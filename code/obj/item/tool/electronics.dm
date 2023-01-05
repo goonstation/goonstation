@@ -786,12 +786,11 @@
 					match_check = 1
 					break
 			if (!match_check)
-				var/obj/tempobj = new X (src)
-				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/typeinfo/obj/typeinfo = get_type_typeinfo(X)
+				var/obj/typedummy = X
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(typedummy.name), X, typeinfo.mats)
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)
@@ -905,7 +904,8 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = ONBELT | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 
 	proc/finish_decon(atom/target,mob/user) // deconstructing work
@@ -924,6 +924,9 @@
 			qdel(O)
 		else
 			F.deconstructed_thing = target
+			if(ismob(O.loc))
+				var/mob/M = O.loc
+				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
 		F.set_loc(target_loc)

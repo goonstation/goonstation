@@ -16,6 +16,7 @@
 		var/mob/living/M = src.target
 		if(istype(M))
 			M.observers -= src
+			src.UnregisterSignal(M, list(COMSIG_TGUI_WINDOW_OPEN))
 
 		if (isobj(target))
 			src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
@@ -36,21 +37,6 @@
 		if (src.client)
 			src.removeOverlaysClient(src.client)
 
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src, T) || (src.client && src.client.holder)))))
-				src.set_loc(T)
-			else
-				if (ASLoc)
-					src.set_loc(ASLoc)
-				else
-					src.z = 1
-		else
-			if (ASLoc)
-				src.set_loc(ASLoc)
-			else
-				src.z = 1
 		STOP_TRACKING
 		..()
 
@@ -106,7 +92,8 @@
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
 		src.set_loc(target)
-
+		if(src.ghost?.auto_tgui_open)
+			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, .proc/open_tgui_if_interactive)
 		set_eye(target)
 
 		var/mob/living/M = target
@@ -129,6 +116,12 @@
 						return target.ui_interact(src)
 		return ..()
 
+	/// Checks if the tgui window being created is from an object with TGUI_INTERACTIVE, and opens the window for the observer if true
+	proc/open_tgui_if_interactive(mob/sender, datum/tgui/observe_window)
+		if(istype(observe_window.src_object, /atom))
+			var/atom/atom_object = observe_window.src_object
+			if(atom_object.flags & TGUI_INTERACTIVE)
+				return observe_window.src_object.ui_interact(src)
 
 	verb
 		stop_observing()

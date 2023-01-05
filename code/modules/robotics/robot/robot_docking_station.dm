@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/recharge_station)
+	mats = 10
+
 /obj/machinery/recharge_station
 	name = "cyborg docking station"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -5,7 +8,6 @@
 	icon_state = "station"
 	density = 1
 	anchored = 1
-	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
@@ -61,6 +63,8 @@
 
 /obj/machinery/recharge_station/ex_act(severity)
 	src.go_out()
+	if (severity > 1 && src.conversion_chamber) //syndie version is a little tougher
+		return
 	return ..(severity)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
@@ -159,7 +163,9 @@
 	if (!src.anchored)
 		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
 		return FALSE
-
+	if (src.occupant)
+		boutput(user, "<span class='alert'>There's already someone in there.</span>")
+		return FALSE
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
@@ -174,10 +180,12 @@
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
+	if (!isturf(AM.loc) && !(AM in user))
+		return
 	if (!isliving(user) || isAI(user))
 		return
 
-	if (isitem(AM) && !user.stat)
+	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return
 
@@ -619,7 +627,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing(LOG_COMBAT, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)

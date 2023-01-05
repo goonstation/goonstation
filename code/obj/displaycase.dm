@@ -5,6 +5,7 @@
 	desc = "A display case for antique possessions."
 	density = 1
 	anchored = 1
+	material_amt = 0.3
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
@@ -171,7 +172,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 	force = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/stability = 10
 
 	var/repair_stage = 0

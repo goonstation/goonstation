@@ -24,7 +24,7 @@
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
-	desc = "what"
+	desc = "What."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
 	w_class = W_CLASS_BULKY
@@ -86,6 +86,7 @@
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	stamina_damage = 5
 	stamina_cost = 1
+	hitsound = 'sound/impact_sounds/tube_bonk.ogg'
 
 	New()
 		..()
@@ -123,17 +124,31 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
+TYPEINFO(/obj/item/disk)
+	mats = 8
+
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
-	mats = 8
 
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
-	flags = TABLEPASS
+	anchored = 2
+	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
+	item_function_flags = IMMUNE_TO_ACID
+
+	disposing()
+		disposed = FALSE
+		..()
+		CRASH("Something tried to delete the can_reach dummy!")
+
+	ex_act()
+		return
+
+	changeHealth(change)
+		return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
@@ -238,7 +253,8 @@
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 
 	New()
@@ -262,6 +278,9 @@
 			src.setItemSpecial(/datum/item_special/slam)
 
 
+TYPEINFO(/obj/item/reagent_containers/vape)
+	mats = 6
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -271,8 +290,8 @@
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	mats = 6
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
 	var/list/safe_smokables = list("nicotine", "THC", "CBD")

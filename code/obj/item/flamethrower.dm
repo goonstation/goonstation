@@ -31,6 +31,7 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = null
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -85,7 +86,7 @@ A Flamethrower in various states of assembly
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+		if(is_reagent_dispenser(target)&& in_interact_range(src,target))
 			if(src.fueltank?.reagents)
 				var/obj/tank = target
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
@@ -172,7 +173,6 @@ A Flamethrower in various states of assembly
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
-		src.updateSelfDialog()
 
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
@@ -195,7 +195,8 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1
@@ -568,7 +569,7 @@ A Flamethrower in various states of assembly
 
 	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
-	src.updateSelfDialog()
+	tgui_process.update_uis(src)
 	SPAWN(0.5 SECONDS)
 		playsound(src, 'sound/effects/valve_creak.ogg', 40, 1)
 	return TRUE
@@ -616,136 +617,129 @@ A Flamethrower in various states of assembly
 	else
 		return	..()
 
-/obj/item/gun/flamethrower/Topic(href,href_list[])
+/obj/item/gun/flamethrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/mob/user
 	if(ismob(usr))
 		user = usr
-	if (href_list["close"])
-		src.remove_dialog(user)
-		user.Browse(null, "window=flamethrower")
+	if(is_incapacitated(user) || !(src in user.equipped_list()))
 		return
-	if(user.stat || user.restrained() || user.lying || !(src in user.equipped_list()))
-		return
-	src.add_dialog(user)
+	switch (action)
+		if ("light")
+			if(!src.gastank || !src.fueltank)
+				return
+			lit = !lit
+			playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
+			if(lit)
+				icon_state = "flamethrower_ignite_on"
+				item_state = "flamethrower1"
+				force =  10
+				hit_type = DAMAGE_BURN
+				processing_items |= src
+			else
+				icon_state = "flamethrower_oxy_fuel"
+				force = 3
+				hit_type = DAMAGE_BLUNT
+			tooltip_rebuild = TRUE
 
-	if (href_list["light"])
-		if(!src.gastank || !src.fueltank)	return
-		lit = !(lit)
-		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
-		if(lit)
-			icon_state = "flamethrower_ignite_on"
-			item_state = "flamethrower1"
-			force =  10
-			hit_type = DAMAGE_BURN
-			processing_items |= src
-		else
-			icon_state = "flamethrower_oxy_fuel"
+		if ("remove_gas")
+			if(!src.gastank || !src.swappable_tanks)
+				return
+			var/obj/item/tank/A = src.gastank
+			A.set_loc(get_turf(src))
+			A.layer = initial(A.layer)
+			user.put_in_hand_or_drop(A)
+			src.gastank = null
+			lit = FALSE
 			force = 3
 			hit_type = DAMAGE_BLUNT
-		tooltip_rebuild = 1
-
-	if (href_list["removeair"])
-		if(!src.gastank || !src.swappable_tanks)
-			return
-		var/obj/item/tank/A = src.gastank
-		A.set_loc(get_turf(src))
-		A.layer = initial(A.layer)
-		user.put_in_hand_or_drop(A)
-		src.gastank = null
-		lit = 0
-		force = 3
-		hit_type = DAMAGE_BLUNT
-		var/fuel = "_no_fuel"
-		if(src.fueltank)
-			fuel = "_fuel"
-		icon_state = "flamethrower_no_oxy[fuel]"
-		item_state = "flamethrower0"
-		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
-		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
-		if(A?.pickup_sfx)
-			remove_sound = A.pickup_sfx
-		SPAWN(0.2 SECONDS)
-			if(src)
-				playsound(src, remove_sound, 30, 1)
+			var/fuel = "_no_fuel"
+			if(src.fueltank)
+				fuel = "_fuel"
+			icon_state = "flamethrower_no_oxy[fuel]"
+			item_state = "flamethrower0"
+			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			if(A?.pickup_sfx)
+				remove_sound = A.pickup_sfx
+			SPAWN(0.2 SECONDS)
+				if(src)
+					playsound(src, remove_sound, 30, 1)
 
 
-	if (href_list["removefuel"])
-		if(!src.fueltank || !src.swappable_tanks)
-			return
-		var/obj/item/reagent_containers/food/drinks/fueltank/A = src.fueltank
-		A.set_loc(get_turf(src))
-		A.layer = initial(A.layer)
-		user.put_in_hand_or_drop(A)
-		src.fueltank = null
-		lit = 0
-		force = 3
-		hit_type = DAMAGE_BLUNT
-		var/oxy = "_no_oxy"
-		if(src.gastank)
-			oxy = "_oxy"
-		icon_state = "flamethrower[oxy]_no_fuel"
-		item_state = "flamethrower0"
-		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
-		if(A?.pickup_sfx)
-			remove_sound = A.pickup_sfx
-		playsound(src, remove_sound, 30, 1)
-		SPAWN(0.5 SECONDS)
-			if(src)
-				playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+		if ("remove_fuel")
+			if(!src.fueltank || !src.swappable_tanks)
+				return
+			var/obj/item/reagent_containers/food/drinks/fueltank/A = src.fueltank
+			A.set_loc(get_turf(src))
+			A.layer = initial(A.layer)
+			user.put_in_hand_or_drop(A)
+			src.fueltank = null
+			lit = FALSE
+			force = 3
+			hit_type = DAMAGE_BLUNT
+			var/oxy = "_no_oxy"
+			if(src.gastank)
+				oxy = "_oxy"
+			icon_state = "flamethrower[oxy]_no_fuel"
+			item_state = "flamethrower0"
+			var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
+			if(A?.pickup_sfx)
+				remove_sound = A.pickup_sfx
+			playsound(src, remove_sound, 30, 1)
+			SPAWN(0.5 SECONDS)
+				if(src)
+					playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 
-	if (href_list["mode"])
-		mode = text2num_safe(href_list["mode"])
-		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
-		src.current_projectile.fullauto_valid = 1
-		src.current_projectile.shot_number = 1
-		switch(src.mode)
-			if(FLAMER_MODE_AUTO) // mid-range automatic
-				src.spread_angle = 15
-				src.shoot_delay = 2 DECI SECONDS
-				src.chem_divisor = 5 //5 shots per second
-			if(FLAMER_MODE_BURST) // close range burst
-				src.spread_angle = 30
-				src.current_projectile.shot_number = 4
-				src.chem_divisor = 4 //4 shots per burst
-				src.shoot_delay = 1 SECOND
-			if(FLAMER_MODE_SINGLE) // single line (default)
-				src.current_projectile.fullauto_valid = 0
-				src.spread_angle = 0
-				src.shoot_delay = 1 SECOND
-				src.chem_divisor = 1 //1 line per second
-			else //default to backtank flamer???
-				src.spread_angle = 5
-				src.shoot_delay = 2 DECI SECONDS
-				src.chem_divisor = 1 //hehehe
+		if ("change_mode")
+			var/new_mode = params["mode"]
+			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+			src.current_projectile.fullauto_valid = 1
+			src.current_projectile.shot_number = 1
+			switch(new_mode)
+				if("auto") // mid-range automatic
+					src.mode = FLAMER_MODE_AUTO
+					src.spread_angle = 15
+					src.shoot_delay = 2 DECI SECONDS
+					src.chem_divisor = 5 //5 shots per second
+				if("burst") // close range burst
+					src.mode = FLAMER_MODE_BURST
+					src.spread_angle = 30
+					src.current_projectile.shot_number = 4
+					src.chem_divisor = 4 //4 shots per burst
+					src.shoot_delay = 1 SECOND
+				if("semi_auto") // single line (default)
+					src.mode = FLAMER_MODE_SINGLE
+					src.current_projectile.fullauto_valid = 0
+					src.spread_angle = 0
+					src.shoot_delay = 1 SECOND
+					src.chem_divisor = 1 //1 line per second
+				else //default to backtank flamer???
+					src.spread_angle = 5
+					src.shoot_delay = 2 DECI SECONDS
+					src.chem_divisor = 1 //hehehe
 
-		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
-		set_current_projectile(src.current_projectile)
+			AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
+			set_current_projectile(src.current_projectile)
 
-	if (href_list["temp"])
-		if (href_list["temp"] == "reset")
-			src.base_temperature = FLAMER_DEFAULT_TEMP
-		else
-			var/tempnum = text2num_safe(href_list["temp"])
-			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
-		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
+		if ("change_temperature")
+			if (!src.lit)
+				return
+			var/tempnum = text2num_safe(params["temperature"])
+			src.base_temperature = clamp(tempnum, src.min_temperature, src.max_temperature)
+			playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
 
-	if (href_list["c_amt"])
-		if (href_list["c_amt"] == "reset")
-			src.amt_chem = FLAMER_DEFAULT_CHEM_AMT
-		else
-			var/tempnum = text2num_safe(href_list["c_amt"])
-			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
-		playsound(src, 'sound/effects/valve_creak.ogg', 10, 0.2)
+		if ("change_volume")
+			var/tempnum = text2num_safe(params["volume"])
+			src.amt_chem = clamp(tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
+			playsound(src, 'sound/effects/valve_creak.ogg', 10, 0.2)
 
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
-	src.updateSelfDialog()
-	return
+	return TRUE
 
 /obj/item/gun/flamethrower/assembled/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
-	src.flamewindow(user)
-	return
+	src.ui_interact(user)
 
 /obj/item/gun/flamethrower/backtank/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
@@ -768,60 +762,38 @@ A Flamethrower in various states of assembly
 		boutput(user, "<span class='notice'>You extinguish \the [src]'s pilot light!</span>")
 	return
 
-/obj/item/gun/flamethrower/proc/flamewindow(mob/user)
-	src.add_dialog(user)
-	var/dat = "<TT><B>Flamethrower - <A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a></B><BR>"
-	var/fueltank_in_range = ((src.fueltank in src.contents) || (src.fueltank in user.get_equipped_items()))
+/obj/item/gun/flamethrower/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Flamethrower")
+		ui.open()
+
+/obj/item/gun/flamethrower/ui_data(mob/user)
+	. = list(
+		"lit" = src.lit,
+		"maxTemp" = src.max_temperature,
+		"minTemp" = src.min_temperature,
+		"gasTank" = src.gastank?.ui_describe(),
+		"fuelTank" = ui_describe_reagents(src.fueltank),
+		"minVolume" = FLAMER_MIN_CHEM_AMT,
+		"maxVolume" = src.amt_chem_max,
+		"chamberVolume" = src.amt_chem,
+	)
 	var/gastank_in_range = ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items()))
-	var/spraytemp = "!NaN!"
-	if(istype(src.fueltank) && fueltank_in_range)
+	var/spraytemp = 20 + T0C
+	if(istype(src.fueltank) && gastank_in_range)
 		if(src.lit)
-			spraytemp = src.base_temperature - T0C
+			spraytemp = src.base_temperature
 		else if(src.fueltank?.reagents)
-			spraytemp = src.fueltank.reagents.total_temperature - T0C
-	dat += "<BR><B>Spray Temp:</B> [spraytemp]&deg;C<BR>"
-	if(src.adjustable_temp && src.lit)
-		dat += " <a href='?src=\ref[src];temp=-100'>-100</a> <a href='?src=\ref[src];temp=-10'>-10</a> <a href='?src=\ref[src];temp=-1'>-1</a>"
-		dat += " <a href='?src=\ref[src];temp=reset'>reset ([FLAMER_DEFAULT_TEMP - (T0C)]&deg;C)</a>"
-		dat += " <a href='?src=\ref[src];temp=1'>+1</a> <a href='?src=\ref[src];temp=10'>+10</a> <a href='?src=\ref[src];temp=100'>+100</a>"
-
-	if (src.gastank && gastank_in_range)
-		dat += "<br>Air Tank Pressure: [MIXTURE_PRESSURE(src.gastank.air_contents)]"
-		if (src.swappable_tanks)
-			dat += " (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)"
-		dat += "<BR>"
-	else
-		dat += "<br>No Air Tank Attached!<BR>"
-
-	dat += "<BR><B>Connector Valve Mode:</B> "
-	if (mode == 1)
-		dat += "<B>Full Auto</B> | "
-	else
-		dat += "<a href='?src=\ref[src];mode=1'>Full Auto</a> | "
-	if (mode == 2)
-		dat += "<B>Wide Burst</B> | "
-	else
-		dat += "<a href='?src=\ref[src];mode=2'>Wide Burst</a> | "
-	if (mode == 3)
-		dat += "<B>Semi-Auto</B>"
-	else
-		dat += "<a href='?src=\ref[src];mode=3'>Semi-Auto</a>"
-
-	if (src.fueltank && fueltank_in_range)
-		dat += "<br>Fuel Tank: [src.fueltank.reagents.total_volume] units of fuel mixture"
-		if (src.swappable_tanks)
-			dat += " (<A HREF='?src=\ref[src];removefuel=1'>Remove Fuel Tank</A>)"
-		dat += "<BR>"
-	else
-		dat += "<br>No Fuel Tank Attached!<BR>"
-
-	dat += "<br>Launcher Chamber Volume: [src.amt_chem]<BR>"
-	if(src.adjustable_chem_amt)
-		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (40)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
-
-	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
-	user.Browse(dat, "window=flamethrower;size=600x300")
-	onclose(user, "flamethrower")
+			spraytemp = src.fueltank.reagents.total_temperature
+	.["sprayTemp"] = spraytemp
+	switch (src.mode)
+		if (FLAMER_MODE_AUTO)
+			.["mode"] = "auto"
+		if (FLAMER_MODE_BURST)
+			.["mode"] = "burst"
+		if (FLAMER_MODE_SINGLE)
+			.["mode"] = "semi_auto"
 
 /obj/item/gun/flamethrower/move_trigger(var/mob/M, kindof)
 	if (..())

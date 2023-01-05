@@ -13,7 +13,7 @@
 	col_b = 0.8
 	var/sparks = 7
 	var/burn_state = 0
-	var/burnt = false
+	var/burnt = FALSE
 	var/light_ticks = 60
 
 	New()
@@ -91,7 +91,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -116,7 +116,7 @@
 					src.icon_state = "smelted-unlit"
 				if(2)
 					src.icon_state = "melted-unlit"
-			src.burnt = true
+			src.burnt = TRUE
 			light.disable()
 			processing_items -= src
 			if(user)

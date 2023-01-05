@@ -14,7 +14,7 @@
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
 	if(!source || !target)
-		CRASH("Invalid Params:: Source:[source] Target:[target]")
+		CRASH("Invalid Params for get_dir_alt: Source:[identify_object(source)] Target:[identify_object(target)]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST
@@ -553,7 +553,8 @@
 	name = "Swipe"
 	desc = "Attack with a wide swing."
 	var/swipe_color
-	var/ignition = false	//If true, the swipe will ignite stuff in it's reach.
+	/// If true, the swipe will ignite stuff in it's reach.
+	var/ignition = FALSE
 
 	onAdd()
 		if(master)
@@ -564,7 +565,7 @@
 			var/obj/item/syndicate_destruction_system/sds = master
 			if (istype(sds))
 				swipe_color = "#FFFBCC"
-				ignition = true
+				ignition = TRUE
 		return
 
 			//Sampled these hex colors from each c-saber sprite.
@@ -1814,6 +1815,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = 1
+	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64
 	pixel_y = -64
@@ -1986,7 +1988,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
 				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")

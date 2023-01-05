@@ -9,7 +9,7 @@
 		var/flare_start_time = rand(50,100)
 		//spatial interdictor: mitigate signal loss
 		//consumes 4,000 units of charge to activate interdiction
-		for(var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+		for_by_tcl(IX, /obj/machinery/interdictor)
 			if(IX.z == 1 && IX.expend_interdict(4000))
 				var/itdr_strength = IX.interdict_range
 				signal_loss_current = max(0,signal_loss_current - rand(itdr_strength,itdr_strength*2))

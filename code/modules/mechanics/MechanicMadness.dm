@@ -26,11 +26,11 @@
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
 	var/light_color = list(0, 255, 255, 255)
-	var/open=true
-	var/welded=false
-	var/can_be_welded=false
-	var/can_be_anchored=false
-	custom_suicide=true
+	var/open = TRUE
+	var/welded = FALSE
+	var/can_be_welded = FALSE
+	var/can_be_anchored = FALSE
+	custom_suicide = TRUE
 	open_to_sound = TRUE
 
 	New()
@@ -57,13 +57,13 @@
 				if(prob(25))
 					src.dispose()
 					return
-				src.open=true
-				src.welded=false
+				src.open = TRUE
+				src.welded = FALSE
 				src.UpdateIcon()
 				return
 			if (3)
 				if(prob(50) && !src.welded)
-					src.open=true
+					src.open = TRUE
 					src.UpdateIcon()
 				return
 		return
@@ -210,8 +210,8 @@
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""]\
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
-		can_be_welded=true
-		can_be_anchored=true
+		can_be_welded = TRUE
+		can_be_anchored = TRUE
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
 		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
@@ -220,7 +220,7 @@
 		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
-		anchored=false
+		anchored = FALSE
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
@@ -257,7 +257,8 @@
 		anchored=0
 		num_f_icons=1
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
 
@@ -268,8 +269,8 @@
 					for(var/obj/item in src.contents)
 						item.set_loc(get_turf(src)) // kick out any mechcomp
 					qdel(src) // delet
-					return false
-			return true
+					return FALSE
+			return TRUE
 		attack_self(mob/user as mob)
 			if(src.open)
 				if(!(user in src.users))
@@ -632,7 +633,7 @@
 	desc = ""
 	icon_state = "comp_flush"
 	cooldown_time = 2 SECONDS
-	cabinet_banned = true
+	cabinet_banned = TRUE
 
 
 	var/obj/disposalpipe/trunk/trunk = null
@@ -717,7 +718,7 @@
 	icon_state = "comp_tprint"
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
-	cabinet_banned = true
+	cabinet_banned = TRUE
 	plane = PLANE_DEFAULT
 	var/paper_left = 10
 	var/process_cycle = 0
@@ -845,7 +846,7 @@
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "secdetector0"
 	can_rotate = 1
-	cabinet_banned = true // abusable. B&
+	cabinet_banned = TRUE // abusable. B&
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
@@ -952,7 +953,7 @@
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = true // non-functional
+	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1013,8 +1014,8 @@
 	desc = ""
 	icon_state = "comp_zap"
 	cooldown_time = 1 SECOND
-	cabinet_banned = true
-	one_per_tile = true
+	cabinet_banned = TRUE
+	one_per_tile = TRUE
 	var/zap_power = 2
 
 	New()
@@ -1781,7 +1782,7 @@
 	var/last_ping = 0
 	var/range = null
 
-	var/noise_enabled = true
+	var/noise_enabled = TRUE
 	var/frequency = FREQ_FREE
 
 	get_desc()
@@ -1853,10 +1854,10 @@
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
 			if(src.noise_enabled)
-				src.noise_enabled = false
+				src.noise_enabled = FALSE
 				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
-					src.noise_enabled = true
+					src.noise_enabled = TRUE
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
@@ -1879,10 +1880,10 @@
 
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
-						src.noise_enabled = false
+						src.noise_enabled = FALSE
 						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
-							src.noise_enabled = true
+							src.noise_enabled = TRUE
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
@@ -2268,7 +2269,7 @@
 	name = "Teleport Component"
 	desc = ""
 	icon_state = "comp_tele"
-	cabinet_banned = true // potentially abusable. b&
+	cabinet_banned = TRUE // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
 	var/image/telelight
@@ -2349,7 +2350,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2589,7 +2590,7 @@
 	desc = ""
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
-	cabinet_banned = true // non-functional
+	cabinet_banned = TRUE // non-functional
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -2769,7 +2770,7 @@
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
-	cabinet_banned = true // non-functional thankfully
+	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
@@ -3251,7 +3252,7 @@
 	name = "Letter Display Component"
 	desc = ""
 	icon_state = "comp_screen"
-	cabinet_banned = true
+	cabinet_banned = TRUE
 
 	var/letter_index = 1
 	var/display_letter = null

@@ -2215,7 +2215,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "afX" = (
 /obj/storage/crate/furnacefuel,
@@ -2253,7 +2254,8 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "agf" = (
 /turf/simulated/floor/stairs{
@@ -2329,7 +2331,8 @@
 /area/listeningpost)
 "ags" = (
 /obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "agt" = (
 /obj/machinery/bot/guardbot/bad{
@@ -2398,7 +2401,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "agB" = (
 /obj/cable{
@@ -4841,10 +4845,11 @@
 /area/station/janitor/office)
 "aoU" = (
 /obj/machinery/door/window/westleft,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/janitor/office)
 "aoV" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "aoY" = (
@@ -5259,7 +5264,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "aqn" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "aqo" = (
@@ -12591,7 +12596,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "aPl" = (
 /obj/cable{
@@ -16146,7 +16152,8 @@
 "bbr" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/window/northright,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "bbs" = (
 /obj/machinery/light{
@@ -17969,7 +17976,7 @@
 /area/station/security/detectives_office)
 "bhu" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -19798,10 +19805,12 @@
 	codes_txt = "delivery;dir=4";
 	location = "Tool Storage"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "bmx" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "bmy" = (
 /obj/table/auto,
@@ -20433,7 +20442,7 @@
 "bnW" = (
 /obj/table/auto,
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/wood/two,
 /area/station/science/research_director)
@@ -21560,7 +21569,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bqF" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bqG" = (
@@ -22128,7 +22137,7 @@
 /area/station/crew_quarters/kitchen)
 "brV" = (
 /obj/machinery/light/small,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	health = 25;
 	name = "Nils"
 	},
@@ -22362,7 +22371,8 @@
 /obj/machinery/bot/mulebot{
 	home_destination = "QM #1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bsx" = (
 /obj/cable{
@@ -22373,7 +22383,8 @@
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bsy" = (
 /obj/table/auto,
@@ -22826,7 +22837,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bty" = (
 /obj/cable{
@@ -22834,7 +22846,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "btz" = (
 /obj/machinery/light/small{
@@ -22948,7 +22961,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "btN" = (
 /obj/cable{
@@ -23399,7 +23413,8 @@
 	codes_txt = "delivery;dir=1";
 	location = "Kitchen"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "buL" = (
 /obj/disposalpipe/segment,
@@ -23751,7 +23766,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bvG" = (
@@ -23801,7 +23816,8 @@
 /area/listeningpost)
 "bvO" = (
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bvP" = (
 /turf/simulated/floor/grey/side{
@@ -25622,7 +25638,8 @@
 	dir = 8;
 	tag = "icon-tube1 (WEST)"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "bBN" = (
 /obj/storage/secure/closet/research,
@@ -26172,7 +26189,8 @@
 	codes_txt = "delivery;dir=1";
 	location = "science"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	dir = 8
 	},
 /area/station/maintenance/southeast)
@@ -27653,7 +27671,7 @@
 	name = "floor based power generator";
 	output = 150000
 	},
-/obj/tree1{
+/obj/tree{
 	desc = "A breed of tree which generates obscene amounts of electric energy. OBSCENE! Also it's better than a bush.";
 	name = "Thermoelectric Tree"
 	},
@@ -31690,7 +31708,8 @@
 	tag = "icon-rwindow (EAST)"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "oFS" = (
 /obj/machinery/light/small{

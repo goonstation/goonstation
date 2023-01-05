@@ -8,11 +8,12 @@
 /obj/flock_structure/sentinel
 	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
-	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies."
+	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies. Consumes 20 compute."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
 	resourcecost = 150
+	show_in_tutorial = TRUE
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
@@ -22,9 +23,13 @@
 	var/range = 4
 	/// The wattage of the arcflash
 	var/wattage = 6000
+	/// has extra range when chaining
+	var/extra_chain_range = FALSE
 	var/powered = FALSE
 
 	passthrough = TRUE
+
+	accepts_sapper_power = TRUE
 
 	var/online_compute_cost = 20
 	compute = 0 //targetting consumes compute
@@ -39,6 +44,7 @@
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
+	src.rays = null
 	..()
 
 /obj/flock_structure/sentinel/building_specific_info()
@@ -90,6 +96,8 @@
 						var/mob/M = A
 						if (isdead(M))
 							continue
+					if (ON_COOLDOWN(A, "sentinel_shock", 2 SECONDS))
+						continue
 					to_hit = A
 					break
 			if(!to_hit)
@@ -101,9 +109,9 @@
 
 			var/atom/last_hit = to_hit
 			var/found_chain_target
-			for(var/i in 1 to rand(5, 6)) // chaining
+			for(var/i in 1 to 3) // chaining
 				found_chain_target = FALSE
-				for(var/atom/A as anything in view(2, last_hit.loc))
+				for(var/atom/A as anything in view(2 + (src.extra_chain_range ? 1 : 0), last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))
 						if (ismob(A))
 							var/mob/M = A
@@ -132,6 +140,17 @@
 /obj/flock_structure/sentinel/proc/charge(chargeamount)
 	src.charge = clamp(src.charge + chargeamount, 0, 100)
 	src.info_tag.set_info_tag("Charge: [src.charge]%")
+
+/obj/flock_structure/sentinel/sapper_power()
+	if (!src.powered || !..())
+		return FALSE
+	src.accepts_sapper_power = FALSE
+	src.extra_chain_range = TRUE
+	SPAWN(10 SECONDS)
+		if (!QDELETED(src))
+			src.accepts_sapper_power = TRUE
+			src.extra_chain_range = FALSE
+	return TRUE
 
 /obj/flock_structure/sentinel/proc/updatefilter()
 	UNLINT(var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type

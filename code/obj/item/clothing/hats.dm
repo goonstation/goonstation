@@ -1022,6 +1022,7 @@ proc/filter_trait_hats(var/type)
 
 	unequipped(mob/user)
 		..()
+		logTheThing(LOG_COMBAT, user, "unequipped [src] at [log_loc(src)].")
 		processing_items.Remove(src)
 		processing = 0
 		return
@@ -1029,7 +1030,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing(LOG_COMBAT, user, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
@@ -1837,10 +1838,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 
 //Lesbian Hat
 
+TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	mats = list("FAB-1"=5, "honey"=5)
+
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."
-	mats = list("FAB-1"=5, "honey"=5)
 	icon_state = "lesbeean"
 	item_state = "lesbeean"
 

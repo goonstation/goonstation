@@ -705,7 +705,7 @@
 /area/station/engine/engineering)
 "abI" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/audio_tape,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/gloves/yellow,
@@ -922,7 +922,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/emitter,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "acg" = (
 /obj/cable{
@@ -930,7 +931,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "ach" = (
 /obj/table/auto,
@@ -1518,7 +1520,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "adr" = (
 /obj/cable{
@@ -1673,7 +1676,8 @@
 	icon_state = "tube1";
 	tag = ""
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "adH" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -1870,7 +1874,8 @@
 	location = "Engineering";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "aeh" = (
 /obj/machinery/power/collector_array,
@@ -3041,7 +3046,8 @@
 "agV" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "agW" = (
 /obj/stool/bed,
@@ -6568,7 +6574,8 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aoZ" = (
 /obj/disposalpipe/segment/mail/bent/north,
@@ -7515,7 +7522,8 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/quartermaster/office)
 "are" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "arf" = (
 /obj/lattice{
@@ -7813,7 +7821,8 @@
 	location = "QM #2";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "arO" = (
 /obj/machinery/navbeacon{
@@ -7824,7 +7833,8 @@
 /obj/machinery/bot/mulebot{
 	home_destination = "QM #1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "arP" = (
 /obj/grille/steel,
@@ -7856,7 +7866,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "arT" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -8236,7 +8247,7 @@
 /area/station/security/detectives_office)
 "asU" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green{
 	on = 0
 	},
@@ -8389,7 +8400,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "atp" = (
 /turf/simulated/floor/circuit,
@@ -8416,7 +8428,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "ats" = (
 /obj/cable{
@@ -8888,7 +8901,8 @@
 	icon_state = "camera";
 	name = "autoname - SS13"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "auv" = (
 /obj/machinery/power/apc/autoname_south,
@@ -9198,7 +9212,8 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "avc" = (
 /turf/space,
@@ -9284,7 +9299,8 @@
 /obj/machinery/computer/robotics{
 	dir = 8
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "avm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -9514,7 +9530,8 @@
 	dir = 1
 	},
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "avO" = (
 /obj/item/device/radio/intercom{
@@ -9530,7 +9547,8 @@
 	dir = 8
 	},
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "avQ" = (
 /obj/cable{
@@ -11195,7 +11213,8 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "azT" = (
 /obj/table/auto,
@@ -11374,7 +11393,8 @@
 	dir = 4;
 	broadcasting = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "aAq" = (
 /obj/storage/closet/fire,
@@ -12020,7 +12040,7 @@
 "aBT" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/peripheral/videocard,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
@@ -13822,7 +13842,8 @@
 /obj/item/sheet/glass{
 	amount = 50
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "aFY" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -14112,7 +14133,8 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "aGF" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -14512,7 +14534,8 @@
 	dir = 10;
 	c_tag = "autotag"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "aHw" = (
 /obj/table/reinforced/auto,
@@ -16242,7 +16265,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/security/main)
 "aLJ" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/security/main)
 "aLK" = (
 /obj/cable{
@@ -16258,7 +16282,8 @@
 	location = "Security";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/security/main)
 "aLL" = (
 /obj/cable{
@@ -16737,7 +16762,7 @@
 /turf/simulated/floor,
 /area/station/janitor/office)
 "aMN" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
 "aMO" = (
@@ -17409,7 +17434,8 @@
 	d2 = 8
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/garden/owlery)
 "aOw" = (
 /obj/cable{
@@ -17550,7 +17576,8 @@
 	location = "Crew Quarters";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aOL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -17746,7 +17773,8 @@
 /obj/disposaloutlet{
 	name = "Automated Parole Chute"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aPj" = (
 /obj/disposalpipe/segment/ejection{
@@ -17899,7 +17927,8 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aPx" = (
 /obj/storage/crate/freezer,
@@ -18931,7 +18960,8 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/chapel/office)
 "aRZ" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aSa" = (
 /obj/machinery/navbeacon{
@@ -18940,7 +18970,8 @@
 	name = "MULE delivery beacon"
 	},
 /obj/machinery/light,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aSb" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -23527,14 +23558,16 @@
 	location = "Hydroponics";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bbr" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bbs" = (
 /obj/reagent_dispensers/beerkeg,
@@ -24235,7 +24268,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bdc" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bdd" = (
 /obj/machinery/navbeacon{
@@ -24244,7 +24278,8 @@
 	name = "MULE delivery beacon"
 	},
 /obj/machinery/light,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bde" = (
 /obj/machinery/door/firedoor/border_only,
@@ -24467,7 +24502,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
 "bdP" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -27286,7 +27321,8 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bkG" = (
 /obj/submachine/chem_extractor{
@@ -28363,7 +28399,8 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "bnc" = (
 /obj/securearea{
@@ -29030,7 +29067,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "boL" = (
 /obj/machinery/navbeacon{
@@ -29038,7 +29076,8 @@
 	location = "Research";
 	name = "MULE delivery beacon"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "boM" = (
 /obj/machinery/vending/coffee,
@@ -30197,7 +30236,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/teleporter)
 "brs" = (
 /obj/machinery/disposal,
@@ -32599,7 +32639,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "bwx" = (
 /turf/simulated/wall/auto/gannets,
@@ -32874,7 +32915,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "bxh" = (
 /obj/cable,
@@ -32995,7 +33037,8 @@
 	icon_state = "ebulb1";
 	dir = 8
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/bridge)
 "bxx" = (
 /obj/decal/mule/dropoff,
@@ -33568,7 +33611,7 @@
 	icon_state = "beebed";
 	name = "cat bed"
 	},
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "byD" = (
@@ -35042,7 +35085,8 @@
 	d2 = 2
 	},
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bBz" = (
 /obj/storage/crate/furnacefuel,
@@ -35076,7 +35120,8 @@
 	name = "Listening Post";
 	req_access_txt = "52"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bBE" = (
 /turf/simulated/floor/stairs{
@@ -35190,7 +35235,8 @@
 /area/space)
 "bBT" = (
 /obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bBU" = (
 /obj/machinery/bot/guardbot/bad{
@@ -35259,7 +35305,8 @@
 	d2 = 8
 	},
 /obj/machinery/door/airlock/glass,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bCc" = (
 /obj/cable{
@@ -35374,7 +35421,8 @@
 /area/listeningpost)
 "bCp" = (
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bCq" = (
 /turf/simulated/floor/grey/side{
@@ -35581,7 +35629,8 @@
 	d2 = 2
 	},
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "gVa" = (
 /obj/table/wood/auto,

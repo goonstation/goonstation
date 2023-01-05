@@ -57,6 +57,9 @@
 			set_secure_frequencies(src)
 		..()
 
+/obj/item/device/radio/headset/wizard
+	emp_act()
+		return //hax
 
 /obj/item/device/radio/headset/command
 	name = "command headset"
@@ -531,6 +534,9 @@ Secure Frequency:
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 
+TYPEINFO(/obj/item/device/radio_upgrade)
+	mats = 12
+
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "wiretap radio upgrade"
 	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
@@ -538,7 +544,6 @@ Secure Frequency:
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
-	mats = 12
 	var/secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,

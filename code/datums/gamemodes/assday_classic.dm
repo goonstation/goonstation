@@ -72,11 +72,12 @@
 
 	if(num_wraiths)
 		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = ROLE_WRAITH
-			possible_wraiths.Remove(wraith)
+		if(length(possible_wraiths))
+			var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
+			for (var/datum/mind/wraith in chosen_wraiths)
+				traitors += wraith
+				wraith.special_role = ROLE_WRAITH
+				possible_wraiths.Remove(wraith)
 
 	return 1
 
@@ -131,7 +132,7 @@
 /datum/game_mode/assday/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Assday Law Module",law,1,true,true)
+	killer.law_rack_connection?.SetLawCustom("Assday Law Module", law, 1, TRUE, TRUE)
 	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/assday/proc/get_mob_list()

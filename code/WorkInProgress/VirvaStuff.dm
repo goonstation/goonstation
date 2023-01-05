@@ -55,8 +55,8 @@ obj/item/ammo/bullets/flechette_mag
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
 	default_magazine = /obj/item/ammo/bullets/flechette_mag
@@ -189,8 +189,8 @@ obj/item/ammo/bullets/flechette_mag
 	icon_state = "kuvalda"
 	item_state = "kuvalda"
 	wear_state = "kuvalda"
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 10
 	ammo_cats = list(AMMO_KUVALDA)
@@ -272,7 +272,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("enriched_msg"=10,"energydrink"=10,"royal_jelly"=10,"hard_punch"=10)
+	initial_reagents = list("enriched_msg"=10,"methamphetamine"=10,"royal_jelly"=10,"hard_punch"=10)
 
 /obj/item/decoration/virvase
 	name = "pretty purple hibiscus"
