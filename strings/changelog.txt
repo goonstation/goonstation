@@ -1,4 +1,9 @@
 
+(t)thu jan 05 23
+(u)Azrun
+(p)12631
+(e)|
+(+)Generated planets may contain ore and be constructed on.
 (t)wed jan 04 23
 (u)tarmunora
 (+)killer tomato and buttbot plants have stricter yield limits
