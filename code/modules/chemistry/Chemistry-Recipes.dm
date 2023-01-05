@@ -662,7 +662,7 @@ datum
 			drinkrecipe = 1
 
 		honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			result = "honey_tea"
 			required_reagents = list("honey" = 1, "tea" = 1)
@@ -672,7 +672,7 @@ datum
 			drinkrecipe = 1
 
 		mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			result = "mint_tea"
 			required_reagents = list("mint" = 1, "tea" = 1)
