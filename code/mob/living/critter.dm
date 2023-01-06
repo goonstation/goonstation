@@ -625,7 +625,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
-		if(!showInv && check_target_immunity(src, 1, M))
+		if(check_target_immunity(src, 1, M))
 			return 0
 		if (!HH)
 			return 0
