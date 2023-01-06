@@ -723,6 +723,7 @@
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	c_flags = COVERSEYES | COVERSMOUTH
 	seal_hair = 1
 	see_face = 0
 
@@ -881,7 +882,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_LAYER_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
@@ -954,6 +955,10 @@
 	desc = "A familiar, yet legally distinct helmet."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_GLASSES|C_EARS|C_MASK
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/armor/sneaking_suit
 	name = "sneaking suit"
