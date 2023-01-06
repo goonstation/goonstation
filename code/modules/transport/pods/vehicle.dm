@@ -113,8 +113,8 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
-			var/turf/T = get_turf(src)
 #ifdef MAP_OVERRIDE_NADIR
+			var/turf/T = get_turf(src)
 			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 				//prevent in-acid welding from extending excursion times indefinitely
 				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
