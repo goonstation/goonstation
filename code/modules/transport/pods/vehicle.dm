@@ -114,13 +114,10 @@
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
 			var/turf/T = get_turf(src)
-			if(T.active_liquid?.my_depth_level >= 3)
-				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
-				return
 #ifdef MAP_OVERRIDE_NADIR
 			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 				//prevent in-acid welding from extending excursion times indefinitely
-				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
 				return
 #endif
 			if(!W:try_weld(user, 1))
