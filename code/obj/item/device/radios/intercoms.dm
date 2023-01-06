@@ -125,13 +125,14 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			M.show_message(msg=message,assoc_maptext=maptext)
 
 		src.locked_frequency = TRUE // lockdown; saves us from clickspam
-		set_frequency(R_FREQ_INTERCOM_AI)
+		var/mob/living/intangible/aieye/eye = user
+		src.set_frequency(eye.mainframe.radio2.frequency)
 		src.broadcasting = TRUE
 		src.listening = TRUE
 
 		SPAWN(1 MINUTE)
 			src.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
-			set_frequency(original_src_frequency)
+			src.set_frequency(original_src_frequency)
 			src.broadcasting = original_src_broadcasting
 			src.listening = original_src_listening
 
