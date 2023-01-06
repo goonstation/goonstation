@@ -2404,8 +2404,8 @@
 			if (src.cell.genrate) power_use_tally -= src.cell.genrate
 
 			if (src.max_upgrades > initial(src.max_upgrades))
-				var/delta = src.max_upgrades - initial(src.max_upgrades)
-				power_use_tally += 3 ^ delta
+				var/delta = src.max_upgrades + 1 - initial(src.max_upgrades)
+				power_use_tally += 3 ** delta
 
 			if (power_use_tally < 0) power_use_tally = 0
 

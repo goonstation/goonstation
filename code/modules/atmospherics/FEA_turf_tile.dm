@@ -404,7 +404,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 			SEND_SIGNAL(AM, COMSIG_ATOM_RADIOACTIVITY, rad_level)
 			if(max(rad_level) > RADGAS_MAXIMUM_CONTAMINATION)
 				continue
-			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
+			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas + max(rad_level), max(rad_level) + RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
 			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
 			if(src.air.radgas < RADGAS_MINIMUM_CONTAMINATION_MOLES)
 				break //no point continuing if we've dropped below threshold

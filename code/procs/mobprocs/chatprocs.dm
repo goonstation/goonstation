@@ -993,7 +993,7 @@
 		if (second_message && M == second_target && M != src)
 			msg = second_message
 		M.show_message(msg, 1, blind_message, 2)
-		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
+		//DEBUG_MESSAGE("<b>[M] receives message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
 /atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
@@ -1085,7 +1085,7 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		if (flock && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+		if (flock && !flock.flockmind.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
 
 	for (var/client/CC)

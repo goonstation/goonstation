@@ -43,47 +43,48 @@ var/list/popup_verbs_to_toggle = list(\
 	return
 
 // if it's in Toggles (Server) it should be in here, ya dig?
-var/list/server_toggles_tab_verbs = list(\
-/client/proc/toggle_attack_messages,\
-/client/proc/toggle_ghost_respawns,\
-/client/proc/toggle_adminwho_alerts,\
-/client/proc/toggle_toggles,\
-/client/proc/toggle_jobban_announcements,\
-/client/proc/toggle_banlogin_announcements,\
-/client/proc/toggle_literal_disarm,\
+var/list/server_toggles_tab_verbs = list(
+/client/proc/toggle_attack_messages,
+/client/proc/toggle_ghost_respawns,
+/client/proc/toggle_adminwho_alerts,
+/client/proc/toggle_toggles,
+/client/proc/toggle_jobban_announcements,
+/client/proc/toggle_banlogin_announcements,
+/client/proc/toggle_literal_disarm,
 /client/proc/toggle_spooky_light_plane,\
-/client/proc/toggle_cloning_with_records,\
-/datum/admins/proc/toggleooc,\
-/datum/admins/proc/togglelooc,\
-/datum/admins/proc/toggleoocdead,\
-/datum/admins/proc/toggletraitorscaling,\
-/datum/admins/proc/pcap,\
-/datum/admins/proc/toggleenter,\
-/datum/admins/proc/toggleAI,\
-/datum/admins/proc/toggle_soundpref_override,\
-/datum/admins/proc/toggle_respawns,\
-/datum/admins/proc/adsound,\
-/datum/admins/proc/adspawn,\
-/datum/admins/proc/adrev,\
-/datum/admins/proc/toggledeadchat,\
-/datum/admins/proc/togglefarting,\
-/datum/admins/proc/toggle_blood_system,\
-/datum/admins/proc/toggle_bone_system,\
-/datum/admins/proc/togglesuicide,\
-/datum/admins/proc/togglethetoggles,\
-/datum/admins/proc/toggleautoending,\
-/datum/admins/proc/toggleaprilfools,\
-/datum/admins/proc/togglespeechpopups,\
-/datum/admins/proc/togglemonkeyspeakhuman,\
-/datum/admins/proc/toggletraitorsseeeachother,\
-/datum/admins/proc/togglelatetraitors,\
-/datum/admins/proc/togglesoundwaiting,\
-/datum/admins/proc/adjump,\
-/datum/admins/proc/togglesimsmode,\
-/datum/admins/proc/toggle_pull_slowing,\
-/client/proc/admin_toggle_nightmode,\
-/client/proc/toggle_camera_network_reciprocity,\
-/datum/admins/proc/toggle_radio_audio,\
+/client/proc/toggle_cloning_with_records,
+/client/proc/toggle_random_job_selection,
+/datum/admins/proc/toggleooc,
+/datum/admins/proc/togglelooc,
+/datum/admins/proc/toggleoocdead,
+/datum/admins/proc/toggletraitorscaling,
+/datum/admins/proc/pcap,
+/datum/admins/proc/toggleenter,
+/datum/admins/proc/toggleAI,
+/datum/admins/proc/toggle_soundpref_override,
+/datum/admins/proc/toggle_respawns,
+/datum/admins/proc/adsound,
+/datum/admins/proc/adspawn,
+/datum/admins/proc/adrev,
+/datum/admins/proc/toggledeadchat,
+/datum/admins/proc/togglefarting,
+/datum/admins/proc/toggle_blood_system,
+/datum/admins/proc/toggle_bone_system,
+/datum/admins/proc/togglesuicide,
+/datum/admins/proc/togglethetoggles,
+/datum/admins/proc/toggleautoending,
+/datum/admins/proc/toggleaprilfools,
+/datum/admins/proc/togglespeechpopups,
+/datum/admins/proc/togglemonkeyspeakhuman,
+/datum/admins/proc/toggletraitorsseeeachother,
+/datum/admins/proc/togglelatetraitors,
+/datum/admins/proc/togglesoundwaiting,
+/datum/admins/proc/adjump,
+/datum/admins/proc/togglesimsmode,
+/datum/admins/proc/toggle_pull_slowing,
+/client/proc/admin_toggle_nightmode,
+/client/proc/toggle_camera_network_reciprocity,
+/datum/admins/proc/toggle_radio_audio,
 )
 
 /client/proc/toggle_server_toggles_tab()
@@ -373,6 +374,10 @@ client/proc/toggle_ghost_respawns()
 	if (!isliving(usr))
 		return
 	usr.nodamage = !(usr.nodamage)
+	var/list/datum/statusEffect/statuses = usr.getStatusList()
+	for (var/status in statuses)
+		if (statuses[status].effect_quality == STATUS_QUALITY_NEGATIVE)
+			usr.delStatus(status)
 	boutput(usr, "<span class='notice'><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
 	logTheThing(LOG_ADMIN, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
@@ -1111,3 +1116,14 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
 	logTheThing(LOG_DIARY, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+
+/client/proc/toggle_random_job_selection()
+	set name = "Toggle Random Job Selection"
+	set desc = "toggles random job rolling at the start of the round; preferences will be ignored. Has no effect on latejoins."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+
+	global.totally_random_jobs = !global.totally_random_jobs
+	logTheThing(LOG_ADMIN, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled random job selection [global.totally_random_jobs ? "on" : "off"]")

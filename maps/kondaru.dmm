@@ -1553,18 +1553,6 @@
 /obj/landmark/artifact,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
-"aet" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/storage/northeast)
 "aeu" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -3335,7 +3323,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/grime,
@@ -8824,7 +8812,7 @@
 /area/station/security/detectives_office)
 "aBH" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/decoration/ashtray{
 	pixel_x = 6;
 	pixel_y = 4
@@ -10233,7 +10221,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/light/lamp/green,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
 /obj/noticeboard/persistent{
@@ -17196,6 +17184,14 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/table/auto,
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/sponge{
+	pixel_x = 2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bew" = (
@@ -18602,7 +18598,9 @@
 /area/station/maintenance/inner/east)
 "bjH" = (
 /obj/machinery/drainage,
-/obj/machinery/optable,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "bjI" = (
@@ -19578,11 +19576,6 @@
 /obj/landmark/start{
 	name = "Bartender"
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
-"bnf" = (
-/obj/machinery/light/small,
-/obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bni" = (
@@ -21890,22 +21883,12 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/crew_quarters/quarters_east)
 "bvf" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/storage/crate/radio,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bvh" = (
@@ -32580,6 +32563,9 @@
 /area/station/medical/medbay)
 "ceJ" = (
 /obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -34936,7 +34922,7 @@
 /area/research_outpost/indigo_rye)
 "clK" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper{
 	info = "delta oblique seneca toreador neptune"
 	},
@@ -38628,10 +38614,6 @@
 /area/station/quartermaster/cargobay)
 "dUm" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/head/souschefhat,
 /obj/item/device/radio/intercom/catering{
 	dir = 4
 	},
@@ -41836,6 +41818,10 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"gsj" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "gsP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42088,7 +42074,9 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "gCb" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gCA" = (
@@ -43629,7 +43617,6 @@
 	})
 "iaN" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -45234,6 +45221,11 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"jrA" = (
+/obj/machinery/manufacturer/general/grody,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/storage/northeast)
 "jrO" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -45263,14 +45255,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/table/auto,
-/obj/item/spraybottle/cleaner{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/sponge{
-	pixel_x = 2
-	},
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jsm" = (
@@ -46299,6 +46284,10 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kvh" = (
+/obj/tree,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary)
 "kvZ" = (
 /obj/cable{
 	d1 = 1;
@@ -49663,7 +49652,7 @@
 /area/station/crew_quarters/cafeteria)
 "nju" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/instrument/bikehorn,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -53249,10 +53238,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
-"qpS" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "qqj" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -53897,7 +53882,7 @@
 /obj/item/paper_bin{
 	pixel_y = 6
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/hand_labeler{
 	pixel_x = 5
 	},
@@ -58966,6 +58951,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vit" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "viJ" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -61714,10 +61703,6 @@
 	dir = 4
 	},
 /area/station/routing/security)
-"xAA" = (
-/obj/tree1,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
 "xBa" = (
 /obj/kitchenspike,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -120632,7 +120617,7 @@ biN
 uzb
 oGM
 fbZ
-bne
+vit
 uzb
 seW
 bqU
@@ -120934,7 +120919,7 @@ fMJ
 uzb
 ykM
 fbZ
-bnf
+bne
 uzb
 qVA
 xfU
@@ -126311,7 +126296,7 @@ aaa
 aaa
 aaa
 aem
-aet
+jrA
 afU
 ahP
 adv
@@ -130005,7 +129990,7 @@ wcz
 hAX
 bsw
 bsw
-xAA
+kvh
 bsw
 tuT
 bre
@@ -130301,7 +130286,7 @@ bnu
 aZa
 bre
 bsw
-xAA
+kvh
 hFc
 kRM
 rsY
@@ -130913,7 +130898,7 @@ sPt
 bsw
 bsw
 bsw
-xAA
+kvh
 bre
 bnq
 bBQ
@@ -131511,7 +131496,7 @@ bre
 bsw
 bsw
 hAX
-xAA
+kvh
 bsw
 bsw
 bsw
@@ -131816,7 +131801,7 @@ whs
 bsw
 bsw
 bsw
-xAA
+kvh
 bsw
 bsw
 xUS
@@ -138315,7 +138300,7 @@ abi
 abx
 abB
 abB
-qpS
+gsj
 abi
 abi
 abi
@@ -139516,7 +139501,7 @@ abi
 abi
 abx
 abB
-qpS
+gsj
 abB
 abB
 abP
@@ -141027,7 +141012,7 @@ abi
 abi
 abB
 abB
-qpS
+gsj
 abx
 abi
 abi

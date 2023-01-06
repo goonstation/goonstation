@@ -753,7 +753,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr) || isghostcritter(usr)) return // ghosts&ghost critter killing plants fix
 		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
@@ -794,13 +794,13 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(!QDELETED(current) && !QDELETED(src))
 						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 						src.reagents.clear_reagents()
-						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				if(!QDELETED(src))
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 					src.reagents.clear_reagents()
 					UpdateIcon()
 					update_name()
@@ -999,6 +999,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
+		if(MUT?.harvest_cap)
+			harvest_cap = MUT.harvest_cap
+
 		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
@@ -1023,7 +1026,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			// And this is if you've neglected the plant!
 
 		var/getitem = null
-		var/dont_rename_crop = false
+		var/dont_rename_crop = FALSE
 		// Figure out what crop we use - the base crop or a mutation crop.
 		if(growing.crop || MUT?.crop)
 			if(MUT)
@@ -1896,12 +1899,15 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "fogmachine0"
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = 0
 	var/active = 0
 	var/mode = 1
 
 	New()
+		if (prob(1))
+			name = pick ("Botanical Missus", "Botanical Miss") //in-joke for ESL folk
 		..()
 		src.create_reagents(5000)
 		reagents.add_reagent("water", 1000)
@@ -1958,6 +1964,3 @@ TYPEINFO(/obj/machinery/hydro_mister)
 
 		src.icon_state = "fogmachine[src.active]"
 		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
-
-	is_open_container()
-		return 1 // :I

@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 /datum/plant/crop/cotton
 	name = "Cotton"
 	seedcolor = "#FFFFFF"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/cotton
 	starthealth = 10
 	growtime = 40
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 /datum/plant/crop/tree // :effort:
 	name = "Tree"
 	seedcolor = "#9C5E13"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/material_piece/organic/wood
 	starthealth = 40
 	growtime = 200

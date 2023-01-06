@@ -191,7 +191,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -549,7 +549,7 @@
 /area/station/garden/aviary)
 "acd" = (
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -1266,7 +1266,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -20281,6 +20281,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"dtq" = (
+/obj/storage/crate/radio,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge)
 "dtt" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -23255,7 +23261,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "eHe" = (
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -106471,7 +106477,7 @@ aBz
 qUX
 dHO
 erq
-tab
+dtq
 sPM
 bqy
 tab

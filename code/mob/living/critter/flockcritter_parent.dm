@@ -186,7 +186,7 @@
 	return FALSE
 
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
+	if (..(parent) || isdead(src))
 		return TRUE
 
 	// automatic extinguisher! after some time, anyway

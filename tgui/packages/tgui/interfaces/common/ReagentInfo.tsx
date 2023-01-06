@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
+import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip, Stack, ProgressBar } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
 import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
@@ -218,4 +218,42 @@ ReagentList.defaultHooks = {
   onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
     return reagentInfoDiffers(lastProps, nextProps);
   },
+};
+
+export const ReagentBar = (props: ReagentInfoProps) => {
+  const {
+    className = '',
+    container,
+    ...rest
+  } = props;
+  const { maxVolume, totalVolume, finalColor } = container;
+  return (
+    <Stack align="center" pb={1}>
+      <Stack.Item>
+        <Box
+          textAlign="right"
+          width="3em"
+        >
+          {`${totalVolume}u`}
+        </Box>
+      </Stack.Item>
+      <Stack.Item grow>
+        <ProgressBar
+          value={totalVolume}
+          minValue={0}
+          maxValue={maxVolume}
+          color={finalColor}
+          {...rest}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Box
+          textAlign="left"
+          width="3em"
+        >
+          {`${maxVolume}u`}
+        </Box>
+      </Stack.Item>
+    </Stack>
+  );
 };
