@@ -37,6 +37,8 @@
 		if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
 			delay_finalization = TRUE
 
+		admin_customized = TRUE
+
 		src.event_effect(source)
 		return
 
@@ -44,7 +46,11 @@
 	event_effect()
 		..()
 
-		var/blacklist_generators = list(/datum/map_generator/icemoon_generator, /datum/map_generator/mars_generator, /datum/map_generator/void_generator)
+		var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
+										/datum/map_generator/mars_generator,
+										/datum/map_generator/void_generator,
+										/datum/map_generator/asteroids,
+										/datum/map_generator/sea_caves)
 
 		if(isnull(generator))
 			generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
@@ -107,6 +113,12 @@
 		if(generator == /datum/map_generator/void_generator)
 			title = pick("Anamolous Data Received", "URGENT - Exploration Mission")
 			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.")
+		else if(generator == /datum/map_generator/asteroids)
+			title = pick("Exploration Mission to [planet_name]", "URGENT - Exploration Mission")
+			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.", \
+		"Our company has been granted permission to explore [planet_name], a nearby cluster of asteroids. The goals of the mission are to conduct a thorough survey of the region and search for signs of past or present life.", \
+		"Urgent request has been made to explore [planet_name], a nearby asteroid that has shown signs of valuable minerals. Due to the pressing nature of this request, please depart immediately. The goals of the mission are to conduct a quick survey of the region.", \
+		"We have received approval to explore [planet_name], this group of asteroids if of great interest to us.  This is a highly secretive and sensitive mission, and I trust that all employees will maintain strict confidentiality.")
 
 		var/command_report = pick(reports)
 		command_report += "\n\nTarget data sent to Long Range Teleporter."
