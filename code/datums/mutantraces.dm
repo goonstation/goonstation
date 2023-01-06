@@ -1047,8 +1047,8 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
