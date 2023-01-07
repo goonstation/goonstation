@@ -2002,7 +2002,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"readster's very own girder",
 				"just a girder",
 				"a gourder",//60
-				"a fuckable girder",
 				"a herd of girders",
 				"an A.D.G.S",
 				"the... thing",
@@ -2013,7 +2012,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"nice",
 				"the girder egg")
 				msg = insert_girder[min(count+1, insert_girder.len)]
-				if(count >= 70)
+				if(count >= 69) //nice
 					girder_egg = 1
 					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
 				else

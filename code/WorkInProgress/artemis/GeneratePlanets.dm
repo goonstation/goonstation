@@ -8,13 +8,39 @@
 	no_prefab
 		allow_prefab = FALSE
 
+/datum/planetData
+	var/name
+	var/image/ambient_light
+	var/datum/map_generator/generator
+
+	New(name, light, generator)
+		. = ..()
+		src.name = name
+		src.ambient_light = light
+		src.generator = generator
 
 /datum/planetManager
 	var/list/datum/allocated_region/regions = list()
+	var/minimum_z = INFINITY
+
+	proc/add_planet(datum/allocated_region/region, datum/planetData/data)
+		if(region.bottom_left.z < minimum_z)
+			minimum_z = region.bottom_left.z
+		regions[region] = data
+
+	proc/repair_planet(turf/T)
+		if(T.z >= minimum_z)
+			for(var/datum/allocated_region/region in regions)
+				if(region.turf_in_region(T))
+					var/datum/planetData/planet = regions[region]
+					if(planet)
+						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+						T.UpdateOverlays(planet.ambient_light, "ambient")
+						return TRUE
 
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
-/proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, mapgen_flags=null)
+/proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
 	var/turf/T
 
 	if(ispath(generator)) generator = new generator()
@@ -65,7 +91,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		T.UpdateOverlays(ambient_light, "ambient")
 		LAGCHECK(LAG_LOW)
 
-	PLANET_LOCATIONS.regions.Add(region)
+	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
 
 	//Make it interesting, slap some prefabs on that thing
 	for (var/n = 1, n <= prefabs_to_place, n++)
@@ -102,6 +128,22 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 		else break
 
+	if(seed_ore)
+		var/max_ores = 10
+		for(var/i in 1 to 50)
+			if(max_ores <= 0)
+				break
+
+			var/turf/target_center = region.get_random_turf()
+			var/list/turf/ast_list = list()
+			for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(3,9)]x[rand(3,9)]"))
+				ast_list |= AST
+
+			if(length(ast_list))
+				Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
+				Turfspawn_Asteroid_SeedEvents(ast_list)
+				max_ores--
+
 	//Allow folks to like uh, get here?
 	if(use_lrt)
 		var/lrt_placed = FALSE
@@ -126,6 +168,79 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
 
 	return turfs
+/datum/map_generator/asteroids
+	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
+		if(!length(seeds))
+			seeds = list(null)
+
+			var/datum/mapGenerator/asteroidsDistance/D = new()
+			D.generate(turfs, numAsteroidSeed=(length(turfs)/2000))
+			for(var/turf/T in turfs)
+				T.generate_worldgen()
+
+/datum/map_generator/sea_caves
+	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
+		if(!length(seeds))
+			seeds = list(null)
+
+			//ocean_reagent_id = reagent.id
+			ocean_reagent_id = "water"
+			var/datum/reagents/R = new /datum/reagents(100)
+			R.add_reagent(ocean_reagent_id, 100)
+
+			ocean_fluid_obj?.group?.reagents?.clear_reagents()
+			fluid_turf_setup(first_time=FALSE)
+			ocean_name = "ocean of " + R.get_master_reagent_name()
+			ocean_color = R.get_average_color().to_rgb()
+			qdel(R)
+
+			if(!bioluminescent_algae)
+				bioluminescent_algae = new()
+				bioluminescent_algae.setup()
+			var/datum/mapGenerator/seaCaverns/D
+			D = new
+			D.generate(turfs, ore_seeds=(length(turfs)/1125))
+
+			for(var/turf/space/space_turf in turfs)
+				space_turf.ReplaceWith(/turf/space/fluid/trench)
+				space_turf.name = ocean_name
+				space_turf.color = ocean_color
+				space_turf.RL_Init()
+
+				if (prob(1))
+					new /obj/item/seashell(space_turf)
+
+				if (prob(7))
+					var/obj/plant = pick(childrentypesof(/obj/sea_plant))
+					var/obj/sea_plant/P = new plant(space_turf)
+					P.initialize()
+
+				if((flags & MAPGEN_IGNORE_FAUNA) == 0)
+					if (prob(1) && prob(2))
+						new /obj/critter/gunbot/drone/buzzdrone/fish(space_turf)
+					else if (prob(1) && prob(4))
+						new /obj/critter/gunbot/drone/gunshark(space_turf)
+					else if (prob(1) && prob(20))
+						var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
+						new fish(space_turf)
+
+					if (prob(2) && prob(20))
+						new /obj/overlay/tile_effect/cracks/spawner/trilobite(space_turf)
+					if (prob(2) && prob(20))
+						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
+
+					if (prob(1) && prob(16))
+						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+					else if (prob(1) && prob(15))
+						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
+
+				if (prob(1) && prob(9))
+					var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
+					var/obj/storage/crate/trench_loot/created_loot = new C(space_turf)
+					created_loot.initialize()
+
+			for(var/turf/T in turfs)
+				T.generate_worldgen()
 
 /obj/landmark/lrt/planet //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
 	name_override = LANDMARK_LRT
