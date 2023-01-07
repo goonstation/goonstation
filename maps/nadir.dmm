@@ -125,6 +125,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -7434,6 +7437,12 @@
 "dun" = (
 /turf/simulated/floor/black,
 /area/station/engine/elect)
+"duN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
 "duZ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "2"
@@ -19206,6 +19215,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -22125,6 +22137,14 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
+	})
+"jLv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
 	})
 "jLL" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -25444,6 +25464,16 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/elect)
+"leS" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space/fluid/acid/clear,
+/area/station/ai_monitored/armory)
 "leU" = (
 /obj/cable,
 /obj/machinery/computer/power_monitor{
@@ -27091,6 +27121,9 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
 /obj/lattice,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/space/fluid/acid/clear,
 /area/station/ai_monitored/armory)
 "lPy" = (
@@ -29152,6 +29185,16 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"mIj" = (
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/armory)
 "mIv" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -38432,6 +38475,9 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 9
@@ -49361,6 +49407,9 @@
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
@@ -89612,7 +89661,7 @@ llS
 tkp
 tzj
 qLh
-rhC
+leS
 rhC
 jjE
 aUV
@@ -89914,7 +89963,7 @@ iCA
 acA
 qJo
 qLh
-qLh
+duN
 jjE
 jjE
 jjE
@@ -90216,8 +90265,8 @@ qLh
 qLh
 qLh
 qLh
-rnQ
-jjE
+mIj
+jLv
 acI
 nyP
 vcl

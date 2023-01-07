@@ -941,11 +941,14 @@
 /area/diner/kitchen)
 "Fi" = (
 /obj/table/reinforced/auto,
-/obj/item/shipcomponent/sensor/mining,
-/obj/item/shipcomponent/sensor/mining,
-/obj/item/shipcomponent/secondary_system/orescoop,
-/obj/item/shipcomponent/secondary_system/cargo,
-/obj/item/shipcomponent/communications/mining,
+/obj/item/shipcomponent/sensor/mining{
+	pixel_y = 2;
+	pixel_x = -3
+	},
+/obj/item/shipcomponent/secondary_system/orescoop{
+	pixel_y = 4;
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "Fk" = (

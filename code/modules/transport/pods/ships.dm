@@ -1007,10 +1007,16 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	capacity = 4
 
 /obj/machinery/vehicle/pod_smooth/industrial/nadir
-	//just adds a special name
+	//special name, pre-equipped with drilling hardware
 	New()
 		..()
 		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
+		src.m_w_system.ship = src
+		src.components += src.m_w_system
+		myhud.update_systems()
+		myhud.update_states()
+		return
 
 //pod wars ones//
 /obj/machinery/vehicle/pod_smooth/nt_light
