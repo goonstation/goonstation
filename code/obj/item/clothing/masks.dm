@@ -7,6 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
+	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
 	obstructs = C_GLASSES
@@ -140,6 +141,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	item_state = "moustache"
 	see_face = 0
 	w_class = W_CLASS_TINY
+	c_flags = null
 	is_syndicate = 1
 	obstructs = 0
 
@@ -634,6 +636,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
 	see_face = 0
+	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
@@ -641,6 +644,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana
