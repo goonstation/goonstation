@@ -43,12 +43,15 @@
 		MAKE_SLOT_CUSTOM("slot_r_store", src.human.r_store, "Something"),
 	)
 
+	var/list/obstructedSlots = src.human.GetObstructedSlots()
+
 	. = list(
 		"name" = src.human.name,
 		"slots" = slots,
 		"handcuffed" = src.human.hasStatus("handcuffed"),
 		"internal" = src.human.internal != null,
-		"canSetInternal" = istype(src.human.wear_mask, /obj/item/clothing/mask) && istype(src.human.back, /obj/item/tank) && !src.human.internal
+		"canSetInternal" = istype(src.human.wear_mask, /obj/item/clothing/mask) && istype(src.human.back, /obj/item/tank) && !src.human.internal,
+		"obstructedSlots" = obstructedSlots
 	)
 
 /datum/humanInventory/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
