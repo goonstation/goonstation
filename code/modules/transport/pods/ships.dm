@@ -1006,6 +1006,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	speed = 1.5
 	capacity = 4
 
+/obj/machinery/vehicle/pod_smooth/industrial/nadir
+	//just adds a special name
+	New()
+		..()
+		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
+
 //pod wars ones//
 /obj/machinery/vehicle/pod_smooth/nt_light
 	name = "Pod NTL-"

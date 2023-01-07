@@ -48,14 +48,14 @@
 	},
 /area/noGenerate)
 "bx" = (
-/obj/overlay{
-	density = 1;
-	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	name = "strange machine"
+/obj/rack,
+/obj/item/sea_ladder{
+	pixel_x = 4
 	},
-/turf/simulated/floor/plating,
+/obj/item/mining_tool/power_pick{
+	pixel_x = -7
+	},
+/turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "bR" = (
 /turf/simulated/wall/void{
@@ -63,12 +63,10 @@
 	},
 /area/noGenerate)
 "cj" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "dd" = (
 /obj/landmark{
@@ -102,8 +100,10 @@
 	name = "The Recluse"
 	})
 "dt" = (
-/obj/machinery/computer/sea_elevator,
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
 "dw" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -116,8 +116,9 @@
 	})
 "dC" = (
 /obj/machinery/light/small/floor/netural,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 5
+	},
 /area/shuttle/sea_elevator)
 "dU" = (
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -158,15 +159,11 @@
 	},
 /area/shuttle/sea_elevator)
 "ey" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 4
-	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "eT" = (
-/obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
+/turf/simulated/floor/engine/caution/north,
 /area/shuttle/sea_elevator)
 "fb" = (
 /obj/table/reinforced/auto,
@@ -184,11 +181,7 @@
 	},
 /area/bee_trader)
 "fv" = (
-/obj/landmark{
-	name = "seafall"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
 "fy" = (
 /turf/simulated/floor/stairs/wide{
@@ -201,7 +194,12 @@
 	},
 /area/shuttle/sea_elevator)
 "fG" = (
-/turf/simulated/floor/scorched2,
+/obj/machinery/door/poddoor/blast/pyro{
+	icon_state = "bdoormid1";
+	id = "nadir_minebot";
+	name = "Vehicle Bay Door"
+	},
+/turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator)
 "fP" = (
 /obj/grille/catwalk{
@@ -236,25 +234,19 @@
 	},
 /area/bee_trader)
 "gv" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
 	},
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/shuttle/sea_elevator)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "gL" = (
-/obj/storage/crate/packing,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/turf/simulated/floor/scorched2,
+/obj/machinery/door/poddoor/blast/pyro{
+	icon_state = "bdoormid1";
+	id = "nadir_minebot";
+	name = "Vehicle Bay Door"
+	},
+/turf/simulated/floor/engine/caution/south,
 /area/shuttle/sea_elevator)
 "gR" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
@@ -289,10 +281,10 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "ii" = (
-/obj/stool/chair{
-	dir = 8
+/obj/machinery/door/airlock/pyro{
+	dir = 4
 	},
-/turf/simulated/floor/industrial,
+/turf/simulated/floor/caution/westeast,
 /area/shuttle/sea_elevator)
 "ji" = (
 /obj/table/reinforced/auto,
@@ -308,25 +300,48 @@
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
+"km" = (
+/obj/machinery/vehicle/pod_smooth/industrial,
+/turf/simulated/floor/engine,
+/area/shuttle/sea_elevator)
 "kv" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
 /area/shuttle/sea_elevator)
+"kx" = (
+/obj/lattice,
+/obj/warp_beacon{
+	name = "Subsurface Bay"
+	},
+/turf/space/fluid/trench,
+/area/noGenerate)
 "kD" = (
-/obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
+/obj/item/crowbar,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
 	},
 /area/shuttle/sea_elevator)
+"lB" = (
+/obj/overlay{
+	density = 1;
+	desc = "It probably has something to do with the elevator.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "strange machine"
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "lK" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/engine/caution/east,
-/area/shuttle/sea_elevator)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "lW" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/engine/caution/east,
-/area/shuttle/sea_elevator)
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/trench,
+/area/noGenerate)
 "lZ" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
@@ -360,6 +375,18 @@
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"mG" = (
+/obj/storage/crate/packing,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "mH" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/industrial,
@@ -372,21 +399,7 @@
 /turf/variableTurf/wall,
 /area/allowGenerate/trench)
 "nJ" = (
-/obj/rack,
-/obj/item/device/gps{
-	identifier = "NT-E";
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/device/gps{
-	identifier = "NT-E";
-	pixel_y = 3
-	},
-/obj/item/device/gps{
-	identifier = "NT-E";
-	pixel_x = -5
-	},
-/turf/simulated/floor/industrial,
+/turf/simulated/floor/caution/south,
 /area/shuttle/sea_elevator)
 "nO" = (
 /obj/table/reinforced/bar/auto,
@@ -446,6 +459,12 @@
 "oQ" = (
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
+"pk" = (
+/obj/machinery/computer/sea_elevator{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "pO" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/shaker/pepper{
@@ -457,6 +476,10 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
+"qc" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/black,
+/area/shuttle/sea_elevator)
 "qe" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/vending/kitchen,
@@ -510,12 +533,15 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "se" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
 	},
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
+/obj/access_spawn/mining,
+/turf/simulated/floor/caution/westeast,
+/area/shuttle/sea_elevator)
+"sF" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
 	},
 /area/shuttle/sea_elevator)
 "sR" = (
@@ -536,8 +562,8 @@
 /turf/variableTurf/wall,
 /area/noGenerate)
 "tk" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine/caution/west,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
 "tm" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
@@ -558,8 +584,14 @@
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
 "tA" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine/caution/east,
+/obj/machinery/door/poddoor/blast/pyro{
+	icon_state = "bdoormid1";
+	id = "nadir_minebot";
+	name = "Vehicle Bay Door"
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
 /area/shuttle/sea_elevator)
 "tC" = (
 /obj/machinery/light/small/floor/netural,
@@ -624,19 +656,16 @@
 	name = "Space Diner Backhall"
 	})
 "vs" = (
-/obj/rack,
-/obj/item/sea_ladder{
-	pixel_x = 4
-	},
-/obj/item/mining_tool/power_pick{
-	pixel_x = -7
-	},
-/turf/simulated/floor/industrial,
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
 "vX" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/engine/caution/west,
-/area/shuttle/sea_elevator)
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space/fluid/trench,
+/area/noGenerate)
 "wk" = (
 /obj/item/cell/charged{
 	pixel_x = 8;
@@ -651,6 +680,34 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
+"wr" = (
+/obj/table/reinforced/auto,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/turf/simulated/floor/black,
+/area/shuttle/sea_elevator)
 "wX" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/shuttle/sea_elevator)
@@ -680,13 +737,28 @@
 	},
 /area/shuttle/sea_elevator)
 "xK" = (
-/obj/decal/poster/wallsign/hazard_danger,
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
+/obj/rack,
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_x = -5;
+	pixel_y = 6
 	},
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_y = 3
+	},
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_x = 5
+	},
+/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "xX" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 3;
+	pixel_x = 4
+	},
+/turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
 "yd" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
@@ -728,6 +800,11 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"zv" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/shuttle/sea_elevator)
 "zF" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -752,11 +829,7 @@
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
 "Af" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 1
-	},
+/turf/unsimulated/wall/setpieces/leadwall/junction,
 /area/shuttle/sea_elevator)
 "An" = (
 /obj/table/wood/auto,
@@ -772,11 +845,7 @@
 	name = "The Recluse"
 	})
 "Ap" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
-	},
-/turf/unsimulated/wall/setpieces/leadwall/cap,
+/turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
 "Av" = (
 /obj/decal/cleanable/blood/tracks,
@@ -787,9 +856,18 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "AG" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/corner,
+/obj/machinery/light/small/floor/netural,
+/obj/machinery/door_control{
+	id = "nadir_minebot";
+	name = "Bay Door Control";
+	pixel_y = 24
+	},
+/turf/simulated/floor/caution/north,
+/area/shuttle/sea_elevator)
+"Be" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
 /area/shuttle/sea_elevator)
 "BK" = (
 /obj/submachine/ATM{
@@ -822,6 +900,12 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"CG" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
 "CS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/round/auto,
@@ -886,10 +970,22 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
+"Fi" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/secondary_system/cargo,
+/obj/item/shipcomponent/communications/mining,
+/turf/simulated/floor/black,
+/area/shuttle/sea_elevator)
 "Fk" = (
 /obj/decal/cleanable/molten_item,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
+"Fp" = (
+/turf/simulated/floor/engine,
+/area/shuttle/sea_elevator)
 "Fs" = (
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -1027,6 +1123,11 @@
 "JT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/bathroom)
+"Kf" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
 "Kj" = (
 /obj/decal/poster/wallsign/biohazard{
 	desc = "A warning sign which reads 'ACID HAZARD'.";
@@ -1165,6 +1266,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
+"Ou" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/caution/north,
+/area/shuttle/sea_elevator)
 "Ow" = (
 /turf/simulated/floor/scorched2,
 /area/diner/bathroom)
@@ -1178,6 +1283,16 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"ON" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/shuttle/sea_elevator)
+"OT" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
 "Ql" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
@@ -1310,6 +1425,11 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
+"TC" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
+	},
+/area/shuttle/sea_elevator)
 "TP" = (
 /obj/npc/trader/bee{
 	name = "Bambini"
@@ -1368,6 +1488,10 @@
 "Vf" = (
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"Vo" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution,
+/area/shuttle/sea_elevator)
 "Vq" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/black/grime,
@@ -1385,6 +1509,14 @@
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
+"VJ" = (
+/obj/machinery/r_door_control{
+	id = "nadir_minebot"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
+	},
+/area/shuttle/sea_elevator)
 "VR" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
@@ -1451,6 +1583,10 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"Xr" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator)
 "Xs" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -1551,15 +1687,11 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "Zf" = (
-/obj/rack,
-/obj/item/sea_ladder{
-	pixel_x = -4
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
-/obj/item/mining_tool/power_pick{
-	pixel_x = 7
-	},
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "Zp" = (
 /obj/table/auto,
 /obj/item/circuitboard/teleporter{
@@ -1605,8 +1737,14 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"ZZ" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/caution/south,
+/area/shuttle/sea_elevator)
 
 (1,1,1) = {"
+XP
+XP
 XP
 al
 bt
@@ -1630,9 +1768,13 @@ XP
 XP
 XP
 XP
-nw
-nw
-nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1650,6 +1792,8 @@ XP
 XP
 "}
 (2,1,1) = {"
+XP
+XP
 XP
 aL
 bR
@@ -1671,13 +1815,17 @@ XP
 XP
 XP
 XP
-nw
-nw
-nw
-nw
-nw
-nw
-nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1693,6 +1841,8 @@ XP
 XP
 "}
 (3,1,1) = {"
+XP
+XP
 XP
 aU
 bt
@@ -1711,18 +1861,22 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
+XP
+XP
+XP
 nw
 nw
 nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1753,20 +1907,26 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 nw
 nw
 nw
 nw
 nw
 nw
-WQ
-WQ
-WQ
-WQ
-WQ
 nw
-nw
-nw
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1779,6 +1939,107 @@ XP
 XP
 "}
 (5,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(6,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+nw
+nw
+nw
+nw
+nw
+nw
+WQ
+WQ
+WQ
+WQ
+WQ
+nw
+nw
+nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(7,1,1) = {"
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1820,8 +2081,14 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
 "}
-(6,1,1) = {"
+(8,1,1) = {"
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1863,8 +2130,14 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
 "}
-(7,1,1) = {"
+(9,1,1) = {"
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1906,8 +2179,14 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
 "}
-(8,1,1) = {"
+(10,1,1) = {"
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1949,8 +2228,14 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
 "}
-(9,1,1) = {"
+(11,1,1) = {"
+XP
+XP
+XP
 XP
 XP
 XP
@@ -1992,8 +2277,11 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
 "}
-(10,1,1) = {"
+(12,1,1) = {"
 XP
 XP
 XP
@@ -2002,6 +2290,9 @@ XP
 XP
 XP
 XP
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2035,89 +2326,6 @@ XP
 XP
 XP
 XP
-"}
-(11,1,1) = {"
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-nw
-nw
-nw
-WQ
-WQ
-WQ
-WQ
-WQ
-nw
-nw
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-"}
-(12,1,1) = {"
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
 XP
 XP
 XP
@@ -2127,12 +2335,13 @@ XP
 XP
 XP
 XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2148,9 +2357,14 @@ XP
 nw
 nw
 nw
+WQ
+WQ
+WQ
+WQ
+WQ
 nw
 nw
-nw
+XP
 XP
 XP
 XP
@@ -2168,6 +2382,16 @@ XP
 (14,1,1) = {"
 XP
 XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2180,19 +2404,15 @@ XP
 XP
 XP
 XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2211,6 +2431,17 @@ XP
 (15,1,1) = {"
 XP
 XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2223,17 +2454,12 @@ XP
 XP
 XP
 XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2253,12 +2479,18 @@ XP
 "}
 (16,1,1) = {"
 XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2295,13 +2527,19 @@ XP
 XP
 "}
 (17,1,1) = {"
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
+nw
 XP
 XP
 XP
@@ -2338,13 +2576,19 @@ XP
 XP
 "}
 (18,1,1) = {"
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+nw
+nw
+nw
+nw
+nw
+nw
+aV
+qX
+qX
+qX
+kv
+nw
+nw
 XP
 XP
 XP
@@ -2381,16 +2625,22 @@ XP
 XP
 "}
 (19,1,1) = {"
-XP
-XP
-XP
-XP
-XP
-XP
 nw
 nw
 nw
 nw
+nw
+aV
+ma
+bx
+bx
+bx
+va
+kv
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -2425,21 +2675,27 @@ XP
 "}
 (20,1,1) = {"
 XP
+nw
+nw
+nw
+nw
+xI
+yJ
+oQ
+yJ
+oQ
+yJ
+xI
 XP
 XP
 XP
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
 XP
 XP
 XP
 XP
+XP
+Nl
+Nl
 Nl
 Nl
 XP
@@ -2467,21 +2723,27 @@ XP
 XP
 "}
 (21,1,1) = {"
-XP
-XP
-nw
-nw
-nw
 aV
 qX
-wX
-wX
 qX
-kv
-nw
-nw
+qX
+qX
+TC
+Ap
+Ap
+Ap
+Ap
+Ap
+bn
+XP
+Nl
+Nl
+Nl
 XP
 XP
+Nl
+Nl
+Nl
 Nl
 Nl
 Nl
@@ -2510,27 +2772,33 @@ XP
 XP
 "}
 (22,1,1) = {"
-XP
-nw
-nw
-nw
-nw
-bn
-ji
-ob
-ob
-ru
-va
-kv
-nw
-XP
-XP
+xI
+mH
+xh
+xK
+jy
+Kf
+fy
+gh
+aV
+dt
+dt
+TC
 Nl
 Nl
 Nl
 Nl
 Nl
-nw
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
 nw
@@ -2553,27 +2821,33 @@ XP
 XP
 "}
 (23,1,1) = {"
-nw
-nw
-nw
-nw
-nw
 bn
-jy
-ob
+ji
+tC
 ob
 tC
-vs
+ob
+tC
+ob
 xI
-nw
-nw
+Vo
+Ap
+vs
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 Nl
 Nl
 Nl
 nw
 nw
-Nl
 nw
+Nl
+Nl
+Nl
 Nl
 Nl
 Nl
@@ -2596,23 +2870,29 @@ XP
 XP
 "}
 (24,1,1) = {"
-nw
-aV
-qX
-qX
-qX
-et
-kv
+xI
+fb
 ob
 ob
 ob
-nJ
-xK
+ob
+ob
+ob
+xI
+Vo
+Ap
+vs
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
-Nl
-Nl
-Nl
+nw
 nw
 nw
 Nl
@@ -2639,23 +2919,29 @@ XP
 XP
 "}
 (25,1,1) = {"
-nw
-bn
-cj
-bx
-dC
-fG
-xI
-oG
-fE
-se
+Af
 wX
-xX
-Ap
+ii
+ii
+wX
+kv
+tC
+ob
+bn
+qu
+qu
+bn
 Nl
 Nl
 Nl
 Nl
+Nl
+Nl
+Nl
+Nl
+nw
+nw
+nw
 nw
 nw
 nw
@@ -2682,22 +2968,28 @@ XP
 XP
 "}
 (26,1,1) = {"
-nw
 bn
-dd
-dd
-fv
-fG
-kD
-oQ
-oQ
-tk
-vX
-yJ
-AG
+ru
+ob
+ob
+mG
+Af
+se
+se
+et
+qX
+qX
+VJ
+lK
+lK
+lK
+lK
+lK
+lK
 Nl
-Nl
-Nl
+XP
+nw
+nw
 nw
 nw
 nw
@@ -2725,22 +3017,28 @@ XP
 XP
 "}
 (27,1,1) = {"
-nw
 bn
-dd
-dd
-fv
+pk
+tC
+tC
+lB
+bn
+oG
+fE
+sF
+OT
+oQ
 fG
-eT
-qu
-qu
-tA
 lK
-lW
-Af
-Nl
-Nl
-Nl
+lK
+lK
+lK
+lK
+lK
+lK
+XP
+XP
+nw
 nw
 nw
 nw
@@ -2768,22 +3066,28 @@ XP
 XP
 "}
 (28,1,1) = {"
-nw
-bn
+va
+kv
+dd
+dd
+aV
+ma
+AG
+kD
 cj
-dt
+qu
 dC
 gL
-xI
-fy
-gh
+lK
+lK
+lK
 gv
-wX
-xX
-Ap
-Nl
-Nl
-Nl
+lK
+lK
+lK
+XP
+XP
+XP
 nw
 nw
 nw
@@ -2811,22 +3115,28 @@ XP
 XP
 "}
 (29,1,1) = {"
-nw
-va
-qX
-qX
-qX
-ey
-ma
-ob
-ob
-ob
-xh
-xK
-Nl
-Nl
-Nl
-Nl
+XP
+bn
+dd
+dd
+bn
+wr
+Ou
+nJ
+Fp
+km
+eT
+gL
+Zf
+Zf
+Zf
+kx
+vX
+lK
+lK
+XP
+XP
+XP
 nw
 nw
 nw
@@ -2854,21 +3164,27 @@ XP
 XP
 "}
 (30,1,1) = {"
-nw
-nw
-nw
-nw
-nw
-bn
-mH
-ob
-ob
-tC
-Zf
-xI
-Nl
-Nl
-Nl
+XP
+va
+qX
+qX
+TC
+Fi
+fv
+ZZ
+Fp
+Fp
+eT
+gL
+lK
+lK
+lK
+lW
+lK
+lK
+lK
+XP
+XP
 nw
 nw
 nw
@@ -2898,20 +3214,26 @@ XP
 "}
 (31,1,1) = {"
 XP
-nw
-nw
-nw
-nw
+XP
+XP
+XP
 bn
-fb
-ob
-ob
-ii
-aV
-ma
-Nl
-Nl
-Nl
+qc
+tk
+zv
+CG
+oQ
+ON
+gL
+lK
+lK
+lK
+lK
+lK
+lK
+lK
+XP
+XP
 nw
 nw
 nw
@@ -2941,19 +3263,25 @@ XP
 "}
 (32,1,1) = {"
 XP
-nw
-nw
-nw
-nw
-va
-qX
-wX
-wX
-qX
-ma
-Nl
-Nl
-Nl
+XP
+XP
+XP
+bn
+ey
+xX
+Xr
+Be
+qu
+qu
+tA
+lK
+lK
+lK
+lK
+lK
+lK
+XP
+XP
 nw
 nw
 nw
@@ -2985,18 +3313,24 @@ XP
 (33,1,1) = {"
 XP
 XP
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
+XP
+XP
+va
+wX
+qX
+wX
+qX
+qX
+qX
+ma
 Nl
 Nl
 Nl
-nw
+Nl
+Nl
+XP
+XP
+XP
 nw
 nw
 nw
@@ -3029,17 +3363,23 @@ XP
 XP
 XP
 XP
-nw
-nw
-nw
-nw
-nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Nl
 Nl
 Nl
 Nl
 Nl
-nw
+XP
+XP
+XP
 nw
 nw
 nw
@@ -3075,12 +3415,18 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Nl
 Nl
 Nl
 Nl
-Nl
-Nl
+XP
 XP
 XP
 nw
@@ -3117,12 +3463,18 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Nl
 Nl
-Nl
-Nl
-Nl
-Nl
+XP
 XP
 XP
 XP
@@ -3159,13 +3511,19 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3202,17 +3560,23 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
 XP
 XP
 XP
-nw
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 nw
 nw
 nw
@@ -3245,12 +3609,18 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3289,11 +3659,17 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3332,10 +3708,16 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3376,9 +3758,15 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3419,9 +3807,15 @@ XP
 XP
 XP
 XP
-Nl
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3463,8 +3857,14 @@ XP
 XP
 XP
 XP
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3506,8 +3906,14 @@ XP
 XP
 XP
 XP
-Nl
-Nl
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
@@ -3563,6 +3969,12 @@ XP
 XP
 XP
 XP
+XP
+XP
+XP
+XP
+XP
+XP
 nw
 nw
 nw
@@ -3585,6 +3997,12 @@ XP
 XP
 "}
 (47,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
 XP
 XP
 XP
