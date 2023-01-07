@@ -1911,6 +1911,9 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_east)
 "aUV" = (
@@ -4689,6 +4692,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "cdg" = (
@@ -7192,7 +7196,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/shuttle/sea_elevator_room)
+/area/shuttle/sea_elevator/upper)
 "dpb" = (
 /obj/rack,
 /obj/disposalpipe/segment/mineral,
@@ -8860,6 +8864,11 @@
 	pixel_y = -14;
 	pixel_x = 7
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "dYJ" = (
@@ -8977,6 +8986,7 @@
 "ebd" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_east)
 "ebi" = (
@@ -23859,6 +23869,11 @@
 /obj/item/decoration/flower_vase{
 	pixel_y = 22
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "ktK" = (
@@ -28441,6 +28456,7 @@
 "mrW" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "msd" = (
@@ -30607,6 +30623,7 @@
 "nsO" = (
 /obj/table/reinforced/auto,
 /obj/item/game_kit,
+/obj/machinery/light,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -31287,7 +31304,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/shuttle/sea_elevator_room)
+/area/shuttle/sea_elevator/upper)
 "nGo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31583,6 +31600,10 @@
 /obj/item/clothing/head/that{
 	pixel_y = 6;
 	pixel_x = 6
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_east)
@@ -35350,6 +35371,10 @@
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 6
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "pFB" = (
@@ -35776,6 +35801,10 @@
 	},
 /obj/item/clothing/mask/balaclava{
 	pixel_x = 6
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_east)
@@ -38693,6 +38722,10 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_east)
 "rpX" = (
@@ -39495,7 +39528,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/shuttle/sea_elevator_room)
+/area/shuttle/sea_elevator/upper)
 "rKK" = (
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -39629,7 +39662,7 @@
 /area/station/crew_quarters/catering)
 "rNu" = (
 /turf/simulated/floor/engine/caution/corner,
-/area/shuttle/sea_elevator_room)
+/area/shuttle/sea_elevator/upper)
 "rNU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -42342,6 +42375,7 @@
 "sVw" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "sVB" = (
@@ -47349,6 +47383,11 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)

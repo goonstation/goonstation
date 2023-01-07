@@ -301,7 +301,7 @@
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "km" = (
-/obj/machinery/vehicle/pod_smooth/industrial,
+/obj/machinery/vehicle/pod_smooth/industrial/nadir,
 /turf/simulated/floor/engine,
 /area/shuttle/sea_elevator)
 "kv" = (
@@ -946,8 +946,12 @@
 	pixel_x = -3
 	},
 /obj/item/shipcomponent/secondary_system/orescoop{
-	pixel_y = 4;
-	pixel_x = 5
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/item/shipcomponent/secondary_system/lock/pw_id{
+	pixel_y = 2;
+	pixel_x = 6
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
