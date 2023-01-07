@@ -444,7 +444,7 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
-	for(var/i = 1 to pick (2, 3))
+	for(var/i = 1 to pick(2, 3))
 		possible_modes.Remove(pick(possible_modes))
 
 	var/datum/intercept_text/i_text = new /datum/intercept_text
