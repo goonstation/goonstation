@@ -492,7 +492,7 @@
 	HH.can_hold_items = FALSE
 
 	HH = hands[3]
-	HH.limb = new /datum/limb/gun/flock_stunner
+	HH.limb = new /datum/limb/gun/flock_stunner(hands[3])
 	HH.name = "incapacitor"
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "incapacitor"
@@ -1175,6 +1175,7 @@
 
 /datum/limb/gun/flock_stunner/New()
 	..()
+	src.cell.set_loc(src.holder.holder)
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()

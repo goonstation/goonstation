@@ -1100,7 +1100,7 @@
 	if (sims) //this is still a thing. huh.
 		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
 
-///multipler to unarmed damage recieved
+///multipler to unarmed damage received
 /mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
 	SHOULD_CALL_PARENT(TRUE)
 	return 1

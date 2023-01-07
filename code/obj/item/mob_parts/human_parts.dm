@@ -1112,16 +1112,17 @@
 /obj/item/parts/human_parts/arm/left/zombie
 	name = "left rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
@@ -1134,16 +1135,17 @@
 /obj/item/parts/human_parts/arm/right/zombie
 	name = "right rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
@@ -1775,6 +1777,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
+	limb_type = /datum/limb/zombie
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'
