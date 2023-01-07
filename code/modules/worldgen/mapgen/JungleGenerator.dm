@@ -89,27 +89,45 @@
 	name = "mountain"
 	desc = "a rocky mountain"
 	fullbright = 0
+	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
-	destroy_asteroid(var/dropOre=0)
+	destroy_asteroid(var/dropOre=1)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
-		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3)
-		src.UpdateIcon()
-		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
-			A.UpdateIcon()
-		src.set_opacity(0)
-		src.levelupdate()
-
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/unsimulated/floor/auto))
-				var/turf/unsimulated/floor/auto/TA = T
-				TA.edge_overlays(src)
+		if(src.ore || prob(8)) // provide less rock
+			default_ore = /obj/item/raw_material/rock
+		. = ..()
 
 		if(weather)
 			src.UpdateOverlays(weather, "weather")
 		if(ambient)
 			src.UpdateOverlays(ambient, "ambient")
 
+		if(air) // force reverting air to floor turf as this is post replace
+#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
+			APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
+#undef _TRANSFER_GAS_TO_AIR
+
+			air.temperature = temperature
+
 		return src
+
+/turf/simulated/floor/plating/airless/asteroid/mountain
+	name = "mountain"
+	desc = "a rocky mountain"
+	// color = "#957a59"
+	// stone_color = "#957a59"
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	fullbright = 0
+
+	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
+		..()
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
