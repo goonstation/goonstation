@@ -458,6 +458,7 @@ proc/generate_space_color()
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
+		if (warptarget_modifier == LANDMARK_VM_WARP_NONE) return
 		if(OldLoc)
 			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
 				if (ismob(M))
