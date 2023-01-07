@@ -2,16 +2,18 @@
 /datum/component/flock_ping
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/duration = 5 SECOND
+	var/duration = 5 SECONDS
 	var/end_time = -1
 	var/obj/dummy/dummy = null
 	var/outline_color = "#00ff9d"
 	var/outline_thickness = 1
 	var/animate = TRUE
 
-	Initialize()
+	Initialize(duration)
 		if (!ismovable(parent) && !isturf(parent))
 			return COMPONENT_INCOMPATIBLE
+		if (duration)
+			src.duration = duration
 
 	RegisterWithParent()
 		//this cast looks horribly unsafe, but we've guaranteed that parent is a type with vis_contents in Initialize
@@ -73,3 +75,10 @@
 /datum/component/flock_ping/tutorial_highlight
 	outline_thickness = 2
 	duration = INFINITY
+
+/datum/component/flock_ping/apc_power
+	duration = 5 SECONDS
+	outline_color = "#ffff00"
+
+/datum/component/flock_ping/sapper_power
+	outline_color = "#040694"

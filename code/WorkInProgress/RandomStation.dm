@@ -1,4 +1,4 @@
-#define RANDOM_Z_LEVEL_TARGET 7 //Z level that should recieve randomized station
+#define RANDOM_Z_LEVEL_TARGET 7 //Z level that should receive randomized station
 #define RANDOM_Z_LEVEL_SOURCE 6 //Z level that contains source rooms with room_props objects.
 #define RANDOM_Z_LEVEL_MAXROOMS 35 //How many rooms max should we use.
 
@@ -182,7 +182,7 @@ proc/spawndeco()
 						new selected(T)
 				else
 					if(prob(11) && prob(55))
-						var/selected = pick(/obj/decal/cleanable/generic, /obj/deskclutter, /obj/decal/cleanable/robot_debris, /obj/decal/cleanable/robot_debris/limb, /obj/decal/cleanable/robot_debris/gib, /obj/decal/cleanable/molten_item)
+						var/selected = pick(/obj/decal/cleanable/generic, /obj/decal/cleanable/desk_clutter, /obj/decal/cleanable/robot_debris, /obj/decal/cleanable/robot_debris/limb, /obj/decal/cleanable/robot_debris/gib, /obj/decal/cleanable/molten_item)
 						new selected(T)
 			if("dirty")
 				if(T.density)

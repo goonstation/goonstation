@@ -3,7 +3,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/tree1{
+/obj/tree{
 	pixel_x = -27
 	},
 /turf/simulated/floor/grass/leafy,

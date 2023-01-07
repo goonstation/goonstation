@@ -143,8 +143,6 @@
 
 	var/spellshield = 0
 
-	var/bomberman = 0
-
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null
 	var/oldname = null
@@ -833,8 +831,8 @@
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
-/mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(M, 0, src))
+/mob/proc/can_strip(mob/M)
+	if(check_target_immunity(M, 1, src))
 		return 0
 	return 1
 
@@ -1102,11 +1100,6 @@
 	health += max(0, burn)
 	health += max(0, tox)
 	health = min(max_health, health)
-
-/mob/setStatus(statusId, duration, optional)
-	if (src.nodamage)
-		return
-	. = ..()
 
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
@@ -3208,6 +3201,8 @@
 
 /// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
 /mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	if(check_target_immunity(src, TRUE))
+		return
 	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0

@@ -876,6 +876,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
 	var/list/space_overlays = null
+	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
 	//NEW VARS
 	var/mining_health = 120
@@ -1165,7 +1166,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	update_icon()
 		. = ..()
 		src.color = src.stone_color
+		var/image/light
+		if(!src.fullbright)
+			light = src.GetOverlayImage("ambient")
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
+		if(light)
+			src.UpdateOverlays(light, "ambient")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1309,7 +1315,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/new_color = src.stone_color
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
+		src.ReplaceWith(src.replace_type)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
@@ -2252,7 +2258,7 @@ TYPEINFO(/obj/item/cargotele)
 		if(Obj == src.cell)
 			src.cell = null
 
-/// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
+/// Basically a list wrapper that removes and adds cargo pads to a global list when it receives the respective signals
 /datum/cargo_pad_manager
 	var/list/pads = list()
 

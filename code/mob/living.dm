@@ -1833,7 +1833,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
-		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 		if (!Q)
 			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
 		else

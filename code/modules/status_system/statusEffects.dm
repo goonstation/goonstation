@@ -28,6 +28,8 @@
 	var/datum/movement_modifier/movement_modifier
 	/// Put a label here to track anyone with this effect into this category
 	var/track_cat
+	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
+	var/effect_quality = STATUS_QUALITY_NEUTRAL
 
 
 	/**
@@ -36,7 +38,12 @@
 		* * return = 1 allow, 0 = do not allow
 		*/
 	proc/preCheck(atom/A)
-		. = 1
+		SHOULD_CALL_PARENT(TRUE)
+		if (ismob(A))
+			var/mob/M = A
+			if (M.nodamage && src.effect_quality == STATUS_QUALITY_NEGATIVE)
+				return FALSE
+		return TRUE
 
 	proc/modify_change(change)
 		. = change
@@ -125,8 +132,11 @@
 		icon_state = "heart+"
 		unique = 1
 		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
+		effect_quality = STATUS_QUALITY_POSITIVE
+
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
+
 		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
 			..()
 			var/mob/M = owner
@@ -135,8 +145,13 @@
 		id = "staminaregen"
 		name = ""
 		icon_state = ""
-		unique = 1
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/change = 1
+
+		preCheck(atom/A)
+			src.effect_quality = src.change < 0 ? STATUS_QUALITY_NEGATIVE : STATUS_QUALITY_POSITIVE
+			. = ..()
 
 		getTooltip()
 			. = "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
@@ -151,13 +166,84 @@
 			var/mob/M = owner
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, id)
 
+	staminaregen/fitness
+		id = "fitness_stam_regen"
+		name = "Pumped"
+		desc = ""
+		icon_state = "muscle"
+		exclusiveGroup = "Food"
+		maxDuration = 500 SECONDS
+		unique = 1
+		change = 2
+
+	staminaregen/darkness
+		id = "darkness_stam_regen"
+		name = "Dark vigor"
+		desc = "Your stamina regen is increased"
+		icon_state = "stam+"
+		maxDuration = 60 SECONDS
+		unique = TRUE
+		change = 5
+
+
+	staminaregen/thirsty
+		id = "thirsty"
+		name = "Thirsty"
+		desc = "You really need some water!"
+		icon_state = "stam-"
+		duration = INFINITE_STATUS
+		maxDuration = null
+		change = -5
+
+	staminaregen/cursed
+		id = "weakcurse"
+		name = "Enfeebled"
+		desc = "You feel really weak"
+		icon_state = "stam-"
+		duration = INFINITE_STATUS
+		maxDuration = null
+		change = -5
+
+	staminaregen/zephyr_field
+		id = "zephyr_field"
+		name = "Zephyr Field"
+		desc = "A bioelectric field is invigorating you."
+		icon_state = "stam+"
+		maxDuration = 9 SECONDS
+		unique = 1
+		change = 8
+
+		getTooltip()
+			. = "A feeling of invigoration permeates you."
+
+	staminaregen/clone
+		id = "stamclone"
+		name = "Weakened"
+		desc = "You feel a bit weaker than usual."
+		icon_state = "stam-"
+		duration = INFINITE_STATUS
+		maxDuration = null
+
+		onAdd(optional=null)
+			if (!optional)
+				stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+				qdel(src)
+				return
+
+			src.change = optional
+			. = ..()
+
 	maxhealth
 		id = "maxhealth"
 		name = ""
 		desc = ""
 		icon_state = ""
-		unique = 1
+		unique = TRUE
 		var/change = 1 //Effective change to maxHealth
+
+		preCheck(atom/A)
+			src.effect_quality = src.change < 0 ? STATUS_QUALITY_NEGATIVE : STATUS_QUALITY_POSITIVE
+			. = ..()
 
 		onAdd(optional=null) //Optional is change.
 			..()
@@ -207,8 +293,24 @@
 				if(change > 0) //Someone fucked this up; remove effect.
 					duration = 1
 
+		decreased/hungry
+			id = "hungry"
+			name = "Hungry"
+			desc = "You really gotta eat!"
+			icon_state = "heart-"
+			duration = INFINITE_STATUS
+			maxDuration = null
+			change = -20
+
+			onAdd(optional=null)
+				. = ..(change)
+
+			onChange(optional=null)
+				. = ..(change)
+
 	simplehot //Simple heal over time.
 		id = "simplehot"
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/tickCount = 0
 		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/heal_brute = 0
@@ -224,11 +326,11 @@
 				for(var/i in 1 to times)
 					var/mob/M = owner
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
-			return
 
 
 	acided
 		id = "acid"
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/filter
 		var/leave_cleanable = 0
 		var/mob_owner = null
@@ -286,6 +388,7 @@
 		heal_brute = 10
 		heal_burn = 10
 		heal_tox = 5
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/tickspassed = 0
 
 
@@ -330,6 +433,7 @@
 				M.sleeping = 0
 
 	simpledot //Simple damage over time.
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/tickCount = 0
 		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/damage_brute = 0
@@ -374,7 +478,7 @@
 			. = "You are [howMuch]irradiated."
 
 		preCheck(var/atom/A)
-			. = TRUE
+			. = ..()
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = FALSE
 
@@ -477,9 +581,9 @@
 				H.resist()
 
 		preCheck(atom/A)
-			. = 1
+			. = ..()
 			if(issilicon(A))
-				. = 0
+				. = FALSE
 
 		onAdd(optional = BURNING_LV1)
 			. = ..()
@@ -613,6 +717,8 @@
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
 	stuns
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
 		modify_change(change)
 			. = change
 
@@ -748,6 +854,7 @@
 		unique = 1
 		maxDuration = 5 SECONDS
 		movement_modifier = /datum/movement_modifier/staggered_or_blocking
+		effect_quality = STATUS_QUALITY_NEGATIVE
 
 		onAdd(optional=null)
 			.=..()
@@ -778,6 +885,7 @@
 		unique = 1
 		var/howMuch = 10
 		movement_modifier = new /datum/movement_modifier/status_slowed
+		effect_quality = STATUS_QUALITY_NEGATIVE
 
 		onAdd(optional=null)
 			if(optional)
@@ -799,6 +907,7 @@
 		unique = 0
 		visible = 0
 		movement_modifier = new /datum/movement_modifier/status_salted
+		effect_quality = STATUS_QUALITY_NEGATIVE
 
 		onAdd(optional=null)
 			if(optional)
@@ -821,6 +930,7 @@
 		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
+		effect_quality = STATUS_QUALITY_NEGATIVE
 
 		onUpdate(timePassed)
 			counter += timePassed
@@ -839,6 +949,7 @@
 		visible = 0
 		unique = 1
 		maxDuration = 30 SECONDS
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/counter = 0
 		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
@@ -856,9 +967,10 @@
 		name = "Drunk"
 		desc = "You are drunk."
 		icon_state = "drunk"
-		unique = 1
+		unique = TRUE
 		duration = INFINITE_STATUS
 		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/how_drunk = 0
 
 		onAdd(optional=null)
@@ -891,15 +1003,17 @@
 		name = "Blinded"
 		desc = "You are blinded.<br>Visibility drastically reduced."
 		icon_state = "blinded"
-		unique = 1
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_NEGATIVE
 
 	hastened
 		id = "hastened"
 		name = "Hastened"
 		desc = "You are hastened.<br>Movement speed is increased."
 		icon_state = "hastened"
-		unique = 1
+		unique = TRUE
 		movement_modifier = /datum/movement_modifier/hastened
+		effect_quality = STATUS_QUALITY_POSITIVE
 
 	cloaked
 		id = "cloaked"
@@ -907,6 +1021,7 @@
 		desc = "You are cloaked.<br>You are less visible."
 		icon_state = "cloaked"
 		unique = 1
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/wait = 0
 
 		onAdd(optional=null)
@@ -923,25 +1038,6 @@
 				animate(owner, alpha=30, flags=ANIMATION_PARALLEL, time=30)
 				wait = 0
 
-	staminaregen/fitness
-		id = "fitness_stam_regen"
-		name = "Pumped"
-		desc = ""
-		icon_state = "muscle"
-		exclusiveGroup = "Food"
-		maxDuration = 500 SECONDS
-		unique = 1
-		change = 2
-
-	staminaregen/darkness
-		id = "darkness_stam_regen"
-		name = "Dark vigor"
-		desc = "Your stamina regen is increased"
-		icon_state = "stam+"
-		maxDuration = 60 SECONDS
-		unique = TRUE
-		change = 5
-
 	fitness_staminamax
 		id = "fitness_stam_max"
 		name = "Buff"
@@ -950,6 +1046,7 @@
 		exclusiveGroup = "Food"
 		maxDuration = 500 SECONDS
 		unique = 1
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/change = 10
 
 		getTooltip()
@@ -973,6 +1070,7 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
@@ -1135,6 +1233,7 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
@@ -1208,6 +1307,7 @@
 		maxDuration = 18 MINUTES
 		unique = 1
 		movement_modifier = /datum/movement_modifier/janktank
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
@@ -1251,7 +1351,8 @@
 		icon_state = "janktank-w"
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
-		unique = 1
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
@@ -1278,6 +1379,7 @@
 		icon_state = "mutiny"
 		unique = 1
 		maxDuration = 1 MINUTES
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 60
 		var/const/max_stam = 30
 		var/const/regen_stam = 5
@@ -1312,6 +1414,7 @@
 		icon_state = "revspirit"
 		unique = 1
 		maxDuration = 20 SECONDS
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 20
 		var/const/max_stam = 15
 		var/const/regen_stam = 3
@@ -1345,6 +1448,7 @@
 		icon_state = "revspirit"
 		unique = 1
 		maxDuration = 5 SECONDS
+		effect_quality = STATUS_QUALITY_POSITIVE
 		onAdd(optional = 8)
 			. = ..()
 			if(ismob(owner))
@@ -1365,6 +1469,7 @@
 		icon_state = "patho_oxy_speed"
 		unique = 1
 		movement_modifier = /datum/movement_modifier/patho_oxygen
+		effect_quality = STATUS_QUALITY_POSITIVE
 		var/oxygenAmount = 100
 		var/mob/living/carbon/human/H
 		var/endCount = 0
@@ -1397,6 +1502,7 @@
 		id = "patho_oxy_speed_bad"
 		name = "Oxygen Conversion"
 		icon_state = "patho_oxy_speed_bad"
+		effect_quality = STATUS_QUALITY_NEGATIVE
 		var/efficiency = 1
 
 		onAdd(optional)
@@ -1432,6 +1538,7 @@
 	unique = 1
 	duration = INFINITE_STATUS
 	maxDuration = null
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/mob/living/carbon/human/H
 	var/units = 5
 
@@ -1439,9 +1546,9 @@
 		. = "You are losing blood at rate of [units] per second ."
 
 	preCheck(var/atom/A)
-		. = 1
+		. = ..()
 		if(issilicon(A))
-			. = 0
+			. = FALSE
 
 	onAdd(optional=null)
 		. = ..()
@@ -1505,7 +1612,8 @@
 	desc = "A Signifier bolt has made you vulnerable! Also you should never be seeing this!"
 	icon_state = null
 	duration = 0.5 SECONDS
-	visible = 0
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 /datum/statusEffect/cornicened
 	id = "cornicened"
@@ -1515,6 +1623,7 @@
 	visible = FALSE
 	var/stacks = 1
 	maxDuration = 2 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	onChange(optional)
 		. = ..()
@@ -1529,6 +1638,7 @@
 	visible = FALSE
 	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
 	maxDuration = 2 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 /datum/statusEffect/shivering
 	id = "shivering"
@@ -1537,7 +1647,8 @@
 	icon_state = "shivering"
 	duration = 2 SECONDS
 	maxDuration = 30 SECONDS
-	visible = 1
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
 
 	onAdd(optional=null)
@@ -1553,77 +1664,15 @@
 		if(istype(M))
 			M.thermoregulation_mult /= 3
 
-/datum/statusEffect/maxhealth/decreased/hungry
-	id = "hungry"
-	name = "Hungry"
-	desc = "You really gotta eat!"
-	icon_state = "heart-"
-	duration = INFINITE_STATUS
-	maxDuration = null
-	change = -20
-
-	onAdd(optional=null)
-		. = ..(change)
-
-	onChange(optional=null)
-		. = ..(change)
-
-/datum/statusEffect/staminaregen/thirsty
-	id = "thirsty"
-	name = "Thirsty"
-	desc = "You really need some water!"
-	icon_state = "stam-"
-	duration = INFINITE_STATUS
-	maxDuration = null
-	change = -5
-
-/datum/statusEffect/staminaregen/cursed
-	id = "weakcurse"
-	name = "Enfeebled"
-	desc = "You feel really weak"
-	icon_state = "stam-"
-	duration = INFINITE_STATUS
-	maxDuration = null
-	change = -5
-
-/datum/statusEffect/staminaregen/zephyr_field
-	id = "zephyr_field"
-	name = "Zephyr Field"
-	desc = "A bioelectric field is invigorating you."
-	icon_state = "stam+"
-	maxDuration = 9 SECONDS
-	unique = 1
-	change = 8
-
-	getTooltip()
-		. = "A feeling of invigoration permeates you."
-
-/datum/statusEffect/staminaregen/clone
-	id = "stamclone"
-	name = "Weakened"
-	desc = "You feel a bit weaker than usual."
-	icon_state = "stam-"
-	duration = INFINITE_STATUS
-	maxDuration = null
-
-	onAdd(optional=null)
-		if (!optional)
-			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
-			qdel(src)
-			return
-
-		src.change = optional
-		. = ..()
-
-
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
 	desc = "You breathed in some gross miasma."
 	icon_state = "miasma"
-	unique = 1
+	unique = TRUE
 	duration = INFINITE_STATUS
 	maxDuration = null
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/static/list/amount_desc = list("almost no", "a bit of", "some", "a lot of", "extremely large amounts of")
 	var/how_miasma = 0
 	var/weighted_average = 0
@@ -1740,6 +1789,7 @@
 	icon_state = "magnetized"
 	unique = TRUE
 	maxDuration = 3 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
 
 	onAdd(optional)
@@ -1769,6 +1819,7 @@
 	desc = ""
 	icon_state = "fire1"
 	maxDuration = 100 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
 	var/regrow_target_path = null 	//object path for the limb/organ we regrow
 	var/regrow_target_name = null 	//Human readable name for name of the effect button and whatnot
 	var/regrow_target_id = null 	//The limb/organ "slot" for this item. Must be a value that works in /datum/human_limbs or /datum/organHolder
@@ -1782,9 +1833,9 @@
 		. = "We are currently regrowing [regrow_target_name]."
 
 	preCheck(atom/A)
-		. = 1
+		. = ..()
 		if(issilicon(A))
-			. = 0
+			. = FALSE
 
 	onUpdate()
 		..()
@@ -1909,7 +1960,8 @@
 	desc = "You breathed in some gross miasma."
 	icon_state = "z_pre_infection-1"
 	maxDuration = 90 SECONDS
-	visible = 0
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	var/timer = 0
 	var/static/infect_time = 50 SECONDS
@@ -1925,9 +1977,9 @@
 			H.resist()
 
 	preCheck(atom/A)
-		. = 1
+		. = ..()
 		if(!ishuman(A))
-			. = 0
+			. = FALSE
 		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
 		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
 		// if (isliving(A))
@@ -1963,6 +2015,7 @@
 	icon_state = "muted"
 	desc = "You don't have the strength to say anything louder than a whisper!"
 	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
@@ -1971,6 +2024,7 @@
 	icon_state = "drowsy"
 	desc = "You feel very drowsy"
 	movement_modifier = new/datum/movement_modifier/drowsy
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/tickspassed = 0
 
 	onUpdate(timePassed)
@@ -1991,6 +2045,7 @@
 	desc = "You're so tired you're about to pass out!"
 	icon_state = "passing_out"
 	maxDuration = 5 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	onRemove()
 		. = ..()
@@ -2006,6 +2061,7 @@
 	desc = "Something <i>really</i> didn't sit well with you."
 	icon_state = "poisoned"
 	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	onAdd()
 		..()
@@ -2048,6 +2104,7 @@
 /datum/statusEffect/lights_out
 	id = "lightsout"
 	visible = 0
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/oldstate
 
 	onAdd(optional)
@@ -2083,6 +2140,7 @@
 	desc = "You're absolutely filthy."
 	icon_state = "filthy"
 	maxDuration = 3 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/mob/living/carbon/human/H
 
 	onAdd(optional)
@@ -2106,18 +2164,21 @@
 	name = "Rancid"
 	desc = "You smell like spoiled milk."
 	icon_state = "rancid"
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	onAdd(optional)
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
@@ -2125,6 +2186,7 @@
 	desc = "Please call 1800-CODER"
 	visible = FALSE
 	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 	onRemove()
 		var/mob/living/critter/flock/drone/drone = owner
@@ -2166,6 +2228,7 @@
 	maxDuration = 3 MINUTES
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/spry
+	effect_quality = STATUS_QUALITY_POSITIVE
 
 /datum/statusEffect/mindhack
 	id = "mindhack"
@@ -2240,6 +2303,7 @@
 	visible = FALSE
 	unique = TRUE
 	maxDuration = 5 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional)
 		. = ..()
@@ -2258,3 +2322,57 @@
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/criticalcondition
+	id = "critical_condition"
+	name = "Critical Condition"
+	icon_state = "heart-"
+	maxDuration = 10 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("critical_condition")
+		H.delStatus("recent_trauma") // Cancel out recent trauma, you is back in trauma, baybeee
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition", -5)
+		H.add_stam_mod_max("critical_condition", -100)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
+		H.remove_stam_mod_max("critical_condition")
+		H.changeStatus("recent_trauma", 90 SECONDS)
+
+
+/datum/statusEffect/recenttrauma
+	id = "recent_trauma"
+	name = "Recent Trauma"
+	icon_state = "-"
+	maxDuration = 90 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("recent_trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma", -2)
+		H.add_stam_mod_max("recent_trauma", -50)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
+		H.remove_stam_mod_max("recent_trauma")
+

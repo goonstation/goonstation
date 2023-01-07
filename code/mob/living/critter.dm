@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (issawingtool(I) || iscuttingtool(I))
+			if (src.butcherable && (issawingtool(I) || iscuttingtool(I)))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
@@ -623,9 +623,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	can_strip(mob/M, showInv = 0)
+	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
-		if(!showInv && check_target_immunity(src, 0, M))
+		if(check_target_immunity(src, 1, M))
 			return 0
 		if (!HH)
 			return 0

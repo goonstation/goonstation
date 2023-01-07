@@ -206,8 +206,8 @@
 		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 60, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] summons the warmth of a nice toasty fireplace!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
-			if (M.bioHolder)
-				M.bioHolder.AddEffect("cold_resist", 0, 60)
+			if (M.bioHolder && !M.bioHolder.HasOneOfTheseEffects("fire_resist", "cold_resist", "thermal_resist"))
+				M.bioHolder.AddEffect("cold_resist", 0, 60) // this will wipe `thermal_vuln` still vOv
 
 /datum/targetable/santa/teleport
 	name = "Spacemas Warp"

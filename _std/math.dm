@@ -94,4 +94,5 @@ proc/text2num_safe(x)
 	. -= round(.)
 
 // hyperbolic trig functions
+#define sech(x) (2/((eulers**x)+(eulers**-x)+0.000001))
 #define tanh(x) (((eulers**(2*x))-1)/((eulers**(2*x))+1))
