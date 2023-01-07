@@ -642,23 +642,24 @@
 /area/space)
 "abB" = (
 /obj/table/auto,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/plate,
 /obj/item/reagent_containers/food/snacks/breakfast,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "abC" = (
@@ -31116,6 +31117,7 @@
 /area/station/mining/staff_room)
 "bDd" = (
 /obj/table/auto,
+/obj/item/plate,
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
