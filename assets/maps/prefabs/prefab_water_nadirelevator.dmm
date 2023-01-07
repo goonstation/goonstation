@@ -476,10 +476,6 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
-"qc" = (
-/obj/storage/closet/welding_supply,
-/turf/simulated/floor/black,
-/area/shuttle/sea_elevator)
 "qe" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/vending/kitchen,
@@ -681,31 +677,7 @@
 	name = "The Recluse"
 	})
 "wr" = (
-/obj/table/reinforced/auto,
-/obj/item/pinpointer/trench{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/pinpointer/trench{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/pinpointer/trench{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/trench_map{
-	pixel_x = 3
-	},
-/obj/item/trench_map{
-	pixel_x = 3
-	},
-/obj/item/trench_map{
-	pixel_x = 3
-	},
-/obj/item/trench_map{
-	pixel_x = 3
-	},
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "wX" = (
@@ -754,10 +726,7 @@
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "xX" = (
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 3;
-	pixel_x = 4
-	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
 "yd" = (
@@ -1166,6 +1135,41 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/engine/caution/corner,
 /area/diner/dining)
+"Lv" = (
+/obj/table/reinforced/auto,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/trench_map{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/obj/item/storage/pill_bottle/antirad{
+	pixel_x = 15
+	},
+/turf/simulated/floor/black,
+/area/shuttle/sea_elevator)
 "LG" = (
 /obj/decal/cleanable/dirt,
 /obj/submachine/ice_cream_dispenser,
@@ -1585,6 +1589,10 @@
 	})
 "Xr" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 3;
+	pixel_x = 4
+	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
@@ -3169,7 +3177,7 @@ va
 qX
 qX
 TC
-Fi
+Lv
 fv
 ZZ
 Fp
@@ -3218,7 +3226,7 @@ XP
 XP
 XP
 bn
-qc
+Fi
 tk
 zv
 CG
