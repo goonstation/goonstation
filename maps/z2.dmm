@@ -61666,7 +61666,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61674,7 +61674,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61703,7 +61703,7 @@
 	dir = 8;
 	tag = "icon-toilet (WEST)"
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61716,12 +61716,12 @@
 	dir = 4;
 	pixel_x = -2
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
 "dFe" = (
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61731,7 +61731,7 @@
 	dir = 8;
 	pixel_x = 2
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -65753,15 +65753,22 @@
 	name = "hand rail";
 	pixel_y = 16
 	},
+/obj/submachine/centcom_elevator{
+	desc = "a not at all suspicious toilet paper holder.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "toiletholder";
+	name = "toilet paper holder";
+	pixel_y = 32
+	},
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPt" = (
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPu" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -65803,8 +65810,8 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -65941,9 +65948,9 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "dPW" = (
 /obj/machinery/door/unpowered/wood{
@@ -66008,9 +66015,9 @@
 /obj/item/clothing/head/plunger,
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "dQg" = (
 /obj/machinery/computer3/generic/secure_data,
@@ -69404,8 +69411,8 @@
 /area/crunch)
 "iho" = (
 /obj/storage/secure/closet/fridge{
-	name = "Mark VI Extreme Conditions Cryogenic Storage Unit";
-	desc = "It looks like a fridge despite the fancy title written on the side. It's extremely scratched and dented all over."
+	desc = "It looks like a fridge despite the fancy title written on the side. It's extremely scratched and dented all over.";
+	name = "Mark VI Extreme Conditions Cryogenic Storage Unit"
 	},
 /obj/item/storage/ntsc_pouch{
 	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
@@ -69444,7 +69451,7 @@
 	dir = 8;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -74323,7 +74330,7 @@
 	dir = 4;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "qHX" = (
 /obj/table/auto,
@@ -75822,8 +75829,8 @@
 	desc = "A button set into the wall. You probably shouldn't press this.";
 	id = "virvadoor";
 	name = "curious button";
-	pixel_y = 30;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 30
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -78428,7 +78435,7 @@
 	dir = 4;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})

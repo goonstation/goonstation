@@ -1527,7 +1527,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
-					M.bioHolder.RandomEffect("bad")
+					if(ishuman(M))
+						M.bioHolder.RandomEffect("bad")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1535,7 +1536,7 @@ datum
 				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
-				if (probmult(mutChance))
+				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
 				..()
 				return
@@ -1563,7 +1564,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
-					M.bioHolder.RandomEffect("bad")
+					if(ishuman(M))
+						M.bioHolder.RandomEffect("bad")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1572,9 +1574,9 @@ datum
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
-				if (probmult(mutChance))
+				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
-				if (probmult(3))
+				if (probmult(3) && ishuman(M))
 					M.bioHolder.RandomEffect("good")
 				..()
 				return

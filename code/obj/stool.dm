@@ -1234,6 +1234,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 	New()
 		..()
+		if (src.dir in ordinal)
+			src.layer = FLY_LAYER+1
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)
 
