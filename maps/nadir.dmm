@@ -29413,7 +29413,7 @@
 "mKE" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
-	name = "cold loop gas supply valve"
+	name = "gas supply valve"
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
@@ -33758,8 +33758,8 @@
 	dir = 8;
 	frequency = 1225;
 	icon_state = "intact_on";
-	id = "Cold Loop Gas Supply 1";
-	name = "cold loop gas supply pump";
+	id = "Reactor Gas Supply 1";
+	name = "reactor gas supply pump 1";
 	on = 1;
 	target_pressure = 1000
 	},
@@ -38898,8 +38898,8 @@
 	dir = 8;
 	frequency = 1225;
 	icon_state = "intact_on";
-	id = "Cold Loop Gas Supply 2";
-	name = "cold loop gas supply pump";
+	id = "Reactor Gas Supply 2";
+	name = "reactor gas supply pump 2";
 	on = 1;
 	target_pressure = 1000
 	},
@@ -52691,7 +52691,7 @@
 /area/station/maintenance/inner/east)
 "xNP" = (
 /obj/machinery/atmospherics/valve{
-	name = "cold loop freezer interface valve"
+	name = "freezer interface valve"
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
