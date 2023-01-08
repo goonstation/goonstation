@@ -81,11 +81,14 @@
 
 	return B
 
-var/global/obj/flashDummy
+var/global/obj/fuckyou/flashDummy
+
+// This runtimes due to abstract instantiation every time an arcflash occurs and I don't feel like fixing it so here's a magic concrete child
+/obj/fuckyou
 
 /proc/getFlashDummy()
 	if (!flashDummy)
-		flashDummy = new /obj(null)
+		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
