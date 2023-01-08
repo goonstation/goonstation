@@ -9706,7 +9706,8 @@
 "esK" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
-	pixel_y = 10
+	pixel_y = 13;
+	pixel_x = 7
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/cafeteria)
