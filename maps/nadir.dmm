@@ -587,14 +587,11 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "alM" = (
-/obj/cable/orange{
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
 /obj/cable/orange{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
@@ -2375,7 +2372,6 @@
 /area/station/crew_quarters/quarters_east)
 "bel" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/cable/orange,
 /obj/cable/orange{
 	icon_state = "0-8"
 	},
@@ -14270,6 +14266,22 @@
 	dir = 3
 	},
 /area/station/hallway/primary/southwest)
+"gsx" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "gsX" = (
 /obj/lattice{
 	dir = 9;
@@ -31845,6 +31857,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/cable/orange,
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -37849,13 +37862,7 @@
 	density = 0;
 	opacity = 0
 	},
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -49461,7 +49468,10 @@
 	dir = 4
 	},
 /obj/cable/orange{
-	icon_state = "4-9"
+	icon_state = "2-9"
+	},
+/obj/cable/orange{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
@@ -109162,7 +109172,7 @@ ygt
 ygt
 ygt
 wks
-dfm
+gsx
 nSj
 wqi
 bko
