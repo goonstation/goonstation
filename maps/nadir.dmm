@@ -34677,7 +34677,6 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "pmV" = (
