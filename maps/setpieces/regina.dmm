@@ -2642,7 +2642,7 @@
 /area/regina)
 "Zc" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/yellowblack,
 /area/regina)
 "Zf" = (

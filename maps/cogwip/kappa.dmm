@@ -7624,7 +7624,7 @@
 /area/space)
 "vd" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/grey,
 /area/space)
 "ve" = (

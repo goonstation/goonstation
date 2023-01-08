@@ -7199,7 +7199,7 @@
 /area/station/maintenance/north)
 "amW" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/reagent_containers/food/snacks/pie/cream,
@@ -22418,7 +22418,7 @@
 /area/station/medical/medbay)
 "aSC" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/device/radio/beacon,
 /obj/item/storage/box/stma_kit,
 /turf/simulated/floor/white,
@@ -24761,7 +24761,7 @@
 /area/station/engine/engineering/ce)
 "aXg" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/deconstructor,
