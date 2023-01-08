@@ -111,8 +111,8 @@
 		. += list(
 			"placable_marker_states" = placable_marker_states,
 			"placable_marker_images" = placable_marker_images,
-			"x" = 1,
-			"y" = 1,
+			"pos_x" = 1,
+			"pos_y" = 1,
 			"icon" = "pin",
 			"image" = placable_marker_images["pin"]
 		)
@@ -142,8 +142,8 @@
 
 		if (src.minimap_controller.selected_x && src.minimap_controller.selected_y)
 			. += list(
-				"x" = src.minimap_controller.selected_x,
-				"y" = src.minimap_controller.selected_y
+				"pos_x" = src.minimap_controller.selected_x,
+				"pos_y" = src.minimap_controller.selected_y
 			)
 			src.minimap_controller.selected_x = null
 			src.minimap_controller.selected_y = null
@@ -167,8 +167,16 @@
 				src.minimap_controller.toggle_visibility_all(markers_visible)
 
 			if ("toggle_visibility")
+				if (!(src.minimap_markers_list[params["index"]]))
+					return
 				var/list/list_entry = src.minimap_markers_list[params["index"]]
+
+				if (!(list_entry["marker"]))
+					return
 				var/datum/minimap_marker/marker = list_entry["marker"]
+
+				if (!marker)
+					return
 				src.minimap_controller.toggle_visibility(marker)
 
 			if ("location_from_minimap")
@@ -188,6 +196,9 @@
 				var/y = params["pos_y"]
 
 				var/turf/location = locate(x, y, src.minimap_datum.z_level)
+				if (!location)
+					return
+
 				src.minimap_controller.new_marker(location, icon_state, name)
 
 				src.minimap_controller.marker_silhouette?.visible = FALSE
@@ -198,8 +209,16 @@
 				src.minimap_controller.marker_silhouette?.marker.alpha = 0
 
 			if ("delete_marker")
+				if (!(src.minimap_markers_list[params["index"]]))
+					return
 				var/list/list_entry = src.minimap_markers_list[params["index"]]
+
+				if (!(list_entry["marker"]))
+					return
 				var/datum/minimap_marker/marker = list_entry["marker"]
+
+				if (!marker)
+					return
 				src.minimap_controller.delete_marker(marker)
 
 		return TRUE

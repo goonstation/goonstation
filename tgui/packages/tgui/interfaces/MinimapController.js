@@ -12,33 +12,29 @@ export const MinimapController = (params, context) => {
     markers_visible,
     selecting_coordinates,
     minimap_markers,
-    showNewMarkerMenu,
     placable_marker_states,
     placable_marker_images,
     icon,
     image,
-    x,
-    y,
+    pos_x,
+    pos_y,
   } = data;
 
   const [name, setName] = useLocalState(context, 'name');
-
-  const toggleNewMarkerMenu = () => {
-    data.showNewMarkerMenu = !showNewMarkerMenu;
-  };
+  const [showNewMarkerMenu, toggleNewMarkerMenu] = useLocalState(context, 'show_menu', false);
 
   const newMarker = () => {
-    toggleNewMarkerMenu();
+    toggleNewMarkerMenu(!showNewMarkerMenu);
     act('new_marker', {
       name: name,
       icon: icon,
-      pos_x: x,
-      pos_y: y,
+      pos_x: pos_x,
+      pos_y: pos_y,
     });
   };
 
   const cancelNewMarker = () => {
-    toggleNewMarkerMenu();
+    toggleNewMarkerMenu(!showNewMarkerMenu);
     act('cancel_new_marker');
   };
 
@@ -48,12 +44,12 @@ export const MinimapController = (params, context) => {
     act('update_icon', { icon: value });
   };
 
-  const setX = (value) => {
-    data.x = value;
+  const setPosX = (value) => {
+    data.pos_x = value;
   };
 
-  const setY = (value) => {
-    data.y = value;
+  const setPosY = (value) => {
+    data.pos_y = value;
   };
 
   return (
@@ -103,7 +99,7 @@ export const MinimapController = (params, context) => {
                     icon="plus"
                     color="green"
                     content="New"
-                    onClick={() => toggleNewMarkerMenu()}
+                    onClick={() => toggleNewMarkerMenu(!showNewMarkerMenu)}
                   />
                   <Button
                     icon={markers_visible ? "eye-slash" : "eye"}
@@ -146,9 +142,9 @@ export const MinimapController = (params, context) => {
                               className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
-                              value={x}
+                              value={pos_x}
                               format={value => "x, " + value}
-                              onDrag={(e, value) => setX(value)}
+                              onDrag={(e, value) => setPosX(value)}
                             />
                           </Flex.Item>
                           <Flex.Item>
@@ -156,9 +152,9 @@ export const MinimapController = (params, context) => {
                               className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
-                              value={y}
+                              value={pos_y}
                               format={value => "y, " + value}
-                              onDrag={(e, value) => setY(value)}
+                              onDrag={(e, value) => setPosY(value)}
                             />
                           </Flex.Item>
                         </Flex>

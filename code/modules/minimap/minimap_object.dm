@@ -58,6 +58,9 @@
 			return TRUE
 
 /obj/minimap/map_computer
+	bound_width = 160
+	bound_height = 160
+
 	map_path = /datum/minimap/z_level
 
 	icon = 'icons/obj/minimap/map_computer.dmi'
