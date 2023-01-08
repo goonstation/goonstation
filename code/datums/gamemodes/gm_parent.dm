@@ -438,7 +438,24 @@
 
 /datum/game_mode/proc/check_win()
 
-/datum/game_mode/proc/send_intercept()
+/datum/game_mode/proc/send_intercept(badguy_list)
+	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
+	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
+
+	var/list/possible_modes = list()
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	for(var/i = 1 to pick(2, 3))
+		possible_modes.Remove(pick(possible_modes))
+
+	var/datum/intercept_text/i_text = new /datum/intercept_text
+
+	for(var/g_mode in possible_modes)
+		intercepttext += i_text.build(g_mode, pick((islist(badguy_list) && length(badguy_list)) ? badguy_list : ticker.minds))
+
+	for_by_tcl(C, /obj/machinery/communications_dish)
+		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
+
+	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 ////////////////////////////
 // Objective related code //

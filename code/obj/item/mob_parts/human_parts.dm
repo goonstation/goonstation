@@ -1119,7 +1119,7 @@
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
@@ -1142,7 +1142,7 @@
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
@@ -1777,6 +1777,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
+	limb_type = /datum/limb/zombie
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

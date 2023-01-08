@@ -999,6 +999,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
+		if(MUT?.harvest_cap)
+			harvest_cap = MUT.harvest_cap
+
 		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
