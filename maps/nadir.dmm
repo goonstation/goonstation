@@ -9210,6 +9210,7 @@
 /area/station/maintenance/disposal)
 "egJ" = (
 /obj/machinery/hydro_growlamp,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "egQ" = (
@@ -9788,6 +9789,12 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"euD" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/hydroponics/bay)
 "euF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14877,6 +14884,12 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"gEM" = (
+/obj/decal/cleanable/writing/infrared{
+	words = "they know. clean up shop"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/west)
 "gEQ" = (
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
@@ -30609,6 +30622,10 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"nqD" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "nqF" = (
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -32665,6 +32682,11 @@
 	pixel_y = 8;
 	pixel_x = 5
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -34231,6 +34253,9 @@
 "oZD" = (
 /obj/stool/chair/green{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Botanist"
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -40080,6 +40105,7 @@
 /area/station/hallway/primary/southwest)
 "rUj" = (
 /obj/machinery/hydro_mister,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "rUk" = (
@@ -46974,15 +47000,6 @@
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
-	})
-"uXV" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
 	})
 "uYq" = (
 /obj/warp_beacon{
@@ -86778,7 +86795,7 @@ akw
 ngq
 ajs
 jRv
-uXV
+bpN
 qqc
 uUP
 uUP
@@ -89799,7 +89816,7 @@ bYZ
 kWV
 jdV
 jdV
-jdV
+nqD
 jdV
 jdV
 kyI
@@ -91309,7 +91326,7 @@ bYZ
 nmm
 rYV
 kAr
-vnJ
+euD
 mvb
 vnJ
 tgU
@@ -92230,7 +92247,7 @@ oLJ
 wqA
 cUx
 cit
-wqA
+gEM
 bhZ
 tjx
 par
