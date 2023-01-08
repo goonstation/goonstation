@@ -101,12 +101,12 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
-			var/maxTries = (P.required ? 200:33)
+			var/maxTries = (P.required ? 200:50)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
-					count = INFINITY
-					break
+					count++
+					continue
 
 				var/datum/loadedProperties/ret = P.applyTo(target)
 				if (ret)
@@ -129,20 +129,22 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		else break
 
 	if(seed_ore)
-		var/max_ores = 10
-		for(var/i in 1 to 50)
-			if(max_ores <= 0)
-				break
+		var/list/turf/mountains = list()
+		for(var/turf/simulated/wall/auto/asteroid/mountain in turfs)
+			mountains += mountain
 
-			var/turf/target_center = region.get_random_turf()
+		var/seed_density = clamp(length(mountains)/500, 2, 30)
+		for(var/j in 1 to seed_density)
+			Turfspawn_Asteroid_SeedOre(mountains, fullbright=FALSE)
+			LAGCHECK(LAG_LOW)
+
+		for(var/i in 1 to seed_density/2)
+			var/turf/target_center = pick(mountains)
 			var/list/turf/ast_list = list()
-			for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(3,9)]x[rand(3,9)]"))
+			for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(2,9)]x[rand(2,9)]"))
 				ast_list |= AST
-
-			if(length(ast_list))
-				Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
-				Turfspawn_Asteroid_SeedEvents(ast_list)
-				max_ores--
+			Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
+			Turfspawn_Asteroid_SeedEvents(mountains)
 
 	//Allow folks to like uh, get here?
 	if(use_lrt)

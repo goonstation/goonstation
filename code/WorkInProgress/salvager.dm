@@ -303,11 +303,10 @@
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 1.5
-	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	speed = 0.85
 
 	New()
 		..()
@@ -317,15 +316,15 @@
 		myhud.update_systems()
 		myhud.update_states()
 
-	go_home()
-		if((POD_ACCESS_SALVAGER in src.com_system?.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
-			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
-
 /obj/item/shipcomponent/communications/salvager
-		name = "Salvager Communication Array"
-		desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
-		color = "#91681c"
-		access_type = list(POD_ACCESS_SALVAGER)
+	name = "Salvager Communication Array"
+	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
+	color = "#91681c"
+	access_type = list(POD_ACCESS_SALVAGER)
+
+	get_home_turf()
+		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
+			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
