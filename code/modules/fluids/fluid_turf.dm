@@ -407,7 +407,7 @@
 	generateLight = 0
 	allow_hole = 0
 #ifdef MAP_OVERRIDE_NADIR
-	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE
+	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE | SPAWN_ACID_DOODADS
 #else
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 #endif
@@ -424,6 +424,12 @@
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
+
+/turf/space/fluid/trench/nospawn
+	spawningFlags = null
+
+	generate_worldgen()
+		return
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

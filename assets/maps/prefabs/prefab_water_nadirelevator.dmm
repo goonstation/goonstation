@@ -62,12 +62,6 @@
 	desc = "The energies within ebb and flow, driven by the source beneath."
 	},
 /area/noGenerate)
-"cj" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
 "dd" = (
 /obj/landmark{
 	name = "seafall"
@@ -197,12 +191,11 @@
 	},
 /area/shuttle/sea_elevator)
 "fG" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "nadir_minebot";
 	name = "Vehicle Bay Door"
 	},
-/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator)
 "fP" = (
@@ -242,15 +235,14 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench/nospawn,
 /area/noGenerate)
 "gL" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "nadir_minebot";
 	name = "Vehicle Bay Door"
 	},
-/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/engine/caution/south,
 /area/shuttle/sea_elevator)
 "gR" = (
@@ -289,6 +281,9 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/caution/westeast,
 /area/shuttle/sea_elevator)
 "ji" = (
@@ -316,13 +311,15 @@
 /area/shuttle/sea_elevator)
 "kx" = (
 /obj/lattice,
+/obj/machinery/light/small/floor/greenish,
 /obj/warp_beacon{
 	name = "Subsurface Bay"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench/nospawn,
 /area/noGenerate)
 "kD" = (
 /obj/item/crowbar,
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
 	},
@@ -337,15 +334,12 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"lK" = (
-/turf/space/fluid/trench,
-/area/noGenerate)
 "lW" = (
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench/nospawn,
 /area/noGenerate)
 "lZ" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -565,10 +559,6 @@
 "ta" = (
 /turf/variableTurf/wall,
 /area/noGenerate)
-"tk" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/caution/north,
-/area/shuttle/sea_elevator)
 "tm" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
 /area/tech_outpost{
@@ -588,12 +578,11 @@
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
 "tA" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "nadir_minebot";
 	name = "Vehicle Bay Door"
 	},
-/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -670,7 +659,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench/nospawn,
 /area/noGenerate)
 "wk" = (
 /obj/item/cell/charged{
@@ -780,6 +769,7 @@
 	name = "Space Diner Backhall"
 	})
 "zv" = (
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -835,7 +825,6 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "AG" = (
-/obj/machinery/light/small/floor/netural,
 /obj/machinery/door_control{
 	id = "nadir_minebot";
 	name = "Bay Door Control";
@@ -879,12 +868,6 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
-"CG" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
-/area/shuttle/sea_elevator)
 "CS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/round/auto,
@@ -1184,6 +1167,10 @@
 	},
 /obj/item/storage/pill_bottle/antirad{
 	pixel_x = 15
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1668,6 +1655,9 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/kitchen)
+"YD" = (
+/turf/space/fluid/trench/nospawn,
+/area/noGenerate)
 "YO" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/engine,
@@ -1715,7 +1705,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench/nospawn,
 /area/noGenerate)
 "Zp" = (
 /obj/table/auto,
@@ -2707,7 +2697,7 @@ nw
 xI
 yJ
 oQ
-yJ
+oQ
 oQ
 yJ
 xI
@@ -2720,9 +2710,9 @@ XP
 XP
 XP
 Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
 XP
 XP
 XP
@@ -2766,13 +2756,13 @@ Nl
 Nl
 XP
 XP
+YD
 Nl
+YD
+YD
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
 XP
 XP
 nw
@@ -2810,20 +2800,20 @@ dt
 dt
 TC
 Nl
+YD
 Nl
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 nw
 nw
 nw
@@ -2852,32 +2842,32 @@ tC
 ob
 tC
 ob
-tC
+ob
 ob
 xI
-Vo
+Ap
 Ap
 vs
+YD
+YD
 Nl
+YD
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
 nw
 nw
 nw
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 Ol
 bd
 Sp
@@ -2901,32 +2891,32 @@ ob
 ob
 ob
 ob
-ob
+tC
 ob
 xI
 Vo
 Ap
 vs
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 nw
 nw
 nw
 nw
 nw
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
 yh
 Iw
 LT
@@ -2945,25 +2935,25 @@ XP
 "}
 (25,1,1) = {"
 Af
-wX
+qX
 ii
 ii
-wX
+qX
 kv
-tC
+ob
 ob
 bn
 qu
 qu
 bn
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 nw
 nw
 nw
@@ -3005,13 +2995,13 @@ et
 qX
 qX
 VJ
-lK
-lK
-lK
-lK
-lK
-lK
-Nl
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 XP
 nw
 nw
@@ -3044,7 +3034,7 @@ XP
 (27,1,1) = {"
 bn
 pk
-tC
+ob
 tC
 lB
 bn
@@ -3054,13 +3044,13 @@ sF
 OT
 oQ
 fG
-lK
-lK
-lK
-lK
-lK
-lK
-lK
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 XP
 XP
 nw
@@ -3099,17 +3089,17 @@ aV
 ma
 AG
 kD
-cj
+Be
 qu
 dC
 gL
-lK
-lK
-lK
+YD
+YD
+YD
 gv
-lK
-lK
-lK
+YD
+YD
+YD
 XP
 XP
 XP
@@ -3157,8 +3147,8 @@ Zf
 Zf
 kx
 vX
-lK
-lK
+YD
+YD
 XP
 XP
 XP
@@ -3201,13 +3191,13 @@ Fp
 Fp
 eT
 gL
-lK
-lK
-lK
+YD
+YD
+YD
 lW
-lK
-lK
-lK
+YD
+YD
+YD
 XP
 XP
 nw
@@ -3244,19 +3234,19 @@ XP
 XP
 bn
 Fi
-tk
+fv
 zv
-CG
+sF
 oQ
 ON
 gL
-lK
-lK
-lK
-lK
-lK
-lK
-lK
+YD
+YD
+YD
+YD
+YD
+YD
+YD
 XP
 XP
 nw
@@ -3299,12 +3289,12 @@ Be
 qu
 qu
 tA
-lK
-lK
-lK
-lK
-lK
-lK
+YD
+YD
+YD
+YD
+YD
+YD
 XP
 XP
 nw
@@ -3349,9 +3339,9 @@ qX
 qX
 ma
 Nl
-Nl
-Nl
-Nl
+YD
+YD
+YD
 Nl
 XP
 XP
@@ -3397,11 +3387,11 @@ XP
 XP
 XP
 XP
+YD
+YD
 Nl
-Nl
-Nl
-Nl
-Nl
+YD
+YD
 XP
 XP
 XP
@@ -3449,7 +3439,7 @@ XP
 XP
 Nl
 Nl
-Nl
+YD
 Nl
 XP
 XP

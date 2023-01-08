@@ -1016,6 +1016,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		src.components += src.m_w_system
 		myhud.update_systems()
 		myhud.update_states()
+		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
 		return
 
 //pod wars ones//
