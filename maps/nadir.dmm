@@ -1635,7 +1635,6 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aLH" = (
@@ -4227,7 +4226,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "bRJ" = (
-/obj/disposalpipe/segment/bent/north,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -5273,10 +5271,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
-"cqm" = (
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/bay)
 "cqt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
@@ -7960,13 +7954,6 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
-"dDa" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction/left/west,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "dDg" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -10051,6 +10038,10 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"ezU" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "eAk" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/grime,
@@ -16568,11 +16559,6 @@
 	dir = 1
 	},
 /area/station/science/hall)
-"hlY" = (
-/obj/machinery/plantpot,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "hmy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18697,6 +18683,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "igp" = (
@@ -22026,11 +22013,10 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/disposalpipe/segment/vertical,
-/obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "jHl" = (
@@ -24189,10 +24175,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
-"kyI" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "kyK" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper_bin,
@@ -25062,10 +25044,6 @@
 "kUs" = (
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergencyinternals)
-"kUx" = (
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "kUI" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -29432,11 +29410,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
-"mKY" = (
-/obj/machinery/plantpot,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "mLB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32022,6 +31995,7 @@
 /obj/access_spawn/hydro,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "nVL" = (
@@ -33484,7 +33458,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "oJh" = (
@@ -38993,10 +38966,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"rsG" = (
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/kitchen)
 "rsJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
@@ -43107,6 +43076,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "tgS" = (
@@ -43124,7 +43094,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "tgU" = (
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/greenblack{
 	dir = 10
 	},
@@ -46817,7 +46786,6 @@
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "uTB" = (
@@ -46904,11 +46872,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"uWr" = (
-/obj/disposalpipe/segment/vertical,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "uWw" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/networked/storage/scanner{
@@ -48280,10 +48243,6 @@
 "vEu" = (
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
-"vEA" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/west)
 "vFk" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4;
@@ -50425,7 +50384,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "wJT" = (
@@ -50947,7 +50905,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "wYE" = (
@@ -53380,6 +53338,10 @@
 	dir = 8
 	},
 /area/station/engine/storage)
+"ycf" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "ycq" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -87717,7 +87679,7 @@ wpS
 mbt
 mbt
 jVa
-vEA
+wqA
 iHN
 iHN
 sOx
@@ -88019,7 +87981,7 @@ cZD
 egS
 oNg
 vZi
-vyr
+oEZ
 iHN
 wPX
 kyY
@@ -88317,14 +88279,14 @@ jdV
 jdV
 jdV
 jdV
-kUx
-mKY
-cqm
-uWr
+jdV
+fLE
+oNg
+vyr
 aLf
-rsG
+iHN
 oJc
-dDa
+kyY
 iPX
 mJW
 eKa
@@ -88619,7 +88581,7 @@ jdV
 bJI
 bJI
 jdV
-kyI
+jdV
 fDR
 oNg
 vyr
@@ -88921,7 +88883,7 @@ jdV
 bJI
 egJ
 jdV
-kyI
+jdV
 fLE
 oNg
 naz
@@ -89223,7 +89185,7 @@ jdV
 bJI
 bJI
 jdV
-kyI
+jdV
 lDX
 oNg
 hWN
@@ -89525,7 +89487,7 @@ jdV
 jdV
 jdV
 jdV
-kyI
+jdV
 fLE
 oNg
 vyr
@@ -89827,7 +89789,7 @@ jdV
 nqD
 jdV
 jdV
-kyI
+jdV
 fDR
 oNg
 auj
@@ -90129,7 +90091,7 @@ jdV
 bJI
 bJI
 jdV
-kyI
+jdV
 fLE
 oNg
 txT
@@ -90431,7 +90393,7 @@ jdV
 bJI
 rUj
 jdV
-kyI
+jdV
 oCN
 oNg
 wqA
@@ -90733,7 +90695,7 @@ jdV
 bJI
 bJI
 jdV
-kyI
+jdV
 fLE
 oNg
 hEe
@@ -91035,7 +90997,7 @@ jdV
 jdV
 jdV
 jdV
-kyI
+jdV
 fDR
 oNg
 oEZ
@@ -92243,7 +92205,7 @@ hOK
 ajV
 ajV
 ajV
-hlY
+loU
 loU
 kry
 irP
@@ -92545,8 +92507,8 @@ ajV
 ajV
 ajV
 ajV
-omx
-ajV
+ezU
+ycf
 tgQ
 igl
 igl
