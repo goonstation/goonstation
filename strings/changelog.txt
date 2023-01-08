@@ -1,4 +1,9 @@
 
+(t)sun jan 08 23
+(u)LeahTheTech
+(p)12673
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock incapacitors now take 3 hits to stun a human rather than 2.
 (t)sat jan 07 23
 (u)Mr. Moriarty
 (p)12632
