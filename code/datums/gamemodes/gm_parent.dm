@@ -450,7 +450,7 @@
 	var/datum/intercept_text/i_text = new /datum/intercept_text
 
 	for(var/g_mode in possible_modes)
-		intercepttext += i_text.build(g_mode, islist(badguy_list) ? badguy_list : pick(ticker.minds))
+		intercepttext += i_text.build(g_mode, pick((islist(badguy_list) && length(badguy_list)) ? badguy_list : ticker.minds))
 
 	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
