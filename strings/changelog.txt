@@ -1,4 +1,9 @@
 
+(t)sat jan 07 23
+(u)Mr. Moriarty
+(p)12632
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited .38 FMJ, Stun, and AP speedloaders.
 (t)fri jan 06 23
 (u)goonstation-enjoyer
 (p)12644
