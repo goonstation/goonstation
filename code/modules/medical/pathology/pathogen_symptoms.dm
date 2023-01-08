@@ -1944,7 +1944,7 @@ datum/pathogeneffects/malevolent/mutation
 	var/list/chrom_types = list(/datum/dna_chromosome, /datum/dna_chromosome/anti_mutadone, /datum/dna_chromosome/stealth, /datum/dna_chromosome/power_enhancer, /datum/dna_chromosome/cooldown_reducer, /datum/dna_chromosome/safety)
 
 	proc/mutate(var/mob/M, var/datum/pathogen/origin)
-		if (M.bioHolder)
+		if (M.bioHolder && ishuman(M))
 			if(prob(chrom_prob))
 				var/type_to_make = pick(chrom_types)
 				var/datum/dna_chromosome/C = new type_to_make()
