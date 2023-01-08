@@ -20797,7 +20797,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/hydroponics/bay)
+/area/station/science/teleporter)
 "jdK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -41169,7 +41169,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/table/reinforced/auto,
+/obj/table/reinforced/chemistry/auto{
+	name = "prep counter"
+	},
 /obj/machinery/espresso_machine{
 	pixel_y = 7
 	},
