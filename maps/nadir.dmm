@@ -5052,6 +5052,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"ckM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_east)
 "ckR" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -35669,6 +35676,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -113057,7 +113065,7 @@ ygn
 ebd
 eVi
 lAS
-nRJ
+ckM
 usM
 vaE
 mrW
