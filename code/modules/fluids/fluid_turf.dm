@@ -407,7 +407,7 @@
 	generateLight = 0
 	allow_hole = 0
 #ifdef MAP_OVERRIDE_NADIR
-	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE | SPAWN_ACID_DOODADS
+	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE
 #else
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 #endif

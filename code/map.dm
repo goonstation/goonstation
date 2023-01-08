@@ -953,9 +953,6 @@ var/global/list/mapNames = list(
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/engineering/miner = 0 //eventually, assay technicians?
-	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
