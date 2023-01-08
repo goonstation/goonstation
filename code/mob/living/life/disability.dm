@@ -46,7 +46,7 @@
 				if(!interdictor_influence)
 					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 
-		if (owner.bioHolder)
+		if (owner.bioHolder && ishuman(M))
 			var/total_stability = owner.bioHolder.genetic_stability
 
 			if (owner.reagents && owner.reagents.has_reagent("mutadone"))
