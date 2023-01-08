@@ -13673,9 +13673,7 @@
 	name = "Genetic Research"
 	})
 "gfu" = (
-/obj/machinery/door/airlock/pyro/alt{
-	name = "Decontamination"
-	},
+/obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary/white,
 /area/station/science/lobby{
 	name = "Science Lounge"
