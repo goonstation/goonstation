@@ -1,5 +1,5 @@
-#define MAKE_SLOT(slot, item) list("id" = slot, "item" = item?.name)
-#define MAKE_SLOT_CUSTOM(slot, item, name) list("id" = slot, "item" = item ? name : null)
+#define MAKE_SLOT(slot, item, obstructed) list("id" = slot, "item" = item?.name, "obstructed" = obstructed)
+#define MAKE_SLOT_CUSTOM(slot, item, name, obstructed) list("id" = slot, "item" = item ? name : null, "obstructed" = obstructed)
 
 /datum/humanInventory
 	var/mob/living/carbon/human/human = null
@@ -26,32 +26,29 @@
 /datum/humanInventory/ui_data(mob/user)
 
 	var/list/slots = list(
-		MAKE_SLOT("slot_head", src.human.head),
-		MAKE_SLOT("slot_wear_mask", src.human.wear_mask),
-		MAKE_SLOT("slot_glasses", src.human.glasses),
-		MAKE_SLOT("slot_ears", src.human.ears),
-		MAKE_SLOT("slot_l_hand", src.human.l_hand),
-		MAKE_SLOT("slot_r_hand", src.human.r_hand),
-		MAKE_SLOT("slot_gloves", src.human.gloves),
-		MAKE_SLOT("slot_shoes", src.human.shoes),
-		MAKE_SLOT("slot_belt", src.human.belt),
-		MAKE_SLOT("slot_w_uniform", src.human.w_uniform),
-		MAKE_SLOT("slot_wear_suit", src.human.wear_suit),
-		MAKE_SLOT("slot_back", src.human.back),
-		MAKE_SLOT("slot_wear_id", src.human.wear_id),
-		MAKE_SLOT_CUSTOM("slot_l_store", src.human.l_store, "Something"),
-		MAKE_SLOT_CUSTOM("slot_r_store", src.human.r_store, "Something"),
+		MAKE_SLOT("slot_head", src.human.head, FALSE),
+		MAKE_SLOT("slot_wear_mask", src.human.wear_mask, src.human.CheckObstructed("slot_wear_mask")),
+		MAKE_SLOT("slot_glasses", src.human.glasses, src.human.CheckObstructed("slot_glasses")),
+		MAKE_SLOT("slot_ears", src.human.ears, src.human.CheckObstructed("slot_ears")),
+		MAKE_SLOT("slot_l_hand", src.human.l_hand, FALSE),
+		MAKE_SLOT("slot_r_hand", src.human.r_hand, FALSE),
+		MAKE_SLOT("slot_gloves", src.human.gloves, src.human.CheckObstructed("slot_gloves")),
+		MAKE_SLOT("slot_shoes", src.human.shoes, src.human.CheckObstructed("slot_shoes")),
+		MAKE_SLOT("slot_belt", src.human.belt, FALSE),
+		MAKE_SLOT("slot_w_uniform", src.human.w_uniform, src.human.CheckObstructed("slot_w_uniform")),
+		MAKE_SLOT("slot_wear_suit", src.human.wear_suit, FALSE),
+		MAKE_SLOT("slot_back", src.human.back, FALSE),
+		MAKE_SLOT("slot_wear_id", src.human.wear_id, FALSE),
+		MAKE_SLOT_CUSTOM("slot_l_store", src.human.l_store, "Something", FALSE),
+		MAKE_SLOT_CUSTOM("slot_r_store", src.human.r_store, "Something", FALSE),
 	)
-
-	var/list/obstructedSlots = src.human.GetObstructedSlots()
 
 	. = list(
 		"name" = src.human.name,
 		"slots" = slots,
 		"handcuffed" = src.human.hasStatus("handcuffed"),
 		"internal" = src.human.internal != null,
-		"canSetInternal" = istype(src.human.wear_mask, /obj/item/clothing/mask) && istype(src.human.back, /obj/item/tank) && !src.human.internal,
-		"obstructedSlots" = obstructedSlots
+		"canSetInternal" = istype(src.human.wear_mask, /obj/item/clothing/mask) && istype(src.human.back, /obj/item/tank) && !src.human.internal
 	)
 
 /datum/humanInventory/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -62,8 +59,8 @@
 	switch(action)
 		if ("access-slot")
 			var/id
-			var/obstructed = FALSE
-			switch(params["id"])
+			var/obstructed = params["slot"]["obstructed"]
+			switch(params["slot"]["id"])
 				if ("slot_head")
 					id = src.human.slot_head
 				if ("slot_wear_mask")
@@ -96,7 +93,6 @@
 					id = src.human.slot_r_store
 
 			if (id)
-				obstructed = src.human.CheckObstructed(id)
 				actions.start(new/datum/action/bar/icon/otherItem(
 					usr,
 					src.human,

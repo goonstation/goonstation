@@ -4,7 +4,6 @@ export type HumanInventoryData = {
   name: string;
 
   slots: HumanInventorySlot[];
-  obstructedSlots: string[];
 
   handcuffed: BooleanLike;
   internal: BooleanLike;
@@ -14,4 +13,5 @@ export type HumanInventoryData = {
 export type HumanInventorySlot = {
   id: string;
   item?: string;
+  obstructed: BooleanLike;
 };

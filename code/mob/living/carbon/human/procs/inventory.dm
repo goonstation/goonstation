@@ -13,17 +13,17 @@
 		ItemFlags |= I.obstructs
 
 	if(ItemFlags & C_GLASSES)
-		obsctructedSlots |= SLOT_GLASSES
+		obsctructedSlots |= "slot_glasses"
 	if(ItemFlags & C_MASK)
-		obsctructedSlots |= SLOT_WEAR_MASK
+		obsctructedSlots |= "slot_wear_mask"
 	if(ItemFlags & C_EARS)
-		obsctructedSlots |= SLOT_EARS
+		obsctructedSlots |= "slot_ears"
 	if(ItemFlags & C_UNIFORM)
-		obsctructedSlots |= SLOT_W_UNIFORM
+		obsctructedSlots |= "slot_w_uniform"
 	if(ItemFlags & C_SHOES)
-		obsctructedSlots |= SLOT_SHOES
+		obsctructedSlots |= "slot_shoes"
 	if(ItemFlags & C_GLOVES)
-		obsctructedSlots |= SLOT_GLOVES
+		obsctructedSlots |= "slot_gloves"
 
 	return obsctructedSlots
 

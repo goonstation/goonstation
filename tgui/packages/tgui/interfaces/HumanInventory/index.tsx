@@ -59,13 +59,26 @@ type SlotProps = { name: string; slot: HumanInventorySlot };
 const Slot = (props: SlotProps, context) => {
   const { act } = useBackend<HumanInventoryData>(context);
   const { slot, name } = props;
-  const { id, item } = slot;
+  const { id, item, obstructed } = slot;
+
+  let getItemName = function getItemName(obstructed, item) {
+    if (obstructed) {
+      return 'Obstructed';
+    }
+    if (!item) {
+      return 'Nothing';
+    }
+    return item;
+  };
 
   return (
     <LabeledList.Item label={name}>
-      <Button color={item ? 'default' : 'transparent'} fluid onClick={() => act('access-slot', { id })}>
-        {item ? item : 'Nothing'}
+      <Button color={!obstructed && item ? 'default' : 'transparent'} fluid onClick={() => act('access-slot', { slot })}>
+        {getItemName(obstructed, item)}
       </Button>
     </LabeledList.Item>
   );
 };
+
+
+
