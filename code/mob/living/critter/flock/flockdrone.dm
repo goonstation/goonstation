@@ -1205,10 +1205,10 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
 	cost = 20
-	stun = 40
+	stun = 25
 	damage = 4
-	dissipation_rate = 1
-	dissipation_delay = 3
+	dissipation_rate = 3
+	dissipation_delay = 4
 	sname = "stunbolt"
 	shot_sound = 'sound/weapons/laser_f.ogg'
 	shot_number = 1

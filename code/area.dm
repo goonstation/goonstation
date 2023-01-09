@@ -749,6 +749,16 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle2"
 	force_fullbright = 0
 
+/area/shuttle/centcom_elevator/upper
+	name = "Centcom Lift Upper Section"
+	icon_state = "shuttle"
+	force_fullbright = 0
+
+/area/shuttle/centcom_elevator/lower
+	name = "Centcom Lift Lower Section"
+	icon_state = "shuttle2"
+	force_fullbright = 0
+
 /area/shuttle/recovery_shuttle
 	name = "Recovery Shuttle Dock"
 	icon_state = "shuttle2"

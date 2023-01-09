@@ -6,14 +6,6 @@ Left Mouse Button on turf/mob/obj      = SHOCK!<br>
 ***********************************************************"}
 	icon_state = "buildmode_zap"
 	var/wattage = 5000
-	var/tmp/obj/dummy
-
-	New()
-		dummy = new()
-		dummy.anchored = 0
-		dummy.set_density(0)
-		dummy.invisibility = INVIS_ALWAYS
-		..()
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		wattage = input("Shock wattage", "Wattage", wattage) as num
