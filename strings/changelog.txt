@@ -1,5 +1,7 @@
 
 (t)sun jan 08 23
+(u)Zamujasa
+(+)Corpses stop farting miasma everywhere when they fully decompose.
 (u)LeahTheTech
 (p)12479
 (e)🆕📦|C-Feature, A-Game-Objects
