@@ -161,7 +161,7 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    if (opts.twemoji) {
+    if (opts.twemoji && window.twemoji !== undefined) {
       return twemoji.parse(message, {
         folder: 'svg',
         ext: '.svg'
