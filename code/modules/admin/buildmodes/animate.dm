@@ -115,7 +115,7 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		update_button_text("Animate")
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		var/animationpick = input("Select animation.", "anim8", null) in animations
+		var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animations)
 		if (animationpick)
 			animation = animationpick
 			update_button_text("Animate: [animationpick]")
