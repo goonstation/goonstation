@@ -97,8 +97,14 @@
 				boutput(user, "You deactivate the interdictor's magnetic lock.")
 				playsound(src.loc, src.sound_togglebolts, 50, 0)
 			else
-				var/obj/cable/C = locate() in get_turf(src)
-				if(C)
+				var/clear_field = TRUE
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if(IX.canInterdict)
+						var/net_range = max(src.interdict_range,IX.interdict_range)
+						if(IN_RANGE(src,IX,net_range))
+							clear_field = FALSE
+							break
+				if(clear_field)
 					src.anchored = 1
 					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
@@ -106,7 +112,7 @@
 					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 						src.start_interdicting()
 				else
-					boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+					boutput(user, "<span class='alert'>An interdictor is already active within range.</span>")
 		else
 			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
@@ -127,8 +133,14 @@
 					boutput(user, "You deactivate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
 				else
-					var/obj/cable/C = locate() in get_turf(src)
-					if(C)
+					var/clear_field = TRUE
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if(IX.canInterdict)
+							var/net_range = max(src.interdict_range,IX.interdict_range)
+							if(IN_RANGE(src,IX,net_range))
+								clear_field = FALSE
+								break
+					if(clear_field)
 						src.anchored = 1
 						src.connected = 1
 						boutput(user, "You activate the interdictor's magnetic lock.")
@@ -136,7 +148,7 @@
 						if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 							src.start_interdicting()
 					else
-						boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+						boutput(user, "<span class='alert'>Cannot activate interdictor - </span>")
 		else
 			..()
 
