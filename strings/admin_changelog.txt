@@ -1,3 +1,6 @@
+(t)sat jan 07 23
+(u)Sovexe
+(*)A new shared admin psuedo adventure zone is now available. Use Retreat-To-Satellite or inquire about the secret enterance to go there and explore! I hope to see this zone grow overtime and welcome others to contribute to it.
 (t)sun dec 11 22
 (u)pali
 (*)I moved some things from coder rank to admin rank:<br>announcements and admin PMs no longer strip HTML when sent by admins<br>clicking on the window icon in the very top left corner now lets you access some misc stuff but namely the profiler when you want to know what's causing the lag<br>the detergent event is no longer locker to coders<br>The verbs financial-info, adjust-budget, randomize-appearance, mass-flock-convert and flock-cheats are now on the admin rank

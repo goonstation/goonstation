@@ -24385,7 +24385,7 @@
 	icon_state = "tabledir";
 	dir = 8
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -26118,7 +26118,7 @@
 	icon_state = "woodentable";
 	dir = 10
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -33097,7 +33097,7 @@
 	dir = 8
 	},
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/white,
 /area/space)

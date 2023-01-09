@@ -422,11 +422,12 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	anchored = TRUE
 	// this would make it connect to the centre, for like terminals and whatnot
-	// has to be var edited because lazy
+	// subtype node sets this to true
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
+	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
 /obj/cablespawner/New()
@@ -463,35 +464,26 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
-	for (var/obj/cablespawner/spawner in orange(1, src))
+	var/list/selftile = list()
+	for (var/obj/cablespawner/dupe in range(0, src))
+		if (istype(dupe, src))
+			selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple cablespawners on coordinate [src.x] x [src.y] y!")
+	qdel(selftile)
+	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
-		var/disx = spawner.x - src.x
-		var/disy = spawner.y - src.y
-		if (disy == 1)
-			if (disx == 1)
-				cable_surr |= NORTHEAST_UNIQUE
-			else if (disx == -1)
-				cable_surr |= NORTHWEST_UNIQUE
-			else
-				cable_surr |= NORTH
-		else if (disy == -1)
-			if (disx == 1)
-				cable_surr |= SOUTHEAST_UNIQUE
-			else if (disx == -1)
-				cable_surr |= SOUTHWEST_UNIQUE
-			else
-				cable_surr |= SOUTH
-		else if (disy == 0)
-			if (disx == 1)
-				cable_surr |= EAST
-			else if (disx == -1)
-				cable_surr |= WEST
+		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
+		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
+			if (spawner.cable_type == src.cable_type)
+				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
-	we'll get rid of the corners and connect in NESOUTHWEST_UNIQUE directions first.
+	we'll get rid of the corners and connect in cardinal directions first.
 	This gets rid of diagonals in 2x2 and 3x3 grids, and stops small 'L's from becoming triangles.
-	if a diagonal tile is next to a cardinal, we disregard it.
-	This won't work on the manually connected cables.
+	if an ordinal tile is next to a cardinal, we disregard it.
+	This won't work on the manually connected cables, which is why they're considered afterwards.
+	Regular cables are always forcibly connected.
 	*/
 	if (cable_surr & NORTHEAST_UNIQUE)
 		if (cable_surr & NORTH || cable_surr & EAST)
@@ -512,75 +504,50 @@
 	* directions. This if statement fixes that, by making the bottom left alter the bottom right one.
 	*/
 	if (cable_surr & EAST)
-		for (var/obj/cablespawner/spawner in orange(1, src))
-			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
-				spawner.cable_surr |= WEST
+	// optimises the outlier case
+		for (var/obj/cablespawner/spawner in get_step(src, EAST))
+			spawner.cable_surr |= WEST
 
-	for (var/obj/cable/normal_cable in orange(1, src))
-	// checks normal, prexisting, manually placed cables (must be joined to no matter what)
-	// turns out, since initialize() does cablespawners one by one
-	// they turn into regular cables and must be considered like that by the system
-	// making this bit MANDATORY
-		var/disx = normal_cable.x - src.x
-		var/disy = normal_cable.y - src.y
-		if (disy == 1)
-			if (disx == 1)
-				if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
-					cable_surr |= NORTHEAST_UNIQUE
-			else if (disx == -1)
-				if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
-					cable_surr |= NORTHWEST_UNIQUE
-			else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
-				cable_surr |= NORTH
-		else if (disy == -1)
-			if (disx == 1)
-				if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
-					cable_surr |= SOUTHEAST_UNIQUE
-			else if (disx == -1)
-				if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
-					cable_surr |= SOUTHWEST_UNIQUE
-			else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
-				cable_surr |= SOUTH
-		else if (disy == 0)
-			if (disx == 1)
-				if (normal_cable.d1 == WEST || normal_cable.d2 == WEST)
-					cable_surr |= EAST
-			else if (disx == -1)
-				if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
-					cable_surr |= WEST
-		// the 'real' wires override and always connect to prevent loose ends
-		// cable_surr is any direction that needs to be connected to at all
-		// this bit does not get optimised
+	for (var/dir_to_c in alldirs)
+	// checks for regular cables (these always connect by default)
+		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
+		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
+			if (istype(normal_cable, src) || istype(src, normal_cable))
+				if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
+					cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
 	var/list/directions = list()
 	if (cable_surr & NORTH)
 		directions += NORTH
-	if (cable_surr & SOUTH)
-		directions += SOUTH
-	if (cable_surr & EAST)
-		directions += EAST
 	if (cable_surr & NORTHEAST_UNIQUE)
 		directions += NORTHEAST
+	if (cable_surr & EAST)
+		directions += EAST
 	if (cable_surr & SOUTHEAST_UNIQUE)
 		directions += SOUTHEAST
+	if (cable_surr & SOUTH)
+		directions += SOUTH
+	if (cable_surr & SOUTHWEST_UNIQUE)
+		directions += SOUTHWEST
 	if (cable_surr & WEST)
 		directions += WEST
 	if (cable_surr & NORTHWEST_UNIQUE)
 		directions += NORTHWEST
-	if (cable_surr & SOUTHWEST_UNIQUE)
-		directions += SOUTHWEST
 
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
-	// multiple cables, spiral out from the centre
+		CRASH("The cable spawner at [src.x] x [src.y] y doesn't connect to anything!")
 	else if (src.override_centre_connection)
+	// multiple cables, spiral out from the centre 'knot'
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	else if (length(directions) >= 3)
-		for (var/i in 1 to length(directions))
-			cable_laying(0, directions[i])
+	// generates multiple cables in a 'away from the centre' pattern.
+		for (var/i in 1 to length(directions) - 1)
+			cable_laying(directions[i], directions[1+i])
+		cable_laying(directions[1], directions[length(directions)])
 	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
@@ -592,6 +559,6 @@
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
-	current.d1 = dir1
-	current.d2 = dir2
+	current.d1 = min(dir1, dir2)
+	current.d2 = max(dir1, dir2)
 	current.UpdateIcon()
