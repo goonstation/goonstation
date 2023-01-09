@@ -14,7 +14,7 @@
 	<br>
 	Radiation pulses safely remodulated within field range
 	<br>
-	Radiation storms interdicted on a per-individual basis**
+	Radiation storms fully deflected from field area**
 	<br>
 	Solar flare disruptions reduced per onboard interdictor
 	<br>
@@ -25,7 +25,7 @@
 	<br>
 	<i>*WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
-	<i>**ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<i>**WARNING: heavy interdiction cost. An adequate grid supply MUST be present for reliable deflection, and a high-capacity cell is recommended.</i>
 	<br>
 	<i>***ADVISORY: as a countermeasure to capacitance failure, interdicting spatial tears will require reinitializing the interdictor if it was not installed near the tear at the time of the event.</i>
 	<br>
@@ -70,6 +70,8 @@
 	<br>
 	- Interdictor frame kit
 	<br>
+	- Nanotrasen standard diameter wrench
+	<br>
 	- Interdictor mainboard of your choice
 	<br>
 	- Interdictor phase-control rod
@@ -78,12 +80,12 @@
 	<br>
 	- Four lengths of industry-compliant electrical cable
 	<br>
-	- Soldering iron
+	- Screwdriver (magnetic acceptable; however, installation using a rotary bit is not recommended)
 	<br>
 	- Four sheets of industry-compliant steel
 	<br>
 	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
+	(III) Assemble objects using the sequence listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
 	<br>
 	<br>
 	<hr>
