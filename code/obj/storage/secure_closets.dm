@@ -303,32 +303,36 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
-	/obj/item/storage/toolbox/mechanical/yellow_tools,
-	/obj/item/storage/backpack/engineering,
-	/obj/item/storage/box/clothing/chief_engineer,
-	/obj/item/clothing/gloves/yellow,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/shoes/magnetic,
-	/obj/item/clothing/ears/earmuffs,
-	/obj/item/clothing/glasses/meson,
-	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/prepared/ceshielded,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/head/helmet/hardhat,
-	/obj/item/device/multitool,
-	/obj/item/device/flash,
-	/obj/item/stamp/ce,
-	/obj/item/clothing/suit/hi_vis,
-#ifdef UNDERWATER_MAP
-	/obj/item/clothing/suit/space/diving/engineering,
-	/obj/item/clothing/head/helmet/space/engineer/diving,
-#else
-	/obj/item/clothing/suit/space/engineer,
-	/obj/item/clothing/head/helmet/space/engineer,
-#endif
-	/obj/item/device/radio/headset/command/ce)
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded,
+		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/cargotele,
+		/obj/item/electronics/soldering,
+		/obj/item/electronics/scanner,
+		/obj/item/lamp_manufacturer/organic,
+		/obj/item/extinguisher,
+		/obj/item/pinpointer/category/apcs/station,
+	#ifdef UNDERWATER_MAP
+		/obj/item/clothing/suit/space/diving/engineering,
+		/obj/item/clothing/head/helmet/space/engineer/diving
+		/obj/item/clothing/shoes/flippers,
+		/obj/item/clothing/shoes/stomp_boots
+	#else
+		/obj/item/clothing/suit/space/engineer,
+		/obj/item/clothing/head/helmet/space/engineer,
+	#endif
+	)
 
 /* ==================== */
 /* ----- Security ----- */
