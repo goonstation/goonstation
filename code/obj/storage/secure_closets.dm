@@ -323,15 +323,18 @@
 		/obj/item/lamp_manufacturer/organic,
 		/obj/item/extinguisher,
 		/obj/item/pinpointer/category/apcs/station,
+	#ifdef MAP_OVERRIDE_OSHAN
+		/obj/item/clothing/shoes/stomp_boots,
+	#endif
 	#ifdef UNDERWATER_MAP
 		/obj/item/clothing/suit/space/diving/engineering,
 		/obj/item/clothing/head/helmet/space/engineer/diving
 		/obj/item/clothing/shoes/flippers,
-		/obj/item/clothing/shoes/stomp_boots
 	#else
 		/obj/item/clothing/suit/space/engineer,
 		/obj/item/clothing/head/helmet/space/engineer,
 	#endif
+
 	)
 
 /* ==================== */
