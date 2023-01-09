@@ -266,7 +266,6 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	. = ..()
 	if (.)
 		return
-	. = TRUE
 	switch(action)
 		if("toggle-bolts")
 			if (!src.active)
@@ -284,6 +283,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 					src.anchored = 1
 					src.UpdateIcon()
 				src.visible_message("<span class='alert'>[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
+				. = TRUE
 			else
 				ui.user.show_text("Turn the generator off first!", "red")
 				return
@@ -311,9 +311,11 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 							return
 			src.active = !src.active
 			src.visible_message("<span class='notice'>[ui.user] [src.active ? "activates" : "deactivates"] the [src].</span>")
+			. = TRUE
 
 		if("swap-target")
 			src.chargeAPC = !src.chargeAPC
+			. = TRUE
 
 		if("eject-tank")
 			if (src.active)
@@ -322,6 +324,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			if (src.internalTank)
 				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalTank] from the [src]!</span>")
 				src.eject_tank(ui.user)
+				. = TRUE
 			else
 				ui.user.show_text("There's no tank to eject.", "red")
 
@@ -332,6 +335,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			if (src.internalCell)
 				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalCell] from the [src]!</span>")
 				src.eject_cell(ui.user)
+				. = TRUE
 			else
 				ui.user.show_text("There's no cell to eject.", "red")
 
@@ -346,6 +350,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				if (1)
 					src.our_APC = get_local_apc(src)
 					ui.user.show_text("Connection to local APC established.", "blue")
+					. = TRUE
 				if (2)
 					src.our_APC = null
 					ui.user.show_text("Local APC doesn't have a power cell to charge.", "red")
