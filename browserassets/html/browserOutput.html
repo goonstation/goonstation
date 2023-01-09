@@ -4,6 +4,15 @@
 	<title>Chat</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style>
+		@font-face {
+			font-family: 'Twemoji';
+			src: url('{{resource("css/fonts/Twemoji.eot")}}');
+			src: url('{{resource("css/fonts/Twemoji.eot")}}') format('embedded-opentype'),
+				url('{{resource("css/fonts/Twemoji.ttf")}}') format('truetype');
+			text-rendering: optimizeLegibility;
+		}
+	</style>
 	<link rel="stylesheet" type="text/css" href="{{resource("css/font-awesome.css")}}" />
 	<link rel="stylesheet" type="text/css" href="{{resource("css/browserOutput.css")}}" />
 	<script type="text/javascript" src="{{resource("js/jquery.min.js")}}"></script>
@@ -37,7 +46,6 @@
 				<a href="#" class="highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
 				<a href="#" class="saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
 				<a href="#" class="clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
-				<a href="#" class="toggleEmojiFont" id="toggleEmojiFont"><span>Toggle emoji font</span> <i class="icon-smile"></i></a>
 				<a href="#" class="toggleMessageLimit" id="toggleMessageLimit"><span>Toggle message limit</span> <i class="icon-align-justify"></i></a>
 			</div>
 		</div>
@@ -47,6 +55,5 @@
 	<script type="text/javascript" src="{{resource("js/errorHandler.js")}}"></script>
 	<!-- <script type="text/javascript" src="{{resource("js/anchorme.js")}}"></script> -->
 	<script type="text/javascript" src="{{resource("js/browserOutput.js")}}"></script>
-	<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

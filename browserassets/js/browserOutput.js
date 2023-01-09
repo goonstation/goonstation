@@ -35,7 +35,6 @@ var opts = {
     'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
-    'twemoji': true, // whether Twemoji are used instead of the default emoji
     'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display
@@ -161,16 +160,8 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    if (opts.twemoji && window.twemoji !== undefined) {
-      return twemoji.parse(message, {
-        folder: 'svg',
-        ext: '.svg'
-      });
-    }
-    else {
-      var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-      return message.replace(pattern, '<span class="emoji">$1</span>');
-    }
+	var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+	return message.replace(pattern, '<span class="emoji">$1</span>');
 }
 
 //Send a message to the client
@@ -605,7 +596,6 @@ $(function() {
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
-        'stwemoji': getCookie('twemoji'),
         'smessageLimitEnabled': getCookie('messageLimitEnabled')
     };
 
@@ -644,9 +634,6 @@ $(function() {
         body.addClass(savedConfig.stheme);
         opts.currentTheme = savedConfig.stheme;
         output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
-    }
-    if (savedConfig.stwemoji) {
-      opts.twemoji = true;
     }
     if (savedConfig.smessageLimitEnabled) {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
@@ -891,12 +878,6 @@ $(function() {
             opts.pingDisabled = true;
         }
         setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
-    });
-
-    $('#toggleEmojiFont').click(function(e) {
-        opts.twemoji = !opts.twemoji;
-        setCookie('twemoji', opts.twemoji, 365);
-        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
     });
 
     $('#toggleMessageLimit').click(function(e) {
