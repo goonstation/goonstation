@@ -328,8 +328,8 @@
 	#endif
 	#ifdef UNDERWATER_MAP
 		/obj/item/clothing/suit/space/diving/engineering,
-		/obj/item/clothing/head/helmet/space/engineer/diving
-		/obj/item/clothing/shoes/flippers,
+		/obj/item/clothing/head/helmet/space/engineer/diving,
+		/obj/item/clothing/shoes/flippers
 	#else
 		/obj/item/clothing/suit/space/engineer,
 		/obj/item/clothing/head/helmet/space/engineer,
