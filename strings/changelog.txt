@@ -1,4 +1,25 @@
 
+(t)mon jan 09 23
+(u)LeahTheTech
+(p)12684
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Flockdrones can now stun silicons again.
+(t)sun jan 08 23
+(u)Zamujasa
+(+)Corpses stop farting miasma everywhere when they fully decompose.
+(u)LeahTheTech
+(p)12479
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)More types of stones can now be broken with mining tools.
+(u)LeahTheTech
+(p)12673
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock incapacitors now take 3 hits to stun a human rather than 2.
+(t)sat jan 07 23
+(u)Mr. Moriarty
+(p)12632
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited .38 FMJ, Stun, and AP speedloaders.
 (t)fri jan 06 23
 (u)goonstation-enjoyer
 (p)12644

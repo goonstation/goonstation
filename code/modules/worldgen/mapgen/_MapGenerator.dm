@@ -44,6 +44,14 @@ area/map_gen
 	name = "planet generation area"
 	map_generator = /datum/map_generator/jungle_generator
 
+/area/map_gen/desert
+	name = "planet generation area"
+	map_generator = /datum/map_generator/desert_generator
+
+/area/map_gen/snow
+	name = "planet generation area"
+	map_generator = /datum/map_generator/snow_generator
+
 /turf/map_gen
 	name = "ungenerated turf"
 	desc = "If you see this, and you're not a ghost, yell at coders"
