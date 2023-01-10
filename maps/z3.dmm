@@ -21431,6 +21431,12 @@
 /turf/space,
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
+"oOU" = (
+/obj/table/flock/auto,
+/obj/machinery/light/flock,
+/obj/item/paper/flockstatsnote,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "oPd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94624,7 +94630,7 @@ atI
 apk
 aza
 aza
-aDX
+oOU
 aoz
 aEq
 aoz

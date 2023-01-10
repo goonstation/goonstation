@@ -1,4 +1,38 @@
 
+(t)tue jan 10 23
+(u)Tyrant
+(p)12364
+(e)🗺|A-Mapping
+(+)Unspaghetti'd the Cog2 TEG room cables.
+(u)Amylizzle
+(p)12609
+(e)⚖🧱|C-Balance, A-Materials
+(+)Koshmarite becomes even spookier, as it is now a weak source of neutron radiation.
+(u)Lord_Earthfire
+(p)12530
+(e)🆕|C-Feature
+(+)The botanical mister can be anchored into the ground by the use of a wrench or screwdriver.
+(u)goonstation-enjoyer
+(p)12659
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds a single cargo locker to Clarion
+(u)Amylizzle
+(p)12431
+(e)🆕🗺🧛|C-Feature, A-Mapping, A-Gamemodes
+(+)Flock statistics can now be found on  a teal stained note in Sa.Le's flockship.
+(u)Binne Boi
+(p)12103
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Sounds synth components will now also output text above them when activated. Along with a robotic bweep.
+(u)LeahTheTech
+(p)12674
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flock sentinels will no longer target incapacitated enemies.
+(t)mon jan 09 23
+(u)LeahTheTech
+(p)12684
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Flockdrones can now stun silicons again.
 (t)sun jan 08 23
 (u)Zamujasa
 (+)Corpses stop farting miasma everywhere when they fully decompose.

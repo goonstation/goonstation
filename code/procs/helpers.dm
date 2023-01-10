@@ -1255,7 +1255,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 	var/turf/T = get_turf(centre)
-	if(T.vistarget)
+	if(T?.vistarget)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
 

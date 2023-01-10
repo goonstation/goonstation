@@ -32,7 +32,7 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Segoe UI Emoji" !important;}
+.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;

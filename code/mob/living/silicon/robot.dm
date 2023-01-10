@@ -915,7 +915,7 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio <= 0.1)
+		if(P.proj_data.stun && P.proj_data.damage <= 5)
 			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
