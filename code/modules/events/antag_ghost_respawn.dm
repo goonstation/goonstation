@@ -1,9 +1,12 @@
 /datum/random_event/major/antag
+	///Can this event be given a custom spawn location
+	var/targetable = FALSE
 	var/turf/custom_spawn_turf = null
 	admin_call(var/source)
-		var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom")
-		if (custom_loc)
-			src.custom_spawn_turf = get_turf(pick_ref(usr))
+		if (src.targetable)
+			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom")
+			if (custom_loc)
+				src.custom_spawn_turf = get_turf(pick_ref(usr))
 /datum/random_event/major/antag/antagonist
 	name = "Antagonist Spawn"
 	required_elapsed_round_time = 26.6 MINUTES
@@ -12,6 +15,7 @@
 	centcom_headline = "Biogenic Outbreak"
 	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
 	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
+	targetable = TRUE
 	var/antagonist_type = "Blob"
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
 	var/respawn_lock = 0
