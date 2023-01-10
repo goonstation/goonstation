@@ -1,5 +1,9 @@
 
 (t)tue jan 10 23
+(u)Binne Boi
+(p)12103
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Sounds synth components will now also output text above them when activated. Along with a robotic bweep.
 (u)LeahTheTech
 (p)12674
 (e)⚖🧛|C-Balance, A-Gamemodes
