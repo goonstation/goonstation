@@ -1,5 +1,9 @@
 
 (t)tue jan 10 23
+(u)Lord_Earthfire
+(p)12530
+(e)🆕|C-Feature
+(+)The botanical mister can be anchored into the ground by the use of a wrench or screwdriver.
 (u)goonstation-enjoyer
 (p)12659
 (e)🪲🗺|C-Bug, A-Mapping
