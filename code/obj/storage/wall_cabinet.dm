@@ -376,7 +376,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/surgery
 	name = "surgical cabinet"
-	desc = "A wall-mounted cabinet containing surgery tools."
+	desc = "A wall-mounted cabinet containing surgical tools."
 	icon_state = "minimed"
 	slots = 13
 	spawn_contents = list(
