@@ -73,9 +73,9 @@
 
 /datum/zone_sel_offsets
 	var/list/offsets
-	var/isRotated = false
+	var/isRotated = FALSE
 
-	New(var/list/headpos, var/list/chestpos, var/list/larmpos, var/list/rarmpos, var/list/llegpos, var/list/rlegpos, var/isRotated = false)
+	New(var/list/headpos, var/list/chestpos, var/list/larmpos, var/list/rarmpos, var/list/llegpos, var/list/rlegpos, var/isRotated = FALSE)
 		..()
 		src.offsets = list("head" = headpos, "chest" = chestpos, "l_arm" = larmpos, "r_arm" = rarmpos, "l_leg" = llegpos, "r_leg" = rlegpos)
 		src.isRotated = isRotated

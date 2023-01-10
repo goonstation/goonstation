@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/is_annoying = FALSE
 	var/attack_damage = 3
 
-	var/static/datum/zone_sel_offsets/cat_static_zone_sel_offsets = new(list(8,6),list(0,4),list(6,-4),list(6,-4),list(-6,-4),list(-6,-4),true)
+	var/static/datum/zone_sel_offsets/cat_static_zone_sel_offsets = new(list(8,6),list(0,4),list(6,-4),list(6,-4),list(-6,-4),list(-6,-4),TRUE)
 
 	New()
 		..()
