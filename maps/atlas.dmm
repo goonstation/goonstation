@@ -542,6 +542,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/stool/chair/office{
+	dir = 1
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bj" = (
@@ -1379,6 +1382,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/stool/bench/blue/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dk" = (
@@ -1667,6 +1671,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/bench/blue/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dS" = (
