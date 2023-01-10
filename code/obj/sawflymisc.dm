@@ -36,9 +36,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 
 	attack_self(mob/user)
-		var/turf/T =  get_turf(src)
-		var/area/A = T.loc
-		if (A.sanctuary == TRUE && !istype(T.loc,/area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
+		var/area/A = get_area(src)
+		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
 			boutput(user, "<span class='notice'>You can't prime it here!</span>")
 			return
 		..()
@@ -110,7 +109,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 				S.foldself()
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
-			var/area/A = S.loc.loc // the best way i know (get turf doesnt work)
+			var/area/A = get_area(S)
 			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
 				continue
 			if (S.issawfly == TRUE) //check if we're allowed to prime the grenade
