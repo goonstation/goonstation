@@ -1,5 +1,9 @@
 
 (t)tue jan 10 23
+(u)Cherman0
+(p)12688
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gave the CE more useful tools in their locker and PDA.
 (u)Mr. Moriarty & LeahTheTech
 (p)12463
 (e)🆕🗺🎨🧫📄🧛|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-UI, A-Gamemodes
