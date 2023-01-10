@@ -1785,6 +1785,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "eh" = (
@@ -2277,7 +2282,7 @@
 /area/station/quartermaster/office)
 "fp" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/stairs/dark/wide,
+/turf/simulated/floor/airless/stairs/dark,
 /area/station/medical/morgue)
 "fq" = (
 /turf/simulated/floor/stairs/dark/wide{
@@ -2781,33 +2786,12 @@
 "gE" = (
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"gF" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "gG" = (
 /obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
 /area/station/security/main)
-"gH" = (
-/obj/machinery/light_switch/auto,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "gI" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /obj/decal/tile_edge/stripe/big{
@@ -3053,10 +3037,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/morgue)
-"hq" = (
-/obj/decal/poster/wallsign/biohazard,
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/morgue)
 "hr" = (
 /obj/machinery/light{
@@ -3864,6 +3844,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "ji" = (
+/obj/surgery_tray,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/biohazard_bags,
+/obj/item/hand_labeler,
+/obj/item/body_bag,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/random_item_spawner/desk_stuff/one,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
 	pixel_y = -3
@@ -3905,9 +3892,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "jn" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/optable,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "jo" = (
@@ -3981,17 +3966,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"jv" = (
-/obj/surgery_tray,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/biohazard_bags,
-/obj/item/hand_labeler,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/body_bag,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/random_item_spawner/desk_stuff/one,
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "jw" = (
 /obj/cable{
 	d1 = 4;
@@ -12569,6 +12543,16 @@
 	},
 /turf/simulated/floor/red,
 /area/station/bridge/united_command)
+"Dx" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "Dz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/refinery)
@@ -13375,6 +13359,12 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"FD" = (
+/obj/machinery/computer3/generic/med_data/console_lower,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "FE" = (
 /obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
@@ -13893,6 +13883,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "GV" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
+"GW" = (
+/obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
 "GY" = (
@@ -14762,6 +14756,20 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"Jl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "Jm" = (
 /obj/machinery/portableowl/attached{
 	name = "Hoot Couture"
@@ -19553,6 +19561,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
+"Wq" = (
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "Wr" = (
 /obj/machinery/vending/pizza/fallen{
 	color = "#b0a060";
@@ -19727,6 +19739,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"WL" = (
+/obj/item/storage/wall/surgery,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
 "WM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -69530,7 +69546,7 @@ HT
 Bx
 IY
 GV
-ga
+Wq
 hm
 ga
 dm
@@ -69831,7 +69847,7 @@ Hy
 eB
 Bx
 IY
-GV
+WL
 jn
 fp
 ji
@@ -70135,8 +70151,8 @@ Bx
 IZ
 GV
 jo
-fq
-jv
+fW
+ga
 dm
 aa
 PS
@@ -70437,8 +70453,8 @@ Bx
 IY
 GV
 eg
-fW
-ga
+fq
+Dx
 dm
 aa
 PS
@@ -70738,9 +70754,9 @@ qi
 Bx
 IY
 GV
-gH
-fq
-gF
+hp
+GW
+GV
 cZ
 aa
 PS
@@ -71040,8 +71056,8 @@ fg
 Bx
 IY
 GV
-hp
-GV
+Jl
+FD
 cZ
 cZ
 aa
@@ -71343,7 +71359,7 @@ Bx
 Ja
 gc
 eD
-hq
+cZ
 cZ
 aa
 aa
