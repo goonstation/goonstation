@@ -382,6 +382,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\effects\system\spark_spread.dm"
 #include "code\datums\effects\system\steam_spread.dm"
 #include "code\datums\flock\flock.dm"
+#include "code\datums\flock\flockstats.dm"
 #include "code\datums\flock\flockunlockable.dm"
 #include "code\datums\gamemodes\arcfiend.dm"
 #include "code\datums\gamemodes\assday_classic.dm"
