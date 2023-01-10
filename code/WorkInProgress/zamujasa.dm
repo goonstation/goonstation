@@ -959,7 +959,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -991,7 +991,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -1016,12 +1016,18 @@
 		farts
 			monitored_var = "farts"
 			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
+
+		slips
+			monitored_var = "slips"
+			maptext_prefix = "<span class='c pixel sh'>Slips:\n<span class='vga'>"
+			update_delay = 1
 
 		deaths
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = 'sound/misc/lose.ogg'
+			update_delay = 1
 
 			players
 				monitored_var = "playerdeaths"
@@ -1046,7 +1052,7 @@
 		violence
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
 
 		clones
 			monitored_var = "clones"
@@ -1058,6 +1064,8 @@
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
 			ding_sound = 'sound/misc/lose.ogg'
+			ding_on_change = 0
+			update_delay = 1
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])

@@ -329,7 +329,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.updateUsrDialog()
 
 /obj/machinery/recharge_station/proc/go_out()
-	if (!src.occupant)
+	if (QDELETED(occupant) || occupant && occupant.loc != src)
+		if(src.occupant)
+			src.occupant = null
+			src.build_icon()
 		return
 	src.occupant.set_loc(get_turf(src))
 	src.occupant = null

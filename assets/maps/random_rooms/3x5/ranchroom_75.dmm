@@ -2,41 +2,41 @@
 "a" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg,
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/railing/reinforced,
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 8
 	},
 /area/dmm_suite/clear_area)
 "g" = (
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "h" = (
 /obj/chicken_nesting_box,
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "o" = (
-/turf/simulated/floor/airless/green/side{
+/turf/simulated/floor/green/side{
 	dir = 1
 	},
 /area/dmm_suite/clear_area)
 "q" = (
-/turf/simulated/floor/airless/green,
+/turf/simulated/floor/green,
 /area/dmm_suite/clear_area)
 "s" = (
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 1
 	},
 /area/dmm_suite/clear_area)
 "v" = (
 /obj/railing/reinforced,
-/turf/simulated/floor/airless/green/corner,
+/turf/simulated/floor/green/corner,
 /area/dmm_suite/clear_area)
 "x" = (
 /obj/shrub{
@@ -51,13 +51,13 @@
 	nostick = 1;
 	pixel_x = -11
 	},
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 4
 	},
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/railing/reinforced,
-/turf/simulated/floor/airless/green/side,
+/turf/simulated/floor/green/side,
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/table/reinforced/auto,
@@ -67,11 +67,11 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/submachine/ranch_feed_grinder,
@@ -81,13 +81,13 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 "Z" = (
 /obj/stool/chair/green{
 	dir = 1
 	},
-/turf/simulated/floor/airless/damaged1,
+/turf/simulated/floor/damaged1,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

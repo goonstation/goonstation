@@ -61,7 +61,7 @@
 	var/fall_time = 2 SECONDS
 
 	attackby(obj/item/I, mob/user)
-		if ((issawingtool(I) || ischoppingtool(I)) && !isrestrictedz(src.z))
+		if ((issawingtool(I) || ischoppingtool(I)) && (!isrestrictedz(src.z) || isgenplanet(src)))
 			if (I.hitsound)
 				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
@@ -160,12 +160,39 @@
 	anchored = 1
 
 /obj/stone
-	name = "Stone"
+	name = "stone"
 	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
-	anchored = 1
-	density=1
+	anchored = TRUE
+	density = TRUE
+
+	_max_health = 25
+	_health = 25
+
+	attackby(obj/item/I, mob/user)
+		if ((istype(I, /obj/item/mining_tool) || istype(I, /obj/item/mining_tools)) && !isrestrictedz(src.z))
+			playsound(src, 'sound/impact_sounds/Stone_Cut_1.ogg', 50)
+			//bleh
+			if (istype(I, /obj/item/mining_tool))
+				src._health -= I.force
+			else
+				var/obj/item/mining_tools/tool = I
+				src._health -= tool.power * 2
+			if (src._health <= 0)
+				src.visible_message("<span class='alert'>\The [src] breaks apart.</span>", "<span class='alert'>You hear rock shattering.</span>")
+				for (var/i in 1 to 3)
+					new /obj/item/raw_material/rock{rand_pos = TRUE}(src.loc)
+				qdel(src)
+		. = ..()
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 	random
 		New()

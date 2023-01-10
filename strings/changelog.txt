@@ -1,5 +1,58 @@
 
+(t)mon jan 09 23
+(u)LeahTheTech
+(p)12684
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Flockdrones can now stun silicons again.
+(t)sun jan 08 23
+(u)Zamujasa
+(+)Corpses stop farting miasma everywhere when they fully decompose.
+(u)LeahTheTech
+(p)12479
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)More types of stones can now be broken with mining tools.
+(u)LeahTheTech
+(p)12673
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock incapacitors now take 3 hits to stun a human rather than 2.
+(t)sat jan 07 23
+(u)Mr. Moriarty
+(p)12632
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited .38 FMJ, Stun, and AP speedloaders.
+(t)fri jan 06 23
+(u)goonstation-enjoyer
+(p)12644
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Ranch random room is no longer airless
+(u)Amylizzle
+(p)12598
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Building external radiation shielding for the nuclear engine is now much more effective.
+(t)thu jan 05 23
+(u)pali
+(e)🐛|bug
+(+)The custom emote and whisper popups now autofocus correctly when opened again
+(+)Tgui input popups no longer eat last few characters when typing quickly
+(u)Azrun
+(p)12631
+(e)|
+(+)Generated planets may contain ore and be constructed on.
+(t)wed jan 04 23
+(u)tarmunora
+(+)killer tomato and buttbot plants have stricter yield limits
+(u)glowbold
+(p)12386
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs can override an intercom to the AI intercom frequency by holding the Bolting key and clicking on it.
+(+)AI intercom override locks down the frequency for one minute and enables microphones and speakers.
 (t)tue jan 03 23
+(u)tarmunora
+(*)Vampiric thralls burn in space and the chapel. Space/chapel burning drains blood from vampires and thralls
+(u)aloe
+(*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
+(u)aloe
+(+)Werewolves now have 100% cold protection. So much floof!
 (u)LeahTheTech
 (p)12585
 (e)⚖🧛|C-Balance, A-Gamemodes
@@ -499,7 +552,7 @@
 (u)Bartimeus973
 (p)11876
 (e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
-(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(*)Wraith-summoned critters received some changes! Details in minor notes.
 (+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
 (+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
 (u)Bartimeus973
@@ -856,7 +909,7 @@
 (u)Ikea
 (p)11015
 (e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
-(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(*)27-30 minutes into a rev round everyone receives a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping
