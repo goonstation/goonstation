@@ -71144,6 +71144,7 @@
 /obj/stool/chair/couch/purple{
 	dir = 4
 	},
+/mob/living/critter/small_animal/crab/responsive,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
 "lpO" = (

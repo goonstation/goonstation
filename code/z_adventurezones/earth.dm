@@ -706,3 +706,5 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 	New()
 		. = ..()
 		src.setMaterial(getMaterial("gnesisglass"))
+
+/mob/living/critter/small_animal/crab/responsive
