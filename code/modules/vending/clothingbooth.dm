@@ -24,12 +24,24 @@ var/list/clothingbooth_items = list()
 	clothingbooth_json = json_encode(boothlist)
 
 //setting up player-side UI data
-/obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
-	if(!user.client)
-		return
-	if(!ishuman(user))
-		return
+// /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
+// 	if(!user.client)
+// 		return
+// 	if(!ishuman(user))
+// 		return
 
+// 	var/mob/living/carbon/human/H = user
+// 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
+// 	qdel(src.preview_item)
+// 	src.preview_item = null
+// 	src.preview.remove_all_clients()
+// 	src.preview.add_client(user.client)
+
+// 	user << browse_rsc('browserassets/css/clothingbooth.css')
+// 	user << browse_rsc('browserassets/js/clothingbooth.js')
+// 	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
+
+/obj/machinery/clothingbooth/ui_interact(mob/user, datum/tgui/ui)
 	var/mob/living/carbon/human/H = user
 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
 	qdel(src.preview_item)
@@ -37,10 +49,10 @@ var/list/clothingbooth_items = list()
 	src.preview.remove_all_clients()
 	src.preview.add_client(user.client)
 
-	user << browse_rsc('browserassets/css/clothingbooth.css')
-	user << browse_rsc('browserassets/js/clothingbooth.js')
-	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
-
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ClothingBooth")
+		ui.open()
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
@@ -52,6 +64,7 @@ var/list/clothingbooth_items = list()
 	desc = "Contains a sophisticated autoloom system capable of manufacturing a variety of clothing items on demand."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
+	flags = TGUI_INTERACTIVE
 	anchored = 1
 	density = 1
 	//power_usage = 100
@@ -106,7 +119,7 @@ var/list/clothingbooth_items = list()
 				qdel(dummycredits)
 				return
 			else
-				uisetup(usr)
+				ui_interact(usr)
 				return
 		..()
 
@@ -188,6 +201,6 @@ var/list/clothingbooth_items = list()
 			user.set_loc(src)
 			src.close()
 			boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to view its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
-			uisetup(user)
+			ui_interact(user)
 	else
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, .proc/eject, null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
