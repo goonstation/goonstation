@@ -1,5 +1,9 @@
 
 (t)tue jan 10 23
+(u)goonstation-enjoyer
+(p)12659
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds a single cargo locker to Clarion
 (u)Amylizzle
 (p)12431
 (e)🆕🗺🧛|C-Feature, A-Mapping, A-Gamemodes
