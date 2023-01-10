@@ -182,7 +182,8 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(20,30)*6)
 		..()
 
-
+//contract below defines the details itself based on variety of order - this is just a dummy so as not to use an abstract type
+/datum/rc_entry/item/mealfood
 
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
@@ -199,7 +200,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 30; 2, 10; 3)
@@ -212,7 +213,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -225,7 +226,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -238,7 +239,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/item/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(40; 1, 40; 2, 20; 3)
