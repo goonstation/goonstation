@@ -2282,7 +2282,7 @@
 /area/station/quartermaster/office)
 "fp" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/airless/stairs/dark,
+/turf/simulated/floor/stairs/dark,
 /area/station/medical/morgue)
 "fq" = (
 /turf/simulated/floor/stairs/dark/wide{
@@ -3893,6 +3893,9 @@
 /area/station/medical/morgue)
 "jn" = (
 /obj/machinery/optable,
+/obj/item/storage/wall/surgery{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "jo" = (
@@ -19739,10 +19742,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
-"WL" = (
-/obj/item/storage/wall/surgery,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/morgue)
 "WM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -69847,7 +69846,7 @@ Hy
 eB
 Bx
 IY
-WL
+GV
 jn
 fp
 ji
