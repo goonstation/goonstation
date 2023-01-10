@@ -1,5 +1,10 @@
 
 (t)tue jan 10 23
+(u)Mr. Moriarty & LeahTheTech
+(p)12463
+(e)🆕🗺🎨🧫📄🧛|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-UI, A-Gamemodes
+(*)The Syndicate have installed the Cairngorm with a new station map display and associated controller remote, in the hope that these investments will result in a higher mission success rate. See Minor Changelog for details.
+(+)The Cairngorm station map will display, alongside the station, the location of the listening post, the two plant locations, all station warp beacons, and the position of the AI. The map controller may pan and zoom the map, and may place, delete, or toggle the visibility of the aforementioned map markers.
 (u)Tyrant
 (p)12364
 (e)🗺|A-Mapping
