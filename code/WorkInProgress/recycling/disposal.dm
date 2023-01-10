@@ -2002,7 +2002,7 @@ ABSTRACT_TYPE(/obj/disposalpipespawner)
 			selftile += dupe
 	if (length(selftile) > 1)
 		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
-	qdel(selftile)
+	selftile.Cut()
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
