@@ -1,5 +1,9 @@
 
 (t)tue jan 10 23
+(u)Tyrant
+(p)12364
+(e)🗺|A-Mapping
+(+)Unspaghetti'd the Cog2 TEG room cables.
 (u)Amylizzle
 (p)12609
 (e)⚖🧱|C-Balance, A-Materials
