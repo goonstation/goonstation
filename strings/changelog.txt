@@ -1,4 +1,9 @@
 
+(t)tue jan 10 23
+(u)LeahTheTech
+(p)12674
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flock sentinels will no longer target incapacitated enemies.
 (t)mon jan 09 23
 (u)LeahTheTech
 (p)12684
