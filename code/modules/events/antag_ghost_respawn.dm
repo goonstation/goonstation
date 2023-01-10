@@ -4,7 +4,7 @@
 	var/turf/custom_spawn_turf = null
 	admin_call(var/source)
 		if (src.targetable)
-			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom")
+			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom") == "Custom"
 			if (custom_loc)
 				src.custom_spawn_turf = get_turf(pick_ref(usr))
 /datum/random_event/major/antag/antagonist
