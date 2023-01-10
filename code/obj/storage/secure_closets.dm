@@ -317,12 +317,8 @@
 		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
-		/obj/item/cargotele,
-		/obj/item/electronics/soldering,
-		/obj/item/electronics/scanner,
-		/obj/item/lamp_manufacturer/organic,
+		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
-		/obj/item/pinpointer/category/apcs/station,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#endif
