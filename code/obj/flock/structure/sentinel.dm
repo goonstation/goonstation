@@ -94,7 +94,7 @@
 				if(src.flock?.isEnemy(A))
 					if (ismob(A))
 						var/mob/M = A
-						if (isdead(M))
+						if (isdead(M) || is_incapacitated(M))
 							continue
 					if (ON_COOLDOWN(A, "sentinel_shock", 2 SECONDS))
 						continue
@@ -115,7 +115,7 @@
 					if(src.flock?.isEnemy(A) && !(A in hit))
 						if (ismob(A))
 							var/mob/M = A
-							if (isdead(M))
+							if (isdead(M) || is_incapacitated(M))
 								continue
 						found_chain_target = TRUE
 						arcFlash(last_hit, A, wattage / 1.5, 1.1)
