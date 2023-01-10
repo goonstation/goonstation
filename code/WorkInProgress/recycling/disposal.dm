@@ -179,7 +179,7 @@
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
-
+	var/spawner_type = /obj/disposalpipespawner
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
 	dir = 0				//! dir will contain dominant direction for junction pipes
@@ -504,7 +504,24 @@
 			dir = SOUTH
 		west
 			dir = WEST
+	// /regular should be used instead of /segment from now on
+	// don't know if segment/horizontal and such are used, is the issue
+	regular
+		horizontal
+			dir = EAST
+		vertical
+			dir = NORTH
+		bent
+			icon_state = "pipe-c"
 
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -1522,6 +1539,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
+	// these four types need to be removed, but i dont know if they're used in maps
 	north
 		dir = NORTH
 	east
@@ -1531,6 +1549,15 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	west
 		dir = WEST
 
+	regular
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -1579,6 +1606,11 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
+
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe"
+		color = PIPEC_CARGO
 
 	New()
 		..()
@@ -1889,3 +1921,153 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+
+/obj/disposalpipespawner
+	icon = 'icons/obj/disposal.dmi'
+	name = "disposal pipe spawner"
+	icon_state = "pipe-spawner"
+	text = ""
+	var/pipe_type = /obj/disposalpipe/segment/regular
+	var/trunk_type = /obj/disposalpipe/trunk/regular
+	var/dpdir = 0		//! bitmask of pipe directions
+	regular
+		pipe_type = /obj/disposalpipe/segment/regular
+		trunk_type = /obj/disposalpipe/trunk/regular
+	mail
+		name = "mail pipe spawner"
+		color = PIPEC_MAIL
+		pipe_type = /obj/disposalpipe/segment/mail
+		trunk_type = /obj/disposalpipe/trunk/mail
+	brig
+		name = "brig pipe spawner"
+		color = PIPEC_BRIG
+		pipe_type = /obj/disposalpipe/segment/brig
+		trunk_type = /obj/disposalpipe/trunk/brig
+
+	ejection
+		name = "ejection pipe spawner"
+		color = PIPEC_EJECTION
+		pipe_type = /obj/disposalpipe/segment/ejection
+		trunk_type = /obj/disposalpipe/trunk/ejection
+
+	morgue
+		name = "morgue pipe spawner"
+		color = PIPEC_MORGUE
+		pipe_type = /obj/disposalpipe/segment/morgue
+		trunk_type = /obj/disposalpipe/trunk/morgue
+
+	food
+		name = "food pipe spawner"
+		color = PIPEC_FOOD
+		pipe_type = /obj/disposalpipe/segment/food
+		trunk_type = /obj/disposalpipe/trunk/food
+
+	produce
+		name = "produce pipe spawner"
+		color = PIPEC_PRODUCE
+		pipe_type = /obj/disposalpipe/segment/produce
+		trunk_type = /obj/disposalpipe/trunk/produce
+
+	transport
+		name = "transport pipe spawner"
+		color = PIPEC_TRANSPORT
+		pipe_type = /obj/disposalpipe/segment/transport
+		trunk_type = /obj/disposalpipe/trunk/transport
+
+	mineral
+		name = "mineral pipe spawner"
+		color = PIPEC_MINERAL
+		pipe_type = /obj/disposalpipe/segment/mineral
+		trunk_type = /obj/disposalpipe/trunk/mineral
+
+	cargo
+		name = "cargo pipe spawner"
+		color = PIPEC_CARGO
+		pipe_type = /obj/disposalpipe/segment/cargo
+		trunk_type = /obj/disposalpipe/trunk/cargo
+
+ABSTRACT_TYPE(/obj/disposalpipespawner)
+
+/obj/disposalpipespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/disposalpipespawner/initialize()
+	var/list/selftile = list()
+	for (var/obj/disposalpipespawner/dupe in range(0, src))
+		if (istype(dupe, src))
+			selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
+	selftile.Cut()
+	var/list/directions = list()
+	for(var/dir_to_pipe in cardinal)
+		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of its own type
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
+		// this checks all the different subtypes of pipe
+			// the ones which spit out at 90 degrees
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
+			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
+				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
+			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
+			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
+			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
+				dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+			// regular pipes and trunks
+			if(istype(maybe_pipe, src.pipe_type)\
+			|| istype(maybe_pipe, src.trunk_type))
+			// these only connect to their own kind btw
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
+				// makes sure they're pointing at you
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+	if (dpdir == 0)
+		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 1)
+		// lays a trunk pipe
+		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
+		current.dir = directions[1]
+		current.dpdir = dpdir
+		update_icon(current)
+	else if (length(directions) == 2)
+	// lays a normal pipe segment
+		if (dpdir == NORTHWEST || dpdir == NORTHEAST || dpdir == SOUTHWEST || dpdir == SOUTHEAST)
+		// curved pipe
+			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
+			current.dpdir = dpdir
+			// this is to make it face the right way, for the icon
+			if (dpdir == NORTHEAST)
+				current.dir = NORTH
+			else if (dpdir == NORTHWEST)
+				current.dir = WEST
+			else if (dpdir == SOUTHEAST)
+				current.dir = EAST
+			else if (dpdir == SOUTHWEST)
+				current.dir = SOUTH
+			current.icon_state = "pipe-c"
+			update_icon(current)
+		else
+		// straight pipe
+			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
+			current.dir = directions[1]
+			current.dpdir = dpdir
+			current.icon_state = "pipe-s"
+			update_icon(current)
+	else
+	// DO NOT MAKE JUNCTIONS, FOOLS
+		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	qdel(src)
