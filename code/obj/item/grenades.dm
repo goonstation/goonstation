@@ -133,16 +133,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
-			var/dir_id = 1
-			for (var/i in 2 to src.amount_to_spawn)
-				var/turf/adjacent = get_step(T, cardinal[dir_id])
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
 				if (istype(adjacent,/turf/simulated/floor))
 					new payload(adjacent)
 				else
 					new payload(T)
-				dir_id++
-				if (dir_id > 4)
-					dir_id = 1
 		qdel(src)
 
 /obj/item/old_grenade/spawner/banana
