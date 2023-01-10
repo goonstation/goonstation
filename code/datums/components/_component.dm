@@ -200,7 +200,7 @@ var/datum/signal_holder/global_signal_holder
 /datum/proc/RegisterSignal(datum/target, signal_type, proctype, override = FALSE, ...)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	if (islist(signal_type))
+	if (islist(signal_type) && !IS_COMPLEX_SIGNAL(signal_type))
 		var/static/list/known_failures = list()
 		var/list/signal_type_list = signal_type
 		var/message = "([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
