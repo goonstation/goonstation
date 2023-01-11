@@ -1067,7 +1067,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 3)
 		setProperty("reflective", 6)
-		setProperty("radioactive", 2)
+		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
 
 

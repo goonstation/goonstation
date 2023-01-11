@@ -208,6 +208,11 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"aaP" = (
+/obj/table/syndicate/auto,
+/obj/item/nukeop_minimap_controller,
+/turf/unsimulated/floor/carpet/red/decal/innercross,
+/area/syndicate_station/battlecruiser)
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -10319,10 +10324,6 @@
 	opacity = 1
 	},
 /area/marsoutpost)
-"aIn" = (
-/obj/table/syndicate/auto,
-/turf/unsimulated/floor/carpet/red/decal/outercross,
-/area/syndicate_station/battlecruiser)
 "aIo" = (
 /turf/unsimulated/wall/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
@@ -45586,12 +45587,6 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
-"cHA" = (
-/obj/item/cigpacket,
-/obj/item/matchbook,
-/obj/table/syndicate/auto,
-/turf/unsimulated/floor/carpet/red/decal/innercross,
-/area/syndicate_station/battlecruiser)
 "cHB" = (
 /obj/item/device/audio_log/radioship/small,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
@@ -56132,14 +56127,6 @@
 	icon_state = "cairngorm10"
 	},
 /area/syndicate_station/battlecruiser)
-"dgn" = (
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm11"
-	},
-/area/syndicate_station/battlecruiser)
 "dgo" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm12"
@@ -56242,19 +56229,6 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
-"dgF" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgG" = (
 /obj/cable{
@@ -60068,14 +60042,6 @@
 "dyi" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"dyk" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/gannets)
 "dyl" = (
 /turf/unsimulated/floor/carpet/arcade,
 /area/centcom/offices/gannets)
@@ -60700,6 +60666,17 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"dBe" = (
+/obj/admin_plaque{
+	name = "Leah \"Rascal\" Polaris's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dBf" = (
 /obj/item/gun/kinetic/riotgun{
 	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
@@ -62434,14 +62411,6 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHh" = (
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lounge)
-"dHi" = (
-/obj/storage/secure/closet/fridge/kitchen,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
-/obj/item/reagent_containers/food/snacks/slimjim,
-/obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHj" = (
@@ -67135,6 +67104,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lobby)
+"eaa" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "eaz" = (
 /obj/storage/crate/classcrate{
 	desc = "A crate for XIANG|GIESEL training materials.";
@@ -68755,6 +68734,10 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"gUB" = (
+/obj/flock_structure/compute,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "gUJ" = (
 /obj/securearea{
 	desc = "";
@@ -68798,6 +68781,10 @@
 "hav" = (
 /turf/unsimulated/floor/caution/corner/sw,
 /area/centcom/offices/azrun)
+"hba" = (
+/obj/machinery/light/flock/floor,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "hbc" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -68834,17 +68821,6 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
-"hgn" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 4;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8;
-	locked = 1
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "hgp" = (
 /obj/table/regal/auto,
 /obj/item/cigarbox/gold{
@@ -69000,6 +68976,17 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"hqN" = (
+/obj/stool/chair/couch/purple{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	on = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "hrN" = (
 /obj/machinery/light{
 	dir = 8
@@ -70552,6 +70539,20 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"kdD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/minimap/map_computer/nukeop,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/battlecruiser)
 "kew" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/assault_pod)
@@ -70764,6 +70765,13 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"kCf" = (
+/obj/stool/chair/couch/purple{
+	dir = 4
+	},
+/mob/living/critter/small_animal/crab/responsive,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "kCF" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -4
@@ -71033,6 +71041,12 @@
 /obj/table/auto,
 /obj/item/gun/kinetic/rpg7,
 /turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
+"lia" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket,
+/obj/item/matchbook,
+/turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "liR" = (
 /turf/unsimulated/floor/wood/two,
@@ -71920,6 +71934,25 @@
 /obj/decal/fakeobjects/dreambeach/stones,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"mLW" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	initial_reagents = "tequilasunrise";
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis{
+	layer = 4
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "mPS" = (
 /obj/item/radio_tape/adventure/xg4,
 /obj/table/wood/round/auto,
@@ -72849,6 +72882,9 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"obN" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "odb" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
@@ -74664,6 +74700,16 @@
 	icon_state = "logo_xg6"
 	},
 /area/iomoon/base)
+"rgX" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/slimjim,
+/obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/centcom/lounge)
 "rhp" = (
 /obj/cable{
 	d1 = 4;
@@ -74977,6 +75023,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"rBI" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "rBM" = (
 /obj/admin_plaque{
 	name = "Adhara's Office";
@@ -76844,6 +76897,15 @@
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
+"uWx" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/black,
+/area/centcom/offices/gannets)
 "uWF" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77234,6 +77296,9 @@
 	icon_state = "shore-0"
 	},
 /area/titlescreen)
+"vCK" = (
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "vCV" = (
 /obj/item/cigbutt{
 	pixel_x = 6
@@ -77397,6 +77462,17 @@
 	dir = 8
 	},
 /area/iomoon/base)
+"vOS" = (
+/obj/table/flock/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	name = "The secret to Flock balance";
+	pixel_w = 1;
+	pixel_y = -1;
+	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>"
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "vPQ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -77989,6 +78065,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"wVp" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 4;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "wWb" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -78286,6 +78370,19 @@
 	dir = 6
 	},
 /area/centcom/offices/janantilles)
+"xxs" = (
+/obj/table/wood/auto/desk,
+/obj/item/plant/flower/rose/poisoned{
+	name = "very suspicious rose";
+	pixel_x = -4;
+	pixel_y = 8;
+	trick = 1
+	},
+/obj/item/clothing/mask/mime{
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "xxK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -78298,6 +78395,22 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
+"xyS" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = -2;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78702,6 +78815,11 @@
 	icon_state = "leadwall"
 	},
 /area/centcom/gallery)
+"yea" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm11"
+	},
+/area/syndicate_station/battlecruiser)
 "yef" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
@@ -104758,7 +104876,7 @@ cIJ
 xPX
 des
 vkk
-dfo
+eaa
 dfQ
 dfQ
 sdh
@@ -106876,7 +106994,7 @@ dfz
 dfS
 dgl
 dgy
-dgF
+kdD
 dgT
 dhd
 dgT
@@ -107468,7 +107586,7 @@ bqW
 buX
 bvJ
 bVf
-cHA
+aaP
 cJw
 cMS
 cNu
@@ -107478,7 +107596,7 @@ dev
 dek
 dfC
 dfU
-dgn
+yea
 dgA
 dgH
 dek
@@ -107772,7 +107890,7 @@ btf
 bVe
 cHB
 bXh
-aIn
+lia
 cNu
 dcP
 btf
@@ -152257,7 +152375,7 @@ dyv
 wel
 wel
 wel
-dyk
+uWx
 wel
 wel
 vGl
@@ -154072,9 +154190,9 @@ nwN
 dnK
 niJ
 wel
-dvW
-dvW
-dvW
+xxs
+vCK
+xyS
 wel
 dxu
 dyh
@@ -154374,9 +154492,9 @@ fDe
 uaJ
 liR
 wel
-lRO
-dvW
-dvW
+rBI
+hba
+gUB
 tIu
 dxv
 dyh
@@ -154676,9 +154794,9 @@ wmi
 liR
 liR
 wel
-dvW
-dvW
-dvW
+hqN
+obN
+vOS
 wel
 dxw
 dyi
@@ -154978,9 +155096,9 @@ ttl
 tVG
 afR
 wel
-dvW
-dvW
-dvW
+kCf
+obN
+mLW
 wel
 dxx
 dyi
@@ -155281,7 +155399,7 @@ mwd
 wel
 wel
 wel
-hgn
+wVp
 wel
 wel
 wel
@@ -155582,7 +155700,7 @@ mbb
 wmb
 wmb
 wmb
-wmb
+dBe
 wmb
 wmb
 wmb
@@ -159146,7 +159264,7 @@ aES
 aES
 wLo
 wLo
-dHi
+rgX
 dHp
 wLo
 dHJ

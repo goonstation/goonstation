@@ -547,6 +547,7 @@ proc/generate_space_color()
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
 			var/turf/simulated/S = src
 			oldair = S.air
+			S.air = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!

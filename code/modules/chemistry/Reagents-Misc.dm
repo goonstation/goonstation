@@ -2167,7 +2167,7 @@ datum
 							holder.add_reagent(id, conversion_rate)
 					else
 						// we ate them all, time to die
-						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
+						if(holder?.my_atom?.material?.mat_id in list("gnesis", "gnesisglass")) // gnesis material prevents coag. gnesis from evaporating
 							return
 
 						holder.remove_reagent(id, conversion_rate)

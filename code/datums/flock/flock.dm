@@ -12,7 +12,6 @@ var/flock_signal_unleashed = FALSE
 	var/name
 	var/used_compute = 0
 	var/total_compute = 0
-	var/peak_compute = 0
 	var/list/all_owned_tiles = list()
 	var/list/busy_tiles = list()
 	var/list/priority_tiles = list()
@@ -50,24 +49,19 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
-	// stats stuff, if not listed above
-	var/drones_made = 0
-	var/bits_made = 0
-	var/deaths = 0
-	var/resources_gained = 0
-	var/partitions_made = 0
-	var/tiles_converted = 0
-	var/structures_made = 0
+	var/datum/flockstats/stats
 
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
+	src.stats = new(src)
 	processing_items |= src
 	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
 
 /datum/flock/proc/load_structures()
 	src.unlockableStructures = list()
@@ -208,14 +202,14 @@ var/flock_signal_unleashed = FALSE
 
 		if ("stats")
 			var/list/stats = list(
-				"Drones realized: " = src.drones_made,
-				"Bits formed: " = src.bits_made,
-				"Total deaths: " = src.deaths,
-				"Resources gained: " = src.resources_gained,
-				"Partitions created: " = src.partitions_made,
-				"Tiles converted: " = src.tiles_converted,
-				"Structures created: " = src.structures_made,
-				"Highest compute: " = src.peak_compute
+				"Drones realized: " = src.stats.drones_made,
+				"Bits formed: " = src.stats.bits_made,
+				"Total deaths: " = src.stats.deaths,
+				"Resources gained: " = src.stats.resources_gained,
+				"Partitions created: " = src.stats.partitions_made,
+				"Tiles converted: " = src.stats.tiles_converted,
+				"Structures created: " = src.stats.structures_made,
+				"Highest compute: " = src.stats.peak_compute
 				)
 
 			for (var/stat in stats)
@@ -232,17 +226,6 @@ var/flock_signal_unleashed = FALSE
 	flocks[src.name] = null
 	processing_items -= src
 	..()
-
-//stats should probably be on their own datum, but we'll do this for now
-/datum/flock/proc/reset_stats()
-	src.drones_made = 0
-	src.bits_made = 0
-	src.deaths = 0
-	src.resources_gained = 0
-	src.partitions_made = 0
-	src.tiles_converted = 0
-	src.structures_made = 0
-	src.peak_compute = 0
 
 /datum/flock/proc/total_health_percentage()
 	var/hp = 0
@@ -691,7 +674,7 @@ var/flock_signal_unleashed = FALSE
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	if (isfeathertile(T))
-		src.tiles_converted++
+		src.stats.tiles_converted++
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))

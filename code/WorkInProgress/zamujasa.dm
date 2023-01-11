@@ -938,6 +938,37 @@
 						return "Departing in [..(val)]"
 
 
+	ticker
+		New()
+			// Global ticker var
+			monitored = ticker
+			..()
+
+		round_timer
+			maptext_prefix = "<span class='c pixel sh'>Shift Time\n<span class='xfont'>"
+			monitored_var = "round_elapsed_ticks"
+			display_mode = "time"
+			update_delay = 1 SECOND
+
+
+	score_tracker
+		New()
+			// Global score_tracker var
+			monitored = score_tracker
+			..()
+
+		artifacts_analyzed
+			maptext_prefix = "<span class='c pixel sh'>Artifacts\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_analyzed"
+			ding_on_change = 1
+
+		artifacts_analyzed_correctly
+			maptext_prefix = "<span class='c pixel sh'>Correctly\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_correctly_analyzed"
+			ding_on_change = 1
+			// u did it
+			ding_sound = 'sound/machines/futurebuddy_beep.ogg'
+
 
 	location
 		require_var_or_list = 0

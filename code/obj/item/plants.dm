@@ -535,10 +535,12 @@
 				user.drop_item(src, FALSE)
 
 /obj/item/plant/flower/rose/poisoned
+	///Trick roses don't poison on attack, only on pickup
+	var/trick = FALSE
 	attack(mob/M, mob/user, def_zone)
-		if (!..() || is_incapacitated(M))
+		if (!..() || is_incapacitated(M) || src.trick)
 			return
-		src.poison(M, user)
+		src.poison(M)
 
 	prick(mob/user)
 		..()
