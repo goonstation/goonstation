@@ -52,9 +52,11 @@ export const LocalGenerator = (props, context) => {
                 <Stack align="baseline">
                   <Stack.Item basis="50%">
                     <Button
-                      width={11}
-                      content="Toggle Floor Bolts"
-                      onClick={() => handleToggleBolts()} />
+                      width={11.4}
+                      onClick={() => handleToggleBolts()}
+                      icon={boltsStatus ? ("toggle-on") : ("toggle-off")}>
+                      Toggle Floor Bolts
+                    </Button>
                   </Stack.Item>
                   <Stack.Item>
                     Status:
@@ -74,9 +76,11 @@ export const LocalGenerator = (props, context) => {
                 <Stack align="baseline">
                   <Stack.Item basis="50%">
                     <Button
-                      width={11}
-                      content="Toggle Generator"
-                      onClick={() => handleToggleGenerator()} />
+                      width={11.4}
+                      onClick={() => handleToggleGenerator()}
+                      icon={generatorStatus ? ("toggle-on") : ("toggle-off")}>
+                      Toggle Generator
+                    </Button>
                   </Stack.Item>
                   <Stack.Item>
                     Status:
@@ -96,9 +100,11 @@ export const LocalGenerator = (props, context) => {
                 <Stack align="baseline">
                   <Stack.Item basis="50%">
                     <Button
-                      width={11}
-                      content="Change Target"
-                      onClick={() => handleSwapChargeTarget()} />
+                      width={11.4}
+                      onClick={() => handleSwapChargeTarget()}
+                      icon="bolt">
+                      Change Target
+                    </Button>
                   </Stack.Item>
                   <Stack.Item>
                     Target:
@@ -125,9 +131,10 @@ export const LocalGenerator = (props, context) => {
             buttons={(
               <Button
                 icon="eject"
-                content="Eject"
                 disabled={!internalCell}
-                onClick={() => handleEjectCell()} />
+                onClick={() => handleEjectCell()}>
+                Eject
+              </Button>
             )}>
             {internalCell ? (
               <Stack vertical>
@@ -155,9 +162,10 @@ export const LocalGenerator = (props, context) => {
             buttons={(
               <Button
                 icon="wifi"
-                content="Connect"
                 disabled={!holding}
-                onClick={() => handleConnectAPC()} />
+                onClick={() => handleConnectAPC()}>
+                Connect
+              </Button>
             )}>
             {connectedAPC ? (
               <Stack vertical>
