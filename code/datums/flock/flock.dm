@@ -448,6 +448,9 @@ var/flock_signal_unleashed = FALSE
 				name_found = TRUE
 				src.active_names[name] = TRUE
 		tries++
+		if(phrase_log.is_uncool(jointext(splittext(name,"."),"")))
+			name_found = FALSE
+
 	if (!name_found && tries == max_tries)
 		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
