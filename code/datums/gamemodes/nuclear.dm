@@ -147,6 +147,8 @@
 	else //Add every single typepath into a list
 		for(var/i in 1 to length(target_location_names))
 			target_location_type += target_locations[target_location_names[i]]
+	src.create_plant_location_markers(target_locations, target_location_names)
+
 	if (!target_location_type)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
@@ -257,7 +259,6 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
-	src.create_plant_location_markers()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -404,14 +405,19 @@
 
 	while (. in blacklisted)
 
-/datum/game_mode/nuclear/proc/create_plant_location_markers()
+/datum/game_mode/nuclear/proc/create_plant_location_markers(var/list/target_locations, var/list/target_location_names)
 	// Find the centres of the plant sites.
-	for (var/area_type in src.target_location_type)
+	for (var/i in 1 to length(target_location_names))
+		var/marker_name
+		var/list/area/areas = list()
+		for (var/area_type in target_locations[target_location_names[i]])
+			areas += get_areas(area_type)
+
 		var/max_x = 1
 		var/min_x = world.maxx
 		var/max_y = 1
 		var/min_y = world.maxy
-		var/list/area/areas = get_areas(area_type)
+
 		for (var/area/area in areas)
 			if (area.z != Z_LEVEL_STATION)
 				continue
@@ -420,12 +426,13 @@
 				min_x = min(min_x, T.x)
 				max_y = max(max_y, T.y)
 				min_y = min(min_y, T.y)
+			if (!marker_name)
+				marker_name = capitalize(area.name)
 		var/target_x = (max_x + min_x) / 2
 		var/target_y = (max_y + min_y) / 2
 
 		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
-		var/area/A = plant_location.loc
-		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[capitalize(A.name)] Plant Site")
+		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
 
 /datum/game_mode/nuclear/process()
 	set background = 1
