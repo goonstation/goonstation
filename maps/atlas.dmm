@@ -1648,7 +1648,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "dR" = (
-/obj/stool/bench/blue/auto,
+/obj/stool/chair/blue{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dS" = (
@@ -2185,8 +2187,10 @@
 	},
 /area/station/security/main)
 "fg" = (
-/obj/stool/bench/blue/auto,
 /obj/machinery/light_switch/auto,
+/obj/stool/chair/blue{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "fh" = (
@@ -3816,6 +3820,9 @@
 	pixel_x = 8;
 	pixel_y = 6;
 	rc_flags = 9
+	},
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/blueish
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
