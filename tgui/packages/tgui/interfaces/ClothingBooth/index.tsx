@@ -1,8 +1,10 @@
 import { useBackend } from '../../backend';
-import { Divider, Dropdown, Flex, Section, Stack, Tabs } from '../../components';
+import { Box, Button, Divider, Dropdown, Flex, Section, Stack, Tabs } from '../../components';
 import { Fragment } from 'inferno';
 import { Window } from '../../layouts';
 import { ClothingBoothData } from './types';
+
+import { capitalize } from '.././common/stringUtils';
 
 export const ClothingBooth = (props, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
@@ -11,27 +13,40 @@ export const ClothingBooth = (props, context) => {
   return (
     <Window title={name} width={350} height={500}>
       <Window.Content>
-        <Flex direction="column">
-          <Flex.Item grow={3}>
+        <Flex fill direction="column">
+          <Flex.Item mb="0.5em">
+            <Section bold>
+              {`Balance: 420⪽`}
+            </Section>
+          </Flex.Item>
+          <Flex.Item>
             <Stack direction="row">
               <Stack.Item grow={1}>
                 <SlotTabs />
               </Stack.Item>
               <Stack.Item grow={3}>
-                <Stack direction="column">
-                  <Stack.Item grow={1}>
+                <Flex fill direction="column">
+                  <Flex.Item>
                     <Section>
                       <Dropdown selected="Accessories" />
                     </Section>
-                  </Stack.Item>
-                  <Stack.Item grow={3}>
-                    <Section>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Section fill scrollable> {/* this section has all the clothing items */}
+                      <ClothingBoothItem />
+                      <ClothingBoothItem />
+                      <ClothingBoothItem />
                       <ClothingBoothItem />
                     </Section>
-                  </Stack.Item>
-                </Stack>
+                  </Flex.Item>
+                </Flex>
               </Stack.Item>
             </Stack>
+          </Flex.Item>
+          <Flex.Item mt="0.5em">
+            <Section fill>
+              {`there's gonna be stuff here`}
+            </Section>
           </Flex.Item>
         </Flex>
       </Window.Content>
@@ -42,8 +57,8 @@ export const ClothingBooth = (props, context) => {
 const ClothingBoothItem = (props, context) => {
   return (
     <Fragment>
-      <Flex>
-        <Flex.Item>
+      <Stack align="center">
+        <Stack.Item>
           <img
             src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAA
             AgCAYAAABzenr0AAAAaXpUWHREZXNjcmlwdGlvbgAAeJwl x70KgCAUBtD
@@ -62,8 +77,18 @@ const ClothingBoothItem = (props, context) => {
               'horizontal-align': 'middle',
             }}
           />
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+        <Stack.Item grow={1}>
+          <Box bold>
+            {capitalize("Beaker")}
+          </Box>
+        </Stack.Item>
+        <Stack.Item>
+          <Button bold color="green" style={{ "width": "50px", "text-align": "center", "padding": "0px" }}>
+            {`150⪽`}
+          </Button>
+        </Stack.Item>
+      </Stack>
       <Divider />
     </Fragment>
   );
@@ -71,7 +96,7 @@ const ClothingBoothItem = (props, context) => {
 
 const SlotTabs = (props, context) => {
   return (
-    <Tabs vertical>
+    <Tabs fill vertical>
       <Tabs.Tab>Head</Tabs.Tab>
       <Tabs.Tab>Eyewear</Tabs.Tab>
       <Tabs.Tab>Mask</Tabs.Tab>
