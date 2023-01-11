@@ -10,7 +10,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	anchored = 1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	allow_stunned_dragndrop = 1
+	allow_stunned_dragndrop = TRUE
 	var/chargerate = 400
 	var/cabling = 250
 	var/list/cells = list()
@@ -45,16 +45,15 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (src.occupant)
 			boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 			src.go_out()
-		return
 
 	if (src.occupant)
 		src.process_occupant(mult)
 
 	use_power(power_usage)
-	return 1
+	return TRUE
 
 /obj/machinery/recharge_station/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if (src.conversion_chamber && !isrobot(user))
@@ -331,12 +330,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.updateUsrDialog()
 
 /obj/machinery/recharge_station/proc/go_out()
-	if (QDELETED(occupant) || occupant && occupant.loc != src)
-		if(src.occupant)
-			src.occupant = null
-			src.build_icon()
-		return
-	src.occupant.set_loc(get_turf(src))
+	MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 	src.occupant = null
 	src.build_icon()
 
