@@ -58,6 +58,7 @@
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
 	customization_available = 1
+	targetable = TRUE
 	var/num_critters = 0
 	var/critter_type = null
 #ifdef RP_MODE
@@ -219,6 +220,8 @@
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
 					O.implanted = 1
+					if (src.custom_spawn_turf)
+						M.current.set_loc(src.custom_spawn_turf)
 					antagify(M.current, null, 1)
 				candidates -= M
 
@@ -228,3 +231,4 @@
 	proc/cleanup_event()
 		src.critter_type = null
 		src.num_critters = 0
+		src.custom_spawn_turf = null
