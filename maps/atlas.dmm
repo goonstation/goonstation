@@ -12677,6 +12677,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/disk/data/floppy/manudrive/cleaner_grenade,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
 "Fa" = (
