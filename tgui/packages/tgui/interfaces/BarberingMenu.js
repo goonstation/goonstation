@@ -23,7 +23,9 @@ export const BarberingMenu = (props, context) => {
             <Stack wrap="wrap" justify="space-around">
               <Stack width="100%" inline justify="space-around">
                 <Icon name="magnifying-glass" />
-                <Input width="90%" onInput={(e, value) => setSearchText(value)} />
+                <Stack.Item grow>
+                  <Input width="100%" onInput={(e, value) => setSearchText(value)} />
+                </Stack.Item>
               </Stack>
               <Box width="100%" height="10px" />
               <HairPreviewList search_text={searchText}
@@ -31,10 +33,7 @@ export const BarberingMenu = (props, context) => {
                 all_hair_styles={available_styles} />
             </Stack>
           </Stack.Item>
-          <Stack.Item width="2%">
-            <Box style={{ "background-color": "white", "height": "100%", "width": "1px" }} />
-          </Stack.Item>
-          <Stack.Item position="fixed" width="29%">
+          <Stack.Item position="fixed" width="32%">
             <PreviewWindow />
           </Stack.Item>
         </Stack>
@@ -74,10 +73,10 @@ const HairPreview = (props, context) => {
   return (
     <Section width="140px" direction="column" align="center">
       <Image pixelated width="60px" height="100px" src={`${hair_style["hair_icon"]}`} />
-      <Box width="100%" fontSize="15px" textAlign="center" pb="10px">{hair_name}</Box>
+      <Box width="100%" fontSize="15px" textAlign="center" mb="10px">{hair_name}</Box>
       <Stack inline justify="space-between">
-        <Button color="blue" fontSize="11px" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
-        <Button color="blue" fontSize="11px" height="20px" icon="eye" onClick={() => act("update_preview", { "what_to_do": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
+        <Button color="blue" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
+        <Button color="blue" height="20px" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
       </Stack>
     </Section>
   );
@@ -90,7 +89,7 @@ const PreviewWindow = (props, context) => {
     <Section>
 
       <Stack justify="space-around" height="200px" wrap="wrap">
-        <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "what_to_do": "reset" })}>Reset</Button>
+        <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
         <ByondUi
           params={{
             id: preview,
@@ -103,18 +102,18 @@ const PreviewWindow = (props, context) => {
       </Stack>
       <hr />
       <Stack wrap="wrap" height="50px" align="center">
-        <Box p="1px solid black" bold>Top Hair: {current_hair_style["top"]}</Box>
-        <Box p="1px solid black" bold>Middle Hair: {current_hair_style["middle"]}</Box>
-        <Box p="1px solid black" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
+        <Box width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
+        <Box width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
+        <Box width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
       </Stack>
       <hr />
       <Stack width="100%" align="center" wrap="wrap" justify="space-around">
-        <Button icon="caret-up" onClick={() => act("update_preview", { "what_to_do": "change_direction", "direction": "north" })} />
+        <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
         <Stack width="100%" align="center" justify="space-around">
-          <Button icon="caret-left" onClick={() => act("update_preview", { "what_to_do": "change_direction", "direction": "west" })} />
-          <Button icon="caret-right" onClick={() => act("update_preview", { "what_to_do": "change_direction", "direction": "east" })} />
+          <Button icon="caret-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": "west" })} />
+          <Button icon="caret-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": "east" })} />
         </Stack>
-        <Button icon="caret-down" onClick={() => act("update_preview", { "what_to_do": "change_direction", "direction": "south" })} />
+        <Button icon="caret-down" onClick={() => act("update_preview", { "action": "change_direction", "direction": "south" })} />
       </Stack>
     </Section>
   );

@@ -512,7 +512,7 @@ TYPEINFO(/datum/component/barber)
 			return TRUE
 
 		if("update_preview")
-			switch(params["what_to_do"])
+			switch(params["action"])
 				if("new_hair")
 					var/datum/customization_style/new_hairstyle = new /datum/customization_style/none // If we don't find any styles, we are probably trying to use the "none" style.
 					var/all_hairs = null
