@@ -54,6 +54,11 @@ var/list/clothingbooth_items = list()
 		ui = new(user, src, "ClothingBooth")
 		ui.open()
 
+/obj/machinery/clothingbooth/ui_data(mob/user)
+	. = list(
+		"name" = name
+	)
+
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
 	var/datum/character_preview/multiclient/preview
