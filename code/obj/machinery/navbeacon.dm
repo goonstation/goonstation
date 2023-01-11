@@ -754,6 +754,16 @@ TYPEINFO(/obj/machinery/wirenav)
 			codes_txt = "delivery;dir=2"
 		west
 			codes_txt = "delivery;dir=8"
+	mining_north
+		location = "Mining"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
 
 /obj/machinery/navbeacon/tour
 	name = "tour beacon"
