@@ -276,30 +276,38 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
-			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
+			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src))
 			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.read_only = 1
 
 	chiefengineer
 		name = "\improper EngineDaemon Ultimate cartridge"
-		desc = "A limited edition cartridge for high-class engineers. The warranty label is missing."
+		desc = "A limited edition cartridge for high-class engineers. The warranty label is missing and it looks like it has been modified."
 		icon_state = "cart-engine"
-		file_amount = 64
+		file_amount = 256 //it has indeed been modified. not technically necessary (ce programs use 114 size) but seemed thematically appropriate
 
 		New()
 			..()
+			//Command stuff
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			//Engineer stuff
+			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src))
+			//QM stuff
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
-			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
-			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			//Miner stuff (lol)
 			src.read_only = 1
 
 	clown

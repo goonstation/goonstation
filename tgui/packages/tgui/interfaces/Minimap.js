@@ -1,18 +1,27 @@
+import { useBackend } from '../backend';
 import { ByondUi } from '../components';
 import { Window } from '../layouts';
 
-export const AIMap = (params, context) => {
+export const Minimap = (params, context) => {
+  const { data } = useBackend(context);
+  const {
+    title,
+    theme,
+    minimap_id,
+  } = data;
+
   return (
     <Window
+      title={title}
+      theme={theme}
       width={610}
       height={640}
-      title="AI station map"
     >
       <Window.Content>
         <ByondUi
           params={{
+            id: minimap_id,
             type: 'map',
-            id: "ai_map",
           }}
           style={{
             width: "600px",

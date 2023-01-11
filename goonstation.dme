@@ -1104,6 +1104,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\minimap\minimap.dm"
 #include "code\modules\minimap\minimap_marker.dm"
 #include "code\modules\minimap\minimap_object.dm"
+#include "code\modules\minimap\minimap_ui.dm"
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"
 #include "code\modules\mining\tile_events.dm"
