@@ -257,7 +257,9 @@ var/datum/signal_holder/global_signal_holder
 	if (!target)
 		return
 	var/list/lookup = target.comp_lookup
-	if(!signal_procs || !signal_procs[target] || !lookup)
+	if(!signal_procs || (!islist(sig_type_or_types) && (!signal_procs[target] || !lookup)))
+		// if sig_type_or_types is a list it's either a complex signal (in which case the conditions can fail but we still want to remove the signal)
+		// or it is a list which can potentially contain another complex signal in which case ditto
 		return
 	if(!islist(sig_type_or_types) || IS_COMPLEX_SIGNAL(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
@@ -293,9 +295,10 @@ var/datum/signal_holder/global_signal_holder
 			else
 				lookup[sig] -= src
 
-	signal_procs[target] -= sig_type_or_types
-	if(!signal_procs[target].len)
-		signal_procs -= target
+	if(signal_procs?[target])
+		signal_procs[target] -= sig_type_or_types
+		if(!signal_procs[target].len)
+			signal_procs -= target
 
 /**
   * Called on a component when a component of the same type was added to the same parent

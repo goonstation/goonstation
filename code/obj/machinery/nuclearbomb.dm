@@ -43,6 +43,9 @@
 
 		src.maptext_width = 64
 
+		// For status display updating
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+
 		START_TRACKING
 		..()
 
@@ -156,6 +159,7 @@
 		else
 			src.armed = TRUE
 			src.anchored = TRUE
+			src.change_status_display()
 			if (!src.image_light)
 				src.image_light = image(src.icon, "nblightc")
 				src.UpdateOverlays(src.image_light, "light")
@@ -385,6 +389,14 @@
 			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
+	proc/change_status_display()
+		var/datum/signal/status_signal = get_free_signal()
+		status_signal.source = src
+		status_signal.transmission_method = TRANSMISSION_RADIO
+		status_signal.data["command"] = "nuclear"
+		status_signal.data["address_tag"] = "STATDISPLAY"
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

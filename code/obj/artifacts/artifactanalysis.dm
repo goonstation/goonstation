@@ -11,31 +11,43 @@
 	var/artifactFaults = ""
 	var/artifactDetails = ""
 	var/lastAnalysis = 0
+	var/lastAnalysisErrors = ""
 
 	proc/checkArtifactVars(obj/O)
 		if(!O.artifact)
 			return FALSE
 		var/datum/artifact/A = O.artifact
+		var/list/analysisErrors = list()
 
 		lastAnalysis = 0
 
 		// check origin
 		if(A.artitype.type_name == src.artifactOrigin)
 			lastAnalysis++
+		else
+			analysisErrors += "origin"
 
 		// check type
 		if(A.type_name == src.artifactType)
 			lastAnalysis++
+		else
+			analysisErrors += "type"
 
 		// if a trigger would be redundant, let's just say it's cool!
 		if(A.automatic_activation || A.no_activation)
 			lastAnalysis++
 		else
 			// check if trigger is one of the correct ones
-			for(var/datum/artifact_trigger/T as anything in A.triggers)
+			var/datum/artifact_trigger/T = null
+			for(T as anything in A.triggers)
 				if(T.type_name == src.artifactTriggers)
 					lastAnalysis++
 					break
+			// BYOND thing: T will be null if the above loop does not break
+			if (!T)
+				analysisErrors += "trigger"
+
+		lastAnalysisErrors = analysisErrors.Join(", ")
 
 		// ok, let's make a name
 		// start with obscured name

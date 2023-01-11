@@ -950,6 +950,21 @@
 			display_mode = "time"
 			update_delay = 1 SECOND
 
+			wall_clock
+				name = "digital wall clock"
+				desc = "A digital readout of how long the shift has been so far."
+				maptext_prefix = "<span class='c xfont ol'>"
+				maptext_suffix = "</span>"
+
+				New()
+					maptext_y += 20
+					..()
+
+				offset
+					New()
+						maptext_x += 16
+						..()
+
 
 	score_tracker
 		New()
