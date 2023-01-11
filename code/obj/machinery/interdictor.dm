@@ -222,11 +222,12 @@
 		return
 	if(anchored)
 		if(intcap.charge < intcap.maxcharge && powered())
-			var/added = intcap.give(src.chargerate)
-			//boutput(world, "yep [added / CELLRATE]")
-			if(!src.canInterdict)
-				playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
-			use_power(added / CELLRATE)
+			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
+			if(amount_to_add)
+				var/added = intcap.give(amount_to_add)
+				if(!src.canInterdict)
+					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
+				use_power(added / CELLRATE)
 		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 			doupdateicon = 0
 			src.start_interdicting()
