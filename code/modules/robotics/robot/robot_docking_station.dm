@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/New()
 	..()
+	src.flags |= NOSPLASH
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()
@@ -121,21 +122,22 @@ TYPEINFO(/obj/machinery/recharge_station)
 			user.drop_item()
 		qdel(W)
 
-	else if (istype(W, /obj/item/reagent_containers/glass))
-		var/obj/item/reagent_containers/glass/G = W
-		if (!G.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
+	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
+	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+		if (!W.reagents.total_volume)
+			boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 			return
-		if (!G.reagents.has_reagent("fuel"))
-			boutput(user, "<span class='alert'>There's no fuel in [G]. It would be pointless to pour it in.</span>")
+		if (!W.reagents.has_reagent("fuel"))
+			boutput(user, "<span class='alert'>There's no fuel in [W]. It would be pointless to pour it in.</span>")
 			return
-		else
-			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
-			if (!G.reagents.total_volume)
-				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
-			src.reagents.isolate_reagent("fuel")
+		if (src.reagents.total_volume >= src.reagents.maximum_volume)
+			boutput(user, "<span class='alert'>[src] is full.</span>")
+			return
+		var/amount = min(W.reagents.total_volume, src.reagents.maximum_volume - src.reagents.total_volume, 50)
+		user.visible_message("<span class='notice'>[user] pours [amount] units of [W]'s contents into [src].</span>")
+		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+		W.reagents.trans_to(src, amount)
+		src.reagents.isolate_reagent("fuel")
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
@@ -329,7 +331,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.updateUsrDialog()
 
 /obj/machinery/recharge_station/proc/go_out()
-	if (!src.occupant)
+	if (QDELETED(occupant) || occupant && occupant.loc != src)
+		if(src.occupant)
+			src.occupant = null
+			src.build_icon()
 		return
 	src.occupant.set_loc(get_turf(src))
 	src.occupant = null

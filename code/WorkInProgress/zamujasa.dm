@@ -938,6 +938,52 @@
 						return "Departing in [..(val)]"
 
 
+	ticker
+		New()
+			// Global ticker var
+			monitored = ticker
+			..()
+
+		round_timer
+			maptext_prefix = "<span class='c pixel sh'>Shift Time\n<span class='xfont'>"
+			monitored_var = "round_elapsed_ticks"
+			display_mode = "time"
+			update_delay = 1 SECOND
+
+			wall_clock
+				name = "digital wall clock"
+				desc = "A digital readout of how long the shift has been so far."
+				maptext_prefix = "<span class='c xfont ol'>"
+				maptext_suffix = "</span>"
+
+				New()
+					maptext_y += 20
+					..()
+
+				offset
+					New()
+						maptext_x += 16
+						..()
+
+
+	score_tracker
+		New()
+			// Global score_tracker var
+			monitored = score_tracker
+			..()
+
+		artifacts_analyzed
+			maptext_prefix = "<span class='c pixel sh'>Artifacts\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_analyzed"
+			ding_on_change = 1
+
+		artifacts_analyzed_correctly
+			maptext_prefix = "<span class='c pixel sh'>Correctly\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_correctly_analyzed"
+			ding_on_change = 1
+			// u did it
+			ding_sound = 'sound/machines/futurebuddy_beep.ogg'
+
 
 	location
 		require_var_or_list = 0
@@ -959,7 +1005,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -991,7 +1037,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -1016,12 +1062,18 @@
 		farts
 			monitored_var = "farts"
 			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
+
+		slips
+			monitored_var = "slips"
+			maptext_prefix = "<span class='c pixel sh'>Slips:\n<span class='vga'>"
+			update_delay = 1
 
 		deaths
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = 'sound/misc/lose.ogg'
+			update_delay = 1
 
 			players
 				monitored_var = "playerdeaths"
@@ -1046,7 +1098,7 @@
 		violence
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
 
 		clones
 			monitored_var = "clones"
@@ -1058,6 +1110,8 @@
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
 			ding_sound = 'sound/misc/lose.ogg'
+			ding_on_change = 0
+			update_delay = 1
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])

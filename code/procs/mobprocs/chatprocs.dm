@@ -20,6 +20,10 @@
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing(LOG_SAY, src, "SAY: [html_encode(message)] [log_loc(src)]")
 
+/mob/verb/sa_verb(message as text)
+	set name = "sa"
+	src.say_verb(message)
+
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
