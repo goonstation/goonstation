@@ -1,5 +1,7 @@
 
 (t)tue jan 10 23
+(u)Zamujasa
+(*)Artifact analysis results will now tell you what you got incorrect (but not what the correct answer was).
 (u)LeahTheTech
 (p)12508
 (e)💅📦|C-QoL, A-Game-Objects
