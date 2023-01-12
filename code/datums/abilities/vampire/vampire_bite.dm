@@ -82,9 +82,9 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (isdead(HH))
+	if (HH.decomp_stage > 0)
 		if (prob(20))
-			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
+			boutput(M, "<span class='alert'>The blood of the rotten provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		H.change_vampire_blood(bitesize, 1)
