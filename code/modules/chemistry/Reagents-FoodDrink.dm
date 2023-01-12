@@ -2469,7 +2469,7 @@ datum
 				return
 
 		fooddrink/honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of honey in it."
 			reagent_state = LIQUID
@@ -2500,7 +2500,7 @@ datum
 				return
 
 		fooddrink/mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of mint in it."
 			reagent_state = LIQUID

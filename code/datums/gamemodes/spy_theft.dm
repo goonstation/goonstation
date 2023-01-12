@@ -212,28 +212,7 @@
 		src.update_bounty_readouts()
 
 /datum/game_mode/spy_theft/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/spy_theft/declare_completion()
 	. = ..()
 

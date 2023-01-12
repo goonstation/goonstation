@@ -220,7 +220,7 @@
 					user.visible_message("<span class='alert'>...but the blades of \the [src] aren't moving, so [user] just looks like an idiot.</span>")
 				return FALSE
 			if(0 to 60)
-				user.visible_message("<span class='alert'>...but the blades of \the [src] are barely moving, so [user] just recieves a bonk on the head.</span>")
+				user.visible_message("<span class='alert'>...but the blades of \the [src] are barely moving, so [user] just receives a bonk on the head.</span>")
 				user.TakeDamageAccountArmor("head", ceil(src.RPM/6), 0, 0, DAMAGE_BLUNT)
 				user.changeStatus("stunned", 3 SECONDS)
 				return FALSE

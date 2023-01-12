@@ -317,6 +317,10 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 
 	on_add()
 		. = ..()
+		// Ugly fix because I can't 'hook' into the brain damage proc- don't want to instantly kill people with weak organs
+		var/damage = src.data["amount"]
+		if (src.owner.traitHolder.hasTrait("weakorgans"))
+			damage /= 2 // ends up the same for frail people and non-frail
 		src.owner.take_brain_damage(data["amount"])
 
 
@@ -436,7 +440,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	desc = "Subject has sustained nerve damage, resulting in some impairments to motor control."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
+	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,

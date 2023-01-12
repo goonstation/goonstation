@@ -955,6 +955,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		..()
 		setProperty("meleeprot_head", 7)
 
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
+	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
+
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."

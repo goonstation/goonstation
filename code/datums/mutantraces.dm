@@ -1047,8 +1047,8 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
@@ -1360,6 +1360,7 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
@@ -1380,6 +1381,7 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf")
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")

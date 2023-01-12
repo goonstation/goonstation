@@ -91,7 +91,7 @@
 		else
 			return
 
-	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
@@ -110,7 +110,7 @@
 		if(istype(over_object, /obj/afterlife_donations))
 			return ..()
 
-		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
+		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")

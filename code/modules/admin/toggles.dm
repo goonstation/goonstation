@@ -374,6 +374,10 @@ client/proc/toggle_ghost_respawns()
 	if (!isliving(usr))
 		return
 	usr.nodamage = !(usr.nodamage)
+	var/list/datum/statusEffect/statuses = usr.getStatusList()
+	for (var/status in statuses)
+		if (statuses[status].effect_quality == STATUS_QUALITY_NEGATIVE)
+			usr.delStatus(status)
 	boutput(usr, "<span class='notice'><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
 	logTheThing(LOG_ADMIN, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
@@ -1000,10 +1004,21 @@ client/proc/toggle_ghost_respawns()
 	// I could probably get away with !(forced_desussification), but
 	// in this case the value is "above 1" or "zero", so it works fine
 	forced_desussification = ( forced_desussification ? 0 : 1 )
+	var/message = "toggled de-sussification [forced_desussification ? "on" : "off"]"
 
-	logTheThing(LOG_ADMIN, usr, "toggled de-sussification [forced_desussification ? "on" : "off"].")
-	logTheThing(LOG_DIARY, usr, "toggled de-sussification [forced_desussification ? "on" : "off"].", "admin")
-	message_admins("[key_name(usr)] toggled de-sussification [forced_desussification ? "on" : "off"]")
+	if (forced_desussification)
+		var/shockLevel = input(usr, "How strong of a zap?", "Shock Collar", 5000) as num
+		var/getsWorse = alert(usr, "Does it get worse each time? (They will absolutely get this to instant-gib levels)", "Fun Time", "YES... HA HA HA... YES!", "Nah")
+
+		// remember, any value above 0 = zzzzt
+		forced_desussification = shockLevel
+		forced_desussification_worse = (getsWorse == "Nah") ? 0 : 1
+
+		message += ", with shock level [shockLevel][forced_desussification_worse ? " (and rising)" : ""]"
+
+	logTheThing(LOG_ADMIN, usr, message)
+	logTheThing(LOG_DIARY, usr, message, "admin")
+	message_admins("[key_name(usr)] [message]")
 
 
 /client/proc/toggle_station_name_changing()

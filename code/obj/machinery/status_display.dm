@@ -31,6 +31,7 @@ TYPEINFO(/obj/machinery/status_display)
 					// 4 = Supply shuttle timer  -- NO LONGER SUPPORTED
 					// 5 = Research station destruct timer
 					// 6 = Mining Ore Score Tracking -- NO LONGER SUPPORTED
+					// 7 = Nuclear Operative Timer
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -49,15 +50,25 @@ TYPEINFO(/obj/machinery/status_display)
 
 	var/repeat_update = FALSE	// true if we are going to update again this ptick
 
+	/// Reference to the nuclear bomb in Nuclear Operatives mode
+	var/obj/machinery/nuclearbomb/the_bomb = null
+
+	/// Proxy object for putting map text on top of overlays
+	var/obj/proxy = null
+
 	var/image/crt_image = null
 
 	// new display
 	// register for radio system
 	New()
 		..()
-		src.layer -= 0.2
+		src.proxy = new
+		src.layer -= 0.3
+		proxy.plane = PLANE_NOSHADOW_ABOVE
+		proxy.layer = src.layer + 0.1
+		src.vis_contents += proxy
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
-		crt_image.layer = src.layer + 0.1
+		crt_image.layer = src.layer + 0.2
 		crt_image.plane = PLANE_DEFAULT
 		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
 		crt_image.alpha = 255
@@ -85,6 +96,12 @@ TYPEINFO(/obj/machinery/status_display)
 
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
+
+	disposing()
+		qdel(src.proxy)
+		src.proxy = null
+		. = ..()
+		
 
 	// timed process
 	process()
@@ -170,6 +187,32 @@ TYPEINFO(/obj/machinery/status_display)
 
 				update_display_lines(line1,line2)
 
+			if(7) // Nuclear Operative Bomb Armed!
+				if(isnull(src.the_bomb))
+					if(ticker.mode.type == /datum/game_mode/nuclear)
+						var/datum/game_mode/nuclear/game_mode = ticker.mode
+						src.the_bomb = game_mode.the_bomb
+					if(isnull(src.the_bomb))
+						for_by_tcl(nuke, /obj/machinery/nuclearbomb)
+							src.the_bomb = nuke
+							break
+				if (!src.the_bomb?.armed)
+					set_picture("nuclear")
+					return
+				set_picture_with_text("nuclear", src.the_bomb.get_countdown_timer())
+				if(src.repeat_update)
+					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
+					SPAWN(0.5 SECONDS)
+						src.repeat_update = FALSE
+						var/iterations = round(delay/5)
+						for(var/i in 1 to iterations)
+							if(mode != 7 || src.repeat_update) // kill early if message or mode changed
+								break
+							update()
+							if(i != iterations)
+								sleep(0.5 SECONDS) // set to update again in 5 ticks
+						src.repeat_update = TRUE
+
 		if(glow_in_dark_screen) // should re-add the glow if power is restored
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
@@ -205,11 +248,25 @@ TYPEINFO(/obj/machinery/status_display)
 		else
 			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
 
+	proc/set_picture_with_text(var/state, var/newText)
+		var/image/previous = GetOverlayImage("picture")
+		if (previous?.icon_state != state)
+			src.maptext = ""
+			var/image/newImage = SafeGetOverlayImage("picture", src.icon, src.picture_state)
+			newImage.layer = src.layer + 0.1
+			newImage.blend_mode = BLEND_INSET_OVERLAY
+			UpdateOverlays(newImage, "picture")
+			UpdateOverlays(null, "overlay_image")
+			UpdateOverlays(crt_image, "crt")
+			src.picture_state = state
+		proxy.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #fff">[newText]</span>"}
+
 	proc/set_picture(var/state)
 		var/image/previous = GetOverlayImage("picture")
 		if(previous?.icon_state == state)
 			return
 		src.maptext = ""
+		src.proxy.maptext = ""
 		picture_state = state
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=picture_state), "picture")
 		UpdateOverlays(null, "overlay_image")
@@ -221,6 +278,7 @@ TYPEINFO(/obj/machinery/status_display)
 		if(previous_state?.icon_state == state && previous_overlay?.icon_state == overlay)
 			return
 		src.maptext = ""
+		src.proxy.maptext = ""
 		picture_state = state+overlay
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "picture")
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=overlay), "overlay_image")
@@ -233,6 +291,7 @@ TYPEINFO(/obj/machinery/status_display)
 		lastdisplayline1 = line1
 		lastdisplayline2 = line2
 
+		src.proxy.maptext = ""
 		set_maptext(line1, line2)
 
 		if(GetOverlayImage("picture") || GetOverlayImage("overlay_image") || !GetOverlayImage("crt"))
@@ -280,6 +339,9 @@ TYPEINFO(/obj/machinery/status_display)
 					else
 						set_picture("destruct")
 
+			if("nuclear")
+				mode = 7
+				repeat_update = TRUE
 
 
 /obj/machinery/status_display/supply_shuttle

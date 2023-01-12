@@ -98,8 +98,9 @@
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		var/obj/flock_structure/structure = new src.building(get_turf(src), src.flock)
-		src.flock?.structures_made++
-		src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_TEALPRINT_COMPLETE, structure)
+		if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
+			src.flock.stats.structures_made++
+			src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_TEALPRINT_COMPLETE, structure)
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()

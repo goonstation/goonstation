@@ -444,7 +444,7 @@
 
 		if (isobj(target))
 			switch (user.smash_through(target, list("window", "grille", "blob")))
-				if (0)
+				if (FALSE)
 					if (isitem(target))
 						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
 						return
@@ -452,12 +452,11 @@
 						boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
 						return
 
-				if (1)
+				if (TRUE)
 					user.lastattacked = target
 					return
 
-		..()
-		return
+		. = ..()
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Nope. Not going to work. You're more likely to kill them.</span>")
@@ -490,7 +489,7 @@
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
 
-/datum/limb/bear/zombie
+/datum/limb/zombie
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
@@ -506,7 +505,12 @@
 		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
 			var/hit = FALSE
 			if (isitem(target))
-				boutput(user, "<span class='alert'>Your zombie arm is too dumb to be able to handle this item!</span>")
+				boutput(user, "<span class='hint'>You reach out for the [target].</span>")
+				var/datum/action/pickup = \
+					new /datum/action/bar/private/icon/callback(user, target, 1.5 SECONDS, /atom/proc.Attackhand, list(user, params, location, control),
+																null, null, null, (INTERRUPT_ACTION | INTERRUPT_ACT | INTERRUPT_STUNNED))
+				pickup.resumable = FALSE // so we can click something else to cancel the action
+				actions.start(pickup, user)
 				return
 			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
@@ -584,8 +588,6 @@
 			target.update_canmove()
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
-
-		return
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
