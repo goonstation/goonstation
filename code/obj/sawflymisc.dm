@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	attack_self(mob/user)
 		var/area/A = get_area(src)
 		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
-			boutput(user, "<span class='notice'>You can't prime it here!</span>")
+			boutput(user, "<span class='notice'>You can't prime [src] here!</span>")
 			return
 		..()
 
