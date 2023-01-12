@@ -4,7 +4,7 @@
 	customization_available = TRUE
 	always_custom = TRUE
 	name = "Crew respawn"
-	var/ghost_confirmation_delay = 60 SECONDS // time to acknowledge or deny respawn offer.
+	var/ghost_confirmation_delay = 20 SECONDS // time to acknowledge or deny respawn offer.
 	var/datum/job/respawn_job = null
 	var/num_crew = 1
 	var/objective_text = ""
