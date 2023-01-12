@@ -2128,7 +2128,8 @@ var/list/fun_images = list()
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
 		for(var/atom/thing as anything in clicked_turf)
-			atoms += thing
+			if(thing.name)
+				atoms += thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
