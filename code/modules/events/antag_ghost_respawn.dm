@@ -1,3 +1,12 @@
+/datum/random_event/major/antag
+	///Can this event be given a custom spawn location
+	var/targetable = FALSE
+	var/turf/custom_spawn_turf = null
+	admin_call(var/source)
+		if (src.targetable)
+			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom") == "Custom"
+			if (custom_loc)
+				src.custom_spawn_turf = get_turf(pick_ref(usr))
 /datum/random_event/major/antag/antagonist
 	name = "Antagonist Spawn"
 	required_elapsed_round_time = 26.6 MINUTES
@@ -6,6 +15,7 @@
 	centcom_headline = "Biogenic Outbreak"
 	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
 	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
+	targetable = TRUE
 	var/antagonist_type = "Blob"
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
 	var/respawn_lock = 0
@@ -382,20 +392,23 @@
 				boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 				i++
 
-			switch (send_to)
-				if (1)
-					if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
-						latejoin_missile_spawn(M3)
-					else
+			if (src.custom_spawn_turf)
+				M3.set_loc(src.custom_spawn_turf)
+			else
+				switch (send_to)
+					if (1)
+						if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
+							latejoin_missile_spawn(M3)
+						else
+							M3.set_loc(ASLoc)
+					if (2)
+						if (!job_start_locations["wizard"])
+							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+							M3.set_loc(ASLoc)
+						else
+							M3.set_loc(pick(job_start_locations["wizard"]))
+					if (3)
 						M3.set_loc(ASLoc)
-				if (2)
-					if (!job_start_locations["wizard"])
-						boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-						M3.set_loc(ASLoc)
-					else
-						M3.set_loc(pick(job_start_locations["wizard"]))
-				if (3)
-					M3.set_loc(ASLoc)
 			//nah
 			/*
 			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
@@ -420,5 +433,4 @@
 		src.message_delay = initial(src.message_delay)
 		src.admin_override = initial(src.admin_override)
 		src.antag_count = initial(src.antag_count)
-
-		return
+		src.custom_spawn_turf = null

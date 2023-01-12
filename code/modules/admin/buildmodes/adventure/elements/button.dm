@@ -9,7 +9,7 @@
 
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
-		button_type = input("Button type", "Button type", "ancient") in list("ancient", "red", "runes")
+		button_type = input("Button type", "Button type", "comp_button") in list("ancient", "red", "runes", "comp_button", "comp_switch")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")

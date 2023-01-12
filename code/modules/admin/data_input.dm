@@ -119,12 +119,7 @@
 				return
 
 		if (DATA_INPUT_REFPICKER)
-			var/datum/promise/promise = new
-			var/datum/targetable/refpicker/abil = new
-			abil.promise = promise
-			src.mob.targeting_ability = abil
-			src.mob.update_cursor()
-			input = promise.wait_for_value()
+			input = pick_ref(src.mob)
 
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
@@ -320,3 +315,12 @@
 
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
+
+///Gives the target mob a reference picker ability and returns the atom picked. Synchronous.
+/proc/pick_ref(mob/M)
+	var/datum/promise/promise = new
+	var/datum/targetable/refpicker/abil = new
+	abil.promise = promise
+	M.targeting_ability = abil
+	M.update_cursor()
+	return promise.wait_for_value()
