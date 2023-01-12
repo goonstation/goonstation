@@ -102,7 +102,6 @@ TYPEINFO(/mob/living/carbon/human)
 
 	var/datum/hud/human/hud
 	var/mini_health_hud = 0
-	var/static/datum/zone_sel_offsets/static_zone_sel_offsets = new(list(0,14),list(0,4),list(-6,0),list(6,0),list(-6,-10),list(6,-10))
 
 	//The spooky UNKILLABLE MAN
 	var/unkillable = 0
