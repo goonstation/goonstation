@@ -17,6 +17,9 @@
 		if (.)
 			return
 
+		if(BE.holder && !BE.activated_from_pool)
+			BE.holder.genetic_stability = max(0, BE.holder.genetic_stability + BE.stability_loss)
+
 		BE.stability_loss = 0
 		BE.name = "Stabilized " + BE.name
 		BE.altered = 1
