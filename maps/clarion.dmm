@@ -4705,6 +4705,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
