@@ -1,4 +1,7 @@
 
+(t)wed jan 11 23
+(u)aloe
+(+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.
 (t)tue jan 10 23
 (u)Zamujasa
 (*)Artifact analysis results will now tell you what you got incorrect (but not what the correct answer was).
