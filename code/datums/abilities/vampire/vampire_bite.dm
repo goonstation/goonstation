@@ -82,7 +82,7 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (HH.decomp_stage > 0)
+	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
 		if (prob(20))
 			boutput(M, "<span class='alert'>The blood of the rotten provides little sustenance...</span>")
 
