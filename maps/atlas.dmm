@@ -1965,7 +1965,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "eE" = (
 /obj/machinery/arc_electroplater,
@@ -2545,8 +2545,8 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/morgue,
-/obj/machinery/door/airlock/pyro/alt,
-/turf/simulated/floor/black,
+/obj/machinery/door/airlock/pyro/medical/morgue,
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "gd" = (
 /obj/machinery/rkit,
@@ -3013,7 +3013,10 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/black,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "hr" = (
 /obj/machinery/light{
@@ -12546,10 +12549,6 @@
 /obj/machinery/traymachine/morgue{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "Dz" = (
@@ -13368,10 +13367,12 @@
 	},
 /area/station/medical/medbay)
 "FD" = (
-/obj/machinery/computer3/generic/med_data/console_lower,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "FE" = (
 /obj/machinery/vending/jobclothing/medical,
@@ -14768,8 +14769,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/stool/chair/office/blue,
-/turf/simulated/floor/black,
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "Jm" = (
 /obj/machinery/portableowl/attached{
@@ -19549,6 +19549,16 @@
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
+"Wm" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 2
@@ -19577,7 +19587,9 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "Wq" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/firealarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "Wr" = (
@@ -20553,13 +20565,13 @@
 /turf/space,
 /area/space)
 "YC" = (
-/obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/obj/machinery/door/airlock/pyro/medical/morgue,
+/turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "YD" = (
 /turf/simulated/floor/black,
@@ -70784,7 +70796,7 @@ Fb
 WL
 YC
 hp
-GV
+Wm
 GV
 cZ
 aa
