@@ -685,7 +685,7 @@
 	icon_state = "light0"
 	anchored = 1
 	density = 0
-	var/on = 0
+	var/on = FALSE
 	var/id = null
 
 	New()
