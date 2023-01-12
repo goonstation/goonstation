@@ -244,6 +244,10 @@
 	if (!isdead(src))
 		damage = rand(modifier, 12 + 8 * modifier)
 
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, damage * 2, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
+
 	if (shielded)
 		damage /= 4
 

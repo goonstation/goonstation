@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/health_scanner)
-	mats = list("CON-1" = 5, "CRY" = 2)
+	mats = list("CON-1" = 5, "CRY-1" = 2)
 
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'

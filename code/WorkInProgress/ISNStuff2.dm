@@ -173,7 +173,7 @@
 	density = 1
 	anchored = 1
 	icon = 'icons/misc/mechanicsExpansion.dmi'
-	icon_state = "comp_button"
+	icon_state = "button_comp_button_unpressed"
 	var/steps_until_pressable = 18
 	var/being_pressed = 0
 	var/has_been_pressed = 0
