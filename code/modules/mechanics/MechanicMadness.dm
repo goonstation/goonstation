@@ -287,8 +287,8 @@
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
-	icon_state = "button_comp_button_unpressed
-	var/icon_up = "button_comp_button_unpressed
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	density = 1
 	anchored= 1
