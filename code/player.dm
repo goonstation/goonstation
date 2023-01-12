@@ -307,6 +307,7 @@
 
 /// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
 /proc/make_player(key)
+	RETURN_TYPE(/datum/player)
 	var/datum/player/player = find_player(key) // just double check so that we don't get any dupes
 	if (!player)
 		player = new(key)
