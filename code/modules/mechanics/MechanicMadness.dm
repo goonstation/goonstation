@@ -2623,8 +2623,8 @@
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
-	icon_state = "button_comp_button_unpressed
-	var/icon_up = "button_comp_button_unpressed
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
@@ -2655,7 +2655,7 @@
 					icon_up = "button_comp_switch_unpressed"
 					icon_down = "button_comp_switch_pressed"
 				else
-					icon_up = "button_comp_button_unpressed
+					icon_up = "button_comp_button_unpressed"
 					icon_down = "button_comp_button_pressed"
 				icon_state = icon_up
 				src.set_loc(target)
