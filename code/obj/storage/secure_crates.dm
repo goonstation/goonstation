@@ -177,12 +177,15 @@
 				B3.pixel_x = -6
 				B3.pixel_y = -4
 
-				var/obj/item/material_piece/glass/B4 = new(src)
+				var/obj/item/material_piece/steel/B4 = new(src)
 				B4.pixel_x = -6
-				B4.pixel_y = 4
 
-				var/obj/item/disk/data/floppy/manudrive/interdictor_parts/B5 = new(src)
-				B5.pixel_x = 6
+				var/obj/item/material_piece/glass/B5 = new(src)
+				B5.pixel_x = -6
+				B5.pixel_y = 4
+
+				var/obj/item/disk/data/floppy/manudrive/interdictor_parts/B6 = new(src)
+				B6.pixel_x = 6
 				return 1
 
 
