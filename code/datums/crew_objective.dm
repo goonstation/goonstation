@@ -72,6 +72,8 @@
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
 
+/datum/objective/crew/custom
+
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
 	explanation_text = "Don't lose your hat!"

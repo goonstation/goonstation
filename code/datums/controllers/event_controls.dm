@@ -225,61 +225,23 @@ var/datum/event_controller/random_events
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
 		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if (href_list["TriggerEvent"] || href_list["TriggerMEvent"] || href_list["TriggerSEvent"] || href_list["TriggerStartEvent"])
+			var/datum/random_event/RE
+			if(href_list["TriggerEvent"])
+				RE = locate(href_list["TriggerEvent"]) in events
+			else if(href_list["TriggerMEvent"])
+				RE = locate(href_list["TriggerMEvent"]) in minor_events
+			else if(href_list["TriggerSEvent"])
+				RE = locate(href_list["TriggerSEvent"]) in special_events
+			else if(href_list["TriggerStartEvent"])
+				RE = locate(href_list["TriggerStartEvent"]) in start_events
 
-		if(href_list["TriggerEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerEvent"]) in events
 			if (!istype(RE,/datum/random_event/))
 				return
 			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
 			if (choice == "Yes")
 				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerMEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerMEvent"]) in minor_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerSEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerSEvent"]) in special_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerStartEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerStartEvent"]) in start_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
+					if (RE.always_custom || alert("Random or custom variables?","[RE.name]","Random","Custom") == "Custom")
 						RE.admin_call(key_name(usr, 1))
 					else
 						RE.event_effect("Triggered by [key_name(usr)]")
