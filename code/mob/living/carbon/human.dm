@@ -1,5 +1,8 @@
 // human
 
+TYPEINFO(/mob/living/carbon/human)
+	var/datum/zone_sel_offsets/zone_sel_offsets = new(list(0,14),list(0,4),list(-6,0),list(6,0),list(-6,-10),list(6,-10))
+
 /mob/living/carbon/human
 	name = "human"
 	voice_name = "human"
@@ -185,7 +188,6 @@
 	src.attach_hud(hud)
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
-	src.zone_sel_offsets = static_zone_sel_offsets
 
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")

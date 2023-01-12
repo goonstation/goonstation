@@ -6,6 +6,10 @@
 		x:block_vision \
 	)
 
+
+TYPEINFO(/mob/living/carbon/human/monkey)
+	var/datum/zone_sel_offsets/zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
+
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
 	real_name = "monkey"
@@ -14,11 +18,8 @@
 #endif
 	static_type_override = /datum/mutantrace/monkey
 
-	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
-
 	New()
 		..()
-		src.zone_sel_offsets = static_monkey_zone_sel_offsets
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("monkey")
@@ -190,6 +191,10 @@
 				src.chest_item = idk
 				src.chest_item_sewn = 1
 
+
+TYPEINFO(/mob/living/carbon/human/npc/monkey)
+	var/datum/zone_sel_offsets/zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
+
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
 	real_name = "monkey"
@@ -204,11 +209,8 @@
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
 
-	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
-
 	New()
 		..()
-		src.zone_sel_offsets = static_monkey_zone_sel_offsets
 		START_TRACKING
 		if (!src.disposed)
 			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none

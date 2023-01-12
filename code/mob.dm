@@ -1,3 +1,6 @@
+TYPEINFO(/mob)
+	var/datum/zone_sel_offsets/zone_sel_offsets = null
+
 /mob
 	density = 1
 	layer = MOB_LAYER
@@ -37,7 +40,6 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
-	var/datum/zone_sel_offsets/zone_sel_offsets = null
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
 

@@ -311,6 +311,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 /* -------------------- Cat -------------------- */
 /* ============================================= */
 
+TYPEINFO(/mob/living/critter/small_animal/cat)
+	var/datum/zone_sel_offsets/zone_sel_offsets = new(list(8,6),list(0,4),list(6,-4),list(6,-4),list(-6,-4),list(-6,-4),TRUE)
+
 /mob/living/critter/small_animal/cat
 	name = "space cat"
 	real_name = "space cat"
@@ -335,12 +338,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/is_annoying = FALSE
 	var/attack_damage = 3
 
-	var/static/datum/zone_sel_offsets/cat_static_zone_sel_offsets = new(list(8,6),list(0,4),list(6,-4),list(6,-4),list(-6,-4),list(-6,-4),TRUE)
-
 	New()
 		..()
-		src.zone_sel_offsets = cat_static_zone_sel_offsets
-
 		if(src.name == "jons the catte")
 			src.is_pet = TRUE
 			src.is_annoying = TRUE

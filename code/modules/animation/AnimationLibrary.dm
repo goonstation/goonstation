@@ -249,8 +249,9 @@
 	var/zone_y = 0
 	if (istype(target, /mob) && M.zone_sel)
 		var/mob/targetMob = target
-		if (targetMob.zone_sel_offsets)
-			var/list/offset = targetMob.zone_sel_offsets.getOffset(M.zone_sel, targetMob)
+		var/typeinfo/mob/typeinfo = targetMob.get_typeinfo()
+		if (typeinfo.zone_sel_offsets)
+			var/list/offset = typeinfo.zone_sel_offsets.getOffset(M.zone_sel, targetMob)
 			zone_x = offset[1]
 			zone_y = offset[2]
 
