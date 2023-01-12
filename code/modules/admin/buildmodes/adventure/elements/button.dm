@@ -39,6 +39,8 @@
 				button.name = button_name
 				button.set_dir(holder.dir)
 				button.icon_state = "button_[button_type]_unpressed"
+				if(startswith(buttontype, "comp")) //crimes
+					button.icon = 'icons/misc/mechanicsExpansion.dmi'
 				button.button_type = button_type
 				button.set_density(button.density)
 				button.triggered = selected_triggerable.Copy()
