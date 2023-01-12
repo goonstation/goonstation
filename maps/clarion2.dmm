@@ -2,6 +2,10 @@
 "ae" = (
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
+"al" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/black,
+/area/space)
 "av" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
@@ -32,6 +36,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
+"aO" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "aP" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -43,6 +51,10 @@
 	dir = 6
 	},
 /area/station/medical/medbay/lobby)
+"aW" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
 "aY" = (
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -77,6 +89,13 @@
 /mob/living/silicon/hivebot/eyebot,
 /turf/space,
 /area/space)
+"bF" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "bH" = (
 /obj/machinery/turret{
 	name = "Fore exterior turret";
@@ -100,6 +119,17 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"bJ" = (
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "bL" = (
 /obj/item/device/radio/intercom/security,
 /obj/cable{
@@ -110,18 +140,36 @@
 "bT" = (
 /turf/simulated/floor/black,
 /area/station/security/equipment)
+"cg" = (
+/turf/simulated/floor/carpet/green/standard/edge/north,
+/area/station/engine/engineering/ce)
 "ci" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
+"cm" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/engineering/breakroom)
 "cn" = (
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "co" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/brig/genpop)
+"cp" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "cr" = (
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
@@ -130,6 +178,10 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"cx" = (
+/obj/machinery/nanofab/nuclear,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
 "cD" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -165,6 +217,9 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"dw" = (
+/turf/simulated/floor/carpet/green,
+/area/station/engine/engineering/ce)
 "dx" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
@@ -183,6 +238,25 @@
 "dO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
+"dU" = (
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/space)
 "dW" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
@@ -240,6 +314,9 @@
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"eI" = (
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
 "eL" = (
 /turf/simulated/floor/blackwhite/corner{
 	dir = 4
@@ -264,6 +341,12 @@
 	},
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/station/science/lab)
+"fg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "fi" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2{
@@ -349,9 +432,16 @@
 "gm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
+"go" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/monitoring)
 "gv" = (
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
+"gz" = (
+/obj/machinery/processor,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
 "gH" = (
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
@@ -378,6 +468,12 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"hm" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/mining/staff_room)
 "hp" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -388,6 +484,13 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"hv" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
+"hx" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/refinery)
 "hC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/gen_storage)
@@ -397,17 +500,37 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"hH" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "hJ" = (
 /turf/simulated/floor/carpet/blue/standard/edge,
 /area/station/crew_quarters/md)
+"hO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "hP" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/black,
 /area/space)
+"hR" = (
+/turf/simulated/floor/carpet/green/standard/edge/se,
+/area/station/engine/engineering/ce)
+"hV" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
 "hW" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"hZ" = (
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
 "id" = (
 /turf/simulated/floor/carpet/red/standard/edge{
 	dir = 4
@@ -417,6 +540,9 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
+"ih" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/engineering/ce)
 "ij" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
@@ -435,6 +561,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"iw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "iz" = (
 /turf/simulated/floor/redwhite{
 	dir = 9
@@ -466,6 +598,9 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"iP" = (
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
 "jb" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -487,6 +622,12 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"jh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "jn" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
@@ -499,6 +640,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ju" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side{
 	name = "Security South Hall";
@@ -509,6 +651,9 @@
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
 	})
+"jx" = (
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "jA" = (
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
@@ -521,6 +666,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
+"jK" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
+"jR" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "jS" = (
 /obj/machinery/light{
 	dir = 2
@@ -585,11 +745,29 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"kX" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/engine/core/nuclear)
 "la" = (
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
 /area/station/medical/medbay/surgery)
+"lb" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Gas Outlet 1";
+	name = "gas outlet 1 pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "le" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/sec)
@@ -613,6 +791,22 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"lt" = (
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
+"lu" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "lA" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -709,6 +903,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
+"mP" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	level = 2;
+	pixel_x = 16
+	},
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
 "mY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
@@ -728,6 +931,9 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
+"no" = (
+/turf/space,
+/area/shuttle_sound_spawn)
 "np" = (
 /obj/item/device/radio/intercom/engineering,
 /obj/cable{
@@ -743,6 +949,9 @@
 "nu" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
+"nw" = (
+/turf/simulated/floor/plating,
+/area/station/science/lab)
 "nx" = (
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
@@ -776,6 +985,37 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"nU" = (
+/obj/grille/catwalk/cross{
+	dir = 5
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 5;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/mining/magnet)
 "nX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/beepsky)
@@ -841,6 +1081,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"oT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "oW" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
@@ -853,6 +1099,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"oX" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Gas Inlet 2";
+	name = "gas inlet 2 pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "oY" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -864,6 +1122,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
+"pe" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/storage)
 "pf" = (
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -1018,9 +1279,19 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"qQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "qT" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
+"qZ" = (
+/obj/machinery/atmospherics/binary/volume_pump,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "rb" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -1097,6 +1368,12 @@
 "si" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hop)
+"sk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "sr" = (
 /obj/item/device/radio/intercom/AI{
 	broadcasting = 0
@@ -1121,6 +1398,10 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"sD" = (
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "sI" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
@@ -1140,6 +1421,10 @@
 "sP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
+"sU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/engineering/ce)
 "sX" = (
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -1171,6 +1456,9 @@
 "tu" = (
 /turf/simulated/floor/plating,
 /area/space)
+"tz" = (
+/turf/space,
+/area/station/hallway/secondary/exit)
 "tH" = (
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
@@ -1197,6 +1485,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"tV" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core/nuclear)
 "tX" = (
 /turf/simulated/floor/black{
 	icon_state = "respect4"
@@ -1230,6 +1522,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"ux" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "uy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1250,12 +1548,27 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"uE" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "uI" = (
 /obj/landmark/map{
 	name = "CLARION2"
 	},
 /turf/space,
 /area/space)
+"uM" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
+"uO" = (
+/obj/machinery/atmospherics/binary/reactor_turbine,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "uU" = (
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
@@ -1344,10 +1657,34 @@
 	dir = 4
 	},
 /area/station/crew_quarters/md)
+"we" = (
+/turf/simulated/floor/black,
+/area/station/engine/elect)
+"wg" = (
+/obj/grille/catwalk/cross{
+	dir = 5
+	},
+/obj/machinery/computer/telescope{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "wj" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
+"wm" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "ws" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -1374,6 +1711,10 @@
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Storage"
 	})
+"wH" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/monitoring)
 "wJ" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
@@ -1394,6 +1735,12 @@
 "xe" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
+"xg" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/core/nuclear)
+"xh" = (
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/exit)
 "xj" = (
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -1427,6 +1774,38 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/space)
+"xA" = (
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 10;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/mining/magnet)
 "xF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -1439,6 +1818,20 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"xK" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet)
 "xO" = (
 /turf/simulated/floor/greenblack,
 /area/station/medical/research{
@@ -1461,6 +1854,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"ye" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
 "yi" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -1553,6 +1949,9 @@
 /area/station/medical/medbay/treatment2{
 	name = "Medbay East Hall"
 	})
+"zp" = (
+/turf/simulated/floor/carpet/green/standard/edge/nw,
+/area/station/engine/engineering/ce)
 "zq" = (
 /obj/machinery/light{
 	dir = 1;
@@ -1584,6 +1983,19 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"zU" = (
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/obj/machinery/computer/magnet{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "Am" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -1625,6 +2037,10 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
+"Bc" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/gas)
 "Bf" = (
 /turf/simulated/floor/purplewhite,
 /area/station/medical/medbay/pharmacy)
@@ -1638,12 +2054,56 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
+"Bq" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "Bt" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
+"Bw" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet)
+"By" = (
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
+"BF" = (
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"BI" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "BK" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2{
@@ -1655,9 +2115,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"BS" = (
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "BX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
+"BY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "Cc" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
@@ -1674,6 +2143,17 @@
 "Cf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/equipment)
+"Cg" = (
+/turf/simulated/floor/carpet/green/standard/edge/ne,
+/area/station/engine/engineering/ce)
+"Cm" = (
+/obj/table/auto,
+/obj/railing/yellow,
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
+"Cv" = (
+/turf/simulated/floor/carpet/green/standard/edge/east,
+/area/station/engine/engineering/ce)
 "Cw" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
@@ -1713,6 +2193,38 @@
 "CY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment)
+"Dc" = (
+/obj/grille/catwalk/cross{
+	dir = 9
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 9;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/mining/magnet)
 "Dd" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/research_director)
@@ -1725,6 +2237,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"Dh" = (
+/turf/simulated/floor/carpet/green/standard/edge/sw,
+/area/station/engine/engineering/ce)
 "Dj" = (
 /turf/simulated/floor/carpet/red/standard/edge{
 	dir = 8
@@ -1735,6 +2250,18 @@
 	dir = 6
 	},
 /area/station/medical/medbay/pharmacy)
+"Dy" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/mining/magnet)
 "Dz" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 8
@@ -1742,6 +2269,12 @@
 /obj/machinery/power/furnace/thermo,
 /turf/simulated/floor/black,
 /area/station/science/lab)
+"DC" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "DP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -1796,6 +2329,12 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"EC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "EH" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
@@ -1872,6 +2411,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"FL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "FO" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
@@ -1940,12 +2485,29 @@
 "Gz" = (
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
+"GC" = (
+/obj/machinery/atmospherics/portables_connector,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"GE" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"GG" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2;
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
 "GI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
-"GL" = (
-/turf/simulated/floor/white,
-/area/station/medical/morgue)
 "GP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/space)
@@ -2005,6 +2567,12 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"HL" = (
+/turf/simulated/floor/black,
+/area/station/engine/gas)
+"HM" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "HQ" = (
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -2066,6 +2634,12 @@
 	dir = 5
 	},
 /area/station/crew_quarters/md)
+"IF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "IK" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -2086,12 +2660,24 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"IR" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"IS" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/engineering/breakroom)
 "IT" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "IX" = (
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
+"Jb" = (
+/obj/railing/yellow,
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "Jn" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -2117,6 +2703,10 @@
 	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
+"Jw" = (
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/engine/engineering/breakroom)
 "Jx" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -2151,9 +2741,26 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"JH" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "JI" = (
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
+"JT" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 2;
+	pixel_x = -1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "JW" = (
 /obj/lattice{
 	dir = 4;
@@ -2222,6 +2829,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
+"KC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "KF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -2235,6 +2848,19 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"KK" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/mining/magnet)
 "KO" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -2341,6 +2967,15 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"Md" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "Mi" = (
 /obj/stool/bed{
 	dir = 8
@@ -2376,11 +3011,21 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"Mw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "Mx" = (
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
 /area/station/medical/medbay/lobby)
+"ME" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "MF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -2388,6 +3033,21 @@
 "MJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/bridge)
+"MK" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/gas)
+"MM" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Gas Inlet 1";
+	name = "gas inlet 1 pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "MQ" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
@@ -2416,11 +3076,21 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"Nc" = (
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
+/turf/space,
+/area/mining/magnet)
 "Ne" = (
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbay)
+"Nl" = (
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "Nr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown{
@@ -2431,6 +3101,10 @@
 	icon_state = "respect3"
 	},
 /area/station/security/main)
+"NA" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
 "NH" = (
 /turf/simulated/floor/greenwhite{
 	dir = 9
@@ -2448,6 +3122,9 @@
 "NQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig/genpop)
+"NR" = (
+/turf/simulated/floor/carpet/green/standard/edge/south,
+/area/station/engine/engineering/ce)
 "NS" = (
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
@@ -2501,11 +3178,24 @@
 "Or" = (
 /turf/simulated/floor/carpet/purple/standard/edge/nw,
 /area/station/science/research_director)
+"Ox" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Oz" = (
+/turf/space,
+/area/shuttle/escape/station)
 "OA" = (
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
 /area/station/medical/medbay/pharmacy)
+"OE" = (
+/turf/simulated/floor/black,
+/area/station/engine/engineering/breakroom)
 "OM" = (
 /obj/disposalpipe/segment/produce,
 /obj/cable{
@@ -2580,9 +3270,21 @@
 	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
+"Pl" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/plating,
+/area/space)
 "Pm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
+"Pp" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"Pq" = (
+/turf/simulated/floor/carpet/green/standard/edge/west,
+/area/station/engine/engineering/ce)
 "Pt" = (
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
@@ -2633,6 +3335,11 @@
 "PT" = (
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
+"PW" = (
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "PX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -2679,6 +3386,15 @@
 	icon_state = "respect7"
 	},
 /area/station/security/main)
+"QE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/engine/core/nuclear)
 "QI" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -2691,6 +3407,10 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
+"QZ" = (
+/obj/machinery/nanofab/mining,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
 "Rj" = (
 /obj/machinery/light{
 	dir = 2
@@ -2699,6 +3419,13 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
+"Rm" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"Ro" = (
+/turf/simulated/floor/black,
+/area/station/engine/monitoring)
 "Rr" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -2732,6 +3459,17 @@
 "RF" = (
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"RM" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "RN" = (
 /obj/table/auto,
 /obj/access_spawn/hydro,
@@ -2894,6 +3632,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"TK" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/obj/machinery/meter,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "TQ" = (
 /turf/simulated/floor/black,
 /area/station/science/spectral{
@@ -2976,6 +3719,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"UH" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/obj/railing/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "UK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3021,6 +3778,33 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"Vb" = (
+/obj/machinery/neosmelter,
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
+"Vd" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Gas Outlet 2";
+	name = "gas outlet 2 pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"Vh" = (
+/obj/grille/catwalk/cross{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery{
+	name = "Mining Catwalk"
+	})
 "Vk" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -3039,6 +3823,10 @@
 	icon_state = "respect6"
 	},
 /area/station/security/main)
+"Vn" = (
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "VE" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
@@ -3247,6 +4035,21 @@
 "XJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
+"XK" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "XQ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/spectral{
@@ -3273,6 +4076,9 @@
 "XY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"Yd" = (
+/turf/simulated/floor/black,
+/area/station/engine/core/nuclear)
 "Ye" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -3280,7 +4086,10 @@
 "Yi" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/elect)
+"Yj" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/mining/staff_room)
 "Yl" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/greenblack{
@@ -3312,6 +4121,51 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"YI" = (
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 6;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/mining/magnet)
+"YQ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5;
+	level = 2;
+	pixel_x = -11
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	level = 2;
+	pixel_x = 16
+	},
+/turf/simulated/floor/engine,
+/area/station/quartermaster/refinery)
 "YS" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -3327,9 +4181,18 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"YV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "Zc" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"Zd" = (
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "Ze" = (
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -3338,6 +4201,16 @@
 "Zh" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
+"Zq" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/secondary/exit)
+"Zs" = (
+/obj/machinery/disposal,
+/turf/simulated/floor/black,
+/area/station/quartermaster/refinery)
+"Zt" = (
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md)
 "Zz" = (
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
@@ -3346,6 +4219,9 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"ZJ" = (
+/turf/space,
+/area/mining/magnet)
 "ZY" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -35237,7 +36113,7 @@ XA
 Dd
 Dd
 Dd
-Dd
+ko
 Dd
 Dd
 gm
@@ -36161,7 +37037,7 @@ ci
 eE
 eE
 eE
-zb
+nw
 qF
 qF
 qF
@@ -41598,24 +42474,24 @@ So
 So
 So
 GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
+GP
 qF
 qF
 qF
@@ -41900,24 +42776,24 @@ So
 So
 So
 GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+GP
 qF
 qF
 qF
@@ -42202,24 +43078,24 @@ So
 So
 So
 GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+GP
 qF
 qF
 qF
@@ -42504,24 +43380,24 @@ So
 So
 So
 GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+GP
 qF
 qF
 qF
@@ -42806,24 +43682,24 @@ So
 So
 So
 GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+GP
 qF
 qF
 qF
@@ -43108,23 +43984,23 @@ So
 So
 So
 GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 GP
 qF
 qF
@@ -44919,31 +45795,31 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+HM
+IS
+IS
+go
+go
+go
+go
+go
+go
+go
+xg
+kX
+kX
+kX
+kX
+kX
+kX
 qF
 qF
 qF
@@ -45221,34 +46097,34 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+we
+we
+we
+we
+we
+we
+we
+HM
+OE
+OE
+go
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
+kX
+kX
+kX
 qF
 qF
 qF
@@ -45523,35 +46399,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+we
+we
+we
+we
+we
+we
+we
+HM
+OE
+OE
+go
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
+kX
 qF
 qF
 qF
@@ -45825,35 +46701,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Pp
+we
+we
+we
+we
+we
+we
+we
+HM
+OE
+OE
+go
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -46127,35 +47003,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Pp
+we
+we
+we
+we
+we
+we
+we
+we
+OE
+OE
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Yd
+Nl
+Nl
+Nl
+Nl
+Nl
+hO
+IR
+iw
+Nl
+kX
 qF
 qF
 qF
@@ -46429,36 +47305,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-GP
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Pp
+we
+we
+we
+we
+we
+we
+we
+HM
+OE
+OE
+go
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+kX
+kX
 qF
 qF
 qF
@@ -46731,36 +47607,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-GP
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Pp
+we
+we
+we
+we
+we
+we
+we
+HM
+OE
+OE
+go
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+uO
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -47033,36 +47909,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-GP
-GP
-So
-So
-GP
-GP
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+we
+we
+we
+we
+we
+we
+Pp
+HM
+OE
+OE
+go
+wH
+Ro
+Ro
+Ro
+Ro
+Ro
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -47313,7 +48189,7 @@ lh
 lh
 lh
 Ig
-fv
+Ye
 YU
 Ne
 kA
@@ -47335,36 +48211,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-GP
-GP
-So
-So
-So
-So
-GP
-GP
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+we
+we
+we
+we
+we
+Pp
+Pp
+OE
+OE
+OE
+OE
+wH
+wH
+ih
+ih
+ih
+ih
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+fg
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -47615,7 +48491,7 @@ nx
 Ye
 Ye
 fv
-fv
+Ye
 Id
 pH
 pp
@@ -47637,36 +48513,36 @@ So
 So
 So
 So
-GP
-GP
+HM
+HM
 Yi
 Yi
-GP
-GP
-GP
-So
-So
-So
-So
-So
-So
-GP
-GP
-GP
-GP
-GP
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+we
+HM
+HM
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+ih
+zp
+Pq
+Dh
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+fg
+Nl
+YV
+Nl
+Bq
+kX
 qF
 qF
 qF
@@ -47944,31 +48820,31 @@ So
 So
 So
 So
-tu
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+cm
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+sU
+cg
+dw
+NR
+kX
+Nl
+GC
+MM
+BY
+JT
+Rm
+Nl
+YV
+Nl
+YV
+kX
 qF
 qF
 qF
@@ -48241,36 +49117,36 @@ So
 So
 So
 So
+hP
 So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+OE
+OE
+OE
+OE
+Jw
+Jw
+OE
+OE
+OE
+sU
+cg
+dw
+NR
+kX
+Nl
+Nl
+Nl
+DC
+qZ
+TK
+Nl
+bF
+sD
+oT
+kX
 qF
 qF
 qF
@@ -48533,7 +49409,7 @@ Hz
 cL
 PS
 hJ
-rq
+Zt
 tu
 tu
 tu
@@ -48548,33 +49424,33 @@ So
 So
 So
 So
-tu
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+cm
+OE
+OE
+OE
+Jw
+Jw
+OE
+OE
+OE
+Zd
+cg
+dw
+NR
+Yd
+Nl
+GC
+oX
+lu
+JT
+Rm
+Nl
+DC
+sD
+lb
+QE
+Md
+dU
 qF
 qF
 qF
@@ -48845,36 +49721,36 @@ So
 So
 So
 So
+hP
 So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+OE
+OE
+OE
+OE
+Jw
+Jw
+OE
+OE
+OE
+sU
+cg
+dw
+NR
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+fg
+Nl
+DC
+sD
+iw
+kX
 qF
 qF
 qF
@@ -49152,31 +50028,31 @@ So
 So
 So
 So
-tu
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+cm
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+sU
+cg
+dw
+NR
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+fg
+Nl
+YV
+Nl
+Vd
+kX
 qF
 qF
 qF
@@ -49427,7 +50303,7 @@ Gl
 rH
 rH
 cw
-cw
+rH
 Id
 pH
 JI
@@ -49449,36 +50325,36 @@ So
 So
 So
 So
-GP
-GP
-Yi
-Yi
-GP
-GP
-GP
-So
-So
-So
-So
-So
-So
-GP
-GP
-GP
-GP
-GP
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pe
+pe
+hH
+hH
+BF
+pe
+pe
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+ih
+Cg
+Cv
+hR
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+GE
+kX
 qF
 qF
 qF
@@ -49729,7 +50605,7 @@ KH
 KH
 KH
 vU
-cw
+rH
 yH
 xa
 wL
@@ -49751,36 +50627,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-GP
-GP
-So
-So
-So
-So
-GP
-GP
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pe
+BF
+BF
+BF
+BF
+BF
+aW
+aW
+OE
+OE
+OE
+OE
+Bc
+Bc
+ih
+ih
+ih
+ih
+kX
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -50031,7 +50907,7 @@ of
 of
 of
 xO
-rH
+cw
 pw
 fi
 pw
@@ -50053,36 +50929,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-GP
-GP
-So
-So
-GP
-GP
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pe
+BF
+BF
+BF
+BF
+BF
+BF
+aW
+pe
+OE
+OE
+MK
+Bc
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Vn
+Nl
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -50355,36 +51231,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-GP
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+aW
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+pe
+OE
+OE
+MK
+HL
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -50657,36 +51533,36 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-GP
-So
-So
-GP
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+aW
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+pe
+OE
+OE
+MK
+HL
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+YV
+Nl
+kX
+kX
 qF
 qF
 qF
@@ -50959,35 +51835,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+aW
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+OE
+OE
+HL
+HL
+HL
+HL
+HL
+HL
+HL
+Yd
+Nl
+Nl
+Nl
+IF
+Mw
+Mw
+IR
+oT
+Nl
+kX
 qF
 qF
 qF
@@ -51261,35 +52137,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+aW
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+pe
+OE
+OE
+MK
+HL
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
 qF
 qF
 qF
@@ -51563,35 +52439,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pe
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+pe
+OE
+OE
+MK
+HL
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
+kX
 qF
 qF
 qF
@@ -51848,7 +52724,7 @@ pf
 fJ
 ze
 Ej
-GL
+CK
 Ej
 Ej
 Ej
@@ -51865,35 +52741,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pe
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+pe
+OE
+OE
+MK
+HL
+HL
+HL
+HL
+HL
+HL
+tV
+Nl
+Nl
+Nl
+Nl
+Nl
+kX
+kX
+kX
+kX
+Ox
 qF
 qF
 qF
@@ -52167,35 +53043,35 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
+pe
+pe
+pe
+pe
+BF
+pe
+pe
+pe
+Yj
+jx
+jx
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+kX
+kX
+kX
+kX
+kX
+kX
+kX
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+uE
 qF
 qF
 qF
@@ -52469,7 +53345,7 @@ So
 So
 So
 So
-GP
+xz
 So
 So
 So
@@ -52477,39 +53353,39 @@ So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
+Yj
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+hm
 qF
 qF
 qF
 qF
+uE
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Dc
+KK
+KK
+KK
+KK
+xK
+Bw
+Bw
+xK
+KK
+KK
+KK
+KK
+KK
+xA
 qF
 qF
 qF
@@ -52753,7 +53629,7 @@ wj
 pf
 fi
 ze
-GL
+CK
 CK
 CK
 CK
@@ -52771,7 +53647,7 @@ So
 So
 So
 So
-GP
+hP
 So
 So
 So
@@ -52779,39 +53655,39 @@ So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+hm
+RM
+RM
+RM
+RM
+lt
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -53055,7 +53931,7 @@ UO
 pf
 fJ
 ze
-GL
+CK
 CK
 CK
 CK
@@ -53073,7 +53949,7 @@ So
 So
 So
 So
-GP
+hP
 So
 So
 So
@@ -53081,39 +53957,39 @@ So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+hm
+jR
+jR
+jR
+Vh
+JH
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -53375,7 +54251,7 @@ So
 So
 So
 So
-GP
+al
 So
 So
 So
@@ -53383,39 +54259,39 @@ So
 So
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
+Yj
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+hm
 qF
 qF
 qF
+cp
+JH
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -53677,47 +54553,47 @@ So
 So
 So
 So
-GP
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+hx
+hx
+hx
+hx
+hx
+hZ
+hZ
+hx
+Yj
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+hm
+ME
+ME
+ME
+UH
+Vh
+RM
+RM
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -53979,47 +54855,47 @@ So
 So
 So
 So
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
-GP
+hx
+iP
+iP
+NA
+hZ
+hZ
+hZ
+gz
+Yj
+jx
+jx
+By
+jx
+Jb
+sk
+ux
+ux
+ux
+jh
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+UH
+Vh
+jR
+jR
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -54281,47 +55157,47 @@ So
 So
 So
 So
-GP
+hx
+iP
+Vb
+YQ
+hZ
+hZ
+hZ
+hV
+Yj
+jx
+jx
+By
+jx
+Jb
+EC
+BS
+BS
+BS
+aO
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+UH
+JH
+wm
+bJ
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -54583,47 +55459,47 @@ So
 So
 So
 So
-GP
+hx
+iP
+iP
+mP
+hZ
+hZ
+hZ
+QZ
+Yj
+jx
+jx
+By
+jx
+Jb
+EC
+BS
+BS
+BS
+aO
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+UH
+JH
+wm
+PW
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+Nc
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -54885,47 +55761,47 @@ So
 So
 So
 So
-GP
+hx
+iP
+iP
+GG
+hZ
+hZ
+hZ
+cx
+Yj
+jx
+jx
+jx
+jx
+Jb
+EC
+BS
+BS
+BS
+aO
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+UH
+JH
+wm
+PW
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -55187,47 +56063,47 @@ So
 So
 So
 So
-GP
+hx
+iP
+iP
+NA
+hv
+uM
+jK
+Zs
+Yj
+By
+By
+By
+By
+Cm
+KC
+qQ
+qQ
+qQ
+FL
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+UH
+Vh
+RM
+RM
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -55489,47 +56365,47 @@ So
 So
 So
 So
-GP
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+hx
+hx
+hx
+hx
+hx
+hx
+hx
+hx
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+ME
+ME
+ME
+UH
+Vh
+jR
+jR
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -55791,7 +56667,11 @@ So
 So
 So
 So
-GP
+hP
+So
+So
+So
+So
 qF
 qF
 qF
@@ -55809,29 +56689,25 @@ qF
 qF
 qF
 qF
+wg
+zU
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -56093,7 +56969,11 @@ So
 So
 So
 So
-GP
+Pl
+So
+So
+So
+So
 qF
 qF
 qF
@@ -56115,25 +56995,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -56395,7 +57271,11 @@ So
 So
 So
 So
-GP
+hP
+So
+So
+So
+So
 qF
 qF
 qF
@@ -56417,25 +57297,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XK
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+ZJ
+BI
 qF
 qF
 qF
@@ -56698,6 +57574,10 @@ NQ
 nX
 NS
 nX
+xh
+xh
+xh
+tz
 qF
 qF
 qF
@@ -56719,25 +57599,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+nU
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+YI
 qF
 qF
 qF
@@ -57000,10 +57876,10 @@ NQ
 NS
 NS
 nX
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -57302,10 +58178,10 @@ NQ
 NS
 NS
 nX
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -57604,10 +58480,10 @@ HH
 HH
 HH
 HH
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -57906,10 +58782,10 @@ HH
 uU
 uU
 HH
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -58208,10 +59084,10 @@ HH
 uU
 uU
 HH
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -58478,7 +59354,7 @@ qF
 oA
 oA
 oA
-oA
+eI
 oA
 Xn
 Xn
@@ -58510,10 +59386,10 @@ HH
 uU
 Hc
 HH
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -58812,10 +59688,10 @@ fr
 fr
 fr
 fl
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -59114,10 +59990,10 @@ fr
 fr
 fr
 fl
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -59416,10 +60292,10 @@ fr
 fr
 fr
 ju
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -59717,11 +60593,11 @@ fr
 fr
 fr
 fr
-fl
-qF
-qF
-qF
-qF
+fr
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -60019,11 +60895,11 @@ fr
 fr
 fr
 fr
-fl
-qF
-qF
-qF
-qF
+ju
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -60322,13 +61198,13 @@ fr
 fr
 fr
 fl
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+Zq
+Zq
+Zq
+Zq
 qF
 qF
 qF
@@ -60624,13 +61500,13 @@ dW
 ae
 dW
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -60926,13 +61802,13 @@ ae
 ae
 ae
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -61228,13 +62104,13 @@ ae
 ae
 ae
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -61530,13 +62406,13 @@ ae
 ae
 ae
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -61832,13 +62708,13 @@ Ti
 Ti
 Ti
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -62134,13 +63010,13 @@ fX
 fX
 fX
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -62436,13 +63312,13 @@ fX
 fX
 fX
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -62738,13 +63614,13 @@ fX
 fX
 fX
 le
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+xh
+xh
+xh
+xh
+xh
+xh
+Zq
 qF
 qF
 qF
@@ -63040,22 +63916,22 @@ mY
 mY
 mY
 mY
+ye
+ye
+ye
+ye
+ye
+ye
+ye
 XY
 XY
 XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
-XY
+qF
+qF
+qF
+qF
+qF
+qF
 qF
 qF
 qF
@@ -64851,21 +65727,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -65153,21 +66029,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -65455,22 +66331,22 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -65754,25 +66630,25 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -66055,26 +66931,26 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -66357,25 +67233,25 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -66659,24 +67535,24 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -66961,25 +67837,25 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+no
 qF
 qF
 qF
@@ -67263,25 +68139,25 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -67565,26 +68441,26 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -67868,25 +68744,25 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -68173,22 +69049,22 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -68475,21 +69351,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
@@ -68777,21 +69653,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qF
 qF
 qF
