@@ -532,10 +532,11 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder)
+	if(!src.holder || src.player.tempmin)
 		src.holder = new /datum/admins(src)
 		src.holder.tempmin = 1
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
+		src.player.tempmin = TRUE
 
 	src.holder.rank = rank
 
