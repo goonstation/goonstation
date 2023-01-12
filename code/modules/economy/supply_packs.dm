@@ -294,6 +294,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Station Pressurization Crate"
 
+/datum/supply_packs/interdictor_supply
+	name = "Interdictor Crate"
+	desc = "One (1) officially licensed Spatial Interdictor manufacture data disk. Includes complementary materials (x3 cable coil, x1 steel ingot, x1 glass block)."
+	category = "Engineering Department"
+	cost = 5000
+	containertype = /obj/storage/secure/crate/eng/itdr_supply
+
 /datum/supply_packs/disposal_pipe_cart
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "Has a pesky staff assistant stolen your cart?"

@@ -155,6 +155,37 @@
 				B5.pixel_y = 1
 				return 1
 
+	itdr_supply
+		name = "interdictor supply crate"
+		desc = "Contains a drive with spatial interdictor manufacture data and several resources useful for interdictor production."
+		req_access = list(access_engineering)
+
+		make_my_stuff()
+			if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+				var/obj/item/cable_coil/B0 = new(src)
+				B0.pixel_x = 5
+				B0.pixel_y = -4
+
+				var/obj/item/cable_coil/B1 = new(src)
+				B1.pixel_x = 5
+
+				var/obj/item/cable_coil/B2 = new(src)
+				B2.pixel_x = 5
+				B2.pixel_y = 4
+
+				var/obj/item/material_piece/steel/B3 = new(src)
+				B3.pixel_x = -6
+				B3.pixel_y = -4
+
+				var/obj/item/material_piece/glass/B4 = new(src)
+				B4.pixel_x = -6
+				B4.pixel_y = 4
+
+				var/obj/item/disk/data/floppy/manudrive/interdictor_parts/B5 = new(src)
+				B5.pixel_x = 6
+				return 1
+
+
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."
 	name = "medical crate"
