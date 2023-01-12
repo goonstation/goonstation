@@ -1,8 +1,8 @@
 /datum/game_mode/blob
-	name = "blob"
+	name = "Blob"
 	config_tag = "blob"
-	shuttle_available = 2
-	shuttle_available_threshold = 12000 // 20 min
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
+	shuttle_available_threshold = 20 MINUTES
 
 	antag_token_support = TRUE
 	var/const/blobs_minimum = 2

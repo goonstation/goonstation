@@ -1,7 +1,7 @@
 /datum/game_mode/wizard
-	name = "wizard"
+	name = "Wizard"
 	config_tag = "wizard"
-	shuttle_available = 2
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1

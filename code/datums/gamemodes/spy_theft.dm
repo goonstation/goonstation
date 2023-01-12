@@ -5,7 +5,7 @@
 #define BOUNTY_TYPE_BIG		5
 
 /datum/game_mode/spy_theft
-	name = "spy_thief"
+	name = "Spy Theft"
 	config_tag = "spy_theft"
 
 	antag_token_support = TRUE

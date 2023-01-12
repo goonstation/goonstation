@@ -8,11 +8,12 @@
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
 /datum/game_mode/revolution
-	name = "revolution"
+	name = "Revolution"
 	config_tag = "revolution"
-	shuttle_available = 0
-
+	shuttle_available = SHUTTLE_AVAILABLE_DISABLED
+	regular = FALSE
 	antag_token_support = TRUE
+
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
@@ -31,8 +32,9 @@
 	escape_possible = 0
 
 /datum/game_mode/revolution/extended //Does not end prematurely
-	name = "extended revolution"
+	name = "Revolution (no time limit)"
 	config_tag = "revolution_extended"
+	regular = FALSE
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")

@@ -2,9 +2,9 @@
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
 
 /datum/game_mode/nuclear
-	name = "nuclear emergency"
+	name = "Nuclear Emergency"
 	config_tag = "nuclear"
-	shuttle_available = 2
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	/// The name of our target area(s). Used for text output.
 	var/list/target_location_names = list()
 	/// Our area.type, which can be multiple per plant location (e.g. medbay).
