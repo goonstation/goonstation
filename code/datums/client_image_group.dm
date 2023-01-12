@@ -97,7 +97,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			for (var/image/img as() in images)
 				if (IMG_CONDITION(img, added_client.mob))
 					added_client.images.Add(img)
-					RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, .proc/on_client_del)
+			RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, .proc/on_client_del)
 		else
 			CRASH("PALI TEST, REMOVE LIVE")
 
