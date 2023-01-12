@@ -290,6 +290,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#define CHEMMASTER_MINIMUM_REAGENT 5 // mininum reagent for pills, bottles and patches
 #define CHEMMASTER_CONTAINER_TRESHOLD 10 // equal or above this amount use container
 #define CHEMMASTER_ITEMNAME_MAXSIZE 16 // chosen by fair dice roll
 #define CHEMMASTER_MAX_PILL 22 // 22 pill icons
@@ -334,12 +335,16 @@ TYPEINFO(/obj/machinery/chem_master)
 		if (src.status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
-
+		
 		if (src.beaker && src.beaker == B)
 			return
 
 		if(B.cant_drop && !isrobot(user))
 			boutput(user, "You can't add [src.beaker] to the machine!")
+			return
+
+		if(BOUNDS_DIST(src, user) > 0)
+			boutput(usr, "[src] is too far away.")
 			return
 
 		// Lets try replacing the current beaker first.
@@ -621,7 +626,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					return
 
 				// sanity check
-				var/reagent_amount = clamp(round(params["amount"]), 1, src.beaker.reagents.maximum_volume)
+				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, src.beaker.reagents.maximum_volume)
 				var/pill_icon = params["icon"] // handled in design_pill
 
 				var/obj/item/reagent_containers/pill/P = new(src)
@@ -648,7 +653,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					return
 
 				// sanity check
-				var/reagent_amount = clamp(round(params["amount"]), 1, src.beaker.reagents.maximum_volume)
+				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, src.beaker.reagents.maximum_volume)
 				var/use_pill_bottle = params["use_bottle"]
 				var/pill_icon = params["icon"] // handled in design_pill
 
@@ -700,7 +705,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					// somehow we didn't get a bottle
 					boutput(ui.user, "[src] bottleler makes a weird grinding noise. That can't be good.")
 					return
-				var/reagent_amount = clamp(round(params["amount"]), 1, bottle.initial_volume)
+				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, bottle.initial_volume)
 
 				global.phrase_log.log_phrase("bottle", src.item_name, no_duplicates=TRUE)
 
@@ -731,7 +736,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					// somehow we didn't get a patch
 					boutput(ui.user, "[src] patcher makes a weird grinding noise. That can't be good.")
 					return
-				var/reagent_amount = clamp(round(params["amount"]), 1, patch.initial_volume)
+				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, patch.initial_volume)
 
 				// unused by log_phrase?
 				//global.phrase_log.log_phrase("patch", src.item_name, no_duplicates=TRUE)
@@ -767,7 +772,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					boutput(ui.user, "[src] patcher makes a weird grinding noise. That can't be good.")
 					return
 				var/obj/item/reagent_containers/patch_path = patch.type
-				var/reagent_amount = clamp(round(params["amount"]), 1, patch.initial_volume)
+				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, patch.initial_volume)
 				var/use_box = params["use_box"]
 				qdel(patch) // only needed the initial_volume
 
@@ -826,6 +831,15 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(istype(B, /obj/item/reagent_containers/glass))
 			tryInsert(B, user)
 
+	attack_hand(mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+		src.ui_interact(user)
+
+	attack_ai(mob/user as mob)
+		return src.Attackhand(user)
+
 	ex_act(severity)
 		..(max(severity, 2))
 
@@ -857,6 +871,7 @@ TYPEINFO(/obj/machinery/chem_master)
 #undef CHEMMASTER_ITEMNAME_MAXSIZE
 #undef CHEMMASTER_MAX_PILL
 #undef CHEMMASTER_MAX_CANS
+#undef CHEMMASTER_MINIMUM_REAGENT
 
 /datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"

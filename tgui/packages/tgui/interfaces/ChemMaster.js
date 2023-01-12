@@ -216,7 +216,7 @@ export const AmountInputControl = (props) => {
         width={5}
         format={value => value + "u"}
         value={current_amount}
-        minValue={1}
+        minValue={5}
         maxValue={max_amount}
         onDrag={(e, value) => set_amount(Math.round(value))}
       />
@@ -426,25 +426,14 @@ export const OperationsSection = (props, context) => {
       capitalize
       title="Operations"
       buttons={
-        <>
-          <Button
-            px={0.75}
-            mr={1.5}
-            color="yellow"
-            title="Reset"
-            bold
-            onClick={() => act("setname")}>
-            Reset
-          </Button>
-          <Box align="left" as="span">
-            {"Name: "}
-            <Input
-              value={item_name}
-              placeholder={item_name}
-              onChange={(e, value) => { act("setname", { name: value }); }}
-            />
-          </Box>
-        </>
+        <Box align="left" as="span">
+          {"Name: "}
+          <Input
+            value={item_name}
+            placeholder={item_name}
+            onChange={(e, value) => { act("setname", { name: value }); }}
+          />
+        </Box>
       } >
       <Stack vertical>
         <Stack.Item mb={margin_bottom} height={operation_height}>
