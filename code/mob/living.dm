@@ -439,21 +439,6 @@
 		else
 			. = ..()
 
-//gross are we tg or something with all of these /s
-// i'd like to hear your suggestion for better searching for procs!!! - cirr
-/mob/living/Click(location,control,params)
-	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
-		var/mob/dead/observer/O = usr
-#ifdef HALLOWEEN
-		//when spooking, clicking on a mob doesn't put us in them.
-		var/datum/abilityHolder/ghost_observer/GH = O:abilityHolder
-		if (GH.spooking)
-			return ..()
-#endif
-		O.insert_observer(src)
-	else
-		. = ..()
-
 /mob/living/click(atom/target, params, location, control)
 	. = ..()
 	if (. == 100)
