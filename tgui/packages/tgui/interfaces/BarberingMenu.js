@@ -23,11 +23,10 @@ export const BarberingMenu = (props, context) => {
             <Stack wrap="wrap" justify="space-around">
               <Stack width="100%" inline justify="space-around">
                 <Icon name="magnifying-glass" />
-                <Stack.Item grow>
+                <Stack.Item mb="10px" grow>
                   <Input width="100%" onInput={(e, value) => setSearchText(value)} />
                 </Stack.Item>
               </Stack>
-              <Box width="100%" height="10px" />
               <HairPreviewList search_text={searchText}
                 all_hair_names={styles_keys}
                 all_hair_styles={available_styles} />
@@ -47,7 +46,7 @@ const HairPreviewList = function (props, context) {
 
   const filtered_list = all_hair_names.filter((x) => x.toLowerCase().includes(search_text.toLowerCase()));
   return filtered_list.map((value, index) => (<HairPreview
-    key={index}
+    key={all_hair_styles[value].id}
     hair_style={all_hair_styles[value]}
     hair_name={value} />));
 };
@@ -101,10 +100,10 @@ const PreviewWindow = (props, context) => {
           }} />
       </Stack>
       <hr />
-      <Stack wrap="wrap" height="50px" align="center">
-        <Box width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
-        <Box width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
-        <Box width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
+      <Stack wrap="wrap" height="100px" align="center">
+        <Box mb="2px" width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
+        <Box mb="2px" width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
+        <Box mb="2px" width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
       </Stack>
       <hr />
       <Stack width="100%" align="center" wrap="wrap" justify="space-around">
