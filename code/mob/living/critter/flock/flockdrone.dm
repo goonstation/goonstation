@@ -96,6 +96,7 @@
 		var/mob/living/intangible/flock/selector = src.selected_by
 		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
 		AH.drone_controller.cast(src)
+	src.selected_by = null
 	src.remove_simple_light("drone_light")
 	..()
 
