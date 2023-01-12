@@ -287,9 +287,9 @@
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed
+	var/icon_up = "button_comp_button_unpressed
+	var/icon_down = "button_comp_button_pressed"
 	density = 1
 	anchored= 1
 	level=1
@@ -2623,9 +2623,9 @@
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed
+	var/icon_up = "button_comp_button_unpressed
+	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
 
@@ -2652,11 +2652,11 @@
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
-					icon_up = "comp_switch"
-					icon_down = "comp_switch2"
+					icon_up = "button_comp_switch_unpressed"
+					icon_down = "button_comp_switch_pressed"
 				else
-					icon_up = "comp_button"
-					icon_down = "comp_button2"
+					icon_up = "button_comp_button_unpressed
+					icon_down = "button_comp_button_pressed"
 				icon_state = icon_up
 				src.set_loc(target)
 		return
