@@ -47,7 +47,7 @@
 						icon = 'icons/effects/effects.dmi'
 						icon_state = "sparks_attack"
 						playsound(src.loc, "sparks", 30, 1)
-						SPAWN(rand(10,20))
+						SPAWN(rand(1 SECOND, 2 SECONDS))
 							qdel(src)
 					return
 
