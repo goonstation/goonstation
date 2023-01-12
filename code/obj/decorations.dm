@@ -759,7 +759,7 @@
 	opacity = 0
 	layer = FLY_LAYER+1.01 // just above windows
 	var/base_state = "occupancy"
-	var/on = 0
+	var/on = FALSE
 	var/id = null
 
 	New()
