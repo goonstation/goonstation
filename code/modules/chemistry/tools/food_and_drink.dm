@@ -618,6 +618,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
 	// still copy paste btw
 	afterattack(obj/target, mob/user , flag)
+		if (is_sealed)
+			boutput(user, "<span class='alert'>[src] is sealed.</span>")
+			return
 		user.lastattacked = target
 		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
@@ -637,10 +640,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
-
-			if (is_sealed)
-				boutput(user, "<span class='alert'>[src] is sealed.</span>")
-				return
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
