@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, Flex, Section, Stack, Tabs } from '../../components';
+import { Box, Button, Divider, Dropdown, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { ClothingBoothData } from './types';
 
@@ -12,26 +12,26 @@ export const ClothingBooth = (props, context) => {
   return (
     <Window title={name} width={350} height={500}>
       <Window.Content>
-        <Flex fill direction="column">
-          <Flex.Item mb="0.5em">
-            <Section bold>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Section fill bold>
               {`Balance: 420⪽`}
             </Section>
-          </Flex.Item>
-          <Flex.Item>
-            <Stack direction="row">
-              <Stack.Item grow={1}>
+          </Stack.Item>
+          <Stack.Item grow={3}>
+            <Stack fill>
+              <Stack.Item>
                 <SlotTabs />
               </Stack.Item>
-              <Stack.Item grow={3}>
-                <Flex fill direction="column">
-                  <Flex.Item>
-                    <Section>
+              <Stack.Item grow={1}>
+                <Stack fill vertical>
+                  <Stack.Item>
+                    <Section fill>
                       <Dropdown selected="Accessories" />
                     </Section>
-                  </Flex.Item>
-                  <Flex.Item>
-                    <Section scrollable> {/* this section has all the clothing items */}
+                  </Stack.Item>
+                  <Stack.Item grow={1}>
+                    <Section fill scrollable> {/* this section has all the clothing items */}
                       {clothingbooth_list
                         .map(booth_item => {
                           const {
@@ -46,17 +46,17 @@ export const ClothingBooth = (props, context) => {
                           );
                         })}
                     </Section>
-                  </Flex.Item>
-                </Flex>
+                  </Stack.Item>
+                </Stack>
               </Stack.Item>
             </Stack>
-          </Flex.Item>
-          <Flex.Item mt="0.5em">
+          </Stack.Item>
+          <Stack.Item grow={2}>
             <Section fill>
               {`there's gonna be stuff here`}
             </Section>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
