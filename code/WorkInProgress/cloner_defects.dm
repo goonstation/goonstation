@@ -73,7 +73,6 @@
 			// If the picked defect can stack, pass automatically. If it can't stack, check if we have it already; if not, pass.
 			is_valid = initial(picked:stackable) || !src.has_defect(picked)
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
-		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 
 	/// Add a cloner defect, rolling severity according to weights
 	proc/add_random_cloner_defect()
@@ -143,6 +142,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		if (!istype(target))
 			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
+		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 		src.on_add()
 
 	disposing()
