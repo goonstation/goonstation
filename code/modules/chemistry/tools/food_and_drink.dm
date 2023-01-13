@@ -675,10 +675,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		else if (istype(target, /obj/item/sponge)) // dump contents onto it
-			if (is_sealed)
-				boutput(user, "<span class='alert'>[src] is sealed.</span>")
-				return
-
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
