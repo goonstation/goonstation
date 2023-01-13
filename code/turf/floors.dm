@@ -22,6 +22,8 @@
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
+	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
+	var/explosion_immune = FALSE
 
 	New()
 		..()
@@ -1652,6 +1654,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
+	if(src.explosion_immune)
+		return
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()
