@@ -12143,7 +12143,7 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/tracker/west,
@@ -12217,7 +12217,7 @@
 /obj/grille/catwalk{
 	dir = 10
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/tracker/east,
@@ -12411,7 +12411,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/lobby)
 "aKf" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/grille/catwalk{
@@ -12550,7 +12550,7 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -15226,7 +15226,7 @@
 /area/station/security/main)
 "aTV" = (
 /obj/grille/catwalk,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -15974,7 +15974,7 @@
 /area/station/medical/medbay/lobby)
 "aWv" = (
 /obj/grille/catwalk,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -22436,7 +22436,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "bub" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23836,7 +23836,7 @@
 /area/station/engine/substation/west)
 "byE" = (
 /obj/decal/cleanable/dirt,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -24212,7 +24212,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bAM" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small{
@@ -24233,7 +24233,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bAP" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side{
@@ -24429,7 +24429,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/central)
 "bCb" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-4"
 	},
 /obj/machinery/light{
@@ -24582,7 +24582,7 @@
 	},
 /area/station/engine/substation/east)
 "bDh" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/corner{
@@ -24590,7 +24590,7 @@
 	},
 /area/station/engine/substation/east)
 "bDi" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/storage/closet/welding_supply,
@@ -24599,7 +24599,7 @@
 	},
 /area/station/engine/substation/east)
 "bDj" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/machinery/light{
@@ -25069,7 +25069,7 @@
 /turf/space,
 /area/space)
 "bHR" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/grille/catwalk{
@@ -26323,7 +26323,7 @@
 /obj/grille/catwalk/cross{
 	dir = 6
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
 /turf/space,
@@ -26372,7 +26372,7 @@
 /obj/grille/catwalk/cross{
 	dir = 9
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
 /turf/space,
@@ -26381,7 +26381,7 @@
 	},
 /area/station/solar/east)
 "bNa" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/grille/catwalk{
@@ -28173,7 +28173,7 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/space,
@@ -30133,7 +30133,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "fyY" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/east,
@@ -30329,11 +30329,11 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "fGZ" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/solar_control/east{
@@ -30458,7 +30458,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "fKG" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -36034,13 +36034,13 @@
 /area/station/ranch)
 "lhu" = (
 /obj/machinery/power/data_terminal,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/caution/misc{
@@ -36501,7 +36501,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/stool/chair/yellow{
@@ -36635,7 +36635,7 @@
 /obj/grille/catwalk/cross{
 	dir = 10
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/space,
@@ -36805,7 +36805,7 @@
 "lRQ" = (
 /obj/decal/poster/wallsign/space,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
@@ -37324,19 +37324,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"mtU" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/solar/east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/east)
 "mup" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37891,14 +37878,13 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mVu" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar/west,
+/obj/machinery/power/solar/east,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -38053,7 +38039,7 @@
 /obj/grille/catwalk/cross{
 	dir = 5
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/space,
@@ -38757,7 +38743,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "nVi" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39268,14 +39254,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -39400,11 +39385,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "oxX" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/east,
@@ -39752,11 +39736,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "oOw" = (
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar/west,
+/obj/machinery/power/solar/east,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -40892,7 +40875,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "pYG" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
@@ -41453,14 +41436,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -41598,10 +41580,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "qHG" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar/west,
+/obj/machinery/power/solar/east,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -43457,20 +43439,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
-"szD" = (
-/obj/cable{
-	dir = 0;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/solar/west,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/west)
 "sBM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43737,13 +43705,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "sPQ" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar/west,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/solar/east,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -44167,8 +44135,7 @@
 	},
 /area/space)
 "tlq" = (
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/east,
@@ -46997,14 +46964,13 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "vVS" = (
-/obj/cable{
-	dir = 0;
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar/east,
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/solar/east,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -47883,7 +47849,7 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/space,
@@ -47961,7 +47927,7 @@
 	},
 /area/station/science/research_director)
 "wUf" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48925,7 +48891,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/stool/chair/yellow{
@@ -68007,17 +67973,11 @@ sPQ
 aaa
 sPQ
 aaa
-szD
-aaa
-szD
+sPQ
 aaa
 sPQ
 aaa
-szD
-aaa
-szD
-aaa
-szD
+sPQ
 aaa
 sPQ
 aaa
@@ -68025,7 +67985,13 @@ sPQ
 aaa
 sPQ
 aaa
-szD
+sPQ
+aaa
+sPQ
+aaa
+sPQ
+aaa
+sPQ
 aaa
 sPQ
 aaa
@@ -94219,31 +94185,31 @@ vVS
 aaa
 vVS
 aaa
-mtU
+vVS
 aaa
 vVS
 aaa
-mtU
+vVS
 aaa
 vVS
 aaa
-mtU
-aaa
-mtU
+vVS
 aaa
 vVS
 aaa
-mtU
-aaa
-mtU
-aaa
-mtU
-aaa
-mtU
+vVS
 aaa
 vVS
 aaa
-mtU
+vVS
+aaa
+vVS
+aaa
+vVS
+aaa
+vVS
+aaa
+vVS
 dxW
 aaa
 aaa
