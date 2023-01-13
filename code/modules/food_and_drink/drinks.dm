@@ -332,7 +332,6 @@
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
-			IN
 			is_sealed = 0
 			can_chug = 1
 			splash_all_contents = 1
