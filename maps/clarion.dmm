@@ -27819,6 +27819,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central)
+"dcM" = (
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "West SMES"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "ddF" = (
 /obj/table/reinforced/auto,
 /obj/bedsheetbin{
@@ -36356,6 +36369,14 @@
 	dir = 4
 	},
 /area/space)
+"lxj" = (
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "lxl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -36471,19 +36492,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/engine/substation/west)
-"lCk" = (
-/obj/cable/brown{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	name = "West SMES"
-	},
-/obj/access_spawn/engineering,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "lDr" = (
 /obj/machinery/centrifuge_nuclear,
@@ -42009,14 +42017,6 @@
 	dir = 8
 	},
 /area/station/ai_monitored/armory)
-"reF" = (
-/obj/cable/brown{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "reT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -73910,7 +73910,7 @@ buj
 vZI
 bIu
 bIH
-lCk
+dcM
 bzQ
 nre
 qQw
@@ -77767,7 +77767,7 @@ bwE
 uVN
 qAx
 qRv
-reF
+lxj
 iQI
 yaD
 fbt
@@ -78538,8 +78538,8 @@ bwH
 sQc
 cdl
 jtc
-reF
-reF
+lxj
+lxj
 cHs
 eYe
 iyw
@@ -79311,7 +79311,7 @@ cdl
 qPT
 gtn
 mtC
-reF
+lxj
 hJM
 sOl
 iMV
@@ -80595,8 +80595,8 @@ kKs
 cdl
 iyw
 gGy
-reF
-reF
+lxj
+lxj
 pPm
 jzV
 kpz
@@ -81621,9 +81621,9 @@ pCX
 bwT
 oLn
 pOZ
-reF
-reF
-reF
+lxj
+lxj
+lxj
 bZt
 wcn
 ptA
