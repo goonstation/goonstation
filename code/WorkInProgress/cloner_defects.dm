@@ -66,6 +66,8 @@
 
 	/// Add a cloner defect of the given severity
 	proc/add_cloner_defect(severity)
+		if (!severity)
+			CRASH("Tried to add cloner defect with falsy severity [isnull(severity) ? "NULL" : severity].")
 		var/picked
 		var/is_valid = FALSE
 		while (!is_valid)
@@ -75,10 +77,10 @@
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
 
 	/// Add a cloner defect, rolling severity according to weights
-	proc/add_random_cloner_defect()
+	proc/add_random_cloner_defect(var/severity_override)
 		var/static/list/severity_weights = list(CLONER_DEFECT_SEVERITY_MINOR=CLONER_DEFECT_PROB_MINOR,
 												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR)
-		src.add_cloner_defect(weighted_pick(severity_weights))
+		src.add_cloner_defect(severity_override || weighted_pick(severity_weights))
 
 	/// Debug proc- add a cloner defect of a specific type.
 	proc/add_specific_cloner_defect(type)

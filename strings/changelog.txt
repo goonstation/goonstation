@@ -1,5 +1,7 @@
 
 (t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
 (u)Amylizzle
 (p)12720
 (e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
