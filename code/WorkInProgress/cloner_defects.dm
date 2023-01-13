@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		if (!istype(target))
 			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
-		logTheThing(LOG_COMBAT, src.owner, "gained the [src] cloner defect.")
+		logTheThing(LOG_COMBAT, src.owner, "gained the [src] cloner defect. Data: [json_encode(src.data)]")
 		src.on_add()
 
 	disposing()
