@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	throw_speed = 1
 	var/can_recycle = 1
 	var/can_chug = 1
-	var/is_sealed = 0
+	var/is_sealed = FALSE
 
 	New()
 		..()
