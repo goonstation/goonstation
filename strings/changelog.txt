@@ -1,4 +1,9 @@
 
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
 (t)wed jan 11 23
 (u)aloe
 (+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.
