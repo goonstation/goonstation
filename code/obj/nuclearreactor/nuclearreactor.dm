@@ -32,6 +32,8 @@
 	var/radiationLevel = 0
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
+	/// gas that has been processed, primarily used for atmos analyser
+	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
 
@@ -147,7 +149,7 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		var/datum/gas_mixture/gas_output = air2
+		air_contents = air2
 		var/total_gas_volume = 0
 
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -158,7 +160,7 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) gas_output.merge(gas)
+					if(gas) air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
@@ -181,10 +183,10 @@
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			gas_output.merge(gas)
+			air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		gas_output.merge(gas_input)
+		air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
@@ -221,6 +223,7 @@
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
