@@ -4898,7 +4898,7 @@
 "lD" = (
 /obj/machinery/computer/power_monitor/smes,
 /obj/machinery/power/data_terminal,
-/obj/cable{
+/obj/cable/brown{
 	d2 = 2;
 	icon_state = "0-2"
 	},
@@ -5287,13 +5287,15 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "mz" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
+/obj/cable/brown{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/hotloop)
@@ -5309,7 +5311,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/cable{
+/obj/cable/brown{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -5571,8 +5573,10 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable{
-	icon_state = "2-4"
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-4";
+	d2 = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
@@ -5586,7 +5590,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
@@ -6050,11 +6056,13 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ok" = (
@@ -6460,10 +6468,12 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/cable{
+/obj/machinery/meter,
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
@@ -7215,7 +7225,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -7716,8 +7728,10 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "2-4"
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-4";
+	d2 = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -7726,8 +7740,10 @@
 	dir = 1;
 	level = 2
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-8";
+	d2 = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -7736,18 +7752,20 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-8";
+	d2 = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sj" = (
-/obj/cable{
+/obj/machinery/atmospherics/portables_connector,
+/obj/cable/brown{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
 "sk" = (
@@ -8294,29 +8312,29 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
 "tr" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/generatorTemp,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/item/paper/engine,
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable/brown{
+	icon_state = "0-4";
+	dir = 4
+	},
+/obj/cable/brown{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable/brown,
+/obj/cable/brown{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ts" = (
@@ -8967,7 +8985,7 @@
 	},
 /area/station/hallway/primary/north)
 "uF" = (
-/obj/cable{
+/obj/cable/brown{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -8980,8 +8998,10 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-8";
+	d2 = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -8992,19 +9012,21 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-8";
+	d2 = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "uI" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
+	},
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-8";
+	d2 = 8
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
@@ -9400,7 +9422,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -10253,7 +10277,7 @@
 /area/space)
 "xI" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun()
+	displayed = new/obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -10640,10 +10664,12 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 1
 	},
-/obj/cable{
+/obj/machinery/meter,
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/core)
 "yA" = (
@@ -10865,11 +10891,13 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "zc" = (
@@ -11077,7 +11105,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable{
+/obj/cable/brown{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -11088,17 +11116,17 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-8";
+	d2 = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
@@ -11402,13 +11430,15 @@
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "Ay" = (
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/cable{
+/obj/cable/brown{
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "2-4";
+	d2 = 4
 	},
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
@@ -11416,7 +11446,7 @@
 /area/station/engine/coldloop)
 "Az" = (
 /obj/machinery/power/terminal,
-/obj/cable{
+/obj/cable/brown{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -11706,8 +11736,8 @@
 /area/station/engine/coldloop)
 "Bk" = (
 /obj/machinery/computer/power_monitor/smes,
-/obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/cable/brown,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/coldloop)
 "Bl" = (
@@ -17810,7 +17840,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
@@ -20979,7 +21011,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
