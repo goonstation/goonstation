@@ -334,8 +334,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			can_chug = 1
-			splash_all_contents = 1
-			incompatible_with_chem_dispensers = 0
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
 			amount_per_transfer_from_this = 5
 			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
 			if (src.shaken)
