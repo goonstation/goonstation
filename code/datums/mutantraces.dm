@@ -1358,8 +1358,10 @@ TYPEINFO(/datum/mutantrace)
 			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			src.mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 30)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 30)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_DISORIENT_RESIST_BODY, "werewolf", 15)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "werewolf", 15)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
@@ -1381,6 +1383,8 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_DISORIENT_RESIST_BODY, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf")
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
