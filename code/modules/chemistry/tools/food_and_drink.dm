@@ -483,6 +483,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	throw_speed = 1
 	var/can_recycle = 1
 	var/can_chug = 1
+	var/is_sealed = 0
 
 	New()
 		..()
@@ -637,6 +638,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 
+			if (is_sealed)
+				boutput(user, "<span class='alert'>[src] is sealed.</span>")
+				return
+
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
 
@@ -645,6 +650,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
 		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+			if (is_sealed)
+				boutput(user, "<span class='alert'>[src] is sealed.</span>")
+				return
+
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -658,6 +667,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+			if (is_sealed)
+				boutput(user, "<span class='alert'>[src] is sealed.</span>")
+				return
+
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -671,6 +684,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		else if (istype(target, /obj/item/sponge)) // dump contents onto it
+			if (is_sealed)
+				boutput(user, "<span class='alert'>[src] is sealed.</span>")
+				return
+
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -687,10 +704,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
 				return
+			if (is_sealed)
+				boutput(user, "<span class='alert'>[src] is sealed.</span>")
+				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			reagents.physical_shock(14)
-
 			var/splash_volume
 			if (src.splash_all_contents)
 				splash_volume = src.reagents.maximum_volume
