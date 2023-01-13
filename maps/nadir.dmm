@@ -5467,7 +5467,8 @@
 /area/station/maintenance/east)
 "cCu" = (
 /obj/machinery/power/catalytic_generator,
-/obj/cable{
+/obj/cable/brown{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -8542,8 +8543,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "edJ" = (
-/obj/cable{
-	icon_state = "2-5"
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-5";
+	d2 = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -8900,8 +8903,10 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "emv" = (
-/obj/cable{
-	icon_state = "6-8"
+/obj/cable/brown{
+	d1 = 6;
+	icon_state = "6-8";
+	d2 = 8
 	},
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -12226,10 +12231,14 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fPG" = (
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 6;
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
@@ -14278,8 +14287,10 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gKQ" = (
-/obj/cable{
-	icon_state = "2-9"
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-9";
+	d2 = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -16456,8 +16467,9 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/cable/brown{
+	icon_state = "0-4";
+	dir = 4
 	},
 /obj/machinery/computer/power_monitor/smes{
 	dir = 4
@@ -18113,10 +18125,14 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
 "ipp" = (
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 10;
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
@@ -23147,7 +23163,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable,
+/obj/cable/brown,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -30609,8 +30625,10 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "nUl" = (
-/obj/cable{
-	icon_state = "4-9"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-9";
+	d2 = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -32187,7 +32205,8 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/cable{
+/obj/cable/brown{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer/power_monitor{
@@ -32533,7 +32552,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable,
+/obj/cable/brown,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -40480,8 +40499,10 @@
 	},
 /area/station/science/chemistry)
 "sMu" = (
-/obj/cable{
-	icon_state = "5-8"
+/obj/cable/brown{
+	d1 = 5;
+	icon_state = "5-8";
+	d2 = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -48024,8 +48045,10 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
 "www" = (
-/obj/cable{
-	icon_state = "4-10"
+/obj/cable/brown{
+	d1 = 4;
+	icon_state = "4-10";
+	d2 = 10
 	},
 /obj/stool/chair/office/yellow{
 	dir = 4
