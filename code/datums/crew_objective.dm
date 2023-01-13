@@ -484,7 +484,9 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/slimjim,
 		/obj/item/reagent_containers/food/snacks/bite,
 		/obj/item/reagent_containers/food/snacks/pickle_holder,
-		/obj/item/reagent_containers/food/snacks/snack_cake
+		/obj/item/reagent_containers/food/snacks/snack_cake,
+		/obj/item/reagent_containers/food/snacks/ice_cream/random,
+		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
