@@ -649,10 +649,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
 		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
-			if (is_sealed)
-				boutput(user, "<span class='alert'>[src] is sealed.</span>")
-				return
-
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
