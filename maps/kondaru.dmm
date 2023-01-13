@@ -7979,9 +7979,9 @@
 	},
 /area/station/hallway/primary/west)
 "ayZ" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/cable/brown{
+	icon_state = "0-4";
+	dir = 4
 	},
 /obj/machinery/power/terminal{
 	dir = 1
@@ -9295,8 +9295,10 @@
 /area/station/engine/core)
 "aDd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/cable{
-	icon_state = "2-5"
+/obj/cable/brown{
+	d1 = 2;
+	icon_state = "2-5";
+	d2 = 5
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -9722,7 +9724,7 @@
 /area/station/engine/core)
 "aEj" = (
 /obj/machinery/power/generatorTemp,
-/obj/cable,
+/obj/cable/brown,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
@@ -36914,15 +36916,15 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
+/obj/cable/brown{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "2-8";
+	d2 = 8
 	},
-/obj/cable{
+/obj/cable/brown{
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "2-4";
+	d2 = 4
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/power)
@@ -37606,7 +37608,9 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 10;
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/engine,
@@ -38205,7 +38209,9 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/news_office)
 "dGb" = (
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/lattice,
@@ -38986,10 +38992,10 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "ejs" = (
-/obj/cable{
+/obj/cable/brown{
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "4-8";
+	d2 = 8
 	},
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -41185,7 +41191,7 @@
 	},
 /area/station/science/lab)
 "fVX" = (
-/obj/cable{
+/obj/cable/brown{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -47030,7 +47036,9 @@
 /area/station/engine/core)
 "lbP" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/misc,
@@ -51549,10 +51557,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "oVz" = (
-/obj/cable{
+/obj/cable/brown{
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "4-8";
+	d2 = 8
 	},
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -51859,7 +51867,9 @@
 /area/station/engine/core)
 "piD" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/misc{
@@ -54340,7 +54350,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/cable{
+/obj/cable/brown{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/misc,
