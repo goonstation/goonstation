@@ -16955,6 +16955,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"hvm" = (
+/obj/item/storage/toilet,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "hvw" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -111528,7 +111539,7 @@ kfP
 fmc
 eIK
 oZp
-mZZ
+hvm
 irk
 xPc
 qlL
