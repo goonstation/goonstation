@@ -3166,10 +3166,10 @@
 	},
 /area/station/chapel/sanctuary)
 "aIV" = (
-/obj/cable/brown{
-	d1 = 4;
-	icon_state = "4-8";
-	d2 = 8
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
@@ -14771,10 +14771,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "ebC" = (
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 2;
-	icon_state = "2-8";
-	d2 = 8
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
@@ -14935,7 +14935,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "edC" = (
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -30238,7 +30238,7 @@
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -37078,10 +37078,10 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/AIsat)
 "kGg" = (
-/obj/cable/brown{
-	d1 = 4;
-	icon_state = "4-8";
-	d2 = 8
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
+	icon_state = "4-8"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -37196,10 +37196,10 @@
 	},
 /area/station/crew_quarters/stockex)
 "kHS" = (
-/obj/cable/brown{
-	d1 = 4;
-	icon_state = "4-8";
-	d2 = 8
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -38131,10 +38131,10 @@
 /turf/simulated/floor/wood/six,
 /area/station/hallway/primary/west)
 "kYt" = (
-/obj/cable/brown{
-	d1 = 4;
-	icon_state = "4-8";
-	d2 = 8
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellowblack/corner,
 /area/station/engine/engineering)
@@ -56842,8 +56842,8 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable/brown,
-/obj/cable/brown{
+/obj/cable/black,
+/obj/cable/black{
 	d2 = 2;
 	icon_state = "0-2"
 	},
@@ -57602,9 +57602,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/cable/brown{
-	icon_state = "0-4";
-	dir = 4
+/obj/cable/black{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /obj/cable/brown,
 /obj/disposalpipe/segment{
@@ -61509,7 +61509,7 @@
 	name = "Engine Output Monitoring"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/black{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -66304,7 +66304,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "sSd" = (
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -66366,7 +66366,7 @@
 	},
 /area/station/engine/inner)
 "sSU" = (
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -69059,10 +69059,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "tGK" = (
-/obj/cable/brown{
-	d1 = 4;
-	icon_state = "4-8";
-	d2 = 8
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
+	icon_state = "4-8"
 	},
 /obj/stool/chair/yellow{
 	dir = 4
@@ -81935,10 +81935,10 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/AIsat)
 "xmy" = (
-/obj/cable/brown{
+/obj/cable/black{
 	d1 = 2;
-	icon_state = "2-8";
-	d2 = 8
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1

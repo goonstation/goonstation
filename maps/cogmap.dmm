@@ -48630,7 +48630,9 @@
 	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -48773,7 +48775,9 @@
 /area/station/medical/dome)
 "cNP" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grime,
@@ -48846,7 +48850,9 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
@@ -50161,7 +50167,9 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -51783,7 +51791,9 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 2;
+	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/stripe_caution,
@@ -52786,7 +52796,9 @@
 /area/station/garden/owlery)
 "hFs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_caution,
@@ -53092,7 +53104,9 @@
 	},
 /area/station/security/main)
 "ibg" = (
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -53552,7 +53566,9 @@
 /area/station/security/main)
 "iUq" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/decal/stripe_caution,
@@ -53800,7 +53816,8 @@
 	icon_state = "0-2"
 	},
 /obj/cable/brown,
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
@@ -55011,7 +55028,9 @@
 	dir = 1;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -55564,7 +55583,9 @@
 /area/station/ai_monitored/armory)
 "lCB" = (
 /obj/landmark/gps_waypoint,
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/big{
@@ -56691,7 +56712,8 @@
 	name = "Engine Output Monitoring"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
@@ -57896,7 +57918,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 6;
+	d2 = 8;
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/engine,
@@ -58330,10 +58354,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "piS" = (
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/decal/tile_edge/stripe/big{
@@ -58713,7 +58741,9 @@
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "pMB" = (
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/big{
@@ -60268,7 +60298,9 @@
 	name = "Cold Loop Inlet Meter";
 	tag = "Cold Loop Inlet Meter"
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -60975,7 +61007,9 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -61074,7 +61108,9 @@
 	dir = 4;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -61427,7 +61463,9 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "sKB" = (
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 4;
+	d2 = 9;
 	icon_state = "4-9"
 	},
 /obj/cable{
@@ -62262,7 +62300,8 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
@@ -63813,7 +63852,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "vAG" = (
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -64111,7 +64152,9 @@
 /area/station/quartermaster/office)
 "vTb" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/cable/brown{
+/obj/cable/black{
+	d1 = 2;
+	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -65245,7 +65288,9 @@
 /area/station/maintenance/solar/north)
 "xmc" = (
 /obj/machinery/light,
-/obj/cable/brown{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/big{

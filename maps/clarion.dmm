@@ -25289,7 +25289,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/ptl)
 "bJd" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external,
@@ -25319,7 +25321,9 @@
 	},
 /area/station/engine/ptl)
 "bJj" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
@@ -25342,7 +25346,9 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/qm)
 "bJq" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -25391,10 +25397,14 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
-/obj/cable{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/orangeblack,
@@ -25408,7 +25418,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
 "bJA" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/east{
@@ -25422,7 +25434,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/cable,
+/obj/cable/black,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -27392,9 +27404,8 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
+/obj/cable/black{
 	d2 = 4;
-	dir = 0;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/yellow/side{
@@ -29414,7 +29425,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -33892,7 +33905,7 @@
 	},
 /area/station/crewquarters/cryotron)
 "jfP" = (
-/obj/cable{
+/obj/cable/black{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -34162,8 +34175,10 @@
 	location = "engine";
 	name = "bot navigation beacon"
 	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/cable/brown,
+/obj/cable/black{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -35026,7 +35041,9 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -37176,7 +37193,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -38962,7 +38981,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ogG" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -41285,7 +41306,9 @@
 	})
 "qtq" = (
 /obj/grille/catwalk,
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -41333,10 +41356,12 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "qwI" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/cable{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -41804,7 +41829,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/pool)
 "qUH" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external,
@@ -42995,7 +43022,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -43294,7 +43323,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -44115,13 +44146,17 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "tkm" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/grille/catwalk/cross{
@@ -48042,11 +48077,13 @@
 	name = "peststart"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
+/obj/cable/black{
+	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/cable/black{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -48993,9 +49030,8 @@
 	name = "Engine Output Monitoring"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
+/obj/cable/black{
 	d2 = 4;
-	dir = 0;
 	icon_state = "0-4"
 	},
 /obj/machinery/camera{

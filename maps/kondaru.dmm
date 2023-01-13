@@ -765,7 +765,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable{
+/obj/cable/black{
 	d2 = 2;
 	icon_state = "0-2"
 	},
@@ -874,7 +874,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/ptl)
 "acF" = (
-/obj/cable{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -1179,7 +1179,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
 "adq" = (
-/obj/cable{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -1201,11 +1201,13 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/ptl)
 "ads" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 2;
+	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/landmark/gps_waypoint,
-/obj/cable{
+/obj/cable/black{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -1213,13 +1215,17 @@
 /turf/simulated/floor/caution/corner/misc,
 /area/station/engine/ptl)
 "adt" = (
-/obj/cable{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/ptl)
 "adu" = (
-/obj/cable{
+/obj/cable/black{
+	d2 = 4;
+	dir = 8;
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/yellow{
@@ -1297,7 +1303,7 @@
 	name = "Transmission Laser Confinement";
 	pixel_x = 24
 	},
-/obj/cable{
+/obj/cable/black{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -36913,7 +36919,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
 "cHa" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable/brown{
@@ -37286,7 +37294,9 @@
 	},
 /area/station/ranch)
 "cVP" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue{
@@ -37678,7 +37688,9 @@
 /area/station/science/lab)
 "dku" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/access_spawn/maint,
@@ -37952,7 +37964,9 @@
 	},
 /area/station/maintenance/southeast)
 "dtJ" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/westeast,
@@ -39691,7 +39705,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "eJp" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -41827,7 +41843,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "gsP" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/horizontal,
@@ -42714,7 +42732,9 @@
 	name = "Research Router"
 	})
 "hbm" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon9,
@@ -48332,7 +48352,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "meS" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -50416,7 +50438,9 @@
 	},
 /area/space)
 "nRO" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/landmark/halloween,
@@ -50978,7 +51002,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
 "opK" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
@@ -51699,13 +51725,17 @@
 	name = "Diplomatic Quarters"
 	})
 "pcf" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/power)
 "pcC" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -57984,7 +58014,9 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "utc" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/westeast,
@@ -60171,7 +60203,9 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "wqf" = (
-/obj/cable{
+/obj/cable/black{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
