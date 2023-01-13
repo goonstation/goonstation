@@ -315,7 +315,7 @@
 	incompatible_with_chem_dispensers = TRUE
 	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
-	is_sealed = 1
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 	var/shaken = FALSE //sets to TRUE on *twirl emote
 
