@@ -662,10 +662,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if (is_sealed)
-				boutput(user, "<span class='alert'>[src] is sealed.</span>")
-				return
-
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
