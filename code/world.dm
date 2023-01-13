@@ -533,6 +533,7 @@ var/f_color_selector_handler/F_Color_Selector
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
+	build_valid_game_modes()
 	build_chem_structure()
 	build_reagent_cache()
 	build_supply_pack_cache()

@@ -1124,6 +1124,9 @@
 	set popup_menu = 0
 	set desc = "When toggled on, you will be able to see all 'hidden' adventure elements regardless of your current mob."
 
+	src._cmd_admin_advview()
+
+/client/proc/_cmd_admin_advview()
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return

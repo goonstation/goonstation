@@ -251,6 +251,9 @@ client/proc/toggle_ghost_respawns()
 	set desc = "Toggle local atags on or off"
 	ADMIN_ONLY
 
+	_toggle_atags()
+
+/client/proc/_toggle_atags()
 	src.holder.see_atags = !src.holder.see_atags
 	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
 

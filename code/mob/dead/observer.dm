@@ -484,7 +484,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 
 
-	if(!src.key && delete_on_logout)
+	if(delete_on_logout)
 		//qdel(src)
 		// so here's a fun thing im gonna do: ghosts dont go away now.
 		// theres too much shit that relies on ghosts staying aroudn post-qdel.
