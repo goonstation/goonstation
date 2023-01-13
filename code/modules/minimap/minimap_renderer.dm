@@ -115,7 +115,7 @@
 		var/area/A = T.loc
 		return A.station_map_colour
 
-	///Generates an icon for a specified minimap type.
+	///Generates an atom/movable for a specified minimap type.
 	proc/generate_minimap_render(var/minimap_type)
 		var/atom/movable/minimap_render_object = new()
 		var/icon/minimap_render = icon('icons/obj/minimap/minimap.dmi', "blank")
