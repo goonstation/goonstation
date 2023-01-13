@@ -4705,6 +4705,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -32033,6 +32034,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "hyV" = (

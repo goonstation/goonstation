@@ -9,6 +9,7 @@
 	var/disabled = 0                     // Event won't occur if this is true.
 	var/announce_to_admins = 1
 	var/customization_available = 0
+	var/always_custom = FALSE
 	var/weight = 100					//for weighted probability picker. 100 is base
 
 	proc/event_effect(var/source)
@@ -41,6 +42,9 @@
 			return 0
 
 		return 1
+
+	proc/cleanup()
+		return
 
 /datum/random_event/minor
 	announce_to_admins = 0

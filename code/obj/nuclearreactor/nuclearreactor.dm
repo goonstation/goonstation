@@ -620,6 +620,8 @@
 	New(power)
 		..()
 		src.power = power
+		src.ks_ratio = 1
+		generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 		if(isintangible(hit) || isobserver(hit))
