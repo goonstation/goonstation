@@ -695,9 +695,10 @@
 /obj/item/device/pda2/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(O)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
+		var/delivery
+		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
+		if (claim)
+			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
 
