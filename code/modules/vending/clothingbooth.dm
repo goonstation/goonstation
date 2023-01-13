@@ -1,7 +1,7 @@
 /*Clothing Booth UI*/
 //list creation
-var/clothingbooth_json
-var/list/clothingbooth_items = list()
+var/list/clothingbooth_list = list()
+// var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
 	var/list/list/list/boothlist = list()
@@ -11,17 +11,22 @@ var/list/clothingbooth_items = list()
 		var/pathname = "[I.path]"
 		var/categoryname = I.category
 		var/cost = I.cost
-		var/matchfound = 0
-		if(boothlist.len>0)
-			for(var/i=1, i<=boothlist.len, i++)
-				if(boothlist[i]["name"] == categoryname)
-					boothlist[i]["items"].Add(list(list("name"=itemname, "path"=pathname, "cost"=cost)))
-					matchfound = 1
-					break
-		if(matchfound == 0)
-			boothlist.Add(list(list("name"=categoryname, "items"=list(list("name"=itemname, "path"=pathname, "cost"=cost)))))
-		clothingbooth_items[pathname] = I
-	clothingbooth_json = json_encode(boothlist)
+
+		var/atom/dummy_atom = I.path
+		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
+		var/itemimg = icon2base64(dummy_icon)
+
+		boothlist += list(
+			list(
+				"category" = categoryname,
+				"cost" = cost,
+				"img" = itemimg,
+				"name" = itemname,
+				"path" = pathname
+			)
+		)
+		// clothingbooth_items[pathname] = I
+	clothingbooth_list = boothlist
 
 //setting up player-side UI data
 // /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
@@ -42,6 +47,11 @@ var/list/clothingbooth_items = list()
 // 	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
 
 /obj/machinery/clothingbooth/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client)
+		return
+	if(!ishuman(user))
+		return
+
 	var/mob/living/carbon/human/H = user
 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
 	qdel(src.preview_item)
@@ -54,9 +64,15 @@ var/list/clothingbooth_items = list()
 		ui = new(user, src, "ClothingBooth")
 		ui.open()
 
+/obj/machinery/clothingbooth/ui_static_data(mob/user)
+	. = list(
+		"clothingbooth_list" = clothingbooth_list,
+		"name" = src.name
+	)
+
 /obj/machinery/clothingbooth/ui_data(mob/user)
 	. = list(
-		"name" = name
+		"money" = src.money
 	)
 
 //clothing booth stuffs <3
@@ -89,28 +105,28 @@ var/list/clothingbooth_items = list()
 			return
 		eject(user)
 
-	Topic(href, href_list)
-		var/datum/clothingbooth_item/cb_item = clothingbooth_items[href_list["path"]]
-		if(!istype(cb_item))
-			return
-		if(!(usr in src.contents))
-			return
-		var/itempath = text2path(href_list["path"])
-		switch(href_list["command"])
-			if("spawn")
-				if(text2num_safe(cb_item.cost) <= src.money)
-					money -= text2num_safe(cb_item.cost)
-					usr.put_in_hand_or_drop(new itempath(src))
-				else
-					boutput(usr, "<span class='alert'>Insufficient funds!</span>")
-					animate_shake(src, 12, 3, 3)
-			if("render")
-				if (src.preview_item)
-					src.preview.preview_mob.u_equip(src.preview_item)
-					qdel(src.preview_item)
-					src.preview_item = null
-				src.preview_item = new itempath()
-				src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
+	// Topic(href, href_list)
+	// 	var/datum/clothingbooth_item/cb_item = clothingbooth_items[href_list["path"]]
+	// 	if(!istype(cb_item))
+	// 		return
+	// 	if(!(usr in src.contents))
+	// 		return
+	// 	var/itempath = text2path(href_list["path"])
+	// 	switch(href_list["command"])
+	// 		if("spawn")
+	// 			if(text2num_safe(cb_item.cost) <= src.money)
+	// 				money -= text2num_safe(cb_item.cost)
+	// 				usr.put_in_hand_or_drop(new itempath(src))
+	// 			else
+	// 				boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+	// 				animate_shake(src, 12, 3, 3)
+	// 		if("render")
+	// 			if (src.preview_item)
+	// 				src.preview.preview_mob.u_equip(src.preview_item)
+	// 				qdel(src.preview_item)
+	// 				src.preview_item = null
+	// 			src.preview_item = new itempath()
+	// 			src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
 
 	Click()
 		if(!ishuman(usr))
