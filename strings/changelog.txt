@@ -1,4 +1,6 @@
-
+(t)fri jan 13 23
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
 (t)thu jan 12 23
 (u)Tanker
 (p)12678
