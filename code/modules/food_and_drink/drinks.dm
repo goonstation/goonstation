@@ -311,8 +311,8 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
-	splash_all_contents = 0
-	incompatible_with_chem_dispensers = 1
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
 	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	is_sealed = 1
