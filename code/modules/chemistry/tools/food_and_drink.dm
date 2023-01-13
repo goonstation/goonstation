@@ -691,9 +691,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
 				return
-			if (is_sealed)
-				boutput(user, "<span class='alert'>[src] is sealed.</span>")
-				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			reagents.physical_shock(14)
