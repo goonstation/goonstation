@@ -107,10 +107,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(src.mat_changedesc)
 		src.desc = initial(src.desc)
 
-	src.alpha = initial(src.alpha)
-	src.color = initial(src.color)
-	src.icon = initial(src.icon)
-	src.icon_state = initial(src.icon_state)
+	src.setMaterialAppearance(null)
 	src.material = null
 
 //Time for some super verbose proc names.
@@ -194,19 +191,25 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
 /// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
 /atom/proc/setMaterialAppearance(var/datum/material/mat1)
-	src.alpha = 255
-	src.color = null
-	if (length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
+	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
+	src.color = initial(src.color)
+	var/base_icon_state = splittext(src.icon_state,"$$")[1]
+	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
+		src.icon_state = base_icon_state
+		src.UpdateOverlays(null, "material")
 		return
 
-	var/potential_new_icon_state = "[splittext(src.icon_state,"$$")[1]]$$[mat1.mat_id]"
+	var/potential_new_icon_state = "[base_icon_state]$$[mat1.mat_id]"
 	if(src.is_valid_icon_state(potential_new_icon_state))
 		src.icon_state = potential_new_icon_state
+		src.UpdateOverlays(null, "material")
 		return
 
 	if (src.mat_changeappearance)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
+		else
+			src.UpdateOverlays(null, "material")
 		if(mat1.applyColor)
 			src.alpha = mat1.alpha
 			src.color = mat1.color
