@@ -215,11 +215,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.color = mat1.color
 
 /atom/proc/is_valid_icon_state(var/state)
-	if(isnull(src.valid_icon_states[src.icon]))
-		src.valid_icon_states[src.icon] = list()
+	if(isnull(global.valid_icon_states[src.icon]))
+		global.valid_icon_states[src.icon] = list()
 		for(var/icon_state in icon_states(src.icon))
-			src.valid_icon_states[src.icon][icon_state] = 1
-	return state in src.valid_icon_states[src.icon]
+			global.valid_icon_states[src.icon][icon_state] = 1
+	return state in global.valid_icon_states[src.icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))

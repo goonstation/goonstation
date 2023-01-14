@@ -61,8 +61,6 @@
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
 
-	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
-	var/static/list/valid_icon_states = list()
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
 
