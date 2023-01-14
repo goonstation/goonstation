@@ -1,5 +1,5 @@
 
-/atom/proc/electrocute(mob/user, prb, netnum, var/ignore_gloves)
+/atom/proc/electrocute(mob/user, prb, netnum, var/ignore_gloves, var/ignore_range = FALSE)
 
 	if(!prob(prb))
 		return 0
@@ -13,7 +13,7 @@
 
 	elecflash(src)
 
-	if(in_interact_range(src, user))
+	if(ignore_range || in_interact_range(src, user))
 		return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
 /// attach a wire to a power machine - leads from the turf you are standing on
