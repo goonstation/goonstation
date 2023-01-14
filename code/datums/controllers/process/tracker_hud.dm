@@ -7,7 +7,7 @@
 
 	doWork()
 		var/c
-		for(var/datum/component/tracker_hud/component in src.processing_components)
+		for(var/datum/component/tracker_hud/component as anything in src.processing_components)
 			if (QDELETED(component))
 				src.processing_components -= component
 				continue
