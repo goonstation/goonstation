@@ -331,9 +331,15 @@
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
 
+/// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	. = new_state != src.icon_state
 	src.icon_state = new_state
+	if(. && src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	signal_event("icon_updated")
+	// TODO: actual component signal here
+	// also TODO: use this proc instead of setting icon state directly probably
 
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
