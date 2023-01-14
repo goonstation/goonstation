@@ -15115,6 +15115,9 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
+/obj/machinery/shipalert{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
@@ -15465,14 +15468,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -7;
 	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
-"aQM" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/shipalert{
-	pixel_x = -32;
-	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -34338,6 +34333,10 @@
 "bQE" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quartermaster's office"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 10
@@ -90983,7 +90982,7 @@ aMw
 aNF
 aOK
 aPL
-aQM
+aRS
 aRS
 aSN
 aTV
