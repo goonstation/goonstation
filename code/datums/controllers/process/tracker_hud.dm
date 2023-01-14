@@ -8,7 +8,7 @@
 	doWork()
 		var/c
 		for(var/datum/component/tracker_hud/component in src.processing_components)
-			if (!component || QDELETED(component))
+			if (QDELETED(component))
 				src.processing_components -= component
 				continue
 			component.process()
