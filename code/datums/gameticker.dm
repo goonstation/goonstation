@@ -495,7 +495,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
-
+	save_flock_stats()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_traitors")
 	statlog_traitors()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_ailaws")

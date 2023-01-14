@@ -1,12 +1,14 @@
+ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode
 	var/name = "invalid" // Don't implement ticker.mode.name or .config_tag checks again, okay? I've had to swap them all to get game mode children to work.
 	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) when checking instead, but this must be set in new game mode
 	var/votable = 1
+	var/regular = TRUE
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
 
 	var/shuttle_available = 1 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
-	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == 2.
+	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == SHUTTLE_AVAILABLE_DELAY.
 	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
@@ -188,7 +190,7 @@
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
 						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
 							if(length(flock.trace_minds))
 								stuff_to_output += "Flocktraces:"
 								for (var/trace_name in flock.trace_minds)
@@ -428,6 +430,10 @@
 			antag.add_antagonist(ROLE_ARCFIEND)
 			do_objectives = FALSE
 
+		if (ROLE_SALVAGER)
+			antag.add_antagonist(ROLE_SALVAGER)
+			do_objectives = FALSE
+
 	if (do_objectives)
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(antag)
@@ -438,7 +444,24 @@
 
 /datum/game_mode/proc/check_win()
 
-/datum/game_mode/proc/send_intercept()
+/datum/game_mode/proc/send_intercept(badguy_list)
+	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
+	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
+
+	var/list/possible_modes = list()
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	for(var/i = 1 to pick(2, 3))
+		possible_modes.Remove(pick(possible_modes))
+
+	var/datum/intercept_text/i_text = new /datum/intercept_text
+
+	for(var/g_mode in possible_modes)
+		intercepttext += i_text.build(g_mode, pick((islist(badguy_list) && length(badguy_list)) ? badguy_list : ticker.minds))
+
+	for_by_tcl(C, /obj/machinery/communications_dish)
+		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
+
+	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 ////////////////////////////
 // Objective related code //
@@ -500,3 +523,8 @@
 	twraith.special_role = ROLE_WRAITH
 
 
+/proc/build_valid_game_modes()
+	. = list()
+	for (var/M in config.modes)
+		. += M
+	global.valid_modes += .

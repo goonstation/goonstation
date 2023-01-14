@@ -1805,3 +1805,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "sec_tape_1"
 	random_icon_states = list("sec_tape_1", "sec_tape_2")
+
+/obj/decal/cleanable/desk_clutter //RIP desk clutter object you're a decal now
+	name = "desk clutter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "deskclutter"
+	desc = "What a mess..."
+	plane = PLANE_DEFAULT //needs to go on desks
+	layer = OBJ_LAYER

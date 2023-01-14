@@ -342,7 +342,7 @@
 								 0.00,  0.00,  0.00,  0.70,\
 								 0.00,  0.00,  0.00,  0.00)
 			//Add damage texture to create dark banding
-			setTexture()
+			setTexture("damaged")
 			animate(src,time=2 SECONDS,color=new_color)
 			src.growth -= 10
 			src.to_spread = round(log(max(src.to_spread,1))*2)

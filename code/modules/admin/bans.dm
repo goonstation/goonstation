@@ -60,7 +60,7 @@ var/global/list/playersSeen = list()
 	query["ip"] = ip
 	query["record"] = record
 	#ifdef RP_MODE
-	query["rp_mode"] = true
+	query["rp_mode"] = TRUE
 	#endif
 
 	var/list/data
@@ -104,7 +104,7 @@ var/global/list/playersSeen = list()
 		var/addData[] = new()
 		addData["ckey"] = ckey
 		addData["compID"] = row["compID"] || null // don't record CID if the original ban doesn't have one down
-		addData["ip"] = ip
+		addData["ip"] = row["ip"] || null // don't record ip if the original ban doesn't have one down
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
 		addData["akey"] = "Auto Banner"

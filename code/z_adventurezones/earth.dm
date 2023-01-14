@@ -216,6 +216,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	kyle
 		ckey = "kyle2143"
 		name = "Office of Kyle"
+	leah
+		ckey = "leahthetech"
+		name = "Office of Leah"
 	lyra
 		ckey = "lison"
 		name = "Office of Lyra"
@@ -684,3 +687,24 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
 				conveyor.operating = 0
 				conveyor.setdir()
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal
+	name = "very normal drink"
+	desc = "Will not blow your leg off."
+	gulp_size = 25
+	initial_volume = 25
+
+	New()
+		. = ..()
+		src.create_reagents(src.initial_volume)
+		src.reagents.add_reagent("ice", 5, temp_new = T0C - 1)
+		src.reagents.add_reagent("potassium", 5, temp_new = T0C - 1)
+		src.reagents.add_reagent("LSD", 15, temp_new = T0C - 1)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis
+	initial_reagents = "flockdrone_fluid"
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gnesisglass"))
+
+/mob/living/critter/small_animal/crab/responsive

@@ -1294,7 +1294,7 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aea" = (
 /obj/item/wirecutters,
@@ -1392,7 +1392,7 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aet" = (
 /obj/item/shipcomponent/secondary_system/cargo/small,
@@ -1434,9 +1434,6 @@
 	name = "Radio Ship Dock"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/radiostation/podbay)
-"aeA" = (
-/turf/simulated/floor/plating/airless/shuttlebay,
 /area/radiostation/podbay)
 "aeB" = (
 /turf/simulated/floor/caution/west,
@@ -1512,7 +1509,7 @@
 /area/radiostation/podbay)
 "aeS" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeT" = (
 /obj/decal/cleanable/oil/streak,
@@ -1538,7 +1535,7 @@
 /area/radiostation/podbay)
 "aeW" = (
 /obj/machinery/light,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeX" = (
 /obj/rack,
@@ -1622,7 +1619,7 @@
 /obj/item/reagent_containers/glass/oilcan,
 /obj/machinery/light,
 /obj/decal/cleanable/oil/streak,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "afj" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
@@ -3504,8 +3501,8 @@
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_name = 0;
-	randomize_look = 0
+	randomize_look = 0;
+	randomize_name = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -7604,7 +7601,7 @@
 /area/abandonedmedicalship)
 "aKP" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedmedicalship)
 "aKQ" = (
@@ -15605,7 +15602,7 @@
 /obj/item/seed/alien,
 /obj/item/seed/alien,
 /obj/item/seed/alien,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -20030,7 +20027,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -20357,8 +20354,8 @@
 "lJu" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/transit_shuttle/mining{
-	icon_state = "shuttle-embed";
 	embed = 1;
+	icon_state = "shuttle-embed";
 	pixel_y = -25
 	},
 /turf/unsimulated/floor/shuttle{
@@ -21431,6 +21428,12 @@
 /turf/space,
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
+"oOU" = (
+/obj/table/flock/auto,
+/obj/machinery/light/flock,
+/obj/item/paper/flockstatsnote,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "oPd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94624,7 +94627,7 @@ atI
 apk
 aza
 aza
-aDX
+oOU
 aoz
 aEq
 aoz
@@ -106121,7 +106124,7 @@ aaa
 adJ
 adO
 adZ
-aeA
+adY
 aeW
 adO
 akS
