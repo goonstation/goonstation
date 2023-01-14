@@ -532,10 +532,11 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder)
+	if(!src.holder || src.player.tempmin)
 		src.holder = new /datum/admins(src)
 		src.holder.tempmin = 1
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
+		src.player.tempmin = TRUE
 
 	src.holder.rank = rank
 
@@ -2127,7 +2128,8 @@ var/list/fun_images = list()
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
 		for(var/atom/thing as anything in clicked_turf)
-			atoms += thing
+			if(thing.name)
+				atoms += thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return

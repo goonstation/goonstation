@@ -1,7 +1,8 @@
 #define CASH_DIVISOR 200
 /datum/game_mode/gang
-	name = "gang"
+	name = "Gang War (Beta)"
 	config_tag = "gang"
+	regular = FALSE
 
 	antag_token_support = TRUE
 	var/list/leaders = list()

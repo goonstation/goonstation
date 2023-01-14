@@ -1446,7 +1446,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
-	is_syndicate = FALSE
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
 

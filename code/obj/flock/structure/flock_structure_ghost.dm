@@ -104,6 +104,9 @@
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()
+	var/typeinfo/obj/flock_structure/info = get_type_typeinfo(src.building)
+	if (!info.cancellable)
+		return
 	if (currentmats > 0)
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats

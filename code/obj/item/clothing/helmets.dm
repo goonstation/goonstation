@@ -950,6 +950,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	icon_state = "indusred"
 	item_state = "indusred"
 	is_syndicate = 1
+	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()
 		..()
@@ -963,6 +964,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	blocked_from_petasusaphilic = TRUE
 	has_visor = TRUE
 	visor_color_lst = list(
 		"color_r" = 1.0,

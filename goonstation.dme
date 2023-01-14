@@ -911,6 +911,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\battle_storm.dm"
 #include "code\modules\events\black_hole.dm"
 #include "code\modules\events\blowout.dm"
+#include "code\modules\events\crew_spawn.dm"
 #include "code\modules\events\ion_storm.dm"
 #include "code\modules\events\locker_entanglement.dm"
 #include "code\modules\events\magnetic.dm"

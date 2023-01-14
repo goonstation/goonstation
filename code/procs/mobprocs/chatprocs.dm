@@ -22,6 +22,7 @@
 
 /mob/verb/sa_verb(message as text)
 	set name = "sa"
+	set hidden = 1
 	src.say_verb(message)
 
 /mob/verb/say_radio()
