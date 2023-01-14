@@ -7,16 +7,16 @@
 /datum/component/tracker_hud/Initialize(atom/target, color)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !target)
-		return
+		return COMPONENT_INCOMPATIBLE
+	if(!ismob(src.parent) || !hasvar(src.parent, "hud")) // I'm so sorry
+		return COMPONENT_INCOMPATIBLE
 	src.target = target
 	src.color = color || src.color
 
 /datum/component/tracker_hud/RegisterWithParent()
 	. = ..()
-	var/mob/user = src.parent
-	if(!istype(user) || !hasvar(user, "hud")) // I'm so sorry
-		return
-	var/datum/hud/hud = user:hud
+	//may hasvar protect us 🙏
+	var/datum/hud/hud = src.parent:hud
 	if (!src.hudarrow)
 		hudarrow = hud.create_screen("pinpointer", "Pinpointer", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
 		hudarrow.mouse_opacity = 0
