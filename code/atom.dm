@@ -762,7 +762,7 @@
 	return
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
-/atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+/atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	if (!I)
 		return
