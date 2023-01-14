@@ -757,13 +757,13 @@
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
-	var/image/I = getTexturedImage(src, texture, blendMode)//, key)
+	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	if (!I)
 		return
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
-		worn_material_texture_image = getTexturedWornImage(src, texture, blendMode)
+		worn_material_texture_image = isnull(texture) ? null : getTexturedWornImage(src, texture, blendMode)
 	return
 
 /proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")

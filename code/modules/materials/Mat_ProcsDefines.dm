@@ -196,20 +196,20 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	var/base_icon_state = splittext(src.icon_state,"$$")[1]
 	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
 		src.icon_state = base_icon_state
-		src.UpdateOverlays(null, "material")
+		src.setTexture(null, key="material")
 		return
 
 	var/potential_new_icon_state = "[base_icon_state]$$[mat1.mat_id]"
 	if(src.is_valid_icon_state(potential_new_icon_state))
 		src.icon_state = potential_new_icon_state
-		src.UpdateOverlays(null, "material")
+		src.setTexture(null, key="material")
 		return
 
 	if (src.mat_changeappearance)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
 		else
-			src.UpdateOverlays(null, "material")
+			src.setTexture(null, key="material")
 		if(mat1.applyColor)
 			src.alpha = mat1.alpha
 			src.color = mat1.color
