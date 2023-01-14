@@ -23,6 +23,8 @@
 	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
+	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
+		src.icon_state = "baba"
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	if (!F)

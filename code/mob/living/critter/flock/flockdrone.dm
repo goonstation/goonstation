@@ -30,6 +30,8 @@
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
+	var/mob/living/intangible/flock/selected_by = null
+
 	var/glow_color = "#26ffe6a2"
 
 	var/ai_paused = FALSE
@@ -91,6 +93,11 @@
 		if (controller)
 			src.release_control_abrupt()
 		flock_speak(null, "Connection to drone [src.real_name] lost.", src.flock)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+	src.selected_by = null
 	src.remove_simple_light("drone_light")
 	..()
 
@@ -133,6 +140,12 @@
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
 	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
+	if (src.selected_by)
+		if (src.selected_by != pilot)
+			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
+			return
+		var/datum/abilityHolder/flockmind/AH = src.selected_by.abilityHolder
+		AH.drone_controller.cast(src)
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -429,9 +442,9 @@
 	if(istype(F) && F.flock && F.flock == src.flock)
 		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
-			holder.drone_controller.cast(src) //deselect it
-			F.targeting_ability = null
-		src.take_control(usr)
+			holder.drone_controller.cast(src, FALSE) //deselect it
+		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are for preventing message spam
+			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -450,6 +463,9 @@
 	if (isdead(src) || isnull(src.flock))
 		return
 	if (!isflockmob(usr))
+		return
+	if (src.selected_by)
+		boutput(usr, "<span class='alert'>This drone is receiving a command!</span>")
 		return
 	var/mob/living/intangible/flock/flock_controller = usr
 	if (istype(usr, /mob/living/critter/flock))
@@ -784,6 +800,11 @@
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /mob/living/critter/flock/drone/death(var/gibbed)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+
 	if(src.controller)
 		src.release_control()
 	if(!src.dormant)

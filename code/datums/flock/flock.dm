@@ -678,6 +678,9 @@ var/flock_signal_unleashed = FALSE
 	src.priority_tiles -= T
 	if (isfeathertile(T))
 		src.stats.tiles_converted++
+	if (istype(T, /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/featherturf = T
+		featherturf.flock = src
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -718,16 +721,6 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
-	var/list/floors_no_longer_existing = list()
-
-	for(var/turf/simulated/floor/feather/T in src.all_owned_tiles)
-		if(!T || T.loc == null || T.broken)
-			floors_no_longer_existing |= T
-			continue
-
-	if(length(floors_no_longer_existing))
-		src.all_owned_tiles -= floors_no_longer_existing
-
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
 

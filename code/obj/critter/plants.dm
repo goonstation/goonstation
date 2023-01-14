@@ -39,7 +39,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
-				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 40, 0)
+				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 25, 0)
 				src.task = "chasing"
 				break
 			else continue
@@ -127,7 +127,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> charges at [C:name]!</span>")
-				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 40, 0)
+				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 25, 0)
 				src.task = "chasing"
 				break
 			else

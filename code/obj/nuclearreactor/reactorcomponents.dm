@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_cap = "gas_cap"
 	thermal_cross_section = 0.05
 	var/gas_thermal_cross_section = 0.95
-	var/datum/gas_mixture/current_gas
+	var/datum/gas_mixture/air_contents
 	gas_volume = 100
 
 	melt()
@@ -281,18 +281,18 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
-		if(current_gas && current_gas.toxins > 0)
+		if(air_contents && air_contents.toxins > 0)
 			for(var/datum/neutron/N in .)
-				if(N.velocity > 0 && prob(current_gas.toxins/10))
+				if(N.velocity > 0 && prob(air_contents.toxins/10))
 					N.velocity++
-					current_gas.toxins--
-					current_gas.radgas+=10
+					air_contents.toxins--
+					air_contents.radgas+=10
 
 	processGas(var/datum/gas_mixture/inGas)
-		if(src.current_gas)
+		if(src.air_contents)
 			//heat transfer equation = hA(T2-T1)
 			//assume A = 1m^2
-			var/deltaT = src.current_gas.temperature - src.temperature
+			var/deltaT = src.air_contents.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
@@ -300,20 +300,21 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				//basically, we just need a specific heat capactiy factor in here
 				//fortunately, atmos has macros for that - for everything else, let's just assume steel's heat capacity and density
 				//shc * moles/(shc of steel * density of steel * volume / molar mass of steel)
-				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
-				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
+				var/gas_thermal_e = THERMAL_ENERGY(air_contents)
+				src.air_contents.temperature += gas_thermal_cross_section*-deltaT*hTC
 				//Q = mcT
 				//dQ = mc(dT)
 				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*0.05) //specific heat capacity of steel (420 J/KgC) * density of steel (7700 Kg/m^3) * volume of material the gas channel is made of (m^3)
-				if(src.current_gas.temperature < 0 || src.temperature < 0)
+				src.temperature += (gas_thermal_e - THERMAL_ENERGY(air_contents))/(420*7700*0.05) //specific heat capacity of steel (420 J/KgC) * density of steel (7700 Kg/m^3) * volume of material the gas channel is made of (m^3)
+				if(src.air_contents.temperature < 0 || src.temperature < 0)
 					CRASH("TEMP WENT NEGATIVE")
-			. = src.current_gas
+			. = src.air_contents
 			if(src.melted)
 				var/turf/T = get_turf(src.loc)
 				if(T)
-					T.assume_air(current_gas)
+					T.assume_air(air_contents)
 		if(inGas)
-			src.current_gas = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			src.air_contents.volume = gas_volume
 
 

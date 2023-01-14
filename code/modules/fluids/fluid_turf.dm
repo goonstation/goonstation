@@ -425,6 +425,12 @@
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
 
+/turf/space/fluid/trench/nospawn
+	spawningFlags = null
+
+	generate_worldgen()
+		return
+
 /turf/space/fluid/nospawn
 	spawningFlags = null
 

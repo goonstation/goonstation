@@ -1661,6 +1661,8 @@
 		var/obj/machinery/vehicle/ship = usr.loc
 		if(ship.com_system)
 			if(ship.com_system.active)
+				if(ship.com_system.go_home())
+					return
 				ship.going_home = 1
 				boutput(usr, "[ship.ship_message("Course set for station level. Traveling off the edge of the current level will take you to the station level.")]")
 			else
