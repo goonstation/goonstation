@@ -1,5 +1,9 @@
 
 (t)sat jan 14 23
+(u)Buyrcsp2
+(p)12731
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unopened cans of soda now can't be poured, unless popped open.
 (u)Amylizzle
 (p)12405
 (e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
