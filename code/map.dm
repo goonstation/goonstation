@@ -470,10 +470,17 @@ var/global/list/mapNames = list(
 /datum/map_settings/clarion2
 	name = "CLARION2"
 	display_name = "NSS Clarion"
+	style = "ship"
+	default_gamemode = "extended"
 	goonhub_map = "https://goonhub.com/maps/clarion2"
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = NORTH
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -485,6 +492,8 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
+
+	escape_dir = NORTH
 
 	valid_nuke_targets = list(
 		"the bridge" = list(/area/station/bridge)
