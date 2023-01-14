@@ -28440,7 +28440,7 @@
 /obj/table/wood/auto{
 	icon_state = "1"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -30971,7 +30971,7 @@
 	dir = 1
 	},
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/lamp/black/bright{
 	pixel_x = -3;
@@ -42734,7 +42734,7 @@
 /area/station/turret_protected/AIsat)
 "mnJ" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "mnL" = (
@@ -52590,7 +52590,7 @@
 	dir = 1
 	},
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -76861,7 +76861,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -3;
 	pixel_y = 3
 	},

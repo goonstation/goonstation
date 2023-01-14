@@ -1,7 +1,8 @@
 /datum/game_mode/disaster
-	name = "disaster"
+	name = "Disaster (Beta)"
 	config_tag = "disaster"
 
+	regular=FALSE
 	var/disaster_type = 0
 	var/disaster_name = "bad thing" //This should be set by the disaster start!!
 	//Time before the disaster starts.

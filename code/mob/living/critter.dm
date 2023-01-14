@@ -623,9 +623,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	can_strip(mob/M, showInv = 0)
+	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
-		if(!showInv && check_target_immunity(src, 0, M))
+		if(check_target_immunity(src, 1, M))
 			return 0
 		if (!HH)
 			return 0
@@ -1358,6 +1358,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	var/modifier = power / 20
 	var/damage = rand(modifier, 12 + 8 * modifier)
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, damage * 2, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
 
 	if (shielded)
 		damage /= 4

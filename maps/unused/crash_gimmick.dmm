@@ -38500,7 +38500,7 @@
 /area/space)
 "dDa" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/space,
 /area/space)
 "dDb" = (
@@ -38638,7 +38638,7 @@
 "dDJ" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/snacks/donut,
 /turf/space,
 /area/space)

@@ -410,18 +410,9 @@
 		"releasePressure" = src.release_pressure,
 		"valveIsOpen" = src.valve_open,
 		"hasValve" = src.has_valve ? TRUE : FALSE,
-		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"holding" = src.holding?.ui_describe(),
 		"detonator" = null,
 	)
-
-	if(src.holding)
-		. += list(
-			"holding" = list(
-				"name" = src.holding.name,
-				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-			)
-		)
 
 	if(src.det)
 		. += list(

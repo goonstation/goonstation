@@ -340,7 +340,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone
-	var/total_plasma = 500
+	var/total_plasma = 200
 
 	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
@@ -358,8 +358,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 					target.parent.suspend_group_processing()
 
 				var/datum/gas_mixture/payload = new /datum/gas_mixture
-				payload.toxins = 25
-				total_plasma -= payload.toxins
+				payload.toxins = 25 * location.material_amt
+				total_plasma -= payload.toxins / location.material_amt
 				payload.temperature = T20C
 				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
@@ -394,15 +394,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
-			trace_gas.moles += 0.18
+			trace_gas.moles += 0.18 * owner.material_amt
 			molitz.iterations -= 1
-			payload.oxygen = 15
+			payload.oxygen = 15 * owner.material_amt
 
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
-			payload.oxygen = 80
+			payload.oxygen = 80 * owner.material_amt
 			molitz.iterations -= 1
 
 			target.assume_air(payload)

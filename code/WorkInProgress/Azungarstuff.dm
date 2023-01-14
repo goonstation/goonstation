@@ -496,11 +496,19 @@
 	density = 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/mining_tool/power_pick))
+		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
-			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
+			playsound(src.loc, 'sound/items/mining_pick.ogg', 70,1)
 			qdel(src)
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 /obj/decal/fakeobjects/bigrocks
 	name = "big rocks"
@@ -510,14 +518,21 @@
 	anchored = 1
 	density = 1
 
-
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/mining_tool/power_pick))
+		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
-			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
+			playsound(src.loc, 'sound/items/mining_pick.ogg', 80,1)
 			new /obj/decal/fakeobjects/smallrocks(src.loc)
 			qdel(src)
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 /obj/decal/fakeobjects/biggerrock
 	name = "big rock"

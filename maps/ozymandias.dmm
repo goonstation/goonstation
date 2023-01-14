@@ -45951,7 +45951,7 @@
 /area/station/engine/proto)
 "lRo" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/decoration/ashtray{
 	pixel_x = 6;
 	pixel_y = 4
@@ -49773,7 +49773,7 @@
 /area/station/engine/engineering/ce)
 "mOT" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,
@@ -54152,7 +54152,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -13
 	},
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue{
@@ -56524,7 +56524,7 @@
 "oCK" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor/horprivate)
 "oCO" = (
@@ -60106,7 +60106,7 @@
 "pxF" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
 /turf/simulated/floor/grey,

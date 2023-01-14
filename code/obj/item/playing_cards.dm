@@ -252,7 +252,7 @@
 						icon_state = "stg-m-[icon_state_num]"
 					if("their")
 						icon_state_num = rand(1,NUMBER_N)
-						icon_state = "stg-N-[icon_state_num]"
+						icon_state = "stg-n-[icon_state_num]"
 			else
 				name = chosen_card_type.card_name
 				var/gender = rand(1,3)
@@ -265,7 +265,7 @@
 						icon_state = "stg-m-[icon_state_num]"
 					if(3)
 						icon_state_num = rand(1,NUMBER_N)
-						icon_state = "stg-N-[icon_state_num]"
+						icon_state = "stg-n-[icon_state_num]"
 		if(chosen_card_type.LVL)
 			name = "LVL [chosen_card_type.LVL] [name]"
 		var/atk

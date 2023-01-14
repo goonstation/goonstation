@@ -18,6 +18,7 @@
 	var/obj/item/clothing/head/wig/wig = null
 	var/in_point_mode = 0
 	var/datum/hud/ghost_observer/hud
+	var/auto_tgui_open = TRUE
 
 	mob_flags = MOB_HEARS_ALL
 
@@ -33,25 +34,26 @@
 
 	..()
 
-/mob/dead/observer/proc/toggle_point_mode(var/force_off = 0)
+/mob/dead/observer/proc/toggle_point_mode(var/force_off = FALSE)
 	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
+		src.in_point_mode = FALSE
+	else
+		src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
+
 /mob/dead/observer/hotkey(name)
 	switch (name)
 		if ("togglepoint")
 			src.toggle_point_mode()
 		else
-			.=..()
+			. = ..()
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
 		if (src.in_point_mode || src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
-			return
+		else if (src.client.check_key(KEY_EXAMINE))
+			src.set_cursor('icons/cursors/examine.dmi')
 /mob/dead/observer/click(atom/target, params, location, control)
 
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
@@ -59,6 +61,10 @@
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
+	if (ismob(target) && !src.client.check_key(KEY_EXAMINE))
+		src.insert_observer(target)
+		return
+
 	return ..()
 
 /mob/dead/observer/Login()
@@ -229,7 +235,7 @@
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
-
+	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -478,7 +484,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 
 
-	if(!src.key && delete_on_logout)
+	if(delete_on_logout)
 		//qdel(src)
 		// so here's a fun thing im gonna do: ghosts dont go away now.
 		// theres too much shit that relies on ghosts staying aroudn post-qdel.
@@ -519,6 +525,16 @@
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
+
+/mob/dead/observer/proc/toggle_tgui_auto_open()
+	set category = "Ghost"
+	set name = "Toggle TGUI auto-observing"
+	if(src.auto_tgui_open)
+		boutput(src, "No longer auto-opening TGUI windows of observed mobs.")
+		src.auto_tgui_open = FALSE
+	else
+		boutput(src, "Observed mob's TGUI windows will now auto-open")
+		src.auto_tgui_open = TRUE
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
@@ -786,11 +802,11 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
-	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
 	newobs.ghost = src
+	newobs.set_observe_target(target)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)

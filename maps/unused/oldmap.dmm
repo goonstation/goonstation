@@ -14219,7 +14219,7 @@
 	dir = 8
 	},
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)

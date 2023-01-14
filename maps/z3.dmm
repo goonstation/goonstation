@@ -7604,7 +7604,7 @@
 /area/abandonedmedicalship)
 "aKP" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedmedicalship)
 "aKQ" = (
@@ -15605,7 +15605,7 @@
 /obj/item/seed/alien,
 /obj/item/seed/alien,
 /obj/item/seed/alien,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -20030,7 +20030,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -21431,6 +21431,12 @@
 /turf/space,
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
+"oOU" = (
+/obj/table/flock/auto,
+/obj/machinery/light/flock,
+/obj/item/paper/flockstatsnote,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "oPd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94624,7 +94630,7 @@ atI
 apk
 aza
 aza
-aDX
+oOU
 aoz
 aEq
 aoz

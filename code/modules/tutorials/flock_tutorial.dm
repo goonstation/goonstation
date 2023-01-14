@@ -53,7 +53,7 @@
 		fowner.reset()
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
-		fowner.flock.reset_stats()
+		fowner.flock.stats.reset_stats()
 		fowner.tutorial = null
 		fowner.sight = initial(fowner.sight)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
@@ -410,7 +410,7 @@
 		..()
 		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
 		var/datum/allocated_region/region = prefab.load()
-		for (var/turf/T in REGION_TILES(region))
+		for (var/turf/T in REGION_TURFS(region))
 			var/obj/spawner/flock_structure/structure_spawner = locate() in T
 			structure_spawner?.spawn_structure(ftutorial.fowner.flock)
 			var/mob/living/carbon/human/bad_immortal/fake_tdummy = locate() in T

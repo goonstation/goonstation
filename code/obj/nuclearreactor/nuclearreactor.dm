@@ -32,6 +32,8 @@
 	var/radiationLevel = 0
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
+	/// gas that has been processed, primarily used for atmos analyser
+	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
 
@@ -147,7 +149,7 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		var/datum/gas_mixture/gas_output = air2
+		air_contents = air2
 		var/total_gas_volume = 0
 
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -158,7 +160,7 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) gas_output.merge(gas)
+					if(gas) air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
@@ -181,10 +183,10 @@
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			gas_output.merge(gas)
+			air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		gas_output.merge(gas_input)
+		air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
@@ -221,6 +223,7 @@
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
@@ -277,8 +280,8 @@
 		if(rads <= 0)
 			return
 
-		for(var/i = min(round(rads/2),20),i>0,i--)
-			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*5,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+		for(var/i = min(round(rads/2),50),i>0,i--)
+			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*2,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
 		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
@@ -539,8 +542,8 @@
 					src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
 				else
 					meat_rod.throw_at(get_ranged_target_turf(get_turf(src),pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
-				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
 				user.set_loc(get_turf(src))
+				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
 				user.gib()
 				_comp_grid_overlay_update = TRUE
 				UpdateIcon()
@@ -603,11 +606,7 @@
 	icon_state = ""
 	icon = null
 	power = 100
-	cost = 0
-//How fast the power goes away
-	dissipation_rate = 1
-//How many tiles till it starts to lose power
-	dissipation_delay = 4
+	cost = 20
 //Kill/Stun ratio
 	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
@@ -624,37 +623,51 @@
 	New(power)
 		..()
 		src.power = power
+		src.ks_ratio = 1
+		generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-		. = FALSE //default to doing normal hit behaviour
-
 		if(isintangible(hit) || isobserver(hit))
-			return TRUE
+			return TRUE //don't irradiate ghosts
 
 		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
-		if((hit.material && !prob(hit.material.getProperty("density")*multiplier)) || (isnull(hit.material) && prob(5*multiplier)))
-			O.initial_power /= 2 //initial power because projectile.collide() uses it to calculate power, rather than direct use of .power
-			if(O.initial_power < 1)
-				O.initial_power = 0
-			return TRUE //don't hit this, lose power and pass through it
+		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density
 
-		if(hit.material)
-			if(prob(hit.material.getProperty("hard")*10))
+		//first are we colliding with this or ignoring it?
+		if(prob(density*multiplier))
+			//we hit it! now decide what that hit means
+			//first, reflection
+			if(hit.material && prob(hit.material.getProperty("hard")*10))
 				//reflect
-				shoot_reflected_bounce(O, hit)
-				return TRUE
+				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
+				reflected.power = O.power
+				return FALSE
 
-			if(prob(hit.material.getProperty("n_radioactive")*10))
-				hit.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
-			if(prob(hit.material.getProperty("radioactive")*10))
-				hit.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
-		hit.AddComponent(/datum/component/radioactive, min(O.proj_data.power,25), TRUE, FALSE, 1)
+			//then fission
+			//fission basically hits like an AoE contamination effect
+			if(hit.material && prob(hit.material.getProperty("n_radioactive")*10))
+				for(var/turf/T in range(1, hit))
+					T.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
+				return FALSE
+			if(hit.material && prob(hit.material.getProperty("radioactive")*10))
+				for(var/turf/T in range(1, hit))
+					T.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
+				return FALSE
+			//finally, moderation
+			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
+			O.power -= density*multiplier
+			if(O.power < 1)
+				O.power = 0
+			return TRUE //don't hit this, lose power and pass through it
+		return TRUE
 
-		if(ismob(hit))
-			var/mob/hitmob = hit
-			hitmob.take_radiation_dose(power/200)
-			O.initial_power = 0
+	tick(var/obj/projectile/P)
+		if(P.power <= 0)
+			P.die()
+			return
 
+	get_power(obj/projectile/P, atom/A)
+		return P.power
 
 /particles/nuke_overheat_smoke
 	icon = 'icons/effects/effects.dmi'
