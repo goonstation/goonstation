@@ -1,4 +1,24 @@
 
+(t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
+(u)Amylizzle
+(p)12720
+(e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
+(+)You can now use the gas analyser on the nuclear reactor and turbine.
+(u)Kubius
+(p)12667
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir has received a nuclear engine and a mining department.
+(+)The mining department is fairly small, and two miners are on staff. Their cherished reinforced exploratory pod lives in a hangar below surface.
+(+)Other things changed in Nadir include a larger Hydroponics Bay, a slightly wider Kitchen, several new random room spots, and a small Crime Conduit.
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
 (t)wed jan 11 23
 (u)aloe
 (+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.

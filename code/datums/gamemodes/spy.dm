@@ -6,8 +6,9 @@
 // like the R&D stuff in paranoia
 
 /datum/game_mode/spy
-	name = "conspiracy"
+	name = "Spy"
 	config_tag = "spy"
+	regular = FALSE
 
 	var/list/leaders = list()
 	var/list/spies = list()

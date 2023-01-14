@@ -1,5 +1,5 @@
 /datum/game_mode/changeling
-	name = "changeling"
+	name = "Changeling"
 	config_tag = "changeling"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING)

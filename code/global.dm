@@ -500,14 +500,7 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","extended",
-		"nuclear","blob","wizard","revolution", "revolution_extended","spy","gang","disaster",
-		"changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
-#if defined(MAP_OVERRIDE_POD_WARS)
-		,"pod_wars"
-#endif
-	)
+	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 

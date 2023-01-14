@@ -171,7 +171,7 @@
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
 			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
-			gamemode?.shuttle_available = FALSE
+			gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 
 		#undef NUKE_AREA_CHECK
 
@@ -201,7 +201,7 @@
 						user.unlock_medal("Brown Pants", 1)
 
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
-						ticker.mode.shuttle_available = 1
+						ticker.mode.shuttle_available = SHUTTLE_AVAILABLE_NORMAL
 
 				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
 				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
