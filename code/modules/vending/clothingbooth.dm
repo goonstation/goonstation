@@ -1,7 +1,6 @@
 /*Clothing Booth UI*/
 //list creation
-var/list/clothingbooth_list = list()
-// var/list/clothingbooth_items = list()
+var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
 	var/list/list/list/boothlist = list()
@@ -25,8 +24,7 @@ var/list/clothingbooth_list = list()
 				"path" = pathname
 			)
 		)
-		// clothingbooth_items[pathname] = I
-	clothingbooth_list = boothlist
+	clothingbooth_items = boothlist
 
 //setting up player-side UI data
 // /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
@@ -66,7 +64,7 @@ var/list/clothingbooth_list = list()
 
 /obj/machinery/clothingbooth/ui_static_data(mob/user)
 	. = list(
-		"clothingbooth_list" = clothingbooth_list,
+		"clothingBoothList" = clothingbooth_items,
 		"name" = src.name
 	)
 
