@@ -1,5 +1,9 @@
 
 (t)sat jan 14 23
+(u)DisturbHerb + Grokberg
+(p)12390
+(e)🆕🎨🔄🔊📄📦📜|C-Feature, C-Sprites, C-Rework, C-Sound, A-UI, A-Game-Objects, C-Documentation
+(*)The NanoTrasen Recreational Appropriations Committee has secured funding to upgrade the quality of crew entertainment in its stations. Chess boards and game clocks have been made available at gaming vendor machines, and a further rollout of the new equipment is anticipated in the near future.
 (u)Buyrcsp2
 (p)12731
 (e)🪲🍝|C-Bug, A-Catering
