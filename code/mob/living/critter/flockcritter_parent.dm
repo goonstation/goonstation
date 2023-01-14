@@ -114,18 +114,6 @@
 	if (istype(target, /obj/item) && target.loc == src) //no batong for radio birds
 		target.emp_act()
 
-/mob/living/critter/flock/weapon_attack(atom/target, obj/item/W, reach, params)
-	if (HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !reach && istype(W, /obj/item/gun))
-		var/prevent_attack = target.density
-		if (istype(target, /mob/living/critter/flock/bit))
-			var/mob/living/critter/flock/bit/flockbit = target
-			if (flockbit.flock == src.flock)
-				prevent_attack = TRUE
-		if (prevent_attack)
-			boutput(src, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
-			return
-	..()
-
 //trying out a world where you can't stun flockdrones
 /mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
