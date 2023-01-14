@@ -62,7 +62,7 @@
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
-	if (ismob(target) && !src.client.check_key(KEY_EXAMINE))
+	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
 		src.insert_observer(target)
 		return
 	return ..()
