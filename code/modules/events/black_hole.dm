@@ -214,8 +214,6 @@
 
 		if(istype(T,/turf/simulated/floor))
 			var/turf/simulated/floor/F = T
-			if (istype(F, /turf/simulated/floor/glassblock))
-				return
 			if(!F.broken)
 				if(prob(80))
 					var/obj/item/tile/TILE = new /obj/item/tile(F)
