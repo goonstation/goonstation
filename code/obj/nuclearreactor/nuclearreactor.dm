@@ -59,7 +59,7 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
