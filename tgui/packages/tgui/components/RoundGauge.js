@@ -23,6 +23,7 @@ export const RoundGauge = props => {
     maxValue = 1,
     ranges,
     alertAfter,
+    alertBefore,
     format,
     size = 1,
     className,
@@ -50,7 +51,9 @@ export const RoundGauge = props => {
   if (alertAfter < value) {
     alertColor = keyOfMatchingRange(clampedValue, scaledRanges);
   }
-
+  else if (alertBefore > value) {
+    alertColor = keyOfMatchingRange(clampedValue, scaledRanges);
+  }
   return (
     <Box inline>
       <div
@@ -68,7 +71,7 @@ export const RoundGauge = props => {
         })}>
         <svg
           viewBox="0 0 100 50">
-          {alertAfter && (
+          {(alertAfter || alertBefore) && (
             <g className={classes([
               'RoundGauge__alert',
               alertColor ? `active RoundGauge__alert--${alertColor}` : '',
