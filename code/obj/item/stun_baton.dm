@@ -4,6 +4,9 @@
 
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
+TYPEINFO(/obj/item/baton)
+	mats = list("MET-3"=10, "CON-2"=10)
+
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -18,7 +21,6 @@
 	throwforce = 7
 	health = 7
 	w_class = W_CLASS_NORMAL
-	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
 	stamina_damage = 15
 	stamina_cost = 21
@@ -44,7 +46,10 @@
 	var/can_swap_cell = 1
 	var/rechargable = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
-	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
+	/// Is it currently rotated so that you're grabbing it by the head?
+	var/flipped = FALSE
+
+	var/item_special_path = /datum/item_special/spark/baton
 
 	New()
 		..()
@@ -55,7 +60,7 @@
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
 		src.UpdateIcon()
-		src.setItemSpecial(/datum/item_special/spark/baton)
+		src.setItemSpecial(src.item_special_path)
 
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -83,6 +88,8 @@
 	emp_act()
 		src.is_active = FALSE
 		src.process_charges(-INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
 		return
 
 	update_icon()
@@ -284,7 +291,7 @@
 	attack_hand(var/mob/user)
 		if (src.flipped && user.a_intent != INTENT_HARM)
 			user.show_text("You flip \the [src] the right way around as you grab it.")
-			src.flipped = false
+			src.flipped = FALSE
 			src.UpdateIcon()
 			user.update_inhands()
 		else if (user.a_intent == INTENT_HARM)
@@ -295,7 +302,7 @@
 		if (intent == INTENT_HARM)
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
-			src.flipped = true
+			src.flipped = TRUE
 			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
@@ -307,20 +314,20 @@
 		else //not already flipped
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
-			src.flipped = false
+			src.flipped = FALSE
 			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.setItemSpecial(/datum/item_special/spark/baton)
+			src.setItemSpecial(src.item_special_path)
 			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
 	dropped(mob/user)
 		if (src.flipped)
-			src.setItemSpecial(/datum/item_special/spark/baton)
-			src.flipped = false
+			src.setItemSpecial(src.item_special_path)
+			src.flipped = FALSE
 			src.UpdateIcon()
 			user.update_inhands()
 		..()
@@ -330,13 +337,18 @@
 /obj/item/baton/secbot
 	cost_normal = 0
 
+TYPEINFO(/obj/item/baton/beepsky)
+	mats = 0 //no
+
 /obj/item/baton/beepsky
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	rechargable = 0
 	cell_type = /obj/item/ammo/power_cell
-	mats = 0 //no
+
+TYPEINFO(/obj/item/baton/cane)
+	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/cane
 	name = "stun cane"
@@ -350,7 +362,9 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	can_swap_cell = 0
 	rechargable = 0
-	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
+
+TYPEINFO(/obj/item/baton/classic)
+	mats = 0
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -358,7 +372,6 @@
 	icon_state = "baton"
 	item_state = "classic_baton"
 	force = 15
-	mats = 0
 	contraband = 6
 	icon_on = "baton"
 	icon_off = "baton"
@@ -382,13 +395,15 @@
 			user.remove_stamina(src.stamina_cost)
 
 
+TYPEINFO(/obj/item/baton/ntso)
+	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
+
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
-	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"
@@ -405,12 +420,11 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	item_function_flags = 0
+
+	item_special_path = /datum/item_special/spark/ntso
+
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = EXTENDO_BATON_CLOSED_AND_OFF
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/spark/ntso) //override spark of parent
 
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)

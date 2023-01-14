@@ -14,6 +14,7 @@
 	anchored = 1
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
@@ -29,7 +30,6 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_FLOCK
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
@@ -66,6 +66,12 @@
 			plane.alpha = 0
 	..()
 
+
+/mob/living/intangible/flock/Move(NewLoc, direct)
+	if (istype(NewLoc, /turf/cordon))
+		return FALSE
+	..()
+
 /mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
@@ -76,6 +82,12 @@
 	else
 		src.afk_counter = 0
 		src.previous_turf = get_turf(src)
+
+/mob/living/intangible/flock/death(datum/controller/process/mobs/parent)
+	var/datum/abilityHolder/flockmind/AH = src.abilityHolder
+	if (AH.drone_controller.drone)
+		AH.drone_controller.cast(AH.drone_controller.drone, FALSE)
+	..()
 
 /mob/living/intangible/flock/is_spacefaring() return 1
 /mob/living/intangible/flock/say_understands() return 1
@@ -131,6 +143,13 @@
 	// HAAAAA
 	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
+/mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
+	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
+	holder.drone_controller.drone = drone
+	drone.AddComponent(/datum/component/flock_ping/selected)
+	src.targeting_ability = holder.drone_controller
+	src.update_cursor()
+
 /mob/living/intangible/flock/click(atom/target, params)
 	if (targeting_ability)
 		..()
@@ -147,17 +166,21 @@
 		return
 
 	if (istype(target, /mob/living/critter/flock/drone))
-		var/datum/abilityHolder/flockmind/holder = src.abilityHolder
-		holder.drone_controller.drone = target
-		target.AddComponent(/datum/component/flock_ping/selected)
-		src.targeting_ability = holder.drone_controller
-		src.update_cursor()
-		return
-
+		var/mob/living/critter/flock/drone/flockdrone = target
+		if (!isdead(flockdrone))
+			if (flockdrone.selected_by || flockdrone.controller)
+				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
+				return
+			flockdrone.selected_by = src
+			src.select_drone(flockdrone)
+			return
 	//moved from flock_structure_ghost for interfering with ability targeting
-	if (istype(target, /obj/flock_structure/ghost))
-		if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
-			var/obj/flock_structure/ghost/tealprint = target
+	else if (istype(target, /obj/flock_structure/ghost))
+		var/obj/flock_structure/ghost/tealprint = target
+		var/typeinfo/obj/flock_structure/info = get_type_typeinfo(tealprint.building)
+		if (!info.cancellable)
+			return
+		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 			tealprint.cancelBuild()
 		return
 
@@ -197,7 +220,7 @@
 
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
-
+	..()
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		act = copytext(act, 1, t1)

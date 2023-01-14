@@ -885,7 +885,7 @@
 	desc = "A force of pure sorrow and evil. They shy away from that which is holy."
 	icon_state = "bling"
 	density = 1
-	health = 15
+	health = 50
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
@@ -922,7 +922,6 @@
 			else
 				continue
 
-
 	ChaseAttack(mob/M)
 		src.attacking = 1
 		if (narrator_mode)
@@ -931,22 +930,23 @@
 			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
 			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
-			random_brute_damage(M, rand(0,3))
-			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
+			random_brute_damage(M, rand(0,5))
+			M.changeStatus("stunned", 5 SECONDS)
+			M.changeStatus("weakened", 5 SECONDS)
 			src.attacking = 0
 			return
-
 
 	CritterAttack(mob/M)
 		playsound(src.loc, 'sound/effects/ghost2.ogg', 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
-			if(prob(30))
-				random_brute_damage(M, rand(3,7))
+			if(prob(66))
+				random_brute_damage(M, rand(5,10))
+				take_bleeding_damage(M, null, rand(10,35), DAMAGE_CRUSH, 5, get_turf(M))
 				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
 			else
 				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
+				M.changeStatus("slowed", 3 SECONDS, 3)
 
 		SPAWN(0.5 SECONDS)
 			attacking = 0
@@ -966,6 +966,11 @@
 			else
 				boutput(user, "<span class='combat'>Hitting it with [W] is ineffective!</span>")
 				return
+
+	attack_hand(var/mob/user)
+		if (src.alive)
+			boutput(user, "<span class='combat'><b>Your hand passes right through!</b></span>")
+		return
 
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)

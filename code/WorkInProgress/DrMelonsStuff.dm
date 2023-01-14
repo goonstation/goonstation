@@ -228,11 +228,11 @@
 
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
-		if (GET_DIST(usr, src) <= 1 && !is_incapacitated(usr))
+		if (GET_DIST(user, src) <= 1 && !is_incapacitated(user))
 			if (src.reagents.total_volume)
 				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
-				if (ishuman(usr))
-					var/mob/living/carbon/human/H = usr
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
 					if(!H.gloves)
 						reagents.reaction(H, TOUCH, 5)
 				playsound(src.loc, 'sound/misc/drain_glug.ogg', 70, 1)
@@ -246,7 +246,7 @@
 				if (count > 0)
 					user.visible_message("<span class='alert'>...and something flushes down the drain. Damn!", "<span class='alert'>...and flush something down the drain. Damn!</span>")
 			else
-				boutput(usr, "<span class='notice'>The bathtub's already empty.</span>")
+				boutput(user, "<span class='notice'>The bathtub's already empty.</span>")
 
 	relaymove(mob/user)
 		user.set_loc(src.loc)

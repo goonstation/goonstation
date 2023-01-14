@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/transfer_valve)
+	mats = 5
+
 /obj/item/device/transfer_valve
 	icon = 'icons/obj/items/assemblies.dmi' //TODO: as of 02/02/2020 missing sprite for regular air tank
 	name = "tank transfer valve" // because that's what it is exadv1 and don't you dare change it
@@ -24,7 +27,6 @@
 
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
-	mats = 5
 
 	New()
 		..()
@@ -425,13 +427,15 @@
 					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.</span>") //It didn't blow up!
 		return 1
 
+TYPEINFO(/obj/item/device/transfer_valve/briefcase)
+	mats = 8
+
 /obj/item/device/transfer_valve/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	var/obj/item/storage/briefcase/B = null
-	mats = 8
 
 	update_icon()
 

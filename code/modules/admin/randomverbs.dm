@@ -121,7 +121,7 @@
 
 	var/client/Mclient = M.client
 
-	var/msg = input("Message:", text("Plain message to [Mclient.key]")) as null|text
+	var/msg = input("Message:", "Plain message to [Mclient.key]") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -143,7 +143,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Plain message to all")) as null|text
+	var/msg = input("Message:", "Plain message to all") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -317,12 +317,26 @@
 	set name = "AI: Bulk Law Change"
 	ADMIN_ONLY
 
-	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")]", "Bulk Law Modification", "") as message
+	var/current_laws = list()
+	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_circuits)
+		if(!X)
+			continue
+		var/lt = X.get_law_text(TRUE)
+		if(islist(lt))
+			for(var/law in lt)
+				current_laws += "[law]"
+		else
+			current_laws += "[lt]"
+
+	var/input = input(usr, "Replace all AI laws with what?", "Bulk Law Modification", jointext(current_laws, "\n")) as message|null
+	if(isnull(input))
+		return
+
 	var/list/split = splittext(input, "\n")
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
-		if(i < split.len)
-			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
+		if(i <= split.len)
+			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -349,9 +363,9 @@
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
 		ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing(LOG_ADMIN, usr, "reset the centralized AI laws.")
@@ -1110,6 +1124,9 @@
 	set popup_menu = 0
 	set desc = "When toggled on, you will be able to see all 'hidden' adventure elements regardless of your current mob."
 
+	src._cmd_admin_advview()
+
+/client/proc/_cmd_admin_advview()
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -1525,7 +1542,7 @@
 		for(var/mob/M in mobs)
 			if(M)
 				M.playsound_local(M.loc, 'sound/voice/animal/cat.ogg', 30, 30)
-				if(I==1 && !isobserver(M)) new /obj/critter/cat(M.loc)
+				if(I==1 && !isobserver(M)) new /mob/living/critter/small_animal/cat(M.loc)
 		sleep(rand(10,20))
 
 /client/proc/revive_all_bees()
@@ -1564,14 +1581,11 @@
 	ADMIN_ONLY
 
 	var/revived = 0
-	for (var/obj/critter/cat/Cat in world)
+	for (var/mob/living/critter/small_animal/cat/Cat in world)
 		LAGCHECK(LAG_LOW)
-		if (!Cat.alive)
-			Cat.health = initial(Cat.health)
-			Cat.alive = 1
+		if (isdead(Cat))
+			Cat.full_heal()
 			Cat.icon_state = initial(Cat.icon_state)
-			Cat.set_density(initial(Cat.density))
-			Cat.on_revive()
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")
@@ -1700,7 +1714,7 @@
 	if (!(newMind in ticker.minds))
 		ticker.minds.Add(newMind)
 	M.mind = newMind
-	M.mind.brain.owner = M.mind
+	M.mind.brain?.owner = M.mind
 
 	M.antagonist_overlay_refresh(1, 1)
 

@@ -112,6 +112,9 @@ Frequency:
 
 /// HAND TELE
 
+TYPEINFO(/obj/item/hand_tele)
+	mats = 8
+
 /obj/item/hand_tele
 	name = "hand tele"
 	icon = 'icons/obj/items/device.dmi'
@@ -125,7 +128,6 @@ Frequency:
 	m_amt = 10000
 	c_flags = ONBELT
 	var/unscrewed = 0
-	mats = 8
 	desc = "An experimental portable teleportation device that can create portals that link to the same destination as a teleport computer."
 	var/obj/item/our_target = null
 	var/turf/our_random_target = null

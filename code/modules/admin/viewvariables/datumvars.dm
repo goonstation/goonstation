@@ -92,6 +92,13 @@
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 
+	if(src.holder.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the variables of [D]")
+		logTheThing(LOG_DIARY, src, "tried to access the variables of [D]", "admin")
+		message_admins("[key_name(src)] tried to access the variables of [D] but was denied.")
+		alert("You need to be an actual admin to access view variables.")
+		return
+
 	if(D == world && src.holder.level < LEVEL_CODER) // maybe host???
 		src.audit(AUDIT_ACCESS_DENIED, "tried to view variables of world as non-coder.")
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )

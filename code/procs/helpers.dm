@@ -81,11 +81,14 @@
 
 	return B
 
-var/global/obj/flashDummy
+var/global/obj/fuckyou/flashDummy
+
+// This runtimes due to abstract instantiation every time an arcflash occurs and I don't feel like fixing it so here's a magic concrete child
+/obj/fuckyou
 
 /proc/getFlashDummy()
 	if (!flashDummy)
-		flashDummy = new /obj(null)
+		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
@@ -1251,8 +1254,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
-
-
+	var/turf/T = get_turf(centre)
+	if(T?.vistarget)
+		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
+		. |= all_hearers(range, T.vistarget)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
@@ -2177,13 +2182,9 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
-var/global/list/allowed_restricted_z_areas
-
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
-	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2196,7 +2197,7 @@ var/global/list/allowed_restricted_z_areas
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
+	if (A && istype(A) && A.allowed_restricted_z)
 		return TRUE
 
 /**
@@ -2644,3 +2645,15 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
 	else
 		return new_screen_loc //regex failed to match, just use what we got
+
+/// For logs- returns the thing's name and type. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
+/proc/log_object(datum/thing)
+	if (isnull(thing))
+		return "***NULL***"
+	if (!istype(thing))
+		return thing
+	return "\"[thing]\" ([thing.type])"
+
+/// For runtime logs- returns the above plus ref
+/proc/identify_object(datum/thing)
+	return "[log_object(thing)] \ref[thing]" // actual datum

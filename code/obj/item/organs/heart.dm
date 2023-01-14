@@ -132,6 +132,9 @@
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
+TYPEINFO(/obj/item/organ/heart/cyber)
+	mats = 8
+
 /obj/item/organ/heart/cyber
 	name = "cyberheart"
 	desc = "A cybernetic heart. Is this thing really medical-grade?"
@@ -141,7 +144,6 @@
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	mats = 8
 	made_from = "pharosium"
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'

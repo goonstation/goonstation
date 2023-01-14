@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/stool/bee_bed,
-/obj/critter/cat/synth,
+/mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/space)
 "e" = (
 /obj/stool/bee_bed,
-/obj/critter/cat/synth,
+/mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9
 	},
@@ -64,7 +64,7 @@
 /area/space)
 "O" = (
 /obj/stool/bee_bed,
-/obj/critter/cat/synth,
+/mob/living/critter/small_animal/cat/synth,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 4
 	},

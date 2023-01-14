@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/deep_fryer)
+	mats = 20
+
 /obj/machinery/deep_fryer
 	name = "Deep Fryer"
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
@@ -7,7 +10,6 @@
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
-	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/atom/movable/fryitem = null
 	var/cooktime = 0

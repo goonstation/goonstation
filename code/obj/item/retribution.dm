@@ -11,6 +11,9 @@
 	is_syndicate = 1
 	contraband = 5
 
+TYPEINFO(/obj/item/syndicate_destruction_system)
+	mats = 18
+
 /obj/item/syndicate_destruction_system
 	name = "Syndicate Destruction System"
 	desc = "An unfinished melee weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
@@ -27,14 +30,13 @@
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	mats = 18
 	is_syndicate = 1
 	contraband = 10
 	two_handed = 1
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 42
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/active_force = 50
 	var/active_stamina_dmg = 50
 	var/active_stamina_cost = 40
@@ -57,7 +59,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			icon = 'icons/misc/retribution/SWORD_loot.dmi'
 			src.icon_state = "SDS_empty"
@@ -76,7 +78,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			icon = 'icons/misc/retribution/48x32.dmi'
 			src.icon_state = "SDS"
@@ -135,12 +137,12 @@
 		..()
 
 	proc/destruction_sds(var/point_x, var/point_y, var/point_z)
-		var/create_scan_decal = false
+		var/create_scan_decal = FALSE
 		var/window_step = 0
 		var/turf/T = locate(point_x,point_y,point_z)
 		for (var/atom/scan_target in T)
 			if (ismob(scan_target))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				if (isrobot(scan_target))
 					random_burn_damage(scan_target, 15)
 					scan_target.changeStatus("stunned", 2 SECOND)
@@ -150,18 +152,18 @@
 				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
 				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				scan_target.ex_act(1)
 			else if (istype(scan_target, /obj/grille))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				window_step++
 				scan_target.ex_act(1)
 			else if (istype(scan_target, /obj/window))
 				if(window_step == 0)
-					create_scan_decal = true
+					create_scan_decal = TRUE
 					scan_target.ex_act(1)
 		if(istype(T, /turf/simulated/wall))
-			create_scan_decal = true
+			create_scan_decal = TRUE
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)

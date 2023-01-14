@@ -351,3 +351,11 @@ proc/params2complexlist(params)
 	for(var/i in 1 to listlen - 1) \
 		x.Swap(i, rand(i, listlen)) \
 	} while (0)
+
+/// Reverses a list in place
+#define reverse_list(x) \
+	do { \
+	var/listlen = length(x); \
+	for(var/i in 1 to round(listlen / 2)) \
+		x.Swap(i, listlen - i + 1) \
+	} while (0)

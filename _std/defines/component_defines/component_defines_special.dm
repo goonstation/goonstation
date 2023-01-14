@@ -67,6 +67,9 @@
 		/// Cell is fully charged
 		#define CELL_FULL 32
 
+// ---- energy shield thing ----
+	/// Sent by the itemability to toggle the energyshield component
+	#define COMSIG_SHIELD_TOGGLE "energy_shield_toggle"
 
 // ---- atom property signals ----
 
@@ -96,7 +99,7 @@
 
 // ---- Dock Signals and Events ----
 // Docks are categorized by the shuttle that uses them. Docks are not interchangable.
-// Registered listeners recieve a signal for each shuttle state change.
+// Registered listeners receive a signal for each shuttle state change.
 // When handling the signal, the provided argument will match a dock event define.
 
 	// ---- Dock Events ----

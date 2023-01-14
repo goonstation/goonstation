@@ -190,13 +190,15 @@
 		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
+TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
+	mats = 8
+
 /obj/reagent_dispensers/watertank/fountain
 	name = "water cooler"
 	desc = "A popular gathering place for NanoTrasen's finest bureaucrats and pencil-pushers."
 	icon_state = "coolerbase"
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
-	mats = 8
 	capacity = 500
 
 	var/has_tank = 1

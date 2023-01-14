@@ -7,6 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
+	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
@@ -129,6 +130,9 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+TYPEINFO(/obj/item/clothing/mask/moustache)
+	mats = 2
+
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
 	desc = "Nobody will know who you are if you put this on. Nobody."
@@ -136,8 +140,8 @@
 	item_state = "moustache"
 	see_face = 0
 	w_class = W_CLASS_TINY
+	c_flags = null
 	is_syndicate = 1
-	mats = 2
 
 	setupProperties()
 		..()
@@ -219,6 +223,9 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+TYPEINFO(/obj/item/clothing/mask/gas/voice)
+	mats = 6
+
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
@@ -226,18 +233,22 @@
 	item_state = "gas_alt"
 	//vchange = 1
 	is_syndicate = 1
-	mats = 6
 
 	New()
 		..()
 		src.vchange = new(src)
+
+TYPEINFO(/obj/item/voice_changer)
+	mats = 6
 
 /obj/item/voice_changer
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
-	mats = 6
+
+TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator
 	name = "vocal translator"
@@ -245,7 +256,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
-	mats = 12	// 2x voice changer cost. It's complicated ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
@@ -619,6 +629,7 @@
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
 	see_face = 0
+	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
@@ -626,6 +637,7 @@
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana

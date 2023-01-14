@@ -2,6 +2,9 @@
 //Cloak field generator
 //Remote for said generator
 
+TYPEINFO(/obj/item/cloak_gen)
+	mats = 12
+
 /obj/item/cloak_gen
 	name = "cloaking field generator"
 	desc = "It's humming softly."
@@ -13,7 +16,6 @@
 	var/icon_to_use = "noise2"
 	var/list/fields = new/list()
 	is_syndicate = 1
-	mats = 12
 	contraband = 2
 
 	New()

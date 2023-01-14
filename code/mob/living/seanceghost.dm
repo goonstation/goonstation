@@ -111,6 +111,7 @@
 			return
 
 	emote(var/act, var/voluntary)
+		..()
 		var/message
 		switch (lowertext(act))
 			if("flip")

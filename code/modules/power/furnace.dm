@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/power/furnace)
+	mats = 20
+
 /obj/machinery/power/furnace
 	name = "Zaojun-2 5kW Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
@@ -12,7 +15,6 @@
 	var/genrate = 5000
 	var/stoked = 0 // engine ungrump
 	custom_suicide = 1
-	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
@@ -120,7 +122,7 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
 			if (src.fuel >= src.maxfuel)

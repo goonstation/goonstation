@@ -662,7 +662,7 @@ datum
 			drinkrecipe = 1
 
 		honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			result = "honey_tea"
 			required_reagents = list("honey" = 1, "tea" = 1)
@@ -672,7 +672,7 @@ datum
 			drinkrecipe = 1
 
 		mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			result = "mint_tea"
 			required_reagents = list("mint" = 1, "tea" = 1)
@@ -3754,7 +3754,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/obj/critter/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)

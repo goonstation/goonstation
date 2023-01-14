@@ -9,6 +9,9 @@
 #define MAX_TIMING 0.5
 #define MAX_NOTE_INPUT 15360
 
+TYPEINFO(/obj/player_piano)
+	mats = 20
+
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
 	desc = "A piano that can take raw text and turn it into music! The future is now!"
@@ -16,7 +19,6 @@
 	icon_state = "player_piano"
 	density = 1
 	anchored = 1
-	mats = 20
 	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping

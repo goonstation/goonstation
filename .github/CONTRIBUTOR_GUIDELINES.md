@@ -4,6 +4,9 @@
 
 {%hackmd @ZeWaka/dark-theme %}
 
+## Personal Information
+Git history is (more-or-less) immutable. For your own safety, make sure that you don't have any personal information in your git username or email (check with `git config user.name` and `git config user.email`) and think very hard before using an account you also use for professional work/etc. Github offers a `noreply` email that you can [enable](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address) and use for your git email.
+
 ## Triage Team
 Have you contributed to the game and want to get more involved? Join our triage team!
 

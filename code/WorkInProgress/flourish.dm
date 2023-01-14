@@ -41,7 +41,7 @@
 		C.AddComponent(/datum/component/pet, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/pet/cat
-	critter_type = /obj/critter/cat
+	critter_type = /mob/living/critter/small_animal/cat
 
 /datum/component/pet
 	dupe_mode = COMPONENT_DUPE_UNIQUE

@@ -109,6 +109,8 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/bruteloss
+	var/burnloss
 
 	max_health = 100
 
@@ -219,15 +221,6 @@
 		return
 
 	src.limbs = new /datum/human_limbs(src)
-
-	if (src.organHolder)
-		src.organs["chest"] = src.organHolder.chest
-		src.organs["head"] = src.organHolder.head
-	if (src.limbs)
-		src.organs["l_arm"] = src.limbs.l_arm
-		src.organs["r_arm"] = src.limbs.r_arm
-		src.organs["l_leg"] = src.limbs.l_leg
-		src.organs["r_leg"] = src.limbs.r_leg
 
 	src.update_body()
 	src.update_face()
@@ -413,7 +406,6 @@
 					if (src.l_arm)
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
-				src.holder.organs["l_arm"] = src.l_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
@@ -435,7 +427,6 @@
 					if (src.r_arm)
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
-				src.holder.organs["r_arm"] = src.r_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
@@ -447,7 +438,6 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
-					src.holder.organs["l_leg"] = src.l_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
@@ -458,7 +448,6 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
-					src.holder.organs["r_leg"] = src.r_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
@@ -537,9 +526,6 @@
 		arrestIcon = null
 
 	src.chest_item = null
-
-	src.organs?.len = 0
-	src.organs = null
 
 	if (mutantrace)
 		mutantrace.dispose()
@@ -1048,7 +1034,7 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-		var/throw_dir = get_dir(target, src)
+		var/throw_dir = get_dir(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_chance = 1
@@ -1072,7 +1058,7 @@
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = throw_dir
+			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
@@ -1107,14 +1093,6 @@
 						src.set_a_intent(INTENT_DISARM)
 						.=..()
 						src.set_a_intent(INTENT_DISARM)
-				/*else if (params["middle"])
-					params["middle"] = 0
-					params["left"] = 1 //hacky again :)
-					var/prev = src.a_intent
-					src.set_a_intent(INTENT_GRAB)
-					.=..()
-					src.set_a_intent(prev)
-					return*/
 				else
 					src.set_a_intent(INTENT_HARM)
 					.=..()
@@ -1176,17 +1154,13 @@
 	if (src.nodamage) return
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
-		if (istype(src.organs[dam_zone], /obj/item/organ))
-			var/obj/item/organ/temp = src.organs[dam_zone]
+		var/reduction = 0
+		if (src.spellshield)
+			reduction = 30
+			boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
-			var/reduction = 0
-			if (src.energy_shield) reduction = src.energy_shield.protect()
-			if (src.spellshield)
-				reduction = 30
-				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
-
-			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
-			src.UpdateDamageIcon()
+		src.TakeDamage(dam_zone, (istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0), 0, DAMAGE_CRUSH)
+		src.UpdateDamageIcon()
 	else if (prob(20))
 		src.gib()
 
@@ -1361,18 +1335,10 @@
 	if (src.organHolder && src.organHolder.brain && src.mind)
 		src.organHolder.brain.setOwner(src.mind)
 
-	/*
-	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN(15 SECONDS)
-			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
-	*/
-	return
-
 /mob/living/carbon/human/Logout()
 	..()
 	if (!ai_active && is_npc)
 		ai_set_active(1)
-	return
 
 /mob/living/carbon/human/get_heard_name()
 	var/alt_name = ""
@@ -3159,7 +3125,7 @@
 	if (usr == src)
 		src.hud.relay_click("invtoggle", src, list()) // ha i copy the dumb thing
 		return
-	if (!src.can_strip(src, 1)) return
+	if (!src.can_strip(src)) return
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return

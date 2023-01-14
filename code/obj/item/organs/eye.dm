@@ -106,6 +106,9 @@
 	item_state = "plant"
 	synthetic = 1
 
+TYPEINFO(/obj/item/organ/eye/cyber)
+	mats = 6
+
 /obj/item/organ/eye/cyber
 	name = "cybereye"
 	organ_name = "cybereye"
@@ -115,7 +118,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	made_from = "pharosium"
 	show_on_examine = 1
 
@@ -126,12 +128,14 @@
 			if (src.holder && src.holder.donor)
 				src.holder.donor.show_text("<b>Your [src.organ_name] [pick("crackles and sparks", "makes a weird crunchy noise", "buzzes strangely")]!</b>", "red")
 
+TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
+	mats = 7
+
 /obj/item/organ/eye/cyber/sunglass
 	name = "polarized cybereye"
 	organ_name = "polarized cybereye"
 	desc = "A fancy electronic eye. It has a polarized filter on the lens for built-in protection from the sun and other harsh lightsources. Your night vision is fucked, though."
 	icon_state = "eye-sunglass"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.95 // darken a little
 	color_g = 0.95
@@ -148,12 +152,14 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/sechud)
+	mats = 7
+
 /obj/item/organ/eye/cyber/sechud
 	name = "\improper Security HUD cybereye"
 	organ_name = "\improper Security HUD cybereye"
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
@@ -177,12 +183,14 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 		..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/thermal)
+	mats = 7
+
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
 	organ_name = "thermal imager cybereye"
 	desc = "A fancy electronic eye. It lets you see through cloaks and enhances your night vision. Use caution around bright lights."
 	icon_state = "eye-thermal"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 1
 	color_g = 0.9 // red tint
@@ -197,12 +205,14 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_THERMALVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/meson)
+	mats = 7
+
 /obj/item/organ/eye/cyber/meson
 	name = "mesonic imager cybereye"
 	organ_name = "mesonic imager cybereye"
 	desc = "A fancy electronic eye. It lets you see the structure of the station through walls. Trippy!"
 	icon_state = "eye-meson"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.925
 	color_g = 1
@@ -240,12 +250,14 @@
 			assigned.vision.set_scan(0)
 			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
 
+TYPEINFO(/obj/item/organ/eye/cyber/spectro)
+	mats = 7
+
 /obj/item/organ/eye/cyber/spectro
 	name = "spectroscopic imager cybereye"
 	organ_name = "spectroscopic imager cybereye"
 	desc = "A fancy electronic eye. It has an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	icon_state = "eye-spectro"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 1 // pink tint?
 	color_g = 0.9
@@ -260,12 +272,14 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_SPECTRO, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
+	mats = 7
+
 /obj/item/organ/eye/cyber/prodoc
 	name = "\improper ProDoc Healthview cybereye"
 	organ_name = "\improper ProDoc Healthview cybereye"
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.925
 	color_g = 1
@@ -294,12 +308,14 @@
 		..()
 		return
 
+TYPEINFO(/obj/item/organ/eye/cyber/ecto)
+	mats = 7
+
 /obj/item/organ/eye/cyber/ecto
 	name = "ectosensor cybereye"
 	organ_name = "ectosensor cybereye"
 	desc = "A fancy electronic eye. It lets you see spooky stuff."
 	icon_state = "eye-ecto"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.925
 	color_g = 1
@@ -314,12 +330,14 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_GHOSTVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/camera)
+	mats = 7
+
 /obj/item/organ/eye/cyber/camera
 	name = "camera cybereye"
 	organ_name = "camera cybereye"
 	desc = "A fancy electronic eye. It has a camera in it connected to the station's security camera network."
 	icon_state = "eye-camera"
-	mats = 7
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
 	var/camera_network = "Zeta"
@@ -337,12 +355,14 @@
 		src.camera.c_tag = "[M]'s Eye"
 		return ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
+	mats = 7
+
 /obj/item/organ/eye/cyber/nightvision
 	name = "night vision cybereye"
 	organ_name = "night vision cybereye"
 	desc = "A fancy electronic eye. It has built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	icon_state = "eye-night"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 0.7
 	color_g = 1
@@ -357,12 +377,14 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/laser)
+	mats = 7
+
 /obj/item/organ/eye/cyber/laser
 	name = "laser cybereye"
 	organ_name = "laser cybereye"
 	desc = "A fancy electronic eye. It can fire a small laser."
 	icon_state = "eye-laser"
-	mats = 7
 	made_from = "pharosium"
 	color_r = 1
 	color_g = 0.85

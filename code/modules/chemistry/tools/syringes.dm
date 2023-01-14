@@ -95,29 +95,12 @@
 						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 						return
 
-					var/mob/living/carbon/human/H = target
 					if (target != user)
-						if (!L.blood_id)
-							user.show_text("You can't draw blood from this mob.", "red")
-							return
-						if (reagents.total_volume >= reagents.maximum_volume)
-							boutput(user, "<span class='alert'>The [src.name] is full.</span>")
-							return
-
-					// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
-					// Also ignore that second container of blood entirely if it's a vampire (Convair880).
-					if (istype(H))
-						if ((isvampire(H) && (H.get_vampire_blood() <= 0)) || (!isvampire(H) && !H.blood_volume))
-							user.show_text("[H]'s veins appear to be completely dry!", "red")
-							return
-
-					if(target != user)
+						logTheThing(LOG_COMBAT, user, "tries to draw 5 units of reagents from [constructTarget(target, "combat")] [log_reagents(target)] with a [src] [log_reagents(src)] at [log_loc(user)].")
 						user.visible_message("<span class='alert'><B>[user] is trying to draw blood from [target]!</B></span>")
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 					else
-						transfer_blood(target, src, src.amount_per_transfer_from_this)
-						boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
-					user.update_inhands()
+						syringe_action(user, target)
 					return
 
 				if (!target.reagents.total_volume)
@@ -168,14 +151,14 @@
 					if (!src.reagents || !src.reagents.total_volume)
 						user.show_text("[src] doesn't contain any reagents.", "red")
 						return
+
 					if (target != user)
 						logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
 						user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
-						user.update_inhands()
-						return
 					else
-						src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
+						syringe_action(user, target)
+					return
 
 				if (istype(target,/obj/item/reagent_containers/patch))
 					var/obj/item/reagent_containers/patch/P = target
@@ -204,14 +187,30 @@
 	proc/syringe_action(mob/user, mob/target)
 		switch(src.mode)
 			if(S_DRAW)
+				// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
+				// Also ignore that second container of blood entirely if it's a vampire (Convair880).
+				var/mob/living/carbon/human/H = target
+				if (istype(H))
+					if ((isvampire(H) && (H.get_vampire_blood() <= 0)) || (!isvampire(H) && (H.blood_volume + H.reagents.total_volume == 0)))
+						user.show_text("[H]'s veins appear to be completely dry!", "red")
+						return
+
 				transfer_blood(target, src, src.amount_per_transfer_from_this)
-				target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
-				logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
+
+				if (target != user)
+					target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
+					logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
+				else
+					boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
+					
 			if(S_INJECT)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
-				target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
-				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
+				if (target != user)
+					target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
+					logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
+
+		user.update_inhands()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

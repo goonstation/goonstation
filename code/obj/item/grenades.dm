@@ -9,6 +9,9 @@ PIPE BOMBS + CONSTRUCTION
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
+TYPEINFO(/obj/item/old_grenade)
+	mats = 6
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
@@ -26,7 +29,6 @@ PIPE BOMBS + CONSTRUCTION
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
 	is_syndicate = 0
-	mats = 6
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -124,19 +126,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
+	var/amount_to_spawn = 5
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
-			for (var/i = 1; i<= 8; i= i*2)
-				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
-					new payload(get_step(T,i))
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
+				if (istype(adjacent,/turf/simulated/floor))
+					new payload(adjacent)
 				else
 					new payload(T)
 		qdel(src)
-		return
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
@@ -190,6 +193,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/graviton)
+	mats = 12
+
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
@@ -199,7 +205,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -249,6 +254,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/singularity)
+	mats = 12
+
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
@@ -258,7 +266,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp"
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -564,6 +571,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/oxygen)
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
+
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -572,7 +582,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "oxy"
 	item_state = "flashbang"
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE

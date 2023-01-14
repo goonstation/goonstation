@@ -266,6 +266,7 @@
 		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 

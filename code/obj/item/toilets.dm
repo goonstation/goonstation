@@ -3,12 +3,14 @@ CONTAINS:
 TOILET
 */
 
+TYPEINFO(/obj/item/storage/toilet)
+	mats = 5
+
 /obj/item/storage/toilet
 	name = "toilet"
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 5
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	var/status = 0
 	var/clogged = 0

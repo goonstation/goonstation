@@ -38,6 +38,9 @@
 			qdel(light)
 		..()
 
+TYPEINFO(/obj/item/device/light/flashlight)
+	mats = 2
+
 /obj/item/device/light/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -51,7 +54,6 @@
 	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
-	mats = 2
 	var/emagged = 0
 	var/broken = 0
 	col_r = 0.9

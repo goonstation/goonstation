@@ -39,7 +39,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "anti_rad"
 	var/treatment_virus = "spaceacillin"
 	/// the stuff the bot injects when emagged
 	var/list/dangerous_stuff = list()

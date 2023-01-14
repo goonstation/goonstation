@@ -94,7 +94,7 @@
 			passenger?.glide_size = glide
 			passenger?.animate_movement = SYNC_STEPS
 			var/old_loc = src.loc
-			src.loc = get_step(src, src.move_dir) // I think this is supposed to be loc= and not set_loc, not sure
+			src.set_loc(get_step(src, src.move_dir))
 			SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, src.move_dir)
 			if(!src.loc)
 				src.num_loops += 1
@@ -144,7 +144,7 @@
 			new_dir = pick(cardinal)
 		src.update_dir(new_dir)
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
-		src.loc = start
+		src.set_loc(start)
 
 proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile

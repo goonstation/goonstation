@@ -12,6 +12,7 @@
 	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
+	hitsound = 'sound/impact_sounds/meat_smack.ogg'
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
@@ -24,20 +25,6 @@
 		src.burn_dam += burn
 		//src.tox_dam += tox
 
-		if (ishuman(holder))
-			var/mob/living/carbon/human/H = holder
-			hit_twitch(H)
-			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
-				src.sever()
-			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
-				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
-				src.remove(FALSE)
-				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
-				if(prob(20))
-					make_cleanable(/obj/decal/cleanable/ash, get_turf(holder))
-				qdel(src)
-			else if (bone_system && src.bones && brute && prob(brute * 2))
-				src.bones.take_damage(damage_type)
 		health_update_queue |= holder
 		return 1
 
@@ -1125,16 +1112,17 @@
 /obj/item/parts/human_parts/arm/left/zombie
 	name = "left rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
@@ -1147,16 +1135,17 @@
 /obj/item/parts/human_parts/arm/right/zombie
 	name = "right rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	override_attack_hand = 1
 	can_hold_items = 0
-	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
@@ -1788,6 +1777,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
+	limb_type = /datum/limb/zombie
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/multitool)
+	mats = list("CRY-1", "CON-2")
+
 /obj/item/device/multitool
 	name = "multitool"
 	icon_state = "multitool"
@@ -11,7 +14,6 @@
 	desc = "An electrical multitool. It can generate small electrical pulses and read the wattage of power cables. It is most commonly used when interfacing with airlock and APC systems on the station."
 	m_amt = 50
 	g_amt = 20
-	mats = list("CRY-1", "CON-2")
 
 
 	New()

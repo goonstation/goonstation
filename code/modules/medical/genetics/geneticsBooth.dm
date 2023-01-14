@@ -32,11 +32,15 @@
 
 
 
+TYPEINFO(/obj/machinery/genetics_booth)
+	mats = 40
+
 /obj/machinery/genetics_booth
 	name = "gene booth"
 	desc = "A luxury booth that will exchange genetic upgrades for cash. It automatically bills your account using advanced magnet technology. It's safe!"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "genebooth"
+	pass_unstable = TRUE
 	pixel_x = -3
 	anchored = 1
 	density = 1
@@ -59,7 +63,6 @@
 	var/list/offered_genes = list()
 
 	var/started = 0
-	mats = 40
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 
 	var/datum/light/light

@@ -9,6 +9,9 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 /* -------------------- Hypospray -------------------- */
 /* =================================================== */
 
+TYPEINFO(/obj/item/reagent_containers/hypospray)
+	mats = 6
+
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
 	desc = "An advanced device capable of injecting various medicines into a patient instantaneously. Dumps any harmful chemicals."
@@ -23,7 +26,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
-	mats = 6
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'

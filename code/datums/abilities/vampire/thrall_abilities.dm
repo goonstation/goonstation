@@ -29,7 +29,6 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing(LOG_SAY, M, "[message]")
 
 		if (!H.master)
 			boutput(M, "<span class='alert'>Your link to your master has been severed!</span>")

@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	use_bite_mask = FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/dippable/))
 			if (bites_left <= 1)
 				boutput(user, "You scoop up the last of [src] with the [W.name].")
 			else
@@ -541,6 +541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			src.bites_left--
 			if (!bites_left)
+				new src.dropped_item(get_turf(src))
 				qdel(src)
 		else
 			..()
@@ -830,10 +831,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
 			boutput(H, "<span class='alert'>You slash your mouth and tongue open on a piece of jagged rusty metal! Looks like you found the prize inside!</span>")
 			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			take_bleeding_damage(H, null, 0, DAMAGE_STAB, 0)
 			bleed(H, rand(10,30), rand(1,3))
 			H.UpdateDamageIcon()
@@ -1931,7 +1931,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attack_self(mob/user as mob)
 		if (!src.stage)
 			boutput(user, "You crunch up the tortilla shell into tortilla chips.")
-			new /obj/item/reagent_containers/food/snacks/tortilla_chip_spawner(user.loc)
+			new /obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner(user.loc)
 			user.u_equip(src)
 			qdel(src)
 		else
@@ -2154,7 +2154,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_hp_up_big")
 	meal_time_flags = MEAL_TIME_DINNER
 
-/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner
+/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner
 	name = "INVISIBLE GHOST OF PANCHO VILLA'S BAKER BROTHER, GARY VILLA"
 	desc = "IGNORE ME"
 
@@ -2163,32 +2163,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
-					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
+					new /obj/item/reagent_containers/food/snacks/dippable/tortilla_chip(src.loc)
 
 			qdel(src)
-
-/obj/item/reagent_containers/food/snacks/tortilla_chip
-	name = "tortilla chip"
-	desc = "A crispy little tortilla disk."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "tortilla-chip"
-	bites_left = 1
-	heal_amt = 1
-	food_effects = list("food_energized")
-
-	New()
-		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
-
-	on_reagent_change()
-		..()
-		if (src.reagents && src.reagents.total_volume)
-			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
-			dip.color = src.reagents.get_average_color().to_rgba()
-			src.UpdateOverlays(dip, "dip")
-		else
-			src.UpdateOverlays(null, "dip")
 
 /obj/item/reagent_containers/food/snacks/wonton_spawner
 	name = "wonton spawner"
@@ -2936,11 +2913,54 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return
 
 /obj/item/reagent_containers/food/snacks/ratatouille
-    name = "ratatouille"
-    desc = "Stewed and caramalized vegetables. Remy not included."
-    icon = 'icons/obj/foodNdrink/food_meals.dmi'
-    icon_state = "ratatouille"
-    needspoon = true
-    heal_amt = 2
-    bites_left = 3
-    food_effects = list("food_refreshed","food_warm")
+	name = "ratatouille"
+	desc = "Stewed and caramalized vegetables. Remy not included."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ratatouille"
+	needspoon = TRUE
+	heal_amt = 2
+	bites_left = 3
+	food_effects = list("food_refreshed","food_warm")
+
+// Dippable food
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
+/obj/item/reagent_containers/food/snacks/dippable
+	name = "dippable food"
+	desc = "YOU'RE NOT MEANT TO SEE THIS GO AWAY"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "tortilla-chip"
+	var/dipOverlayImage = "tortilla-chip-overlay"
+
+	New()
+		..()
+		src.pixel_x = rand(-6, 6)
+		src.pixel_y = rand(-6, 6)
+
+	on_reagent_change()
+		..()
+		if (src.reagents && src.reagents.total_volume)
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "[dipOverlayImage]")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
+
+/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip
+	name = "tortilla chip"
+	desc = "A crispy little tortilla disk."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "tortilla-chip"
+	bites_left = 1
+	heal_amt = 1
+	food_effects = list("food_energized")
+	dipOverlayImage = "tortilla-chip-overlay"
+
+/obj/item/reagent_containers/food/snacks/dippable/churro
+	name = "churro"
+	desc = "It's like a donut, but long."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "churro"
+	bites_left = 3
+	heal_amt = 1
+	food_effects = list("food_energized")
+	dipOverlayImage = "churro-overlay"

@@ -184,12 +184,14 @@
 /obj/machinery/computer/arcade/handheld
 	desc = "You shouldn't see this, I exist for typechecks"
 
+TYPEINFO(/obj/item/toy/handheld)
+	mats = 2
+
 /obj/item/toy/handheld
 	name = "arcade toy"
 	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "arcade-generic"
-	mats = 2
 	var/arcademode = FALSE
 	//The arcade machine will typecheck if we're this type
 	var/obj/machinery/computer/arcade/handheld/arcadeholder = null

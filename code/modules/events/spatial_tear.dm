@@ -42,8 +42,8 @@
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(800))
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(800,src))
 				src.stabilize()
 				break
 		SPAWN(duration)

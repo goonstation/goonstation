@@ -9,6 +9,9 @@
 
 	var/datum/abilityHolder/H = wizard_mob.add_ability_holder(/datum/abilityHolder/wizard)
 
+	wizard_mob.RegisterSignal(wizard_mob, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
+	wizard_mob.RegisterSignal(wizard_mob, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+
 	if (!vr)
 		// normal spells for normal wizards
 		H.addAbility(/datum/targetable/spell/phaseshift)
@@ -45,7 +48,7 @@
 		if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
 			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
 		else
-			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/wizard(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/storage/backpack(wizard_mob), wizard_mob.slot_back)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/staff(wizard_mob), wizard_mob.slot_r_hand)
@@ -65,6 +68,13 @@
 		wizard_mob.show_antag_popup("wizard")
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
+
+/mob/proc/emp_touchy(source, obj/item/I)
+	I.emp_act()
+
+/mob/proc/emp_hands(source)
+	for(var/obj/item/I in src.equipped_list())
+		I.emp_act()
 
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	return 0

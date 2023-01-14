@@ -111,7 +111,7 @@
 	desc = "For me!?"
 	name = "gift"
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "gift2-p"
+	icon_state = "gift2-g"
 	item_state = "gift"
 	var/size = 3
 	var/obj/item/gift = null
@@ -119,6 +119,12 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	var/random_icons = TRUE
+
+	New()
+		. = ..()
+		if (src.random_icons)
+			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
 
 /obj/item/gift/attack_self(mob/user as mob)
 	if(!src.gift)

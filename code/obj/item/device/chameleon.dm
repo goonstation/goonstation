@@ -65,6 +65,9 @@
 			step(src,direction)
 		return
 
+TYPEINFO(/obj/item/device/chameleon)
+	mats = 14
+
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
@@ -82,7 +85,6 @@
 	tooltip_flags = REBUILD_DIST
 
 	is_syndicate = 1
-	mats = 14
 
 	New()
 		..()

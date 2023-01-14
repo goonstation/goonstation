@@ -106,6 +106,7 @@
 	return ..(gibbed)
 
 /mob/living/silicon/hivebot/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)

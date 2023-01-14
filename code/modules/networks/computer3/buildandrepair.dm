@@ -1,4 +1,7 @@
 //Motherboard is just used in assembly/disassembly, doesn't exist in the actual computer object.
+TYPEINFO(/obj/item/motherboard)
+	mats = 8
+
 /obj/item/motherboard
 	name = "Computer mainboard"
 	desc = "A computer motherboard."
@@ -9,7 +12,6 @@
 	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
-	mats = 8
 
 /obj/computer3frame
 	density = 1

@@ -89,9 +89,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-		src.organs[t] = null
 
 	return ..()
 
@@ -214,7 +211,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
@@ -268,8 +264,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[text("[t]")])
 
 	if(!mainframe)
 		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
@@ -480,7 +474,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,null,1)
 
@@ -903,8 +896,6 @@ var/respawn_arena_enabled = 0
 
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
-		if (!(O.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")

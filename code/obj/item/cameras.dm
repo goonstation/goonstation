@@ -11,6 +11,12 @@
 
 	return ..()
 
+TYPEINFO(/obj/item/camera)
+	mats = 15
+
+TYPEINFO(/obj/item/camera/large)
+	mats = 25
+
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
@@ -24,7 +30,6 @@
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	mats = 15
 	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
@@ -36,7 +41,6 @@
 		src.setItemSpecial(null)
 
 	large
-		mats = 25
 		pictures_left = 30
 
 
@@ -106,7 +110,7 @@
 			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
@@ -165,6 +169,12 @@
 	else
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
+TYPEINFO(/obj/item/camera_film)
+	mats = 10
+
+TYPEINFO(/obj/item/camera_film/large)
+	mats = 15
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -173,13 +183,11 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	mats = 10
 	var/pictures = 10
 
 	large
 		name = "film cartridge (large)"
 		pictures = 30
-		mats = 15
 
 	examine()
 		. = ..()

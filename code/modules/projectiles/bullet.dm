@@ -49,15 +49,6 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
-//Any special things when it hits shit?
-	on_hit(atom/hit, direction, obj/projectile/P)
-		if (ishuman(hit) && src.hit_type)
-			if (hit_type != DAMAGE_BLUNT)
-				take_bleeding_damage(hit, null, round(src.damage / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
-		..()//uh, what the fuck, call your parent
-		//return // BULLETS CANNOT BLEED, HAINE
-
 //no caliber
 /datum/projectile/bullet/staple
 	name = "staple"
@@ -737,9 +728,6 @@ toxic - poisons
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
-			//if (src.hit_type)
-			// impact_image_effect("K", hit)
-				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
 /datum/projectile/bullet/sledgehammer
 	name = "\"sledgehammer\" round"

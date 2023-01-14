@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/accessgun)
+	mats = 14
+
 /obj/item/device/accessgun
 	name = "Access Pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
@@ -8,7 +11,6 @@
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
-	mats = 14
 	var/obj/item/card/id/ID_card = null
 	req_access = list(access_change_ids,access_engineering_chief)
 	var/mode = 0 //0 AND, 1 OR
@@ -131,10 +133,12 @@
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
+		var/str_contents = kText.list2text(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
 		else
 			O.set_access_list(ID_card.access)
+		logTheThing(LOG_STATION, user, "reprograms door access on [constructName(O)] [log_loc(O)] to [str_contents] [mode ? "(AND mode)" : "(OR mode)"]")
 		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
 
 

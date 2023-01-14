@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/borg_linker)
+	mats = list("CRY-1", "CON-2")
+
 /obj/item/device/borg_linker
 	name = "cyborg law linker"
 	icon_state = "cyborg_linker"
@@ -11,7 +14,6 @@
 	desc = "A device for connecting silicon beings to a law rack, setting restrictions on their behaviour."
 	m_amt = 50
 	g_amt = 20
-	mats = list("CRY-1", "CON-2")
 	var/obj/machinery/lawrack/linked_rack = null
 
 	attack_self(var/mob/user)

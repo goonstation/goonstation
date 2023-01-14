@@ -22,10 +22,23 @@
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
+	var/key_string = "no ckey"
+	var/html_key_string = "<i>no ckey</i>"
+	if (M.key)
+		key_string = M.key
+		html_key_string = key_string
+	else if(M.last_ckey)
+		if (find_player(M.last_ckey)?.client)
+			key_string = "last: [M.last_ckey] / in other mob"
+			html_key_string = "last: [M.last_ckey] <i>/ in <a href='?src=\ref[src];action=refreshoptions;targetckey=[M.last_ckey];'>other mob</a></i>"
+		else
+			key_string = "last: [M.last_ckey] / offline"
+			html_key_string = "last: [M.last_ckey] <i>/ offline</i>"
+
 	var/list/dat = list()
 	dat += {"
 	[header_thing_chui_toggle]
-	<title>[M.name] ([M.key ? M.key : "NO CKEY"]) Options</title>
+	<title>[M.name] ([key_string]) Options</title>
 	<style>
 		a {
 			text-decoration: none;
@@ -71,6 +84,11 @@
 		#topOpts {
 			float: right;
 		}
+
+		#mobInfo {
+			margin-top: 2em;
+			margin-bottom: 0.25em;
+		}
 	</style>
 	"}
 
@@ -83,15 +101,15 @@
 			for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
 				antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a><br>"
+			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 		else if (M.mind.special_role != null)
 			antag = {"
 			<a href='[playeropt_link(M, "traitor")]' class='antag'>[M.mind.special_role]</a> &mdash;
 			<a href='[playeropt_link(M, "remove_traitor")]' class='antag'>Remove</a>
 			"}
 		else if (!isobserver(M))
-			antag = "<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a>"
-			antag += "<br><a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role (New system, WIP)</a><br>"
+			antag = {"<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a> &bull;
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a>"}
 		else
 			antag = "Observer"
 
@@ -105,11 +123,11 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)
 </div>
 
-<div style="margin-top: 2em;">
-	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+<div id="mobInfo">
+	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>

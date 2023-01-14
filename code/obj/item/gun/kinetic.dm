@@ -1679,7 +1679,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 
 	afterattack(atom/A, mob/user as mob)
-		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
+		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /mob/living/critter/small_animal/cat))
 			src.ammo.amount_left += 1
 			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
@@ -2135,12 +2135,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		just_stop_snipe(M)
 
 	proc/just_stop_snipe(var/mob/living/M) // remove overlay here
+		M.use_movement_controller = null
 		if (M.client)
 			M.client.pixel_x = 0
 			M.client.pixel_y = 0
+			M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 
-		M.use_movement_controller = null
-		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
 	attack_hand(mob/user)

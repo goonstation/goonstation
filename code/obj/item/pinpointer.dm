@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/pinpointer)
+	mats = 4
+
 /obj/item/pinpointer
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
@@ -16,7 +19,6 @@
 	var/target_ref = null
 	var/active = 0
 	var/icon_type = "disk"
-	mats = 4
 	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -369,6 +371,9 @@
 			if(ismob(src.loc))
 				boutput(src.loc, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
 
+TYPEINFO(/obj/item/pinpointer/secweapons)
+	mats = null
+
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
 	icon_state = "sec_pinoff"
@@ -376,7 +381,6 @@
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	mats = null
 	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
 
 	proc/track(var/list/L)
@@ -616,3 +620,8 @@
 	thing_name = "artifact"
 	hudarrow_color = "#7755ff"
 	max_range = 20
+
+/obj/item/pinpointer/category/rancid
+	name = "smelly person pinpointer"
+	category = TR_CAT_RANCID_STUFF
+	thing_name = "smelly person"

@@ -335,6 +335,9 @@
 //////////////////////////////
 /////Dye Bottle Dispenser/////
 //////////////////////////////
+TYPEINFO(/obj/machinery/hair_dye_dispenser)
+	mats = 15
+
 /obj/machinery/hair_dye_dispenser
 	name = "Hair Dye Mixer 3000"
 	desc = "Mixes hair dye for whatever color you want"
@@ -342,7 +345,6 @@
 	icon_state = "dyedispenser"
 	density = 1
 	anchored = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	var/obj/item/dye_bottle/bottle = null

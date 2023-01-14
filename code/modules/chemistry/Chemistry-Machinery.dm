@@ -9,6 +9,9 @@
 // Removed quite a bit of of duplicate code here (Convair880).
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+TYPEINFO(/obj/machinery/chem_heater)
+	mats = 15
+
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
 	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
@@ -17,7 +20,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
 	var/obj/beaker = null
@@ -288,6 +290,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/chem_master)
+	mats = 15
+
 /obj/machinery/chem_master
 	name = "CheMaster 3000"
 	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
@@ -296,7 +301,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	flags = NOSPLASH
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/whitelist = list()
@@ -694,17 +698,19 @@
 			icon_state = "mixer0"
 			src.updateUsrDialog()
 
-datum/chemicompiler_core/stationaryCore
+/datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"
 
-/obj/machinery/chemicompiler_stationary/
+TYPEINFO(/obj/machinery/chemicompiler_stationary)
+	mats = 15
+
+/obj/machinery/chemicompiler_stationary
 	name = "ChemiCompiler CCS1001"
 	desc = "This device looks very difficult to use."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
-	mats = 15
 	flags = NOSPLASH
 	processing_tier = PROCESSING_FULL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL

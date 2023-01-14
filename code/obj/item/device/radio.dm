@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio)
+	mats = 3
+
 /obj/item/device/radio
 	name = "station bounced radio"
 	desc = "A portable, non-wearable radio for communicating over a specified frequency. Has a microphone and a speaker which can be independently toggled."
@@ -39,7 +42,6 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = W_CLASS_SMALL
-	mats = 3
 
 	var/icon_override = 0
 	var/icon_tooltip = null // null = use name, "" = no tooltip
@@ -676,6 +678,9 @@ var/list/headset_channel_lookup
 	listening = 0
 	return
 
+TYPEINFO(/obj/item/radiojammer)
+	mats = 10
+
 /obj/item/radiojammer
 	name = "signal jammer"
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
@@ -684,7 +689,6 @@ var/list/headset_channel_lookup
 	w_class = W_CLASS_TINY
 	var/active = 0
 	is_syndicate = 1
-	mats = 10
 
 	attack_self(var/mob/user as mob)
 		if (!(radio_controller && istype(radio_controller)))
@@ -1005,7 +1009,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if (!( src.wires & WIRE_TRANSMIT ))
 		return
 
-	logTheThing(LOG_SIGNALERS, !usr && src.master ? src.master.fingerprintslast : usr, null, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
+	logTheThing(LOG_SIGNALERS, !usr && src.master ? src.master.fingerprintslast : usr, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
 
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src
@@ -1019,6 +1023,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 /obj/item/device/radio/signaler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if (.)
+		return
 	switch (action)
 		if ("set-code")
 			var/newcode = text2num_safe(params["value"])
@@ -1030,13 +1036,15 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 			src.send_signal("ACTIVATE")
 
 //////////////////////////////////////////////////
+TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
+	mats = 0
+
 /obj/item/device/radio/intercom/loudspeaker
 	name = "Loudspeaker Transmitter"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "transmitter"
 	anchored = 1
 	speaker_range = 0
-	mats = 0
 	chat_class = RADIOCL_INTERCOM
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
@@ -1074,12 +1082,14 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 		set_secure_frequencies()
 
 //This is the main parent, also is the actual speakers that will be attached to the walls.
+TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
+	mats = 0
+
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
 	icon_state = "loudspeaker"
 	anchored = 1
 	speaker_range = 7
-	mats = 0
 	broadcasting = 1
 	listening = 1
 	chat_class = RADIOCL_INTERCOM

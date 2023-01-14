@@ -127,6 +127,7 @@ task-install-git-hooks() {
   git config --replace-all merge.tgui-merge-bundle.driver \
     "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
   echo "tgui: Merge drivers have been successfully installed!"
+  exit 0
 }
 
 ## Bundle merge driver

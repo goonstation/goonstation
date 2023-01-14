@@ -2167,7 +2167,7 @@ datum
 							holder.add_reagent(id, conversion_rate)
 					else
 						// we ate them all, time to die
-						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
+						if(holder?.my_atom?.material?.mat_id in list("gnesis", "gnesisglass")) // gnesis material prevents coag. gnesis from evaporating
 							return
 
 						holder.remove_reagent(id, conversion_rate)
@@ -2188,7 +2188,7 @@ datum
 						//make it obvious that you are about to die horribly
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
-						if(probmult(1)) // i hate you all, players
+						if(probmult(max(2, (src.volume - gib_threshold)/5))) // i hate you more, players
 							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
 							return

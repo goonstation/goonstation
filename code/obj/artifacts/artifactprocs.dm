@@ -98,6 +98,7 @@
 	A.fx_image.icon = src.icon
 	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
+	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
 	A.fx_image.plane = PLANE_ABOVE_LIGHTING
 
 	A.react_mpct[1] = AO.impact_reaction_one

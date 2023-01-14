@@ -14,7 +14,7 @@
 	color = "#FF0000"
 	var/colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
 	var/obj/critter/animal_to_spawn = null
-	var/animals = list(/obj/critter/cat,
+	var/animals = list(/mob/living/critter/small_animal/cat,
 						/obj/critter/bat,
 						/obj/critter/domestic_bee,
 						/mob/living/critter/small_animal/mouse,

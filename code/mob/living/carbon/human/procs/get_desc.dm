@@ -52,7 +52,7 @@
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
 	if (src.hasStatus("handcuffed"))
-		. +=  "<br><b class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
+		. +=  "<br><b class='alert'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
 
 	if (src.w_uniform && !(src.wear_suit?.hides_from_examine & C_UNIFORM))
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"

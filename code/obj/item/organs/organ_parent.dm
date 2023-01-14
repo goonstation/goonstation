@@ -13,7 +13,7 @@
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS
+	flags = TABLEPASS | FPRINT
 	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
@@ -115,6 +115,8 @@
 
 		..()
 
+	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
+		. = ..()
 
 	New(loc, datum/organHolder/nholder)
 		..()
@@ -150,8 +152,6 @@
 					holder.vars[thing] = null
 
 
-		if (donor?.organs) //not all mobs have organs/organholders (fish)
-			donor.organs -= src
 		donor = null
 
 		if (bones)

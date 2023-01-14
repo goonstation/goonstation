@@ -33,6 +33,16 @@
 		SPAWN(2 SECONDS)
 			ai_init()
 
+/mob/living/carbon/human/npc/mutantrace
+	var/spawn_mutantrace
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			if(spawn_mutantrace)
+				src.set_mutantrace(text2path(spawn_mutantrace))
+				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)
+
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
 
@@ -199,6 +209,13 @@
 		ai_lastaction = world.time
 		walk_towards(src, null)
 		return
+
+	// Strange to have this so high up, but we're considered 'restrained' if we have a missing limb on our active hand
+	// thus the AI thinks it's cuffed or whatever and never does anything other than moving if it loses the active arm
+	if(!src.limbs.l_arm)
+		src.swap_hand(0)
+	else if(!src.limbs.r_arm)
+		src.swap_hand(1)
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()

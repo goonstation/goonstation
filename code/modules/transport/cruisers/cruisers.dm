@@ -200,7 +200,7 @@
 
 		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
 		src.region = prefab.load()
-		for(var/turf/T in REGION_TILES(src.region))
+		for(var/turf/T in REGION_TURFS(src.region))
 			if(istype(T.loc, src.interior_area))
 				src.interior_area = T.loc
 				src.interior_area.ship = src
@@ -857,6 +857,8 @@
 	Exited(atom/movable/A)
 		. = ..()
 		if(!ismob(A))
+			return
+		if(get_area(A) == src)
 			return
 		var/mob/user = A
 		src.ship.unsubscribe_interior(user)

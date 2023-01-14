@@ -251,6 +251,10 @@
 				if (protection > 0)
 					protection--
 					return 0
+				// Devera-class interdictor: prevent passive hygiene decrease within the field
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(2,src,TRUE,ITDR_DEVERA))
+						return 0
 				return 1
 
 		onIncrease()

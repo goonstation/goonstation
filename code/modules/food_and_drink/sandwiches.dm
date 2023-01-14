@@ -248,7 +248,7 @@
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
-	food_effects = list("food_sweaty_big", "food_hp_up_big")
+	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/humanburger

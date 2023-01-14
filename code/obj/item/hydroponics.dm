@@ -10,6 +10,9 @@
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
+TYPEINFO(/obj/item/saw)
+	mats = 12
+
 /obj/item/saw
 	name = "chainsaw"
 	desc = "An electric chainsaw used to chop up harmful plants."
@@ -30,7 +33,6 @@
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
-	mats = 12
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -132,6 +134,9 @@
 
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
+TYPEINFO(/obj/item/saw/syndie)
+	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
+
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -148,7 +153,6 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
@@ -338,6 +342,9 @@
 /obj/item/saw/syndie/vr
 	icon = 'icons/effects/VR.dmi'
 
+TYPEINFO(/obj/item/saw/elimbinator)
+	mats = 12
+
 /obj/item/saw/elimbinator
 	name = "The Elimbinator"
 	desc = "Lops off limbs left and right!"
@@ -356,7 +363,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	hitsound = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s-A"
@@ -386,6 +392,9 @@
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
 
+TYPEINFO(/obj/item/plantanalyzer)
+	mats = 4
+
 /obj/item/plantanalyzer/
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
@@ -393,7 +402,6 @@
 	icon_state = "plantanalyzer"
 	w_class = W_CLASS_TINY
 	c_flags = ONBELT
-	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)

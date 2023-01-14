@@ -10,6 +10,7 @@
 	level = 1
 
 	unsimulated
+		pass_unstable = FALSE
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
 #ifdef RUNTIME_CHECKING
 		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
@@ -28,6 +29,11 @@
 	var/heat_capacity = 1
 
 	#undef _UNSIM_TURF_GAS_DEF
+
+	/// Sum of all unstable atoms on the turf.
+	pass_unstable = TRUE
+	/// Whether this turf is passable. Used in the pathfinding system.
+	var/tmp/passability_cache
 
 	//Properties for both
 	var/temperature = T20C
@@ -187,6 +193,7 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "placeholder"
+	pass_unstable = FALSE
 	fullbright = TRUE
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -451,6 +458,7 @@ proc/generate_space_color()
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
+		if (warptarget_modifier == LANDMARK_VM_WARP_NONE) return
 		if(OldLoc)
 			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
 				if (ismob(M))
@@ -539,6 +547,7 @@ proc/generate_space_color()
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
 			var/turf/simulated/S = src
 			oldair = S.air
+			S.air = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
@@ -586,6 +595,7 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
+	var/old_pass_unstable = src.pass_unstable
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -631,6 +641,10 @@ proc/generate_space_color()
 			if (delay_space_conversion()) return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
+				keep_old_material = FALSE
+				new_turf = src
+			else if(PLANET_LOCATIONS.repair_planet(src))
+				keep_old_material = FALSE
 				new_turf = src
 			else
 				new_turf = new /turf/space(src)
@@ -661,7 +675,7 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = old_opaque_atom_count
-
+	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
@@ -1268,4 +1282,7 @@ proc/generate_space_color()
 	Entered(atom/movable/mover, atom/forget)
 		. = ..()
 		if(!mover.anchored)
-			mover.set_loc(null)
+			if(istype(mover, /obj/centcom_clone_wrapper))
+				qdel(mover) // so the mob inside can GC in case references got freed up since qdel
+			else
+				mover.set_loc(null)

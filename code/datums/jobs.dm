@@ -381,10 +381,10 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
-		var/obj/critter/domestic_bee/heisenbee/heisenbee = locate() in range(M, 7)
-		if (istype(heisenbee) && !heisenbee.beeMom)
-			heisenbee.beeMom = M
-			heisenbee.beeMomCkey = M.ckey
+		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
+			if (!heisenbee.beeMom)
+				heisenbee.beeMom = M
+				heisenbee.beeMomCkey = M.ckey
 
 /datum/job/command/medical_director
 	name = "Medical Director"
@@ -2269,7 +2269,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		else
 			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, ROLE_NUKEOP, 0)
+		antagify(M, ROLE_NUKEOP, do_objectives = FALSE)
 		equip_syndicate(M, leader)
 		return
 
@@ -2400,7 +2400,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_security")
-		M.show_text("<b>Hostile assault force incoming! Defend the crew from the attacking Syndicate Special Operatives!</b>", "blue")
+		// M.show_text("<b>Hostile assault force incoming! Defend the crew from the attacking Syndicate Special Operatives!</b>", "blue")
 
 
 // Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags

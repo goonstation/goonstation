@@ -345,6 +345,9 @@ CONTAINS:
 /* -------------------- Defib -------------------- */
 /* =============================================== */
 
+TYPEINFO(/obj/item/robodefibrillator)
+	mats = 10
+
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
@@ -359,7 +362,6 @@ CONTAINS:
 	var/emagged = 0
 	var/makeshift = 0
 	var/obj/item/cell/cell = null
-	mats = 10
 
 	emag_act(var/mob/user)
 		if (src.makeshift)
@@ -634,6 +636,9 @@ CONTAINS:
 		parent = null
 		..()
 
+TYPEINFO(/obj/machinery/defib_mount)
+	mats = 25
+
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
@@ -641,7 +646,6 @@ CONTAINS:
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
-	mats = 25
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
@@ -1244,6 +1248,9 @@ CONTAINS:
 /* -------------------- Penlight -------------------- */
 /* ================================================== */
 
+TYPEINFO(/obj/item/device/light/flashlight/penlight)
+	mats = 1
+
 /obj/item/device/light/flashlight/penlight
 	name = "penlight"
 	desc = "A small light used for testing photopupillary reflexes."
@@ -1258,7 +1265,6 @@ CONTAINS:
 	throw_range = 15
 	m_amt = 50
 	g_amt = 10
-	mats = 1
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7

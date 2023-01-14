@@ -325,7 +325,10 @@
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
-			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
+			if (pap.lastAnalysis == 3)
+				message += "Analysis was correct."
+			else
+				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
@@ -621,7 +624,7 @@
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
-	var/amount = input(usr, "How much?", "Funds", 0) as null|num
+	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
 	if (!isnum_safe(amount)) return
 
 	switch(trans)

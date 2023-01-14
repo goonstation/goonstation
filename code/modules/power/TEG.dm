@@ -1411,13 +1411,15 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				network.update = 1
 		return 1
 
+TYPEINFO(/obj/machinery/power/furnace/thermo)
+	mats = 20
+
 /obj/machinery/power/furnace/thermo
 	name = "Zaojun-1 Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1
-	mats = 20
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/obj/machinery/atmospherics/unary/furnace_connector/f_connector = null
