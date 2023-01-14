@@ -1,4 +1,9 @@
 
+(t)sat jan 14 23
+(u)Amylizzle
+(p)12405
+(e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
+(+)The quartermaster's office now contains a chemical request console, so you can ask chemistry for meth to sell!
 (t)fri jan 13 23
 (u)aloe
 (*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
