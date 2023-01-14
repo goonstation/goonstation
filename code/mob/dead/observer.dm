@@ -47,6 +47,7 @@
 			src.toggle_point_mode()
 		else
 			. = ..()
+
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
@@ -54,8 +55,8 @@
 			src.set_cursor('icons/cursors/point.dmi')
 		else if (src.client.check_key(KEY_EXAMINE))
 			src.set_cursor('icons/cursors/examine.dmi')
-/mob/dead/observer/click(atom/target, params, location, control)
 
+/mob/dead/observer/click(atom/target, params, location, control)
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
@@ -64,7 +65,6 @@
 	if (ismob(target) && !src.client.check_key(KEY_EXAMINE))
 		src.insert_observer(target)
 		return
-
 	return ..()
 
 /mob/dead/observer/Login()
