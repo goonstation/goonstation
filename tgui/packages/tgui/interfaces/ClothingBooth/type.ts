@@ -1,4 +1,5 @@
 export interface ClothingBoothData {
+  categoryList: Array<string>;
   clothingBoothList: ClothingBoothListData[];
   money: number;
   name: string;

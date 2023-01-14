@@ -1,27 +1,37 @@
 /*Clothing Booth UI*/
 //list creation
+var/list/clothingbooth_categories = list()
 var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
 	var/list/list/list/boothlist = list()
 	for(var/datum/clothingbooth_item/type as anything in concrete_typesof(/datum/clothingbooth_item))
 		var/datum/clothingbooth_item/I = new type
-		var/itemname = I.name
-		var/pathname = "[I.path]"
-		var/categoryname = I.category
+		var/item_name = I.name
+		var/path_name = "[I.path]"
+		var/category_name = I.category
 		var/cost = I.cost
 
 		var/atom/dummy_atom = I.path
 		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
-		var/itemimg = icon2base64(dummy_icon)
+		var/item_img = icon2base64(dummy_icon)
+
+		var/match_found = FALSE
+		if(length(boothlist))
+			for(var/i=1, i<=boothlist.len, i++)
+				if(boothlist[i]["category"] == category_name)
+					match_found = TRUE
+					break
+		if(!match_found)
+			clothingbooth_categories += category_name
 
 		boothlist += list(
 			list(
-				"category" = categoryname,
+				"category" = category_name,
 				"cost" = cost,
-				"img" = itemimg,
-				"name" = itemname,
-				"path" = pathname
+				"img" = item_img,
+				"name" = item_name,
+				"path" = path_name
 			)
 		)
 	clothingbooth_items = boothlist
@@ -65,6 +75,7 @@ var/list/clothingbooth_items = list()
 /obj/machinery/clothingbooth/ui_static_data(mob/user)
 	. = list(
 		"clothingBoothList" = clothingbooth_items,
+		"categoryList" = clothingbooth_categories,
 		"name" = src.name
 	)
 
