@@ -214,7 +214,7 @@
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
-	icon_state = "ore$$molitz"
+	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	crystal = 1
 
