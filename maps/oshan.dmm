@@ -29585,6 +29585,10 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bzr" = (
