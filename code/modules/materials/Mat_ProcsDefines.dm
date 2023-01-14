@@ -193,7 +193,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /atom/proc/setMaterialAppearance(var/datum/material/mat1)
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
-	var/base_icon_state = splittext(src.icon_state,"$$")[1]
+	var/base_icon_state = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
 	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
