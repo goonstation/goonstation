@@ -393,6 +393,15 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 			src.turn_off()
 			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
 
+//lets you click on something to pick it as a target, good for gimmicks
+/obj/item/pinpointer/picker
+	attack_self(mob/user)
+		if (!src.active && !src.target)
+			SPAWN(0)
+				src.target = pick_ref(user)
+			return
+		..()
+
 
 // gimmick pinpointers because I feel like adding them now that I made the by_cat pinpointer base version
 
