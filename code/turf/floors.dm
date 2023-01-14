@@ -866,7 +866,19 @@ DEFINE_FLOORS(marble/border_wb,
 	New()
 		var/image/I
 		#ifdef UNDERWATER_MAP
-		I = image('icons/turf/outdoors.dmi', "sand_other")
+		var/sand_icon
+		var/direction
+		switch(rand(1,3))
+			if(1)
+				sand_icon = "sand_other_texture"
+				direction = pick(alldirs)
+			if(2)
+				sand_icon = "sand_other_texture2"
+				direction = pick(alldirs)
+			if(3)
+				sand_icon = "sand_other_texture3"
+				direction = pick(cardinal)
+		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
 		#else
 		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
 		#endif
