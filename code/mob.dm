@@ -182,7 +182,7 @@
 
 	var/list/datum/hud/huds = null
 
-	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
