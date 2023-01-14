@@ -899,7 +899,7 @@ DEFINE_FLOORS(marble/border_wb,
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
 		var/direction
-		switch(rand(1,3))
+		switch(rand(1, 3))
 			if(1)
 				sand_icon = "sand_other_texture"
 				direction = pick(alldirs)
