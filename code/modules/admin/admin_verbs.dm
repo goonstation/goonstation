@@ -2236,6 +2236,8 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Set Material")
+			C.cmd_set_material(A)
 
 	src.update_cursor()
 
