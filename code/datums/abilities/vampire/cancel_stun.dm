@@ -30,7 +30,7 @@
 		M.delStatus("drowsy")
 
 		if (M.get_stamina() < 0) // Tasers etc.
-			M.set_stamina(40)
+			M.set_stamina(20)
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
