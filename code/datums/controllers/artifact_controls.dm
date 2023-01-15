@@ -243,7 +243,9 @@ var/datum/artifact_controller/artifact_controls
 		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
 		if(prob(3*rarityMod))
-			artifact.blend_mode = pick(BLEND_ADD, BLEND_MULTIPLY, BLEND_SUBTRACT)
+			artifact.blend_mode = pick(BLEND_ADD, BLEND_SUBTRACT)
+			if(artifact.blend_mode == BLEND_SUBTRACT)
+				artifact.plane = PLANE_FLOOR
 
 	proc/generate_name()
 		return "unknown object"
