@@ -23,6 +23,7 @@
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
+	var/datum/flock/flock = null
 
 
 /turf/simulated/floor/feather/New()
@@ -78,6 +79,7 @@
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
+	src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -150,6 +152,11 @@
 		src.desc = initial(desc)
 	src.light.disable()
 	on = FALSE
+
+/turf/simulated/floor/feather/Del()
+	src.flock.all_owned_tiles -= src
+	src.flock = null
+	..()
 
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"

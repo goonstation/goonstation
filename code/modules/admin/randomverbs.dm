@@ -1124,6 +1124,9 @@
 	set popup_menu = 0
 	set desc = "When toggled on, you will be able to see all 'hidden' adventure elements regardless of your current mob."
 
+	src._cmd_admin_advview()
+
+/client/proc/_cmd_admin_advview()
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -1519,6 +1522,22 @@
 	logTheThing(LOG_ADMIN, src, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
 	if (ismob(A))
 		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+
+
+/client/proc/cmd_set_material(var/atom/A in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Set Material"
+	set desc = "Sets the material of an atom using its matid"
+	set popup_menu = 0
+
+	ADMIN_ONLY
+	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	var/material_selected = getMaterial(matid)
+	if(!material_selected)
+		alert(src, "Invalid material selected: [matid]", "Invalid Material", "Ok")
+		return
+	A.setMaterial(material_selected)
+	boutput(src, "Set material of [A] to [material_selected]")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

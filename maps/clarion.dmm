@@ -4705,6 +4705,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -22668,6 +22669,10 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
@@ -32033,6 +32038,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "hyV" = (

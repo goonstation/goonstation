@@ -34,31 +34,36 @@
 
 	..()
 
-/mob/dead/observer/proc/toggle_point_mode(var/force_off = 0)
+/mob/dead/observer/proc/toggle_point_mode(var/force_off = FALSE)
 	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
+		src.in_point_mode = FALSE
+	else
+		src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
+
 /mob/dead/observer/hotkey(name)
 	switch (name)
 		if ("togglepoint")
 			src.toggle_point_mode()
 		else
-			.=..()
+			. = ..()
+
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
 		if (src.in_point_mode || src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
-			return
-/mob/dead/observer/click(atom/target, params, location, control)
+		else if (src.client.check_key(KEY_EXAMINE))
+			src.set_cursor('icons/cursors/examine.dmi')
 
+/mob/dead/observer/click(atom/target, params, location, control)
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
+		return
+	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+		src.insert_observer(target)
 		return
 	return ..()
 
@@ -325,7 +330,8 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		if(!istype(src, /mob/dead))
+			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
@@ -479,7 +485,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 
 
-	if(!src.key && delete_on_logout)
+	if(delete_on_logout)
 		//qdel(src)
 		// so here's a fun thing im gonna do: ghosts dont go away now.
 		// theres too much shit that relies on ghosts staying aroudn post-qdel.
@@ -620,6 +626,23 @@
 				render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
+
+
+/mob/dead/observer/verb/toggle_ghosts()
+	set name = "Toggle Ghosts"
+	set category = null
+
+	if (src.see_invisible >= INVIS_GHOST)
+		src.see_invisible = INVIS_NONE
+		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
+	else if(HAS_FLAG(src.sight, SEE_SELF))
+		src.sight &= ~SEE_SELF
+		boutput(src, "You can no longer see yourself.", group="ghostsight")
+	else
+		src.see_invisible = INVIS_SPOOKY
+		src.sight |= SEE_SELF
+		boutput(src, "You can now see other ghosts and yourself.", group="ghostsight")
+
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"

@@ -1,4 +1,111 @@
 
+(t)sun jan 15 23
+(u)pali & Shiiba
+(*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
+(u)FlameArrow57
+(p)11684
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flockdrones will now deal less damage when attacking with items and point-blank shoot instead of gun-grab.
+(u)goonstation-enjoyer
+(p)12730
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adds a cleaning grenade manudrive to the janitor locker on Atlas
+(t)sat jan 14 23
+(u)DisturbHerb + Grokberg
+(p)12390
+(e)🆕🎨🔄🔊📄📦📜|C-Feature, C-Sprites, C-Rework, C-Sound, A-UI, A-Game-Objects, C-Documentation
+(*)The NanoTrasen Recreational Appropriations Committee has secured funding to upgrade the quality of crew entertainment in its stations. Chess boards and game clocks have been made available at gaming vendor machines, and a further rollout of the new equipment is anticipated in the near future.
+(u)Buyrcsp2
+(p)12731
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unopened cans of soda now can't be poured, unless popped open.
+(u)Amylizzle
+(p)12405
+(e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
+(+)The quartermaster's office now contains a chemical request console, so you can ask chemistry for meth to sell!
+(t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
+(u)Amylizzle
+(p)12720
+(e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
+(+)You can now use the gas analyser on the nuclear reactor and turbine.
+(u)Kubius
+(p)12667
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir has received a nuclear engine and a mining department.
+(+)The mining department is fairly small, and two miners are on staff. Their cherished reinforced exploratory pod lives in a hangar below surface.
+(+)Other things changed in Nadir include a larger Hydroponics Bay, a slightly wider Kitchen, several new random room spots, and a small Crime Conduit.
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
+(t)wed jan 11 23
+(u)aloe
+(+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.
+(t)tue jan 10 23
+(u)Zamujasa
+(*)Artifact analysis results will now tell you what you got incorrect (but not what the correct answer was).
+(u)LeahTheTech
+(p)12508
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Cyborg docking stations are now easier to refill.
+(u)Cherman0
+(p)12688
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gave the CE more useful tools in their locker and PDA.
+(u)Mr. Moriarty & LeahTheTech
+(p)12463
+(e)🆕🗺🎨🧫📄🧛|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-UI, A-Gamemodes
+(*)The Syndicate have installed the Cairngorm with a new station map display and associated controller remote, in the hope that these investments will result in a higher mission success rate. See Minor Changelog for details.
+(+)The Cairngorm station map will display, alongside the station, the location of the listening post, the two plant locations, all station warp beacons, and the position of the AI. The map controller may pan and zoom the map, and may place, delete, or toggle the visibility of the aforementioned map markers.
+(u)Tyrant
+(p)12364
+(e)🗺|A-Mapping
+(+)Unspaghetti'd the Cog2 TEG room cables.
+(u)Amylizzle
+(p)12609
+(e)⚖🧱|C-Balance, A-Materials
+(+)Koshmarite becomes even spookier, as it is now a weak source of neutron radiation.
+(u)Lord_Earthfire
+(p)12530
+(e)🆕|C-Feature
+(+)The botanical mister can be anchored into the ground by the use of a wrench or screwdriver.
+(u)goonstation-enjoyer
+(p)12659
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds a single cargo locker to Clarion
+(u)Amylizzle
+(p)12431
+(e)🆕🗺🧛|C-Feature, A-Mapping, A-Gamemodes
+(+)Flock statistics can now be found on  a teal stained note in Sa.Le's flockship.
+(u)Binne Boi
+(p)12103
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Sounds synth components will now also output text above them when activated. Along with a robotic bweep.
+(u)LeahTheTech
+(p)12674
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flock sentinels will no longer target incapacitated enemies.
+(t)mon jan 09 23
+(u)LeahTheTech
+(p)12684
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Flockdrones can now stun silicons again.
+(t)sun jan 08 23
+(u)Zamujasa
+(+)Corpses stop farting miasma everywhere when they fully decompose.
+(u)LeahTheTech
+(p)12479
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)More types of stones can now be broken with mining tools.
+(u)LeahTheTech
+(p)12673
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock incapacitors now take 3 hits to stun a human rather than 2.
 (t)sat jan 07 23
 (u)Mr. Moriarty
 (p)12632

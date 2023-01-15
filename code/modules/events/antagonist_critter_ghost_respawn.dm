@@ -55,9 +55,10 @@
 
 
 //very similar to playable_pests.dm :)
-/datum/random_event/major/antag/antagonist_pest
+/datum/random_event/major/player_spawn/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
 	customization_available = 1
+	targetable = TRUE
 	var/num_critters = 0
 	var/critter_type = null
 #ifdef RP_MODE
@@ -134,7 +135,7 @@
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn? ([length(eligible_dead_player_list(allow_dead_antags = TRUE))] players eligible)", src.name, 0) as num|null
 		if (!src.num_critters || src.num_critters < 1)
-			cleanup_event()
+			cleanup()
 			return
 		else
 			src.num_critters = round(src.num_critters)
@@ -143,7 +144,7 @@
 		if (alert(usr, "You have chosen to spawn [src.num_critters] [src.critter_type ? src.critter_type : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
 		else
-			cleanup_event()
+			cleanup()
 
 	event_effect(var/source)
 		..()
@@ -176,7 +177,7 @@
 
 
 			if (!length(candidates))
-				cleanup_event()
+				cleanup()
 				global.random_events.next_spawn_event = TIME + 1 MINUTE
 				return
 
@@ -191,7 +192,7 @@
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
-					cleanup_event()
+					cleanup()
 					return
 
 			var/atom/pestlandmark = pick(EV)
@@ -219,12 +220,15 @@
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
 					O.implanted = 1
+					if (src.custom_spawn_turf)
+						M.current.set_loc(src.custom_spawn_turf)
 					antagify(M.current, null, 1)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
-			cleanup_event()
+			cleanup()
 
-	proc/cleanup_event()
+	cleanup()
+		..()
 		src.critter_type = null
 		src.num_critters = 0
