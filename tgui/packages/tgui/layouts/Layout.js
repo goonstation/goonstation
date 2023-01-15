@@ -12,11 +12,12 @@ export const Layout = props => {
   const {
     className,
     theme = 'nanotrasen',
+    mode = 'dark',
     children,
     ...rest
   } = props;
   return (
-    <div className={'theme-' + theme}>
+    <div className={classes(['theme-' + theme, 'mode-' + mode])}>
       <div
         className={classes([
           'Layout',
