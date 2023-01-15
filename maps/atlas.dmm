@@ -1522,6 +1522,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -2577,11 +2578,14 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gk" = (
-/obj/storage/secure/closet/engineering/cargo,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4

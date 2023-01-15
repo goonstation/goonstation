@@ -47,6 +47,7 @@
 			src.toggle_point_mode()
 		else
 			. = ..()
+
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
@@ -54,17 +55,16 @@
 			src.set_cursor('icons/cursors/point.dmi')
 		else if (src.client.check_key(KEY_EXAMINE))
 			src.set_cursor('icons/cursors/examine.dmi')
-/mob/dead/observer/click(atom/target, params, location, control)
 
+/mob/dead/observer/click(atom/target, params, location, control)
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
-	if (ismob(target) && !src.client.check_key(KEY_EXAMINE))
+	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
 		src.insert_observer(target)
 		return
-
 	return ..()
 
 /mob/dead/observer/Login()
@@ -330,7 +330,8 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		if(!istype(src, /mob/dead))
+			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()

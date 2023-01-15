@@ -4116,7 +4116,10 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/hall)
 "bPw" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
 "bPO" = (
@@ -16974,6 +16977,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"hvm" = (
+/obj/item/storage/toilet,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "hvw" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -36270,6 +36284,10 @@
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
+"pYn" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black/grime,
+/area/station/storage/warehouse)
 "pYx" = (
 /obj/surgery_tray,
 /turf/simulated/floor/black,
@@ -37424,18 +37442,6 @@
 "qAZ" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
-"qBe" = (
-/obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour10;desc=The east crew quarters are your best place to catch up on sleep - most public beds are located here, with personal safes for your security. Also located here are the diplomatic quarters.";
-	freq = 1443;
-	location = "tour9";
-	name = "tour 9 - east crew"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/southeast)
 "qBw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42349,7 +42355,7 @@
 "sQU" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour14;desc=On your left is the Site refinery - Engineers access the Siphon through its far door, and its nano-fabricator is often used for catalytic rod fabrication.";
+	codes_txt = "tour;next_tour=tour14;desc=On your left is the Site refinery - Engineers access the Harmonic Siphon, Nadir's primary prototype device, through its far door.";
 	freq = 1443;
 	location = "tour13";
 	name = "tour 13 - east1"
@@ -42602,7 +42608,7 @@
 "sVX" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour11;desc=On my left, you'll see the nuclear reactor responsible for s electrical generation for the Site. Please respect caution borders.";
+	codes_txt = "tour;next_tour=tour11;desc=On my left, you'll see the nuclear reactor responsible for primary electrical generation for the Site. Please respect caution borders.";
 	freq = 1443;
 	location = "tour10";
 	name = "tour 10 - nuclear"
@@ -84415,8 +84421,8 @@ gkJ
 hWJ
 hLQ
 hWJ
-hWJ
 qga
+hWJ
 hWJ
 hWJ
 rYi
@@ -103164,7 +103170,7 @@ bsb
 fQh
 sWo
 liG
-nes
+pYn
 vsG
 pJt
 xHa
@@ -110097,7 +110103,7 @@ ePt
 ebu
 ocD
 vEo
-qBe
+fdg
 rZb
 nlG
 hXJ
@@ -111587,7 +111593,7 @@ kfP
 fmc
 eIK
 oZp
-mZZ
+hvm
 irk
 xPc
 qlL

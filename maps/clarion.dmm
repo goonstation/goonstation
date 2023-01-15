@@ -22671,6 +22671,10 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
