@@ -38,8 +38,12 @@
 	controller.processing_components -= src
 
 /datum/component/tracker_hud/proc/process()
-	var/dist = GET_DIST(src.parent,target)
-	var/ang = get_angle(get_turf(src.parent), get_turf(target))
+	if (QDELETED(src.target))
+		src.hudarrow.alpha = 0
+		return
+	src.hudarrow.alpha = 127
+	var/dist = GET_DIST(src.parent, src.target)
+	var/ang = get_angle(get_turf(src.parent), get_turf(src.target))
 	var/hudarrow_dist = 16 + 32 / (1 + 3 ** (3 - dist / 10))
 	var/matrix/M = matrix()
 	var/hudarrow_scale = 0.6 + 0.4 / (1 + 3 ** (3 - dist / 10))
