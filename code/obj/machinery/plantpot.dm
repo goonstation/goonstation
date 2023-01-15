@@ -1932,6 +1932,13 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				src.mode = 0
 
 	attackby(obj/item/W, mob/user)
+		if(isscrewingtool(W) || iswrenchingtool(W))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !src.anchored
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)

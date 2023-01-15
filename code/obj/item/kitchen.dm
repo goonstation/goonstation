@@ -608,11 +608,12 @@ TRAYS
 				food_inside[i].pixel_x = rad * sin(i * ang)
 				food_inside[i].pixel_y = rad * cos(i * ang)
 
-		if (src.grabs_food_on_spawn && isturf(src.loc))
+		if (src.grabs_food_on_spawn)
 			SPAWN(1 DECI SECOND)
-				for (var/obj/item/food_maybe in src.loc)
-					// This will fail for non-edibles so we can just blindfire the proc at everything
-					src.add_contents(food_maybe)
+				if (isturf(src.loc))
+					for (var/obj/item/food_maybe in src.loc)
+						// This will fail for non-edibles so we can just blindfire the proc at everything
+						src.add_contents(food_maybe)
 
 	proc/check_height()
 		. = 1

@@ -119,6 +119,9 @@
 
 		return null
 
+	proc/go_home()
+		return FALSE
+
 	proc/get_home_turf()
 		return
 

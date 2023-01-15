@@ -53,7 +53,7 @@
 		fowner.reset()
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
-		fowner.flock.reset_stats()
+		fowner.flock.stats.reset_stats()
 		fowner.tutorial = null
 		fowner.sight = initial(fowner.sight)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)

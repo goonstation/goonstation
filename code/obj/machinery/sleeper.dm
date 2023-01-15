@@ -279,7 +279,7 @@ TYPEINFO(/obj/machinery/sleeper)
 
 	disposing()
 		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+			MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 			occupant = null
 		..()
 
@@ -503,8 +503,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	proc/go_out()
 		if (!src || !src.occupant)
 			return
-		if (src.occupant.loc == src)
-			src.occupant.set_loc(get_turf(src))
+		MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 
 	was_deconstructed_to_frame(mob/user)
 		src.go_out()
