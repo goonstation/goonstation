@@ -1072,7 +1072,6 @@ TYPEINFO(/datum/mutantrace)
 			M.update_face()
 			M.update_body()
 			M.update_clothing()
-			src.add_ability(src.mob)
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			M.bioHolder.AddEffect("accent_thrall", magical=TRUE)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
@@ -1084,8 +1083,6 @@ TYPEINFO(/datum/mutantrace)
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
-	proc/add_ability(var/mob/living/carbon/human/H)
-		H.make_vampiric_thrall()
 
 	onLife(var/mult = 1)
 		..()
@@ -1124,7 +1121,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindhack_status(src.mob)
+				remove_mindhack_status(src.mob, "vthrall", "death")
 		..()
 
 /datum/mutantrace/skeleton
