@@ -325,7 +325,7 @@ proc/filter_trait_hats(var/type)
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses,
-									"goggles"= /obj/item/clothing/glasses) //For the lizard mutatrance that say glassssssses
+									"goggles" = /obj/item/clothing/glasses) //For the lizard mutatrance that say glassssssses
 		cigs = list()
 	examine()
 		. = ..()
