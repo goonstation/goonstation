@@ -1,4 +1,21 @@
-.clothingbooth__dropdown {
-  margin-bottom: 0 !important;
-  margin-right: 0 !important;
+@use '.././components/Button.scss';
+
+.clothingbooth__ {
+
+  &dropdown {
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  &boothitem > div {
+    pointer-events: none;
+  }
+
+  &boothitem:hover {
+    background-color: Button.$color-selected;
+  }
+
+  &boothitem:active {
+    background-color: lighten(Button.$color-selected, 30%);
+  }
 }

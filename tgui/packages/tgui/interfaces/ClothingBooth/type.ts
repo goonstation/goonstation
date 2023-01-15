@@ -3,6 +3,7 @@ export interface ClothingBoothData {
   clothingBoothList: ClothingBoothListData[];
   money: number;
   name: string;
+  preview: string;
 }
 
 export interface ClothingBoothListData {

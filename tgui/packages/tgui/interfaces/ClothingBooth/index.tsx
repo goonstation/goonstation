@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Section, Stack } from '../../components';
+import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { ClothingBoothData, ClothingBoothListData } from './type';
 
@@ -12,7 +12,7 @@ export const ClothingBooth = (props, context) => {
   const [selectedCategory, selectCategory] = useLocalState(context, "selectedCategory", data.categoryList.find(() => true));
 
   return (
-    <Window title={data.name} width={350} height={500}>
+    <Window title={data.name} width={300} height={500}>
       <Window.Content>
         <Stack fill vertical>
           {/* Topmost section, containing the cash balance and category dropdown. */}
@@ -39,7 +39,7 @@ export const ClothingBooth = (props, context) => {
               <Stack.Item grow={1}>
                 <Section fill scrollable>
                   {data.clothingBoothList
-                    .filter((booth_item) => booth_item.category === selectedCategory)
+                    .filter((booth_item) => (booth_item.category === selectedCategory))
                     .map((booth_item) => {
                       return <ClothingBoothItem key={booth_item.name} booth_item={booth_item} />;
                     })}
@@ -50,7 +50,25 @@ export const ClothingBooth = (props, context) => {
           {/* Character rendering and purchase button. */}
           <Stack.Item>
             <Section fill>
-              {`character rendering and purchase button will live here`}
+              <Stack>
+                <Stack.Item align="center">
+                  <CharacterPreview />
+                </Stack.Item>
+                <Stack.Item grow={1}>
+                  <Stack vertical>
+                    <Stack.Item>
+                      {`Selected: `}
+                    </Stack.Item>
+                    <Stack.Item>
+                      {`Price: `}
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        color="green" />
+                    </Stack.Item>
+                  </Stack>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
         </Stack>
@@ -64,31 +82,52 @@ type boothItemProps = {
 };
 
 const ClothingBoothItem = ({ booth_item }: boothItemProps, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+  const { act, data } = useBackend<ClothingBoothData>(context);
 
   return (
     <>
-      <Stack align="center">
+      <Stack
+        align="center"
+        className="clothingbooth__boothitem"
+        onClick={() => act('select', { path: booth_item.path })}>
         <Stack.Item>
           <img
             src={`data:image/png;base64,${booth_item.img}`}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }}
           />
         </Stack.Item>
         <Stack.Item grow={1}>
           <Box bold>{capitalize(booth_item.name)}</Box>
         </Stack.Item>
-        <Stack.Item>
-          {/* please get around to destroying this Button and replacing it with something nicer */}
-          <Button bold color="green" style={{ 'width': '50px', 'text-align': 'center', 'padding': '0px' }}>
-            {`${booth_item.cost}⪽`}
-          </Button>
+        <Stack.Item bold>
+          {`${booth_item.cost}⪽`}
         </Stack.Item>
       </Stack>
       <Divider />
     </>
+  );
+};
+
+const CharacterPreview = (_, context) => {
+  const { act, data } = useBackend<ClothingBoothData>(context);
+
+  return (
+    <Stack vertical align="center">
+      <Stack.Item>
+        <ByondUi
+          params={{
+            id: data.preview,
+            type: "map",
+          }}
+          style={{
+            width: "64px",
+            height: "128px",
+          }} />
+      </Stack.Item>
+      <Stack.Item>
+        <Button icon="chevron-left" onClick={() => act('rotate-counter-clockwise')} />
+        <Button icon="circle" onClick={() => act('rotate-reset')} />
+        <Button icon="chevron-right" onClick={() => act('rotate-clockwise')} />
+      </Stack.Item>
+    </Stack>
   );
 };

@@ -3,8 +3,8 @@
 var/list/clothingbooth_categories = list()
 var/list/clothingbooth_items = list()
 
-/proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
-	var/list/list/list/boothlist = list()
+/proc/clothingbooth_setup()
+	var/list/list/boothlist = list()
 	for(var/datum/clothingbooth_item/type as anything in concrete_typesof(/datum/clothingbooth_item))
 		var/datum/clothingbooth_item/I = new type
 		var/item_name = I.name
@@ -36,65 +36,18 @@ var/list/clothingbooth_items = list()
 		)
 	clothingbooth_items = boothlist
 
-//setting up player-side UI data
-// /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
-// 	if(!user.client)
-// 		return
-// 	if(!ishuman(user))
-// 		return
-
-// 	var/mob/living/carbon/human/H = user
-// 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
-// 	qdel(src.preview_item)
-// 	src.preview_item = null
-// 	src.preview.remove_all_clients()
-// 	src.preview.add_client(user.client)
-
-// 	user << browse_rsc('browserassets/css/clothingbooth.css')
-// 	user << browse_rsc('browserassets/js/clothingbooth.js')
-// 	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
-
-/obj/machinery/clothingbooth/ui_interact(mob/user, datum/tgui/ui)
-	if(!user.client)
-		return
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/H = user
-	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
-	qdel(src.preview_item)
-	src.preview_item = null
-	src.preview.remove_all_clients()
-	src.preview.add_client(user.client)
-
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "ClothingBooth")
-		ui.open()
-
-/obj/machinery/clothingbooth/ui_static_data(mob/user)
-	. = list(
-		"clothingBoothList" = clothingbooth_items,
-		"categoryList" = clothingbooth_categories,
-		"name" = src.name
-	)
-
-/obj/machinery/clothingbooth/ui_data(mob/user)
-	. = list(
-		"money" = src.money
-	)
-
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
 	var/datum/character_preview/multiclient/preview
 	var/obj/item/preview_item = null
 	var/money = 0
 	var/open = TRUE
+	var/preview_direction = SOUTH
 	name = "Clothing Booth"
 	desc = "Contains a sophisticated autoloom system capable of manufacturing a variety of clothing items on demand."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
-	flags = TGUI_INTERACTIVE
+	flags = FPRINT | TGUI_INTERACTIVE
 	anchored = 1
 	density = 1
 	//power_usage = 100
@@ -114,30 +67,7 @@ var/list/clothingbooth_items = list()
 			return
 		eject(user)
 
-	// Topic(href, href_list)
-	// 	var/datum/clothingbooth_item/cb_item = clothingbooth_items[href_list["path"]]
-	// 	if(!istype(cb_item))
-	// 		return
-	// 	if(!(usr in src.contents))
-	// 		return
-	// 	var/itempath = text2path(href_list["path"])
-	// 	switch(href_list["command"])
-	// 		if("spawn")
-	// 			if(text2num_safe(cb_item.cost) <= src.money)
-	// 				money -= text2num_safe(cb_item.cost)
-	// 				usr.put_in_hand_or_drop(new itempath(src))
-	// 			else
-	// 				boutput(usr, "<span class='alert'>Insufficient funds!</span>")
-	// 				animate_shake(src, 12, 3, 3)
-	// 		if("render")
-	// 			if (src.preview_item)
-	// 				src.preview.preview_mob.u_equip(src.preview_item)
-	// 				qdel(src.preview_item)
-	// 				src.preview_item = null
-	// 			src.preview_item = new itempath()
-	// 			src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
-
-	Click()
+	Click() // does this actually get used?
 		if(!ishuman(usr))
 			boutput(usr,"<span style=\"color:red\">Human clothes don't fit you!</span>")
 			return
@@ -179,6 +109,66 @@ var/list/clothingbooth_items = list()
 	else
 		..()
 
+/obj/machinery/clothingbooth/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client)
+		return
+	if(!ishuman(user))
+		return
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ClothingBooth")
+		ui.open()
+
+/obj/machinery/clothingbooth/ui_close(mob/user)
+	. = ..()
+	if (!isnull(src.preview_item))
+		qdel(src.preview_item)
+		src.preview_item = null
+
+/obj/machinery/clothingbooth/ui_static_data(mob/user)
+	. = list(
+		"clothingBoothList" = clothingbooth_items,
+		"categoryList" = clothingbooth_categories,
+		"name" = src.name
+	)
+
+/obj/machinery/clothingbooth/ui_data(mob/user)
+	. = list(
+		"money" = src.money,
+		"preview" = src.preview?.preview_id,
+		"previewItem" = src.preview_item
+	)
+
+/obj/machinery/clothingbooth/ui_act(action, params)
+	. = ..()
+	if (. || !(usr in src.contents))
+		return
+
+	switch(action)
+		if("purchase")
+			// var/item_path = text2path(params["path"])
+			// if(text2num_safe(cb_item.cost) <= src.money)
+			// 	money -= text2num_safe(cb_item.cost)
+			// 	usr.put_in_hand_or_drop(new item_path(src))
+			// else
+			// 	boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+			// 	animate_shake(src, 12, 3, 3)
+			. = TRUE
+		if("select")
+			var/item_path = params["path"]
+			var/equip_slot
+			for(var/datum/clothingbooth_item/I as anything in concrete_typesof(/datum/clothingbooth_item))
+				if (I.path == item_path)
+					equip_slot = I.slot
+
+			if(src.preview_item)
+				src.preview.preview_mob.u_equip(src.preview_item)
+				qdel(src.preview_item)
+				src.preview_item = null
+			src.preview_item = new text2path(item_path())
+			src.preview.preview_mob.force_equip(src.preview_item, equip_slot)
+			. = TRUE
+
 /// open the booth
 /obj/machinery/clothingbooth/proc/open()
 	flick("clothingbooth-opening", src)
@@ -196,6 +186,8 @@ var/list/clothingbooth_items = list()
 	if (open) return
 	open()
 	SPAWN(2 SECONDS)
+		qdel(src.preview_item)
+		tgui_process.close_uis(src)
 		var/turf/T = get_turf(src)
 		if (!occupant)
 			occupant = locate(/mob/living/carbon/human) in src
@@ -215,6 +207,13 @@ var/list/clothingbooth_items = list()
 			for (var/atom/movable/AM in contents)
 				AM.set_loc(T)
 
+/// generates a preview of the current occupant
+/obj/machinery/clothingbooth/proc/render_preview(mob/occupant)
+	var/mob/living/carbon/human/H = occupant
+	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, src.preview_direction, occupant.real_name)
+	src.preview_item = null
+	src.preview.remove_all_clients()
+	src.preview.add_client(occupant.client)
 
 /obj/machinery/clothingbooth/attack_hand(mob/user)
 	if (!ishuman(user))
@@ -230,6 +229,7 @@ var/list/clothingbooth_items = list()
 			if (!open) return
 			user.set_loc(src)
 			src.close()
+			src.render_preview(user)
 			boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to view its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
 			ui_interact(user)
 	else
