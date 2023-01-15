@@ -25,12 +25,15 @@
 	var/list/holo_expansions = list()
 	/// list of ability expansions
 	var/list/datum/targetable/ai_abilities = list()
+	///range that the law rack interdicts incoming teleports
+	var/teleblock_range = 1 //law rack and adjacent tiles, prevents avoiding the turrets by teleporting inside the law rack or a wall
 
 	New(loc)
 		START_TRACKING
 		. = ..()
 		//if the ticker isn't initialised yet, it'll grab this rack when it is (see /datum/ai_rack_manager)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.teleblock_range)
 
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)

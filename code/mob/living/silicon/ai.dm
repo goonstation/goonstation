@@ -139,6 +139,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
+	var/teleblock_range = 4
+
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
 			src.hat.wear_image.pixel_y = 0
@@ -202,6 +204,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	START_TRACKING
 
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.teleblock_range)
 
 	ai_station_map = new /obj/minimap/ai
 	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
