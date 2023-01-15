@@ -1115,7 +1115,9 @@ obj/machinery/atmospherics/pipe
 		var/destroyed = FALSE
 		var/can_rupture = FALSE
 		var/initial_icon_state = null
-
+		var/minimum_temperature_difference = 300
+		var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+		var/fatigue_pressure = 150*ONE_ATMOSPHERE
 		north
 			dir = NORTH
 		east
