@@ -2839,15 +2839,7 @@
 /area/dank_trench)
 "hB" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/manufacturer/general{
-	desc = "It's covered top to bottom in a thin layer of sticky gunk. You are absolutely certain it has never been cleaned.";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	supplemental_desc = null;
-	wires = 11
-	},
+/obj/machinery/manufacturer/general/grody,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

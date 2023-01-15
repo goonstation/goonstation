@@ -943,7 +943,7 @@ var/datum/action_controller/actions
 				G.shoot()
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
-			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			boutput(source, "<span class='alert'>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -954,7 +954,7 @@ var/datum/action_controller/actions
 			if(existing_item) // if they have something there, smack it with held item
 				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
 													[log_object(existing_item)] equipped by [log_object(target)].")
-				source.click(existing_item, list()) // this is a bit messy
+				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(!target.can_equip(item, slot))
@@ -1714,8 +1714,14 @@ var/datum/action_controller/actions
 				return FALSE
 
 			if (human_owner.wear_mask)
-				boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
-				return FALSE
+				if (human_owner.wear_mask.c_flags & COVERSMOUTH)
+					boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
+					return FALSE
+				if (istype(human_owner.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/C = human_owner.wear_mask
+					human_owner.u_equip(C)
+					C.set_loc(human_owner.loc)
+					boutput(human_owner, "<span class='alert'>You spit out your cigarette in preparation to give CPR!</span>")
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/human_target = target
@@ -1724,8 +1730,14 @@ var/datum/action_controller/actions
 				return FALSE
 
 			if (human_target.wear_mask)
-				boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
-				return FALSE
+				if(human_target.wear_mask.c_flags & COVERSMOUTH)
+					boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
+					return FALSE
+				if (istype(human_target.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/C = human_target.wear_mask
+					human_target.u_equip(C)
+					C.set_loc(human_target.loc)
+					boutput(owner, "<span class='alert'>You knock the cigarette out of [human_target]'s mouth in preparation to give CPR!</span>")
 
 		if (isdead(target))
 			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")

@@ -137,10 +137,10 @@
 	src.movecd = 1
 	SPAWN(0.2 SECONDS) src.movecd = 0
 
-/obj/dummy/spell_invis/ex_act(blah)
+/obj/dummy/spell_invis/ex_act(severity, last_touched)
 	return
 
-/obj/dummy/spell_invis/bullet_act(blah,blah)
+/obj/dummy/spell_invis/bullet_act(obj/projectile/P)
 	return
 
 

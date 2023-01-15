@@ -12,6 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
+#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -26,11 +27,11 @@
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
 	var/light_color = list(0, 255, 255, 255)
-	var/open=true
-	var/welded=false
-	var/can_be_welded=false
-	var/can_be_anchored=false
-	custom_suicide=true
+	var/open = TRUE
+	var/welded = FALSE
+	var/can_be_welded = FALSE
+	var/can_be_anchored = FALSE
+	custom_suicide = TRUE
 	open_to_sound = TRUE
 
 	New()
@@ -57,13 +58,13 @@
 				if(prob(25))
 					src.dispose()
 					return
-				src.open=true
-				src.welded=false
+				src.open = TRUE
+				src.welded = FALSE
 				src.UpdateIcon()
 				return
 			if (3)
 				if(prob(50) && !src.welded)
-					src.open=true
+					src.open = TRUE
 					src.UpdateIcon()
 				return
 		return
@@ -210,8 +211,8 @@
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""]\
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
-		can_be_welded=true
-		can_be_anchored=true
+		can_be_welded = TRUE
+		can_be_anchored = TRUE
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
 		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
@@ -220,7 +221,7 @@
 		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
-		anchored=false
+		anchored = FALSE
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
@@ -269,8 +270,8 @@
 					for(var/obj/item in src.contents)
 						item.set_loc(get_turf(src)) // kick out any mechcomp
 					qdel(src) // delet
-					return false
-			return true
+					return FALSE
+			return TRUE
 		attack_self(mob/user as mob)
 			if(src.open)
 				if(!(user in src.users))
@@ -286,9 +287,9 @@
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	density = 1
 	anchored= 1
 	level=1
@@ -497,8 +498,17 @@
 
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
+		var/maptext = null
+		var/mob/user = usr
+		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
+			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
+		else
+			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
 		for(var/mob/O in all_hearers(7, src.loc))
-			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
+			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+			O.show_message(assoc_maptext = maptext)
+		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -633,7 +643,7 @@
 	desc = ""
 	icon_state = "comp_flush"
 	cooldown_time = 2 SECONDS
-	cabinet_banned = true
+	cabinet_banned = TRUE
 
 
 	var/obj/disposalpipe/trunk/trunk = null
@@ -718,7 +728,7 @@
 	icon_state = "comp_tprint"
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
-	cabinet_banned = true
+	cabinet_banned = TRUE
 	plane = PLANE_DEFAULT
 	var/paper_left = 10
 	var/process_cycle = 0
@@ -846,7 +856,7 @@
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "secdetector0"
 	can_rotate = 1
-	cabinet_banned = true // abusable. B&
+	cabinet_banned = TRUE // abusable. B&
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
@@ -953,7 +963,7 @@
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = true // non-functional
+	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1014,8 +1024,8 @@
 	desc = ""
 	icon_state = "comp_zap"
 	cooldown_time = 1 SECOND
-	cabinet_banned = true
-	one_per_tile = true
+	cabinet_banned = TRUE
+	one_per_tile = TRUE
 	var/zap_power = 2
 
 	New()
@@ -1782,7 +1792,7 @@
 	var/last_ping = 0
 	var/range = null
 
-	var/noise_enabled = true
+	var/noise_enabled = TRUE
 	var/frequency = FREQ_FREE
 
 	get_desc()
@@ -1854,10 +1864,10 @@
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
 			if(src.noise_enabled)
-				src.noise_enabled = false
+				src.noise_enabled = FALSE
 				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
-					src.noise_enabled = true
+					src.noise_enabled = TRUE
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
@@ -1880,10 +1890,10 @@
 
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
-						src.noise_enabled = false
+						src.noise_enabled = FALSE
 						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
-							src.noise_enabled = true
+							src.noise_enabled = TRUE
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
@@ -2269,7 +2279,7 @@
 	name = "Teleport Component"
 	desc = ""
 	icon_state = "comp_tele"
-	cabinet_banned = true // potentially abusable. b&
+	cabinet_banned = TRUE // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
 	var/image/telelight
@@ -2590,7 +2600,7 @@
 	desc = ""
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
-	cabinet_banned = true // non-functional
+	cabinet_banned = TRUE // non-functional
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -2613,9 +2623,9 @@
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
 
@@ -2642,11 +2652,11 @@
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
-					icon_up = "comp_switch"
-					icon_down = "comp_switch2"
+					icon_up = "button_comp_switch_unpressed"
+					icon_down = "button_comp_switch_pressed"
 				else
-					icon_up = "comp_button"
-					icon_down = "comp_button2"
+					icon_up = "button_comp_button_unpressed"
+					icon_down = "button_comp_button_pressed"
 				icon_state = icon_up
 				src.set_loc(target)
 		return
@@ -2770,7 +2780,7 @@
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
-	cabinet_banned = true // non-functional thankfully
+	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
@@ -3252,7 +3262,7 @@
 	name = "Letter Display Component"
 	desc = ""
 	icon_state = "comp_screen"
-	cabinet_banned = true
+	cabinet_banned = TRUE
 
 	var/letter_index = 1
 	var/display_letter = null
@@ -3428,3 +3438,4 @@
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
+#undef src_exists_inside_user_or_user_storage

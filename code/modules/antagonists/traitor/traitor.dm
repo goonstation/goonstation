@@ -13,9 +13,15 @@
 		if (!ishuman(src.owner.current))
 			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
 			return FALSE
+
 		var/mob/living/carbon/human/H = src.owner.current
 		var/obj/item/uplink_source = null
 		var/loc_string = ""
+
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
+			boutput(H, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
+			H.show_antag_popup("traitorhard")
+			return
 
 		// step 1 of uplinkification: find a source! prioritize PDAs, then try headsets
 		if (istype(H.belt, /obj/item/device/pda2) || istype(H.belt, /obj/item/device/radio))

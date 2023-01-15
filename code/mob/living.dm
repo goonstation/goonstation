@@ -439,21 +439,6 @@
 		else
 			. = ..()
 
-//gross are we tg or something with all of these /s
-// i'd like to hear your suggestion for better searching for procs!!! - cirr
-/mob/living/Click(location,control,params)
-	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
-		var/mob/dead/observer/O = usr
-#ifdef HALLOWEEN
-		//when spooking, clicking on a mob doesn't put us in them.
-		var/datum/abilityHolder/ghost_observer/GH = O:abilityHolder
-		if (GH.spooking)
-			return ..()
-#endif
-		O.insert_observer(src)
-	else
-		. = ..()
-
 /mob/living/click(atom/target, params, location, control)
 	. = ..()
 	if (. == 100)
@@ -698,7 +683,12 @@
 		if (phrase_log.is_sussy(message))
 			// var/turf/T = get_turf(src)
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
-			arcFlash(src, src, 5000)
+			arcFlash(src, src, forced_desussification)
+			if (issilicon(src))
+				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
+			if (forced_desussification_worse)
+				forced_desussification *= 1.1
+
 
 	if (reverse_mode) message = reverse_text(message)
 
@@ -1833,7 +1823,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
-		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 		if (!Q)
 			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
 		else

@@ -74,7 +74,8 @@
 			"Possess",\
 			"Create Poster",\
 			"Copy Here",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -105,7 +106,8 @@
 			"Transfer Client To",\
 			"Shamecube",\
 			"Create Poster",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
@@ -119,7 +121,8 @@
 			"View Variables",\
 			"View Fingerprints",\
 			"Delete",\
-			"Create Poster"\
+			"Create Poster",\
+			"Set Material",\
 			)
 
 

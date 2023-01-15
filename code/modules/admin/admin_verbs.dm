@@ -532,10 +532,11 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder)
+	if(!src.holder || src.player.tempmin)
 		src.holder = new /datum/admins(src)
 		src.holder.tempmin = 1
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
+		src.player.tempmin = TRUE
 
 	src.holder.rank = rank
 
@@ -663,7 +664,8 @@ var/list/special_pa_observing_verbs = list(
 		update_admins(rank)
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		src.mob.mind?.damned = 0
+		src.mob.mind?.damned = FALSE
+		src.mob.mind?.dnr = TRUE
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -1018,7 +1020,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	respawn_as_self_internal(new_self=TRUE, jobstring = initial(J.name))
+	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
@@ -1956,6 +1958,7 @@ var/list/fun_images = list()
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
 	ADMIN_ONLY
+	// Previous HTML (so you can replace without always resetting to the default)
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
@@ -1975,7 +1978,7 @@ var/list/fun_images = list()
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
-		newHTML = input("Gib HTML, then.", "FEED ME HTML", "<b>memes</b>") as message
+		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
 		newHTML = input("Upload that file!", "Upload that file!") as file
 		if(newHTML)
@@ -2125,7 +2128,8 @@ var/list/fun_images = list()
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
 		var/list/atom/atoms = list(clicked_turf)
 		for(var/atom/thing as anything in clicked_turf)
-			atoms += thing
+			if(thing.name)
+				atoms += thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
@@ -2232,6 +2236,8 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Set Material")
+			C.cmd_set_material(A)
 
 	src.update_cursor()
 

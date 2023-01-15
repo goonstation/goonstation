@@ -10,6 +10,7 @@
 /// @param custom_type_message 	If not null, set as the text for input type selection
 /// @return 			 		A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
 /client/proc/input_data(list/allowed_types, custom_title = null, custom_message = null, default = null, custom_type_title = null, custom_type_message = null, default_type = null)
+	RETURN_TYPE(/datum/data_input_result)
 	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this. Thus, to check for cancellation, check for a null output_type.
 
 	if (!src.holder)
@@ -118,12 +119,7 @@
 				return
 
 		if (DATA_INPUT_REFPICKER)
-			var/datum/promise/promise = new
-			var/datum/targetable/refpicker/abil = new
-			abil.promise = promise
-			src.mob.targeting_ability = abil
-			src.mob.update_cursor()
-			input = promise.wait_for_value()
+			input = pick_ref(src.mob)
 
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
@@ -319,3 +315,12 @@
 
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
+
+///Gives the target mob a reference picker ability and returns the atom picked. Synchronous.
+/proc/pick_ref(mob/M)
+	var/datum/promise/promise = new
+	var/datum/targetable/refpicker/abil = new
+	abil.promise = promise
+	M.targeting_ability = abil
+	M.update_cursor()
+	return promise.wait_for_value()

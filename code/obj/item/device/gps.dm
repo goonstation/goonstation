@@ -96,7 +96,7 @@ TYPEINFO(/obj/item/device/gps)
 			font-size: 12px;
 		}
 		</style>"})
-		HTML += build_html_gps_form(src, false, src.tracking_target)
+		HTML += build_html_gps_form(src, FALSE, src.tracking_target)
 		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
 		HTML += "<HR>"
