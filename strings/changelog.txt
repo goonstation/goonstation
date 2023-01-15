@@ -1,5 +1,9 @@
 
 (t)sun jan 15 23
+(u)FlameArrow57
+(p)11684
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flockdrones will now deal less damage when attacking with items and point-blank shoot instead of gun-grab.
 (u)goonstation-enjoyer
 (p)12730
 (e)🪲📦|C-Bug, A-Game-Objects
