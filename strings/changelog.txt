@@ -1,5 +1,7 @@
 
 (t)sun jan 15 23
+(u)pali & Shiiba
+(*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
 (u)FlameArrow57
 (p)11684
 (e)⚖🧛|C-Balance, A-Gamemodes
