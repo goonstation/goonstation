@@ -268,7 +268,7 @@
 					remove_equipment(M)
 					M.mind.transfer_to(src)
 					return
-				WG.mind.dnr = TRUE
+				WG.mind.get_player()?.dnr = TRUE
 				WG.verbs -= list(/mob/verb/setdnr)
 				M.setStatus("possessed", duration = 45 SECONDS)
 				sleep(45 SECONDS)
@@ -283,7 +283,7 @@
 					return //well you're dead now, soz
 				M.mind.transfer_to(src)
 				sleep(5 DECI SECONDS)
-				WG.mind.dnr = FALSE
+				WG.mind.get_player()?.dnr = FALSE
 				WG.verbs += list(/mob/verb/setdnr)
 				playsound(M, 'sound/effects/ghost2.ogg', 50, 0)
 				if(!WG || !M)

@@ -97,7 +97,7 @@ var/global/cloning_with_records = TRUE
 /obj/machinery/computer/cloning/proc/records_scan()
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
-		if (!selected || (selected.mind && selected.mind.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
@@ -356,7 +356,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.dnr)
+	if (selected.mind && selected.mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return

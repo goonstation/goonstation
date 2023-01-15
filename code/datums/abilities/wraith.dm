@@ -1369,7 +1369,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							human_mind = O.mind
 							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 							WG = O.insert_slasher_observer(H)
-							WG.mind.dnr = TRUE
+							WG.mind.get_player()?.dnr = TRUE
 							WG.verbs -= list(/mob/verb/setdnr)
 						wraith_mind = W.mind
 						W.mind.transfer_to(H)
@@ -1384,7 +1384,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							H.ghostize()
 							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 							if (human_mind)
-								WG.mind.dnr = FALSE
+								WG.mind.get_player()?.dnr = FALSE
 								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
 								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
@@ -1398,7 +1398,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 							wraith_mind.transfer_to(W)
 							if (human_mind)
-								WG.mind.dnr = FALSE
+								WG.mind.get_player()?.dnr = FALSE
 								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
 								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)

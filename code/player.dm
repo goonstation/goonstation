@@ -42,6 +42,10 @@
 	var/datum/buildmode_holder/buildmode = null
 	/// whether this person is a temporary admin (this round only)
 	var/tempmin = FALSE
+	/// whether this person set DNR (Do not revive)
+	var/dnr = FALSE
+	/// keep track of whether this player joined round as an observer (blocks them from bank payouts)
+	var/joined_observer = FALSE
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)

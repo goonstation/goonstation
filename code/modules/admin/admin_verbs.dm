@@ -665,7 +665,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = FALSE
-		src.mob.mind?.dnr = TRUE
+		src.mob.mind?.get_player()?.dnr = TRUE
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else

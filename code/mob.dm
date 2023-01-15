@@ -965,8 +965,8 @@
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
 	if(isadmin(src))
-		src.mind.dnr = !src.mind.dnr
-		boutput(src, "<span class='alert'>DNR status [src.mind.dnr ? "set" : "removed"]!</span>")
+		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
+		boutput(src, "<span class='alert'>DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!</span>")
 	else
 		var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
 		if (confirm != "Yes")
@@ -982,7 +982,7 @@
 				return
 			src.death()
 		src.verbs -= list(/mob/verb/setdnr)
-		src.mind.dnr = 1
+		src.mind.get_player()?.dnr = TRUE
 		boutput(src, "<span class='alert'>DNR status set!</span>")
 		boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -993,7 +993,7 @@
 #else
 
 		src.verbs -= list(/mob/verb/setdnr)
-		src.mind.dnr = 1
+		src.mind.get_player()?.dnr = TRUE
 		boutput(src, "<span class='alert'>DNR status set!</span>")
 #endif
 
@@ -1231,7 +1231,7 @@
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.dnr)
+	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	//stop piloting pods or whatever
 	src.use_movement_controller = null

@@ -277,7 +277,7 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				src.mind?.dnr = 1
+				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
 			else
@@ -331,7 +331,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		if(!istype(src, /mob/dead) && !mind?.dnr)
+		if(!istype(src, /mob/dead) && !mind?.get_player()?.dnr)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -463,7 +463,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -600,7 +600,7 @@
 	//set category = "Ghost"
 	// ooooo its a secret, oooooo!!
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 

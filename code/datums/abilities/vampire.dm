@@ -363,7 +363,7 @@
 
 
 			if (!M.mind && !M.client)
-				if (M.ghost && M.ghost.client && !(M.ghost.mind && M.ghost.mind.dnr))
+				if (M.ghost && M.ghost.client && !M.ghost.mind.get_player().dnr)
 					var/mob/dead/ghost = M.ghost
 					ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
 					if(ghost.mind)

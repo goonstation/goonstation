@@ -1237,7 +1237,7 @@
 				var/mob/M = C.mob
 				if(!M || isnewplayer(M)) continue
 				if (isdead(M) && !isliving(M))
-					if (M.mind?.joined_observer)
+					if (M.mind?.get_player()?.joined_observer)
 						results["observer"]++
 					else
 						results["dead"]++
