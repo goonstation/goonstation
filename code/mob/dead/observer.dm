@@ -299,6 +299,7 @@
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
+		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
 		var/mob/dead/our_ghost = null
@@ -330,7 +331,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		if(!istype(src, /mob/dead))
+		if(!istype(src, /mob/dead) && !mind?.dnr)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
