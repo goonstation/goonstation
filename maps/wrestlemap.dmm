@@ -33402,7 +33402,7 @@
 	})
 "oaR" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "obI" = (
@@ -40480,7 +40480,7 @@
 /area/station/engine/monitoring)
 "rfb" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
