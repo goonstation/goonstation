@@ -1,5 +1,8 @@
 
 (t)sun jan 15 23
+(u)Zamujasa
+(*)Football mode is now 10 minutes long.
+(*)Football players have a team-colored outline.
 (u)pali & Shiiba
 (*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
 (u)FlameArrow57
