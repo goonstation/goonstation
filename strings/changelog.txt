@@ -3,6 +3,7 @@
 (u)Zamujasa
 (*)Football mode is now 10 minutes long.
 (*)Football players have a team-colored outline.
+(*)New type of license to kill that adds a crappy visual indicator over your head. Now everyone will know who's valid.
 (u)pali & Shiiba
 (*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
 (u)FlameArrow57
