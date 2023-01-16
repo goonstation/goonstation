@@ -74,7 +74,7 @@ export class Window extends Component {
     const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
-    const mode = config.window?.mode;
+    const mode = config.window?.mode; /* |GOONSTATION-ADD| */
     // Determine when to show dimmer
     const showDimmer = config.user && (
       config.user.observer
