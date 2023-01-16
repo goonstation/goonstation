@@ -2,6 +2,7 @@
 //list creation
 var/list/clothingbooth_categories = list()
 var/list/clothingbooth_items = list()
+var/list/clothingbooth_paths = list()
 
 /proc/clothingbooth_setup()
 	var/list/list/boothlist = list()
@@ -34,6 +35,7 @@ var/list/clothingbooth_items = list()
 				"path" = path_name
 			)
 		)
+		clothingbooth_paths[path_name] = I
 	clothingbooth_items = boothlist
 
 //clothing booth stuffs <3
@@ -47,6 +49,7 @@ var/list/clothingbooth_items = list()
 	density = 1
 	var/datum/character_preview/multiclient/preview
 	var/datum/light/light
+	var/datum/clothingbooth_item/item_to_purchase = null
 	var/mob/living/carbon/human/occupant
 	var/obj/item/preview_item = null
 	var/money = 0
@@ -65,11 +68,6 @@ var/list/clothingbooth_items = list()
 		src.preview = new()
 		src.preview.add_background()
 		src.preview_direction = src.preview_direction_default
-
-	relaymove(mob/user as mob)
-		if (!isalive(user))
-			return
-		eject(user)
 
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/spacecash))
@@ -90,12 +88,57 @@ var/list/clothingbooth_items = list()
 				var/mob/GM = G.affecting
 				if (src.open)
 					GM.set_loc(src)
+					src.occupant = GM
+					src.preview.add_client(GM.client)
+					src.update_preview()
+					ui_interact(GM)
 					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
 					src.close()
 					qdel(G)
 					logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 		else
 			..()
+
+	attack_hand(mob/user)
+		if (!ishuman(user))
+			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
+			return
+		if (!IN_RANGE(user, src, 1))
+			return
+		if (!can_act(user))
+			return
+		if (open)
+			user.set_loc(src.loc)
+			SPAWN(0.5 SECONDS)
+				if (!open) return
+				user.set_loc(src)
+				src.close()
+				src.occupant = user
+				src.preview.add_client(user.client)
+				src.update_preview()
+				ui_interact(user)
+		else
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, .proc/eject, null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+
+	Click()
+		if((usr in src) && (src.open == 0))
+			if(istype(usr.equipped(),/obj/item/spacecash))
+				var/obj/item/dummycredits = usr.equipped()
+				src.money += dummycredits.amount
+				dummycredits.amount = 0
+				qdel(dummycredits)
+				return
+		..()
+
+	disposing()
+		qdel(src.preview)
+		qdel(src.preview_item)
+		..()
+
+	relaymove(mob/user as mob)
+		if (!isalive(user))
+			return
+		eject(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		if(!user.client)
@@ -124,7 +167,9 @@ var/list/clothingbooth_items = list()
 		. = list(
 			"money" = src.money,
 			"preview" = src.preview?.preview_id,
-			"previewItem" = src.preview_item
+			"previewItem" = src.preview_item,
+			"selectedItemCost" = src.item_to_purchase?.cost,
+			"selectedItemName" = src.item_to_purchase?.name
 		)
 
 	ui_act(action, params)
@@ -133,17 +178,18 @@ var/list/clothingbooth_items = list()
 			return
 
 		switch(action)
-			// if("purchase")
-			// 	var/item_path_str = params["path"]
-			// 	var/item_path = text2path(item_path_str)
-
-			// 	if(text2num_safe(cb_item.cost) <= src.money)
-			// 		money -= text2num_safe(cb_item.cost)
-			// 		usr.put_in_hand_or_drop(new item_path(src))
-			// 	else
-			// 		boutput(usr, "<span class='alert'>Insufficient funds!</span>")
-			// 		animate_shake(src, 12, 3, 3)
-			// 	. = TRUE
+			if("purchase")
+				if(src.item_to_purchase)
+					if(text2num_safe(src.item_to_purchase.cost) <= src.money)
+						src.money -= text2num_safe(src.item_to_purchase.cost)
+						var/purchased_item_path = src.item_to_purchase.path
+						usr.put_in_hand_or_drop(new purchased_item_path(src))
+					else
+						boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+						animate_shake(src, 12, 3, 3)
+					. = TRUE
+				else
+					boutput(usr, "<span class='alert'>No item selected!</span>")
 			if ("rotate-cw")
 				src.preview_direction = turn(src.preview_direction, -90)
 				update_preview()
@@ -152,27 +198,20 @@ var/list/clothingbooth_items = list()
 				src.preview_direction = turn(src.preview_direction, 90)
 				update_preview()
 				. = TRUE
-			if ("rotate-reset")
-				src.preview_direction = src.preview_direction_default
+			if("select")
+				var/datum/clothingbooth_item/selected_item = clothingbooth_paths[params["path"]]
+				if(!istype(selected_item))
+					return
+				var/selected_item_path = text2path(params["path"])
+				if(src.preview_item)
+					src.preview.preview_mob.u_equip(src.preview_item)
+					qdel(src.preview_item)
+					src.preview_item = null
+				src.preview_item = new selected_item_path
+				src.preview.preview_mob.force_equip(src.preview_item, selected_item.slot)
+				src.item_to_purchase = selected_item
 				update_preview()
 				. = TRUE
-			// if("select")
-			// 	var/item_path_str = params["path"]
-			// 	var/item_path = text2path(item_path_str)
-			// 	var/equip_slot
-
-			// 	for(var/datum/clothingbooth_item/I as anything in concrete_typesof(/datum/clothingbooth_item))
-			// 		if (I.path == item_path_str)
-			// 			equip_slot = I.slot
-
-			// 	if(src.preview_item)
-			// 		src.preview.preview_mob.u_equip(src.preview_item)
-			// 		qdel(src.preview_item)
-			// 		src.preview_item = null
-			// 	src.preview_item = new item_path()
-			// 	src.preview.preview_mob.force_equip(src.preview_item, equip_slot)
-			// 	update_preview()
-			// 	. = TRUE
 
 	/// open the booth
 	proc/open()
@@ -192,7 +231,10 @@ var/list/clothingbooth_items = list()
 		open()
 		SPAWN(2 SECONDS)
 			qdel(src.preview_item)
+			qdel(src.item_to_purchase)
 			src.preview.remove_all_clients()
+			src.preview_direction = src.preview_direction_default
+			src.item_to_purchase = null
 			tgui_process.close_uis(src)
 			var/turf/T = get_turf(src)
 			if (!occupant)
@@ -217,24 +259,3 @@ var/list/clothingbooth_items = list()
 	proc/update_preview()
 		var/mob/living/carbon/human/H = src.occupant
 		src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, src.preview_direction, occupant.real_name)
-
-	attack_hand(mob/user)
-		if (!ishuman(user))
-			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
-			return
-		if (!IN_RANGE(user, src, 1))
-			return
-		if (!can_act(user))
-			return
-		if (open)
-			user.set_loc(src.loc)
-			SPAWN(0.5 SECONDS)
-				if (!open) return
-				user.set_loc(src)
-				src.close()
-				src.preview.add_client(user.client)
-				src.occupant = user
-				src.update_preview()
-				ui_interact(user)
-		else
-			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, .proc/eject, null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)

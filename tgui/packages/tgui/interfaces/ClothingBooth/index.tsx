@@ -1,3 +1,4 @@
+import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
@@ -5,7 +6,7 @@ import { ClothingBoothData, ClothingBoothListData } from './type';
 
 import { capitalize } from '.././common/stringUtils';
 
-export const ClothingBooth = (props, context) => {
+export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
 
   // on god, this probably isn't the best way of finding the first element in an array. weh.
@@ -41,9 +42,9 @@ export const ClothingBooth = (props, context) => {
               <Stack.Item grow={1}>
                 <Section fill scrollable>
                   {data.clothingBoothList
-                    .filter((booth_item) => booth_item.category === selectedCategory)
-                    .map((booth_item) => {
-                      return <ClothingBoothItem key={booth_item.name} booth_item={booth_item} />;
+                    .filter((boothItem) => boothItem.category === selectedCategory)
+                    .map((boothItem) => {
+                      return <ClothingBoothItem key={boothItem.name} boothItem={boothItem} />;
                     })}
                 </Section>
               </Stack.Item>
@@ -75,27 +76,27 @@ export const ClothingBooth = (props, context) => {
 };
 
 type boothItemProps = {
-  booth_item: ClothingBoothListData;
+  boothItem: ClothingBoothListData;
 };
 
-const ClothingBoothItem = ({ booth_item }: boothItemProps, context) => {
+const ClothingBoothItem = ({ boothItem }: boothItemProps, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-
   return (
     <>
       <Stack
         align="center"
-        className="clothingbooth__boothitem"
-        onClick={() => act('select', { path: booth_item.path })}>
+        className={classes([
+          'clothingbooth__boothitem',
+          boothItem.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+        ])}
+        onClick={() => act('select', { path: boothItem.path })}>
         <Stack.Item>
-          <img src={`data:image/png;base64,${booth_item.img}`} />
+          <img src={`data:image/png;base64,${boothItem.img}`} />
         </Stack.Item>
         <Stack.Item grow={1}>
-          <Box bold>{capitalize(booth_item.name)}</Box>
+          <Box bold>{capitalize(boothItem.name)}</Box>
         </Stack.Item>
-        <Stack.Item bold>
-          {`${booth_item.cost}⪽`}
-        </Stack.Item>
+        <Stack.Item bold>{`${boothItem.cost}⪽`}</Stack.Item>
       </Stack>
       <Divider />
     </>
@@ -104,24 +105,24 @@ const ClothingBoothItem = ({ booth_item }: boothItemProps, context) => {
 
 const CharacterPreview = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-
   return (
     <Stack vertical align="center">
-      <Stack.Item align="center">
+      <Stack.Item textAlign>
         <ByondUi
           params={{
             id: data.preview,
             type: 'map',
           }}
-          style={{
-            width: '64px',
-            height: '128px',
-          }}
+          className="clothingbooth__preview"
         />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
-        <Button icon="circle" tooltip="Reset" tooltipPosition="right" onClick={() => act('rotate-reset')} />
+        <Button
+          icon="chevron-left"
+          tooltip="Clockwise"
+          tooltipPosition="right"
+          onClick={() => act('rotate-cw')}
+        />
         <Button
           icon="chevron-right"
           tooltip="Counter-clockwise"
@@ -133,16 +134,27 @@ const CharacterPreview = (_, context) => {
   );
 };
 
-const PurchaseInfo = () => {
+const PurchaseInfo = (_, context) => {
+  const { act, data } = useBackend<ClothingBoothData>(context);
   return (
     <Stack bold vertical textAlign="center">
-      <Stack.Item>{`Selected: Golden Hairclips`}</Stack.Item>
-      <Stack.Item>{`Price: 60C`}</Stack.Item>
-      <Stack.Item>
-        <Button color="green" icon="dollar-sign">
-          {`Purchase`}
-        </Button>
-      </Stack.Item>
+      {data.selectedItemName ? (
+        <>
+          <Stack.Item>{`Selected: ${data.selectedItemName}`}</Stack.Item>
+          <Stack.Item>{`Price: ${data.selectedItemCost}⪽`}</Stack.Item>
+          <Stack.Item>
+            <Button
+              color="green"
+              disabled={data.selectedItemCost > data.money}
+              icon="dollar-sign"
+              onClick={() => act('purchase')}>
+              {!(data.selectedItemCost > data.money) ? `Purchase` : `Insufficient Cash`}
+            </Button>
+          </Stack.Item>
+        </>
+      ) : (
+        <Stack.Item>{`Please select an item.`}</Stack.Item>
+      )}
     </Stack>
   );
 };

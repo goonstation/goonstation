@@ -4,6 +4,8 @@ export interface ClothingBoothData {
   money: number;
   name: string;
   preview: string;
+  selectedItemCost: number;
+  selectedItemName: string;
 }
 
 export interface ClothingBoothListData {
