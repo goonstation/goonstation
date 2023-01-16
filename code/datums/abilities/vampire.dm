@@ -415,6 +415,7 @@
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
+			M.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
 			M.antagonist_overlay_refresh(1)

@@ -58,3 +58,22 @@
 /datum/component/tracker_hud/proc/change_target(atom/new_target)
 	src.target = new_target
 	src.process()
+
+
+/datum/component/tracker_hud/vampthrall
+	color = "#ff0000ff" //red
+	var/datum/player/master
+
+/datum/component/tracker_hud/vampthrall/RegisterWithParent()
+	. = ..()
+	var/mob/living/carbon/human/vamp = src.target
+	if (!istype(vamp))
+		return
+	src.master = vamp.client?.player
+
+/datum/component/tracker_hud/vampthrall/process()
+	//you might be asking "what is this fucking mess", so we want to track a specific player's body but ONLY if they currently have vampire abilities
+	//can't track the abilityHolder directly since it gets replaced with a copy on clone so we do this mess instead
+	var/datum/abilityHolder/vampire/holder = src.master.client?.mob?.get_ability_holder(/datum/abilityHolder/vampire)
+	src.target = holder?.owner
+	..()

@@ -1122,6 +1122,8 @@ TYPEINFO(/datum/mutantrace)
 				abil.master.remove_thrall(src.mob)
 			else
 				remove_mindhack_status(src.mob, "vthrall", "death")
+		var/datum/component/tracker_hud/vampthrall/component = src.mob.GetComponent(/datum/component/tracker_hud/vampthrall)
+		component?.RemoveComponent()
 		..()
 
 /datum/mutantrace/skeleton
