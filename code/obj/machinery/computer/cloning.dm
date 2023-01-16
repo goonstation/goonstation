@@ -95,6 +95,16 @@ var/global/cloning_with_records = TRUE
 	return
 
 /obj/machinery/computer/cloning/proc/records_scan()
+	// check if we're busy cloning
+	var/all_cloning = TRUE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (!P.attempting)
+			// at least one free pod
+			all_cloning = FALSE
+	if (all_cloning)
+		icon_state = "dnap"
+		return TRUE
+	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
 		if (!selected || (selected.mind && selected.mind.dnr))

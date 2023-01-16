@@ -1,5 +1,8 @@
 
 (t)mon jan 16 23
+(u)Flourish
+(e)🎨💅|C-Sprites, C-QoL
+(*)The cloning console now has an "in-progress" screen for when all connected pods are in use (i.e. currently cloning someone).
 (u)Sovexe
 (p)12588
 (e)🎨📦|C-Sprites, A-Game-Objects
