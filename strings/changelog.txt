@@ -1,6 +1,9 @@
 
 (t)mon jan 16 23
 (u)Flourish
+(+)You can now compost organs with the compost tank.
+(+)When drinking something, bartenders can now discern both the reagents and how it tastes.
+(u)Flourish
 (e)🎨💅|C-Sprites, C-QoL
 (*)The cloning console now has an "in-progress" screen for when all connected pods are in use (i.e. currently cloning someone).
 (u)Sovexe
