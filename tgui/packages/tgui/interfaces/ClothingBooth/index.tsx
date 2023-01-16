@@ -9,7 +9,11 @@ export const ClothingBooth = (props, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
 
   // on god, this probably isn't the best way of finding the first element in an array. weh.
-  const [selectedCategory, selectCategory] = useLocalState(context, "selectedCategory", data.categoryList.find(() => true));
+  const [selectedCategory, selectCategory] = useLocalState(
+    context,
+    'selectedCategory',
+    data.categoryList.find(() => true)
+  );
 
   return (
     <Window title={data.name} width={300} height={500}>
@@ -18,17 +22,15 @@ export const ClothingBooth = (props, context) => {
           {/* Topmost section, containing the cash balance and category dropdown. */}
           <Stack.Item>
             <Section fill>
-              <Stack align="center" fill>
-                <Stack.Item bold>
-                  {`Cash: ${data.money}⪽`}
-                </Stack.Item>
-                <Stack.Item grow={1} />
+              <Stack fill align="center" justify="space-between">
+                <Stack.Item bold>{`Cash: ${data.money}⪽`}</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     className="clothingbooth__dropdown"
                     options={data.categoryList}
                     selected={selectedCategory}
-                    onSelected={(value) => selectCategory(value)} />
+                    onSelected={(value) => selectCategory(value)}
+                  />
                 </Stack.Item>
               </Stack>
             </Section>
@@ -39,7 +41,7 @@ export const ClothingBooth = (props, context) => {
               <Stack.Item grow={1}>
                 <Section fill scrollable>
                   {data.clothingBoothList
-                    .filter((booth_item) => (booth_item.category === selectedCategory))
+                    .filter((booth_item) => booth_item.category === selectedCategory)
                     .map((booth_item) => {
                       return <ClothingBoothItem key={booth_item.name} booth_item={booth_item} />;
                     })}
@@ -49,27 +51,22 @@ export const ClothingBooth = (props, context) => {
           </Stack.Item>
           {/* Character rendering and purchase button. */}
           <Stack.Item>
-            <Section fill>
-              <Stack>
-                <Stack.Item align="center">
+            <Stack>
+              <Stack.Item align="center">
+                <Section fill>
                   <CharacterPreview />
-                </Stack.Item>
-                <Stack.Item grow={1}>
-                  <Stack vertical>
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                <Section fill title="Purchase Info">
+                  <Stack fill vertical justify="space-around">
                     <Stack.Item>
-                      {`Selected: `}
-                    </Stack.Item>
-                    <Stack.Item>
-                      {`Price: `}
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        color="green" />
+                      <PurchaseInfo />
                     </Stack.Item>
                   </Stack>
-                </Stack.Item>
-              </Stack>
-            </Section>
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -91,9 +88,7 @@ const ClothingBoothItem = ({ booth_item }: boothItemProps, context) => {
         className="clothingbooth__boothitem"
         onClick={() => act('select', { path: booth_item.path })}>
         <Stack.Item>
-          <img
-            src={`data:image/png;base64,${booth_item.img}`}
-          />
+          <img src={`data:image/png;base64,${booth_item.img}`} />
         </Stack.Item>
         <Stack.Item grow={1}>
           <Box bold>{capitalize(booth_item.name)}</Box>
@@ -112,21 +107,41 @@ const CharacterPreview = (_, context) => {
 
   return (
     <Stack vertical align="center">
-      <Stack.Item>
+      <Stack.Item align="center">
         <ByondUi
           params={{
             id: data.preview,
-            type: "map",
+            type: 'map',
           }}
           style={{
-            width: "64px",
-            height: "128px",
-          }} />
+            width: '64px',
+            height: '128px',
+          }}
+        />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="chevron-left" onClick={() => act('rotate-counter-clockwise')} />
-        <Button icon="circle" onClick={() => act('rotate-reset')} />
-        <Button icon="chevron-right" onClick={() => act('rotate-clockwise')} />
+        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
+        <Button icon="circle" tooltip="Reset" tooltipPosition="right" onClick={() => act('rotate-reset')} />
+        <Button
+          icon="chevron-right"
+          tooltip="Counter-clockwise"
+          tooltipPosition="right"
+          onClick={() => act('rotate-ccw')}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const PurchaseInfo = () => {
+  return (
+    <Stack bold vertical textAlign="center">
+      <Stack.Item>{`Selected: Golden Hairclips`}</Stack.Item>
+      <Stack.Item>{`Price: 60C`}</Stack.Item>
+      <Stack.Item>
+        <Button color="green" icon="dollar-sign">
+          {`Purchase`}
+        </Button>
       </Stack.Item>
     </Stack>
   );
