@@ -22,6 +22,7 @@
 
 /mob/verb/sa_verb(message as text)
 	set name = "sa"
+	set hidden = 1
 	src.say_verb(message)
 
 /mob/verb/say_radio()
@@ -935,7 +936,7 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/M in src:observers)
+				for (var/mob/dead/target_observer/M in src.observers)
 					if(!just_maptext)
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)

@@ -43,6 +43,9 @@
 
 		src.maptext_width = 64
 
+		// For status display updating
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+
 		START_TRACKING
 		..()
 
@@ -156,6 +159,8 @@
 		else
 			src.armed = TRUE
 			src.anchored = TRUE
+			if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
+				src.change_status_display()
 			if (!src.image_light)
 				src.image_light = image(src.icon, "nblightc")
 				src.UpdateOverlays(src.image_light, "light")
@@ -165,9 +170,10 @@
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+			if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
+				playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
 			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
-			gamemode?.shuttle_available = FALSE
+			gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 
 		#undef NUKE_AREA_CHECK
 
@@ -197,7 +203,7 @@
 						user.unlock_medal("Brown Pants", 1)
 
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
-						ticker.mode.shuttle_available = 1
+						ticker.mode.shuttle_available = SHUTTLE_AVAILABLE_NORMAL
 
 				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
 				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
@@ -385,6 +391,14 @@
 			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
+	proc/change_status_display()
+		var/datum/signal/status_signal = get_free_signal()
+		status_signal.source = src
+		status_signal.transmission_method = TRANSMISSION_RADIO
+		status_signal.data["command"] = "nuclear"
+		status_signal.data["address_tag"] = "STATDISPLAY"
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

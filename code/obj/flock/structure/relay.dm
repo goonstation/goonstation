@@ -5,6 +5,8 @@
 // Important: Reduce size of max_conv_radius if you are planning on viewing
 // variables of the relay, otherwise it will take a long time to load
 
+TYPEINFO(/obj/flock_structure/relay)
+	cancellable = FALSE
 /obj/flock_structure/relay
 	icon = 'icons/misc/featherzone-160x160.dmi'
 	icon_state = "structure-relay"

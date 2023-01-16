@@ -1,5 +1,65 @@
 
+(t)mon jan 16 23
+(u)Sovexe
+(p)12588
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Rancher now spawns with a belt that can fit chicken carriers and fishing rods. Sprite by BatElite.
+(u)LeahTheTech
+(*)Vampiric thralls now have a HUD element to track their master.
+(t)sun jan 15 23
+(u)Zamujasa
+(*)Football mode is now 10 minutes long.
+(*)Football players have a team-colored outline.
+(*)New type of license to kill that adds a crappy visual indicator over your head. Now everyone will know who's valid.
+(u)pali & Shiiba
+(*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
+(u)FlameArrow57
+(p)11684
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flockdrones will now deal less damage when attacking with items and point-blank shoot instead of gun-grab.
+(u)goonstation-enjoyer
+(p)12730
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adds a cleaning grenade manudrive to the janitor locker on Atlas
+(t)sat jan 14 23
+(u)DisturbHerb + Grokberg
+(p)12390
+(e)🆕🎨🔄🔊📄📦📜|C-Feature, C-Sprites, C-Rework, C-Sound, A-UI, A-Game-Objects, C-Documentation
+(*)The NanoTrasen Recreational Appropriations Committee has secured funding to upgrade the quality of crew entertainment in its stations. Chess boards and game clocks have been made available at gaming vendor machines, and a further rollout of the new equipment is anticipated in the near future.
+(u)Buyrcsp2
+(p)12731
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unopened cans of soda now can't be poured, unless popped open.
+(u)Amylizzle
+(p)12405
+(e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
+(+)The quartermaster's office now contains a chemical request console, so you can ask chemistry for meth to sell!
+(t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
+(u)Amylizzle
+(p)12720
+(e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
+(+)You can now use the gas analyser on the nuclear reactor and turbine.
+(u)Kubius
+(p)12667
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir has received a nuclear engine and a mining department.
+(+)The mining department is fairly small, and two miners are on staff. Their cherished reinforced exploratory pod lives in a hangar below surface.
+(+)Other things changed in Nadir include a larger Hydroponics Bay, a slightly wider Kitchen, several new random room spots, and a small Crime Conduit.
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
+(t)wed jan 11 23
+(u)aloe
+(+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.
 (t)tue jan 10 23
+(u)Zamujasa
+(*)Artifact analysis results will now tell you what you got incorrect (but not what the correct answer was).
 (u)LeahTheTech
 (p)12508
 (e)💅📦|C-QoL, A-Game-Objects
