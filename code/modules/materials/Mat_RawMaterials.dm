@@ -209,7 +209,7 @@
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horriffic smell."
 	default_material = "hamburgris"
-	icon_state = "slag"
+	icon_state = "wad"
 
 	setup_material()
 		src.setMaterial(getMaterial("hamburgris"), appearance = TRUE, setname = FALSE)
@@ -252,11 +252,11 @@
 		..()
 
 /obj/item/material_piece/slag
-	icon_state = "slag"
+	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
 	setup_material()
-		src.setMaterial(getMaterial("slag"), appearance = FALSE, setname = FALSE)
+		src.setMaterial(getMaterial("slag"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/rubber/latex
