@@ -159,7 +159,8 @@
 		else
 			src.armed = TRUE
 			src.anchored = TRUE
-			src.change_status_display()
+			if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
+				src.change_status_display()
 			if (!src.image_light)
 				src.image_light = image(src.icon, "nblightc")
 				src.UpdateOverlays(src.image_light, "light")
