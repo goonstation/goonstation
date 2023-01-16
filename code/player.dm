@@ -42,6 +42,8 @@
 	var/datum/buildmode_holder/buildmode = null
 	/// whether this person is a temporary admin (this round only)
 	var/tempmin = FALSE
+	/// whteher this person is a permanent admin
+	var/perm_admin = FALSE
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
