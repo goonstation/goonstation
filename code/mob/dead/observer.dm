@@ -299,6 +299,7 @@
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
+		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
 		var/mob/dead/our_ghost = null
@@ -330,7 +331,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		if(!istype(src, /mob/dead))
+		if(!istype(src, /mob/dead) && !mind?.dnr)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -626,6 +627,23 @@
 				render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
+
+
+/mob/dead/observer/verb/toggle_ghosts()
+	set name = "Toggle Ghosts"
+	set category = null
+
+	if (src.see_invisible >= INVIS_GHOST)
+		src.see_invisible = INVIS_NONE
+		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
+	else if(HAS_FLAG(src.sight, SEE_SELF))
+		src.sight &= ~SEE_SELF
+		boutput(src, "You can no longer see yourself.", group="ghostsight")
+	else
+		src.see_invisible = INVIS_SPOOKY
+		src.sight |= SEE_SELF
+		boutput(src, "You can now see other ghosts and yourself.", group="ghostsight")
+
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"

@@ -276,7 +276,7 @@
 			for(var/i in 1 to amount_ejected)
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
-				ore.setMaterial(OCD.stats[length(OCD.stats)], (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
+				ore.setMaterial(OCD.stats[length(OCD.stats)], TRUE, (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
 				ore.initial_material_name = ore.material.name
 				OCD.stats.Cut(length(OCD.stats))
 				ore.set_loc(eject_location)

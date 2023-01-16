@@ -30,7 +30,7 @@
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
 		..(loc)
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	proc/setup(var/atom/L, var/amt = 1 as num)
 		set_loc(L)
@@ -39,9 +39,9 @@
 	proc/set_amt(var/amt = 1 as num)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount)
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
 		switch (src.amount)
@@ -101,7 +101,7 @@
 			src.visible_message("[src] melds together into a single credit. What?")
 			src.desc += " It looks all melted together or something."
 			src.change_stack_amount(-(src.amount-1))
-			update_stack_appearance()
+			UpdateStackAppearance()
 
 //	attack_self(mob/user as mob)
 //		user.visible_message("fart")
@@ -169,7 +169,7 @@
 		..()
 		processing_items |= src
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		return
 
 	UpdateName()
@@ -250,7 +250,7 @@
 		if (amt != null)
 			src.amount = amt
 
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	get_desc()
 		. += "This one is worth [amount >= 1000000 ? "ONE FUCKING GOD DAMN MILLION" : amount] spacebux."
@@ -262,9 +262,9 @@
 	proc/set_amt(var/amt = 1 as num)
 		tooltip_rebuild = 1
 		src.amount = amt
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter?.update_number(amount)
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)

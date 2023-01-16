@@ -537,12 +537,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		if (src.amount <= 1)
 			src.icon_state = "chip"
@@ -1382,7 +1382,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
 			C.amount -= max_accept
-			C.update_stack_appearance()
+			C.UpdateStackAppearance()
 			src.cash_amt = src.cash_max
 		else
 			src.cash_amt += C.amount
