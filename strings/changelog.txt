@@ -1,4 +1,9 @@
+
 (t)mon jan 16 23
+(u)Sovexe
+(p)12588
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Rancher now spawns with a belt that can fit chicken carriers and fishing rods. Sprite by BatElite.
 (u)LeahTheTech
 (*)Vampiric thralls now have a HUD element to track their master.
 (t)sun jan 15 23
