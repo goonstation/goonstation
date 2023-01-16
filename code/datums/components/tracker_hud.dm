@@ -38,7 +38,7 @@
 	controller.processing_components -= src
 
 /datum/component/tracker_hud/proc/process()
-	if (QDELETED(src.target))
+	if (QDELETED(src.target) || src.target.z != src.parent.z)
 		src.hudarrow.alpha = 0
 		return
 	src.hudarrow.alpha = 127
