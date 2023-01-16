@@ -60,6 +60,8 @@
 		. = ..()
 		src.whiteTime = src.defaultTime
 		src.blackTime = src.defaultTime
+		// Klepto block
+		APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_KLEPTO_IGNORE, src)
 
 	examine()
 		. = ..()

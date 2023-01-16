@@ -134,6 +134,8 @@
 		// Store old styling if there is any reason to reset the board
 		src.styling[STYLING_OLDTILECOLOR1] = src.styling[STYLING_TILECOLOR1]
 		src.styling[STYLING_OLDTILECOLOR2] = src.styling[STYLING_TILECOLOR2]
+		// Klepto block
+		APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_KLEPTO_IGNORE, src)
 
 	/**
 	 * Reset the board to its color scheme, in case it has been changed

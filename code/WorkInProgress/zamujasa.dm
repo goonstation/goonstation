@@ -1015,13 +1015,13 @@
 				maptext_suffix = "</span>"
 
 				New()
-					maptext_y += 20
 					..()
+					maptext_y += 21
 
 				offset
 					New()
-						maptext_x += 16
 						..()
+						maptext_x += 16
 
 
 	score_tracker
