@@ -5,6 +5,8 @@
 // Important: Reduce size of max_conv_radius if you are planning on viewing
 // variables of the relay, otherwise it will take a long time to load
 
+TYPEINFO(/obj/flock_structure/relay)
+	cancellable = FALSE
 /obj/flock_structure/relay
 	icon = 'icons/misc/featherzone-160x160.dmi'
 	icon_state = "structure-relay"
@@ -41,6 +43,8 @@
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
+	if(src.flock)
+		src.flock.stats.built_relay = TRUE
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
 	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
 	// no shuttle for you, either destroy the relay or flee when it unleashes
@@ -142,6 +146,7 @@
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
 	src.flock.relay_finished = TRUE
+	src.flock.stats.won = TRUE
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
 	desc = "Your life is flashing before your eyes. Looks like this is the end."

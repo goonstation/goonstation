@@ -61,6 +61,9 @@
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
 
+	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
+	var/material_applied_appearance = FALSE
+
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
@@ -326,9 +329,15 @@
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
 
+/// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	. = new_state != src.icon_state
 	src.icon_state = new_state
+	if(. && src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	signal_event("icon_updated")
+	// TODO: actual component signal here
+	// also TODO: use this proc instead of setting icon state directly probably
 
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
@@ -353,6 +362,8 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
+	if(src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
 	return
 
@@ -749,14 +760,14 @@
 	return
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
-/atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
-	var/image/I = getTexturedImage(src, texture, blendMode)//, key)
+/atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	if (!I)
 		return
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
-		worn_material_texture_image = getTexturedWornImage(src, texture, blendMode)
+		worn_material_texture_image = isnull(texture) ? null : getTexturedWornImage(src, texture, blendMode)
 	return
 
 /proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
@@ -918,7 +929,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
-		CRASH("Tried to call set_loc on [identify_object(src)] to non-null location: [identify_object(newloc)]")
+		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)

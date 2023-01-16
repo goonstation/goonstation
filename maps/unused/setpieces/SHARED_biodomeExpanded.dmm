@@ -5159,7 +5159,7 @@
 /area/catacombs)
 "fWs" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_3"
 	},
@@ -10270,7 +10270,7 @@
 /area/swampzone/interiors/bonktek)
 "mjc" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
 "mjC" = (
@@ -12195,7 +12195,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "ouY" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/box/stma_kit,
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/white/grime,
@@ -13075,7 +13075,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
@@ -13979,7 +13979,7 @@
 /area/crater/cave)
 "qJt" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/map/light/graveyard,
 /obj/item/cigpacket/propuffs,
 /turf/unsimulated/floor/carpet{
@@ -19888,7 +19888,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
@@ -20369,7 +20369,7 @@
 /area/swampzone/interiors/bonktek)
 "yeW" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a young man. He looks kinda familiar to you.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";

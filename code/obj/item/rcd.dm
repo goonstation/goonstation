@@ -227,8 +227,9 @@ TYPEINFO(/obj/item/rcd)
 
 	afterattack(atom/A, mob/user as mob)
 		if ((isrestrictedz(user.z) || isrestrictedz(A.z)) && !src.really_actually_bypass_z_restriction)
-			boutput(user, "\The [src] won't work here for some reason. Oh well!")
-			return
+			if(!(isgenplanet(user) && isgenplanet(A)))
+				boutput(user, "\The [src] won't work here for some reason. Oh well!")
+				return
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 			return

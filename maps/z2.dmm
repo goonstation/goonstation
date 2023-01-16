@@ -208,6 +208,11 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"aaP" = (
+/obj/table/syndicate/auto,
+/obj/item/nukeop_minimap_controller,
+/turf/unsimulated/floor/carpet/red/decal/innercross,
+/area/syndicate_station/battlecruiser)
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -2477,7 +2482,7 @@
 /obj/item/storage/secure/ssafe/hospital{
 	pixel_y = 24
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and...wow, that's a lot of cats.  Maybe she uh...volunteers for a cat shelter....";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -2805,7 +2810,7 @@
 /area/hospital)
 "ahR" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/device/light/zippo,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
@@ -3161,7 +3166,7 @@
 /area/hospital)
 "ajq" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/caution/north,
 /area/hospital)
 "ajr" = (
@@ -3177,7 +3182,7 @@
 /area/hospital)
 "ajt" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "aju" = (
@@ -10319,10 +10324,6 @@
 	opacity = 1
 	},
 /area/marsoutpost)
-"aIn" = (
-/obj/table/syndicate/auto,
-/turf/unsimulated/floor/carpet/red/decal/outercross,
-/area/syndicate_station/battlecruiser)
 "aIo" = (
 /turf/unsimulated/wall/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
@@ -12722,7 +12723,7 @@
 /area/upper_arctic/pod2)
 "aPw" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/scalpel,
 /obj/item/circular_saw{
 	pixel_y = 7
@@ -13049,7 +13050,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
@@ -13883,7 +13884,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
@@ -15232,7 +15233,7 @@
 /area/marsoutpost)
 "aXd" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -16035,7 +16036,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -16807,7 +16808,7 @@
 /area/lower_arctic/pod1)
 "bbn" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbo" = (
@@ -20226,7 +20227,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and a little girl.  They look to be related.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -20439,7 +20440,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/ammo/bullets/autocannon,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/office)
@@ -21718,7 +21719,7 @@
 "bnE" = (
 /obj/table/auto,
 /obj/item/stamp,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnF" = (
@@ -24584,7 +24585,7 @@
 /area/iomoon/base)
 "bvY" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "bvZ" = (
@@ -28828,7 +28829,7 @@
 /area/solarium)
 "bKg" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen/odd,
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -29312,7 +29313,7 @@
 /area/crunch)
 "bLI" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_3"
 	},
@@ -29604,7 +29605,7 @@
 /area/crypt/sigma/crew)
 "bMM" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/map/light/graveyard,
 /obj/item/cigpacket/propuffs,
 /turf/unsimulated/floor/carpet{
@@ -30244,7 +30245,7 @@
 /area/crunch)
 "bOO" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -32459,7 +32460,7 @@
 /area/crunch)
 "bWx" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a young man. He looks kinda familiar to you.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -45586,12 +45587,6 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
-"cHA" = (
-/obj/item/cigpacket,
-/obj/item/matchbook,
-/obj/table/syndicate/auto,
-/turf/unsimulated/floor/carpet/red/decal/innercross,
-/area/syndicate_station/battlecruiser)
 "cHB" = (
 /obj/item/device/audio_log/radioship/small,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
@@ -46612,7 +46607,7 @@
 /area/owlery/office)
 "cJX" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
 "cJY" = (
@@ -52706,7 +52701,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's signed 'Greg!'";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -56132,14 +56127,6 @@
 	icon_state = "cairngorm10"
 	},
 /area/syndicate_station/battlecruiser)
-"dgn" = (
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm11"
-	},
-/area/syndicate_station/battlecruiser)
 "dgo" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm12"
@@ -56242,19 +56229,6 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
-"dgF" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgG" = (
 /obj/cable{
@@ -60068,14 +60042,6 @@
 "dyi" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"dyk" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/gannets)
 "dyl" = (
 /turf/unsimulated/floor/carpet/arcade,
 /area/centcom/offices/gannets)
@@ -60700,6 +60666,17 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"dBe" = (
+/obj/admin_plaque{
+	name = "Leah \"Rascal\" Polaris's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dBf" = (
 /obj/item/gun/kinetic/riotgun{
 	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
@@ -61666,7 +61643,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61674,7 +61651,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61703,7 +61680,7 @@
 	dir = 8;
 	tag = "icon-toilet (WEST)"
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61716,12 +61693,12 @@
 	dir = 4;
 	pixel_x = -2
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
 "dFe" = (
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61731,7 +61708,7 @@
 	dir = 8;
 	pixel_x = 2
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61950,7 +61927,7 @@
 /area/crypt/sigma/lab)
 "dFR" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/box/stma_kit,
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/white/grime,
@@ -62434,14 +62411,6 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHh" = (
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lounge)
-"dHi" = (
-/obj/storage/secure/closet/fridge/kitchen,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
-/obj/item/reagent_containers/food/snacks/slimjim,
-/obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHj" = (
@@ -64286,7 +64255,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dMb" = (
@@ -65219,7 +65188,7 @@
 /area/centcom/lobby)
 "dOg" = (
 /obj/table/auto/desk,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dOh" = (
@@ -65753,15 +65722,22 @@
 	name = "hand rail";
 	pixel_y = 16
 	},
+/obj/submachine/centcom_elevator{
+	desc = "a not at all suspicious toilet paper holder.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "toiletholder";
+	name = "toilet paper holder";
+	pixel_y = 32
+	},
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPt" = (
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPu" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -65803,8 +65779,8 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/specialroom/freezer,
-/area/centcom/lobby)
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "dPB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -65941,9 +65917,9 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "dPW" = (
 /obj/machinery/door/unpowered/wood{
@@ -66008,9 +65984,9 @@
 /obj/item/clothing/head/plunger,
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "dQg" = (
 /obj/machinery/computer3/generic/secure_data,
@@ -67128,6 +67104,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lobby)
+"eaa" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "eaz" = (
 /obj/storage/crate/classcrate{
 	desc = "A crate for XIANG|GIESEL training materials.";
@@ -68394,7 +68380,7 @@
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
 /obj/table/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and a little girl.  They look to be related.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -68748,6 +68734,10 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"gUB" = (
+/obj/flock_structure/compute,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "gUJ" = (
 /obj/securearea{
 	desc = "";
@@ -68791,6 +68781,10 @@
 "hav" = (
 /turf/unsimulated/floor/caution/corner/sw,
 /area/centcom/offices/azrun)
+"hba" = (
+/obj/machinery/light/flock/floor,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "hbc" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -68827,17 +68821,6 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
-"hgn" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 4;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8;
-	locked = 1
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "hgp" = (
 /obj/table/regal/auto,
 /obj/item/cigarbox/gold{
@@ -68993,6 +68976,17 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"hqN" = (
+/obj/stool/chair/couch/purple{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	on = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "hrN" = (
 /obj/machinery/light{
 	dir = 8
@@ -69404,8 +69398,8 @@
 /area/crunch)
 "iho" = (
 /obj/storage/secure/closet/fridge{
-	name = "Mark VI Extreme Conditions Cryogenic Storage Unit";
-	desc = "It looks like a fridge despite the fancy title written on the side. It's extremely scratched and dented all over."
+	desc = "It looks like a fridge despite the fancy title written on the side. It's extremely scratched and dented all over.";
+	name = "Mark VI Extreme Conditions Cryogenic Storage Unit"
 	},
 /obj/item/storage/ntsc_pouch{
 	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
@@ -69444,7 +69438,7 @@
 	dir = 8;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -70545,6 +70539,20 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"kdD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/minimap/map_computer/nukeop,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/battlecruiser)
 "kew" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/assault_pod)
@@ -70757,6 +70765,13 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"kCf" = (
+/obj/stool/chair/couch/purple{
+	dir = 4
+	},
+/mob/living/critter/small_animal/crab/responsive,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "kCF" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -4
@@ -71026,6 +71041,12 @@
 /obj/table/auto,
 /obj/item/gun/kinetic/rpg7,
 /turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
+"lia" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket,
+/obj/item/matchbook,
+/turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "liR" = (
 /turf/unsimulated/floor/wood/two,
@@ -71913,6 +71934,25 @@
 /obj/decal/fakeobjects/dreambeach/stones,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"mLW" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	initial_reagents = "tequilasunrise";
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis{
+	layer = 4
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "mPS" = (
 /obj/item/radio_tape/adventure/xg4,
 /obj/table/wood/round/auto,
@@ -72397,7 +72437,7 @@
 /area/centcom/offices/kyle)
 "nxw" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/bowl{
@@ -72842,6 +72882,9 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"obN" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "odb" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
@@ -74323,7 +74366,7 @@
 	dir = 4;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/lobby)
 "qHX" = (
 /obj/table/auto,
@@ -74657,6 +74700,16 @@
 	icon_state = "logo_xg6"
 	},
 /area/iomoon/base)
+"rgX" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/slimjim,
+/obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/centcom/lounge)
 "rhp" = (
 /obj/cable{
 	d1 = 4;
@@ -74970,6 +75023,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"rBI" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "rBM" = (
 /obj/admin_plaque{
 	name = "Adhara's Office";
@@ -75822,8 +75882,8 @@
 	desc = "A button set into the wall. You probably shouldn't press this.";
 	id = "virvadoor";
 	name = "curious button";
-	pixel_y = 30;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 30
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -76837,6 +76897,15 @@
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
+"uWx" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/black,
+/area/centcom/offices/gannets)
 "uWF" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77101,7 +77170,7 @@
 /area/sim/gunsim/lobby)
 "vrn" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},
@@ -77227,6 +77296,9 @@
 	icon_state = "shore-0"
 	},
 /area/titlescreen)
+"vCK" = (
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "vCV" = (
 /obj/item/cigbutt{
 	pixel_x = 6
@@ -77390,6 +77462,17 @@
 	dir = 8
 	},
 /area/iomoon/base)
+"vOS" = (
+/obj/table/flock/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	name = "The secret to Flock balance";
+	pixel_w = 1;
+	pixel_y = -1;
+	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>"
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "vPQ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -77982,6 +78065,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"wVp" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 4;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "wWb" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -78279,6 +78370,19 @@
 	dir = 6
 	},
 /area/centcom/offices/janantilles)
+"xxs" = (
+/obj/table/wood/auto/desk,
+/obj/item/plant/flower/rose/poisoned{
+	name = "very suspicious rose";
+	pixel_x = -4;
+	pixel_y = 8;
+	trick = 1
+	},
+/obj/item/clothing/mask/mime{
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "xxK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -78291,6 +78395,22 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
+"xyS" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = -2;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78428,7 +78548,7 @@
 	dir = 4;
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -78695,6 +78815,11 @@
 	icon_state = "leadwall"
 	},
 /area/centcom/gallery)
+"yea" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm11"
+	},
+/area/syndicate_station/battlecruiser)
 "yef" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
@@ -104751,7 +104876,7 @@ cIJ
 xPX
 des
 vkk
-dfo
+eaa
 dfQ
 dfQ
 sdh
@@ -106869,7 +106994,7 @@ dfz
 dfS
 dgl
 dgy
-dgF
+kdD
 dgT
 dhd
 dgT
@@ -107461,7 +107586,7 @@ bqW
 buX
 bvJ
 bVf
-cHA
+aaP
 cJw
 cMS
 cNu
@@ -107471,7 +107596,7 @@ dev
 dek
 dfC
 dfU
-dgn
+yea
 dgA
 dgH
 dek
@@ -107765,7 +107890,7 @@ btf
 bVe
 cHB
 bXh
-aIn
+lia
 cNu
 dcP
 btf
@@ -152250,7 +152375,7 @@ dyv
 wel
 wel
 wel
-dyk
+uWx
 wel
 wel
 vGl
@@ -154065,9 +154190,9 @@ nwN
 dnK
 niJ
 wel
-dvW
-dvW
-dvW
+xxs
+vCK
+xyS
 wel
 dxu
 dyh
@@ -154367,9 +154492,9 @@ fDe
 uaJ
 liR
 wel
-lRO
-dvW
-dvW
+rBI
+hba
+gUB
 tIu
 dxv
 dyh
@@ -154669,9 +154794,9 @@ wmi
 liR
 liR
 wel
-dvW
-dvW
-dvW
+hqN
+obN
+vOS
 wel
 dxw
 dyi
@@ -154971,9 +155096,9 @@ ttl
 tVG
 afR
 wel
-dvW
-dvW
-dvW
+kCf
+obN
+mLW
 wel
 dxx
 dyi
@@ -155274,7 +155399,7 @@ mwd
 wel
 wel
 wel
-hgn
+wVp
 wel
 wel
 wel
@@ -155575,7 +155700,7 @@ mbb
 wmb
 wmb
 wmb
-wmb
+dBe
 wmb
 wmb
 wmb
@@ -159139,7 +159264,7 @@ aES
 aES
 wLo
 wLo
-dHi
+rgX
 dHp
 wLo
 dHJ

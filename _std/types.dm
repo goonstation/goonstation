@@ -141,24 +141,32 @@ proc/maximal_subtype(var/list/L)
 			else if (!(ispath(., t)))
 				return null // paths in L aren't linearly ordered
 
+
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
 // to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
 
 #ifdef SPACEMAN_DMM // just don't ask
-#define START_TRACKING
-#define STOP_TRACKING
+	#define START_TRACKING
+	#define STOP_TRACKING
+#elif defined(OPENDREAM) // Yay, actual sanity!
+	#define START_TRACKING if(!by_type[opendream_procpath]) { by_type[opendream_procpath] = list() }; by_type[opendream_procpath][src] = 1
+	#define STOP_TRACKING by_type[opendream_procpath].Remove(src)
 #else
-#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
-#if DM_BUILD >= 1552
-#define STOP_TRACKING by_type[......].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ....... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
-#else
-#define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
-#endif
+	/// we use an assoc list here because removing from one is a lot faster
+	#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1
+	#if DM_BUILD >= 1552
+		// ok if ur seeing this and thinking "wtf is up with the .......
+		// in THIS use case it gives us the type path at the particular scope this is called.
+		// and the amount of dots varies based on scope in the macro! fun
+		#define STOP_TRACKING by_type[......].Remove(src)
+	#else
+		#define STOP_TRACKING by_type[.....].Remove(src)
+	#endif
 #endif
 
-/// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+/// contains lists of objects indexed by their type based on [START_TRACKING] / [STOP_TRACKING]
 var/list/list/by_type = list()
 
 /// Performs a typecheckless for loop with var/iterator over by_type[_type]

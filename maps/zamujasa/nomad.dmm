@@ -264,7 +264,7 @@
 /area/nomad/outside)
 "aL" = (
 /obj/table/wood/round/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/random_item_spawner/tableware,
 /obj/item/storage/pill_bottle/antirad,
 /turf/unsimulated/floor/black,

@@ -816,6 +816,17 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/cmd = "c_mode_current"
 				var/addltext = ""
+				var/list/regular_modes = list()
+				var/list/other_modes = list()
+				for(var/game_type in concrete_typesof(/datum/game_mode))
+					var/datum/game_mode/GM = game_type
+					if(initial(GM.regular))
+						regular_modes[initial(GM.name)] = initial(GM.config_tag)
+					else
+						other_modes[initial(GM.name)] = initial(GM.config_tag)
+				sortList(regular_modes, /proc/cmp_text_asc)
+				sortList(other_modes, /proc/cmp_text_asc)
+
 				if (current_state > GAME_STATE_PREGAME)
 					cmd = "c_mode_next"
 					addltext = " next round"
@@ -829,33 +840,12 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=secret'>Secret</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=action'>Secret: Action</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=intrigue'>Secret: Intrigue</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=mixed'>Mixed (Action)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=mixed_rp'>Mixed (Mild)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=traitor'>Traitor</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=nuclear'>Nuclear Emergency</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=wizard'>Wizard</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=changeling'>Changeling</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=vampire'>Vampire</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=blob'>Blob</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=conspiracy'>Conspiracy</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=spy_theft'>Spy Theft</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=arcfiend'>Arcfiend</A><br>
-							<b>Other Modes</b><br>
-							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=disaster'>Disaster (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=spy'>Spy</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=revolution_extended'>Revolution (no time limit)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>Pod Wars (Beta)(only works if current map is pod_wars.dmm)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=everyone-is-a-traitor'>Everyone is a traitor</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
 							"})
-#if FOOTBALL_MODE
-				dat += "<A href='?src=\ref[src];action=[cmd];type=football'>Football</A>"
-#endif
+				for(var/item in regular_modes)
+					dat += "<A href='?src=\ref[src];action=[cmd];type=[regular_modes[item]]'>[item]</A><br>"
+				dat += "<b>Other Modes</b><br>"
+				for(var/item in other_modes)
+					dat += "<A href='?src=\ref[src];action=[cmd];type=[other_modes[item]]'>[item]</A><br>"
 				dat += "</body></html>"
 				usr.Browse(dat.Join(), "window=c_mode")
 			else
@@ -1051,14 +1041,11 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				if (isobserver(M))
-					boutput(usr, "<span class='alert'>You can't observe a ghost.</span>")
-				else
-					if (!istype(usr, /mob/dead/observer))
-						boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
-						return
-					var/mob/dead/observer/ghost = usr
-					ghost.insert_observer(M)
+				if (!istype(usr, /mob/dead/observer))
+					boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
+					return
+				var/mob/dead/observer/ghost = usr
+				ghost.insert_observer(M)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
 

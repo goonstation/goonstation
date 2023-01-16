@@ -369,6 +369,8 @@
 		return
 	if(!loc)
 		return
+	if(AM.loc != src.loc) //fixes race condition where AM gets yoinked during the turf-to-turf loop that calls Crossed on everything (& ends up with an active walk inside another object)
+		return
 	move_thing(AM)
 
 /obj/machinery/conveyor/Uncrossed(var/atom/movable/AM)

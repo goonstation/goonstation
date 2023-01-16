@@ -603,7 +603,7 @@
 			if (!stack_result)
 				continue
 			else
-				sleep(0.3 SECONDS)
+				sleep(0.5 DECI SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
 				if (src.amount >= max_stack)
@@ -1255,6 +1255,10 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/datum/limb/attacking_limb = user?.equipped_limb()
+	var/attack_strength_mult = !isnull(attacking_limb) ? attacking_limb.attack_strength_modifier : 1
+	power *= attack_strength_mult
+
 	var/list/shield_amt = list()
 	SEND_SIGNAL(M, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
 	power *= max(0, (1-shield_amt["shield_strength"]))
@@ -1291,6 +1295,8 @@
 		if (is_special && src.special)
 			if(src.special.overrideStaminaDamage >= 0)
 				stam_power = src.special.overrideStaminaDamage
+
+		stam_power *= attack_strength_mult
 
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/2 so we still cant ignore it entirely

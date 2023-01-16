@@ -283,6 +283,14 @@ Contains:
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
 

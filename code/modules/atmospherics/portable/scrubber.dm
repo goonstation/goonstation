@@ -161,11 +161,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		"inletFlow" = src.inlet_flow
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding?.ui_describe()
 	.["reagent_container"] = ui_describe_reagents(src)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
