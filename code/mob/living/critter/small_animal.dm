@@ -1717,7 +1717,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					random_brute_damage(M, rand(6,12),1)
 					src.emote("snip")
 					M.emote("scream")
-			I.Eat()
+			qdel(I)
 			return
 		. = ..()
 
