@@ -681,7 +681,7 @@
 	var/is_reassignable = 1
 	var/assignment = null
 	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
-	var/current_mode = "stamp-sprite-ok"
+	var/current_mode = "Granted"
 	var/current_state = null
 
 /obj/item/stamp/New()
