@@ -170,7 +170,8 @@
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+			if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
+				playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
 			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 
