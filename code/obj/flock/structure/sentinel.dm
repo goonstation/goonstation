@@ -22,7 +22,7 @@
 	/// Turret range in tiles
 	var/range = 4
 	/// The wattage of the arcflash
-	var/wattage = 6000
+	var/wattage = 5000
 	/// has extra range when chaining
 	var/extra_chain_range = FALSE
 	var/powered = FALSE
@@ -103,7 +103,7 @@
 			if(!to_hit)
 				src.updatefilter()
 				return
-			arcFlash(src, to_hit, wattage, 1.1)
+			arcFlash(src, to_hit, wattage, 0.9)
 			logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(to_hit)].")
 			hit += to_hit
 
@@ -118,7 +118,7 @@
 							if (isdead(M) || is_incapacitated(M))
 								continue
 						found_chain_target = TRUE
-						arcFlash(last_hit, A, wattage / 1.5, 1.1)
+						arcFlash(last_hit, A, wattage / 1.5, 0.8)
 						logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(A)] with a chained arcflash.")
 						hit += A
 						last_hit = A

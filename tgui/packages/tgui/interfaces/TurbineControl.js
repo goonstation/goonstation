@@ -91,7 +91,7 @@ export const TurbineControl = (_props, context) => {
             <NumberInput
               minValue={1}
               value={volume}
-              format={value => value + " M^3"}
+              format={value => value + " L"}
               onChange={(e, value) => act("volChange", { newVal: value })} />
           </Stack.Item>
         </Stack>
