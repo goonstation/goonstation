@@ -622,8 +622,8 @@
 /obj/item/storage/belt/rancher
 	name = "rancher's belt"
 	desc = "A sturdy belt with hooks for chicken carriers."
-	icon_state = "utilitybelt"
-	item_state = "utility"
+	icon_state = "rancherbelt"
+	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod)
