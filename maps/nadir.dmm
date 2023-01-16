@@ -4026,6 +4026,12 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -9022,6 +9028,17 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
+"ebU" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/west)
 "ecc" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -14490,6 +14507,13 @@
 "gwB" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -28011,6 +28035,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"mfN" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/mining/staff_room)
 "mfV" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -30699,6 +30733,12 @@
 "nsO" = (
 /obj/table/reinforced/auto,
 /obj/item/game_kit,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -40798,19 +40838,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"slG" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "slV" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -45666,6 +45693,13 @@
 	id = "market";
 	pixel_y = 24
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/grey/side{
 	dir = 9
 	},
@@ -47454,6 +47488,15 @@
 "vmx" = (
 /turf/simulated/floor/yellowblack/corner,
 /area/station/hallway/secondary/east)
+"vmA" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "vmT" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -47763,6 +47806,13 @@
 	dir = 4
 	},
 /obj/machinery/meter,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 3;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -49235,6 +49285,13 @@
 	pixel_x = -14;
 	pixel_y = 4
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "wdR" = (
@@ -50280,6 +50337,17 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"wHy" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "wHU" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib5"
@@ -90422,7 +90490,7 @@ chV
 bYc
 nea
 jwF
-slG
+jBz
 nKx
 idy
 bts
@@ -93739,7 +93807,7 @@ gNU
 iER
 hAe
 lut
-uqt
+ebU
 uqt
 jpG
 jli
@@ -106714,7 +106782,7 @@ pqb
 dYV
 tYz
 dYV
-ujK
+mfN
 aXs
 rkh
 ibV
@@ -109749,7 +109817,7 @@ fQt
 ocD
 pwy
 tXe
-sSm
+wHy
 ocD
 ocD
 ocD
@@ -110642,7 +110710,7 @@ eIK
 oZp
 oZp
 oZp
-jXY
+vmA
 ibV
 ibV
 lXA
