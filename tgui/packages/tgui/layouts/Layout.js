@@ -12,7 +12,7 @@ export const Layout = props => {
   const {
     className,
     theme = 'nanotrasen',
-    mode = 'dark',
+    mode = 'dark', /* |GOONSTATION-ADD| */
     children,
     ...rest
   } = props;
