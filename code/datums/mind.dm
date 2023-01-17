@@ -51,9 +51,6 @@ datum/mind
 	// namely ckey_to_mob(mob.mind.master) (Convair880).
 	var/master = null
 
-	var/dnr = 0
-	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
-
 	var/handwriting = null
 	var/color = null
 
@@ -178,6 +175,11 @@ datum/mind
 			current:delete_on_logout = 1
 		if (isobserver(target))
 			target:delete_on_logout = 1
+
+	proc/get_player()
+		RETURN_TYPE(/datum/player)
+		if(ckey)
+			. = make_player(ckey)
 
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"

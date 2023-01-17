@@ -523,3 +523,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 	twraith.special_role = ROLE_WRAITH
 
 
+/proc/build_valid_game_modes()
+	. = list()
+	for (var/M in config.modes)
+		. += M
+	global.valid_modes += .

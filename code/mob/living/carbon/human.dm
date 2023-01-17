@@ -606,7 +606,7 @@
 
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
-		if (src.unkillable && src.mind.dnr) //Unless they have dnr set in which case rip for good
+		if (src.unkillable && src.mind.get_player()?.dnr) //Unless they have dnr set in which case rip for good
 			logTheThing(LOG_COMBAT, src, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
 				src.gib()

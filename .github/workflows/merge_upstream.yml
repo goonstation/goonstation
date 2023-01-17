@@ -6,7 +6,7 @@ on:
 jobs:
   merge-upstream:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '!merge_upstream' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
     - name: PR Data
@@ -23,7 +23,6 @@ jobs:
 
     - name: Perform Merge
       run: |
-        sudo apt-get install -y libgit2-dev=0.28.*
         bash tools/hooks/install.sh
         bash tools/ci/install_build_tools.sh
         bash tgui/bin/tgui --install-git-hooks

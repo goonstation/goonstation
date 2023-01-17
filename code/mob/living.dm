@@ -684,6 +684,8 @@
 			// var/turf/T = get_turf(src)
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
 			arcFlash(src, src, forced_desussification)
+			if (issilicon(src))
+				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
 			if (forced_desussification_worse)
 				forced_desussification *= 1.1
 
