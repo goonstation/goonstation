@@ -299,7 +299,6 @@
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
-		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
 		var/mob/dead/our_ghost = null

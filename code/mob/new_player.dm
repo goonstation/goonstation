@@ -885,7 +885,14 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		var/observe_alert_text
+		#ifdef RP_MODE
+		observe_alert_text = "By choosing to observe the round, you will be unable to participate until your respawn timer runs out"
+		#else
+		observe_alert_text = "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate"
+		#endif
+
+		if(tgui_alert(src, "[observe_alert_text]. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -915,6 +922,9 @@ a.latejoin-card:hover {
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()
+			#ifdef RP_MODE
+			respawn_controller.subscribeNewRespawnee(observer.ckey)
+			#endif
 
 			qdel(src)
 
