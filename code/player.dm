@@ -71,6 +71,7 @@
 
 	/// queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats()
+		set waitfor = FALSE
 		var/list/response = null
 		try
 			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
