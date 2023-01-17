@@ -127,6 +127,7 @@ var/list/clothingbooth_paths = list()
 				src.money += dummycredits.amount
 				dummycredits.amount = 0
 				qdel(dummycredits)
+				src.ui_interact(usr)
 				return
 		..()
 
