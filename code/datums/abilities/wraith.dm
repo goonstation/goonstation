@@ -1362,9 +1362,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						H.setStatusMin("paralysis", 8 SECONDS)
 						sleep(8 SECONDS)
 						if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
-						var/mob/dead/observer/O = H.ghostize()
 						if(W.mind == null)	//Wraith died or was removed in the meantime
 							return
+						var/mob/dead/observer/O = H.ghostize()
 						if (O?.mind)
 							human_mind = O.mind
 							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
