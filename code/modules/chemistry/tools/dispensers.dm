@@ -394,7 +394,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	name = "beer keg"
 	desc = "Full of delicious alcohol, hopefully."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "beertankTEMP"
+	icon_state = "beertank"
 	amount_per_transfer_from_this = 25
 
 	New()
