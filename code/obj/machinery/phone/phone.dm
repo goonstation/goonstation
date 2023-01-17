@@ -5,7 +5,7 @@ TYPEINFO(/obj/machinery/phone)
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
-	icon_state = 'phone'
+	icon_state = "phone"
 	anchored = TRUE
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -13,19 +13,18 @@ TYPEINFO(/obj/machinery/phone)
 	color = null
 	var/obj/item/phone_handset/handset = null
 	var/obj/machinery/phone/linked = null
-	var/answered_icon = 'phone_answered'
-	var/dialicon = 'phone_dial'
-	var/phone_icon = 'phone'
-	var/ringing_icon = 'phone_ringing'
+	var/answered_icon = "phone_answered"
+	var/dialicon = "phone_dial"
+	var/phone_icon = "phone"
+	var/ringing_icon = "phone_ringing"
 	var/last_caller = null
 	var/phone_category = null
 	var/phone_id = null
 	var/stripe_color = null
 	var/last_ring = 0
 	var/answered = FALSE
-	var/can_talk_across_z_levels = FLASE
+	var/can_talk_across_z_levels = FALSE
 	var/connected = TRUE
-	var/custom_suicide = TRUE
 	var/dialing = FALSE
 	var/emagged = FALSE
 	var/labelling = FALSE
@@ -212,14 +211,6 @@ TYPEINFO(/obj/machinery/phone)
 					UpdateIcon()
 					src.last_ring = 0
 
-	suicide(var/mob/user as mob)
-		if (!src.user_can_suicide(user))
-			return FALSE
-		if (ishuman(user))
-			user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
-			user.TakeDamage("head", 150, 0)
-			return TRUE
-
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -308,6 +299,15 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked.ringing = TRUE
 			src.dialing = FALSE
 			return
+
+/obj/machinery/phone/custom_suicide = TRUE
+/obj/machinery/phone/suicide(var/mob/user as mob)
+	if (!src.user_can_suicide(user))
+		return FALSE
+	if (ishuman(user))
+		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
+		user.TakeDamage("head", 150, 0)
+		return TRUE
 
 // Item generated when someone picks up a phone
 /obj/item/phone_handset
