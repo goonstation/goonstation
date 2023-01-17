@@ -1,5 +1,9 @@
 
 (t)tue jan 17 23
+(u)DisturbHerb
+(p)12784
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gaming machines now have 5 board game clocks available for purchase.
 (u)Flourish
 (e)💅|C-QoL
 (*)Added a bunch more emotes - *squint, *scoff, *nodslowly, *starehands, *rubface, *rubtemples, *scratchhead, *jazzhands, *thumbsup, *pose, *rolleyes, *sideeye, *examine, and a very special and secret *jsay!
