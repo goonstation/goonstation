@@ -2,6 +2,7 @@
 (t)mon jan 16 23
 (u)Flourish
 (e)💅|C-QoL
+(+)Injector belts and vapomatics can now only hold small sized items. This means they can no longer hold artbeakers.
 (+)Phones now record their last caller on their screen.
 (+)You can now compost organs with the compost tank.
 (+)When drinking something, bartenders can now discern both the reagents and how it tastes.
