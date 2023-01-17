@@ -17,6 +17,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/ringing = 0
 	var/answered = 0
 	var/last_ring = 0
+	var/last_caller = "none"
 	var/connected = 1
 	var/emagged = 0
 	var/dialing = 0
@@ -222,6 +223,7 @@ TYPEINFO(/obj/machinery/phone)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = 0
 			src.linked.linked = null
+			src.linked.last_caller = src.unlisted ? "undisclosed" : "[src.phone_id]"
 			src.linked = null
 		src.ringing = 0
 		src.handset = null
@@ -275,6 +277,7 @@ TYPEINFO(/obj/machinery/phone)
 
 	GetBody()
 		var/html = ""
+		html += "Last caller: <b>[owner.last_caller]</b> <p>"
 		for_by_tcl(P, /obj/machinery/phone)
 			if (P.unlisted) continue
 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
