@@ -88,6 +88,7 @@ TYPEINFO(/obj/item/light_parts)
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+	material_amt = 0.2
 
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation

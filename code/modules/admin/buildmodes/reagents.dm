@@ -12,7 +12,6 @@ Right Mouse Button on buildmode    = Select reagent<br>
 	New()
 		..()
 		reagent_holder = new(20)
-		reagent_holder.my_atom = new /obj()
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		var/nrid = get_one_match_string(input("Enter full (or part of) reagent ID", "Reagent ID", reagent_id), reagents_cache)

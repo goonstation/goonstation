@@ -4709,14 +4709,14 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return
 
 /obj/machinery/networked/test_apparatus/laserR
-	name = "Laser Reciever"
+	name = "Laser receiver"
 	desc = "Catches a laser beam and analyses how it was changed since emission."
 	icon_state = "laserR0"
 	density = 1
 
 	setup_base_icon_state = "laserR"
 	setup_test_id = "LASER_R"
-	setup_device_name = "Laser Reciever"
+	setup_device_name = "Laser receiver"
 	setup_capability_value = "S"
 
 	var/list/sensed = list(null,null)*/

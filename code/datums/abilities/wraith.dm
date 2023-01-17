@@ -798,18 +798,17 @@
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
-
-		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
-		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
-		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
-		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
-		boutput(P, "Don't venture too far from your portal or your master!")
+		if (lucky_dude.current)
+			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
+			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
+			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
+			boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
+			boutput(P, "Don't venture too far from your portal or your master!")
 
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
@@ -1665,7 +1664,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "You gather your energy and open a portal")
 				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
 				if(mob_choice != null)
-					V.random_mode = false
+					V.random_mode = FALSE
 				V.set_loc(W.loc)
 				V.master = W
 				V.alpha = 0

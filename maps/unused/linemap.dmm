@@ -705,7 +705,7 @@
 /area/station/engine/engineering)
 "abI" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/audio_tape,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/gloves/yellow,
@@ -8247,7 +8247,7 @@
 /area/station/security/detectives_office)
 "asU" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green{
 	on = 0
 	},
@@ -12040,7 +12040,7 @@
 "aBT" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/peripheral/videocard,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
@@ -13099,7 +13099,7 @@
 "aDX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -14338,7 +14338,7 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -16762,7 +16762,7 @@
 /turf/simulated/floor,
 /area/station/janitor/office)
 "aMN" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
 "aMO" = (
@@ -17608,7 +17608,7 @@
 "aOO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -18434,7 +18434,7 @@
 "aQz" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-
+	
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -19932,7 +19932,7 @@
 "aUo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -20789,7 +20789,7 @@
 "aVT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -21918,7 +21918,7 @@
 "aXX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -31873,7 +31873,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -32979,7 +32979,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
@@ -33708,7 +33708,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";

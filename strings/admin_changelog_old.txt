@@ -444,7 +444,7 @@
 (u)SpyGuy
 (*)Advanced command report that takes placeholders like %name%, for custom-tailored messages. Found under Special Verbs if you're SA+
 (u)Haine
-(*)Player mode now lets you choose if you wanna recieve adminsays, adminhelps and/or mentorhelps, rather than the completely useless choice of all or no adminlog things.
+(*)Player mode now lets you choose if you wanna receive adminsays, adminhelps and/or mentorhelps, rather than the completely useless choice of all or no adminlog things.
 (t)sat nov 29 14
 (u)Marquesas
 (*)Build Mode has been rewritten.
@@ -536,7 +536,7 @@
 (*)And a long-awaited feature: save and load adventure areas on the client side.
 (*)This should work near-perfectly for all adventure elements but most special object vars are NOT saved. So don't complain to me when your pre-created hitler moustaches have the wrong transformation matrix.
 (u)Haine
-(*)Vampire's thralls will also recieve alert popups like mindslaves will now. Kinda redundant considering how long it takes to enthrall someone, but hey, consist<B>E</B>ncy. THERE SPY ARE YOU HAPPY THERE'S AN E NOW
+(*)Vampire's thralls will also receive alert popups like mindslaves will now. Kinda redundant considering how long it takes to enthrall someone, but hey, consist<B>E</B>ncy. THERE SPY ARE YOU HAPPY THERE'S AN E NOW
 (t)sat sep 13 14
 (u)Marquesas
 (*)Puzzle element placement revamp in adventure mode. It should all around be more convenient now.

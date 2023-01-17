@@ -41,7 +41,8 @@ ABSTRACT_TYPE(/datum/plant)
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
 	var/harvested_proc = 0 // Take a guess
 
-	var/dont_rename_crop = false	// don't rename the crop after the plant
+	/// Don't rename the crop after the plant.
+	var/dont_rename_crop = FALSE
 
 
 	var/category = null // Used for vendor filtering

@@ -17,6 +17,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/ringing = FALSE
 	var/answered = FALSE
 	var/last_ring = 0
+	var/last_caller = "none"
 	var/connected = TRUE
 	var/emagged = FALSE
 	var/dialing = FALSE
@@ -115,8 +116,8 @@ TYPEINFO(/obj/machinery/phone)
 		UpdateIcon()
 		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
-		if(src.ringing == FALSE) // we are making an outgoing call
-			if(src.connected == TRUE)
+		if(!src.ringing) // we are making an outgoing call
+			if(src.connected)
 				if(user)
 					ui_interact(user)
 			else
@@ -267,6 +268,7 @@ TYPEINFO(/obj/machinery/phone)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
+			src.linked.last_caller = src.unlisted ? "undisclosed" : "[src.phone_id]"
 			src.linked = null
 		src.ringing = FALSE
 		src.handset = null
