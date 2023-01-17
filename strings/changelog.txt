@@ -1,6 +1,9 @@
 
 (t)mon jan 16 23
 (u)Flourish
+(e)🪲|C-Bug
+(*)Hitting Z / blocking on non-grab intent while on top of a chair will now buckle you in again. It was a bug that all intents made you climb the chair, so I've fixed it. I know this was a pretty longstanding bug, though, so let me know if you have feedback or want buckling to be help intent only.
+(u)Flourish
 (e)💅|C-QoL
 (+)Injector belts and vapomatics can now only hold small sized items. This means they can no longer hold artbeakers.
 (+)Phones now record their last caller on their screen.
