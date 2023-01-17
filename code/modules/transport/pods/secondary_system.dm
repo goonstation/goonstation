@@ -914,7 +914,7 @@
 	f_active = 1
 	hud_state = "SRS_icon"
 	var/cooldown = 0
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/health_snapshot
 	var/image/rewind
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
@@ -960,7 +960,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SRS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
@@ -968,7 +968,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SRS")
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)

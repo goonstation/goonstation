@@ -182,7 +182,7 @@
 
 	var/list/datum/hud/huds = null
 
-	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
@@ -556,7 +556,10 @@
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				src.throw_at(get_edge_cheap(source, turn(get_dir(A, src),rand(-1,1)*45)),  20, 3)
+				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
+				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
+
 				return
 
 	if (ismob(AM))
@@ -603,8 +606,14 @@
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
-				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
+				var/target_dir = get_dir(src, tmob)
+				var/src_dir = get_dir(tmob, src)
+				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
+				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
+
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
+
 				return
 			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_neg")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_pos")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -831,8 +840,8 @@
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
-/mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(M, 0, src))
+/mob/proc/can_strip(mob/M)
+	if(check_target_immunity(M, 1, src))
 		return 0
 	return 1
 
@@ -1101,11 +1110,6 @@
 	health += max(0, tox)
 	health = min(max_health, health)
 
-/mob/setStatus(statusId, duration, optional)
-	if (src.nodamage)
-		return
-	. = ..()
-
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
 		return
@@ -1227,7 +1231,7 @@
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey)
+	if(src.ckey && !src.mind?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	//stop piloting pods or whatever
 	src.use_movement_controller = null
@@ -3206,6 +3210,8 @@
 
 /// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
 /mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	if(check_target_immunity(src, TRUE))
+		return
 	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0

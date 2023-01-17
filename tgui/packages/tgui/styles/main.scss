@@ -52,13 +52,16 @@
 @include meta.load-css('./interfaces/Airlock.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/ComUplink.scss');
+@include meta.load-css('./interfaces/Boardgame/main.scss');
 @include meta.load-css('./interfaces/ChemDispenser.scss');
 @include meta.load-css('./interfaces/ChemHeater.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
+@include meta.load-css('./interfaces/Gameclock.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
 @include meta.load-css('./interfaces/MusicInstrument.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
+@include meta.load-css('./interfaces/MinimapController.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
 @include meta.load-css('./interfaces/WeaponVendor.scss');

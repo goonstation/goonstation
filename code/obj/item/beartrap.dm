@@ -17,6 +17,9 @@
 		icon_state = "bear_trap-open"
 		armed = 1
 
+	armed/hidden_a_bit
+		layer = -1 // layers under doors
+
 	examine()
 		. = ..()
 		if (src.armed)

@@ -198,6 +198,7 @@ obj/machinery/atmospherics/valve
 		return
 
 	attack_hand(mob/user)
+		interact_particle(user,src)
 		UpdateIcon(1)
 		sleep(1 SECOND)
 		logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
@@ -206,6 +207,7 @@ obj/machinery/atmospherics/valve
 		else
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
+		add_fingerprint(user)
 
 	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))

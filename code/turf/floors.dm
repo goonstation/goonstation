@@ -22,6 +22,8 @@
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
+	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
+	var/explosion_immune = FALSE
 
 	New()
 		..()
@@ -1652,6 +1654,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
+	if(src.explosion_immune)
+		return
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()
@@ -2002,7 +2006,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"readster's very own girder",
 				"just a girder",
 				"a gourder",//60
-				"a fuckable girder",
 				"a herd of girders",
 				"an A.D.G.S",
 				"the... thing",
@@ -2013,7 +2016,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"nice",
 				"the girder egg")
 				msg = insert_girder[min(count+1, insert_girder.len)]
-				if(count >= 70)
+				if(count >= 69) //nice
 					girder_egg = 1
 					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
 				else

@@ -581,7 +581,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		else ..()
 
 	proc/SpliceChance(var/obj/item/seed/seed1, var/obj/item/seed/seed2)
-		if (seed1 && seed2)
+		if (istype(seed1) && istype(seed2) && seed1.planttype && seed2.planttype)
 			var/datum/plant/P1 = seed1.planttype
 			var/datum/plant/P2 = seed2.planttype
 			var/splice_chance = 100
@@ -606,6 +606,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						splice_chance += S.splice_mod
 
 			return clamp(splice_chance, 0, 100)
+		else
+			logTheThing(LOG_DEBUG, src, "Attempt to splice invalid seeds. Object details: seed1: [json_encode(seed1)], seed2: [json_encode(seed2)]")
+			return 0
 
 	proc/SpliceMK2(var/allele1,var/allele2,var/value1,var/value2)
 		var/dominance = allele1 - allele2
@@ -618,13 +621,23 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			return round((value1 + value2)/2)
 
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
-		if (!DNA) return
+		var/result = list()
+		if (!scanned || !P || P.cantscan || !DNA) //this shouldn't happen, but if it does, return a valid (if confusing) row, and report the error
+			result["name"] = list(scanned ? scanned.name : "???", FALSE)
+			result["species"] = list("???", FALSE)
+			result["genome"] = list("???", FALSE)
+			result["generation"] = list("???", FALSE)
+			result["growtime"] = list("???", FALSE)
+			result["harvesttime"] = list("???", FALSE)
+			result["lifespan"] = list("???", FALSE)
+			result["cropsize"] = list("???", FALSE)
+			result["potency"] = list("???", FALSE)
+			result["endurance"] = list("???", FALSE)
+			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
+			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
+			return result
 
 		var/generation = 0
-
-		if (P.cantscan)
-			return list()
-
 		if (istype(scanned, /obj/item/seed/))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
@@ -632,7 +645,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
 
-		var/result = list()
 		//list of attributes and their dominance flag
 		result["name"] = list(scanned.name, FALSE)
 		result["species"] = list(P.name, DNA.d_species)

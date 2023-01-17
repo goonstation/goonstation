@@ -126,19 +126,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
+	var/amount_to_spawn = 5
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
-			for (var/i = 1; i<= 8; i= i*2)
-				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
-					new payload(get_step(T,i))
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
+				if (istype(adjacent,/turf/simulated/floor))
+					new payload(adjacent)
 				else
 					new payload(T)
 		qdel(src)
-		return
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"

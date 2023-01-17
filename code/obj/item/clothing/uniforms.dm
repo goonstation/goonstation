@@ -349,7 +349,7 @@
 
 	fancy
 		icon_state = "chief-fancy"
-		item_state = "cheif-fancy"
+		item_state = "chief-fancy"
 
 	april_fools
 		icon_state = "chief-alt"

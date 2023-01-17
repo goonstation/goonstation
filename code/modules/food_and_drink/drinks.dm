@@ -311,8 +311,11 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
+	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
-	var/is_sealed = 1 //can you drink out of it?
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 	var/shaken = FALSE //sets to TRUE on *twirl emote
 
@@ -331,6 +334,9 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			can_chug = 1
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
+			amount_per_transfer_from_this = 5
 			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
 			if (src.shaken)
 				src.reagents.reaction(user)
