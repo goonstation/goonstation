@@ -1364,7 +1364,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
 						if(isnull(W.mind))	//Wraith died or was removed in the meantime
 							return
-						var/datum/player/target_player = H.mind?.player
+						var/datum/player/target_player = H.mind?.get_player()
 						target_player?.dnr++
 						var/mob/dead/observer/O = H.ghostize()
 						if (O?.mind)
