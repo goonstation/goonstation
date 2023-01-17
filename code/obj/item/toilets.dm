@@ -197,9 +197,9 @@ TYPEINFO(/obj/item/storage/toilet)
 
 /obj/item/storage/toilet/goldentoilet
 	name = "golden toilet"
-	icon_state = "goldentoilet"
+	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
 
 	New()
 		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(src))
+		src.setMaterial(getMaterial("gold"))

@@ -1690,6 +1690,31 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
+///Crossbow that fires irradiating neutron projectiles like the nuclear reactor
+///DEBUG ITEM - don't actually use this for things. Unless you really want to, or it might be funny.
+/obj/item/gun/energy/neutron
+	name = "mini neutron-crossbow"
+	desc = "A weapon that fires irradiating neutrons. Because it makes sense that a crossbow can fire subatomic particles at relativistic speeds."
+	icon_state = "crossbow"
+	w_class = W_CLASS_SMALL
+	item_state = "crossbow"
+	force = 4
+	throw_speed = 3
+	throw_range = 10
+	rechargeable = 0 // Cannot be recharged manually.
+	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	projectiles = null
+	is_syndicate = 1
+	silenced = 1
+	custom_cell_max_capacity = 100
+
+	New()
+		set_current_projectile(new/datum/projectile/neutron(50))
+		projectiles = list(current_projectile)
+		..()
+
+
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
 /obj/item/gun/energy/howitzer

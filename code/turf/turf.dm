@@ -458,6 +458,7 @@ proc/generate_space_color()
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
+		if (warptarget_modifier == LANDMARK_VM_WARP_NONE) return
 		if(OldLoc)
 			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
 				if (ismob(M))
@@ -546,6 +547,7 @@ proc/generate_space_color()
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
 			var/turf/simulated/S = src
 			oldair = S.air
+			S.air = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
