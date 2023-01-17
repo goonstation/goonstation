@@ -48,6 +48,8 @@
 	var/dnr = FALSE
 	/// keep track of whether this player joined round as an observer (blocks them from bank payouts)
 	var/joined_observer = FALSE
+	/// Last time this person died (used for critter respawns)
+	var/last_death_time
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -62,6 +64,7 @@
 
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
+		src.last_death_time = world.timeofday
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
