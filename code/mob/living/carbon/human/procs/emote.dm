@@ -660,10 +660,7 @@
 						if (thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
-							var/trans = thing.transform
-							animate(thing, transform = turn(trans, 120), time = 0.7, loop = 3, flags = ANIMATION_PARALLEL)
-							animate(transform = turn(trans, 240), time = 0.7, flags = ANIMATION_PARALLEL)
-							animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
+							animate_spin(thing, prob(50) ? "L" : "R", 1, 0)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
@@ -1331,14 +1328,22 @@
 							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
-
 					if (M)
-						if (M.canmove && !M.r_hand && !M.restrained())
-							message = "<B>[src]</B> shakes hands with [M]."
-							maptext_out = "<I>shakes hands with [M]</I>"
+						if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
+								if (M in view(1,null))
+									message = "<B>[src]</B> shakes hands with [M]."
+									maptext_out = "<I>shakes hands with [M].</I>"
+							else
+								message = "<B>[src]</B> offers [M] a handshake, but [M] declines."
+								maptext_out = "<I>offers [M] a handshake, but [M] declines</I>"
 						else
 							message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
 							maptext_out = "<I>holds out [his_or_her(src)] hand to [M]</I>"
+					else
+						message = "<B>[src]</B> randomly extends [his_or_her(src)] hand."
+						maptext_out = "<I>randomly extends [his_or_her(src)] hand.</I>"
+
 
 			if ("daps","dap")
 				m_type = 1
@@ -1490,6 +1495,7 @@
 					else if (src.r_hand)
 						thing = src.r_hand
 				if (thing)
+					animate_spin(thing, prob(50) ? "L" : "R", 3, 0)
 					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining at it."
 					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining at it</I>"
 					m_type = 1
