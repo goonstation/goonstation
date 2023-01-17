@@ -137,6 +137,10 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	process()
 		if (status & (BROKEN|NOPOWER))
 			UnsubscribeProcess()
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100)
+			animate_shake(src, 3, rand(2,5), rand(2,5))
+			src.visible_message("The [src] buzzes as it spits everything inside it, and completely runs out of power.")
+			src.eject_item(FALSE)
 			return
 
 		if(!src.target_item)
@@ -146,14 +150,14 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if (src.cooktime >= 5)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='notice'>[src] dings!</span>")
-			eject_item()
+			src.eject_item()
 
 		src.cooktime++
 		use_power(src.power_usage)
 
 		return
 
-	proc/eject_item()
+	proc/eject_item(successful = TRUE)
 		if(src.my_bar && !src.target_item)
 			my_bar.set_loc(src.loc)
 			my_bar = null
@@ -163,7 +167,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			UnsubscribeProcess()
 			return
 
-		if(my_bar?.material && isnull(target_item.material))
+		if(my_bar?.material && isnull(target_item.material) && successful)
 			target_item.setMaterial(my_bar.material)
 			qdel(my_bar)
 		my_bar = null
