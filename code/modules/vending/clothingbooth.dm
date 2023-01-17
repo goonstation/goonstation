@@ -258,5 +258,4 @@ var/list/clothingbooth_paths = list()
 
 	/// generates a preview of the current occupant
 	proc/update_preview()
-		var/mob/living/carbon/human/H = src.occupant
-		src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, src.preview_direction, occupant.real_name)
+		src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.preview_direction, src.occupant.real_name)
