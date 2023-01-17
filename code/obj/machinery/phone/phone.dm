@@ -269,7 +269,7 @@ TYPEINFO(/obj/machinery/phone)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
-			src.linked.last_caller = src.unlisted ? "undisclosed" : "[src.phone_id]"
+			src.linked.last_caller = src.unlisted ? "Undisclosed" : "[src.phone_id]"
 			src.linked = null
 		src.ringing = FALSE
 		src.handset = null

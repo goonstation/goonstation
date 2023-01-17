@@ -6,12 +6,12 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Collapsible, Dimmer, Section } from '../components';
+import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Phone = (props, context) => {
   const { data } = useBackend(context);
-  const { inCall, dialing, name } = data;
+  const { dialing, inCall, lastCaller, name } = data;
   return (
     <Window title={name} width={250} height={350}>
       <Window.Content>
@@ -20,14 +20,27 @@ export const Phone = (props, context) => {
             <h1>LINE BUSY</h1>
           </Dimmer>
         )}
-        <Section title="Phonebook" fill scrollable>
-          <AddressGroup category="bridge" name="Bridge" depColour="green" />
-          <AddressGroup category="engineering" name="Engineering" depColour="yellow" />
-          <AddressGroup category="medical" name="Medical" depColour="blue" />
-          <AddressGroup category="research" name="Research" depColour="purple" />
-          <AddressGroup category="security" name="Security" depColour="red" />
-          <AddressGroup category="uncategorized" name="Uncategorized" depColour="brown" />
-        </Section>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section fill>
+              <LabeledList>
+                <LabeledList.Item label="Last Caller">
+                  {lastCaller ? `${lastCaller}` : `None`}
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow={1}>
+            <Section title="Phonebook" fill scrollable>
+              <AddressGroup category="bridge" name="Bridge" depColour="green" />
+              <AddressGroup category="engineering" name="Engineering" depColour="yellow" />
+              <AddressGroup category="medical" name="Medical" depColour="blue" />
+              <AddressGroup category="research" name="Research" depColour="purple" />
+              <AddressGroup category="security" name="Security" depColour="red" />
+              <AddressGroup category="uncategorized" name="Uncategorized" depColour="brown" />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
