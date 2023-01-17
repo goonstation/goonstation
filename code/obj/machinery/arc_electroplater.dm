@@ -12,6 +12,8 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	anchored = 1
 	density = 1
 	flags = NOSPLASH
+	power_usage = 10 KILO WATTS
+	machine_may_use_wired_power = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/target_item = null
 	var/cooktime = 0
@@ -134,20 +136,21 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		return
 
 	process()
-		if (status & BROKEN)
+		if (status & (BROKEN|NOPOWER))
 			UnsubscribeProcess()
 			return
 
 		if(!src.target_item)
 			UnsubscribeProcess()
 			return
-		else
-			src.cooktime++
 
-		if (src.cooktime == 5)
+		if (src.cooktime >= 5)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='notice'>[src] dings!</span>")
 			eject_item()
+
+		src.cooktime++
+		use_power(src.power_usage)
 
 		return
 
