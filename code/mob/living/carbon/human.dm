@@ -606,6 +606,7 @@
 
 	if (src.mind?.key)
 		var/datum/player/P = find_player(src.mind.key)
+		P.last_death_time = world.timeofday
 
 
 	//The unkillable man just respawns nearby! Oh no!
