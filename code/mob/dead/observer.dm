@@ -330,6 +330,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
+		// adding ghosts on ghostize() to the respawn_controller is intended behaviour for now
 		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
