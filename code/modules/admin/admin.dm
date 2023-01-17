@@ -1908,7 +1908,7 @@ var/global/noir = 0
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 				return
 			var/mob/M = locate(href_list["target"])
-			var/datum/objective/objective = locate(href_list["trait"])
+			var/datum/objective/objective = locate(href_list["objective"])
 			if (!length(M?.mind?.objectives) || !objective)
 				return
 			message_admins("[key_name(usr)] removed objective [objective.type][objective.explanation_text ? " with text: " : ""][objective.explanation_text] from [key_name(M)].")
@@ -1927,13 +1927,13 @@ var/global/noir = 0
 				return
 			LAZYLISTINIT(M.mind.objectives)
 
-			var/objective_type = tgui_input_list(usr, "Add a Trait:", "Select", concrete_typesof(/datum/objective))
+			var/objective_type = tgui_input_list(usr, "Add an objective:", "Select", concrete_typesof(/datum/objective))
 			if (!objective_type)
 				return // user canceled
 			var/objective_text = input(usr, "Custom objective text (optional)", "Objective text")
 			new objective_type(objective_text, M.mind)
 			message_admins("[key_name(usr)] added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [key_name(M)].")
-			logTheThing(LOG_ADMIN, usr, "added the trait [objective_type][objective_text ? " with text: " : ""][objective_text] to [constructTarget(M,"admin")].")
+			logTheThing(LOG_ADMIN, usr, "added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [constructTarget(M,"admin")].")
 			if (origin == "manageobjectives")//called via objective management panel
 				usr.client.cmd_admin_manageobjectives(M)
 
@@ -5360,7 +5360,7 @@ var/global/noir = 0
 	dat += {"
 		<html>
 		<head>
-		<title>Trait Management Panel</title>
+		<title>Objective Management Panel</title>
 		<style>
 		table {
 			border:1px solid #44aaff;
@@ -5413,13 +5413,13 @@ var/global/noir = 0
 				<th>Type Path</th>
 			</tr>
 		"}
-	if (!length(M.mind?.objectives))
+	if (!M.mind)
 		return
 
 	for (var/datum/objective/objective as anything in M.mind.objectives)
 		dat += {"
 			<tr>
-				<td><a href='?src=\ref[src.holder];action=manageobjectives_remove;target=\ref[M];trait=\ref[objective];origin=manageobjectives'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=manageobjectives_remove;target=\ref[M];objective=\ref[objective];origin=manageobjectives'>remove</a></td>
 				<td><a href='?src=\ref[src.holder];action=manageobjectives_debug_vars;objective=\ref[objective];origin=manageobjectives'>[objective.explanation_text]</a></td>
 				<td>[objective.type]
 			</tr>"}
