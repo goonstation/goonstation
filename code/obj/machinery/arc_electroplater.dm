@@ -30,6 +30,9 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if(isnull(src.my_bar))
 			boutput(user, "<span class='alert'>You can't plate yourself without a source material!</span>")
 			return 0
+		if(status & (BROKEN|NOPOWER))
+			boutput(user, "<span class='alert'>You try to turn on \the [src] and jump into it, but it is out of power.</span>")
+			return 0
 		user.visible_message("<span class='alert'><b>[user] jumps into \the [src].</b></span>", "<span class='alert'><b>You jump into \the [src].</b></span>")
 		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
 		user.TakeDamage("All", burn=200)
@@ -98,6 +101,10 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 
 		if(my_bar)
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			if (status & (BROKEN|NOPOWER))
+				boutput(usr, "<spawn class='alert'>You try to turn on \the [src] but it is out of power.</span>")
+				src.eject_item(FALSE)
+				return
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
@@ -139,7 +146,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			UnsubscribeProcess()
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100)
 			animate_shake(src, 3, rand(2,5), rand(2,5))
-			src.visible_message("The [src] buzzes as it spits everything inside it, and completely runs out of power.")
+			src.visible_message("\The [src] buzzes as it spits everything inside it, and completely runs out of power.")
 			src.eject_item(FALSE)
 			return
 
