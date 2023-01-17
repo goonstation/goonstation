@@ -678,7 +678,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = FALSE
-		src.mob.mind?.dnr = TRUE
+		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -700,6 +700,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
+		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
 		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
 		boutput(src, "<span class='notice'>You are already playing!</span>")
