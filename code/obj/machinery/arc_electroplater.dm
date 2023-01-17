@@ -13,7 +13,6 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	density = 1
 	flags = NOSPLASH
 	power_usage = 10 KILO WATTS
-	machine_may_use_wired_power = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/target_item = null
 	var/cooktime = 0
