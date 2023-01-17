@@ -5,35 +5,36 @@ TYPEINFO(/obj/machinery/phone)
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
-	icon_state = "phone"
-	anchored = 1
+	icon_state = 'phone'
+	anchored = TRUE
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 25
 	color = null
-	var/can_talk_across_z_levels = 0
-	var/phone_id = null
-	var/obj/machinery/phone/linked = null
-	var/ringing = FALSE
-	var/answered = FALSE
-	var/last_ring = 0
-	var/last_caller = "none"
-	var/connected = TRUE
-	var/emagged = FALSE
-	var/dialing = FALSE
-	var/labelling = 0
-	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
-	var/phoneicon = "phone"
-	var/ringingicon = "phone_ringing"
-	var/answeredicon = "phone_answered"
-	var/dialicon = "phone_dial"
-	var/stripe_color = null
+	var/obj/machinery/phone/linked = null
+	var/answered_icon = 'phone_answered'
+	var/dialicon = 'phone_dial'
+	var/phone_icon = 'phone'
+	var/ringing_icon = 'phone_ringing'
+	var/last_caller = null
 	var/phone_category = null
+	var/phone_id = null
+	var/stripe_color = null
+	var/last_ring = 0
+	var/answered = FALSE
+	var/can_talk_across_z_levels = FLASE
+	var/connected = TRUE
+	var/custom_suicide = TRUE
+	var/dialing = FALSE
+	var/emagged = FALSE
+	var/labelling = FALSE
+	var/ringing = FALSE
+	var/unlisted = FALSE
 
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
-		src.icon_state = "[phoneicon]"
+		src.icon_state = "[phone_icon]"
 		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
@@ -81,10 +82,6 @@ TYPEINFO(/obj/machinery/phone)
 
 		START_TRACKING
 
-	update_icon()
-		. = ..()
-		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
-
 	disposing()
 
 		if (linked)
@@ -97,37 +94,6 @@ TYPEINFO(/obj/machinery/phone)
 
 		STOP_TRACKING
 		..()
-
-	// Attempt to pick up the handset
-	attack_hand(mob/living/user)
-		..(user)
-		if (src.answered)
-			return
-
-		if (src.emagged)
-			src.explode()
-			return
-
-		src.handset = new /obj/item/phone_handset(src,user)
-		user.put_in_hand_or_drop(src.handset)
-		src.answered = TRUE
-
-		src.icon_state = "[answeredicon]"
-		UpdateIcon()
-		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
-
-		if(!src.ringing) // we are making an outgoing call
-			if(src.connected)
-				if(user)
-					ui_interact(user)
-			else
-				if(user)
-					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
-		else
-			src.ringing = FALSE
-			src.linked.ringing = FALSE
-			if(src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	attack_ai(mob/user as mob)
 		return
@@ -160,7 +126,7 @@ TYPEINFO(/obj/machinery/phone)
 				return
 			if(t)
 				src.phone_id = t
-			src.labelling = 0
+			src.labelling = FALSE
 			return
 		..()
 		src._health -= P.force
@@ -177,8 +143,39 @@ TYPEINFO(/obj/machinery/phone)
 				src.gib(src.loc)
 			qdel(src)
 
+	// Attempt to pick up the handset
+	attack_hand(mob/living/user)
+		..(user)
+		if (src.answered)
+			return
+
+		if (src.emagged)
+			src.explode()
+			return
+
+		src.handset = new /obj/item/phone_handset(src,user)
+		user.put_in_hand_or_drop(src.handset)
+		src.answered = TRUE
+
+		src.icon_state = "[answered_icon]"
+		UpdateIcon()
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
+
+		if(!src.ringing) // we are making an outgoing call
+			if(src.connected)
+				if(user)
+					ui_interact(user)
+			else
+				if(user)
+					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
+		else
+			src.ringing = FALSE
+			src.linked.ringing = FALSE
+			if(src.linked.handset.holder)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
+
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		src.icon_state = "[ringingicon]"
+		src.icon_state = "[ringing_icon]"
 		UpdateIcon()
 		if (!src.emagged)
 			if(user)
@@ -191,7 +188,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.emagged)
 			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(!src.answered)
-				src.icon_state = "[ringingicon]"
+				src.icon_state = "[ringing_icon]"
 				UpdateIcon()
 			return
 
@@ -211,9 +208,17 @@ TYPEINFO(/obj/machinery/phone)
 			else
 				if(src.last_ring >= 2)
 					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
-					src.icon_state = "[ringingicon]"
+					src.icon_state = "[ringing_icon]"
 					UpdateIcon()
 					src.last_ring = 0
+
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return FALSE
+		if (ishuman(user))
+			user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
+			user.TakeDamage("head", 150, 0)
+			return TRUE
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -233,8 +238,9 @@ TYPEINFO(/obj/machinery/phone)
 		sortList(phonebook, /proc/cmp_phone_data)
 
 		. = list(
-			"inCall" = src.linked,
 			"dialing" = src.dialing,
+			"inCall" = src.linked,
+			"lastCaller" = src.last_caller,
 			"name" = src.name,
 			"phonebook" = phonebook,
 		)
@@ -255,6 +261,10 @@ TYPEINFO(/obj/machinery/phone)
 				boutput(usr, "<span class='alert'>Unable to connect!</span>")
 		src.add_fingerprint(usr)
 
+	update_icon()
+		. = ..()
+		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
+
 	proc/explode()
 		src.blowthefuckup(strength = 2.5, delete = TRUE)
 
@@ -262,7 +272,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.answered = FALSE
 		if(src.linked) // Other phone needs updating
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
-				src.linked.icon_state = "[src.linked.phoneicon]"
+				src.linked.icon_state = "[src.linked.phone_icon]"
 				src.linked.UpdateIcon()
 			else if(src.linked.handset && src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
@@ -272,7 +282,7 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked = null
 		src.ringing = FALSE
 		src.handset = null
-		src.icon_state = "[phoneicon]"
+		src.icon_state = "[phone_icon]"
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
@@ -298,16 +308,6 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked.ringing = TRUE
 			src.dialing = FALSE
 			return
-
-
-/obj/machinery/phone/custom_suicide = TRUE
-/obj/machinery/phone/suicide(var/mob/user as mob)
-	if (!src.user_can_suicide(user))
-		return FALSE
-	if (ishuman(user))
-		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
-		user.TakeDamage("head", 150, 0)
-		return TRUE
 
 // Item generated when someone picks up a phone
 /obj/item/phone_handset
@@ -385,9 +385,9 @@ TYPEINFO(/obj/machinery/phone/wall)
 	anchored = TRUE
 	density = 0
 	_health = 50
-	phoneicon = "wallphone"
-	ringingicon = "wallphone_ringing"
-	answeredicon = "wallphone_answered"
+	phone_icon = "wallphone"
+	ringing_icon = "wallphone_ringing"
+	answered_icon = "wallphone_answered"
 	dialicon = "wallphone_dial"
 
 /obj/machinery/phone/unlisted
@@ -445,9 +445,9 @@ TYPEINFO(/obj/item/phone/cellphone)
 	var/dialing = 0
 	var/labelling = 0
 	var/chui/window/phonecall/phonebook
-	var/phoneicon = "cellphone"
-	var/ringingicon = "cellphone_ringing"
-	var/answeredicon = "cellphone_answered"
+	var/phone_icon = "cellphone"
+	var/ringing_icon = "cellphone_ringing"
+	var/answered_icon = "cellphone_answered"
 	var/obj/item/ammo/power_cell/cell = new /obj/item/ammo/power_cell/med_power
 	var/activated = 0
 
@@ -497,9 +497,9 @@ TYPEINFO(/obj/item/phone/cellphone)
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A cellular, bananular phone."
 	icon_state = "bananaphone"
-	phoneicon = "bananaphone"
-	ringingicon = "bananaphone_ringing"
-	answeredicon = "bananaphone_answered"
+	phone_icon = "bananaphone"
+	ringing_icon = "bananaphone_ringing"
+	answered_icon = "bananaphone_answered"
 
 	ring()
 
