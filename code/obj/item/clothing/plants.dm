@@ -6,13 +6,25 @@
 
 /obj/item/clothing/head/gardenia
 	name = "gardenia"
+	desc =
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
 
 /obj/item/clothing/head/bird_of_paradise
 	name = "bird of paradise"
+	desc =
+	icon_state = "flower_bop"
+	item_state = "flower_bop"
 
 /obj/item/clothing/head/hydrangea
 	name = "hydrangea"
+	desc =
+	icon_state = "flower_hyd-white"
+	item_state = "flower_hyd-white"
 
 /obj/item/clothing/head/lavender
 	name = "lavender"
+	desc =
+	icon_state = "flower_lav"
+	item_state = "flower_lav"
 

@@ -1920,6 +1920,15 @@ datum
 			mix_phrase = "The drink smells vaguely like artifical autumn."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		lavenderlatte
+			name = "Lavender Latte"
+			id = "lavender_latte"
+			result = "lavender_latte"
+			required_reagents = list("lavender_essence"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "A sweet floral scent drifts up from the pale foamy mixture."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"

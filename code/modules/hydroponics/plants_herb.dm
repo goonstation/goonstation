@@ -324,5 +324,5 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	harvests = 3
 	nectarlevel = 10
 	genome = 3
-	assoc_reagents = list("lavender_oil")
+	assoc_reagents = list("lavender_essence")
 	commuts = list(/datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/quality)

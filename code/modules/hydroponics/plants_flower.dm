@@ -63,14 +63,15 @@ ABSTRACT_TYPE(/datum/plant/flower)
 
 /datum/plant/flower/gardenia
 	name = "Gardenia"
-	seedcolor = "#f8f3da" //TODO: change to Walp sprite color
+	seedcolor = "#d5b984"
 	crop = /obj/item/clothing/head/gardenia
 	cropsize = 3
 	commuts = list(/datum/plant_gene_strain/metabolism_fast, /datum/plant_gene_strain/splicing/disabled)
 
 /datum/plant/flower/bird_of_paradise
 	name = "Bird of Paradise"
-	seedcolor = "#db682e" //TODO: change to Walp sprite color
+	plant_icon = "BirdofParadise"
+	seedcolor = "#ffb426" /
 	crop = /obj/item/clothing/head/bird_of_paradise
 	growtime = 300
 	harvtime = 400
@@ -81,9 +82,13 @@ ABSTRACT_TYPE(/datum/plant/flower)
 
 /datum/plant/flower/hydrangea
 	name = "Hydrangea"
-	seedcolor = "#a197ed" //TODO: change to Walp sprite color
+	seedcolor = "#875dbc"
 	crop = /obj/item/clothing/head/hydrangea
 	growtime = 70
 	harvtime = 120
 	harvests = 3
 	commuts = list(/datum/plant_gene_strain/yield, /datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/splicing/disabled)
+
+	getIconOverlay(grow_level, datum/plantmutation/MUT)
+		if (grow_level == 4)
+

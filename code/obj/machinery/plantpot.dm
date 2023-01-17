@@ -909,6 +909,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon
 		src.plant_sprite.layer = 4
+		var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
+		if(plantoverlay)
+			src.plant_sprite.overlays += image(iconname, plantoverlay)
 		UpdateOverlays(plant_sprite, "plant")
 
 		if(status & (NOPOWER|BROKEN))

@@ -4535,9 +4535,9 @@ datum
 			taste = list("earthy", "sweet")
 			thirst_value = 1
 
-		fooddrink/lavender_oil
-			name = "lavender oil"
-			id = "lavender_oil"
+		fooddrink/lavender_essence
+			name = "lavender essence"
+			id = "lavender_essence"
 			fluid_r = 190
 			fluid_g = 159
 			fluid_b = 254
@@ -4545,3 +4545,14 @@ datum
 			reagent_state = LIQUID
 			taste = list("soothing", "pleasant")
 			thirst_value = 0
+
+		fooddrink/lavenderlatte
+			name = "lavender latte"
+			id = "lavender_latte"
+			fluid_r = 157
+			fluid_g = 134
+			fluid_b = 186
+			description = "The whimsical cousin of the pumpkin spice latte."
+			reagent_state = LIQUID
+			taste = "like living in a cottage in the countryside"
+			thirst_value = 1
