@@ -604,6 +604,10 @@
 	game_stats.Increment("deaths")
 #endif
 
+	if (src.mind?.key)
+		var/datum/player/P = find_player(src.mind.key)
+
+
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
 		if (src.unkillable && src.mind.get_player()?.dnr) //Unless they have dnr set in which case rip for good
