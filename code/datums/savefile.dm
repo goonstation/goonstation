@@ -324,6 +324,8 @@
 		F["local_deachat"] >> src.local_deadchat
 
 		F["tgui_fancy"] >> src.tgui_fancy
+		if(isnull(src.tgui_fancy))
+			src.tgui_fancy = 1
 		F["tgui_lock"] >> src.tgui_lock
 
 
