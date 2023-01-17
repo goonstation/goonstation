@@ -65,8 +65,6 @@ var tooltip = {
 	showDelay: 100,
 	showDelayInt: 0,
 	interrupt: false,
-	waitingTooltip: null,
-	uidCounter: 0,
 
 	init: function(screen, tileSize, interface, map) {
 		tooltip.screenProperties = screen;
@@ -353,13 +351,9 @@ var tooltip = {
 		}
 
 		//Images affect sizing, so we have to wait until they all load first
-		var ourUid = tooltip.uidCounter++;
-		tooltip.waitingTooltip = ourUid;
-		tooltip.$content.waitForImages(function() {
+		tooltip.showDelayInt = tooltip.$content.waitForImages(function() {
 			tooltip.showDelayInt = setTimeout(function() {
-				if (tooltip.waitingTooltip === ourUid) {
-					tooltip.position();
-				}
+				tooltip.position();
 			}, tooltip.showDelay);
 		});
 	},
