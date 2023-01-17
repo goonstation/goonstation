@@ -931,15 +931,7 @@
 /turf/space,
 /area/prefab/silverglass/research)
 "FH" = (
-/obj/machinery/manufacturer/general{
-	desc = "There are bits and pieces of the internal mechanisms poking out the side. It's seen better days.";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	supplemental_desc = null;
-	wires = 11
-	},
+/obj/machinery/manufacturer/general/grody,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)

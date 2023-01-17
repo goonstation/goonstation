@@ -46,7 +46,8 @@ TYPEINFO(/obj/item/baton)
 	var/can_swap_cell = 1
 	var/rechargable = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
-	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
+	/// Is it currently rotated so that you're grabbing it by the head?
+	var/flipped = FALSE
 
 	var/item_special_path = /datum/item_special/spark/baton
 
@@ -290,7 +291,7 @@ TYPEINFO(/obj/item/baton)
 	attack_hand(var/mob/user)
 		if (src.flipped && user.a_intent != INTENT_HARM)
 			user.show_text("You flip \the [src] the right way around as you grab it.")
-			src.flipped = false
+			src.flipped = FALSE
 			src.UpdateIcon()
 			user.update_inhands()
 		else if (user.a_intent == INTENT_HARM)
@@ -301,7 +302,7 @@ TYPEINFO(/obj/item/baton)
 		if (intent == INTENT_HARM)
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
-			src.flipped = true
+			src.flipped = TRUE
 			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
@@ -313,7 +314,7 @@ TYPEINFO(/obj/item/baton)
 		else //not already flipped
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
-			src.flipped = false
+			src.flipped = FALSE
 			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
@@ -326,7 +327,7 @@ TYPEINFO(/obj/item/baton)
 	dropped(mob/user)
 		if (src.flipped)
 			src.setItemSpecial(src.item_special_path)
-			src.flipped = false
+			src.flipped = FALSE
 			src.UpdateIcon()
 			user.update_inhands()
 		..()
@@ -418,7 +419,6 @@ TYPEINFO(/obj/item/baton/ntso)
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
-	item_function_flags = 0
 
 	item_special_path = /datum/item_special/spark/ntso
 
@@ -489,14 +489,14 @@ TYPEINFO(/obj/item/baton/ntso)
 			return
 		switch (src.state)
 			if (EXTENDO_BATON_CLOSED_AND_OFF)
-				src.set_icon_state(src.icon_off)
-				src.item_state = src.item_off
+				src.set_icon_state("[src.icon_off][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_ON)
-				src.set_icon_state(src.icon_on)
-				src.item_state = src.item_on
+				src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_OFF)
-				src.set_icon_state(src.icon_off_open)
-				src.item_state = src.item_off_open
+				src.set_icon_state("[src.icon_off_open][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off_open][src.flipped ? "-f" : ""]"
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))

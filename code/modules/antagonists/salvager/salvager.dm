@@ -32,14 +32,14 @@
 			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
 
-		H.equip_if_possible(new /obj/item/salvager(H), H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/gloves/long(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
 		H.traitHolder.addTrait("training_engineer")
 
 	assign_objectives()

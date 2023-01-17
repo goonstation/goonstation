@@ -81,11 +81,14 @@
 
 	return B
 
-var/global/obj/flashDummy
+var/global/obj/fuckyou/flashDummy
+
+// This runtimes due to abstract instantiation every time an arcflash occurs and I don't feel like fixing it so here's a magic concrete child
+/obj/fuckyou
 
 /proc/getFlashDummy()
 	if (!flashDummy)
-		flashDummy = new /obj(null)
+		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
@@ -1251,8 +1254,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
-
-
+	var/turf/T = get_turf(centre)
+	if(T?.vistarget)
+		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
+		. |= all_hearers(range, T.vistarget)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
@@ -2641,10 +2646,14 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	else
 		return new_screen_loc //regex failed to match, just use what we got
 
-/// For runtime logs- returns the thing's name, type, and ref as a string. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
-/proc/identify_object(datum/thing)
-	if (isnull(thing)) // null
+/// For logs- returns the thing's name and type. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
+/proc/log_object(datum/thing)
+	if (isnull(thing))
 		return "***NULL***"
-	if (!istype(thing)) //  probably text or a num or something
+	if (!istype(thing))
 		return thing
-	return "\"[thing]\" \ref[thing] ([thing.type])" // actual datum
+	return "\"[thing]\" ([thing.type])"
+
+/// For runtime logs- returns the above plus ref
+/proc/identify_object(datum/thing)
+	return "[log_object(thing)] \ref[thing]" // actual datum

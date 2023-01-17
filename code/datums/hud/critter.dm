@@ -193,7 +193,7 @@
 		return
 	src.throwing.icon_state = "throw[src.master.in_throw_mode]"
 
-/// recieves clicks from the screen hud objects
+/// receives clicks from the screen hud objects
 /datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))

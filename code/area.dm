@@ -35,8 +35,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
-	/// Whether or not the tile will be drawn on the station map.
-	var/render_on_map = FALSE
+	/// A flag system for determining which minimap types this area should be rendered on. For available flags, see `_std/defines/minimap.dm`.
+	var/minimaps_to_render_on = null
 	/// What colour should be displayed for this tile on the station map?
 	var/station_map_colour = MAPC_DEFAULT
 
@@ -746,6 +746,16 @@ ABSTRACT_TYPE(/area/shuttle)
 
 /area/shuttle/biodome_elevator/lower
 	name = "Biodome Lift Lower Section"
+	icon_state = "shuttle2"
+	force_fullbright = 0
+
+/area/shuttle/centcom_elevator/upper
+	name = "Centcom Lift Upper Section"
+	icon_state = "shuttle"
+	force_fullbright = 0
+
+/area/shuttle/centcom_elevator/lower
+	name = "Centcom Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
 
@@ -1633,7 +1643,7 @@ ABSTRACT_TYPE(/area/station)
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	render_on_map = TRUE
+	minimaps_to_render_on = MAP_ALL
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
@@ -2564,6 +2574,9 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Quarters"
 	icon_state = "yellow"
 
+/area/station/engine/core/nuclear
+	name = "Nuclear reactor room"
+
 /area/mining/miningoutpost
 	name = "Mining Outpost"
 	icon_state = "engine"
@@ -3384,7 +3397,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Research Outpost"
 	icon_state = "blue"
 	do_not_irradiate = 1
-	render_on_map = TRUE
+	minimaps_to_render_on = MAP_ALL
 	station_map_colour = MAPC_RESEARCH
 
 /area/research_outpost/protest
@@ -3422,6 +3435,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "brig"
 	teleport_blocked = 1
 	do_not_irradiate = 1
+	minimaps_to_render_on = MAP_SYNDICATE
+	station_map_colour = MAPC_SYNDICATE
 
 /area/listeningpost/syndicateassaultvessel
 		name ="Syndicate Assault Vessel"
@@ -3668,7 +3683,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
-	render_on_map = FALSE
+	minimaps_to_render_on = null
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -3694,7 +3709,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
 	requires_power = FALSE
-	render_on_map = FALSE
+	minimaps_to_render_on = null
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 
@@ -3882,6 +3897,14 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 
+/// Areas That Walp Uses For Gimmick Maps To Load In
+
+/area/pawnshop
+	name = "Very Legitimate Pawn Shop"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
+	icon_state = "purple"
 
 /* ================================================== */
 

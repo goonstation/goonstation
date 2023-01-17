@@ -43,7 +43,7 @@ var/global/datum/participationRecorder/participationRecorder
 				"round_mode" = ticker.mode.name
 			)
 			#ifdef RP_MODE
-			payload["rp_mode"] = true
+			payload["rp_mode"] = TRUE
 			#endif
 			apiHandler.queryAPI("participation/record", payload)
 
@@ -68,7 +68,7 @@ var/global/datum/participationRecorder/participationRecorder
 			"round_mode" = ticker.mode.name
 		)
 		#ifdef RP_MODE
-		payload["rp_mode"] = true
+		payload["rp_mode"] = TRUE
 		#endif
 
 		var/count = 0
