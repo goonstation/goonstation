@@ -133,6 +133,7 @@ var/list/clothingbooth_paths = list()
 	disposing()
 		qdel(src.preview)
 		qdel(src.preview_item)
+		qdel(src.item_to_purchase)
 		..()
 
 	relaymove(mob/user as mob)
