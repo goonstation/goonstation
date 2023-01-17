@@ -1,5 +1,9 @@
 
 (t)tue jan 17 23
+(u)DrWolfy
+(p)11826
+(e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
+(*)CheMaster3000 rework with TGUI.
 (u)Cheffie
 (p)12717
 (e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
