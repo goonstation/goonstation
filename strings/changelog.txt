@@ -1,5 +1,9 @@
 
 (t)tue jan 17 23
+(u)Cheffie
+(p)12717
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)The penalty for draining a corpse as a thrall now only applies if it's rotting.
 (u)Flaborized
 (p)12761
 (e)🆕🎨|C-Feature, C-Sprites
