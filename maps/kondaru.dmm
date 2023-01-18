@@ -12786,11 +12786,9 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
 "aQi" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 4
-	},
+/obj/disposalpipe/segment/horizontal,
 /obj/stool/chair{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
@@ -69861,7 +69859,7 @@ aJX
 aJX
 aJX
 aPi
-aQi
+aUR
 aJX
 aSy
 aJX
@@ -70162,7 +70160,7 @@ aJX
 aMs
 aNx
 aOw
-aWc
+aQi
 aQj
 aMs
 aMs
