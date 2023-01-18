@@ -14380,7 +14380,7 @@
 /area/station/chapel/sanctuary)
 "Cy" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -16718,7 +16718,7 @@
 "GS" = (
 /obj/machinery/light,
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
