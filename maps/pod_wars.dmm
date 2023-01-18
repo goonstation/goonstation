@@ -2692,7 +2692,9 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "kj" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/control_point_computer{
+	name = "Fortuna Station Control Console"
+	},
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
 "km" = (
@@ -3134,10 +3136,6 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/maintdock)
-"lX" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black,
-/area/pod_wars/spacejunk/fstation/computercore)
 "lY" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/plating,
@@ -4537,6 +4535,8 @@
 /area/pod_wars/asteroid/major/maj_14)
 "qK" = (
 /obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
@@ -4748,7 +4748,9 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "rG" = (
-/obj/table/reinforced/auto,
+/obj/control_point_computer{
+	name = "UBV-67 Control Console"
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "rH" = (
@@ -10369,15 +10371,6 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team1/hangar)
-"Nc" = (
-/obj/table/reinforced/auto,
-/obj/control_point_computer{
-	name = "UBV-67 Control Console";
-	pixel_x = -16;
-	pixel_y = 10
-	},
-/turf/simulated/floor/black,
-/area/pod_wars/spacejunk/uvb67/power)
 "Nd" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/yellow/side{
@@ -10385,10 +10378,8 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Ne" = (
-/obj/control_point_computer{
-	dir = 8;
-	name = "Fortuna Station Control Console"
-	},
+/obj/decal/fakeobjects/operatorconsole,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Ni" = (
@@ -12968,6 +12959,8 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Xf" = (
 /obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
@@ -56357,7 +56350,7 @@ Xc
 Xc
 Xc
 fe
-Nc
+pd
 iD
 pd
 pd
@@ -181552,8 +181545,8 @@ aa
 JJ
 au
 gj
+cW
 Dn
-lX
 pS
 Ne
 gj
@@ -182054,8 +182047,8 @@ by
 by
 cB
 gj
-SE
 gj
+SE
 gj
 gj
 gj

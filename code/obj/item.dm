@@ -502,7 +502,15 @@
 	// This needs to be a ternary because the value of the contraband override might be 0
 	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
 
-/obj/item/proc/update_stack_appearance()
+/// Don't override this, override _update_stack_appearance() instead.
+/obj/item/proc/UpdateStackAppearance()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	src._update_stack_appearance()
+	if(src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
+
+/// Call UpdateStackAppearance() instead.
+/obj/item/proc/_update_stack_appearance()
 	return
 
 /obj/item/proc/change_stack_amount(var/diff)
@@ -513,7 +521,7 @@
 		create_inventory_counter()
 	inventory_counter.update_number(amount)
 	if (amount > 0)
-		update_stack_appearance()
+		UpdateStackAppearance()
 	else if(!isrobot(src.loc)) // aaaaaa borgs
 		if(ismob(src.loc))
 			var/mob/holding_mob = src.loc

@@ -19,7 +19,7 @@
 	proc/setup_material()
 		.=0
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
 		return

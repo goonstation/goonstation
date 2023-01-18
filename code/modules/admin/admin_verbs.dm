@@ -532,11 +532,24 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder || src.player.tempmin)
+	if(src.player.tempmin && src.player.perm_admin)
+		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
+
+	// The idea is that player.tempmin and player.perm_admin are set when the given player
+	// is adminned for the first time during a round and are persistent. Essentially, if
+	// the player is adminned by code during round initialization then their src.holder
+	// has already been set and they are marked as perm_admin for the rest of the round.
+	// Other ways of getting adminned (such as using the player options) will not set
+	// src.holder and the first call to this proc will mark the player as tempminned for
+	// the rest of the round.
+	if((!src.holder || src.player.tempmin) && !src.player.perm_admin)
 		src.holder = new /datum/admins(src)
-		src.holder.tempmin = 1
+		src.holder.tempmin = TRUE
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
 		src.player.tempmin = TRUE
+	else
+		src.player.perm_admin = TRUE
 
 	src.holder.rank = rank
 
@@ -665,7 +678,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = FALSE
-		src.mob.mind?.dnr = TRUE
+		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -687,6 +700,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
+		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
 		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
 		boutput(src, "<span class='notice'>You are already playing!</span>")
