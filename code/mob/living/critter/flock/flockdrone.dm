@@ -99,6 +99,9 @@
 		AH.drone_controller.cast(src)
 	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = locate() in src.contents
+	if (cell)
+		qdel(cell)
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -1201,6 +1204,7 @@
 /datum/limb/gun/flock_stunner/New()
 	..()
 	src.cell.set_loc(src.holder.holder)
+	src.holder.holder.contents |= cell
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
