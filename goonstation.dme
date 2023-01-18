@@ -1515,7 +1515,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\fitness.dm"
 #include "code\obj\item\flamethrower.dm"
 #include "code\obj\item\football.dm"
-#include "code\obj\item\game_kit.dm"
 #include "code\obj\item\generic_box.dm"
 #include "code\obj\item\gift.dm"
 #include "code\obj\item\go_board.dm"

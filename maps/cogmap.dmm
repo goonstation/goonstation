@@ -7616,7 +7616,7 @@
 /area/station/crew_quarters/fitness)
 "axp" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -10320,7 +10320,7 @@
 /area/station/security/brig)
 "aEc" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18192,7 +18192,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/jazz)
@@ -40648,7 +40648,7 @@
 /area/station/hallway/secondary/exit)
 "chk" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},

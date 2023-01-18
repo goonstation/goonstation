@@ -9071,7 +9071,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
@@ -13195,7 +13195,7 @@
 	pixel_y = 21
 	},
 /obj/table/round,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /obj/item/storage/wall/fire{

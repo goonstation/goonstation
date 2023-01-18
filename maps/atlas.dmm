@@ -6560,7 +6560,7 @@
 /area/station/hallway/primary/north)
 "pw" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

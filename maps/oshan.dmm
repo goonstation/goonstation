@@ -12839,7 +12839,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aEO" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aEP" = (
@@ -37062,7 +37062,7 @@
 /area/station/maintenance/south)
 "bRV" = (
 /obj/table/wood,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/space)
 "bRW" = (
