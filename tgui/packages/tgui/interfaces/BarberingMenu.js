@@ -45,10 +45,10 @@ const HairPreviewList = function (props, context) {
   const { search_text, all_hair_names, all_hair_styles } = props;
 
   const filtered_list = all_hair_names.filter((x) => x.toLowerCase().includes(search_text.toLowerCase()));
-  return filtered_list.map((value, index) => (<HairPreview
-    key={all_hair_styles[value].id}
-    hair_style={all_hair_styles[value]}
-    hair_name={value} />));
+  return filtered_list.map((hairName) => (<HairPreview
+    key={all_hair_styles[hairName].id}
+    hair_style={all_hair_styles[hairName]}
+    hair_name={hairName} />));
 };
 
 const HairOptions = (props, context) => {
