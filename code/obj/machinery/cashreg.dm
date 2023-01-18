@@ -46,10 +46,6 @@ TYPEINFO(/obj/machinery/cashreg)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
 
-	attack_hand(mob/user)
-		..()
-		ui_interact(user)
-
 	disposing()
 		src.owner_account = null
 		src.owner_card = null
@@ -67,7 +63,8 @@ TYPEINFO(/obj/machinery/cashreg)
 			"amount" = src.amount,
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
-			"tip" = src.tip,
+			"tip_amount" = ceil(src.amount * src.tip),
+			"tip_proportion" = src.tip,
 			"total" = src.amount + ceil(src.amount * src.tip),
 		)
 
@@ -76,14 +73,15 @@ TYPEINFO(/obj/machinery/cashreg)
 		if (.)
 			return
 		switch (action)
-			if ("cancel_transaction")
-				var/obj/O = usr.equipped()
+			if ("clear_transaction")
+				var/obj/O = src.check_worn_ID(usr)
 				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
-					boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
-					usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
-					src.amount = 0
-					src.tip = 0
-					. = TRUE
+					if (tgui_alert(usr, "Clear the transaction?", "Clear transaction", list("Clear", "Cancel")) == "Clear" && !src.active_transaction)
+						boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
+						usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
+						src.amount = 0
+						src.tip = 0
+						. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
 					return
@@ -100,14 +98,13 @@ TYPEINFO(/obj/machinery/cashreg)
 					. = TRUE
 			if ("swipe_owner")
 				var/obj/O = usr.equipped()
-				if (src.get_ID(O) && !src.owner_account)
-					src.register_owner(usr, O)
+				if (!src.owner_account)
+					src.register_owner(usr, src.get_ID(O))
 					. = TRUE
 			if ("swipe_payer")
 				var/obj/O = usr.equipped()
-				if (src.get_ID(O))
-					src.pay(usr, O)
-					. = TRUE
+				src.pay(usr, src.get_ID(O))
+				. = TRUE
 			if ("reset")
 				var/obj/O = src.check_worn_ID(usr)
 				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
@@ -125,7 +122,10 @@ TYPEINFO(/obj/machinery/cashreg)
 					return
 		src.add_fingerprint(usr)
 
+	/// Checks that the scanned card's PIN was entered correctly and that it exists on the database.
 	proc/authenticate_card(mob/user, obj/item/card/id/O)
+		if (!O)
+			return
 		var/enter_pin = user.enter_pin()
 		if (enter_pin == O.pin)
 			var/datum/db_record/card_account = data_core.bank.find_record("name", O.registered)
@@ -151,7 +151,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			var/obj/item/device/pda2/pda = O
 			return pda.ID_card
 
-	// If an ID is being held, get what's equipped. Otherwise, if mob M is wearing something in their ID slot, get an ID from that.
+	/// If an ID is being held, get what's equipped. Otherwise, if mob M is wearing something in their ID slot, get an ID from that.
 	proc/check_worn_ID(mob/M)
 		var/obj/item/O
 		if (ishuman(M))
@@ -162,6 +162,7 @@ TYPEINFO(/obj/machinery/cashreg)
 				O = owner.wear_id
 			return O
 
+	/// Registers mob/user as the owner of the device.
 	proc/register_owner(mob/user, obj/item/card/id/O)
 		src.owner_account = src.authenticate_card(user, O)
 		if (src.owner_account)
@@ -172,6 +173,8 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	proc/pay(mob/user, obj/item/card/id/O)
 		var/payer_account = src.authenticate_card(user, O)
+		if (!payer_account)
+			return
 		src.active_transaction = TRUE
 
 		// Checks to make sure that the scanned card is allowed to transfer money to the owner at all.
@@ -184,7 +187,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			src.cancel(user)
 			return
 		if (payer_account == src.owner_account)
-			boutput(user, "<span class='alert'>You can't send funds with the owner ID to the owner ID!</span>")
+			boutput(user, "<span class='alert'>You can't send funds to yourself!</span>")
 			src.cancel(user)
 			return
 
@@ -261,7 +264,8 @@ TYPEINFO(/obj/machinery/cashreg)
 						<td>PURCHASE</td>
 						<td style="text-align:right">[price][CREDIT_SIGN]</td>
 					</tr>
-					[tip ? "<tr><td>TIP</td><td style='text-align:right'>[tip * 100]%</td></tr>" : ""]
+					[tip ? "<tr><td>TIP (%)</td><td style='text-align:right'>[tip * 100]%</td></tr>" : ""]
+					[tip ? "<tr><td>TIP ([CREDIT_SIGN])</td><td style='text-align:right'>[ceil(price * tip)][CREDIT_SIGN]</td></tr>" : ""]
 					<tr>
 						<td>TOTAL</td>
 						<td style="text-align:right">[total][CREDIT_SIGN]</td>

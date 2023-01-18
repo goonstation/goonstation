@@ -5,28 +5,12 @@
  * @license MIT
  */
 
+ @use '.././colors.scss';
+
  .cashreg__ {
-  &wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  &bottombutt_holder {
-    display: flex;
-  }
-
-  &bottombutt,
-  &pay,
-  &tip {
-    display: flex;
-    flex: 1 1 0px;
-  }
-
   &ownerbutton,
   &pay,
-  &tip,
-  &amount {
+  &tip {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,13 +20,16 @@
     }
   }
 
-  &amount {
-    flex-grow: 1;
-    font-size: 1.5em;
+  &centerpart {
+    font-size: 1.5rem;
+  }
+
+  &amount:hover {
+    background-color: lighten(colors.$blue, colors.$fg-lightness)
   }
 
   &table {
-    width: 100%;
+    width: 80%;
 
     &_cellright {
       text-align: right;
