@@ -47,6 +47,39 @@ var/global/obj/fluid/ocean_fluid_obj = null
 		schedule_interval = 5 SECONDS
 
 		src.processing_fluid_turfs = global.processing_fluid_turfs
+		// wacky reagent randomization here: taken from oceanization admin verb and ice cream (thanks)
+#ifdef UNDERWATER_MAP
+		message_admins("Ocean shenanigans now begin.")
+
+		//ocean_fluid_obj?.group?.reagents?.clear_reagents() // idk???
+
+		var/chosenReagent = null
+		if (all_functional_reagent_ids.len > 1)
+			chosenReagent = pick(all_functional_reagent_ids)
+		else
+			message_admins("Wait, this isn't supposed to happen. The functional reagents list is empty! Defaulting to water. Call coders pls")
+			chosenReagent = "water"
+		ocean_reagent_id = chosenReagent
+		var/datum/reagents/R = new /datum/reagents(100)
+		R.add_reagent(chosenReagent, 100)
+
+		var/master_reagent_name = R.get_master_reagent_name()
+		if(master_reagent_name == "water")
+			ocean_name = "ocean floor" //normal ocean
+		else
+			ocean_name = master_reagent_name + " ocean floor"
+
+		ocean_color = R.get_average_color().to_rgb()
+		qdel(R)
+		message_admins("Replacing...")
+		for(var/turf/space/fluid/S in world)
+			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
+			var/turf/orig = locate(S.x, S.y, S.z)
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+			T.name = ocean_name
+			T.color = ocean_color
+		message_admins("Ocean is now set to [reagent_id_to_name(chosenReagent)] ([chosenReagent]), good luck!!")
+#endif
 
 		SPAWN(20 SECONDS)
 			if (total_clients() >= OSHAN_LIGHT_OVERLOAD)
