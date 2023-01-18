@@ -482,7 +482,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	doants = 0
 	throw_speed = 1
-	var/can_recycle = 1
+	can_recycle = TRUE
 	var/can_chug = 1
 
 	New()

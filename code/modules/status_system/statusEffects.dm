@@ -1995,7 +1995,7 @@
 			//If dead, instaconvert.
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)

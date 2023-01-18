@@ -1,5 +1,25 @@
 
 (t)tue jan 17 23
+(u)Zamujasa
+(*)Football mode now removes all traits. No more spawning blind/deaf/whatever.
+(u)Emily
+(*)Stationfinder RPG added to the tabletop gaming kits
+(u)DrWolfy
+(p)11826
+(e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
+(*)CheMaster3000 rework with TGUI.
+(u)Cheffie
+(p)12717
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)The penalty for draining a corpse as a thrall now only applies if it's rotting.
+(u)Flaborized
+(p)12761
+(e)🆕🎨|C-Feature, C-Sprites
+(+)There are now unique sprites for joints rolled out of space credits.
+(u)DisturbHerb
+(p)12784
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gaming machines now have 5 board game clocks available for purchase.
 (u)Flourish
 (e)💅|C-QoL
 (*)Added a bunch more emotes - *squint, *scoff, *nodslowly, *starehands, *rubface, *rubtemples, *scratchhead, *jazzhands, *thumbsup, *pose, *rolleyes, *sideeye, *examine, and a very special and secret *jsay!

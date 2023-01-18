@@ -213,7 +213,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
-		if (ghost.mind.dnr)
+		if (ghost.mind.get_player()?.dnr)
 			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 

@@ -2547,6 +2547,8 @@
 	},
 /obj/access_spawn/morgue,
 /obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
+/obj/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "gd" = (
@@ -13130,8 +13132,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/alt,
-/obj/access_spawn/robotics,
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "Fd" = (
@@ -20575,6 +20577,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
+/obj/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "YD" = (
