@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
 				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.dnr) ) //If the borg-to-be is jobbanned or has DNR set
+			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
 				boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
 				user.drop_item()
 				qdel(B)

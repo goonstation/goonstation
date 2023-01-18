@@ -16,8 +16,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "Flechette magazine"
 	ammo_type = new/datum/projectile/bullet/flechette
 	icon_state = "flech_mag"
-	amount_left = 20
-	max_amount = 20
+	amount_left = 32
+	max_amount = 32
 	ammo_cat = AMMO_FLECHETTE
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
@@ -51,7 +51,7 @@ obj/item/ammo/bullets/flechette_mag
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 20
+	max_ammo_capacity = 32
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1

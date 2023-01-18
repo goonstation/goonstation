@@ -51,9 +51,6 @@ datum/mind
 	// namely ckey_to_mob(mob.mind.master) (Convair880).
 	var/master = null
 
-	var/dnr = 0
-	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
-
 	var/handwriting = null
 	var/color = null
 
@@ -61,7 +58,6 @@ datum/mind
 
 	var/datum/bank_purchaseable/purchased_bank_item = 0 //set when player readies up
 	var/join_time = 0
-	var/last_death_time = 0 // look, you can live a dozen lives in one round if you're (un)lucky enough
 
 	var/karma = 0 //fuck
 	var/const/karma_min = -420
@@ -86,7 +82,6 @@ datum/mind
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
-		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)
 		Z_LOG_DEBUG("Mind/TransferTo", "Transferring \ref[src] (\ref[current], [current]) ...")
@@ -179,6 +174,11 @@ datum/mind
 		if (isobserver(target))
 			target:delete_on_logout = 1
 
+	proc/get_player()
+		RETURN_TYPE(/datum/player)
+		if(ckey)
+			. = make_player(ckey)
+
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
 
@@ -214,7 +214,7 @@ datum/mind
 		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
-		src.last_death_time = world.timeofday
+		find_player(src.key).last_death_time = world.timeofday
 
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)

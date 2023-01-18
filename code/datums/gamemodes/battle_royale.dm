@@ -18,6 +18,7 @@ var/global/area/current_battle_spawn = null
 /datum/game_mode/battle_royale
 	name = "Battle Royale"
 	config_tag = "battle_royale"
+	regular = FALSE
 	var/list/drop_locations = list()
 	var/list/datum/mind/living_battlers = list()
 	var/last_shuttle_move = 0

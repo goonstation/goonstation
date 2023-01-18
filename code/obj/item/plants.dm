@@ -34,7 +34,11 @@
 		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-
+			if(istype(W, /obj/item/spacecash))
+				P.icon_state = "cig-[W.icon_state]"
+				P.item_state = "cig-[W.icon_state]"
+				P.litstate = "ciglit-[W.icon_state]"
+				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
@@ -535,10 +539,12 @@
 				user.drop_item(src, FALSE)
 
 /obj/item/plant/flower/rose/poisoned
+	///Trick roses don't poison on attack, only on pickup
+	var/trick = FALSE
 	attack(mob/M, mob/user, def_zone)
-		if (!..() || is_incapacitated(M))
+		if (!..() || is_incapacitated(M) || src.trick)
 			return
-		src.poison(M, user)
+		src.poison(M)
 
 	prick(mob/user)
 		..()

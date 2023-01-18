@@ -4431,6 +4431,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "arx" = (
@@ -19666,7 +19670,7 @@
 /area/station/security/equipment)
 "bpE" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -39418,7 +39422,7 @@
 /area/station/atmos/highcap_storage)
 "nOg" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /obj/item/instrument/saxophone,
 /obj/item/clothing/glasses/sunglasses,
@@ -49710,7 +49714,7 @@
 /area/station/hydroponics/bay)
 "weR" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},

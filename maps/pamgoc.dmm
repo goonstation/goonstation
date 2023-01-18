@@ -20619,7 +20619,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/jazz)
@@ -58821,7 +58821,7 @@
 /area/station/crew_quarters/pool)
 "chV" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -58831,7 +58831,7 @@
 /area/station/security/brig)
 "chW" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -63026,7 +63026,7 @@
 /area/station/crew_quarters/hor)
 "cnr" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/bar,

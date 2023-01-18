@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
