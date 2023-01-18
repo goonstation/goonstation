@@ -7,6 +7,8 @@
 (+)Centrifuges now accept multiple rods and nuclear waste items at once.
 (+)For each point of fissile isotopes material property, one plutonium bar is produced
 (+)Any remaining fissile isotopes are output as nuclear waste, which can be added back into the centrifuge when you have more fuel to process.
+(u)LeahTheTech
+(+)Flock sentinels now chain to less targets by default, but more with sapper power.
 (u)goonstation-enjoyer
 (p)12658
 (e)🪲🔨|C-Bug, A-Player-Actions
