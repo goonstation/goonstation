@@ -204,7 +204,7 @@
 		return null
 
 /**
-  * Convenience proc to see if a container is open for chemistry handling
+  * Convenience procs
 	*/
 	proc/can_receive()
 		return rc_flags & CAN_RECEIVE //checks for CAN_RECEIVE
