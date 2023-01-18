@@ -12839,7 +12839,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aEO" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aEP" = (
@@ -29585,6 +29585,10 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bzr" = (
@@ -36840,11 +36844,11 @@
 	dir = 4
 	},
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/gun/energy/phaser_gun{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/machinery/light_switch/auto,
+/obj/item/gun/energy/phaser_small{
+	pixel_y = -2;
+	pixel_x = -6
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bRA" = (
@@ -37058,7 +37062,7 @@
 /area/station/maintenance/south)
 "bRV" = (
 /obj/table/wood,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/space)
 "bRW" = (

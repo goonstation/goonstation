@@ -9,6 +9,9 @@
 // // Alert status
 // // And arbitrary messages set by comms computer
 
+/obj/status_display_proxy
+	plane = PLANE_NOSHADOW_ABOVE
+
 #define MAX_LEN 5
 TYPEINFO(/obj/machinery/status_display)
 	mats = 14
@@ -54,7 +57,7 @@ TYPEINFO(/obj/machinery/status_display)
 	var/obj/machinery/nuclearbomb/the_bomb = null
 
 	/// Proxy object for putting map text on top of overlays
-	var/obj/proxy = null
+	var/obj/status_display_proxy/proxy = null
 
 	var/image/crt_image = null
 
@@ -64,13 +67,12 @@ TYPEINFO(/obj/machinery/status_display)
 		..()
 		src.proxy = new
 		src.layer -= 0.3
-		proxy.plane = PLANE_NOSHADOW_ABOVE
 		proxy.layer = src.layer + 0.1
 		src.vis_contents += proxy
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
 		crt_image.layer = src.layer + 0.2
 		crt_image.plane = PLANE_DEFAULT
-		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
+		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
@@ -101,7 +103,7 @@ TYPEINFO(/obj/machinery/status_display)
 		qdel(src.proxy)
 		src.proxy = null
 		. = ..()
-		
+
 
 	// timed process
 	process()

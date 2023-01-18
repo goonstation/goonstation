@@ -4026,6 +4026,12 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -4116,7 +4122,10 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/hall)
 "bPw" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
 "bPO" = (
@@ -9019,6 +9028,17 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
+"ebU" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/west)
 "ecc" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -14488,6 +14508,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gwG" = (
@@ -16955,6 +16982,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"hvm" = (
+/obj/item/storage/toilet,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "hvw" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -27997,6 +28035,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"mfN" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/mining/staff_room)
 "mfV" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -30684,7 +30732,13 @@
 /area/station/science/research_director)
 "nsO" = (
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -36234,6 +36288,10 @@
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
+"pYn" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black/grime,
+/area/station/storage/warehouse)
 "pYx" = (
 /obj/surgery_tray,
 /turf/simulated/floor/black,
@@ -37387,18 +37445,6 @@
 "qAZ" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
-"qBe" = (
-/obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour10;desc=The east crew quarters are your best place to catch up on sleep - most public beds are located here, with personal safes for your security. Also located here are the diplomatic quarters.";
-	freq = 1443;
-	location = "tour9";
-	name = "tour 9 - east crew"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/southeast)
 "qBw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40792,19 +40838,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"slG" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "slV" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -41223,7 +41256,7 @@
 "sti" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/greenblack,
 /area/station/hallway/primary/northwest)
 "stv" = (
@@ -42310,7 +42343,7 @@
 "sQU" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour14;desc=On your left is the Site refinery - Engineers access the Siphon through its far door, and its nano-fabricator is often used for catalytic rod fabrication.";
+	codes_txt = "tour;next_tour=tour14;desc=On your left is the Site refinery - Engineers access the Harmonic Siphon, Nadir's primary prototype device, through its far door.";
 	freq = 1443;
 	location = "tour13";
 	name = "tour 13 - east1"
@@ -42559,7 +42592,7 @@
 "sVX" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour11;desc=On my left, you'll see the nuclear reactor responsible for s electrical generation for the Site. Please respect caution borders.";
+	codes_txt = "tour;next_tour=tour11;desc=On my left, you'll see the nuclear reactor responsible for primary electrical generation for the Site. Please respect caution borders.";
 	freq = 1443;
 	location = "tour10";
 	name = "tour 10 - nuclear"
@@ -45660,6 +45693,13 @@
 	id = "market";
 	pixel_y = 24
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/grey/side{
 	dir = 9
 	},
@@ -47448,6 +47488,15 @@
 "vmx" = (
 /turf/simulated/floor/yellowblack/corner,
 /area/station/hallway/secondary/east)
+"vmA" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "vmT" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -47757,6 +47806,13 @@
 	dir = 4
 	},
 /obj/machinery/meter,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 3;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -49229,6 +49285,13 @@
 	pixel_x = -14;
 	pixel_y = 4
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "wdR" = (
@@ -50274,6 +50337,17 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"wHy" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "wHU" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib5"
@@ -84368,8 +84442,8 @@ gkJ
 hWJ
 hLQ
 hWJ
-hWJ
 qga
+hWJ
 hWJ
 hWJ
 rYi
@@ -90416,7 +90490,7 @@ chV
 bYc
 nea
 jwF
-slG
+jBz
 nKx
 idy
 bts
@@ -93733,7 +93807,7 @@ gNU
 iER
 hAe
 lut
-uqt
+ebU
 uqt
 jpG
 jli
@@ -103117,7 +103191,7 @@ bsb
 fQh
 sWo
 liG
-nes
+pYn
 vsG
 pJt
 xHa
@@ -106708,7 +106782,7 @@ pqb
 dYV
 tYz
 dYV
-ujK
+mfN
 aXs
 rkh
 ibV
@@ -109743,7 +109817,7 @@ fQt
 ocD
 pwy
 tXe
-sSm
+wHy
 ocD
 ocD
 ocD
@@ -110050,7 +110124,7 @@ ePt
 ebu
 ocD
 vEo
-qBe
+fdg
 rZb
 nlG
 hXJ
@@ -110636,7 +110710,7 @@ eIK
 oZp
 oZp
 oZp
-jXY
+vmA
 ibV
 ibV
 lXA
@@ -111540,7 +111614,7 @@ kfP
 fmc
 eIK
 oZp
-mZZ
+hvm
 irk
 xPc
 qlL

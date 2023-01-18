@@ -1537,6 +1537,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -2546,6 +2547,8 @@
 	},
 /obj/access_spawn/morgue,
 /obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
+/obj/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "gd" = (
@@ -2592,11 +2595,14 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gk" = (
-/obj/storage/secure/closet/engineering/cargo,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -6554,7 +6560,7 @@
 /area/station/hallway/primary/north)
 "pw" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -13126,8 +13132,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/alt,
-/obj/access_spawn/robotics,
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "Fd" = (
@@ -20571,6 +20577,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
+/obj/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "YD" = (

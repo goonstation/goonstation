@@ -970,7 +970,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				user.u_equip(C)
 				qdel(C)
 			else
-				C.update_stack_appearance()
+				C.UpdateStackAppearance()
 
 			FP = new FP(get_turf(src))
 			if (istype(FP, /atom))

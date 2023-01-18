@@ -142,7 +142,7 @@
 
 	SPAWN(0)
 		src.get_static_image()
-		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
 

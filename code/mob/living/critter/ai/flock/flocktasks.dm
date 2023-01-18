@@ -689,7 +689,7 @@ stare
 		return FALSE // can't harvest anyway, if not a flockdrone
 
 /datum/aiTask/sequence/goalbased/flock/harvest/valid_target(obj/item/I)
-	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/game_kit)
+	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/boardgame/chess)
 
 /datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
 	. = list()

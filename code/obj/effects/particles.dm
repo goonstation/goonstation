@@ -16,7 +16,7 @@
 				sparks.particles.spawning = 0
 
 /obj/effects/welding
-	appearance_flags = RESET_COLOR | RESET_ALPHA
+	appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	vis_flags = VIS_INHERIT_DIR
 	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
 	icon = 'icons/effects/fire.dmi'

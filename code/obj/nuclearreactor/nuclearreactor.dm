@@ -59,10 +59,14 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
+
+		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
+		for(var/turf/simulated/floor/F in src.locs)
+			F.explosion_immune = TRUE
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
@@ -73,6 +77,8 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("reactor_light")
+		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
+			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
 	update_icon()
@@ -117,7 +123,7 @@
 			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
-				old_grid.layer = old_grid.layer+0.1
+				old_grid.layer -= 0.1
 				src.UpdateOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)

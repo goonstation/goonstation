@@ -190,7 +190,7 @@
 	if(prob(10))
 		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
-	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	A.underlays += underneath
 	var/matrix/pivot = matrix()
 	pivot.Scale(0.2, 1.0)
@@ -203,7 +203,7 @@
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
-	src.attack_particle.appearance_flags = TILE_BOUND
+	src.attack_particle.appearance_flags = TILE_BOUND | PIXEL_SCALE
 	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
 	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
@@ -223,7 +223,7 @@
 		icon = 'icons/mob/mob.dmi'
 		icon_state = "sprint_cloud"
 		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	muzzleflash
 		icon = 'icons/mob/mob.dmi'

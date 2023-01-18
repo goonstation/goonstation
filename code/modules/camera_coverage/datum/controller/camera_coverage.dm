@@ -18,7 +18,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	ma.layer = 100
 	ma.color = "#777777"
 	ma.dir = pick(alldirs)
-	ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+	ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	ma.name = " "
 
 	game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
