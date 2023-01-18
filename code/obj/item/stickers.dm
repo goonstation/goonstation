@@ -234,7 +234,7 @@
 		..()
 
 	disposing()
-		src.remove_from_attached()
+		src.remove_from_attached(do_loc = FALSE)
 		..()
 
 	set_loc(newloc)
