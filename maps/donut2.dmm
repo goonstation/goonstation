@@ -19670,7 +19670,7 @@
 /area/station/security/equipment)
 "bpE" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -39422,7 +39422,7 @@
 /area/station/atmos/highcap_storage)
 "nOg" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /obj/item/instrument/saxophone,
 /obj/item/clothing/glasses/sunglasses,
@@ -49714,7 +49714,7 @@
 /area/station/hydroponics/bay)
 "weR" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},

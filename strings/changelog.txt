@@ -1,5 +1,9 @@
 
 (t)tue jan 17 23
+(u)DisturbHerb
+(p)12783
+(e)📦🗺⛔|A-Game-Objects, A-Mapping, C-Removal
+(+)The rollout of more advanced chessboards aboard NanoTrasen assets is now complete.
 (u)Zamujasa
 (*)Football mode now removes all traits. No more spawning blind/deaf/whatever.
 (u)Emily
