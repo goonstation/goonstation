@@ -11,6 +11,8 @@
 (+)Flock sentinels now chain to less targets by default, but more with sapper power.
 (u)LeahTheTech
 (+)Flockdrones now dodge a little slower.
+(u)LeahTheTech
+(+)Flock compute nodes now provide 50 compute, down from 60.
 (u)goonstation-enjoyer
 (p)12658
 (e)🪲🔨|C-Bug, A-Player-Actions
