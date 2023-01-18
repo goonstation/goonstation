@@ -27,7 +27,8 @@
 	initial_volume = 30
 
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS
+	rc_flags = CAN_RECEIVE
 
 	var/contained = null
 

@@ -12,9 +12,10 @@
 	initial_volume = 30
 	var/image/fluid_image
 	var/bottle_style = null
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS| SUPPRESSATTACK
+	rc_flags = CAN_RECEIVE | CAN_SPLASH | CAN_TRANSFER
 	object_flags = NO_GHOSTCRITTER
 
 	New()
@@ -411,7 +412,7 @@
 	initial_volume = 50
 	initial_reagents = list("fluorosurfactant"=30,"pepperoni"=10,"bourbon"=10)
 	amount_per_transfer_from_this = 5
-	rc_flags = RC_FULLNESS
+	rc_desc_flag = RC_FULLNESS
 
 /obj/item/reagent_containers/glass/bottle/holywater
 	name = "Holy Water"

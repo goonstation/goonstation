@@ -21,12 +21,13 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	rc_flags = CAN_RECEIVE
 	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
@@ -174,7 +175,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
 			return
 
-		if (isobj(target) && target.is_open_container() && target.reagents)
+		if (isobj(target) && target.is_can_receive() && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is already empty.</span>")
 				return

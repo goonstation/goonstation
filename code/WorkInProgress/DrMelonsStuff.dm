@@ -94,7 +94,8 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = CAN_RECEIVE
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -331,7 +332,7 @@
 		src.add_fingerprint(user)
 		src.enter_bathtub(target)
 
-	is_open_container()
+	is_can_receive() //OPENCONTAINER renamed to CAN_RECEIVE.
 		return 1
 
 /obj/item/clothing/head/apprentice

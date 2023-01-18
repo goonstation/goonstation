@@ -17,7 +17,7 @@
 	icon_state = "minicache"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "beaker"
-	rc_flags = RC_VISIBLE | RC_SPECTRO
+	rc_desc_flag = RC_VISIBLE | RC_SPECTRO
 	mat_changename = 0
 	mat_changedesc = 0
 	mat_changeappearance = 0

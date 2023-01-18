@@ -249,7 +249,7 @@ datum
 				var/datum/reagents/myholder = holder
 				var/vol = volume
 				myholder.del_reagent(id)
-				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
+				if(!myholder?.my_atom?.is_can_receive() && !istype(myholder, /datum/reagents/fluid_group))
 					if(myholder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
@@ -271,7 +271,7 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_can_receive())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")

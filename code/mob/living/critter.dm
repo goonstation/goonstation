@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_can_receive() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
 				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
@@ -778,7 +778,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
-			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_can_receive() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
 

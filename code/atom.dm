@@ -8,6 +8,8 @@
 	plane = PLANE_DEFAULT
 	var/level = 2
 	var/flags = FPRINT
+	var/rc_desc_flag = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
+	var/rc_flags = null
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -206,8 +208,14 @@
 	*
   * * returns true if open, false if closed
 	*/
-	proc/is_open_container()
-		return flags & OPENCONTAINER
+	proc/is_can_receive()
+		return rc_flags & CAN_RECEIVE
+
+	proc/is_can_transfer()
+		return rc_flags & CAN_TRANSFER
+
+	proc/is_can_splash()
+		return rc_flags & CAN_SPLASH
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A

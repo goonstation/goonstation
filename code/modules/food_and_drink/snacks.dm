@@ -842,7 +842,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		..()
 
 
-	is_open_container()
+	is_can_receive()
 		return 1
 
 /obj/item/reagent_containers/food/snacks/waffles

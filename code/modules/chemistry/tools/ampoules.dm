@@ -5,7 +5,7 @@
 	icon_state = "ampoule-0"
 	initial_volume = 5
 	flags = FPRINT | TABLEPASS
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/image/fluid_image
 

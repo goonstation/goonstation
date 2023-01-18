@@ -2158,7 +2158,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-				if(holder?.my_atom?.is_open_container())
+				if(holder?.my_atom?.is_can_receive())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("sarin", created_volume / 6)
@@ -2920,7 +2920,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 				if (holder)
-					if(!holder?.my_atom?.is_open_container())
+					if(!holder?.my_atom?.is_can_receive())
 						if(holder.my_atom)
 							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 								boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
@@ -3212,7 +3212,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.postfoam)
 					return
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_can_receive())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
@@ -3254,7 +3254,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_can_receive())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
@@ -3290,7 +3290,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_can_receive())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, location))
 							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")

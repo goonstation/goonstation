@@ -152,7 +152,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
-	is_open_container()
+	is_can_receive()
 		return 2
 
 	update_icon()
@@ -1159,7 +1159,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			else
 		return
 
-	is_open_container()
+	is_can_receive()
 		return -1
 
 	custom_suicide = 1

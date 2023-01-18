@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "bathbomb"
 	item_state = "bathbomb"
-	rc_flags = RC_SPECTRO		// only spectroscopic analysis
+	rc_desc_flag = RC_SPECTRO		// only spectroscopic analysis
 	initial_volume = 50
 	var/batbomb = 0
 

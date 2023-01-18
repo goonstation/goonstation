@@ -130,7 +130,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
-		if (src.can_sample && W.is_open_container() && W.reagents)
+		if (src.can_sample && W.is_can_receive() && W.reagents)
 			src.Sample(W, user)
 		if (istype(W,/obj/item/mop))
 			return
@@ -914,7 +914,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (!src.can_sample)
 			return 0
 
-		if (W.is_open_container() && W.reagents)
+		if (W.is_can_receive() && W.reagents)
 			if (W.reagents.total_volume >= W.reagents.maximum_volume - 2)
 				user.show_text("[W] is too full!", "red")
 				return

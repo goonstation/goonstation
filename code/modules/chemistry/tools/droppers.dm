@@ -12,7 +12,7 @@
 	icon_state = "dropper0"
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/icon_empty = "dropper0"
 	var/icon_filled = "dropper1"
 	var/image/fluid_image
@@ -53,7 +53,7 @@
 			t = min(src.transfer_amount, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (t <= 0) return
 
-			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
+			if (target.is_can_receive() != 1 && !is_reagent_dispenser(target))
 				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
 				return
 			if (!target.reagents.total_volume)
@@ -71,7 +71,7 @@
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[target] is full.</span>")
 					return
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
+				if (target.is_can_receive() != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 

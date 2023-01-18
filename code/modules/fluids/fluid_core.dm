@@ -98,7 +98,8 @@ var/mutable_appearance/fluid_ma
 				src.removed()
 				return
 
-		flags |= OPENCONTAINER | UNCRUSHABLE
+		flags |= UNCRUSHABLE
+		rc_flags |= CAN_RECEIVE
 
 		//src.floated_atoms = list()
 
@@ -107,7 +108,6 @@ var/mutable_appearance/fluid_ma
 
 		if (!fluid_ma)
 			fluid_ma = new(src)
-
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return

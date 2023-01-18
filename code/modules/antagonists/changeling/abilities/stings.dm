@@ -14,7 +14,7 @@
 		if (..())
 			return 1
 
-		if (isobj(target) && (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
+		if (isobj(target) && (target.is_can_receive() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
 			if (BOUNDS_DIST(holder.owner, target) > 0)
 				boutput(holder.owner, "<span class='alert'>We cannot reach that target with our stinger.</span>")
 				return 1
@@ -107,7 +107,7 @@
 		cast(atom/target)
 			if (..())
 				return 1
-			if (target.is_open_container() == 1 || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
+			if (target.is_can_receive() == 1 || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					return 0
 				var/max_amount = min(15,target.reagents.maximum_volume - target.reagents.total_volume)
