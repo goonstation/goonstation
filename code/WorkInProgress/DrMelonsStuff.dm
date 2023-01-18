@@ -332,7 +332,7 @@
 		src.add_fingerprint(user)
 		src.enter_bathtub(target)
 
-	can_receive() //OPENCONTAINER renamed to CAN_RECEIVE.
+	can_receive()
 		return 1
 
 /obj/item/clothing/head/apprentice
