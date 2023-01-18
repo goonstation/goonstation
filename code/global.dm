@@ -433,6 +433,7 @@ var/global
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
 	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")

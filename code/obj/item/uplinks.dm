@@ -101,7 +101,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 

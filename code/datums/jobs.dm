@@ -2264,14 +2264,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
-			ticker.mode:agent_number++
-		else
-			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, ROLE_NUKEOP, do_objectives = FALSE)
-		equip_syndicate(M, leader)
+		if (src.leader)
+			M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+		else
+			M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+
 		return
 
 /datum/job/special/syndicate_operative/leader
