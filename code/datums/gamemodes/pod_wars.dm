@@ -193,12 +193,15 @@ var/list/pw_rewards_tier3 = null
 		if (istype(A, /area/pod_wars/spacejunk/reliant))
 			name = "The NSV Reliant"
 			true_name = RELIANT
+			CPC.update_name_overlay("reliant")
 		else if (istype(A, /area/pod_wars/spacejunk/fstation))
 			name = "Fortuna Station"
 			true_name = FORTUNA
+			CPC.update_name_overlay("fortuna")
 		else if (istype(A, /area/pod_wars/spacejunk/uvb67))
 			name = "UVB-67"
 			true_name = UVB67
+			CPC.update_name_overlay("uvb")
 		var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
 
 		CPC.ctrl_pt = P 		//computer's reference to datum

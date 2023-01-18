@@ -1888,6 +1888,55 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
+		if ("manageobjectives")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_manageobjectives(M)
+			else
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+
+		if ("manageobjectives_debug_vars")
+			if (src.level >= LEVEL_PA)
+				var/datum/objective/objective = locate(href_list["objective"])
+				usr.client.debug_variables(objective)
+			else
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+
+		if ("manageobjectives_remove")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+				return
+			var/mob/M = locate(href_list["target"])
+			var/datum/objective/objective = locate(href_list["objective"])
+			if (!length(M?.mind?.objectives) || !objective)
+				return
+			message_admins("[key_name(usr)] removed objective [objective.type][objective.explanation_text ? " with text: " : ""][objective.explanation_text] from [key_name(M)].")
+			logTheThing(LOG_ADMIN, usr, "removed objective [objective.type][objective.explanation_text ? " with text: " : ""][objective.explanation_text] from [constructTarget(M,"admin")].")
+			M.mind.objectives -= objective
+			qdel(objective)
+			usr.client.cmd_admin_manageobjectives(M)
+
+		if ("addobjective")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+				return
+			var/mob/M = locate(href_list["target"])
+			var/origin = href_list["origin"]
+			if (!M?.mind)
+				return
+			LAZYLISTINIT(M.mind.objectives)
+
+			var/objective_type = tgui_input_list(usr, "Add an objective:", "Select", concrete_typesof(/datum/objective))
+			if (!objective_type)
+				return // user canceled
+			var/objective_text = input(usr, "Custom objective text (optional)", "Objective text")
+			new objective_type(objective_text, M.mind)
+			message_admins("[key_name(usr)] added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [key_name(M)].")
+			logTheThing(LOG_ADMIN, usr, "added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [constructTarget(M,"admin")].")
+			if (origin == "manageobjectives")//called via objective management panel
+				usr.client.cmd_admin_manageobjectives(M)
+
 		if("subtlemsg")
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -5298,6 +5347,84 @@ var/global/noir = 0
 			</tr>"}
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=managetraits;size=700x400")
+
+//completely copy pasted from above, in the finest traditions of this mess
+/client/proc/cmd_admin_manageobjectives(var/mob/M in mobs)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Manage Objectives"
+	set desc = "Select a mob to manage its mind's objectives."
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Objective Management Panel</title>
+		<style>
+		table {
+			border:1px solid #44aaff;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #44aaff;
+			color: white;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th:nth-child(4), td:nth-child(4) {text-align: center;}
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+			text-decoration: none;
+		}
+		</style>
+		</head>
+		<body>
+		<h1>
+			Objectives of [M.name]
+			<a href='?src=\ref[src.holder];action=manageobjectives;target=\ref[M];origin=manageobjectives' class="button">&#x1F504;</a>
+			<a href='?src=\ref[src.holder];action=addobjective;target=\ref[M];origin=manageobjectives' class="button">&#x2795;</a>
+		</h1>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>Text</th>
+				<th>Type Path</th>
+			</tr>
+		"}
+	if (!M.mind)
+		return
+
+	for (var/datum/objective/objective as anything in M.mind.objectives)
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=manageobjectives_remove;target=\ref[M];objective=\ref[objective];origin=manageobjectives'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=manageobjectives_debug_vars;objective=\ref[objective];origin=manageobjectives'>[objective.explanation_text]</a></td>
+				<td>[objective.type]
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=manageobjectives;size=700x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"

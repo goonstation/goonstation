@@ -123,7 +123,7 @@
 			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
-				old_grid.layer = old_grid.layer+0.1
+				old_grid.layer -= 0.1
 				src.UpdateOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)

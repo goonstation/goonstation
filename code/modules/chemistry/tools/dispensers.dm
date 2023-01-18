@@ -436,6 +436,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)
 		else if (istype(W,/obj/item/seed/)) src.reagents.add_reagent("poo", 2)
 		else if (istype(W,/obj/item/plant/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/organ/)) src.reagents.add_reagent("poo", 35)
 		else load = 0
 
 		if(load)

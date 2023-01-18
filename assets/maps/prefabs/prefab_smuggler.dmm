@@ -76,7 +76,7 @@
 /area/prefab/smuggler_den)
 "ao" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray{
 	butts = 5;
 	icon_state = "ashtray";

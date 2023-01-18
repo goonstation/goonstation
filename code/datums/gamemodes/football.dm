@@ -215,6 +215,8 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			var/mob/new_player/N = M
 			N.mind.assigned_role = "MODE"
 			footballer = N.create_character(new /datum/job/football)
+			footballer.traitHolder.removeAll()
+			footballer.full_heal()
 
 		if (!ishuman(footballer))
 			boutput(M, "something went wrong. dunno what. sorry. football machine broke")

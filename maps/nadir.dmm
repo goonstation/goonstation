@@ -30732,7 +30732,7 @@
 /area/station/science/research_director)
 "nsO" = (
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -41256,7 +41256,7 @@
 "sti" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/greenblack,
 /area/station/hallway/primary/northwest)
 "stv" = (
