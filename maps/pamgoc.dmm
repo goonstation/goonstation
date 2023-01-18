@@ -68881,7 +68881,7 @@
 "kAr" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log{
-	bites_right = 5;
+	bites_right = 1;
 	desc = "Don't get it mixed up it's still made of meat, but what are the chances of finding it here?.";
 	name = "improbable(tm) pepperoni"
 	},
