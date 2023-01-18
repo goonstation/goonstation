@@ -1,5 +1,7 @@
 
 (t)tue jan 17 23
+(u)Emily
+(*)Stationfinder RPG added to the tabletop gaming kits
 (u)DrWolfy
 (p)11826
 (e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
