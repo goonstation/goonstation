@@ -1855,7 +1855,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/dippable/churro
 
 /datum/cookingrecipe/french_toast
-	item1 = /obj/item/reagent_containers/food/snacks/breadslice/french
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
 	item3 = /obj/item/reagent_containers/food/drinks/milk
