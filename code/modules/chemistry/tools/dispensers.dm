@@ -68,7 +68,7 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS & can_transfer()))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)

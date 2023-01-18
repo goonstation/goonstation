@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if(!ok)
 				return
 
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS & can_transfer()))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
