@@ -106,10 +106,10 @@ TYPEINFO(/obj/machinery/light_switch)
 		return "A light switch. It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/proc/toggle(mob/user=null)
+	if(ON_COOLDOWN(src, "mechcomp_toggle", 1 SECOND))
+		return
 	on = !on
-
 	area.lightswitch = on
-
 	area.power_change()
 
 	if(user)
