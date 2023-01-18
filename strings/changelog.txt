@@ -1,5 +1,7 @@
 
 (t)tue jan 17 23
+(u)Zamujasa
+(*)Football mode now removes all traits. No more spawning blind/deaf/whatever.
 (u)Emily
 (*)Stationfinder RPG added to the tabletop gaming kits
 (u)DrWolfy
