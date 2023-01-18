@@ -1359,7 +1359,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("sugar" = 20)
