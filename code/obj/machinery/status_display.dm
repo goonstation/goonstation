@@ -11,6 +11,7 @@
 
 /obj/status_display_proxy
 	plane = PLANE_NOSHADOW_ABOVE
+	mouse_opacity = FALSE
 
 #define MAX_LEN 5
 TYPEINFO(/obj/machinery/status_display)
