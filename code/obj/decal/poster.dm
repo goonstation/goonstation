@@ -1101,7 +1101,7 @@
 
 	New()
 		. = ..()
-		banner_holder.appearance_flags = RESET_COLOR
+		banner_holder.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.underlays.Add(banner_holder)
 
 	attackby(obj/item/W, mob/user)
@@ -1110,7 +1110,7 @@
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
 				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
-				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
 				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")

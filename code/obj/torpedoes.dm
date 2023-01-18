@@ -109,7 +109,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
 	anchored = 1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
 	var/id = "torp1"

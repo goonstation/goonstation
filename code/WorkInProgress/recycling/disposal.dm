@@ -286,7 +286,7 @@
 		missing_image.plane = PLANE_FLOOR
 		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
 		missing_image.alpha = 180
-		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 
 		var/turf/simulated/T = get_turf(src)
 		if (!T.disposal_image)

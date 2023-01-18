@@ -20,7 +20,7 @@
 	if (!src.hudarrow)
 		hudarrow = hud.create_screen("pinpointer", "Pinpointer", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
 		hudarrow.mouse_opacity = 0
-		hudarrow.appearance_flags = 0
+		hudarrow.appearance_flags = 0 // PIXEL_SCALE ommitted on purpose (?)
 		hudarrow.alpha = 127
 		hudarrow.color = color
 	else
