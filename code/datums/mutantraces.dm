@@ -2163,7 +2163,7 @@ TYPEINFO(/datum/mutantrace)
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
-			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_can_receive())
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.can_receive())
 				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)

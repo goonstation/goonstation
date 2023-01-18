@@ -612,7 +612,7 @@
 			if (B.donor_DNA)
 				blood_data += "<br><span class='notice'>[B]'s blood DNA:</span> [B.donor_DNA]"
 
-		else if (isobj(A) && A.reagents && A.is_can_receive() && A.reagents.has_reagent("blood"))
+		else if (isobj(A) && A.reagents && A.can_receive() && A.reagents.has_reagent("blood"))
 			var/datum/reagent/blood/B = A.reagents.reagent_list["blood"]
 			if (B && istype(B.data, /datum/bioHolder))
 				var/datum/bioHolder/BH = B.data

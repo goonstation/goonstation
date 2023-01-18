@@ -519,7 +519,7 @@
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
 
-	is_can_receive()
+	can_receive()
 		return 1
 
 /* ================================================= */

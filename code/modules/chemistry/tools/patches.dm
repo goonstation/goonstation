@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		src.UpdateIcon()
 
 
-	is_can_receive()
+	can_receive()
 		if (borg)
 			.= 0
 		else

@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.emagged = TRUE
 				return TRUE
 
-		is_can_receive()
+		can_receive()
 			return TRUE
 
 		emagged

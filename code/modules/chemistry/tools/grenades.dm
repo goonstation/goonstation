@@ -36,7 +36,7 @@
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		src.create_reagents(150000)
 
-	is_can_receive()
+	can_receive()
 		return src.detonating
 
 	attackby(obj/item/W, mob/user)

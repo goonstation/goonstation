@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
+	rc_desc_flag = RC_SPECTRO | RC_VISIBLE | RC_FULLNESS
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
 	var/splash_all_contents = 1
@@ -110,7 +111,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if  (ismob(target) && src.is_can_transfer() && !target.is_can_receive()) // pour reagents down their neck (if possible)
+		if  (ismob(target) && src.can_transfer() && !target.can_receive()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
@@ -157,7 +158,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
-			if (!src.reagents.total_volume && src.is_can_receive())
+			if (!src.reagents.total_volume && src.can_receive())
 				if (!F.group || !F.group.reagents.total_volume)
 					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
 					F.removed()
@@ -173,7 +174,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
-			else if(src.is_can_splash()) //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
+			else if(src.can_splash()) //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
@@ -181,7 +182,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (is_reagent_dispenser(target) || (target.is_can_receive() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.can_receive() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -196,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (src.is_can_transfer() && target.is_can_receive() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
+		else if (src.can_transfer() && target.can_receive() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -211,7 +212,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (istype(target, /obj/item/sponge) && src.is_can_transfer()) // dump contents onto it
+		else if (istype(target, /obj/item/sponge) && src.can_transfer()) // dump contents onto it
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -224,7 +225,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
-		else if (istype(target, /turf/space/fluid) && src.is_can_receive()) //specific exception for seafloor rn, since theres no others
+		else if (istype(target, /turf/space/fluid) && src.can_receive()) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -232,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
 				boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
 
-		else if (reagents.total_volume && src.is_can_splash())
+		else if (reagents.total_volume && src.can_splash())
 			if (isobj(target) && (target:flags & NOSPLASH))
 				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
@@ -268,7 +269,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attackby(obj/item/I, mob/user)
 
-		if (src.is_can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
+		if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -279,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.is_can_receive() && istype(I, /obj/item/paper))
+		else if (src.can_receive() && istype(I, /obj/item/paper))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -289,7 +290,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			qdel(I)
 
-		else if (src.is_can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
+		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -300,7 +301,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.is_can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadslice))
+		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadslice))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -311,7 +312,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.is_can_receive() && istype(I,/obj/item/material_piece/rubber))
+		else if (src.can_receive() && istype(I,/obj/item/material_piece/rubber))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -322,7 +323,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.is_can_transfer() && istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
+		else if (src.can_transfer() && istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
 				src.reagents.trans_to(I, 5)
 				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
@@ -330,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
-		else if (src.is_can_transfer() && istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
+		else if (src.can_transfer() && istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message("<span class='alert'><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
 				I.tooltip_rebuild = 1
@@ -343,7 +344,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				else
 					boutput(user, "<span class='notice'>[src] doesn't have enough silver in it to coat [I].</span>")
 
-		else if (src.is_can_receive() && istype(I, /obj/item/reagent_containers/iv_drip))
+		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/iv_drip))
 			var/obj/item/reagent_containers/iv_drip/W = I
 			if (W.slashed == 1)
 				if (W.reagents.total_volume)
@@ -381,7 +382,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
 
-	is_can_receive()
+	can_receive()
 		return 1
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
@@ -427,7 +428,7 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	var/can_recycle = TRUE //can this be put in a glass recycler?
+	can_recycle = TRUE //can this be put in a glass recycler?
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = CAN_SPLASH | CAN_TRANSFER | CAN_RECEIVE
 

@@ -58,7 +58,7 @@
 	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
-		if (I.is_can_receive() && I.reagents)
+		if (I.can_receive() && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
 			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
@@ -71,7 +71,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if (!isobj(target))
 			return ..()
-		if (target.is_can_receive() && target.reagents)
+		if (target.can_receive() && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
 				return

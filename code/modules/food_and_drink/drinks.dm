@@ -321,14 +321,14 @@
 		setup_soda()
 
 	attack(mob/M, mob/user)
-		if (!src.is_can_receive())
+		if (!src.can_receive())
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
 		..()
 
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
-		if (!src.is_can_transfer())
+		if (!src.can_transfer())
 			rc_flags |= CAN_TRANSFER | CAN_RECEIVE | CAN_SPLASH
 			can_chug = 1
 			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)

@@ -351,7 +351,7 @@
 		qdel(src)
 		return
 
-	is_can_receive()
+	can_receive()
 		return TRUE
 
 	red

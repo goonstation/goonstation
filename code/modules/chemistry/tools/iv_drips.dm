@@ -57,7 +57,7 @@
 			src.UpdateOverlays(null, "inj_dr")
 		signal_event("icon_updated")
 
-	is_can_receive()
+	can_receive()
 		return 1
 
 	pickup(mob/user)

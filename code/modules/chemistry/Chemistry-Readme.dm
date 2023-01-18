@@ -265,7 +265,7 @@ About the Tools:
 			It simply tells us how much to transfer when
 			'pouring' our reagents into something else.
 
-		atom/proc/is_can_receive()
+		atom/proc/can_receive()
 			Checks atom/var/flags & CAN_RECEIVE.
 			If this returns 1 , you can use syringes, beakers etc
 			to manipulate the contents of this object.

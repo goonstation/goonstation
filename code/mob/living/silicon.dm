@@ -625,7 +625,7 @@ var/global/list/module_editors = list()
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_can_receive() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.can_receive() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
 	random_brute_damage(src, AM.throwforce,1)
 
 	#ifdef DATALOGGER

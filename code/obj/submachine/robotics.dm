@@ -429,7 +429,7 @@ ported and crapped up by: haine
 		if (istype(target, /obj/machinery) || ismob(target) || isturf(target)) // Do nothing if the user is trying to put it in a machine or feeding a mob.
 			return
 
-		if (target.is_can_receive()) //Something like a glass. Player probably wants to transfer TO it.
+		if (target.can_receive()) //Something like a glass. Player probably wants to transfer TO it.
 			if (!src.reagents.total_volume)
 				user.show_text("[src] is empty!", "red")
 				return

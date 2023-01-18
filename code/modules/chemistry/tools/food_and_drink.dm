@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					JOB_XP(user, "Bartender", 1)
 			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
 				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
-				if (soda_can.is_can_receive() && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
+				if (soda_can.can_receive() && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
 			else
@@ -1082,7 +1082,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				S.shakes ++
 				return
 
-		else if (istype(W, /obj/item/reagent_containers) && W.is_can_receive() && W.reagents.has_reagent("salt"))
+		else if (istype(W, /obj/item/reagent_containers) && W.can_receive() && W.reagents.has_reagent("salt"))
 			if (src.salted)
 				return
 			else if (W.reagents.get_reagent_amount("salt") >= 5)

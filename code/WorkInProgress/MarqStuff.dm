@@ -444,7 +444,7 @@
 			return 1
 		else
 			var/obj/item/I = target
-			if (istype(I) && I.is_can_receive() == 1 && I.reagents) //hello if you're seeing this then my code is approved, you'll need to use is_can_receive instead of is_open_container, it's the same thing with different names
+			if (istype(I) && I.can_receive() == 1 && I.reagents) //hello if you're seeing this then my code is approved, you'll need to use is_can_receive instead of is_open_container, it's the same thing with different names
 				if (reagents.total_volume == reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
 				else if (!I.reagents.total_volume)

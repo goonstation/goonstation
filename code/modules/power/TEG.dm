@@ -113,16 +113,16 @@
 			. += "The instruction manual should have more information."
 		if(dist <= 5)
 			. += "[repair_desc]"
-			. += "<br><span class='notice'>The maintenance panel is [src.is_can_receive() ? "open" : "closed"].</span>"
+			. += "<br><span class='notice'>The maintenance panel is [src.can_receive() ? "open" : "closed"].</span>"
 		if(dist <= 2)
 			. += "<br><span class='notice'>Serial Number: [serial_num].</span>"
-		if(dist <= 2 && reagents && is_can_receive() )
+		if(dist <= 2 && reagents && can_receive() )
 			. += "<br><span class='notice'>The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].</span>"
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
 	attackby(obj/item/W, mob/user)
-		var/open = is_can_receive()
+		var/open = can_receive()
 
 		// Weld > Crowbar > Rods > Weld
 		if(open && repairstate)
@@ -265,7 +265,7 @@
 			src.reagents_consumed = src.reagents.maximum_volume / 5
 			src.lube_cycle_duration = 1
 			src.repairstate = 1
-			if(src.is_can_receive() && src.reagents.total_volume )
+			if(src.can_receive() && src.reagents.total_volume )
 				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
 				playsound(src.loc, 'sound/effects/bubbles3.ogg', 80, 1, -3, pitch=0.7)
 			else
@@ -319,7 +319,7 @@
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		// Protect if hatch is closed
-		if(src.is_can_receive())
+		if(src.can_receive())
 			. = ..()
 		else
 			src.material?.triggerTemp(src, exposed_temperature)
@@ -408,7 +408,7 @@
 		else
 			icon_state = "circ[side]-off"
 
-		if(src.is_can_receive())
+		if(src.can_receive())
 			if(src.GetOverlayImage("open")) return 1
 
 			var/icon/open_icon = icon('icons/obj/atmospherics/atmos.dmi',"can-oT")

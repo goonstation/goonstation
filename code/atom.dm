@@ -8,8 +8,8 @@
 	plane = PLANE_DEFAULT
 	var/level = 2
 	var/flags = FPRINT
-	var/rc_desc_flag = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	var/rc_flags = null
+	var/rc_desc_flag = null //flags for descriptions of reagents inside containers
+	var/rc_flags = null //flags for reagent container behavior
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -205,17 +205,15 @@
 
 /**
   * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
 	*/
-	proc/is_can_receive()
-		return rc_flags & CAN_RECEIVE
+	proc/can_receive()
+		return rc_flags & CAN_RECEIVE //checks for CAN_RECEIVE
 
-	proc/is_can_transfer()
-		return rc_flags & CAN_TRANSFER
+	proc/can_transfer()
+		return rc_flags & CAN_TRANSFER //checks for CAN_TRANSFER
 
-	proc/is_can_splash()
-		return rc_flags & CAN_SPLASH
+	proc/can_splash()
+		return rc_flags & CAN_SPLASH //checks for CAN_SPLASH
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
