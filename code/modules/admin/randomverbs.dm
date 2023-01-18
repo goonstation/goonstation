@@ -1720,7 +1720,6 @@
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
 	newMind.brain = M.mind.brain
-	newMind.dnr = M.mind.dnr
 	newMind.is_target = M.mind.is_target
 	if (M.mind.former_antagonist_roles.len)
 		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)

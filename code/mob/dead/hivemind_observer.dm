@@ -1,4 +1,5 @@
 /mob/dead/target_observer/hivemind_observer
+	is_respawnable = FALSE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0

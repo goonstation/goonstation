@@ -741,7 +741,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
-
+		logTheThing(LOG_COMBAT, M, "is mindhacked ([src.expire ? "regular" : "deluxe"]) by [constructTarget(I,"combat")] at [log_loc(I)].")
 		M.setStatus("mindhack", expire ? (25 + rand(-5,5)) MINUTES : null, I, custom_orders)
 		src.uses -= 1
 

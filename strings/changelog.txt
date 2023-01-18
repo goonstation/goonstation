@@ -1,5 +1,39 @@
 
+(t)tue jan 17 23
+(u)Emily
+(*)Stationfinder RPG added to the tabletop gaming kits
+(u)DrWolfy
+(p)11826
+(e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
+(*)CheMaster3000 rework with TGUI.
+(u)Cheffie
+(p)12717
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)The penalty for draining a corpse as a thrall now only applies if it's rotting.
+(u)Flaborized
+(p)12761
+(e)🆕🎨|C-Feature, C-Sprites
+(+)There are now unique sprites for joints rolled out of space credits.
+(u)DisturbHerb
+(p)12784
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gaming machines now have 5 board game clocks available for purchase.
+(u)Flourish
+(e)💅|C-QoL
+(*)Added a bunch more emotes - *squint, *scoff, *nodslowly, *starehands, *rubface, *rubtemples, *scratchhead, *jazzhands, *thumbsup, *pose, *rolleyes, *sideeye, *examine, and a very special and secret *jsay!
 (t)mon jan 16 23
+(u)Flourish
+(e)🪲|C-Bug
+(*)Hitting Z / blocking on non-grab intent while on top of a chair will now buckle you in again. It was a bug that all intents made you climb the chair, so I've fixed it. I know this was a pretty longstanding bug, though, so let me know if you have feedback or want buckling to be help intent only.
+(u)Flourish
+(e)💅|C-QoL
+(+)Injector belts and vapomatics can now only hold small sized items. This means they can no longer hold artbeakers.
+(+)Phones now record their last caller on their screen.
+(+)You can now compost organs with the compost tank.
+(+)When drinking something, bartenders can now discern both the reagents and how it tastes.
+(u)Flourish
+(e)🎨💅|C-Sprites, C-QoL
+(*)The cloning console now has an "in-progress" screen for when all connected pods are in use (i.e. currently cloning someone).
 (u)Sovexe
 (p)12588
 (e)🎨📦|C-Sprites, A-Game-Objects

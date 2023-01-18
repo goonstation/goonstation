@@ -277,7 +277,7 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				src.mind?.dnr = 1
+				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
 			else
@@ -462,7 +462,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -599,7 +599,7 @@
 	//set category = "Ghost"
 	// ooooo its a secret, oooooo!!
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 

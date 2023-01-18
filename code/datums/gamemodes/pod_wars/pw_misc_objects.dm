@@ -206,7 +206,7 @@
 			return
 
 		for(var/datum/mind/mind in to_search)
-			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
+			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
 				//prune puritan trait
 				mind.current?.traitHolder.removeTrait("puritan")
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
@@ -547,10 +547,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 /obj/control_point_computer
 	name = "computer"	//name it based on area.
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer_generic"
+	icon = 'icons/obj/control_point_computer.dmi'
+	icon_state = "control_point_computer"
 	density = 1
 	anchored = 1
+
+	var/image/screen
+	var/image/screen_light
+	var/image/name_overlay
+
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -568,7 +573,29 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
 
-		//name it based on area.
+		src.update_screen("screen")
+
+		if (src.dir == NORTH || src.dir == SOUTH)
+			src.bound_width = 64
+			src.bound_height = 32
+		else if (src.dir == EAST || src.dir == WEST)
+			src.bound_width = 32
+			src.bound_height = 64
+
+	proc/update_screen(var/icon_state)
+		src.screen = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.UpdateOverlays(src.screen, "screen")
+
+		src.screen_light = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.screen_light.plane = PLANE_LIGHTING
+		src.screen_light.blend_mode = BLEND_ADD
+		src.screen_light.layer = LIGHTING_LAYER_BASE
+		src.screen_light.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(src.screen_light, "screen_light")
+
+	proc/update_name_overlay(var/icon_state)
+		src.name_overlay = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.UpdateOverlays(src.name_overlay, "name_overlay")
 
 	ex_act()
 		return
@@ -638,17 +665,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			light_r = 0
 			light_g = 0
 			light_b = 1
-			icon_state = "computer_blue"
+			src.update_screen("nanotrasen")
 		else if (owner_team == TEAM_SYNDICATE)
 			light_r = 1
 			light_g = 0
 			light_b = 0
-			icon_state = "computer_red"
+			src.update_screen("syndicate")
 		else
 			light_r = 1
 			light_g = 1
 			light_b = 1
-			icon_state = "computer_generic"
+			src.update_screen("screen")
 
 		light.set_color(light_r, light_g, light_b)
 
