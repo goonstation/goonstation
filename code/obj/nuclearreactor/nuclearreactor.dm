@@ -59,10 +59,14 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
+
+		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
+		for(var/turf/simulated/floor/F in src.locs)
+			F.explosion_immune = TRUE
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
@@ -73,6 +77,8 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("reactor_light")
+		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
+			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
 	update_icon()
@@ -280,7 +286,7 @@
 		if(rads <= 0)
 			return
 
-		for(var/i = min(ceil(rads/2),50),i>0,i--)
+		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
