@@ -86,7 +86,6 @@ const PreviewWindow = (props, context) => {
   const { preview, current_hair_style } = data;
   return (
     <Section>
-
       <Stack justify="space-around" height="200px" wrap="wrap">
         <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
         <ByondUi
