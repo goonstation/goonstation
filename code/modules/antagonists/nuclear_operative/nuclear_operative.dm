@@ -22,7 +22,7 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
+			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with your equipment. That's biology for you.</span>")
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
