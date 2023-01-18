@@ -12186,7 +12186,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/bookshelf,
+/obj/cabinet/psychiatry,
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -12825,10 +12825,6 @@
 /area/station/medical/morgue)
 "aQn" = (
 /obj/table/wood/auto,
-/obj/blind_switch/area{
-	pixel_y = 2;
-	pixel_x = -4
-	},
 /obj/item/kitchen/food_box/lollipop{
 	pixel_y = 4;
 	pixel_x = 5
@@ -12849,10 +12845,9 @@
 "aQq" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+	pixel_x = 12
 	},
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -13755,7 +13750,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/filing_cabinet,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/medbay/psychiatrist)
 "aSD" = (
@@ -14017,7 +14011,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cabinet/psychiatry,
+/obj/filing_cabinet,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/psychiatrist)
 "aTx" = (
@@ -14279,12 +14273,7 @@
 "aUj" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/psychiatrist)
-"aUk" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "aUm" = (
@@ -14445,12 +14434,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "aUV" = (
-/obj/disposalpipe/segment/vertical,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -14466,9 +14455,6 @@
 	},
 /area/station/medical/medbay)
 "aUY" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -14850,7 +14836,6 @@
 	},
 /area/station/medical/medbay/psychiatrist)
 "aWj" = (
-/obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15275,16 +15260,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/dome)
 "aXv" = (
-/obj/machinery/light_switch/west,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
 /area/station/medical/medbay/psychiatrist)
 "aXx" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/stool/chair/comfy{
 	dir = 8
 	},
@@ -16669,10 +16649,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bcS" = (
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+	pixel_x = -12
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -20159,12 +20138,12 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "boT" = (
-/obj/disposalpipe/segment/bent/north,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "boU" = (
@@ -21526,6 +21505,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "btW" = (
@@ -38634,7 +38614,7 @@
 /area/station/crew_quarters/pool)
 "dXb" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "dXe" = (
@@ -55268,6 +55248,14 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"sdX" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/psychiatrist)
 "set" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/wood,
@@ -58400,6 +58388,9 @@
 "uGl" = (
 /obj/stool/chair/couch{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -96796,7 +96787,7 @@ aLA
 aLv
 mOM
 mOM
-mOM
+sdX
 mOM
 tKY
 vOP
@@ -98010,7 +98001,7 @@ vDR
 iAc
 vDR
 aTw
-aUk
+mOM
 btW
 aWk
 btW
