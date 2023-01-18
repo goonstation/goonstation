@@ -624,7 +624,7 @@ TYPEINFO(/obj/machinery/vending)
 	else // make a new one
 		vended = new product.product_path(src.get_output_location())
 	vended.name = product.product_name
-	vended.loc = src.get_output_location()
+	vended.set_loc(src.get_output_location())
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
 		if (src.vend_inhand)
