@@ -191,7 +191,7 @@
 
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
 		. = ..()
-		src.reagents.clear_reagents() // no
+		src.reagents?.clear_reagents() // no
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
