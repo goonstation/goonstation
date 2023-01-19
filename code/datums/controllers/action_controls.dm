@@ -1160,45 +1160,35 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
+		if(!istype(ownerMob) || !target || !cuffs || target.hasStatus("handcuffed") || cuffs != ownerMob.equipped() || BOUNDS_DIST(owner, target) != 0)
+			return
 
-			var/obj/item/handcuffs/tape/cuffs2
-
-			if (initial(cuffs.amount) > 1)
-				if (cuffs.amount >= 1)
-					cuffs2 = new /obj/item/handcuffs/tape
-					cuffs2.apply_multiplier = cuffs.apply_multiplier
-					cuffs2.remove_self_multiplier = cuffs.remove_self_multiplier
-					cuffs2.remove_other_multiplier = cuffs.remove_other_multiplier
-					cuffs.amount--
-					if (cuffs.amount < 1 && cuffs.delete_on_last_use)
-						ownerMob.u_equip(cuffs)
-						boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
-						qdel(cuffs)
-					else
-						boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
-				else
-					boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
-					interrupt(INTERRUPT_ALWAYS)
-			else
+		if (initial(cuffs.amount) > 1)
+			if (cuffs.amount < 1)
+				boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			var/obj/item/handcuffs/tape/inner_cuffs = new /obj/item/handcuffs/tape
+			inner_cuffs.apply_multiplier = cuffs.apply_multiplier
+			inner_cuffs.remove_self_multiplier = cuffs.remove_self_multiplier
+			inner_cuffs.remove_other_multiplier = cuffs.remove_other_multiplier
+			cuffs.amount--
+			if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 				ownerMob.u_equip(cuffs)
-
-			logTheThing(LOG_COMBAT, ownerMob, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
-
-			if (cuffs2 && istype(cuffs2))
-				cuffs2.set_loc(target)
-				target.handcuffs = cuffs2
+				boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+				qdel(cuffs)
 			else
-				cuffs.set_loc(target)
-				target.handcuffs = cuffs
-			target.drop_from_slot(target.r_hand)
-			target.drop_from_slot(target.l_hand)
-			target.drop_juggle()
-			target.setStatus("handcuffed", duration = INFINITE_STATUS)
-			target.update_clothing()
+				boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
+			cuffs = inner_cuffs
+		else
+			ownerMob.u_equip(cuffs)
 
-			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
+
+		logTheThing(LOG_COMBAT, ownerMob, "handcuffs [constructTarget(target,"combat")] with [cuffs] at [log_loc(ownerMob)].")
+
+		cuffs.cuff(target)
+		for(var/mob/O in AIviewers(ownerMob))
+			O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
