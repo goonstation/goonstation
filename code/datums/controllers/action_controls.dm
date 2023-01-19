@@ -1016,24 +1016,25 @@ var/datum/action_controller/actions
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			// Picking a clowns pockets is likely to give you a stupid item instead
 			if (target.job == "Clown" && (slot == SLOT_L_STORE || slot == SLOT_R_STORE))
-				if (!ON_COOLDOWN(target, "prank_pockets", 30 SECONDS) && prob(50))
-					var/list/clown_pocket_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg,
-					 /obj/item/fish/red_herring,
-					 /obj/item/gun/kinetic/rpg7,
-					 /obj/item/toy/plush/small/bee,
-					 /obj/item/toy/plush/small/monkey,
-					 /obj/item/instrument/saxophone,
-					 /obj/item/instrument/large/piano/grand,
-					 /obj/item/storage/toilet,
-					 /obj/item/clothing/head/bigtex)
-					var/obj/item/pick = pick(clown_pocket_junk)
-					I = new pick
-					logTheThing(LOG_COMBAT, source, "tries to remove a pocket item from clown [constructTarget(target,"combat")] but instead gets prank item [I] at [log_loc(target)].")
-					I.set_loc(target.loc)
-					I.layer = initial(I.layer)
-					I.add_fingerprint(target)
-					source.visible_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>")
-					return
+				if (prob(50))
+					if (!ON_COOLDOWN(target, "prank_pockets", 30 SECONDS))
+						var/list/clown_pocket_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg,
+						/obj/item/fish/red_herring,
+						/obj/item/gun/kinetic/rpg7,
+						/obj/item/toy/plush/small/bee,
+						/obj/item/toy/plush/small/monkey,
+						/obj/item/instrument/saxophone,
+						/obj/item/instrument/large/piano/grand,
+						/obj/item/storage/toilet,
+						/obj/item/clothing/head/bigtex)
+						var/obj/item/pick = pick(clown_pocket_junk)
+						I = new pick
+						logTheThing(LOG_COMBAT, source, "tries to remove a pocket item from clown [constructTarget(target,"combat")] but instead gets prank item [I] at [log_loc(target)].")
+						I.set_loc(target.loc)
+						I.layer = initial(I.layer)
+						I.add_fingerprint(target)
+						source.visible_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>")
+						return
 			if(I.handle_other_remove(source, target))
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				source.visible_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>")
