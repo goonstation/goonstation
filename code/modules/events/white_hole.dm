@@ -589,6 +589,7 @@
 			"organ" = 20,
 			/obj/item/reagent_containers/hypospray = 5,
 			"corpse" = 3,
+			"geneinjector" = 300,
 			/obj/item/reagent_containers/syringe = 10,
 			/obj/item/clothing/gloves/latex = 5,
 			/obj/item/robodefibrillator = 1,
@@ -862,7 +863,19 @@
 					qdel(organ)
 				human.death()
 				human.set_loc(src.loc)
-
+			if("geneinjector")
+				var/datum/bioEffect/effect = pick(global.mutini_effects)
+				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
+					var/chromosome_type = pick(typesof(/datum/dna_chromosome))
+					var/datum/dna_chromosome/chromosome = new chromosome_type()
+					// yes we skipping the apply_check here, the other dimension can break laws of genetics
+					chromosome.apply(effect)
+				var/obj/item/genetics_injector/dna_injector/inj = new(src.loc)
+				if(prob(50))
+					inj.name = "dna injector - [effect.name]"
+				else
+					inj.name = "dna injector - ???"
+				inj.BE = effect
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
