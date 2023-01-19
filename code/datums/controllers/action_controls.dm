@@ -1015,7 +1015,7 @@ var/datum/action_controller/actions
 					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			// Picking a clowns pockets is likely to give you a stupid item instead
-			if (target.job == "Clown" && (slot == SLOT_L_STORE) || (slot == SLOT_R_STORE))
+			if (target.job == "Clown" && (slot == SLOT_L_STORE || slot == SLOT_R_STORE))
 				if (!ON_COOLDOWN(target, "prank_pockets", 30 SECONDS) && prob(50))
 					var/list/clown_pocket_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg,
 					 /obj/item/fish/red_herring,
