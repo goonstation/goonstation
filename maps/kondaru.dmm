@@ -12186,7 +12186,11 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/cabinet/psychiatry,
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -14455,7 +14459,7 @@
 	},
 /area/station/medical/medbay)
 "aUY" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/cabinet/psychiatry,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -15268,6 +15272,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/blind_switch/area/east,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -58548,7 +58553,7 @@
 	},
 /area/station/hydroponics/bay)
 "uNE" = (
-/obj/blind_switch/area/east,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
