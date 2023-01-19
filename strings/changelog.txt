@@ -13,6 +13,8 @@
 (+)Flockdrones now dodge a little slower.
 (u)LeahTheTech
 (+)Flock compute nodes now provide 50 compute, down from 60.
+(u)LeahTheTech
+(+)Flockminds and traces now have a tracker hud element pointing to the relay while it is active.
 (u)goonstation-enjoyer
 (p)12658
 (e)🪲🔨|C-Bug, A-Player-Actions

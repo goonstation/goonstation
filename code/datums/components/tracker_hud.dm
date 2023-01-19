@@ -8,15 +8,16 @@
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !target)
 		return COMPONENT_INCOMPATIBLE
-	if(!ismob(src.parent) || !hasvar(src.parent, "hud")) // I'm so sorry
+	var/mob/mob_parent = src.parent
+	if(!istype(mob_parent) || !mob_parent.get_hud())
 		return COMPONENT_INCOMPATIBLE
 	src.target = target
 	src.color = color || src.color
 
 /datum/component/tracker_hud/RegisterWithParent()
 	. = ..()
-	//may hasvar protect us 🙏
-	var/datum/hud/hud = src.parent:hud
+	var/mob/mob_parent = src.parent
+	var/datum/hud/hud = mob_parent.get_hud()
 	if (!src.hudarrow)
 		hudarrow = hud.create_screen("pinpointer", "Pinpointer", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
 		hudarrow.mouse_opacity = 0
@@ -31,7 +32,8 @@
 
 /datum/component/tracker_hud/UnregisterFromParent()
 	. = ..()
-	var/datum/hud/hud = src.parent:hud
+	var/mob/mob_parent = src.parent
+	var/datum/hud/hud = mob_parent.get_hud()
 	hud.remove_object(src.hudarrow)
 
 	var/datum/controller/process/tracker_hud/controller = locate() in processScheduler.processes
@@ -82,3 +84,6 @@
 	var/datum/abilityHolder/vampire/holder = src.master.client?.mob?.get_ability_holder(/datum/abilityHolder/vampire)
 	src.target = holder?.owner
 	..()
+
+/datum/component/tracker_hud/flock
+	color = "#15ccb4"
