@@ -340,7 +340,7 @@
 		),
 		"plasma" = list(
 			"plasma" = 100,
-			/mob/living/critter/plasmaspore = 3,
+			/obj/critter/spore = 3,
 			/obj/item/raw_material/shard/plasmacrystal = 1,
 			/obj/item/raw_material/plasmastone = 1,
 		),
