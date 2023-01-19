@@ -8,6 +8,7 @@ TYPEINFO(/datum/component/loctargeting)
 	initialization_args = list()
 
 /datum/component/loctargeting/Initialize()
+	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 

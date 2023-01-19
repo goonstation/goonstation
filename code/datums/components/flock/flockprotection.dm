@@ -5,6 +5,7 @@
 	var/datum/flock/flock
 
 /datum/component/flock_interest/Initialize(datum/flock/flock)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

@@ -331,6 +331,7 @@ TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	. = ..()
 	if(add_bug(A, B, user))
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/pickup)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)

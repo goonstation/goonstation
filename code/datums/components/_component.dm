@@ -85,6 +85,7 @@ var/datum/signal_holder/global_signal_holder
   * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   */
 /datum/component/proc/Initialize(...)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /**
