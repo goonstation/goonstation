@@ -1,5 +1,5 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown") // "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay") // "cargo")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -43,7 +43,7 @@
 				boutput(usr, "<span class='alert'>Cancelled.</span>")
 				return
 
-		var/activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 0, 10, round_input=FALSE)
+		var/activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 10, 0, round_input=FALSE)
 
 		src.event_effect(source, target_turf, grow_duration, duration, source_location, activity_modifier)
 
@@ -578,6 +578,31 @@
 			/obj/item/material_piece/cloth/carbon = 0.02,
 			/obj/item/raw_material/gemstone = 3,
 		),
+		"medbay" = list(
+			/obj/item/surgical_spoon = 5,
+			/obj/item/scalpel = 5,
+			/obj/item/circular_saw = 5,
+			/obj/item/hemostat = 5,
+			/obj/item/scissors/surgical_scissors = 5,
+			/obj/machinery/optable = 2,
+			"medicine" = 20,
+			"organ" = 20,
+			/obj/item/reagent_containers/hypospray = 5,
+			"corpse" = 3,
+			/obj/item/reagent_containers/syringe = 10,
+			/obj/item/clothing/gloves/latex = 5,
+			/obj/item/robodefibrillator = 1,
+			/obj/item/storage/firstaid/oxygen = 4,
+			/obj/item/storage/firstaid/brute = 4,
+			/obj/item/storage/firstaid/fire = 4,
+			/obj/item/storage/firstaid/regular = 4,
+			/obj/item/storage/firstaid/toxin = 4,
+			/obj/machinery/manufacturer/medical = 2,
+			/obj/machinery/bot/medbot = 5,
+			/obj/machinery/bot/medbot/mysterious/emagged = 1,
+			/datum/reagent/blood = 5,
+			/datum/reagent/fooddrink/coffee = 2,
+		)
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
@@ -816,6 +841,26 @@
 					fryholder.reagents.my_atom = fryholder
 					thing.set_loc(fryholder)
 					. = fryholder
+			if ("medicine")
+				spawn_type = pick(concrete_typesof(/obj/item/reagent_containers/glass/bottle))
+				. = new spawn_type(src.loc)
+			if ("organ")
+				spawn_type = pick(concrete_typesof(/obj/item/organ))
+				. = new spawn_type(src.loc)
+			if ("corpse")
+				spawn_type = pick( //safe jobs that don't introduce too much loot
+					/mob/living/carbon/human/normal/assistant,
+					/mob/living/carbon/human/normal/clown,
+					/mob/living/carbon/human/normal/chef,
+					/mob/living/carbon/human/normal/botanist,
+					/mob/living/carbon/human/normal/janitor,
+					/mob/living/carbon/human/normal/miner)
+				var/mob/living/carbon/human/normal/human = new spawn_type(null)
+				for (var/i in 1 to rand(1,4))
+					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
+					qdel(organ)
+				human.death()
+				human.set_loc(src.loc)
 
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
