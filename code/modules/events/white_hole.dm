@@ -609,6 +609,7 @@
 		"security" = list(
 			/obj/item/handcuffs/guardbot = 10,
 			/obj/item/handcuffs = 3,
+			/obj/itemspecialeffect/barrier = 3,
 			/obj/machinery/bot/secbot = 1,
 			/obj/machinery/bot/secbot/emagged = 3,
 			/obj/item/reagent_containers/food/snacks/donut/custom/random = 15,
