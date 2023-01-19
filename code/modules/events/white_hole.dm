@@ -703,6 +703,12 @@
 
 	proc/generate_thing(source_location)
 		var/spawn_type = weighted_pick(src.spawn_probs[source_location])
+
+		// if we roll hotspot or plasma in an "inner" call (for example for flockification or deep frying)
+		// we get one reroll to get something else
+		if((spawn_type in list(/obj/hotspot, "plasma")) && source_location != src.source_location)
+			spawn_type = weighted_pick(src.spawn_probs[source_location])
+
 		if(ispath(spawn_type, /atom/movable))
 			. = new spawn_type(src.loc)
 		else if(ispath(spawn_type, /datum/projectile))
