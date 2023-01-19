@@ -379,6 +379,7 @@
 			/obj/critter/slime/magma = 5,
 			/obj/critter/slime/large/magma = 1,
 			/obj/decal/cleanable/ash = 10,
+			#endif
 			/mob/living/carbon/human/normal = 5,
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
@@ -442,6 +443,7 @@
 			/mob/living/carbon/human/normal/assistant = 2,
 			/mob/living/critter/legman = 1,
 		),
+			#endif
 		"ai" = list(
 			/datum/projectile/laser/heavy/law_safe = 30,
 			/datum/projectile/energy_bolt/robust = 30,
