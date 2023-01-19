@@ -1,0 +1,912 @@
+#define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown") // "cargo")
+
+/datum/random_event/major/white_hole
+	name = "White Hole"
+	required_elapsed_round_time = 26.6 MINUTES
+	customization_available = TRUE
+
+	admin_call(source)
+		if (..())
+			return
+
+		var/turf/target_turf = null
+		switch(tgui_alert(usr, "Do you want to pick white hole location?", "Pick location", list("Pick", "Random", "Cancel")))
+			if("Pick")
+				target_turf = get_turf(pick_ref(usr))
+				if(isnull(target_turf))
+					boutput(usr, "<span class='alert'>Cancelled. You must select a turf.</span>")
+					return
+			if("Random")
+				target_turf = null
+			if("Cancel")
+				boutput(usr, "<span class='alert'>Cancelled.</span>")
+				return
+
+		var/grow_duration = tgui_input_number(usr, "How long should it take for the white hole to grow?", "White Hole Growth Time", 2 MINUTES, 1 HOUR, 0)
+		if(isnull(grow_duration))
+			boutput(usr, "<span class='alert'>Cancelled.</span>")
+			return
+
+		var/duration = tgui_input_number(usr, "How long should the white hole be active?", "White Hole Duration", 40 SECONDS, 1 HOUR, 0)
+		if(isnull(duration))
+			boutput(usr, "<span class='alert'>Cancelled.</span>")
+			return
+
+		var/source_location = null
+		switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Random", "Cancel")))
+			if("Pick")
+				source_location = tgui_input_list(usr, "Which white hole source location?", "White Hole Source Location", VALID_WHITE_HOLE_LOCATIONS)
+			if("Random")
+				source_location = null
+			if("Cancel")
+				boutput(usr, "<span class='alert'>Cancelled.</span>")
+				return
+
+		src.event_effect(source, target_turf, grow_duration, duration, source_location)
+
+	event_effect(source, turf/T, grow_duration, duration, source_location)
+		..()
+		if (!istype(T,/turf/))
+			if(isnull(random_floor_turfs))
+				build_random_floor_turf_list()
+			T = pick(random_floor_turfs)
+
+		if(isnull(grow_duration))
+			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
+
+		if(isnull(duration))
+			duration = 40 SECONDS + rand(-10 SECONDS, 10 SECONDS)
+
+		message_admins("White Hole anomaly spawning in [log_loc(T)]")
+		new /obj/whole(T, grow_duration, duration, source_location, TRUE)
+
+
+/obj/whole
+	name = "white hole"
+	icon = 'icons/effects/160x160.dmi'
+	desc = "HHHAAA KCUF KCUF KCUF"
+	icon_state = "whole"
+	opacity = 0
+	density = 1
+	anchored = 2
+	pixel_x = -64
+	pixel_y = -64
+	event_handler_flags = IMMUNE_SINGULARITY
+	plane = PLANE_NOSHADOW_BELOW
+	mouse_opacity = FALSE
+	var/static/list/valid_locations = VALID_WHITE_HOLE_LOCATIONS
+	var/source_location = null
+	var/start_time
+	var/state = "static"
+	var/triggered_by_event = FALSE
+	var/grow_duration = 0
+	var/active_duration = 0
+
+	var/static/list/spawn_probs = list(
+		"artlab" = list(
+			"artifact" = 60,
+			/obj/item/pen = 10,
+			/obj/item/pen/pencil = 10,
+			/obj/item/sticker/postit/artifact_paper = 20,
+			/obj/item/parts/robot_parts/arm/right/light = 20,
+			/obj/item/hand_labeler = 20,
+			/obj/item/device/multitool = 10,
+			/obj/item/weldingtool = 10,
+			/obj/stool/chair/office = 10,
+			/obj/item/cargotele = 2,
+			/obj/item/disk/data/tape = 2,
+			/mob/living/carbon/human/npc/monkey = 0.5,
+			/mob/living/carbon/human/normal/scientist = 0.5,
+			#ifdef SECRETS_ENABLED
+			/mob/living/carbon/human/npc/monkey/extremely_fast = 0.05,
+			#endif
+		),
+		"teg" = list(
+			/obj/hotspot = 90,
+			"plasma" = 50,
+			/obj/item/wrench/yellow = 10,
+			/obj/item/weldingtool/yellow = 10,
+			/obj/item/crowbar/yellow = 10,
+			/obj/item/screwdriver/yellow = 10,
+			/obj/item/wirecutters/yellow = 10,
+			/obj/item/cable_coil = 10,
+			/obj/item/sheet/steel/fullstack = 10,
+			/obj/item/sheet/glass/fullstack = 10,
+			/obj/item/rods/steel/fullstack = 10,
+			/obj/item/tile/steel/fullstack = 10,
+			/obj/item/extinguisher = 10,
+			/obj/item/device/light/flashlight = 10,
+			/obj/machinery/portable_atmospherics/canister/toxins = 2,
+			/obj/machinery/portable_atmospherics/canister/oxygen = 2,
+			/obj/machinery/portable_atmospherics/canister/nitrogen = 2,
+			/obj/machinery/portable_atmospherics/canister/carbon_dioxide = 2,
+			/obj/item/paper/engine = 5,
+			/obj/item/chem_grenade/firefighting = 5,
+			/obj/item/clothing/mask/gas = 2,
+			/obj/item/clothing/head/helmet/hardhat = 2,
+			/obj/item/clothing/gloves/yellow = 1,
+			/obj/item/clothing/shoes/magnetic = 1,
+			/obj/machinery/portable_atmospherics/pump = 1,
+			/obj/item/deconstructor = 1,
+			/obj/item/raw_material/shard/glass = 5,
+			/obj/item/rcd = 0.5,
+			/obj/item/pipebomb/bomb/syndicate = 0.1,
+			/obj/item/pipebomb/bomb/engineering = 0.3,
+			/mob/living/carbon/human/normal/engineer = 0.5,
+			/mob/living/carbon/human/normal/chiefengineer = 0.2,
+			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
+		),
+		"flock" = list(
+			"flockconverted" = 15,
+			/mob/living/critter/flock/drone = 2,
+			/mob/living/critter/flock/bit = 2,
+			/obj/item/organ/brain/flockdrone = 2,
+			/obj/item/organ/flock_crystal = 2,
+			/datum/projectile/energy_bolt/flockdrone = 4,
+			/obj/item/reagent_containers/gnesis = 2,
+			/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock = 3,
+			/obj/item/reagent_containers/food/snacks/burger/flockburger = 3,
+			/obj/storage/closet/flock = 2,
+			/obj/item/furniture_parts/flock_chair = 7,
+			/obj/stool/chair/comfy/flock = 3,
+			/obj/item/furniture_parts/table/flock = 7,
+			/obj/table/flock = 3,
+			/obj/item/device/flockblocker = 3,
+			/obj/item/paper/flockstatsnote = 1,
+			/obj/window/feather = 1,
+			/obj/grille/flock = 1,
+			/obj/decal/fakeobjects/flock/antenna/not_dense = 1,
+			/obj/decal/cleanable/flockdrone_debris = 1,
+			/obj/decal/cleanable/flockdrone_debris/fluid = 1,
+			/obj/item/gun/energy/flock = 0.05,
+			/obj/item/material_piece/gnesisglass = 5,
+			/obj/item/material_piece/gnesis = 5,
+			/datum/reagent/flockdrone_fluid = 3,
+		),
+		"chapel" = list(
+			/obj/item/storage/bible = 2,
+			/obj/item/device/light/candle = 10,
+			/obj/item/device/light/candle/small = 15,
+			/obj/item/device/light/candle/spooky = 2,
+			/obj/item/device/light/candle/haunted = 2,
+			/obj/item/strange_candle = 2,
+			/obj/item/spook = 5,
+			/obj/storage/closet/coffin = 5,
+			/obj/storage/closet/coffin/wood = 2,
+			/obj/item/card_box/tarot = 2,
+			/obj/item/reagent_containers/glass/bottle/holywater = 3,
+			/obj/stool/chair/pew = 3,
+			/obj/item/ghostboard = 5,
+			/obj/item/ghostboard/emouija = 1,
+			/mob/living/critter/aquatic/fish/nautilus = 2,
+			/obj/item/instrument/large/piano = 3,
+			/obj/storage/closet/dresser = 3,
+			/obj/machinery/traymachine/morgue = 1,
+			/obj/item/body_bag = 2,
+			/obj/item/reagent_containers/glass/bottle/formaldehyde = 1,
+			/obj/item/skull = 5,
+			/obj/item/skull/strange = 0.1,
+			/obj/item/skull/odd = 0.1,
+			/obj/item/skull/peculiar = 0.1,
+			/obj/item/skull/menacing = 0.1,
+			/obj/item/skull/crystal = 0.1,
+			/obj/item/skull/gold = 0.1,
+			/obj/item/skull/noface = 0.1,
+			/mob/living/carbon/human/normal/chaplain = 0.2,
+			/mob/living/critter/skeleton = 1,
+			/obj/item/gun/energy/ghost = 0.2,
+			/obj/item/reagent_containers/food/snacks/ectoplasm = 4,
+			/datum/reagent/water/water_holy = 1,
+			/datum/reagent/blood = 1,
+			/obj/item/kitchen/utensil/knife = 1,
+			/obj/critter/spirit = 1,
+		),
+		"trench" = list(
+			/datum/reagent/water/sea = 20,
+			// /datum/reagent/harmful/tene = 1,
+			/obj/item/seashell = 2,
+			"trenchloot" = 5,
+			"ore" = 5,
+			/obj/critter/shark = 1,
+			/obj/critter/gunbot/drone/gunshark = 1,
+			/obj/critter/gunbot/drone/buzzdrone/fish = 1,
+			/obj/naval_mine/standard = 1,
+			/obj/naval_mine/vandalized = 1,
+			/obj/naval_mine/rusted = 1,
+			/mob/living/critter/small_animal/pikaia = 1,
+			/mob/living/critter/small_animal/hallucigenia = 1,
+			/mob/living/critter/small_animal/trilobite = 1,
+
+			/mob/living/critter/aquatic/fish/jellyfish = 1,
+			/mob/living/critter/aquatic/king_crab = 0.01,
+
+			/mob/living/critter/aquatic/fish/butterfly = 0.5,
+			/mob/living/critter/aquatic/fish/butterfly/copperbanded = 0.5,
+			/mob/living/critter/aquatic/fish/butterfly/addis = 0.5,
+			/mob/living/critter/aquatic/fish/butterfly/spotted = 0.5,
+			/mob/living/critter/aquatic/fish/butterfly/forceps = 0.5,
+			/mob/living/critter/aquatic/fish/tang = 0.5,
+			/mob/living/critter/aquatic/fish/tang/powderblue = 0.5,
+			/mob/living/critter/aquatic/fish/tang/bluesailfin = 0.5,
+			/mob/living/critter/aquatic/fish/tang/purplesailfin = 0.5,
+			/mob/living/critter/aquatic/fish/tang/regal = 0.5,
+			/mob/living/critter/aquatic/fish/angel = 0.5,
+			/mob/living/critter/aquatic/fish/angel/french = 0.5,
+			/mob/living/critter/aquatic/fish/damsel = 0.5,
+			/mob/living/critter/aquatic/fish/damsel/blue = 0.5,
+			/mob/living/critter/aquatic/fish/gamma = 0.5,
+			/mob/living/critter/aquatic/fish/clown = 0.5,
+			/mob/living/critter/aquatic/fish/nautilus = 0.5,
+
+			/obj/sea_plant/kelp = 0.5,
+			/obj/sea_plant/seaweed = 0.5,
+			/obj/sea_plant/tubesponge = 0.5,
+			/obj/sea_plant/tubesponge/small = 0.5,
+			/obj/sea_plant/anemone/lit = 0.5,
+			/obj/sea_plant/anemone = 0.5,
+			/obj/sea_plant/coralfingers = 0.5,
+			/obj/sea_plant/branching = 0.5,
+			/obj/sea_plant/bulbous = 0.5,
+			/obj/nadir_doodad/sinkspires = 0.5,
+			/obj/nadir_doodad/bitelung = 0.5,
+
+			/mob/living/carbon/human/normal/miner = 0.1,
+			/obj/machinery/vehicle/tank/minisub/mining = 0.5,
+		),
+		"asteroid" = list(
+			"ore" = 200,
+			/obj/critter/rockworm = 3,
+			/obj/critter/fermid = 10,
+			/obj/storage/crate/loot = 2,
+			/obj/storage/crate/loot/puzzle = 2,
+			/mob/living/carbon/human/normal/miner = 0.1,
+			/obj/item/raw_material/scrap_metal = 4,
+			/obj/machinery/portable_reclaimer = 1,
+			/obj/item/mining_tool/drill = 0.5,
+			/obj/item/mining_tool/power_pick = 0.5,
+			/obj/item/mining_tool/power_shovel = 0.5,
+			/obj/item/mining_tool/powerhammer = 0.5,
+
+			/obj/critter/gunbot/drone = 0.5,
+			/obj/critter/gunbot/drone/heavydrone = 0.2,
+			/obj/critter/gunbot/drone/cannondrone = 0.2,
+			/obj/critter/gunbot/drone/minigundrone = 0.2,
+			/obj/critter/gunbot/drone/raildrone = 0.2,
+			/obj/critter/gunbot/drone/buzzdrone = 1,
+			/obj/critter/gunbot/drone/laser = 0.2,
+			/obj/critter/gunbot/drone/cutterdrone = 0.2,
+			/obj/critter/gunbot/drone/assdrone = 0.2,
+			/obj/critter/gunbot/drone/aciddrone = 0.2,
+		),
+		"cafeteria" = list(
+			"deepfried" = 2,
+			/obj/item/plate = 10,
+			/obj/item/kitchen/utensil/fork = 10,
+			/obj/item/kitchen/utensil/knife = 10,
+			/obj/item/kitchen/utensil/spoon = 10,
+			/obj/item/kitchen/utensil/knife/bread = 1,
+			/obj/item/kitchen/utensil/knife/cleaver = 1,
+			/obj/item/kitchen/utensil/knife/pizza_cutter = 1,
+			/obj/item/ladle = 0.2,
+			/obj/item/kitchen/rollingpin = 0.5,
+
+			/obj/item/reagent_containers/food/drinks/drinkingglass = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/oldf = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher = 2,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/round = 2,
+			/obj/item/reagent_containers/food/drinks/espressocup = 1,
+			/obj/item/reagent_containers/food/drinks/mug = 1,
+			/obj/item/reagent_containers/food/drinks/tea = 1,
+			/obj/item/reagent_containers/food/drinks/coffee = 1,
+
+			/datum/reagent/vomit = 0.1,
+
+			/obj/stool/bar = 5,
+			/obj/item/decoration/ashtray = 1,
+			/mob/living/carbon/human/normal/chef = 0.1,
+			/mob/living/carbon/human/normal/bartender = 0.1,
+			/mob/living/carbon/human/npc/monkey/angry = 0.1,
+			/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+			/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau = 0.5,
+			/obj/decal/cleanable/vomit = 0.5,
+		),
+		"singulo" = list(
+			/obj/storage/closet/extradimensional = 0.2,
+			/datum/projectile/laser/heavy = 5,
+			/obj/item/tile/steel = 10,
+			/obj/item/rods/steel = 10,
+			/obj/grille/steel = 2,
+			/obj/window = 2,
+			/obj/machinery/emitter = 0.3,
+			/obj/item/toy/plush/small/singuloose = 0.1,
+			/mob/living/carbon/human/normal/engineer = 0.5,
+			/mob/living/carbon/human/normal/chiefengineer = 0.2,
+			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
+			/obj/item/clothing/glasses/meson = 0.5,
+			/obj/item/old_grenade/graviton = 0.2,
+			/obj/gravity_well_generator = 0.5,
+			/obj/item/raw_material/scrap_metal = 4,
+			/obj/item/raw_material/shard/glass = 5,
+			/obj/item/raw_material/shard/plasmacrystal = 3,
+		),
+		"plasma" = list(
+			"plasma" = 100,
+			/mob/living/critter/plasmaspore = 3,
+			/obj/item/raw_material/shard/plasmacrystal = 1,
+			/obj/item/raw_material/plasmastone = 1,
+		),
+		"nukies" = list(
+			/datum/projectile/bullet/minigun = 5,
+			/datum/projectile/energy_bolt = 5,
+			/datum/projectile/bullet/rpg = 0.5,
+			/datum/projectile/bullet/assault_rifle = 5,
+			/datum/projectile/bullet/grenade_round/explosive = 0.5,
+			/obj/machinery/bot/secbot = 2,
+			/obj/machinery/bot/guardbot = 2,
+			/obj/barricade = 1,
+			/obj/item/deployer/barricade = 0.5,
+			/mob/living/carbon/human/npc/monkey/oppenheimer = 0.5,
+			/obj/item/mine/blast/armed = 1,
+			/obj/item/mine/incendiary/armed = 1,
+			/obj/item/mine/radiation/armed = 1,
+			/obj/item/mine/stun/armed = 1,
+			/obj/item/old_grenade/stinger/frag = 1,
+			/obj/item/old_grenade/stinger = 1,
+			/obj/item/chem_grenade/very_incendiary = 0.5,
+			/obj/item/chem_grenade/incendiary = 1,
+			/obj/stool/chair/office/syndie = 1,
+			/obj/item/paper/book/from_file/syndies_guide = 0.5,
+			/obj/item/beartrap/armed = 1,
+			/datum/reagent/harmful/sarin = 0.1,
+			/datum/reagent/blood = 1,
+			/mob/living/critter/robotic/sawfly = 2,
+			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
+			/obj/bomb_decoy = 0.4,
+		),
+		"hell" = list(
+			/obj/hotspot = 10,
+			/obj/critter/lavacrab = 5,
+			/obj/submachine/slot_machine = 5,
+			/obj/critter/slime/magma = 5,
+			/obj/critter/slime/large/magma = 1,
+			/obj/decal/cleanable/ash = 10,
+			/mob/living/carbon/human/normal = 5,
+			/obj/decal/stalagmite = 5,
+			/obj/decal/cleanable/molten_item = 10,
+			// yeah idk where I was going with "hell" either
+		),
+		"botany" = list(
+			"randomplant" = 100,
+			/obj/item/reagent_containers/food/snacks/plant/tomato = 100,
+			/obj/item/reagent_containers/food/snacks/ingredient/egg/bee = 100,
+			/obj/item/plant/herb/cannabis/spawnable = 80,
+			/obj/item/plant/herb/cannabis/mega/spawnable = 10,
+			/obj/item/plant/herb/cannabis/black/spawnable = 10,
+			/obj/item/plant/herb/cannabis/white/spawnable = 5,
+			/obj/item/plant/herb/cannabis/omega/spawnable = 3,
+			/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 50,
+			/obj/critter/domestic_bee = 10,
+			/obj/critter/domestic_bee_larva = 10,
+			/datum/reagent/fooddrink/juice_tomato = 1,
+			/datum/reagent/drug/THC = 1,
+			/datum/reagent/poo = 1,
+			/obj/item/reagent_containers/food/snacks/plant/melonslice = 10,
+			/obj/item/reagent_containers/food/snacks/plant/melon = 20,
+			/obj/item/reagent_containers/food/snacks/plant/melon/bowling = 20,
+			/obj/item/seed/alien = 2,
+			/obj/machinery/plantpot = 10,
+			/obj/reagent_dispensers/watertank = 2,
+			/obj/reagent_dispensers/compostbin = 2,
+			/obj/item/clothing/mask/cigarette = 10,
+			/obj/item/reagent_containers/glass/water_pipe = 1,
+			/obj/item/device/light/lava_lamp = 1,
+		),
+		"maint" = list(
+			/obj/decal/cleanable/rust = 10,
+			/obj/decal/cleanable/dirt = 10,
+			/obj/decal/cleanable/fungus = 10,
+			/obj/decal/cleanable/oil = 10,
+			/obj/reagent_dispensers/fueltank = 2,
+			/obj/item/wrench = 10,
+			/obj/item/crowbar = 10,
+			/obj/item/screwdriver = 10,
+			/obj/item/weldingtool = 10,
+			/obj/item/device/radio = 10,
+			/obj/item/tank/air = 10,
+			/obj/item/tank/emergency_oxygen = 2,
+			/obj/item/extinguisher = 10,
+			/obj/item/clothing/mask/gas/emergency = 3,
+			/obj/burning_barrel = 2,
+			/obj/item/device/light/glowstick = 5,
+			/obj/storage/closet/fire = 2,
+			/obj/storage/closet/emergency = 2,
+			/obj/item/storage/toilet = 1,
+			/obj/machinery/bot/firebot = 2,
+			/obj/machinery/bot/cleanbot = 2,
+			/obj/machinery/bot/floorbot = 2,
+			/obj/item/storage/pill_bottle/cyberpunk = 10,
+			/obj/item/reagent_containers/food/drinks/bottle/hobo_wine = 10,
+			/obj/item/plant/herb/cannabis/spawnable = 5,
+			/mob/living/critter/spider/baby = 2,
+			/mob/living/critter/spider/nice = 2,
+			/mob/living/carbon/human/npc/assistant = 2,
+			/mob/living/carbon/human/normal/assistant = 2,
+			/mob/living/critter/legman = 1,
+		),
+		"ai" = list(
+			/datum/projectile/laser/heavy/law_safe = 30,
+			/datum/projectile/energy_bolt/robust = 30,
+			/obj/item/aiModule/random = 20,
+			/mob/living/silicon/hivebot/eyebot = 10,
+			/obj/item/circuitboard/robotics = 2,
+			/mob/living/silicon/ai = 1,
+			/obj/item/storage/box/diskbox = 1,
+			/obj/item/storage/box/tapebox = 1,
+			/obj/item/paper/book/from_file/guardbot_guide = 1,
+			/obj/item/paper/book/from_file/dwainedummies = 1,
+			/obj/item/disk/data/tape/master/readonly = 1,
+			/obj/item/disk/data/tape = 1,
+			/obj/item/disk/data/floppy/read_only/network_progs = 1,
+			/obj/item/disk/data/floppy/read_only/communications = 1,
+			/obj/item/aiModule/makeCaptain = 1,
+			/obj/item/aiModule/emergency = 1,
+			/obj/machinery/recharge_station = 1,
+			/obj/machinery/manufacturer/robotics = 1,
+			/obj/item/robot_module = 1,
+			/obj/item/parts/robot_parts/robot_frame = 1,
+			/obj/ai_core_frame = 1,
+			/obj/item/parts/robot_parts/chest/standard = 1,
+			/obj/item/parts/robot_parts/head/standard = 1,
+			/obj/item/organ/brain/latejoin = 1,
+			/obj/item/cell/supercell/charged = 1,
+			/obj/item/parts/robot_parts/arm/left/standard = 1,
+			/obj/item/parts/robot_parts/arm/right/standard = 1,
+			/obj/item/parts/robot_parts/leg/left/standard = 1,
+			/obj/item/parts/robot_parts/leg/right/standard = 1,
+			/obj/item/cable_coil = 1,
+			/obj/item/wrench = 1,
+		),
+		"bridge" = list(
+			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
+			/obj/item/reagent_containers/food/drinks/bottle/champagne = 3,
+			/obj/item/toy/judge_gavel = 1,
+			/obj/stool/chair/comfy = 5,
+			/mob/living/critter/small_animal/cat/jones = 5,
+			/obj/item/clothing/suit/bedsheet/captain = 2,
+			/obj/item/card/id/captains_spare = 0.1,
+			/obj/item/spacecash/random = 5,
+			/obj/item/stamp/hop = 1,
+			/obj/item/stamp/cap = 1,
+			/obj/item/stamp/centcom = 1,
+			/obj/item/coin = 1,
+			/obj/machinery/coffeemaker = 1,
+			/obj/item/pen/fancy = 1,
+			/obj/item/storage/toilet/goldentoilet = 1,
+			/obj/item/storage/box/id_kit = 1,
+			/obj/item/storage/box/clothing/captain = 1,
+			/obj/item/item_box/gold_star = 1,
+			/obj/item/hand_tele = 2,
+			/obj/machinery/shipalert = 1,
+			/obj/item/storage/box/PDAbox = 1,
+			/obj/item/storage/box/trackimp_kit2 = 1,
+			/obj/item/cigarbox/gold = 2,
+			/obj/item/paper/book/from_file/captaining_101 = 1,
+			/obj/shrub/captainshrub = 0.5,
+			/obj/captain_bottleship = 0.5,
+			/obj/fitness/speedbag/captain = 1,
+			/obj/item/disk/data/floppy/read_only/communications = 1,
+			/obj/machinery/manufacturer/hop_and_uniform = 0.5,
+		),
+		"clown" = list(
+			/obj/item/bananapeel = 20,
+			/obj/item/instrument/bikehorn = 10,
+			/obj/item/toy/sword = 3,
+			/obj/item/rubber_chicken = 1,
+			/obj/item/rubber_hammer = 1,
+			/obj/machinery/bot/duckbot = 1,
+			/obj/item/a_gift/easter = 1,
+			/obj/item/paper/book/from_file/the_trial = 1,
+			/obj/item/reagent_containers/food/snacks/pie/cream = 5,
+			/obj/item/gnomechompski = 3,
+			/obj/item/aiModule/hologram_expansion/clown = 1,
+			/obj/item/balloon_animal/random = 5,
+			/obj/item/pen/crayon/rainbow = 2,
+			/obj/item/pen/crayon/random = 1,
+			/obj/item/clothing/suit/bedsheet/captain = 2,
+			/obj/item/storage/pill_bottle/cyberpunk = 1,
+			/obj/vehicle/clowncar = 0.03,
+			/obj/reagent_dispensers/heliumtank = 1,
+			/obj/item/storage/goodybag = 3,
+			/obj/stool/chair/syndicate = 3,
+			/obj/item/paper/fortune = 1,
+			/obj/item/toy/plush = 1,
+			/obj/item/toy/figure = 1,
+			/obj/item/toy/diploma = 1,
+			/obj/item/toy/gooncode = 1,
+			/obj/item/toy/cellphone = 1,
+			/obj/item/toy/handheld/robustris = 1,
+			/obj/item/toy/handheld/arcade = 1,
+			/obj/item/toy/ornate_baton = 1,
+			/obj/fitness/speedbag/clown = 1,
+			/obj/item/storage/box/costume/clown = 2,
+			/obj/item/reagent_containers/food/drinks/milk/clownspider = 1,
+			/obj/item/ai_plating_kit/clown = 0.5,
+			/mob/living/carbon/human/normal/clown = 1,
+			/mob/living/critter/spider/clown = 1,
+			/mob/living/critter/spider/clownqueen = 0.1,
+		),
+		"cargo" = list(
+			// TODO, I am too tired rn
+		),
+
+		// not actual location, just a helper thing since it's shared between asteroid and trench
+		"ore" = list(
+			/obj/item/raw_material/rock = 100,
+			/obj/item/raw_material/ice = 50,
+
+			/obj/item/raw_material/mauxite = 20,
+			/obj/item/raw_material/pharosium = 20,
+			/obj/item/raw_material/uqill = 0.5,
+			/obj/item/raw_material/fibrilith = 3,
+			/obj/item/raw_material/molitz = 20,
+			/obj/item/raw_material/char = 5,
+			/obj/item/raw_material/cobryl = 3,
+			/obj/item/raw_material/bohrum = 2,
+			/obj/item/raw_material/claretine = 5,
+			/obj/item/raw_material/martian = 5,
+			/obj/item/raw_material/syreline = 2,
+			/obj/item/raw_material/cerenkite = 1,
+			/obj/item/raw_material/plasmastone = 1,
+			/obj/item/raw_material/eldritch = 1,
+			/obj/item/raw_material/gold = 2,
+			/obj/item/raw_material/miracle = 1,
+			/obj/item/raw_material/erebite = 0.5,
+			/obj/item/raw_material/starstone = 0.01,
+			/obj/item/material_piece/cloth/carbon = 0.02,
+			/obj/item/raw_material/gemstone = 3,
+		),
+	)
+
+	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
+		..()
+		src.start_time = TIME
+		src.triggered_by_event = triggered_by_event
+		src.grow_duration = grow_duration
+
+		if (active_duration < 1)
+			active_duration = rand(5 SECONDS, 40 SECONDS)
+		src.active_duration = active_duration
+
+		if(isnull(source_location))
+			source_location = pick(valid_locations)
+		src.source_location = source_location
+
+		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.source_location)
+		location_image.alpha = 160
+		location_image.pixel_x = 32
+		location_image.pixel_y = 32
+		src.UpdateOverlays(location_image, "source_location")
+
+		src.transform = matrix(32 / 160, MATRIX_SCALE)
+
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/whole_warning, src))
+			particleMaster.SpawnSystem(new /datum/particleSystem/whole_warning(src))
+
+		if(triggered_by_event)
+			var/turf/T = get_turf(src)
+			for (var/mob/M in GET_NEARBY(T, 15))
+				if (M.client)
+					boutput(M, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
+					shake_camera(M, 5, 16)
+			playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,-0.5)
+
+		processing_items |= src
+
+	bullet_act(obj/projectile/P)
+		shoot_reflected_to_sender(P, src)
+		P.die()
+
+	Bumped(atom/movable/A)
+		if(QDELETED(A) || A.throwing || istype(A, /obj/projectile))
+			return
+		if(prob(90)) // the 10% probability not to is there mostly just to prevent very rare infinite loops
+			step_away(A, src)
+
+	attackby(obj/item/I, mob/user)
+		boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
+
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		SPAWN(0)
+			AM.throw_at( \
+				thr.thrown_from,
+				thr.range,
+				thr.speed
+			)
+
+	ex_act(severity)
+		return
+
+	proc/process()
+		var/time_since_start = TIME - start_time
+
+		if(state == "dying")
+			qdel(src)
+
+		if(triggered_by_event)
+			//spatial interdictor: can't stop the white hole, but it can mitigate it
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(500, src))
+					if(prob(20))
+						playsound(IX,'sound/machines/alarm_a.ogg',20,0,5,-1.5)
+						IX.visible_message("<span class='alert'><b>[IX] emits an anti-gravitational anomaly warning!</b></span>")
+					if(state != "active")
+						grow_duration += 4 SECOND
+					else
+						active_duration -= 1 SECOND
+
+		if(time_since_start < grow_duration)
+			var/scale = 32 / 160 + (160 - 32) / 160 * clamp(((time_since_start + 3 SECONDS) - grow_duration / 3) / (grow_duration * 2 / 3), 0, 1)
+			animate(src, transform = matrix(scale, MATRIX_SCALE), time = 3 SECONDS, loop = 0, easing = LINEAR_EASING)
+
+		if(time_since_start < grow_duration / 3)
+			return
+		else if(time_since_start < grow_duration)
+			if(state == "static")
+				state = "growing"
+				src.visible_message("<span class='alert'><b>[src] begins to uncollapse out of itself!</b></span>")
+				playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,-0.5)
+				if (random_events.announce_events && triggered_by_event)
+					command_alert("A severe anti-gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It will uncollapse into a white hole. Consider quarantining it off.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
+			return
+
+		if(state == "growing")
+			state = "active"
+			src.visible_message("<span class='alert'><b>[src] uncollapses into a white hole!</b></span>")
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -1)
+			animate(src, transform = matrix(1.2, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
+			animate(transform = matrix(1, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
+
+			SPAWN(0.5 SECONDS)
+				var/rot_time = rand(3 SECONDS, 50 SECONDS)
+				var/turn = 90
+				var/matrix/mat = src.transform
+				animate(src, transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
+				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
+				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
+
+		if(time_since_start > grow_duration + active_duration)
+			animate(src)
+			SPAWN(0)
+				animate(src, transform = matrix() / 100, time = 3 SECONDS, loop = 0)
+			state = "dying"
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -2)
+
+		// TODO push and throw stuff away
+
+		var/time_interval = 3 SECONDS
+		var/spew_count = rand(1, 20)
+		spew_out_stuff(src.source_location)
+		if(spew_count > 1)
+			SPAWN(time_interval / spew_count)
+				for(var/i = 1 to spew_count - 1)
+					if(QDELETED(src) || state == "dying")
+						return
+					spew_out_stuff(src.source_location)
+					sleep(time_interval / spew_count)
+
+
+	proc/generate_thing(source_location)
+		var/spawn_type = weighted_pick(src.spawn_probs[source_location])
+		if(ispath(spawn_type, /atom/movable))
+			. = new spawn_type(src.loc)
+		else if(ispath(spawn_type, /datum/projectile))
+			var/atom/target = null
+			if(prob(60))
+				var/list/mob/living/valid_mobs = list()
+				for(var/mob/living/L in view(7, src))
+					if(isdead(L))
+						continue
+					if(ismobcritter(L) && prob(80))
+						continue
+					valid_mobs += L
+				if(length(valid_mobs))
+					target = pick(valid_mobs)
+			if(isnull(target))
+				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
+			. = shoot_projectile_ST(src, new spawn_type, target)
+		else if(ispath(spawn_type, /datum/reagent))
+			var/datum/reagent/dummy = spawn_type
+			var/reagent_id = initial(dummy.id)
+			var/amount = rand(20, 150)
+			if(prob(10))
+				amount *= 10
+			if(prob(10))
+				amount *= 10
+			var/turf/T = get_turf(src)
+			T.fluid_react_single(reagent_id, amount)
+		else switch(spawn_type)
+			if("artifact")
+				var/obj/artifact = Artifact_Spawn(src.loc)
+				. = artifact
+				if(prob(25))
+					SPAWN(rand(0.1 SECONDS, 15 SECONDS))
+						artifact?.ArtifactActivated()
+			if("plasma")
+				var/datum/gas_mixture/gas = new
+				gas.toxins += rand(1, 10)
+				if(prob(20))
+					gas.toxins += rand(10, 30)
+				if(prob(20))
+					gas.temperature += rand(100, 300)
+				if(prob(20))
+					gas.oxygen += rand(1, 10)
+				var/turf/T = get_turf(src)
+				T.assume_air(gas)
+			if("flockconverted")
+				. = generate_thing(pick(valid_locations - list("flock")))
+				var/atom/A = .
+				if(istype(A))
+					A.color = list(-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.25,-0.2,-0.15,0.368627,0.764706,0.666667)
+			if("trenchloot")
+				spawn_type = pick(childrentypesof(/obj/storage/crate/trench_loot))
+				. = new spawn_type(src.loc)
+			if("ore")
+				. = generate_thing("ore")
+			if("randomplant")
+				spawn_type = pick(concrete_typesof(/obj/item/reagent_containers/food/snacks/plant))
+				. = new spawn_type(src.loc)
+			if("deepfried")
+				. = generate_thing(pick(valid_locations))
+				var/atom/movable/thing = .
+				if(istype(thing))
+					var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src.loc)
+					var/icon/composite = new(thing.icon, thing.icon_state)
+					for(var/O in thing.underlays + thing.overlays)
+						var/image/I = O
+						composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
+					switch(rand(0, 2))
+						if (0)
+							fryholder.name = "lightly-fried [thing.name]"
+							fryholder.color = ( rgb(166,103,54) )
+						if (1)
+							fryholder.name = "fried [thing.name]"
+							fryholder.color = ( rgb(103,63,24) )
+						if (2)
+							fryholder.name = "deep-fried [thing.name]"
+							fryholder.color = ( rgb(63, 23, 4) )
+					fryholder.icon = composite
+					fryholder.overlays = thing.overlays
+					fryholder.bites_left = 5
+					if (ismob(thing))
+						fryholder.w_class = W_CLASS_BULKY
+					if(thing.reagents)
+						fryholder.reagents.maximum_volume += thing.reagents.total_volume
+						thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
+					fryholder.reagents.my_atom = fryholder
+					thing.set_loc(fryholder)
+					. = fryholder
+
+			else
+				CRASH("Unknown spawn type: [spawn_type]")
+
+		if(istype(., /mob/living))
+			var/mob/living/L = .
+			if(ismobcritter(L))
+				L.TakeDamage("chest", rand(0, 15), rand(0, 15), rand(0, 15))
+			else
+				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
+			if(ishuman(.))
+				var/mob/living/carbon/human/H = .
+				SPAWN(1)
+					for(var/i in 1 to rand(0, 3))
+						H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+		else if(istype(., /obj/hotspot))
+			var/obj/hotspot/hotspot = .
+			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
+			hotspot.set_real_color()
+			SPAWN(rand(10 SECONDS, 2 MINUTES))
+				if(!QDELETED(hotspot))
+					qdel(hotspot)
+		else if(istype(., /obj/item/old_grenade))
+			var/obj/item/old_grenade/grenade = .
+			if(prob(50))
+				SPAWN(rand(1 SECOND, 10 SECONDS))
+					grenade.prime()
+		else if(istype(., /obj/item/chem_grenade))
+			var/obj/item/chem_grenade/grenade = .
+			if(prob(50))
+				grenade.arm()
+		else if(istype(., /obj/item/reagent_containers/food/snacks/plant/tomato))
+			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = .
+			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
+
+
+
+	proc/spew_out_stuff(source_location)
+		if(QDELETED(src))
+			return
+
+		animate(src, transform = matrix(1.05, MATRIX_SCALE), time = 0.1 SECONDS, loop = 0, easing = SINE_EASING, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(transform = matrix(1, MATRIX_SCALE), time = 0.1 SECONDS, loop = 0, easing = SINE_EASING)
+
+		var/atom/movable/thing = generate_thing(source_location)
+		if(!thing)
+			return
+
+		if(istype(thing, /obj/projectile))
+			return // don't throw bullets
+
+		var/angle = rand(0, 360)
+		var/throw_speed = randfloat(1, 3)
+		var/throw_range = 50
+
+		var/turf/T = null
+		var/turf_search_dist = 64
+		var/turf/origin = get_turf(src)
+		while(isnull(T) && turf_search_dist >= 0)
+			T = locate(
+				round(origin.x + cos(angle) * turf_search_dist),
+				round(origin.y + sin(angle) * turf_search_dist),
+				origin.z
+			)
+			turf_search_dist -= 4
+		if(isnull(T))
+			return
+		// TODO make the thing pass through things for first few tiles
+		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
+
+	disposing()
+		processing_items.Remove(src)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/whole_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/whole_warning)
+		..()
+
+
+
+// Particle FX
+
+/datum/particleSystem/whole_warning
+	New(var/atom/location = null)
+		..(location, "whole_warning", 300)
+
+	Run()
+		if (..())
+			for(var/i=0, i<10, i++)
+				sleep(rand(3,6))
+				SpawnParticle()
+			state = 1
+
+/datum/particleType/whole_warning
+	name = "whole_warning"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "32x32circle"
+
+	MatrixInit()
+		first = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.pixel_x += rand(-128,128)
+			par.pixel_y += rand(-128,128)
+			par.color = "#ffffff"
+			par.alpha = 5
+			par.plane = PLANE_NOSHADOW_ABOVE
+
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(50)
+			animate(par, transform = first, time = 15 SECONDS, alpha = 30)
+
+			first.Scale(0.1 / 50)
+			animate(transform = first, time = 15 SECONDS, alpha = 5)
+			first.Reset()
+
+#undef VALID_WHITE_HOLE_LOCATIONS
