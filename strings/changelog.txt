@@ -1,4 +1,10 @@
 
+(t)thu jan 19 23
+(u)Tanker
+(p)12487
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Adds french toast. Simply combine bread, two eggs, and milk in the oven.
+(+)Baguettes will now produce french bread slices when sliced.
 (t)wed jan 18 23
 (u)tarmunora
 (+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
