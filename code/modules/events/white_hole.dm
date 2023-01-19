@@ -860,9 +860,6 @@
 				for (var/i in 1 to rand(1, 4))
 					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
 					qdel(organ)
-				SPAWN(1)
-					for(var/i in 1 to rand(0, 3))
-						human.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
 				human.death()
 				human.set_loc(src.loc)
 
@@ -878,8 +875,10 @@
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
 				SPAWN(1)
+					var/list/limbs = pick("l_arm", "r_arm", "l_leg", "r_leg")
+					shuffle_list(limbs)
 					for(var/i in 1 to rand(0, 3))
-						H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+						human.limbs?.sever(limbs[i])
 		else if(istype(., /obj/hotspot))
 			var/obj/hotspot/hotspot = .
 			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
