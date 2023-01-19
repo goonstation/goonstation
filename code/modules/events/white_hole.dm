@@ -687,7 +687,23 @@
 			state = "dying"
 			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -2)
 
-		// TODO push and throw stuff away
+		// push or throw things away from the white hole
+		for (var/atom/movable/X in range(7,src))
+			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
+				continue
+
+			if(prob(30))
+				continue
+			else if(prob(50))
+				step_away(X, src)
+			else
+				X.throw_at( \
+					locate_throw_target(X), \
+					rand(1, 6), \
+					randfloat(1, 3), \
+					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
+				)
+
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(1 + rand() * 10 * src.activity_modifier)
@@ -835,6 +851,45 @@
 			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = .
 			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
 
+	proc/locate_throw_target(atom/thrown, turf_search_dist = 64)
+		var/turf/init_turf = get_turf(thrown)
+		var/turf/hole_turf = get_turf(src)
+		if(hole_turf.z != init_turf.z)
+			return null
+
+		// basically make sure we're not throwing it into a wall
+		var/list/valid_sectors = list()
+		for(var/dir in global.cardinal)
+			var/turf/first_turf = get_step(init_turf, dir)
+			if(init_turf != hole_turf && get_step_towards(init_turf, hole_turf) == first_turf) // skip the dir towards the hole
+				continue
+			if(first_turf.density)
+				continue
+			for(var/atom/movable/AM in first_turf)
+				if(AM.density)
+					continue
+			var/angle = dir_to_angle(dir)
+			// this asymmetry really sucks but that's just how our throwing works :whelm:
+			var/angle_size = (dir & (NORTH|SOUTH)) ? 28 : 180 - 28
+			valid_sectors += list(list(angle - angle_size / 2, angle + angle_size / 2))
+
+		var/angle
+		if(!length(valid_sectors))
+			angle = rand(0, 360)
+		else
+			var/list/sector = pick(valid_sectors)
+			angle = rand(sector[1], sector[2])
+
+		var/turf/T = null
+		while(isnull(T) && turf_search_dist >= 0)
+			T = locate(
+				round(init_turf.x + cos(angle) * turf_search_dist),
+				round(init_turf.y + sin(angle) * turf_search_dist),
+				init_turf.z
+			)
+			turf_search_dist -= 4
+
+		return T
 
 
 	proc/spew_out_stuff(source_location)
@@ -851,20 +906,10 @@
 		if(istype(thing, /obj/projectile))
 			return // don't throw bullets
 
-		var/angle = rand(0, 360)
 		var/throw_speed = randfloat(1, 3)
 		var/throw_range = 50
 
-		var/turf/T = null
-		var/turf_search_dist = 64
-		var/turf/origin = get_turf(src)
-		while(isnull(T) && turf_search_dist >= 0)
-			T = locate(
-				round(origin.x + cos(angle) * turf_search_dist),
-				round(origin.y + sin(angle) * turf_search_dist),
-				origin.z
-			)
-			turf_search_dist -= 4
+		var/turf/T = locate_throw_target(thing)
 		if(isnull(T))
 			return
 		// TODO make the thing pass through things for first few tiles
