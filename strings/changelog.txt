@@ -1,7 +1,7 @@
 
 (t)wed jan 18 23
 (u)tarmunora
-(+)beakers/etc in chem dispensers count as closed containers.
+(+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
 (u)Amylizzle. Spritework by Mr Moriarty & Hans
 (p)12795
 (e)🪲🎨⚖🔄📦|C-Bug, C-Sprites, C-Balance, C-Rework, A-Game-Objects
