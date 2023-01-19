@@ -1020,7 +1020,7 @@ var/datum/action_controller/actions
 					if (!ON_COOLDOWN(target, "prank_pockets", 30 SECONDS))
 						var/list/clown_pocket_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg,
 						/obj/item/fish/red_herring,
-						/obj/item/gun/kinetic/rpg7,
+						/obj/item/bang_gun/ak47,
 						/obj/item/toy/plush/small/bee,
 						/obj/item/toy/plush/small/monkey,
 						/obj/item/instrument/saxophone,
