@@ -646,7 +646,7 @@
 			if(hit.material && prob(hit.material.getProperty("hard")*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
-				reflected.power = O.power
+				reflected?.power = O.power
 				return FALSE
 
 			//then fission
