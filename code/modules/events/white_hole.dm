@@ -849,12 +849,13 @@
 				. = new spawn_type(src.loc)
 			if ("corpse")
 				spawn_type = pick( //safe jobs that don't introduce too much loot
-					/mob/living/carbon/human/normal/assistant,
-					/mob/living/carbon/human/normal/clown,
-					/mob/living/carbon/human/normal/chef,
-					/mob/living/carbon/human/normal/botanist,
-					/mob/living/carbon/human/normal/janitor,
-					/mob/living/carbon/human/normal/miner)
+					1; /mob/living/carbon/human/normal/assistant,
+					1; /mob/living/carbon/human/normal/clown,
+					1; /mob/living/carbon/human/normal/chef,
+					1; /mob/living/carbon/human/normal/botanist,
+					1; /mob/living/carbon/human/normal/janitor,
+					1; /mob/living/carbon/human/normal/miner,
+					6; /mob/living/carbon/human/normal)
 				var/mob/living/carbon/human/normal/human = new spawn_type(null)
 				for (var/i in 1 to rand(1, 4))
 					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
