@@ -109,6 +109,7 @@
 		"teg" = list(
 			/obj/hotspot = 90,
 			"plasma" = 50,
+			"arcflash" = 30,
 			/obj/item/wrench/yellow = 10,
 			/obj/item/weldingtool/yellow = 10,
 			/obj/item/crowbar/yellow = 10,
@@ -320,6 +321,7 @@
 			/obj/decal/cleanable/vomit = 0.5,
 		),
 		"singulo" = list(
+			"arcflash" = 5,
 			/obj/storage/closet/extradimensional = 0.2,
 			/datum/projectile/laser/heavy = 5,
 			/obj/item/tile/steel = 10,
@@ -766,6 +768,17 @@
 					sleep(time_interval / spew_count)
 
 
+	proc/get_target_mob()
+		var/list/mob/living/valid_mobs = list()
+		for(var/mob/living/L in view(7, src))
+			if(isdead(L))
+				continue
+			if(ismobcritter(L) && prob(80))
+				continue
+			valid_mobs += L
+		if(length(valid_mobs))
+			return pick(valid_mobs)
+
 	proc/generate_thing(source_location)
 		var/spawn_type = weighted_pick(src.spawn_probs[source_location])
 
@@ -779,15 +792,7 @@
 		else if(ispath(spawn_type, /datum/projectile))
 			var/atom/target = null
 			if(prob(60))
-				var/list/mob/living/valid_mobs = list()
-				for(var/mob/living/L in view(7, src))
-					if(isdead(L))
-						continue
-					if(ismobcritter(L) && prob(80))
-						continue
-					valid_mobs += L
-				if(length(valid_mobs))
-					target = pick(valid_mobs)
+				target = src.get_target_mob()
 			if(isnull(target))
 				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
 			. = shoot_projectile_ST(src, new spawn_type, target)
@@ -902,6 +907,13 @@
 					inj.name = "dna injector - ???"
 				inj.BE = effect
 				. = inj
+			if ("arcflash")
+				var/atom/target = null
+				if(prob(60))
+					target = src.get_target_mob()
+				if(isnull(target))
+					target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
+				arcFlash(src, target, rand(4, 6) KILO WATTS)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
