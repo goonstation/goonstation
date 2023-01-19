@@ -213,11 +213,11 @@
 			"trenchloot" = 5,
 			"ore" = 5,
 			/obj/critter/shark = 1,
-			/obj/critter/gunbot/drone/gunshark = 1,
-			/obj/critter/gunbot/drone/buzzdrone/fish = 1,
-			/obj/naval_mine/standard = 1,
-			/obj/naval_mine/vandalized = 1,
-			/obj/naval_mine/rusted = 1,
+			/obj/critter/gunbot/drone/gunshark = 0.5,
+			/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
+			/obj/naval_mine/standard = 0.2,
+			/obj/naval_mine/vandalized = 0.2,
+			/obj/naval_mine/rusted = 0.2,
 			/mob/living/critter/small_animal/pikaia = 1,
 			/mob/living/critter/small_animal/hallucigenia = 1,
 			/mob/living/critter/small_animal/trilobite = 1,
@@ -589,6 +589,7 @@
 			"organ" = 20,
 			/obj/item/reagent_containers/hypospray = 5,
 			"corpse" = 2,
+			"geneinjector" = 3,
 			/obj/item/reagent_containers/syringe = 10,
 			/obj/item/clothing/gloves/latex = 5,
 			/obj/item/robodefibrillator = 1,
@@ -754,7 +755,7 @@
 
 
 		var/time_interval = 3 SECONDS
-		var/spew_count = round(1 + rand() * 10 * src.activity_modifier)
+		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
 		spew_out_stuff(src.source_location)
 		if(spew_count > 1)
 			SPAWN(time_interval / spew_count)
@@ -872,20 +873,35 @@
 				. = new spawn_type(src.loc)
 			if ("corpse")
 				spawn_type = pick( //safe jobs that don't introduce too much loot
-					/mob/living/carbon/human/normal/assistant,
-					/mob/living/carbon/human/normal/clown,
-					/mob/living/carbon/human/normal/chef,
-					/mob/living/carbon/human/normal/botanist,
-					/mob/living/carbon/human/normal/janitor,
-					/mob/living/carbon/human/normal/miner)
+					1; /mob/living/carbon/human/normal/assistant,
+					1; /mob/living/carbon/human/normal/clown,
+					1; /mob/living/carbon/human/normal/chef,
+					1; /mob/living/carbon/human/normal/botanist,
+					1; /mob/living/carbon/human/normal/janitor,
+					1; /mob/living/carbon/human/normal/miner,
+					6; /mob/living/carbon/human/normal)
 				var/mob/living/carbon/human/normal/human = new spawn_type(null)
 				human.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_SKELETONIZED)
-				for (var/i in 1 to rand(1,4))
+				for (var/i in 1 to rand(1, 4))
 					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
 					qdel(organ)
 				human.death()
 				human.set_loc(src.loc)
-
+				. = human
+			if("geneinjector")
+				var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
+				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
+					var/chromosome_type = pick(typesof(/datum/dna_chromosome))
+					var/datum/dna_chromosome/chromosome = new chromosome_type()
+					// yes we skipping the apply_check here, the other dimension can break laws of genetics
+					chromosome.apply(effect)
+				var/obj/item/genetics_injector/dna_injector/inj = new(src.loc)
+				if(prob(50))
+					inj.name = "dna injector - [effect.name]"
+				else
+					inj.name = "dna injector - ???"
+				inj.BE = effect
+				. = inj
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
@@ -898,8 +914,10 @@
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
 				SPAWN(1)
-					for(var/i in 1 to rand(0, 3))
-						H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+					shuffle_list(limbs)
+					for(var/i in 1 to pick(5; 0,   10; 1,   10; 2,   5; 3,   2; 4))
+						H.limbs?.sever(limbs[i])
 		else if(istype(., /obj/hotspot))
 			var/obj/hotspot/hotspot = .
 			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
