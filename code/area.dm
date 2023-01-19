@@ -547,6 +547,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
+			jerk.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			jerk.remove()
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
 			qdel(O)

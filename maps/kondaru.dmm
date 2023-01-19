@@ -3278,7 +3278,7 @@
 /area/station/security/checkpoint/podbay)
 "ajF" = (
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -14083,7 +14083,7 @@
 /area/station/engine/elect)
 "aTQ" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_east)
 "aTV" = (
@@ -19071,7 +19071,7 @@
 /area/station/maintenance/inner/east)
 "blz" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/maintenance/inner/east)
@@ -23590,7 +23590,7 @@
 /area/station/science/chemistry)
 "bCj" = (
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -24569,7 +24569,7 @@
 /area/station/hallway/primary/south)
 "bEP" = (
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -52710,7 +52710,7 @@
 /area/station/garden/aviary)
 "pSt" = (
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "pSJ" = (
@@ -60526,7 +60526,7 @@
 /area/station/crew_quarters/catering)
 "wCQ" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light,
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)

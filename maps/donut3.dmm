@@ -6670,7 +6670,7 @@
 /area/station/maintenance/inner/nw)
 "bJK" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -24669,7 +24669,7 @@
 /area/station/medical/medbay)
 "gYb" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -47183,7 +47183,7 @@
 /area/station/hallway/primary/west)
 "nBY" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/escape{
 	dir = 4
 	},
@@ -49972,7 +49972,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "opG" = (

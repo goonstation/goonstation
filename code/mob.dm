@@ -124,8 +124,6 @@
 
 	var/respawning = 0
 
-	var/obj/hud/hud_used = null
-
 	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
@@ -3247,3 +3245,7 @@
 	. = src.find_type_in_hand(/obj/item/device/radio)
 	if(!.)
 		. = src.find_in_equipment(/obj/item/device/radio)
+
+///Returns the default HUD of the mob, whatever that may be
+/mob/proc/get_hud()
+	return null

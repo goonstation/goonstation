@@ -1199,6 +1199,12 @@ var/global/noir = 0
 					usr.client.cmd_admin_admindamn(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+		if("rapture")
+			if(src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				heavenly_spawn(M, reverse = TRUE)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
