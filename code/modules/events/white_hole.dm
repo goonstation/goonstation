@@ -917,6 +917,8 @@
 	proc/locate_throw_target(atom/thrown, turf_search_dist = 64)
 		var/turf/init_turf = get_turf(thrown)
 		var/turf/hole_turf = get_turf(src)
+		if(!init_turf || !hole_turf)
+			return null
 		if(hole_turf.z != init_turf.z)
 			return null
 
