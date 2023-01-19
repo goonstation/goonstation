@@ -54,8 +54,6 @@
 		else
 			ID = new /obj/item/card/id/syndicate(H)
 
-		ID.icon_state = "id"
-		ID.icon = 'icons/obj/items/card.dmi'
 		H.equip_if_possible(ID, H.slot_wear_id)
 
 		var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(H)
@@ -75,12 +73,6 @@
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear)
-
-	do_popup(override)
-		if (!override && src.id == ROLE_NUKEOP_COMMANDER)
-			override = "nukeop-commander"
-
-		..(override)
 
 	remove_self()
 		if (istype(ticker.mode, /datum/game_mode/nuclear))
@@ -110,5 +102,11 @@
 				src.owner.current.real_name = "Syndicate Operative [src.owner.current.real_name]"
 
 /datum/antagonist/nuclear_operative/commander
-		id = ROLE_NUKEOP_COMMANDER
-		display_name = "\improper Syndicate Operative Commander"
+	id = ROLE_NUKEOP_COMMANDER
+	display_name = "\improper Syndicate Operative Commander"
+
+	do_popup(override)
+		if (!override)
+			override = "nukeop-commander"
+
+		..(override)
