@@ -43,9 +43,11 @@
 				boutput(usr, "<span class='alert'>Cancelled.</span>")
 				return
 
-		src.event_effect(source, target_turf, grow_duration, duration, source_location)
+		var/activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 0, 10, round_input=FALSE)
 
-	event_effect(source, turf/T, grow_duration, duration, source_location)
+		src.event_effect(source, target_turf, grow_duration, duration, source_location, activity_modifier)
+
+	event_effect(source, turf/T, grow_duration, duration, source_location, activity_modifier = 1)
 		..()
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
@@ -59,7 +61,8 @@
 			duration = 40 SECONDS + rand(-10 SECONDS, 10 SECONDS)
 
 		message_admins("White Hole anomaly spawning in [log_loc(T)]")
-		new /obj/whole(T, grow_duration, duration, source_location, TRUE)
+		var/obj/whole/whole = new (T, grow_duration, duration, source_location, TRUE)
+		whole.activity_modifier = activity_modifier
 
 
 /obj/whole
@@ -82,6 +85,7 @@
 	var/triggered_by_event = FALSE
 	var/grow_duration = 0
 	var/active_duration = 0
+	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
 
 	var/static/list/spawn_probs = list(
 		"artlab" = list(
@@ -691,7 +695,7 @@
 		// TODO push and throw stuff away
 
 		var/time_interval = 3 SECONDS
-		var/spew_count = rand(1, 20)
+		var/spew_count = round(1 + rand() * 10 * src.activity_modifier)
 		spew_out_stuff(src.source_location)
 		if(spew_count > 1)
 			SPAWN(time_interval / spew_count)
