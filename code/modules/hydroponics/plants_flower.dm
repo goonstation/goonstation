@@ -64,15 +64,15 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/gardenia
 	name = "Gardenia"
 	seedcolor = "#d5b984"
-	crop = /obj/item/clothing/head/gardenia
+	crop = /obj/item/clothing/head/flower/gardenia
 	cropsize = 3
 	commuts = list(/datum/plant_gene_strain/metabolism_fast, /datum/plant_gene_strain/splicing/disabled)
 
 /datum/plant/flower/bird_of_paradise
 	name = "Bird of Paradise"
-	plant_icon = "BirdofParadise"
-	seedcolor = "#ffb426" /
-	crop = /obj/item/clothing/head/bird_of_paradise
+	sprite = "BirdofParadise"
+	seedcolor = "#ffb426"
+	crop = /obj/item/clothing/head/flower/bird_of_paradise
 	growtime = 300
 	harvtime = 400
 	cropsize = 1
@@ -83,12 +83,18 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/hydrangea
 	name = "Hydrangea"
 	seedcolor = "#875dbc"
-	crop = /obj/item/clothing/head/hydrangea
+	crop = /obj/item/clothing/head/flower/hydrangea
 	growtime = 70
 	harvtime = 120
 	harvests = 3
 	commuts = list(/datum/plant_gene_strain/yield, /datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/splicing/disabled)
+	mutations = list(/datum/plantmutation/hydrangea/pink, /datum/plantmutation/hydrangea/blue, /datum/plantmutation/hydrangea/purple)
 
 	getIconOverlay(grow_level, datum/plantmutation/MUT)
 		if (grow_level == 4)
+			if (MUT)
+				var/datum/plantmutation/hydrangea/H = MUT
+				if (H.flower_color)
+					return "Hydrangea-[H.flower_color]"
+			return "Hydrangea-white"
 

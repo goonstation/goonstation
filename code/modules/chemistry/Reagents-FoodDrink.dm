@@ -4546,6 +4546,28 @@ datum
 			taste = list("soothing", "pleasant")
 			thirst_value = 0
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+
+				if (probmult(5))
+					. = ""
+					switch (rand(1, 5))
+						if (1)
+							. = "calm"
+						if (2)
+							. = "quiet"
+						if (3)
+							. = "serene"
+						if (4)
+							. = "at peace"
+						if (5)
+							. = "sleepy"
+
+					boutput(M, "<font color=#be9ffe'>You feel [.].</font>")
+
+				..()
+
 		fooddrink/lavenderlatte
 			name = "lavender latte"
 			id = "lavender_latte"
