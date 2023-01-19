@@ -1,5 +1,5 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay") // "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security") // "cargo")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -588,7 +588,7 @@
 			"medicine" = 20,
 			"organ" = 20,
 			/obj/item/reagent_containers/hypospray = 5,
-			"corpse" = 3,
+			"corpse" = 2,
 			"geneinjector" = 3,
 			/obj/item/reagent_containers/syringe = 10,
 			/obj/item/clothing/gloves/latex = 5,
@@ -603,6 +603,29 @@
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 			/datum/reagent/blood = 5,
 			/datum/reagent/fooddrink/coffee = 2,
+		),
+		"security" = list(
+			/obj/item/handcuffs/guardbot = 10,
+			/obj/item/handcuffs = 3,
+			/obj/machinery/bot/secbot = 1,
+			/obj/machinery/bot/secbot/emagged = 3,
+			/obj/item/reagent_containers/food/snacks/donut/custom/random = 15,
+			/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1,
+			/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1,
+			/obj/item/device/flash = 3,
+			/obj/item/clothing/head/beret/prisoner = 5,
+			/obj/item/clothing/shoes/orange = 5,
+			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/shoes/swat = 2,
+			/obj/item/clothing/head/red = 4,
+			/obj/item/clothing/head/helmet/siren = 2,
+			/obj/machinery/flasher/portable = 1,
+			/obj/item/barrier = 1,
+			/mob/living/carbon/human/npc/monkey/stirstir = 1,
+			/datum/projectile/energy_bolt = 3,
+			/datum/projectile/energy_bolt/burst = 3,
+			/datum/projectile/energy_bolt/tasershotgun = 3,
+			/datum/projectile/energy_bolt/bouncy = 3,
 		)
 	)
 
@@ -858,6 +881,7 @@
 					1; /mob/living/carbon/human/normal/miner,
 					6; /mob/living/carbon/human/normal)
 				var/mob/living/carbon/human/normal/human = new spawn_type(null)
+				human.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_SKELETONIZED)
 				for (var/i in 1 to rand(1, 4))
 					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
 					qdel(organ)
