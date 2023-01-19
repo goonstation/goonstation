@@ -6,19 +6,19 @@
 
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
-	desc = ""
+	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
 
 /obj/item/clothing/head/flower/bird_of_paradise
 	name = "bird of paradise"
-	desc = "Contrary to popular belief, this"
+	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
-	desc = ""
+	desc = "Hydrangeas are popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
@@ -39,7 +39,7 @@
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
-	desc = ""
+	desc = "Lavender is usually used as an ingredient or as a source of essential oil; you can tuck a sprig behind your ear for that garden aesthetic too."
 	icon_state = "flower_lav"
 	item_state = "flower_lav"
 
