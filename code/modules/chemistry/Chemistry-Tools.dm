@@ -384,7 +384,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				src.reagents.clear_reagents()
 
 	can_receive()
-		return 1
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc

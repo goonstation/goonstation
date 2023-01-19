@@ -231,7 +231,7 @@
 
 			sticker.layer = A.layer + 1
 			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
@@ -252,7 +252,7 @@
 
 			sticker.layer = A.layer + 1
 			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy

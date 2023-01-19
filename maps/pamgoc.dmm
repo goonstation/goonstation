@@ -339,7 +339,9 @@
 "aav" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/hazard_caution,
+/obj/decal/poster/wallsign/hazard_caution{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "aaw" = (
@@ -616,7 +618,9 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/hazard_caution,
+/obj/decal/poster/wallsign/hazard_caution{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "abe" = (
@@ -15699,94 +15703,136 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "aAj" = (
-/obj/decal/poster/wallsign/bar,
+/obj/decal/poster/wallsign/bar{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
 "aAl" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "aAm" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
 "aAn" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/cdc)
 "aAo" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/science/testchamber)
 "aAp" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
 "aAq" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "aAr" = (
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
 "aAs" = (
-/obj/decal/poster/wallsign/chsl,
+/obj/decal/poster/wallsign/chsl{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "aAt" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "aAu" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "aAv" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "aAw" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "aAx" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "aAy" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "aAz" = (
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
 "aAB" = (
-/obj/decal/poster/wallsign/medbay,
+/obj/decal/poster/wallsign/medbay{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "aAC" = (
-/obj/decal/poster/wallsign/medbay_right,
+/obj/decal/poster/wallsign/medbay_right{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/south)
 "aAD" = (
-/obj/decal/poster/wallsign/pool,
+/obj/decal/poster/wallsign/pool{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "aAE" = (
-/obj/decal/poster/wallsign/poster_sol,
+/obj/decal/poster/wallsign/poster_sol{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
 "aAF" = (
-/obj/decal/poster/wallsign/security,
+/obj/decal/poster/wallsign/security{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "aAG" = (
@@ -16275,7 +16321,8 @@
 /area/station/hangar/sec)
 "aBr" = (
 /obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -16283,7 +16330,8 @@
 /area/station/hallway/primary/central)
 "aBs" = (
 /obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -16291,7 +16339,8 @@
 /area/station/hallway/primary/central)
 "aBt" = (
 /obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -17170,12 +17219,16 @@
 /area/station/medical/medbay)
 "aDh" = (
 /obj/disposalpipe/segment,
-/obj/decal/poster/wallsign/medbay,
+/obj/decal/poster/wallsign/medbay{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "aDi" = (
 /obj/disposalpipe/segment,
-/obj/decal/poster/wallsign/pool,
+/obj/decal/poster/wallsign/pool{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "aDj" = (
@@ -22678,7 +22731,9 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/transport,
-/obj/decal/poster/wallsign/fire,
+/obj/decal/poster/wallsign/fire{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "aPc" = (
@@ -22808,7 +22863,8 @@
 	pixel_y = 7
 	},
 /obj/decal/poster/wallsign/poster_ptoe{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -25685,7 +25741,9 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/security,
+/obj/decal/poster/wallsign/security{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "aUD" = (
@@ -26905,7 +26963,8 @@
 	dir = 8
 	},
 /obj/decal/poster/wallsign/barber{
-	pixel_y = -16
+	pixel_y = -16;
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -27166,7 +27225,9 @@
 	desc = "Something beautiful overwhelms you when you look at this ball.";
 	name = "barkley's basketball"
 	},
-/obj/decal/poster/wallsign/gym,
+/obj/decal/poster/wallsign/gym{
+	transform = list(-1,0,0,0,1,0)
+	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
@@ -27196,7 +27257,9 @@
 	dir = 8
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/escape_right,
+/obj/decal/poster/wallsign/escape_right{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "aXr" = (
@@ -27233,7 +27296,9 @@
 	dir = 8
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/escape_left,
+/obj/decal/poster/wallsign/escape_left{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "aXw" = (
@@ -31718,7 +31783,9 @@
 /area/station/storage/warehouse)
 "biq" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/decal/poster/wallsign/biohazard,
+/obj/decal/poster/wallsign/biohazard{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -36170,7 +36237,8 @@
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
 	name = "MIXOLOGY HAZARD";
-	pixel_x = -32
+	pixel_x = -32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -38246,7 +38314,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/cable{
 	d1 = 0;
@@ -60441,7 +60510,8 @@
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/cdnp{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -61163,7 +61233,8 @@
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
 /obj/decal/poster/wallsign/cdnp{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -66537,7 +66608,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "cCk" = (
-/obj/decal/poster/wallsign/no_smoking,
+/obj/decal/poster/wallsign/no_smoking{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
 "cCl" = (
@@ -66954,7 +67027,8 @@
 	tag = ""
 	},
 /obj/decal/poster/wallsign/framed_award/hos_medal{
-	pixel_y = 27
+	pixel_y = 27;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -67020,7 +67094,9 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/secondary/entry)
 "dKg" = (
-/obj/decal/poster/wallsign/poster_eyetest,
+/obj/decal/poster/wallsign/poster_eyetest{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
 "dKx" = (
@@ -70603,7 +70679,8 @@
 /area/station/routing/sortingRoom)
 "saQ" = (
 /obj/decal/poster/wallsign/hazard_electrical{
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
@@ -70980,7 +71057,8 @@
 	},
 /obj/decal/poster/wallsign/statistics2{
 	desc = "A poster with a line chart depicting the rapid growth of PTL related accidents.";
-	pixel_y = 32
+	pixel_y = 32;
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
@@ -71886,7 +71964,9 @@
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "xKM" = (
-/obj/decal/poster/wallsign/danger_highvolt,
+/obj/decal/poster/wallsign/danger_highvolt{
+	transform = list(-1,0,0,0,1,0)
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "xOa" = (

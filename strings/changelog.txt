@@ -1,4 +1,26 @@
 
+(t)wed jan 18 23
+(u)tarmunora
+(+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
+(u)Amylizzle. Spritework by Mr Moriarty & Hans
+(p)12795
+(e)🪲🎨⚖🔄📦|C-Bug, C-Sprites, C-Balance, C-Rework, A-Game-Objects
+(*)Reworked nuclear centrifuges. See minor changes for details.
+(+)Centrifuges now accept multiple rods and nuclear waste items at once.
+(+)For each point of fissile isotopes material property, one plutonium bar is produced
+(+)Any remaining fissile isotopes are output as nuclear waste, which can be added back into the centrifuge when you have more fuel to process.
+(u)LeahTheTech
+(+)Flock sentinels now chain to less targets by default, but more with sapper power.
+(u)LeahTheTech
+(+)Flockdrones now dodge a little slower.
+(u)LeahTheTech
+(+)Flock compute nodes now provide 50 compute, down from 60.
+(u)LeahTheTech
+(+)Flockminds and traces now have a tracker hud element pointing to the relay while it is active.
+(u)goonstation-enjoyer
+(p)12658
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Leaving the afterlife bar now teleports you anywhere but the afterlife bar.
 (t)tue jan 17 23
 (u)DisturbHerb
 (p)12783
