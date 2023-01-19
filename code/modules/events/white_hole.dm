@@ -680,15 +680,6 @@
 			animate(src, transform = matrix(1.2, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 			animate(transform = matrix(1, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 
-			SPAWN(0.5 SECONDS)
-				var/rot_time = rand(3 SECONDS, 50 SECONDS)
-				var/turn = 90
-				var/matrix/mat = src.transform
-				animate(src, transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
-				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
-				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
-				animate(transform = matrix(mat, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = rot_time, loop = -1)
-
 		if(time_since_start > grow_duration + active_duration)
 			animate(src)
 			SPAWN(0)
