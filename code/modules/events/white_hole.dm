@@ -706,7 +706,7 @@
 
 
 		var/time_interval = 3 SECONDS
-		var/spew_count = round(1 + rand() * 10 * src.activity_modifier)
+		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
 		spew_out_stuff(src.source_location)
 		if(spew_count > 1)
 			SPAWN(time_interval / spew_count)
