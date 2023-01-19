@@ -68,6 +68,7 @@
 	var/report_proj
 
 /datum/component/flock_protection/Initialize(report_unarmed=TRUE, report_attack=TRUE, report_thrown=TRUE, report_proj=TRUE)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
