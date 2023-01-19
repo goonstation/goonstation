@@ -972,8 +972,7 @@ var/datum/action_controller/actions
 			logTheThing(LOG_COMBAT, source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
+			source.visible_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", TRUE)
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(!I)
@@ -991,8 +990,7 @@ var/datum/action_controller/actions
 				icon_state = I.icon_state
 				name = I.name
 
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", 1)
+			source.visible_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", TRUE)
 
 		..() // we call our parents here because we need to set our icon and icon_state before calling them
 
@@ -1009,31 +1007,47 @@ var/datum/action_controller/actions
 			if(item == source.equipped() && !I)
 				if(target.can_equip(item, slot))
 					logTheThing(LOG_COMBAT, source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
-					for(var/mob/O in AIviewers(owner))
-						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
+					source.visible_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", TRUE)
 					source.u_equip(item)
 					if(QDELETED(item))
 						return
 					target.force_equip(item, slot)
 					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
+			// Picking a clowns pockets is likely to give you a stupid item instead
+			if (target.job == "Clown" && (slot == SLOT_L_STORE) || (slot == SLOT_R_STORE))
+				if (!ON_COOLDOWN(target, "prank_pockets", 30 SECONDS) && prob(50))
+					var/list/clown_pocket_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg,
+					 /obj/item/fish/red_herring,
+					 /obj/item/gun/kinetic/rpg7,
+					 /obj/item/toy/plush/small/bee,
+					 /obj/item/toy/plush/small/monkey,
+					 /obj/item/instrument/saxophone,
+					 /obj/item/instrument/large/piano/grand,
+					 /obj/item/storage/toilet,
+					 /obj/item/clothing/head/bigtex)
+					var/obj/item/pick = pick(clown_pocket_junk)
+					I = new pick
+					logTheThing(LOG_COMBAT, source, "tries to remove a pocket item from clown [constructTarget(target,"combat")] but instead gets prank item [I] at [log_loc(target)].")
+					I.set_loc(target.loc)
+					I.layer = initial(I.layer)
+					I.add_fingerprint(target)
+					source.visible_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", TRUE)
+					return
 			if(I.handle_other_remove(source, target))
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
-				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
+				source.visible_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", TRUE)
 
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
 					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
+						source.visible_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", TRUE)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
 				else if (istype(I, /obj/item/mine))
 					var/obj/item/mine/M = I
 					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
+						source.visible_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", TRUE)
 						M.triggered(source)
 
 				target.u_equip(I)
