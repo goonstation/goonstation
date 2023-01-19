@@ -856,9 +856,12 @@
 					/mob/living/carbon/human/normal/janitor,
 					/mob/living/carbon/human/normal/miner)
 				var/mob/living/carbon/human/normal/human = new spawn_type(null)
-				for (var/i in 1 to rand(1,4))
+				for (var/i in 1 to rand(1, 4))
 					var/obj/item/organ/organ = human.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
 					qdel(organ)
+				SPAWN(1)
+					for(var/i in 1 to rand(0, 3))
+						human.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
 				human.death()
 				human.set_loc(src.loc)
 
