@@ -356,7 +356,7 @@ var/list/roles_to_prefs = list(
 			added_text = "spy"
 		if(ROLE_HEAD_REV)
 			added_text = "rev"
-		if((ROLE_NUKEOP || ROLE_NUKEOP_COMMANDER))
+		if(ROLE_NUKEOP, ROLE_NUKEOP_COMMANDER)
 			added_text = "nukeop"
 		if(ROLE_OMNITRAITOR)
 			added_text = "omni"
