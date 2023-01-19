@@ -12787,7 +12787,8 @@
 /area/station/hallway/secondary/exit)
 "aQi" = (
 /obj/decal/fakeobjects/pipe/heat{
-	dir = 4
+	dir = 4;
+	layer = 2.9
 	},
 /obj/stool/chair{
 	dir = 4
