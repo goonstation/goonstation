@@ -662,7 +662,7 @@ datum
 			drinkrecipe = 1
 
 		honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			result = "honey_tea"
 			required_reagents = list("honey" = 1, "tea" = 1)
@@ -672,7 +672,7 @@ datum
 			drinkrecipe = 1
 
 		mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			result = "mint_tea"
 			required_reagents = list("mint" = 1, "tea" = 1)
@@ -3186,7 +3186,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			required_reagents = list("fluorine" = 1, "carbon" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'

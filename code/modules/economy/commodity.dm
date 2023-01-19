@@ -858,7 +858,7 @@
 
 /datum/commodity/contraband/command_helmet
 	comname = "Armored Helmet"
-	comtype = /obj/item/clothing/head/helmet/space/industrial/syndicate/
+	comtype = /obj/item/clothing/head/helmet/space/industrial/syndicate
 	desc = "An armored helmet issued to Syndicate squad leaders."
 	price = 15000
 	baseprice = 15000

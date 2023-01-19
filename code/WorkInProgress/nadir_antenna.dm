@@ -777,7 +777,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				for(var/nerd in oofed_nerds)
 					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
-					thing2send.loc = src
+					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
 						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
@@ -825,7 +825,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				else
 					tele_obstructed = TRUE
 				if(!tele_obstructed && transception_array.transceive(netnumber))
-					thing2get.loc = src.loc
+					thing2get.set_loc(src.loc)
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else

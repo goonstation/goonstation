@@ -1006,6 +1006,19 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	speed = 1.5
 	capacity = 4
 
+/obj/machinery/vehicle/pod_smooth/industrial/nadir
+	//special name, pre-equipped with drilling hardware
+	New()
+		..()
+		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
+		src.m_w_system.ship = src
+		src.components += src.m_w_system
+		myhud.update_systems()
+		myhud.update_states()
+		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
+		return
+
 //pod wars ones//
 /obj/machinery/vehicle/pod_smooth/nt_light
 	name = "Pod NTL-"
@@ -1303,6 +1316,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."

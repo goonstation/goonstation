@@ -39,4 +39,10 @@
  * 	M.gib()
  * ```
  */
+
 #define REGION_TILES(REG) range(REG.get_center(), "[REG.width]x[REG.height]")
+
+/**
+ * Provides a list of all turfs in allocated region.
+ */
+#define REGION_TURFS(REG) block(locate(REG.bottom_left.x, REG.bottom_left.y, REG.bottom_left.z), locate(REG.bottom_left.x+REG.width-1, REG.bottom_left.y+REG.height-1, REG.bottom_left.z))

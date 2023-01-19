@@ -33,6 +33,16 @@
 		SPAWN(2 SECONDS)
 			ai_init()
 
+/mob/living/carbon/human/npc/mutantrace
+	var/spawn_mutantrace
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			if(spawn_mutantrace)
+				src.set_mutantrace(text2path(spawn_mutantrace))
+				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)
+
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
 

@@ -18,7 +18,7 @@
 			var/image/I = image(src.icon, T, src.icon_state, src.layer, src.dir)
 			I.pixel_x = src.pixel_x
 			I.pixel_y = src.pixel_y
-			I.appearance_flags = RESET_COLOR
+			I.appearance_flags = RESET_COLOR | PIXEL_SCALE
 			if (src.color)
 				I.color = src.color
 			var/md5hasho = "tile_edge_[md5("[rand(1,10000)]_[rand(1,10000)]")]"

@@ -6,19 +6,46 @@
 	spawn_contents = list(/obj/item/mousetrap = 7)
 
 /obj/item/storage/box/nerd_kit
-	name = "tabletop gaming kit"
-	desc = "It's the famous carmine box starter set for Syndicates & Stations, Fifth Edition."
+	name = "Tabletop Gaming Double Trouble Box Set"
+	desc = "Two of your favorite tabletop roleplaying games, now in one box!"
+	icon_state = "nerdkit"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "box-red"
+	spawn_contents = list(
+		/obj/item/storage/box/nerd_kit/stations_and_syndicates,
+		/obj/item/storage/box/nerd_kit/stationfinder
+	)
+
+/obj/item/storage/box/nerd_kit/stations_and_syndicates
+	name = "Stations and Syndicates Starter Kit"
+	desc = "It's the famous carmine box starter set for Stations and Syndicates, 9th edition."
 	icon_state = "nerdkit"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box-red"
 	spawn_contents = list(
 		/obj/item/paper/book/from_file/DNDrulebook,
-		/obj/item/dice,
-		/obj/item/dice/d4,
-		/obj/item/dice/d8,
-		/obj/item/dice/d12,
-		/obj/item/dice/d20,
-		/obj/item/dice/d100
+		/obj/item/paper/book/from_file/monster_manual_revised,
+		/obj/item/storage/dicepouch,
+		/obj/item/storage/dicepouch,
+		/obj/item/storage/dicepouch,
+		/obj/item/storage/dicepouch,
+		/obj/item/storage/dicepouch
+	)
+
+/obj/item/storage/box/nerd_kit/stationfinder
+	name = "Stationfinder Starter Kit"
+	desc = "Contains everything you need to run a game of Stationfinder, First Edition"
+	icon_state = "nerdkit"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "box-red"
+	spawn_contents = list(
+		/obj/item/paper/book/from_file/DWrulebook,
+		/obj/item/diceholder/dicebox,
+		/obj/item/diceholder/dicebox,
+		/obj/item/diceholder/dicebox,
+		/obj/item/diceholder/dicebox,
+		/obj/item/paper_bin,
+		/obj/item/pen/pencil
 	)
 
 /obj/item/storage/box/balloonbox
@@ -86,3 +113,17 @@
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
 	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
 	/obj/item/reagent_containers/glass/bottle/holywater)
+
+/obj/item/storage/box/misctools //used in CE locker
+	name = "miscellaneous tools"
+	desc = "A box full of tools, but distinctly seperate from a toolbox."
+	icon_state = "box"
+	spawn_contents = list(
+		/obj/item/electronics/scanner,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/electronics/soldering,
+		/obj/item/cargotele,
+		/obj/item/lamp_manufacturer/organic,
+		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/ore_scoop/prepared
+	)

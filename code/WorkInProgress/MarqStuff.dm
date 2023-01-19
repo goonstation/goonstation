@@ -369,7 +369,7 @@
 			overlays += shaft
 			overlays += head
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		setName()
 		return
 
