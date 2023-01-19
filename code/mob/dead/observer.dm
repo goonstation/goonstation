@@ -696,126 +696,26 @@
 	set name = "Observe Objects"
 	set category = "Ghost"
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
+	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
 
-	// Same thing you could do with the old auth disk. The bomb is equally important
-	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
-			var/name = "Nuclear bomb"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = N.the_bomb
-
-
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		var/datum/game_mode/football/F = ticker.mode
-		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
-			var/name = "THE FOOTBALL"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = F.the_football
-
-
-	for_by_tcl(O, /obj/observable)
-		LAGCHECK(LAG_LOW)
-		var/name = O.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = O
-
-	for_by_tcl(GB, /obj/item/ghostboard)
-		LAGCHECK(LAG_LOW)
-		var/name = "Ouija board"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = GB
-
-	for_by_tcl(G, /obj/item/gnomechompski)
-		var/name = "Gnome Chompski"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = G
-
-	for_by_tcl(CR, /obj/cruiser_camera_dummy)
-		var/name = CR.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = CR
-
-	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
-		var/name = L.name
-		if (name != "strangelet loaf")
+	for (var/atom/A in all_observables)
+		// isghostrestrictedz also filters out objects in NULL
+		// bomb is only tracked in nuclear mode
+		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
 			continue
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = L
+		// this doesn't distinguish objects with the same name on the same tile. that's fine
+		var/area/area = get_area(A)
+		var/turf/turf = get_turf(A)
+		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
 
-	for (var/obj/machinery/bot/B in machine_registry[MACHINES_BOTS])
-		LAGCHECK(LAG_LOW)
-		if (isghostrestrictedz(B.z)) continue
-		var/name = "*[B.name]"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = B
+	sortList(observable_map, /proc/cmp_text_asc)
+	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
 
-
-	for(var/name in creatures)
-		var/obj/O = creatures[name]
-		if(!istype(O))
-			creatures -= name
-		else
-			// let people observe these regardless of where they are. who cares
-			// there's probably a way to do this better (some bots have no-camera mode for example)
-			// which would work but someone else can fix it later. jhon madden
-			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
-				var/turf/T = get_turf(O)
-				if(!T || isghostrestrictedz(T.z))
-					creatures -= name
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
+	if (!picked_label)
 		return
 
-	insert_observer(creatures[eye_name])
+	insert_observer(observable_map[picked_label])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
