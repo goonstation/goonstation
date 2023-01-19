@@ -4546,6 +4546,11 @@ datum
 			taste = list("soothing", "pleasant")
 			thirst_value = 0
 
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					M.changeStatus("fragrant", volume * 5 SECONDS)
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
@@ -4564,7 +4569,7 @@ datum
 						if (5)
 							. = "sleepy"
 
-					boutput(M, "<font color=#be9ffe'>You feel [.].</font>")
+					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
 
 				..()
 
