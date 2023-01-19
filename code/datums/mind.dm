@@ -214,7 +214,7 @@ datum/mind
 		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
-		find_player(src.key).last_death_time = world.timeofday
+		src.get_player()?.last_death_time = world.timeofday
 
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)

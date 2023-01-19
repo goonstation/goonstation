@@ -55729,7 +55729,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/decoration/tabletopfull{
 	pixel_y = 32
 	},

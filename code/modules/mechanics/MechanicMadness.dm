@@ -2834,6 +2834,7 @@
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
 			if(Gun.canshoot(null))

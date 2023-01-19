@@ -25,6 +25,7 @@
 	var/wattage = 5000
 	/// has extra range when chaining
 	var/extra_chain_range = FALSE
+	var/chain_targets = 2
 	var/powered = FALSE
 
 	passthrough = TRUE
@@ -109,7 +110,7 @@
 
 			var/atom/last_hit = to_hit
 			var/found_chain_target
-			for(var/i in 1 to 3) // chaining
+			for(var/i in 1 to src.chain_targets) // chaining
 				found_chain_target = FALSE
 				for(var/atom/A as anything in view(2 + (src.extra_chain_range ? 1 : 0), last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))
@@ -146,8 +147,10 @@
 		return FALSE
 	src.accepts_sapper_power = FALSE
 	src.extra_chain_range = TRUE
+	src.chain_targets = 3
 	SPAWN(10 SECONDS)
 		if (!QDELETED(src))
+			src.chain_targets = initial(src.chain_targets)
 			src.accepts_sapper_power = TRUE
 			src.extra_chain_range = FALSE
 	return TRUE

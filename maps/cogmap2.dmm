@@ -17438,7 +17438,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aPE" = (
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/table/wood/auto,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
@@ -46152,7 +46152,7 @@
 /area/station/security/brig)
 "bYL" = (
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/disposalpipe/junction/left/east,
 /obj/cable{
 	d1 = 1;
@@ -60782,7 +60782,7 @@
 /area/station/hallway/secondary/exit)
 "cHJ" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "cHK" = (
