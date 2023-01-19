@@ -608,7 +608,7 @@
 		),
 		"security" = list(
 			/obj/item/handcuffs/guardbot = 5,
-			/datum/projectile/special/spawner/handcuff = 5
+			/datum/projectile/special/spawner/handcuff = 5,
 			/obj/item/handcuffs = 2,
 			/obj/itemspecialeffect/barrier = 3,
 			/obj/machinery/bot/secbot = 1,
