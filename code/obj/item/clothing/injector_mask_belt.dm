@@ -76,6 +76,9 @@ TYPEINFO(/obj/item/injector_belt)
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
 				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
+				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
 				return
@@ -190,6 +193,9 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")

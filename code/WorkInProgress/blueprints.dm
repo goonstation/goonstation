@@ -258,7 +258,11 @@
 
 	save.cd = "/"
 
-	var/input = input(usr,"Select save:","Blueprints") in bps
+	if(!length(bps))
+		boutput(usr, "<span class='alert'>No blueprints found.</span>")
+		return
+	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
+	if(!input) return
 	var/list/split = splittext(input, "/")
 	var/key = input
 	if(save.dir.Find("[split[1]]"))
@@ -312,7 +316,11 @@
 
 	save.cd = "/"
 
-	var/input = input(usr,"Select save:","Blueprints") in bps
+	if(!length(bps))
+		boutput(usr, "<span class='alert'>No blueprints found.</span>")
+		return
+	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
+	if(!input) return
 	var/list/split = splittext(input, "/")
 	if(save.dir.Find("[split[1]]"))
 		save.cd = "/[split[1]]"

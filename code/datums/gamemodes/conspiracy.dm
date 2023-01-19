@@ -1,5 +1,5 @@
 /datum/game_mode/conspiracy
-	name = "conspiracy"
+	name = "Conspiracy"
 	config_tag = "conspiracy"
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1 // No hunters until the conspiracy is dead, thanks

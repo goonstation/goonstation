@@ -4,8 +4,9 @@
 *
 */
 /datum/game_mode/assday
-	name = "Everyone-Is-A-Traitor Mode"
+	name = "Everyone is a traitor"
 	config_tag = "everyone-is-a-traitor"
+	regular = FALSE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH)
 	antag_token_support = TRUE

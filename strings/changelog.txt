@@ -1,4 +1,127 @@
 
+(t)thu jan 19 23
+(u)Tanker
+(p)12487
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Adds french toast. Simply combine bread, two eggs, and milk in the oven.
+(+)Baguettes will now produce french bread slices when sliced.
+(t)wed jan 18 23
+(u)tarmunora
+(+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
+(u)Amylizzle. Spritework by Mr Moriarty & Hans
+(p)12795
+(e)🪲🎨⚖🔄📦|C-Bug, C-Sprites, C-Balance, C-Rework, A-Game-Objects
+(*)Reworked nuclear centrifuges. See minor changes for details.
+(+)Centrifuges now accept multiple rods and nuclear waste items at once.
+(+)For each point of fissile isotopes material property, one plutonium bar is produced
+(+)Any remaining fissile isotopes are output as nuclear waste, which can be added back into the centrifuge when you have more fuel to process.
+(u)LeahTheTech
+(+)Flock sentinels now chain to less targets by default, but more with sapper power.
+(u)LeahTheTech
+(+)Flockdrones now dodge a little slower.
+(u)LeahTheTech
+(+)Flock compute nodes now provide 50 compute, down from 60.
+(u)LeahTheTech
+(+)Flockminds and traces now have a tracker hud element pointing to the relay while it is active.
+(u)goonstation-enjoyer
+(p)12658
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Leaving the afterlife bar now teleports you anywhere but the afterlife bar.
+(t)tue jan 17 23
+(u)DisturbHerb
+(p)12783
+(e)📦🗺⛔|A-Game-Objects, A-Mapping, C-Removal
+(+)The rollout of more advanced chessboards aboard NanoTrasen assets is now complete.
+(u)Zamujasa
+(*)Football mode now removes all traits. No more spawning blind/deaf/whatever.
+(u)Emily
+(*)Stationfinder RPG added to the tabletop gaming kits
+(u)DrWolfy
+(p)11826
+(e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
+(*)CheMaster3000 rework with TGUI.
+(u)Cheffie
+(p)12717
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)The penalty for draining a corpse as a thrall now only applies if it's rotting.
+(u)Flaborized
+(p)12761
+(e)🆕🎨|C-Feature, C-Sprites
+(+)There are now unique sprites for joints rolled out of space credits.
+(u)DisturbHerb
+(p)12784
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gaming machines now have 5 board game clocks available for purchase.
+(u)Flourish
+(e)💅|C-QoL
+(*)Added a bunch more emotes - *squint, *scoff, *nodslowly, *starehands, *rubface, *rubtemples, *scratchhead, *jazzhands, *thumbsup, *pose, *rolleyes, *sideeye, *examine, and a very special and secret *jsay!
+(t)mon jan 16 23
+(u)Flourish
+(e)🪲|C-Bug
+(*)Hitting Z / blocking on non-grab intent while on top of a chair will now buckle you in again. It was a bug that all intents made you climb the chair, so I've fixed it. I know this was a pretty longstanding bug, though, so let me know if you have feedback or want buckling to be help intent only.
+(u)Flourish
+(e)💅|C-QoL
+(+)Injector belts and vapomatics can now only hold small sized items. This means they can no longer hold artbeakers.
+(+)Phones now record their last caller on their screen.
+(+)You can now compost organs with the compost tank.
+(+)When drinking something, bartenders can now discern both the reagents and how it tastes.
+(u)Flourish
+(e)🎨💅|C-Sprites, C-QoL
+(*)The cloning console now has an "in-progress" screen for when all connected pods are in use (i.e. currently cloning someone).
+(u)Sovexe
+(p)12588
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Rancher now spawns with a belt that can fit chicken carriers and fishing rods. Sprite by BatElite.
+(u)LeahTheTech
+(*)Vampiric thralls now have a HUD element to track their master.
+(t)sun jan 15 23
+(u)Zamujasa
+(*)Football mode is now 10 minutes long.
+(*)Football players have a team-colored outline.
+(*)New type of license to kill that adds a crappy visual indicator over your head. Now everyone will know who's valid.
+(u)pali & Shiiba
+(*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
+(u)FlameArrow57
+(p)11684
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flockdrones will now deal less damage when attacking with items and point-blank shoot instead of gun-grab.
+(u)goonstation-enjoyer
+(p)12730
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adds a cleaning grenade manudrive to the janitor locker on Atlas
+(t)sat jan 14 23
+(u)DisturbHerb + Grokberg
+(p)12390
+(e)🆕🎨🔄🔊📄📦📜|C-Feature, C-Sprites, C-Rework, C-Sound, A-UI, A-Game-Objects, C-Documentation
+(*)The NanoTrasen Recreational Appropriations Committee has secured funding to upgrade the quality of crew entertainment in its stations. Chess boards and game clocks have been made available at gaming vendor machines, and a further rollout of the new equipment is anticipated in the near future.
+(u)Buyrcsp2
+(p)12731
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unopened cans of soda now can't be poured, unless popped open.
+(u)Amylizzle
+(p)12405
+(e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
+(+)The quartermaster's office now contains a chemical request console, so you can ask chemistry for meth to sell!
+(t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
+(u)Amylizzle
+(p)12720
+(e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
+(+)You can now use the gas analyser on the nuclear reactor and turbine.
+(u)Kubius
+(p)12667
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir has received a nuclear engine and a mining department.
+(+)The mining department is fairly small, and two miners are on staff. Their cherished reinforced exploratory pod lives in a hangar below surface.
+(+)Other things changed in Nadir include a larger Hydroponics Bay, a slightly wider Kitchen, several new random room spots, and a small Crime Conduit.
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
 (t)wed jan 11 23
 (u)aloe
 (+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.

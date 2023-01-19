@@ -1275,7 +1275,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				else if(istype(CROP,/obj/item/spacecash)) // Ugh
 					var/obj/item/spacecash/S = CROP
 					S.amount = max(1, DNA.potency * rand(2,4))
-					S.update_stack_appearance()
+					S.UpdateStackAppearance()
 				else if (istype(CROP,/obj/item/device/light/glowstick))
 					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
 					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)

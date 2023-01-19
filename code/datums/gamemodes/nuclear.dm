@@ -2,9 +2,9 @@
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
 
 /datum/game_mode/nuclear
-	name = "nuclear emergency"
+	name = "Nuclear Emergency"
 	config_tag = "nuclear"
-	shuttle_available = 2
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	/// The name of our target area(s). Used for text output.
 	var/list/target_location_names = list()
 	/// Our area.type, which can be multiple per plant location (e.g. medbay).
@@ -250,6 +250,7 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])

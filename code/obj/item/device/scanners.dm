@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.color = A.color
 				img.overlays = A.overlays
 				img.alpha = 100
-				img.appearance_flags = RESET_ALPHA | RESET_COLOR
+				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
 			if (T.disposal_image)
@@ -979,7 +979,7 @@ TYPEINFO(/obj/item/device/appraisal)
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

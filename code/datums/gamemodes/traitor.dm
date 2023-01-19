@@ -1,5 +1,5 @@
 /datum/game_mode/traitor
-	name = "traitor"
+	name = "Traitor"
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)

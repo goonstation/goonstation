@@ -5,6 +5,8 @@
 // Important: Reduce size of max_conv_radius if you are planning on viewing
 // variables of the relay, otherwise it will take a long time to load
 
+TYPEINFO(/obj/flock_structure/relay)
+	cancellable = FALSE
 /obj/flock_structure/relay
 	icon = 'icons/misc/featherzone-160x160.dmi'
 	icon_state = "structure-relay"
@@ -58,6 +60,9 @@
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
+	src.flock.flockmind.AddComponent(/datum/component/tracker_hud/flock, src)
+	for (var/mob/living/intangible/flock/trace/trace in src.flock.traces)
+		trace.AddComponent(/datum/component/tracker_hud/flock, src)
 	play_sound()
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
