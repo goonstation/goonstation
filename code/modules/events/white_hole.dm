@@ -877,7 +877,7 @@
 				SPAWN(1)
 					var/list/limbs = pick("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)
-					for(var/i in 1 to rand(0, 3))
+					for(var/i in 1 to pick(5; 0;   10; 1,   10; 2,   5; 3,   2; 4))
 						human.limbs?.sever(limbs[i])
 		else if(istype(., /obj/hotspot))
 			var/obj/hotspot/hotspot = .
