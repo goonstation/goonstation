@@ -4269,6 +4269,9 @@
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /obj/item/sponge,
 /obj/item/kitchen/utensil/knife,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "ant" = (
@@ -5405,16 +5408,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
-"ari" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "arj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -5423,6 +5416,9 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -5915,6 +5911,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "asJ" = (
@@ -6394,6 +6393,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "aub" = (
@@ -6805,26 +6807,10 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"avi" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "avj" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"avl" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "avn" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
@@ -7389,6 +7375,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "awA" = (
@@ -7627,7 +7616,7 @@
 /area/station/crew_quarters/fitness)
 "axp" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -8326,12 +8315,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"azl" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "azm" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/hydroponicsguide{
@@ -10337,7 +10320,7 @@
 /area/station/security/brig)
 "aEc" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18209,7 +18192,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/jazz)
@@ -28960,6 +28943,9 @@
 	},
 /obj/landmark/start{
 	name = "Rancher"
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -40662,7 +40648,7 @@
 /area/station/hallway/secondary/exit)
 "chk" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -51844,9 +51830,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "gpF" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -57041,6 +57024,9 @@
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "nHP" = (
@@ -59027,6 +59013,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "qiY" = (
@@ -59428,6 +59417,9 @@
 	},
 /obj/machinery/plantpot{
 	anchored = 1
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -62417,9 +62409,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "tYJ" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 12
 	},
@@ -123876,11 +123865,11 @@ ajl
 gPb
 apY
 gpF
-avi
-avi
+awI
+awI
 atX
-ari
-avi
+mDJ
+awI
 atS
 apY
 awv
@@ -125084,11 +125073,11 @@ adC
 bSY
 atW
 tYJ
-azl
-azl
+awI
+awI
 atX
-avl
-azl
+mDJ
+awI
 fSd
 atW
 avj

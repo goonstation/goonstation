@@ -111,7 +111,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
-	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 
 	New()
 		..()

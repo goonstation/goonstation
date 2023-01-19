@@ -19,7 +19,7 @@
 	proc/setup_material()
 		.=0
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
 		return
@@ -437,7 +437,6 @@
 		..()
 
 /obj/item/material_piece/plutonium
-	name = "plutonium"
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
 	setup_material()
