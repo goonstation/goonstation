@@ -415,7 +415,7 @@
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-		background.appearance_flags = RESET_COLOR
+		background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		. = background
 
 	getIcon()
@@ -1176,7 +1176,7 @@
 
 			buildBackgroundIcon-(atom/target, mob/user)
 				var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-				background.appearance_flags = RESET_COLOR
+				background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				.= background
 
 
