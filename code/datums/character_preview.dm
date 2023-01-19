@@ -106,9 +106,6 @@ datum/character_preview
 		src.preview_mob.real_name = "clone of " + name
 		src.preview_mob.name = "clone of " + name
 
-	proc/mirror_appearance(mob/living/carbon/human/to_copy) // This is like using a sledgehammer in a surgery where a scapel is better. You could directly change preview_mob, change it's clothes and appearance safely and sleep like someone who didn't commit a felony, or you can use this.
-		src.preview_mob.appearance = to_copy.appearance
-
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
 datum/character_preview/window

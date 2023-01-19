@@ -60,6 +60,7 @@ TYPEINFO(/datum/component/barber)
 	initialization_args = list()
 
 /datum/component/barber
+	var/list/all_hairs = list()
 	var/datum/appearanceHolder/new_AH
 	var/datum/character_preview/preview
 	var/mob/living/carbon/human/barbee
@@ -67,15 +68,32 @@ TYPEINFO(/datum/component/barber)
 	var/hair_portion = "bottom"
 
 /datum/component/barber/Initialize()
+	var/all_hair_types = null
+
+	if (istype(src, /datum/component/barber/shave))
+		all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+	else
+		all_hair_types = concrete_typesof(/datum/customization_style/hair)
+
+	// just so we get a special icon sprite for no hair
+	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH))))
+
+	for (var/datum/customization_style/styles as anything in all_hair_types)
+		var/datum/customization_style/style = new styles
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon))
+
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_shave)
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -433,31 +451,16 @@ TYPEINFO(/datum/component/barber)
 
 	if (isnull(src.preview))
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + (istype(src, /datum/component/barber/shave) ? "shave" : "cut") // To avoid mixing up preview IDs, we gotta be *really* specific
-		src.preview = new /datum/character_preview(src.barbee.client, "barber", preview_id)
+		src.preview = new /datum/character_preview(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424")
-		src.preview.mirror_appearance(barbee)
-		src.preview.update_appearance(src.barbee.bioHolder.mobAppearance, direction=SOUTH, name=src.barbee.name)
-
+		src.preview.preview_mob.appearance = src.barbee.appearance
+		src.preview.preview_mob.appearance = src.barbee.appearance // For whatever reason, you have to do this twice for it to properly copy another mob's appearance. Get rid of this hack once someone properly creates a proc to copy appearance.
+		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
+		// If you're wondering why I'm calling update_apperarance right after copying another mob's appearance var, it's because one copies the clothes and another copies the modified hair. One cannot do the other.
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
 /datum/component/barber/ui_static_data(mob/user)
-	var/list/all_hairs = list()
-	var/all_styles = null
-
-	if (istype(src, /datum/component/barber/shave))
-		all_styles = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
-	else
-		all_styles = concrete_typesof(/datum/customization_style/hair)
-
-	// just so we get a special icon sprite for no hair
-	all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH))))
-
-	for (var/datum/customization_style/styles as anything in all_styles)
-		var/datum/customization_style/style = new styles
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon))
-
 	. = list("available_styles" = all_hairs)
 
 /datum/component/barber/ui_act(var/action, var/params)
@@ -478,9 +481,11 @@ TYPEINFO(/datum/component/barber)
 				else
 					actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
+				if (!barber)
+					return // If there's no barber, it's safe to say we've been disposed of
+
 				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-				src.preview.mirror_appearance(barbee)
-				src.preview.update_appearance(new_AH)
+				src.preview.update_appearance(src.new_AH)
 				return TRUE
 
 			var/hair_portion_list = list(
@@ -507,6 +512,9 @@ TYPEINFO(/datum/component/barber)
 				actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 			else
 				actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
+
+			if (!barber)
+				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
 			return TRUE
@@ -536,7 +544,6 @@ TYPEINFO(/datum/component/barber)
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
 
-					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
@@ -548,12 +555,10 @@ TYPEINFO(/datum/component/barber)
 						"north" = NORTH
 					)
 
-					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
@@ -561,7 +566,8 @@ TYPEINFO(/datum/component/barber)
 /datum/component/barber/ui_status(mob/user, datum/ui_state/state)
 	. = user.find_in_hand(src.parent) ? UI_INTERACTIVE : UI_CLOSE // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
 
-/datum/component/barber/ui_close(mob/user) // Gotta reset some left-over values on the component
+/datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
+	src.preview.preview_mob.appearance = null
 	qdel(src.new_AH)
 	qdel(src.preview)
 	src.new_AH = null
