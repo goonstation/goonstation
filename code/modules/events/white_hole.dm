@@ -765,9 +765,9 @@
 			if("ore")
 				. = generate_thing("ore")
 			if("randomplant")
-				spawn_type = pick(concrete_typesof(pick(
-						/obj/item/reagent_containers/food/snacks/plant,
-						/obj/item/plant
+				spawn_type = pick(concrete_typesof(pick( \
+						/obj/item/reagent_containers/food/snacks/plant, \
+						/obj/item/plant \
 					)))
 				. = new spawn_type(src.loc)
 			if("deepfried")
