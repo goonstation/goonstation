@@ -589,7 +589,7 @@
 			"organ" = 20,
 			/obj/item/reagent_containers/hypospray = 5,
 			"corpse" = 3,
-			"geneinjector" = 300,
+			"geneinjector" = 3,
 			/obj/item/reagent_containers/syringe = 10,
 			/obj/item/clothing/gloves/latex = 5,
 			/obj/item/robodefibrillator = 1,
