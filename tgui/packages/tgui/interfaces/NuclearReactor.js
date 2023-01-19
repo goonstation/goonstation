@@ -146,10 +146,10 @@ export const NuclearReactor = (props, context) => {
                 size={5}
                 value={reactorRads}
                 format={value => round(value, 1) + " clicks"}
-                alertAfter={15}
+                alertAfter={50}
                 ranges={{
-                  "good": [0, 5],
-                  "average": [5, 50],
+                  "good": [0, 10],
+                  "average": [10, 50],
                   "bad": [50, 100],
                 }} />
             </Flex.Item>
