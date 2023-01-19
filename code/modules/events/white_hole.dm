@@ -888,7 +888,7 @@
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
 				SPAWN(1)
-					var/list/limbs = pick("l_arm", "r_arm", "l_leg", "r_leg")
+					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)
 					for(var/i in 1 to pick(5; 0,   10; 1,   10; 2,   5; 3,   2; 4))
 						H.limbs?.sever(limbs[i])
