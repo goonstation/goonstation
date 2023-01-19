@@ -863,6 +863,7 @@
 					qdel(organ)
 				human.death()
 				human.set_loc(src.loc)
+				. = human
 			if("geneinjector")
 				var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
 				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
@@ -876,6 +877,7 @@
 				else
 					inj.name = "dna injector - ???"
 				inj.BE = effect
+				. = inj
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
