@@ -68,14 +68,14 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS & can_transfer()))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
-
-		src.transfer_all_reagents(over_object, usr)
+		if (can_transfer())
+			src.transfer_all_reagents(over_object, usr)
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

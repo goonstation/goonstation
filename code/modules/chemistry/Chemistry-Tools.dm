@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if(!ok)
 				return
 
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS & can_transfer()))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -107,7 +107,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
-		src.transfer_all_reagents(over_object, usr)
+		if (can_transfer())
+			src.transfer_all_reagents(over_object, usr)
 
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
