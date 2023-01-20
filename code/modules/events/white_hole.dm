@@ -140,7 +140,7 @@
 			/obj/item/pipebomb/bomb/syndicate = 0.1,
 			/obj/item/pipebomb/bomb/engineering = 0.3,
 			/mob/living/carbon/human/normal/engineer = 0.5,
-			/mob/living/carbon/human/normal/chiefengineer = 0.2,
+			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 			/obj/item/paper = 2,
 		),
@@ -335,7 +335,7 @@
 			/obj/machinery/emitter = 0.3,
 			/obj/item/toy/plush/small/singuloose = 0.1,
 			/mob/living/carbon/human/normal/engineer = 0.5,
-			/mob/living/carbon/human/normal/chiefengineer = 0.2,
+			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 			/obj/item/clothing/glasses/meson = 0.5,
 			/obj/item/old_grenade/graviton = 0.2,
@@ -615,7 +615,7 @@
 			/datum/projectile/energy_bolt/tasershotgun = 3,
 			/datum/projectile/energy_bolt/bouncy = 3,
 			/obj/item/paper = 1,
-		)
+		),
 		"cargo" = list(
 			// TODO, I am too tired rn
 		),
@@ -949,6 +949,17 @@
 					shuffle_list(limbs)
 					for(var/i in 1 to pick(5; 0,   10; 1,   10; 2,   5; 3,   2; 4))
 						H.limbs?.sever(limbs[i])
+					if(prob(25))
+						H.emote("scream")
+					if(prob(25))
+						for(var/i in 1 to 20)
+							sleep(rand(3 SECONDS, 35 SECONDS))
+							if(isdead(H))
+								break
+							if(prob(90))
+								H.say(phrase_log.random_phrase("say"))
+							else
+								H.emote("me", TRUE, phrase_log.random_phrase("emote"))
 		else if(istype(., /obj/hotspot))
 			var/obj/hotspot/hotspot = .
 			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
@@ -972,6 +983,41 @@
 			var/obj/item/paper/paper = .
 			if(!length(paper.info))
 				paper.info = phrase_log.random_phrase("paper")
+
+		// renaming
+		if(istype(., /mob))
+			var/mob/M = .
+			if(istype(M, /mob/living/silicon/ai) && prob(80))
+				M.real_name = phrase_log.random_phrase("name-ai")
+			else if(istype(M, /mob/living/silicon/robot) && prob(80))
+				M.real_name = phrase_log.random_phrase("name-cyborg")
+			else if(istype(M, /mob/living/carbon/human/normal/clown) && prob(80))
+				M.real_name = phrase_log.random_phrase("name-clown")
+			else if(istype(M, /mob/living/carbon/human) && prob(80))
+				M.real_name = phrase_log.random_phrase("name-human")
+			if(!M.real_name)
+				M.real_name = M.name // revert in case of a fail
+			M.name = M.real_name
+			M.choose_name(1, null, M.real_name, force_instead=TRUE)
+
+		if(istype(., /obj/machinery/bot))
+			var/obj/machinery/bot/B = .
+			if(istype(B, /obj/machinery/bot/firebot) && prob(33))
+				B.name = phrase_log.random_phrase("name-firebot")
+			else if(istype(B, /obj/machinery/bot/secbot) && prob(33))
+				B.name = phrase_log.random_phrase("name-secbot")
+			else if(istype(B, /obj/machinery/bot/cleanbot) && prob(33))
+				B.name = phrase_log.random_phrase("name-cleanbot")
+			else if(istype(B, /obj/machinery/bot/mulebot) && prob(33))
+				B.name = phrase_log.random_phrase("name-mulebot")
+			else if(istype(B, /obj/machinery/bot/medbot) && prob(33))
+				B.name = phrase_log.random_phrase("name-medbot")
+			else if(istype(B, /obj/machinery/bot/cambot) && prob(33))
+				B.name = phrase_log.random_phrase("name-cambot")
+			else if(istype(B, /obj/machinery/bot/duckbot) && prob(33))
+				B.name = phrase_log.random_phrase("name-duckbot")
+			if(!B.name)
+				B.name = initial(B.name) // revert in case of a fail
 
 	proc/locate_throw_target(atom/thrown, turf_search_dist = 64)
 		var/turf/init_turf = get_turf(thrown)
