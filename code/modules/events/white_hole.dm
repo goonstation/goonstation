@@ -375,17 +375,19 @@
 			/obj/bomb_decoy = 0.4,
 		),
 		"hell" = list(
+			"fireflash" = 15
 			/obj/hotspot = 10,
 			/obj/critter/lavacrab = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
-			/obj/critter/slime/magma = 5,
-			/obj/critter/slime/large/magma = 1,
+			/obj/critter/slime/magma = 2,
+			/obj/critter/slime/large/magma = 0.3,
 			#endif
 			/obj/decal/cleanable/ash = 10,
 			/mob/living/carbon/human/normal = 5,
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
+			"corpse" = 5,
 			// yeah idk where I was going with "hell" either
 		),
 		"botany" = list(
@@ -916,6 +918,8 @@
 				if(isnull(target))
 					target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
 				arcFlash(src, target, rand(4, 6) KILO WATTS)
+			if ("fireflash")
+				fireflash_sm(src, rand(1, 6), rand(200, 3000), rand(50, 300))
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
