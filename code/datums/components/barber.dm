@@ -14,7 +14,9 @@ TYPEINFO(/datum/component/toggle_tool_use)
 	initialization_args = list()
 
 /datum/component/toggle_tool_use
+
 /datum/component/toggle_tool_use/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
@@ -68,6 +70,7 @@ TYPEINFO(/datum/component/barber)
 	var/hair_portion = "bottom"
 
 /datum/component/barber/Initialize()
+	. = ..()
 	var/all_hair_types = null
 
 	if (istype(src, /datum/component/barber/shave))

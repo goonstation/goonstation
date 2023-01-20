@@ -133,7 +133,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/center_loc = get_turf(src)
 	SPAWN(0)
 		for(var/mob/M as anything in mobs)
-			M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
+			M.playsound_local(M, 'sound/misc/flockmind/Flock_Reactor.ogg', 30, 0, 2)
 			boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()

@@ -6,6 +6,7 @@
 	var/obj/ability_button/hood_toggle/toggle = new
 
 /datum/component/toggle_hood/Initialize(hooded = FALSE, hood_style = null)
+	. = ..()
 	if(!istype(parent, /obj/item/clothing/suit))
 		return COMPONENT_INCOMPATIBLE
 	src.hooded = hooded
