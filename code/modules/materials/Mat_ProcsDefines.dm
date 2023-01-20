@@ -185,15 +185,21 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
 
+/atom/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
+/image/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
 /// Order of precedence is as follows:
 /// if the material is in the list of appearences to ignore, do nothing
 /// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
 /// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
-/atom/proc/setMaterialAppearance(var/datum/material/mat1)
+/atom/proc/setMaterialAppearance(datum/material/mat1)
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
-	var/base_icon_state = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+	var/base_icon_state = materialless_icon_state()
 	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
