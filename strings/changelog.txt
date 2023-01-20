@@ -1,5 +1,7 @@
 
 (t)fri jan 20 23
+(u)aloe
+(+)Going shambler mode as a changeling now removes pins.
 (u)tarmunora
 (+)Biblethump brain damage is now affected by head armor instead of blocked outright by helmets
 (u)pali & Leah
