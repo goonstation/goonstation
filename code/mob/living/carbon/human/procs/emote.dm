@@ -1496,7 +1496,7 @@
 						thing = src.r_hand
 				if (thing)
 					animate_spin(thing, prob(50) ? "L" : "R", 3, 0)
-					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining at it."
+					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining it."
 					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining it</I>"
 					m_type = 1
 				else
