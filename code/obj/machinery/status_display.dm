@@ -11,6 +11,7 @@
 
 /obj/status_display_proxy
 	plane = PLANE_NOSHADOW_ABOVE
+	mouse_opacity = FALSE
 
 #define MAX_LEN 5
 TYPEINFO(/obj/machinery/status_display)
@@ -72,7 +73,7 @@ TYPEINFO(/obj/machinery/status_display)
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
 		crt_image.layer = src.layer + 0.2
 		crt_image.plane = PLANE_DEFAULT
-		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
+		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")

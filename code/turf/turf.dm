@@ -327,7 +327,7 @@ proc/generate_space_color()
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
-			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
@@ -972,6 +972,7 @@ proc/generate_space_color()
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
 #else

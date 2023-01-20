@@ -1015,13 +1015,13 @@
 				maptext_suffix = "</span>"
 
 				New()
-					maptext_y += 20
 					..()
+					maptext_y += 21
 
 				offset
 					New()
-						maptext_x += 16
 						..()
+						maptext_x += 16
 
 
 	score_tracker
@@ -1237,7 +1237,7 @@
 				var/mob/M = C.mob
 				if(!M || isnewplayer(M)) continue
 				if (isdead(M) && !isliving(M))
-					if (M.mind?.joined_observer)
+					if (M.mind?.get_player()?.joined_observer)
 						results["observer"]++
 					else
 						results["dead"]++

@@ -669,6 +669,7 @@
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/sea_crashed)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)

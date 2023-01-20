@@ -1316,6 +1316,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."

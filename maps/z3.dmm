@@ -496,7 +496,7 @@
 /area/space_hive)
 "abJ" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "abK" = (

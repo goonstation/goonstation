@@ -19357,7 +19357,7 @@
 /area/crypt/sigma/lab)
 "wNC" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},

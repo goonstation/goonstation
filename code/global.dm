@@ -518,7 +518,7 @@ var/global
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
 		I.render_target = key
-		I.appearance_flags = KEEP_APART
+		I.appearance_flags = KEEP_APART | PIXEL_SCALE
 		I.loc = renderSourceHolder
 		globalRenderSources[key] = I
 		return I
