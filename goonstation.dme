@@ -930,6 +930,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\syndicate_retribution.dm"
 #include "code\modules\events\vamp_teg.dm"
 #include "code\modules\events\vortexes.dm"
+#include "code\modules\events\white_hole.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\gimmick\bigfart.dm"
 #include "code\modules\events\gimmick\generate_planet.dm"
