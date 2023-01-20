@@ -12173,8 +12173,12 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aNz" = (
-/obj/item/pen/crayon/orange,
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aNA" = (
@@ -12573,10 +12577,6 @@
 /turf/space,
 /area/station/solar/west)
 "aPo" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
@@ -14873,11 +14873,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -60589,12 +60584,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"wFl" = (
-/obj/cable,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "wFB" = (
 /obj/item/sheet/steel{
 	amount = 50
@@ -61646,6 +61635,11 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
+"xvW" = (
+/obj/disposalpipe/segment/vertical,
+/obj/item/pen/marker/purple,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xwf" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -96187,9 +96181,9 @@ aMt
 bCG
 aSM
 aTz
-aRu
-aRu
 aYv
+aRu
+aRu
 aRu
 aRu
 aRu
@@ -96492,7 +96486,7 @@ aBE
 aNz
 aBE
 aPo
-aBE
+xvW
 aBE
 aBE
 nqT
@@ -98311,7 +98305,7 @@ aTx
 dXb
 lJb
 aWl
-wFl
+phm
 aPq
 ukm
 baF
