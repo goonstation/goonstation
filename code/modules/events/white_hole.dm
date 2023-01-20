@@ -1001,7 +1001,7 @@
 			var/obj/item/paper/paper = .
 			if(!length(paper.info))
 				paper.info = phrase_log.random_phrase("paper")
-		else if(istype(., /obj/item/sticker/postit))
+		else if(istype(., /obj/item/sticker/postit) && !istype(., /obj/item/sticker/postit/artifact_paper))
 			var/obj/item/sticker/postit/postit = .
 			if(!length(postit.words))
 				postit.words = phrase_log.random_phrase("paper")
