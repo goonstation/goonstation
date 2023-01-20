@@ -948,6 +948,12 @@
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
+		if(istype(., /obj/item))
+			var/obj/item/I = .
+			if(I.pixel_x == 0 && I.pixel_y == 0)
+				I.pixel_x = rand(-16, 16)
+				I.pixel_y = rand(-16, 16)
+
 		if(istype(., /mob/living))
 			var/mob/living/L = .
 			if(ismobcritter(L))
