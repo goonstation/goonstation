@@ -12576,11 +12576,6 @@
 	},
 /turf/space,
 /area/station/solar/west)
-"aPo" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "aPp" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/access_spawn/maint,
@@ -96485,7 +96480,7 @@ aLq
 aBE
 aNz
 aBE
-aPo
+aBE
 xvW
 aBE
 aBE
