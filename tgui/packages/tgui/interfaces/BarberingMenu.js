@@ -19,7 +19,7 @@ export const BarberingMenu = (props, context) => {
         <HairOptions />
         <hr />
         <Stack>
-          <Stack.Item width="65%">
+          <Stack.Item width="70%">
             <Stack wrap="wrap" justify="space-around">
               <Stack width="100%" inline justify="space-around">
                 <Icon name="magnifying-glass" />
@@ -32,7 +32,7 @@ export const BarberingMenu = (props, context) => {
                 all_hair_styles={available_styles} />
             </Stack>
           </Stack.Item>
-          <Stack.Item position="fixed" width="32%">
+          <Stack.Item position="fixed" width="200px">
             <PreviewWindow />
           </Stack.Item>
         </Stack>
@@ -57,11 +57,17 @@ const HairOptions = (props, context) => {
 
   return (
     <Stack justify="space-between" fontSize="15px">
-      <Button.Checkbox checked={selected_hair_portion === "bottom" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "bottom" })}>Bottom Hair</Button.Checkbox>
-      <Button.Checkbox checked={selected_hair_portion === "middle" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "middle" })}>Middle Hair</Button.Checkbox>
-      <Button.Checkbox checked={selected_hair_portion === "top" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "top" })}>Top Hair</Button.Checkbox>
-      <hr />
-      <Button bold color="red" icon="cut" onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
+      <Stack.Item>
+        <Button.Checkbox mx="20px" checked={selected_hair_portion === "bottom" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "bottom" })}>Bottom Hair</Button.Checkbox>
+        <Button.Checkbox mx="20px" checked={selected_hair_portion === "middle" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "middle" })}>Middle Hair</Button.Checkbox>
+        <Button.Checkbox mx="20px" checked={selected_hair_portion === "top" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "top" })}>Top Hair</Button.Checkbox>
+      </Stack.Item>
+      <Stack.Item width="2px">
+        <Box backgroundColor="white" width="2px" height="100%" />
+      </Stack.Item>
+      <Stack.Item shrink>
+        <Button bold color="red" icon="cut" onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
+      </Stack.Item>
     </Stack>
   );
 };
@@ -71,11 +77,13 @@ const HairPreview = (props, context) => {
   const { hair_style, hair_name } = props;
   return (
     <Section width="140px" direction="column" align="center">
-      <Image pixelated width="60px" height="100px" src={`${hair_style["hair_icon"]}`} />
-      <Box width="100%" fontSize="15px" textAlign="center" mb="10px">{hair_name}</Box>
       <Stack inline justify="space-between">
-        <Button color="blue" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
-        <Button color="blue" height="20px" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
+        <Stack.Item>
+          <Image pixelated width="60px" height="100px" src={`${hair_style["hair_icon"]}`} />
+          <Box width="100%" fontSize="15px" textAlign="center" mb="10px">{hair_name}</Box>
+          <Button color="blue" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
+          <Button color="blue" height="20px" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
+        </Stack.Item>
       </Stack>
     </Section>
   );
@@ -87,31 +95,45 @@ const PreviewWindow = (props, context) => {
   return (
     <Section>
       <Stack justify="space-around" height="200px" wrap="wrap">
-        <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
-        <ByondUi
-          params={{
-            id: preview,
-            type: "map",
-          }}
-          style={{
-            width: "80px",
-            height: "160px",
-          }} />
+        <Stack.Item width="100%">
+          <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <ByondUi
+            params={{
+              id: preview,
+              type: "map",
+            }}
+            style={{
+              width: "80px",
+              height: "160px",
+            }} />
+        </Stack.Item>
       </Stack>
       <hr />
-      <Stack wrap="wrap" height="100px" align="center">
-        <Box mb="2px" width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
-        <Box mb="2px" width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
-        <Box mb="2px" width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
+      <Stack wrap="wrap" align="center">
+        <Stack.Item>
+          <Box width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
+          <Box width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
+          <Box width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
+        </Stack.Item>
       </Stack>
       <hr />
       <Stack width="100%" align="center" wrap="wrap" justify="space-around">
-        <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
+        <Stack.Item>
+          <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
+        </Stack.Item>
         <Stack width="100%" align="center" justify="space-around">
-          <Button icon="caret-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": "west" })} />
-          <Button icon="caret-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": "east" })} />
+          <Stack.Item>
+            <Button icon="caret-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": "west" })} />
+          </Stack.Item>
+          <Stack.Item>
+            <Button icon="caret-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": "east" })} />
+          </Stack.Item>
         </Stack>
-        <Button icon="caret-down" onClick={() => act("update_preview", { "action": "change_direction", "direction": "south" })} />
+        <Stack.Item>
+          <Button icon="caret-down" onClick={() => act("update_preview", { "action": "change_direction", "direction": "south" })} />
+        </Stack.Item>
       </Stack>
     </Section>
   );

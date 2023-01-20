@@ -454,9 +454,9 @@ TYPEINFO(/datum/component/barber)
 		src.preview = new /datum/character_preview(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424")
 		src.preview.preview_mob.appearance = src.barbee.appearance
-		src.preview.preview_mob.appearance = src.barbee.appearance // For whatever reason, you have to do this twice for it to properly copy another mob's appearance. Get rid of this hack once someone properly creates a proc to copy appearance.
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
-		// If you're wondering why I'm calling update_apperarance right after copying another mob's appearance var, it's because one copies the clothes and another copies the modified hair. One cannot do the other.
+		// If you're wondering why I'm calling update_apperarance and also copying the appearance var from the barbee, it's because the appearance var copies the clothes and update_appearance copies the modified hair.
+
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
@@ -485,6 +485,7 @@ TYPEINFO(/datum/component/barber)
 					return // If there's no barber, it's safe to say we've been disposed of
 
 				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+				src.preview.preview_mob.appearance = src.barbee.appearance
 				src.preview.update_appearance(src.new_AH)
 				return TRUE
 
@@ -517,6 +518,8 @@ TYPEINFO(/datum/component/barber)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+			src.preview.preview_mob.appearance = src.barbee.appearance
+			src.preview.update_appearance(src.new_AH)
 			return TRUE
 
 		if("update_preview")
@@ -543,7 +546,7 @@ TYPEINFO(/datum/component/barber)
 							src.new_AH.customization_second = new_hairstyle
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
-
+					src.preview.preview_mob.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
@@ -555,10 +558,12 @@ TYPEINFO(/datum/component/barber)
 						"north" = NORTH
 					)
 
+					src.preview.preview_mob.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+					src.preview.preview_mob.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
