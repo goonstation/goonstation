@@ -86,6 +86,12 @@
 	desc = "Chromosomal alterations prevent seeds from this plant from being spliced as easily."
 	negative = 1
 
+/datum/plant_gene_strain/splicing/disabled
+	name = "Splice Disabler"
+	desc = "Chromosomal alterations prevent seeds from this plant from being spliced at all."
+	negative = 1
+	chance = 100
+
 /datum/plant_gene_strain/damage_res
 	name = "Damage Resistance"
 	desc = "Enables the plant to take less damage from anything that would harm it."
@@ -174,6 +180,11 @@
 		var/turf/T = PP.loc
 		if (istype(T,/turf/) && T.RL_GetBrightness() >= 1)
 			PP.growth += 2
+
+/datum/plant_gene_strain/variable_harvest
+	name = "Variable Harvest"
+	desc = "This gene causes the plant to produce a variable number of harvests."
+	chance = 50
 
 /datum/plant_gene_strain/reagent_adder
 	name = "Hyperaquacity"

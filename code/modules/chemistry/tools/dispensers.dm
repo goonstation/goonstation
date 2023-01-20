@@ -435,7 +435,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)
 		else if (istype(W,/obj/item/seed/)) src.reagents.add_reagent("poo", 2)
-		else if (istype(W,/obj/item/plant/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/plant/) || istype(W,/obj/item/clothing/head/flower/)) src.reagents.add_reagent("poo", 15)
 		else if (istype(W,/obj/item/organ/)) src.reagents.add_reagent("poo", 35)
 		else load = 0
 
@@ -458,7 +458,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
-		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
+		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) || istype(O, /obj/item/clothing/head/flower/))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 			var/itemtype = O.type
 			var/staystill = user.loc

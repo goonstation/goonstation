@@ -612,7 +612,7 @@
 					poured = TRUE
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
-			// do nothing
+			; // do nothing
 		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else

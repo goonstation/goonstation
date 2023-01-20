@@ -1583,7 +1583,6 @@
 					if (M)
 						message = "<B>[src]</B> points to [M]."
 						maptext_out = "<I>points to [M]</I>"
-					else
 				m_type = 1
 
 			if ("signal")

@@ -1,4 +1,15 @@
 
+(t)thu jan 19 23
+(u)Walpvrgis + Flourish
+(p)12817
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Added gardenias, hydrangeas, birds of paradise, and lavender as both growable botany plants and wearable head accessories
+(*)Also added lavender essence and lavender latte (lavender essence + milk + espresso) as reagents. Lavender essence, when applied via TOUCH, will apply the "fragrant" status effect to the user, with each unit increasing the status duration by 5 seconds.
+(u)Tanker
+(p)12487
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Adds french toast. Simply combine bread, two eggs, and milk in the oven.
+(+)Baguettes will now produce french bread slices when sliced.
 (t)wed jan 18 23
 (u)tarmunora
 (+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
