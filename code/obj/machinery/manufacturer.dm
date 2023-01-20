@@ -2988,20 +2988,22 @@ TYPEINFO(/obj/machinery/manufacturer)
 		MA.error = null
 		MA.mode = "ready"
 		MA.build_icon()
-		src.manudrive_file.num_working--
-		if(src.manudrive_file.num_working < 0)
-			CRASH("Manudrive num_working negative.")
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
 
 	onEnd()
 		..()
 		src.completed = TRUE
-		src.manudrive_file.num_working--
-		if(src.manudrive_file.num_working < 0)
-			CRASH("Manudrive num_working negative.")
-		if(src.manudrive_file.fablimit == 0)
-			CRASH("Manudrive fablimit 0.")
-		else if(src.manudrive_file.fablimit > 0)
-			src.manudrive_file.fablimit--
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
+			if(src.manudrive_file.fablimit == 0)
+				CRASH("Manudrive fablimit 0.")
+			else if(src.manudrive_file.fablimit > 0)
+				src.manudrive_file.fablimit--
 		MA.finish_work()
 		// call dispense
 
