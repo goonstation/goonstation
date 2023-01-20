@@ -375,7 +375,7 @@
 			/obj/bomb_decoy = 0.4,
 		),
 		"hell" = list(
-			"fireflash" = 15
+			"fireflash" = 15,
 			/obj/hotspot = 10,
 			/obj/critter/lavacrab = 5,
 			/obj/submachine/slot_machine = 5,
