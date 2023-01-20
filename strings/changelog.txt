@@ -1,5 +1,7 @@
 
 (t)fri jan 20 23
+(u)tarmunora
+(+)Biblethump brain damage is now affected by head armor instead of blocked outright by helmets
 (u)pali & Leah
 (p)12824
 (e)🆕🎨🌠|C-Feature, C-Sprites, A-Events
