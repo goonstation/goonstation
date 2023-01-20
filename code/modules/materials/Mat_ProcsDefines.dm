@@ -227,6 +227,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	var/base_icon_state = img.materialless_icon_state()
 	if (isnull(mat) || length(src.mat_appearances_to_ignore) && (mat in src.mat_appearances_to_ignore))
 		img.icon_state = base_icon_state
+		return
 	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
 	if(src.is_valid_icon_state(potential_new_icon_state))
 		img.icon_state = potential_new_icon_state
