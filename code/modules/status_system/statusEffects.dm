@@ -2185,6 +2185,7 @@
 	name = "Fragrant"
 	desc = "You smell very nice."
 	icon_state = "fragrant"
+	maxDuration = 5 MINUTES
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional)
