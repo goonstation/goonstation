@@ -1018,12 +1018,12 @@ var/datum/action_controller/actions
 			if (target.job == "Clown" && (slot == SLOT_L_STORE || slot == SLOT_R_STORE))
 				if (prob(25) && !ON_COOLDOWN(target, "prank_pockets", 2 MINUTES))
 					var/obj/item/pick = pick(
-						100;/obj/item/reagent_containers/food/snacks/ingredient/egg,
-						100;/obj/item/fish/red_herring,
 						100;/obj/item/toy/plush/small/bee,
 						100;/obj/item/toy/plush/small/monkey,
 						100;/obj/item/balloon_animal/random,
 						100;/obj/item/basketball,
+						50;/obj/item/fish/red_herring,
+						50;/obj/item/baguette,
 						50;/obj/item/clothing/head/plunger,
 						30;/obj/item/clothing/head/bigtex,
 						30;/obj/item/instrument/saxophone,
