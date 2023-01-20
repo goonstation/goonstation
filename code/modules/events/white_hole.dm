@@ -60,9 +60,10 @@
 		if(isnull(duration))
 			duration = 40 SECONDS + rand(-10 SECONDS, 10 SECONDS)
 
-		message_admins("White Hole anomaly spawning in [log_loc(T)]")
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
+		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
+		logTheThing("admin", usr, null, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
 /obj/whitehole
