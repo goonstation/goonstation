@@ -102,6 +102,7 @@
 			/obj/item/disk/data/tape = 2,
 			/mob/living/carbon/human/npc/monkey = 0.5,
 			/mob/living/carbon/human/normal/scientist = 0.5,
+			/obj/item/paper = 5,
 			#ifdef SECRETS_ENABLED
 			/mob/living/carbon/human/npc/monkey/extremely_fast = 0.05,
 			#endif
@@ -141,6 +142,7 @@
 			/mob/living/carbon/human/normal/engineer = 0.5,
 			/mob/living/carbon/human/normal/chiefengineer = 0.2,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
+			/obj/item/paper = 2,
 		),
 		"flock" = list(
 			"flockconverted" = 15,
@@ -206,6 +208,7 @@
 			/datum/reagent/blood = 1,
 			/obj/item/kitchen/utensil/knife = 1,
 			/obj/critter/spirit = 1,
+			/obj/item/paper = 3,
 		),
 		"trench" = list(
 			/datum/reagent/water/sea = 20,
@@ -295,6 +298,7 @@
 			/obj/item/kitchen/utensil/knife/pizza_cutter = 1,
 			/obj/item/ladle = 0.2,
 			/obj/item/kitchen/rollingpin = 0.5,
+			/obj/item/paper = 3,
 
 			/obj/item/reagent_containers/food/drinks/drinkingglass = 2,
 			/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail = 2,
@@ -339,6 +343,7 @@
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/item/raw_material/shard/glass = 5,
 			/obj/item/raw_material/shard/plasmacrystal = 3,
+			/obj/item/paper = 3,
 		),
 		"plasma" = list(
 			"plasma" = 100,
@@ -387,6 +392,7 @@
 			/mob/living/carbon/human/normal = 5,
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
+			/obj/item/paper = 3,
 			"corpse" = 5,
 			// yeah idk where I was going with "hell" either
 		),
@@ -415,6 +421,7 @@
 			/obj/item/clothing/mask/cigarette = 10,
 			/obj/item/reagent_containers/glass/water_pipe = 1,
 			/obj/item/device/light/lava_lamp = 1,
+			/obj/item/paper = 3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -446,6 +453,7 @@
 			/mob/living/critter/spider/nice = 2,
 			/mob/living/carbon/human/npc/assistant = 2,
 			/mob/living/carbon/human/normal/assistant = 2,
+			/obj/item/paper = 5,
 			#ifdef SECRETS_ENABLED
 			/mob/living/critter/legman = 1,
 			#endif
@@ -482,6 +490,7 @@
 			/obj/item/parts/robot_parts/leg/right/standard = 1,
 			/obj/item/cable_coil = 1,
 			/obj/item/wrench = 1,
+			/obj/item/paper = 2,
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
@@ -513,6 +522,7 @@
 			/obj/fitness/speedbag/captain = 1,
 			/obj/item/disk/data/floppy/read_only/communications = 1,
 			/obj/machinery/manufacturer/hop_and_uniform = 0.5,
+			/obj/item/paper = 6,
 		),
 		"clown" = list(
 			/obj/item/bananapeel = 20,
@@ -551,6 +561,7 @@
 			/mob/living/carbon/human/normal/clown = 1,
 			/mob/living/critter/spider/clown = 1,
 			/mob/living/critter/spider/clownqueen = 0.1,
+			/obj/item/paper = 1,
 		),
 		"cargo" = list(
 			// TODO, I am too tired rn
@@ -607,6 +618,7 @@
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 			/datum/reagent/blood = 5,
 			/datum/reagent/fooddrink/coffee = 2,
+			/obj/item/paper = 1,
 		),
 		"security" = list(
 			/obj/item/handcuffs/guardbot = 5,
@@ -632,6 +644,7 @@
 			/datum/projectile/energy_bolt/burst = 3,
 			/datum/projectile/energy_bolt/tasershotgun = 3,
 			/datum/projectile/energy_bolt/bouncy = 3,
+			/obj/item/paper = 1,
 		)
 	)
 
@@ -955,6 +968,10 @@
 		else if(istype(., /obj/item/reagent_containers/food/snacks/plant/tomato))
 			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = .
 			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
+		else if(istype(., /obj/item/paper))
+			var/obj/item/paper/paper = .
+			if(!length(paper.info))
+				paper.info = phrase_log.random_phrase("paper")
 
 	proc/locate_throw_target(atom/thrown, turf_search_dist = 64)
 		var/turf/init_turf = get_turf(thrown)
