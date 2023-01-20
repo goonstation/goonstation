@@ -61,11 +61,11 @@
 			duration = 40 SECONDS + rand(-10 SECONDS, 10 SECONDS)
 
 		message_admins("White Hole anomaly spawning in [log_loc(T)]")
-		var/obj/whole/whole = new (T, grow_duration, duration, source_location, TRUE)
-		whole.activity_modifier = activity_modifier
+		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
+		whitehole.activity_modifier = activity_modifier
 
 
-/obj/whole
+/obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
 	desc = "HHHAAA KCUF KCUF KCUF"
@@ -655,8 +655,8 @@
 
 		src.transform = matrix(32 / 160, MATRIX_SCALE)
 
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/whole_warning, src))
-			particleMaster.SpawnSystem(new /datum/particleSystem/whole_warning(src))
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/whitehole_warning, src))
+			particleMaster.SpawnSystem(new /datum/particleSystem/whitehole_warning(src))
 
 		if(triggered_by_event)
 			var/turf/T = get_turf(src)
@@ -1020,17 +1020,17 @@
 
 	disposing()
 		processing_items.Remove(src)
-		if(particleMaster.CheckSystemExists(/datum/particleSystem/whole_warning, src))
-			particleMaster.RemoveSystem(/datum/particleSystem/whole_warning)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/whitehole_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/whitehole_warning)
 		..()
 
 
 
 // Particle FX
 
-/datum/particleSystem/whole_warning
+/datum/particleSystem/whitehole_warning
 	New(var/atom/location = null)
-		..(location, "whole_warning", 300)
+		..(location, "whitehole_warning", 300)
 
 	Run()
 		if (..())
@@ -1039,8 +1039,8 @@
 				SpawnParticle()
 			state = 1
 
-/datum/particleType/whole_warning
-	name = "whole_warning"
+/datum/particleType/whitehole_warning
+	name = "whitehole_warning"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "32x32circle"
 
