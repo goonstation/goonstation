@@ -563,36 +563,6 @@
 			/mob/living/critter/spider/clownqueen = 0.1,
 			/obj/item/paper = 1,
 		),
-		"cargo" = list(
-			// TODO, I am too tired rn
-		),
-
-		// not actual location, just a helper thing since it's shared between asteroid and trench
-		"ore" = list(
-			/obj/item/raw_material/rock = 100,
-			/obj/item/raw_material/ice = 50,
-
-			/obj/item/raw_material/mauxite = 20,
-			/obj/item/raw_material/pharosium = 20,
-			/obj/item/raw_material/uqill = 0.5,
-			/obj/item/raw_material/fibrilith = 3,
-			/obj/item/raw_material/molitz = 20,
-			/obj/item/raw_material/char = 5,
-			/obj/item/raw_material/cobryl = 3,
-			/obj/item/raw_material/bohrum = 2,
-			/obj/item/raw_material/claretine = 5,
-			/obj/item/raw_material/martian = 5,
-			/obj/item/raw_material/syreline = 2,
-			/obj/item/raw_material/cerenkite = 1,
-			/obj/item/raw_material/plasmastone = 1,
-			/obj/item/raw_material/eldritch = 1,
-			/obj/item/raw_material/gold = 2,
-			/obj/item/raw_material/miracle = 1,
-			/obj/item/raw_material/erebite = 0.5,
-			/obj/item/raw_material/starstone = 0.01,
-			/obj/item/material_piece/cloth/carbon = 0.02,
-			/obj/item/raw_material/gemstone = 3,
-		),
 		"medbay" = list(
 			/obj/item/surgical_spoon = 5,
 			/obj/item/scalpel = 5,
@@ -646,6 +616,36 @@
 			/datum/projectile/energy_bolt/bouncy = 3,
 			/obj/item/paper = 1,
 		)
+		"cargo" = list(
+			// TODO, I am too tired rn
+		),
+
+		// not actual location, just a helper thing since it's shared between asteroid and trench
+		"ore" = list(
+			/obj/item/raw_material/rock = 100,
+			/obj/item/raw_material/ice = 50,
+
+			/obj/item/raw_material/mauxite = 20,
+			/obj/item/raw_material/pharosium = 20,
+			/obj/item/raw_material/uqill = 0.5,
+			/obj/item/raw_material/fibrilith = 3,
+			/obj/item/raw_material/molitz = 20,
+			/obj/item/raw_material/char = 5,
+			/obj/item/raw_material/cobryl = 3,
+			/obj/item/raw_material/bohrum = 2,
+			/obj/item/raw_material/claretine = 5,
+			/obj/item/raw_material/martian = 5,
+			/obj/item/raw_material/syreline = 2,
+			/obj/item/raw_material/cerenkite = 1,
+			/obj/item/raw_material/plasmastone = 1,
+			/obj/item/raw_material/eldritch = 1,
+			/obj/item/raw_material/gold = 2,
+			/obj/item/raw_material/miracle = 1,
+			/obj/item/raw_material/erebite = 0.5,
+			/obj/item/raw_material/starstone = 0.01,
+			/obj/item/material_piece/cloth/carbon = 0.02,
+			/obj/item/raw_material/gemstone = 3,
+		),
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
