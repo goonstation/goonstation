@@ -1448,7 +1448,7 @@
 /area/bee_trader)
 "TR" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /obj/machinery/light/small/warm/very{
 	dir = 4;

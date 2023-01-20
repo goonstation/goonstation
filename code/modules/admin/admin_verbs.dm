@@ -678,7 +678,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		src.mob.mind?.damned = FALSE
-		src.mob.mind?.dnr = TRUE
+		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -700,6 +700,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
+		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
 		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
 		boutput(src, "<span class='notice'>You are already playing!</span>")
@@ -2139,13 +2140,20 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as anything in clicked_turf)
+		var/list/atom/atoms = list()
+		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
 			if(thing.name)
 				atoms += thing
+			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
+				if(initial(thing.name))
+					atoms["nameless [initial(thing.name)]"] = thing
+				else
+					atoms["nameless [thing.type]"] = thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
+		if(istext(A))
+			A = atoms[A]
 
 	var/choice = 0
 

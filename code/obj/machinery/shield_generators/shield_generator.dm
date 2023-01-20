@@ -1,6 +1,7 @@
 
 /* ==================== Area ==================== */
-
+TYPEINFO(/area/station/shield_zone)
+	valid_bounty_area = FALSE
 /area/station/shield_zone
 	name = "shield protected space"
 	icon_state = "shield_zone"

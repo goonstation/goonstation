@@ -437,7 +437,6 @@
 		..()
 
 /obj/item/material_piece/plutonium
-	name = "plutonium"
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
 	setup_material()

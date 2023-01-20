@@ -377,7 +377,6 @@
 			lucky_dude.assigned_role = "MODE"
 			lucky_dude.special_role = role
 			lucky_dude.random_event_special_role = 1
-			lucky_dude.dnr = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
 			M3.antagonist_overlay_refresh(1, 0)

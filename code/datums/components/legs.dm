@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/legs)
 	initialization_args = list()
 
 /datum/component/legs/Initialize()
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	legs = new/obj

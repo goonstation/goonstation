@@ -1920,6 +1920,15 @@ datum
 			mix_phrase = "The drink smells vaguely like artifical autumn."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		lavenderlatte
+			name = "Lavender Latte"
+			id = "lavender_latte"
+			result = "lavender_latte"
+			required_reagents = list("lavender_essence"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "A sweet floral scent drifts up from the pale foamy mixture."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
@@ -3186,7 +3195,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			required_reagents = list("fluorine" = 1, "carbon" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'

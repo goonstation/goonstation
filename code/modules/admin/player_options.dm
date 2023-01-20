@@ -194,6 +194,11 @@
 						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removetrait")]'>Remove</a>
 				 	</div>
+					<div class='l'>Objectives</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "manageobjectives")]'>Manage</a> &bull;
+						<a href='[playeropt_link(M, "addobjective")]'>Add</a>
+				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
@@ -221,7 +226,8 @@
 						<a href='[playeropt_link(M, "cluwnegib")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
-						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
+						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
