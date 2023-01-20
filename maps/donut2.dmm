@@ -17486,6 +17486,9 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -17642,6 +17645,10 @@
 	pixel_y = 9
 	},
 /obj/item/stamp/hos,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet,
 /area/station/security/hos)
 "bij" = (
@@ -17811,6 +17818,7 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
+/obj/item/plate,
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy{
 	name = "spaghetti arrabbiata"
 	},
@@ -17840,6 +17848,7 @@
 /obj/item/device/radio/intercom{
 	dir = 1
 	},
+/obj/critter/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fred2"
@@ -45948,13 +45957,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
-"tgy" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "tgF" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -81272,7 +81274,7 @@ aaa
 adQ
 aaa
 aWx
-tgy
+aai
 aas
 aag
 aas

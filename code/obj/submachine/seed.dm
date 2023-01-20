@@ -687,7 +687,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
-	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
+	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
 
 	New()
 		..()

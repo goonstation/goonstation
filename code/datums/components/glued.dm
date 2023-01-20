@@ -16,6 +16,7 @@ TYPEINFO(/datum/component/glued)
 	var/set_loc_rippoff_in_progress = FALSE
 
 /datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null)
+	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.glued_to = target

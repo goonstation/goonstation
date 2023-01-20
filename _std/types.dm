@@ -337,7 +337,10 @@ proc/find_first_by_type(type)
 	while(ancestor != null)
 		if(ancestor in global.by_type)
 			if(length(global.by_type[ancestor]))
-				return global.by_type[ancestor][1]
+				for(var/instance in global.by_type[ancestor])
+					if(istype(instance, type))
+						return instance
+				return null
 			else
 				return null
 		ancestor = type2parent(ancestor)

@@ -1028,7 +1028,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
