@@ -3,7 +3,7 @@
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
-	required_elapsed_round_time = 26.6 MINUTES
+	required_elapsed_round_time = 20 MINUTES
 	customization_available = TRUE
 
 	admin_call(source)
