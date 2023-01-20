@@ -1,5 +1,5 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security") // "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -626,7 +626,29 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			// TODO, I am too tired rn
+			/obj/item/spacecash/five = 11,
+			/obj/item/spacecash/ten = 11,
+			/obj/item/spacecash/twenty = 11,
+			/obj/item/spacecash/fifty = 6,
+			/obj/item/spacecash/hundred = 3,
+			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/paper = 15,
+			/obj/item/paper_bin = 5,
+			/obj/item/hand_labeler = 5,
+			/obj/item/stamp/qm = 5,
+			/obj/storage/crate = 15,
+			/obj/storage/crate/internals = 3,
+			/obj/storage/crate/freezer = 3,
+			/obj/storage/crate/medical = 3,
+			/obj/storage/crate/packing = 3,
+			/obj/storage/crate/wooden = 3,
+			/obj/item/cargotele = 3,
+			/obj/item/device/appraisal = 5,
+			/obj/item/paper/book/from_file/pocketguide/quartermaster = 3,
+			/obj/item/storage/box/clothing/qm = 3,
+			/obj/machinery/manufacturer/qm = 1,
+			/obj/machinery/bot/mulebot = 0.3,
+			/obj/vehicle/forklift = 0.2
 		),
 
 		// not actual location, just a helper thing since it's shared between asteroid and trench
