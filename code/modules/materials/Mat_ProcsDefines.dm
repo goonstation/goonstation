@@ -220,6 +220,18 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.alpha = mat1.alpha
 			src.color = mat1.color
 
+/// Applies material icon_state override to an /image based on this atom's material (or the material provided)
+/atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
+	if(isnull(mat))
+		mat = src.material
+	var/base_icon_state = img.materialless_icon_state()
+	if (isnull(mat) || length(src.mat_appearances_to_ignore) && (mat in src.mat_appearances_to_ignore))
+		img.icon_state = base_icon_state
+	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		img.icon_state = potential_new_icon_state
+		return
+
 /atom/proc/is_valid_icon_state(var/state)
 	if(isnull(global.valid_icon_states[src.icon]))
 		global.valid_icon_states[src.icon] = list()
