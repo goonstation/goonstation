@@ -104,6 +104,7 @@
 			/mob/living/carbon/human/npc/monkey = 0.5,
 			/mob/living/carbon/human/normal/scientist = 0.5,
 			/obj/item/paper = 5,
+			/obj/item/sticker/postit = 2,
 			#ifdef SECRETS_ENABLED
 			/mob/living/carbon/human/npc/monkey/extremely_fast = 0.05,
 			#endif
@@ -210,6 +211,7 @@
 			/obj/item/kitchen/utensil/knife = 1,
 			/obj/critter/spirit = 1,
 			/obj/item/paper = 3,
+			/obj/item/sticker/postit = 1,
 		),
 		"trench" = list(
 			/datum/reagent/water/sea = 20,
@@ -455,6 +457,7 @@
 			/mob/living/carbon/human/npc/assistant = 2,
 			/mob/living/carbon/human/normal/assistant = 2,
 			/obj/item/paper = 5,
+			/obj/item/sticker/postit = 1,
 			#ifdef SECRETS_ENABLED
 			/mob/living/critter/legman = 1,
 			#endif
@@ -524,6 +527,8 @@
 			/obj/item/disk/data/floppy/read_only/communications = 1,
 			/obj/machinery/manufacturer/hop_and_uniform = 0.5,
 			/obj/item/paper = 6,
+			/obj/item/sticker/postit = 4,
+			"sticker" = 4,
 		),
 		"clown" = list(
 			/obj/item/bananapeel = 20,
@@ -563,6 +568,8 @@
 			/mob/living/critter/spider/clown = 1,
 			/mob/living/critter/spider/clownqueen = 0.1,
 			/obj/item/paper = 1,
+			/obj/item/sticker/postit = 1,
+			"sticker" = 3,
 		),
 		"medbay" = list(
 			/obj/item/surgical_spoon = 5,
@@ -590,6 +597,7 @@
 			/datum/reagent/blood = 5,
 			/datum/reagent/fooddrink/coffee = 2,
 			/obj/item/paper = 1,
+			/obj/item/sticker/postit = 0.5,
 		),
 		"security" = list(
 			/obj/item/handcuffs/guardbot = 5,
@@ -616,6 +624,7 @@
 			/datum/projectile/energy_bolt/tasershotgun = 3,
 			/datum/projectile/energy_bolt/bouncy = 3,
 			/obj/item/paper = 1,
+			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
 			// TODO, I am too tired rn
@@ -934,6 +943,9 @@
 				arcFlash(src, target, rand(4, 6) KILO WATTS)
 			if ("fireflash")
 				fireflash_sm(src, rand(1, 6), rand(200, 3000), rand(50, 300))
+			if ("sticker")
+				spawn_type = pick(concrete_typesof(/obj/item/sticker))
+				. = new spawn_type(src.loc)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
@@ -984,6 +996,11 @@
 			var/obj/item/paper/paper = .
 			if(!length(paper.info))
 				paper.info = phrase_log.random_phrase("paper")
+		else if(istype(., /obj/item/sticker/postit))
+			var/obj/item/sticker/postit/postit = .
+			if(!length(postit.words))
+				postit.words = phrase_log.random_phrase("paper")
+				postit.icon_state = "postit-writing"
 
 		// renaming
 		if(istype(., /mob))
