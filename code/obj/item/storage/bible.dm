@@ -94,11 +94,10 @@ var/global/list/bible_contents = list()
 			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
-			var/mob/living/carbon/human/H = M
 			// ******* Check
 			var/is_undead = isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant")
 			var/is_atheist = M.traitHolder?.hasTrait("atheist")
-			if (ishuman(H) && prob(60) && !(is_atheist && !is_undead))
+			if (ishuman(M) && prob(60) && !(is_atheist && !is_undead))
 				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
