@@ -78,7 +78,6 @@
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_BELOW
-	mouse_opacity = FALSE
 	var/static/list/valid_locations = VALID_WHITE_HOLE_LOCATIONS
 	var/source_location = null
 	var/start_time
