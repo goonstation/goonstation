@@ -639,7 +639,7 @@
 			/obj/storage/crate = 5,
 			/obj/storage/crate/internals = 1,
 			/obj/storage/crate/freezer = 0.75,
-			/obj/storage/crate/dan = 0.25,
+			/obj/storage/secure/crate/dan = 0.25,
 			/obj/storage/crate/medical = 0.75,
 			/obj/storage/crate/biohazard = 0.25,
 			/obj/storage/crate/packing = 1,
