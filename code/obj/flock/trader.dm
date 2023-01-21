@@ -96,6 +96,9 @@
 	name = "fibrous pole"
 	desc = "Huh. Weird."
 
+/obj/decal/fakeobjects/flock/antenna/not_dense
+	density = FALSE
+
 /obj/decal/fakeobjects/flock/antenna/end
 	icon_state = "antenna-end"
 

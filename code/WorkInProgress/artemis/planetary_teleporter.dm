@@ -22,7 +22,7 @@
 					if(G.my_ship_body)
 						if(G.my_ship_body.landing_zone)
 							found = 1
-							link_html += {"[G.my_ship_body.destination_name] <a href='?src=\ref[src];send=\ref[G.my_ship_body.landing_zone]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=\ref[G.my_ship_body.landing_zone]'><small>(Recieve)</small></a><br>"}
+							link_html += {"[G.my_ship_body.destination_name] <a href='?src=\ref[src];send=\ref[G.my_ship_body.landing_zone]'><small>(Send)</small></a> <a href='?src=\ref[src];receive=\ref[G.my_ship_body.landing_zone]'><small>(receive)</small></a><br>"}
 		if(!found)
 			link_html = "<br>No co-ordinates available.<br>"
 
@@ -65,8 +65,8 @@
 					busy = 0
 					qdel(S)
 
-		if(href_list["recieve"])
-			var/obj/landmark/destination_landmark/L = locate(href_list["recieve"])
+		if(href_list["receive"])
+			var/obj/landmark/destination_landmark/L = locate(href_list["receive"])
 			var/turf/target = locate(L.x, L.y, L.z)
 			if(target)
 				busy = 1
@@ -114,7 +114,7 @@
 					if(G.my_ship_body)
 						if(G.my_ship_body.landing_zone)
 							found = 1
-							link_html += {"[G.my_ship_body.destination_name] <a href='?src=\ref[src];recieve=\ref[G.my_ship_body.landing_zone]'><small>(Receive)</small></a><br>"}
+							link_html += {"[G.my_ship_body.destination_name] <a href='?src=\ref[src];receive=\ref[G.my_ship_body.landing_zone]'><small>(Receive)</small></a><br>"}
 		if(!found)
 			link_html = "<br>No co-ordinates available.<br>"
 
@@ -139,8 +139,8 @@
 		if(busy) return
 		if(GET_DIST(usr, src) != 0) return
 
-		if(href_list["recieve"])
-			var/obj/landmark/destination_landmark/L = locate(href_list["recieve"])
+		if(href_list["receive"])
+			var/obj/landmark/destination_landmark/L = locate(href_list["receive"])
 			var/turf/target = locate(L.x, L.y, L.z)
 			if(target)
 				busy = 1

@@ -419,7 +419,6 @@ TYPEINFO(/obj/item/baton/ntso)
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
-	item_function_flags = 0
 
 	item_special_path = /datum/item_special/spark/ntso
 
@@ -490,14 +489,14 @@ TYPEINFO(/obj/item/baton/ntso)
 			return
 		switch (src.state)
 			if (EXTENDO_BATON_CLOSED_AND_OFF)
-				src.set_icon_state(src.icon_off)
-				src.item_state = src.item_off
+				src.set_icon_state("[src.icon_off][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_ON)
-				src.set_icon_state(src.icon_on)
-				src.item_state = src.item_on
+				src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_OFF)
-				src.set_icon_state(src.icon_off_open)
-				src.item_state = src.item_off_open
+				src.set_icon_state("[src.icon_off_open][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off_open][src.flipped ? "-f" : ""]"
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))

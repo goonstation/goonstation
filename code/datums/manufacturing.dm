@@ -2157,7 +2157,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Red Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/red)
+	item_outputs = list(/obj/item/storage/backpack/empty/red)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2166,7 +2166,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Green Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/green)
+	item_outputs = list(/obj/item/storage/backpack/empty/green)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2175,7 +2175,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Blue Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/blue)
+	item_outputs = list(/obj/item/storage/backpack/empty/blue)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2184,7 +2184,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2193,7 +2193,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Red Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/red)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/red)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2202,7 +2202,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Green Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/green)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/green)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2211,7 +2211,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Blue Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/blue)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"

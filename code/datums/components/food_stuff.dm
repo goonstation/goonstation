@@ -7,6 +7,7 @@ TYPEINFO(/datum/component/consume)
 	initialization_args = list()
 
 /datum/component/consume/Initialize()
+	. = ..()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
 

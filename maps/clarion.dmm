@@ -4705,6 +4705,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -9070,7 +9071,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
@@ -13194,7 +13195,7 @@
 	pixel_y = 21
 	},
 /obj/table/round,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /obj/item/storage/wall/fire{
@@ -22668,6 +22669,10 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
@@ -32033,6 +32038,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "hyV" = (
@@ -33868,7 +33874,9 @@
 	},
 /area/station/science/lobby)
 "jiM" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "jiP" = (
@@ -37736,7 +37744,9 @@
 /area/station/mining/refinery)
 "mSt" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -37791,7 +37801,9 @@
 	},
 /area/station/solar/west)
 "mVy" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mVD" = (
@@ -38249,7 +38261,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "nAi" = (
@@ -40224,7 +40238,9 @@
 "pwH" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "pxJ" = (

@@ -190,7 +190,7 @@
 	if(prob(10))
 		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
-	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	A.underlays += underneath
 	var/matrix/pivot = matrix()
 	pivot.Scale(0.2, 1.0)
@@ -203,7 +203,7 @@
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
-	src.attack_particle.appearance_flags = TILE_BOUND
+	src.attack_particle.appearance_flags = TILE_BOUND | PIXEL_SCALE
 	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
 	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
@@ -223,7 +223,7 @@
 		icon = 'icons/mob/mob.dmi'
 		icon_state = "sprint_cloud"
 		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	muzzleflash
 		icon = 'icons/mob/mob.dmi'
@@ -1346,33 +1346,51 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/atom/movable/A)
+/proc/heavenly_spawn(var/atom/movable/A, reverse = FALSE)
 	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
+	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
 	A.anchored = 1
-	A.alpha = 0
-	A.pixel_y = 176
+	if (!reverse)
+		A.alpha = 0
+		A.pixel_y = 176
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			old_canbegrabbed = living.canbegrabbed
+			living.canbegrabbed = FALSE
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
-	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(A, pixel_y = reverse ? 176 : 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	sleep(12 SECONDS)
 	A.anchored = was_anchored
 	A.layer = oldlayer
 	animate(lightbeam,alpha = 0, time=15)
+	if (reverse)
+		animate(A,alpha=0,time=15)
 	sleep(1.5 SECONDS)
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			living.canbegrabbed = old_canbegrabbed
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+	if (reverse)
+		if (ismob(A))
+			var/mob/M = A
+			M.ghostize()
+			M.set_loc(null)
+			M.death()
+		qdel(A)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'

@@ -816,6 +816,17 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/cmd = "c_mode_current"
 				var/addltext = ""
+				var/list/regular_modes = list()
+				var/list/other_modes = list()
+				for(var/game_type in concrete_typesof(/datum/game_mode))
+					var/datum/game_mode/GM = game_type
+					if(initial(GM.regular))
+						regular_modes[initial(GM.name)] = initial(GM.config_tag)
+					else
+						other_modes[initial(GM.name)] = initial(GM.config_tag)
+				sortList(regular_modes, /proc/cmp_text_asc)
+				sortList(other_modes, /proc/cmp_text_asc)
+
 				if (current_state > GAME_STATE_PREGAME)
 					cmd = "c_mode_next"
 					addltext = " next round"
@@ -829,33 +840,12 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=secret'>Secret</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=action'>Secret: Action</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=intrigue'>Secret: Intrigue</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=mixed'>Mixed (Action)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=mixed_rp'>Mixed (Mild)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=traitor'>Traitor</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=nuclear'>Nuclear Emergency</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=wizard'>Wizard</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=changeling'>Changeling</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=vampire'>Vampire</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=blob'>Blob</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=conspiracy'>Conspiracy</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=spy_theft'>Spy Theft</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=arcfiend'>Arcfiend</A><br>
-							<b>Other Modes</b><br>
-							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=disaster'>Disaster (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=spy'>Spy</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=revolution_extended'>Revolution (no time limit)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>Pod Wars (Beta)(only works if current map is pod_wars.dmm)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=everyone-is-a-traitor'>Everyone is a traitor</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
 							"})
-#if FOOTBALL_MODE
-				dat += "<A href='?src=\ref[src];action=[cmd];type=football'>Football</A>"
-#endif
+				for(var/item in regular_modes)
+					dat += "<A href='?src=\ref[src];action=[cmd];type=[regular_modes[item]]'>[item]</A><br>"
+				dat += "<b>Other Modes</b><br>"
+				for(var/item in other_modes)
+					dat += "<A href='?src=\ref[src];action=[cmd];type=[other_modes[item]]'>[item]</A><br>"
 				dat += "</body></html>"
 				usr.Browse(dat.Join(), "window=c_mode")
 			else
@@ -1051,14 +1041,11 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				if (isobserver(M))
-					boutput(usr, "<span class='alert'>You can't observe a ghost.</span>")
-				else
-					if (!istype(usr, /mob/dead/observer))
-						boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
-						return
-					var/mob/dead/observer/ghost = usr
-					ghost.insert_observer(M)
+				if (!istype(usr, /mob/dead/observer))
+					boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
+					return
+				var/mob/dead/observer/ghost = usr
+				ghost.insert_observer(M)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
 
@@ -1210,6 +1197,12 @@ var/global/noir = 0
 					usr.client.cmd_admin_adminundamn(M)
 				else
 					usr.client.cmd_admin_admindamn(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+		if("rapture")
+			if(src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
@@ -1901,6 +1894,55 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
+		if ("manageobjectives")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_manageobjectives(M)
+			else
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+
+		if ("manageobjectives_debug_vars")
+			if (src.level >= LEVEL_PA)
+				var/datum/objective/objective = locate(href_list["objective"])
+				usr.client.debug_variables(objective)
+			else
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+
+		if ("manageobjectives_remove")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+				return
+			var/mob/M = locate(href_list["target"])
+			var/datum/objective/objective = locate(href_list["objective"])
+			if (!length(M?.mind?.objectives) || !objective)
+				return
+			message_admins("[key_name(usr)] removed objective [objective.type][objective.explanation_text ? " with text: " : ""][objective.explanation_text] from [key_name(M)].")
+			logTheThing(LOG_ADMIN, usr, "removed objective [objective.type][objective.explanation_text ? " with text: " : ""][objective.explanation_text] from [constructTarget(M,"admin")].")
+			M.mind.objectives -= objective
+			qdel(objective)
+			usr.client.cmd_admin_manageobjectives(M)
+
+		if ("addobjective")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
+				return
+			var/mob/M = locate(href_list["target"])
+			var/origin = href_list["origin"]
+			if (!M?.mind)
+				return
+			LAZYLISTINIT(M.mind.objectives)
+
+			var/objective_type = tgui_input_list(usr, "Add an objective:", "Select", concrete_typesof(/datum/objective))
+			if (!objective_type)
+				return // user canceled
+			var/objective_text = input(usr, "Custom objective text (optional)", "Objective text")
+			new objective_type(objective_text, M.mind)
+			message_admins("[key_name(usr)] added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [key_name(M)].")
+			logTheThing(LOG_ADMIN, usr, "added the objective [objective_type][objective_text ? " with text: " : ""][objective_text] to [constructTarget(M,"admin")].")
+			if (origin == "manageobjectives")//called via objective management panel
+				usr.client.cmd_admin_manageobjectives(M)
+
 		if("subtlemsg")
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -2226,7 +2268,7 @@ var/global/noir = 0
 									evilize(M, ROLE_TRAITOR)
 							if(ROLE_NUKEOP)
 								if (tgui_alert(usr,"Commander?","Hierarchy",list("Yes", "No")) == "Yes")
-									evilize(M, ROLE_NUKEOP, "commander", do_objectives = FALSE)
+									evilize(M, ROLE_NUKEOP_COMMANDER, do_objectives = FALSE)
 								else
 									evilize(M, ROLE_NUKEOP, do_objectives = FALSE)
 							else
@@ -4774,14 +4816,11 @@ var/global/noir = 0
 				new objective_set_path(M.mind)
 				equip_spy_theft(tmob)
 			if(ROLE_NUKEOP)
-				M.show_text("<h1><font color=red><B>You have been chosen as a nuclear operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
-				var/mob/living/carbon/human/H = M
-				var/rank = (special == "commander" ? "Syndicate Operative Commander" : "Syndicate Operative")
-				H.unequip_all(delete_stuff = TRUE)
-				H.JobEquipSpawned(rank)
-				var/datum/game_mode/nuclear/nukemode = ticker.mode
-				nukemode.syndicates += H.mind
-				nukemode.bestow_objective(H.mind, /datum/objective/specialist/nuclear)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+			if(ROLE_NUKEOP_COMMANDER)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative Commander! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 
 	else
 		M.show_text("<h2><font color=red><B>You have become evil and are now an antagonist!</B></font></h2>", "red")
@@ -5311,6 +5350,84 @@ var/global/noir = 0
 			</tr>"}
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=managetraits;size=700x400")
+
+//completely copy pasted from above, in the finest traditions of this mess
+/client/proc/cmd_admin_manageobjectives(var/mob/M in mobs)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Manage Objectives"
+	set desc = "Select a mob to manage its mind's objectives."
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Objective Management Panel</title>
+		<style>
+		table {
+			border:1px solid #44aaff;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #44aaff;
+			color: white;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th:nth-child(4), td:nth-child(4) {text-align: center;}
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+			text-decoration: none;
+		}
+		</style>
+		</head>
+		<body>
+		<h1>
+			Objectives of [M.name]
+			<a href='?src=\ref[src.holder];action=manageobjectives;target=\ref[M];origin=manageobjectives' class="button">&#x1F504;</a>
+			<a href='?src=\ref[src.holder];action=addobjective;target=\ref[M];origin=manageobjectives' class="button">&#x2795;</a>
+		</h1>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>Text</th>
+				<th>Type Path</th>
+			</tr>
+		"}
+	if (!M.mind)
+		return
+
+	for (var/datum/objective/objective as anything in M.mind.objectives)
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=manageobjectives_remove;target=\ref[M];objective=\ref[objective];origin=manageobjectives'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=manageobjectives_debug_vars;objective=\ref[objective];origin=manageobjectives'>[objective.explanation_text]</a></td>
+				<td>[objective.type]
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=manageobjectives;size=700x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"

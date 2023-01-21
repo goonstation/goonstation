@@ -22,9 +22,10 @@
 	/// Turret range in tiles
 	var/range = 4
 	/// The wattage of the arcflash
-	var/wattage = 6000
+	var/wattage = 5000
 	/// has extra range when chaining
 	var/extra_chain_range = FALSE
+	var/chain_targets = 2
 	var/powered = FALSE
 
 	passthrough = TRUE
@@ -94,7 +95,7 @@
 				if(src.flock?.isEnemy(A))
 					if (ismob(A))
 						var/mob/M = A
-						if (isdead(M))
+						if (isdead(M) || is_incapacitated(M))
 							continue
 					if (ON_COOLDOWN(A, "sentinel_shock", 2 SECONDS))
 						continue
@@ -103,22 +104,22 @@
 			if(!to_hit)
 				src.updatefilter()
 				return
-			arcFlash(src, to_hit, wattage, 1.1)
+			arcFlash(src, to_hit, wattage, 0.9)
 			logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(to_hit)].")
 			hit += to_hit
 
 			var/atom/last_hit = to_hit
 			var/found_chain_target
-			for(var/i in 1 to 3) // chaining
+			for(var/i in 1 to src.chain_targets) // chaining
 				found_chain_target = FALSE
 				for(var/atom/A as anything in view(2 + (src.extra_chain_range ? 1 : 0), last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))
 						if (ismob(A))
 							var/mob/M = A
-							if (isdead(M))
+							if (isdead(M) || is_incapacitated(M))
 								continue
 						found_chain_target = TRUE
-						arcFlash(last_hit, A, wattage / 1.5, 1.1)
+						arcFlash(last_hit, A, wattage / 1.5, 0.8)
 						logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(A)] with a chained arcflash.")
 						hit += A
 						last_hit = A
@@ -146,8 +147,10 @@
 		return FALSE
 	src.accepts_sapper_power = FALSE
 	src.extra_chain_range = TRUE
+	src.chain_targets = 3
 	SPAWN(10 SECONDS)
 		if (!QDELETED(src))
+			src.chain_targets = initial(src.chain_targets)
 			src.accepts_sapper_power = TRUE
 			src.extra_chain_range = FALSE
 	return TRUE

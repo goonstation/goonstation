@@ -30,6 +30,8 @@
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
+	var/mob/living/intangible/flock/selected_by = null
+
 	var/glow_color = "#26ffe6a2"
 
 	var/ai_paused = FALSE
@@ -63,7 +65,8 @@
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"), TRUE)
-		src.flock?.drones_made++
+		if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
+			src.flock.stats.drones_made++
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
@@ -90,7 +93,15 @@
 		if (controller)
 			src.release_control_abrupt()
 		flock_speak(null, "Connection to drone [src.real_name] lost.", src.flock)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = locate() in src.contents
+	if (cell)
+		qdel(cell)
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -132,6 +143,12 @@
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
 	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
+	if (src.selected_by)
+		if (src.selected_by != pilot)
+			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
+			return
+		var/datum/abilityHolder/flockmind/AH = src.selected_by.abilityHolder
+		AH.drone_controller.cast(src)
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -172,6 +189,10 @@
 		if (flocktrace.dying)
 			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 			src.updateOverlaysClient(src.client)
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -226,6 +247,8 @@
 		controller = null
 		src.update_health_icon()
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
+		var/datum/component/tracker_hud/flock/tracker = src.GetComponent(/datum/component/tracker_hud/flock)
+		tracker?.RemoveComponent()
 	if(!src.flock)
 		src.dormantize()
 
@@ -428,9 +451,9 @@
 	if(istype(F) && F.flock && F.flock == src.flock)
 		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
-			holder.drone_controller.cast(src) //deselect it
-			F.targeting_ability = null
-		src.take_control(usr)
+			holder.drone_controller.cast(src, FALSE) //deselect it
+		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are for preventing message spam
+			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -449,6 +472,9 @@
 	if (isdead(src) || isnull(src.flock))
 		return
 	if (!isflockmob(usr))
+		return
+	if (src.selected_by)
+		boutput(usr, "<span class='alert'>This drone is receiving a command!</span>")
 		return
 	var/mob/living/intangible/flock/flock_controller = usr
 	if (istype(usr, /mob/living/critter/flock))
@@ -492,7 +518,7 @@
 	HH.can_hold_items = FALSE
 
 	HH = hands[3]
-	HH.limb = new /datum/limb/gun/flock_stunner
+	HH.limb = new /datum/limb/gun/flock_stunner(hands[3])
 	HH.name = "incapacitor"
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "incapacitor"
@@ -648,8 +674,9 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
-	src.flock?.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
-	src.flock?.resources_gained += amount
+	if (src.flock)
+		src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
+		src.flock.stats.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
 	aH.updateResources(src.resources)
@@ -782,6 +809,11 @@
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /mob/living/critter/flock/drone/death(var/gibbed)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+
 	if(src.controller)
 		src.release_control()
 	if(!src.dormant)
@@ -943,6 +975,8 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/flock_grip // an ordinary hand but with some modified messages
+	attack_strength_modifier = 0.2
+	can_gun_grab = FALSE
 	var/attack_hit_prob = 50
 	var/grab_mob_hit_prob = 30
 	var/dam_low = 4 // 2 is human baseline
@@ -1175,6 +1209,8 @@
 
 /datum/limb/gun/flock_stunner/New()
 	..()
+	src.cell.set_loc(src.holder.holder)
+	src.holder.holder.contents |= cell
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
@@ -1204,10 +1240,10 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
 	cost = 20
-	stun = 40
+	stun = 25
 	damage = 4
-	dissipation_rate = 1
-	dissipation_delay = 3
+	dissipation_rate = 3
+	dissipation_delay = 4
 	sname = "stunbolt"
 	shot_sound = 'sound/weapons/laser_f.ogg'
 	shot_number = 1

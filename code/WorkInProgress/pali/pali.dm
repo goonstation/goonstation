@@ -219,7 +219,7 @@
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_BASE
 	blend_mode = BLEND_ADD
-	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM // PIXEL_SCALE omitted intentionally
 	var/ray_density = 3
 	var/shift_x = 0
 	var/shift_y = 0

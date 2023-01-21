@@ -27,8 +27,9 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	. = ..()
 
 /datum/component/camera_coverage_emitter/Initialize(range = CAM_RANGE, active = TRUE)
+	. = ..()
 	if (!istype(src.parent, /atom))
-		CRASH("camera_coverage_emitter added on non-atom type")
+		return COMPONENT_INCOMPATIBLE
 
 	var/atom/parent_atom = src.parent
 

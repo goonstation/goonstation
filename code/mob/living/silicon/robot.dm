@@ -915,7 +915,7 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio <= 0.1)
+		if(P.proj_data.stun && P.proj_data.damage <= 5)
 			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
@@ -1269,7 +1269,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return

@@ -363,7 +363,7 @@
 
 
 			if (!M.mind && !M.client)
-				if (M.ghost && M.ghost.client && !(M.ghost.mind && M.ghost.mind.dnr))
+				if (M.ghost && M.ghost.client && !M.ghost.mind.get_player().dnr)
 					var/mob/dead/ghost = M.ghost
 					ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
 					if(ghost.mind)
@@ -411,9 +411,11 @@
 
 			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
+			M.make_vampiric_thrall()
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
+			M.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
 			M.antagonist_overlay_refresh(1)
