@@ -2180,6 +2180,27 @@
 			M.bioHolder?.RemoveEffect("sims_stinky")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
+/datum/statusEffect/fragrant
+	id = "fragrant"
+	name = "Fragrant"
+	desc = "You smell very nice."
+	icon_state = "fragrant"
+	maxDuration = 5 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			var/particles/petals/P = new
+			M.UpdateParticles(P, "fragrant")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.ClearSpecificParticles("fragrant")
+
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
 	name = "Absorbing"

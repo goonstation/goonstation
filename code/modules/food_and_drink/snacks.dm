@@ -2964,3 +2964,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	heal_amt = 1
 	food_effects = list("food_energized")
 	dipOverlayImage = "churro-overlay"
+
+/obj/item/reagent_containers/food/snacks/french_toast
+	name = "french toast"
+	desc = "A very eggy piece of bread."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "french-toast"
+	bites_left = 3
+	heal_amt = 2
+	var/syrup = 0
+	food_color = "#FFFF99"
+	food_effects = list("food_energized", "food_hp_up")
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/syrup))
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			syrup = 1
+			heal_amt = 6
+			user.u_equip(W)
+			qdel (W)
+			return
+		return ..()

@@ -312,3 +312,18 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 4
 	assoc_reagents = list("grassgro")
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
+
+/datum/plant/herb/lavender
+	name = "Lavender"
+	seedcolor = "#be9ffe"
+	crop = /obj/item/clothing/head/flower/lavender
+	starthealth = 20
+	growtime = 80
+	harvtime = 120
+	cropsize = 3
+	harvests = 3
+	nectarlevel = 10
+	force_seed_on_harvest = TRUE
+	genome = 3
+	assoc_reagents = list("lavender_essence")
+	commuts = list(/datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/quality)

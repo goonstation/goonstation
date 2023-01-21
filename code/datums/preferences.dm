@@ -1732,6 +1732,7 @@ datum/preferences
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
 		character.real_name = src.real_name
+		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 
 		//Wire: Not everything has a bioholder you morons
 		if (character.bioHolder)
