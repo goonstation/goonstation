@@ -43,7 +43,8 @@ THROWING DARTS
 				src.net_id = generate_net_id(src)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 		if (ismob(src.loc))
-			src.implanted(src.loc)
+			SPAWN(0)
+				src.implanted(src.loc)
 
 	disposing()
 		if (owner)
