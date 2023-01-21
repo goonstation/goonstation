@@ -110,21 +110,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
-					var/dna_absorbed = 0
-					var/absorbed_identities = null
-					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
-					if (C && istype(C))
-						absorbed_identities = list()
-						dna_absorbed = max(0, C.absorbtions)
-						for (var/DNA in C.absorbed_dna)
-							absorbed_identities += DNA
-					else
-						dna_absorbed = "N/A (body destroyed)"
-
-					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
-					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
-
 				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0
 					if (isvampire(traitor.current))
@@ -347,8 +332,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
-			objective_set_path = /datum/objective_set/changeling
-			antag.current.make_changeling()
+			antag.add_antagonist(ROLE_CHANGELING)
+			do_objectives = FALSE
 
 		if (ROLE_WIZARD)
 			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
