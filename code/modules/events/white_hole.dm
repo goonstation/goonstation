@@ -467,7 +467,7 @@
 			/obj/item/aiModule/random = 20,
 			/mob/living/silicon/hivebot/eyebot = 10,
 			/obj/item/circuitboard/robotics = 2,
-			/mob/living/silicon/ai = 1,
+			/mob/living/silicon/ai/latejoin = 1,
 			/obj/item/storage/box/diskbox = 1,
 			/obj/item/storage/box/tapebox = 1,
 			/obj/item/paper/book/from_file/guardbot_guide = 1,

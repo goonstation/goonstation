@@ -1,4 +1,9 @@
 
+(t)sat jan 21 23
+(u)DisturbHerb
+(p)12619
+(e)🔎💅🔄📄📦|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Game-Objects
+(+)Credit transfer devices have been reworked and TGUI-ified.
 (t)fri jan 20 23
 (u)aloe
 (+)Going shambler or monkey mode as a changeling now removes pins.

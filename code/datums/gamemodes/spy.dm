@@ -267,7 +267,8 @@
 
 		if (M == Implanter)
 			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
-			alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
+			SPAWN(0)
+				alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
 		if (override == -1)
@@ -289,7 +290,8 @@
 		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
 			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
-			alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
+			SPAWN(0)
+				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
 				for (var/image/I in M.client.images)
 					if (I.loc == oldLeader.current)
@@ -297,7 +299,8 @@
 						break
 		else
 			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
+			SPAWN(0)
+				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
 		if (M.mind)
 			if (!src.linked_objective)
