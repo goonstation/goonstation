@@ -132,7 +132,7 @@
 						if (!New_Planttype.hybrid)
 							WS.generic_seed_setup(New_Planttype)
 						HYPpassplantgenes(DNA,New_DNA)
-						// it appears we have to do some stuff when we handle hybrids
+						// for spliced plants, we have to go some additional steps
 						if (New_Planttype.hybrid)
 							var/plantType = New_Planttype.type
 							var/datum/plant/hybrid = new plantType(WS)

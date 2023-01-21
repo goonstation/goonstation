@@ -597,6 +597,7 @@
 /datum/plantmutation/creeper/tumbling
 	name = "Tumbling Creeper"
 	name_prefix = "Tumbling "
+	dont_rename_crop = TRUE
 	iconmod = "CreeperTumbling"
 	harvest_override = 1
 	crop = /obj/item/Tumbling_Creeper
