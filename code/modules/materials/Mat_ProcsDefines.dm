@@ -185,15 +185,21 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
 
+/atom/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
+/image/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
 /// Order of precedence is as follows:
 /// if the material is in the list of appearences to ignore, do nothing
 /// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
 /// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
-/atom/proc/setMaterialAppearance(var/datum/material/mat1)
+/atom/proc/setMaterialAppearance(datum/material/mat1)
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
-	var/base_icon_state = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+	var/base_icon_state = materialless_icon_state()
 	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
@@ -213,6 +219,19 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		if(mat1.applyColor)
 			src.alpha = mat1.alpha
 			src.color = mat1.color
+
+/// Applies material icon_state override to an /image based on this atom's material (or the material provided)
+/atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
+	if(isnull(mat))
+		mat = src.material
+	var/base_icon_state = img.materialless_icon_state()
+	if (isnull(mat) || length(src.mat_appearances_to_ignore) && (mat in src.mat_appearances_to_ignore))
+		img.icon_state = base_icon_state
+		return
+	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		img.icon_state = potential_new_icon_state
+		return
 
 /atom/proc/is_valid_icon_state(var/state)
 	if(isnull(global.valid_icon_states[src.icon]))
