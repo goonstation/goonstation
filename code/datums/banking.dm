@@ -768,17 +768,19 @@
 		STATE_LOGGEDIN = 2
 
 	attackby(var/obj/item/I, mob/user)
-		if(broken)
+		if (broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
-		if(istype(I, /obj/item/card/id))
+		if (istype(I, /obj/item/card/id))
+			if (src.scan)
+				return
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
 			attack_hand(user)
 			return
-		if(istype(I, /obj/item/spacecash/))
+		if (istype(I, /obj/item/spacecash/))
 			if (afterlife)
 				boutput(user, "<span class='alert'>On closer inspection, this ATM doesn't seem to have a deposit slot for credits!</span>")
 				return
@@ -793,7 +795,7 @@
 				attack_hand(user)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
-		if(istype(I, /obj/item/lotteryTicket))
+		if (istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if (!ON_COOLDOWN(src, "sound_insertcash", 2 SECONDS))
@@ -814,7 +816,7 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if(istype(I, /obj/item/spacebux))
+		if (istype(I, /obj/item/spacebux))
 			var/obj/item/spacebux/SB = I
 			if(SB.spent == 1)
 				return
