@@ -44,7 +44,7 @@
 		var/list/dat = ..()
 		for (var/datum/objective/specialist/hunter/trophy/T in src.owner.objectives)
 			if (src.owner.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-				dat.Insert(2, {"<B>Combined trophy value:</b> [src.owner.current.get_skull_value()]</B>"})
+				dat.Insert(2, {"<b>Combined trophy value:</b> [src.owner.current.get_skull_value()]"})
 				return dat
 
 		return dat
