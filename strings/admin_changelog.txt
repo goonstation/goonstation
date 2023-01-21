@@ -1,3 +1,6 @@
+(t)sat jan 21 23
+(u)Zamujasa
+(*)Player Notes looks a little different. Feel free to tweak/adjust. (Dimmed entries are automatic notes, red ones are bans. Mostly. I tried.)
 (t)mon jan 09 23
 (u)Zamujasa
 (*)Force-Desussification has two new options. They might... shock you!
