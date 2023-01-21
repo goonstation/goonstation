@@ -1,4 +1,13 @@
 
+(t)fri jan 20 23
+(u)aloe
+(+)Going shambler or monkey mode as a changeling now removes pins.
+(u)tarmunora
+(+)Biblethump brain damage is now affected by head armor instead of blocked outright by helmets
+(u)pali & Leah
+(p)12824
+(e)🆕🎨🌠|C-Feature, C-Sprites, A-Events
+(*)Added a new random event - the white hole. Which is like the other end of a black hole. So stuff is thrown out of it. Better build some barricades.
 (t)thu jan 19 23
 (u)Walpvrgis + Flourish
 (p)12817
