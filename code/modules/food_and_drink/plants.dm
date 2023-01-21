@@ -1364,6 +1364,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/mustard
 	bites_left = 1
 	food_color = "#FFCC00"
+	food_effects = list("food_warm", "food_disease_resist")
 	validforhat = 1
 
 // Weird alien fruit
