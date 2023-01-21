@@ -716,7 +716,10 @@
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)
-		boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
+		if(istype(I, /obj/item/fishing_rod))
+			. = ..()
+		else
+			boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
@@ -1177,5 +1180,29 @@
 			first.Scale(0.1 / 50)
 			animate(transform = first, time = 15 SECONDS, alpha = 5)
 			first.Reset()
+
+
+/datum/fishing_spot/whitehole
+	fishing_atom_type = /obj/whitehole
+
+	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		var/obj/whitehole/whitehole = target
+		if(!istype(whitehole))
+			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
+		. = whitehole.generate_thing(whitehole.source_location)
+
+	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		. = ..()
+		if(.)
+			var/obj/whitehole/whitehole = target
+			if(!istype(whitehole))
+				CRASH("try_fish called on whitehole fishing spot with non-whitehole target")
+			if(prob(5))
+				whitehole.spew_out_stuff(whitehole.source_location)
+			if(whitehole.state in list("static", "growing"))
+				whitehole.grow_duration += 10 SECONDS
+				boutput(user, "<span class='notice'>You feel the white hole shrink a little.</span>")
+			else
+				whitehole.active_duration -= 5 SECONDS
 
 #undef VALID_WHITE_HOLE_LOCATIONS
