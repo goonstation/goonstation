@@ -43,6 +43,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				P.litstate = "ciglit-[W.icon_state]"
 				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
+			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
