@@ -142,13 +142,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-				if (traitor.special_role == ROLE_HUNTER)
-					// Same reasoning here, really.
-					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
-						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-							var/S = traitor.current.get_skull_value()
-							stuff_to_output += "<B>Combined trophy value:</b> [S]"
-
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
 					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
