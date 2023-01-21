@@ -39,6 +39,9 @@
 #define THRESHOLD_OVER 1
 #define THRESHOLD_INIT THRESHOLD_UNDER
 //What can be done with a reagent_container
-#define CAN_TRANSFER (1<<0) //can transfer to other containers
-#define CAN_RECEIVE  (1<<1) //can receive reagents from other containers
-#define CAN_SPLASH  (1<<2) //can splash reagent inside this container
+/// can transfer to other containers
+#define CAN_TRANSFER (1<<0)
+/// can receive reagents from other containers
+#define CAN_RECEIVE (1<<1)
+/// can splash reagent inside this container
+#define CAN_SPLASH (1<< 2)
