@@ -13,6 +13,8 @@ import { Window } from '../layouts';
 export interface CashregData {
   active_transaction: boolean;
   amount: number;
+  is_authorised: boolean;
+  is_owner: boolean;
   name: string;
   owner: string;
   tip_amount: number;
@@ -22,7 +24,7 @@ export interface CashregData {
 
 export const Cashreg = (_, context) => {
   const { act, data } = useBackend<CashregData>(context);
-  const { active_transaction, amount, name, owner, tip_proportion } = data;
+  const { active_transaction, amount, is_authorised, is_owner, name, owner, tip_proportion } = data;
 
   return (
     <Window title={name} theme="ntos" height={240} width={300}>
@@ -33,14 +35,14 @@ export const Cashreg = (_, context) => {
               className="cashreg__ownerbutton"
               color="blue"
               disabled={active_transaction}
-              onClick={owner ? () => act('reset') : () => act('swipe_owner')}
-              tooltip={owner && `Click to remove ownership`}
+              onClick={owner ? ((is_authorised || is_owner) && (() => act('reset'))) : () => act('swipe_owner')}
+              tooltip={(owner && (is_authorised || is_owner)) && `Click to remove ownership`}
               width="100%">
               {owner ? `Owner ${owner}` : `Swipe ID to own`}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
-            {owner ? (
+            {is_owner ? (
               <Tooltip content={amount ? `Click to clear transaction` : `Click to set price`}>
                 <CenterPart />
               </Tooltip>
@@ -84,7 +86,7 @@ export const Cashreg = (_, context) => {
 
 const CenterPart = (_, context) => {
   const { act, data } = useBackend<CashregData>(context);
-  const { amount, owner, tip_amount, tip_proportion, total } = data;
+  const { amount, is_owner, owner, tip_amount, tip_proportion, total } = data;
 
   return (
     <Stack
@@ -92,8 +94,8 @@ const CenterPart = (_, context) => {
       vertical
       align="center"
       justify="space-around"
-      className={classes(['cashreg__centerpart', owner && 'cashreg__amount'])}
-      onClick={owner && (amount ? () => act('clear_transaction') : () => act('set_amount'))}>
+      className={classes(['cashreg__centerpart', (owner && is_owner) && 'cashreg__amount'])}
+      onClick={(owner && is_owner) && (amount ? () => act('clear_transaction') : () => act('set_amount'))}>
       {owner ? (
         amount ? (
           <table className="cashreg__table">
