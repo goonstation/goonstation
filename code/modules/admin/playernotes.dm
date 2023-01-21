@@ -75,6 +75,11 @@
 		for (var/i in 1 to length(all_notes))
 			var/list/row_classes = list()
 
+			// somehow newlines in notes are 0D 0D 0A
+			// i don't know how the fuck this happened
+			// but what the FUCK, byond
+			all_notes[i]["note"] = replacetext(all_notes[i]["note"], "\x0D", "")
+
 			if (all_notes[i]["akey"] == "Auto Banner" || all_notes[i]["akey"] == "VPN Blocker")
 				row_classes += "auto"
 
