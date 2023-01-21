@@ -14,6 +14,7 @@
 	var/chargerate = 700 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
 	var/maglock_cooldown = 3 SECONDS
+	var/emagged = 0 // emagging axes access requirement
 
 	var/canInterdict = 0 // indication of operability
 	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
@@ -29,6 +30,9 @@
 
 	var/interdict_class = ITDR_STANDARD // type of interdictor
 	//standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality
+
+	var/interdict_cost_mult = 1 // interdiction cost multiplier
+	//some part selections can influence this value, raising or lowing the effective energy cost of interdiction activity
 
 	var/list/deployed_fields = list()
 
@@ -46,6 +50,8 @@
 
 		if(altrod)
 			src.interdict_range = altrod.interdist
+			if(altrod.power_multiplier)
+				src.interdict_cost_mult *= altrod.power_multiplier
 			qdel(altrod)
 
 		if(altboard)
@@ -85,7 +91,7 @@
 		..()
 
 	attack_hand(mob/user)
-		if(!src.allowed(user))
+		if(!emagged && !src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
@@ -121,7 +127,7 @@
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
 		else if(istype(W, /obj/item/card/id))
-			if(!src.check_access(W))
+			if(!emagged && !src.check_access(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 				return
 			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
@@ -210,6 +216,24 @@
 	UpdateOverlays(I_chrg, "charge", 0, 1)
 
 
+/obj/machinery/interdictor/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = 1
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		if(user)
+			boutput(user, "You short out the access lock on [src].")
+		return 1
+	return 0
+
+/obj/machinery/interdictor/demag(var/mob/user)
+	if (!src.emagged)
+		return 0
+	if (user)
+		user.show_text("You repair the access lock on [src].")
+	src.emagged = 0
+	return 1
+
+
 /obj/machinery/interdictor/process()
 	var/doupdateicon = 1 //avoids repeating icon updates, might be goofy
 	if (status & BROKEN)
@@ -257,6 +281,7 @@
  * The core function of interdictors is to suppress energy-based random events; other beneficial functions are provided by alternate mainboards.
  *
  * The first argument (use_cost) is the cost in cell power units, charged to the interdictor's internal cell on successful expenditure.
+ * It's passed through modified_use_cost to take into account any multipliers on efficiency provided by installed parts.
  *
  * The second argument (target) specifies a range-checking target for localized effect application (i.e. blocking a radiation pulse).
  * To perform a global interdiction (such as shielding from solar flares), this argument can be skipped entirely.
@@ -273,12 +298,13 @@
 		return 0
 	if (target && !IN_RANGE(src,target,src.interdict_range))
 		return 0
-	if (!intcap || intcap.charge < use_cost)
+	var/net_use_cost = ceil(use_cost * src.interdict_cost_mult)
+	if (!intcap || intcap.charge < net_use_cost)
 		src.stop_interdicting()
 		return 0
 	else
-		intcap.use(use_cost)
-		src.cumulative_cost += use_cost
+		intcap.use(net_use_cost)
+		src.cumulative_cost += net_use_cost
 		if(!skipanim) src.updatecharge()
 		return 1
 
@@ -294,9 +320,10 @@
 		return 0
 	else
 		if(!src.radstorm_paid) //check if we still need to pay the cost for this machine tick; if we don't, good to go, just return right away
-			if(intcap.charge > use_cost)
-				intcap.use(use_cost)
-				src.cumulative_cost += use_cost
+			var/net_use_cost = ceil(use_cost * src.interdict_cost_mult)
+			if(intcap.charge > net_use_cost)
+				intcap.use(net_use_cost)
+				src.cumulative_cost += net_use_cost
 				src.radstorm_paid = TRUE
 			else
 				src.stop_interdicting()
@@ -363,14 +390,27 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
-	var/interdist = 3
-	//how far the interdictor constructed with this rod will extend its interdiction field
+	var/interdist = 4 //how far the interdictor constructed with this rod will extend its interdiction field
+	var/power_multiplier = null //if present, influences the efficiency of interdictor operation
+
+	phi
+		name = "Phi phase-control rod"
+		desc = "A large, narrow cylinder with a conductive core and control circuitry. Substantially increases interdictor efficiency at a cost of range."
+		interdist = 2
+		power_multiplier = 0.6
 
 	sigma
 		name = "Sigma phase-control rod"
 		desc = "A large, narrow cylinder with a highly conductive core and inbuilt control circuitry. Grants full range to interdictors."
 		icon_state = "interdict-rod-ex"
 		interdist = 6
+
+	epsilon
+		name = "Epsilon phase-control rod"
+		desc = "A large, narrow cylinder with a conductive core and control circuitry. Substantially increases interdictor range at a cost of efficiency."
+		icon_state = "interdict-rod-ex"
+		interdist = 10
+		power_multiplier = 1.8
 
 //interdictor board: power management circuitry and whatnot. alternate boards yield different functionality
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts

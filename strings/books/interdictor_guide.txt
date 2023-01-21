@@ -61,7 +61,13 @@
 	<br>
 	(I) Fabricate the frame kit, mainboard and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
 	<br>
-	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
+	Phase control rods may be manufactured in Lambda, Sigma, Epsilon and Phi configurations.
+	<br>
+	Lambda and Sigma rods are recommended for typical operation; Lambda rods cover a four-unit radius, while the advanced but more materially complex Sigma rods cover a six-unit radius.
+	<br>
+	For circumstances where fine-tuning is advantageous, Epsilon and Phi rods provide the ability to improve range at the expense of efficiency, or vice versa.
+	<br>
+	Epsilon rods provide a greater radius (ten units) but expend approximately 180% of normal cost, while Phi rods provide a reduced radius (two units) but expend approximately 60% of normal cost.
 	<br>
 	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
 	<br>
