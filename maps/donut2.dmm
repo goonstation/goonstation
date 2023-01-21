@@ -22950,8 +22950,6 @@
 	icon_state = "pipe-j2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/grime,
