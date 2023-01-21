@@ -258,6 +258,7 @@
 	var/datum/objective/linked_objective = null
 
 	implanted(mob/M, mob/Implanter, override=0)
+		set waitfor = FALSE
 		..()
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
