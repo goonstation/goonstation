@@ -4742,12 +4742,11 @@ var/global/noir = 0
 				M.show_antag_popup("adminwizard")
 				M.verbs += /client/proc/gearspawn_wizard
 			if(ROLE_VAMPIRE)
-				M.mind.special_role = ROLE_VAMPIRE
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
-				M.make_vampire()
+				M.mind.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_HUNTER)
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE)
+				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WRESTLER)
 				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
@@ -4767,7 +4766,7 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-				M.mind.add_antagonist(ROLE_ARCFIEND)
+				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work

@@ -65,9 +65,8 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_VAMPIRE
 		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
-		M.make_vampire()
+		M.mind.add_antagonist(ROLE_VAMPIRE)
 
 /obj/traitorifier/wrestler
 	name = "VERY Haunted Championship Belt"
