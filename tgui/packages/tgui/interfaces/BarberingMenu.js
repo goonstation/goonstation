@@ -20,16 +20,24 @@ export const BarberingMenu = (props, context) => {
         <hr />
         <Stack>
           <Stack.Item width="70%">
-            <Stack wrap="wrap" justify="space-around">
-              <Stack width="100%" inline justify="space-around">
-                <Icon name="magnifying-glass" />
-                <Stack.Item mb="10px" grow>
-                  <Input width="100%" onInput={(e, value) => setSearchText(value)} />
-                </Stack.Item>
-              </Stack>
-              <HairPreviewList search_text={searchText}
-                all_hair_names={styles_keys}
-                all_hair_styles={available_styles} />
+            <Stack justify="space-around" vertical>
+              <Stack.Item>
+                <Stack width="100%">
+                  <Stack.Item>
+                    <Icon name="magnifying-glass" />
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <Input mb="10px" width="100%" onInput={(e, value) => setSearchText(value)} />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+              <Stack.Item>
+                <Stack width="100%" wrap justify="space-around">
+                  <HairPreviewList search_text={searchText}
+                    all_hair_names={styles_keys}
+                    all_hair_styles={available_styles} />
+                </Stack>
+              </Stack.Item>
             </Stack>
           </Stack.Item>
           <Stack.Item position="fixed" width="200px">
@@ -94,8 +102,8 @@ const PreviewWindow = (props, context) => {
   const { preview, current_hair_style } = data;
   return (
     <Section>
-      <Stack justify="space-around" height="200px" wrap="wrap">
-        <Stack.Item width="100%">
+      <Stack justify="space-around" height="200px" vertical>
+        <Stack.Item>
           <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
         </Stack.Item>
         <Stack.Item>
