@@ -87,6 +87,7 @@
 	var/grow_duration = 0
 	var/active_duration = 0
 	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
+	var/datum/light/light = null
 
 	var/static/list/spawn_probs = list(
 		"artlab" = list(
@@ -672,6 +673,17 @@
 			source_location = pick(valid_locations)
 		src.source_location = source_location
 
+		var/image/illum = image(src.icon, src.icon_state)
+		illum.plane = PLANE_LIGHTING
+		illum.blend_mode = BLEND_ADD
+		illum.alpha = 100
+		src.UpdateOverlays(illum, "illum")
+
+		light = new /datum/light/point
+		light.set_brightness(0.7)
+		light.attach(src)
+		light.enable()
+
 		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.source_location)
 		location_image.alpha = 160
 		location_image.pixel_x = 32
@@ -1110,6 +1122,9 @@
 		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
 
 	disposing()
+		if(src.light)
+			qdel(src.light)
+			src.light = null
 		processing_items.Remove(src)
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/whitehole_warning, src))
 			particleMaster.RemoveSystem(/datum/particleSystem/whitehole_warning)
@@ -1145,6 +1160,13 @@
 			par.color = "#ffffff"
 			par.alpha = 5
 			par.plane = PLANE_NOSHADOW_ABOVE
+
+			var/image/illum = par.SafeGetOverlayImage("illum", src.icon, src.icon_state)
+			illum.appearance_flags = PIXEL_SCALE | RESET_ALPHA
+			illum.plane = PLANE_LIGHTING
+			illum.blend_mode = BLEND_ADD
+			illum.alpha = 140 // note that this gets multiplied by the particle's alpha when rendered
+			par.UpdateOverlays(illum, "illum")
 
 			first.Scale(0.1,0.1)
 			par.transform = first
