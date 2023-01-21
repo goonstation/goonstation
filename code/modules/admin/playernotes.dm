@@ -67,33 +67,38 @@
 
 	dat += "<h1 style='text-align: center;'>Player Notes for <b>[player]</b></h1><center><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a></center><br><br><table><tbody>"
 
-	for (var/i in 1 to length(all_notes))
-		var/list/row_classes = list()
+	if (all_notes["error"])
+		dat += "No notes. <i>Yet.</i>"
 
-		if (all_notes[i]["akey"] == "Auto Banner" || all_notes[i]["akey"] == "VPN Blocker")
-			row_classes += "auto"
+	else
 
-		var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
-		if (R.Find(all_notes[i]["note"]))
-			row_classes += "ban"
-			all_notes[i]["note"] = R.Replace(all_notes[i]["note"], "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
+		for (var/i in 1 to length(all_notes))
+			var/list/row_classes = list()
+
+			if (all_notes[i]["akey"] == "Auto Banner" || all_notes[i]["akey"] == "VPN Blocker")
+				row_classes += "auto"
+
+			var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
+			if (R.Find(all_notes[i]["note"]))
+				row_classes += "ban"
+				all_notes[i]["note"] = R.Replace(all_notes[i]["note"], "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
 
 
-		var/classes = row_classes.Join(" ")
-		dat += {"
-		<tr class="[classes]">
-			<th>[all_notes[i]["server"]]</th>
-			<th>[all_notes[i]["created"]]</th>
-			<th style='width: 0; white-space: pre;'>#[all_notes[i]["id"]] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[all_notes[i]["id"]]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
-		</tr>
-		<tr class="[classes]" style="margin-bottom: 1em;">
-			<th>[all_notes[i]["akey"]]</th>
-			<td colspan="2" style="white-space: pre-wrap;">[all_notes[i]["note"]]</td>
-		</tr>
-		<tr class='empty'><td colspan='3'></td></tr>
-		"}
+			var/classes = row_classes.Join(" ")
+			dat += {"
+			<tr class="[classes]">
+				<th>[all_notes[i]["server"]]</th>
+				<th>[all_notes[i]["created"]]</th>
+				<th style='width: 0; white-space: pre;'>#[all_notes[i]["id"]] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[all_notes[i]["id"]]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
+			</tr>
+			<tr class="[classes]" style="margin-bottom: 1em;">
+				<th>[all_notes[i]["akey"]]</th>
+				<td colspan="2" style="white-space: pre-wrap;">[all_notes[i]["note"]]</td>
+			</tr>
+			<tr class='empty'><td colspan='3'></td></tr>
+			"}
 
-	dat += "</table>"
+		dat += "</table>"
 
 	usr.Browse(dat.Join(""), "window=notesp;size=875x600;title=Notes for [player]")
 
