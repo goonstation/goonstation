@@ -20,6 +20,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
   *
   * A grouping of tiles into a logical space. The sworn enemy of mappers.
   */
+TYPEINFO(/area)
+	var/valid_bounty_area = FALSE
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -35,8 +37,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
-	/// Whether or not the tile will be drawn on the station map.
-	var/render_on_map = FALSE
+	/// A flag system for determining which minimap types this area should be rendered on. For available flags, see `_std/defines/minimap.dm`.
+	var/minimaps_to_render_on = null
 	/// What colour should be displayed for this tile on the station map?
 	var/station_map_colour = MAPC_DEFAULT
 
@@ -547,6 +549,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
+			jerk.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			jerk.remove()
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
 			qdel(O)
@@ -746,6 +749,16 @@ ABSTRACT_TYPE(/area/shuttle)
 
 /area/shuttle/biodome_elevator/lower
 	name = "Biodome Lift Lower Section"
+	icon_state = "shuttle2"
+	force_fullbright = 0
+
+/area/shuttle/centcom_elevator/upper
+	name = "Centcom Lift Upper Section"
+	icon_state = "shuttle"
+	force_fullbright = 0
+
+/area/shuttle/centcom_elevator/lower
+	name = "Centcom Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
 
@@ -1209,6 +1222,8 @@ ABSTRACT_TYPE(/area/adventure)
 
 
 ABSTRACT_TYPE(/area/diner)
+TYPEINFO(/area/diner)
+	valid_bounty_area = TRUE
 /area/diner
 	sound_environment = 12
 #ifdef UNDERWATER_MAP
@@ -1522,6 +1537,8 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Mining Outpost"
 	icon_state = "purple"
 
+TYPEINFO(/area/station/turret_protected/sea_crashed)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
 	name = "Crashed Transport"
 	icon_state = "purple"
@@ -1630,10 +1647,12 @@ ABSTRACT_TYPE(/area/sim/gunsim)
 
 /// Base station area
 ABSTRACT_TYPE(/area/station)
+TYPEINFO(/area/station)
+	valid_bounty_area = TRUE
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	render_on_map = TRUE
+	minimaps_to_render_on = MAP_ALL
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
@@ -1700,6 +1719,8 @@ ABSTRACT_TYPE(/area/station/communications)
 		name = "Communications Office Bedroom"
 		icon_state = "communicationsoffice-bedroom"
 ABSTRACT_TYPE(/area/station/maintenance)
+TYPEINFO(/area/station/maintenance)
+	valid_bounty_area = FALSE
 /area/station/maintenance/
 	name = "Maintenance"
 	icon_state = "maintcentral"
@@ -1814,6 +1835,8 @@ ABSTRACT_TYPE(/area/shuttle/asylum)
 
 // Asylum
 ABSTRACT_TYPE(/area/station/medical/asylum)
+TYPEINFO(/area/station/medical/asylum)
+	valid_bounty_area = FALSE
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
@@ -1960,6 +1983,8 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 		name = "Boiler room"
 		icon_state = "orange"
 ABSTRACT_TYPE(/area/station/hallway)
+TYPEINFO(/area/station/hallway)
+	valid_bounty_area = FALSE
 /area/station/hallway/
 	name = "Hallway"
 	icon_state = "hallC"
@@ -2597,7 +2622,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Control Room"
 	icon_state = "green"
 
-
+TYPEINFO(/area/station/engine/singcore)
+	valid_bounty_area = FALSE
 /area/station/engine/singcore
 	name = "Singularity Core"
 	icon_state = "red"
@@ -2616,6 +2642,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Hot Loop"
 	icon_state = "red"
 
+TYPEINFO(/area/station/engine/combustion_chamber)
+	valid_bounty_area = FALSE
 /area/station/engine/combustion_chamber
 	name = "Combustion Chamber"
 	icon_state = "combustion_chamber"
@@ -2635,6 +2663,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "yellow"
 
 ABSTRACT_TYPE(/area/station/engine/substation)
+TYPEINFO(/area/station/engine/substation)
+	valid_bounty_area = FALSE
 /area/station/engine/substation
 	icon_state = "purple"
 	sound_environment = 3
@@ -3387,7 +3417,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Research Outpost"
 	icon_state = "blue"
 	do_not_irradiate = 1
-	render_on_map = TRUE
+	minimaps_to_render_on = MAP_ALL
 	station_map_colour = MAPC_RESEARCH
 
 /area/research_outpost/protest
@@ -3425,6 +3455,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "brig"
 	teleport_blocked = 1
 	do_not_irradiate = 1
+	minimaps_to_render_on = MAP_SYNDICATE
+	station_map_colour = MAPC_SYNDICATE
 
 /area/listeningpost/syndicateassaultvessel
 		name ="Syndicate Assault Vessel"
@@ -3651,6 +3683,8 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "ai_foyer"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/ai)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
@@ -3661,17 +3695,21 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/AIsat)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
 	icon_state = "ai_satellite"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/AIbaseoutside)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
-	render_on_map = FALSE
+	minimaps_to_render_on = null
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -3697,7 +3735,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
 	requires_power = FALSE
-	render_on_map = FALSE
+	minimaps_to_render_on = null
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 

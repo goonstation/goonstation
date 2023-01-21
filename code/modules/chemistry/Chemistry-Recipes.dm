@@ -662,7 +662,7 @@ datum
 			drinkrecipe = 1
 
 		honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			result = "honey_tea"
 			required_reagents = list("honey" = 1, "tea" = 1)
@@ -672,7 +672,7 @@ datum
 			drinkrecipe = 1
 
 		mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			result = "mint_tea"
 			required_reagents = list("mint" = 1, "tea" = 1)
@@ -1918,6 +1918,15 @@ datum
 			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
 			result_amount = 4
 			mix_phrase = "The drink smells vaguely like artifical autumn."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		lavenderlatte
+			name = "Lavender Latte"
+			id = "lavender_latte"
+			result = "lavender_latte"
+			required_reagents = list("lavender_essence"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "A sweet floral scent drifts up from the pale foamy mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		explosion_potassium // get in
@@ -3186,7 +3195,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			required_reagents = list("fluorine" = 1, "carbon" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'

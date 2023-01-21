@@ -191,7 +191,7 @@
 
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
 		. = ..()
-		src.reagents.clear_reagents() // no
+		src.reagents?.clear_reagents() // no
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
@@ -1375,7 +1375,7 @@
 			P.pixel_y = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 
 		P.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
-		P.appearance_flags = RESET_COLOR
+		P.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		user.visible_message("<b>[user]</b> sticks a sticky note to [T].",\
 		"You stick a sticky note to [T].")

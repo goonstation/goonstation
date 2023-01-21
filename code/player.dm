@@ -40,6 +40,16 @@
 	var/list/clouddata = null
 	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
 	var/datum/buildmode_holder/buildmode = null
+	/// whether this person is a temporary admin (this round only)
+	var/tempmin = FALSE
+	/// whteher this person is a permanent admin
+	var/perm_admin = FALSE
+	/// whether this person set DNR (Do not revive)
+	var/dnr = FALSE
+	/// keep track of whether this player joined round as an observer (blocks them from bank payouts)
+	var/joined_observer = FALSE
+	/// Last time this person died (used for critter respawns)
+	var/last_death_time
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -54,6 +64,7 @@
 
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
+		src.last_death_time = world.timeofday
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -65,6 +76,7 @@
 
 	/// queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats()
+		set waitfor = FALSE
 		var/list/response = null
 		try
 			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
@@ -305,6 +317,7 @@
 
 /// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
 /proc/make_player(key)
+	RETURN_TYPE(/datum/player)
 	var/datum/player/player = find_player(key) // just double check so that we don't get any dupes
 	if (!player)
 		player = new(key)

@@ -7,6 +7,7 @@
 	var/generate_mobs = TRUE
 	var/add_lrt = TRUE
 	var/delay_finalization = FALSE
+	var/seed_ore = TRUE
 	var/width = null
 	var/height = null
 	var/prefabs = 1
@@ -25,6 +26,8 @@
 		prefabs = tgui_input_number(usr, "Prefabs to attempt to place", "Planet Generation", 1, 5, 0)
 
 		generate_mobs = alert("Generate Mobs", "Planet Generation", "True", "False") == "True" ? TRUE : FALSE
+		if(alert("Generate Ore in Rocks/Mountains","Planet Generation","Yes","No") == "No")
+			seed_ore = FALSE
 		color = input("Choose a color for the planet","Planet Generation", "#888888") as color
 
 		planet_name = tgui_input_text(usr, "Planet name", "Planet Generation", null)
@@ -34,6 +37,8 @@
 		if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
 			delay_finalization = TRUE
 
+		admin_customized = TRUE
+
 		src.event_effect(source)
 		return
 
@@ -41,7 +46,11 @@
 	event_effect()
 		..()
 
-		var/blacklist_generators = list(/datum/map_generator/icemoon_generator, /datum/map_generator/mars_generator)
+		var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
+										/datum/map_generator/mars_generator,
+										/datum/map_generator/void_generator,
+										/datum/map_generator/asteroids,
+										/datum/map_generator/sea_caves)
 
 		if(isnull(generator))
 			generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
@@ -71,7 +80,7 @@
 
 		if(delay_finalization && add_lrt)
 
-			var/list/turf/turfs = GeneratePlanetChunk(width, height, prefabs_to_place=prefabs, generator=generator, color=color, name=planet_name, use_lrt=FALSE, mapgen_flags=flags)
+			var/list/turf/turfs = GeneratePlanetChunk(src.width, src.height, prefabs_to_place=src.prefabs, generator=src.generator, color=src.color, name=planet_name, use_lrt=FALSE, seed_ore=src.seed_ore, mapgen_flags=flags)
 
 			tgui_alert(usr, "Continue when you are complete...","Ready?!?",list("Continue"))
 
@@ -92,7 +101,7 @@
 				lrt_placed = TRUE
 				special_places.Add(planet_name)
 		else
-			GeneratePlanetChunk(width, height, prefabs_to_place=prefabs, generator=generator, color=color, name=planet_name, use_lrt=add_lrt, mapgen_flags=flags)
+			GeneratePlanetChunk(src.width, src.height, prefabs_to_place=src.prefabs, generator=src.generator, color=src.color, name=planet_name, use_lrt=src.add_lrt, seed_ore=src.seed_ore, mapgen_flags=flags)
 
 		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		var/title = pick("Planetary Data Received","URGENT - Exploration Mission","Exploration Mission to [planet_name]")
@@ -104,10 +113,17 @@
 		if(generator == /datum/map_generator/void_generator)
 			title = pick("Anamolous Data Received", "URGENT - Exploration Mission")
 			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.")
+		else if(generator == /datum/map_generator/asteroids)
+			title = pick("Exploration Mission to [planet_name]", "URGENT - Exploration Mission")
+			reports = list("Unusual readings detected on [planet_name].  Investigate and bring back any relevent equipment or technoledgy.", \
+		"Our company has been granted permission to explore [planet_name], a nearby cluster of asteroids. The goals of the mission are to conduct a thorough survey of the region and search for signs of past or present life.", \
+		"Urgent request has been made to explore [planet_name], a nearby asteroid that has shown signs of valuable minerals. Due to the pressing nature of this request, please depart immediately. The goals of the mission are to conduct a quick survey of the region.", \
+		"We have received approval to explore [planet_name], this group of asteroids if of great interest to us.  This is a highly secretive and sensitive mission, and I trust that all employees will maintain strict confidentiality.")
 
 		var/command_report = pick(reports)
 		command_report += "\n\nTarget data sent to Long Range Teleporter."
 		command_announcement(replacetext(command_report, "\n", "<br>"), title, sound_to_play, do_sanitize=0);
+
 		post_event()
 
 	proc/post_event()
@@ -117,6 +133,7 @@
 		src.width = initial(src.width)
 		src.height = initial(src.height)
 		src.prefabs = initial(src.prefabs)
+		src.seed_ore = initial(src.seed_ore)
 		src.planet_name = initial(src.planet_name)
 		src.color = initial(src.color)
 		src.generator = initial(src.generator)

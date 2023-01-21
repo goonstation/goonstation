@@ -303,11 +303,10 @@
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 1.5
-	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	speed = 0.85
 
 	New()
 		..()
@@ -317,15 +316,93 @@
 		myhud.update_systems()
 		myhud.update_states()
 
-	go_home()
-		if((POD_ACCESS_SALVAGER in src.com_system?.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
-			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
+/datum/manufacture/pod/armor_light/salvager
+	name = "Salvager Pod Armor"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,20)
+	item_outputs = list(/obj/item/podarmor/salvager)
+	time = 20 SECONDS
+	create = 1
+	category = "Component"
+
+/obj/item/podarmor/salvager
+	name = "Salvager Pod Armor"
+	desc = "Exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
 
 /obj/item/shipcomponent/communications/salvager
-		name = "Salvager Communication Array"
-		desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
-		color = "#91681c"
-		access_type = list(POD_ACCESS_SALVAGER)
+	name = "Salvager Communication Array"
+	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
+	color = "#91681c"
+	access_type = list(POD_ACCESS_SALVAGER)
+
+	go_home()
+		var/escape_planet
+#ifdef UNDERWATER_MAP
+		escape_planet = !isrestrictedz(ship.z)
+#else
+		escape_planet = !isnull(station_repair.station_generator) && (ship.z == Z_LEVEL_STATION)
+#endif
+
+		if(!escape_planet)
+			return
+
+		var/turf/target = get_home_turf()
+		if(!src.active)
+			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate trajectory!")]")
+			return TRUE
+		if(!target)
+			boutput(usr, "[ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
+			return TRUE
+
+		if(ship.engine.active)
+			if(ship.engine.ready)
+				//brake the pod, we must stop to calculate warp trajectory.
+				if (istype(ship.movement_controller, /datum/movement_controller/pod))
+					var/datum/movement_controller/pod/MCP = ship.movement_controller
+					if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate trajectory to destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+				else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+					var/datum/movement_controller/tank/MCT = ship.movement_controller
+					if (MCT.input_x != 0 || MCT.input_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate trajectory destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+
+
+				ship.engine.warp_autopilot = 1
+				boutput(usr, "[ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
+
+				var/health_perc = ship.health_percentage
+				ship.going_home = FALSE
+				sleep(5 SECONDS)
+
+				if(ship.health_percentage < (health_perc - 30))
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
+				else if(ship.engine.active && ship.engine.ready && src.active)
+					animate_teleport(ship)
+					sleep(0.8 SECONDS)
+					ship.set_loc(target)
+				else
+					boutput(usr, "[ship.ship_message("Trajectory calculatoin failure! Loss of systems!")]")
+
+				ship.engine.ready = 0
+				ship.engine.warp_autopilot = 0
+				ship.engine.ready()
+			else
+				boutput(usr, "[ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
+		else
+			boutput(usr, "[ship.ship_message("Engines inactive! Unable to calculate trajectory!")]")
+
+		return TRUE
+
+	get_home_turf()
+		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
+			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"

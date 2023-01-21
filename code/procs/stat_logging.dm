@@ -163,7 +163,7 @@
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if (ROLE_NUKEOP)
+			if (ROLE_NUKEOP, ROLE_NUKEOP_COMMANDER)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
 					if (ticker.mode:nuke_detonated)

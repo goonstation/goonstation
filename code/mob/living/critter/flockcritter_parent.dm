@@ -55,7 +55,7 @@
 	burn.value = src.health_burn
 	burn.maximum_value = src.health_burn
 	burn.last_value = src.health_burn
-	burn.damage_multiplier = 0.2
+	burn.damage_multiplier = 0.4
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
@@ -243,7 +243,7 @@
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
 	if (src.flock)
-		src.flock.deaths++
+		src.flock.stats.deaths++
 		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 

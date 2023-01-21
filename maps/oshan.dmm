@@ -642,23 +642,24 @@
 /area/space)
 "abB" = (
 /obj/table/auto,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -16;
+	pixel_y = -16
+	},
+/obj/item/plate,
 /obj/item/reagent_containers/food/snacks/breakfast,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
-/obj/item/kitchen/utensil/fork{
-	pixel_x = -16;
-	pixel_y = -16
-	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "abC" = (
@@ -12838,7 +12839,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aEO" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aEP" = (
@@ -29584,6 +29585,10 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bzr" = (
@@ -31116,6 +31121,7 @@
 /area/station/mining/staff_room)
 "bDd" = (
 /obj/table/auto,
+/obj/item/plate,
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -36838,11 +36844,11 @@
 	dir = 4
 	},
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/gun/energy/phaser_gun{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/machinery/light_switch/auto,
+/obj/item/gun/energy/phaser_small{
+	pixel_y = -2;
+	pixel_x = -6
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bRA" = (
@@ -37056,7 +37062,7 @@
 /area/station/maintenance/south)
 "bRV" = (
 /obj/table/wood,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/space)
 "bRW" = (
@@ -44539,6 +44545,12 @@
 /obj/decal/fakeobjects/flock/antenna,
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"eJl" = (
+/obj/table/flock/auto,
+/obj/machinery/light/flock,
+/obj/item/paper/flockstatsnote,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "eJX" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -75449,7 +75461,7 @@ baN
 aYi
 aXI
 aXI
-bdR
+eJl
 aXK
 beq
 wdN

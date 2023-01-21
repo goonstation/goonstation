@@ -245,7 +245,7 @@
 /area/station/storage/primary)
 "aaH" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray{
 	butts = 5;
 	icon_state = "ashtray";
@@ -17450,7 +17450,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
@@ -20335,7 +20335,7 @@
 /area/station/maintenance/disposal)
 "aSZ" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/vertical,
@@ -41789,7 +41789,7 @@
 /area/station/crew_quarters/hor)
 "bOc" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/vertical,

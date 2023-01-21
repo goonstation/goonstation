@@ -495,7 +495,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
-
+	save_flock_stats()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_traitors")
 	statlog_traitors()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_ailaws")
@@ -615,7 +615,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	/// list of ckeys and keypairs to bulk commit
 	var/list/bulk_commit = list()
 	for(var/mob/player in mobs)
-		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player?.client && player.mind && !player.mind.get_player()?.joined_observer && !istype(player,/mob/new_player))
 			logTheThing(LOG_DEBUG, null, "Iterating on [player.client]")
 			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
