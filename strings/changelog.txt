@@ -1,5 +1,9 @@
 
 (t)sat jan 21 23
+(u)RubberRats
+(p)12839
+(e)|
+(+)Rolled blunts inherit any size modifiers from the plant used to make them.
 (u)goonstation-enjoyer
 (p)12643
 (e)💅📦|C-QoL, A-Game-Objects
