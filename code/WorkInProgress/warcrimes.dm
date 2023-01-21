@@ -4,10 +4,13 @@
 var/johnbill_shuttle_fartnasium_active = 0
 var/fartcount = 0
 
+TYPEINFO(/area/diner/tug)
+	valid_bounty_area = FALSE
 /area/diner/tug
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
-
+TYPEINFO(/area/diner/juicer_trader)
+	valid_bounty_area = FALSE
 /area/diner/jucer_trader
 	icon_state = "green"
 	name = "Placeholder Paul's $STORE_NAME.shuttle"

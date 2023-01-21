@@ -250,6 +250,7 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])

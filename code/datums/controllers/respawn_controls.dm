@@ -59,6 +59,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/checkRespawnee(var/datum/respawnee/R)
 		switch(R.checkValid())
 			if(RESPAWNEE_STATE_WAITING)
+				; // Do nothing
 				// This could happen if the client disconnects
 			if(RESPAWNEE_STATE_ELIGIBLE)
 				// They are eligible for respawn

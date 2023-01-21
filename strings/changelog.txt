@@ -1,5 +1,27 @@
 
+(t)fri jan 20 23
+(u)aloe
+(+)Going shambler or monkey mode as a changeling now removes pins.
+(u)tarmunora
+(+)Biblethump brain damage is now affected by head armor instead of blocked outright by helmets
+(u)pali & Leah
+(p)12824
+(e)🆕🎨🌠|C-Feature, C-Sprites, A-Events
+(*)Added a new random event - the white hole. Which is like the other end of a black hole. So stuff is thrown out of it. Better build some barricades.
+(t)thu jan 19 23
+(u)Walpvrgis + Flourish
+(p)12817
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Added gardenias, hydrangeas, birds of paradise, and lavender as both growable botany plants and wearable head accessories
+(*)Also added lavender essence and lavender latte (lavender essence + milk + espresso) as reagents. Lavender essence, when applied via TOUCH, will apply the "fragrant" status effect to the user, with each unit increasing the status duration by 5 seconds.
+(u)Tanker
+(p)12487
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Adds french toast. Simply combine bread, two eggs, and milk in the oven.
+(+)Baguettes will now produce french bread slices when sliced.
 (t)wed jan 18 23
+(u)tarmunora
+(+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
 (u)Amylizzle. Spritework by Mr Moriarty & Hans
 (p)12795
 (e)🪲🎨⚖🔄📦|C-Bug, C-Sprites, C-Balance, C-Rework, A-Game-Objects
@@ -13,6 +35,8 @@
 (+)Flockdrones now dodge a little slower.
 (u)LeahTheTech
 (+)Flock compute nodes now provide 50 compute, down from 60.
+(u)LeahTheTech
+(+)Flockminds and traces now have a tracker hud element pointing to the relay while it is active.
 (u)goonstation-enjoyer
 (p)12658
 (e)🪲🔨|C-Bug, A-Player-Actions

@@ -54,6 +54,7 @@ TYPEINFO(/datum/component/pet)
 	)
 
 /datum/component/pet/Initialize(mob/critter_parent)
+	. = ..()
 	if(!istype(parent, /obj/critter))
 		return COMPONENT_INCOMPATIBLE
 	src.critter = parent
