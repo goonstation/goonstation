@@ -1280,7 +1280,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					newstick.turnon()
 					qdel(CROP)
 					CROP = newstick
-				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && !istype(MUT,/datum/plantmutation/creeper/tumbling))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S

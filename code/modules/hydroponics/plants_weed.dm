@@ -85,6 +85,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	name = "Creeper"
 	unique_seed = /obj/item/seed/creeper
 	seedcolor = "#CC00FF"
+	cropsize = 1
 	nothirst = 1
 	starthealth = 30
 	growtime = 30
@@ -95,6 +96,9 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	special_proc = 1
 	vending = 2
 	genome = 8
+	mutations = list(/datum/plantmutation/creeper/tumbling)
+	//stabilizer is the bad commut for the plant here, toxic the good one
+	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/reagent_adder/toxic)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
@@ -105,10 +109,13 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.growth > (P.growtime + DNA.growtime) && POT.health > P.starthealth / 2 && prob(33))
 			for (var/obj/machinery/plantpot/C in range(1,POT))
 				var/datum/plant/growing = C.current
-				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper)) C.health -= 10
+				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+					C.health -= 10
 				else if (C.dead) C.HYPdestroyplant()
-				else if (!C.current)
+				else if (!C.current && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
 					var/obj/item/seed/creeper/WS = new(src)
+					//devolve the plant in case of tumbling creeper
+					WS.plantgenes.mutation = null
 					C.HYPnewplant(WS)
 					spawn(0.5 SECONDS)
 						qdel(WS)

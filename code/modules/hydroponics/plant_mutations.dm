@@ -588,6 +588,16 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
 
+// Creeper Mutations
+
+/datum/plantmutation/creeper/tumbling
+	name = "Tumbling Creeper"
+	name_prefix = "Tumbling "
+	iconmod = "CreeperTumbling"
+	harvest_override = 1
+	crop = /obj/item/Tumbling_Creeper
+	chance = 25
+
 
 // Radweed Mutations
 

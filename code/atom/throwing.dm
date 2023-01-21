@@ -26,8 +26,8 @@
 					src.throw_impact(A, thr)
 					. = TRUE
 			//Would be an idea to move all these checks into its own proc so non-humans don't need to check for this
-			if(ishuman(src) && istype(A, /obj/item/bamboo_spike_trap))
-				var/obj/item/bamboo_spike_trap/M = A
+			if(ishuman(src) && istype(A, /obj/item/Tumbling_Creeper))
+				var/obj/item/Tumbling_Creeper/M = A
 				if(M.armed)
 					src.throw_impact(M, thr)
 					. = TRUE
