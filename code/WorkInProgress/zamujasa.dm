@@ -300,7 +300,7 @@
 			var/obj/item/reagent_containers/food/snacks/plant/I = W
 			base_score = 2 + I.quality
 
-		else if (istype(W, /obj/item/plant))
+		else if (istype(W, /obj/item/plant) || istype(W, /obj/item/clothing/head/flower))
 			var/obj/item/plant/I = W
 			base_score = 2 + I.quality
 

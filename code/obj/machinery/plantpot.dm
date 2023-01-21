@@ -911,6 +911,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
 
+		var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
+		if(plantoverlay)
+			UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
+		else
+			UpdateOverlays(null, "plantoverlay")
+
 		if(status & (NOPOWER|BROKEN))
 			UpdateOverlays(null, "water_meter")
 			UpdateOverlays(null, "harvest_display")
@@ -1208,7 +1214,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
 
-				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers))
+				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/flower/))
 					// If we've got a herb or some other thing like wheat or shit like that.
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
@@ -1386,6 +1392,12 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					// No bonus, harvest is decremented as usual.
 					src.harvests--
+			else if(prob(33) && HYPCheckCommut(DNA, /datum/plant_gene_strain/variable_harvest))
+				if(prob(10))
+					src.harvests++
+				else if(prob(33))
+					src.harvests -= 2
+				// else just don't reduce the harvests
 			else
 				src.harvests--
 		if(growing.isgrass)

@@ -1199,6 +1199,12 @@ var/global/noir = 0
 					usr.client.cmd_admin_admindamn(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+		if("rapture")
+			if(src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				heavenly_spawn(M, reverse = TRUE)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -2262,7 +2268,7 @@ var/global/noir = 0
 									evilize(M, ROLE_TRAITOR)
 							if(ROLE_NUKEOP)
 								if (tgui_alert(usr,"Commander?","Hierarchy",list("Yes", "No")) == "Yes")
-									evilize(M, ROLE_NUKEOP, "commander", do_objectives = FALSE)
+									evilize(M, ROLE_NUKEOP_COMMANDER, do_objectives = FALSE)
 								else
 									evilize(M, ROLE_NUKEOP, do_objectives = FALSE)
 							else
@@ -4810,14 +4816,11 @@ var/global/noir = 0
 				new objective_set_path(M.mind)
 				equip_spy_theft(tmob)
 			if(ROLE_NUKEOP)
-				M.show_text("<h1><font color=red><B>You have been chosen as a nuclear operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
-				var/mob/living/carbon/human/H = M
-				var/rank = (special == "commander" ? "Syndicate Operative Commander" : "Syndicate Operative")
-				H.unequip_all(delete_stuff = TRUE)
-				H.JobEquipSpawned(rank)
-				var/datum/game_mode/nuclear/nukemode = ticker.mode
-				nukemode.syndicates += H.mind
-				nukemode.bestow_objective(H.mind, /datum/objective/specialist/nuclear)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+			if(ROLE_NUKEOP_COMMANDER)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative Commander! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 
 	else
 		M.show_text("<h2><font color=red><B>You have become evil and are now an antagonist!</B></font></h2>", "red")

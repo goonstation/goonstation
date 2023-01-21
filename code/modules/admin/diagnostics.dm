@@ -234,7 +234,7 @@ proc/debug_map_apc_count(delim,zlim)
 			mt.maptext_x = -3
 		if(tall)
 			mt.maptext_height *= 2
-		mt.appearance_flags = RESET_COLOR | additional_flags
+		mt.appearance_flags = RESET_COLOR | PIXEL_SCALE | additional_flags
 		return mt
 
 	teleblocked

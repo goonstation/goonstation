@@ -1736,23 +1736,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.time_left *= 1.5
 			src.time_left /= src.speed
 
+		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
 				var/obj/item/disk/data/floppy/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-					if(MD.fablimit == 0)
+					if(MD.fablimit == -1 || MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.queue = list()
 						return
 					else
-						MD.fablimit -= 1
+						MD.num_working++
+					manudrive_file = MD
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()
 
-		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left), src)
+		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left, manudrive_file), src)
 
 
 	proc/output_loop(datum/manufacture/M)
@@ -2962,10 +2964,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 	id = "manufacturer"
 	var/obj/machinery/manufacturer/MA
 	var/completed = FALSE
+	var/datum/computer/file/manudrive/manudrive_file
 
-	New(machine, dur)
+	New(machine, dur, datum/computer/file/manudrive/manudrive_file)
 		MA = machine
 		duration = dur
+		src.manudrive_file = manudrive_file
 		..()
 
 	onUpdate()
@@ -2984,10 +2988,22 @@ TYPEINFO(/obj/machinery/manufacturer)
 		MA.error = null
 		MA.mode = "ready"
 		MA.build_icon()
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
 
 	onEnd()
 		..()
 		src.completed = TRUE
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
+			if(src.manudrive_file.fablimit == 0)
+				CRASH("Manudrive fablimit 0.")
+			else if(src.manudrive_file.fablimit > 0)
+				src.manudrive_file.fablimit--
 		MA.finish_work()
 		// call dispense
 

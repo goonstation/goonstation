@@ -101,7 +101,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -1233,10 +1233,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 							B.run_on_spawn(A, usr, FALSE, src)
 							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
+							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
 							. = TRUE
 							break
 
