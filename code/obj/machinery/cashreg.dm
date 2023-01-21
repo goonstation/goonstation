@@ -59,15 +59,12 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	ui_data(mob/user)
 		var/obj/O = src.check_worn_ID(user)
-		var/is_owner = FALSE
-		if (src.get_ID(O) == src.owner_card)
-			is_owner = TRUE
 
 		. = list(
 			"active_transaction" = src.active_transaction,
 			"amount" = src.amount,
 			"is_authorised" = src.allowed(user),
-			"is_owner" = is_owner,
+			"is_owner" = (src.get_ID(O) == src.owner_card),
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
 			"tip_amount" = ceil(src.amount * src.tip),
