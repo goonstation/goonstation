@@ -130,6 +130,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
+		/client/proc/toggle_random_job_selection,
 
 		/client/proc/debug_deletions,
 
@@ -531,10 +532,24 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder)
+	if(src.player.tempmin && src.player.perm_admin)
+		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
+
+	// The idea is that player.tempmin and player.perm_admin are set when the given player
+	// is adminned for the first time during a round and are persistent. Essentially, if
+	// the player is adminned by code during round initialization then their src.holder
+	// has already been set and they are marked as perm_admin for the rest of the round.
+	// Other ways of getting adminned (such as using the player options) will not set
+	// src.holder and the first call to this proc will mark the player as tempminned for
+	// the rest of the round.
+	if((!src.holder || src.player.tempmin) && !src.player.perm_admin)
 		src.holder = new /datum/admins(src)
-		src.holder.tempmin = 1
+		src.holder.tempmin = TRUE
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
+		src.player.tempmin = TRUE
+	else
+		src.player.perm_admin = TRUE
 
 	src.holder.rank = rank
 
@@ -662,7 +677,8 @@ var/list/special_pa_observing_verbs = list(
 		update_admins(rank)
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		src.mob.mind?.damned = 0
+		src.mob.mind?.damned = FALSE
+		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -684,6 +700,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
+		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
 		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
 		boutput(src, "<span class='notice'>You are already playing!</span>")
@@ -1017,7 +1034,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	respawn_as_self_internal(new_self=TRUE, jobstring = initial(J.name))
+	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
@@ -1955,6 +1972,7 @@ var/list/fun_images = list()
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
 	ADMIN_ONLY
+	// Previous HTML (so you can replace without always resetting to the default)
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
@@ -1974,7 +1992,7 @@ var/list/fun_images = list()
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
-		newHTML = input("Gib HTML, then.", "FEED ME HTML", "<b>memes</b>") as message
+		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
 		newHTML = input("Upload that file!", "Upload that file!") as file
 		if(newHTML)
@@ -2122,12 +2140,20 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as anything in clicked_turf)
-			atoms += thing
+		var/list/atom/atoms = list()
+		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
+			if(thing.name)
+				atoms += thing
+			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
+				if(initial(thing.name))
+					atoms["nameless [initial(thing.name)]"] = thing
+				else
+					atoms["nameless [thing.type]"] = thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
+		if(istext(A))
+			A = atoms[A]
 
 	var/choice = 0
 
@@ -2231,6 +2257,8 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Set Material")
+			C.cmd_set_material(A)
 
 	src.update_cursor()
 

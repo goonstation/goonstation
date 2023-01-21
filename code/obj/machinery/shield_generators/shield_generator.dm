@@ -1,12 +1,14 @@
 
 /* ==================== Area ==================== */
-
+TYPEINFO(/area/station/shield_zone)
+	valid_bounty_area = FALSE
 /area/station/shield_zone
 	name = "shield protected space"
 	icon_state = "shield_zone"
 	expandable = FALSE
 	do_not_irradiate = TRUE
 	requires_power = FALSE
+	minimaps_to_render_on = null
 
 /* ==================== Generator ==================== */
 

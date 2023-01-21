@@ -4,8 +4,9 @@
 *
 */
 /datum/game_mode/assday
-	name = "Everyone-Is-A-Traitor Mode"
+	name = "Everyone is a traitor"
 	config_tag = "everyone-is-a-traitor"
+	regular = FALSE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH)
 	antag_token_support = TRUE
@@ -72,11 +73,12 @@
 
 	if(num_wraiths)
 		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = ROLE_WRAITH
-			possible_wraiths.Remove(wraith)
+		if(length(possible_wraiths))
+			var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
+			for (var/datum/mind/wraith in chosen_wraiths)
+				traitors += wraith
+				wraith.special_role = ROLE_WRAITH
+				possible_wraiths.Remove(wraith)
 
 	return 1
 
@@ -93,45 +95,14 @@
 		send_intercept()
 
 /datum/game_mode/assday/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/assday/declare_completion()
 	return // don't call parent because we don't want to spam objectives of 80 traitors, thanks
 
 /datum/game_mode/assday/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Assday Law Module",law,1,true,true)
+	killer.law_rack_connection?.SetLawCustom("Assday Law Module", law, 1, TRUE, TRUE)
 	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/assday/proc/get_mob_list()

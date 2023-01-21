@@ -10,7 +10,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	anchored = 1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	allow_stunned_dragndrop = 1
+	allow_stunned_dragndrop = TRUE
 	var/chargerate = 400
 	var/cabling = 250
 	var/list/cells = list()
@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/New()
 	..()
+	src.flags |= NOSPLASH
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()
@@ -44,16 +45,15 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (src.occupant)
 			boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 			src.go_out()
-		return
 
 	if (src.occupant)
 		src.process_occupant(mult)
 
 	use_power(power_usage)
-	return 1
+	return TRUE
 
 /obj/machinery/recharge_station/allow_drop()
-	return 0
+	return FALSE
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if (src.conversion_chamber && !isrobot(user))
@@ -121,21 +121,22 @@ TYPEINFO(/obj/machinery/recharge_station)
 			user.drop_item()
 		qdel(W)
 
-	else if (istype(W, /obj/item/reagent_containers/glass))
-		var/obj/item/reagent_containers/glass/G = W
-		if (!G.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
+	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
+	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+		if (!W.reagents.total_volume)
+			boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 			return
-		if (!G.reagents.has_reagent("fuel"))
-			boutput(user, "<span class='alert'>There's no fuel in [G]. It would be pointless to pour it in.</span>")
+		if (!W.reagents.has_reagent("fuel"))
+			boutput(user, "<span class='alert'>There's no fuel in [W]. It would be pointless to pour it in.</span>")
 			return
-		else
-			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
-			if (!G.reagents.total_volume)
-				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
-			src.reagents.isolate_reagent("fuel")
+		if (src.reagents.total_volume >= src.reagents.maximum_volume)
+			boutput(user, "<span class='alert'>[src] is full.</span>")
+			return
+		var/amount = min(W.reagents.total_volume, src.reagents.maximum_volume - src.reagents.total_volume, 50)
+		user.visible_message("<span class='notice'>[user] pours [amount] units of [W]'s contents into [src].</span>")
+		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+		W.reagents.trans_to(src, amount)
+		src.reagents.isolate_reagent("fuel")
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
@@ -163,7 +164,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (!src.anchored)
 		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
 		return FALSE
-
+	if (src.occupant)
+		boutput(user, "<span class='alert'>There's already someone in there.</span>")
+		return FALSE
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
@@ -327,9 +330,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.updateUsrDialog()
 
 /obj/machinery/recharge_station/proc/go_out()
-	if (!src.occupant)
-		return
-	src.occupant.set_loc(get_turf(src))
+	MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 	src.occupant = null
 	src.build_icon()
 

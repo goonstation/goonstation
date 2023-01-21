@@ -19,7 +19,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
-	var/mob/living/occupant
+	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -213,7 +213,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
-		if (ghost.mind.dnr)
+		if (ghost.mind.get_player()?.dnr)
 			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 
@@ -255,6 +255,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.abilityHolder.remove_unlocks()
 
 		ghost.mind.transfer_to(src.occupant)
+		src.occupant.is_npc = FALSE
 
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
@@ -264,11 +265,21 @@ TYPEINFO(/obj/machinery/clonepod)
 			defects = new /datum/cloner_defect_holder
 
 		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
+		// TODO refactor to just do this in the clonepod proc (this one right here)
 		defects.apply_to_on_move(src.occupant)
 
 		if (!src.clonehack) // syndies get good clones
-			for (var/i in 1 to rand(0, (src.emagged ? 6 : 3))) // uniform chance between 0-3, 0-6 if emagged
-				defects.add_random_cloner_defect()
+			/* Apply clone defects, number picked from a uniform distribution on
+			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
+			 * (Clone generation is the number of times a person has been cloned)
+			 */
+			var/generation = src.occupant.bioHolder.clone_generation
+			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
+				if (generation)
+					defects.add_random_cloner_defect()
+				else
+					// First cloning can't get major defects
+					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
 
 		if (length(defects.active_cloner_defects) > 7)
 			src.occupant.unlock_medal("Quit Cloning Around")
@@ -334,7 +345,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-
 		// -- Mode/mind specific stuff goes here
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
@@ -342,6 +352,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		// -- End mode specific stuff
 
+		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
@@ -358,6 +369,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			if(implant_hacker == src.occupant)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
+				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
 		// Remove zombie antag status as zombie race is removed on cloning
@@ -639,6 +651,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
+			logTheThing(LOG_STATION, src, "[user] removed the mindhack cloning module from ([src]) at [log_loc(user)].")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )

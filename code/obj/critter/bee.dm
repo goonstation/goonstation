@@ -2041,6 +2041,7 @@
 	name = "bee beard"
 	desc = "A beard. From a bee."
 	icon_state = "beard"
+	c_flags = null
 
 /obj/item/reagent_containers/food/snacks/beefood
 	name = "bee kibble"

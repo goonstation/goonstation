@@ -42,6 +42,8 @@ THROWING DARTS
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+		if (ismob(src.loc))
+			src.implanted(src.loc)
 
 	disposing()
 		if (owner)
@@ -58,9 +60,15 @@ THROWING DARTS
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
-		implanted = 1
+		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.implant.Add(src)
+		else if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
@@ -741,7 +749,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
-
+		logTheThing(LOG_COMBAT, M, "is mindhacked ([src.expire ? "regular" : "deluxe"]) by [constructTarget(I,"combat")] at [log_loc(I)].")
 		M.setStatus("mindhack", expire ? (25 + rand(-5,5)) MINUTES : null, I, custom_orders)
 		src.uses -= 1
 
@@ -1455,13 +1463,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
 				"<span class='alert'>You have been implanted by [user].</span>",\
 				"<span class='alert'>You implanted the implant into [M].</span>")
-
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.implant.Add(src.imp)
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants.Add(src.imp)
 
 		src.imp.set_loc(M)
 		src.imp.implanted(M, user)
