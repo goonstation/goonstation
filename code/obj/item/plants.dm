@@ -1,7 +1,9 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+
+ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
-/obj/item/plant/
+/obj/item/plant
 	name = "plant"
 	var/crop_suffix = ""
 	var/crop_prefix = ""
@@ -18,6 +20,7 @@
 		if (!src.reagents)
 			src.create_reagents(100)
 
+ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
 	health = 4
@@ -453,6 +456,7 @@
 
 // FLOWERS //
 
+ABSTRACT_TYPE(/obj/item/plant/flower)
 /obj/item/plant/flower
 	// PLACEHOLDER FOR FLOURISH'S PLANT PLOT STUFF
 

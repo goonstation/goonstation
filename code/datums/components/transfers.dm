@@ -8,6 +8,7 @@
 	var/atom/output_target
 
 /datum/component/transfer_output/Initialize()
+	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -68,6 +69,7 @@
 #define DEFAULT_TRANSFER_FILTER list(/obj/item/)
 
 /datum/component/transfer_input/Initialize(list/filter=null, transfer_proc=null, filter_proc=null, filter_link_proc=null)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.filter = filter || DEFAULT_TRANSFER_FILTER
