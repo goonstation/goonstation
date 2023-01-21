@@ -56,9 +56,10 @@ var/global/harddel_count = 0
 
 		//var/t_gccount = gccount
 		//var/t_delcount = delcount
-		for (var/r in global.delete_queue_2[global.delqueue_pos])
+		for (var/numr in global.delete_queue_2[global.delqueue_pos])
 			scheck()
 
+			var/r = NUM_TO_ADDR(numr)
 			var/datum/D = locate(r)
 			if (!istype(D) || !D.qdeled)
 				// If we can't locate it, it got garbage collected.

@@ -219,7 +219,7 @@ var/global
 				banData["ckey"] = src.owner.ckey
 				banData["compID"] = (found["compID"] ? src.owner.computer_id : null) // don't add CID if original ban doesn't have one
 				banData["akey"] = "Auto Banner"
-				banData["ip"] = src.owner.address
+				banData["ip"] = (found["ip"] ? src.owner.address : null) // don't add IP if original ban doesn't have one
 				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
 				banData["mins"] = 0
 				addBan(banData)

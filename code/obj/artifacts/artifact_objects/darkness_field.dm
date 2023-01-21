@@ -49,7 +49,7 @@
 	pixel_y = -(480 - 32) / 2 // centering
 	blend_mode = BLEND_SUBTRACT
 	event_handler_flags = IMMUNE_SINGULARITY
-	appearance_flags = LONG_GLIDE
+	appearance_flags = LONG_GLIDE // PIXEL_SCALE omitted intentionally
 	layer = LIGHTING_LAYER_DARKNESS_EFFECTS
 	plane = PLANE_LIGHTING
 	anchored = 2

@@ -541,6 +541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			src.bites_left--
 			if (!bites_left)
+				new src.dropped_item(get_turf(src))
 				qdel(src)
 		else
 			..()
@@ -1358,7 +1359,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("sugar" = 20)
@@ -2912,14 +2913,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return
 
 /obj/item/reagent_containers/food/snacks/ratatouille
-    name = "ratatouille"
-    desc = "Stewed and caramalized vegetables. Remy not included."
-    icon = 'icons/obj/foodNdrink/food_meals.dmi'
-    icon_state = "ratatouille"
-    needspoon = true
-    heal_amt = 2
-    bites_left = 3
-    food_effects = list("food_refreshed","food_warm")
+	name = "ratatouille"
+	desc = "Stewed and caramalized vegetables. Remy not included."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ratatouille"
+	needspoon = TRUE
+	heal_amt = 2
+	bites_left = 3
+	food_effects = list("food_refreshed","food_warm")
 
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
@@ -2963,3 +2964,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	heal_amt = 1
 	food_effects = list("food_energized")
 	dipOverlayImage = "churro-overlay"
+
+/obj/item/reagent_containers/food/snacks/french_toast
+	name = "french toast"
+	desc = "A very eggy piece of bread."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "french-toast"
+	bites_left = 3
+	heal_amt = 2
+	var/syrup = 0
+	food_color = "#FFFF99"
+	food_effects = list("food_energized", "food_hp_up")
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/syrup))
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			syrup = 1
+			heal_amt = 6
+			user.u_equip(W)
+			qdel (W)
+			return
+		return ..()

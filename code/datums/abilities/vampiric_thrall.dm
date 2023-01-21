@@ -19,8 +19,6 @@
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			src.show_antag_popup("vampthrall")
 
-	else return
-
 
 /* 	/		/		/		/		/		/		Ability Holder	/		/		/		/		/		/		/		/		*/
 

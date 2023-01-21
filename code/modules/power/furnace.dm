@@ -122,7 +122,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
 			if (src.fuel >= src.maxfuel)
@@ -193,7 +193,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
-					F.update_stack_appearance()
+					F.UpdateStackAppearance()
 		return amtload
 
 	// this is run after it's checked a person isn't being loaded in with a grab

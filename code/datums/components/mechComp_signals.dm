@@ -383,6 +383,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/atom/connectee
 
 /datum/component/mechanics_connector/Initialize(var/datum/component/mechanics_holder/C)
+	. = ..()
 	if(!ispulsingtool(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.connectee = C
