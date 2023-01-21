@@ -149,7 +149,7 @@
 		"flock" = list(
 			"flockconverted" = 15,
 			/mob/living/critter/flock/drone = 2,
-			/mob/living/critter/flock/bit = 2,
+			/obj/flock_structure/egg/bit = 2,
 			/obj/item/organ/brain/flockdrone = 2,
 			/obj/item/organ/flock_crystal = 2,
 			/datum/projectile/energy_bolt/flockdrone = 4,
