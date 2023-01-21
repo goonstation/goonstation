@@ -1,5 +1,9 @@
 
 (t)sat jan 21 23
+(u)goonstation-enjoyer
+(p)12643
+(e)💅📦|C-QoL, A-Game-Objects
+(+)AI intercom override now uses the frequency of your second radio
 (u)DisturbHerb
 (p)12619
 (e)🔎💅🔄📄📦|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Game-Objects
