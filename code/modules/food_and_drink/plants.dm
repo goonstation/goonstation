@@ -1356,6 +1356,16 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF00FF"
 	validforhat = 1
 
+/obj/item/reagent_containers/food/snacks/plant/mustard
+	name = "mustard fruit"
+	crop_suffix = " fruit"
+	desc = "Faith larger than a mustard seed."
+	icon_state = "mustard"
+	planttype = /datum/plant/fruit/mustard
+	bites_left = 1
+	food_color = "#FFCC00"
+	validforhat = 1
+
 // Weird alien fruit
 
 /obj/item/reagent_containers/food/snacks/plant/purplegoop
