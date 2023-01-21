@@ -96,3 +96,40 @@
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
 	request.begin_async()
+
+
+// *****************************************************************
+// TEST SHIT BELOW THIS LINE HOLY SHIT DO NOT MERGE ONTO MASTER EVER
+// *****************************************************************
+
+
+
+// Viewing a player's notes
+/datum/admins/proc/viewPlayerNotes_v2(var/player)
+	if (!player)
+		return
+
+	if (!config.player_notes_baseurl || !config.player_notes_auth)
+		alert("Missing configuration for player notes")
+		return
+
+	var/list/data = list(
+		"auth" = config.player_notes_auth,
+		"action" = "get",
+		"ckey" = player,
+		"format" = "json"
+	)
+
+	// Fetch notes via HTTP
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
+		return
+
+	usr.Browse(response.body, "window=notesp;size=875x400;title=Notes for [player]")
+

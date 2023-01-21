@@ -647,6 +647,14 @@
 
 	src.holder.viewPlayerNotes(ckey(target))
 
+/client/proc/cmd_admin_view_playernotes_v2(target as text)
+	set name = "View Player Notes v2"
+	set desc = "View the notes for a current player's key."
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+
+	src.holder.viewPlayerNotes_v2(ckey(target))
+
 /client/proc/cmd_admin_set_loginnotice(target as text)
 	set name = "Set Player LoginNotice"
 	set desc = "Change a player's login notice."
