@@ -44,6 +44,7 @@
 	var/on_Ground = TRUE /// changed whenever the item is picked up or dropped
 	var/plantpot_damage_chance = 20 /// the chance for an armed tumbler to damage a plant in percent
 	var/plantpot_damage_amount = 6 /// the amount of damage the armed tumbler should deal to the plant
+	var/self_assemly_chance = 50 /// the chance in percent for the trap to auto-arm when it gets flung against a plantpot
 
 	New()
 		..()
@@ -224,6 +225,14 @@
 			return
 		qdel(src)
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		//now the tumbler reaches its destination
+		if (istype(hit_atom, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/C = hit_atom
+			var/datum/plant/growing = C.current
+			if (!C.current || !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+				if (prob(src.self_assemly_chance))
+					src.arm()
 
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
