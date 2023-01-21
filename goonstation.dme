@@ -766,6 +766,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\hunter\abilities\hunter_gearspawn.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_summongear.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_taketrophy.dm"
+#include "code\modules\antagonists\nuclear_operative\nuclear_operative.dm"
 #include "code\modules\antagonists\salvager\salvager.dm"
 #include "code\modules\antagonists\traitor\licensed_traitor.dm"
 #include "code\modules\antagonists\traitor\sleeper_agent.dm"
