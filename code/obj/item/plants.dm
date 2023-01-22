@@ -43,6 +43,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				P.litstate = "ciglit-[W.icon_state]"
 				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
+			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
@@ -59,6 +60,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			if(B.flavor)
 				doink.flavor = B.flavor
 			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
 			W.reagents.trans_to(doink, W.reagents.total_volume)

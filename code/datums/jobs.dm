@@ -1101,6 +1101,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Lawyer")
 		return
 
+/datum/job/special/lawyer/judge
+	name = "Judge"
+
+	New()
+		..()
+		src.access = get_all_accesses()
+		return
+
 /datum/job/special/vice_officer
 	name = "Vice Officer"
 	linkcolor = "#FF0000"

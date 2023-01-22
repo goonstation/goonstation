@@ -16,6 +16,7 @@ TYPEINFO(/datum/component/legs)
 	legs.icon = src.icon_path
 	legs.pixel_y = src.y_offset
 	legs.icon_state = src.icon_state_name
+	legs.plane = FLOAT_PLANE
 
 /datum/component/legs/RegisterWithParent()
 	. = ..()
