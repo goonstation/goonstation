@@ -161,7 +161,7 @@
 				M.mind.transfer_to(obs)
 			else if (M.client)
 				obs.client = M.client
-			else if (M.ghost && !(M.ghost.mind && M.ghost.mind.dnr)) //Heh, death is no escape // (except sometimes when the ghost really doesn't want to come back and has DNR set HHHHEH)
+			else if (M.ghost && !(M.ghost.mind && M.ghost.mind.get_player()?.dnr)) //Heh, death is no escape // (except sometimes when the ghost really doesn't want to come back and has DNR set HHHHEH)
 				var/mob/dead/ghost = M.ghost
 				ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and into another consciousness!</span>")
 				if(ghost.mind)

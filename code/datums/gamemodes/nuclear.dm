@@ -170,7 +170,6 @@
 	syndicates |= chosen_syndicates
 	for (var/datum/mind/syndicate in syndicates)
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
@@ -188,12 +187,6 @@
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()
-	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
-	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
-	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
-
 	var/datum/mind/leader_mind = src.pick_leader()
 
 	//Building the plant location strings
@@ -217,8 +210,6 @@
 			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
 
 	for(var/datum/mind/synd_mind in syndicates)
-		bestow_objective(synd_mind, /datum/objective/specialist/nuclear)
-
 		var/obj_count = 1
 		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 		for(var/datum/objective/objective in synd_mind.objectives)
@@ -229,27 +220,15 @@
 		boutput(synd_mind.current, to_output)
 
 		if(synd_mind == leader_mind)
-			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
-			if(!synd_mind.current.loc)
-				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
-			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-			equip_syndicate(synd_mind.current, 1)
+			synd_mind.add_antagonist(ROLE_NUKEOP_COMMANDER)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
-			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
-			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
-			var/callsign = pick(callsign_list)
-			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			callsign_list -= callsign
-			equip_syndicate(synd_mind.current, 0)
-			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
-			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
-			synd_mind.current.show_antag_popup("nukeop")
-		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+			synd_mind.add_antagonist(ROLE_NUKEOP)
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])

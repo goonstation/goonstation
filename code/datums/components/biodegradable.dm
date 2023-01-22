@@ -3,6 +3,7 @@ TYPEINFO(/datum/component/biodegradable)
 
 /datum/component/biodegradable
 /datum/component/biodegradable/Initialize()
+	. = ..()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_REAGENT_CHANGE, .proc/biodegrade)

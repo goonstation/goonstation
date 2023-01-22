@@ -1269,7 +1269,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return

@@ -555,11 +555,11 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	gauntlet
 		name = "The Gauntlet Arena"

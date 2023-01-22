@@ -9071,7 +9071,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
@@ -13195,7 +13195,7 @@
 	pixel_y = 21
 	},
 /obj/table/round,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /obj/item/storage/wall/fire{
@@ -33874,7 +33874,9 @@
 	},
 /area/station/science/lobby)
 "jiM" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "jiP" = (
@@ -37742,7 +37744,9 @@
 /area/station/mining/refinery)
 "mSt" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -37797,7 +37801,9 @@
 	},
 /area/station/solar/west)
 "mVy" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mVD" = (
@@ -38255,7 +38261,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "nAi" = (
@@ -40230,7 +40238,9 @@
 "pwH" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "pxJ" = (

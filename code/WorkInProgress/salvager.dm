@@ -316,6 +316,22 @@
 		myhud.update_systems()
 		myhud.update_states()
 
+/datum/manufacture/pod/armor_light/salvager
+	name = "Salvager Pod Armor"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,20)
+	item_outputs = list(/obj/item/podarmor/salvager)
+	time = 20 SECONDS
+	create = 1
+	category = "Component"
+
+/obj/item/podarmor/salvager
+	name = "Salvager Pod Armor"
+	desc = "Exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
+
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
 	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
