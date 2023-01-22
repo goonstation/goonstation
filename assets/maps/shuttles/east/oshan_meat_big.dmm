@@ -1,0 +1,4882 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"ab" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"ac" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ad" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ae" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"af" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ag" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "A pipe.";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ah" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ai" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aj" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ak" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"al" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"am" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = -64;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"an" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (SOUTHWEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ao" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 1.9;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ap" = (
+/obj/decal/fakeobjects/tallsmes{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aq" = (
+/obj/machinery/atmospherics/portables_connector/east,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ar" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 6;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"as" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 2;
+	icon = 'icons/obj/atmospherics/valve.dmi';
+	icon_state = "valve0";
+	name = "valve";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"at" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"au" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"av" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (EAST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aw" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"ax" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/atmospherics/portables_connector/west,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ay" = (
+/obj/machinery/atmospherics/portables_connector/west,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"az" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aB" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (SOUTHWEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (EAST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aG" = (
+/obj/machinery/shuttle/engine/propulsion{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "alt_propulsion";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"aH" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"aI" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aJ" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aL" = (
+/obj/machinery/shuttle/engine/propulsion{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "alt_propulsion";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"aM" = (
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"aN" = (
+/turf/unsimulated/wall/setpieces/bloodwall{
+	icon_state = "bloodwall_2";
+	name = "Meaty Wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"aO" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "alt_heater-R";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"aP" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"aQ" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "alt_heater-M";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"aR" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "alt_heater-L";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"aS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aT" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/atmospherics/portables_connector/west,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aU" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aV" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aX" = (
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"aY" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"aZ" = (
+/obj/machinery/light/small/floor/harsh,
+/obj/random_item_spawner/med_kit,
+/obj/table/auto,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"ba" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bb" = (
+/obj/machinery/sleeper/compact{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bc" = (
+/obj/random_item_spawner/med_kit,
+/obj/table/auto,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bd" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (EAST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"be" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"bf" = (
+/obj/meatlight,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bg" = (
+/obj/stool/chair/comfy/shuttle/red,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bh" = (
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bi" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 1.9;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 1.9;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bk" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bl" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 64;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bm" = (
+/obj/machinery/light/small/floor/harsh,
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bn" = (
+/obj/decal/poster/wallsign/hazard_rad{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = -64;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bo" = (
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bp" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/centcom/outside)
+"bq" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"br" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bs" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bt" = (
+/obj/decal/poster/wallsign/hazard_rad{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 64;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bu" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bv" = (
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bw" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bx" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"by" = (
+/obj/machinery/door/unpowered/martian/meat{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	opacity = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"bz" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bA" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bB" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/pool_springboard{
+	dir = 4;
+	pixel_x = 16
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bC" = (
+/obj/decal/poster/wallsign/hazard_caution{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"bD" = (
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bE" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bF" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bG" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bH" = (
+/obj/stomachacid,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bI" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bJ" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bK" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 1;
+	layer = 3.2;
+	name = "bone railing"
+	},
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bL" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bM" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bN" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bO" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bP" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/grassplug{
+	desc = "Gross";
+	dir = 8;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 1;
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bQ" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"bR" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"bS" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"bT" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"bU" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bV" = (
+/obj/map/light/meatland,
+/obj/stomachacid,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bW" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/stomachacid,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"bX" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"bY" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"bZ" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"ca" = (
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"cb" = (
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"cc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"cd" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"ce" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom)
+"cf" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom)
+"cg" = (
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"ch" = (
+/obj/grassplug{
+	desc = "Gross";
+	dir = 1;
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	dir = 1;
+	layer = 3.2;
+	name = "bone railing"
+	},
+/obj/stomachacid,
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"ci" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"cj" = (
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"ck" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"cl" = (
+/obj/grassplug{
+	desc = "Gross";
+	icon = 'icons/misc/meatland.dmi';
+	icon_state = "acid_corners";
+	name = "Fleshy Floor"
+	},
+/obj/railing{
+	layer = 3.2;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/shuttle/escape/centcom)
+"cm" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"cn" = (
+/obj/pool_springboard,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"co" = (
+/obj/machinery/light/small/floor/harsh,
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"cp" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"cq" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"cr" = (
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"cs" = (
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"ct" = (
+/obj/railing{
+	dir = 8;
+	layer = 3.3;
+	name = "bone railing"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"cu" = (
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"cv" = (
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"cw" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"cx" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"cy" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"cz" = (
+/obj/machinery/door/unpowered/martian/meat{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	opacity = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"cA" = (
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"cB" = (
+/obj/rack,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"cC" = (
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"cD" = (
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"cE" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"cF" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"cG" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 10
+	},
+/area/centcom/outside)
+"cH" = (
+/obj/machinery/light/small/floor/harsh,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"cI" = (
+/obj/machinery/computer/shuttle{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/shuttle/escape/centcom)
+"cJ" = (
+/turf/unsimulated/floor/stairs/dark/wide,
+/area/centcom/outside)
+"cK" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/shuttle/escape/centcom)
+"cL" = (
+/obj/machinery/light/small/floor/harsh,
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/shuttle/escape/centcom)
+"cM" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 1
+	},
+/area/centcom/outside)
+"cN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cR" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/centcom/outside)
+"cS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cU" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"cV" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"cW" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+ad
+ap
+ad
+ao
+ad
+an
+ah
+am
+ah
+ah
+aj
+al
+ah
+ag
+ah
+ag
+ah
+ak
+aj
+ai
+ah
+ak
+ah
+ag
+ah
+ag
+ah
+ag
+ah
+ak
+aj
+ai
+ah
+ak
+ah
+ag
+ah
+ag
+aj
+ai
+ah
+ag
+ad
+af
+ae
+ae
+ad
+ac
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ad
+ad
+ae
+ae
+aq
+aq
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+ad
+ad
+ae
+ae
+ad
+av
+ah
+ah
+ah
+ah
+ah
+au
+ah
+ah
+ah
+ah
+ah
+au
+ah
+au
+ah
+au
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+au
+ah
+au
+ah
+au
+ah
+ah
+ah
+ah
+ah
+au
+ah
+ah
+ad
+at
+ad
+as
+ad
+ar
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+ad
+ad
+ae
+ae
+ad
+ad
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ad
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+"}
+(7,1,1) = {"
+aw
+aw
+ad
+ap
+ad
+ao
+ad
+aD
+ah
+ah
+ah
+ah
+ah
+au
+ah
+ah
+ah
+aC
+ah
+aB
+ah
+aB
+ah
+aB
+ah
+aA
+ah
+ah
+ah
+aC
+ah
+aB
+ah
+aB
+ah
+aB
+ah
+aA
+ah
+ah
+ah
+au
+ah
+ah
+ad
+az
+ad
+ad
+ay
+ax
+aw
+aw
+"}
+(8,1,1) = {"
+aw
+aw
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ad
+ad
+ad
+ad
+ad
+ad
+aw
+aw
+"}
+(9,1,1) = {"
+aa
+aa
+ad
+ad
+ad
+ad
+ad
+av
+ah
+ah
+ah
+aC
+ah
+aB
+ah
+aE
+aj
+aI
+aH
+aG
+aH
+aG
+aH
+aG
+aj
+aF
+ah
+aE
+aj
+aI
+aH
+aG
+aH
+aG
+aH
+aG
+aj
+aF
+ah
+aE
+ah
+aB
+ah
+aA
+ad
+az
+ad
+ad
+ad
+ac
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+aH
+aH
+aH
+aH
+aH
+aH
+aj
+aj
+ah
+ah
+aj
+aj
+aH
+aH
+aH
+aH
+aH
+aH
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+ad
+ad
+ad
+ad
+aq
+aq
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+ad
+ap
+ad
+ao
+ad
+aD
+ah
+ah
+ah
+aS
+aM
+aL
+aN
+aN
+aN
+aN
+aP
+aR
+aP
+aQ
+aP
+aO
+aN
+aN
+aN
+aN
+aN
+aN
+aP
+aR
+aP
+aQ
+aP
+aO
+aN
+aN
+aN
+aN
+aM
+aL
+ah
+aK
+ad
+aJ
+ad
+as
+ad
+ar
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+ah
+ah
+ah
+aM
+aM
+aN
+aN
+aN
+aN
+aP
+aP
+aP
+aP
+aP
+aP
+aN
+aN
+aN
+aN
+aN
+aN
+aP
+aP
+aP
+aP
+aP
+aP
+aN
+aN
+aN
+aN
+aM
+aM
+ah
+ah
+ad
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+"}
+(13,1,1) = {"
+aw
+aw
+ad
+be
+ae
+aU
+ad
+bd
+aj
+aj
+ah
+aS
+aN
+aN
+aN
+aN
+bc
+bc
+aX
+bb
+aX
+bb
+aX
+bb
+ba
+ba
+aY
+aX
+aX
+aY
+ba
+ba
+aZ
+aZ
+aY
+aY
+aX
+aX
+aN
+aN
+aN
+aN
+aj
+aW
+ad
+aV
+ae
+aU
+ay
+aT
+aw
+aw
+"}
+(14,1,1) = {"
+aw
+aw
+ad
+ad
+ae
+ae
+ad
+ad
+aj
+aj
+ah
+ah
+aN
+aN
+aN
+aN
+bc
+bc
+aX
+aX
+aX
+aX
+aX
+aX
+ba
+ba
+aY
+aX
+aX
+aY
+ba
+ba
+aZ
+aZ
+aX
+aX
+aY
+aY
+aN
+aN
+aN
+aN
+aj
+aj
+ad
+ad
+ae
+ae
+ad
+ad
+aw
+aw
+"}
+(15,1,1) = {"
+aa
+aa
+ah
+bl
+ah
+ah
+ah
+bk
+ah
+bj
+ah
+bi
+aN
+aN
+bf
+bf
+aX
+aX
+aX
+aX
+bh
+bh
+aX
+aX
+aN
+aN
+aX
+aX
+bh
+bh
+aN
+aN
+aN
+aN
+aX
+bg
+aX
+aX
+bf
+bf
+aN
+aN
+ah
+aK
+ah
+ah
+ah
+ah
+ah
+ah
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aN
+aN
+bf
+bf
+aX
+aX
+aX
+aX
+bh
+bh
+aX
+aX
+aN
+aN
+aY
+aY
+bm
+bm
+aN
+aN
+aN
+aN
+aX
+bg
+aX
+aX
+bf
+bf
+aN
+aN
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+bo
+bt
+bo
+bs
+bp
+bp
+bo
+br
+ah
+aS
+aN
+aN
+aX
+bg
+aX
+aX
+aN
+aN
+ba
+ba
+aN
+aN
+aN
+aN
+aX
+aX
+aX
+aX
+aX
+aX
+aN
+aN
+aN
+aN
+aX
+aX
+aX
+aX
+aN
+aN
+ah
+aK
+bo
+bq
+bp
+bp
+bo
+bn
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bp
+bp
+bo
+bo
+ah
+ah
+aN
+aN
+aX
+bg
+aX
+aX
+aN
+aN
+ba
+ba
+aN
+aN
+aN
+aN
+aY
+aY
+aY
+aY
+aY
+aY
+aN
+aN
+aN
+aN
+aX
+aX
+bu
+bu
+aN
+aN
+ah
+ah
+bo
+bo
+bp
+bp
+bo
+bo
+aa
+aa
+"}
+(19,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bw
+bv
+bo
+bA
+ah
+aS
+aN
+aN
+aN
+aN
+aX
+by
+aN
+aN
+bh
+bh
+aX
+aX
+aX
+aX
+aX
+aX
+bz
+bz
+aX
+aX
+bh
+bh
+aN
+aN
+aX
+by
+ba
+ba
+aN
+aN
+ah
+aK
+bo
+bx
+bw
+bv
+bo
+bo
+aw
+aw
+"}
+(20,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+ah
+ah
+aN
+aN
+aN
+aN
+aX
+aX
+aN
+aN
+bh
+bh
+aX
+aX
+aX
+aX
+aX
+aX
+bB
+bB
+aX
+aX
+bh
+bh
+aN
+aN
+aX
+aX
+ba
+ba
+aN
+aN
+ah
+ah
+bo
+bo
+bw
+bw
+bo
+bo
+aw
+aw
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bC
+bE
+bD
+aa
+bC
+aa
+aa
+ba
+ba
+bf
+bf
+aX
+aX
+aX
+aX
+aX
+aX
+bK
+bJ
+bI
+bI
+bI
+bI
+bH
+bH
+bG
+bF
+aX
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+ba
+ba
+aa
+aa
+aa
+bC
+bE
+bD
+aa
+bC
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+bE
+bE
+aa
+aa
+aa
+aa
+ba
+ba
+bf
+bf
+aX
+aX
+aX
+aX
+aX
+aX
+bP
+bO
+bN
+bN
+bN
+bN
+bH
+bH
+bM
+bL
+aX
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+ba
+ba
+aa
+aa
+aa
+aa
+bE
+bE
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+bQ
+bQ
+bR
+bR
+bQ
+bQ
+bQ
+bQ
+bY
+bX
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+bW
+bW
+bV
+bV
+bH
+bH
+bV
+bV
+bU
+bU
+bf
+bf
+aX
+aX
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+bT
+bS
+bQ
+bQ
+bR
+bR
+bQ
+bQ
+"}
+(24,1,1) = {"
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bQ
+bQ
+cb
+cb
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+bW
+bW
+bV
+bV
+bH
+bH
+bV
+bV
+bU
+bU
+bf
+bf
+aX
+aX
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+ca
+ca
+bQ
+bQ
+bZ
+bZ
+bZ
+bZ
+"}
+(25,1,1) = {"
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+cj
+ci
+cf
+ce
+aX
+cg
+aX
+aX
+aX
+aX
+aX
+aX
+ch
+bW
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bN
+bN
+bG
+bF
+aX
+aX
+aX
+aX
+aX
+cg
+cf
+ce
+cd
+cc
+bE
+bE
+bE
+bE
+bE
+bE
+"}
+(26,1,1) = {"
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+cj
+cj
+cf
+cf
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+ch
+bW
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bN
+bN
+bM
+bL
+aX
+aX
+aX
+aX
+aX
+aX
+cf
+cf
+cd
+cd
+bE
+bE
+bE
+bE
+bE
+bE
+"}
+(27,1,1) = {"
+ck
+ck
+ck
+ck
+ck
+ck
+ck
+ck
+cj
+cj
+aa
+aa
+ba
+ba
+aX
+aX
+bh
+bh
+aX
+aX
+ch
+bW
+bV
+bV
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bV
+bV
+bU
+cl
+bh
+bh
+aX
+aX
+ba
+ba
+aa
+aa
+cd
+cd
+ck
+ck
+ck
+ck
+ck
+ck
+"}
+(28,1,1) = {"
+ck
+ck
+ck
+ck
+ck
+ck
+ck
+ck
+cj
+cj
+aa
+aa
+ba
+ba
+aX
+aX
+bh
+bh
+aX
+aX
+ch
+bW
+bV
+bV
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bV
+bV
+bU
+cl
+bh
+bh
+aX
+aX
+ba
+ba
+aa
+aa
+cd
+cd
+ck
+ck
+ck
+ck
+ck
+ck
+"}
+(29,1,1) = {"
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+cj
+ci
+bE
+cm
+aX
+cg
+aX
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+bW
+bW
+bU
+cl
+co
+co
+cn
+cn
+ch
+bW
+bH
+bH
+bU
+cl
+aX
+aX
+aX
+aX
+aX
+cg
+bE
+cm
+cd
+cc
+bE
+bE
+bE
+bE
+bE
+bE
+"}
+(30,1,1) = {"
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+cj
+cj
+bE
+bE
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+bf
+bf
+bW
+bW
+bU
+cl
+bh
+bh
+aX
+aX
+ch
+bW
+bH
+bH
+bU
+cl
+aX
+aX
+aX
+aX
+aX
+aX
+bE
+bE
+cd
+cd
+bE
+bE
+bE
+bE
+bE
+bE
+"}
+(31,1,1) = {"
+cp
+cp
+cp
+cp
+cp
+cp
+cq
+cq
+cv
+cu
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+ct
+ct
+ct
+ct
+aX
+aX
+aX
+aX
+ct
+ct
+ct
+ct
+ct
+ct
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+cs
+cr
+cq
+cq
+cp
+cp
+cp
+cp
+"}
+(32,1,1) = {"
+cq
+cq
+cw
+cw
+cq
+cq
+cq
+cq
+cy
+cy
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+cx
+cx
+cq
+cq
+cw
+cw
+cq
+cq
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bC
+bE
+bD
+aa
+bC
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aN
+aN
+aN
+aN
+ba
+ba
+aN
+aN
+cA
+cz
+aN
+aN
+ba
+ba
+aN
+aN
+aN
+aN
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+aa
+bC
+bE
+bD
+aa
+bC
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+bE
+bE
+aa
+aa
+aa
+aa
+ba
+ba
+aY
+aX
+aX
+aX
+aN
+aN
+aN
+aN
+ba
+ba
+aN
+aN
+cA
+cA
+aN
+aN
+ba
+ba
+aN
+aN
+aN
+aN
+aX
+aX
+aX
+aY
+ba
+ba
+aa
+aa
+aa
+aa
+bE
+bE
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+cB
+cB
+bo
+bo
+bw
+cC
+bo
+bA
+ah
+aS
+aN
+aN
+bf
+bf
+aX
+aX
+aN
+aN
+cA
+cA
+cD
+cD
+cA
+cA
+cA
+cA
+cA
+cA
+cD
+cD
+cD
+cD
+aN
+aN
+aX
+aX
+bf
+bf
+aN
+aN
+ah
+aK
+bo
+bx
+bw
+cC
+cB
+cB
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+cB
+cB
+bo
+bo
+bw
+bw
+bo
+bo
+ah
+ah
+aN
+aN
+bf
+bf
+aX
+aX
+aN
+aN
+cF
+cF
+cD
+cD
+cA
+cA
+cA
+cA
+cA
+cA
+cD
+cD
+cE
+cE
+aN
+aN
+aX
+aX
+bf
+bf
+aN
+aN
+ah
+ah
+bo
+bo
+bw
+bw
+cB
+cB
+aa
+aa
+"}
+(37,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bo
+bo
+cJ
+cJ
+ah
+aS
+aN
+aN
+aN
+aN
+aX
+aX
+aN
+aN
+cD
+cD
+cH
+cH
+cA
+cA
+cA
+cI
+cD
+cD
+cH
+cH
+cD
+cD
+aN
+aN
+aX
+aX
+aN
+aN
+aN
+aN
+ah
+aK
+cG
+cG
+bo
+bo
+bo
+bo
+aw
+aw
+"}
+(38,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bo
+bo
+cJ
+cJ
+ah
+ah
+aN
+aN
+aN
+aN
+cK
+cK
+aN
+aN
+cE
+cE
+cL
+cL
+cF
+cF
+cA
+cA
+cE
+cE
+cL
+cL
+cE
+cE
+aN
+aN
+cK
+cK
+aN
+aN
+aN
+aN
+ah
+ah
+cG
+cG
+bo
+bo
+bo
+bo
+aw
+aw
+"}
+(39,1,1) = {"
+aa
+aa
+cB
+cB
+bo
+bo
+bo
+bo
+cR
+cR
+ah
+cQ
+aj
+cP
+aN
+aN
+ba
+ba
+aN
+aN
+ba
+ba
+ba
+ba
+ba
+ba
+aN
+aN
+ba
+ba
+ba
+ba
+ba
+ba
+aN
+aN
+ba
+ba
+aN
+aN
+aj
+cO
+ah
+cN
+cM
+cM
+bo
+bo
+cB
+cB
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+cB
+cB
+bo
+bo
+bo
+bo
+cR
+cR
+ah
+ah
+aj
+aj
+aN
+aN
+ba
+ba
+aN
+aN
+ba
+ba
+ba
+ba
+ba
+ba
+aN
+aN
+ba
+ba
+ba
+ba
+ba
+ba
+aN
+aN
+ba
+ba
+aN
+aN
+aj
+aj
+ah
+ah
+cM
+cM
+bo
+bo
+cB
+cB
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bA
+ah
+ah
+ah
+cQ
+ah
+cS
+ah
+cS
+ah
+cS
+aj
+cT
+ah
+cS
+ah
+cS
+ah
+cS
+ah
+cS
+ah
+cS
+aj
+cT
+ah
+cS
+ah
+cS
+ah
+cS
+ah
+cN
+ah
+ah
+bo
+bx
+bw
+bw
+bo
+bo
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+aj
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bo
+bw
+bw
+bo
+bo
+aa
+aa
+"}
+(43,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+cV
+bo
+br
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bq
+bo
+cU
+bo
+bo
+bo
+bo
+aw
+aw
+"}
+(44,1,1) = {"
+aw
+aw
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+aw
+aw
+"}
+(45,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+cV
+bo
+bs
+bo
+br
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bq
+bo
+bs
+bo
+cU
+bo
+bo
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bA
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bx
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bo
+bo
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+cV
+bo
+bs
+bw
+cW
+bo
+bs
+bo
+bs
+bw
+cW
+bo
+bs
+bw
+cW
+bo
+bs
+bo
+bs
+bw
+cW
+bo
+bs
+bo
+cU
+bw
+bw
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+bw
+bw
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+bo
+aa
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
