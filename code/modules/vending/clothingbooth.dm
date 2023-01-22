@@ -14,7 +14,7 @@ var/list/clothingbooth_paths = list()
 		var/cost = I.cost
 
 		var/atom/dummy_atom = I.path
-		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
+		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state), frame = 1)
 		var/item_img = icon2base64(dummy_icon)
 
 		var/match_found = FALSE
