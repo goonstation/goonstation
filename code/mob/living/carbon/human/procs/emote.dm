@@ -1496,8 +1496,8 @@
 						thing = src.r_hand
 				if (thing)
 					animate_spin(thing, prob(50) ? "L" : "R", 3, 0)
-					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining at it."
-					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining at it</I>"
+					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining it."
+					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining it</I>"
 					m_type = 1
 				else
 					boutput(src, "<span class='alert'>There's nothing in your hand.</span>")
@@ -1583,7 +1583,6 @@
 					if (M)
 						message = "<B>[src]</B> points to [M]."
 						maptext_out = "<I>points to [M]</I>"
-					else
 				m_type = 1
 
 			if ("signal")

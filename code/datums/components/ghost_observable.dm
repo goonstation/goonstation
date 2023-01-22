@@ -5,6 +5,7 @@ TYPEINFO(/datum/component/ghost_observable)
 /datum/component/ghost_observable
 
 /datum/component/ghost_observable/Initialize()
+	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	OTHER_START_TRACKING_CAT(parent, TR_CAT_GHOST_OBSERVABLES)

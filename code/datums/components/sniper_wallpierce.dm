@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/sniper_wallpierce)
 		ARG_INFO("damage_loss", DATA_INPUT_NUM, "power loss on piercing the first thing", 0)
 	)
 /datum/component/sniper_wallpierce/Initialize(var/num_pierces, var/power_loss)
+	. = ..()
 	if (!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
 	if (num_pierces)

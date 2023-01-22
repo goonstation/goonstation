@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/glue_ready)
 	var/glue_removal_time
 
 /datum/component/glue_ready/Initialize(glue_duration=null, glue_removal_time=null)
+	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(src.parent.GetComponent(/datum/component/glued))

@@ -787,8 +787,37 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
 
+// Flower mutations
+
 /datum/plantmutation/rose/holorose
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = TRUE
 	crop = /obj/item/plant/flower/rose/holorose
+
+/datum/plantmutation/hydrangea
+	var/flower_color
+
+/datum/plantmutation/hydrangea/pink
+	name = "Pink Hydrangea"
+	name_prefix = "Pink "
+	flower_color = "pink"
+	crop = /obj/item/clothing/head/flower/hydrangea/pink
+	PTrange = list(10,30)
+	chance = 25
+
+/datum/plantmutation/hydrangea/blue
+	name = "Blue Hydrangea"
+	name_prefix = "Blue "
+	flower_color = "blue"
+	crop = /obj/item/clothing/head/flower/hydrangea/blue
+	PTrange = list(30,50)
+	chance = 25
+
+/datum/plantmutation/hydrangea/purple
+	name = "Purple Hydrangea"
+	name_prefix = "Purple "
+	flower_color = "purple"
+	crop = /obj/item/clothing/head/flower/hydrangea/purple
+	PTrange = list(50,null)
+	chance = 25
