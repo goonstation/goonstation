@@ -1,5 +1,5 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security") // "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -78,6 +78,7 @@
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_BELOW
+	pixel_point = TRUE
 	var/static/list/valid_locations = VALID_WHITE_HOLE_LOCATIONS
 	var/source_location = null
 	var/start_time
@@ -86,6 +87,7 @@
 	var/grow_duration = 0
 	var/active_duration = 0
 	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
+	var/datum/light/light = null
 
 	var/static/list/spawn_probs = list(
 		"artlab" = list(
@@ -148,7 +150,7 @@
 		"flock" = list(
 			"flockconverted" = 15,
 			/mob/living/critter/flock/drone = 2,
-			/mob/living/critter/flock/bit = 2,
+			/obj/flock_structure/egg/bit = 2,
 			/obj/item/organ/brain/flockdrone = 2,
 			/obj/item/organ/flock_crystal = 2,
 			/datum/projectile/energy_bolt/flockdrone = 4,
@@ -494,6 +496,8 @@
 			/obj/item/cable_coil = 1,
 			/obj/item/wrench = 1,
 			/obj/item/paper = 2,
+			/obj/item/clothing/suit/cardboard_box/ai = 1,
+			/obj/item/disk/data/floppy/manudrive/ai = 1,
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
@@ -626,7 +630,34 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			// TODO, I am too tired rn
+			/obj/item/spacecash/five = 10,
+			/obj/item/spacecash/ten = 10,
+			/obj/item/spacecash/twenty = 10,
+			/obj/item/spacecash/fifty = 5,
+			/obj/item/spacecash/hundred = 3,
+			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/paper = 15,
+			/obj/item/paper_bin = 5,
+			/obj/item/hand_labeler = 5,
+			/obj/item/stamp/qm = 5,
+			/obj/storage/crate = 5,
+			/obj/storage/crate/internals = 1,
+			/obj/storage/crate/freezer = 0.75,
+			/obj/storage/secure/crate/dan = 0.25,
+			/obj/storage/crate/medical = 0.75,
+			/obj/storage/crate/biohazard = 0.25,
+			/obj/storage/crate/packing = 1,
+			/obj/storage/crate/wooden = 1,
+			/obj/storage/crate/bee = 0.25,
+			/obj/storage/crate/bloody = 0.25,
+			/obj/storage/crate/classcrate/qm = 0.25,
+			/obj/item/cargotele = 3,
+			/obj/item/device/appraisal = 5,
+			/obj/item/paper/book/from_file/pocketguide/quartermaster = 3,
+			/obj/item/storage/box/clothing/qm = 3,
+			/obj/machinery/manufacturer/qm = 1,
+			/obj/machinery/bot/mulebot = 0.3,
+			/obj/vehicle/forklift = 0.2
 		),
 
 		// not actual location, just a helper thing since it's shared between asteroid and trench
@@ -671,6 +702,17 @@
 			source_location = pick(valid_locations)
 		src.source_location = source_location
 
+		var/image/illum = image(src.icon, src.icon_state)
+		illum.plane = PLANE_LIGHTING
+		illum.blend_mode = BLEND_ADD
+		illum.alpha = 100
+		src.UpdateOverlays(illum, "illum")
+
+		light = new /datum/light/point
+		light.set_brightness(0.7)
+		light.attach(src)
+		light.enable()
+
 		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.source_location)
 		location_image.alpha = 160
 		location_image.pixel_x = 32
@@ -703,7 +745,10 @@
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)
-		boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
+		if(istype(I, /obj/item/fishing_rod))
+			. = ..()
+		else
+			boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
@@ -1109,6 +1154,9 @@
 		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
 
 	disposing()
+		if(src.light)
+			qdel(src.light)
+			src.light = null
 		processing_items.Remove(src)
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/whitehole_warning, src))
 			particleMaster.RemoveSystem(/datum/particleSystem/whitehole_warning)
@@ -1145,6 +1193,13 @@
 			par.alpha = 5
 			par.plane = PLANE_NOSHADOW_ABOVE
 
+			var/image/illum = par.SafeGetOverlayImage("illum", src.icon, src.icon_state)
+			illum.appearance_flags = PIXEL_SCALE | RESET_ALPHA
+			illum.plane = PLANE_LIGHTING
+			illum.blend_mode = BLEND_ADD
+			illum.alpha = 6
+			par.UpdateOverlays(illum, "illum")
+
 			first.Scale(0.1,0.1)
 			par.transform = first
 
@@ -1154,5 +1209,29 @@
 			first.Scale(0.1 / 50)
 			animate(transform = first, time = 15 SECONDS, alpha = 5)
 			first.Reset()
+
+
+/datum/fishing_spot/whitehole
+	fishing_atom_type = /obj/whitehole
+
+	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		var/obj/whitehole/whitehole = target
+		if(!istype(whitehole))
+			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
+		. = whitehole.generate_thing(whitehole.source_location)
+
+	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		. = ..()
+		if(.)
+			var/obj/whitehole/whitehole = target
+			if(!istype(whitehole))
+				CRASH("try_fish called on whitehole fishing spot with non-whitehole target")
+			if(prob(5))
+				whitehole.spew_out_stuff(whitehole.source_location)
+			if(whitehole.state in list("static", "growing"))
+				whitehole.grow_duration += 10 SECONDS
+				boutput(user, "<span class='notice'>You feel the white hole shrink a little.</span>")
+			else
+				whitehole.active_duration -= 5 SECONDS
 
 #undef VALID_WHITE_HOLE_LOCATIONS
