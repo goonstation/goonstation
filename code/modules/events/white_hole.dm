@@ -1195,7 +1195,7 @@
 			illum.appearance_flags = PIXEL_SCALE | RESET_ALPHA
 			illum.plane = PLANE_LIGHTING
 			illum.blend_mode = BLEND_ADD
-			illum.alpha = 140 // note that this gets multiplied by the particle's alpha when rendered
+			illum.alpha = 6
 			par.UpdateOverlays(illum, "illum")
 
 			first.Scale(0.1,0.1)
