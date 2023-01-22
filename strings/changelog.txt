@@ -1,4 +1,9 @@
 
+(t)sun jan 22 23
+(u)pali
+(p)12774
+(e)💅📄|C-QoL, A-UI
+(*)Light mode users will now have light mode applied to (most) TGUI windows too
 (t)sat jan 21 23
 (u)RubberRats
 (p)12839
