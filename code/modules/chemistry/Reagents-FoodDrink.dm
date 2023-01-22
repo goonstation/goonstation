@@ -4527,11 +4527,59 @@ datum
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
-			id = "pumpkinspicelatte"
 			fluid_r = 231
 			fluid_g = 106
 			fluid_b = 0
 			description = "Whether or not it contains actual pumpkin juice has been up for debate."
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
+			thirst_value = 1
+
+		fooddrink/lavender_essence
+			name = "lavender essence"
+			id = "lavender_essence"
+			fluid_r = 190
+			fluid_g = 159
+			fluid_b = 254
+			description = "Essential."
+			reagent_state = LIQUID
+			taste = list("soothing", "pleasant")
+			thirst_value = 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					M.changeStatus("fragrant", volume * 5 SECONDS)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+
+				if (probmult(5))
+					. = ""
+					switch (rand(1, 5))
+						if (1)
+							. = "calm"
+						if (2)
+							. = "quiet"
+						if (3)
+							. = "serene"
+						if (4)
+							. = "at peace"
+						if (5)
+							. = "sleepy"
+
+					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
+
+				..()
+
+		fooddrink/lavenderlatte
+			name = "lavender latte"
+			id = "lavender_latte"
+			fluid_r = 157
+			fluid_g = 134
+			fluid_b = 186
+			description = "The whimsical cousin of the pumpkin spice latte."
+			reagent_state = LIQUID
+			taste = "like living in a cottage in the countryside"
 			thirst_value = 1

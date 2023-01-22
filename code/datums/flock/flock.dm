@@ -325,26 +325,26 @@ var/flock_signal_unleashed = FALSE
 	var/image/deconstruct = image('icons/misc/featherzone.dmi', icon_state = "deconstruct")
 	deconstruct.blend_mode = BLEND_ADD
 	deconstruct.plane = PLANE_ABOVE_LIGHTING
-	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	deconstruct.pixel_y = 16
 	.[FLOCK_ANNOTATION_DECONSTRUCT] = deconstruct
 
 	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
 	hazard.blend_mode = BLEND_ADD
 	hazard.plane = PLANE_ABOVE_LIGHTING
-	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	hazard.pixel_y = 16
 	.[FLOCK_ANNOTATION_HAZARD] = hazard
 
 	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
+	priority.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	priority.alpha = 180
 	priority.plane = PLANE_ABOVE_LIGHTING
 	priority.mouse_opacity = FALSE
 	.[FLOCK_ANNOTATION_PRIORITY] = priority
 
 	var/image/reserved = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR
+	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	reserved.alpha = 80
 	reserved.plane = PLANE_ABOVE_LIGHTING
 	reserved.mouse_opacity = FALSE
@@ -353,14 +353,14 @@ var/flock_signal_unleashed = FALSE
 	var/image/flock_face = image('icons/misc/featherzone.dmi', icon_state = "flockmind_face")
 	flock_face.blend_mode = BLEND_ADD
 	flock_face.plane = PLANE_ABOVE_LIGHTING
-	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	flock_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKMIND_CONTROL] = flock_face
 
 	var/image/trace_face = image('icons/misc/featherzone.dmi', icon_state = "flocktrace_face")
 	trace_face.blend_mode = BLEND_ADD
 	trace_face.plane = PLANE_ABOVE_LIGHTING
-	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	trace_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKTRACE_CONTROL] = trace_face
 
@@ -369,13 +369,13 @@ var/flock_signal_unleashed = FALSE
 	health.pixel_x = 10
 	health.pixel_y = 16
 	health.plane = PLANE_ABOVE_LIGHTING
-	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
 	var/image/ignore = image('icons/misc/featherzone.dmi', icon_state = "ignore")
 	ignore.blend_mode = BLEND_ADD
 	ignore.plane = PLANE_ABOVE_LIGHTING
-	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	ignore.pixel_y = 16
 	.[FLOCK_ANNOTATION_IGNORE] = ignore
 

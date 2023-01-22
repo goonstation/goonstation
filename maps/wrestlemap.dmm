@@ -25953,10 +25953,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
-"kWp" = (
-/obj/machinery/ai_status_display,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/data)
 "kWF" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
@@ -33139,6 +33135,9 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/data)
 "nXf" = (
@@ -33402,7 +33401,7 @@
 	})
 "oaR" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "obI" = (
@@ -40480,7 +40479,7 @@
 /area/station/engine/monitoring)
 "rfb" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -90653,7 +90652,7 @@ iOM
 rtE
 wfW
 nRz
-kWp
+vyu
 drO
 rke
 sSa

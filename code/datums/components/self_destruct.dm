@@ -6,6 +6,7 @@ TYPEINFO(/datum/component/self_destruct)
 	initialization_args = list()
 
 /datum/component/self_destruct/Initialize(tracked_mob)
+	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(ismob(tracked_mob))

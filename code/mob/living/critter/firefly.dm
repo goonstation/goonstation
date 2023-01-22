@@ -81,12 +81,12 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		. = ..()
 
 		bulb = SafeGetOverlayImage("bulb", src.icon, "firefly-bulb")
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = light_color
 		UpdateOverlays(bulb, "bulb")
 
 		bulb_light = SafeGetOverlayImage("bulb-light", src.icon, "firefly-light")
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD
@@ -177,7 +177,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			A.vis_contents += src
 
 		var/image/fire_light = SafeGetOverlayImage("pyre_light", 'icons/effects/fire.dmi', "1old")
-		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART
+		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		fire_light.layer = LIGHTING_LAYER_BASE
 		fire_light.plane = PLANE_LIGHTING
 		fire_light.blend_mode = BLEND_ADD
@@ -331,6 +331,7 @@ TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	. = ..()
 	if(add_bug(A, B, user))
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/pickup)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
@@ -437,13 +438,13 @@ TYPEINFO(/datum/component/bug_capture)
 				firefly_image_count = 3
 
 		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]", pixel_y=pixel_y_offset)
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
 		var/image/bulb_light = A.SafeGetOverlayImage("bulb-light", 'icons/mob/insect.dmi', "jar_glow")
 		bulb_light.pixel_y = pixel_y_offset
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD

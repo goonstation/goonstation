@@ -15650,7 +15650,7 @@
 /area/station/security/brig/cell_block_control)
 "aSW" = (
 /obj/storage/secure/closet/brig,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
 "aSX" = (
@@ -25940,7 +25940,7 @@
 "bsY" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/emergency,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -33760,7 +33760,7 @@
 /area/station/engine/elect)
 "diy" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/storage/box/donkpocket_kit,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;

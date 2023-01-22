@@ -7206,7 +7206,7 @@
 /area/station/engine/core)
 "cby" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cbA" = (
@@ -11549,7 +11549,7 @@
 	})
 "dfV" = (
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -14058,7 +14058,7 @@
 /area/station/turret_protected/Zeta)
 "dNf" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/market)
 "dNh" = (
@@ -50441,7 +50441,7 @@
 /area/station/medical/medbay/lobby)
 "mZs" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -51421,7 +51421,7 @@
 /area/station/quartermaster/cargooffice)
 "nnA" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "nnC" = (
@@ -54252,7 +54252,7 @@
 /area/station/hallway/primary/south)
 "oaE" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -55201,7 +55201,7 @@
 /area/station/medical/cdc)
 "olV" = (
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
 "omf" = (
@@ -65629,7 +65629,7 @@
 	pixel_x = -10
 	},
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -65637,7 +65637,7 @@
 "qRS" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/table/reinforced/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
 "qRV" = (
@@ -69058,7 +69058,7 @@
 /area/shuttle/arrival/station)
 "rNf" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge/research)
 "rNh" = (
@@ -69323,7 +69323,7 @@
 	})
 "rPx" = (
 /obj/table/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
@@ -71033,7 +71033,7 @@
 	pixel_y = 21
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/quartersB{
 	name = "Tanhony Creek Station"
@@ -72371,7 +72371,7 @@
 /area/station/hallway/secondary/west)
 "sBc" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
@@ -92615,7 +92615,7 @@
 /area/station/chapel/sanctuary)
 "xjr" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},

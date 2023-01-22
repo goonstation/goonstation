@@ -6,6 +6,7 @@ TYPEINFO(/datum/component/buildable_turf)
 	initialization_args = list()
 
 /datum/component/buildable_turf/Initialize()
+	. = ..()
 	if(!istype(parent, /turf))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/check_build_item)
