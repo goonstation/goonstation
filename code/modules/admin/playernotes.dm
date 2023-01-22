@@ -80,7 +80,8 @@
 			// but what the FUCK, byond
 			all_notes[i]["note"] = replacetext(all_notes[i]["note"], "\x0D", "")
 
-			if (all_notes[i]["akey"] == "Auto Banner" || all_notes[i]["akey"] == "VPN Blocker")
+			// screaming
+			if (all_notes[i]["akey"] == "Auto Banner" || all_notes[i]["akey"] == "VPN Blocker" || all_notes[i]["akey"] == "(AUTO)")
 				row_classes += "auto"
 
 			var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
