@@ -28,6 +28,7 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
+	var/acid_damage_multiplier = 1 // kubius: multiplier to damage taken from acid sea turfs (1 is full, 0 is none). 0 for syndie, 0.5 for subs
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -112,6 +113,17 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
+			var/turf/T = get_turf(src)
+			if(T.active_liquid)
+				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+					boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+					return
+#ifdef MAP_OVERRIDE_NADIR
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				//prevent in-acid welding from extending excursion times indefinitely
+				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
+				return
+#endif
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -704,10 +716,18 @@
 
 		..()
 
-	process()
+	process(mult)
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+#ifdef MAP_OVERRIDE_NADIR
+		if(src.acid_damage_multiplier > 0)
+			var/T = get_turf(src)
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				var/power = get_move_velocity_magnitude()
+				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
+				checkhealth()
+#endif
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -1745,6 +1765,7 @@
 /obj/machinery/vehicle/tank/minisub
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	acid_damage_multiplier = 0.5
 
 	New()
 		..()
@@ -1793,6 +1814,7 @@
 	icon_state = "syndisub_body"
 	health = 150
 	maxhealth = 150
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
