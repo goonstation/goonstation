@@ -18,6 +18,7 @@ proc/check_map_correctness()
 	#ifndef PREFAB_CHECKING
 	check_xmas_tree()
 	#endif
+	check_turf_underlays()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -165,5 +166,13 @@ proc/check_missing_material()
 proc/check_xmas_tree()
 	if(length(by_type[/obj/xmastree]) != 1)
 		CRASH("There should be exactly one xmas tree, but there are [length(by_type[/obj/xmastree])]")
+
+proc/check_turf_underlays()
+	var/log_msg
+	for(var/turf/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		if(T.underlays.len)
+			log_msg += "Turf [T] [T.type] on [T.x], [T.y], [T.z] in [T.loc] has underlays, likely due to duplicate turfs in the map.\n"
+	if(log_msg)
+		CRASH(log_msg)
 
 #endif
