@@ -87,54 +87,42 @@ var/global/list/bible_contents = list()
 			JOB_XP(user, "Clown", 1)
 			return
 
-	//	if(..() == BLOCKED)
-	//		return
-
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
 			bless(M, user)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-			else
-				playsound(src.loc, "punch", 25, 1, -1)
 			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
-			var/mob/H = M
 			// ******* Check
 			var/is_undead = isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant")
 			var/is_atheist = M.traitHolder?.hasTrait("atheist")
-			if (ishuman(H) && prob(60) && !(is_atheist && !is_undead))
+			if (ishuman(M) && prob(60) && !(is_atheist && !is_undead))
 				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
 				boutput(M, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				else
-					playsound(src.loc, "punch", 25, 1, -1)
 				var/healed = is_undead ? "damaged undead" : "healed"
 				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(M,"combat")]")
+
 			else
-				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					if (is_atheist)
-						M.take_brain_damage(5)
-					else
-						M.take_brain_damage(10)
-					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
+				var/damage = 10 - clamp(M.get_melee_protection("head", DAMAGE_BLUNT) - 1, 0, 10)
+				if (is_atheist)
+					damage /= 2
+
+				M.take_brain_damage(damage)
+				boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
 				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				else
-					playsound(src.loc, "punch", 25, 1, -1)
+
 		else if (isdead(M))
 			M.visible_message("<span class='alert'><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-			else
-				playsound(src.loc, "punch", 25, 1, -1)
+
+		if (narrator_mode)
+			playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
+		else
+			playsound(src.loc, "punch", 25, 1, -1)
+
 		return
 
 	attack_hand(var/mob/user)

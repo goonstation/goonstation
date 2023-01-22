@@ -62,6 +62,7 @@
 			last_used_name = H.real_name
 			if (H.hasStatus("handcuffed"))
 				H.handcuffs.drop_handcuffs(H)
+			H.delStatus("pinned") // slip out of the grab
 			H.monkeyize()
 			H.abilityHolder.updateButtons()
 			logTheThing(LOG_COMBAT, H, "enters lesser form as a changeling, [log_loc(H)].")
