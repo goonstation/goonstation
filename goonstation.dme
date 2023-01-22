@@ -554,6 +554,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\ai\ocean.dm"
 #include "code\mob\living\critter\ai\roach.dm"
 #include "code\mob\living\critter\ai\sawflyai.dm"
+#include "code\mob\living\critter\ai\scorpion.dm"
 #include "code\mob\living\critter\ai\shared.dm"
 #include "code\mob\living\critter\ai\sleeping.dm"
 #include "code\mob\living\critter\ai\snake.dm"
