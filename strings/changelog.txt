@@ -1,4 +1,22 @@
 
+(t)sun jan 22 23
+(u)pali
+(p)12774
+(e)💅📄|C-QoL, A-UI
+(*)Light mode users will now have light mode applied to (most) TGUI windows too
+(t)sat jan 21 23
+(u)RubberRats
+(p)12839
+(e)|
+(+)Rolled blunts inherit any size modifiers from the plant used to make them.
+(u)goonstation-enjoyer
+(p)12643
+(e)💅📦|C-QoL, A-Game-Objects
+(+)AI intercom override now uses the frequency of your second radio
+(u)DisturbHerb
+(p)12619
+(e)🔎💅🔄📄📦|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Game-Objects
+(+)Credit transfer devices have been reworked and TGUI-ified.
 (t)fri jan 20 23
 (u)aloe
 (+)Going shambler or monkey mode as a changeling now removes pins.

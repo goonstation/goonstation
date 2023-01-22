@@ -2666,6 +2666,12 @@ proc/get_mobs_trackable_by_AI()
 		src.UpdateOverlays(src.image_top_overlay, "top")
 
 
+/mob/living/silicon/ai/latejoin
+	New()
+		..()
+		qdel(src.brain)
+		src.brain = new /obj/item/organ/brain/latejoin(src)
+
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit
 	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
