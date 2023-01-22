@@ -474,3 +474,37 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("negativematter"))
+
+
+
+
+
+#ifdef UPSCALED_MAP
+/turf/var/base_icon
+
+/turf/proc/fix_upscale()
+	var/dx = (src.x - 1) % 2
+	var/dy = (src.y - 1) % 2
+	var/icon_to_use = src.icon
+	if(isnull(src.base_icon))
+		src.base_icon = src.icon
+	else
+		icon_to_use = src.base_icon
+	src.icon = get_upscaled_icon(icon_to_use, src.icon_state, dx, dy)
+
+/turf/simulated/floor/update_icon()
+	. = ..()
+	fix_upscale()
+
+/turf/unsimulated/floor/update_icon()
+	. = ..()
+	fix_upscale()
+
+/turf/simulated/floor/New()
+	..()
+	fix_upscale()
+
+/turf/unsimulated/floor/New()
+	..()
+	fix_upscale()
+#endif
