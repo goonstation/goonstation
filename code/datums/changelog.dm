@@ -40,9 +40,7 @@ so you'll want your single-digit days to have 0s in front
 	var/json = json_decode(file_text)
 
 	var/body = json["body"]
-	//body = splittext(body, "\n")
 
-	var/static/regex/changelog_regex = regex(@"```changelog(.*)```", "m")
 	var/static/regex/author_regex = regex(@"\(u\)\s*(.*?):?$", "m")
 
 	if (author_regex.Find(body))
@@ -52,6 +50,11 @@ so you'll want your single-digit days to have 0s in front
 
 	. += "(p)[json["number"]]"
 	. += "(e)🧪|Testmerge"
+
+	var/static/regex/newline_destroyer = regex(@"\r?\n", "g")
+	body = replacetext(body, newline_destroyer, "\n")
+
+	var/static/regex/changelog_regex = regex(@"```changelog(.*)```", "m")
 
 	if (!changelog_regex.Find(body)) // At least put the PR title, if no direct changelog TODO maybe disable this?
 		. += "(+)[json["title"]]"
