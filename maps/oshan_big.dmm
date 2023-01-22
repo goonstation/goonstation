@@ -88745,8 +88745,8 @@
 /area/evilreaver/bar)
 "doJ" = (
 /obj/item/photo/beepsky1{
-	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?",
-	},
+	desc = {"You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
+	}},
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "doK" = (
@@ -90095,6 +90095,7 @@
 /area/space)
 "drD" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/space/fluid/nospawn,
@@ -90756,6 +90757,7 @@
 /area/space)
 "dth" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -91119,6 +91121,7 @@
 /area/space)
 "dtW" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/r_door_control{
@@ -95794,6 +95797,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
+/area/space)
+"viq" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-s"
+	},
+/turf/space/fluid/nospawn,
 /area/space)
 
 (1,1,1) = {"
@@ -414482,7 +414492,7 @@ aae
 diW
 diW
 drS
-drD
+viq
 drF
 drF
 drR
@@ -416892,7 +416902,7 @@ drY
 aae
 aae
 drS
-drD
+viq
 drF
 drF
 drR

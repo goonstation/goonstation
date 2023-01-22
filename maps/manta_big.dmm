@@ -4106,6 +4106,7 @@
 "aiU" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/mineral{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,

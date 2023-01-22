@@ -247,6 +247,7 @@
 /area/ghostdrone_factory)
 "aaE" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -515,6 +516,7 @@
 /area/ghostdrone_factory)
 "abe" = (
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/mass_driver{
@@ -549,6 +551,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -4525,6 +4528,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/black,
@@ -8496,6 +8500,7 @@
 /area/station/maintenance/inner/hammer)
 "amH" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -8756,6 +8761,7 @@
 /area/station/maintenance/inner/hammer)
 "ane" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -9752,6 +9758,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/redblack/corner{
@@ -10381,6 +10388,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -11764,6 +11772,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/light,
@@ -11968,6 +11977,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/redblack{
@@ -12815,6 +12825,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/black,
@@ -13075,6 +13086,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -14839,6 +14851,7 @@
 	})
 "avT" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/black,
@@ -15778,6 +15791,7 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white,
@@ -15879,12 +15893,6 @@
 /area/station/solar/south{
 	name = "Dionysus Solar Array"
 	})
-"axv" = (
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-s"
-	},
-/turf/space,
-/area/space)
 "axw" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary/white,
@@ -16714,6 +16722,7 @@
 	})
 "ayP" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -17000,6 +17009,7 @@
 	})
 "azn" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -17033,6 +17043,7 @@
 	})
 "azr" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
@@ -17731,6 +17742,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/wood,
@@ -18308,6 +18320,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -18495,6 +18508,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -18705,6 +18719,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -18797,6 +18812,7 @@
 	})
 "aBS" = (
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/wood,
@@ -20152,6 +20168,7 @@
 	})
 "aDW" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -20634,6 +20651,7 @@
 	})
 "aEI" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -21350,6 +21368,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/purplewhite{
@@ -21463,6 +21482,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -21929,6 +21949,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white,
@@ -24955,6 +24976,7 @@
 /area/station/science/tenebrae)
 "aKL" = (
 /obj/disposalpipe/segment/transport{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -27271,6 +27293,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/yellow/side{
@@ -27570,6 +27593,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/yellow/side{
@@ -29555,6 +29579,7 @@
 	})
 "aRN" = (
 /obj/disposalpipe/segment/transport{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -35848,6 +35873,7 @@
 	})
 "bbU" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -36271,6 +36297,7 @@
 	})
 "bcH" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -37458,6 +37485,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/bluewhite,
@@ -37682,6 +37710,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -38015,6 +38044,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/stool/chair/blue{
@@ -38152,6 +38182,7 @@
 	})
 "bfu" = (
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -41431,6 +41462,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/bluewhite,
@@ -41701,6 +41733,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/light{
@@ -42512,6 +42545,7 @@
 	})
 "bmh" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -42724,6 +42758,7 @@
 	})
 "bmz" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -43332,6 +43367,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -43584,6 +43620,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white,
@@ -45339,6 +45376,7 @@
 /area/mining/magnet)
 "bqi" = (
 /obj/disposalpipe/segment/transport{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/blue/side{
@@ -46637,6 +46675,7 @@
 	})
 "bsn" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -47020,6 +47059,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -52065,6 +52105,7 @@
 	})
 "byR" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/conveyor/NS{
@@ -52322,6 +52363,7 @@
 	})
 "bzk" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -52955,6 +52997,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/transport{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/grey,
@@ -53017,6 +53060,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -54649,6 +54693,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/transport{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/orange/corner{
@@ -57347,6 +57392,15 @@
 /obj/stool/bed,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"jMT" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
 
 (1,1,1) = {"
 aaa
@@ -82509,7 +82563,7 @@ aaa
 aaa
 aal
 aal
-aaE
+abd
 aaB
 aaz
 aaz
@@ -87330,7 +87384,7 @@ aaJ
 aal
 aal
 abk
-aaE
+aaA
 abj
 abj
 aay
@@ -193172,7 +193226,7 @@ asj
 ard
 ard
 avU
-avT
+jMT
 avS
 awq
 arc
@@ -194342,7 +194396,7 @@ axk
 axi
 axi
 axg
-axv
+axM
 axf
 axf
 axf
@@ -213620,7 +213674,7 @@ aaa
 aaa
 aaa
 axg
-axv
+axM
 axf
 axf
 axf
@@ -219676,7 +219730,7 @@ aqR
 aaa
 aaa
 axg
-axv
+axM
 axf
 axf
 axf
@@ -220876,7 +220930,7 @@ aaa
 aaa
 aaa
 axg
-axv
+axM
 axf
 axf
 axf
@@ -223276,7 +223330,7 @@ aVF
 aST
 aST
 axg
-axv
+axM
 axf
 axf
 axf
@@ -249712,7 +249766,7 @@ aaa
 aaa
 aaa
 axg
-axv
+axM
 axf
 axf
 axf
@@ -266574,7 +266628,7 @@ bqB
 bqe
 bqe
 axg
-axv
+axM
 axf
 axf
 axf

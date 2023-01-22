@@ -8220,6 +8220,7 @@
 /area/mining/manufacturing)
 "rh" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
@@ -8543,6 +8544,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
@@ -8754,6 +8756,7 @@
 "sv" = (
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
@@ -9096,6 +9099,7 @@
 "th" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,

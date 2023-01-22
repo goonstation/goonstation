@@ -45136,6 +45136,7 @@
 /area/afterlife/bar)
 "bGj" = (
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
@@ -50024,6 +50025,7 @@
 /area/afterlife/bar)
 "bPv" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/unsimulated/floor/grey,
@@ -126299,6 +126301,13 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"uAb" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 
 (1,1,1) = {"
 aab
@@ -219541,7 +219550,7 @@ bGm
 bGm
 bGl
 bGk
-bGj
+bRG
 bGi
 bGh
 bGg
@@ -231597,7 +231606,7 @@ bOP
 bOP
 bOP
 bOP
-bGj
+bRG
 bGi
 bOO
 bOO
@@ -232187,7 +232196,7 @@ bNT
 bNT
 bNV
 bNV
-bPv
+uAb
 bOU
 bOR
 bOR
@@ -234017,7 +234026,7 @@ bPz
 bQn
 bOK
 bQm
-bGj
+bRG
 bGi
 aab
 aab
@@ -235222,7 +235231,7 @@ bRe
 bRd
 bRd
 bRc
-bGj
+bHM
 aab
 aab
 bNM

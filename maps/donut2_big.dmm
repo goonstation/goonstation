@@ -8289,6 +8289,7 @@
 /area/station/medical/medbay)
 "apk" = (
 /obj/disposalpipe/segment/morgue{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white,
@@ -8942,6 +8943,7 @@
 /area/station/medical/medbay)
 "aqy" = (
 /obj/disposalpipe/segment/morgue{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/light/emergency{
@@ -33416,6 +33418,7 @@
 /area/station/mining/staff_room)
 "bkL" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/yellow/corner{
@@ -36030,6 +36033,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/yellow/side{
@@ -41133,6 +41137,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/grime,
@@ -49867,6 +49872,7 @@
 /area/station/storage/tools)
 "bPl" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/landmark/start{
@@ -71162,6 +71168,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/grime,
@@ -71954,6 +71961,7 @@
 /area/station/security/processing)
 "cEB" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/black,
@@ -72941,6 +72949,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/grime,
@@ -78149,6 +78158,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/ejection{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/red/checker{
@@ -82760,6 +82770,7 @@
 /area/station/science/lobby)
 "cXV" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /obj/stool/bench/green/auto,
@@ -82886,6 +82897,7 @@
 /area/station/science/lobby)
 "cYk" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -84669,6 +84681,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -88584,6 +88597,7 @@
 /area/station/crew_quarters/observatory)
 "djb" = (
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /obj/item/kitchen/food_box/donut_box,
@@ -89309,6 +89323,7 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment{
+	dir = 1;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/power/apc/autoname_west,
@@ -89478,6 +89493,7 @@
 /area/station/maintenance/scidisposal)
 "dkP" = (
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/plating,
@@ -91228,6 +91244,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/item/device/radio/beacon,
@@ -91398,6 +91415,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/blueblack,
@@ -91770,6 +91788,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/redblack{
@@ -95347,6 +95366,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /obj/stool/chair,
@@ -95617,6 +95637,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /obj/item/reagent_containers/food/snacks/beefood,
@@ -96110,6 +96131,7 @@
 /area/station/crew_quarters/hor)
 "dws" = (
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
@@ -96229,6 +96251,7 @@
 /area/station/crew_quarters/hor)
 "dwF" = (
 /obj/disposalpipe/segment{
+	dir = 4;
 	icon_state = "pipe-s"
 	},
 /obj/item/reagent_containers/food/snacks/b_cupcake,
@@ -97581,6 +97604,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment{
+	dir = 8;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
@@ -97937,6 +97961,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white/checker2{
@@ -101742,6 +101767,25 @@
 /obj/item/raw_material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"nlK" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/black,
+/area/station/security/processing)
+"pCH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 
 (1,1,1) = {"
 aab
@@ -211171,7 +211215,7 @@ bnu
 bnu
 bnu
 bqa
-bpZ
+pCH
 bpY
 bqG
 bpX
@@ -268908,7 +268952,7 @@ cDp
 cDp
 cEC
 cDn
-cEB
+nlK
 cDl
 cDi
 cEA

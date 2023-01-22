@@ -94129,6 +94129,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/food{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/wingrille_spawn/auto/reinforced,
@@ -111259,6 +111260,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/mineral{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /obj/machinery/firealarm{
@@ -114911,6 +114913,7 @@
 /area/station/quartermaster/cargobay)
 "dAU" = (
 /obj/disposalpipe/segment/mineral{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
@@ -121477,6 +121480,7 @@
 "dKR" = (
 /obj/decal/stripe_caution,
 /obj/disposalpipe/segment/mineral{
+	dir = 2;
 	icon_state = "pipe-s"
 	},
 /turf/simulated/floor,
