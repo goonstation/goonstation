@@ -170,7 +170,7 @@ proc/check_xmas_tree()
 proc/check_turf_underlays()
 	var/log_msg
 	for(var/turf/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-		if(T.underlays.len)
+		if(T.underlays.len && !istype(T, /turf/simulated/floor/airless/plating/catwalk))
 			log_msg += "Turf [T] [T.type] on [T.x], [T.y], [T.z] in [T.loc] has underlays, likely due to duplicate turfs in the map.\n"
 	if(log_msg)
 		CRASH(log_msg)
