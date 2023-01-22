@@ -8,6 +8,7 @@ TYPEINFO(/datum/component/conveyorplacer)
 	initialization_args = list()
 
 /datum/component/conveyorplacer/Initialize(var/list/obj/machinery/conveyor/conveyors, var/conv_id)
+	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/place_conveyors)

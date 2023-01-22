@@ -100,7 +100,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else
 			L.set_loc(WSLoc)
 
-		M.dnr = 1
 		M.transfer_to(L)
 		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
@@ -119,7 +118,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		L.set_loc(ASLoc)
-		M.dnr = 1
 		M.transfer_to(L)
 		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")

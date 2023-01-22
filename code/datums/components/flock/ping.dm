@@ -10,6 +10,7 @@
 	var/animate = TRUE
 
 	Initialize(duration)
+		. = ..()
 		if (!ismovable(parent) && !isturf(parent))
 			return COMPONENT_INCOMPATIBLE
 		if (duration)

@@ -11203,7 +11203,7 @@
 /area/marsoutpost)
 "aLf" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light,
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
@@ -19130,7 +19130,7 @@
 /area/marsoutpost)
 "bhr" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bhs" = (
@@ -38131,8 +38131,8 @@
 /area/sim/racing_entry)
 "cnd" = (
 /obj/table/wood/round,
-/obj/item/game_kit,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
 "cne" = (
@@ -65898,7 +65898,7 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dPU" = (
@@ -66501,7 +66501,7 @@
 /area/afterlife/bar)
 "dSJ" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)

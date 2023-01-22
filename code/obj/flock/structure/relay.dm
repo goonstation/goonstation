@@ -60,6 +60,9 @@ TYPEINFO(/obj/flock_structure/relay)
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
+	src.flock.flockmind.AddComponent(/datum/component/tracker_hud/flock, src)
+	for (var/mob/living/intangible/flock/trace/trace in src.flock.traces)
+		trace.AddComponent(/datum/component/tracker_hud/flock, src)
 	play_sound()
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
@@ -130,7 +133,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/center_loc = get_turf(src)
 	SPAWN(0)
 		for(var/mob/M as anything in mobs)
-			M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
+			M.playsound_local(M, 'sound/misc/flockmind/Flock_Reactor.ogg', 30, 0, 2)
 			boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()
