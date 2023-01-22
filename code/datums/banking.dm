@@ -752,6 +752,7 @@
 
 	var/datum/db_record/accessed_record = null
 	var/obj/item/card/id/scan = null
+
 	/// Limits how much spacebux can be physically withdrawn from the machine
 	var/const/spacebux_limit = 1000000
 	var/current_status_message = list()
@@ -900,10 +901,10 @@
 					src.show_message("Lottery ticket purchased. Good luck.", "success", "lottery")
 					if (!ON_COOLDOWN(src, "sound_buylottery", 2 SECONDS))
 						playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
-					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 					src.show_message("Insufficient funds in account.", "danger", "lottery")
+				. = TRUE
 			if ("insert_card")
 				if (src.scan)
 					return TRUE
@@ -911,7 +912,7 @@
 				if (istype(O, /obj/item/card/id))
 					boutput(usr, "<span class='notice'>You swipe your ID card.</span>")
 					src.scan = O
-					. = TRUE
+				. = TRUE
 			if("login_attempt")
 				if(!src.scan)
 					return FALSE
@@ -920,13 +921,13 @@
 				if (enteredPIN == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
-						. = TRUE
 					else
 						boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
 						src.show_message("Cannot find a bank record for this card.", "danger", "login")
 				else
 					boutput(usr, "<span class='alert'>Incorrect or invalid PIN number.</span>")
 					src.show_message("Incorrect or invalid PIN number entered. Please try again.", "danger", "login")
+				. = TRUE
 			if("logout")
 				if(!src.scan)
 					. = FALSE
@@ -979,7 +980,7 @@
 					usr.put_in_hand_or_drop(S)
 					src.show_message("Withdrawal successful.", "success", "atm")
 					playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
-					. = TRUE
+				. = TRUE
 			if("withdraw_spacebux")
 				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, src.spacebux_limit))
 				if(amount <= 0)
@@ -993,7 +994,7 @@
 					usr.client.add_to_bank(-amount)
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
-					. = TRUE
+				. = TRUE
 		src.add_fingerprint(usr)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
@@ -1057,9 +1058,9 @@
 
 	w_class = W_CLASS_TINY
 
-	// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
+	/// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
 	var/list/numbers = new/list(4)
-	// Lottery rounds
+	/// Lottery rounds
 	var/lotteryRound = 0
 	// If this ticket is a winner!
 	var/winner = 0
