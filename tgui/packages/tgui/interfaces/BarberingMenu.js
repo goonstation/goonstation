@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Image, Stack, ByondUi, Input, Icon } from '../components';
+import { Box, Button, Section, Image, Stack, ByondUi, Input, Icon, LabeledList, Flex } from '../components';
 import { Window } from '../layouts';
 
 export const BarberingMenu = (props, context) => {
@@ -21,13 +21,13 @@ export const BarberingMenu = (props, context) => {
         <Stack>
           <Stack.Item width="70%">
             <Stack justify="space-around" vertical>
-              <Stack.Item>
+              <Stack.Item mb="10px">
                 <Stack width="100%">
                   <Stack.Item>
                     <Icon name="magnifying-glass" />
                   </Stack.Item>
                   <Stack.Item grow>
-                    <Input mb="10px" width="100%" onInput={(e, value) => setSearchText(value)} />
+                    <Input width="100%" onInput={(e, value) => setSearchText(value)} />
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -40,7 +40,7 @@ export const BarberingMenu = (props, context) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item position="fixed" width="200px">
+          <Stack.Item position="fixed" width="27%">
             <PreviewWindow />
           </Stack.Item>
         </Stack>
@@ -64,19 +64,20 @@ const HairOptions = (props, context) => {
   const { selected_hair_portion } = data;
 
   return (
-    <Stack justify="space-between" fontSize="15px">
-      <Stack.Item>
-        <Button.Checkbox mx="20px" checked={selected_hair_portion === "bottom" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "bottom" })}>Bottom Hair</Button.Checkbox>
-        <Button.Checkbox mx="20px" checked={selected_hair_portion === "middle" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "middle" })}>Middle Hair</Button.Checkbox>
-        <Button.Checkbox mx="20px" checked={selected_hair_portion === "top" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "top" })}>Top Hair</Button.Checkbox>
-      </Stack.Item>
-      <Stack.Item width="2px">
-        <Box backgroundColor="white" width="2px" height="100%" />
-      </Stack.Item>
-      <Stack.Item shrink>
+    <Flex justify="space-between" fontSize="15px">
+      <Flex.Item>
+        <Button.Checkbox checked={selected_hair_portion === "bottom" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "bottom" })}>Bottom Hair</Button.Checkbox>
+      </Flex.Item>
+      <Flex.Item>
+        <Button.Checkbox checked={selected_hair_portion === "middle" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "middle" })}>Middle Hair</Button.Checkbox>
+      </Flex.Item>
+      <Flex.Item>
+        <Button.Checkbox checked={selected_hair_portion === "top" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "top" })}>Top Hair</Button.Checkbox>
+      </Flex.Item>
+      <Flex.Item>
         <Button bold color="red" icon="cut" onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
-      </Stack.Item>
-    </Stack>
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -85,10 +86,14 @@ const HairPreview = (props, context) => {
   const { hair_style, hair_name } = props;
   return (
     <Section width="140px" direction="column" align="center">
-      <Stack inline justify="space-between">
+      <Stack vertical>
         <Stack.Item>
           <Image pixelated width="60px" height="100px" src={`${hair_style["hair_icon"]}`} />
-          <Box width="100%" fontSize="15px" textAlign="center" mb="10px">{hair_name}</Box>
+        </Stack.Item>
+        <Stack.Item>
+          <Box fontSize="15px" textAlign="center">{hair_name}</Box>
+        </Stack.Item>
+        <Stack.Item>
           <Button color="blue" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
           <Button color="blue" height="20px" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
         </Stack.Item>
@@ -119,15 +124,13 @@ const PreviewWindow = (props, context) => {
         </Stack.Item>
       </Stack>
       <hr />
-      <Stack wrap="wrap" align="center">
-        <Stack.Item>
-          <Box width="100%" bold>Top Hair: {current_hair_style["top"]}</Box>
-          <Box width="100%" bold>Middle Hair: {current_hair_style["middle"]}</Box>
-          <Box width="100%" bold>Bottom Hair: {current_hair_style["bottom"]}</Box>
-        </Stack.Item>
-      </Stack>
+      <LabeledList>
+        <LabeledList.Item label="Top Hair">{current_hair_style["top"]}</LabeledList.Item>
+        <LabeledList.Item label="Middle Hair">{current_hair_style["middle"]}</LabeledList.Item>
+        <LabeledList.Item label="Bottom Hair">{current_hair_style["bottom"]}</LabeledList.Item>
+      </LabeledList>
       <hr />
-      <Stack width="100%" align="center" wrap="wrap" justify="space-around">
+      <Stack width="100%" wrap justify="space-around">
         <Stack.Item>
           <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
         </Stack.Item>
