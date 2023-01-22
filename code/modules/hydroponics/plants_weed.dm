@@ -96,6 +96,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	special_proc = 1
 	vending = 2
 	genome = 8
+	force_seed_on_harvest = -1
 	mutations = list(/datum/plantmutation/creeper/tumbling)
 	//stabilizer is the bad commut for the plant here, toxic the good one
 	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/reagent_adder/toxic)
@@ -110,12 +111,27 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			for (var/obj/machinery/plantpot/C in range(1,POT))
 				var/datum/plant/growing = C.current
 				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-					C.health -= 10
-				else if (C.dead) C.HYPdestroyplant()
+					C.HYPdamageplant("physical",10,1)
+				else if (C.dead)
+					C.HYPdestroyplant()
+				//Seedless prevents the creeper to replant itself
 				else if (!C.current && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
-					var/obj/item/seed/creeper/WS = new(src)
+					var/obj/item/seed/WS = new /obj/item/seed
+					var/datum/plantgenes/New_DNA = WS.plantgenes
+					if (!P.hybrid)
+						WS.generic_seed_setup(P)
+					HYPpassplantgenes(DNA,New_DNA)
+					// for spliced plants, we have to go some additional steps
+					if (P.hybrid)
+						var/plantType = P.type
+						var/datum/plant/hybrid = new plantType(WS)
+						for (var/V in P.vars)
+							if (issaved(P.vars[V]) && V != "holder")
+								hybrid.vars[V] = P.vars[V]
+						WS.planttype = hybrid
 					//devolve the plant in case of tumbling creeper
-					WS.plantgenes.mutation = null
+					New_DNA.mutation = null
+					// now we are able to plant the seed
 					C.HYPnewplant(WS)
 					spawn(0.5 SECONDS)
 						qdel(WS)

@@ -31,7 +31,7 @@
 	var/reagent_storage_max = 50 ///How much the max amount of chems is the trap should be able to hold	at max potency
 	var/reagent_generation_multiplier = 0.5 ///How much percentage of the volume should be filled with assoc_reagents when harvested
 	var/stepon_transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred when stepped into.
-	var/crash_transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred when crashed into.
+	var/crash_transfer_multiplier = 0.4 ///Multiplier to damage to calculate the amount of chems tranferred when crashed into.
 	var/target_zone = "chest" ///which zone the trap tries to target and calculate the damage resist from
 	var/disarming_time = 3 SECONDS ///how long disarming with a wirecutter should take
 	var/arming_time = 2 SECONDS ///how long arming should take
@@ -56,25 +56,40 @@
 				src.planttype = species
 
 		src.plantgenes = new /datum/plantgenes(src)
+
+		src.create_reagents(src.reagent_storage)
+
+
+	proc/Setup_DNA()
 		var/datum/plantgenes/DNA = src.plantgenes
 
-		// raise the reagent storage limit lineary from 0 potency to max potency
+		// raise the reagent storage limit linear from 0 potency to max potency
 		src.reagent_storage = clamp(
 			round(src.reagent_storage_min + (DNA.potency/src.potency_for_max) * (src.reagent_storage_max - src.reagent_storage_min)),
 			src.reagent_storage_min,
 			src.reagent_storage_max)
 
-		src.create_reagents(src.reagent_storage)
+		src.reagents.maximum_volume = src.reagent_storage
 
-		//add chemicals until reagent_generation_multiplier is filled
+		//add chemicals until reagent_generation_multiplier percentage of the storage is filled
 		if (src.planttype)
-			if (length(src.planttype.assoc_reagents) > 0)
+			//we build a list out of all chems in assoc_reagents and commuts
+			var/list/putreagents = list()
+			putreagents = src.planttype.assoc_reagents
+			//theoretically the tumbling creeper got no assoc_reagents, but for the case that will change at some point
+			if(DNA.mutation)
+				putreagents = putreagents | DNA.mutation.assoc_reagents
+			if(DNA.commuts)
+				for (var/datum/plant_gene_strain/reagent_adder/R in DNA.commuts)
+					putreagents |= R.reagents_to_add
+			// Now we add each reagent into the tumbling creeper
+			if (length(putreagents) > 0)
 				var/volume_to_fill = src.reagent_storage * src.reagent_generation_multiplier
-				var/to_add = volume_to_fill / length(src.planttype.assoc_reagents)
-				for (var/plantReagent in src.planttype.assoc_reagents)
+				var/to_add = volume_to_fill / length(putreagents)
+				for (var/plantReagent in putreagents)
 					src.reagents.add_reagent(plantReagent, to_add)
 
-		// raise the damage of the plant lineary from 0 endurance to max endurance
+		// raise the damage of the plant linear from 0 endurance to max endurance
 		src.crashed_force = clamp(
 			round(src.crashed_force_min + (DNA.endurance/src.endurance_for_max) * (src.crashed_force_max - src.crashed_force_min)),
 			src.crashed_force_min,
@@ -84,8 +99,6 @@
 			round(src.armed_force_min + (DNA.endurance/src.endurance_for_max) * (src.armed_force_max - src.armed_force_min)),
 			src.armed_force_min,
 			src.armed_force_max)
-
-
 
 	disposing()
 		processing_items -= src
@@ -120,7 +133,7 @@
 				for (var/obj/machinery/plantpot/C in range(1,src))
 					var/datum/plant/growing = C.current
 					if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-						C.health -= src.plantpot_damage_amount
+						C.HYPdamageplant("physical",plantpot_damage_amount,1)
 					else if (C.dead)
 						C.HYPdestroyplant()
 					else if (!C.current && src.plantgenes && !HYPCheckCommut(src.plantgenes, /datum/plant_gene_strain/seedless))

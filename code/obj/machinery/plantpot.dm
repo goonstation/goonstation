@@ -1266,6 +1266,29 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
+				else  if (istype(CROP,/obj/item/Tumbling_Creeper))
+					// tumbling creepers behave with their DNA values are like food, but cannot be eaten.... ugh
+					// TODO: Make a proc that transfers all seed information, included hybrids
+					var/obj/item/Tumbling_Creeper/F = CROP
+					var/datum/plantgenes/FDNA = F.plantgenes
+
+					HYPpassplantgenes(DNA,FDNA)
+					F.generation = src.generation
+					// Copy the genes from the plant we're harvesting to the new piece of produce.
+
+					if(growing.hybrid)
+						// We need to do special shit with the genes if the plant is a spliced
+						// hybrid since they run off instanced datums rather than referencing
+						// a specific already-existing one.
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(F)
+						for(var/V in growing.vars)
+							if(issaved(growing.vars[V]) && V != "holder")
+								hybrid.vars[V] = growing.vars[V]
+						F.planttype = hybrid
+					// Now while we have all stats together, let's make the object adjust its stats and not bloat this object more than it needs to be
+					F.Setup_DNA()
+
 				else if (istype(CROP,/obj/item/organ))
 					var/obj/item/organ/O = CROP
 					if(istype(CROP,/obj/item/organ/heart))
@@ -1289,7 +1312,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					newstick.turnon()
 					qdel(CROP)
 					CROP = newstick
-				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && !istype(MUT,/datum/plantmutation/creeper/tumbling))
+				if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
@@ -1661,6 +1684,9 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		generation = S.generation
 	if(istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
+		generation = F.generation
+	if(istype(scanned, /obj/item/Tumbling_Creeper))
+		var/obj/item/Tumbling_Creeper/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?
