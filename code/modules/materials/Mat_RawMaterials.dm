@@ -304,9 +304,8 @@
 				change_stack_amount(-1)
 			else
 				qdel (src)
-			return
-		..()
-
+		else
+			..()
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"
