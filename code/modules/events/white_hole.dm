@@ -496,6 +496,8 @@
 			/obj/item/cable_coil = 1,
 			/obj/item/wrench = 1,
 			/obj/item/paper = 2,
+			/obj/item/clothing/suit/cardboard_box/ai = 1,
+			/obj/item/disk/data/floppy/manudrive/ai = 1,
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
