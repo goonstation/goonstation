@@ -1921,7 +1921,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-
+ABSTRACT_TYPE(/obj/disposalpipespawner)
 /obj/disposalpipespawner
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"

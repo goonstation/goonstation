@@ -535,8 +535,8 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
 		CRASH("The cable spawner at [src.x] x [src.y] y doesn't connect to anything!")
-	else if (src.override_centre_connection)
-	// multiple cables, spiral out from the centre 'knot'
+	else if (src.override_centre_connection || length(directions) == 1)
+	// multiple cables, spiral out from the centre 'knot', or the end of a cable
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	else if (length(directions) >= 3)
@@ -544,9 +544,6 @@ ABSTRACT_TYPE(/obj/cablespawner)
 		for (var/i in 1 to length(directions) - 1)
 			cable_laying(directions[i], directions[1+i])
 		cable_laying(directions[1], directions[length(directions)])
-	else if (length(directions) == 1)
-	// end of a cable
-		cable_laying(0, directions[1])
 	else if (length(directions) == 2)
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
