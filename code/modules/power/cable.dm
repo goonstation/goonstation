@@ -415,6 +415,7 @@
 
 	return
 
+ABSTRACT_TYPE(/obj/cablespawner)
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
 	name = "power cable spawner"
@@ -430,11 +431,6 @@
 	var/cable_type = /obj/cable
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
-
-	node
-		name = "node cable spawner"
-		override_centre_connection = TRUE
-		icon_state = "superstate-node"
 
 	/// reinforced, thick cables. They should also connect to the regular kind.
 	reinforced
