@@ -4745,9 +4745,8 @@ var/global/noir = 0
 					M.mind.special_role = ROLE_HARDMODE_TRAITOR
 					M.show_antag_popup("traitorhard")
 			if(ROLE_CHANGELING)
-				M.mind.special_role = ROLE_CHANGELING
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
-				M.make_changeling()
+				M.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WIZARD)
 				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")

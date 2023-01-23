@@ -334,12 +334,12 @@
 						failed = 1
 
 				if ("Changeling")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_changeling()
-						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_HUNTER
 					else
 						failed = 1
 
@@ -347,9 +347,7 @@
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/changeling/headspider)
 					if (C && istype(C))
 						M3 = C
-						C.make_changeling()
-						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
+						C.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						C.remove_ability_holder(/datum/abilityHolder/changeling/)
 					else
 						failed = 1
