@@ -4562,6 +4562,12 @@ var/global/noir = 0
 	set desc="Delay the server restart"
 	set name="Delay Round End"
 
+	// If the game end is delayed AT ALL, confirm removing the delay
+	// so that mutiple admins don't end up cancelling their own delays
+	if (game_end_delayed)
+		if (alert(usr, "The restart was delayed by [game_end_delayer]. Remove delay?", "Hold up, pardner", "Remove delay", "Cancel") != "Remove delay")
+			return
+
 	if (game_end_delayed == 2)
 		logTheThing(LOG_ADMIN, usr, "removed the restart delay and triggered an immediate restart.")
 		logTheThing(LOG_DIARY, usr, "removed the restart delay and triggered an immediate restart.", "admin")

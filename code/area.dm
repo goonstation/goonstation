@@ -3481,6 +3481,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/salvager/lower
 	icon_state = "orange"
 
+/area/salvager/pod
+	icon_state = "yellow"
+
 /// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"

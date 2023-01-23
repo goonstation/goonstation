@@ -40,6 +40,13 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
+
+		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/deconstructor, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/tool/omnitool, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/weldingtool, H.slot_in_backpack)
+
 		H.traitHolder.addTrait("training_engineer")
 
 	assign_objectives()

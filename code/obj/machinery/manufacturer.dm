@@ -1741,7 +1741,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(src.queue[1] in src.drive_recipes)
 				var/obj/item/disk/data/floppy/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-					if(MD.fablimit == -1 || MD.fablimit - MD.num_working <= 0)
+					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.queue = list()
