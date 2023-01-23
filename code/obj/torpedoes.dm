@@ -15,9 +15,7 @@
 					M.TakeDamage("chest", 5, 0)
 				else
 					M.TakeDamage("chest", 15, 0)
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
