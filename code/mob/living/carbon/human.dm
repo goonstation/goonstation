@@ -232,9 +232,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
