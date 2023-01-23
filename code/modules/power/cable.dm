@@ -431,31 +431,30 @@
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
+	node
+		name = "node cable spawner"
+		override_centre_connection = TRUE
+		icon_state = "superstate-node"
+
+	/// reinforced, thick cables. They should also connect to the regular kind.
+	reinforced
+		name = "reinforced power cable spawner"
+		icon = 'icons/obj/power_cond.dmi'
+		icon_state = "superstate-thick"
+		cable_type = /obj/cable/reinforced
+		color = "#075C90"
+
+		node
+			name = "node reinforced cable spawner"
+			override_centre_connection = TRUE
+			icon_state = "superstate-thick-node"
+
 /obj/cablespawner/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
-
-/obj/cablespawner/node
-	name = "node cable spawner"
-	override_centre_connection = TRUE
-	icon_state = "superstate-node"
-
-/// reinforced, thick cables. They should also connect to the regular kind.
-/obj/cablespawner/reinforced
-	name = "reinforced power cable spawner"
-	icon = 'icons/obj/power_cond.dmi'
-	icon_state = "superstate-thick"
-	cable_type = /obj/cable/reinforced
-	color = "#075C90"
-
-/obj/cablespawner/reinforced/node
-	name = "node reinforced cable spawner"
-	override_centre_connection = TRUE
-	icon_state = "superstate-thick-node"
-
 
 /// makes the cable spawners actually spawn cables and delete themselves
 /obj/cablespawner/initialize()
@@ -470,7 +469,7 @@
 		if (istype(dupe, src))
 			selftile += dupe
 	if (length(selftile) > 1)
-		CRASH("Multiple cablespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("[selftile + 1] cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
