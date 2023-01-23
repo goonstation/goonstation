@@ -1253,7 +1253,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			. = ..()
-			if (!(length(noise_cache))) return
+			if (!length(noise_cache)) return
 			var/val = noise_cache[theTurf.x][theTurf.y]
 			img.app.color = rgb((val*255), 0, (255-val*255))
 			if(!isnull(val))
