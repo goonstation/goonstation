@@ -18,6 +18,8 @@ import './styles/themes/paper.scss';
 import './styles/themes/retro-dark.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/flock.scss';
+import './styles/theme-modes/nanotrasen-light.scss';
+import './styles/theme-modes/ntos-light.scss';
 
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';

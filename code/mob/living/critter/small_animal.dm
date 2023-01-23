@@ -1679,6 +1679,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	density = 1
 	flags = TABLEPASS
 	fits_under_table = 1
+	can_lie = 0
+	ai_type = /datum/aiHolder/scorpion
+	is_npc = TRUE
+	var/aggressive = TRUE
+	var/list/friends = list()
+
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
 
@@ -1690,6 +1696,42 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "pincers"
 		HH.name = "pincers"
 		HH.limb_name = "pincers"
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+				src.health_brute = min(60, src.health_brute + 6)
+				src.health_burn = min(60, src.health_burn + 6)
+			if(M in src.friends)
+				src.emote("chitter")
+			else
+				if(prob(20))
+					friends += M
+					src.visible_message("[M] chitters happily at the \the [I], and seems a little friendlier with [M].")
+					src.emote("chitter")
+				else
+					src.visible_message("<span class='notice'>[src] hated \the [I] and bit [M]'s hand!</span>")
+					random_brute_damage(M, rand(6,12),1)
+					src.emote("snip")
+					M.emote("scream")
+			I.Eat(src, src, TRUE)
+			return
+		. = ..()
+
+	attack_hand(mob/M)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				return
+			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				return
+		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1707,6 +1749,40 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream","chitter", "snip", "snap")
 				return 2
+		return ..()
+
+	critter_attack(var/mob/target)
+		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
+		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
+
+		if (sting.cooldowncheck() && prob(50))
+			sting.handleCast(target)
+			return
+		else if (pincer_grab.cooldowncheck() && prob(50))
+			pincer_grab.handleCast(target)
+			return
+		else
+			return ..()
+
+	seek_target(var/range = 8)
+		. = list()
+		if(!src.aggressive)
+			return .
+		for (var/mob/living/C in hearers(range, src))
+			if (isdead(C)) continue //don't attack the dead
+			if (isintangible(C)) continue //don't attack the AI eye
+			if (istype(C, src.type)) continue //don't attack other scorpions
+			if (C in src.friends) continue //don't attack frens :)
+			. += C
+
+		if(length(.) && prob(25))
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> snips it's pincers!</span>")
+
+	death()
+		src.reagents.add_reagent("toxin", 20, null)
+		src.reagents.add_reagent("neurotoxin", 80, null)
+		qdel(friends)
 		return ..()
 
 /mob/living/critter/small_animal/cockroach/weak
