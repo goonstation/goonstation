@@ -187,15 +187,10 @@
 	start_clone()
 		. = ..()
 		if (.)
-			var/obj/item/implant/implant
 			if (team_num == TEAM_NANOTRASEN)
-				implant = new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
+				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
 			else if (team_num == TEAM_SYNDICATE)
-				implant = new /obj/item/implant/pod_wars/syndicate(src.occupant)
-
-			implant.implanted = TRUE
-			implant.owner = src.occupant
-			src.occupant.implant.Add(implant)
+				new /obj/item/implant/pod_wars/syndicate(src.occupant)
 
 		return
 
