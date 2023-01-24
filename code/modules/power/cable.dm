@@ -463,14 +463,16 @@ ABSTRACT_TYPE(/obj/cablespawner)
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
-	// first we have to make sure we're checking the correct kinds
-	for (src.self_type in range(0, src))
-		selftile += 1
+	// first we have to make sure we're checking the correct kind of cable
+	for (var/obj/cablespawner/self_loc in range(0, src))
+		if (istype(self_loc, src.self_type) || istype(src.self_type, self_loc))
+			selftile += 1
 	if (length(selftile) > 1)
-		CRASH("[selftile + 1] cablespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("[selftile] cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
+		// declarer is the dir being checked at present
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
 			if (spawner.cable_type == src.cable_type)
@@ -504,7 +506,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	if (cable_surr & EAST)
 	// optimises the outlier case
 		for (var/obj/cablespawner/spawner in get_step(src, EAST))
-			if (spawner.cable_type == src.cable_type)
+			if (istype(src.self_type, spawner) || istype(spawner, src.self_type))
 				spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
@@ -557,6 +559,4 @@ ABSTRACT_TYPE(/obj/cablespawner)
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
-	current.d1 = min(dir1, dir2)
-	current.d2 = max(dir1, dir2)
-	current.UpdateIcon()
+	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
