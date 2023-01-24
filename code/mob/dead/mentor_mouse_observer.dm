@@ -1,6 +1,7 @@
 /mob/dead/target_observer/mentor_mouse_observer
 	name = "mentor mouse"
 	real_name = "mentor mouse"
+	is_respawnable = FALSE
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy
@@ -27,8 +28,8 @@
 	process_move(keys)
 		if(keys && src.move_dir && !src.leave_popup_open)
 			src.leave_popup_open = TRUE
-			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-				src.stop_observing()
+			if(tgui_alert(src, "Are you sure you want to leave?", "Hop out of the pocket", list("Yes", "No")) == "Yes")
+				qdel(src)
 			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
@@ -58,7 +59,7 @@
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
 		qdel(M)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
 				animate(src.ping, alpha = 0, time = 0.3 SECOND, easing = SINE_EASING)
 				animate(src.ping, transform = null, time = 0.3 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
@@ -84,9 +85,9 @@
 			return
 
 		if(src.is_admin)
-			logTheThing("diary", src, null, "(ADMINMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
 		else
-			logTheThing("diary", src, null, "(MENTORMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -118,12 +119,10 @@
 		boutput(src.the_guy, rendered)
 
 	emote(act, voluntary=0)
+		..()
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
-		boot()
-
-	ghostize()
 		boot()
 
 	disposing()

@@ -3,7 +3,7 @@
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "trashbag-f"
 	uses_multiple_icon_states = 1
@@ -40,7 +40,7 @@
 			src.icon_state = src.base_state
 			src.item_state = src.base_state
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
 			return
@@ -70,7 +70,7 @@
 						src.remove_random_item(H)
 			src.calc_w_class(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)
@@ -124,9 +124,9 @@
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
-		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1 || get_dist(usr, over_object) > 1)
+		if (!usr || usr.stat || usr.restrained() || BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			return
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object

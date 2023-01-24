@@ -15,7 +15,7 @@ export const DoorTimer = (_props, context) => {
   const { act, data } = useBackend<DoorTimerData>(context);
 
   return (
-    <Window width={260} height={data.flasher ? 205 : 135}>
+    <Window width={260} height={data.flasher ? 279 : 207}>
       <Window.Content>
         <Stack vertical fill justify="stretch">
           <Stack.Item grow={1}>
@@ -45,6 +45,17 @@ export const DoorTimer = (_props, context) => {
               </LabeledControls>
             </Section>
           </Stack.Item>
+          {!!data.flusher && (
+            <Stack.Item>
+              <Section title="Floor Flusher" fill>
+                <Button
+                  onClick={() => act('toggle-flusher')}
+                  backgroundColor={data.opening ? 'orange' : undefined}>
+                  {data.opening ? (data.flusheropen ? 'Opening...' : 'Closing...') : (data.flusheropen ? 'Close Flusher' : 'Open Flusher')}
+                </Button>
+              </Section>
+            </Stack.Item>
+          )}
           {!!data.flasher && (
             <Stack.Item>
               <Section title="Flasher" fill>

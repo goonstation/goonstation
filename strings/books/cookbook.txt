@@ -171,6 +171,20 @@
 	<li>Cook the ingredients in the oven for 10 seconds on low.
 	</div>
 
+<hr>
+	<h2>Ratatouille</h2>
+	<h3>Ingredients</h3>
+	<div class = "ratatouille">
+	<li>1 Cucumber
+	<li>1 Eggplant
+	<li>1 Garlic
+	<li>1 Tomato
+	</div>
+	<h3>Steps</h3>
+	<div class = "ratatouille">
+	<li>Cook the ingredients in the oven for 3 seconds on high.
+	</div>
+
 	<hr>
 	<h2>Donut</h2>
 	<h3>Ingredients</h3>
@@ -268,7 +282,7 @@
 	<div class = "omelette">
 	<li>2 Eggs
 	<li>1 Piece of Meat
-	<li>1 Cheese
+	<li>1 Slice of Cheese
 	</div>
 	<h3>Steps</h3>
 	<div class = "omelettesteps">
@@ -448,7 +462,7 @@
 	<h3>Ingredients</h3>
 	<div class = "macguffin">
 	<li>2 English Muffins
-	<li>1 Cheese
+	<li>1 Slice of Cheese
 	<li>1 egg
 	<li>1 meat
 	</div>

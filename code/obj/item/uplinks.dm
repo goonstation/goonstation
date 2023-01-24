@@ -26,6 +26,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
 	var/locked = 0
+	var/reading_synd_int = FALSE
+	var/reading_specific_synd_int = null
+	var/has_synd_int = TRUE
 
 	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
 	var/temp = null
@@ -33,12 +36,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/can_selfdestruct = 0
 	var/datum/syndicate_buylist/reading_about = null
 
+	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
+	var/purchase_flags
+	var/owner_ckey = null
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
+
+	disposing()
+		reading_specific_synd_int = null
+		reading_about = null
+		..()
 
 	proc/generate_code()
 		if (!src || !istype(src))
@@ -50,6 +62,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		if (!src || !istype(src))
 			return
+
+		src.owner_ckey = ownermind?.ckey
 
 		if (!islist(src.items_general))
 			src.items_general = list()
@@ -72,21 +86,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					src.items_general.Add(S)
 
 			else
-				var/blocked = 0
-				if (ticker?.mode)
-					if (S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-						for (var/V in S.blockedmode)
-							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
-								blocked = 1
-								continue
 
-					if (S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
-						for (var/V in S.exclusivemode)
-							if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
-								blocked = 1
-								continue
-
-				if (blocked)
+				if(!(S.can_buy & purchase_flags))
 					continue
 
 				if (istype(S, /datum/syndicate_buylist/surplus))
@@ -100,7 +101,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -136,7 +137,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S1
 
-			src.items_general = sortList(sort1)
+			src.items_general = sortList(sort1, /proc/cmp_text_asc)
 
 		if (length(src.items_job))
 			var/list/sort2 = list()
@@ -152,7 +153,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort2[name] = S2
 
-			src.items_job = sortList(sort2)
+			src.items_job = sortList(sort2, /proc/cmp_text_asc)
 
 		if (length(src.items_objective))
 			var/list/sort3 = list()
@@ -168,7 +169,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort3[name] = S3
 
-			src.items_objective = sortList(sort3)
+			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
 		if (length(src.items_telecrystal))
 			var/list/sort4 = list()
@@ -184,7 +185,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4)
+			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
 
 		return
 
@@ -256,6 +257,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if(reading_about.desc) item_about = "[reading_about.desc]"
 			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
 
+		else if(reading_synd_int)
+			dat += "<h4>Syndicate Intelligence</h4>"
+			dat += get_manifest(FALSE, src)
+			dat += "<br>"
+			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
+			dat += "<br>"
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			dat += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			dat += staff_record["syndint"]
+			dat += "<br>"
+			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
+			dat += "<br>"
+
 		else
 			if (src.temp)
 				dat += "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -293,6 +309,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A></td>"
 				dat += "</table>"
 				var/do_divider = 1
+
+				if(has_synd_int && !is_VR_uplink)
+					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 
 				if (istype(src, /obj/item/uplink/integrated/radio))
 					var/obj/item/uplink/integrated/radio/RU = src
@@ -332,7 +351,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return 0
 
-#define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+#define CHECK1 (BOUNDS_DIST(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 #define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
@@ -397,13 +416,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
-				I.run_on_spawn(item, usr)
+				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					statlog_traitor_item(usr, I.name, I.cost)
 			if (I.item2)
@@ -415,13 +435,27 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			reading_about = locate(href_list["about"])
 
 		else if (href_list["back"])
-			reading_about = null
+			if(reading_about)
+				reading_about = null
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (src)
 					src.explode()
+
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
 
 		else if (href_list["temp"])
 			src.temp = null
@@ -437,7 +471,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
@@ -458,6 +493,29 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		name = "syndicate equipment uplink"
 		desc = "An uplink terminal that allows you to order weapons and items."
 		icon_state = "uplink"
+		purchase_flags = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV //Currently this sits unused except for an admin's character, so we can safely have fun with it
+
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		name = "syndicate operative uplink"
+		desc = "An uplink terminal that allows you to order weapons and items."
+		icon_state = "uplink"
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
+
+	omni //For admin fuckery and omnitraitors, have fun.
+		name = "syndicate omnivendor"
+		desc = "Warning: User may suffer from choice paralysis."
+		icon_state = "uplink"
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
+
 
 /obj/item/uplink/syndicate/virtual
 	name = "Syndicate Simulator 2053"
@@ -465,6 +523,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	uses = INFINITY
 	is_VR_uplink = 1
 	can_selfdestruct = 0
+	purchase_flags = UPLINK_TRAITOR
 
 	explode()
 		src.temp = "Bang! Just kidding."
@@ -549,6 +608,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<B>Request item:</B><BR>"
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
+		if(reading_synd_int)
+			src.menu_message += "<h4>Syndicate Intelligence</h4>"
+			src.menu_message += get_manifest(FALSE, src)
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			src.menu_message += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
 		if (src.items_general && islist(src.items_general) && length(src.items_general))
 			for (var/G in src.items_general)
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
@@ -570,6 +644,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
+		if(has_synd_int)
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
+			src.menu_message += "<HR>"
 		return
 
 	Topic(href, href_list)
@@ -577,7 +654,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.uses = 0
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (!in_interact_range(src.hostpda, usr) || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -601,9 +678,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -623,14 +701,36 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.print_to_host("<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>")
 			return
 
-		/*else if (href_list["back"])
-			src.generate_menu()
-			src.print_to_host(src.menu_message)
-			return*/
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
+
+		else if (href_list["back_menu"])
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
 		return
+
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
@@ -667,6 +767,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.origradio = R
 		return
 
+	traitor
+		purchase_flags = UPLINK_TRAITOR
+
+	nukeop
+		purchase_flags = UPLINK_NUKE_OP
+
+	rev
+		purchase_flags = UPLINK_HEAD_REV
+
+	spy
+		purchase_flags = UPLINK_SPY
+
+///Datum used to combine the bounty being claimed with the item being delivered
+/datum/bounty_claim
+	var/datum/bounty_item/bounty = null
+	var/atom/delivery = null
+
+	New(datum/bounty_item/bounty, atom/delivery)
+		..()
+		src.bounty = bounty
+		src.delivery = delivery
+
+	disposing()
+		src.bounty = null
+		src.delivery = null
+		..()
+
 /obj/item/uplink/integrated/pda/spy
 	uses = 5 //amount of times that we can deliver items
 			//When uses hits 0, the spawn will be an ID tracker
@@ -683,6 +810,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/last_photo_print = 0
 
 	var/datum/game_mode/spy_theft/game
+	purchase_flags = UPLINK_SPY_THIEF
 
 	disposing()
 		if (game)
@@ -691,13 +819,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
+		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, .proc/master_pre_attackby)
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.
 				if (!ticker.mode.spy_market)
 					ticker.mode.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 						ticker.mode.spy_market.build_bounty_list()
 						ticker.mode.spy_market.update_bounty_readouts()
 				game = ticker.mode.spy_market
@@ -707,26 +836,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return
 
+	///We have hit something with our uplink master device
+	proc/master_pre_attackby(obj/item/device/master, atom/target, mob/user)
+		var/datum/bounty_item/bounty = src.bounty_is_claimable(target, user)
+		if (bounty)
+			actions.start(new/datum/action/bar/private/spy_steal(target, src), user)
+			return TRUE
+
 	proc/req_bounties()
 		if (loops <= 0 || !loops_allowed)
 			.= 1
 		else
 			.= loops+1 - bounty_tally
 
-	proc/bounty_is_claimable(var/A)
+	///Returns a /datum/bounty_claim containing the bounty that can be claimed and the item that will be delivered
+	proc/bounty_is_claimable(atom/A, mob/user)
 		.= 0
 		if (ismob(A))
 			var/mob/M = A
 			for (var/obj/possible in M.contents)
-				.= bounty_object_is_claimable(possible)
+				.= bounty_object_is_claimable(possible, user)
 				if(.)
 					break
 		else if (isobj(A))
-			.= bounty_object_is_claimable(A)
+			.= bounty_object_is_claimable(A, user)
 
-
-	proc/bounty_object_is_claimable(var/obj/delivery)
-		.= 0
+	proc/bounty_object_is_claimable(obj/delivery, mob/user)
+		. = FALSE
 		for(var/datum/bounty_item/B in game.active_bounties)
 			if (B.claimed)
 				continue
@@ -735,65 +871,67 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			var/everythingelse_succ = ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 			if (((B.bounty_type == BOUNTY_TYPE_ORGAN) && organ_succ) || ((B.bounty_type != BOUNTY_TYPE_ORGAN) && everythingelse_succ))
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
-					return 0
-				return delivery
+					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
+					if (istype(B.delivery_area, /area/diner))
+						user.show_text("It can be found at the nearby space diner!", "red")
+					var/turf/end = B.delivery_area.spyturf
+					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
+					return FALSE
+				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
+					if (P.uplink == src)
+						return FALSE
+				return new /datum/bounty_claim(B, delivery)
 
-	proc/try_deliver(var/obj/delivery, var/mob/user)
+	proc/try_deliver(obj/delivery, mob/user)
 		if (uses < 0)
 			src.ui_update()
 			return
 
 		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
 			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
-			return 0
+			return FALSE
 
-		for(var/datum/bounty_item/B in game.active_bounties)
-			if (B.claimed)
-				continue
-			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
-				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
-					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
-					if (istype(B.delivery_area, /area/diner))
-						user.show_text("It can be found at the nearby space diner!", "red")
-					var/turf/end = B.delivery_area.spyturf
-					user.gpsToTurf(end, doText = 0, heuristic = /turf/proc/AllDirsTurfsWithAllAccess) // spy thieves probably need to break in anyway, so screw access check
-					return 0
-				user.removeGpsPath(doText = 0)
-				B.claimed = 1
-				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.set_loc(get_turf(delivery))
-				if (istype(delivery.loc, /mob))
-					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts) && ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/HP = delivery
-					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
-						if(HP == B.item) //Uhh idk if this will work
-							HP.remove()
-							take_bleeding_damage(H, null, 10)
-							H.changeStatus("weakened", 3 SECONDS)
-							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-							H.emote("scream")
-						else
-							user.show_text("That isn't the right limb!", "red")
-					else
-						M.drop_from_slot(delivery,get_turf(M))
+		var/datum/bounty_claim/claim = src.bounty_is_claimable(delivery)
+		if (!claim)
+			user.show_text("You cannot claim [delivery] for bounty!", "red")
+			src.ui_update()
+			return FALSE
+		var/datum/bounty_item/bounty = claim.bounty
+		delivery = claim.delivery
+		user.removeGpsPath(doText = FALSE)
+		bounty.claimed = TRUE
+		if (istype(delivery.loc, /mob))
+			var/mob/M = delivery.loc
+			if (istype(delivery,/obj/item/parts) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/parts/HP = delivery
+				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
+					HP.remove()
+					take_bleeding_damage(H, null, 10)
+					H.changeStatus("weakened", 3 SECONDS)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+					H.emote("scream")
+					logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+				else if(HP != bounty.item)
+					user.show_text("That isn't the right limb!", "red")
+					return FALSE
+			else
+				M.drop_from_slot(delivery,get_turf(M))
+		for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
+			M.set_loc(get_turf(delivery))
+		if (!istype(delivery,/obj/item/parts))
+			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+		qdel(delivery)
+		if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
+			user.mind.spy_stolen_items += bounty.name
 
-				qdel(delivery)
-				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-					user.mind.spy_stolen_items += B.name
-
-				if (req_bounties() > 1)
-					bounty_tally += 1
-					user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
-				else
-					src.spawn_reward(B, user)
-				src.ui_update()
-				return 1
-
-		user.show_text("You cannot claim [delivery] for bounty!", "red")
+		if (req_bounties() > 1)
+			bounty_tally += 1
+			user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
+		else
+			src.spawn_reward(bounty, user)
 		src.ui_update()
-		return 0
+		return TRUE
 
 	proc/loop()
 		if (loops_allowed && loops < max_loops)
@@ -801,7 +939,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			loops += 1
 
 	proc/spawn_reward(var/datum/bounty_item/B, var/mob/user)
-		B.spawn_reward(user,src)
+		B.spawn_reward(user,src.loc)
 
 		if (uses == 0)//Spawn ID tracker. Last item!
 
@@ -888,11 +1026,26 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
-		playsound(src, "sound/machines/scan.ogg", 10, 1)
+		playsound(src, 'sound/machines/scan.ogg', 10, 1)
 		last_photo_print = TIME
 
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
+
+		if(reading_synd_int)
+			src.menu_message += "<br><h4>Syndicate Intelligence</h4>"
+			src.menu_message += get_manifest(FALSE, src)
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			src.menu_message += "<br><h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
 
 		if (game)
 			//var/datum/game_mode/spy_theft/game = ticker.mode
@@ -931,13 +1084,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<br><I>Each bounty is open to all spies. Be sure to satisfy the requirements before your enemies.</I><BR><BR>"
 		src.menu_message += "<br><I>A **HOT** bounty indicates that the payout will be higher in value.</I><BR><BR>"
 		src.menu_message += "<I>Stand in the Deliver Area and touch a bountied item (or use click + drag) to this PDA. Our fancy wormhole tech can take care of the rest. Your efforts will be rewarded.</I><BR><table cellspacing=5>"
-
+		if(has_synd_int)
+			src.menu_message += "<HR>"
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 		return
 
 	Topic(href, href_list)
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src.hostpda, usr) > 0 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -946,11 +1101,146 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				//print photo of item or mob owner
 				src.print_photo(locate(href_list["bounty"]) , usr)
 
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
+
+		else if (href_list["back_menu"])
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
+
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
 		return
 
+#define PLAYERS_PER_UPLINK_POINT 20
 
+/obj/item/device/nukeop_commander_uplink
+	name = "nuclear commander uplink"
+	desc = "A nifty device used by the commander to order powerful equipment for their team."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "uplink_commander"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	w_class = W_CLASS_SMALL
+	item_state = "uplink_commander"
+	throw_speed = 4
+	throw_range = 20
+	var/points = 2
+	var/list/commander_buylist = list()
+	var/datum/syndicate_buylist/reading_about = null
+	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
+	var/purchase_flags = UPLINK_NUKE_COMMANDER
+
+	New()
+		..()
+		var/num_players
+		for(var/client/C in clients)
+			var/mob/client_mob = C.mob
+			if (!istype(client_mob))
+				continue
+			num_players++
+		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+		SPAWN(1 SECOND)
+			if (src && istype(src) && (!length(src.commander_buylist)))
+				src.setup()
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/remote/reinforcement_beacon))
+			var/obj/item/remote/reinforcement_beacon/R = W
+			if(R.uses >= 1 && !R.anchored)
+				R.force_drop(user)
+				sleep(1 DECI SECOND)
+				boutput(user, "<span class='alert'>The [src] accepts the [R], warping it away.</span>")
+				src.points += 2
+				qdel(R)
+		else
+			..()
+
+	proc/setup()
+		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
+			if ((istype(S, /datum/syndicate_buylist/commander) || (S.can_buy & purchase_flags)) && !(S in src.commander_buylist))
+				src.commander_buylist.Add(S)
+
+		var/list/names = list()
+		var/list/namecounts = list()
+		if (length(src.commander_buylist))
+			var/list/sort1 = list()
+
+			for (var/datum/syndicate_buylist/S in src.commander_buylist)
+				var/name = S.name
+				if (name in names) // sanity check
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort1[name] = S
+
+			src.commander_buylist = sortList(sort1, /proc/cmp_text_asc)
+
+	attack_self(mob/user)
+		return ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ComUplink")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"points" = points,
+		)
+
+	ui_static_data(mob/user)
+		. = list("stock" = list())
+
+		for (var/datum/syndicate_buylist/SB as anything in commander_buylist)
+			var/datum/syndicate_buylist/I = commander_buylist[SB]
+			.["stock"] += list(list(
+				"ref" = "\ref[I]",
+				"name" = I.name,
+				"description" = I.desc,
+				"cost" = I.cost,
+				"category" = I.category,
+			))
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if ("redeem")
+				for(var/datum/syndicate_buylist/SB as anything in commander_buylist)
+					if(istype(commander_buylist[SB], locate(params["ref"])))
+						var/datum/syndicate_buylist/B = commander_buylist[SB]
+						if (src.points >= B.cost)
+							src.points -= B.cost
+							var/atom/A = new B.item(get_turf(src))
+							if(B.item2)
+								new B.item2(get_turf(src))
+							if(B.item3)
+								new B.item3(get_turf(src))
+
+							B.run_on_spawn(A, usr, FALSE, src)
+							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
+							if(isnull(loadnum))
+								loadnum = 0
+							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
+							. = TRUE
+							break
+
+#undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
 
 /obj/item/SWF_uplink
@@ -965,8 +1255,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
 	var/list/spells = list()
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	throwforce = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
@@ -1007,13 +1299,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
 			return
-		logTheThing("debug", null, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
+		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
-			if (istype(I, /obj/item/staff) && user.mind)
+			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
@@ -1038,6 +1330,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "The crew will normally steal your staff and run off with it to cripple your casting abilities, but that doesn't work so well with this version. Any non-wizard dumb enough to touch or pull the Staff of Cthulhu takes massive brain damage and is knocked down for quite a while, and hiding the staff in a closet or somewhere else is similarly ineffective given that you can summon it to your active hand at will. It also makes a much better bludgeoning weapon than the regular staff, hitting harder and occasionally inflicting brain damage."
 	assoc_spell = /datum/targetable/spell/summon_staff
 	assoc_item = /obj/item/staff/cthulhu
+	cost = 2
+
+/datum/SWFuplinkspell/staffofthunder
+	name = "Staff of Thunder"
+	eqtype = "Equipment"
+	desc = "A special staff attuned to electical energies. Able to conjure three lightning bolts to strike down foes before being recharged. Capable of being summoned magically, which recharges the wand. Take care, as you're not immune to your own thunder!"
+	assoc_spell = /datum/targetable/spell/summon_thunder_staff
+	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
 /datum/SWFuplinkspell/bull
@@ -1358,7 +1658,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				explode()
 				return
 		else

@@ -244,7 +244,7 @@ export const PaperSheetView = (props, context) => {
       height="100%">
       <Box
         color="black"
-        backgroundColor="white"
+        backgroundColor={backgroundColor}
         fillPositionedParent
         width="100%"
         height="100%"

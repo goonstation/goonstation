@@ -112,8 +112,7 @@
 	name = "GLOMAR Salvager"
 	})
 "q" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -122,8 +121,7 @@
 	name = "GLOMAR Salvager"
 	})
 "r" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -140,8 +138,7 @@
 	name = "GLOMAR Salvager"
 	})
 "t" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -154,8 +151,7 @@
 /obj/machinery/bot/secbot{
 	control_freq = 0
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -192,7 +188,7 @@
 	name = "GLOMAR Salvager"
 	})
 "z" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -284,8 +280,7 @@
 	name = "GLOMAR Salvager"
 	})
 "L" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},

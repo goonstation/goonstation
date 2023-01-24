@@ -1,0 +1,87 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray,
+/obj/machinery/light/small/floor/netural,
+/obj/item/card_box/plain,
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/table/wood/auto,
+/obj/item/clothing/head/cowboy{
+	name = "hummmanboy hat"
+	},
+/obj/item/clothing/head/cowboy{
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/table/wood/auto,
+/obj/item/cigpacket{
+	pixel_x = -8
+	},
+/obj/item/cigpacket/random{
+	pixel_x = 8
+	},
+/obj/item/device/light/zippo{
+	pixel_y = 4;
+	pixel_x = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+a
+w
+"}
+(2,1,1) = {"
+a
+p
+a
+"}
+(3,1,1) = {"
+a
+b
+a
+"}
+(4,1,1) = {"
+Z
+g
+L
+"}
+(5,1,1) = {"
+a
+x
+a
+"}

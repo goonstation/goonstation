@@ -1,0 +1,198 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decoration/decorativeplant/plant3{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/leaves{
+	pixel_y = -1;
+	pixel_x = -3
+	},
+/turf/simulated/floor/airless/blue/corner{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/west,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/item/toy/plush/small/bunny{
+	name = "Hop";
+	rand_pos = 0
+	},
+/obj/item/pen/crayon/random{
+	pixel_x = -6;
+	pixel_y = -5;
+	rand_pos = 0
+	},
+/obj/stool/bench/green/auto,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/item/toy/plush/small{
+	name = "Doctor Isabear";
+	rand_pos = 0
+	},
+/obj/item/clothing/head/nursehat{
+	pixel_y = 11
+	},
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/item/toy/plush/small/buddy{
+	name = "D'aww Bringer";
+	rand_pos = 0
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_y = 7;
+	pixel_x = 1
+	},
+/obj/stool/bench/red/auto,
+/turf/simulated/floor/carpet/blue,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/item/toy/plush/small/singuloose{
+	pixel_y = -1;
+	name = "Singuloose the Engineer";
+	rand_pos = 0
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_y = 3
+	},
+/obj/stool/bench/yellow/auto,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/table/wood,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 34;
+	pixel_x = -7
+	},
+/turf/simulated/floor/airless/blue/side,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/table/wood,
+/obj/item/item_box/medical_patches{
+	pixel_y = 8;
+	pixel_x = -2
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_y = 26;
+	pixel_x = 7
+	},
+/obj/decal/cleanable/cobweb{
+	layer = 14
+	},
+/turf/simulated/floor/airless/blue/corner,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/table/wood,
+/obj/item/folder{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/paper{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/pen/pencil{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/stool/bee_bed{
+	pixel_y = 4
+	},
+/obj/item/toy/plush/small/bee/cute{
+	dir = 3;
+	name = "Captain Buzz";
+	rand_pos = 0
+	},
+/obj/item/clothing/head/fancy/captain{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/blue/fancy/narrow/west,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/clothing/suit/cardboard_box/ai,
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/item/toy/plush/small/monkey{
+	name = "Dr.Monke";
+	rand_pos = 0
+	},
+/obj/stool/bench/auto,
+/obj/item/reagent_containers/dropper{
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/dmm_suite/clear_area)
+"X" = (
+/turf/simulated/floor/airless/blue/side{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	pixel_y = -5
+	},
+/turf/simulated/floor/airless/blue/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+J
+X
+a
+"}
+(2,1,1) = {"
+x
+P
+Z
+"}
+(3,1,1) = {"
+g
+c
+t
+"}
+(4,1,1) = {"
+m
+n
+T
+"}
+(5,1,1) = {"
+R
+Q
+N
+"}

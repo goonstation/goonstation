@@ -43,7 +43,7 @@
 		if(istype(M, /obj/item/raw_material/))
 			var/obj/item/raw_material/material = M
 			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
-			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			src.eaten += material.amount
 			qdel(src.target)
 			src.target = null
@@ -111,7 +111,7 @@
 	ChaseAttack(mob/M)
 		if (prob(20))
 			..()
-			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			playsound(src.loc, pick('sound/impact_sounds/Generic_Shove_1.ogg'), 50, 0)
 			M.changeStatus("weakened", 3 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)

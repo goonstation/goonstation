@@ -16,4 +16,4 @@ fi
 
 echo "Building 'tgui'"
 cd "${base_dir}/tgui"
-bin/tgui
+bin/tgui --ci

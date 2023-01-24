@@ -13,7 +13,7 @@ obj/machinery/airlock_sensor
 	var/on = 1
 	var/alert = 0
 
-	proc/update_icon()
+	update_icon()
 		if(on)
 			if(alert)
 				icon_state = "airlock_sensor_alert"
@@ -47,7 +47,7 @@ obj/machinery/airlock_sensor
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
 
-		update_icon()
+		UpdateIcon()
 
 	New()
 		..()

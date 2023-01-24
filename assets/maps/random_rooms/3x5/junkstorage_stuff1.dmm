@@ -1,0 +1,64 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/random_item_spawner/medicine/one,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/table/auto,
+/obj/random_item_spawner/snacks/few,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_tool/one,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/stool/chair,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+N
+A
+N
+s
+a
+"}
+(2,1,1) = {"
+N
+z
+N
+D
+A
+"}
+(3,1,1) = {"
+E
+g
+w
+N
+N
+"}

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/space_heater)
+	mats = 8
+
 /obj/machinery/space_heater
 	anchored = 0
 	density = 1
@@ -13,7 +16,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT
 
@@ -23,10 +25,10 @@
 		cell = new(src)
 		cell.charge = 1000
 		cell.maxcharge = 1000
-		update_icon()
+		UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (on)
 			if(heating)
 				icon_state = "sheaterH"
@@ -82,12 +84,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -96,11 +98,11 @@
 		else if (isscrewingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
 				src.remove_dialog(user)
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
@@ -109,7 +111,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -143,14 +145,14 @@
 			else
 				on = !on
 				user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
-				update_icon()
+				UpdateIcon()
 
 
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -170,7 +172,7 @@
 					set_temperature = clamp(value, -min, max)
 
 				if("temp")
-					var/value = text2num(href_list["val"])
+					var/value = text2num_safe(href_list["val"])
 					var/max = src.emagged ? 400 : 90
 					var/min = src.emagged ? -120 : 90
 
@@ -179,8 +181,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
+						cell.UpdateIcon()
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -240,16 +242,24 @@
 						//boutput(world, "now at [removed.temperature]")
 
 					env.merge(removed)
-					update_icon()
+					UpdateIcon()
 					//boutput(world, "turf now at [env.temperature]")
 
 
 			else
 				on = 0
-				update_icon()
+				UpdateIcon()
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
+TYPEINFO(/obj/machinery/sauna_stove)
+	mats = 8
 
 /obj/machinery/sauna_stove
 	anchored = 0
@@ -265,7 +275,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = FPRINT
 
@@ -275,10 +284,10 @@
 		cell = new(src)
 		cell.charge = 1000
 		cell.maxcharge = 1000
-		update_icon()
+		UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (on)
 			if(heating)
 				icon_state = "saunaH"
@@ -308,12 +317,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -322,7 +331,7 @@
 		else if (isscrewingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=saunastove")
 				src.remove_dialog(user)
@@ -330,7 +339,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -360,12 +369,12 @@
 		else
 			on = !on
 			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
-			update_icon()
+			UpdateIcon()
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -378,15 +387,15 @@
 			switch(href_list["op"])
 
 				if("temp")
-					var/value = text2num(href_list["val"])
+					var/value = text2num_safe(href_list["val"])
 
 					// limit to 20-90 degC
 					set_temperature = clamp(set_temperature + value, 0, 200)
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
+						cell.UpdateIcon()
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -443,13 +452,18 @@
 						//boutput(world, "now at [removed.temperature]")
 
 					env.merge(removed)
-					update_icon()
+					UpdateIcon()
 					//boutput(world, "turf now at [env.temperature]")
 
 
 			else
 				on = 0
-				update_icon()
+				UpdateIcon()
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null

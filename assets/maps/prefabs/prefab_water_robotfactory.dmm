@@ -432,10 +432,6 @@
 /obj/item/device/flash,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
-"bo" = (
-/obj/decal/cleanable/robot_debris,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/prefab/replicant_lab)
 "bp" = (
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/robot_debris{
@@ -937,7 +933,7 @@
 	icon_state = "smear3"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
@@ -1247,7 +1243,7 @@ aJ
 aT
 ba
 bg
-bo
+aa
 bx
 bf
 ad

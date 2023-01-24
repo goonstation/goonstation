@@ -99,12 +99,10 @@
 			var/filters_to_copy = target.filters
 			var/filter_data_to_copy = target.filter_data
 			var/count = 0
-			for(var/thing in world.contents)
-				if(istype(thing, target_path))
-					var/atom/thing_at = thing
-					thing_at.filters = filters_to_copy
-					thing_at.filter_data = filter_data_to_copy
-					count += 1
+			for(var/atom/target as anything in find_all_by_type(target_path))
+				target.filters = filters_to_copy
+				target.filter_data = filter_data_to_copy
+				count += 1
 			//message_admins("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
 			//log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
 
@@ -132,15 +130,18 @@ var/static/master_filter_info = list(
 			"size" = 1
 		)
 	),
-	/* Not supported because making a proper matrix editor is more complicated than it seems.
-		Uncomment if you ever implement it
 	"color" = list(
 		"defaults" = list(
-			"color" = matrix(),
-			"space" = FILTER_COLOR_RGB
+			"color" = COLOR_WHITE,
+			"space" = COLORSPACE_RGB
+			),
+		"space" = list(
+			"RGB" = COLORSPACE_RGB,
+			"HSV" = COLORSPACE_HSV,
+			"HSL" = COLORSPACE_HSL,
+			"HCY" = COLORSPACE_HCY
 		)
 	),
-	*/
 	"displace" = list(
 		"defaults" = list(
 			"x" = 0,

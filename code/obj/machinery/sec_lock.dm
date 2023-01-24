@@ -1,7 +1,7 @@
 /obj/machinery/sec_lock/attack_ai(user as mob)
 	return //src.Attackhand(user)
 
-/obj/machinery/sec_lock/attack_hand(var/mob/user as mob)
+/obj/machinery/sec_lock/attack_hand(var/mob/user)
 	if(..())
 		return
 	use_power(10)
@@ -17,7 +17,7 @@
 
 /obj/machinery/sec_lock/New()
 	..()
-	SPAWN_DBG( 2 )
+	SPAWN( 2 )
 		if (src.a_type == 1)
 			src.d2 = locate(/obj/machinery/door, locate(src.x - 2, src.y - 1, src.z))
 			src.d1 = locate(/obj/machinery/door, get_step(src, SOUTHWEST))
@@ -53,22 +53,22 @@
 			if (src.scan)
 				if (src.check_access(src.scan))
 					if (src.d1.density)
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d1.open()
 							return
 					else
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d1.close()
 							return
 		if (href_list["door2"])
 			if (src.scan)
 				if (src.check_access(src.scan))
 					if (src.d2.density)
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d2.open()
 							return
 					else
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d2.close()
 							return
 		if (href_list["em_cl"])
@@ -78,19 +78,19 @@
 						src.d1.close()
 						return
 					sleep(0.1 SECONDS)
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
 						return
 		if (href_list["em_op"])
 			if (src.scan)
 				if (src.check_access(src.scan))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (src.d1.density)
 							src.d1.open()
 						return
 					sleep(0.1 SECONDS)
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (src.d2.density)
 							src.d2.open()
 						return

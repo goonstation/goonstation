@@ -1,0 +1,134 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/fakeobjects/bookcase,
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/decal/fakeobjects/bookcase{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/item/paper/book/from_file/critter_compendium{
+	pixel_y = 2
+	},
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs{
+	pixel_y = 4;
+	pixel_x = -8
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/decal/cleanable/cobweb2,
+/obj/stool/chair/comfy/red,
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/machinery/light/lamp/green{
+	pixel_x = -4;
+	pixel_y = 12;
+	on = 1
+	},
+/obj/table/wood,
+/obj/item/decoration/ashtray{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/cigarette/cigar/gold{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/matchbook{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 6;
+	pixel_y = 20
+	},
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"u" = (
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/table/wood,
+/obj/item/device/light/candle{
+	pixel_y = 18
+	},
+/obj/item/clothing/glasses/regular{
+	pixel_x = -2
+	},
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/table/wood/round,
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/item/paper/book/from_file/the_trial{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/decal/fakeobjects/bookcase{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/carpet/red/decal,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/decoration/ceilingfan,
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+F
+u
+I
+"}
+(2,1,1) = {"
+d
+g
+a
+"}
+(3,1,1) = {"
+Z
+Y
+u
+"}
+(4,1,1) = {"
+q
+P
+f
+"}
+(5,1,1) = {"
+o
+B
+y
+"}

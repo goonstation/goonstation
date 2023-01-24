@@ -12,6 +12,8 @@
 	var/commander_job_title			//for commander selection
 	var/datum/game_mode/pod_wars/mode
 
+	var/list/datum/resources = list("mauxite" = 0, "pharosium" = 0, "molitz" = 0) // List of material resources
+
 	//These two are for playing sounds, they'll only play for the first death or system destruction.
 	var/first_system_destroyed = 0
 	var/first_commander_death = 0
@@ -88,14 +90,13 @@
 
 		return 0
 
-	//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
+	//Really stolen from gang, But this basically just picks everyone who is ready and not jobbanned from Command or Captain
 	//priority values 1=favorite,2=medium,3=low job priorities
 	proc/get_possible_commanders(var/priority)
 		var/list/candidates = list()
 		for(var/datum/mind/mind in members)
 			var/mob/new_player/M = mind.current
 			if (!istype(M)) continue
-			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
 			if(jobban_isbanned(M, "NanoTrasen Commander")) continue
 			if(jobban_isbanned(M, "Syndicate Commander")) continue
@@ -155,7 +156,7 @@
 
 		//This second bit is for the in-round player equipping (when cloned)
 		else if (istype(H))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				H.JobEquipSpawned(H.mind.assigned_role)
 
 		if (!ishuman(H))
@@ -167,7 +168,7 @@
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		if (show_popup)
-			SHOW_POD_WARS(H)
+			H.show_antag_popup("podwars")
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 

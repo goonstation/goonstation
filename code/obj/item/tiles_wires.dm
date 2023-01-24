@@ -13,12 +13,13 @@ TILES
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile"
+	health = 2
 	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 5
 	throw_range = 20
-	force = 6.0
-	throwforce = 7.0
+	force = 6
+	throwforce = 7
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 25
@@ -34,7 +35,7 @@ TILES
 		. = ..()
 		. += "There are [src.amount] tile\s left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -72,7 +73,7 @@ TILES
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return

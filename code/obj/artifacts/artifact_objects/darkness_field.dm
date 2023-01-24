@@ -5,6 +5,7 @@
 /datum/artifact/darkness_field
 	associated_object = /obj/artifact/darkness_field
 	type_name = "Darkness Generator"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")
@@ -30,7 +31,7 @@
 		var/turf/T = get_turf(O)
 		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
-		SPAWN_DBG(field_time)
+		SPAWN(field_time)
 			if (O)
 				O.ArtifactDeactivated()
 
@@ -48,7 +49,7 @@
 	pixel_y = -(480 - 32) / 2 // centering
 	blend_mode = BLEND_SUBTRACT
 	event_handler_flags = IMMUNE_SINGULARITY
-	appearance_flags = LONG_GLIDE
+	appearance_flags = LONG_GLIDE // PIXEL_SCALE omitted intentionally
 	layer = LIGHTING_LAYER_DARKNESS_EFFECTS
 	plane = PLANE_LIGHTING
 	anchored = 2
@@ -61,10 +62,10 @@
 		src.alpha = 0
 		animate(src, time = 2 SECONDS, alpha = max_alpha, easing = LINEAR_EASING)
 		if(!isnull(duration))
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				src.deactivate()
 
 	proc/deactivate()
 		animate(src, time = 2 SECONDS, alpha = 0, easing = LINEAR_EASING)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)

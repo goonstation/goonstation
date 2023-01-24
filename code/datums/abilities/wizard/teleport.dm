@@ -7,21 +7,23 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/TeleportGrim.ogg"
-	voice_fem = "sound/voice/wizard/TeleportFem.ogg"
-	voice_other = "sound/voice/wizard/TeleportLoud.ogg"
+	maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
 
 	cast()
 		if (!holder)
 			return 1
 
-		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(0, 3, spell=src) == 1)
+		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(1, 3, spell=src) == 1)
 			return 0
 
 		return 1
 
 // These two procs were so similar that I combined them (Convair880).
-/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell)
+/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell, var/abort_if_incapacitated = FALSE)
+	var/voice_grim = 'sound/voice/wizard/TeleportGrim.ogg'
+	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
+	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
+
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
@@ -50,14 +52,23 @@
 		wiz_shuttle = null
 
 	// Doing it this way to avoid modifying the cached areas
+	var/list/tele_areas = get_teleareas()
 	if (wiz_shuttle)
-		A = input("Area to jump to", "Teleportation", A) in (get_teleareas() | wiz_shuttle.name)
+		tele_areas |= wiz_shuttle.name
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
 		if(A == wiz_shuttle.name)
 			thearea = wiz_shuttle
 	else
-		A = input("Area to jump to", "Teleportation", A) in get_teleareas()
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+
+	if(abort_if_incapacitated && !can_act(src))
+		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
+		return 0
 
 	if(!thearea)
+		if (isnull(A))
+			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			return 0
 		thearea = get_telearea(A)
 
 	if (!thearea || !istype(thearea))
@@ -89,7 +100,7 @@
 			if (comp_check.status & (NOPOWER|BROKEN))
 				src.show_text("[comp_check] is out of order.", "red")
 				return 0
-			if (get_dist(src, comp_check) > 1)
+			if (BOUNDS_DIST(src, comp_check) > 0)
 				src.show_text("[comp_check] is too far away.", "red")
 				return 0
 
@@ -121,7 +132,6 @@
 	switch (perform_check)
 		if (1)
 			src.visible_message("<span class='alert'><b>[src] magically disappears!</b></span>")
-
 		if (2)
 			src.visible_message("<span class='alert'><b>[src]</b> presses a button and teleports away.</span>")
 			var/datum/targetable/spell/teleport/tele = src.abilityHolder.getAbility(/datum/targetable/spell/teleport)
@@ -130,18 +140,20 @@
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
-			src.say("SCYAR NILA [uppertext(A)]")
-
+			src.say("SCYAR NILA [uppertext(A)]", FALSE, spell.maptext_style, spell.maptext_colors)
+			if(ishuman(src))
+				var/mob/living/carbon/human/O = src
+				if(istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
+					playsound(O.loc, voice_grim, 50, 0, -1)
+				else if(O.gender == "female")
+					playsound(O.loc, voice_fem, 50, 0, -1)
+				else
+					playsound(O.loc, voice_other, 50, 0, -1)
 			src.visible_message("<span class='alert'><b>[src] begins to fade away!</b></span>")
-			animate_teleport_wiz(src)
-			sleep(4 SECONDS) // Animation.
-
 			var/mob/living/carbon/human/H = src
 			if (istype(H) && H.getStatusDuration("burning"))
-				boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+				boutput(H, "<span class='notice'>The flames sputter out as you teleport.</span>")
 				H.set_burning(0)
-
-			playsound(src.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
 
 	var/list/L = list()
 	for (var/turf/T3 in get_area_turfs(thearea.type))
@@ -154,24 +166,19 @@
 			if (clear)
 				L += T3
 
+	var/turf/destination = pick(L)
+	logTheThing(LOG_COMBAT, src, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
-		if (perform_check == 3)
-			src.set_loc(pick(L))
-			elecflash(src) // Effect second because we had sound effects etc at the old loc.
-		else
-			elecflash(src)
-			src.set_loc(pick(L))
-
-	else
+		animate_teleport_wiz(src)
+		sleep(2 SECONDS) // Animation.
+		playsound(src.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
+		sleep(2 SECONDS) // Animation.
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		if (perform_check == 3)
-			src.set_loc(pick(L))
-			smoke.start()
-		else
-			smoke.start()
-			src.set_loc(pick(L))
+		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
+		src.set_loc(destination)
+		smoke.start()
 
 	return 1

@@ -65,7 +65,7 @@
 /datum/computer/file/pda_program/bot_control/secbot
 	name = "Securitron Access"
 	var/header_thing = "Securitron Interlink"
-	size = 8.0
+	size = 8
 	var/menumode = 1
 	var/all_guard = 0
 	var/lockdown = 0
@@ -131,7 +131,7 @@
 		var/turf/summon_turf = get_turf(PDA)
 		if (isAIeye(usr))
 			summon_turf = get_turf(usr)
-			if (!(summon_turf.cameras && length(summon_turf.cameras)))
+			if (!(summon_turf.camera_coverage_emitters && length(summon_turf.camera_coverage_emitters)))
 				summon_turf = get_turf(PDA)
 
 		if(href_list["active"])
@@ -159,7 +159,7 @@
 				else
 					src.lockdown = 0
 				var/area/guardthis = input(usr, "Please type 'Here' or the name of an area. Capitalization matters!", "GuardTron 0.0.1a", "Here") as text
-				if(IN_RANGE(get_turf(usr), get_turf(src.master), 1))
+				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0))
 					if(guardthis == "Here")
 						guardthis = get_area(get_turf(src.master))
 					else if(guardthis in stationAreas)
@@ -181,7 +181,7 @@
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
-						SPAWN_DBG(0)
+						SPAWN(0)
 							// yeah its cheating, but holy heck is it laggy to send a zillion signals via PDA
 							var/list/bots = list()
 							for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -201,7 +201,7 @@
 			if("summon")
 				post_status("bot_control", "command", "summon", "active", active, "target", summon_turf )
 				post_status("bot_control", "command", "bot_status", "active", active)
-				self_text("[active] summoned to [summon_turf]")
+				self_text("[active] summoned to [summon_turf.loc].")
 
 			if("proc")
 				post_status("bot_control", "command", "proc", "active", active)
@@ -212,7 +212,7 @@
 				if (!botlist.len)
 					PDA.updateSelfDialog()
 					return
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/list/bots = list()
 					// again, yeah, cheating, but let's just pretend it isnt
 					for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -223,7 +223,7 @@
 							self_text("Summon failed.")
 							break
 					if(length(bots) >= 1)
-						self_text("[english_list(bots)] summoned to [summon_turf].")
+						self_text("[english_list(bots)] summoned to [summon_turf.loc].")
 		src.lockdown = 0
 		src.all_guard = 0
 		PDA.updateSelfDialog()
@@ -242,14 +242,14 @@
 			src.master.updateSelfDialog()
 /datum/computer/file/pda_program/bot_control/secbot/pro
 	name = "Securitron Access PRO"
-	size = 8.0
+	size = 8
 	header_thing = "Securitron Interlink PRO"
 	can_summon_all = 1
 	can_force_proc = 1
 
 /datum/computer/file/pda_program/bot_control/mulebot
 	name = "MULE Bot Control"
-	size = 16.0
+	size = 16
 	var/list/beacons
 
 	return_text()

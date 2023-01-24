@@ -51,39 +51,39 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
-			if(3.0)
+					src.UpdateIcon()
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				//src.icon_state = "heptemitter-p"
-				if (src.beam)
-					//qdel(src.beam)
-					src.beam.dispose()
-			//else
-				//src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
-			return
+
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			//src.icon_state = "heptemitter-p"
+			if (src.beam)
+				//qdel(src.beam)
+				src.beam.dispose()
+		//else
+			//src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
+		return
 
 
 

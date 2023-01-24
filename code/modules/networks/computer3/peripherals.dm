@@ -16,6 +16,9 @@
 
 
 
+TYPEINFO(/obj/item/peripheral)
+	mats = 8
+
 /obj/item/peripheral
 	name = "Peripheral card"
 	desc = "A computer circuit board."
@@ -28,7 +31,6 @@
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
-	mats = 8
 
 	New(location)
 		..()
@@ -47,7 +49,7 @@
 
 	disposing()
 		if (host)
-			host.peripherals.Remove(src)
+			host.peripherals?.Remove(src)
 			host = null
 
 		..()
@@ -219,7 +221,7 @@
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
 						get_radio_connection_by_id(src, "wireless").update_frequency(new_freq)
 						src.frequency = new_freq
@@ -252,7 +254,7 @@
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
-					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+					SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
 
 				return
@@ -286,7 +288,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -352,7 +354,7 @@
 			newsignal.data["address_1"] = "ping"
 			newsignal.data["sender"] = src.net_id
 			if (length(command) > 4)
-				var/new_net_number = text2num( copytext(command, 5) )
+				var/new_net_number = text2num_safe( copytext(command, 5) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					newsignal.data["net"] = "[new_net_number]"
 				else if (src.net_number)
@@ -367,7 +369,7 @@
 
 		else if (dd_hasprefix(command, "subnet"))
 			if (length(command) > 6)
-				var/new_net_number = text2num( copytext(command, 7) )
+				var/new_net_number = text2num_safe( copytext(command, 7) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					src.net_number = new_net_number
 			else
@@ -403,7 +405,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
 				pingsignal.source = src
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return //Just toss out the rest of the signal then I guess
@@ -422,25 +424,25 @@
 		. += " | NETID: [src.net_id ? src.net_id : "NONE"]"
 
 
-	proc
-		check_connection()
-			//if there is a link, it has a master, and the master is valid..
-			if(src.link && istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
-				if(src.link.master == src)
-					return 1 //If it's already us, the connection is fine!
-				else//Otherwise welp no this thing is taken.
-					src.link = null
-					return 0
+// why is the connection checked like this - do we really need to disconnect then reconnect?
+/obj/item/peripheral/network/powernet_card/proc/check_connection()
+	//if there is a link, it has a master, and the master is valid..
+	if(istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
+		if(src.link.master == src)
+			return 1 //If it's already us, the connection is fine!
+		else//Otherwise welp no this thing is taken.
 			src.link = null
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
-				return 1
-			else
-				//boutput(world, "couldn't link")
-				return 0
+			return 0
+	src.link = null
+	var/turf/T = get_turf(src)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+		src.link = test_link
+		src.link.master = src
+		return 1
+	else
+		//boutput(world, "couldn't link")
+		return 0
 
 /obj/item/peripheral/network/powernet_card/terminal
 	name = "Terminal card"
@@ -500,11 +502,11 @@
 				if(!print_data)
 					src.printing = 0
 					return 1
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -525,7 +527,7 @@
 					newsignal.data["sender"] = src.net_id
 
 					if (length(command) > 4)
-						var/new_net_number = text2num( copytext(command, 5) )
+						var/new_net_number = text2num_safe( copytext(command, 5) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							newsignal.data["net"] = "[new_net_number]"
 						else if (src.net_number)
@@ -539,7 +541,7 @@
 
 				else if (dd_hasprefix(command, "subnet"))
 					if (length(command) > 6)
-						var/new_net_number = text2num( copytext(command, 7) )
+						var/new_net_number = text2num_safe( copytext(command, 7) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							src.net_number = new_net_number
 					else
@@ -563,7 +565,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.wired_link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_wired_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -592,7 +594,7 @@
 						newsignal.data["sender"] = src.net_id
 					newsignal.source = src
 
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? 0 : src.wireless_range, "wireless")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? null : src.wireless_range, "wireless")
 					return 0
 
 				else
@@ -639,11 +641,11 @@
 				if(!print_data)
 					src.printing = 0
 					return 1
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -693,7 +695,7 @@
 					return 1
 
 				else if (copytext(command, 1, 7) == "subnet")
-					. = text2num( copytext(command, 7) )
+					. = text2num_safe( copytext(command, 7) )
 					if (. != null && . >= 0 && . <= 16)
 						src.subnet = .
 					else
@@ -702,9 +704,9 @@
 					return 0
 
 				else if (mode < 2)
-					. = text2num(command)
+					. = text2num_safe(command)
 					if (isnum(.))
-						. = round( max(1000, min(., 1500)) )
+						. = round( clamp(., 1000, 1500) )
 						get_radio_connection_by_id(src, "wireless").update_frequency(.)
 						src.frequency = .
 						return 0
@@ -730,7 +732,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = src.mode == 2 ? TRANSMISSION_WIRE : TRANSMISSION_RADIO
 				pingsignal.source = src
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if (src.mode == 2 && src.wired_link)
 						src.wired_link.post_signal(src, pingsignal)
 					else
@@ -824,11 +826,11 @@
 			if(!print_data)
 				src.printing = 0
 				return
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
-				playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 				P.info = "<tt>[print_data]</tt>"
 				if(print_title)
 					P.name = "paper- '[print_title]'"
@@ -902,6 +904,7 @@
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
+				prize.anchored = FALSE
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
 				prize.name = "Burno Lighter"
@@ -968,7 +971,7 @@
 			if (src.clownifies_card)
 				src.authid.assignment = "Clown"
 				src.authid.update_name()
-				playsound(src.host.loc, "sound/items/bikehorn.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 			status_text = "Card: [authid.registered]"
 		return status_text
 
@@ -1014,7 +1017,7 @@
 				newsignal.data["access"] = jointext(src.authid.access, ";")
 				newsignal.data["balance"] = src.authid.money
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("card_authed", newsignal)
 
 				return newsignal
@@ -1024,7 +1027,7 @@
 					return "nocard"
 				var/new_access = 0
 				if(signal)
-					new_access = text2num(signal.data["access"])
+					new_access = text2num_safe(signal.data["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/signal/newsignal = get_free_signal()
@@ -1032,7 +1035,7 @@
 					newsignal.data["assignment"] = src.authid.assignment
 					newsignal.data["balance"] = src.authid.money
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_authed", newsignal)
 
 					return newsignal
@@ -1042,14 +1045,14 @@
 					return "nocard"
 /*
 				//We need correct PIN numbers you jerks.
-				if(text2num(signal.data["pin"]) != src.authid.pin)
-					SPAWN_DBG(0.4 SECONDS)
+				if(text2num_safe(signal.data["pin"]) != src.authid.pin)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 */
-				var/charge_amount = text2num(signal.data["data"])
+				var/charge_amount = text2num_safe(signal.data["data"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_charge")
 					return 1
 
@@ -1061,7 +1064,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/new_access = text2num(signal.data["access"])
+				var/new_access = text2num_safe(signal.data["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -1072,7 +1075,7 @@
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.data["access"] = new_access
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_add")
 
 					return 0
@@ -1081,7 +1084,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/rem_access = text2num(signal.data["access"])
+				var/rem_access = text2num_safe(signal.data["access"])
 				if(!rem_access || (rem_access <= 0))
 					return 1
 
@@ -1092,7 +1095,7 @@
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.data["access"] = rem_access
 
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_remove")
 
 					return 0
@@ -1107,7 +1110,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1145,7 +1148,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -1225,7 +1228,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1368,7 +1371,7 @@
 		if(..())
 			return 1
 
-		SPAWN_DBG(rand(50,100))
+		SPAWN(rand(50,100))
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)
@@ -1391,7 +1394,7 @@
 						if(M.client)
 							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						//dispose()
 						src.dispose()

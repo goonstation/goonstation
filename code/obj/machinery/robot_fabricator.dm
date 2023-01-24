@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/robotic_fabricator)
+	mats = 20
+
 /obj/machinery/robotic_fabricator
 	name = "Robotic Fabricator"
 	desc = "A machine that produces various objects for robotics from raw material."
@@ -8,19 +11,18 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/parts/robot_parts/being_built = null
-	mats = 20
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/robotic_fabricator/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				while(metal_amount < 150000 && O:amount)
 
 					if(!O:amount)
 						return
 
-					src.metal_amount += O:height * O:width * O:length * 100000.0
+					src.metal_amount += O:height * O:width * O:length * 100000
 					O:amount--
 					count++
 
@@ -44,7 +46,7 @@
 
 	use_power(1000)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(user)
 	var/dat
 	if (..())
 		return
@@ -81,7 +83,7 @@ Please wait until completion...</TT><BR>
 
 	if (href_list["make"])
 		if (!src.operating)
-			var/part_type = text2num(href_list["make"])
+			var/part_type = text2num_safe(href_list["make"])
 
 			var/build_type = ""
 			var/build_time = 200
@@ -137,7 +139,7 @@ Please wait until completion...</TT><BR>
 
 					use_power(5000)
 
-					SPAWN_DBG (build_time)
+					SPAWN(build_time)
 						if (!isnull(src.being_built))
 							src.being_built.set_loc(get_turf(src))
 							src.being_built = null

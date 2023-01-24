@@ -3,15 +3,13 @@
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "owl"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 1
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Owlize"
 //file location for the sound you want it to play
@@ -53,5 +51,5 @@
 	on_hit(atom/hit)
 
 		if(ishuman(hit))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 			hit:owlgib()

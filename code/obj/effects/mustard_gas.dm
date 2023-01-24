@@ -7,13 +7,13 @@
 	name = "mustard gas"
 	icon_state = "mustard"
 	opacity = 1
-	anchored = 0.0
+	anchored = 0
 	mouse_opacity = 0
-	var/amount = 6.0
+	var/amount = 6
 
 /obj/effects/mustard_gas/New()
 	..()
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		dispose()
 	return
 

@@ -1,5 +1,10 @@
 // A dummy parent type used for easily making components that target an item's wearer rather than the item itself.
 
+TYPEINFO(/datum/component/wearertargeting)
+	initialization_args = list(
+		ARG_INFO("valid_slots", DATA_INPUT_LIST_BUILD, "List of wear slots that the component should function in \[1-19\]")
+	)
+
 /datum/component/wearertargeting
 	var/list/valid_slots = list()
 	var/list/signals = list()

@@ -5,14 +5,13 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	density = 0
 	canmove = 0
 	blinded = 0
 	anchored = 1
 	alpha = 180
 	stat = 0
-	suicide_can_succumb = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -23,7 +22,7 @@
 
 	New(var/mob/M)
 		..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
@@ -92,7 +91,7 @@
 
 		the_zoldorf = list()
 		spawn(0)
-			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			src.show_antag_popup("souldorf")
 
 	Login()
 		..()
@@ -146,12 +145,12 @@
 			else
 				animate_spin(src, "L", 1, 0)
 			src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"ectooverlay"),"ecto")
-			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			qdel(target)
 		else
 			src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)
@@ -170,7 +169,7 @@
 			return 1
 		return ..()
 
-	Move(NewLoc, direct) //just a copy paste from ghost move
+	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
@@ -198,6 +197,8 @@
 		if((direct & WEST) && src.x > 1)
 			src.x--
 
+		. = ..()
+
 	is_active()
 		return 0
 
@@ -216,7 +217,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -231,6 +232,7 @@
 			return
 		if(src.emoting)
 			return
+		..()
 		var/icon/soulcache
 		var/icon/blendic
 		switch (lowertext(act))
@@ -254,7 +256,7 @@
 							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
-						APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+						APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 						src.ClearAllOverlays()
 						var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 						e.set_loc(get_turf(src))
@@ -264,7 +266,7 @@
 				soulcache = src.icon
 				if(!src.invisibility)
 					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
-					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					e.set_loc(get_turf(src))
@@ -288,6 +290,7 @@
 					src.pixel_y = 0
 
 	death(gibbed)
+		. = ..()
 		var/mob/dead/observer/o = src.ghostize()
 
 		if(o.client)
@@ -309,6 +312,13 @@
 		src.free()
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")
+
+	stopObserving()
+		if(src.homebooth)
+			src.set_loc(homebooth)
+		else
+			src.ghostize()
+		src.observing = null
 
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
@@ -375,13 +385,13 @@
 /mob/proc/zoldize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a zoldorf.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a zoldorf.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a zoldorf.")
 		return make_zoldorf()
 	return null
 
 /client/MouseDrop(var/over_object, var/src_location, var/over_location, mob/user as mob) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
-	if(!istype(usr,/mob/zoldorf))
+	if(!istype(user,/mob/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)
 	var/turf/Ta = get_turf(src_location)
@@ -389,18 +399,18 @@
 	if(!Tb || !Ta || Ta.density || Tb.density)
 		return
 
-	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
+	if(istype(over_object,/obj/item) && istype(user.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
 		if(i.anchored)
 			return
-		var/obj/machinery/playerzoldorf/pz = usr.loc
-		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
+		var/obj/machinery/playerzoldorf/pz = user.loc
+		if((i in range(1,user.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
-			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))
+			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(user.loc)))
 				var/obj/item/paper/thermal/playerfortune/fi = i
 				fi.icon = 'icons/obj/zoldorf.dmi'
 				fi.icon_state = "fortuneburn"

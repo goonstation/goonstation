@@ -23,7 +23,7 @@
 	for(var/mob/new_player/player in mobs)
 		if (player.client && player.ready) num_players++
 
-	var/num_waldos = max(1, min(round(num_players / 6), waldos_possible))
+	var/num_waldos = clamp(round(num_players / 6), 1, waldos_possible)
 
 	var/list/chosen_waldos = antagWeighter.choose(pool = possible_waldos, role = "waldo", amount = num_waldos, recordChosen = 1)
 	for (var/datum/mind/waldo in chosen_waldos)
@@ -129,7 +129,7 @@
 //			waldo.current << browse('waldo.jpg',"window=some;titlebar=1;size=550x400;can_minimize=0;can_resize=0")
 
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/waldo/proc/equip_waldo(mob/living/carbon/human/waldo_mob)
@@ -180,7 +180,7 @@
 				waldo_mob.equip_if_possible(new /obj/item/clothing/under/color/white(waldo_mob), waldo_mob.slot_w_uniform)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(waldo_mob), waldo_mob.slot_wear_suit)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/head/wizard(waldo_mob), waldo_mob.slot_head)
-				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(waldo_mob), waldo_mob.slot_shoes)
+				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(waldo_mob), waldo_mob.slot_shoes)
 				waldo_mob.equip_if_possible(new /obj/item/staff(waldo_mob), waldo_mob.slot_r_hand)
 				waldo_mob.equip_if_possible(new /obj/item/device/pda2/syndicate(waldo_mob), waldo_mob.slot_belt)
 
@@ -250,37 +250,7 @@
 
 
 /datum/game_mode/waldo/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
-	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(waldos))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		if(! (C.status & (BROKEN|NOPOWER) ) )
-			C.messagetitle.Add("Cent. Com. Status Summary")
-			C.messagetext.Add(intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+	..(src.waldos)
 
 /datum/game_mode/waldo/declare_completion()
 	var/wizcount = 0

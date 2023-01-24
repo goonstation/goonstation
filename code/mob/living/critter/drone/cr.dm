@@ -1,4 +1,4 @@
-/mob/living/critter/drone/cr
+/mob/living/critter/robotic/drone/cr
 	drone_designation = "CR"
 	desc = "A Syndicate scrap cutter drone, designed for automated salvage operations."
 	icon_state = "drone4"
@@ -6,7 +6,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/cutter
+		HH.limb = new /datum/limb/gun/energy/cutter
 		HH.name = "C-4 Salvager Sawdrill"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handcr"

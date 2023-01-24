@@ -27,7 +27,13 @@ export const CharacterTab = (_props, context) => {
 
   return (
     <>
-      <Section title="Appearance">
+      <Section
+        title="Appearance"
+        buttons={
+          <Button.Checkbox checked={data.randomAppearance} onClick={() => act('update-randomAppearance')}>
+            Random appearance
+          </Button.Checkbox>
+        }>
         <LabeledList>
           <LabeledList.Item label="Skin Tone">
             <ColorButton color={data.skinTone} onClick={() => act('update-skinTone')} />
@@ -50,16 +56,14 @@ export const CharacterTab = (_props, context) => {
           <LabeledList.Item label="Bottom Detail">
             <CustomDetail id="custom1" color={data.customColor1} style={data.customStyle1} />
           </LabeledList.Item>
+          <LabeledList.Item label="Special Style">
+            <Button onClick={() => act('update-specialStyle')}>{data.specialStyle || "default"}</Button>
+          </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Underwear">
             <CustomDetail id="underwear" color={data.underwearColor} style={data.underwearStyle} />
           </LabeledList.Item>
           <LabeledList.Divider />
-          <LabeledList.Item label="Randomization">
-            <Button.Checkbox checked={data.randomAppearance} onClick={() => act('update-randomAppearance')}>
-              Always use a randomized appearance
-            </Button.Checkbox>
-          </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Sounds">

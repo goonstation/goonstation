@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/magtractor)
+	mats = 12
+
 /obj/item/magtractor
 	name = "magtractor"
 	desc = "A device used to pick up and hold objects via the mysterious power of magnets."
@@ -7,15 +10,14 @@
 	icon_state = "magtractor"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
-	mats = 12
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
@@ -53,10 +55,10 @@
 		src.holder = null
 		src.verbs -= /obj/item/magtractor/proc/toggleHighPower
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return 0
 
-		if (get_dist(get_turf(src), get_turf(W)) > 1)
+		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
 			out(user, "<span class='alert'>\The [W] is too far away!</span>")
 			return 0
 
@@ -70,7 +72,7 @@
 
 		if (istype(W, /obj/item/magtractor))
 			var/turf/T = get_ranged_target_turf(user, turn(user.dir, 180), 7)
-			playsound(user.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			user.visible_message("<span class='combat bold'>\The [src]'s magnets violently repel as they counter a similar magnetic field!</span>")
 			user.throw_at(T, 7, 10)
 			user.changeStatus("stunned", 2 SECONDS)
@@ -93,7 +95,7 @@
 
 		if (!src.holding)
 			if (!isitem(A)) return 0
-			if (get_dist(get_turf(src), get_turf(A)) > 1)
+			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 				out(user, "<span class='alert'>\The [A] is too far away!</span>")
 				return 0
 			var/obj/item/target = A
@@ -213,7 +215,7 @@
 		src.UpdateOverlays(I, "magField")
 		src.updateHeldOverlay(W)
 
-		playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"
@@ -260,5 +262,9 @@
 		src.processHeld = 0
 
 		return 1
+
+	Exited(Obj, newloc) // handles the held item going byebye
+		if(Obj == src.holding  && src.holder)
+			actions.stopId("magpickerhold", src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robotics"
 	req_access = list(access_robotics)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
@@ -15,7 +15,7 @@
 	light_b = 1
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
 		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 		return
@@ -34,11 +34,11 @@
 	return
 
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
-	var/dat = "Located AI Units<BR><BR>"
+	var/list/dat = list("Located AI Units<BR><BR>")
 	for_by_tcl(A, /mob/living/silicon/ai)
 		dat += "[A.name] |"
 		if(A.stat)
@@ -70,7 +70,7 @@
 			dat += "[R.name] |"
 			if(R.disposed)
 				dat += " Missing |"
-			else if(isnull(R.brain))
+			else if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"
@@ -102,12 +102,24 @@
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
 			dat += "*----------*<BR>"
 
-	user.Browse(dat, "window=computer;size=400x500")
+	var/found_drones = FALSE
+	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
+		if(!drone.last_ckey || isdead(drone))
+			continue
+		if(!found_drones)
+			dat += "*----------*<BR><BR>"
+			dat += "Ghostdrones:<BR>"
+			found_drones = TRUE
+		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
+
+	user.Browse(dat.Join(), "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
+		return
+	if(isghostdrone(usr))
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
@@ -117,13 +129,26 @@
 
 	if (href_list["gib"])
 		switch(href_list["gib"])
+			if("drone")
+				var/obj/item/card/id/I = usr.equipped()
+				var/mob/living/silicon/ghostdrone/drone = locate(href_list["bot"])
+				if (istype(drone))
+					if(src.check_access(I))
+						message_admins("<span class='alert'>[key_name(usr)] killswitched drone [key_name(drone)].</span>")
+						logTheThing(LOG_COMBAT, usr, "killswitched drone [constructTarget(drone,"combat")]")
+						if(drone.client)
+							boutput(drone, "<span class='alert'><b>Killswitch activated.</b></span>")
+						drone.gib()
+					else
+						boutput(usr, "<span class='alert'>Access Denied.</span>")
+
 			if("1")
 				var/obj/item/card/id/I = usr.equipped()
 				if (istype(I))
 					if(src.check_access(I))
 						if(istype(R))
 							message_admins("<span class='alert'>[key_name(usr)] has activated the robot self destruct on [key_name(R)].</span>")
-							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
+							logTheThing(LOG_COMBAT, usr, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
@@ -132,7 +157,7 @@
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
-							logTheThing("combat", usr, message, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
+							logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
@@ -146,7 +171,7 @@
 					R.killswitch_at = 0
 					R.killswitch = 0
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
-					logTheThing("combat", usr, R, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
+					logTheThing(LOG_COMBAT, usr, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
 					if(R.client)
 						boutput(R, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
@@ -154,7 +179,7 @@
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")
-					logTheThing("combat", usr, message, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
+					logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
 					if(message.client)
 						boutput(message, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 
@@ -171,7 +196,7 @@
 					R.weapon_lock = 1
 					R.weaponlock_time = 120
 					R.uneq_active()
-					logTheThing("combat", usr, R, "has activated [constructTarget(R,"combat")]'s weapon lock (120 seconds).")
+					logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(R,"combat")]'s weapon lock (120 seconds).")
 					for (var/obj/item/roboupgrade/X in R.contents)
 						if (X.activated)
 							X.activated = 0
@@ -187,7 +212,7 @@
 								boutput(message, "<span class='alert'><b>Emergency lockout activated!</b></span>")
 								A.weapon_lock = 1
 								A.weaponlock_time = 120
-								logTheThing("combat", usr, message, "has activated [constructTarget(message,"combat")]'s weapon lock (120 seconds).")
+								logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(message,"combat")]'s weapon lock (120 seconds).")
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
@@ -198,7 +223,7 @@
 						boutput(R, "Weapon Lock deactivated.")
 					R.weapon_lock = 0
 					R.weaponlock_time = 120
-					logTheThing("combat", usr, R, "has deactivated [constructTarget(R,"combat")]'s weapon lock.")
+					logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(R,"combat")]'s weapon lock.")
 
 				else if(istype(A))
 					var/mob/message = A.get_message_mob()
@@ -206,7 +231,7 @@
 						boutput(message, "Emergency lockout deactivated.")
 					A.weapon_lock = 0
 					A.weaponlock_time = 120
-					logTheThing("combat", usr, message, "has deactivated [constructTarget(message,"combat")]'s weapon lock.")
+					logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(message,"combat")]'s weapon lock.")
 
 	src.updateUsrDialog()
 	return

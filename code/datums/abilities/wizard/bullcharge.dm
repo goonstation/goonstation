@@ -5,16 +5,18 @@
 	targeted = 0
 	cooldown = 150
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/BullChargeGrim.ogg"
-	voice_fem = "sound/voice/wizard/BullChargeFem.ogg"
-	voice_other = "sound/voice/wizard/BullChargeLoud.ogg"
+	voice_grim = 'sound/voice/wizard/BullChargeGrim.ogg'
+	voice_fem = 'sound/voice/wizard/BullChargeFem.ogg'
+	voice_other = 'sound/voice/wizard/BullChargeLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("RAMI TIN")
+			holder.owner.say("RAMI TIN", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/path = list()
@@ -28,7 +30,7 @@
 				prev = curr
 			sleep(0.1 SECONDS)
 
-		playsound(holder.owner.loc, "sound/voice/animal/bull.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/voice/animal/bull.ogg', 25, 1, -1)
 
 		var/list/affected = list()
 		var/obj/effects/bullshead/B = new/obj/effects/bullshead(first)

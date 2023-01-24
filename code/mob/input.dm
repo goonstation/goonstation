@@ -11,11 +11,27 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES))
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/atom/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, TRUE)
 		else
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/mob/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -36,10 +52,8 @@
 			move_x -= 1
 		if (move_x || move_y)
 			if(!src.move_dir && src.canmove && src.restrained())
-				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
-						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
-						break
+				if (src.pulled_by || length(src.grabbed_by))
+					boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
 
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
@@ -72,7 +86,9 @@
 	if (src.move_dir)
 		var/running = 0
 		var/mob/living/carbon/human/H = src
-		if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if ((keys & KEY_RUN) && \
+		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
+			  !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			running = 1
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
@@ -81,7 +97,9 @@
 		var/move_dir = src.move_dir
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
-		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
+		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
+			if(isnull(get_step(src, move_dir)))
+				return
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
@@ -99,9 +117,8 @@
 		src.update_canmove()
 		if (src.canmove)
 			if (src.restrained())
-				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
-						return
+				if (src.pulled_by || length(src.grabbed_by))
+					return
 
 			var/misstep_angle = 0
 			if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
@@ -118,7 +135,7 @@
 				move_dir = angle2dir(move_angle)
 
 			if (src.buckled && !istype(src.buckled, /obj/stool/chair))
-				src.buckled.relaymove(move_dir)
+				src.buckled.relaymove(src, move_dir)
 			else if (isturf(src.loc))
 				if (src.buckled && istype(src.buckled, /obj/stool/chair))
 					var/obj/stool/chair/C = src.buckled
@@ -127,11 +144,11 @@
 						C.rotate(src.move_dir)
 
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-					if (get_dist(src, G.affecting) > 1)
+					if (BOUNDS_DIST(src, G.affecting) > 0)
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
-					if (istype(G) && get_dist(src, G.assailant) > 1)
-						if (G.state > 1)
+					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
+						if (G.state > GRAB_STRONG)
 							delay += G.assailant.p_class
 						qdel(G)
 
@@ -177,7 +194,7 @@
 						I.icon_state = "blank"
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
-						SPAWN_DBG( 20 )
+						SPAWN( 20 )
 							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh
@@ -199,9 +216,14 @@
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 					for (var/obj/item/grab/G as anything in src.grabbed_by)
-						if (G?.state < GRAB_NECK) continue
+						if (G?.state < GRAB_AGGRESSIVE) continue
 						do_step = 0
 						break
+
+					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
+						boutput(src, "<span class='alert'>Without a leg to walk with, you flop over!</span>")
+						src.setStatus("resting", duration = INFINITE_STATUS)
+						src.force_laydown_standup()
 
 					if (do_step)
 						step(src, move_dir)
@@ -219,7 +241,7 @@
 
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
-							if (G.state < GRAB_NECK) continue
+							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
@@ -233,9 +255,20 @@
 							if (src.pulling)
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
+						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
+							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
+								//just fall over in place when in space (to prevent zooming)
+								var/turf/current_turf = get_turf(src)
+								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
+									src.throw_at(get_step(src, move_dir), 1, 1)
+								src.setStatus("resting", duration = INFINITE_STATUS)
+								src.force_laydown_standup()
+								src.emote("wheeze")
+								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
+
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
@@ -244,7 +277,7 @@
 							pulling += G.affecting
 
 						for (var/atom/movable/A in pulling)
-							if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 								continue
 							if (A == src || A == pushing)
 								continue
@@ -257,9 +290,18 @@
 							A.OnMove(src)
 			else
 				if (src.loc) //ZeWaka: Fix for null.relaymove
-					delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay
+					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)
 						delay = 0.5
 
 			next_move = world.time + delay
 			return delay
+		else
+			if (src.restrained())
+				return
+			for (var/obj/item/grab/G as anything in src.grabbed_by)
+				if (G.state == GRAB_PIN)
+					if (src.last_resist > world.time)
+						return
+					src.last_resist = world.time + 20
+					G.do_resist()

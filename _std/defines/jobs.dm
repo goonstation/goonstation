@@ -12,6 +12,7 @@
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
 #define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
+#define MGD_MINING "mining"
 
 // Mail Groups (Other)
 // These cannot be joined or left.
@@ -20,8 +21,6 @@
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
 #define MGO_ENGINEER "engineer"
-#define MGO_MINING "mining"
-#define MGO_MECHANIC "mechanic"
 
 // Mail Groups (Alerts)
 // These cannot be joined, and no PDAs start in them.

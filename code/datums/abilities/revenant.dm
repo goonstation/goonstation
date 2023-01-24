@@ -4,15 +4,8 @@
 	cast_while_dead = 1
 	var/channeling = 0
 
-	var/datum/abilityHolder/wraith/relay = null
 	var/datum/bioEffect/hidden/revenant/revenant = null
 	pointName = "Wraith Points"
-
-	Stat()
-		if (relay)
-			relay.Stat()
-		if (owner)
-			stat("Human vessel integrity:", "[(owner.max_health + 50) / 1.5]%")
 
 	generatePoints(var/mult = 1)
 		if (relay)
@@ -29,7 +22,7 @@
 		if (!relay.usesPoints)
 			return 1
 		if (relay.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
 			relay.points = 0
 		if (cost > relay.points)
 			boutput(owner, relay.notEnoughPointsMessage)
@@ -39,8 +32,9 @@
 	onAbilityStat()
 		..()
 		.= list()
-		.["Points:"] = round(relay.points)
-		.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
+		if (relay) // Avoids a runtime whilst setting up revenant verbs
+			.["Points:"] = round(relay.points)
+			.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
 
 /datum/bioEffect/hidden/revenant
 	name = "Revenant"
@@ -50,10 +44,13 @@
 	isBad = 0 // depends on who you ask really
 	can_copy = 0
 	var/isDying = 0
-	var/mob/wraith/wraith = null
+	var/mob/living/intangible/wraith/wraith = null
 	var/ghoulTouchActive = 0
 	var/list/abilities
 	icon_state  = "evilaura"
+
+	var/datum/hud/revenant/hud
+	var/hud_path = /datum/hud/revenant
 
 	OnAdd()
 		if (ishuman(owner) && isdead(owner))
@@ -87,28 +84,34 @@
 		owner.set_mutantrace(null)
 		owner.set_face_icon_dirty()
 		owner.set_body_icon_dirty()
+		hud = new hud_path(owner)
+		owner.attach_hud(hud)
+
 		animate_levitate(owner)
 
-		owner.add_stun_resist_mod("revenant", 1000)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant", 100)
 		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()
 
 	OnRemove()
 		if (owner)
-			owner.remove_stun_resist_mod("revenant")
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
+			owner.detach_hud(hud)
 		..()
 
-	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
+	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/def_zone)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
 			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
 			JOB_XP(poorSob, "Chaplain", 2)
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
-			if (istype(affecting))
-				affecting.take_damage(4, 4, 0, DAMAGE_BLUNT)
+			if (def_zone)
+				poorSob.TakeDamage(def_zone, 4, 4, 0, DAMAGE_BLUNT)
 			else
 				poorSob.TakeDamage("All", 4, 4, 0, DAMAGE_BLUNT)
 			poorSob.changeStatus("weakened", 2 SECONDS)
@@ -117,7 +120,7 @@
 			step_away(poorSob, owner, 15)
 
 
-	proc/wraithPossess(var/mob/wraith/W)
+	proc/wraithPossess(var/mob/living/intangible/wraith/W)
 		if (!W.mind && !W.client)
 			return
 		if (owner.client || owner.mind)
@@ -129,12 +132,12 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
+		APPLY_ATOM_PROPERTY(W, PROP_MOB_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.topBarRendered = 0
 
-		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, usr, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -158,19 +161,19 @@
 		if (!src.owner.mind && !src.owner.client)
 			return
 
-		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
+		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
+		playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
+		logTheThing(LOG_COMBAT, usr, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src.wraith, PROP_MOB_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
-		owner:decomp_stage = 4
+		owner:decomp_stage = DECOMP_STAGE_SKELETONIZED
 		if (ishuman(owner) && owner:organHolder && owner:organHolder:brain)
 			qdel(owner:organHolder:brain)
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(owner.x, owner.y, owner.z)))
@@ -204,15 +207,15 @@
 		owner.take_brain_damage(-120)
 		owner.bodytemperature = owner.base_body_temp
 		setalive(owner)
-
+		hud.update_health()
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-			owner.death(0) // todo: add custom death
+			playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
+			owner.death(FALSE) // todo: add custom death
 			return
 
-		var/e_decomp_stage = 0
+		var/e_decomp_stage = DECOMP_STAGE_NO_ROT
 		if (owner.max_health < 75)
 			e_decomp_stage++
 			if (owner.max_health < 50)
@@ -244,13 +247,39 @@
 			owner.mind.spells.len = 0
 		return*/
 
+/atom/movable/screen/ability/topBar/revenant
+	update_cooldown_cost()
+		var/newcolor = null
+		var/on_cooldown = round((owner.last_cast - world.time) / 10)
+
+		if (owner.pointCost)
+			if (owner.pointCost > owner.holder.relay.points)
+				newcolor = rgb(64, 64, 64)
+				point_overlay.maptext = "<span class='sh vb r ps2p' style='color: #cc2222;'>[owner.pointCost]</span>"
+			else
+				point_overlay.maptext = "<span class='sh vb r ps2p'>[owner.pointCost]</span>"
+		else
+			src.maptext = null
+
+		if (on_cooldown > 0)
+			newcolor = rgb(96, 96, 96)
+			cooldown_overlay.alpha = 255
+			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, on_cooldown)]</span>"
+			point_overlay.alpha = 64
+		else
+			cooldown_overlay.alpha = 0
+			point_overlay.alpha = 255
+
+		if (newcolor != src.color)
+			src.color = newcolor
+
 /datum/targetable/revenantAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	preferred_holder_type = /datum/abilityHolder/revenant
 	theme = "wraith"
 
 	New()
-		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/revenant/B = new /atom/movable/screen/ability/topBar/revenant(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -273,8 +302,8 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
-			holder.updateButtons()
+		SPAWN(cooldown + 5)
+			holder?.updateButtons()
 
 
 /datum/targetable/revenantAbility/massCommand
@@ -287,18 +316,20 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
+		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
 		holder.owner.visible_message("<span class='alert'><strong>[holder.owner]</strong> gestures upwards, then at [target] with a swift striking motion!</span>")
 		var/list/thrown = list()
 		var/current_prob = 100
+		var/turf/destination = get_turf(target)
+		if (!destination) return TRUE
 		if (ishuman(target))
 			var/mob/living/carbon/T = target
 			if (T.traitHolder.hasTrait("training_chaplain"))
 				target.visible_message("<span class='alert'> [target] gives a rude gesture right back to [holder.owner]!</span>")
-				return 1
+				return TRUE
 			else if( check_target_immunity(T) )
 				holder.owner.show_message( "<span class='alert'>That target seems to be warded from the effects!</span>" )
 			else
@@ -312,9 +343,10 @@
 					current_prob *= 0.75
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
+			if (!destination) return
 			for (var/obj/O in thrown)
-				O.throw_at(target, 32, 2)
+				O.throw_at(destination, 32, 2)
 
 /datum/targetable/revenantAbility/shockwave
 	name = "Shockwave"
@@ -329,8 +361,8 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
-		SPAWN_DBG(0)
+		playsound(usr.loc, 'sound/voice/wraith/revshock.ogg', 30, 0)
+		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
@@ -369,7 +401,7 @@
 		for (var/turf/T in orange(1, origin))
 			next += T
 			next[T] = get_dir(origin, T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 1, i <= iteration_depth, i++)
 				for (var/turf/T in next)
 					shock(T)
@@ -406,7 +438,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -464,68 +496,68 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
-			return 1
+			return TRUE
 		var/mob/living/carbon/human/H = target
 		if (!isturf(holder.owner.loc))
 			holder.owner.show_message("<span class='alert'>You cannot cast this ability inside a [holder.owner.loc].</span>")
-			return 1
+			return TRUE
 		if (holder.owner.equipped())
 			holder.owner.show_message("<span class='alert'>You require a free hand to cast this ability.</span>")
-			return 1
+			return TRUE
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
 			JOB_XP(H, "Chaplain", 2)
-			return 1
+			return TRUE
 		else if( check_target_immunity(H) )
 			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
-			return 1
-
-		var/location = holder.owner.loc
+			return TRUE
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span class='notice'>You reach out towards [H].</span>")
 		H.changeStatus("weakened", 2 SECONDS)
+		actions.start(new/datum/action/bar/crush(holder.owner, H), holder.owner)
+		return FALSE
 
-		var/datum/abilityHolder/revenant/RH
-		if (istype(holder, /datum/abilityHolder/revenant))
-			RH = holder
-			RH.channeling = 1
-		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
+/datum/action/bar/crush
+	duration = 8 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT
+	id = "crush"
+	var/mob/living/casting_mob = null
+	var/mob/living/target_mob = null
+
+	New(var/mob/living/caster, var/mob/living/target)
+		src.casting_mob = caster
+		src.target_mob = target
+		..()
+
+	onStart()
+		..()
+		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
+			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		SPAWN_DBG(0.5 SECONDS)
-			var/iterations = 0
-			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
-				iterations++
-				if (!holder.owner)
-					RH.channeling = 0
-					break
-				if (RH.channeling == 0)
-					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
-					break
-				if (!H)
-					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
-					RH.channeling = 0
-					break
-				if (get_dist(holder.owner, H) > 7)
-					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
-					RH.channeling = 0
-					break
-				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
-				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
-				if (prob(40))
-					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
-				if (prob(50))
-					H.emote("scream")
-				if (iterations > 12 && prob((iterations - 12) * 5))
-					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
-					H.gib()
-					return
-				sleep(0.7 SECONDS)
-			holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
-		return 0
+	onUpdate()
+		..()
+		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.target_mob.changeStatus("weakened", 2 SECONDS)
+		src.target_mob.TakeDamage("chest", 5, 0, 0, DAMAGE_CRUSH)
+		if (prob(25))
+			src.target_mob.visible_message("<span class='alert'>[src.target_mob]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
+			playsound(src.target_mob.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 70, 1)
+
+	onEnd()
+		..()
+		src.target_mob.visible_message("<span class='alert'>[src.target_mob]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
+		logTheThing(LOG_COMBAT, src.casting_mob, "gibs [constructTarget(src.target_mob,"combat")] with the Revenant crush ability at [log_loc(casting_mob)].")
+		src.target_mob.gib()
+
+	onInterrupt()
+		..()
+		boutput(src.casting_mob, "<span class='alert'>You were interrupted!</span>")
 
 /datum/targetable/revenantAbility/help
 	name = "Toggle Help Mode"

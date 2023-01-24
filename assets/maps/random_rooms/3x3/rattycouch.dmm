@@ -1,0 +1,91 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/item/cigbutt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/structure/girder,
+/obj/item/storage/pill_bottle/cyberpunk{
+	layer = 2.4
+	},
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/decal/cleanable/dirt,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/syringe/krokodil,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag19";
+	layer = 4;
+	pixel_y = 32
+	},
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+w
+F
+a
+"}
+(2,1,1) = {"
+u
+l
+C
+"}
+(3,1,1) = {"
+W
+d
+n
+"}

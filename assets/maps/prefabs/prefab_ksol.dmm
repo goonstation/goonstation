@@ -121,7 +121,7 @@
 /turf/space,
 /area/noGenerate)
 "ap" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aq" = (
 /obj/item/raw_material/shard/glass,
@@ -342,11 +342,11 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aT" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aU" = (
 /obj/lattice{
@@ -370,7 +370,7 @@
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aW" = (
 /obj/decal/cleanable/dirt,
@@ -675,7 +675,7 @@
 /area/noGenerate)
 "bF" = (
 /obj/decal/cleanable/vomit,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Still has her monitor headset on...";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -984,15 +984,14 @@
 	icon_state = "lattice-dir-b";
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "cs" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard/glass,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "ct" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -1083,7 +1082,7 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cE" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "He hasn't got a leg to stand on.";
 	dir = 4;
 	icon = 'icons/misc/hstation.dmi';
@@ -1159,7 +1158,7 @@
 /area/noGenerate)
 "cN" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "50% of a rotten corpse.";
 	dir = 8;
 	icon = 'icons/misc/hstation.dmi';

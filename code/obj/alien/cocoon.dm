@@ -10,8 +10,8 @@ they're trapped
 /obj/alien/cocoon
 	name = "cocoon"
 	desc = "a strange... something..."
-	density = 1.0
-	anchored = 1.0
+	density = 1
+	anchored = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 
@@ -21,7 +21,7 @@ they're trapped
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return
-		if ((!( ismob(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat))
+		if ((!( ismob(M) ) || BOUNDS_DIST(src, user) > 0 || user.restrained() || user.stat))
 			return
 		for(var/mob/O in viewers(user, null))
 			if ((O.client && !( O.blinded )))
@@ -32,7 +32,7 @@ they're trapped
 		src.add_fingerprint(user)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(health <= 0)
 			for(var/mob/M in src.loc)
 				if (M.buckled)
@@ -43,7 +43,7 @@ they're trapped
 					src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><B>[user] has destroyed the cocoon.</B></span>")
 			src.death()

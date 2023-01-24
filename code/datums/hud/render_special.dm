@@ -15,6 +15,10 @@
 		center_light.blend_mode = BLEND_ADD
 		center_light.plane = PLANE_LIGHTING
 		center_light.color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255)
+		#ifdef UPSCALED_MAP
+		center_light.Scale(3, 3)
+		center_light.color = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
+		#endif
 
 	proc/set_centerlight_icon(state, color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255), blend_mode = BLEND_ADD, plane = PLANE_LIGHTING, wide = 0, alpha = 255)
 		switch(state)
@@ -48,12 +52,12 @@
 
 		if(isnull(left_fill))
 			left_fill = create_screen("", "", 'icons/effects/overlays/solid.dmi', "solid", "LEFT-12,CENTER-7", LIGHTING_LAYER_BASE)
-			left_fill.appearance_flags = TILE_BOUND
+			left_fill.appearance_flags = TILE_BOUND | PIXEL_SCALE
 			left_fill.mouse_opacity = 1 // this is meant to OBSCURE ok
 			left_fill.transform = flip
 		if(isnull(right_fill))
 			right_fill = create_screen("", "", 'icons/effects/overlays/solid.dmi', "solid", "RIGHT+12,CENTER-7", LIGHTING_LAYER_BASE)
-			right_fill.appearance_flags = TILE_BOUND
+			right_fill.appearance_flags = TILE_BOUND | PIXEL_SCALE
 			right_fill.mouse_opacity = 1
 			right_fill.transform = flip
 

@@ -33,7 +33,7 @@
 		/obj/critter/zombie/security,
 		/obj/critter/spirit,
 		/obj/critter/blobman,
-		/obj/critter/spider/spacerachnid,
+		/mob/living/critter/spider/spacerachnid,
 		/obj/critter/lion, //Okay, this one isn't very "spooky"
 		/obj/item/clothing/glasses/regular/ecto,
 		/obj/item/device/key/haunted,

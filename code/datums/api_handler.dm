@@ -14,8 +14,8 @@ var/global/datum/apiHandler/apiHandler
 		..()
 		if (!config.goonhub_api_endpoint)
 			src.enabled = 0
-			logTheThing("debug", null, null, "Goonhub endpoint doesn't exist, disabled api handler")
-			logTheThing("diary", null, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
+			logTheThing(LOG_DEBUG, null, "Goonhub endpoint doesn't exist, disabled api handler")
+			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
@@ -69,8 +69,8 @@ var/global/datum/apiHandler/apiHandler
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing("diary", null, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
+			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
 
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
@@ -82,8 +82,8 @@ var/global/datum/apiHandler/apiHandler
 			var/list/data = json_decode(response.body)
 
 			if (!data)
-				logTheThing("debug", null, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
-				logTheThing("diary", null, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
+				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
+				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
 
 				if (attempt < maxApiRetries)
 					return retryApiQuery(args, attempt = attempt)

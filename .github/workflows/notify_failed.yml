@@ -31,4 +31,4 @@ jobs:
                 "${{ secrets.MEDASS_API_KEY }}" \
                 "${{ github.event.workflow_run.head_repository.full_name }}" \
               )" \
-            "${{ secrets.MEDASS_API_URL }}/workflow_failed"
+            "${{ secrets.MEDASS_API_URL }}/github/workflow_failed"

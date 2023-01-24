@@ -21,12 +21,14 @@
 	3) Done.
 */
 
-obj/machinery/recharger
-	anchored = 1.0
+TYPEINFO(/obj/machinery/recharger)
+	mats = 16
+
+/obj/machinery/recharger
+	anchored = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
-	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_MULTITOOL
 	desc = "An anchored minature recharging device, used to recharge small, hand-held objects that don't require much electrical charge."
 	power_usage = 50
@@ -85,7 +87,7 @@ obj/machinery/recharger
 						break
 				T = null
 
-/obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
+/obj/machinery/recharger/attackby(obj/item/G, mob/user)
 	if (isrobot(user)) return
 	if (src.charging)
 		return
@@ -93,18 +95,18 @@ obj/machinery/recharger
 	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)
 
 	if(ret & CELL_UNCHARGEABLE)
-		boutput(user, "<span class='alert'>[G.name] is not compatible with \the [src]!</span>")
+		boutput(user, "<span class='alert'>[G] is not compatible with \the [src]!</span>")
 	else if(ret & CELL_CHARGEABLE)
 		user.drop_item(G)
 		G.set_loc(src)
 		if (G.loc == src)
 			src.charging = G
 			charge_status = STATUS_ACTIVE
-			update_icon()
+			UpdateIcon()
 	else
 		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
 
-/obj/machinery/recharger/attack_hand(mob/user as mob)
+/obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	remove_charging()
 
@@ -113,7 +115,7 @@ obj/machinery/recharger
 	if (src.charging)
 		try
 			//Some items will want to update their icons after a charge. Try doing so here
-			src.charging:update_icon()
+			src.charging:UpdateIcon()
 		catch
 			//Pass
 
@@ -122,9 +124,9 @@ obj/machinery/recharger
 
 		power_usage = 50
 		charge_status = STATUS_INACTIVE
-		src.update_icon()
+		src.UpdateIcon()
 
-/obj/machinery/recharger/proc/update_icon()
+/obj/machinery/recharger/update_icon()
 	if (status & NOPOWER || charge_status == STATUS_INACTIVE)
 		// No power - show blank machine
 		src.icon_state = sprite_empty
@@ -155,7 +157,7 @@ obj/machinery/recharger
 /obj/machinery/recharger/process(var/mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
-		update_icon()
+		UpdateIcon()
 		return
 
 
@@ -171,13 +173,13 @@ obj/machinery/recharger
 			// Charge complete
 			charge_status = STATUS_COMPLETE
 			playsound(src, 'sound/machines/ping.ogg', 50)
-			update_icon()
+			UpdateIcon()
 		else if(ret & CELL_UNCHARGEABLE)
 			// Charge failed - the item does not want to be recharged
 			charge_status = STATUS_ERRORED
 			src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
-			update_icon()
+			UpdateIcon()
 
 	if(src.charging)
 		use_power(power_usage)

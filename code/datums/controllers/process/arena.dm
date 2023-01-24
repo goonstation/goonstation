@@ -1,5 +1,5 @@
 
-/// Handles the gauntlet and colosseum
+/// Handles the gauntlet
 /datum/controller/process/arena
 	var/list/arenas = list()
 
@@ -8,7 +8,6 @@
 		schedule_interval = 0.8 SECONDS
 
 		arenas += gauntlet_controller
-		arenas += colosseum_controller
 
 	copyStateFrom(datum/controller/process/target)
 		var/datum/controller/process/arena/old_arena = target

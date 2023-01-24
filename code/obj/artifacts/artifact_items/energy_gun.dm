@@ -3,7 +3,7 @@
 	name = "artifact energy gun"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "laser"
-	force = 5.0
+	force = 5
 	artifact = 1
 	is_syndicate = 1
 	mat_changename = 0
@@ -17,7 +17,7 @@
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 			var/datum/artifact/A = src.artifact
 
@@ -43,7 +43,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -99,6 +99,7 @@
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
 	type_name = "Energy Gun"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)
@@ -117,6 +118,7 @@
 			// artifact tweak buff, people said guns were useless compared to their cells
 			// the next 3 lines override the randomize(). Doing this instead of editing randomize to avoid changing prismatic spray.
 			bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
+			bullet.generate_inverse_stats()
 			bullet.dissipation_rate = rand(1,bullet.power)
 			bullet.cost = rand(35,100) // randomise puts it at 50-150
 			bullets += bullet

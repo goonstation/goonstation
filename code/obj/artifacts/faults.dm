@@ -30,19 +30,19 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(user)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly emits a burst of flame!</span>")
 		fireflash(T, 0)
-		playsound(T, "sound/effects/bamf.ogg", 100, 1)
+		playsound(T, 'sound/effects/bamf.ogg', 100, 1)
 
 /datum/artifact_fault/irradiate
 	// irradiates the victim
 	type_name = "Radiation"
 	trigger_prob = 8
-	var/rads_amount = 20
+	var/rads_amount = 2 SIEVERTS
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
-		user.changeStatus("radiation", (src.rads_amount) SECONDS, 3)
+		user.take_radiation_dose(src.rads_amount)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [O.name] suddenly deactivates!</span>")
-		playsound(T, "sound/effects/shielddown2.ogg", 100, 1)
+		playsound(T, 'sound/effects/shielddown2.ogg', 100, 1)
 		O.ArtifactDeactivated()
 
 /datum/artifact_fault/warp
@@ -68,8 +68,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
-		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
-		user.set_loc(pick(wormholeturfs))
+		playsound(T, 'sound/effects/mag_warp.ogg', 100, 1)
+		user.set_loc(pick(random_floor_turfs))
 
 /datum/artifact_fault/grow
 	// embiggens the artifact
@@ -127,10 +127,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			var/obj/item/I = O
 			if (I.loc == user)
 				user.u_equip(I)
-				I.dropped()
+				I.dropped(user)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
-		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		playsound(T, 'sound/effects/elec_bigzap.ogg', 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		logTheThing(LOG_COMBAT, user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 
 /datum/artifact_fault/explode
@@ -147,7 +148,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (isitem(O))
 			var/obj/item/I = O
 			user.u_equip(I)
-			I.dropped()
+			I.dropped(user)
 		explosion(O, T, 0, 1, 2, 4)
 		O.ArtifactDestroyed()
 
@@ -194,7 +195,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			else
 				user.say(generate_message(O, user))
 			var/datum/artifact/A = O.artifact
-			logTheThing("say", src, null, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
+			logTheThing(LOG_SAY, src, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")
@@ -252,13 +253,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		..()
 		if(prob(70))
 			allowed_emoji = list()
-			for(var/i in 1 to rand(10))
+			for(var/i in 1 to rand(1, 10))
 				allowed_emoji += random_emoji()
 
 	generate_message(obj/O, mob/living/user)
 		. = list()
-		for(var/i in 1 to rand(10))
-			if(isnull(src.allowed_emoji) || prob(2))
+		for(var/i in 1 to rand(1, 10))
+			if(!length(src.allowed_emoji) || prob(2))
 				. += random_emoji()
 			else
 				. += pick(src.allowed_emoji)

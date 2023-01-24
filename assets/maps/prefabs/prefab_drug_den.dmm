@@ -149,7 +149,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "ks" = (
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood,
@@ -478,7 +478,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "EW" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
@@ -665,7 +665,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/prefab/drug_den/party)
 "LZ" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
@@ -707,7 +707,7 @@
 /turf/space,
 /area/noGenerate)
 "OO" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -804,7 +804,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/prefab/drug_den/party)
 "Ti" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "Tv" = (

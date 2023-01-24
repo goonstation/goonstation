@@ -1,0 +1,65 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/reagent_containers/food/snacks/ingredient/peeled_banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_y = 9;
+	pixel_x = -5
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/overlay{
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
+	},
+/obj/item/bananapeel,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+"W" = (
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+b
+a
+"}
+(2,1,1) = {"
+W
+C
+b
+"}
+(3,1,1) = {"
+W
+s
+k
+"}

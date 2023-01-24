@@ -13,7 +13,7 @@
 		master = get_disease_from_path(/datum/ailment/malady)
 		master.tickcount = 0
 
-	stage_act()
+	stage_act(mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -32,9 +32,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
@@ -47,11 +46,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33))
+			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5))
+			else if (cure == "Self-Curing" && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -73,19 +72,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(reagcure_prob))
+							if (probmult(reagcure_prob))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(thing))
-									success = 0
-							if (success)
-								we_are_cured = 1
-						else if (prob(recureprob))
+						else if (probmult(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -94,10 +83,10 @@
 		if (state == "Asymptomatic")
 			return 1
 
-		SPAWN_DBG(rand(1,5))
+		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
-				master.stage_act(affected_mob,src)
+				master.stage_act(affected_mob, src, mult)
 
 		master.tickcount++
 
@@ -116,7 +105,7 @@
 	stage_prob = 6
 	min_advance_ticks = 5 //delay!!
 
-/datum/ailment/malady/shock/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/shock/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if (..())
 		return
 	if (affected_mob.health >= 25 && affected_mob.nutrition >= 0)
@@ -129,40 +118,40 @@
 			return
 	switch(D.stage)
 		if (1)
-			if (prob(1) && prob(10))
+			if (probmult(0.1))
 				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.cure_disease(D)
 				return
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("shiver", "pale", "moan"))
-			if (prob(5))
+			if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>You feel weak!</span>")
 		if (2)
-			if (prob(1) && prob(10))
+			if (probmult(0.1))
 				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.cure_disease(D)
 				return
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("shiver", "pale", "moan", "shudder", "tremble"))
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.emote("faint", "collapse", "groan")
-			if (prob(5))
+			if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>You feel absolutely terrible!</span>")
 		if (3)
-			if (prob(1) && prob(10))
+			if (probmult(0.1))
 				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.cure_disease(D)
 				return
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("shudder", "pale", "tremble", "groan", "shake"))
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
-			if (prob(5))
+			if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>You feel horrible!</span>")
-			if (prob(7))
+			if (probmult(7))
 				boutput(affected_mob, "<span class='alert'>You can't breathe!</span>")
 				affected_mob.losebreath++
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 
 /*------------------- Hypoglycemia -------------------*/
@@ -175,7 +164,7 @@
 	affected_species = list("Human")
 	stage_prob = 1
 
-/datum/ailment/malady/hypoglycemia/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/hypoglycemia/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if(..())
 		return
 	if(affected_mob.nutrition > 0)
@@ -184,32 +173,32 @@
 		return
 	switch(D.stage)
 		if (1)
-			if (prob(4))
+			if (probmult(4))
 				boutput(affected_mob, "<span class='alert'>You feel hungry!</span>")
-			if (prob(2))
+			if (probmult(2))
 				boutput(affected_mob, "<span class='alert'>You have a headache!</span>")
-			if (prob(2))
+			if (probmult(2))
 				boutput(affected_mob, "<span class='alert'>You feel [pick("anxious","depressed")]!</span>")
 		if(2)
-			if (prob(4))
+			if (probmult(4))
 				boutput(affected_mob, "<span class='alert'>You feel like everything is wrong with your life!</span>")
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
 		if(3)
-			if(prob(8))
+			if(probmult(8))
 				affected_mob.contract_disease(/datum/ailment/malady/shock,null,null,1)
-			if(prob(12))
+			if(probmult(12))
 				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
-			if (prob(12))
+			if (probmult(12))
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
 				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 
@@ -236,10 +225,10 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
+		REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot")
 		C.remove_stam_mod_max("bloodclot")
 
-/datum/ailment/malady/bloodclot/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/bloodclot/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if (D?.state == "Asymptomatic")
 		if (prob(1) && (prob(1) || affected_mob.find_ailment_by_type(/datum/ailment/malady/heartdisease) || affected_mob.reagents && affected_mob.reagents.has_reagent("proconvertin"))) // very low prob to become...
 			D.state = "Active"
@@ -251,7 +240,7 @@
 			affected_mob.cure_disease(D)
 			return
 		var/mob/living/carbon/human/H = affected_mob
-		if (!D.affected_area && prob(20))
+		if (!D.affected_area && probmult(20))
 			var/list/possible_areas = list()
 			if (H.organHolder)
 				if (H.organHolder.heart)
@@ -272,7 +261,7 @@
 				affected_mob.cure_disease(D)
 				return
 			boutput(affected_mob, "<span class='alert'>Your [D.affected_area] starts hurting!</span>")
-		else if (prob(3))
+		else if (probmult(3))
 			boutput(affected_mob, "<span class='alert'>Your [D.affected_area] hurts!</span>")
 
 		switch (D.affected_area)
@@ -280,33 +269,33 @@
 				if (H.organHolder && !H.organHolder.heart) // you need a heart to have an embolism in it
 					affected_mob.cure_disease(D)
 					return
-				if (prob(5) && iscarbon(affected_mob))
+				if (probmult(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
+					APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
-				if (prob(5))
+				if (probmult(5))
 					affected_mob.losebreath ++
-				if (prob(5))
+				if (probmult(5))
 					affected_mob.take_oxygen_deprivation(rand(1,2))
-				if (prob(5))
+				if (probmult(5))
 					affected_mob.emote(pick("twitch", "groan", "gasp"))
-				if (prob(1))
+				if (probmult(1))
 					affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 			if ("head")
 				if (H.organHolder && !H.organHolder.head || !H.organHolder.brain) // you need a brain to have an embolism in it
 					affected_mob.cure_disease(D)
 					return
-				if (prob(5) && iscarbon(affected_mob))
+				if (probmult(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
+					APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
-				if (prob(8))
+				if (probmult(8))
 					affected_mob.take_brain_damage(10)
-				if (prob(5))
+				if (probmult(5))
 					affected_mob.stuttering += 1
-				if (prob(2))
+				if (probmult(2))
 					affected_mob.changeStatus("drowsy", 5 SECONDS)
-				if (prob(5))
+				if (probmult(5))
 					affected_mob.emote(pick("faint", "collapse", "twitch", "groan"))
 			else // a limb or whatever
 				if (H.limbs)
@@ -322,7 +311,7 @@
 					else if (D.affected_area == "right leg" && !H.limbs.r_leg)
 						affected_mob.cure_disease(D)
 						return
-				if (prob(2)) // the clot moves
+				if (probmult(2)) // the clot moves
 					boutput(affected_mob, "<span class='notice'>Your [D.affected_area] stops hurting.</span>")
 					if (prob(1))
 						affected_mob.cure_disease(D)
@@ -330,7 +319,7 @@
 					D.affected_area = null
 					if (iscarbon(affected_mob))
 						var/mob/living/carbon/C = affected_mob
-						REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
+						REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot")
 						C.remove_stam_mod_max("bloodclot")
 
 /* -------------------- Heart Disease -------------------- */
@@ -348,17 +337,17 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease", -2)
+		APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "heartdisease", -2)
 		C.add_stam_mod_max("heartdisease", -10)
 
 /datum/ailment/malady/heartdisease/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease")
+		REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "heartdisease")
 		C.remove_stam_mod_max("heartdisease")
 
-/datum/ailment/malady/heartdisease/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/heartdisease/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if (..())
 		return
 	// chest pains, heartburn, shortness of breath (losebreath)
@@ -388,14 +377,14 @@
 		if (D.stage >= 2)
 			cureprob -= 10
 
-		if (prob(cureprob))
+		if (probmult(cureprob))
 			affected_mob.cure_disease(D)
 			return
 		else if (cureprob > 10 && src.reagentcure["heparin"] < 2)
 			reagentcure = list("heparin"=2, "salicylic_acid"=4)
 
 		if (D.stage >= 1) // chest pain, heartburn, shortness of breath and a little bit of damage from heart not getting enough oxygen
-			if (prob(5))
+			if (probmult(5))
 				var/msg = pick("Your chest hurts[prob(20) ? ". The pain radiates down your [pick("left arm", "back")]" : null].</span>",\
 				"You feel a burning pain in your chest.</span>",\
 				"Your chest feels tight.</span>",\
@@ -404,15 +393,15 @@
 				if (prob(1) && prob(10))
 					msg = "It feels like you're being hugged real hard by a bear! Or maybe a robot! Maybe a robot bear!!</span><br>Point is that your chest hurts and it's hard to breath.[prob(5) ? "<br>A robot bear would be kinda cool though. Do they make those?" : null]"
 				boutput(affected_mob, "<span class='alert'>[msg]")
-			if (prob(2))
+			if (probmult(2))
 				affected_mob.losebreath = max(affected_mob.losebreath, 1)
-			if (prob(2))
+			if (probmult(2))
 				affected_mob.take_oxygen_deprivation(1)
-			if (prob(2))
+			if (probmult(2))
 				affected_mob.emote("gasp")
 
 		if (D.stage >= 2) // danger zone!! chance of heart attack!!
-			if (prob(1))
+			if (probmult(1))
 				affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 
 /* -------------------- Cardiac Failure -------------------- */
@@ -427,7 +416,7 @@
 	affected_species = list("Human","Monkey")
 	stage_prob = 5
 
-/datum/ailment/malady/heartfailure/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/heartfailure/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if (..())
 		return
 
@@ -442,67 +431,67 @@
 		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
 			var/datum/organHolder/oH = H.organHolder
 			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
-			if (prob(40) && oH.heart.emagged)
+			if (probmult(40) && oH.heart.emagged)
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
-			else if (prob(25))
+			else if (probmult(25))
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D) //ZeWaka: Fix for null.robo_restart
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else
 				D.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					if (D)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 
 	switch (D.stage)
 		if (1)
-			if (prob(1) && prob(10))
+			if (probmult(0.1))
 				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.cure_disease(D)
 				return
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("pale", "shudder"))
-			if (prob(5))
+			if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>Your arm hurts!</span>")
-			else if (prob(5))
+			else if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>Your chest hurts!</span>")
 		if (2)
-			if (prob(1) && prob(10))
+			if (probmult(0.1))
 				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("pale", "groan"))
-			if (prob(5))
+			if (probmult(5))
 				boutput(affected_mob, "<span class='alert'>Your heart lurches in your chest!</span>")
 				affected_mob.losebreath++
-			if (prob(3))
+			if (probmult(3))
 				boutput(affected_mob, "<span class='alert'>Your heart stops beating!</span>")
 				affected_mob.losebreath+=3
-			if (prob(5))
+			if (probmult(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 		if (3)
 			affected_mob.take_oxygen_deprivation(1)
-			if (prob(8))
+			if (probmult(8))
 				affected_mob.emote(pick("twitch", "gasp"))
-			if (prob(1) && !affected_mob.hasStatus("defibbed")) // down from 5
+			if (probmult(1) && !affected_mob.hasStatus("defibbed")) // down from 5
 				affected_mob.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /* -------------------- Cardiac Arrest -------------------- */
@@ -513,10 +502,10 @@
 	max_stages = 1
 	cure = "Electric Shock"
 	affected_species = list("Human","Monkey")
-	reagentcure = list("atropine" = list(1,1), // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
-	"epinephrine" = list(1,10)) // epi is recommended though
+	reagentcure = list("atropine" = 0.01, // atropine is not recommended for use in treating cardiac arrest anymore but SHRUG
+	"epinephrine" = 0.1) // epi is recommended though
 
-/datum/ailment/malady/flatline/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
+/datum/ailment/malady/flatline/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
 	if (..())
 		return
 	if (ishuman(affected_mob))
@@ -530,52 +519,52 @@
 		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
 			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
 
-			if (prob(20) && H.organHolder.heart.emagged)
+			if (probmult(20) && H.organHolder.heart.emagged)
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
-			else if (prob(10))
+			else if (probmult(10))
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D) //ZeWaka: Fix for null.robo_restart x4
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						if (D)
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())
-				H.take_brain_damage(3)
+				H.take_brain_damage(3 * mult)
 			else if (prob(10))
-				H.take_brain_damage(1)
+				H.take_brain_damage(1 * mult)
 
-		H.changeStatus("weakened", 6 SECONDS)
-		H.losebreath+=20
-		H.take_oxygen_deprivation(20)
+		H.changeStatus("weakened", 6 * mult SECONDS)
+		H.losebreath+=20 * mult
+		H.take_oxygen_deprivation(20 * mult)

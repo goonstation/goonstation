@@ -1,0 +1,40 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/marslike/t1,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/item/reagent_containers/food/drinks/bottle,
+/turf/simulated/floor/marslike,
+/area/dmm_suite/clear_area)
+"d" = (
+/turf/simulated/floor/marslike,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/poncho/leaf,
+/obj/item/clothing/head/westhat{
+	pixel_x = 11;
+	pixel_y = 2
+	},
+/turf/simulated/floor/marslike,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/item/material_piece/bone,
+/turf/simulated/floor/marslike/t1,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+D
+d
+a
+"}
+(2,1,1) = {"
+a
+t
+D
+"}
+(3,1,1) = {"
+a
+c
+a
+"}

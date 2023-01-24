@@ -1,0 +1,113 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/item/handcuffs{
+	pixel_y = 7
+	},
+/obj/item/handcuffs,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/table/auto,
+/obj/machinery/light/lamp/green,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/surgery_tray,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/item/tank/anesthetic,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/random_item_spawner/organs/one_to_three,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib3"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/table/auto,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/staple_gun{
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/machinery/optable{
+	id = "treatment"
+	},
+/obj/machinery/drainage,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Y" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+A
+Y
+x
+"}
+(2,1,1) = {"
+i
+v
+Y
+"}
+(3,1,1) = {"
+E
+Q
+V
+"}
+(4,1,1) = {"
+Y
+o
+Y
+"}
+(5,1,1) = {"
+a
+R
+y
+"}

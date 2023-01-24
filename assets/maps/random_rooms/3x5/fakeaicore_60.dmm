@@ -1,0 +1,94 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/caution/north,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/cable{
+	icon_state = "0-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/storage/cart,
+/obj/item/screwdriver,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/cable_coil,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/computerframe,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	dir = null;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/item/clothing/suit/cardboard_box/ai,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/rack,
+/obj/item/paper{
+	pixel_x = -9;
+	pixel_y = 5;
+	name = "LAW ONE";
+	info = "<h4>Clown Is Cap!</h4>"
+	},
+/obj/item/paper{
+	name = "LAW TUU";
+	info = "<h4>No Harm Clown!</h4>";
+	pixel_y = 2
+	},
+/obj/item/paper{
+	pixel_x = 7;
+	pixel_y = -1;
+	name = "LAW THEE";
+	info = "<h4>CREW IS ALL CLOWNS HAHAHAHA!</h4>"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/item/rubberduck{
+	name = "AI FRIEND"
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+T
+b
+a
+a
+u
+"}
+(2,1,1) = {"
+O
+b
+y
+W
+a
+"}
+(3,1,1) = {"
+Q
+b
+a
+a
+g
+"}

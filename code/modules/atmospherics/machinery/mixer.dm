@@ -159,7 +159,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["in1tg"] = round(100*tgmoles/in1_total_moles)
 				signal.data["in1kpa"] = round(MIXTURE_PRESSURE(air_in1), 0.1)
-				signal.data["in1temp"] = round(air_in1.temperature - T0C)
+				signal.data["in1temp"] = round(TO_CELSIUS(air_in1.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(in1)
 				signal.data["in1tg"] = 0
@@ -174,7 +174,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["in2tg"] = round(100*tgmoles/in2_total_moles)
 				signal.data["in2kpa"] = round(MIXTURE_PRESSURE(air_in2), 0.1)
-				signal.data["in2temp"] = round(air_in2.temperature - T0C)
+				signal.data["in2temp"] = round(TO_CELSIUS(air_in2.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(in2)
 				signal.data["in2tg"] = 0
@@ -193,7 +193,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["outtg"] = round(100*tgmoles/out_total_moles)
 				signal.data["outkpa"] = round(MIXTURE_PRESSURE(air_out), 0.1)
-				signal.data["outtemp"] = round(air_out.temperature - T0C)
+				signal.data["outtemp"] = round(TO_CELSIUS(air_out.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(out)
 				signal.data["outtg"] = 0
@@ -278,7 +278,7 @@ obj/machinery/atmospherics/mixer
 			if ("set_ratio")
 				var/number = text2num(signal.data["parameter"])
 				if (number && isnum(number))
-					number = min(max(number, 0), 100)
+					number = clamp(number, 0, 100)
 					node1_concentration = number/100
 					node2_concentration = (100-number)/100
 
@@ -290,10 +290,10 @@ obj/machinery/atmospherics/mixer
 					target_pressure = 0
 
 		if (signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src) src.report_status()
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 // Housekeeping and pipe network stuff below
@@ -338,7 +338,7 @@ obj/machinery/atmospherics/mixer
 				node_out = target
 				break
 
-		update_icon()
+		UpdateIcon()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()

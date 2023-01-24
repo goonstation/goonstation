@@ -1,39 +1,428 @@
-"a" = (/turf/variableTurf/clear,/area/space)
-"b" = (/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 1},/turf/variableTurf/clear,/area/noGenerate)
-"d" = (/obj/item/raw_material/rock{icon_state = "rock2"},/turf/variableTurf/clear,/area/noGenerate)
-"e" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/noGenerate)
-"f" = (/turf/variableTurf/floor,/area/noGenerate)
-"g" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/obj/overlay{anchored = 1; density = 0; desc = "Seems to be full of fiber optic cables."; icon = 'icons/obj/tubing.dmi'; icon_state = "5-10"; name = "structural conduit"},/turf/variableTurf/floor,/area/noGenerate)
-"h" = (/obj/lattice,/turf/variableTurf/floor,/area/noGenerate)
-"i" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/obj/overlay{anchored = 1; density = 0; desc = "Seems to be full of fiber optic cables."; icon = 'icons/obj/tubing.dmi'; icon_state = "6-9"; name = "structural conduit"},/turf/variableTurf/floor,/area/noGenerate)
-"j" = (/obj/item/paper{info = "IF YOU LIKE THIS HUNK OF JUNK SO MUCH THEN WHY DON'T YOU MARRY IT? - Signed, an employee at Sickly Sam's Space Scrapyard"; name = "angry note"},/turf/variableTurf/clear,/area/noGenerate)
-"k" = (/obj/item/raw_material/rock,/turf/variableTurf/clear,/area/noGenerate)
-"l" = (/obj/decal/fakeobjects/shuttleengine{desc = "You should probably leave it alone."; dir = 8; name = "sensor array"},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/noGenerate)
-"m" = (/obj/overlay{anchored = 1; density = 1; desc = "A device for scanning deep space."; icon = 'icons/mob/hivebot.dmi'; icon_state = "def_radar"; name = "relay dish"},/obj/lattice,/turf/variableTurf/floor,/area/noGenerate)
-"n" = (/obj/lattice{icon_state = "lattice-dir"; dir = 1},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/noGenerate)
-"o" = (/obj/critter/gunbot/drone/heavydrone,/turf/variableTurf/clear,/area/noGenerate)
-"p" = (/obj/ydrone_panel,/turf/variableTurf/floor,/area/noGenerate)
-"q" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 9},/obj/overlay{anchored = 1; density = 0; desc = "Seems to be full of fiber optic cables."; icon = 'icons/obj/tubing.dmi'; icon_state = "6-9"; name = "structural conduit"},/turf/variableTurf/floor,/area/noGenerate)
-"r" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/overlay{anchored = 1; density = 0; desc = "Seems to be full of fiber optic cables."; icon = 'icons/obj/tubing.dmi'; icon_state = "5-10"; name = "structural conduit"},/turf/variableTurf/floor,/area/noGenerate)
-"s" = (/obj/lattice{icon_state = "lattice-dir"},/obj/overlay{anchored = 1; density = 0; desc = "Seems to be full of fiber optic cables."; icon = 'icons/obj/tubing.dmi'; icon_state = "1-2"; name = "structural conduit"},/turf/variableTurf/clear,/area/noGenerate)
-"t" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/noGenerate)
-"u" = (/obj/lattice{icon_state = "lattice-dir"; dir = 4},/turf/variableTurf/clear,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"b" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"d" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"e" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"f" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"g" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 6
+	},
+/obj/overlay{
+	anchored = 1;
+	density = 0;
+	desc = "Seems to be full of fiber optic cables.";
+	icon = 'icons/obj/tubing.dmi';
+	icon_state = "5-10";
+	name = "structural conduit"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"h" = (
+/obj/lattice,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"i" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 10
+	},
+/obj/overlay{
+	anchored = 1;
+	density = 0;
+	desc = "Seems to be full of fiber optic cables.";
+	icon = 'icons/obj/tubing.dmi';
+	icon_state = "6-9";
+	name = "structural conduit"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"j" = (
+/obj/item/paper{
+	info = "IF YOU LIKE THIS HUNK OF JUNK SO MUCH THEN WHY DON'T YOU MARRY IT? - Signed, an employee at Sickly Sam's Space Scrapyard";
+	name = "angry note"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"k" = (
+/obj/item/raw_material/rock,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"l" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "You should probably leave it alone.";
+	dir = 8;
+	name = "sensor array"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"m" = (
+/obj/overlay{
+	anchored = 1;
+	density = 1;
+	desc = "A device for scanning deep space.";
+	icon = 'icons/mob/hivebot.dmi';
+	icon_state = "def_radar";
+	name = "relay dish"
+	},
+/obj/lattice,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"n" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 1
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"o" = (
+/obj/critter/gunbot/drone/heavydrone,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"p" = (
+/obj/ydrone_panel,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"q" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 9
+	},
+/obj/overlay{
+	anchored = 1;
+	density = 0;
+	desc = "Seems to be full of fiber optic cables.";
+	icon = 'icons/obj/tubing.dmi';
+	icon_state = "6-9";
+	name = "structural conduit"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"r" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/obj/overlay{
+	anchored = 1;
+	density = 0;
+	desc = "Seems to be full of fiber optic cables.";
+	icon = 'icons/obj/tubing.dmi';
+	icon_state = "5-10";
+	name = "structural conduit"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"s" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/overlay{
+	anchored = 1;
+	density = 0;
+	desc = "Seems to be full of fiber optic cables.";
+	icon = 'icons/obj/tubing.dmi';
+	icon_state = "1-2";
+	name = "structural conduit"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"t" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 10
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/noGenerate)
+"u" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaa
-abbcbbbdbbbdbba
-abbbbbbbbbbbbca
-abbbbbbbbbbbbba
-acbbbbefefebbba
-abbbdbfghifjbka
-abbbblehmhenbba
-aobbbbpqhrfsbba
-akbbbbefefesbba
-abbbbbbbtuuebba
-abbbkbbbbbbbbba
-abbbbbbbbdbbbba
-acbbbbbbbbbcbba
-abbbbbbbbbbbbba
-aaaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+c
+b
+b
+o
+k
+b
+b
+b
+c
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(4,1,1) = {"
+a
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+b
+b
+d
+b
+b
+b
+b
+k
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+b
+l
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+e
+f
+e
+p
+e
+b
+b
+b
+b
+b
+a
+"}
+(8,1,1) = {"
+a
+d
+b
+b
+f
+g
+h
+q
+f
+b
+b
+b
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+e
+h
+m
+h
+e
+t
+b
+b
+b
+b
+a
+"}
+(10,1,1) = {"
+a
+b
+b
+b
+f
+i
+h
+r
+f
+u
+b
+d
+b
+b
+a
+"}
+(11,1,1) = {"
+a
+b
+b
+b
+e
+f
+e
+f
+e
+u
+b
+b
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+d
+b
+b
+b
+j
+n
+s
+s
+e
+b
+b
+c
+b
+a
+"}
+(13,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+c
+b
+b
+k
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

@@ -14,7 +14,7 @@
 	stage_prob = 5
 	var/robo_restart = 0
 
-/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 
@@ -31,27 +31,27 @@
 			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
 			if (prob(40) && oH.heart.emagged)
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else if (prob(25))
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 

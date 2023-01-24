@@ -3,7 +3,8 @@
 	icon_state = "fireball"
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
-
+	damage = 20
+	
 	is_magical = 1
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
@@ -32,20 +33,22 @@
 	target_anything = 1
 	cooldown = 350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/FireballGrim.ogg"
-	voice_fem = "sound/voice/wizard/FireballFem.ogg"
-	voice_other = "sound/voice/wizard/FireballLoud.ogg"
+	voice_grim = 'sound/voice/wizard/FireballGrim.ogg'
+	voice_fem = 'sound/voice/wizard/FireballFem.ogg'
+	voice_other = 'sound/voice/wizard/FireballLoud.ogg'
 
 	var/datum/projectile/fireball/fb_proj = new
+	maptext_colors = list("#fcdf74", "#eb9f2b", "#d75015")
 
 	cast(atom/target)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("MHOL HOTTOV")
+			holder.owner.say("MHOL HOTTOV", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()
@@ -62,6 +65,7 @@
 
 	cast(atom/target)
 		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()

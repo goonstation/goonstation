@@ -20,7 +20,7 @@
 	<br>You could try messing around with Doors or vending Machines.
 	<br>If you want to connect two non-component objects together - say two Doors,
 	<br>you will have to use a Component between the two Objects. Relays are easily used for this.
-	<br>You would connect the Relay to Door 1 as Reciever and then connect the Relay to Door 2 as Trigger.
+	<br>You would connect the Relay to Door 1 as Receiver and then connect the Relay to Door 2 as Trigger.
 	<br>
 	<br>Most Components offer additional Options in their right-Click Menu when you are standing right next to them.
 	<br>These Options can range from Rotation to setting the output Signal and such Things.
@@ -31,7 +31,7 @@
 	<br><BIG><B>Component specific Information</B></BIG>
 	<br>
 	<br><B>AND Component:</B>
-	<br>Sends specified signal when both inputs recieve a Signal within a specified Time Frame.
+	<br>Sends specified signal when both inputs receive a Signal within a specified Time Frame.
 	<br>
 	<br>
 	<br><B>Button:</B>
@@ -75,7 +75,7 @@
 	<br>
 	<br>
 	<br><B>OR Component:</B>
-	<br>Sends a specified Signal when it recieves a specified Signal in one of its Inputs.
+	<br>Sends a specified Signal when it receives a specified Signal in one of its Inputs.
 	<br>
 	<br>
 	<br><B>Pressure Sensor:</B>
@@ -107,12 +107,12 @@
 	<br>
 	<br>
 	<br><B>Signal Check Component:</B>
-	<br>Sends either its own Signal or the input Signal when it recieves a Signal that has the set Trigger String in it somewhere.  Can be toggled to trigger when it does NOT find the specified string.
+	<br>Sends either its own Signal or the input Signal when it receives a Signal that has the set Trigger String in it somewhere.  Can be toggled to trigger when it does NOT find the specified string.
 	<br>For Example: Trigger -> cat, Incoming Signal -> \"catswithhats\" -> the Component activates. This is not case-sensitive.
 	<br>
 	<br>
 	<br><B>Sound Synthesizer:</B>
-	<br>Speaks whatever Signal it recieves out loud. Rate-limited to 2 Seconds.
+	<br>Speaks whatever Signal it receives out loud. Rate-limited to 2 Seconds.
 	<br>
 	<br>
 	<br><B>Teleport Component:</B>
@@ -129,13 +129,13 @@
 	<br>
 	<br><B>Wifi Component:</B>
 	<br>The "send radio message" Command accepts Messages in the Format of command=herp&data=derp which will then be sent on the set Frequency.
-	<br>The Component can recieve a sendmsg Radio Signal that will send the Data in the \"data\" Portion of the Signal to the Outputs of this Component.
+	<br>The Component can receive a sendmsg Radio Signal that will send the Data in the \"data\" Portion of the Signal to the Outputs of this Component.
 	<br>Following the previous Syntax a sendmsg Signal would look like this : address_1=WIFICompoAddHere&command=sendmsg&data=MyCompoCommand
 	<br>Normal PDA Messages can also be used to trigger the Component.
 	<br>The frequency can be changed wirelessly as well by using the setfreq Command : address_1=WIFICompoAddHere&command=setfreq&data=1419
-	<br>If you enable the forward all option, the Component will forward any Radio Messages it recieves, unprocessed and in the above format, to its Outputs.
+	<br>If you enable the forward all option, the Component will forward any Radio Messages it receives, unprocessed and in the above format, to its Outputs.
 	<br>By disabling NetID filtering you can make the Component react to any and all Radio Messages on its frequency.
-	<br>The Component will blink green when it recieves a wireless Message and blink red when it sends a wireless Message."
+	<br>The Component will blink green when it receives a wireless Message and blink red when it sends a wireless Message."
 	<br>
 	<br>
 	<br><B>Wifi Signal Splitter Component:</B>
@@ -143,3 +143,19 @@
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
 	<br>
 	<br>
+	<br><B>Movement Component:</B>
+	<br>This component can only be deployed inside a component cabinet. It will allow the cabinet to move by it's own power.
+	<br>For this it has two possible inputs:
+	<br>"step" will make the cabinet take a single step in the given direction.
+	<br>"walk" will make the cabinet walk in the given direction until it is stopped.
+	<br>The speed of the cabinet can also be configured.
+	<br>Directions can be given as numbers or text
+	<br>Stopping is done via 0
+	<br>north 1
+	<br>south 2
+	<br>east 4
+	<br>west 8
+	<br>northeast 5
+	<br>southeast 6
+	<br>northwest 9
+	<br>southwest 10

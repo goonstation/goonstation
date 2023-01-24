@@ -1,8 +1,10 @@
 #define CASH_DIVISOR 200
 /datum/game_mode/gang
-	name = "gang"
+	name = "Gang War (Beta)"
 	config_tag = "gang"
+	regular = FALSE
 
+	antag_token_support = TRUE
 	var/list/leaders = list()
 	var/list/gangs = list()
 
@@ -35,12 +37,13 @@
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
 	var/kidnapping_score = 20000
-	var/kidnapp_success = 0			//true if the gang successfully kidnapps.
+	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
 	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
+	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
@@ -55,7 +58,7 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
+	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > leaders_possible.len)
@@ -70,7 +73,7 @@
 			break
 		leaders += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
@@ -108,46 +111,25 @@
 
 	find_potential_hot_zones()
 
-	SPAWN_DBG (10 MINUTES)
+	SPAWN(10 MINUTES)
 		process_hot_zones()
 
-	SPAWN_DBG (15 MINUTES)
+	SPAWN(15 MINUTES)
 		process_kidnapping_event()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-	SPAWN_DBG (50 MINUTES)
-		force_shuttle()
 
 	return 1
 
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
-		emergency_shuttle.disabled = 0
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 		emergency_shuttle.incall()
 		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
 
 /datum/game_mode/gang/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list("revolution", "wizard", "nuke", "traitor", "changeling")
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(leaders))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.leaders)
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
 	// leader.verbs += /client/proc/set_gang_base
 	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
@@ -206,6 +188,9 @@
 
 /datum/game_mode/gang/process()
 	..()
+	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
+		shuttle_called = TRUE
+		force_shuttle()
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -270,7 +255,7 @@
 		text += items
 		text += "<br><b>Areas Owned:</b> [leader_mind.gang.num_areas_controlled()]"
 		text += "<br><b>Turf Score:</b> [leader_mind.gang.score_turf]"
-		text += "<br><b>Cash Pile:</b> $[leader_mind.gang.score_cash*CASH_DIVISOR]"
+		text += "<br><b>Cash Pile:</b> [leader_mind.gang.score_cash*CASH_DIVISOR][CREDIT_SIGN]"
 		text += "<br><b>Guns Stashed:</b> [leader_mind.gang.score_gun]"
 		text += "<br><b>Drug Score:</b> [leader_mind.gang.score_drug]"
 		text += "<br><b>Event Score:</b> [leader_mind.gang.score_event]"
@@ -306,7 +291,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -354,7 +339,7 @@
 			part2chosen = pick(part2)
 			temp_name = part1chosen + " " + part2chosen
 
-		switch(alert(leaderMind.current,"Name: [temp_name].","Approve your gang's name","Accept","Randomize"))
+		switch(tgui_alert(leaderMind.current, "Name: [temp_name].", "Approve your gang's name", list("Accept", "Randomize")))
 			if ("Accept")
 				//make sure no other gangs have this name
 				if (fullchosen)
@@ -372,7 +357,7 @@
 					part2_used += part2chosen
 				leaderMind.gang.gang_name = temp_name
 				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			if ("Randomize")
+			else
 				continue
 
 /datum/game_mode/gang/proc/check_winner()
@@ -408,7 +393,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN_DBG(hot_zone_timer-600)
+	SPAWN(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -419,7 +404,7 @@
 		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
-	kidnapp_success = 0
+	kidnap_success = 0
 	kidnapping_target = null
 	var/datum/gang/top_gang = null
 	for (var/datum/gang/G in gangs)
@@ -430,7 +415,7 @@
 			top_gang = G
 
 	if (!top_gang)
-		logTheThing("debug", null, null, "No winning gang chosen for kidnapping event. Something's broken.")
+		logTheThing(LOG_DEBUG, null, "No winning gang chosen for kidnapping event. Something's broken.")
 		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
 		return 0
 
@@ -441,7 +426,7 @@
 			potential_targets += H
 
 	if (!potential_targets.len)
-		logTheThing("debug", null, null, "No players found to be kidnapping targets.")
+		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
 		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
 		return 0
 
@@ -461,17 +446,17 @@
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
 
-	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
+	SPAWN(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
 		sleep(1 MINUTE)
-		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-		if(!kidnapp_success)
+		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnap_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
 			if (kidnapping_target && kidnapping_target.stat != 2)
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
 						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnap [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
 			else
 				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
@@ -612,7 +597,7 @@
 	locker.gang = usr.mind.gang
 	ticker.mode:gang_lockers += locker
 	usr.mind.gang.locker = locker
-	locker.update_icon()
+	locker.UpdateIcon()
 
 	usr.verbs -= /client/proc/set_gang_base
 
@@ -640,7 +625,7 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || get_dist(src,target) > 1) return
+		if(turftarget == loc || BOUNDS_DIST(src, target) > 0) return
 
 		if(!user.mind || !user.mind.gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
@@ -713,22 +698,22 @@
 			..()
 			throw e
 
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if(prob(15))
-			playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")
@@ -740,7 +725,7 @@
 
 	onEnd()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -817,7 +802,7 @@
 
 		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		if(!isalive(user))
 			boutput(user, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
@@ -875,7 +860,7 @@
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		if (href_list["get_gear"])
@@ -918,10 +903,10 @@
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
-	proc/update_icon()
+	update_icon()
 		if(health <= 0)
 			src.UpdateOverlays(null, "light")
 			src.UpdateOverlays(null, "screen")
@@ -938,14 +923,14 @@
 		if(!user)
 			return 0
 		if (user.mind && user.mind.gang != src.gang)
-			boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score
 		if (istype(item, /obj/item/spacecash))
 			var/obj/item/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than $500!<b></span>")
+				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
@@ -1017,7 +1002,7 @@
 		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
 			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
 			damage_warning_timeout = 1
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				damage_warning_timeout = 0
 
 		if(health <= 0)
@@ -1037,7 +1022,7 @@
 		take_damage(250-50*severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			user.lastattacked = src
 
@@ -1062,15 +1047,15 @@
 		//if they're the target
 		if (istype(W, /obj/item/grab))
 			if (user?.mind.gang != src.gang)
-				boutput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
+				boutput(user, "<span class='alert'>You can't kidnap someone for a different gang!</span>")
 				return
-			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
+			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnap
 				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
-						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnapp a dead person!</span>")
-					else if (G.state < 3)
+						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
+					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
 						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
@@ -1081,7 +1066,7 @@
 						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
-						mode.kidnapp_success = 1
+						mode.kidnap_success = 1
 						G.affecting.remove()
 						qdel(G)
 			return
@@ -1098,7 +1083,7 @@
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				hadcannabis = 1
 
 			if(hadcannabis)
@@ -1140,7 +1125,7 @@
 			O.set_loc(src.loc)
 
 		icon_state = "secure-open"
-		update_icon()
+		UpdateIcon()
 
 		return
 
@@ -1149,7 +1134,7 @@
 		set_density(1)
 		icon_state = "gang"
 
-		update_icon()
+		UpdateIcon()
 
 		return
 
@@ -1161,7 +1146,7 @@
 	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
@@ -1179,7 +1164,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 
@@ -1218,7 +1203,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1231,17 +1216,17 @@
 			return
 
 		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
-		if (joingang == "No") return
+		if (joingang != "Yes")
+			return
 
 		target.mind.gang = gang
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
-		SHOW_GANG_MEMBER_TIPS(target)
-		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
-		gangObjective.owner = target.mind
-		gangObjective.explanation_text = "Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!"
-		target.mind.objectives += gangObjective
+		target.show_antag_popup("gang_member")
+		new /datum/objective/specialist/gang(
+			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
+			target.mind)
 		boutput(target, "<span class='notice'>You are now a member of [src.gang.gang_name]!</span>")
 		boutput(target, "<span class='notice'>Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
 		boutput(target, "<span class='notice'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
@@ -1295,8 +1280,9 @@
 		..() //spawn the flyers
 
 		for(var/obj/item/gang_flyer/flyer in contents)
-			flyer.name = "[gang.gang_name] recruitment flyer"
-			flyer.desc = "A flyer offering membership in the [gang.gang_name] gang."
+			var/gang_name = gang?.gang_name || "C0D3R"
+			flyer.name = "[gang_name] recruitment flyer"
+			flyer.desc = "A flyer offering membership in the [gang_name] gang."
 			flyer.gang = gang
 
 proc/get_gang_gear(var/mob/living/carbon/human/user)
@@ -1533,13 +1519,13 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/katana_sheath/reverse
+	item_path = /obj/item/swords_sheaths/katana/reverse
 /datum/gang_item/ninja/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
-	item_path = /obj/item/katana_sheath
+	item_path = /obj/item/swords_sheaths/katana
 
 /datum/gang_item/ninja/shuriken
 	name = "Shuriken"
@@ -1616,7 +1602,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "It shoots bullets."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/gun/kinetic/colt_saa
+	item_path = /obj/item/gun/kinetic/single_action/colt_saa
 /datum/gang_item/country_western/colt_45_bullet
 	name = "Colt .45 Speedloader"
 	desc = "A speedloader containing 7 rounds of Colt .45 ammunition.."
@@ -1672,7 +1658,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		..()
 		if (!ishuman(src.owner))
 			return
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 
 /obj/item/implanter/gang

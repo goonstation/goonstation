@@ -46,7 +46,7 @@
 				CRASH("Disjoint Connector missing ID [log_loc(src)]")
 			var/turf/source = get_turf(src)
 			LAZYLISTADD(disjoint_turf_connections[id], source)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/turf/T in disjoint_turf_connections[id])
 					if(T != source)
 						connect(source, T)

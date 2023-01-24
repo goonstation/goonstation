@@ -20,7 +20,7 @@
 			src.interacted(user)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(mode)
 			src.interacted(user)
 			return
@@ -88,7 +88,7 @@
 		..()
 
 		if (!issilicon(usr) && !isAIeye(usr))
-			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && IN_RANGE(src, usr, 1)))
+			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && (BOUNDS_DIST(src, usr) == 0)))
 				return
 			if (usr.stat || usr.restrained())
 				return
@@ -146,15 +146,15 @@
 			return
 
 		if(!src.last_intercept || src.last_intercept + 40 <= world.time)
-			playsound(src.loc, "sound/machines/twobeep.ogg", 25, 1)
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 25, 1)
 		//src.packet_data = signal.data:Copy()
 		var/newdat = "<b>\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]:</b>"
 		for (var/i in signal.data)
-			newdat += "[i][isnull(signal.data[i]) ? "; " : "=[signal.data[i]]; "]"
+			newdat += "[strip_html(i)][isnull(signal.data[i]) ? "; " : "=[strip_html(signal.data[i])]; "]"
 
 		if (signal.data_file)
 			. = signal.data_file.asText()
-			newdat += "<br>Included file ([signal.data_file.name], [signal.data_file.extension]): [. ? . : "Not printable."]"
+			newdat += "<br>Included file ([strip_html(signal.data_file.name)], [strip_html(signal.data_file.extension)]): [. ? . : "Not printable."]"
 
 		src.packet_data += newdat
 		if (src.packet_data.len > src.max_logs)

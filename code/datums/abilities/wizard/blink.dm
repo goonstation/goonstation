@@ -6,16 +6,17 @@
 	cooldown = 100
 	requires_robes = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/BlinkGrim.ogg"
-	voice_fem = "sound/voice/wizard/BlinkFem.ogg"
-	voice_other = "sound/voice/wizard/BlinkLoud.ogg"
+	voice_grim = 'sound/voice/wizard/BlinkGrim.ogg'
+	voice_fem = 'sound/voice/wizard/BlinkFem.ogg'
+	voice_other = 'sound/voice/wizard/BlinkLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("SYCAR TYN")
+			holder.owner.say("SYCAR TYN", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/accuracy = 3
@@ -46,7 +47,7 @@
 
 		var/turf/targetturf = locate(targetx, targety, holder.owner.z)
 
-		playsound(holder.owner.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(accuracy,targetturf))

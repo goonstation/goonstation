@@ -7,7 +7,7 @@
 			if ("nuke")
 				var/atom/movable/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_nuke", "1:6, 1:50", 99)
 				clients << sound('sound/misc/airraid_loop_short.ogg')
-				SPAWN_DBG(3.5 SECONDS)//45)
+				SPAWN(3.5 SECONDS)//45)
 					anim.icon_state = "explode"
 					sleep(1 SECOND)
 					clients << sound('sound/effects/kaboom.ogg')
@@ -15,7 +15,7 @@
 					anim.icon_state = "loss_nuke"
 			if ("malf")
 				var/atom/movable/screen/hud/anim = create_screen("cinematic", "", 'icons/effects/station_explosion.dmi', "start_malf", "1:6, 1:50", 99)
-				SPAWN_DBG(3.5 SECONDS)//45)
+				SPAWN(3.5 SECONDS)//45)
 					anim.icon_state = "explode"
 					sleep(1 SECOND)
 					clients << sound('sound/effects/kaboom.ogg')

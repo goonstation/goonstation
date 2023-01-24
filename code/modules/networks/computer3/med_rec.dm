@@ -8,6 +8,7 @@
 #define MENU_SEARCH_INPUT 4
 #define MENU_VIRUS_INDEX 5
 #define MENU_VIRUS_RECORD 6
+#define MENU_SEARCH_PICK 7
 
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
@@ -44,6 +45,7 @@
 	var/datum/db_record/active_general = null //General record
 	var/datum/db_record/active_medical = null //Medical record
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
+	var/list/datum/db_record/possible_active = null
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "medlog" //What name do we give our logdump textfile?
@@ -89,25 +91,25 @@
 
 		switch(menu)
 			if (MENU_MAIN)
-				switch (command)
-					if ("0") //Exit program
+				switch (round( max( text2num_safe(command), 0) ))
+					if (0) //Exit program
 						src.print_text("Quitting...")
 						src.master.unload_program(src)
 						return
 
-					if ("1") //View records
+					if (1) //View records
 						src.record_database = data_core.general
 
 						src.menu = MENU_INDEX
 						src.print_index()
 
-					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, or fingerprint.")
+					if (2) //Search records
+						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
 
-					if ("3") //Viral records.
+					if (3) //Viral records.
 
 						src.master.temp = null
 						src.print_text(virusmenu_text())
@@ -116,7 +118,7 @@
 						return
 
 			if (MENU_INDEX)
-				var/index_number = round( max( text2num(command), 0) )
+				var/index_number = round( max( text2num_safe(command), 0) )
 				if (index_number == 0)
 					src.menu = MENU_MAIN
 					src.master.temp = null
@@ -203,7 +205,7 @@
 						src.print_text("Printing...")
 						return
 
-				var/field_number = round( max( text2num(command), 0) )
+				var/field_number = round( max( text2num_safe(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
 					src.print_index()
@@ -274,7 +276,7 @@
 							return
 
 					if (FIELDNUM_SEX)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_general["sex"] = "Female"
 							if (2)
@@ -288,13 +290,13 @@
 								return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 99) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return
 
 						src.active_general["age"] = newAge
-						return
+
 
 					if (FIELDNUM_PSTAT)
 						if (ckey(inputText))
@@ -327,7 +329,7 @@
 							src.menu = MENU_IN_RECORD
 							return
 
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_medical["bioHolder.bloodType"] = "A+"
 							if (2)
@@ -490,16 +492,45 @@
 				src.menu = MENU_IN_RECORD
 				return
 
+			if (MENU_SEARCH_PICK)
+				var/input = text2num_safe(ckey(strip_html(text)))
+				if(isnull(input) || input < 0 || input >> length(src.possible_active))
+					src.print_text("Cancelled")
+					src.menu = MENU_MAIN
+					return
+
+				var/datum/db_record/result = src.possible_active[input]
+				src.active_general = result
+				src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+				if(!src.active_medical)
+					data_core.medical.find_record("name", src.active_general["name"])
+
+				src.menu = MENU_IN_RECORD
+				src.print_active_record()
+
 			if (MENU_SEARCH_INPUT)
 				var/searchText = ckey(strip_html(text))
 				if (!searchText)
 					return
 
-				var/datum/db_record/result = null
+				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
-						result = R
-						break
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					if(findtext(haystack, searchText))
+						results += R
+
+				var/datum/db_record/result = null
+				if(length(results) == 1)
+					result = results[1]
+				else if(length(results) > 1)
+					src.print_text("Multiple results found:")
+					var/i = 1
+					for(var/datum/db_record/R as anything in results)
+						src.print_text("\[[i++]\] [R["name"]]")
+					src.print_text("\[0\] Cancel")
+					src.menu = MENU_SEARCH_PICK
+					src.possible_active = results
+					return
 
 				if(!result)
 					src.print_text("No results found.")
@@ -517,13 +548,13 @@
 
 			if (MENU_VIRUS_INDEX)
 				var/entrydat = null
-				switch (copytext(text, 1,2))
-					if ("0")
+				switch (round( max( text2num_safe(text), 0) ))
+					if (0)
 						src.menu = MENU_MAIN
 						src.master.temp = null
 						src.print_text(virusmenu_text())
 						return
-					if ("1")
+					if (1)
 						entrydat = {"<b>Name:</b> GBS
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Airborne Transmission
@@ -533,7 +564,7 @@
 						<br><b>Notes:</b> If left untreated death will occur.
 						<br>
 						<br><b>Severity:</b> Major"}
-					if ("2")
+					if (2)
 						entrydat = {"<b>Name:</b> Common Cold
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -543,7 +574,7 @@
 						<br><b>Notes:</b> If left untreated the subject will contract the flu.
 						<br>
 						<br><b>Severity:</b> Minor"}
-					if ("3")
+					if (3)
 						entrydat = {"<b>Name:</b> The Flu
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -554,8 +585,8 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("4")
-						entrydat = {"<b>Name:</b> Chimpfluenza
+					if (4)
+						entrydat = {"<b>Name:</b> Monkey Madness
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Airborne Transmission
 						<br><b>Possible Cure:</b> None
@@ -565,7 +596,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("5")
+					if (5)
 						entrydat = {"<b>Name:</b> Clowning Around
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Contact Transmission
@@ -576,7 +607,7 @@
 						<br>
 						<br><b>Severity:</b> Laughable"}
 
-					if ("6")
+					if (6)
 						entrydat = {"<b>Name:</b> Space Rhinovirus
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Airborne Transmission
@@ -587,7 +618,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("7")
+					if (7)
 						entrydat = {"<b>Name:</b> Robot Transformation
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Infected food
@@ -598,7 +629,7 @@
 						<br>
 						<br><b>Severity:</b> Major"}
 
-					if ("8")
+					if (8)
 						entrydat = {"<b>Name:</b> Teleportitis
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Unknown
@@ -610,7 +641,7 @@
 						in physical position of subject.  Keep patients away from active engines.<br>
 						<br><b>Severity:</b> Unknown"}
 
-					if ("9")
+					if (9)
 						entrydat = {"<b>Name:</b> Berserker
 						<br><b>Number of stages:</b> 2
 						<br><b>Spread:</b> Contact Transmission
@@ -631,7 +662,7 @@
 				src.menu = MENU_VIRUS_RECORD
 
 			if (MENU_VIRUS_RECORD)
-				if (copytext(text, 1,2) == "0")
+				if (round( max( text2num_safe(command), 0) ) == 0)
 					src.master.temp = null
 					src.menu = MENU_MAIN
 					src.print_text(mainmenu_text())
@@ -657,7 +688,7 @@
 					(01) GBS<br>
 					(02) Common Cold<br>
 					(03) Flu<br>
-					(04) Chimpfluenza<br>
+					(04) Monkey Madness<br>
 					(05) Clowning Around<br>
 					(06) Space Rhinovirus<br>
 					(07) Robot Transformation<br>
@@ -750,6 +781,7 @@
 #undef MENU_SEARCH_INPUT
 #undef MENU_VIRUS_INDEX
 #undef MENU_VIRUS_RECORD
+#undef MENU_SEARCH_PICK
 
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME

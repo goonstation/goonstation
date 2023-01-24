@@ -81,7 +81,7 @@ export const GameSettingsTab = (_props, context) => {
             <Button onClick={() => act('update-hudTheme')}>Change</Button>
           </Box>
           <Box>
-            <Image pixelated src={`hud_preview_${data.hudTheme}.png`} width="32px" height="32px" />
+            <Image pixelated src={`data:image/png;base64,${data.hudThemePreview}`} width="32px" height="32px" />
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Targeting Cursor">
@@ -89,7 +89,7 @@ export const GameSettingsTab = (_props, context) => {
             <Button onClick={() => act('update-targetingCursor')}>Change</Button>
           </Box>
           <Box>
-            <Image pixelated src={`tcursor_${data.targetingCursor}.png`} width="32px" height="32px" />
+            <Image pixelated src={`data:image/png;base64,${data.targetingCursorPreview}`} width="32px" height="32px" />
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Tooltips">
@@ -130,16 +130,16 @@ export const GameSettingsTab = (_props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="tgui">
           <Box mb="5px" color="label">
-            tgui is the UI framework we use for some game windows, and it comes with options!
+            TGUI is the UI framework we use for some game windows, and it comes with options!
           </Box>
           <Box mb="5px">
             <Button.Checkbox checked={data.tguiFancy} onClick={() => act('update-tguiFancy')}>
-              Fast & Fancy Windows
+              Makes TGUI windows look better, at the cost of compatibility.
             </Button.Checkbox>
           </Box>
           <Box mb="5px">
             <Button.Checkbox checked={data.tguiLock} onClick={() => act('update-tguiLock')}>
-              Lock initial placement of windows
+              Locks TGUI windows to your main monitor.
             </Button.Checkbox>
           </Box>
         </LabeledList.Item>

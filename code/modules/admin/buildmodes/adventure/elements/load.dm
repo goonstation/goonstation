@@ -88,7 +88,7 @@
 				boutput(user, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/workgroup_size = 10
 					var/workgroup_curr = 0
 					var/list/PP = list()
@@ -143,7 +143,6 @@
 								F["[base].OBJ.[objid].type"] >> objt
 								if (ispath(objt))
 									O = new objt(Q)
-									O.flags |= ISADVENTURE
 									var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
 									if (!istype(O, /obj/critter))
 										if (result & DESERIALIZE_NEED_POSTPROCESS)

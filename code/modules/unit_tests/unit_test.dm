@@ -22,7 +22,6 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/datum/unit_test/current_test
 	var/failed_any_test = FALSE
 	var/test_log
-	var/dmm_suite/reservation
 
 /datum/unit_test_controller/proc/log_test(text)
 	if(src.test_log)
@@ -30,11 +29,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	world.log << text
 
 /datum/unit_test_controller/proc/run_tests()
-	if (isnull(reservation))
-		var/loaded = file2text('code/modules/unit_tests/unit_tests.dmm')
-		reservation = new/dmm_suite()
-		reservation.read_map(loaded, 1, 1, 1,'code/modules/unit_tests/unit_tests.dmm', DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-		sleep(0)
+	rand_seed(69420)
 	LAGCHECK(LAG_HIGH)
 
 	var/tests_to_run = childrentypesof(/datum/unit_test)
@@ -48,6 +43,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 
 	for(var/I in tests_to_run)
 		var/datum/unit_test/test = new I
+		LAGCHECK(LAG_HIGH)
 
 		src.current_test = test
 		var/duration = TIME
@@ -69,7 +65,6 @@ var/global/datum/unit_test_controller/unit_tests = new()
 		test_results[I] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = I)
 
 		qdel(test)
-
 		LAGCHECK(LAG_HIGH)
 
 	var/file_name = "data/unit_tests.json"

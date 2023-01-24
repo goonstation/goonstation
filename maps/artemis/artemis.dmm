@@ -384,7 +384,7 @@
 /area)
 "bq" = (
 /obj/table/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area)
 "br" = (

@@ -1,0 +1,142 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/table/wood/auto,
+/obj/item/paper/band_notice{
+	pixel_y = -2
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 10;
+	name = "parade gloves";
+	desc = "A set of form-fitting yet surprisingly roomy and rugged gloves."
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 12;
+	name = "parade gloves";
+	desc = "A set of form-fitting yet surprisingly roomy and rugged gloves."
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 14;
+	name = "parade gloves";
+	desc = "A set of form-fitting yet surprisingly roomy and rugged gloves."
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/rack,
+/obj/item/clothing/head/shako{
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/obj/item/clothing/head/shako{
+	pixel_y = 0
+	},
+/obj/item/clothing/head/shako{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/table/wood/auto,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/saxophone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/rack,
+/obj/item/clothing/under/gimmick/marchingband{
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/obj/item/clothing/under/gimmick/marchingband{
+	pixel_y = 0
+	},
+/obj/item/clothing/under/gimmick/marchingband{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/table/wood/auto,
+/obj/item/instrument/trumpet{
+	pixel_y = 0
+	},
+/obj/item/instrument/trumpet{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/rack,
+/obj/item/toy/ornate_baton,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/table/wood/auto,
+/obj/item/instrument/tambourine,
+/obj/item/instrument/triangle{
+	pixel_y = 16;
+	pixel_x = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"R" = (
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/table/wood/auto,
+/obj/item/instrument/cowbell{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/instrument/whistle{
+	pixel_y = 9
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+w
+h
+a
+l
+x
+"}
+(2,1,1) = {"
+R
+v
+J
+a
+X
+"}
+(3,1,1) = {"
+A
+f
+L
+W
+Q
+"}

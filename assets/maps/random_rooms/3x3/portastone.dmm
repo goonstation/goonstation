@@ -1,0 +1,52 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/scorched,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/decal/poster/wallsign/warning3{
+	pixel_y = 29
+	},
+/turf/simulated/floor/scorched,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/stone{
+	pixel_y = 3;
+	desc = "Wow, that looks heavy. How did it even get here?"
+	},
+/turf/simulated/floor/damaged3,
+/area/dmm_suite/clear_area)
+"L" = (
+/turf/simulated/floor/scorched2,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/item/mining_tools/pick{
+	pixel_x = 15;
+	pixel_y = 6
+	},
+/turf/simulated/floor/scorched2,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/item/remote/busted{
+	pixel_x = -7;
+	pixel_y = 13;
+	name = "Busted Port-A-Stone Remote";
+	desc = "For use in terrestrial environments only"
+	},
+/turf/simulated/floor/scorched,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+e
+M
+a
+"}
+(2,1,1) = {"
+L
+u
+L
+"}
+(3,1,1) = {"
+e
+L
+V
+"}

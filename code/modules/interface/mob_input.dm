@@ -24,7 +24,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
+			if (S.target_in_inventory && (!(BOUNDS_DIST(src, target) == 0) && !isturf(target) && !isturf(target.loc)))
 				if(S.sticky)
 					src.targeting_ability = S
 					update_cursor()
@@ -47,7 +47,7 @@
 					update_cursor()
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.handleCast(target)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
@@ -75,8 +75,8 @@
 		if (istype(target, B))
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
-		SPAWN_DBG(0)
-			B.execute_ability(target)
+		SPAWN(0)
+			B.execute_ability(target, params)
 			src.targeting_ability = null
 			src.update_cursor()
 		return 100
@@ -86,7 +86,7 @@
 			if (abilityHolder.click(target, params))
 				return 100
 	//Pull cancel 'hotkey'
-	if (src.pulling && get_dist(src,target) > 1)
+	if (src.pulling && BOUNDS_DIST(src, target) > 0)
 		if (!islist(params))
 			params = params2list(params)
 		if(params["ctrl"])
@@ -97,7 +97,7 @@
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		if(!src.dir_locked)
 			set_dir(get_dir(src, target))
 			if(dir & (dir-1))
@@ -169,13 +169,14 @@
 	PROTECTED_PROC(TRUE)
 
 	if(!C || !C.cloud_available())
-		//logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")
-	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
+	if (!isnull(fetched_keylist) && fetched_keylist != "") //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
+		C.keymap.on_update(C)
 
 /**
 	* Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.

@@ -2,6 +2,7 @@
 #define NAME_CHAR_MAX 16
 #define NAME_CHAR_MIN 2
 #define FLAVOR_CHAR_LIMIT 256
+#define LONG_FLAVOR_CHAR_LIMIT 4000
 
 #define FULLNAME_MAX 50
 
@@ -16,4 +17,4 @@
 #define CUSTOMJOB_SAVEFILE_VERSION_MAX	3
 
 //human voice stuff
-#define RANDOM_HUMAN_VOICE pick(1,2,3)
+#define RANDOM_HUMAN_VOICE pick("1", "2", "3", "4")

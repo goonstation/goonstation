@@ -17,7 +17,7 @@
 
 /*
 /obj/machinery/sim/transmitter/New()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		Connect()
 	..()
 */
@@ -64,7 +64,7 @@
 
 
 /obj/machinery/sim/transmitter/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
 			user.Browse(null, "window=mm")
@@ -140,7 +140,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
@@ -159,7 +159,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/sim/chair/attack_hand(mob/user as mob)
+/obj/machinery/sim/chair/attack_hand(mob/user)
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
@@ -193,25 +193,25 @@
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null
-	var/time = 30.0
-	var/timing = 0.0
+	var/time = 30
+	var/timing = 0
 	var/last_tick = 0
 	//var/emagged = 0
 
 /obj/machinery/sim/vr_bed/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/sim/vr_bed/disposing()
 	go_out()
 	. = ..()
 
 
-/obj/machinery/sim/vr_bed/proc/update_icon()
+/obj/machinery/sim/vr_bed/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
-/obj/machinery/sim/vr_bed/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/sim/vr_bed/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/grab))
 		var/obj/item/grab/G = O
 		if (!ismob(G.affecting))
@@ -271,7 +271,7 @@
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
@@ -315,7 +315,7 @@
 /obj/machinery/sim/vr_bed/remove_air(amount)
 	return src.loc.remove_air(amount)
 
-/obj/machinery/sim/vr_bed/attack_hand(var/mob/user as mob)
+/obj/machinery/sim/vr_bed/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"
@@ -344,7 +344,7 @@
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
@@ -387,20 +387,15 @@
 		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
-				src.timing = text2num(href_list["time"])
+				src.timing = text2num_safe(href_list["time"])
 		else
 			if (href_list["tp"])
 				if(src.allowed(usr))
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
+					src.time = clamp(round(src.time), 0, 300)
 		src.updateUsrDialog()
 	return
-
-/obj/machinery/sim/vr_bed/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
-	..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

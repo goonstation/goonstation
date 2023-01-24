@@ -29,7 +29,7 @@
 	proc/do_item_delivery()
 		if (!src.computer)
 			message_admins("SOMETHING WENT THE CONTROL POINTS!!!owner_team=[owner_team]|1 is NT, 2 is SY")
-			logTheThing("debug", null, null, "PW CONTROL POINT has null computer var.!!!owner_team=[owner_team]")
+			logTheThing(LOG_DEBUG, null, "PW CONTROL POINT has null computer var.!!!owner_team=[owner_team]")
 			return 0
 		if (src.owner_team == 0)
 			return 0
@@ -73,7 +73,7 @@
 			//error checking
 			if (!other_team)
 				message_admins("Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
-				logTheThing("debug", null, null, "Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
+				logTheThing(LOG_DEBUG, null, "Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
 				return 0
 			other_team.change_points(-5)
 

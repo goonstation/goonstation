@@ -1,4 +1,4 @@
-/mob/living/critter/drone/x
+/mob/living/critter/robotic/drone/x
 	drone_designation = "X"
 	desc = "An experimental and extremely dangerous Syndicate railgun drone."
 	icon_state = "drone3"

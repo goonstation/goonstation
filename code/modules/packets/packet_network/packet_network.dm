@@ -175,7 +175,7 @@
 				if(img) \
 					images += img; \
 			)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			for(var/image/img as anything in images)
 				get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_image(img)
 				qdel(img)

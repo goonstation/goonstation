@@ -4,12 +4,18 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
 
 	return ..()
+
+TYPEINFO(/obj/item/camera)
+	mats = 15
+
+TYPEINFO(/obj/item/camera/large)
+	mats = 25
 
 /obj/item/camera
 	name = "camera"
@@ -18,12 +24,12 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	mats = 15
 	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
@@ -35,7 +41,6 @@
 		src.setItemSpecial(null)
 
 	large
-		mats = 25
 		pictures_left = 30
 
 
@@ -43,7 +48,7 @@
 		. = ..()
 		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/camera_film))
 			var/obj/item/camera_film/C = W
 
@@ -95,23 +100,23 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
-			src.update_icon()
+			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
 		else
@@ -138,12 +143,12 @@
 		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
-		src.update_icon()
+		src.UpdateIcon()
 		// Generic flash
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -152,7 +157,7 @@
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
-		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
 
@@ -164,6 +169,12 @@
 	else
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
+TYPEINFO(/obj/item/camera_film)
+	mats = 10
+
+TYPEINFO(/obj/item/camera_film/large)
+	mats = 15
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -172,13 +183,11 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	mats = 10
 	var/pictures = 10
 
 	large
 		name = "film cartridge (large)"
 		pictures = 30
-		mats = 15
 
 	examine()
 		. = ..()
@@ -198,12 +207,15 @@
 	var/written = null
 	var/image/my_writing = null
 	tooltip_flags = REBUILD_DIST
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
+			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 			IM.pixel_y = 1
 			src.UpdateOverlays(IM, "photo")
 		if (istype(IC))
@@ -227,7 +239,7 @@
 			. += "At the bottom is written: [written]"
 
 
-/obj/item/photo/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
@@ -267,7 +279,7 @@
 
 	//farting is handled in human.dm
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
@@ -304,7 +316,7 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -321,7 +333,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src)
 			src.can_use = 1
 
@@ -334,9 +346,6 @@
 	var/icon/photo_icon = getFlatIcon(the_turf)
 	if (!photo)
 		return
-
-	if (istype(photo_icon))
-		photo_icon.Crop(1,1,32,32) // mehhhh
 
 	//photo.overlays += the_turf
 
@@ -357,15 +366,11 @@
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
 			continue
+		var/icon/ic = getFlatIcon(A)
+		if (ic)
+			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
 		if (ismob(A))
 			var/mob/M = A
-			var/image/X = build_composite_icon(A)
-			var/icon/Y = A:build_flat_icon()
-			//X.Scale(22,20)
-			photo.overlays += X
-			photo_icon.Blend(Y, ICON_OVERLAY)
-			qdel(X)
-			qdel(Y)
 
 			if(src.steals_souls)
 				stolen_souls += M
@@ -409,16 +414,7 @@
 
 		else
 			if (itemnumber < 5)
-				var/image/X = build_composite_icon(A)
-				var/icon/Y = getFlatIcon(A)
-				if (X)
-					//X.Scale(22,20)
-					photo.overlays += X
-				if (Y)
-					photo_icon.Blend(Y, ICON_OVERLAY)
 				itemnumber++
-				qdel(X)
-				qdel(Y)
 
 				if (!item_title)
 					item_title = " \a [A]"
@@ -443,6 +439,10 @@
 		else if (item_title)
 			finished_title = "photo of[item_title]"
 			finished_detail = "You can see [item_detail]."
+
+	if (istype(photo_icon))
+		photo_icon.Crop(1,1,32,32)
+	photo.icon = photo_icon
 
 	var/obj/item/photo/P
 	if(src.takes_voodoo_pics)

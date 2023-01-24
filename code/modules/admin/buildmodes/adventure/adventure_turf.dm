@@ -8,11 +8,11 @@
 
 	var/static/list/turfs = list("Ancient floor" = /turf/unsimulated/iomoon/ancient_floor, \
 	"Ancient wall" = /turf/unsimulated/iomoon/ancient_wall, "Cave floor" = /turf/unsimulated/floor/cave, \
-	"Cave wall" = /turf/unsimulated/wall/cave,  "Data floor: Blue" = /turf/unsimulated/floor/techfloor, \
-	"Data floor: Red" = /turf/unsimulated/floor/techfloor/red, "Data floor: Purple" = /turf/unsimulated/floor/techfloor/purple, \
-	"Data floor: Yellow" = /turf/unsimulated/floor/techfloor/yellow, "Data floor: Green" = /turf/unsimulated/floor/techfloor/green, \
+	"Cave wall" = /turf/unsimulated/wall/cave,  "Circuit floor: Blue" = /turf/unsimulated/floor/circuit, \
+	"Circuit floor: Red" = /turf/unsimulated/floor/circuit/red, "Circuit floor: Purple" = /turf/unsimulated/floor/circuit/purple, \
+	"Circuit floor: Vintage" = /turf/unsimulated/floor/circuit/vintage, "Circuit floor: Green" = /turf/unsimulated/floor/circuit/green, \
 	"Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
-	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/setpieces/hive, \
+	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/auto/adventure/bee, \
 	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/martian/floor, \
 	"Martian wall" = /turf/simulated/martian/wall, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \
 	"Reinforced floor" = /turf/simulated/floor/engine, "Reinforced wall" = /turf/simulated/wall/r_wall, "Shielded floor" = /turf/simulated/floor/engine, \

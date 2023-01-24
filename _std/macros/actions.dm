@@ -25,3 +25,8 @@
 #define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
 	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
 	end_message, interrupt_flags), owner)
+
+/// The same thing but only the owner can see it
+#define SETUP_GENERIC_PRIVATE_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
+	actions.start(new /datum/action/bar/private/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
+	end_message, interrupt_flags), owner)

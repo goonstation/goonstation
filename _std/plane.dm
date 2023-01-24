@@ -5,10 +5,10 @@
 #define PLANE_NOSHADOW_BELOW -101
 #define PLANE_DEFAULT -100
 #define PLANE_NOSHADOW_ABOVE -99
-#define PLANE_EXAMINE -96
 #define PLANE_HIDDENGAME -95
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
+#define PLANE_ABOVE_LIGHTING -50
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
@@ -28,7 +28,7 @@
 	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
 		src.name = name
 		src.plane = plane
-		src.appearance_flags = PLANE_MASTER | appearance_flags
+		src.appearance_flags = PLANE_MASTER | PIXEL_SCALE | appearance_flags
 		src.blend_mode = blend_mode
 		src.color = color
 		src.mouse_opacity = mouse_opacity
@@ -54,7 +54,7 @@
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
-			src.appearance_flags = pl.appearance_flags | PASS_MOUSE
+			src.appearance_flags = pl.appearance_flags | PASS_MOUSE | PIXEL_SCALE
 			src.blend_mode = pl.blend_mode
 			src.mouse_opacity = pl.mouse_opacity
 		..()
@@ -78,7 +78,7 @@ client
 	var/atom/movable/screen/plane_display/master/game_display
 
 	New()
-		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane"))
@@ -86,15 +86,15 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane"))
-		var/atom/examine_plane = add_plane(new /atom/movable/screen/plane_parent(PLANE_EXAMINE, name = "examine_plane"))
-		examine_plane.alpha = 0
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
+
 
 #ifdef COOL_PLANE_STUFF
 		game_display = new
@@ -111,7 +111,9 @@ client
 		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		add_plane(P)
 
-		SPAWN_DBG(5 SECONDS) //Because everything needs to wait!
+		src.setup_special_screens()
+
+		SPAWN(5 SECONDS)
 			apply_depth_filter()
 		..()
 

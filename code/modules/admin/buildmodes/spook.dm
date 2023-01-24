@@ -127,21 +127,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			animate(src, pixel_y = 32, transform = matrix(rdeg, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(rdeg * -1, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 		if("Come Alive")
-			src.visible_message("<span class='alert'>\The [src] comes to life!</span>")
-			var/obj/critter/livingobj/L = new/obj/critter/livingobj(src.loc)
-			src.set_loc(L)
-			L.name = "Living [src.name]"
-			L.desc = "[src.desc]. It appears to be alive!"
-			L.overlays += src
-			L.health = rand(10, 150)
-			L.atk_brute_amt = rand(1, 35)
-			L.defensive = 1
-			L.aggressive = pick(1,0)
-			L.atkcarbon = pick(1,0)
-			L.atksilicon = pick(1,0)
-			L.opensdoors = pick(1,0)
-			L.original_object = src
-			animate_float(L, -1, 30)
+			new/mob/living/object/ai_controlled(src.loc, src)
 		else
 			.	=	..()
 
@@ -176,6 +162,6 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		if("Toggle")
 			src.operating = !src.operating
 			src.update()
-			updateicon()
+			UpdateIcon()
 		else
 			. = ..()

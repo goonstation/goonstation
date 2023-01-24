@@ -43,7 +43,7 @@
 				button.set_density(button_density)
 				button.triggered = selected_triggerable.Copy()
 				button.triggered_unpress = selected_triggerable_untrigger.Copy()
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					button.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
@@ -77,7 +77,7 @@
 	var/button_type
 	var/pressed = 0
 
-	attack_hand(var/mob/living/user as mob)
+	attack_hand(var/mob/living/user)
 		if (!istype(user))
 			return
 		if (!(user in range(1)))

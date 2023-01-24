@@ -1,0 +1,196 @@
+.instrument__keyboardwrapper {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 10px;
+  padding-top: 20px;
+  background: rgb(73, 80, 74);
+  background: linear-gradient(180deg, rgba(73, 80, 74, 1) 0%, rgba(73, 80, 74, 1) 22%, rgb(87, 94, 87) 100%);
+  border-left: 5px solid rgb(61, 61, 61);
+  border-bottom: 5px solid rgb(51, 51, 51);
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.instruments__piano {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0 10px 10px 10px;
+
+  overflow-x: auto;
+}
+.instrument__outerpanel {
+  display: flex;
+  width: 100%;
+  padding: 0 40px;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.instrument__speaker {
+  border-top-left-radius: 30%;
+  width: 360px;
+  height: 100px;
+  margin: 0px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgb(77, 77, 77) inset;
+  background: rgb(100, 100, 100);
+  background-image: linear-gradient(rgb(61, 61, 61) 0.1em, transparent 0.1em),
+    linear-gradient(90deg, rgb(61, 61, 61) 0.1em, transparent 0.1em);
+  background-size: 2px 2px;
+}
+
+.instruments__piano-key {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 12px;
+  background: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 2px 2px 10px 2px;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.instruments__piano-key-white {
+  height: 16em;
+  width: 4em;
+  min-width: 4em;
+  z-index: 1;
+  color: rgb(56, 56, 56);
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 0 0 5px 5px;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 0 5px #ccc inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+  transition: 0.05s all;
+}
+
+.instruments__piano-key-black {
+  height: 9em;
+  width: 3em;
+  min-width: 3em;
+  z-index: 10;
+  color: rgb(206, 206, 206);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid rgb(59, 59, 59);
+  margin: 0 0 0 -1.5em;
+  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
+    0 2px 12px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(0deg, #222 0%, #555 100%);
+  transition: 0.05s all;
+}
+
+.instruments__piano-key-white:active,
+.instruments__piano-key-white-active {
+  border: 1px solid rgb(180, 180, 180);
+  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, -5px 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+}
+
+.instruments__piano-key-black:active,
+.instruments__piano-key-black-active {
+  border: 1px solid rgb(34, 34, 34);
+  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset,
+    0 1px 2px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to bottom, #444 0%, #222 100%);
+}
+
+.instruments__piano-key-white-offset {
+  margin-left: -1.5em;
+}
+
+.instruments__piano-key:first-child {
+  margin-left: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.instruments__piano-key:last-child {
+  margin-right: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.instruments__notedetails {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  pointer-events: none;
+}
+
+.instruments__notename {
+  font-size: 10px;
+}
+
+.instruments__notekey {
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+.instruments__piano-key-white > .instruments__notename {
+  font-size: 14px;
+  text-shadow: 0px 0px 1px 5px white;
+}
+
+.instrument__keybind-indicator {
+  border-radius: 20px;
+  width: 20px;
+  height: 10px;
+}
+
+.instrument__panel {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  padding: 6px;
+  background: #333333;
+}
+
+.instrument__keyboardsupport {
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.instrument__panel-input {
+  text-align: center;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 0px 5px;
+}
+
+.instrument__toggle-keyboard-button {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.instrument_panel-info {
+  flex-grow: 1;
+  text-align: center;
+  color: black;
+  padding: 0 10px;
+  margin: 0 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.instrument__instructions {
+  width: 100%;
+  text-align: center;
+}
+
+.instrument__input_keyorder {
+  width: 100%;
+}

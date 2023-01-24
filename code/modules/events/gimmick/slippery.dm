@@ -8,7 +8,7 @@
 		for (var/turf/simulated/floor/T in world)
 			LAGCHECK(LAG_LOW)
 			T.wet = 2
-		SPAWN_DBG(rand(100,1200))
+		SPAWN(rand(100,1200))
 			for (var/turf/simulated/floor/T in world)
 				LAGCHECK(LAG_LOW)
 				T.wet = 0

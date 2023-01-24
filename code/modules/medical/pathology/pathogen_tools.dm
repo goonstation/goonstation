@@ -14,10 +14,11 @@
 		var/datum/reagents/R = new /datum/reagents(5)
 		src.reagents = R
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		return
 
 	on_reagent_change()
+		..()
 		reagents.maximum_volume = reagents.total_volume // This should make the blood slide... permanent.
 		if (reagents.has_reagent("blood") || reagents.has_reagent("bloodc"))
 			icon_state = "slide1"
@@ -139,6 +140,7 @@
 					set_dirty("The pathogen in the petri dish starved to death.")
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume < 0.5)
 			return
 		if (dirty)
@@ -266,6 +268,15 @@
 		src.reagents = R
 		..()
 
+/obj/item/reagent_containers/glass/vial/plastic
+	name = "plastic vial"
+	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
+
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"
 	desc = "A vial. Can hold up to 5 units."
@@ -276,7 +287,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/pathogen/P = new /datum/pathogen
 			if(FM)
@@ -424,20 +435,20 @@
 	proc/inject(var/mob/living/carbon/human/target, var/mob/user)
 		if (is_cure)
 			if (!is_vaccine)
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
 				target.remission(src.pathogen)
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
 				target.immunity(src.pathogen)
 		else
 			if (target.infected(src.pathogen))
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
 		src.pathogen = null
 		used = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (used)
 			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return
@@ -447,7 +458,7 @@
 					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (used)
 						return
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)

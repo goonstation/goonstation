@@ -10,7 +10,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
 	w_class = W_CLASS_SMALL
-	force = 2.0
+	force = 2
 	var/stage = 0
 	var/state = 0
 	var/icon_state_armed = "grenade-chem-armed"
@@ -19,11 +19,14 @@
 	var/image/fluid_image2
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	duration_put = 0.25 SECONDS //crime
+	var/is_dangerous = TRUE
 	var/detonating = 0
 
 
@@ -36,10 +39,10 @@
 	is_open_container()
 		return src.detonating
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-			playsound(src, "sound/items/Screwdriver2.ogg", 25, -3)
+			playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
 			icon_state = "grenade-chem2"
 			name = "unsecured grenade"
@@ -47,7 +50,7 @@
 		else if (isscrewingtool(W) && stage == 1)
 			if (beakers.len)
 				boutput(user, "<span class='notice'>You lock the assembly.</span>")
-				playsound(src, "sound/items/Screwdriver.ogg", 25, -3)
+				playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
 				name = "grenade"
 				icon_state = "grenade-chem3"
 				stage = 2
@@ -81,7 +84,7 @@
 			if (!S || !S:status)
 				return
 			boutput(user, "<span class='notice'>You attach the [src.name] to the [S.name]!</span>")
-			logTheThing("bombing", user, null, "made a chemical bomb with a [S.name].")
+			logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [S.name].")
 			message_admins("[key_name(user)] made a chemical bomb with a [S.name].")
 
 			var/obj/item/assembly/chem_bomb/R = new /obj/item/assembly/chem_bomb( user )
@@ -121,7 +124,7 @@
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state)
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state)
 			return
 		var/area/a = get_area(target)
 		if(a.sanctuary) return
@@ -162,14 +165,15 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		if(!A.dont_log_combat)
-			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+			if(is_dangerous && user)
+				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
 		src.icon_state = icon_state_armed
-		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
-		SPAWN_DBG(3 SECONDS)
+		playsound(src, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+		SPAWN(3 SECONDS)
 			if (src && !src.disposed)
 				if(user?.equipped() == src)
 					user.u_equip(src)
@@ -183,11 +187,11 @@
 			if (G.reagents.total_volume) has_reagents = 1
 
 		if (!has_reagents)
-			playsound(src.loc, "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 			state = 0
 			return
 
-		playsound(src.loc, "sound/effects/bamf.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			G.reagents.trans_to(src, G.reagents.total_volume)
@@ -206,7 +210,7 @@
 
 		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
 		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
+		SPAWN(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
 
@@ -235,11 +239,12 @@
 
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "After activating, creates a mess of foamed metal. Useful for plugging the hull up."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -255,11 +260,12 @@
 
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
-	desc = "Can help to put out dangerous fires from a distance."
+	desc = "Propells firefighting foam in a wide area around it after activation, putting out fires."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -279,6 +285,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -314,6 +321,12 @@
 		beakers += B1
 		beakers += B2
 
+TYPEINFO(/obj/item/chem_grenade/flashbang)
+	mats = 6
+
+TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
+	mats = null
+
 /obj/item/chem_grenade/flashbang
 	name = "flashbang"
 	desc = "A standard stun grenade."
@@ -322,27 +335,28 @@
 	icon_state_armed = "flashbang1"
 	stage = 2
 	is_syndicate = 1
-	mats = 6
+	is_dangerous = FALSE
 
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 10)
-		B1.reagents.add_reagent("potassium", 10)
-		B1.reagents.add_reagent("cola", 10)
-		B1.reagents.add_reagent("chlorine", 10)
+		B1.reagents.maximum_volume = 100
+		B1.reagents.add_reagent("aluminium", 25)
+		B1.reagents.add_reagent("potassium", 25)
+		B1.reagents.add_reagent("cola", 25)
+		B1.reagents.add_reagent("chlorine", 25)
 
-		B2.reagents.add_reagent("sulfur", 10)
-		B2.reagents.add_reagent("oxygen", 10)
-		B2.reagents.add_reagent("phosphorus", 10)
+		B2.reagents.maximum_volume = 100
+		B2.reagents.add_reagent("sulfur", 25)
+		B2.reagents.add_reagent("oxygen", 25)
+		B2.reagents.add_reagent("phosphorus", 25)
 
 		beakers += B1
 		beakers += B2
 
 	revolution //convertssss
-		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
@@ -366,13 +380,13 @@
 							else
 								can_convert = 1
 
-							for (var/obj/item/implant/antirev/found_imp in H.implant)
+							for (var/obj/item/implant/counterrev/found_imp in H.implant)
 								found_imp.on_remove(H)
 								H.implant.Remove(found_imp)
 								qdel(found_imp)
 
 								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span class='notice'>The loyalty implant inside [H] shatters into one million pieces!</span>")
+								H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)
@@ -495,6 +509,7 @@
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -517,6 +532,7 @@
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()

@@ -6,6 +6,6 @@
 
 /mob/living/carbon/human/New()
 	. = ..()
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		if(src.client)
 			src.set_loc(locate(26, 34, 1))

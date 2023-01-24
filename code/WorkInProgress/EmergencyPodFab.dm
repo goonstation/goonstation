@@ -11,8 +11,8 @@
 	var/steps_moved = 0
 	var/failing = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/crowbar))
+	attackby(obj/item/W, mob/living/user)
+		if (ispryingtool(W))
 			boutput(user, "There's no maintenance panel to open.")
 			return
 		if (isweldingtool(W))
@@ -77,7 +77,7 @@
 	var/static/list/fabsounds = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
 	'sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (active)
 			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
 			return

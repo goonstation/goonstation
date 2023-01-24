@@ -19,9 +19,9 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 			luminosity = input("New luminosity", "New luminosity", luminosity) as num
 		else
 			var/colorstr = input("New color", "New color", rgb(color_r * 255, color_g * 255, color_b * 255)) as color
-			color_r = hex2num(copytext(colorstr, 2, 4)) / 255.0
-			color_g = hex2num(copytext(colorstr, 4, 6)) / 255.0
-			color_b = hex2num(copytext(colorstr, 6, 8)) / 255.0
+			color_r = hex2num(copytext(colorstr, 2, 4)) / 255
+			color_g = hex2num(copytext(colorstr, 4, 6)) / 255
+			color_b = hex2num(copytext(colorstr, 6, 8)) / 255
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (ctrl)

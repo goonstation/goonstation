@@ -14,7 +14,7 @@
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
-	list(/mob/living/critter/bot/cleanbot, /mob/living/critter/bot/firebot),)
+	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())
@@ -31,7 +31,7 @@
 
 		src.num_pests = input(usr, "How many pests to spawn?", src.name, 0) as num|null
 		if (!src.num_pests || src.num_pests < 1)
-			cleanup_event()
+			cleanup()
 			return
 		else
 			src.num_pests = round(src.num_pests)
@@ -40,7 +40,7 @@
 		if (alert(usr, "You have chosen to spawn [src.num_pests] [src.pest_type ? src.pest_type : "random pests"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
 		else
-			cleanup_event()
+			cleanup()
 
 	event_effect(var/source)
 		..()
@@ -73,8 +73,8 @@
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find any valid landmarks!")
-					logTheThing( "debug", null, null, "Failed to find any valid landmarks for a Pests event!" )
-					cleanup_event()
+					logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
+					src.cleanup()
 					return
 
 			var/atom/pestlandmark = pick(EV)
@@ -104,10 +104,10 @@
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")
 
 			if (src.num_pests >= 5)
-				command_alert("A large number of pests have been detected onboard.", "Pest invasion")
-		cleanup_event()
+				command_alert("A large number of pests have been detected onboard.", "Pest invasion", alert_origin = ALERT_STATION)
+		src.cleanup()
 
-	proc/cleanup_event()
+	cleanup()
 		src.num_pests = 0
 		src.pest_type = null
 

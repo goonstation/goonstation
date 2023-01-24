@@ -113,7 +113,7 @@
 
 			if ("leave")
 				flick("exit_push",leave)
-				SPAWN_DBG(0.7 SECONDS)
+				SPAWN(0.7 SECONDS)
 					master.go_out()
 
 			if ("scan")
@@ -137,7 +137,7 @@
 
 				if(master.ship.control_lock)
 					user.show_message("<span class='alert'>The controls are locked!</span>")
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						if(toggle_tracking.icon_state == "tracking-on")
 							toggle_tracking.icon_state = "tracking-off"
 						else
@@ -179,7 +179,7 @@
 					for(var/datum/galactic_object/G in GALAXY.bodies)
 						if(G.navigable)
 							navigable_bodies += G
-					var/datum/galactic_object/target = input(usr, "Which waypoint would you like to navigate to?", "Target:", null) in navigable_bodies
+					var/datum/galactic_object/target = input(user, "Which waypoint would you like to navigate to?", "Target:", null) in navigable_bodies
 
 					if(target)
 
@@ -238,8 +238,8 @@
 				if(src.coffee_level)
 					src.coffee_level--
 					src.coffee.icon_state = null
-					playsound(get_turf(user),"sound/items/drink.ogg", rand(10,50), 1)
-					SPAWN_DBG(0.5 SECONDS)
+					playsound(get_turf(user),'sound/items/drink.ogg', rand(10,50), 1)
+					SPAWN(0.5 SECONDS)
 						src.coffee.icon_state = "coffee[coffee_level]"
 				else
 					user.show_message("<span class='alert'>Oh no! Out of coffee!</span>")

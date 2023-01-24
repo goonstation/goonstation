@@ -28,7 +28,7 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
 		START_TRACKING
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
 	disposing()
@@ -75,7 +75,6 @@
 		return
 
 	receive_signal(datum/signal/signal)
-
 		if (signal.data["command"] == "mail_reply")
 			if (!src.destinations)
 				src.destinations = new()
@@ -86,7 +85,7 @@
 
 			if (!(destination in src.destinations))
 				src.destinations += destination
-				src.destinations = sortList(src.destinations)
+				sortList(src.destinations, /proc/cmp_text_asc)
 
 		else if (signal.data["command"] == "mail_inquire")
 			src.post_radio_status()
@@ -151,34 +150,6 @@
 		..()
 		return
 
-	colosseum
-		flush()
-			flushing = 1
-			if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
-			else flick("disposal-flush", src)
-
-			var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
-																	// travels through the pipes.
-
-			H.init(src)	// copy the contents of disposer to holder
-
-			sleep(1 SECOND)
-			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(0.5 SECONDS) // wait for animation to finish
-
-
-			H.start(src) // start the holder processing movement
-			flushing = 0
-			// now reset disposal state
-			flush = 0
-			if(mode == 2)	// if was ready,
-				mode = 1	// switch to charging
-			update()
-			return
-
-		ex_act(severity)
-			return
-
 /obj/machinery/disposal/mail/autoname
 	autoname = 1
 
@@ -232,12 +203,12 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -518,7 +489,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -534,7 +505,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 
 		north

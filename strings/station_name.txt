@@ -1,9 +1,19 @@
 halloweenPrefixes@=The Fate of@,The Doom That Befell@,The Shadow Over@,The Haunting of@,The Sad Tale of@,The Curse of@,The Case of@,The Dream-Quest of Unknown@,The Fall of@,What REALLY Happened to@,The Final Day of@,The Unmaking of@,The Ascension of@,The Facts Concerning@,The Fate of@,The Phantom of@,The Last Days of@,The Mystery of@,Harold and Kumar Go To@,The Nightmare on@,The End of@,The Final Report from
-prefixes1@=Dyna@,Auto@,Boot@,Con-@,Cyber@,Corp@,Glob@,Uni@,Inter@,Media@,Meta@,Multi@,New@,Pan-@,Proto@,Metro@,Nano@,Chem@,Wave@,Gene
-prefixes2@=Mercury@,Venus@,Earth@,Mars@,Jupiter@,Saturn@,Uranus@,Neptune@,Ceres@,Pluto@,Haumea@,Makemake@,Eris@,Luna@,engineering@,Gen@,gen@,Co@,You@,Galactic@,Node@,Capital@,Moon@,Main@,Labs@,Lab@,trasen@,tum
-prefixes3@=@,Space@,Star@,Moon@,System@,Mining@,Research@,Supply@,Military@,Goon@,Orbital@,Battle@,Science@,Asteroid@,Home@,Production@,Transport@,Delivery@,Extraplanetary@,Correctional@,Robot@,Memorial@,Mass@,Development@,Deep Space
-suffixes@=Station@,Base@,Facility@,Depot@,Outpost@,Installation@,Drydock@,Observatory@,Array@,Relay@,Monitor@,Platform@,Construct@,Hangar@,Prison@,Center@,Port@,Waystation@,Factory@,Waypoint@,Stopover@,Hub@,HQ@,Office@,Object@,Fortification@,Colony@,Repository@,Store@,Cache@,Terminal@,Depository@,Terminus@,Dump@,Site@,Garrison@,Headquarters@,Theater@,Lab@,Labs@,Laboratory
+
+prefixes1@=Dyna-@,Auto-@,Boot-@,Con-@,Cyber-@,Corp-@,Glob-@,Uni-@,Inter@,Media-@,Meta-@,Multi@,New @,Pan-@,Metro-@,Nano-@,Chem-@,Wave-@,Gene-@,FAAE-@,RSS @,NanoTrasen@,Regional-
+
+prefixes2@=Engineering@,Gen@,Co@,System@,Node@,Capital@,Moon@,Main@,Labs@,Lab@,NanoTrasen@,NT@,Supply
+
+prefixes3@=Space@,Moon@,Mining@,Research@,Supply@,Goon@,Orbital@,Science@,Asteroid@,Production@,Transport@,Delivery@,Extraplanetary@,Robot@,Memorial@,Mass@,Development@,Deep Space
+
+suffixes@=Station@,Orbital@,Facility@,Depot@,Outpost@,Installation@,Observatory@,Array@,Relay@,Monitor@,Platform@,Construct@,Hangar@,Center@,Port@,Waystation@,Factory@,Waypoint@,Stopover@,Hub@,HQ@,Office@,Object@,Fortification@,Repository@,Store@,Cache@,Terminal@,Depository@,Terminus@,Dump@,Site@,Garrison@,Headquarters@,Theater@,Lab@,Labs@,Laboratory@,Dockyard@,Shipyard@,Salvage
+
 greek@=Alpha@,Beta@,Gamma@,Delta@,Epsilon@,Zeta@,Eta@,Theta@,Iota@,Kappa@,Lambda@,Mu@,Nu@,Xi@,Omicron@,Pi@,Rho@,Sigma@,Tau@,Upsilon@,Phi@,Chi@,Psi@,Omega
+
 romanNum@=II@,III@,IV@,V@,VI@,VII@,VIII@,IX@,X@,XI@,XII@,XIII@,XIV@,XV@,XVI@,XVII@,XVIII@,XIX@,XX
+
+frontierLocations@=Typhon@,Plasma Star@,Fortitudo@,mAntistes@,Quadriga@,Fatuus@,Domus Dei@,Mundus@,Iustitia@,Iudicium@,Rota Fortuna@,Amantes@,Magus@,Regis@,Regina@,Mors@,Flaminica@,Senex@,Estella@,Shidd@,Abzu@,Fugg@,Frontier@,Channel@,Buttes@,Buttes Junction
+
 militaryLetters@=Alpha@,Bravo@,Charlie@,Delta@,Echo@,Foxtrot@,Golf@,Hotel@,India@,Juliet@,Kilo@,Lima@,Mike@,November@,Oscar@,Papa@,Quebec@,Romeo@,Sierra@,Tango@,Uniform@,Victor@,Whiskey@,X-ray@,Yankee@,Zulu
-numbers@=One@,Two@,Three@,Four@,Five@,Six@,Seven@,Eight@,Nine@,Ten@,Eleven@,Twelve@,Thirteen@,Fourteen@,Fifteen@,Sixteen@,Seventeen@,Eighteen@,Nineteen@,Twenty@,Fourty-Two@,Sixty-Nine@,Eighty-Eight@,One-Thousand Nine-Hundred Ninety-Nine@,Two-Thousand@,Three-Thousand@,Nine-Thousand@,Fourteen-Billion
+
+numbers@=One@,Two@,Three@,Four@,Five@,Six@,Seven@,Eight@,Nine@,Ten@,Eleven@,Twelve@,Thirteen@,Fourteen@,Fifteen@,Sixteen@,Seventeen@,Eighteen@,Nineteen@,Twenty@,Fourty-Two@,Sixty-Nine@,One-Thousand Nine-Hundred Ninety-Nine@,Two-Thousand@,Three-Thousand@,Nine-Thousand@,Fourteen-Billion

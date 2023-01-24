@@ -1,5 +1,5 @@
 /datum/matfab_part/variable
-	var/required_value = 50
+	var/required_value = 5
 	var/greater_than = 1
 	var/required_property = "hard"
 	var/proper_name = "hardness"
@@ -40,7 +40,15 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(I.material.getProperty("radioactive") < 10) return 0
+		if(I.material.getProperty("radioactive") < 1 && I.material.getProperty("n_radioactive") < 1) return 0
+		return ..()
+
+/datum/matfab_part/conductive
+	name = "Conductive Material"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(I.material.getProperty("electrical") < 5) return 0
 		return ..()
 
 /datum/matfab_part/charge
@@ -175,12 +183,6 @@
 		if(!istype(I, /obj/item/lens) ||  !I.material) return 0
 		return ..()
 
-/datum/matfab_part/arrowhead
-	name = "Arrowhead"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		if(!I.material || !istype(I, /obj/item/arrowhead)) return 0
-		return ..()
 
 /datum/matfab_part/chemical
 	name = "Chemical"
@@ -194,13 +196,6 @@
 		if(!I.material || (I.material.mat_id != "starstone")) return 0
 		return ..()
 
-/datum/matfab_part/fissile
-	name = "Fissile"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		//if(I.material.getProperty("fissile") < 30) return 0
-		//if(!I.material.nuke_compat) return 0
-		return ..()
 //////////////////////////////////////////////BASE CLASS BELOW
 
 /// Base material fabrication part

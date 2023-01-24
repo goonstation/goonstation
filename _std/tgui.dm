@@ -8,9 +8,9 @@
 #define UI_CLOSE -1
 
 /// Maximum number of windows that can be suspended/reused
-#define TGUI_WINDOW_SOFT_LIMIT 5
+#define TGUI_WINDOW_SOFT_LIMIT 4
 /// Maximum number of open windows
-#define TGUI_WINDOW_HARD_LIMIT 9
+#define TGUI_WINDOW_HARD_LIMIT 8
 
 /// Maximum ping timeout allowed to detect zombie windows
 #define TGUI_PING_TIMEOUT 4 SECONDS

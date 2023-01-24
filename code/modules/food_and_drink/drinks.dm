@@ -8,7 +8,7 @@
 	heal_amt = 1
 	labeled = 1
 	initial_volume = 50
-	initial_reagents = list("methamphetamine"=3,"VHFCS"=10,"cola"=17)
+	initial_reagents = list("methamphetamine"=5,"VHFCS"=10,"cola"=15)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/blue
 	name = "Grife-O"
@@ -177,11 +177,41 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bottlewater"
-	item_state = "contliquid"
-	initial_volume = 50
+	icon_state = "water"
+	item_state = "water"
+	initial_volume = 25
 	initial_reagents = "water"
+
+/obj/item/reagent_containers/food/drinks/mate
+	name = "mate gourd"
+	desc = "A gourd and a straw for drinking mate"
+	icon_state = "mate_empty"
+	initial_volume = 20
+	var/yerba_left = 0
+	var/water_amount
+
+	on_reagent_change()
+		if((yerba_left > 1) && reagents.get_reagent_amount("water") > 0)
+			changetomate()
+		if((yerba_left < 1) && !reagents.get_reagent_amount("mate"))
+			yerba_left = 0
+			icon_state = "mate_empty"
+		..()
+
+	proc/changetomate()
+		water_amount = src.reagents.get_reagent_amount("water")
+		src.reagents.remove_reagent("water", water_amount)
+		src.reagents.add_reagent("mate", water_amount)
+		yerba_left -= water_amount
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
+			src.icon_state = "mate"
+			yerba_left = 100
+			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			qdel (W)
+		else ..()
 
 /obj/item/reagent_containers/food/drinks/tea
 	name = "tea"
@@ -206,16 +236,6 @@
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
 
-/obj/item/reagent_containers/food/drinks/eggnog
-	name = "Egg Nog"
-	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
-	icon_state = "nog"
-	heal_amt = 1
-	festivity = 1
-	rc_flags = RC_FULLNESS
-	initial_volume = 50
-	initial_reagents = list("eggnog"=40)
-
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
@@ -225,6 +245,52 @@
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
+
+/obj/item/reagent_containers/food/drinks/fruitmilk
+	name = "Creaca's Fruit Milk "
+	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
+	icon_state = "fruitmilk"
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("milk"=20)
+
+	New()
+		switch(rand(1,10))
+			if (1)
+				src.name += "Synthetic Tropical Dawn flavor"
+				src.initial_reagents["juice_pineapple"] = 30
+			if (2)
+				src.name += "Changing Cherry Red flavor"
+				src.initial_reagents["juice_cherry"] = 30
+			if (3)
+				src.name += "Curdled Lemon Twist flavor"
+				src.initial_reagents["juice_lemon"] = 30
+			if (4)
+				src.name += "Earth Dreamer Lime flavor"
+				src.initial_reagents["juice_lime"] = 30
+			if (5)
+				src.name += "Odyssey Orange flavor"
+				src.initial_reagents["juice_orange"] = 30
+			if (6)
+				src.name += "Strawberry and Cream flavor"
+				src.initial_reagents["juice_strawberry"] = 30
+			if (7)
+				src.name += "Seasonal Peach Blossom flavor"
+				src.initial_reagents["juice_peach"] = 30
+			if (8)
+				src.name += "Surprise Mystery flavor"
+				src.initial_reagents["juice_pickle"] = 20
+				src.initial_reagents["neurodepressant"] = 5
+				src.initial_reagents["msg"] = 5
+			if (9)
+				src.name += "Little Soups flavor"
+				src.initial_reagents["juice_tomato"] = 30
+			if (10)
+				src.name += "Artifical Autumn flavor"
+				src.initial_reagents["juice_pumpkin"] = 30
+
+		..()
+
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"
@@ -239,22 +305,25 @@
 	name = "space cola"
 	desc = "Cola. in space."
 	icon = 'icons/obj/foodNdrink/can.dmi'
-	icon_state = "cola-1"
+	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
+	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
-	var/is_sealed = 1 //can you drink out of it?
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
+	var/shaken = FALSE //sets to TRUE on *twirl emote
 
 	New()
 		..()
-		if (prob(50))
-			src.icon_state = "cola-2"
+		setup_soda()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
@@ -263,10 +332,19 @@
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
-			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
 			can_chug = 1
-			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
+			amount_per_transfer_from_this = 5
+			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
+			if (src.shaken)
+				src.reagents.reaction(user)
+				src.reagents.clear_reagents()
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+			else
+				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
@@ -285,10 +363,19 @@
 				user.put_in_hand_or_drop(C)
 			qdel(src)
 
+	is_open_container()
+		return !is_sealed
+
+
+	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
+		if (prob(50)) // without having to change the Space-Cola path
+			src.icon_state = "cola-2-small"
+
 /obj/item/crushed_can
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
 	icon = 'icons/obj/foodNdrink/can.dmi'
+	w_class = W_CLASS_TINY
 
 	proc/crush_can(var/name, var/icon_state)
 		src.name = "crushed [name]"
@@ -319,6 +406,28 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/reagent_containers/food/drinks/cola/custom
+	name = "beverage can"
+	desc = "An aluminium can with custom branding."
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	heal_amt = 1
+	icon_state = "cola-13"
+	rc_flags = RC_FULLNESS
+	initial_reagents = null
+	initial_volume = 50
+
+	New()
+		..()
+
+	setup_soda()
+		return
+
+	small
+		icon_state = "cola-13-small"
+		initial_volume = 30
+
+
+
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
@@ -344,10 +453,13 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
+		if (src.icon_state == "milk_calcium")
+			return
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)

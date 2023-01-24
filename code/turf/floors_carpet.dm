@@ -505,6 +505,44 @@
 		icon_state = "fblue1"
 		dir = 10
 
+/turf/unsimulated/floor/carpet/blue/fancy/narrow
+	icon_state = "fblue6"
+
+	ne
+		dir = 5
+	se
+		dir = 6
+	nw
+		dir = 9
+	sw
+		dir = 10
+	T_north
+		dir = 1
+	T_south
+		dir = 2
+	T_east
+		dir = 4
+	T_west
+		dir = 8
+	north
+		icon_state = "fblue4"
+		dir = 1
+	south
+		icon_state = "fblue4"
+		dir = 2
+	east
+		icon_state = "fblue4"
+		dir = 4
+	west
+		icon_state = "fblue4"
+		dir = 8
+	northsouth
+		icon_state = "fblue1"
+		dir = 6
+	eastwest
+		icon_state = "fblue1"
+		dir = 10
+
 /turf/simulated/floor/carpet/blue/fancy/junction
 	icon_state = "fblue5"
 
@@ -1521,6 +1559,133 @@
 
 /turf/unsimulated/floor/carpet/red/fancy/junction
 	icon_state = "fred5"
+
+	sw_e
+		dir = 1
+	ne_w
+		dir = 2
+	nw_s
+		dir = 4
+	se_n
+		dir = 8
+	sw_n
+		dir = 5
+	nw_e
+		dir = 6
+	ne_s
+		dir = 9
+	se_w
+		dir = 10
+
+//Wizard Carpet Variant
+
+/turf/unsimulated/floor/carpet/wizard
+	icon_state = "wizard1"
+
+/turf/unsimulated/floor/carpet/wizard/standard/edge
+	icon_state = "wizard2"
+
+	north
+		dir = 1
+	south
+		dir = 2
+	east
+		dir = 4
+	west
+		dir = 8
+	ne
+		dir = 5
+	se
+		dir = 6
+	nw
+		dir = 9
+	sw
+		dir = 10
+
+/turf/unsimulated/floor/carpet/wizard/standard/innercorner
+	icon_state = "wizard3"
+
+	ne
+		dir = 5
+	se
+		dir = 6
+	nw
+		dir = 9
+	sw
+		dir = 10
+	north
+		dir = 1
+	south
+		dir = 2
+	east
+		dir = 4
+	west
+		dir = 8
+	ne_triple
+		icon_state = "wizard4"
+		dir = 5
+	se_triple
+		icon_state = "wizard4"
+		dir = 6
+	nw_triple
+		icon_state = "wizard4"
+		dir = 9
+	sw_triple
+		icon_state = "wizard4"
+		dir = 10
+	ne_sw
+		icon_state = "wizard1"
+		dir = 5
+	nw_se
+		icon_state = "wizard1"
+		dir = 9
+	omni
+		icon_state = "wizard1"
+		dir = 8
+
+/turf/unsimulated/floor/carpet/wizard/standard/narrow
+	icon_state = "wizard6"
+
+	ne
+		dir = 5
+	se
+		dir = 6
+	nw
+		dir = 9
+	sw
+		dir = 10
+	T_north
+		dir = 1
+	T_south
+		dir = 2
+	T_east
+		dir = 4
+	T_west
+		dir = 8
+	north
+		icon_state = "wizard4"
+		dir = 1
+	south
+		icon_state = "wizard4"
+		dir = 2
+	east
+		icon_state = "wizard4"
+		dir = 4
+	west
+		icon_state = "wizard4"
+		dir = 8
+	solo
+		icon_state = "wizard1"
+		dir = 4
+	northsouth
+		icon_state = "wizard1"
+		dir = 6
+	eastwest
+		icon_state = "wizard1"
+		dir = 10
+
+/turf/unsimulated/floor/carpet/wizard/standard/junction
+	icon_state = "wizard5"
 
 	sw_e
 		dir = 1

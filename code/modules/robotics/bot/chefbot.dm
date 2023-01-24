@@ -22,7 +22,7 @@
 	if(prob(60) && src.on == 1)
 		src.navigate_to(get_step_rand(src))
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(prob(src.emagged * 20))
 				drama()
 			if(prob(30 + src.emagged * 30))
@@ -75,7 +75,7 @@
 							dork = M
 			if (thechef)
 				point(shitfood)
-				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 60) // Shit food can't hide!
+				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
 				if (prob(50))
 					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
 				sleep(1 SECOND)
@@ -167,7 +167,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/bot/chefbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/chefbot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
@@ -184,7 +184,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/clothing/head/dramachefhat(Tsec)

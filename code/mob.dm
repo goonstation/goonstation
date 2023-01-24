@@ -5,10 +5,11 @@
 	soundproofing = 10
 
 	flags = FPRINT | FLUID_SUBMERGE
-	event_handler_flags = USE_CANPASS
+
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
+	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -28,6 +29,7 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
 
@@ -35,9 +37,8 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
-	var/atom/movable/name_tag/outer/name_tag
-
-	var/obj/item/device/energy_shield/energy_shield = null
+	var/atom/movable/name_tag/name_tag
+	var/atom/atom_hovered_over = null
 
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
@@ -47,7 +48,6 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
-	var/last_door_knock_time = 0 //anti door knock spam, now seperate from emote anti-spam
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
@@ -56,7 +56,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0.0
+	var/stat = 0
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -69,17 +69,18 @@
 	var/stuttering = null
 	var/real_name = null
 	var/blinded = null
+	var/disfigured = FALSE
+	var/vdisfigured = FALSE
 	var/druggy = 0
-	var/sleeping = 0.0
-	var/lying = 0.0
+	var/sleeping = 0
+	var/lying = 0
 	var/lying_old = 0
 	var/can_lie = 0
-	var/canmove = 1.0
+	var/canmove = 1
 	var/incrit = 0
-	var/timeofdeath = 0.0
+	var/timeofdeath = 0
 	var/fakeloss = 0
 	var/fakedead = 0
-	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -92,10 +93,10 @@
 	var/is_jittery = 0
 	var/is_zombie = 0
 	var/jitteriness = 0
-	var/charges = 0.0
-	var/urine = 0.0
+	var/charges = 0
+	var/urine = 0
 	var/nutrition = 100
-	var/losebreath = 0.0
+	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
 	var/a_intent = "help"
@@ -123,9 +124,6 @@
 
 	var/respawning = 0
 
-	var/obj/hud/hud_used = null
-
-	var/list/organs = null
 	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
@@ -143,8 +141,6 @@
 
 	var/spellshield = 0
 
-	var/bomberman = 0
-
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null
 	var/oldname = null
@@ -160,7 +156,7 @@
 	var/speechverb_stammer = "stammers"
 	var/speechverb_gasp = "gasps"
 	var/speech_void = 0
-	var/now_pushing = null //temp. var used for Bump()
+	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
@@ -174,8 +170,6 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/vamp_beingbitten = 0 // Are we being drained by a vampire?
-
 	var/atom/eye = null
 	var/eye_pixel_x = 0
 	var/eye_pixel_y = 0
@@ -186,7 +180,7 @@
 
 	var/list/datum/hud/huds = null
 
-	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
@@ -196,13 +190,7 @@
 	var/punchMessage = "punches"
 	var/kickMessage = "kicks"
 
-//#ifdef MAP_OVERRIDE_DESTINY
-	var/last_cryotron_message = 0 // to stop relaymove spam  :I
-//#endif
-
 	var/datum/hud/render_special/render_special
-
-	//var/shamecubed = 0
 
 	// does not allow non-admins to observe them voluntarily
 	var/unobservable = 0
@@ -215,17 +203,31 @@
 	var/last_cubed = 0
 
 	var/obj/use_movement_controller = null
-	var/next_spammable_chem_reaction_time = 0
 
 	var/dir_locked = FALSE
 
-	var/list/mob_properties
 
 	var/last_move_dir = null
 
+	/// Type path for the ai holder. Set to have the aiHolder instantiated on New()
+	var/ai_type = null
+	/// AI controller for this mob - only active if is_npc is TRUE, in which case it's called by the mobAI loop at a frequency depending on mob flags
 	var/datum/aiHolder/ai = null
+	///Do we add the special "Toggle AI" ability to this mob?
+	var/use_ai_toggle = TRUE
+	/// used for load balancing mob_ai ticks
+	var/ai_tick_schedule = null
 
 	var/last_pulled_time = 0
+
+	/// stores total accumulated radiation dose
+	var/radiation_dose = 0
+	/// natural decay of radiation exposure
+	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
+	/// set to observed mob if you're currently observing a mob, otherwise null
+	var/mob/observing = null
+	/// A list of emotes that trigger a special action for this mob
+	var/list/trigger_emotes = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -236,7 +238,6 @@
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
-	organs = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -244,23 +245,27 @@
 	render_special = new
 	traitHolder = new(src)
 
+
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
 
+	if(src.ai_type)
+		src.ai = new src.ai_type(src)
+
 	var/turf/T = get_turf(src)
-	if(isnull(T) || T.z <= Z_LEVEL_STATION)
+	var/area/AR = get_area(src)
+	if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
-		var/area/AR = get_area(src)
-		LAZYLISTADD(AR.mobs_not_in_global_mobs_list, src)
+		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	mob_properties = list()
 	src.chat_text = new
+	src.vis_contents += src.chat_text
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -295,7 +300,7 @@
 	else
 		. = ..()
 
-	src.closeContextActions()
+	src.contextActionsOnMove()
 
 	src.update_grab_loc()
 
@@ -306,8 +311,8 @@
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
-		if (G.state < GRAB_NECK) continue
-		if (get_dist(src,G.affecting) > 1)
+		if (G.state < GRAB_AGGRESSIVE) continue
+		if (BOUNDS_DIST(src, G.affecting) > 0)
 			qdel(G)
 			continue
 		if (G.affecting.buckled) continue
@@ -319,7 +324,6 @@
 /mob/disposing()
 	STOP_TRACKING
 
-	src.vis_contents -= src.name_tag
 	qdel(src.name_tag)
 	src.name_tag = null
 
@@ -332,12 +336,20 @@
 		observers -= TO
 		TO.ghostize()
 
-	for(var/mob/m in src) //just in case...
-		m.set_loc(src.loc)
-		m.ghostize()
+	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+		if(m.observing == src)
+			m.stopObserving()
+		else
+			m.set_loc(src.loc)
+			m.ghostize()
 
-	if (ghost && ghost.corpse == src)
-		ghost.corpse = null
+	qdel(chat_text)
+	chat_text = null
+
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -387,6 +399,9 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
+	if (src.buckled)
+		src.buckled.buckled_guy = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
@@ -395,7 +410,6 @@
 	ckey = null
 	client = null
 	internals = null
-	energy_shield = null
 	hallucinations = null
 	buckled = null
 	handcuffs = null
@@ -406,7 +420,6 @@
 	s_active = null
 	wear_mask = null
 	ears = null
-	organs = null
 	grabbed_by = null
 	oldmob = null
 	oldmind = null
@@ -425,9 +438,10 @@
 		src.vars["hud"] = null
 
 	..()
-	src.mob_properties = null
 
 /mob/Login()
+	if (!src.client)
+		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -439,22 +453,11 @@
 		global.ai_mobs |= src
 
 	if(!src.last_ckey)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/AR = get_area(src)
 			AR?.wake_critters(src)
 
 	src.last_ckey = src.ckey
-
-	if (!src.client.chatOutput)
-		//At least once, some dude has gotten here without a chatOutput datum. Fuck knows how.
-		src.client.chatOutput = new /datum/chatOutput(src.client)
-
-	if (!src.client.chatOutput.loaded)
-		//Load custom chat
-		src.client.chatOutput.start()
-
-	//src.client.screen = null //ov1 - to make sure we don't keep overlays of our old mob. This is here since logout wont work - when logout is called client is already null
-	src.client.setup_special_screens()
 
 	src.last_client = src.client
 	src.apply_camera(src.client)
@@ -464,56 +467,8 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
-	if (config.log_access)
-		for (var/client/C)
-			var/mob/M = C.mob
-			if ((!M) || M == src || M.client == null)
-				continue
-			else if (M && M.client && M.client.address == src.client.address)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
-			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
-				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
-					if (IP_alerts)
-						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font class='internal'> as [key_name(M)]</span>")
-				SPAWN_DBG(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
-				logTheThing("admin", M, null, "is no longer logged in.")
-				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-				SPAWN_DBG(0)
-					if(M.lastKnownIP == src.client.address)
-						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-/*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
-	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
-	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
-		SPAWN_DBG(0)
-			var/joinstring = "???"
-			var/list/response = world.Export("http://www.byond.com/members/[src.ckey]?format=text")
-			if (response && response["CONTENT"])
-				var/result = html_encode(file2text(response["CONTENT"]))
-				if (result)
-					var/pos = findtext(result, "joined = ")
-					joinstring = copytext(result, pos+14, pos+24)
-			message_admins("<font color=red>Possible login by That Ban Evader Jerk: [key_name(src)] with IP \"[lastKnownIP]\" and computer ID \[[src.client.computer_id]]. (Regdate: [joinstring])</font>")
-			logTheThing("admin", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]")
-			logTheThing("diary", src, null, "Possible login by Ban Evader Jerk:. IP: [lastKnownIP], Computer ID: \[[src.client.computer_id]], Regdate: [joinstring]", "admin")
-			if (!("[src.ckey]" in IRC_alerted_keys))
-				IRC_alerted_keys += "[src.ckey]"
-*/
 
 	world.update_status()
 
@@ -550,15 +505,13 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
 /mob/Logout()
 
-	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.last_client?.get_plane(PLANE_EXAMINE)?.alpha = 0
-
+	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
@@ -584,8 +537,8 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A, yes)
-	if ((!( yes ) || src.now_pushing))
+/mob/bump(atom/A)
+	if (src.now_pushing)
 		return
 
 	var/atom/movable/AM = A
@@ -596,19 +549,21 @@
 
 	if(isturf(A))
 		if((A.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || A.hasStatus("sugar_rush"))
-			if(!(src.next_spammable_chem_reaction_time > world.time) || src.hasStatus("sugar_rush"))
-				src.next_spammable_chem_reaction_time = world.time + 1
+			if(!ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || src.hasStatus("sugar_rush"))
 				src.now_pushing = 0
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				src.throw_at(get_edge_cheap(source, turn(get_dir(A, src),rand(-1,1)*45)),  20, 3)
+				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
+				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
+
 				return
 
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			if(isliving(src))
+			if(isliving(src) && src.density)
 				var/mob/living/L = src
 				L.viral_transmission(AM,"Contact",1)
 
@@ -627,8 +582,8 @@
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -642,17 +597,21 @@
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
 			if((tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush"))
-				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
-					src.now_pushing = 0
-					return
-				src.next_spammable_chem_reaction_time = world.time + 1
-				tmob.next_spammable_chem_reaction_time = world.time + 1
 				src.now_pushing = 0
+				if(ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || ON_COOLDOWN(tmob, "flubber_bounce", 0.1 SECONDS))
+					return
+
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
-				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
+				var/target_dir = get_dir(src, tmob)
+				var/src_dir = get_dir(tmob, src)
+				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
+				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
+
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
+
 				return
 			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_neg")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_pos")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -671,8 +630,8 @@
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
 
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -704,26 +663,34 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(5 SECONDS)
-					src.now_pushing = 0
-
-					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
-						tmob.now_pushing = 0
-
-					return
+					SPAWN(5 SECONDS)
+						src.now_pushing = 0
+						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
+							tmob.now_pushing = 0
 
 		if (!issilicon(AM))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
+				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
+					src.now_pushing = 0
+					return
+				for(var/atom/movable/obstacle in oldloc)
+					if(!ismob(obstacle) && !obstacle.Cross(tmob))
+						src.now_pushing = 0
+						return
+				for(var/atom/movable/obstacle in newloc)
+					if(!ismob(obstacle) && !obstacle.Cross(src))
+						src.now_pushing = 0
+						return
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
 				if (istype(tmob.loc, /turf/space))
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
+					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/obj/hotspot) in tmob.loc)
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
+					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
 				tmob.update_grab_loc()
@@ -749,23 +716,25 @@
 			var/mob/victim = AM
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
+			var/was_in_space = istype(victim.loc, /turf/space)
+			var/was_in_fire = locate(/obj/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
-			if (istype(victim.loc, /turf/space))
-				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (locate(/obj/hotspot) in victim.loc)
-				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
+			if (!was_in_space && istype(victim.loc, /turf/space))
+				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
+			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
+				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
 		AM.OnMove(src)
-		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
+		//src.OnMove(src) //dont do this here - this bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
 		// so yeah, i copy+pasted this from process_move.
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
-			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
+			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
 				//hud.update_pulling() // FIXME
 			else
@@ -773,7 +742,7 @@
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				pulling += G.affecting
 			for (var/atom/movable/pulled in pulling)
-				if (get_dist(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+				if (GET_DIST(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 					continue
 				if (pulled == src || pulled == AM)
 					continue
@@ -791,7 +760,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
-	logTheThing("combat", src, null, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
+	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
 /mob/proc/projCanHit(datum/projectile/P)
@@ -805,6 +774,9 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
+	if (!hud) // Can happen if someone dies instantly when entering a z level (i.e. singulo)
+		return
+
 	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
@@ -819,6 +791,8 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+	var/atom/oldloc = src.loc
+
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -837,11 +811,24 @@
 
 	walk(src,0) //cancel any walk movements
 
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
+
 /mob/proc/update_camera()
 	if (src.client)
 		apply_camera(src.client)
 
 /mob/proc/apply_camera(client/C)
+	if (!C)
+		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
@@ -851,8 +838,8 @@
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
-/mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(M, 0, src))
+/mob/proc/can_strip(mob/M)
+	if(check_target_immunity(M, 1, src))
 		return 0
 	return 1
 
@@ -870,6 +857,14 @@
 			src.set_cursor('icons/cursors/admin.dmi')
 			return
 	src.set_cursor(null)
+
+/// used to set the a_intent var of a mob
+/mob/proc/set_a_intent(intent)
+	if (!intent)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
+		return
+	src.a_intent = intent
 
 // medals
 /mob/proc/revoke_medal(title, debug)
@@ -891,18 +886,18 @@
 		return
 
 	var/key = src.key
-	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
+	var/displayed_key = src.mind.displayed_key
+	SPAWN(0)
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
 				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
 
@@ -942,7 +937,7 @@
 
 	boutput(src, "Retrieving your medal information...")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
@@ -955,7 +950,7 @@
 			return
 
 		medals = params2list(medals)
-		medals = sortList(medals)
+		sortList(medals, /proc/cmp_text_asc)
 
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
@@ -967,37 +962,38 @@
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
-	var/confirm = alert("Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", "Yes", "Cancel")
-	if (confirm == "Cancel")
-		return
-//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
+	if(isadmin(src))
+		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
+		boutput(src, "<span class='alert'>DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!</span>")
+	else
+		var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
+		if (confirm != "Yes")
+			return
+		if (!src.mind)
+			tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
+			return
+	//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
 #if defined(MAP_OVERRIDE_POD_WARS)
-	if (confirm == "Yes")
-		if (src.mind)
-			if (isliving(src) && !isdead(src))
-				var/double_confirm = alert("Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", "Yes", "No")
-				if (double_confirm == "No")
-					return
-				src.death()
-			src.verbs -= list(/mob/verb/setdnr)
-			src.mind.dnr = 1
-			boutput(src, "<span class='alert'>DNR status set!</span>")
-			boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
-			if (istype(ticker.mode, /datum/game_mode/pod_wars))
-				var/datum/game_mode/pod_wars/mode = ticker.mode
-				mode.team_NT.members -= src.mind
-				mode.team_SY.members -= src.mind
-				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
+		if (isliving(src) && !isdead(src))
+			var/double_confirm = tgui_alert(src, "Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", list("Yes", "No"))
+			if (double_confirm != "Yes")
+				return
+			src.death()
+		src.verbs -= list(/mob/verb/setdnr)
+		src.mind.get_player()?.dnr = TRUE
+		boutput(src, "<span class='alert'>DNR status set!</span>")
+		boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.team_NT.members -= src.mind
+			mode.team_SY.members -= src.mind
+			message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
 #else
-	if (confirm == "Yes")
-		if (src.mind)
-			src.verbs -= list(/mob/verb/setdnr)
-			src.mind.dnr = 1
-			boutput(src, "<span class='alert'>DNR status set!</span>")
+
+		src.verbs -= list(/mob/verb/setdnr)
+		src.mind.get_player()?.dnr = TRUE
+		boutput(src, "<span class='alert'>DNR status set!</span>")
 #endif
-		else
-			src << alert("There was an error setting this status. Perhaps you are a ghost?")
-	return
 
 /mob/proc/unequip_all(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = src.get_unequippable()
@@ -1094,6 +1090,7 @@
 		. *= max(src.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
 // for mobs without organs
@@ -1115,23 +1112,29 @@
 	if(A == src)
 		return
 
-	if(src.pulling)
+	var/atom/movable/wasPulling = src.pulling
+	if(wasPulling)
 		src.remove_pulling()
+		if(wasPulling == A)
+			return
 
-	pulling = A
+	if(!can_reach(src, A) || src.restrained())
+		return
 
-	if(ismob(pulling))
-		var/mob/M = pulling
+	src.pulling = A
+
+	if(ismob(src.pulling))
+		var/mob/M = src.pulling
 		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
-	if (ishuman(pulling))
-		var/mob/living/carbon/human/H = pulling
-		if (H.grabbed_by.len)
+	if (ishuman(src.pulling))
+		var/mob/living/carbon/human/H = src.pulling
+		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.state < GRAB_NECK) continue
-				pulling = G.assailant
+				if (G.state < GRAB_AGGRESSIVE) continue
+				src.pulling = G.assailant
 				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
@@ -1212,10 +1215,9 @@
 #undef CLOTHING
 #undef DAMAGE
 
-/mob/proc/death(gibbed)
-	#ifdef COMSIG_MOB_DEATH
+/mob/proc/death(gibbed = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
-	#endif
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
@@ -1227,8 +1229,11 @@
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey)
+	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+	//stop piloting pods or whatever
+	src.use_movement_controller = null
+
 
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
@@ -1252,7 +1257,7 @@
 		if (item)
 			item.layer = initial(item.layer)
 
-/mob/proc/drop_item(obj/item/W)
+/mob/proc/drop_item(obj/item/W, grabs_first)
 	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
@@ -1268,10 +1273,14 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 
+		if (W.chokehold != null && grabs_first)
+			W.drop_grab()
+			return
+
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
-				if (V.throw_dropped_items_overboard == 1)
+				if (V.can_eject_items)
 					W.set_loc(get_turf(V))
 				else
 					W.set_loc(src.loc)
@@ -1327,14 +1336,14 @@
 	. = list()
 
 	if (src.r_hand)
-		. += src.r_hand
+		. |= src.r_hand
 		if (src.r_hand.chokehold)
-			. += src.r_hand.chokehold
+			. |= src.r_hand.chokehold
 
 	if (src.l_hand)
-		. += src.l_hand
+		. |= src.l_hand
 		if (src.l_hand.chokehold)
-			. += src.l_hand.chokehold
+			. |= src.l_hand.chokehold
 
 	//handle mag tracktor
 	if (check_for_magtractor)
@@ -1342,15 +1351,15 @@
 			if (istype(I,/obj/item/magtractor))
 				var/obj/item/magtractor/M = I
 				if (M.holding)
-					.+= M.holding
-				.-= I
+					. |= M.holding
+				. -= I
 
 /mob/living/critter/equipped_list(check_for_magtractor = 1)
 	.= ..()
 	if (hands)
 		for(var/datum/handHolder/H in hands)
 			if (H.item)
-				.+= H.item
+				. |= H.item
 
 /mob/living/silicon/equipped_list(check_for_magtractor = 1) //lool copy paste fix later
 	.= 0
@@ -1368,7 +1377,7 @@
 		for (var/I in .)
 			if (istype(I,/obj/item/magtractor))
 				var/obj/item/magtractor/M = I
-				.+= M.holding
+				.|= M.holding
 				.-= I
 
 /mob/proc/swap_hand()
@@ -1463,7 +1472,7 @@
 
 		src.mind.set_miranda(new_rights)
 
-		logTheThing("telepathy", src, null, "has set their miranda rights quote to: [src.mind.miranda]")
+		logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
 		src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
 
 /mob/verb/abandon_mob()
@@ -1476,7 +1485,7 @@
 		boutput(usr, "<span class='notice'><B>You must be a ghost to use this!</B></span>")
 		return
 
-	logTheThing("diary", usr, null, "used abandon mob.", "game")
+	logTheThing(LOG_DIARY, usr, "used abandon mob.", "game")
 
 	var/mob/new_player/M = new()
 
@@ -1498,25 +1507,13 @@
 
 /mob/verb/succumb()
 	set hidden = 1
-/*
-//prevent a
- if the person is infected with the headspider disease.
-	for (var/datum/ailment/V in src.ailments)
-		if (istype(V, /datum/ailment/parasite/headspider) || istype(V, /datum/ailment/parasite/alien_embryo))
-			boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-			return
-*/
-//or if they are being drained of blood
-	if (src.vamp_beingbitten)
-		boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-		return
 
 	if (src.health < 0)
 		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
-		logTheThing("combat", src, null, "succumbs")
+		logTheThing(LOG_COMBAT, src, "succumbs")
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -1525,9 +1522,7 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (air_group || (height==0)) return 1
-
+/mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
 
@@ -1578,7 +1573,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage) SECONDS)
+			src.reagents?.add_reagent("radium", damage/4) //fuckit
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
@@ -1633,7 +1628,7 @@
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
 		if (src.health < 0 && !src.incrit)
 			src.incrit = 1
-			logTheThing("combat", src, null, "goes into crit [log_health(src)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "goes into crit [log_health(src)] at [log_loc(src)].")
 		else if (src.incrit && src.health >= 0)
 			src.incrit = 0
 	else
@@ -1684,14 +1679,14 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
 	var/difference = abs(actual-desired)   // get difference
 	var/increments = difference * divisor  //find how many increments apart they are
 	var/change = increments*incrementboost // Get the amount to change by (x per increment)
-	//change = change * 0.10
+	//change = change * 0.1
 
 	if (actual < desired) // Too cold
 		temperature += change
@@ -1711,11 +1706,11 @@
 	if (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer))
 		return
 
-	src.death()
+	src.death(TRUE)
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		src.ghostize()
@@ -1730,13 +1725,13 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is gibbed at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1764,7 +1759,7 @@
 		if(organ.donor == src)
 			organ.on_removal()
 	if (!custom_gib_handler)
-		if (iscarbon(src))
+		if (iscarbon(src) || (ismobcritter(src) & !isrobocritter(src)))
 			if (bdna && btype)
 				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
@@ -1818,21 +1813,35 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is electric-gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is electric-gibbed at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-
+	var/col_r = 0.4
+	var/col_g = 0.8
+	var/col_b = 1
+	var/brightness = 0.7
+	var/height = 1
+	var/datum/light/light
+	var/light_type = /datum/light/point
 
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
 		flick("elecgibbed", animation)
-
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(height)
+			light.attach(animation)
+			light.enable()
+			SPAWN(1 SECOND)
+				qdel(light)
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
@@ -1845,29 +1854,31 @@
 		animation.delaydispose()
 	qdel(src)
 
-/mob/proc/firegib()
+
+/mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is fire-gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is fire-gibbed at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
 		flick("firegibbed", animation)
-		for (var/obj/item/W in src)
-			if (istype(W, /obj/item/clothing))
-				var/obj/item/clothing/C = W
-				C.stains += "singed"
-				C.UpdateName()
-		unequip_all()
+		if (drop_clothes)
+			for (var/obj/item/W in src)
+				if (istype(W, /obj/item/clothing))
+					var/obj/item/clothing/C = W
+					C.stains += "singed"
+					C.UpdateName()
+			unequip_all()
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -1889,13 +1900,13 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is party-gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is party-gibbed at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1920,7 +1931,7 @@
 	else
 		partygibs(src.loc, virus)
 
-	playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 100, 1)
+	playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -1935,13 +1946,13 @@
 	game_stats.Increment("violence")
 #endif
 	var/transfer_mind_to_owl = prob(control_chance)
-	logTheThing("combat", src, null, "is owl-gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is owl-gibbed at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1971,7 +1982,7 @@
 	else
 		gibs(src.loc, virus)
 
-	playsound(src.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+	playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -1983,13 +1994,13 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+	logTheThing(LOG_COMBAT, src, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2020,13 +2031,13 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "imploded at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "imploded at [log_loc(src)].")
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2037,7 +2048,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -2045,13 +2056,13 @@
 
 /mob/proc/cluwnegib(var/duration = 30, var/anticheat = 0)
 	if(isobserver(src)) return
-	SPAWN_DBG(0) //multicluwne
+	SPAWN(0) //multicluwne
 		duration = clamp(duration, 10, 100)
 
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")
 	#endif
-		logTheThing("combat", src, null, "is taken by the floor cluwne at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
 		src.anchored = 1
@@ -2107,7 +2118,7 @@
 		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		sleep(duration+5)
-		src.death(1)
+		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
 		newmob?.corpse = null
 
@@ -2115,17 +2126,15 @@
 		qdel(src)
 
 /mob/proc/buttgib(give_medal)
-	if (isobserver(src)) return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is butt-gibbed at [log_loc(src)].")
-	src.death(1)
+	logTheThing(LOG_COMBAT, src, "is butt-gibbed at [log_loc(src)].")
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null
 	var/btype = null
@@ -2150,27 +2159,47 @@
 	var/list/virus = src.ailments
 	var/list/ejectables = list_ejectables()
 
-	for(var/i = 0, i < 16, i++)
-		if(organHolder)
-			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+	for (var/i = 0, i < 16, i++)
+		var/obj/item/clothing/head/butt/the_butt
+		if (organHolder)
+			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
+		else if (istype(src, /mob/living/silicon))
+			the_butt = new /obj/item/clothing/head/butt/cyberbutt
+		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
+			the_butt = new /obj/item/clothing/head/butt
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
+		else if (istype(src, /mob/living/intangible/blob_overmind))
+			the_butt = new /obj/item/clothing/head/butt
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else
-			ejectables.Add(new /obj/item/clothing/head/butt/synth)
+			the_butt = new /obj/item/clothing/head/butt/synth
+
+		ejectables += (the_butt)
 
 	if (bdna && btype)
 		gibs(src.loc, virus, ejectables, bdna, btype)
 	else
 		gibs(src.loc, virus, ejectables)
 
-	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 		for(var/mob/living/L in range(src_turf, 6))
 			shake_camera(L, 10, 32)
 
+	src.death(TRUE)
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
+
+/mob/proc/flockbit_gib()
+	src.visible_message("<span class='alert bold'>[src] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
+	var/mob/living/critter/flock/bit/B = new()
+	var/turf/T = get_turf(src)
+	B.set_loc(T)
+	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
+	src.gib()
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
@@ -2270,7 +2299,8 @@
 
 	var/list/L = src.get_all_items_on_mob()
 	if (length(L))
-		var/list/OL = list() // Sorted output list. Could definitely be improved, but is functional enough.
+		/// Sorted output list. Could definitely be improved, but is functional enough.
+		var/list/OL = list()
 		var/list/O_names = list()
 		var/list/O_namecount = list()
 
@@ -2295,7 +2325,7 @@
 				var/N3 = "[N2]: [N]"
 				OL[N3] = O
 
-		OL = sortList(OL)
+		sortList(OL, /proc/cmp_text_asc)
 
 		selection:
 		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
@@ -2337,7 +2367,7 @@
 	dizziness = min(500, dizziness + amount)	// store what will be new value
 													// clamped to max 500
 	if (dizziness > 100 && !is_dizzy)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			dizzy_process()
 
 
@@ -2368,7 +2398,7 @@
 	jitteriness = min(500, jitteriness + amount)	// store what will be new value
 													// clamped to max 500
 	if (jitteriness > 100 && !is_jittery)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			jittery_process()
 
 
@@ -2400,9 +2430,19 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
+	if (thr.throw_type & THROW_PEEL_SLIP)
+		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
+		if(("slip_obj" in thr.params) && istype(thr.params["slip_obj"], /obj/item/device/pda2/clown))
+			animate_peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
+		else
+			animate_peel_slip(src, stun_duration=stun_duration)
+		if(!isturf(hit) || hit.density)
+			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+		return ..()
+
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
-			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
@@ -2432,7 +2472,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
-	src.delStatus("n_radiation")
+	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)
@@ -2441,6 +2481,7 @@
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
 	src.buckled = null
+	src.disfigured = FALSE
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
@@ -2526,7 +2567,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -2560,7 +2601,7 @@
 		else
 			upper_cap = cap
 
-	src.eye_blurry = max(0, min(src.eye_blurry + amount, upper_cap))
+	src.eye_blurry = clamp(src.eye_blurry + amount, 0, upper_cap)
 	//DEBUG_MESSAGE("Amount is [amount], new eye blurry is [src.eye_blurry], cap is [upper_cap]")
 	return 1
 
@@ -2675,10 +2716,16 @@
 	if(the_pos)
 		name = copytext(name, 1, the_pos)
 	if(name)
-		src.name_tag.set_extra(he_or_she(src))
+		src.name_tag.set_info_tag(he_or_she(src))
 	else
-		src.name_tag.set_extra("")
+		src.name_tag.set_info_tag("")
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
+
+/mob/proc/get_tracked_examine_atoms()
+	return mobs
+
+/mob/get_examine_tag(mob/examiner)
+	return src.name_tag
 
 /mob/proc/protected_from_space()
 	return 0
@@ -2766,7 +2813,7 @@
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name ? default_name : src.real_name) as null|text
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
 		if (!newname)
 			return
 		else
@@ -2775,8 +2822,8 @@
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
 			else
-				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+					if(!src.traitHolder.hasTrait("stowaway"))// stowaway entertainers shouldn't be on the manifest
 						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
 							if (R)
@@ -2859,11 +2906,21 @@
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
+	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
+	if (!equipment_proxy)
+		equipment_proxy = new
+		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
+
+	// reset the modifiers to defaults
+	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
 /mob/proc/vomit(var/nutrition=0, var/specialType=null)
-	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
+	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -2924,7 +2981,7 @@
 	animation.master = src
 	animation.icon_state = "ungibbed"
 	src = null //Detach this, what if we get deleted before the animation ends??
-	SPAWN_DBG(0.7 SECONDS) //Length of animation.
+	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
@@ -2938,8 +2995,8 @@
 	src.nodamage = 1
 	var/duration = 30
 
-	SPAWN_DBG(0) //multisatan
-		logTheThing("combat", src, null, "is damned to hell from [log_loc(src)].")
+	SPAWN(0) //multisatan
+		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
 		src.anchored = 1
@@ -3021,7 +3078,7 @@
 	if(isnpc(src))
 		return 0
 	if(allow_overflow)
-		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
+		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
 	if (isdiabolical(src))
 		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0
@@ -3062,14 +3119,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/point(atom/A as mob|obj|turf in view(,usr))
 	set name = "Point"
 	src.point_at(A)
 
-/mob/proc/point_at(var/atom/target) //overriden by living and dead
+/mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -3077,10 +3134,10 @@
 		unpull_particle(src,src.pulling)
 		src.set_pulling(null)
 	else
-		A.pull()
+		A.pull(src)
 
 
-/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/examine_verb(atom/A as mob|obj|turf in view(,usr))
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
@@ -3088,7 +3145,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
@@ -3104,8 +3161,9 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		src.client.Click(A, get_turf(A))
+		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		if (A)
+			src.client?.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
@@ -3113,11 +3171,6 @@
 /mob/proc/on_eat(var/atom/A)
 	return
 
-/mob/set_density(var/newdensity)
-	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
-		..(0)
-	else
-		..(newdensity)
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
@@ -3125,11 +3178,17 @@
 
 
 /mob/MouseEntered(location, control, params)
-	if(usr.client.check_key(KEY_EXAMINE))
-		src.name_tag?.show_hover(usr.client)
+	var/mob/M = usr
+	M.atom_hovered_over = src
+	if(M.client.check_key(KEY_EXAMINE))
+		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+		hover_tag?.show_images(M.client, FALSE, TRUE)
 
 /mob/MouseExited(location, control, params)
-	src.name_tag?.hide_hover(usr.client)
+	var/mob/M = usr
+	M.atom_hovered_over = null
+	var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+	hover_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)
@@ -3145,3 +3204,48 @@
 				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
+
+
+/// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
+/mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	if(check_target_immunity(src, TRUE))
+		return
+	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
+	if(!internal)
+		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
+	if(Sv > 0)
+		if(isdead(src))
+			return //no rads for the dead
+		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
+		src.radiation_dose += radres_mult*Sv
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
+		. = radres_mult*Sv
+	else
+		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+		. = Sv
+	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
+
+/// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
+/mob/proc/observeMob(mob/target)
+	src.set_loc(target)
+	src.observing = target
+
+/// called when the observed mob is deleted, override for custom behaviour.
+/mob/proc/stopObserving()
+	src.set_loc(get_turf(src.observing))
+	src.observing = null
+	src.ghostize()
+
+/// search for any radio device, starting with hands and then equipment
+/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+/// (more practically, they won't hear it)
+/mob/proc/find_radio()
+	if(istype(src.ears, /obj/item/device/radio))
+		return src.ears
+	. = src.find_type_in_hand(/obj/item/device/radio)
+	if(!.)
+		. = src.find_in_equipment(/obj/item/device/radio)
+
+///Returns the default HUD of the mob, whatever that may be
+/mob/proc/get_hud()
+	return null

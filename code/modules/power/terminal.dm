@@ -10,7 +10,7 @@
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
-	var/obj/machinery/power/master = null
+	var/obj/machinery/master = null
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
 
@@ -64,6 +64,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			//qdel(signal)
 			return
@@ -71,6 +72,9 @@
 //Data terminal is pretty similar in appearance to the regular terminal
 //It sends wired /datum/signal information between its master obj and other
 //data terminals in its powernet's nodes.
+
+TYPEINFO(/obj/machinery/power/data_terminal)
+	mats = 5
 
 /obj/machinery/power/data_terminal //The data terminal is remarkably similar to a regular terminal
 	name = "data terminal"
@@ -82,7 +86,6 @@
 	anchored = 1
 	directwired = 0
 	use_datanet = 1
-	mats = 5
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/master = null //It can be any obj that can use receive_signal
 
@@ -133,6 +136,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			if(signal)
 				qdel(signal)
@@ -141,18 +145,20 @@
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 		alpha = invisibility ? 128 : 255
 
+TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
+	mats = 0 // uh no thanks
+
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"
 	desc = "A connector that goes off into somewhere..."
 	icon_state = "vterm"
-	mats = 0 // uh no thanks
 
 	New()
 		..()
 		var/turf/T = get_turf(src)
 		if(!src.netnum && !length(T.connections) )
 			//Re-attempt connection to power nets due to delayed disjoint connections
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				src.netnum = 0
 				if(makingpowernets)
 					return

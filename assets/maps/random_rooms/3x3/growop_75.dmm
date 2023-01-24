@@ -1,0 +1,75 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -6
+	},
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
+/obj/item/device/light/zippo{
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/machinery/plantpot,
+/obj/item/seed/cannabis,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/storage/crate,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"P" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+t
+P
+a
+"}
+(2,1,1) = {"
+m
+L
+P
+"}
+(3,1,1) = {"
+e
+m
+P
+"}

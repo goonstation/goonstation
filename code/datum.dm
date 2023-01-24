@@ -32,4 +32,4 @@ var/global/list/deletedObjects = new
 /// called when a variable is admin-edited
 /datum/proc/onVarChanged(variable, oldval, newval)
 
-/datum/var/qdeltime = 0
+// /datum/var/qdeltime = 0

@@ -16,14 +16,16 @@ change the direction of created objects.<br>
 	var/objpath = null
 	var/cinematic = "Blink"
 	var/giftwrap_style = "Regular"
-	var/turf/first_corner = null
-	var/matrix/mtx = matrix()
+	var/tmp/turf/first_corner = null
+	var/tmp/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None")) || cinematic
 			giftwrap_style = (input("Gift wrapping style mode") as null|anything in list("Regular", "Spacemas")) || giftwrap_style
 			return
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		first_corner = null
 		if(ispath(objpath, /turf))
 			boutput(usr, "<span class='alert'>No gifting turfs!</span>")
@@ -34,42 +36,15 @@ change the direction of created objects.<br>
 		first_corner = get_turf(object)
 
 	proc/spawn_gift(var/turf/T)
-		var/atom/A
-		var/obj/item/gift/G = new /obj/item/gift(T)
-		A = new objpath(G)
-		var/random_style
-		if(isitem(A))
-			var/obj/item/gifted_item = A
-			G.size = gifted_item.w_class
-			G.w_class = G.size + 1
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "gift[clamp(G.size, 1, 3)]-[random_style]"
-		else if(ismob(A) || istype(A, /obj/critter))
-			G.size = 3
-			G.w_class = G.size + 1
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "strange-[random_style]"
+		var/atom/movable/AM
+		AM = new objpath(T)
+		if (giftwrap_style == "Regular")
+			AM.gift_wrap(FALSE, FALSE)
 		else
-			G.size = 3
-			G.w_class = W_CLASS_BULKY
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "gift3-[random_style]"
-		G.gift = A
-		if (isobj(A) || ismob(A))
-			A.set_dir(holder.dir)
-			A.onVarChanged("dir", SOUTH, A.dir)
+			AM.gift_wrap(FALSE, TRUE)
+		if (isobj(AM) || ismob(AM))
+			AM.set_dir(holder.dir)
+			AM.onVarChanged("dir", SOUTH, AM.dir)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath || ispath(objpath, /turf))
@@ -89,7 +64,7 @@ change the direction of created objects.<br>
 					mtx.Translate(0, 64)
 					pad.transform = mtx
 					animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-					SPAWN_DBG(0.7 SECONDS)
+					SPAWN(0.7 SECONDS)
 						swirl.loc = T
 						flick("portswirl", swirl)
 
@@ -145,7 +120,7 @@ change the direction of created objects.<br>
 						mtx.Translate(0, 64)
 						pad.transform = mtx
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
 							flick("portswirl", swirl)
 

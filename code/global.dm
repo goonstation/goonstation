@@ -14,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf')
+var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/fonts/ibmvga9.ttf', 'interface/fonts/xfont.ttf', 'interface/fonts/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 
@@ -64,7 +64,6 @@ var/global
 	force_random_looks = 0			// same as above
 
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
-	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 
 	list/browse_item_icons = list()
@@ -77,7 +76,7 @@ var/global
 
 	list/factions = list()
 
-	list/traitList = list() //List of trait objects
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -243,6 +242,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -270,6 +270,7 @@ var/global
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
@@ -288,6 +289,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -315,52 +317,51 @@ var/global
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
 
-	///////////////
+	//
 	//cyberorgan damage thresholds for emagging without emag
-	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
-	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
-	///////////////
-	list/logs = list ( //Loooooooooogs
-		"admin_help" = list (  ),
-		"speech" = list (  ),
-		"ooc" = list (  ),
-		"combat" = list (  ),
-		"station" = list (  ),
-		"pdamsg" = list (  ),
-		"admin" = list (  ),
-		"mentor_help" = list (  ),
-		"telepathy" = list (  ),
-		"bombing" = list (  ),
-		"signalers" = list (  ),
-		"atmos" = list (  ),
-		"debug" = list (  ),
-		"pathology" = list (  ),
-		"deleted" = list (  ),
-		"vehicle" = list (  ),
-		"tgui" = list (), //me 2
-		"computers" = list(),
-		"audit" = list()//im a rebel, i refuse to add that gross SPACING
+	/// Loooooooooogs
+	list/logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_PDAMSG		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
+		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
-	savefile/compid_file 	//The file holding computer ID information
-	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
+	/// The file holding computer ID information
+	savefile/compid_file
+
+	/// Should we be analysing the comp IDs of new clients?
+	do_compid_analysis = 1
+
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
-	list/wormholeturfs = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 
 	// Controllers
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
 	datum/sun/sun = null
@@ -386,6 +387,10 @@ var/global
 
 	narrator_mode = 0
 
+	// Zam note: this is horrible
+	forced_desussification = 0
+	forced_desussification_worse = 0
+
 	disable_next_click = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
@@ -405,13 +410,11 @@ var/global
 
 	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
 	list/total_chem_reactions = list()
-	list/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
@@ -423,14 +426,16 @@ var/global
 	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
 	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
 	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindslave = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave")
+	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
+	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
 	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
 	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyslave = image('icons/mob/antag_overlays.dmi', icon_state = "spyslave")
+	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
 	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
 	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
@@ -440,6 +445,7 @@ var/global
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
+	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -495,12 +501,25 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
+	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
+
+	hardRebootFilePath = "data/hard-reboot"
+
+	list/icon/z_level_maps = list()
+	list/minimap_marker_targets = list()
+
+	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
+	/// used when creating new z-levels
+	dont_init_space = FALSE
+
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	list/valid_icon_states = list()
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
 		I.render_target = key
-		I.appearance_flags = KEEP_APART
+		I.appearance_flags = KEEP_APART | PIXEL_SCALE
 		I.loc = renderSourceHolder
 		globalRenderSources[key] = I
 		return I

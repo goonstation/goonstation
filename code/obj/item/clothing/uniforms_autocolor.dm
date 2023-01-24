@@ -27,7 +27,7 @@
 		..()
 		src.autojump_updateworldicon()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.autojump_updateworldicon()
 
@@ -52,7 +52,6 @@
 	base_r = 180
 	base_g = 180
 	base_b = 180
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/autocolor/red
 	name = "red jumpsuit"

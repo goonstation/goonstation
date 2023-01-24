@@ -25,6 +25,7 @@
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
 	type_name = "Elemental Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -71,7 +72,7 @@
 			return
 
 		ready = 0
-		SPAWN_DBG(cooldown)
+		SPAWN(cooldown)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			ready = 1
@@ -82,18 +83,18 @@
 
 		switch(curAttack)
 			if("fire")
-				playsound(T, "sound/effects/bamf.ogg", 50, 1, 0)
+				playsound(T, 'sound/effects/bamf.ogg', 50, 1, 0)
 				tfireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
 
 				ArtifactLogs(user, T, O, "used", "creating fireball on target turf", 0) // Attack wands need special log handling (Convair880).
 
 			if("ice")
-				playsound(T, "sound/effects/mag_iceburstlaunch.ogg", 50, 1, 0)
+				playsound(T, 'sound/effects/mag_iceburstlaunch.ogg', 50, 1, 0)
 				for (var/turf/TT in range(T,powerVars["iceRadius"]))
 					if(locate(/obj/decal/icefloor) in TT.contents)
 						continue
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(TT)
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						B.dispose()
 				for (var/mob/living/M in range(T,powerVars["iceRadius"]))
 					if (M.bioHolder)
@@ -111,7 +112,7 @@
 					ArtifactLogs(user, M, O, "weapon", "zapping them with electricity", 0)
 
 			if("sonic")
-				playsound(T, "sound/effects/screech.ogg", 50, 1, 0)
+				playsound(T, 'sound/effects/screech.ogg', 50, 1, 0)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sonic_burst(T))
 
 				for (var/mob/living/M in all_hearers(world.view, T))

@@ -8,6 +8,9 @@
 #define MW_STATE_BROKEN_1 1
 #define MW_STATE_BROKEN_2 2
 
+TYPEINFO(/obj/machinery/microwave)
+	mats = 12
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -49,20 +52,18 @@
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
 	var/obj/item/extra_item
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = FALSE
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (src.emagged)
+		if (!src.emagged)
 			if (user)
 				user.show_text("You use the card to change the internal radiation setting to \"IONIZING\"", "blue")
 			src.emagged = TRUE
-			return 1
+			return TRUE
 		else
 			if (user)
 				user.show_text("The [src] has already been tampered with", "red")
-				return 0
 
 	demag(var/mob/user)
 		if (!src.emagged)
@@ -70,7 +71,7 @@
 		if (user)
 			user.show_text("You reset the radiation levels to a more food-safe setting.", "blue")
 		src.emagged = FALSE
-		return 1
+		return TRUE
 
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
@@ -95,7 +96,7 @@
 	*  Item Adding
 	*/
 
-obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.operating)
 		return
 	if(src.microwave_state > 0)
@@ -123,6 +124,8 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 	else if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		return
+	else if(istype(O, /obj/item/card/emag))
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/egg)) // If an egg is used, add it
 		if(src.egg_amount < 5)
@@ -168,11 +171,14 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			O.set_loc(src)
 	else
 		if(!isitem(extra_item)) //Allow one non food item to be added!
-			user.u_equip(O)
-			extra_item = O
-			user.u_equip(O)
-			O.set_loc(src)
-			src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			if(O.w_class <= W_CLASS_NORMAL)
+				user.u_equip(O)
+				extra_item = O
+				user.u_equip(O)
+				O.set_loc(src)
+				src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			else
+				boutput(user, "[O] is too large and bulky to be microwaved.")
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
@@ -195,7 +201,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	*  Microwave Menu
 	*/
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
@@ -250,13 +256,13 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(href_list["cook"])
 		if(!src.operating)
-			var/operation = text2num(href_list["cook"])
+			var/operation = text2num_safe(href_list["cook"])
 			var/cooked_item = ""
 
 			/// If cook was pressed in the menu
 			if(operation == 1)
 				src.visible_message("<span class='notice'>The microwave turns on.</span>")
-				playsound(src.loc, 'sound/machines/microwave_start.ogg', 50, 0)
+				playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
 				var/diceinside = 0
 				for(var/obj/item/dice/D in src.contents)
 					if(!diceinside)
@@ -324,6 +330,8 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.being_cooked.reagents.add_reagent("radium", 25)
 				if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
 					qdel(src.extra_item)
+				if(prob(1))
+					src.being_cooked.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 				src.being_cooked.set_loc(get_turf(src)) // Create the new item
 				src.extra_item = null
 				src.cooked_recipe = null

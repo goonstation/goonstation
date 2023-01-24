@@ -1,0 +1,183 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/decal/cleanable/blood,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/suit/cultist,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/item/clothing/mask/skull,
+/obj/item/clothing/mask/skull,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "8-10"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-6"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-5"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-5"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/deep_fryer,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.2;
+	color_g = 0.45;
+	color_r = 0.5;
+	invisibility = 101;
+	name = "glow - YELLOW"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+n
+Y
+a
+"}
+(2,1,1) = {"
+K
+L
+A
+"}
+(3,1,1) = {"
+D
+Z
+i
+"}
+(4,1,1) = {"
+E
+g
+P
+"}
+(5,1,1) = {"
+l
+e
+S
+"}

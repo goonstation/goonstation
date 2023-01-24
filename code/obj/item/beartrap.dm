@@ -17,12 +17,15 @@
 		icon_state = "bear_trap-open"
 		armed = 1
 
+	armed/hidden_a_bit
+		layer = -1 // layers under doors
+
 	examine()
 		. = ..()
 		if (src.armed)
 			. += "<span class='alert'>It looks like it's armed.</span>"
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (src.armed)
 			if ((M.get_brain_damage() >= 60 || M.bioHolder.HasEffect("clumsy")) && prob(30))
 				src.triggered(M)
@@ -54,7 +57,7 @@
 
 		else if (istype(AM, /obj/critter/bear) && (src.armed))
 			var/obj/critter/bear/M = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
 			src.anchored = FALSE
@@ -65,17 +68,17 @@
 
 	proc/arm(mob/M)
 		if (!src.armed)
-			logTheThing("combat", src, null, "armed a beartrap at [src.loc]")
+			logTheThing(LOG_COMBAT, src, "armed a beartrap at [src.loc]")
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
 			src.anchored = TRUE
-			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
 	proc/disarm(mob/M)
 		if (src.armed)
-			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
 			src.anchored = FALSE
@@ -87,16 +90,17 @@
 
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			logTheThing("combat", H, null, "stood on a [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, H, "stood on a [src] at [log_loc(src)].")
 			H.changeStatus("stunned", 4 SECONDS)
+			H.force_laydown_standup()
 			random_brute_damage(H, 50, 0)
 			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
 			H.UpdateDamageIcon()
 
 		if (target)
-			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
+			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
 			src.anchored = FALSE
-			logTheThing("combat", target, null, "triggers [src] at [log_loc(src)]")
+			logTheThing(LOG_COMBAT, target, "triggers [src] at [log_loc(src)]")
 		return

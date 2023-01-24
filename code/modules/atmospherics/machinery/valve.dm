@@ -100,7 +100,7 @@ obj/machinery/atmospherics/valve
 	update_icon(animation)
 		if(animation)
 			flick("valve[src.open][!src.open]",src)
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 		else
 			icon_state = "valve[open]"
 
@@ -160,9 +160,9 @@ obj/machinery/atmospherics/valve
 
 		if(open) return 0
 
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		open = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node1&&network_node2)
 			network_node1.merge(network_node2)
@@ -180,9 +180,9 @@ obj/machinery/atmospherics/valve
 		if(!open)
 			return 0
 
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		open = 0
-		update_icon()
+		UpdateIcon()
 
 		network_node1?.dispose()
 		network_node1 = null
@@ -197,21 +197,23 @@ obj/machinery/atmospherics/valve
 		boutput(user, "This valve is manually controlled.")
 		return
 
-	attack_hand(mob/user as mob)
-		update_icon(1)
+	attack_hand(mob/user)
+		interact_particle(user,src)
+		UpdateIcon(1)
 		sleep(1 SECOND)
-		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
+		logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 		if (src.open)
 			src.close()
 		else
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
+		add_fingerprint(user)
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
+	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))
-			update_icon(1)
+			UpdateIcon(1)
 			sleep(1 SECOND)
-			logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 			if (src.open)
 				src.close()
 
@@ -348,7 +350,7 @@ obj/machinery/atmospherics/manifold_valve
 	update_icon(animation)
 		if(animation)
 			flick("valve[src.divert][!src.divert]",src)
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 		else
 			icon_state = "manifold_valve[divert]"
 
@@ -429,7 +431,7 @@ obj/machinery/atmospherics/manifold_valve
 		if(divert) return 0
 
 		divert = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node2)
 			network_node2.dispose()
@@ -454,7 +456,7 @@ obj/machinery/atmospherics/manifold_valve
 			return 0
 
 		divert = 0
-		update_icon()
+		UpdateIcon()
 
 		if(network_node3)
 			network_node3.dispose()
@@ -473,7 +475,7 @@ obj/machinery/atmospherics/manifold_valve
 
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 
 

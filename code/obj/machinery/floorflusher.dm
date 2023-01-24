@@ -12,15 +12,18 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
+	var/opening = FALSE // is the flusher opening/closing? Used for door_timer.dm
 	var/id = null //ID used for brig stuff
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if triggered
 	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk, if none reject user
 	var/flushing = 0	// true if flushing in progress
+	var/mail_tag = null // mail_tag to apply on next flush
+	var/mail_id = null // id for linking a flusher for mail tagging
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)
@@ -68,7 +71,8 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		START_TRACKING
+		SPAWN(0.5 SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
 				mode = 0
@@ -85,6 +89,7 @@
 			qdel(air_contents)
 			air_contents = null
 		..()
+		STOP_TRACKING
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -142,13 +147,13 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if(open != 1)
@@ -191,18 +196,13 @@
 		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (open != 1)
 			return
 		if(status & BROKEN)
 			src.remove_dialog(user)
 			return
-
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
 
 
 	// eject the contents of the unit
@@ -230,6 +230,17 @@
 					boutput(M, "You feel your handcuffs being removed.")
 					M.handcuffs.drop_handcuffs(M)
 
+				//Might as well set their security record to "released"
+				var/nameToCheck = M.name
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					// this makes it so that if your face is unobstructed and your id is wrong, i.e. you show up as John Smith (as Someone Else)
+					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
+					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
+					nameToCheck = H.face_visible() ? H.real_name : H.name
+				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
+				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
+					R["criminal"] = "Released"
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
@@ -237,7 +248,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0)
+			SPAWN(0)
 				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
@@ -257,13 +268,14 @@
 		closeup()
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
+		H.mail_tag = src.mail_tag // apply mail_tag
 
 		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents.zero() // empty gas
 
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -289,22 +301,28 @@
 	//open up, called on trigger
 	proc/openup()
 		open = 1
+		opening = TRUE
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
+		SPAWN(0.7 SECONDS)
+			opening = FALSE
 
 	proc/closeup()
 		open = 0
+		opening = TRUE
 		flick("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
+		SPAWN(0.7 SECONDS)
+			opening = FALSE
 
 	// called when holder is expelled from a disposal
 	// should usually only occur if the pipe network is modified
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -323,7 +341,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			openup()
 
 		return 1
@@ -357,7 +375,7 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
@@ -367,7 +385,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0) flush()
+			SPAWN(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

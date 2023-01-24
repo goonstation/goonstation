@@ -57,7 +57,7 @@ Hell area (send people here if they die in a shameful way)
 
 
 /area/afterlife/bar/barspawn
-	name = "The Afterlife Bar"
+	name = "Afterlife Bar Revival Point"
 	skip_sims = 1
 	sims_score = 100
 	icon_state = "afterlife_bar_spawn"
