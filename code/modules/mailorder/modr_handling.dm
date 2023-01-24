@@ -66,7 +66,7 @@
 
 	proc/yeetself()
 		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
-		SPAWN_DBG(yeetdelay)
+		SPAWN(yeetdelay)
 			var/yeetbegin = pick_landmark(LANDMARK_MAILORDER_SPAWN)
 			var/yeetend = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			if(!yeetbegin || !yeetend)
