@@ -559,16 +559,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
-	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
-	attack_self(mob/user as mob)
-		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
-			src.splash_all_contents = 0
-		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
-			src.splash_all_contents = 1
-		return
-
 	attack(mob/M, mob/user, def_zone)
 		// in this case m is the consumer and user is the one holding it
 		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))

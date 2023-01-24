@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	rc_desc_flag = RC_SPECTRO | RC_VISIBLE | RC_FULLNESS
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
-	var/splash_all_contents = 1
+	var/splash_all_contents = TRUE
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
 	var/can_recycle = FALSE //can this be put in a glass recycler?
@@ -351,13 +351,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				if (W.reagents.total_volume)
 					if (src.reagents.maximum_volume > src.reagents.total_volume)
 						var/transferred = W.reagents.trans_to(src, 10)
-						boutput(user, "You pour [transferred] units of the [W]'s contents into the [src].")
+						boutput(user, "You pour [transferred] units of the [W.name]'s contents into the [src.name].")
 					else
-						boutput(user, "<span class='alert'>The [src] is full.</span>")
+						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
-					boutput(user, "The [W] is empty.")
+					boutput(user, "The [W.name] is empty.")
 			else
-				boutput(user, "You need to slice open the [W] first!")
+				boutput(user, "You need to slice open the [W.name] first!")
 
 			return
 		else
@@ -367,10 +367,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
-			src.splash_all_contents = 0
+			src.splash_all_contents = FALSE
 		else
 			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
-			src.splash_all_contents = 1
+			src.splash_all_contents = TRUE
 		return
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)

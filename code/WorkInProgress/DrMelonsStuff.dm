@@ -146,7 +146,7 @@
 		else if (istype(over_object, /turf))
 			drain_bathtub(usr)
 			return
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS & can_transfer()))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")

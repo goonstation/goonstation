@@ -204,18 +204,15 @@
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience procs
-	*/
+	///checks if the container has CAN_RECEIVE and returns it
 	proc/can_receive()
-		return rc_flags & CAN_RECEIVE //checks for CAN_RECEIVE
-
+		return rc_flags & CAN_RECEIVE
+	///checks if the container has CAN_TRANSFER and returns it
 	proc/can_transfer()
-		return rc_flags & CAN_TRANSFER //checks for CAN_TRANSFER
-
+		return rc_flags & CAN_TRANSFER
+	///checks if the container has CAN_SPLASH and returns it
 	proc/can_splash()
-		return rc_flags & CAN_SPLASH //checks for CAN_SPLASH
+		return rc_flags & CAN_SPLASH
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
