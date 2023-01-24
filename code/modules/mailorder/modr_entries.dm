@@ -267,13 +267,13 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 //Survival Mart: primarily medical, but not exclusively
 ABSTRACT_TYPE(/datum/mail_order/survmart)
 /datum/mail_order/survmart
-/* //alternate non-pressurized tank to be added at later point
+
 	oxytank
 		name = "Emergency Oxygen Tank"
 		desc = "An easy-to-use compact gas tank pre-loaded with pure oxygen."
 		order_items = list(/obj/item/tank/emergency_oxygen)
 		cost = PAY_TRADESMAN
-*/
+
 	wintercoat
 		name = "Winterized Overcoat"
 		desc = "Beat the cold of space with your very own cozy coat."
