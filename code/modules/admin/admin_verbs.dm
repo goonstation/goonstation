@@ -2033,9 +2033,6 @@ var/list/fun_images = list()
 		for (var/mob/living/carbon/human/H in mobs)
 			var/obj/item/implant/revenge/microbomb/MB = new (H)
 			MB.power = microbombs_4_everyone
-			MB.implanted = 1
-			H.implant.Add(MB)
-			MB.implanted(H, 0)
 			implanted ++
 		SPAWN(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")

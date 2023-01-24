@@ -76,9 +76,6 @@
 			if (receives_implant && ispath(receives_implant))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
-				I.implanted = 1
-				if(ishuman(M)) H.implant.Add(I)
-				I.implanted(M)
 				if (src.receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
@@ -93,14 +90,7 @@
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
-				I.owner = M
 				I.uses = -1
-				I.set_loc(M)
-				I.implanted = 1
-				if(ishuman(M))
-					var/mob/living/carbon/human/H = M
-					H.implant.Add(I)
-				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
 				var/location = special_spawn_location

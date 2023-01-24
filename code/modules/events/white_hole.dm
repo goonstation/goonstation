@@ -1190,7 +1190,7 @@
 			par.pixel_x += rand(-128,128)
 			par.pixel_y += rand(-128,128)
 			par.color = "#ffffff"
-			par.alpha = 5
+			par.alpha = 2
 			par.plane = PLANE_NOSHADOW_ABOVE
 
 			var/image/illum = par.SafeGetOverlayImage("illum", src.icon, src.icon_state)
