@@ -515,10 +515,12 @@
 	// checks for regular cables (these always connect by default)
 		declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
-			if (normal_cable.color == src.color)
-				if (istype(normal_cable, src) || istype(src, normal_cable))
-					if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
-						cable_surr |= declarer
+			if (normal_cable.color != src.color)
+				continue
+			if (!istype(normal_cable, src) && !istype(src, normal_cable))
+				continue
+			if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
+				cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
