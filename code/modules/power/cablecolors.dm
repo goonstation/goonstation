@@ -32,6 +32,7 @@
 /obj/cablespawner/_color/name = ""+#_color+" power cable";\
 /obj/cablespawner/_color/color = _hexcolor;\
 /obj/cablespawner/_color/cable_type = /obj/cable/_color;\
+/obj/cablespawner/_color/self_type = /obj/cablespawner/_color;\
 /obj/cablespawner/_color/node;\
 /obj/cablespawner/_color/node/name = "node "+#_color+" cable spawner";\
 /obj/cablespawner/_color/node/override_centre_connection = TRUE;\
@@ -48,13 +49,14 @@ colorcable(brown, "#633221")
 colorcable(white, "#ffffff")
 
 // the cablespawners need abstract parents otherwise they break, so we define red variant here
-/obj/cablespawner/red;\
-/obj/cablespawner/red/name = "red power cable";\
-/obj/cablespawner/red/color = "#DD0000";\
-/obj/cablespawner/red/cable_type = /obj/cable;\
-/obj/cablespawner/red/node;\
-/obj/cablespawner/red/node/name = "node red cable spawner";\
-/obj/cablespawner/red/node/override_centre_connection = TRUE;\
-/obj/cablespawner/red/node/icon_state = "superstate-node"
+/obj/cablespawner/red
+	name = "red power cable"
+	color = "#DD0000"
+	cable_type = /obj/cable
+	node
+		name = "node red cable spawner"
+		override_centre_connection = TRUE
+		icon_state = "superstate-node"
+// an alternative of course is to go 'screw it' and just run colorcable on red as well, but that's not great.
 
 #undef colorcable

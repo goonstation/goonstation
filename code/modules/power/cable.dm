@@ -429,6 +429,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	// subtype node sets this to true
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
+	var/self_type = null
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
@@ -439,6 +440,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 		icon_state = "superstate-thick"
 		cable_type = /obj/cable/reinforced
 		color = "#075C90"
+		self_type = /obj/cablespawner/reinforced
 
 		node
 			name = "node reinforced cable spawner"
@@ -461,9 +463,10 @@ ABSTRACT_TYPE(/obj/cablespawner)
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
-	for (var/obj/cablespawner/dupe in range(0, src))
+	// first we have to make sure we're checking the correct kinds
+	for (var/self_type/dupe in range(0, src))
 		if (istype(dupe, src))
-			selftile += dupe
+			selftile += 1
 	if (length(selftile) > 1)
 		CRASH("[selftile + 1] cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
@@ -502,12 +505,15 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	if (cable_surr & EAST)
 	// optimises the outlier case
 		for (var/obj/cablespawner/spawner in get_step(src, EAST))
-			spawner.cable_surr |= WEST
+			if (spawner.cable_type == src.cable_type)
+				spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
 	// checks for regular cables (these always connect by default)
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
+			if (normal_cable.color != src.color)
+				continue
 			if (istype(normal_cable, src) || istype(src, normal_cable))
 				if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
 					cable_surr |= declarer
