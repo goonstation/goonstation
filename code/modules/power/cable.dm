@@ -439,7 +439,6 @@ ABSTRACT_TYPE(/obj/cablespawner)
 		icon_state = "superstate-thick"
 		cable_type = /obj/cable/reinforced
 		color = "#075C90"
-		self_type = /obj/cablespawner/reinforced
 
 		node
 			name = "node reinforced cable spawner"
