@@ -49,6 +49,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/widescreen = 0
 	var/vert_split = 1
+	var/darkmode = TRUE
 
 	var/tg_controls = 0
 	var/tg_layout = 0
@@ -132,6 +133,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
+	// technically not disposing but it really should be here for feature parity
+	SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
+
 	src.mob?.move_dir = 0
 
 	if (player_capa && src.login_success)
@@ -1702,6 +1706,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #define _SKIN_COMMAND_BG "#28294c"
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-dark")
+		src.darkmode = TRUE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG
@@ -1715,6 +1720,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 	else
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-default")
+		src.darkmode = FALSE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG

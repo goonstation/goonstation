@@ -273,7 +273,7 @@
 /area/prefab/ghost_house)
 "bc" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/wood,
 /area/prefab/ghost_house)
 "bd" = (

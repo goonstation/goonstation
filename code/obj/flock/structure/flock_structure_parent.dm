@@ -1,5 +1,7 @@
 /// # Flock Structure Parent
 ABSTRACT_TYPE(/obj/flock_structure)
+TYPEINFO(/obj/flock_structure)
+	var/cancellable = TRUE
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"

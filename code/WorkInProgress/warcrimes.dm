@@ -4,10 +4,13 @@
 var/johnbill_shuttle_fartnasium_active = 0
 var/fartcount = 0
 
+TYPEINFO(/area/diner/tug)
+	valid_bounty_area = FALSE
 /area/diner/tug
 	icon_state = "green"
 	name = "Big Yank's Cheap Tug"
-
+TYPEINFO(/area/diner/juicer_trader)
+	valid_bounty_area = FALSE
 /area/diner/jucer_trader
 	icon_state = "green"
 	name = "Placeholder Paul's $STORE_NAME.shuttle"
@@ -173,8 +176,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
 		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
 
-		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-		implant.implanted(src, src)
+		new /obj/item/implant/access/infinite/shittybill(src)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)

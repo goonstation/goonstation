@@ -318,7 +318,7 @@ obj/structure/ex_act(severity)
 		return ..()
 
 /obj/structure/woodwall
-	name = "wooden barricade"
+	name = "barricade"
 	desc = "This was thrown up in a hurry."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodwall"

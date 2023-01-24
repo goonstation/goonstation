@@ -188,9 +188,9 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
-			frame_img.appearance_flags = RESET_COLOR
+			frame_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 			rocked_out_img = image('icons/misc/abilities.dmi',"rocked_out")
-			rocked_out_img.appearance_flags = RESET_COLOR
+			rocked_out_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()

@@ -3032,7 +3032,7 @@
 /area/sim/area1)
 "gZ" = (
 /obj/table,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floorVR2"

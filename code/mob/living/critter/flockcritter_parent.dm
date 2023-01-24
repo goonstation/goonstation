@@ -55,7 +55,7 @@
 	burn.value = src.health_burn
 	burn.maximum_value = src.health_burn
 	burn.last_value = src.health_burn
-	burn.damage_multiplier = 0.2
+	burn.damage_multiplier = 0.4
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()

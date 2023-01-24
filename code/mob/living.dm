@@ -142,7 +142,7 @@
 
 	SPAWN(0)
 		src.get_static_image()
-		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
 
@@ -684,6 +684,8 @@
 			// var/turf/T = get_turf(src)
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
 			arcFlash(src, src, forced_desussification)
+			if (issilicon(src))
+				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
 			if (forced_desussification_worse)
 				forced_desussification *= 1.1
 
@@ -2121,3 +2123,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
 	else if((actual_dose > 0) && (!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")
+
+/mob/living/get_hud()
+	return src.vision

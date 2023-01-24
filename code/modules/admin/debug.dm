@@ -384,24 +384,6 @@ var/global/debug_messages = 0
 	else
 		alert("This only works on human mobs.")
 
-/* Just use the set traitor dialog thing
-/client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set name = "Make Changeling"
-	set popup_menu = 0
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(ishuman(M) && M.mind != null)
-		logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a changeling.")
-		logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a changeling.", "admin")
-		SPAWN(1 SECOND)
-			M.mind.absorbed_dna[M.bioHolder] = M.real_name
-			M.make_changeling()
-	else
-		alert("Invalid mob")
-*/
-
 /client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
@@ -663,8 +645,7 @@ body
 					location = pick(job_start_locations[job])
 				var/mob/living/carbon/human/npc/monkey/M = new /mob/living/carbon/human/npc/monkey(location)
 				if(prob(10))
-					var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(M)
-					implant.implanted(M, M)
+					new /obj/item/implant/access/infinite/shittybill(M)
 				M.ai_offhand_pickup_chance = rand(20,80)
 				M.ai_poke_thing_chance = rand(20,50)
 		if ("Monkey Chemistry")

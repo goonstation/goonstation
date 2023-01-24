@@ -85,6 +85,7 @@ var/datum/signal_holder/global_signal_holder
   * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   */
 /datum/component/proc/Initialize(...)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /**
@@ -231,7 +232,7 @@ var/datum/signal_holder/global_signal_holder
 	if(isnull(looked_up)) // Nothing has registered here yet
 		lookup[signal_type] = src
 	else if(looked_up == src) // We already registered here
-		// pass
+		; // pass
 	else if(!length(looked_up)) // One other thing registered here
 		lookup[signal_type] = list((looked_up) = TRUE, (src) = TRUE)
 	else // Many other things have registered here
