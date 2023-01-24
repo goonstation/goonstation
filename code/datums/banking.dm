@@ -951,7 +951,7 @@
 				if(!C)
 					boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
 					return
-				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+				if(tgui_alert(usr, "You are about to send [amount] spacebux to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 						return
@@ -983,7 +983,7 @@
 					playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
 				. = TRUE
 			if("withdraw_spacebux")
-				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, src.spacebux_limit))
+				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, min(src.spacebux_limit, usr.client?.persistent_bank)))
 				if(amount <= 0)
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
