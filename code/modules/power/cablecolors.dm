@@ -47,15 +47,4 @@ colorcable(hotpink, "#FF69B4")
 colorcable(brown, "#633221")
 colorcable(white, "#ffffff")
 
-// the cablespawners need abstract parents otherwise they break, so we define red variant here
-/obj/cablespawner/red
-	name = "red power cable"
-	color = "#DD0000"
-	cable_type = /obj/cable
-	node
-		name = "node red cable spawner"
-		override_centre_connection = TRUE
-		icon_state = "superstate-node"
-// an alternative of course is to go 'screw it' and just run colorcable on red as well, but that's not great.
-
 #undef colorcable

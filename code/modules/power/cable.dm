@@ -415,7 +415,6 @@
 
 	return
 
-ABSTRACT_TYPE(/obj/cablespawner)
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
 	name = "power cable spawner"
@@ -473,7 +472,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 		// declarer is the dir being checked at present
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
-			if (spawner.color = src.color)
+			if (spawner.color == src.color)
 				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
