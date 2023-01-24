@@ -215,6 +215,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_FLOCK_STRUCTURE "flock_structure"
 #define TR_CAT_AREA_PROCESS "process_area"
 #define TR_CAT_RANCID_STUFF "rancid_stuff"
+#define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -336,7 +337,10 @@ proc/find_first_by_type(type)
 	while(ancestor != null)
 		if(ancestor in global.by_type)
 			if(length(global.by_type[ancestor]))
-				return global.by_type[ancestor][1]
+				for(var/instance in global.by_type[ancestor])
+					if(istype(instance, type))
+						return instance
+				return null
 			else
 				return null
 		ancestor = type2parent(ancestor)

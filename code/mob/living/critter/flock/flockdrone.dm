@@ -99,6 +99,9 @@
 		AH.drone_controller.cast(src)
 	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = locate() in src.contents
+	if (cell)
+		qdel(cell)
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -186,6 +189,10 @@
 		if (flocktrace.dying)
 			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 			src.updateOverlaysClient(src.client)
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -240,6 +247,8 @@
 		controller = null
 		src.update_health_icon()
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
+		var/datum/component/tracker_hud/flock/tracker = src.GetComponent(/datum/component/tracker_hud/flock)
+		tracker?.RemoveComponent()
 	if(!src.flock)
 		src.dormantize()
 
@@ -1201,6 +1210,7 @@
 /datum/limb/gun/flock_stunner/New()
 	..()
 	src.cell.set_loc(src.holder.holder)
+	src.holder.holder.contents |= cell
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()

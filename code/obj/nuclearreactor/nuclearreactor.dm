@@ -123,7 +123,7 @@
 			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
-				old_grid.layer = old_grid.layer+0.1
+				old_grid.layer -= 0.1
 				src.UpdateOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)
@@ -280,14 +280,14 @@
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads*2, 100), TRUE, FALSE, 5)
-		rads -= 10
+		src.AddComponent(/datum/component/radioactive, min(rads*3, 100), TRUE, FALSE, 5)
+		rads -= 5
 
 		if(rads <= 0)
 			return
 
-		for(var/i = min(round(rads/2),50),i>0,i--)
-			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*2,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
+			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
 		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
@@ -646,7 +646,7 @@
 			if(hit.material && prob(hit.material.getProperty("hard")*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
-				reflected.power = O.power
+				reflected?.power = O.power
 				return FALSE
 
 			//then fission

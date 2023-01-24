@@ -1,3 +1,7 @@
+(t)sat jan 21 23
+(u)Zamujasa
+(*)Player Notes looks a little different. Feel free to tweak/adjust. (Dimmed entries are automatic notes, red ones are bans. Mostly. I tried.)
+(*)After three thousand years, Delay-Round-End will now prompt for confirmation if someone else has already delayed it instead of just removing it. The future is now.
 (t)mon jan 09 23
 (u)Zamujasa
 (*)Force-Desussification has two new options. They might... shock you!
