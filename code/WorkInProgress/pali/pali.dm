@@ -294,9 +294,7 @@
 	New()
 		. = ..()
 		access = new /obj/item/implant/access(src)
-		access.owner = src
 		access.uses = -1
-		access.implanted = 1
 
 	bump(atom/movable/AM, yes = 1)
 		. = ..()
