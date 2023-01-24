@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			"active_transaction" = src.active_transaction,
 			"amount" = src.amount,
 			"is_authorised" = src.allowed(user),
-			"is_owner" = (src.fetch_mob_id(user) == src.owner_card),
+			"is_owner" = (user.get_id() == src.owner_card),
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
 			"tip_amount" = ceil(src.amount * src.tip),
@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			return
 		switch (action)
 			if ("clear_transaction")
-				if (src.fetch_mob_id(usr) == src.owner_card && !src.active_transaction)
+				if (usr.get_id() == src.owner_card && !src.active_transaction)
 					if (tgui_alert(usr, "Clear the transaction?", "Clear transaction", list("Clear", "Cancel")) == "Clear" && !src.active_transaction)
 						boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
@@ -84,7 +84,7 @@ TYPEINFO(/obj/machinery/cashreg)
 					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
 					return
 			if ("set_amount")
-				if (src.fetch_mob_id(usr) == src.owner_card && !src.active_transaction)
+				if (usr.get_id() == src.owner_card && !src.active_transaction)
 					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
 					if (amount_buffer && !src.active_transaction)
 						src.amount = amount_buffer
@@ -95,14 +95,14 @@ TYPEINFO(/obj/machinery/cashreg)
 					. = TRUE
 			if ("swipe_owner")
 				if (!src.owner_account)
-					src.register_owner(usr, src.fetch_mob_id(usr, not_worn = TRUE))
+					src.register_owner(usr, usr.get_id(not_worn = TRUE))
 					. = TRUE
 			if ("swipe_payer")
-				src.pay(usr, src.fetch_mob_id(usr, not_worn = TRUE))
+				src.pay(usr, usr.get_id(not_worn = TRUE))
 				. = TRUE
 			if ("reset")
 				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
-				if ((src.fetch_mob_id(usr) == src.owner_card || src.allowed(usr)) && !src.active_transaction)
+				if ((usr.get_id() == src.owner_card || src.allowed(usr)) && !src.active_transaction)
 					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset" && !src.active_transaction)
 						boutput(usr, "<span class='alert'>Reader reset.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
@@ -136,13 +136,6 @@ TYPEINFO(/obj/machinery/cashreg)
 	proc/cancel(mob/user)
 		user.visible_message("<span class='alert'><b>[src] buzzes.</b> The transaction was cancelled!</span>")
 		src.active_transaction = FALSE
-
-	proc/fetch_mob_id(mob/user, var/not_worn = FALSE)
-		if (ishuman(user))
-			var/mob/living/carbon/human/human_user = user
-			return human_user.get_id(not_worn)
-		else
-			return user.get_id()
 
 	/// Registers mob/user as the owner of the device.
 	proc/register_owner(mob/user, obj/item/card/id/O)
