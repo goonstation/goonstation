@@ -432,6 +432,11 @@
 	var/cable_surr = 0
 
 	/// reinforced, thick cables. They should also connect to the regular kind.
+	node
+		name = "node reinforced cable spawner"
+		override_centre_connection = TRUE
+		icon_state = "superstate-node"
+
 	reinforced
 		name = "reinforced power cable spawner"
 		icon = 'icons/obj/power_cond.dmi'
