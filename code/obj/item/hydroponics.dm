@@ -476,8 +476,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	rand_pos = 1
-	var/image/plantyboi /// The "plant" overlay of the plant
-	var/image/plantyboi_plantoverlay /// The "plantoverlay" of the plant
+	var/image/plantyboi //! The "plant" overlay of the plant
+	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
 
 	New()
 		..()
