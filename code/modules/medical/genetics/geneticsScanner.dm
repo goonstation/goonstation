@@ -1,12 +1,14 @@
 var/list/genescanner_addresses = list()
 var/list/genetek_hair_styles = list()
 
+TYPEINFO(/obj/machinery/genetics_scanner)
+	mats = 15
+
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null

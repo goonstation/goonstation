@@ -83,6 +83,7 @@ class DMM:
             # reassign the grid entries which used the old key
             self.grid[k] = bad_keys.get(v, v)
 
+    # From san7890 @ https://github.com/tgstation/tgstation/pull/68039
     def remove_unused_keys(self, modified_keys = None):
         unused_keys = list(set(modified_keys)) if modified_keys is not None else self.dictionary.keys()
         for key in self.grid.values():

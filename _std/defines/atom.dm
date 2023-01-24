@@ -49,6 +49,7 @@
 #define IS_FARTABLE					(1 << 9)
 /// overrides the click drag mousedrop pickup QOL kinda stuff
 #define NO_MOUSEDROP_QOL			(1 << 10)
+#define MOVE_NOCLIP 				(1 << 11)
 
 
 //THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)

@@ -12,6 +12,7 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
+	pass_unstable = TRUE
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = TRUE
@@ -104,10 +105,7 @@
 				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
-					var/obj/item/affecting = H.organs["head"]
-					if (affecting)
-						affecting.take_damage(9, 0)
-						H.UpdateDamageIcon()
+					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 					H.changeStatus("weakened", 1 SECOND)
 				else
 					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")

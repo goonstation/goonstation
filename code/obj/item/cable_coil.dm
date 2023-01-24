@@ -22,7 +22,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
@@ -101,7 +102,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			UpdateIcon()
 			return 1
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		update_icon()
 
 	update_icon()

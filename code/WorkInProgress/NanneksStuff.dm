@@ -189,7 +189,7 @@ This works
 
 		else
 			logTheThing(LOG_ADMIN, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]")
-			logTheThing(LOG_DIARY, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]", "admin")
+			logTheThing(LOG_DIARY, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]", "admin")
 
 
 /obj/point_to_projection

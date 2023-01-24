@@ -161,6 +161,14 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif
 					stat("Maptick/Client:", "[world.map_cpu/length(clients)]")
+					if(config.whitelistEnabled != config.baseWhitelistEnabled)
+						var/current_status = config.whitelistEnabled ? "temporarily ON" : "temporarily OFF"
+						if(!config.whitelistEnabled && config.baseWhitelistEnabled)
+							if(config.roundsLeftWithoutWhitelist == 0)
+								current_status += " (final round)"
+							else
+								current_status += " ([config.roundsLeftWithoutWhitelist] rounds left)"
+						stat("Whitelist:", current_status)
 
 					if (!istype(src.loc, /turf) && !isnull(loc))
 						stat("Co-ordinates:", "([loc.x], [loc.y], [loc.z])")

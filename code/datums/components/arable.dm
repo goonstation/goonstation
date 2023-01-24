@@ -22,6 +22,7 @@ TYPEINFO(/datum/component/arable)
 	initialization_args = list()
 
 /datum/component/arable/Initialize()
+	. = ..()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/plant_seed)
@@ -73,7 +74,7 @@ TYPEINFO(/datum/component/arable)
 			user.u_equip(SEED)
 			SEED.set_loc(P)
 			if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-				logTheThing(LOG_COMBAT, user, "plants a [SEED.planttype] seed at [log_loc(P)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(P)].")
 			if(!(user in P.contributors))
 				P.contributors += user
 		else

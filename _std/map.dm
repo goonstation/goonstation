@@ -1,10 +1,10 @@
-#define Z_LEVEL_NULL 0 				//Nullspace/Z0/The Darkness
-#define Z_LEVEL_STATION 1           //The station Z-level.
-#define Z_LEVEL_ADVENTURE 2         //The Z-level used for Adventure Zones.
-#define Z_LEVEL_DEBRIS 3            //The debris Z-level. Blank on underwater maps.
-#define Z_LEVEL_SECRET 4            //The Z-level used for secret things.
-#define Z_LEVEL_MINING 5            //The mining Z-level.
-#define Z_LEVEL_FOOTBALL 6          //The Z-level used for football.
+#define Z_LEVEL_NULL 0 		//! Nullspace/Z0/The Darkness
+#define Z_LEVEL_STATION 1	//! The station Z-level.
+#define Z_LEVEL_ADVENTURE 2	//! The Z-level used for Adventure Zones.
+#define Z_LEVEL_DEBRIS 3	//! The debris Z-level. Blank on underwater maps.
+#define Z_LEVEL_SECRET 4	//! The Z-level used for secret things.
+#define Z_LEVEL_MINING 5	//! The mining Z-level.
+#define Z_LEVEL_FOOTBALL 6	//! The Z-level used for football.
 
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"
@@ -39,4 +39,10 @@
  * 	M.gib()
  * ```
  */
+
 #define REGION_TILES(REG) range(REG.get_center(), "[REG.width]x[REG.height]")
+
+/**
+ * Provides a list of all turfs in allocated region.
+ */
+#define REGION_TURFS(REG) block(locate(REG.bottom_left.x, REG.bottom_left.y, REG.bottom_left.z), locate(REG.bottom_left.x+REG.width-1, REG.bottom_left.y+REG.height-1, REG.bottom_left.z))

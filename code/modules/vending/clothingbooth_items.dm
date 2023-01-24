@@ -844,11 +844,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	path = /obj/item/clothing/head/frog_hat
 	cost = PAY_TRADESMAN
 
-/datum/clothingbooth_item/head/link
-	name = "Hero Hat"
-	path = /obj/item/clothing/head/link
-	cost = PAY_TRADESMAN
-
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 /datum/clothingbooth_item/head/frenchberet
 	name = "French Beret"
@@ -1100,14 +1095,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_DOCTORATE/3
 
-/datum/clothingbooth_item/costume/russsianmob
-	name = "Russian Mobster Suit"
-	path = /obj/item/clothing/under/misc/rusmob
-
-/datum/clothingbooth_item/costume/columbianmob
-	name = "Columbian Mobster Suit"
-	path = /obj/item/clothing/under/misc/colmob
-
 /datum/clothingbooth_item/costume/dinerdress_mint
 	name = "Mint Diner Waitress's Dress"
 	path = /obj/item/clothing/under/gimmick/dinerdress_mint
@@ -1133,10 +1120,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/head/pirate_brn
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/costume/guybrush
-	name = "Wannabe Pirate Costume"
-	path = /obj/item/clothing/under/gimmick/guybrush
 
 /datum/clothingbooth_item/costume/dinosuar
 	name = "Dinosaur Pajamas"

@@ -117,7 +117,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/phaser
+		HH.limb = new /datum/limb/gun/energy/phaser
 		HH.name = "S-1 Light Anti-Personnel Energy Sling"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handphs"

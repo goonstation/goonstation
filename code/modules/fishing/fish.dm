@@ -7,7 +7,7 @@
 	item_state = "fish"
 	w_class = W_CLASS_NORMAL
 	hitsound = null // handled in attack() below
-	flags = ONBELT
+	c_flags = ONBELT
 	attack_verbs = "slaps"
 	/// what type of item do we get when butchering the fish
 	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish

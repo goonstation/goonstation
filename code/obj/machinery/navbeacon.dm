@@ -1,6 +1,9 @@
 // Navigation beacon for AI robots
 // Functions as a transponder: looks for incoming signal matching
 
+TYPEINFO(/obj/machinery/navbeacon)
+	mats = 4
+
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
@@ -23,7 +26,6 @@
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = 4
 	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
@@ -339,6 +341,9 @@ Transponder Codes:<UL>"}
 		get_radio_connection_by_id(src, "navbeacon").update_frequency(freq)
 
 //Wired nav device
+TYPEINFO(/obj/machinery/wirenav)
+	mats = 8
+
 /obj/machinery/wirenav
 	name = "Wired Nav Beacon"
 	icon = 'icons/obj/objects.dmi'
@@ -346,7 +351,6 @@ Transponder Codes:<UL>"}
 	level = 1		// underfloor
 	layer = OBJ_LAYER
 	anchored = 1
-	mats = 8
 	var/nav_tag = null
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null

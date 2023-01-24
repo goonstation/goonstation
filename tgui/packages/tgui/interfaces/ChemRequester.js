@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Box, Stack, NumberInput, LabeledList } from '../components';
+import { Button, Input, Section, Stack, NumberInput, LabeledList } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from '../../common/string';
 import { ListSearch } from './common/ListSearch';

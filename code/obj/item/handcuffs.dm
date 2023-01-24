@@ -2,7 +2,8 @@
 	name = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 2
@@ -78,7 +79,10 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M, mob/user)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
+	src.try_cuff(M, user)
+
+/obj/item/handcuffs/proc/try_cuff(mob/M, mob/user, instant = FALSE)
+	if (user?.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -105,10 +109,19 @@
 			return
 
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-		actions.start(new/datum/action/bar/icon/handcuffSet(H, src), user)
-		return
+		if (instant)
+			src.cuff(M)
+		else
+			actions.start(new/datum/action/bar/icon/handcuffSet(H, src), user)
 
-	return
+/obj/item/handcuffs/proc/cuff(mob/living/carbon/human/target)
+	src.set_loc(target)
+	target.handcuffs = src
+	target.drop_from_slot(target.r_hand)
+	target.drop_from_slot(target.l_hand)
+	target.drop_juggle()
+	target.setStatus("handcuffed", duration = INFINITE_STATUS)
+	target.update_clothing()
 
 /obj/item/handcuffs/New()
 	..()
@@ -147,7 +160,8 @@
 	name = "ducktape"
 	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	m_amt = 200
 	amount = 10
 	delete_on_last_use = TRUE

@@ -238,13 +238,8 @@
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves)
 			boutput(H, "<span class='combat'>Your hand burns from grabbing the [src.name].</span>")
-			var/obj/item/affecting = H.organs["r_arm"]
-			if(H.hand)
-				affecting = H.organs["l_arm"]
-			if(affecting)
-				affecting.take_damage(0, 15)
-				H.UpdateDamageIcon()
-
+			var/zone = H.hand ? "l_arm" : "r_arm"
+			H.TakeDamage(zone, 0, 15, 0, DAMAGE_BURN)
 
 //BLOOD BOWL BALL
 

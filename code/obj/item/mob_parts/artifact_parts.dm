@@ -3,7 +3,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	skintoned = FALSE
 	decomp_affected = FALSE
 	accepts_normal_human_overlays = FALSE
@@ -98,8 +99,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", "<span class='alert'>You attach [src.name] to [holder.name] with [tool].</span>")
-				logTheThing("diary", tool.the_mob, holder, "attaches [src.name] to [constructTarget(holder,"combat")].", "combat")
-				logTheThing("combat", tool.the_mob, holder, "attaches [src.name] to [constructTarget(holder,"combat")].")
+				logTheThing(LOG_COMBAT, tool.the_mob, "attaches [src.name] to [constructTarget(holder,"combat")].")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
@@ -110,8 +110,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 						src.remove(FALSE)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("diary", tool.the_mob, holder, "removes [src.name] to [constructTarget(holder,"combat")].", "combat")
-				logTheThing("combat", tool.the_mob, holder, "removes [src.name] to [constructTarget(holder,"combat")].")
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [src.name] to [constructTarget(holder,"combat")].")
 				src.remove(FALSE)
 
 		return TRUE

@@ -1,6 +1,7 @@
 /mob/dead/target_observer/mentor_mouse_observer
 	name = "mentor mouse"
 	real_name = "mentor mouse"
+	is_respawnable = FALSE
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy
@@ -118,6 +119,7 @@
 		boutput(src.the_guy, rendered)
 
 	emote(act, voluntary=0)
+		..()
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()

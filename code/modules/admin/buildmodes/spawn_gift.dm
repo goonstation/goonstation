@@ -36,42 +36,15 @@ change the direction of created objects.<br>
 		first_corner = get_turf(object)
 
 	proc/spawn_gift(var/turf/T)
-		var/atom/A
-		var/obj/item/gift/G = new /obj/item/gift(T)
-		A = new objpath(G)
-		var/random_style
-		if(isitem(A))
-			var/obj/item/gifted_item = A
-			G.size = gifted_item.w_class
-			G.w_class = G.size + 1
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "gift[clamp(G.size, 1, 3)]-[random_style]"
-		else if(ismob(A) || istype(A, /obj/critter))
-			G.size = 3
-			G.w_class = G.size + 1
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "strange-[random_style]"
+		var/atom/movable/AM
+		AM = new objpath(T)
+		if (giftwrap_style == "Regular")
+			AM.gift_wrap(FALSE, FALSE)
 		else
-			G.size = 3
-			G.w_class = W_CLASS_BULKY
-			//style selection copied from wrapping paper's New()
-			if(giftwrap_style == "Regular")
-				random_style = rand(1,8)
-			else
-				random_style = pick("r", "rs", "g", "gs")
-			G.icon_state = "gift3-[random_style]"
-		G.gift = A
-		if (isobj(A) || ismob(A))
-			A.set_dir(holder.dir)
-			A.onVarChanged("dir", SOUTH, A.dir)
+			AM.gift_wrap(FALSE, TRUE)
+		if (isobj(AM) || ismob(AM))
+			AM.set_dir(holder.dir)
+			AM.onVarChanged("dir", SOUTH, AM.dir)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath || ispath(objpath, /turf))

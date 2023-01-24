@@ -2,11 +2,13 @@
  *	Arcade -- An arcade cabinet.
  */
 
+TYPEINFO(/obj/machinery/computer/arcade)
+	mats = 10
+
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	mats = 10
 	deconstruct_flags = DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/arcade
 	var/enemy_name = "Space Villian"

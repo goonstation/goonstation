@@ -41,7 +41,8 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	structType = /obj/flock_structure/relay
 
 	check_unlocked()
-		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !src.my_flock.relay_in_progress && !src.my_flock.relay_finished)
+		var/relay_built = src.my_flock.relay_in_progress || src.my_flock.relay_finished
+		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !relay_built && !src.my_flock.flockmind.tutorial)
 
 /datum/unlockable_flock_structure/collector
 	structType = /obj/flock_structure/collector
@@ -64,9 +65,14 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
+/datum/unlockable_flock_structure/sapper
+	structType = /obj/flock_structure/sapper
+
+	check_unlocked()
+		return ..() || src.my_flock.total_compute() >= 150
+
 /datum/unlockable_flock_structure/interceptor
 	structType = /obj/flock_structure/interceptor
 
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_BULLETS_HIT)
-

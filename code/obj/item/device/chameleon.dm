@@ -65,10 +65,14 @@
 			step(src,direction)
 		return
 
+TYPEINFO(/obj/item/device/chameleon)
+	mats = 14
+
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | SUPPRESSATTACK
+	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
@@ -81,7 +85,6 @@
 	tooltip_flags = REBUILD_DIST
 
 	is_syndicate = 1
-	mats = 14
 
 	New()
 		..()

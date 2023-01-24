@@ -1,7 +1,9 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+
+ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
-/obj/item/plant/
+/obj/item/plant
 	name = "plant"
 	var/crop_suffix = ""
 	var/crop_prefix = ""
@@ -18,6 +20,7 @@
 		if (!src.reagents)
 			src.create_reagents(100)
 
+ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
 	health = 4
@@ -34,8 +37,13 @@
 		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-
+			if(istype(W, /obj/item/spacecash))
+				P.icon_state = "cig-[W.icon_state]"
+				P.item_state = "cig-[W.icon_state]"
+				P.litstate = "ciglit-[W.icon_state]"
+				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
+			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
@@ -52,6 +60,7 @@
 			if(B.flavor)
 				doink.flavor = B.flavor
 			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
 			W.reagents.trans_to(doink, W.reagents.total_volume)
@@ -449,6 +458,7 @@
 
 // FLOWERS //
 
+ABSTRACT_TYPE(/obj/item/plant/flower)
 /obj/item/plant/flower
 	// PLACEHOLDER FOR FLOURISH'S PLANT PLOT STUFF
 
@@ -486,15 +496,7 @@
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && src.thorned)
-			if (H.hand)//gets active arm - left arm is 1, right arm is 0
-				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
-					..()
-					return
-			else
-				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
-					..()
-					return
-			if(H.gloves)
+			if (src.thorns_protected(H))
 				..()
 				return
 			if(ON_COOLDOWN(src, "prick_hands", 1 SECOND))
@@ -502,6 +504,16 @@
 			src.prick(user)
 		else
 			..()
+
+	proc/thorns_protected(mob/living/carbon/human/H)
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				return TRUE
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				return TRUE
+		if(H.gloves)
+			return TRUE
 
 	proc/prick(mob/M)
 		boutput(M, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
@@ -525,11 +537,20 @@
 			return TRUE
 		..()
 
+	pickup(mob/user)
+		. = ..()
+		if(ishuman(user) && src.thorned && !src.thorns_protected(user))
+			src.prick(user)
+			SPAWN(0.1 SECONDS)
+				user.drop_item(src, FALSE)
+
 /obj/item/plant/flower/rose/poisoned
+	///Trick roses don't poison on attack, only on pickup
+	var/trick = FALSE
 	attack(mob/M, mob/user, def_zone)
-		if (!..() || is_incapacitated(M))
+		if (!..() || is_incapacitated(M) || src.trick)
 			return
-		src.poison(M, user)
+		src.poison(M)
 
 	prick(mob/user)
 		..()

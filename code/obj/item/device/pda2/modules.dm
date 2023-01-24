@@ -4,13 +4,15 @@
 //T-ray scanner module.
 //Computer 3 Emulator / Associated Bits
 
+TYPEINFO(/obj/item/device/pda_module)
+	mats = 4
+
 /obj/item/device/pda_module
 	name = "PDA module"
 	desc = "A piece of expansion circuitry for PDAs."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
@@ -315,12 +317,12 @@
 		if(isliving(user))
 			playsound(src, 'sound/items/security_alert.ogg', 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
-			for (var/mob/O in hearers(usr))
+			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(user))
 				O.show_message(assoc_maptext = map_text)
-			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>",
+			user.visible_message("<span class='alert'>[user] presses a red button on the side of their [src.host].</span>",
 			"<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>",
-			"<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
+			"<span class='alert'>You see [user] press a button on the side of their [src.host].</span>")
 
 
 /obj/ability_button/pda_security_alert

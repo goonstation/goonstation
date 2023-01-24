@@ -393,7 +393,7 @@ CONTENTS:
 			var/mob/living/critter/C = M
 			if(C.dormant || C.ghost_spawned)
 				. = 0
-		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/robotic) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
 			. = 0
 
 	proc/do_swap()

@@ -11,6 +11,9 @@
 */
 
 // -------------------grenades-------------
+TYPEINFO(/obj/item/old_grenade/sawfly)
+	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
+
 /obj/item/old_grenade/sawfly
 
 	name = "Compact sawfly"
@@ -25,7 +28,6 @@
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
-	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 	overlays = null
 	state = 0
@@ -33,13 +35,18 @@
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 
+	attack_self(mob/user)
+		var/area/A = get_area(src)
+		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
+			boutput(user, "<span class='notice'>You can't prime [src] here!</span>")
+			return
+		..()
 
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.dontdolife = FALSE
 			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 
 		qdel(src)
@@ -102,6 +109,9 @@
 				S.foldself()
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
+			var/area/A = get_area(S)
+			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
+				continue
 			if (S.issawfly == TRUE) //check if we're allowed to prime the grenade
 				if (istype(S, /obj/item/old_grenade/sawfly))
 					S.visible_message("<span class='alert'>[S] suddenly springs open as its engine purrs to a start!</span>")

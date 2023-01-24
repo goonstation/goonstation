@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/autolathe)
+	mats = 20
+
 /obj/machinery/autolathe
 	name = "Autolathe"
 	icon_state = "autolathe"
@@ -18,7 +21,6 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	mats = 20
 
 
 /obj/machinery/autolathe/attackby(var/obj/item/O, var/mob/user)

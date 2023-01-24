@@ -518,7 +518,7 @@
 			if(src.powerlevel < 3) src.gas_impermeable = TRUE
 			if(src.powerlevel == 3)
 				src.mouse_opacity = 1
-				src.density = 1
+				src.set_density(TRUE)
 		else
 			src.icon_state = ""
 			src.isactive = FALSE
@@ -526,7 +526,7 @@
 			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = FALSE
 			src.mouse_opacity = 0
-			src.density = 0
+			src.set_density(FALSE)
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc

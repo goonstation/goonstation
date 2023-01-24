@@ -557,7 +557,7 @@
 				newcandy.razor_blade = 1
 			boutput(user, "You grab [newcandy] from the cauldron!")
 
-	candy/halloween_only
+		/// subtype named "ephemeral" which only spawns on halloween
 		EPHEMERAL_HALLOWEEN
 
 	jellybean
@@ -570,5 +570,5 @@
 			user.put_in_hand_or_drop(B)
 			boutput(user, "You grab [B] from the cauldron!")
 
-	jellybean/halloween_only
+		/// subtype named "ephemeral" which only spawns on halloween
 		EPHEMERAL_HALLOWEEN

@@ -430,6 +430,10 @@
 							src.menu = MENU_IN_RECORD
 							return
 
+						if (lowertext(command) == "clown")
+							src.active_secure["criminal"] = "Clown"
+							return
+
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")

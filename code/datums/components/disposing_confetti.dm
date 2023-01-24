@@ -7,6 +7,7 @@ TYPEINFO(/datum/component/disposing_confetti)
 	initialization_args = list()
 
 /datum/component/disposing_confetti/Initialize()
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, .proc/the_confetti)

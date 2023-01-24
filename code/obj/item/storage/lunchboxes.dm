@@ -89,7 +89,7 @@
 	food10
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/taco/complete,\
 		/obj/item/reagent_containers/food/snacks/soup/chili,\
-		/obj/item/reagent_containers/food/snacks/tortilla_chip,\
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip,\
 		/obj/item/reagent_containers/food/drinks/water,\
 		/obj/item/kitchen/utensil/spoon,\
 		/obj/item/paper/lunchbox_note)

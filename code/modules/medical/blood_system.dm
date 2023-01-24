@@ -385,7 +385,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR //this makes it so the amounts of chemicals you bleed scales nonlinearly with the amount of chemicals in you compared to the amount of blood
+	var/reagents_to_transfer = min(num_amount * (0.2 + (0.8 * (H.reagents?.total_volume**(5/4)/(H.reagents?.total_volume**(5/4) + H.blood_volume)))), H.reagents.total_volume)
+	var/blood_to_transfer = num_amount - reagents_to_transfer
 
 	if (istype(H))
 		blood_color_to_pass = H.blood_color
@@ -465,8 +467,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.change_vampire_blood(-5) //num_amount // gunna go with a set number as a test
 			//BLOOD_DEBUG("[H] bleeds -5 from vamp_blood_remaining and their vamp_blood_remaining becomes [H.get_vampire_blood()]")
 		else
-			H.blood_volume -= num_amount // time to bleed
-			//BLOOD_DEBUG("[H] bleeds [num_amount] and their blood level becomes [H.blood_volume]")
+			H.blood_volume -= blood_to_transfer // time to bleed
+			//BLOOD_DEBUG("[H] bleeds [blood_to_transfer] and their blood level becomes [H.blood_volume]")
 
 			if (H.blood_volume < 0) // you shouldn't have negative blood okay
 				H.blood_volume = 0
@@ -476,13 +478,12 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
+		B.add_volume(blood_color_to_pass, H.blood_id, blood_to_transfer, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
-	else
+			H.reagents.trans_to(B, (num_amount - blood_to_transfer))
 		return
 
 /* ====================================== */
@@ -502,8 +503,8 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (isvampire(some_idiot) && (some_idiot.get_vampire_blood() <= 0) || (!isvampire(some_idiot) && !some_idiot.reagents && !some_idiot.blood_volume))
 		return 0
-
-	var/reagents_to_transfer = (amount / 5) * 2
+								//this makes it so the amounts of chemicals you extract scales nonlinearly with the amount of chemicals in you compared to the amount of blood
+	var/reagents_to_transfer = (amount * (0.2 + (0.8 * (some_idiot.reagents.total_volume**(5/4)/(some_idiot.reagents.total_volume**(5/4) + some_idiot.blood_volume)))))
 	var/blood_to_transfer = (amount - min(reagents_to_transfer, some_idiot.reagents.total_volume))
 
 	var/datum/bioHolder/bloodHolder = null
@@ -540,7 +541,8 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))
-		some_idiot.change_vampire_blood(-blood_to_transfer)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=FALSE)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=TRUE)
 
 	// Ignore that second container of blood entirely if it's a vampire (Convair880).
 	if (blood_system && !isvampire(some_idiot) && (some_idiot.blood_volume >= blood_to_transfer))

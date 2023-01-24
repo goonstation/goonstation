@@ -259,6 +259,13 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
+			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
+			if (iscarbon(src))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
+						break
+
 		clamp_values()
 
 		//Regular Trait updates
@@ -414,9 +421,6 @@
 		hud.update_health()
 		hud.update_tools()
 
-	if (src.client)
-		src.updateStatic()
-
 /mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
@@ -571,7 +575,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
+		var/final_mod = (max(1, src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS))) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)

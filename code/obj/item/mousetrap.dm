@@ -315,20 +315,27 @@
 			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
 			P.gib()
 
+		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && src.armed) //The admin mouse fears not your puny attempt to squish it.
+			AM.visible_message("<span class='alert'>[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life.</span>")
+			new/obj/effect/supplyexplosion(src.loc)
+			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			qdel(src)
+
+		else if (istype(AM, /mob/living/critter/small_animal/mouse) && (src.armed))
+			var/mob/living/critter/small_animal/mouse/M = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = 0
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
+			M.death()
+
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
 			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 
-		else if (istype(AM, /obj/critter/mouse) && (src.armed))
-			var/obj/critter/mouse/M = AM
-			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-			icon_state = "mousetrap"
-			src.armed = 0
-			clear_armer()
-			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
-			M.CritterDeath()
 		..()
 		return
 
@@ -343,21 +350,19 @@
 		if (!src || !src.armed)
 			return
 
-		var/obj/item/affecting = null
+		var/zone = null
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
 					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
-						affecting = H.organs[pick("l_leg", "r_leg")]
+						zone = pick("l_leg", "r_leg")
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
-						affecting = H.organs[type]
+						zone = type
 						H.changeStatus("stunned", 3 SECONDS)
-			if (affecting)
-				affecting.take_damage(1, 0)
-				H.UpdateDamageIcon()
+			H.TakeDamage(zone, 1, 0, 0, DAMAGE_CRUSH)
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target

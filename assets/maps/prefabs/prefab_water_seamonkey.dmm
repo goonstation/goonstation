@@ -841,7 +841,7 @@
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "cK" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "cL" = (

@@ -34,6 +34,9 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	return TRUE
 
+TYPEINFO(/obj/machinery/networked/telepad)
+	mats = 16
+
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
@@ -41,7 +44,6 @@ proc/is_teleportation_allowed(var/turf/T)
 	anchored = 1
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 16
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
@@ -733,10 +735,10 @@ proc/is_teleportation_allowed(var/turf/T)
 						new /obj/critter/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/mouse(src.loc)
+							new/mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/roach(src.loc)
+							new/mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
 							new/obj/critter/rockworm(src.loc)
@@ -790,6 +792,9 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 
+TYPEINFO(/obj/machinery/networked/teleconsole)
+	mats = 14
+
 /obj/machinery/networked/teleconsole
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "s_teleport"
@@ -798,7 +803,6 @@ proc/is_teleportation_allowed(var/turf/T)
 	anchored = 1
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
-	mats = 14
 	var/xtarget = 0
 	var/ytarget = 0
 	var/ztarget = 0

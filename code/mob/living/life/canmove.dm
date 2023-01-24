@@ -16,9 +16,6 @@
 					owner.buckled.buckled_guy = null
 				owner.buckled = null
 				return ..()
-			owner.lying = istype(owner.buckled, /obj/stool/bed) || istype(owner.buckled, /obj/machinery/conveyor)
-			if (owner.lying)
-				owner.drop_item()
 			owner.set_density(initial(owner.density))
 		else
 			if (!owner.lying)

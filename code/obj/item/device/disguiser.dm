@@ -1,16 +1,19 @@
+TYPEINFO(/obj/item/device/disguiser)
+	mats = 8
+
 /obj/item/device/disguiser
 	name = "holographic disguiser"
 	icon_state = "enshield0"
 	uses_multiple_icon_states = 1
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 8
 	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
 	var/active = 0

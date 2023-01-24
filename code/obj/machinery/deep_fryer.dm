@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/deep_fryer)
+	mats = 20
+
 /obj/machinery/deep_fryer
 	name = "Deep Fryer"
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
@@ -7,7 +10,6 @@
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
-	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/atom/movable/fryitem = null
 	var/cooktime = 0
@@ -41,7 +43,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)

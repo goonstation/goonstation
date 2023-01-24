@@ -187,7 +187,7 @@
 					for(var/reagent_id in src.active_vial.reagents.reagent_list)
 						log_reagents += " [reagent_id]"
 
-				logTheThing(LOG_COMBAT, usr, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
+				logTheThing(LOG_CHEMISTRY, usr, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
 				for(var/obj/item/reagent_containers/glass/vial/V in src.contents)
 					V.set_loc(get_turf(src))
 				src.active_vial = null

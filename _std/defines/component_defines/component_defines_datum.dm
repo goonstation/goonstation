@@ -23,4 +23,6 @@
 	/// area's active var set to false (when all clients leave)
 	#define COMSIG_AREA_DEACTIVATED "area_deactivated"
 
-
+// ---- TGUI signals ----
+	/// A TGUI window was opened by a user (receives tgui datum)
+	#define COMSIG_TGUI_WINDOW_OPEN "tgui_window_open"

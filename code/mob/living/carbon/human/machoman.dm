@@ -547,7 +547,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 
 /obj/item/clothing/shoes/macho
 	name = "Wrestling boots"
@@ -572,13 +573,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
-				for (var/A in H.organs)
-					var/obj/item/affecting = null
-					if (!H.organs[A])    continue
-					affecting = H.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+				H.HealDamage("All", 50, 50, 50)
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
@@ -864,11 +859,10 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			for (var/obj/item/grab/G in holder.owner)
 				if (ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					var/obj/item/affecting = H.organs["head"]
 					playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [H]'s skull like a grape!</B></span>")
-					affecting.take_damage(50, 0)
 					H.take_brain_damage(60)
+					H.TakeDamage("head", 50, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
 					H.changeStatus("weakened", 5 SECONDS)
 					H.UpdateDamageIcon()
@@ -893,10 +887,9 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			for (var/obj/item/grab/G in holder.owner)
 				if (ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					var/obj/item/affecting = H.organs["chest"]
 					playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [H]'s ribcage open like a bag of chips!</B></span>")
-					affecting.take_damage(500, 0)
+					H.TakeDamage("chest", 500, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
 					H.changeStatus("weakened", 5 SECONDS)
 					H.UpdateDamageIcon()
@@ -1476,13 +1469,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_soulsteal
-					for (var/A in holder.owner.organs)
-						var/obj/item/affecting = null
-						if (!holder.owner.organs[A])    continue
-						affecting = holder.owner.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+					holder.owner.HealDamage("All", 50, 50, 50)
 					holder.owner.take_toxin_damage(-INFINITY)
 					holder.owner.UpdateDamageIcon()
 					if (H)
@@ -1535,7 +1522,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 75)
+					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50)
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes [his_or_her(holder.owner)] eyes in silent macho prayer!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))

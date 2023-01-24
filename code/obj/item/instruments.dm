@@ -66,7 +66,6 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
@@ -449,6 +448,9 @@
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
+TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	mats = 2
+
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
 	desc = "SHIT FUCKING PISS IT'S SO RAW"
@@ -456,7 +458,6 @@
 	volume = 100
 	randomized_pitch = 0
 	note_time = 30
-	mats = 2
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))

@@ -212,17 +212,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/unsimulated/floor/bot/caution{
-	dir = 2
-	},
-/area/moon/underground/hemera)
-"aO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/unsimulated/floor/delivery/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -232,7 +223,8 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/bot/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -349,7 +341,8 @@
 	frequency = 1089;
 	name = "dusty docking station"
 	},
-/turf/unsimulated/floor/bot/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -397,7 +390,8 @@
 "bg" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/unsimulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -828,7 +822,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cn" = (
 /obj/grille/catwalk{
@@ -838,7 +833,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "co" = (
 /obj/decal/fakeobjects/pipe{
@@ -870,7 +866,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cr" = (
 /obj/grille/catwalk{
@@ -880,7 +877,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cs" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -1343,7 +1341,8 @@
 	},
 /area/moon/underground)
 "ds" = (
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/underground)
 "dt" = (
 /turf/unsimulated/floor/caution/misc{
@@ -1831,7 +1830,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eJ" = (
 /obj/grille/catwalk{
@@ -1841,7 +1841,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eK" = (
 /turf/unsimulated/wall/setpieces/lunar,
@@ -1879,7 +1880,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eR" = (
 /obj/grille/catwalk{
@@ -1889,7 +1891,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eS" = (
 /turf/unsimulated/wall/setpieces/lunar{
@@ -5819,7 +5822,8 @@
 /area/moon/museum)
 "ne" = (
 /obj/machinery/door/airlock,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/museum)
 "nf" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5836,7 +5840,8 @@
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/museum)
 "nh" = (
 /obj/stool/chair/office/red{
@@ -6227,7 +6232,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/radio,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "of" = (
 /obj/machinery/power/data_terminal,
@@ -6236,7 +6242,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/printer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "og" = (
 /obj/machinery/power/data_terminal,
@@ -6245,7 +6252,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/storage/scanner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oh" = (
 /obj/cable{
@@ -6254,7 +6262,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/pitching_machine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oi" = (
 /obj/cable{
@@ -6265,7 +6274,8 @@
 /obj/machinery/networked/printer{
 	print_id = "Joe"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oj" = (
 /obj/cable{
@@ -6274,7 +6284,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/electrobox,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ok" = (
 /obj/item/luggable_computer,
@@ -6632,7 +6643,8 @@
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pa" = (
 /obj/machinery/light{
@@ -6726,7 +6738,8 @@
 /obj/landmark{
 	name = "bubsbeejob"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pm" = (
 /obj/machinery/power/data_terminal,
@@ -6773,7 +6786,8 @@
 /obj/machinery/networked/mainframe/zeta{
 	tag = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "ps" = (
 /obj/machinery/light{
@@ -7017,7 +7031,8 @@
 	read_only = 1;
 	setup_drive_type = /obj/item/disk/data/tape/boot2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pY" = (
 /obj/cable{
@@ -7118,7 +7133,8 @@
 	read_only = 0;
 	setup_drive_type = /obj/item/disk/data/tape/master
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ql" = (
 /obj/machinery/power/data_terminal,
@@ -7129,14 +7145,16 @@
 	setup_drive_type = /obj/item/disk/data/tape/test;
 	setup_spawn_with_tape = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qm" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qn" = (
 /obj/cable{
@@ -7194,7 +7212,8 @@
 /obj/machinery/networked/printer{
 	print_id = "Stan"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qw" = (
 /obj/machinery/power/data_terminal,
@@ -7207,7 +7226,8 @@
 	d2 = 4
 	},
 /obj/machinery/networked/test_apparatus/heater,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qx" = (
 /obj/machinery/power/data_terminal,
@@ -7220,7 +7240,8 @@
 	d2 = 4
 	},
 /obj/machinery/networked/test_apparatus/xraymachine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qy" = (
 /obj/machinery/power/data_terminal,
@@ -7237,7 +7258,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qz" = (
 /obj/machinery/power/data_terminal,
@@ -7246,7 +7268,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/test_apparatus/xraymachine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qA" = (
 /obj/machinery/light{
@@ -7609,7 +7632,8 @@
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "rz" = (
 /obj/table/auto,
@@ -7644,7 +7668,8 @@
 	pixel_y = 5;
 	network = "bombtest"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "rA" = (
 /obj/machinery/plantpot,
@@ -8577,7 +8602,7 @@ ab
 ab
 ab
 aq
-aO
+aN
 aX
 bg
 ax

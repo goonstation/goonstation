@@ -53,6 +53,9 @@
 
 		..()
 
+	get_desc()
+		. = " It is labeled to have a volume of [src.volume] litres."
+
 	proc
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
@@ -62,8 +65,6 @@
 			//Make sure are close enough for a valid connection
 			if(new_port.loc != loc)
 				return 0
-
-			//logTheThing(LOG_COMBAT, usr, "attaches [src] to [new_port] at [log_loc(new_port)].")
 
 			add_fingerprint(usr)
 

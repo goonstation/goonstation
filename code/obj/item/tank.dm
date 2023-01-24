@@ -15,7 +15,8 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
+	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
@@ -199,13 +200,13 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)
@@ -282,6 +283,14 @@ Contains:
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
 
@@ -308,11 +317,13 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
+
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
-	mats = 16
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
 	distribute_pressure = 17
@@ -408,13 +419,15 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
+
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
 	item_state = "microjetpack0"
 	base_icon_state = "microjetpack"
 	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
-	mats = 8
 	force = 6
 
 	New()
@@ -478,7 +491,8 @@ Contains:
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
 	force = 3

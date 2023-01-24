@@ -8,6 +8,9 @@
 #define MW_STATE_BROKEN_1 1
 #define MW_STATE_BROKEN_2 2
 
+TYPEINFO(/obj/machinery/microwave)
+	mats = 12
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'icons/obj/kitchen.dmi'
@@ -49,7 +52,6 @@
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
 	var/obj/item/extra_item
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = FALSE
 
@@ -169,11 +171,14 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			O.set_loc(src)
 	else
 		if(!isitem(extra_item)) //Allow one non food item to be added!
-			user.u_equip(O)
-			extra_item = O
-			user.u_equip(O)
-			O.set_loc(src)
-			src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			if(O.w_class <= W_CLASS_NORMAL)
+				user.u_equip(O)
+				extra_item = O
+				user.u_equip(O)
+				O.set_loc(src)
+				src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			else
+				boutput(user, "[O] is too large and bulky to be microwaved.")
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 

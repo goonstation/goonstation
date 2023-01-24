@@ -12,12 +12,12 @@
 		switch (type)
 			if (1)
 				while (spawnamount > 0)
-					new /obj/critter/roach(pestlandmark)
+					new /mob/living/critter/small_animal/cockroach(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (2)
 				while (spawnamount > 0)
-					new /obj/critter/mouse(pestlandmark)
+					new /mob/living/critter/small_animal/mouse(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (3)
@@ -27,7 +27,7 @@
 					LAGCHECK(LAG_LOW)
 			if (4)
 				while (spawnamount > 0)
-					new /obj/critter/spacescorpion(pestlandmark)
+					new /mob/living/critter/small_animal/scorpion(pestlandmark)
 					spawnamount -= 3
 					LAGCHECK(LAG_LOW)
 			if (5)

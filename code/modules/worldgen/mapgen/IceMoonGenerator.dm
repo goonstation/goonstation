@@ -10,7 +10,7 @@
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
-	flora_types = list(/obj/tree1{dir=NORTH} = 10,/obj/tree1{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree{dir=NORTH} = 10,/obj/tree{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 3
 
 /datum/biome/icemoon/ice
@@ -20,7 +20,7 @@
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
-	turf_type = /turf/simulated/wall/auto/asteroid/icemoon
+	turf_type = /turf/simulated/wall/auto/asteroid/mountain/icemoon
 
 /datum/biome/icemoon/abyss
 	turf_type = /turf/unsimulated/floor/arctic/abyss
@@ -111,24 +111,42 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/auto/asteroid/icemoon
+/turf/simulated/wall/auto/asteroid/mountain/icemoon
 	name = "ice wall"
 	desc = "You're inside a glacier. Wow."
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "ice1"
+	fullbright = 0
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
+	default_material = "ice"
+	color = "#8df"
+	stone_color = "#8df"
+	carbon_dioxide = 100
+	nitrogen = 0
+	oxygen = 0
+	temperature = 100
+
+	destroy_asteroid(var/dropOre=1)
+		if(src.ore || prob(33)) // provide less rock
+			default_ore = /obj/item/raw_material/ice
+		. = ..()
+
+/turf/simulated/floor/plating/airless/asteroid/icemoon
+	name = "floor"
+	desc = "A tunnel through the glacier. This doesn't seem to be water ice..."
+	carbon_dioxide = 100
+	nitrogen = 0
+	oxygen = 0
+	temperature = 100
 	fullbright = 0
 
-	New()
+	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 		..()
-		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
-	destroy_asteroid(var/dropOre=0)
-		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
-		src.set_opacity(0)
-		src.levelupdate()
-
-		return src
 
 /turf/unsimulated/floor/arctic/snow/autocliff
 	New()

@@ -1,7 +1,9 @@
 
+TYPEINFO(/obj/item/machinery/phone/cellphone)
+	mats = 25
+
 /obj/item/machinery/phone/cellphone
 	icon_state = "cellphone"
-	mats = 25
 	_health = 20
 	var/phone_id = null
 	var/ringmode = 0 // 0 for silent, 1 for vibrate, 2 for ring (For future use)

@@ -62,6 +62,7 @@
 		F["[profileNum]_flavor_text"] << src.flavor_text
 		F["[profileNum]_medical_note"] << src.medical_note
 		F["[profileNum]_security_note"] << src.security_note
+		F["[profileNum]_synd_int_note"] << src.synd_int_note
 
 		// Randomize appearances
 		F["[profileNum]_name_is_always_random"] << src.be_random_name
@@ -111,8 +112,6 @@
 		if(src.traitPreferences.isValid())
 			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
 
-
-
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["changelog"] << src.view_changelog
@@ -132,6 +131,9 @@
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
 		F["local_deachat"] << src.local_deadchat
+
+		F["tgui_fancy"] << src.tgui_fancy
+		F["tgui_lock"] << src.tgui_lock
 
 		if (returnSavefile)
 			return F
@@ -226,6 +228,7 @@
 		F["[profileNum]_flavor_text"] >> src.flavor_text
 		F["[profileNum]_medical_note"] >> src.medical_note
 		F["[profileNum]_security_note"] >> src.security_note
+		F["[profileNum]_synd_int_note"] >> src.synd_int_note
 
 		// Randomization options
 		F["[profileNum]_name_is_always_random"] >> src.be_random_name
@@ -319,6 +322,11 @@
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
+
+		F["tgui_fancy"] >> src.tgui_fancy
+		if(isnull(src.tgui_fancy))
+			src.tgui_fancy = 1
+		F["tgui_lock"] >> src.tgui_lock
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
