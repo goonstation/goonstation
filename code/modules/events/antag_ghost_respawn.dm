@@ -248,22 +248,13 @@
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/carbon/human/R = M3.humanize()
-					if (R && istype(R))
-						M3 = R
-						R.unequip_all(1)
-						equip_wizard(R, 1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
 						send_to = 2
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						SPAWN(0)
-							if (R.gender && R.gender == "female")
-								R.real_name = pick_string_autokey("names/wizard_female.txt")
-							else
-								R.real_name = pick_string_autokey("names/wizard_male.txt")
-							R.choose_name(3, "wizard")
-
 					else
 						failed = 1
 

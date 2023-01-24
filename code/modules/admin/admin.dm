@@ -4748,10 +4748,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WIZARD)
-				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-				M.show_antag_popup("adminwizard")
-				M.verbs += /client/proc/gearspawn_wizard
+				M.mind.add_antagonist(ROLE_WIZARD, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_VAMPIRE)
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_ADMIN)

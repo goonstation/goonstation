@@ -1,5 +1,6 @@
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
+// Remove when omnitraitors are datumised.
 /proc/equip_wizard(mob/living/carbon/human/wizard_mob, var/robe = 0, var/vr = 0)
 	if (!ishuman(wizard_mob)) return
 
