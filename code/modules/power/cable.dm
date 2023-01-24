@@ -478,7 +478,7 @@
 			selftile += self_loc
 	if (length(selftile) > 1)
 		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
-	for (var/dir_to_cs in CHECK_BEHIND_LIST)
+	for (var/dir_to_cs in CHECK_AHEAD_LIST)
 	// checks for cablespawners around itself
 		// declarer is the dir being checked at present
 		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
