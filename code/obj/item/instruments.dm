@@ -34,15 +34,18 @@
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
+	var/note_range = list("c4", "c5")
 	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
-	/*Default keybinds (c2-c7)*/
+	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
 	/*A string representing the keybinds used in keyboard mode*/
-	var/note_keys_string = "tTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
+	var/note_keys_string = ""
+	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
+	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 
 	New()
 		..()
@@ -64,6 +67,14 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+
+		if (src.use_new_interface)
+			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
+			src.note_keys_string = src.generate_keybinds(src.note_range)
+			src.sounds_instrument = list()
+			for (var/i in 1 to length(src.notes))
+				src.note = src.notes[i]
+				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
 
 	proc/play_note(var/note, var/mob/user)
 		if (note != clamp(note, 1, length(sounds_instrument)))
@@ -102,8 +113,8 @@
 		return
 
 	// Creates a list of notes between two notes, for example
-	// note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
-	proc/note_range(var/fromNote, var/toNote)
+	// generate_note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
+	proc/generate_note_range(var/fromNote, var/toNote)
 		var/list/notes = list()
 
 		// Removes the octave number, for example "c4" becomes "c"
@@ -124,23 +135,33 @@
 				currentOctave++
 		return notes
 
-	// Creates a string that is converted into the instrument keybinds for the interface
-	// proc/generate_keybinds(var/list/noteRange)
-	// 	var/list/bleh
-	// 	var/result
-	// 	var/lowerBound = noteRange[0]
-	// 	var/upperBound = noteRange[noteRange.len]
+	/// Creates a string that is converted into the instrument keybinds for the interface using the list of notes an instrument has.
+	proc/generate_keybinds(var/list/note_range)
+		var/list/keybinds
+		var/list/split_default_key_string
 
-	// 	// Delete the list entries in the noteRange list below the lower bound and above the upper bound
-	// 	var/start = (text2ascii(copytext(lowerBound, 1, 2)) - text2ascii("a")) + (copytext(lowerBound, 2) * 12)
-	// 	var/end = (text2ascii(copytext(upperBound, 1, 2)) - text2ascii("a")) + (copytext(upperBound, 2) * 12)
+		// Split the default key string into a list delimited after each character.
+		for(var/i in 1 to length(src.default_keys_string))
+			split_default_key_string += list(copytext(src.default_keys_string, i, (i + 1)))
 
-	// 	for(var/i in start to end)
-	// 		bleh.Add(noteRange[i])
+		// These bounds denote the start and end of an instrument's range of notes.
+		var/lower_bound = note_range[1]
+		var/upper_bound = note_range[length(note_range)]
 
-	// 	result = bleh.Join()
+		// start value represents the position of the first keybind in the instrument's note range in the default key string.
+		// end value represents the position of the last keybind.
+		// Calculations are elucidated as follows:
+		// var/start = (First character in lower bound as ASCII) - ("a" as ASCII offset, as "a" in ASCII is 65)
+		// 		       + ((Last character in lower bound - (Manual offset = 2, as note range starts from C2)) * (12 tones in Western equal temperament tuning))
+		//             - (Fixed offset of 3, as the default note range starts from c, positionally third in the alphabet)
+		var/start = (text2ascii(copytext(lower_bound, 1, 2)) - text2ascii("a")) + ((text2num(copytext(lower_bound, length(lower_bound))) - 2) * 12) - 3
+		var/end = (text2ascii(copytext(upper_bound, 1, 2)) - text2ascii("a")) + ((text2num(copytext(upper_bound, length(upper_bound))) - 2) * 12)
 
-	// 	return result
+		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
+		for(var/i in start to end)
+			keybinds += split_default_key_string[i]
+
+		return keybinds
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -155,7 +176,7 @@
 			"volume" = src.volume,
 			"transpose" = src.transpose,
 			"keybindToggle" = src.keyboard_toggle,
-			"noteKeysString": src.note_keys_string,
+			"noteKeysString" = src.note_keys_string,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -163,6 +184,9 @@
 		if(.)
 			return
 		switch(action)
+			if("edit_keybinds")
+				src.note_keys_string = params["note_keys_order"]
+				. = TRUE
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
@@ -249,20 +273,12 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
+	note_range = list("c4", "c7")
+	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 	use_new_interface = TRUE
-
-	New()
-		notes = note_range("c4", "c7")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
-
-		..()
-
 
 /* -------------------- Grand Piano -------------------- */
 
@@ -312,6 +328,8 @@
 	icon_state = "sax"
 	item_state = "sax"
 	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
+	note_range = list("g3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/saxophone/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -320,11 +338,6 @@
 	key_offset = 8
 
 	New()
-		notes = note_range("g3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/saxophone/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -595,6 +608,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/trumpet/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -603,11 +618,6 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	key_offset = 5
 
 	New()
-		notes = note_range("e3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -676,17 +686,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	item_state = "fiddle"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
 	sounds_instrument = list()
+	note_range = list("a3", "g6")
+	instrument_sound_directory = "sound/musical_instruments/fiddle/notes/"
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 	use_new_interface = TRUE
-
-	New()
-		notes = note_range("a3", "g6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/fiddle/notes/[note].ogg"
-		..()
 
 /obj/item/instrument/fiddle/satanic
 	desc_sound = list("devilish", "hellish", "satanic", "enviable", "sinful", "grumpy", "lazy", "lustful", "greedy")
@@ -784,23 +788,14 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	item_state = "banjo"
 	two_handed = 1
 	force = 6
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/banjo/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
-
-	New()
-		notes = note_range("e3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
-		..()
-
-
-
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
