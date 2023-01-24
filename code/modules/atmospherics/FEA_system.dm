@@ -52,9 +52,6 @@ Important Procedures
 
 */
 
-/atom/Cross(atom/movable/mover)
-	return (!density)
-
 /atom/proc/gas_cross(turf/target)
 	return !src.gas_impermeable
 

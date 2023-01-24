@@ -325,9 +325,9 @@
 			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
-						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,
-						access_tech_storage,access_engineering_mechanic,)
+			return list(access_engineering, access_maint_tunnels, access_external_airlocks, access_engineering_control,
+						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
+						access_tech_storage, access_engineering_mechanic, access_construction)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,

@@ -35,6 +35,9 @@
 
 //TO-DO: Major rewrite in communication method between peripherals and the host system.
 
+TYPEINFO(/obj/item/peripheralx)
+	mats = 8
+
 /obj/item/peripheralx
 	name = "Peripheral card"
 	desc = "A computer circuit board."
@@ -47,7 +50,6 @@
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
-	mats = 8
 
 	New(location)
 		..()

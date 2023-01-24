@@ -163,8 +163,9 @@ var/list/datum/contextAction/globalContextActions = null
 			var/sizeX = Icon.Width()
 			var/sizeY = Icon.Height()
 
-			var/offX = round(dist * cos(anglePer * count)) + round(sizeX / 2)
-			var/offY = round(dist * sin(anglePer * count)) + round(sizeY / 2)
+			var/angle = 90 - anglePer * count
+			var/offX = round(dist * cos(angle)) + round(sizeX / 2)
+			var/offY = round(dist * sin(angle)) + round(sizeY / 2)
 			if (center && count == 0)
 				offX = round(sizeX / 2)
 				offY = round(sizeY / 2)

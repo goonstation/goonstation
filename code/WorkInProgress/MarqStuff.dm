@@ -369,7 +369,7 @@
 			overlays += shaft
 			overlays += head
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		setName()
 		return
 
@@ -432,9 +432,6 @@
 				A.arrow = src
 				A.name = name
 				set_loc(A)
-				A.set_loc(target)
-				A.owner = target
-				H.implant += A
 				A.implanted(H, null, 100)
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
@@ -481,7 +478,8 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
 	attackby(var/obj/item/arrow/I, var/mob/user)

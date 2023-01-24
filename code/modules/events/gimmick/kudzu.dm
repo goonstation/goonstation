@@ -52,10 +52,12 @@
 		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
 			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 		else
 			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 
 	admin_call(var/source)
 		if (..())
@@ -257,7 +259,8 @@
 
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
-		V.set_loc(Vspread)
+		if(!QDELETED(V))
+			V.set_loc(Vspread)
 	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
@@ -339,7 +342,7 @@
 								 0.00,  0.00,  0.00,  0.70,\
 								 0.00,  0.00,  0.00,  0.00)
 			//Add damage texture to create dark banding
-			setTexture()
+			setTexture("damaged")
 			animate(src,time=2 SECONDS,color=new_color)
 			src.growth -= 10
 			src.to_spread = round(log(max(src.to_spread,1))*2)
@@ -363,7 +366,8 @@
 		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
-				F.set_loc(src.loc)
+				if(!QDELETED(F))
+					F.set_loc(src.loc)
 
 	herbicide()
 		return
@@ -418,7 +422,7 @@
 
 				sleep(bulb_complete)
 
-				if(!isalive(M) && M.ghost?.mind?.dnr)
+				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
 					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
 					M.gib()
 					flick("bulb-open-animation", src)
@@ -432,7 +436,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 
 					H.full_heal()
-					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
+					if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
 						if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
 					if (istype(H.abilityHolder, /datum/abilityHolder/composite))

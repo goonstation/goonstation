@@ -564,7 +564,7 @@ var/datum/job_controller/job_controls
 					// used to be here. Anway, the job controller will not spawn unsuitable items (Convair880).
 					if (picker)
 						var/obj/item/check = new picker
-						if (!(check.flags & ONBACK))
+						if (!(check.c_flags & ONBACK))
 							usr.show_text("This item cannot be worn on the back slot.", "red")
 							qdel(check)
 							return
@@ -600,7 +600,7 @@ var/datum/job_controller/job_controls
 					// Ditto (Convair880).
 					if (picker)
 						var/obj/item/check = new picker
-						if (!(check.flags & ONBELT))
+						if (!(check.c_flags & ONBELT))
 							usr.show_text("This item cannot be worn on the belt slot.", "red")
 							qdel(check)
 							return

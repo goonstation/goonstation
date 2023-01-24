@@ -473,7 +473,8 @@
 /area/mining/miningoutpost)
 "bF" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "bG" = (
 /obj/lattice{
@@ -567,7 +568,8 @@
 /area/noGenerate)
 "bT" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "bU" = (
 /obj/storage/secure/closet/engineering/mining,

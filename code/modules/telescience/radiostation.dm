@@ -1028,7 +1028,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 64
-	bound_height = 64
+	bound_height = 32
 	anchored = 1
 	density = 1
 

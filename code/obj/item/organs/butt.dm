@@ -30,8 +30,6 @@
 	var/made_from = "butt"
 
 	disposing()
-		if (donor?.organs)
-			donor.organs -= src
 		if (holder)
 			holder.butt = null
 

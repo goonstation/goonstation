@@ -31,6 +31,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
+	material_amt = 0.1
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -111,6 +112,13 @@
 		update_nearby_tiles(need_rebuild=1)
 
 		return
+
+	set_dir(new_dir)
+		. = ..()
+		if(new_dir in cardinal)
+			src.material_amt = 0.1
+		else
+			src.material_amt = 0.2
 
 	onMaterialChanged()
 		..()
@@ -766,6 +774,7 @@
 		/turf/unsimulated/wall/auto/adventure/shuttle,
 		/turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
 	))
 
 	/// Gotta be a typecache list
@@ -1099,11 +1108,11 @@
 // flock windows
 
 /obj/window/auto/feather
+	default_material = "gnesisglass"
 	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
-	connects_to += /turf/simulated/wall/auto/feather
 	..()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)

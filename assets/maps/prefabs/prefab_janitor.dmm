@@ -290,7 +290,7 @@
 /area/janitor_setpiece)
 "aR" = (
 /obj/table/wood/auto/desk,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper/janitor_joblist,
 /turf/simulated/floor,
 /area/janitor_setpiece)

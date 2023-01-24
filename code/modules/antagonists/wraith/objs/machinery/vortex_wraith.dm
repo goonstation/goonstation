@@ -14,7 +14,7 @@
 	var/next_spawn = 5 SECONDS
 	var/total_mob_value = 0	//Total point value of all linked mobs
 	var/obj/mob_type = null
-	var/random_mode = true
+	var/random_mode = TRUE
 	var/mob/living/intangible/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light

@@ -8,7 +8,8 @@
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
@@ -266,6 +267,7 @@
 		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
+		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
@@ -273,6 +275,7 @@
 		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
@@ -283,6 +286,7 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
 		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
@@ -568,11 +572,6 @@
 		return
 
 /obj/item/device/pda2/attackby(obj/item/C, mob/user)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		if (U.try_deliver(C, user))
-			return
-
 	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
@@ -632,6 +631,9 @@
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
+				if (IS_WORN_BY_SOMEONE_OTHER_THAN(src, user))
+					boutput(user, "<span class='alert'>There's already an ID card in [src].</span>")
+					return
 				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
@@ -678,13 +680,6 @@
 		..()
 
 /obj/item/device/pda2/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(A)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
-			return
-
 	var/scan_dat = null
 	if (src.scan_program && istype(src.scan_program))
 		scan_dat = src.scan_program.scan_atom(A)
@@ -700,9 +695,9 @@
 /obj/item/device/pda2/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(O)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
+		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
+		if (claim)
+			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
 

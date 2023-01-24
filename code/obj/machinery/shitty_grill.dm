@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/shitty_grill)
+	mats = 20
+
 /obj/machinery/shitty_grill
 	name = "shitty grill"
 	desc = "Is that a space heater? That doesn't look safe at all!"
@@ -6,7 +9,6 @@
 	anchored = 0
 	density = 1
 	flags = NOSPLASH
-	mats = 20
 	var/obj/item/grillitem = null
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook

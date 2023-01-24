@@ -703,12 +703,18 @@ proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/para
 
 /// get_ouija_word_list
 // get a list of words for an ouija board
-proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/words_max = 8, var/include_nearby_mobs_chance = 40, var/include_most_mobs_chance = 20, include_said_phrases_chance = 10)
+proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 8,
+		include_nearby_mobs_chance = 40,
+		include_most_mobs_chance = 20,
+		include_said_phrases_chance = 10,
+		filename = "ouija_board.txt",
+		strings_category = "ouija_board_words"
+	)
 	var/list/words = list()
 
 	// Generic Ouija words
 	for(var/i in 1 to rand(words_min, words_max))
-		var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+		var/picked = pick(strings(filename, strings_category))
 		words |= picked
 
 	if (prob(include_nearby_mobs_chance))
@@ -765,6 +771,7 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 
 	return words
+
 
 // returns initial health of an item or an item type
 /proc/get_initial_item_health(obj/item/I)

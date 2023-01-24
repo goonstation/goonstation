@@ -13,6 +13,7 @@ TYPEINFO(/datum/component/analyzable)
 	)
 
 /datum/component/analyzable/Initialize(type_override)
+	. = ..()
 	if (!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/O = parent
@@ -28,7 +29,8 @@ TYPEINFO(/datum/component/analyzable)
 		return
 	// if this item doesn't have mats defined or was constructed or
 	// attempting to scan a syndicate item and this is a normal scanner
-	if (isnull(parent_atom.mats) || parent_atom.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate))
+	var/typeinfo/obj/typeinfo = parent_atom.get_typeinfo()
+	if (isnull(typeinfo.mats) || typeinfo.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate))
 		return MECHANICS_ANALYSIS_INCOMPATIBLE
 	var/obj/item/electronics/scanner/S = I
 	if (istype(S))

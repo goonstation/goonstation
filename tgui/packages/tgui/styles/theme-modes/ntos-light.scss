@@ -1,0 +1,13 @@
+/**
+ * Copyright (c) 2023 pali6
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:meta';
+
+.theme-ntos.mode-light {
+  @include meta.load-css('./base-light.scss', $with: (
+    'bg-color': #d9eaff,
+    'component-bg-color': #d9eaff,
+  ));
+}

@@ -7,7 +7,7 @@
 
 
 import { useBackend } from '../backend';
-import { Stack, Box, ProgressBar, Section, Flex, Button, Blink } from '../components';
+import { Stack, Box, Section, Flex, Button } from '../components';
 import { Window } from '../layouts';
 
 import { capitalize, glitch } from './common/stringUtils';

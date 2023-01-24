@@ -95,9 +95,19 @@ var/global/cloning_with_records = TRUE
 	return
 
 /obj/machinery/computer/cloning/proc/records_scan()
+	// check if we're busy cloning
+	var/all_cloning = TRUE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (!P.attempting)
+			// at least one free pod
+			all_cloning = FALSE
+	if (all_cloning)
+		icon_state = "dnap"
+		return TRUE
+	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
-		if (!selected || (selected.mind && selected.mind.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
@@ -283,10 +293,9 @@ var/global/cloning_with_records = TRUE
 	if(!isnull(subject.traitHolder))
 		R["traits"] = subject.traitHolder.copy(null)
 
+	R["defects"] = subject.cloner_defects.copy()
+
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -354,7 +363,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.dnr)
+	if (selected.mind && selected.mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
@@ -376,7 +385,7 @@ var/global/cloning_with_records = TRUE
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -390,7 +399,7 @@ var/global/cloning_with_records = TRUE
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
@@ -406,7 +415,11 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+		if(istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				return null
+		if(iswraith(M))
 			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
@@ -416,13 +429,15 @@ proc/find_ghost_by_key(var/find_key)
 #define PROCESS_STRIP 1
 #define PROCESS_MINCE 2
 
+TYPEINFO(/obj/machinery/clone_scanner)
+	mats = 15
+
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
 	anchored = 1
@@ -512,7 +527,8 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M, var/mob/user)
-		if (!can_operate(user) || !ishuman(M)) return
+		if (!can_operate(user) || !ishuman(M) || QDELETED(M))
+			return
 
 		M.remove_pulling()
 		M.set_loc(src)

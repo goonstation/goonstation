@@ -6,7 +6,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/disruptor
+		HH.limb = new /datum/limb/gun/energy/disruptor
 		HH.name = "S-7 Heavy Waveform Disruptor"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handdis"

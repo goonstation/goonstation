@@ -133,12 +133,12 @@
 
 		if (prob(50))
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, FALSE)
 			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, TRUE)
 			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
@@ -185,7 +185,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 			//consumes cell charge per hardware item protected, based on the category's interdict cost
 			var/interdicted = FALSE
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IN_RANGE(IX,object,IX.interdict_range) && IX.expend_interdict(interdict_cost))
+				if (IX.expend_interdict(interdict_cost,object))
 					interdicted = TRUE
 					SPAWN(rand(1,8))
 						playsound(object.loc, "sparks", 60, 1) //absorption noise, as a little bit of "force feedback"

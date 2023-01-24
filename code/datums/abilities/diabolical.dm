@@ -327,6 +327,7 @@
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
 		if(usr.plane == PLANE_UNDERFLOOR)
+			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
@@ -342,6 +343,7 @@
 					animate_slide(floorturf, 0, 0, 4)
 
 		else
+			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)

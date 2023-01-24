@@ -1,4 +1,7 @@
 ///////////////////////////////////////PW Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
@@ -7,7 +10,6 @@
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
 	force = 8
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
@@ -109,7 +111,7 @@
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_standard
 	name = "Power Cell - Standard Radioisotope"
@@ -118,7 +120,7 @@
 	icon_state = "recharger_cell"
 	charge = 300
 	max_charge = 300
-	recharge_rate = 15
+	recharge_rate = 8
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
 	name = "Power Cell - Robust Radioisotope "
@@ -127,7 +129,7 @@
 	icon_state = "recharger_cell"
 	charge = 350
 	max_charge = 350
-	recharge_rate = 30
+	recharge_rate = 15
 
 //////////survival_machete//////////////
 /obj/item/survival_machete

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/kitchenspike)
+	mats = 10
+
 /obj/kitchenspike
 	name = "a meat spike"
 	icon = 'icons/obj/kitchen.dmi'
@@ -5,7 +8,6 @@
 	desc = "A spike for collecting meat from animals"
 	density = 1
 	anchored = 1
-	mats = 10
 	var/meat = 0
 	var/occupied = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR

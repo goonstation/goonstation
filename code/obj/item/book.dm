@@ -92,7 +92,11 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
+#ifdef MAP_OVERRIDE_NADIR
+		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#else
 		file_path = "strings/books/cargo_pocket_guide.txt"
+#endif
 
 /****MatSci and Mining****/
 
@@ -139,6 +143,12 @@ Custom Books
 	icon_state = "interdictorguide"
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
+
+/obj/item/paper/book/from_file/transception_guide
+	name = "NT-PROTO: Transception Array"
+	icon_state = "orangebook"
+	desc = "A book detailing behaviors and operations of Nadir's transception array"
+	file_path = "strings/books/transception_guide.txt"
 
 /****Civilian Guides****/
 
@@ -310,11 +320,17 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
-/obj/item/paper/book/from_file/MONOrules
-	name = "MONO card game rules"
-	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+/obj/item/paper/book/from_file/DWrulebook
+	name = "Stationfinder"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stationfinder. It was made based on the Stations and Syndicates 5th edition SRD after a dispute over licensing."
+	icon_state = "bookcc"
+	file_path = "strings/books/stationfinder.txt"
+
+/obj/item/paper/book/from_file/solo_rules
+	name = "SOLO card game rules"
+	desc = "A pamphlet describing the rules of SOLO, the family-friendly and legally distinct card game for all ages!"
 	icon_state = "paper"
-	file_path = "strings/books/MONOrules.txt"
+	file_path = "strings/books/solo_rules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
@@ -538,3 +554,9 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 give me your answer do.<BR/>
 I'm half crazy,<BR/>
 all for the love of you.</tt>"}
+
+/obj/item/paper/book/from_file/nuclear_engineering
+	name = "Nuclear Engineering for Idiots"
+	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
+	icon_state = "nuclearguide"
+	file_path = "strings/books/nuclear_engineering.txt"

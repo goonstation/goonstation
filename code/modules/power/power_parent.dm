@@ -119,7 +119,7 @@ var/makingpowernetssince = 0
 			var/datum/powernet/PN = powernets[C.netnum]
 			PN.cables += C
 		else
-			stack_trace("Tried to add cable [C] \ref[C] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
+			stack_trace("Tried to add cable [identify_object(C)] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum <= 0)		// APCs have netnum=-1 so they don't count as network nodes directly

@@ -423,7 +423,7 @@
 				if (icon_y > 16 || master.in_throw_mode)
 					master.toggle_throw_mode()
 				else
-					master.drop_item()
+					master.drop_item(null, TRUE)
 
 			if ("resist")
 				master.resist()

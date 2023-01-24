@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		setup_equipment_slots()
 		setup_reagents()
 		setup_healths()
-		if (!healthlist.len)
+		if (!length(healthlist))
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
+		if(src.is_npc && !src.client)
 			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (issawingtool(I) || iscuttingtool(I))
+			if (src.butcherable && (issawingtool(I) || iscuttingtool(I)))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
@@ -623,9 +623,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	can_strip(mob/M, showInv = 0)
+	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
-		if(!showInv && check_target_immunity(src, 0, M))
+		if(check_target_immunity(src, 1, M))
 			return 0
 		if (!HH)
 			return 0
@@ -946,6 +946,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				EH.drop(1)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))
@@ -1228,14 +1229,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
 		. = list()
-		for (var/mob/living/carbon/human/H in view(range, src))
+		for (var/mob/living/carbon/human/H in view(range, get_turf(src)))
 			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 				. += H
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, get_turf(src)))
 			. += S
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
@@ -1284,7 +1285,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1357,6 +1358,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	var/modifier = power / 20
 	var/damage = rand(modifier, 12 + 8 * modifier)
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, damage * 2, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
 
 	if (shielded)
 		damage /= 4

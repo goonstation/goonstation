@@ -767,7 +767,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
 	name = "wheat noodles"
 	heal_amt = 0
-	amount = 1
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Ew, disgusting...</span>")
@@ -887,12 +886,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "fish paste"
 	desc = "An unappetizing clump of mashed fish bits."
 	icon_state = "fishpaste"
-	amount = 1
 /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
 	name = "kamaboko"
 	desc = "A slice of fish cake with a cute little spiral in the center."
 	icon_state = "kamaboko"
-	amount = 1
 	custom_food = 1
 	food_color = "#ffffff"
 
@@ -900,10 +897,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "kamaboko log"
 	desc = "What a strange-looking fish."
 	icon_state = "kamaboko-log"
-	amount = 3
 	custom_food = 1
 	food_color = "#ffffff"
 	doants = 0
+	bites_left = 3
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

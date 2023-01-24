@@ -102,12 +102,16 @@
 	//Rotating full logs saved to disk
 	var/allowRotatingFullLogs = 0
 
-	//Are we limiting connected players to certain ckeys?
+	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
+	var/baseWhitelistEnabled = 0 //! The config value of whitelistEnabled (actual value might be modified mid-round)
+	var/roundsLeftWithoutWhitelist = 0 //! How many rounds are left without the whitelist being enabled
 	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
+
+	var/already_loaded_once = FALSE
 
 /datum/configuration/New()
 	..()
@@ -369,7 +373,8 @@
 				config.allowRotatingFullLogs = 1
 
 			if ("whitelist_enabled")
-				config.whitelistEnabled = 1
+				config.whitelistEnabled = TRUE
+				config.baseWhitelistEnabled = TRUE
 
 			if ("player_notes_baseurl")
 				config.player_notes_baseurl = trim(value)
@@ -389,6 +394,18 @@
 	if (config.env == "dev")
 		config.cdn = ""
 		config.disableResourceCache = 1
+
+	if(!already_loaded_once)
+		roundsLeftWithoutWhitelist = world.load_intra_round_value("whitelist_disabled")
+		if(roundsLeftWithoutWhitelist > 0)
+			roundsLeftWithoutWhitelist--
+			world.save_intra_round_value("whitelist_disabled", roundsLeftWithoutWhitelist)
+
+	if(roundsLeftWithoutWhitelist > 0)
+		config.whitelistEnabled = FALSE
+
+	already_loaded_once = TRUE
+
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

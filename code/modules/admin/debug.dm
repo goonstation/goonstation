@@ -384,24 +384,6 @@ var/global/debug_messages = 0
 	else
 		alert("This only works on human mobs.")
 
-/* Just use the set traitor dialog thing
-/client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set name = "Make Changeling"
-	set popup_menu = 0
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(ishuman(M) && M.mind != null)
-		logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a changeling.")
-		logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a changeling.", "admin")
-		SPAWN(1 SECOND)
-			M.mind.absorbed_dna[M.bioHolder] = M.real_name
-			M.make_changeling()
-	else
-		alert("Invalid mob")
-*/
-
 /client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
@@ -663,8 +645,7 @@ body
 					location = pick(job_start_locations[job])
 				var/mob/living/carbon/human/npc/monkey/M = new /mob/living/carbon/human/npc/monkey(location)
 				if(prob(10))
-					var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(M)
-					implant.implanted(M, M)
+					new /obj/item/implant/access/infinite/shittybill(M)
 				M.ai_offhand_pickup_chance = rand(20,80)
 				M.ai_poke_thing_chance = rand(20,50)
 		if ("Monkey Chemistry")
@@ -1136,17 +1117,28 @@ proc/display_camera_paths()
 		. += rand_deci(-range,range,0,9)
 
 
-/client/proc/test_mass_flock_convert()
-	set name = "Test Mass Flock Convert"
-	set desc = "Don't fucking use this EVER"
+/client/proc/test_mass_flock_convert(force as num|null, radius as num|null, fancy as num|null)
+	set name = "Mass Flock Convert"
+	set desc = "Convert a part of the area to flock"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
 
-	if(alert("This will IRREVERSIBLY FUCK UP THE STATION and might be laggy, do not use this live. Are you sure?","Misclick Prevention","Yes","No") == "Yes")
-		logTheThing(LOG_ADMIN, usr, "started a mass flocktile conversion at [log_loc(usr)]")
-		logTheThing(LOG_DIARY, usr, "started a mass flocktile conversion at [log_loc(usr)]", "admin")
-		message_admins("[key_name(usr)] started a mass flocktile conversion at [log_loc(usr)]")
-		mass_flock_convert_turf(get_turf(usr))
+	if(isnull(force))
+		force = tgui_alert(src, "Force convert unsimulated too?", "Force?", list("Yes", "No")) == "Yes"
+	if(isnull(radius))
+		radius = tgui_input_number(src, "Tile radius:", "Tile radius", 300, max_value=300, min_value=0)
+	if(isnull(radius) || radius <= 0)
+		return
+	if(isnull(fancy))
+		fancy = tgui_alert(src, "Recolor misc stuff?", "Fancy?", list("Yes", "No")) == "Yes"
+
+	if(radius > 15 && tgui_alert(src, "This will IRREVERSIBLY FUCK UP the current zlevel and might be laggy, do not use this live with such a high radius. Are you sure?","Misclick Prevention",list("Yes","No")) != "Yes")
+		return
+
+	logTheThing(LOG_ADMIN, usr, "started a mass flocktile conversion at [log_loc(usr)] with [radius] radius and force=[force]")
+	logTheThing(LOG_DIARY, usr, "started a mass flocktile conversion at [log_loc(usr)] with [radius] radius and force=[force]", "admin")
+	message_admins("[key_name(usr)] started a mass flocktile conversion at [log_loc(usr)] with [radius] radius and force=[force]")
+	mass_flock_convert_turf(get_turf(usr), null, radius=radius, force=force, fancy=fancy)
 
 var/datum/flock/testflock
 /client/proc/test_flock_panel()

@@ -18,6 +18,10 @@
 	var/authed = 0
 	var/area/armory_area
 
+	New()
+		..()
+		START_TRACKING
+
 	initialize()
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
 
@@ -28,6 +32,10 @@
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
 
 	receive_signal(datum/signal/signal)
@@ -119,6 +127,8 @@
 		src.authorized = null
 		src.authorized_registered = null
 
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_AUTH)
+
 		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.req_access = list(access_security)
@@ -134,6 +144,11 @@
 
 				LAGCHECK(LAG_REALTIME)
 
+		SPAWN(0.5 SECONDS)
+			playsound(src, 'sound/vox/armory.ogg', 50, vary=FALSE, extrarange=10)
+			sleep(0.7 SECONDS)
+			playsound(src, 'sound/vox/authorized.ogg', 50, vary=FALSE, extrarange=10)
+
 	proc/unauthorize()
 		if(src.authed)
 
@@ -143,6 +158,8 @@
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
 			src.UpdateIcon()
+
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
 
 			for (var/obj/machinery/door/airlock/D in armory_area)
 				if (D.has_access(access_security))
@@ -253,7 +270,8 @@
 				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
 			src.authorized_registered += W:registered
 
-			if (src.authorized.len < auth_need)
+			if (length(src.authorized) < auth_need)
+				logTheThing(LOG_STATION, user, "added an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 				print_auth_needed(user)
 			else
 				authorize()
@@ -266,5 +284,5 @@
 			else
 				src.authorized -= user
 			src.authorized_registered -= W:registered
-
+			logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 			print_auth_needed(user)

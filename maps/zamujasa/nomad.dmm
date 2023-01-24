@@ -176,7 +176,7 @@
 	pixel_x = -10;
 	pixel_y = -2
 	},
-/obj/tree1{
+/obj/tree{
 	pixel_x = 6;
 	pixel_y = -3
 	},
@@ -249,7 +249,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/nomad/inside)
 "aJ" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = 0;
 	pixel_y = -6
@@ -264,7 +264,7 @@
 /area/nomad/outside)
 "aL" = (
 /obj/table/wood/round/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/random_item_spawner/tableware,
 /obj/item/storage/pill_bottle/antirad,
 /turf/unsimulated/floor/black,
@@ -414,7 +414,7 @@
 	pixel_x = 28;
 	pixel_y = 29
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/dirt,
@@ -921,7 +921,7 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cu" = (
-/obj/decal/fakeobjects/carcosa/tree/five,
+/obj/tree/carcosa/five,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cv" = (
@@ -1105,7 +1105,7 @@
 	},
 /area/nomad/inside)
 "cL" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cM" = (
@@ -1184,11 +1184,11 @@
 	},
 /area/nomad/inside)
 "cV" = (
-/obj/decal/fakeobjects/carcosa/tree/two,
+/obj/tree/carcosa/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cW" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 

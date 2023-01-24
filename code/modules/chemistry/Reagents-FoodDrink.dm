@@ -87,12 +87,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (bone_system)
-						for (var/obj/item/organ/O in H.organs)
-							if (O.bones)
-								O.bones.repair_damage(1 * mult)
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
@@ -888,34 +882,50 @@ datum
 			transparency = 155
 			data = null
 			depletion_rate = 1
+			var/datum/mutantrace/orig_mutantrace = null
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
+				if(ishuman(M))
+					src.grantPower(M)
+
+			on_add()
+				if(!ishuman(holder?.my_atom))
 					return
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				var/mob/living/carbon/human/M = holder.my_atom
+				if(M.mutantrace && !src.orig_mutantrace)
+					src.orig_mutantrace = M.mutantrace.type
+
+			on_mob_life_complete(var/mob/living/carbon/human/M)
+				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
+					M.set_mutantrace(src.orig_mutantrace)
+				src.orig_mutantrace = null
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				if(ishuman(M))
+					src.grantPower(M)
 				..()
 				return
+
+			proc/grantPower(var/mob/living/carbon/human/M)
+				if (!islist(mutini_effects) || !length(mutini_effects) || !M.bioHolder)
+					return
+				var/power_granted = pick(mutini_effects)
+				if (M.bioHolder.HasEffect(power_granted))
+					return
+				var/power_time = rand(1,10)
+				var/is_mutant_race = istype(GetBioeffectFromGlobalListByID(power_granted), /datum/bioEffect/mutantrace)
+
+				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
+				// Keep whatever mutant races we get until mutini wears off
+				if(!is_mutant_race)
+					SPAWN(power_time*10)
+						if (M.bioHolder)
+							M.bioHolder.RemoveEffect(power_granted)
 
 		fooddrink/alcoholic/Manhattan
 			name = "Manhattan"
@@ -2379,7 +2389,7 @@ datum
 			addiction_prob = 4
 			addiction_prob2 = 10
 			var/tickcounter = 0
-			thirst_value = 0.055
+			thirst_value = -0.2
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
@@ -2459,7 +2469,7 @@ datum
 				return
 
 		fooddrink/honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of honey in it."
 			reagent_state = LIQUID
@@ -2468,7 +2478,7 @@ datum
 			fluid_b = 52
 			taste = "delicate"
 			transparency = 232
-			thirst_value = 0.075
+			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
 			addiction_prob = 1
@@ -2490,7 +2500,7 @@ datum
 				return
 
 		fooddrink/mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of mint in it."
 			reagent_state = LIQUID
@@ -2520,7 +2530,7 @@ datum
 			fluid_b = 127
 			transparency = 160
 			taste = "fizzy"
-			thirst_value = 0.078
+			thirst_value = 0.78
 			bladder_value = 0.05
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2680,9 +2690,10 @@ datum
 			reagent_state = LIQUID
 			taste = "purrplexing"
 
-			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/cat))
-					var/obj/critter/cat/theCat = O
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
+				if (istype(M, /mob/living/critter/small_animal/cat))
+					var/mob/living/critter/small_animal/cat/theCat = M
 					theCat.catnip_effect()
 
 		fooddrink/vanilla
@@ -3277,6 +3288,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3313,6 +3325,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3340,6 +3353,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3533,6 +3547,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3774,6 +3789,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -4511,11 +4527,59 @@ datum
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
-			id = "pumpkinspicelatte"
 			fluid_r = 231
 			fluid_g = 106
 			fluid_b = 0
 			description = "Whether or not it contains actual pumpkin juice has been up for debate."
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
+			thirst_value = 1
+
+		fooddrink/lavender_essence
+			name = "lavender essence"
+			id = "lavender_essence"
+			fluid_r = 190
+			fluid_g = 159
+			fluid_b = 254
+			description = "Essential."
+			reagent_state = LIQUID
+			taste = list("soothing", "pleasant")
+			thirst_value = 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					M.changeStatus("fragrant", volume * 5 SECONDS)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+
+				if (probmult(5))
+					. = ""
+					switch (rand(1, 5))
+						if (1)
+							. = "calm"
+						if (2)
+							. = "quiet"
+						if (3)
+							. = "serene"
+						if (4)
+							. = "at peace"
+						if (5)
+							. = "sleepy"
+
+					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
+
+				..()
+
+		fooddrink/lavenderlatte
+			name = "lavender latte"
+			id = "lavender_latte"
+			fluid_r = 157
+			fluid_g = 134
+			fluid_b = 186
+			description = "The whimsical cousin of the pumpkin spice latte."
+			reagent_state = LIQUID
+			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
