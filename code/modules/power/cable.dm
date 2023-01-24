@@ -469,9 +469,9 @@
 	// first we have to make sure we're checking the correct kind of cable
 	for (var/obj/cablespawner/self_loc in range(0, src))
 		if (self_loc.color == src.color)
-			selftile += 1
+			selftile += self_loc
 	if (length(selftile) > 1)
-		CRASH("[length(selftile)] cablespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
 		// declarer is the dir being checked at present
@@ -564,3 +564,7 @@
 	var/obj/cable/current = new src.cable_type(src.loc)
 	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
 	current.color = src.color
+	// oddly the New() of these cables doesn't work during the setup process, so things get funky
+	// d1 and d2 have to be manually assigned here
+	current.d1 = min(dir1, dir2)
+	current.d2 = max(dir1, dir2)
