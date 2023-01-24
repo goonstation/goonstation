@@ -415,6 +415,12 @@
 
 	return
 
+#define CHECK_AHEAD_LIST list(NORTH, EAST, NORTHWEST, NORTHEAST)
+#define CHECK_BEHIND_LIST list(SOUTH, WEST, SOUTHWEST, SOUTHEAST)
+// these defines are for the /obj/cablespawner/proc/check()
+// as everything in the 'ahead' list should be cablespawners, and stuff behind already be cables.
+// speeds it up a tiny tiny bit
+
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
 	name = "power cable spawner"
@@ -472,7 +478,7 @@
 			selftile += self_loc
 	if (length(selftile) > 1)
 		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
-	for (var/dir_to_cs in alldirs)
+	for (var/dir_to_cs in CHECK_BEHIND_LIST)
 	// checks for cablespawners around itself
 		// declarer is the dir being checked at present
 		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
@@ -511,7 +517,7 @@
 			if (src.color == spawner.color)
 				spawner.cable_surr |= WEST
 
-	for (var/dir_to_c in alldirs)
+	for (var/dir_to_c in CHECK_BEHIND_LIST)
 	// checks for regular cables (these always connect by default)
 		declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
@@ -568,3 +574,6 @@
 	// d1 and d2 have to be manually assigned here
 	current.d1 = min(dir1, dir2)
 	current.d2 = max(dir1, dir2)
+
+#undef CHECK_AHEAD_LIST
+#undef CHECK_BEHIND_LIST
