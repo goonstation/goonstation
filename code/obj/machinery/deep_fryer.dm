@@ -148,7 +148,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		if (!src.fryitem.reagents)
 			src.fryitem.create_reagents(50)
 
-
+		if (src.fryitem.reagents.is_full())
+			src.fryitem.reagents.maximum_volume += 2
 		src.reagents.trans_to(src.fryitem, 2)
 
 		if (src.cooktime < 60)
@@ -250,7 +251,6 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		if (ismob(thing))
 			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)
-			fryholder.reagents.maximum_volume += thing.reagents.total_volume
 			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 

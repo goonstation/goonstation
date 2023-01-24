@@ -242,6 +242,11 @@
 
 	New()
 		..()
+		src.create_reagents(6)
+		src.reagents.add_reagent("rubber", 1)
+		src.reagents.add_reagent("carbon", 2)
+		src.reagents.add_reagent("wood", 3)
+
 		if (prob(25))
 			src.icon_state = pick("pencil-b", "pencil-g")
 

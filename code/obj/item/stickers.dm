@@ -18,6 +18,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		src.reagents.add_reagent("spaceglue", 2)
 		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)

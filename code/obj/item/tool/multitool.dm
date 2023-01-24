@@ -21,6 +21,12 @@ TYPEINFO(/obj/item/device/multitool)
 	m_amt = 50
 	g_amt = 20
 
+	New()
+		..()
+		src.create_reagents(6)
+		src.reagents.add_reagent("copper", 4)
+		src.reagents.add_reagent("silicon", 2)
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

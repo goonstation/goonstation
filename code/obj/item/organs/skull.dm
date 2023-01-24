@@ -25,6 +25,8 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
+		src.create_reagents(10)
+		src.reagents.add_reagent("calcium", 10)
 		SPAWN(0)
 			if (istype(nholder) && nholder.donor)
 				src.holder = nholder

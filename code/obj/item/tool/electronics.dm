@@ -31,6 +31,9 @@
 	icon_state = "batt1"
 
 /obj/item/electronics/battery/New()
+	src.create_reagents(5)
+	src.reagents.add_reagent("carbon", 2)
+	src.reagents.add_reagent("lithium", 3)
 	src.icon_state = pick("batt1", "batt2", "batt3")
 	randompix()
 	..()
@@ -41,6 +44,9 @@
 
 /obj/item/electronics/board/New()
 	src.icon_state = pick("board1", "board2", "board3")
+	src.create_reagents(5)
+	src.reagents.add_reagent("silicon", 4)
+	src.reagents.add_reagent("copper", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -50,6 +56,8 @@
 
 /obj/item/electronics/fuse/New()
 	src.icon_state = pick("fuse1", "fuse2", "fuse3")
+	src.create_reagents(4)
+	src.reagents.add_reagent("copper", 4)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -59,6 +67,9 @@
 
 /obj/item/electronics/switc/New()
 	src.icon_state = pick("switch1", "switch2", "switch3")
+	src.create_reagents(4)
+	src.reagents.add_reagent("copper", 3)
+	src.reagents.add_reagent("aluminum", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////up
@@ -67,6 +78,10 @@
 	icon_state = "keypad1"
 /obj/item/electronics/keypad/New()
 	src.icon_state = pick("keypad1", "keypad2", "keypad3")
+	src.create_reagents(4)
+	src.reagents.add_reagent("silicon", 2)
+	src.reagents.add_reagent("copper", 2)
+	src.reagents.add_reagent("aluminum", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////up
@@ -75,6 +90,9 @@
 	icon_state = "screen1"
 /obj/item/electronics/screen/New()
 	src.icon_state = pick("screen1", "screen2", "screen3")
+	src.create_reagents(10)
+	src.reagents.add_reagent("silicon", 8)
+	src.reagents.add_reagent("copper", 2)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -83,6 +101,9 @@
 	icon_state = "capacitor1"
 /obj/item/electronics/capacitor/New()
 	src.icon_state = pick("capacitor1", "capacitor2", "capacitor3")
+	src.create_reagents(4)
+	src.reagents.add_reagent("silicon", 3)
+	src.reagents.add_reagent("copper", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////up
@@ -90,6 +111,10 @@
 	name = "buzzer"
 	icon_state = "buzzer"
 /obj/item/electronics/buzzer/New()
+	src.create_reagents(3)
+	src.reagents.add_reagent("silicon", 1)
+	src.reagents.add_reagent("copper", 1)
+	src.reagents.add_reagent("aluminum", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -98,6 +123,8 @@
 	icon_state = "resistor1"
 /obj/item/electronics/resistor/New()
 	src.icon_state = pick("resistor1", "resistor2")
+	src.create_reagents(3)
+	src.reagents.add_reagent("copper", 3)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -106,6 +133,9 @@
 	icon_state = "bulb1"
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("bulb1", "bulb2")
+	src.create_reagents(4)
+	src.reagents.add_reagent("silicon", 3)
+	src.reagents.add_reagent("aluminum", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
@@ -114,6 +144,9 @@
 	icon_state = "relay1"
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("relay1", "relay2")
+	src.create_reagents(2)
+	src.reagents.add_reagent("silicon", 1)
+	src.reagents.add_reagent("copper", 1)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////no
@@ -129,6 +162,11 @@
 	var/list/needed_parts = new/list()
 	var/obj/deconstructed_thing = null
 
+	New()
+		src.create_reagents(5)
+		src.reagents.add_reagent("silicon", 3)
+		src.reagents.add_reagent("copper", 2)
+		..()
 
 	disposing()
 		if(deconstructed_thing)

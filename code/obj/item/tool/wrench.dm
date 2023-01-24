@@ -22,6 +22,8 @@
 
 	New()
 		..()
+		src.create_reagents(10)
+		src.reagents.add_reagent("iron", 10)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack(mob/living/carbon/M, mob/user)

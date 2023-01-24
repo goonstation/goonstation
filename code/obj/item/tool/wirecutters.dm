@@ -24,6 +24,8 @@
 
 	New()
 		..()
+		src.create_reagents(4)
+		src.reagents.add_reagent("iron", 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)

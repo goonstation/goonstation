@@ -38,6 +38,13 @@ TYPEINFO(/obj/item/card/emag)
 	is_syndicate = 1
 	contraband = 6
 
+	New()
+		..()
+		src.create_reagents(10)
+		src.reagents.add_reagent("copper", 2)
+		src.reagents.add_reagent("iron", 3)
+		src.reagents.add_reagent("crime", 5)
+
 	afterattack(var/atom/A, var/mob/user)
 		if(!A || !user)
 			return

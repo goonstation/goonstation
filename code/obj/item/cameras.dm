@@ -38,6 +38,9 @@ TYPEINFO(/obj/item/camera/large)
 
 	New()
 		..()
+		src.create_reagents(5)
+		src.reagents.add_reagent("silicon", 4)
+		src.reagents.add_reagent("copper", 1)
 		src.setItemSpecial(null)
 
 	large
