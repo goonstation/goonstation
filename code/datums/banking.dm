@@ -950,6 +950,7 @@
 				var/client/C = tgui_input_list(usr, "Who do you wish to give [amount] to?", "Spacebux Transfer", clients)
 				if(!C)
 					boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
+					return
 				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient funds.</span>")
