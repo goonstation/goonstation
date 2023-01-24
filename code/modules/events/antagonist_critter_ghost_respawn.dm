@@ -217,9 +217,7 @@
 							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
 					else // only path provided
 						M.current.make_critter(picked_critter, pestlandmark)
-					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
-					O.owner = M.current
-					O.implanted = 1
+					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
 					antagify(M.current, null, 1)

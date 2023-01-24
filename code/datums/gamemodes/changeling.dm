@@ -58,19 +58,7 @@
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in src.traitors)
 		if(istype(changeling))
-			changeling.current.make_changeling()
-			bestow_objective(changeling,/datum/objective/specialist/absorb)
-			bestow_objective(changeling,/datum/objective/escape)
-
-			//HRRFM horror form stuff goes here
-			boutput(changeling.current, "<B><span class='alert'>You feel... HUNGRY!</span></B><br>")
-
-			// Moved antag help pop-up to changeling.dm (Convair880).
-
-			var/obj_count = 1
-			for(var/datum/objective/objective in changeling.objectives)
-				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-				obj_count++
+			changeling.add_antagonist(ROLE_CHANGELING)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
