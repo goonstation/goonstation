@@ -3251,7 +3251,7 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id(var/not_worn = FALSE)
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
 	if(. || not_worn)
 		return
