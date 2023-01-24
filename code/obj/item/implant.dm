@@ -61,6 +61,7 @@ THROWING DARTS
 	proc/implanted(mob/M, mob/I)
 		SHOULD_CALL_PARENT(TRUE)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		src.set_loc(M)
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M

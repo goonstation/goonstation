@@ -1,3 +1,4 @@
+// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
 /mob/proc/make_changeling()
 	var/datum/abilityHolder/changeling/O = src.get_ability_holder(/datum/abilityHolder/changeling)
 	if (O)
@@ -6,7 +7,7 @@
 	if(istype(L))
 		L.blood_id = "bloodc"
 
-	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != ROLE_OMNITRAITOR))
+	if (src.mind && !ischangeling(src) && (src.mind.special_role != ROLE_OMNITRAITOR))
 		src.show_antag_popup("changeling")
 
 	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)
@@ -35,9 +36,6 @@
 	C.addAbility(/datum/targetable/changeling/hivesay)
 	C.addAbility(/datum/targetable/changeling/boot)
 	C.addAbility(/datum/targetable/changeling/give_control)
-
-	if (src.mind)
-		src.mind.is_changeling = C
 
 	SPAWN(2.5 SECONDS) // Don't remove.
 		if (src) src.assign_gimmick_skull()
