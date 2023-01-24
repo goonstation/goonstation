@@ -864,6 +864,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "rubberball"
 		desc = "A rubber ball from a stinger grenade. Ouch."
 
+		New()
+			..()
+			src.create_reagents(1)
+			src.reagents.add_reagent("rubber", 1)
+
 	grenade_fragment
 		name = "grenade fragment"
 		icon_state = "grenadefragment"

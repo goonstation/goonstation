@@ -1233,6 +1233,11 @@ proc/filter_trait_hats(var/type)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 
+	New()
+		..()
+		src.create_reagents(5)
+		src.reagents.add_reagent("rubber", 5)
+
 /obj/item/clothing/head/jester
 	name = "jester's hat"
 	desc = "The hat of not-so-funny-clown."

@@ -264,6 +264,11 @@ TYPEINFO(/obj/item/toy/handheld)
 	throw_speed = 3
 	throw_range = 15
 
+	New()
+		..()
+		src.create_reagents(4)
+		src.reagents.add_reagent("rubber", 4)
+
 /obj/item/rubberduck/attack_self(mob/user as mob)
 	if (!ON_COOLDOWN(src,"quack",2 SECONDS))
 		if (ishuman(user))

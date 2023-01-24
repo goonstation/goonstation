@@ -1739,6 +1739,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	setupProperties()
 		..()
 		setProperty("chemprot", 70)
+		src.create_reagents(12)
+		src.reagents.add_reagent("rubber", 12)
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"

@@ -213,6 +213,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("heatprot", 5)
 		setProperty("chemprot", 15)
 
+	New()
+		..()
+		src.create_reagents(3)
+		src.reagents.add_reagent("rubber", 3)
+
 /obj/item/clothing/gloves/fingerless
 	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 	name = "fingerless gloves"

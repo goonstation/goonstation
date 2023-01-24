@@ -161,6 +161,11 @@ TYPEINFO(/obj/item/disk)
 	stamina_cost = 5
 	stamina_crit_chance = 3
 
+	New()
+		..()
+		src.create_reagents(3)
+		src.reagents.add_reagent("rubber", 3)
+
 /obj/item/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
@@ -260,6 +265,8 @@ TYPEINFO(/obj/item/disk)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
+		src.create_reagents(6)
+		src.reagents.add_reagent("rubber", 6)
 
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)

@@ -262,6 +262,10 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	setupProperties()
 		..()
 		setProperty("chemprot", 7)
+	New()
+		..()
+		src.create_reagents(6)
+		src.reagents.add_reagent("rubber", 6)
 
 	torn
 		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
@@ -270,6 +274,10 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setupProperties()
 			..()
 			delProperty("chemprot")
+		New()
+			..()
+			src.create_reagents(8)
+			src.reagents.add_reagent("rubber", 8)
 
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
@@ -336,6 +344,8 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		..()
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
+		src.create_reagents(5)
+		src.reagents.add_reagent("rubber", 5)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
 	mats = 2

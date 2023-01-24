@@ -534,6 +534,11 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
+	New()
+		..()
+		src.create_reagents(1)
+		src.reagents.add_reagent("rubber", 1)
+
 /obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
 	amount_left = 0
 
@@ -808,6 +813,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_dynamic = 0
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
+
+	New()
+		..()
+		src.create_reagents(1)
+		src.reagents.add_reagent("rubber", 1)
 
 /obj/item/ammo/bullets/abg/two //spawns in the break action
 	amount_left = 2

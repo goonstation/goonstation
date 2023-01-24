@@ -686,6 +686,9 @@
 
 /obj/item/stamp/New()
 	..()
+	src.create_reagents(1)
+	src.reagents.add_reagent("rubber", 1)
+
 	if(special_mode)
 		available_modes += special_mode
 		current_mode = special_mode
