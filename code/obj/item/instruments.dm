@@ -34,15 +34,16 @@
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
-	var/note_range = list("c4", "c5")
+	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
-	/*A string representing the keybinds used in keyboard mode*/
+	/// String representing the keybinds used in keyboard mode
 	var/note_keys_string = ""
 	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
 	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
@@ -70,7 +71,9 @@
 
 		if (src.use_new_interface)
 			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
-			src.note_keys_string = src.generate_keybinds(src.note_range)
+			src.note_keys_string = src.generate_keybinds(src.notes)
+			if(!src.note_keys_string)
+				src.note_keys_string = src.default_keys_string
 			src.sounds_instrument = list()
 			for (var/i in 1 to length(src.notes))
 				src.note = src.notes[i]
@@ -137,25 +140,25 @@
 
 	/// Creates a string that is converted into the instrument keybinds for the interface using the list of notes an instrument has.
 	proc/generate_keybinds(var/list/note_range)
-		var/list/keybinds
+		var/list/default_range = src.generate_note_range("c2", "c7")
 		var/list/split_default_key_string
+		var/keybinds
+		var/start
+		var/end
 
 		// Split the default key string into a list delimited after each character.
 		for(var/i in 1 to length(src.default_keys_string))
 			split_default_key_string += list(copytext(src.default_keys_string, i, (i + 1)))
 
-		// These bounds denote the start and end of an instrument's range of notes.
-		var/lower_bound = note_range[1]
-		var/upper_bound = note_range[length(note_range)]
+		// Find character position of first keybind.
+		for(var/i in 1 to length(default_range))
+			if(default_range[i] == note_range[1])
+				start = i
+				end = length(note_range) + (start - 1)
+				break
 
-		// start value represents the position of the first keybind in the instrument's note range in the default key string.
-		// end value represents the position of the last keybind.
-		// Calculations are elucidated as follows:
-		// var/start = (First character in lower bound as ASCII) - ("a" as ASCII offset, as "a" in ASCII is 65)
-		// 		       + ((Last character in lower bound - (Manual offset = 2, as note range starts from C2)) * (12 tones in Western equal temperament tuning))
-		//             - (Fixed offset of 3, as the default note range starts from c, positionally third in the alphabet)
-		var/start = (text2ascii(copytext(lower_bound, 1, 2)) - text2ascii("a")) + ((text2num(copytext(lower_bound, length(lower_bound))) - 2) * 12) - 3
-		var/end = (text2ascii(copytext(upper_bound, 1, 2)) - text2ascii("a")) + ((text2num(copytext(upper_bound, length(upper_bound))) - 2) * 12)
+		if(!start || !end)
+			return
 
 		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
 		for(var/i in start to end)
