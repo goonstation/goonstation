@@ -464,9 +464,8 @@ ABSTRACT_TYPE(/obj/cablespawner)
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
 	// first we have to make sure we're checking the correct kinds
-	for (var/self_type/dupe in range(0, src))
-		if (istype(dupe, src))
-			selftile += 1
+	for (src.self_type in range(0, src))
+		selftile += 1
 	if (length(selftile) > 1)
 		CRASH("[selftile + 1] cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
