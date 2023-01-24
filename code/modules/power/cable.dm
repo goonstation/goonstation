@@ -561,3 +561,4 @@
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
 	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
+	current.color = src.color
