@@ -465,17 +465,17 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
+	var/declarer = 0
 	// first we have to make sure we're checking the correct kind of cable
 	for (var/obj/cablespawner/self_loc in range(0, src))
 		if (self_loc.color == src.color)
 			selftile += 1
 	if (length(selftile) > 1)
 		CRASH("[length(selftile)] cablespawners on coordinate [src.x] x [src.y] y!")
-	qdel(selftile)
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
 		// declarer is the dir being checked at present
-		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
+		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
 			if (spawner.color == src.color)
 				cable_surr |= declarer
@@ -513,13 +513,12 @@
 
 	for (var/dir_to_c in alldirs)
 	// checks for regular cables (these always connect by default)
-		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
+		declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
-			if (normal_cable.color != src.color)
-				continue
-			if (istype(normal_cable, src) || istype(src, normal_cable))
-				if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
-					cable_surr |= declarer
+			if (normal_cable.color == src.color)
+				if (istype(normal_cable, src) || istype(src, normal_cable))
+					if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
+						cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
