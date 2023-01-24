@@ -429,7 +429,6 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	// subtype node sets this to true
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	var/self_type = null
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
@@ -465,7 +464,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	var/list/selftile = list()
 	// first we have to make sure we're checking the correct kind of cable
 	for (var/obj/cablespawner/self_loc in range(0, src))
-		if (istype(self_loc, src.self_type) || istype(src.self_type, self_loc))
+		if (self_loc.color == src.color)
 			selftile += 1
 	if (length(selftile) > 1)
 		CRASH("[selftile] cablespawners on coordinate [src.x] x [src.y] y!")
@@ -475,7 +474,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 		// declarer is the dir being checked at present
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
-			if (spawner.cable_type == src.cable_type)
+			if (spawner.color = src.color)
 				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
@@ -506,7 +505,7 @@ ABSTRACT_TYPE(/obj/cablespawner)
 	if (cable_surr & EAST)
 	// optimises the outlier case
 		for (var/obj/cablespawner/spawner in get_step(src, EAST))
-			if (istype(src.self_type, spawner) || istype(spawner, src.self_type))
+			if (src.color == spawner.color)
 				spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
