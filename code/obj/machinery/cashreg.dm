@@ -31,14 +31,11 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	attackby(obj/item/O, mob/user)
 		// If attempting to use an ID or PDA with an ID inserted, attempt to register device to that ID. Else, they're paying for something.
-		var/held_ID = src.get_ID(O)
-		if (src.get_ID(O))
+		if (istype(O, /obj/item/card/id) || istype(O, /obj/item/device/pda2))
 			if (!src.owner_account)
-				src.register_owner(user, held_ID)
+				src.register_owner(user, user.get_id())
 			else
-				src.pay(user, held_ID)
-			src.attack_hand(user)
-			return
+				src.pay(user, user.get_id())
 
 		// (Un)anchoring the device with a tool.
 		if (istool(O, TOOL_SCREWING | TOOL_WRENCHING))
@@ -58,13 +55,11 @@ TYPEINFO(/obj/machinery/cashreg)
 			ui.open()
 
 	ui_data(mob/user)
-		var/obj/O = src.check_worn_ID(user)
-
 		. = list(
 			"active_transaction" = src.active_transaction,
 			"amount" = src.amount,
 			"is_authorised" = src.allowed(user),
-			"is_owner" = (src.get_ID(O) == src.owner_card),
+			"is_owner" = (user.get_id() == src.owner_card),
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
 			"tip_amount" = ceil(src.amount * src.tip),
@@ -78,8 +73,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			return
 		switch (action)
 			if ("clear_transaction")
-				var/obj/O = src.check_worn_ID(usr)
-				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
+				if (usr.get_id() == src.owner_card && !src.active_transaction)
 					if (tgui_alert(usr, "Clear the transaction?", "Clear transaction", list("Clear", "Cancel")) == "Clear" && !src.active_transaction)
 						boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
@@ -90,8 +84,7 @@ TYPEINFO(/obj/machinery/cashreg)
 					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
 					return
 			if ("set_amount")
-				var/obj/O = src.check_worn_ID(usr)
-				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
+				if (usr.get_id() == src.owner_card && !src.active_transaction)
 					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
 					if (amount_buffer && !src.active_transaction)
 						src.amount = amount_buffer
@@ -101,18 +94,15 @@ TYPEINFO(/obj/machinery/cashreg)
 					src.tip = clamp((tgui_input_number(usr, "What percentage would you like to pay as a tip?", "Tip", 10, 100, 0) / 100), 0, 1)
 					. = TRUE
 			if ("swipe_owner")
-				var/obj/O = usr.equipped()
 				if (!src.owner_account)
-					src.register_owner(usr, src.get_ID(O))
+					src.register_owner(usr, usr.get_id(not_worn = TRUE))
 					. = TRUE
 			if ("swipe_payer")
-				var/obj/O = usr.equipped()
-				src.pay(usr, src.get_ID(O))
+				src.pay(usr, usr.get_id(not_worn = TRUE))
 				. = TRUE
 			if ("reset")
-				var/obj/O = src.check_worn_ID(usr)
 				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
-				if ((src.get_ID(O) == src.owner_card || src.allowed(usr)) && !src.active_transaction)
+				if ((usr.get_id() == src.owner_card || src.allowed(usr)) && !src.active_transaction)
 					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset" && !src.active_transaction)
 						boutput(usr, "<span class='alert'>Reader reset.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
@@ -146,25 +136,6 @@ TYPEINFO(/obj/machinery/cashreg)
 	proc/cancel(mob/user)
 		user.visible_message("<span class='alert'><b>[src] buzzes.</b> The transaction was cancelled!</span>")
 		src.active_transaction = FALSE
-
-	// This proc should really exist elsewhere.
-	proc/get_ID(obj/item/O)
-		if (istype(O, /obj/item/card/id))
-			return O
-		else if (istype(O, /obj/item/device/pda2))
-			var/obj/item/device/pda2/pda = O
-			return pda.ID_card
-
-	/// If an ID is being held, get what's equipped. Otherwise, if mob M is wearing something in their ID slot, get an ID from that.
-	proc/check_worn_ID(mob/M)
-		var/obj/item/O
-		if (ishuman(M))
-			var/mob/living/carbon/human/owner = M
-			if (istype(M.equipped(), /obj/item/card/id) || istype(M.equipped(), /obj/item/device/pda2))
-				O = M.equipped()
-			else if (owner.wear_id)
-				O = owner.wear_id
-			return O
 
 	/// Registers mob/user as the owner of the device.
 	proc/register_owner(mob/user, obj/item/card/id/O)
