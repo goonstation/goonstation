@@ -186,6 +186,8 @@
 /datum/commodity/trader/josh/foamgun
 	comname = "Totally Cool Foam Flingin' Tool"
 	comtype = /obj/item/gun/kinetic/foamdartrevolver
+	possible_alt_types = (/obj/item/gun/kinetic/foamdartshotgun)
+	alt_type_chance = 20
 	price_boundary = list(600,1200)
 	possible_names = list("Bro, this thing can shoot sooo fast! You gotta have one.",
 	"You could have such a sick battle if you had enough of these.",
