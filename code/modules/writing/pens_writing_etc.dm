@@ -112,7 +112,7 @@
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
-		src.in_use = 1
+		src.in_use = TRUE
 		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
@@ -144,10 +144,15 @@
 			src.reagents.clear_reagents()
 
 			src.remove_filter("reagent_coloration")
-			src.color_name = initial(src.color_name)
-			src.font_color = initial(src.font_color)
+			src.reset_color()
 
-		src.in_use = 0
+		src.in_use = FALSE
+
+	/// Reset the color of this crayon. Default behavior is to reset to initial color, but random crayons might save their color and rainbow ones
+	/// might just re-randomize, etc
+	proc/reset_color()
+		src.color_name = initial(src.color_name)
+		src.font_color = initial(src.font_color)
 
 	onMaterialChanged()
 		..()
@@ -183,7 +188,7 @@
 			src.add_filter("reagent_coloration", 1, color_matrix_filter(normalize_color_to_matrix(src.reagents.get_average_rgb())))
 			src.color = src.reagents.get_average_color()
 			src.font_color = src.color
-			src.color_name = get_nearest_color(src.reagents.get_average_color()) // why the fuck are there 3 vars for this
+			src.color_name = get_nearest_color(src.reagents.get_average_color())
 
 			if (src.material)
 				src.removeMaterial() // no
@@ -414,9 +419,15 @@
 		font_color = "#FF00FF"
 
 	random
+		var/picked_color
+
 		New()
 			..()
-			src.color = random_color()
+			src.picked_color = random_color()
+			src.reset_color()
+
+		reset_color()
+			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -506,9 +517,15 @@
 			src.setMaterial(getMaterial("gold"))
 
 	random
+		var/picked_color
+
 		New()
 			..()
-			src.color = random_color()
+			src.picked_color = random_color()
+			src.reset_color()
+
+		reset_color()
+			src.color = src.picked_color
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] crayon"
@@ -517,11 +534,9 @@
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
-				..(user)
-				src.color = random_color()
-				src.font_color = src.color
-				src.color_name = hex2color_name(src.color)
-				src.name = "[src.color_name] crayon"
+				..()
+				src.picked_color = random_color()
+				src.reset_color()
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
 
 		robot
@@ -529,10 +544,8 @@
 
 			attack(mob/M, mob/user, def_zone)
 				if (M == user)
-					src.color = random_color()
-					src.font_color = src.color
-					src.color_name = hex2color_name(src.color)
-					src.name = "[src.color_name] crayon"
+					src.picked_color = random_color()
+					src.reset_color()
 					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
 					return
 
@@ -717,8 +730,7 @@
 			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
 
 			src.remove_filter("reagent_coloration")
-			src.color_name = initial(src.color_name)
-			src.font_color = initial(src.font_color)
+			src.reset_color()
 
 	get_desc()
 		. = ..()
@@ -739,12 +751,13 @@
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
+		var/picked_color
 		New()
 			..()
-			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
-			src.font_color = src.color
-			src.color_name = hex2color_name(src.color)
-			src.name = "[src.color_name] chalk"
+			src.assign_color(src.picked_color)
+
+		reset_color()
+			src.assign_color(src.picked_color)
 
 	proc/assign_color(var/color)
 		if(isnull(color))
@@ -777,6 +790,9 @@
 			src.icon_state = "chalk-0"
 		else
 			src.icon_state = "chalk-[src.chalk_health]"
+
+	reset_color()
+		src.assign_color(initial(src.color))
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob)
 		..()

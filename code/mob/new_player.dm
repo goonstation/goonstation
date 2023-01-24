@@ -729,14 +729,12 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
-				traitor.special_role = ROLE_CHANGELING
-				objective_set_path = /datum/objective_set/changeling
-				traitormob.make_changeling()
+				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_VAMPIRE)
-				traitor.special_role = ROLE_VAMPIRE
-				objective_set_path = /datum/objective_set/vampire
-				traitormob.make_vampire()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRESTLER)
 				traitor.special_role = ROLE_WRESTLER

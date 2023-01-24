@@ -32,9 +32,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
-		var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(src)
-		O.owner = src
-		O.implanted = 1
+		new /obj/item/implant/access/infinite/assistant(src)
 
 	setup_hands()
 		..()
