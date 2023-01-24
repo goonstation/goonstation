@@ -659,7 +659,7 @@ datum
 					if (silent)
 						M.TakeDamage("All", volume * 0.5, 0, 0, DAMAGE_BLUNT)
 					else if (prob(75))
-						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
+						M.TakeDamage("head", 25 * min(1, volume / 10), 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
 						if(!H.disfigured)
 							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
@@ -667,7 +667,7 @@ datum
 							H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
-						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)
+						M.TakeDamage("All", 5 * min(1, volume / 10), 0, 0, DAMAGE_BLUNT)
 
 				if(istype(H))
 					if(method == INGEST && H.reagents && H.reagents.has_reagent("super_hairgrownium")) //if this starts being abused i will change it, but only admins seem to use grog so fuck it
