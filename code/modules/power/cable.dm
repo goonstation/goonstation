@@ -470,7 +470,7 @@
 		if (self_loc.color == src.color)
 			selftile += 1
 	if (length(selftile) > 1)
-		CRASH("[selftile] cablespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("[length(selftile)] cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
