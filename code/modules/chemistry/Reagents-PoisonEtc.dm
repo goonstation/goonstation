@@ -1135,6 +1135,48 @@ datum
 				..()
 				return
 
+		harmful/cresol
+			name = "cresol"
+			id = "cresol"
+			description = "An aromatic organic compound capable of severely irritating lungs and the respiratory system upon skin contact."
+			reagent_state = SOLID
+			fluid_r = 230
+			fluid_g = 180
+			fluid_b = 180
+			transparency = 130
+			depletion_rate = 0.2
+			penetrates_skin = 1
+			touch_modifier = 0.25 // a cut on skinpen, akin to mercury
+			var/counter = 1
+			var/oxy_damage_target = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
+                                                                                      //the target goes up with time
+				switch(counter+= (1 * mult))
+					if (6 to 12)
+						if(probmult(6))
+							M.emote(pick("cough", "gasp"))
+					if (12 to 22)
+						if(probmult(10))
+							M.emote(pick("cough", "choke", "gasp"))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 20 * mult))
+					if (22 to INFINITY)
+						M.change_eye_blurry(5, 5)
+						if(probmult(15))
+							M.emote(pick("pale", "choke", "tremble", "gasp"))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 40 * mult))
+						if(probmult(15) && !M.hasStatus("drowsy"))   //rolls a chance to make you drowsy
+							M.setStatus("drowsy", 15 SECONDS)
+							boutput(M, "<span class='alert'><b>You feel [pick("sick", "tired", "exhausted")].</b></span>")
+						else if(probmult(15))                //if you are already drowsy, rolls a chance to stun you for a small amount
+							M.setStatus("stunned", 3 SECONDS)
+							if(prob(30))
+								boutput(M, "<span class='alert'><b>You suddenly feel [pick("weak", "extremely weak", "very sick")]!</b></span>")
+				..()
+				return
+
 		harmful/polonium
 			name = "polonium"
 			id = "polonium"

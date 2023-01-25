@@ -2144,6 +2144,16 @@ datum
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
+		cresol
+			name = "Cresol"
+			id = "cresol"
+			result = "cresol"
+			required_reagents = list("oil" = 1, "ether" = 1, "ethanol" = 1, "magnesium_chloride" = 1) // most common route to cresol production,
+			required_temperature = T0C + 180                                                          // oil being a stand in for benzene
+			result_amount = 3
+			mix_phrase = "The mixture gives off a strong scent of coal tar."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		sarin // oh god why am i adding this
 			name = "Sarin"
 			id = "sarin"
