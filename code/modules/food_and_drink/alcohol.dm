@@ -299,7 +299,7 @@
 	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 125
 	initial_reagents = "moonshine"
 
@@ -308,7 +308,7 @@
 	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
 	icon_state = "curacao"
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 100
 	initial_reagents = "curacao"
 

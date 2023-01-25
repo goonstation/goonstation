@@ -241,7 +241,7 @@
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
 	icon_state = "soup"
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
@@ -297,7 +297,7 @@
 	desc = "A shake designed to cause weight loss.  The package proudly proclaims that it is 'tapeworm free.'"
 	icon_state = "shake"
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("lipolicide"=30,"chocolate"=5)
 
@@ -308,7 +308,7 @@
 	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	rc_flags = null
 	initial_volume = 50
 	can_chug = 0
@@ -384,7 +384,7 @@
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 50
 
 	New()
@@ -402,7 +402,7 @@
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
 	icon_state = "cola-13"
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_reagents = null
 	initial_volume = 50
 
@@ -423,7 +423,7 @@
 	desc = "A vibrantly colored can of 100% all natural peach juice."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	icon_state = "peach"
-	rc_desc_flagFULLNESS
+	rc_desc_flagsFULLNESS
 	initial_volume = 50
 	initial_reagents = "juice_peach"
 
@@ -434,7 +434,7 @@
 	item_state = "milk"
 	var/icon_style = "milk"
 	var/glass_style = "milk"
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"

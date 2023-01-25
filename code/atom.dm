@@ -9,7 +9,7 @@
 	var/level = 2
 	var/flags = FPRINT
 	/// flags for descriptions of reagents inside containers
-	var/rc_desc_flag = null
+	var/rc_desc_flags = null
 	/// flags for reagent container behavior
 	var/rc_flags = null
 	var/event_handler_flags = 0

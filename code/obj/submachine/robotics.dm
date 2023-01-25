@@ -398,7 +398,7 @@
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
 	w_class = W_CLASS_NORMAL
-	rc_desc_flag = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 120
 
 	New()

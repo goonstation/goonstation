@@ -12,7 +12,7 @@
 	icon_state = "dropper0"
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/icon_empty = "dropper0"
 	var/icon_filled = "dropper1"
 	var/image/fluid_image

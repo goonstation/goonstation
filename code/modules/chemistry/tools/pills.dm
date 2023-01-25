@@ -10,7 +10,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "pill0"
 	item_state = "pill"
-	rc_desc_flag = RC_SPECTRO		// only spectroscopic analysis
+	rc_desc_flags = RC_SPECTRO		// only spectroscopic analysis
 	flags = NOSPLASH | TABLEPASS
 	rand_pos = 1
 	var/random_icon = 0

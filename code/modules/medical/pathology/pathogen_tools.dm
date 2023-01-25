@@ -254,7 +254,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
 		..()

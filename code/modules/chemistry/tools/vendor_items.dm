@@ -13,7 +13,7 @@
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	var/image/fluid_image
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE
 
 /* ============================================== */
 /* -------------------- Vial -------------------- */
@@ -23,7 +23,7 @@
 	name = "small vial"
 	desc = "A little vial. Can hold up to 5 units."
 	icon_state = "minivial"
-	rc_desc_flag = RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
 		..()

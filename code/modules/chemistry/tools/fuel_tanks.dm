@@ -16,7 +16,7 @@
 	incompatible_with_chem_dispensers = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = CAN_RECEIVE | CAN_SPLASH | CAN_TRANSFER
-	rc_desc_flag = RC_SCALE
+	rc_desc_flags = RC_SCALE
 	initial_volume = 400
 	can_recycle = FALSE
 	can_chug = 0

@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
-	rc_desc_flag = RC_SPECTRO | RC_VISIBLE | RC_FULLNESS
+	rc_desc_flags = RC_SPECTRO | RC_VISIBLE | RC_FULLNESS
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
 	var/splash_all_contents = TRUE
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if (!reagents)
 			return
-		. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flag)]</span>"
+		. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flags)]</span>"
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
@@ -456,7 +456,7 @@ proc/ui_describe_reagents(atom/A)
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
 	flags = FPRINT | SUPPRESSATTACK
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
@@ -536,7 +536,7 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "beaker"
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/large
@@ -545,7 +545,7 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beakerlarge"
 	item_state = "beaker"
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 

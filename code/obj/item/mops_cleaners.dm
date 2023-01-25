@@ -15,7 +15,7 @@ WET FLOOR SIGN
 	item_state = "cleaner"
 	flags = TABLEPASS|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	rc_flags = CAN_RECEIVE
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -40,7 +40,7 @@ WET FLOOR SIGN
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
-	rc_desc_flag = RC_VISIBLE | RC_SPECTRO | RC_SCALE
+	rc_desc_flags = RC_VISIBLE | RC_SPECTRO | RC_SCALE
 
 	New()
 		..()
@@ -259,7 +259,7 @@ WET FLOOR SIGN
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flag)]</span>"
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flags)]</span>"
 	return
 
 // MOP

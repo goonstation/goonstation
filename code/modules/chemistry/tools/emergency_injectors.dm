@@ -13,7 +13,7 @@
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red

@@ -8,7 +8,7 @@
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS |  ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = CAN_SPLASH | CAN_RECEIVE | CAN_TRANSFER
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	p_class = 1.2
 
@@ -42,7 +42,7 @@
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flag)]</span>"
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flags)]</span>"
 	return
 
 /obj/mopbucket/attackby(obj/item/W, mob/user)

@@ -597,7 +597,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "tetsubin"
 	item_state = "tetsubin"
-	rc_desc_flag = RC_SPECTRO
+	rc_desc_flags = RC_SPECTRO
 
 /obj/decal/wallscroll
  name = "wall scroll"

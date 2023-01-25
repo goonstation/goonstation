@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/slice_inert = FALSE
 	/// When we want to name them slices or wedges or what-have-not. Default is slice
 	var/slice_suffix = "slice"
-	rc_desc_flag = 0
+	rc_desc_flags = 0
 	rc_flags = CAN_RECEIVE
 
 	proc/on_table()
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	heal_amt = 1
 	initial_volume = 100
 	festivity = 0
-	rc_desc_flag = 0
+	rc_desc_flags = 0
 	edible = 1
 	rand_pos = 1
 	var/has_cigs = 0
@@ -446,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	heal_amt = 0
 	initial_volume = 100
 	festivity = 0
-	rc_desc_flag = 0
+	rc_desc_flags = 0
 	edible = 1
 	rand_pos = 1
 	bites_left = 1
@@ -477,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
-	rc_desc_flag = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	rc_flags = CAN_SPLASH | CAN_RECEIVE | CAN_TRANSFER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	doants = 0

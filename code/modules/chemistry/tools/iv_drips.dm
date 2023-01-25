@@ -16,7 +16,7 @@
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	rc_flags = CAN_RECEIVE
-	rc_desc_flag = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	rc_desc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
 	var/image/fluid_image = null

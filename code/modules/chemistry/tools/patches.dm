@@ -24,7 +24,7 @@
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
-	rc_desc_flag = RC_SPECTRO		// only spectroscopic analysis
+	rc_desc_flags = RC_SPECTRO		// only spectroscopic analysis
 	var/in_use = 0
 	var/good_throw = 0
 
@@ -470,7 +470,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	rc_flags = CAN_RECEIVE
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
 	var/list/whitelist = list()
 	var/use_volume = 8

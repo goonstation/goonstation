@@ -27,7 +27,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
-	rc_desc_flag = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	hide_attack = ATTACK_PARTIALLY_HIDDEN

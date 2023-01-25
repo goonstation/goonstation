@@ -11,7 +11,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	flags = FPRINT | TABLEPASS
 	rc_flags = CAN_RECEIVE
-	rc_desc_flag = 0
+	rc_desc_flags = 0
 	initial_volume = 40
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
