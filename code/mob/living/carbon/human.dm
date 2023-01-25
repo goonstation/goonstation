@@ -1309,6 +1309,7 @@
 	..()
 	if (M != usr) return
 	if (usr == src) return
+	if (BOUNDS_DIST(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (issilicon(usr) || issilicon(src)) return
