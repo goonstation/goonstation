@@ -519,7 +519,6 @@
 			src.organ_holder_required_op_stage = 0
 			src.scalp_op_stage = 0
 			src.head_type = mutant_race
-			src.has_nose = FALSE
 
 			// then set the head icon
 			if(headicon)
@@ -548,7 +547,6 @@
 				if(HEAD_LIZARD)
 					src.organ_name = "lizard head"
 					src.desc = "Well, sssshit."
-					src.has_nose = TRUE
 
 				if(HEAD_COW)
 					src.organ_name = "cow head"
