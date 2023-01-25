@@ -103,10 +103,10 @@
 			src.owner.current.set_loc(pick(job_start_locations["wizard"]))
 
 	assign_objectives()
-		ticker.mode.bestow_objective(src.owner, /datum/objective/regular/assassinate)
+		ticker.mode.bestow_objective(src.owner, /datum/objective/regular/assassinate, src)
 
 		var/objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 		if (ispath(objective_set_path, /datum/objective_set))
-			new objective_set_path(src.owner)
+			new objective_set_path(src.owner, src)
 		else if (ispath(objective_set_path, /datum/objective))
-			ticker.mode.bestow_objective(src.owner, objective_set_path)
+			ticker.mode.bestow_objective(src.owner, objective_set_path, src)
