@@ -1146,7 +1146,7 @@ datum
 			transparency = 130
 			depletion_rate = 0.2
 			penetrates_skin = 1
-			touch_modifier = 0.25 // a cut on skinpen, akin to mercury
+			touch_modifier = 0.5 // a cut on skinpen, akin to radium
 			var/counter = 1
 			var/oxy_damage_target = 0
 
