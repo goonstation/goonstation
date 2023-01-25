@@ -38322,14 +38322,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
-"cbc" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/hallway/primary/south)
 "cbd" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -38441,14 +38433,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/cargo)
-"cbr" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/hallway/primary/south)
 "cbs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -60163,7 +60147,6 @@
 	mail_tag = "engineering";
 	name = "engineering mail router"
 	},
-/obj/machinery/light/emergency,
 /turf/simulated/floor/yellow/corner,
 /area/station/hallway/primary/south)
 "rtA" = (
@@ -113744,7 +113727,7 @@ bUL
 bCb
 bWU
 bZn
-cbc
+chg
 chg
 chg
 cdv
@@ -114650,7 +114633,7 @@ bUN
 bWK
 bXa
 rtz
-cbr
+chh
 chh
 chh
 tOO
@@ -114951,7 +114934,7 @@ bKx
 bLY
 bWL
 bWU
-bZl
+bZm
 ccf
 jeE
 cit
