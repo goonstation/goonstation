@@ -142,7 +142,6 @@
 	proc/generate_keybinds(var/list/note_range)
 		var/list/default_range = src.generate_note_range("c2", "c7")
 		var/list/split_default_key_string
-		var/keybinds
 		var/start
 		var/end
 
@@ -162,9 +161,7 @@
 
 		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
 		for(var/i in start to end)
-			keybinds += split_default_key_string[i]
-
-		return keybinds
+			. += split_default_key_string[i]
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
