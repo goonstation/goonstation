@@ -1328,6 +1328,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
+/obj/decal/cleanable/machine_debris/radioactive
+	New()
+		.=..()
+		src.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "Useless heap of junk."

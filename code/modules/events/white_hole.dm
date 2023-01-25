@@ -1,5 +1,5 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo", "nuclear")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -397,6 +397,7 @@
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
 			/obj/item/paper = 3,
+			/obj/critter/bat/hellbat = 5,
 			"corpse" = 5,
 			// yeah idk where I was going with "hell" either
 		),
@@ -686,6 +687,40 @@
 			/obj/item/material_piece/cloth/carbon = 0.02,
 			/obj/item/raw_material/gemstone = 3,
 		),
+		//haha get irradiated nerds
+		"nuclear" = list(
+			"radgas" = 50,
+			"plasma" = 30,
+			/obj/item/reactor_component/control_rod/random_material = 20,
+			/obj/item/reactor_component/fuel_rod/random_material = 20,
+			/obj/item/reactor_component/gas_channel/random_material= 20,
+			/obj/item/reactor_component/heat_exchanger/random_material = 20,
+			/datum/projectile/neutron = 50,
+			/obj/item/nuclear_waste = 20,
+			/obj/decal/cleanable/machine_debris/radioactive = 20,
+			/obj/item/storage/pill_bottle/antirad = 15,
+			/obj/item/clothing/glasses/meson = 1,
+			/obj/item/reagent_containers/emergency_injector/anti_rad = 15,
+			/obj/storage/closet/radiation = 10,
+			/obj/item/reagent_containers/pill/antirad = 10,
+			/obj/item/clothing/mask/gas = 5,
+			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/gloves/yellow = 5,
+			/obj/item/clothing/head/rad_hood = 5,
+			/obj/item/wrench/yellow = 10,
+			/obj/item/weldingtool/yellow = 10,
+			/obj/item/crowbar/yellow = 10,
+			/obj/item/extinguisher = 10,
+			/obj/machinery/portable_atmospherics/canister/toxins = 4,
+			/obj/machinery/portable_atmospherics/canister/oxygen = 2,
+			/obj/machinery/portable_atmospherics/canister/nitrogen = 2,
+			/obj/machinery/portable_atmospherics/canister/carbon_dioxide = 2,
+			/obj/item/paper/book/from_file/nuclear_engineering = 10,
+			/obj/item/chem_grenade/firefighting = 5,
+			/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
+			/obj/item/material_piece/plutonium = 1,
+			/obj/item/raw_material/cerenkite = 10,
+		)
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
@@ -893,6 +928,15 @@
 					gas.temperature += rand(100, 300)
 				if(prob(20))
 					gas.oxygen += rand(1, 10)
+				var/turf/T = get_turf(src)
+				T.assume_air(gas)
+			if("radgas")
+				var/datum/gas_mixture/gas = new
+				gas.radgas += rand(10, 100)
+				if(prob(20))
+					gas.radgas += rand(100, 500)
+				if(prob(20))
+					gas.temperature += rand(100, 3000)
 				var/turf/T = get_turf(src)
 				T.assume_air(gas)
 			if("flockconverted")
@@ -1190,7 +1234,7 @@
 			par.pixel_x += rand(-128,128)
 			par.pixel_y += rand(-128,128)
 			par.color = "#ffffff"
-			par.alpha = 5
+			par.alpha = 2
 			par.plane = PLANE_NOSHADOW_ABOVE
 
 			var/image/illum = par.SafeGetOverlayImage("illum", src.icon, src.icon_state)

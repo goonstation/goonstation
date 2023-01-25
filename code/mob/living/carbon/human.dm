@@ -232,9 +232,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -3251,9 +3248,9 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id()
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
-	if(.)
+	if(. || not_worn)
 		return
 	if(istype(src.wear_id, /obj/item/card/id))
 		return src.wear_id

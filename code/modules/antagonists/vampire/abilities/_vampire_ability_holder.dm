@@ -3,6 +3,7 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
+// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
 /mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
 	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (vampholder && istype(vampholder))

@@ -154,7 +154,8 @@
 	on = FALSE
 
 /turf/simulated/floor/feather/Del()
-	src.flock.all_owned_tiles -= src
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
 	src.flock = null
 	..()
 
