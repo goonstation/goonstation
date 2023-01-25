@@ -1309,12 +1309,13 @@
 	..()
 	if (M != usr) return
 	if (usr == src) return
-	if (BOUNDS_DIST(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
+	if (issilicon(usr) || issilicon(src)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
-	if(!isliving(usr)) return
+	if (isintangible(usr)) return
+	if (!isliving(usr)) return
 	src.show_inv(usr)
 
 // called when something steps onto a human
@@ -3129,9 +3130,11 @@
 		return
 	if (!src.can_strip(src)) return
 	if (LinkBlocked(src.loc,usr.loc)) return
+	if (issilicon(usr) || issilicon(src)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
 	if (isintangible(usr)) return
+	if (!isliving(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY
