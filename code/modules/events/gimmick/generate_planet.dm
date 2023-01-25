@@ -21,26 +21,29 @@
 			return
 
 		generator = tgui_input_list(usr, "Select a Generator type.", "Generator type", childrentypesof(/datum/map_generator))
-		height = tgui_input_number(usr, "Planet Height", "Planet Generation", rand(80,130), 250, 9)
-		width = tgui_input_number(usr, "Planet Width", "Planet Generation", rand(80,130), 250, 9)
-		prefabs = tgui_input_number(usr, "Prefabs to attempt to place", "Planet Generation", 1, 5, 0)
+		if(generator)
+			height = tgui_input_number(usr, "Planet Height", "Planet Generation", rand(80,130), 250, 9)
+			width = tgui_input_number(usr, "Planet Width", "Planet Generation", rand(80,130), 250, 9)
+			prefabs = tgui_input_number(usr, "Prefabs to attempt to place", "Planet Generation", 1, 5, 0)
 
-		generate_mobs = alert("Generate Mobs", "Planet Generation", "True", "False") == "True" ? TRUE : FALSE
-		if(alert("Generate Ore in Rocks/Mountains","Planet Generation","Yes","No") == "No")
-			seed_ore = FALSE
-		color = input("Choose a color for the planet","Planet Generation", "#888888") as color
+			generate_mobs = alert("Generate Mobs", "Planet Generation", "True", "False") == "True" ? TRUE : FALSE
+			if(alert("Generate Ore in Rocks/Mountains","Planet Generation","Yes","No") == "No")
+				seed_ore = FALSE
+			color = input("Choose a color for the planet","Planet Generation", "#888888") as color
 
-		planet_name = tgui_input_text(usr, "Planet name", "Planet Generation", null)
-		if(length(planet_name)<1)
-			planet_name = null
+			planet_name = tgui_input_text(usr, "Planet name (Cancel for Random Name)", "Planet Generation", null)
+			if(length(planet_name)<1)
+				planet_name = null
 
-		if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
-			delay_finalization = TRUE
+			if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
+				delay_finalization = TRUE
 
-		admin_customized = TRUE
+			admin_customized = TRUE
 
-		src.event_effect(source)
-		return
+		if(generator && alert("Are you sure you want to generate this planet? [width]x[height] [generator] with [prefabs] prefab.","Generate Planet?","Yes","No") == "Yes")
+			src.event_effect(source)
+		else
+			boutput(usr,"<span class='internal'>Planet Generation Event cancelled.</span>")
 
 
 	event_effect()

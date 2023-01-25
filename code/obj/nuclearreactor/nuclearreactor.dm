@@ -505,8 +505,7 @@
 						throwcomp.throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 					else
 						qdel(src.component_grid[x][y])
-						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris, epicentre)
-						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 		if(severity <= 1)
@@ -626,7 +625,7 @@
 	window_pass = FALSE
 	silentshot = TRUE
 
-	New(power)
+	New(power=50)
 		..()
 		src.power = power
 		src.ks_ratio = 1
