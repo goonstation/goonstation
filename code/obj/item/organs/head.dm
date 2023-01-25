@@ -38,6 +38,7 @@
 	var/head_state = null
 
 	var/image/head_image_eyes = null
+	var/image/head_image_nose = null
 	var/image/head_image_cust_one = null
 	var/image/head_image_cust_two = null
 	var/image/head_image_cust_three = null
@@ -181,6 +182,12 @@
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
 
+		// Add long nose if they have one
+		if (src.head_appearance_flags & HAS_LONG_NOSE)
+			src.head_image_nose = image(src.head_icon, 'snout', layer = MOB_GLASSES_LAYER)
+		else
+			src.head_image_nose = null
+
 		// Remove their hair first
 		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 		src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
@@ -248,6 +255,9 @@
 		src.head_image_eyes.pixel_x = 0
 		src.head_image_eyes.pixel_y = 0
 		src.overlays += src.head_image_eyes
+
+		if(src.head_image_nose)
+			src.overlays += src.head_image_nose
 
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
@@ -509,6 +519,7 @@
 			src.organ_holder_required_op_stage = 0
 			src.scalp_op_stage = 0
 			src.head_type = mutant_race
+			src.has_nose = FALSE
 
 			// then set the head icon
 			if(headicon)
@@ -537,6 +548,7 @@
 				if(HEAD_LIZARD)
 					src.organ_name = "lizard head"
 					src.desc = "Well, sssshit."
+					src.has_nose = TRUE
 
 				if(HEAD_COW)
 					src.organ_name = "cow head"
