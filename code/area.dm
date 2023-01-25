@@ -20,6 +20,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
   *
   * A grouping of tiles into a logical space. The sworn enemy of mappers.
   */
+TYPEINFO(/area)
+	var/valid_bounty_area = FALSE
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -1220,6 +1222,8 @@ ABSTRACT_TYPE(/area/adventure)
 
 
 ABSTRACT_TYPE(/area/diner)
+TYPEINFO(/area/diner)
+	valid_bounty_area = TRUE
 /area/diner
 	sound_environment = 12
 #ifdef UNDERWATER_MAP
@@ -1533,6 +1537,8 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Mining Outpost"
 	icon_state = "purple"
 
+TYPEINFO(/area/station/turret_protected/sea_crashed)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
 	name = "Crashed Transport"
 	icon_state = "purple"
@@ -1641,6 +1647,8 @@ ABSTRACT_TYPE(/area/sim/gunsim)
 
 /// Base station area
 ABSTRACT_TYPE(/area/station)
+TYPEINFO(/area/station)
+	valid_bounty_area = TRUE
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
@@ -1711,6 +1719,8 @@ ABSTRACT_TYPE(/area/station/communications)
 		name = "Communications Office Bedroom"
 		icon_state = "communicationsoffice-bedroom"
 ABSTRACT_TYPE(/area/station/maintenance)
+TYPEINFO(/area/station/maintenance)
+	valid_bounty_area = FALSE
 /area/station/maintenance/
 	name = "Maintenance"
 	icon_state = "maintcentral"
@@ -1825,6 +1835,8 @@ ABSTRACT_TYPE(/area/shuttle/asylum)
 
 // Asylum
 ABSTRACT_TYPE(/area/station/medical/asylum)
+TYPEINFO(/area/station/medical/asylum)
+	valid_bounty_area = FALSE
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
@@ -1971,6 +1983,8 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 		name = "Boiler room"
 		icon_state = "orange"
 ABSTRACT_TYPE(/area/station/hallway)
+TYPEINFO(/area/station/hallway)
+	valid_bounty_area = FALSE
 /area/station/hallway/
 	name = "Hallway"
 	icon_state = "hallC"
@@ -2608,7 +2622,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Control Room"
 	icon_state = "green"
 
-
+TYPEINFO(/area/station/engine/singcore)
+	valid_bounty_area = FALSE
 /area/station/engine/singcore
 	name = "Singularity Core"
 	icon_state = "red"
@@ -2627,6 +2642,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Hot Loop"
 	icon_state = "red"
 
+TYPEINFO(/area/station/engine/combustion_chamber)
+	valid_bounty_area = FALSE
 /area/station/engine/combustion_chamber
 	name = "Combustion Chamber"
 	icon_state = "combustion_chamber"
@@ -2646,6 +2663,8 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "yellow"
 
 ABSTRACT_TYPE(/area/station/engine/substation)
+TYPEINFO(/area/station/engine/substation)
+	valid_bounty_area = FALSE
 /area/station/engine/substation
 	icon_state = "purple"
 	sound_environment = 3
@@ -3462,6 +3481,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/salvager/lower
 	icon_state = "orange"
 
+/area/salvager/pod
+	icon_state = "yellow"
+
 /// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"
@@ -3664,6 +3686,8 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "ai_foyer"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/ai)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
@@ -3674,11 +3698,15 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/AIsat)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
 	icon_state = "ai_satellite"
 	sound_environment = 12
 
+TYPEINFO(/area/station/turret_protected/AIbaseoutside)
+	valid_bounty_area = FALSE
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
 	icon_state = "AIt"

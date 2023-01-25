@@ -1,8 +1,6 @@
 var/datum/telescope_manager/tele_man
 var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
-var/list/magnet_locations = list()
-
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."

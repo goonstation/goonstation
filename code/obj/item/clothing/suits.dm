@@ -1448,6 +1448,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
