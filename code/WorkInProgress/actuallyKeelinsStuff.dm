@@ -1701,11 +1701,24 @@ Returns:
 	icon_state = "pixel"
 	pixel_z = 16
 	pixel_w = 16
+	var/got_renamed = FALSE
 
 	New(loc, atom/original)
 		..(loc)
 		src.name = original.name
 		src.desc = "This is a single pixel of [original.name]. Wow."
+
+	pickup(mob/user)
+		. = ..()
+		icon = 'icons/effects/white.dmi'
+		if(!got_renamed)
+			got_renamed = TRUE
+			name = "pixel of [name]"
+
+	dropped(mob/user)
+		. = ..()
+		src.icon = initial(icon)
+
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
