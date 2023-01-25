@@ -42217,10 +42217,6 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
-"qrQ" = (
-/turf/simulated/floor/plating/airless,
-/turf/space,
-/area/space)
 "qss" = (
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
@@ -80082,7 +80078,7 @@ lFr
 bck
 bck
 acK
-qrQ
+acK
 acv
 aaa
 aaa
