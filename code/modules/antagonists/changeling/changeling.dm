@@ -86,7 +86,7 @@
 		src.owner.current.assign_gimmick_skull()
 
 	assign_objectives()
-		new /datum/objective_set/changeling(src.owner)
+		new /datum/objective_set/changeling(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

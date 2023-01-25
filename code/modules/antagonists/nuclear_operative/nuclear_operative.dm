@@ -69,7 +69,7 @@
 			M.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 
 	assign_objectives()
-		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear)
+		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
 
 	remove_self()
 		if (istype(ticker.mode, /datum/game_mode/nuclear))

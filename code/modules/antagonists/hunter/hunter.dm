@@ -38,7 +38,7 @@
 		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	assign_objectives()
-		new /datum/objective_set/hunter(src.owner)
+		new /datum/objective_set/hunter(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()
