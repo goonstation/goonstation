@@ -416,8 +416,7 @@
 	return
 
 #define CHECK_AHEAD_LIST list(NORTH, EAST, NORTHWEST, NORTHEAST)
-#define CHECK_BEHIND_LIST list(SOUTH, WEST, SOUTHWEST, SOUTHEAST)
-// these defines are for the /obj/cablespawner/proc/check()
+// this define is for the /obj/cablespawner/proc/check()
 // as everything in the 'ahead' list should be cablespawners, and stuff behind already be cables.
 // speeds it up a tiny tiny bit
 
@@ -517,7 +516,7 @@
 			if (src.color == spawner.color)
 				spawner.cable_surr |= WEST
 
-	for (var/dir_to_c in CHECK_BEHIND_LIST)
+	for (var/dir_to_c in alldirs)
 	// checks for regular cables (these always connect by default)
 		declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
@@ -576,4 +575,3 @@
 	current.d2 = max(dir1, dir2)
 
 #undef CHECK_AHEAD_LIST
-#undef CHECK_BEHIND_LIST
