@@ -56,10 +56,7 @@
 
 		H.equip_if_possible(ID, H.slot_wear_id)
 
-		var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(H)
-		M.implanted = TRUE
-		H.implant.Add(M)
-		M.implanted(H)
+		new /obj/item/implant/revenge/microbomb(H)
 
 		boutput(H, "<span class='alert'>Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 		src.assign_name()

@@ -40,9 +40,6 @@ datum/mind
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
-	//Ability holders.
-	var/datum/abilityHolder/changeling/is_changeling = 0
-
 	var/list/intrinsic_verbs = list()
 
 	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
@@ -118,10 +115,6 @@ datum/mind
 			current.addOverlaysClient(current.client)
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")
-
-
-		//if (is_changeling)
-		//	new_character.make_changeling()
 
 		for (var/intrinsic_verb in intrinsic_verbs)
 			Z_LOG_DEBUG("Mind/TransferTo", "Adding [intrinsic_verb]")

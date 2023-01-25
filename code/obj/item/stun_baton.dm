@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun.lastattacker = user
 			dude_to_stun.lastattackertime = world.time
 
-		return
+		return TRUE
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -482,6 +482,10 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.UpdateIcon()
 		user.update_inhands()
 
+	do_stun(mob/user, mob/victim, type, stun_who)
+		. = ..()
+		if (.) //successfully stunned someone
+			ON_COOLDOWN(src, "ranged_stun", max(src.click_delay, user.click_delay, COMBAT_CLICK_DELAY))
 
 	update_icon()
 
@@ -500,7 +504,7 @@ TYPEINFO(/obj/item/baton/ntso)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))
-			if (src.state == EXTENDO_BATON_OPEN_AND_ON && src.can_stun())
+			if (src.state == EXTENDO_BATON_OPEN_AND_ON && src.can_stun() && !GET_COOLDOWN(src, "ranged_stun"))
 				src.do_stun(usr, A, "stun")
 				return
 		..()

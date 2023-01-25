@@ -115,7 +115,7 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 
 	return TRUE
 
-#define GHOSTDRONE_BUILD_INTERVAL 1000
+#define GHOSTDRONE_BUILD_INTERVAL 100 SECONDS
 
 var/global/ghostdrone_factory_working = null // will be set to the current instance of a drone assembly when the first factory makes one, then set to null when it arrives at a recharger
 var/global/last_ghostdrone_build_time = 0
@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 	var/list/obj/machinery/conveyor/conveyors = list()
 	var/list/obj/machinery/drone_recharger/factory/factory_rechargers = list()
 	var/working = 0 // are we currently doing something to a drone piece?
-	var/work_time = 20 // how long do_work()'s animation and sound effect loop runs
+	var/work_time = 20 SECONDS // how long do_work()'s animation and sound effect loop runs
 	var/worked_time = 0 // how long the current work cycle has run
 	var/single_system = 0 // for destiny, does this only need one machine in order to make all the parts?
 
@@ -196,10 +196,10 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 			return ..()
 		src.start_work(G)
 
-	process()
+	process(mult)
 		..()
 		if (working && src.current_assembly)
-			worked_time ++
+			worked_time += (TIME - src.last_process)
 			if (work_time - worked_time <= 0)
 				src.stop_work()
 				return
@@ -221,12 +221,14 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 			if (src.factory_section == 1 || src.single_system)
 				if (!ticker) // game ain't started
 					return
-				if (world.timeofday >= (last_ghostdrone_build_time + GHOSTDRONE_BUILD_INTERVAL))
+				if (TIME >= (last_ghostdrone_build_time + GHOSTDRONE_BUILD_INTERVAL))
 					src.start_work()
 			else
 				var/obj/item/ghostdrone_assembly/G = locate() in get_turf(src)
 				if (G && G.stage == (src.factory_section - 1))
 					src.start_work(G)
+		else if (TIME >= (last_ghostdrone_build_time + 2 * GHOSTDRONE_BUILD_INTERVAL)) //Last assembly didn't arrive at a charger but is overdue to
+			ghostdrone_factory_working = null //Restart the system (so the factory isn't permabricked if someone steals the drone assembly)
 
 	proc/start_work(var/obj/item/ghostdrone_assembly/G)
 		if (!src.factory_rechargers.len)
@@ -256,7 +258,7 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 			ghostdrone_factory_working = src.current_assembly // if something happens to the assembly, for whatever, reason this should become null, I guess?
 			src.working = 1
 			src.icon_state = "factory[src.factory_section]1"
-			last_ghostdrone_build_time = world.timeofday
+			last_ghostdrone_build_time = TIME
 
 		if (!src.current_assembly)
 			src.working = 0
