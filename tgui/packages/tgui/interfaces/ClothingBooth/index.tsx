@@ -9,11 +9,10 @@ import { capitalize } from '.././common/stringUtils';
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
 
-  // on god, this probably isn't the best way of finding the first element in an array. weh.
   const [selectedCategory, selectCategory] = useLocalState(
     context,
     'selectedCategory',
-    data.categoryList.find(() => true)
+    data.categoryList[0]
   );
 
   return (
