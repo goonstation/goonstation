@@ -3,17 +3,13 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-
+import { Fragment } from 'inferno';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend(context);
-  const categories = data.clothingBoothCategories;
+  const categories = data.clothingBoothCategories || [];
 
-  const [selectedCategory, selectCategory] = useLocalState(
-    context,
-    'selectedCategory',
-    categories[0]
-  );
+  const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
 
   return (
     <Window title={data.name} width={300} height={500}>
@@ -29,7 +25,9 @@ export const ClothingBooth = (_, context) => {
                     className="clothingbooth__dropdown"
                     options={categories.map((category) => category.category)}
                     selected={selectedCategory.category}
-                    onSelected={(value) => selectCategory(value)}
+                    onSelected={(value) => (
+                      selectCategory(categories[categories.findIndex((category) => category.category === value)])
+                    )}
                   />
                 </Stack.Item>
               </Stack>
@@ -39,10 +37,7 @@ export const ClothingBooth = (_, context) => {
           <Stack.Item grow={1}>
             <Stack fill vertical>
               <Stack.Item grow={1}>
-                <Section fill scrollable>
-                  {/* <ClothingBoothItem /> go here */}
-                  o ku
-                </Section>
+                <ItemHolder displayedCategory={selectedCategory} />
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -71,30 +66,36 @@ export const ClothingBooth = (_, context) => {
   );
 };
 
-const ClothingBoothItem = (props, context) => {
+const ItemHolder = (props, context) => {
   const { act, data } = useBackend(context);
-  const { category } = props;
-  const { cost, img, name, path } = category;
+  const { displayedCategory } = props;
+  const { items } = displayedCategory;
+
+  if (!items) return null;
 
   return (
-    <>
-      <Stack
-        align="center"
-        className={classes([
-          'clothingbooth__boothitem',
-          name === data.selectedItemName && 'clothingbooth__boothitem-selected',
-        ])}
-        onClick={() => act('select', { path: path })}>
-        <Stack.Item>
-          <img src={`data:image/png;base64,${img}`} />
-        </Stack.Item>
-        <Stack.Item grow={1}>
-          <Box bold>{name}</Box>
-        </Stack.Item>
-        <Stack.Item bold>{`${cost}⪽`}</Stack.Item>
-      </Stack>
-      <Divider />
-    </>
+    <Section fill scrollable>
+      {items.map((item) => (
+        <Fragment key={item.name}>
+          <Stack
+            align="center"
+            className={classes([
+              'clothingbooth__boothitem',
+              item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+            ])}
+            onClick={() => act('select', { path: item.path })}>
+            <Stack.Item>
+              <img src={`data:image/png;base64,${item.img}`} />
+            </Stack.Item>
+            <Stack.Item grow={1}>
+              <Box bold>{item.name}</Box>
+            </Stack.Item>
+            <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
+          </Stack>
+          <Divider />
+        </Fragment>
+      ))}
+    </Section>
   );
 };
 
@@ -112,12 +113,7 @@ const CharacterPreview = (_, context) => {
         />
       </Stack.Item>
       <Stack.Item>
-        <Button
-          icon="chevron-left"
-          tooltip="Clockwise"
-          tooltipPosition="right"
-          onClick={() => act('rotate-cw')}
-        />
+        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
         <Button
           icon="chevron-right"
           tooltip="Counter-clockwise"

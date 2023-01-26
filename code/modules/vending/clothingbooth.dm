@@ -21,29 +21,23 @@ var/list/clothingbooth_paths = list()
 			for(var/i=1, i<=boothlist.len, i++)
 				if(boothlist[i]["category"] == category_name)
 					match_found = TRUE
-					boothlist[i]["items"] += list(
-						list(
+					boothlist[i]["items"] += list(list(
 							"cost" = cost,
 							"img" = item_img,
 							"name" = item_name,
 							"path" = path_name
-						)
-					)
+					))
 					break
 		if(!match_found)
-			boothlist += list(
-			list(
+			boothlist += list(list(
 				"category" = category_name,
-				"items" = list(
-					list(
-						"cost" = cost,
-						"img" = item_img,
-						"name" = item_name,
-						"path" = path_name
-						)
-					)
-				)
-			)
+				"items" = list(list(
+					"cost" = cost,
+					"img" = item_img,
+					"name" = item_name,
+					"path" = path_name
+				))
+			))
 
 		clothingbooth_paths[path_name] = I
 	clothingbooth_stock = boothlist
