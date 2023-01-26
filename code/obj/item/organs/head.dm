@@ -184,7 +184,8 @@
 
 		// Add long nose if they have one
 		if (src.head_appearance_flags & HAS_LONG_NOSE)
-			src.head_image_nose = image(src.head_icon, 'snout', layer = MOB_GLASSES_LAYER)
+			src.head_image_nose = image(src.head_icon, "snout", layer = MOB_GLASSES_LAYER)
+			src.head_image_nose.color = src.skintone
 		else
 			src.head_image_nose = null
 
