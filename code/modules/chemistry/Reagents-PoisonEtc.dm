@@ -1161,13 +1161,13 @@ datum
 					if (12 to 22)
 						if(probmult(10))
 							M.emote(pick("cough", "choke", "gasp"))
-						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 10 * mult))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 15 * mult))
 
 					if (22 to INFINITY)
 						M.change_eye_blurry(5, 5)
 						if(probmult(15))
 							M.emote(pick("pale", "choke", "tremble", "gasp"))
-						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 20 * mult))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 30 * mult))
 						if(probmult(15) && !M.hasStatus("drowsy"))   //rolls a chance to make you drowsy
 							M.setStatus("drowsy", 15 SECONDS)
 							boutput(M, "<span class='alert'><b>You feel [pick("sick", "tired", "exhausted")].</b></span>")
