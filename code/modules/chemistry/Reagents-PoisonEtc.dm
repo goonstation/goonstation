@@ -1156,25 +1156,24 @@ datum
                                                                                         //the target goes up with time
 				switch(counter+= (1 * mult))
 					if (6 to 12)
-						if(probmult(6))
+						if(probmult(5))
 							M.emote(pick("cough", "gasp"))
 					if (12 to 22)
-						if(probmult(10))
+						if(probmult(8))
 							M.emote(pick("cough", "choke", "gasp"))
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 15 * mult))
-
 					if (22 to INFINITY)
 						M.change_eye_blurry(5, 5)
 						if(probmult(15))
 							M.emote(pick("pale", "choke", "tremble", "gasp"))
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 30 * mult))
 						if(probmult(15) && !M.hasStatus("drowsy"))   //rolls a chance to make you drowsy
-							M.setStatus("drowsy", 15 SECONDS)
-							boutput(M, "<span class='alert'><b>You feel [pick("sick", "tired", "exhausted")].</b></span>")
-						else if(probmult(15) && M.hasStatus("drowsy"))    //if you are already drowsy, rolls a chance to stun you for a small amount
+							M.setStatus("drowsy", 20 SECONDS)
+							boutput(M, "<span class='alert'>You feel [pick("sick", "tired", "exhausted")].</span>")
+						else if(probmult(20) && M.hasStatus("drowsy"))    //if you are already drowsy, rolls a chance to stun you for a small amount
 							M.setStatus("stunned", 3 SECONDS)
 							if(prob(30))
-								boutput(M, "<span class='alert'><b>You suddenly feel [pick("weak", "extremely weak", "very sick")]!</b></span>")
+								boutput(M, "<span class='alert'>You suddenly feel [pick("weak", "extremely weak", "very sick")]!</span>")
 				..()
 				return
 
