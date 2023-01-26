@@ -2144,15 +2144,29 @@ datum
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
-		cresol
-			name = "Cresol"
-			id = "cresol"
-			result = "cresol"
-			required_reagents = list("oil" = 1, "ether" = 1, "ethanol" = 1, "magnesium_chloride" = 1) // most common route to cresol production,
-			required_temperature = T0C + 180                                                          // oil being a stand in for benzene
-			result_amount = 3
-			mix_phrase = "The mixture gives off a strong scent of coal tar."
+		hydrogen_sulfide
+			name = "Hydrogen Sulfide"
+			id = "hydrogen_sulfide"
+			result = "hydrogen_sulfide"
+			required_reagents = list("iron" = 1, "sulfur" = 1, "hydrogen" = 1, "clacid" = 1) // based off ferrous sulfide treatment with hydrochloric acid
+			required_temperature = T0C + 380
+			result_amount = 2
+			mix_phrase = "The mixture gives off a strong scent of rotten eggs."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!issmokeimmune(C))
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("hydrogen_sulfide", (0.6 * created_volume) / length(mobs_affected))
+				return
 
 		sarin // oh god why am i adding this
 			name = "Sarin"

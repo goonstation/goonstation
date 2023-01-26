@@ -1135,19 +1135,18 @@ datum
 				..()
 				return
 
-		harmful/cresol
-			name = "cresol"
-			id = "cresol"
-			description = "An aromatic organic compound capable of severely irritating lungs and the respiratory system upon skin contact."
+		harmful/hydrogen_sulfide
+			name = "hydrogen sulfide"
+			id = "hydrogen_sulfide"
+			description = "A dangerous asphyxiant substance that inhibits celular respiration."
 			reagent_state = SOLID
-			fluid_r = 230
-			fluid_g = 180
-			fluid_b = 180
-			transparency = 130
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 0
 			depletion_rate = 0.2
 			penetrates_skin = 1
 			touch_modifier = 0.5 // a cut on skinpen, akin to radium
-			target_organs = list("left_lung", "right_lung")
 			var/counter = 1
 			var/oxy_damage_target = 0
 
@@ -1155,10 +1154,6 @@ datum
 				if (!M) M = holder.my_atom
 				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
                                                                                         //the target goes up with time
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M                                   //irritates your lungs quite severely
-					if (H.organHolder)
-						H.organHolder.damage_organs(0, 1.5*mult, 1.5*mult, target_organs, 50)
 				switch(counter+= (1 * mult))
 					if (6 to 12)
 						if(probmult(6))
@@ -1176,7 +1171,7 @@ datum
 						if(probmult(15) && !M.hasStatus("drowsy"))   //rolls a chance to make you drowsy
 							M.setStatus("drowsy", 15 SECONDS)
 							boutput(M, "<span class='alert'><b>You feel [pick("sick", "tired", "exhausted")].</b></span>")
-						else if(probmult(15))                //if you are already drowsy, rolls a chance to stun you for a small amount
+						else if(probmult(15) && M.hasStatus("drowsy"))    //if you are already drowsy, rolls a chance to stun you for a small amount
 							M.setStatus("stunned", 3 SECONDS)
 							if(prob(30))
 								boutput(M, "<span class='alert'><b>You suddenly feel [pick("weak", "extremely weak", "very sick")]!</b></span>")
