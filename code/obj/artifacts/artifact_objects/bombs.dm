@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
 				"silicon","gypsum","sodium_sulfate","diethylamine","pyrosium","thermite","fuel","acid","silicate","lube","cryostylane",
-				"ash","clacid","oil","acetone","ammonia")
+				"ash","barium_chloride","clacid","oil","acetone","ammonia")
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",

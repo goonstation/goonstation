@@ -41,6 +41,7 @@
 	"pacid",
 	"phlogiston",
 	"big_bang",
+	"barium_chloride",
 	"clacid",
 	"nitric_acid",
 	"firedust")

@@ -214,7 +214,7 @@
 			src.ArtifactStimulus("heat", 310 - (volume * 15))
 		if("voltagen","energydrink")
 			src.ArtifactStimulus("elec", volume * 50)
-		if("acid","acetic_acid")
+		if("acid","acetic_acid","barium_chloride")
 			src.ArtifactTakeDamage(volume * 2)
 		if("pacid","clacid","nitric_acid")
 			src.ArtifactTakeDamage(volume * 10)

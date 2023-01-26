@@ -257,6 +257,7 @@
 		// Interactions with circulator
 		if( !(src.circulator_flags & LEAKS_LUBE)							\
 			&& ( src.reagents.has_reagent("pacid", 10)					\
+			|| src.reagents.has_reagent("barium_chloride", 10)		\
 		    || src.reagents.has_reagent("clacid", 10)					\
 		    || src.reagents.has_reagent("nitric_acid", 10))		\
 		  && prob(10))
@@ -1371,7 +1372,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
-	desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	desc = "A large rectangular ae stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
 

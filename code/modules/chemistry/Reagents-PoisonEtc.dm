@@ -129,6 +129,15 @@ datum
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
+		harmful/acid/barium_chloride
+			name = "barium chloride"
+			id = "barium_chloride"
+			description = "A corrosive powder."
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			blob_damage = 1.1
+
 		harmful/acid/clacid
 			name = "hydrochloric acid"
 			id = "clacid"
