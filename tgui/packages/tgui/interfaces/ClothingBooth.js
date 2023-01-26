@@ -1,17 +1,12 @@
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { ClothingBoothData, CategoryItems } from './type';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
-import { capitalize } from '.././common/stringUtils';
 
-type boothItemProps = {
-  boothItem: CategoryItems;
-};
 
 export const ClothingBooth = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+  const { data } = useBackend(context);
   const categories = data.clothingBoothCategories;
 
   const [selectedCategory, selectCategory] = useLocalState(
@@ -46,6 +41,7 @@ export const ClothingBooth = (_, context) => {
               <Stack.Item grow={1}>
                 <Section fill scrollable>
                   {/* <ClothingBoothItem /> go here */}
+                  o ku
                 </Section>
               </Stack.Item>
             </Stack>
@@ -75,24 +71,27 @@ export const ClothingBooth = (_, context) => {
   );
 };
 
-const ClothingBoothItem = ({ boothItem }: boothItemProps, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+const ClothingBoothItem = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { category } = props;
+  const { cost, img, name, path } = category;
+
   return (
     <>
       <Stack
         align="center"
         className={classes([
           'clothingbooth__boothitem',
-          boothItem.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+          name === data.selectedItemName && 'clothingbooth__boothitem-selected',
         ])}
-        onClick={() => act('select', { path: boothItem.path })}>
+        onClick={() => act('select', { path: path })}>
         <Stack.Item>
-          <img src={`data:image/png;base64,${boothItem.img}`} />
+          <img src={`data:image/png;base64,${img}`} />
         </Stack.Item>
         <Stack.Item grow={1}>
-          <Box bold>{capitalize(boothItem.name)}</Box>
+          <Box bold>{name}</Box>
         </Stack.Item>
-        <Stack.Item bold>{`${boothItem.cost}⪽`}</Stack.Item>
+        <Stack.Item bold>{`${cost}⪽`}</Stack.Item>
       </Stack>
       <Divider />
     </>
@@ -100,7 +99,7 @@ const ClothingBoothItem = ({ boothItem }: boothItemProps, context) => {
 };
 
 const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+  const { act, data } = useBackend(context);
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
@@ -131,7 +130,7 @@ const CharacterPreview = (_, context) => {
 };
 
 const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+  const { act, data } = useBackend(context);
   return (
     <Stack bold vertical textAlign="center">
       {data.selectedItemName ? (
