@@ -1164,6 +1164,8 @@ datum
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 15 * mult))
 					if (22 to INFINITY)
 						M.change_eye_blurry(5, 5)
+						if(oxy_damage_target < 0)           //if something else suffocates you, it will make you suffocate faster
+							counter -= oxy_damage_target
 						if(probmult(15))
 							M.emote(pick("pale", "choke", "tremble", "gasp"))
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 30 * mult))
