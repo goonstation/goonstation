@@ -34331,6 +34331,13 @@
 /obj/stool/chair/blue{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
@@ -43837,20 +43844,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
-"tye" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 6
-	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
 "tyJ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/sci_alt{
@@ -101625,7 +101618,7 @@ qYB
 tam
 bjQ
 bjQ
-tye
+bjQ
 paY
 raq
 liD
