@@ -397,6 +397,7 @@
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
 			/obj/item/paper = 3,
+			/obj/critter/bat/hellbat = 5,
 			"corpse" = 5,
 			// yeah idk where I was going with "hell" either
 		),
