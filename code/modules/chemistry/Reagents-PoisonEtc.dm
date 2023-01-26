@@ -1147,13 +1147,18 @@ datum
 			depletion_rate = 0.2
 			penetrates_skin = 1
 			touch_modifier = 0.5 // a cut on skinpen, akin to radium
+			target_organs = list("left_lung", "right_lung")
 			var/counter = 1
 			var/oxy_damage_target = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
-                                                                                      //the target goes up with time
+                                                                                        //the target goes up with time
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M                                   //irritates your lungs quite severely
+					if (H.organHolder)
+						H.organHolder.damage_organs(0, 1.5*mult, 1.5*mult, target_organs, 50)
 				switch(counter+= (1 * mult))
 					if (6 to 12)
 						if(probmult(6))
@@ -1161,12 +1166,13 @@ datum
 					if (12 to 22)
 						if(probmult(10))
 							M.emote(pick("cough", "choke", "gasp"))
-						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 20 * mult))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 10 * mult))
+
 					if (22 to INFINITY)
 						M.change_eye_blurry(5, 5)
 						if(probmult(15))
 							M.emote(pick("pale", "choke", "tremble", "gasp"))
-						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 40 * mult))
+						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 20 * mult))
 						if(probmult(15) && !M.hasStatus("drowsy"))   //rolls a chance to make you drowsy
 							M.setStatus("drowsy", 15 SECONDS)
 							boutput(M, "<span class='alert'><b>You feel [pick("sick", "tired", "exhausted")].</b></span>")
