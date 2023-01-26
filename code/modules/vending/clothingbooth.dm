@@ -1,11 +1,10 @@
 /*Clothing Booth UI*/
 //list creation
-var/list/clothingbooth_categories = list()
-var/list/clothingbooth_items = list()
+var/list/clothingbooth_stock = list()
 var/list/clothingbooth_paths = list()
 
 /proc/clothingbooth_setup()
-	var/list/list/boothlist = list()
+	var/list/list/list/boothlist = list()
 	for(var/datum/clothingbooth_item/type as anything in concrete_typesof(/datum/clothingbooth_item))
 		var/datum/clothingbooth_item/I = new type
 		var/item_name = I.name
@@ -22,21 +21,32 @@ var/list/clothingbooth_paths = list()
 			for(var/i=1, i<=boothlist.len, i++)
 				if(boothlist[i]["category"] == category_name)
 					match_found = TRUE
+					boothlist[i]["items"] += list(
+						list(
+							"cost" = cost,
+							"img" = item_img,
+							"name" = item_name,
+							"path" = path_name
+						)
+					)
 					break
 		if(!match_found)
-			clothingbooth_categories += category_name
-
-		boothlist += list(
+			boothlist += list(
 			list(
 				"category" = category_name,
-				"cost" = cost,
-				"img" = item_img,
-				"name" = item_name,
-				"path" = path_name
+				"items" = list(
+					list(
+						"cost" = cost,
+						"img" = item_img,
+						"name" = item_name,
+						"path" = path_name
+						)
+					)
+				)
 			)
-		)
+
 		clothingbooth_paths[path_name] = I
-	clothingbooth_items = boothlist
+	clothingbooth_stock = boothlist
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
@@ -127,8 +137,7 @@ var/list/clothingbooth_paths = list()
 				src.money += dummycredits.amount
 				dummycredits.amount = 0
 				qdel(dummycredits)
-				src.ui_interact(usr)
-				return
+			src.ui_interact(usr)
 		..()
 
 	disposing()
@@ -160,10 +169,9 @@ var/list/clothingbooth_paths = list()
 
 	ui_static_data(mob/user)
 		. = list(
-			"clothingBoothList" = clothingbooth_items,
-			"categoryList" = clothingbooth_categories,
 			"name" = src.name
 		)
+		.["clothingBoothCategories"] = clothingbooth_stock
 
 	ui_data(mob/user)
 		. = list(

@@ -2,17 +2,22 @@ import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { ClothingBoothData, ClothingBoothListData } from './type';
+import { ClothingBoothData, CategoryItems } from './type';
 
 import { capitalize } from '.././common/stringUtils';
 
+type boothItemProps = {
+  boothItem: CategoryItems;
+};
+
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
+  const categories = data.clothingBoothCategories;
 
   const [selectedCategory, selectCategory] = useLocalState(
     context,
     'selectedCategory',
-    data.categoryList[0]
+    categories[0]
   );
 
   return (
@@ -27,8 +32,8 @@ export const ClothingBooth = (_, context) => {
                 <Stack.Item>
                   <Dropdown
                     className="clothingbooth__dropdown"
-                    options={data.categoryList}
-                    selected={selectedCategory}
+                    options={categories.map((category) => category.category)}
+                    selected={selectedCategory.category}
                     onSelected={(value) => selectCategory(value)}
                   />
                 </Stack.Item>
@@ -40,11 +45,7 @@ export const ClothingBooth = (_, context) => {
             <Stack fill vertical>
               <Stack.Item grow={1}>
                 <Section fill scrollable>
-                  {data.clothingBoothList
-                    .filter((boothItem) => boothItem.category === selectedCategory)
-                    .map((boothItem) => {
-                      return <ClothingBoothItem key={boothItem.name} boothItem={boothItem} />;
-                    })}
+                  {/* <ClothingBoothItem /> go here */}
                 </Section>
               </Stack.Item>
             </Stack>
@@ -72,10 +73,6 @@ export const ClothingBooth = (_, context) => {
       </Window.Content>
     </Window>
   );
-};
-
-type boothItemProps = {
-  boothItem: ClothingBoothListData;
 };
 
 const ClothingBoothItem = ({ boothItem }: boothItemProps, context) => {

@@ -1,6 +1,5 @@
 export interface ClothingBoothData {
-  categoryList: Array<string>;
-  clothingBoothList: ClothingBoothListData[];
+  clothingBoothCategories: ClothingBoothCategory[];
   money: number;
   name: string;
   preview: string;
@@ -8,8 +7,12 @@ export interface ClothingBoothData {
   selectedItemName: string;
 }
 
-export interface ClothingBoothListData {
+export interface ClothingBoothCategory {
   category: string;
+  items: CategoryItems[];
+}
+
+export interface CategoryItems {
   cost: number;
   img: string;
   name: string;
