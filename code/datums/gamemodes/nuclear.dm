@@ -221,7 +221,8 @@
 
 		if(synd_mind == leader_mind)
 			synd_mind.add_antagonist(ROLE_NUKEOP_COMMANDER)
-			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
+			var/mob/living/carbon/human/H = synd_mind.current
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
 		else
 			synd_mind.add_antagonist(ROLE_NUKEOP)
 
