@@ -299,7 +299,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
 		SPAWN(4 SECONDS)
 			// Is it busy?
-			if(target.answered || target.linked || !target.connected)
+			if(target.answered || target.linked || !target.connected || !src.answered)
 				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = FALSE
 				return
