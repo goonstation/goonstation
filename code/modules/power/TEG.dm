@@ -1372,7 +1372,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
-	desc = "A large rectangular ae stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
 
