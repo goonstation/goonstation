@@ -3,13 +3,12 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-import { Fragment } from 'inferno';
-
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend(context);
   const categories = data.clothingBoothCategories || [];
 
   const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
+  const { items } = selectedCategory;
 
   return (
     <Window title={data.name} width={300} height={500}>
@@ -37,7 +36,11 @@ export const ClothingBooth = (_, context) => {
           <Stack.Item grow={1}>
             <Stack fill vertical>
               <Stack.Item grow={1}>
-                <ItemHolder displayedCategory={selectedCategory} />
+                <Section fill scrollable>
+                  {items.map((item) => (
+                    <ClothingBoothItem key={item.name} item={item} />
+                  ))}
+                </Section>
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -66,36 +69,29 @@ export const ClothingBooth = (_, context) => {
   );
 };
 
-const ItemHolder = (props, context) => {
+const ClothingBoothItem = (props, context) => {
   const { act, data } = useBackend(context);
-  const { displayedCategory } = props;
-  const { items } = displayedCategory;
-
-  if (!items) return null;
+  const { item } = props;
 
   return (
-    <Section fill scrollable>
-      {items.map((item) => (
-        <Fragment key={item.name}>
-          <Stack
-            align="center"
-            className={classes([
-              'clothingbooth__boothitem',
-              item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
-            ])}
-            onClick={() => act('select', { path: item.path })}>
-            <Stack.Item>
-              <img src={`data:image/png;base64,${item.img}`} />
-            </Stack.Item>
-            <Stack.Item grow={1}>
-              <Box bold>{item.name}</Box>
-            </Stack.Item>
-            <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
-          </Stack>
-          <Divider />
-        </Fragment>
-      ))}
-    </Section>
+    <>
+      <Stack
+        align="center"
+        className={classes([
+          'clothingbooth__boothitem',
+          item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+        ])}
+        onClick={() => act('select', { path: item.path })}>
+        <Stack.Item>
+          <img src={`data:image/png;base64,${item.img}`} />
+        </Stack.Item>
+        <Stack.Item grow={1}>
+          <Box bold>{item.name}</Box>
+        </Stack.Item>
+        <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
+      </Stack>
+      <Divider />
+    </>
   );
 };
 
