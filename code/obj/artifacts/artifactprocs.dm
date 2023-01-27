@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable

@@ -134,8 +134,6 @@
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
-			src.mind.dnr = 0
-
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
 			ghost.icon_state = "drone-ghost"
@@ -1306,7 +1304,6 @@
 
 	G.job = "Ghostdrone"
 	theMind.assigned_role = "Ghostdrone"
-	theMind.dnr = 1
 
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")

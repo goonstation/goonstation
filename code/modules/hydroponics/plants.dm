@@ -65,6 +65,8 @@ ABSTRACT_TYPE(/datum/plant)
 		else
 			return "[src.name]-G[grow_level]"
 
+	proc/getIconOverlay(grow_level, datum/plantmutation/MUT)
+		return
 
 	proc/getBase64Img()
 		var/path = src.type

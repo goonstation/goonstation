@@ -389,6 +389,7 @@ var/global
 
 	// Zam note: this is horrible
 	forced_desussification = 0
+	forced_desussification_worse = 0
 
 	disable_next_click = 0
 
@@ -432,6 +433,7 @@ var/global
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
 	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
@@ -499,14 +501,7 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","extended",
-		"nuclear","blob","wizard","revolution", "revolution_extended","spy","gang","disaster",
-		"changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
-#if defined(MAP_OVERRIDE_POD_WARS)
-		,"pod_wars"
-#endif
-	)
+	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 
@@ -517,11 +512,14 @@ var/global
 	/// used when creating new z-levels
 	dont_init_space = FALSE
 
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	list/valid_icon_states = list()
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
 		I.render_target = key
-		I.appearance_flags = KEEP_APART
+		I.appearance_flags = KEEP_APART | PIXEL_SCALE
 		I.loc = renderSourceHolder
 		globalRenderSources[key] = I
 		return I

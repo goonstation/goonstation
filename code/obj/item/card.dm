@@ -425,10 +425,30 @@ TYPEINFO(/obj/item/card/emag)
 	desc = "The bearer of this license is allowed to kill any player they like, but only as long as it is in their inventory. Yes, even if you arent an antag. No, you dont need to ahelp this we already know if you have it. Get to it!"
 	icon_state="fingerprint1"
 	var/mob/owner = null
+	var/is_very_visible = 0
+	var/obj/maptext_junk/indicator = null
+
+	very_visible
+		is_very_visible = 1
 
 	New()
 		..()
 		processing_items.Add(src)
+		if (is_very_visible)
+			indicator = new(src)
+			indicator.maptext_x = -100
+			indicator.maptext_y = 38
+			indicator.maptext_width = 232
+			indicator.maptext_height = 64
+			var/col1 = "color: #fff; -dm-text-outline: 2px #000;"
+			var/col2 = "color: #f00; -dm-text-outline: 2px #000;"
+			var/blink1 = "<span class='c vb ps2p' style='[col1]'><span class='vga'>KILL</span>\n↓</span>"
+			var/blink2 = "<span class='c vb ps2p' style='[col2]'><span class='vga'>KILL</span>\n↓</span>"
+			indicator.maptext = blink1
+			animate(indicator, maptext = blink1, time = 3, loop = -1)
+			animate(maptext = blink2, time = 3, loop = -1)
+
+
 
 	process()
 		if(!owner) return
@@ -438,6 +458,8 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
 			owner.mind?.remove_antagonist(ROLE_LICENSED)
+			if (is_very_visible)
+				owner.vis_contents -= indicator
 			owner = null
 
 	pickup(mob/user as mob)
@@ -447,11 +469,16 @@ TYPEINFO(/obj/item/card/emag)
 			message_admins("[key_name(user)] picked up a license to kill")
 			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
 			user.mind?.add_antagonist(ROLE_LICENSED)
+			if (is_very_visible)
+				user.vis_contents += indicator
+
 			if(owner)
 				boutput(owner, "<h2>You have lost your license to kill!</h2>")
-				logTheThing(LOG_COMBAT, user, "dropped their license to kill")
-				logTheThing(LOG_ADMIN, user, "dropped their license to kill")
-				message_admins("[key_name(user)] dropped their license to kill")
+				logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
+				logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
+				message_admins("[key_name(owner)] dropped their license to kill")
 				owner.mind?.remove_antagonist(ROLE_LICENSED)
+				if (is_very_visible)
+					owner.vis_contents -= indicator
 			owner = user
 		..()

@@ -865,6 +865,14 @@
 					if (see_everything || see_traitors)
 						var/I = image(antag_traitor, loc = M.current)
 						can_see.Add(I)
+				if (ROLE_NUKEOP_COMMANDER)
+					if (see_everything || see_nukeops)
+						var/I = image(antag_syndicate_comm, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_NUKEOP)
+					if (see_everything || see_nukeops)
+						var/I = image(antag_syndicate, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_CHANGELING)
 					if (see_everything)
 						var/I = image(antag_changeling, loc = M.current)
@@ -955,16 +963,6 @@
 			for (var/datum/mind/M in heads)
 				if (M.current)
 					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
-					can_see.Add(I)
-
-	else if (istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		var/list/datum/mind/syndicates = N.syndicates
-		if (see_nukeops || see_everything)
-			for (var/datum/mind/M in syndicates)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_syndicate, loc = M.current)
 					can_see.Add(I)
 
 	else if (istype(ticker.mode, /datum/game_mode/spy))

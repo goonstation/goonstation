@@ -148,13 +148,12 @@
 	fullbright = 0
 	color = "#c96433"
 	stone_color = "#c96433"
-	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/mars
 
-	destroy_asteroid(var/dropOre=0)
+	destroy_asteroid(var/dropOre=1)
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 		..()
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/mars)
 		src.UpdateIcon()
 		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
 			A.UpdateIcon()

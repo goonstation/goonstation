@@ -1332,7 +1332,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 		charge = max_charge
 
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_delay, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay)
 		return
 
 
@@ -1347,7 +1347,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
 			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 6 //weight this too
 
-			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_delay, recharge_rate)
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate, recharge_delay)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"

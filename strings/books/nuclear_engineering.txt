@@ -16,7 +16,7 @@
 <p>There are four main reactor components which may be inserted into the reactor grid.</p>
 <p>The most imporant of these is the fuel rods, which when made of a radioactive material produce heat and high energy neutrons by a fission process. When struck by a low energy neutron, additional heat will be generated.</p>
 <p>In order to control the rate of reaction, control rods are also available. These allow a material to inserted into the reactor at a configurable amount, and will absorb neutrons preventing them from reacting with fuel further.</p>
-<p>In order to utilise the heat of the reactor, gas cooling channels are provided which exchange 100 cubic meters of gas per second over internal heatsinks. When made of thermally conductive materials, these heat the gas flowing through the reactor for the generation of power, while cooling themselves in the process.</p>
+<p>In order to utilise the heat of the reactor, gas cooling channels are provided which exchange 100 litres of gas per second over internal heatsinks. When made of thermally conductive materials, these heat the gas flowing through the reactor for the generation of power, while cooling themselves in the process.</p>
 <p>And finally, heat exchange components balance heat between adjacent components, allowing rapid heat transfer from fuel rods to gas channels, and preventing "hot spots" in the reactor grid.</p>
 
 <h2>A Note on Material Properties</h2>

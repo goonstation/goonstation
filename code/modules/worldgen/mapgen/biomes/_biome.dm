@@ -23,7 +23,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 			new fauna(gen_turf)
 
 	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
-	if(gen_turf.z == Z_LEVEL_STATION && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
+	if((gen_turf.z == Z_LEVEL_STATION || isgenplanet(gen_turf)) && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
 		gen_turf.AddComponent(/datum/component/buildable_turf)
 
 		for(var/bad_area in blacklist_flora_gen)

@@ -107,9 +107,7 @@ TYPEINFO(/obj/machinery/light_switch)
 
 /obj/machinery/light_switch/proc/toggle(mob/user=null)
 	on = !on
-
 	area.lightswitch = on
-
 	area.power_change()
 
 	if(user)

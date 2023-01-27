@@ -638,7 +638,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 					logTheThing(LOG_COMBAT, user, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user.a_intent)
 						if("harm")
-							src.electrocute(victim, 100, netnum)
+							src.electrocute(victim, 100, netnum, ignore_range = TRUE)
 							if(uses)
 								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--

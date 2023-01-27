@@ -12,6 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
+#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -286,9 +287,9 @@
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	density = 1
 	anchored= 1
 	level=1
@@ -497,8 +498,17 @@
 
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
+		var/maptext = null
+		var/mob/user = usr
+		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
+			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
+		else
+			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
 		for(var/mob/O in all_hearers(7, src.loc))
-			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
+			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+			O.show_message(assoc_maptext = maptext)
+		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -2613,9 +2623,9 @@
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
 
@@ -2642,11 +2652,11 @@
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
-					icon_up = "comp_switch"
-					icon_down = "comp_switch2"
+					icon_up = "button_comp_switch_unpressed"
+					icon_down = "button_comp_switch_pressed"
 				else
-					icon_up = "comp_button"
-					icon_down = "comp_button2"
+					icon_up = "button_comp_button_unpressed"
+					icon_down = "button_comp_button_pressed"
 				icon_state = icon_up
 				src.set_loc(target)
 		return
@@ -2824,6 +2834,7 @@
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
 			if(Gun.canshoot(null))
@@ -3428,3 +3439,4 @@
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
+#undef src_exists_inside_user_or_user_storage
