@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/rafflesia
 	name = "Rafflesia"
 	seedcolor = "#A4000F"
-	crop = /obj/item/clothing/head/rafflesia
+	crop = /obj/item/clothing/head/headband/plant/rafflesia
 	growthmode = "weed"
 	starthealth = 40
 	growtime = 50
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/gardenia
 	name = "Gardenia"
 	seedcolor = "#d5b984"
-	crop = /obj/item/clothing/head/flower/gardenia
+	crop = /obj/item/clothing/head/headband/plant/gardenia
 	cropsize = 3
 	commuts = list(/datum/plant_gene_strain/metabolism_fast, /datum/plant_gene_strain/splicing/disabled)
 
@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	name = "Bird of Paradise"
 	sprite = "BirdofParadise"
 	seedcolor = "#ffb426"
-	crop = /obj/item/clothing/head/flower/bird_of_paradise
+	crop = /obj/item/clothing/head/headband/plant/bird_of_paradise
 	growtime = 300
 	harvtime = 400
 	cropsize = 1
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/hydrangea
 	name = "Hydrangea"
 	seedcolor = "#875dbc"
-	crop = /obj/item/clothing/head/flower/hydrangea
+	crop = /obj/item/clothing/head/headband/plant/hydrangea
 	growtime = 70
 	harvtime = 120
 	harvests = 3

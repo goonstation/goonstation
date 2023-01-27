@@ -802,7 +802,7 @@
 	name = "Pink Hydrangea"
 	name_prefix = "Pink "
 	flower_color = "pink"
-	crop = /obj/item/clothing/head/flower/hydrangea/pink
+	crop = /obj/item/clothing/head/headband/plant/hydrangea/pink
 	PTrange = list(10,30)
 	chance = 25
 
@@ -810,7 +810,7 @@
 	name = "Blue Hydrangea"
 	name_prefix = "Blue "
 	flower_color = "blue"
-	crop = /obj/item/clothing/head/flower/hydrangea/blue
+	crop = /obj/item/clothing/head/headband/plant/hydrangea/blue
 	PTrange = list(30,50)
 	chance = 25
 
@@ -818,6 +818,6 @@
 	name = "Purple Hydrangea"
 	name_prefix = "Purple "
 	flower_color = "purple"
-	crop = /obj/item/clothing/head/flower/hydrangea/purple
+	crop = /obj/item/clothing/head/headband/plant/hydrangea/purple
 	PTrange = list(50,null)
 	chance = 25

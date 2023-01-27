@@ -1415,7 +1415,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
 			H.wear_image = src.wear_image
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+			H.desc = "[src.desc] Someone has taped a radio headset onto the [src.name]." //no more overriding text!
 			qdel(src)
 
 ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)

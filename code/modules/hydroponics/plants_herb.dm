@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 /datum/plant/herb/lavender
 	name = "Lavender"
 	seedcolor = "#be9ffe"
-	crop = /obj/item/clothing/head/flower/lavender
+	crop = /obj/item/clothing/head/headband/plant/lavender
 	starthealth = 20
 	growtime = 80
 	harvtime = 120

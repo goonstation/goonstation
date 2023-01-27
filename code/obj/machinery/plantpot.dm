@@ -1214,7 +1214,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
 
-				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/flower/))
+				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/headband/plant/))
 					// If we've got a herb or some other thing like wheat or shit like that.
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
