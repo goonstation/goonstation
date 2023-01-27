@@ -20145,7 +20145,25 @@
 	},
 /area/station/medical/medbay/cloner)
 "bnz" = (
-)
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	doordir = "left";
+	icon_state = "bdoorleft0";
+	id = "eva_shield";
+	layer = 4;
+	name = "E.V.A. Security Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
 "bnA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29044,8 +29062,18 @@
 	name = "Crew Quarters P02"
 	})
 "eOh" = (
-/turf/simulated/floor/grass/random,
-/area/space)
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/space,
+/area/listeningpost/solars)
 "eOj" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -32452,17 +32480,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "imY" = (
-/obj/grille/catwalk{
-	dir = 4
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
 	},
-/obj/cable/yellow{
-	icon_state = "4-8"
+/obj/cable{
+	icon_state = "0-4"
 	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	doordir = "right";
+	icon_state = "bdoorright0";
+	id = "eva_shield";
+	layer = 4;
+	name = "E.V.A. Security Shield";
+	opacity = 0
 	},
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
 "ino" = (
 /obj/submachine/ice_cream_dispenser,
 /obj/machinery/status_display{
@@ -34596,15 +34632,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "kut" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/greenwhite{
-	dir = 4
+/obj/cable{
+	icon_state = "0-8"
 	},
-/area/space)
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/science/lobby)
 "kuw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34742,8 +34779,8 @@
 	},
 /area/station/crewquarters/cryotron)
 "kAy" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -42585,11 +42622,6 @@
 	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/security/main)
-"svO" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/space,
-/turf/simulated/floor/plating,
-/area/space)
 "swJ" = (
 /obj/decoration/decorativeplant/plant2,
 /turf/simulated/floor/black/side,
@@ -70337,7 +70369,7 @@ bzH
 bAQ
 lhu
 cSA
-imY
+gah
 eUx
 eva
 aaa
@@ -70594,7 +70626,7 @@ byG
 bAR
 lBj
 cSA
-imY
+gah
 eUx
 eva
 aaa
@@ -70851,7 +70883,7 @@ yeG
 hhd
 bCe
 cSA
-bnz
+gah
 eUx
 eva
 aaa
@@ -71108,7 +71140,7 @@ pLp
 wlE
 xnG
 oZJ
-imY
+gah
 eUx
 eva
 aaa
@@ -71365,7 +71397,7 @@ bgt
 rsw
 lHE
 bDn
-imY
+gah
 eUx
 eva
 aaa
@@ -71622,7 +71654,7 @@ bMv
 bAU
 lHE
 kSp
-imY
+gah
 eUx
 eva
 aaa
@@ -71879,7 +71911,7 @@ vjn
 bAT
 fNo
 kSp
-imY
+gah
 eUx
 eva
 aaa
@@ -72136,7 +72168,7 @@ jZo
 bAV
 hOu
 kSp
-imY
+gah
 eUx
 eva
 aaa
@@ -72650,7 +72682,7 @@ nOt
 bAT
 bAT
 kSp
-bnz
+gah
 eUx
 eva
 aaa
@@ -74365,7 +74397,7 @@ abH
 wPX
 aee
 aeL
-svO
+qPU
 qPU
 agK
 aee
@@ -83925,7 +83957,7 @@ aMt
 lKx
 aOE
 aPQ
-bnz
+imY
 ttk
 orX
 aVI
@@ -88070,7 +88102,7 @@ bAC
 lqm
 bBW
 gxZ
-bnz
+kXw
 iZn
 laq
 aaa
@@ -88327,7 +88359,7 @@ uOc
 kdx
 iCy
 gxZ
-bnz
+kXw
 iZn
 laq
 aaa
@@ -88584,7 +88616,7 @@ mbM
 bBV
 eBt
 bZs
-agl
+kXw
 iZn
 laq
 aaa
@@ -88841,7 +88873,7 @@ mJX
 bBW
 rvQ
 qum
-bnz
+kXw
 iZn
 laq
 aaa
@@ -89098,7 +89130,7 @@ wXU
 emY
 bDd
 bEi
-agl
+kXw
 iZn
 laq
 aaa
@@ -89320,7 +89352,7 @@ aKj
 kaQ
 lSW
 aNW
-bnz
+kut
 aQj
 nUd
 aTd
@@ -89355,7 +89387,7 @@ uCz
 bBY
 bDe
 qum
-bnz
+kXw
 iZn
 laq
 aaa
@@ -89612,7 +89644,7 @@ oBG
 bBW
 xMI
 qum
-agl
+kXw
 iZn
 laq
 aaa
@@ -89869,7 +89901,7 @@ qqQ
 bBW
 fGZ
 qum
-bnz
+kXw
 iZn
 laq
 aaa
@@ -90383,7 +90415,7 @@ jzn
 bzC
 bDi
 qum
-bnz
+kXw
 iZn
 laq
 aaa
@@ -108169,7 +108201,7 @@ aaa
 aaa
 aaa
 krK
-bnz
+eOh
 aaa
 aab
 aab
