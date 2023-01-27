@@ -25,6 +25,7 @@
 			var/reagents_present = length(T.required_reagents)
 			for(var/R as anything in T.required_reagents)
 				if(generator.circ1.reagents.get_reagent_amount(R) + generator.circ2.reagents.get_reagent_amount(R) >= T.required_reagents[R])
+					; // Do nothing
 				else
 					reagents_present = FALSE
 					break

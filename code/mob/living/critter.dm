@@ -1229,14 +1229,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
 		. = list()
-		for (var/mob/living/carbon/human/H in view(range, src))
+		for (var/mob/living/carbon/human/H in view(range, get_turf(src)))
 			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 				. += H
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, get_turf(src)))
 			. += S
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask

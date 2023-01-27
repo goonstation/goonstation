@@ -213,7 +213,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
-		if (ghost.mind.dnr)
+		if (ghost.mind.get_player()?.dnr)
 			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 
@@ -265,10 +265,9 @@ TYPEINFO(/obj/machinery/clonepod)
 			defects = new /datum/cloner_defect_holder
 
 		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
-		// TODO refactor to just do this in the clonepod proc (this one right here)
 		defects.apply_to_on_move(src.occupant)
 
-		if (!src.clonehack) // syndies get good clones
+		if (!src.clonehack && !src.perfect_clone) // syndies and pod wars people get good clones
 			/* Apply clone defects, number picked from a uniform distribution on
 			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
 			 * (Clone generation is the number of times a person has been cloned)

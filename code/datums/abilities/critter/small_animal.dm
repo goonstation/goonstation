@@ -204,7 +204,7 @@
 
 	scorpion_sting
 		icon_state = "scorpion_sting"
-		cooldown = 20 SECONDS
+		cooldown = 10 SECONDS
 		venom1 = "neurotoxin"
 		amt1 = 15
 		venom2 = "toxin"
@@ -213,7 +213,7 @@
 /datum/targetable/critter/pincer_grab
 	name = "Grab"
 	desc = "Grab a mob with your pincers, imobilizing them for a bit"
-	cooldown = 200
+	cooldown = 10 SECONDS
 	targeted = 1
 	icon_state = "pincer_grab"
 	target_anything = 1

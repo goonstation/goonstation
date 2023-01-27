@@ -422,7 +422,7 @@
 
 				sleep(bulb_complete)
 
-				if(!isalive(M) && M.ghost?.mind?.dnr)
+				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
 					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
 					M.gib()
 					flick("bulb-open-animation", src)
@@ -436,7 +436,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 
 					H.full_heal()
-					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
+					if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
 						if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
 					if (istype(H.abilityHolder, /datum/abilityHolder/composite))

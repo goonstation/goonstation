@@ -8195,7 +8195,7 @@
 "pU" = (
 /obj/storage/secure/closet/personal,
 /obj/item/storage/box/clothing/hop,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/darkblue,
 /area/adventure/urs_dungeon)
 "pV" = (
