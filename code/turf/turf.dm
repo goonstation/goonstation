@@ -327,7 +327,7 @@ proc/generate_space_color()
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
-			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
@@ -523,12 +523,12 @@ proc/generate_space_color()
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
+/turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
+/turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
@@ -972,6 +972,7 @@ proc/generate_space_color()
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
 #else

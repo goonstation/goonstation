@@ -662,29 +662,13 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_unblocked_turfs(/area/station)
-	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/jucer_trader)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/shield_zone)
-	possible_areas -= /area/sim/test_area
-
-	for (var/area/A in possible_areas)
+	for (var/area/A in (get_areas_with_unblocked_turfs(/area/station) + get_areas_with_unblocked_turfs(/area/diner)))
 		LAGCHECK(LAG_LOW)
 		if (A.virtual)
-			possible_areas -= A
-			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
-			possible_areas -= A
-			break
+			continue
+		var/typeinfo/area/typeinfo = A.get_typeinfo()
+		if (typeinfo.valid_bounty_area)
+			possible_areas += A
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)

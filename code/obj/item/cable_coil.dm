@@ -102,7 +102,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			UpdateIcon()
 			return 1
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		update_icon()
 
 	update_icon()

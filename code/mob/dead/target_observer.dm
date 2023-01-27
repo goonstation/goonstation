@@ -4,6 +4,7 @@
 	icon = null
 	event_handler_flags = 0
 	var/atom/target
+	var/is_respawnable = TRUE
 
 	New()
 		..()
@@ -133,6 +134,7 @@
 
 /mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
+	is_respawnable = FALSE
 	var/start_time
 
 	New()
