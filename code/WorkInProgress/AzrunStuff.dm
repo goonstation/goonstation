@@ -289,6 +289,10 @@
 	var/active_stage
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 
+	New()
+		..()
+		gimmick_events = list()
+
 	get_desc()
 		var/datum/gimmick_event/AE = get_active_event()
 		if(!AE)
@@ -357,7 +361,6 @@
 
 		New()
 			..()
-			gimmick_events = list()
 			gimmick_events += new /datum/gimmick_event/test1
 			gimmick_events += new /datum/gimmick_event/test2
 			active_stage = 1
@@ -377,7 +380,6 @@
 
 /obj/gimmick_obj/ui_data()
 	. = list()
-
 
 	.["activeStage"] = active_stage
 	.["eventList"] = list()
@@ -441,6 +443,8 @@
 		if("active_step")
 			active_stage = id
 			. = TRUE
+
+	active_stage = clamp(active_stage, 1, length(gimmick_events))
 
 /obj/item/aiModule/ability_expansion/taser
 	name = "CLF:Taser Expansion Module"
