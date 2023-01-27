@@ -206,6 +206,7 @@
 			"size" = window_size,
 			"fancy" = user.client.preferences.tgui_fancy,
 			"locked" = user.client.preferences.tgui_lock,
+			"mode" = user.client.darkmode ? "dark" : "light", // |GOONSTATION-ADD|
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,

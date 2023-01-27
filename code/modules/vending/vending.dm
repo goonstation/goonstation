@@ -2041,29 +2041,39 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 
-	proc/addProduct(obj/item/target, mob/user)
+	proc/addProduct(obj/item/target, mob/user, quiet = FALSE)
 		if (target.cant_drop)
-			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			if(!quiet)
+				boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
 			return
-		var/obj/item/storage/targetContainer = target
-		if (!istype(targetContainer))
+		var/obj/item/targetContainer = target
+		if (!istype(targetContainer, /obj/item/storage) && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
-			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			if(!quiet)
+				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
-		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
+		var/action = quiet ? "Empty it into the vending machine" : \
+			input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
 		var/cantuse
 		if (action)
 			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
 		if (action == "Place it in the vending machine" && !cantuse)
 			productListUpdater(target, user)
-			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			if(!quiet)
+				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		else if (cantuse || !action)
 			return
-		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
+		if(!quiet)
+			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
+
+		var/obj/item/storage/targetStorage = null
+		if(istype(targetContainer, /obj/item/storage))
+			targetStorage = targetContainer
 		for (var/obj/item/R in targetContainer)
-			targetContainer.hud.remove_object(R)
+			targetStorage?.hud.remove_object(R)
 			productListUpdater(R, user)
+
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -2108,6 +2118,34 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()
+
+	MouseDrop_T(atom/movable/dropped, mob/user)
+		..()
+		if (!dropped || !user || !isliving(user) || isintangible(user) || BOUNDS_DIST(dropped, user) > 0 || !in_interact_range(src, user) || !can_act(user))
+			return
+
+		if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart))
+			if(!loading || !panel_open)
+				boutput(user, "<span class='alert'>\The [src]'s chute is not open to load stuff in!</span>")
+				return
+
+			var/obj/storage/store = dropped
+			if(istype(store) && (store.welded || store.locked))
+				boutput(user, "<span class='alert'>You cannot load from a [store] that cannot open!</span>")
+				return
+
+			var/num_loaded = 0
+			for (var/obj/item/I in dropped.contents)
+				addProduct(I, user, quiet=TRUE)
+				if(I.loc == src)
+					num_loaded++
+			if(num_loaded)
+				boutput(user, "<span class='notice'>You load [num_loaded] item\s from \the [dropped] into \the [src].</span>")
+				update_static_data(user)
+			else if(length(dropped.contents))
+				boutput(user, "<span class='alert'>\The [dropped] is empty!</span>")
+			else
+				boutput(user, "<span class='alert'>No items were loaded from \the [dropped] into \the [src]!</span>")
 
 	attackby(obj/item/target, mob/user)
 		if (loading && panel_open)

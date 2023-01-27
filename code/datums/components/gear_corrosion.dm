@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 	initialization_args = list()
 
 /datum/component/gear_corrosion/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/show_pip)

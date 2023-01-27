@@ -1329,9 +1329,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
@@ -1427,9 +1425,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 

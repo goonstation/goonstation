@@ -259,43 +259,6 @@
 	else
 		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
 
-
-/proc/equip_syndicate(mob/living/carbon/human/synd_mob, var/leader = 0)
-	if (!ishuman(synd_mob))
-		return
-
-	if(leader == 1)
-		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
-		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
-		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/swords_sheaths/nukeop(synd_mob), synd_mob.slot_r_hand)
-		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
-	else
-		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)
-
-	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
-	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(synd_mob), synd_mob.slot_shoes)
-	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
-	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(synd_mob), synd_mob.slot_wear_mask)
-	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
-	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
-	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(synd_mob), synd_mob.slot_l_store)
-
-	synd_mob.equip_sensory_items()
-
-	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
-	if(leader)
-		I = new /obj/item/card/id/syndicate/commander(synd_mob)
-	I.icon_state = "id"
-	I.icon = 'icons/obj/items/card.dmi'
-	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
-
-	var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(synd_mob)
-	M.implanted = 1
-	synd_mob.implant.Add(M)
-	M.implanted(synd_mob)
-
 /proc/alive_player_count()
 	. = 0
 	for(var/client/C)
@@ -393,7 +356,7 @@ var/list/roles_to_prefs = list(
 			added_text = "spy"
 		if(ROLE_HEAD_REV)
 			added_text = "rev"
-		if(ROLE_NUKEOP)
+		if(ROLE_NUKEOP, ROLE_NUKEOP_COMMANDER)
 			added_text = "nukeop"
 		if(ROLE_OMNITRAITOR)
 			added_text = "omni"

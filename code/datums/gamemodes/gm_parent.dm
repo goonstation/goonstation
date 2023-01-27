@@ -110,29 +110,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
-					var/dna_absorbed = 0
-					var/absorbed_identities = null
-					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
-					if (C && istype(C))
-						absorbed_identities = list()
-						dna_absorbed = max(0, C.absorbtions)
-						for (var/DNA in C.absorbed_dna)
-							absorbed_identities += DNA
-					else
-						dna_absorbed = "N/A (body destroyed)"
-
-					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
-					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
-
-				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
-					var/blood_acquired = 0
-					if (isvampire(traitor.current))
-						blood_acquired = traitor.current.get_vampire_blood(1)
-					else
-						blood_acquired = "N/A (body destroyed)"
-					stuff_to_output += "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]"
-
 				if (traitor.special_role == ROLE_WEREWOLF)
 					// Werewolves may not have the feed objective, so we don't want to make this output universal.
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
@@ -149,13 +126,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 							break
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
-
-				if (traitor.special_role == ROLE_HUNTER)
-					// Same reasoning here, really.
-					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
-						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-							var/S = traitor.current.get_skull_value()
-							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
@@ -347,8 +317,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
-			objective_set_path = /datum/objective_set/changeling
-			antag.current.make_changeling()
+			antag.add_antagonist(ROLE_CHANGELING)
+			do_objectives = FALSE
 
 		if (ROLE_WIZARD)
 			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
@@ -384,8 +354,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			generate_wraith_objectives(antag)
 
 		if (ROLE_VAMPIRE)
-			objective_set_path = /datum/objective_set/vampire
-			antag.current.make_vampire()
+			antag.add_antagonist(ROLE_VAMPIRE)
+			do_objectives = FALSE
 
 		if (ROLE_HUNTER)
 			antag.add_antagonist(ROLE_HUNTER)

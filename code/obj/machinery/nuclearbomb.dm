@@ -55,6 +55,7 @@
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if(gamemode.the_bomb == src)
 				gamemode.the_bomb = null
+				STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		qdel(wirepanel)
 		..()
 

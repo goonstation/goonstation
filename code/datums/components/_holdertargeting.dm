@@ -10,6 +10,7 @@ TYPEINFO(/datum/component/holdertargeting)
 	initialization_args = list()
 
 /datum/component/holdertargeting/Initialize()
+	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)

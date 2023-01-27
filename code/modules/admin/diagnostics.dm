@@ -1227,6 +1227,38 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.color = "#aa5555"
 
+	perlin_noise_visualizer
+		name = "perlin noise visualizer"
+		help = "Visualize a given perlin noise seed and zoom"
+		var/seed = 42069
+		var/perlin_zoom = 65
+		var/square_drift = 2
+		var/drift_x
+		var/drift_y
+		var/list/noise_cache
+		OnEnabled(client/C)
+			. = ..()
+			var/turf/user_turf = get_turf(C.mob)
+			seed = tgui_input_number(C.mob, "Enter a seed value", "Seed Selection", seed, 50000,0)
+			if (isnull(seed)) seed = initial(seed)
+			perlin_zoom = tgui_input_number(C.mob, "Enter a zoom value, higher numbers mean slower transitions", "Zoom Selection", perlin_zoom, 500, 2)
+			if (isnull(perlin_zoom)) perlin_zoom = initial(perlin_zoom)
+			square_drift = tgui_input_number(C.mob, "Enter a drift value, controls intensity of randomized intermingling of biomes", "Drift Selection", square_drift, 10, 0)
+			if (isnull(square_drift)) square_drift = initial(square_drift)
+			noise_cache = new/list(world.maxx, world.maxy)
+			for (var/turf/T as anything in block(locate(1, 1, user_turf.z), locate(world.maxx, world.maxy, user_turf.z)))
+				drift_x = (T.x + rand(-square_drift, square_drift)) / perlin_zoom
+				drift_y = (T.y + rand(-square_drift, square_drift)) / perlin_zoom
+				noise_cache[T.x][T.y] = text2num(rustg_noise_get_at_coordinates("[seed]", "[drift_x]", "[drift_y]"))
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(noise_cache)) return
+			var/val = noise_cache[theTurf.x][theTurf.y]
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
