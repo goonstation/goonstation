@@ -258,7 +258,7 @@ datum
 				. = ..()
 				if(method == TOUCH)
 					M.take_eye_damage(rand(1,6))
-					M.losebreath += 1 * mult
+					M.losebreath += 1
 				if(method == INGEST)
 					if (ishuman(M) || ismonkey(M))
 						var/mob/living/carbon/C = M
