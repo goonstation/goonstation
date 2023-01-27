@@ -258,6 +258,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 16
 		prefabSizeY = 16
 
+	pathology // Bonus content to the sunken ship, a derelict solo pathology site that discovered something it shouldn't have, and defected to the syndies
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/prefab_pathology.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 20
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -536,6 +543,39 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_martian_glomp.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
+
+	// The sunken ship of a small crew, torn into four remaining parts.
+	sunken_ship_bridge // The bridge and AI core
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_sunkenship_bridge.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 10
+
+	sunken_ship_security // The security department
+		underwater = 1
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_water_sunkenship_sec.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 13
+
+	sunken_ship_medbay // The medbay, morgue, and laundry room
+		underwater = 1
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_water_sunkenship_medbay.dmm"
+		prefabSizeX = 12
+		prefabSizeY = 14
+
+	sunken_ship_engineering // The engine, mechlab, and cargo bay
+		underwater = 1
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_water_sunkenship_engi.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 18
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

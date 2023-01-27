@@ -502,3 +502,110 @@ TYPEINFO(/obj/item/device/audio_log)
 								"gruff male voice",
 								"young male voice",
 								"gruff male voice")
+
+// sunken ship interrogations
+/obj/item/device/audio_log/sunkenohshit
+	desc = "Looks like it's gone to hell and back. How is it still functioning?!"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newLarge"
+	continuous = 0
+	audiolog_messages = list(
+		"Investigation Aleph onboard the Lazlo 5th. Interrogation 1.",
+		"Sophie Faisal is, uhm... wait. Hold on.",
+		"What?",
+		"Do you hear that outside? I gotta check that.",
+		"*mechanical hiss*",
+		"HELP ME! OH GOD! HELP!",
+		"*moaning*",
+		"OH MY GOD, WHAT THE FUCK IS THAT?",
+		"Oh. Oh no.",
+		"*bang, bang*",
+		"pain... go sleep...",
+		"*zap!*",
+		"*whack! whack! whack!*",
+		"It's dead. I think it's dead? What the hell?",
+		"I'm not feeling good either. I think it's bitten me while I was sleeping.",
+		"Keep me in the brig.",
+		"I better move this corpse somewhere. Confiscated items is best fit for now.",
+		"*mechanical hiss*",
+		"*muffled speech*",
+		"Well, shit...",
+		"*muffled screaming*",
+		"Shit. Shit!",
+		"My chest, oh, fuck... I wasn't ready for this incident. But now...",
+		"*bang, bang, bang*",
+		"I am! Get me out of here!!",
+		"Trent! Treeeent!!",
+		"*mechanical hiss*",
+		"*moaning*",
+		"You! I'll show you the cure!",
+		"MY SAW!",
+		"*loud sawing, kicking, and clawing noises*",
+		"Error. Recording head stuck."
+	)
+	audiolog_speakers = list(
+		"Gerardo Fulton",
+		"Gerardo Fulton",
+		"Sophie Faisal",
+		"Gerardo Fulton",
+		"\improper security airlock",
+		"Kevin Smith",
+		"Sophie Faisal",
+		"zombie",
+		"Gerardo Fulton",
+		"\improper revolver",
+		"zombie",
+		"\improper stun baton",
+		"\improper stun baton",
+		"Gerardo Fulton",
+		"Kevin Smith",
+		"Kevin Smith",
+		"Gerardo Fulton",
+		"\improper security airlock",
+		"people",
+		"Sophie Faisal",
+		"people",
+		"Sophie Faisal",
+		"Sophie Faisal",
+		"\improper security airlock",
+		"Sophie Faisal",
+		"Sophie Faisal",
+		"\improper security airlock",
+		"zombie",
+		"Sophie Faisal",
+		"Sophie Faisal",
+		"people",
+		"System"
+	)
+
+/obj/item/audio_tape/sunkeninvestigation
+	desc = "Are those bite marks?"
+	messages = list(
+		"Investigation Aleph onboard the Lazlo 5th. Testimony 2.",
+		"Witness is Eric Sissel, engineer. Investigator is officer Gerardo Fulton. Begin.",
+		"Right, so you know I've been complaining about those noises in the maintenance tunnels.",
+		"Yes.",
+		"Good, then you'll be happy to know I've found some tangible evidence.",
+		"*clank*",
+		"Sloppy wiring, fire hazard, incredibly primitive. Found connected to one of the loose power terminals.",
+		"Whoever made this was definitely intending harm on a budget.",
+		"Second thing. This is a strange labcoat - we don't employ anyone with such thing as standard dress code on a ship this class.",
+		"Interesting... isn't that an old-issue Nanotrasen coat? They used to hire...",
+		"Yea, makes sense. I hope that clears up what's going on." ,
+		"Maybe I'll get decent sleep tonight.",
+		"Hah, hopefully. End testimony.")
+	speakers = list(
+		"Gerardo Fulton",
+		"Gerardo Fulton",
+		"Eric Sissel",
+		"Gerardo Fulton",
+		"Eric Sissel",
+		"\improper clunky machine",
+		"Eric Sissel",
+		"Eric Sissel",
+		"Eric Sissel",
+		"Gerardo Fulton",
+		"Eric Sissel",
+		"Eric Sissel",
+		"Gerardo Fulton"
+	)

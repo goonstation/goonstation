@@ -1,0 +1,545 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/structure/woodwall,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"aU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"cs" = (
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"cv" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"do" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"du" = (
+/obj/stool/chair/couch/green{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"eU" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"fm" = (
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/vending/snack,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+"lt" = (
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"lF" = (
+/obj/grille/steel/broken,
+/obj/decal/cleanable/rust/jen,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+"lG" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "bustedmantapc";
+	dir = 8;
+	density = 1;
+	anchored = 1;
+	name = "broken console";
+	desc = "It's busted!"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"lJ" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/prefab/sunkenship/bridge)
+"lN" = (
+/obj/decoration/clock{
+	pixel_y = 8;
+	pixel_x = 29
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"md" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/plating/airless,
+/area/prefab/sunkenship/bridge)
+"mQ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/bridge)
+"nm" = (
+/obj/decal/cleanable/rust,
+/obj/machinery/vending/coffee,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"pJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/sunkenship/bridge)
+"qU" = (
+/obj/decal/fakeobjects/junction_box,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"rW" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"sk" = (
+/obj/decal/cleanable/rust,
+/obj/table/reinforced,
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"sD" = (
+/obj/storage/crate/bin/trash,
+/obj/item/paper/sunkenmanifest,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"sP" = (
+/obj/stool/chair/couch/green{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"tp" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/prefab/sunkenship/bridge)
+"tJ" = (
+/obj/machinery/door/airlock/gannets/command/alt,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"ub" = (
+/obj/table/reinforced,
+/obj/item/paper/sunkenbees,
+/obj/item/pen,
+/obj/item/stamp{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"uz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+"vu" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/bridge)
+"vB" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "bustedmantapc2";
+	density = 1;
+	anchored = 1;
+	desc = "It's busted!";
+	name = "broken console"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"wo" = (
+/obj/machinery/door/airlock/gannets/command/alt,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+"yT" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/bridge)
+"zd" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"zu" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "bustedmantapc";
+	dir = 1;
+	anchored = 1;
+	density = 1;
+	desc = "It's busted!";
+	name = "broken console"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"AZ" = (
+/obj/machinery/door/airlock/gannets/command,
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/prefab/sunkenship/bridge)
+"Bd" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "bustedmantapc2";
+	dir = 8;
+	density = 1;
+	anchored = 1;
+	desc = "It's busted!";
+	name = "broken console"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Cd" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"Cr" = (
+/obj/grille/steel,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+"Dg" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"DH" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Fj" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "gannets_machine30";
+	anchored = 1;
+	density = 1;
+	name = "power override cabinet";
+	desc = "Overrides power to other departments... if it worked, but it's not, so it's just a decorational prop."
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Ga" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Go" = (
+/obj/decal/stripe_caution,
+/obj/storage/cart,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Gz" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/darkblue,
+/area/prefab/sunkenship/bridge)
+"HC" = (
+/obj/decal/stripe_caution,
+/obj/decal/stripe_caution,
+/obj/storage/cart,
+/obj/item/crowbar,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Im" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Nn" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"NS" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Px" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "bustedmantapc2";
+	dir = 1;
+	name = "broken lever console";
+	desc = "The lever is locked to 'INITIATE'.";
+	density = 1;
+	anchored = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"PS" = (
+/obj/table/reinforced/auto,
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "clogged printer";
+	desc = "There's... odd black gunk inside this printer."
+	},
+/obj/item/paper/sunkenaimonologue,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Ql" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"UG" = (
+/turf/simulated/floor/plating/airless,
+/area/prefab/sunkenship/bridge)
+"Ve" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/prefab/sunkenship/bridge)
+"Vf" = (
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Vh" = (
+/obj/decal/fakeobjects/lawrack,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/prefab/sunkenship/bridge)
+"Wp" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/airless/circuit,
+/area/prefab/sunkenship/bridge)
+"Wy" = (
+/turf/variableTurf/clear,
+/area/allowGenerate/trench)
+"XH" = (
+/obj/decal/fakeobjects/lawrack{
+	icon = 'icons/mob/ai.dmi';
+	icon_state = "ai-crash";
+	name = "broken AI";
+	desc = "Looks like it's opened its last door."
+	},
+/obj/decal/stripe_caution,
+/obj/decal{
+	mouse_opacity = 0;
+	icon = 'icons/mob/ai.dmi';
+	icon_state = 'brute75';
+	layer = 40
+	},
+/obj/decal{
+	mouse_opacity = 0;
+	icon = 'icons/mob/ai.dmi';
+	icon_state = 'dwaine';
+	layer = 39
+	},
+/turf/simulated/floor/airless/blue,
+/area/prefab/sunkenship/bridge)
+"Yq" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6
+	},
+/area/prefab/sunkenship/bridge)
+"YI" = (
+/obj/grille/steel/broken,
+/obj/decal/cleanable/rust,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/bridge)
+
+(1,1,1) = {"
+Wy
+Ga
+Ga
+Wy
+Wy
+Wy
+Im
+Ga
+Wy
+Wy
+"}
+(2,1,1) = {"
+Im
+Ga
+lJ
+pJ
+pJ
+UG
+lJ
+Ga
+Wy
+Wy
+"}
+(3,1,1) = {"
+Im
+Ga
+mQ
+cv
+tp
+Nn
+UG
+Im
+Wy
+Wy
+"}
+(4,1,1) = {"
+Im
+Im
+lJ
+Ql
+XH
+aU
+mQ
+Ga
+Im
+Wy
+"}
+(5,1,1) = {"
+Wy
+Im
+mQ
+Wp
+Dg
+md
+mQ
+NS
+Ga
+Wy
+"}
+(6,1,1) = {"
+Wy
+Im
+vu
+pJ
+AZ
+pJ
+yT
+Im
+Ga
+Wy
+"}
+(7,1,1) = {"
+Im
+Im
+uz
+Vh
+DH
+Fj
+mQ
+Im
+Im
+Wy
+"}
+(8,1,1) = {"
+Ga
+uz
+Cr
+PS
+eU
+ar
+wo
+NS
+Im
+zd
+"}
+(9,1,1) = {"
+Ga
+Cr
+sk
+cs
+Vf
+fm
+mQ
+qU
+Im
+NS
+"}
+(10,1,1) = {"
+Ga
+Cr
+lG
+zu
+cs
+nm
+mQ
+NS
+NS
+Im
+"}
+(11,1,1) = {"
+Ga
+uz
+Px
+rW
+Cd
+do
+mQ
+NS
+Wy
+Wy
+"}
+(12,1,1) = {"
+Ga
+uz
+vB
+Bd
+cs
+du
+mQ
+Im
+Im
+Wy
+"}
+(13,1,1) = {"
+Ga
+YI
+ub
+Gz
+Vf
+sP
+mQ
+NS
+Im
+Im
+"}
+(14,1,1) = {"
+Ga
+uz
+uz
+Go
+Vf
+ar
+tJ
+lt
+Im
+Im
+"}
+(15,1,1) = {"
+Ga
+Im
+lF
+HC
+lN
+sD
+mQ
+Im
+Im
+Wy
+"}
+(16,1,1) = {"
+Wy
+Wy
+Ve
+pJ
+pJ
+pJ
+Yq
+Wy
+Wy
+Wy
+"}

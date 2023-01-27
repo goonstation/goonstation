@@ -1,0 +1,630 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"aV" = (
+/obj/cabinet/medical,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"ba" = (
+/obj/item/reagent_containers/glass/beaker/parasiticmedium,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cp" = (
+/obj/iv_stand,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"dk" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 9
+	},
+/area/prefab/sunkenship/medbay)
+"eU" = (
+/obj/table/round,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/syringe/formaldehyde,
+/obj/machinery/light/emergency,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"gw" = (
+/obj/storage/secure/closet/fridge/blood,
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"hs" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10
+	},
+/area/prefab/sunkenship/medbay)
+"hV" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 8;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/medbay)
+"ir" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"iH" = (
+/obj/storage/crate/bloody,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibtorso";
+	name = "meaty bit"
+	},
+/obj/item/spraybottle/cleaner,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"kR" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"lp" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body6";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/decal/cleanable/vomit{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"lr" = (
+/obj/storage/closet/wardrobe/mixed,
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"lN" = (
+/obj/item/storage/box/patchbox{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/rack,
+/obj/item/item_box/medical_patches/mini_silver_sulf{
+	pixel_x = -8;
+	pixel_y = -3;
+	layer = 3.01
+	},
+/obj/item/item_box/medical_patches/mini_styptic{
+	pixel_x = -1;
+	layer = 3.02
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"md" = (
+/turf/variableTurf/clear,
+/area/allowGenerate/trench)
+"mv" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"mQ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/medbay)
+"pJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/sunkenship/medbay)
+"rl" = (
+/obj/machinery/door/airlock/gannets/morgue,
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/obj/access_spawn/morgue,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"sW" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"tq" = (
+/obj/machinery/drainage,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"tr" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"tu" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = -24
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"uH" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/critter/zombie/scientist{
+	name = "Diseased Doctor"
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"uO" = (
+/obj/item/storage/wall/surgery{
+	pixel_y = 34
+	},
+/obj/rack,
+/obj/item/reagent_containers/hypospray{
+	pixel_y = 4;
+	pixel_x = -9
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -4
+	},
+/obj/item/storage/pill_bottle/antitox{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"vg" = (
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"vs" = (
+/obj/storage/crate/bin/trash,
+/obj/item/organ/heart{
+	desc = "Something's off with this heart. It feels alive, in a weird way.";
+	name = "heart...?"
+	},
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/obj/item/paper/sunkenmedbay,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"vu" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/medbay)
+"vU" = (
+/obj/machinery/vending/medical,
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"wo" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"wy" = (
+/obj/decal/cleanable/blood{
+	icon_state = "smear3"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"yf" = (
+/obj/stool/bed/moveable,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"yT" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/medbay)
+"zo" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"Cv" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/medbay)
+"CB" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "bloodhit4"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"FG" = (
+/obj/decal/cleanable/blood{
+	icon_state = "drip5d"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"FN" = (
+/obj/item/storage/wall/surgery{
+	pixel_y = 34
+	},
+/obj/table/round,
+/obj/item/paper/sunkenmorgue,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"Hj" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Ir" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/item/storage/box/body_bag,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"IQ" = (
+/obj/stool/bed/moveable,
+/obj/decal/cleanable/blood/drip/med,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"Jq" = (
+/obj/machinery/traymachine/locking/crematorium,
+/turf/simulated/floor/specialroom/freezer/white,
+/area/prefab/sunkenship/medbay)
+"JJ" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"LA" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/bot/medbot{
+	name = "Dr. Fredrickson";
+	desc = "A little medical robot. He looks somewhat lonely. There's a few dents on the casing, but otherwise he looks fine.";
+	treatment_fire = "menthol";
+	treatment_brute = "salicylic_acid";
+	skin = "brain2";
+	no_camera = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"MK" = (
+/obj/storage/crate,
+/obj/item/clothing/under/rank,
+/obj/item/clothing/under/rank/medical,
+/obj/item/clothing/under/rank/orangeoveralls/yellow,
+/obj/item/clothing/under/rank/mechanic,
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"OH" = (
+/obj/machinery/optable,
+/obj/fluid_spawner/polluted_filth/blood,
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/medbay)
+"OP" = (
+/obj/submachine/laundry_machine,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"Pv" = (
+/obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/public,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/prefab/sunkenship/medbay)
+"PD" = (
+/obj/machinery/manufacturer/uniform,
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"Rj" = (
+/obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/medical,
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/prefab/sunkenship/medbay)
+"RM" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"SC" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip2e"
+	},
+/obj/iv_stand,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"Tm" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"UV" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ve" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/prefab/sunkenship/medbay)
+"Vf" = (
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"Vl" = (
+/obj/item/storage/wall/clothingrack{
+	spawn_contents = list(/obj/item/clothing/under/rank/medical=1,/obj/item/clothing/under/rank/orangeoveralls/yellow=1,/obj/item/clothing/under/rank/mechanic=1,/obj/item/clothing/under/rank/security=2,/obj/item/clothing/under/rank/captain/fancy=1,/obj/item/clothing/under/rank)
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"WR" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gibmid1"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/medbay)
+"Xy" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -2
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"Yq" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6
+	},
+/area/prefab/sunkenship/medbay)
+"Ys" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"YT" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"Zl" = (
+/obj/machinery/door/airlock/gannets/glass/medical/alt,
+/obj/access_spawn/medical,
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+"ZR" = (
+/turf/simulated/floor/white,
+/area/prefab/sunkenship/medbay)
+
+(1,1,1) = {"
+md
+md
+md
+UV
+UV
+dk
+pJ
+pJ
+hs
+UV
+md
+md
+md
+md
+"}
+(2,1,1) = {"
+md
+md
+md
+UV
+dk
+Yq
+OP
+zo
+Ve
+hs
+md
+md
+md
+md
+"}
+(3,1,1) = {"
+UV
+dk
+pJ
+pJ
+yT
+Vl
+Vf
+wo
+Vf
+Pv
+Hj
+UV
+md
+md
+"}
+(4,1,1) = {"
+dk
+Yq
+tr
+tr
+mQ
+PD
+WR
+MK
+lr
+mQ
+UV
+JJ
+UV
+md
+"}
+(5,1,1) = {"
+mQ
+Ir
+mv
+uH
+vu
+pJ
+Rj
+pJ
+pJ
+hV
+pJ
+hs
+UV
+UV
+"}
+(6,1,1) = {"
+mQ
+FN
+lp
+wy
+rl
+FG
+vg
+Xy
+ir
+cp
+yf
+Cv
+UV
+UV
+"}
+(7,1,1) = {"
+mQ
+Jq
+sW
+eU
+mQ
+aV
+Tm
+LA
+YT
+cp
+IQ
+Cv
+UV
+md
+"}
+(8,1,1) = {"
+Ve
+pJ
+pJ
+pJ
+yT
+vU
+ak
+OH
+tq
+tu
+dk
+Yq
+UV
+md
+"}
+(9,1,1) = {"
+md
+md
+md
+ba
+mQ
+uO
+CB
+SC
+Ys
+ZR
+Zl
+Hj
+UV
+md
+"}
+(10,1,1) = {"
+md
+md
+md
+md
+mQ
+vs
+ZR
+RM
+ZR
+ZR
+Zl
+UV
+kR
+md
+"}
+(11,1,1) = {"
+md
+md
+md
+md
+Ve
+hs
+lN
+gw
+iH
+dk
+hV
+UV
+kR
+md
+"}
+(12,1,1) = {"
+md
+md
+md
+md
+md
+Ve
+pJ
+pJ
+pJ
+Yq
+md
+md
+md
+md
+"}

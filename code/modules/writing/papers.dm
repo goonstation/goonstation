@@ -1102,3 +1102,135 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	Congrats! Your mineral magnet is now assembled and ready for use!
 	"}
+
+// Sunken ship papers
+// Engineering
+/obj/item/paper/sunkenengine
+	name = "paper - Wha??"
+	info = {"
+	<span style="font-family:Gochi Hand">Bart, how the hell do you even use this? It looks like the amalgamation of four different engines from hell during the 1970s on the budget of a single Discount Dan's. -P</span><br>
+	<span style="font-family:Lobster Two">it works on a similar principle to the teg but with space magmic micro-explosions contained and utilized to spin a small turbine. the pipes are in the right measurement. it needs no maintenance. <u>just trust me on this, it'll work.</u></span>
+	"}
+
+/obj/item/paper/sunkenbees
+	name = "paper - to alan"
+	info = {"
+	<span style="font-family:Lobster Two">quintin isnt feeling so good today, so alan will have to fill in for him.<br>
+	i keep hearing weird things creak and hiss in maintenance and when i go to check, there's nothing<br>
+	all i've found are empty glasses. i checked the vents and there's just nothing. not even space rats<br>
+	maybe the noises are also getting to him. we both really need a hug.</span>
+	"}
+
+/obj/item/paper/sunkensymptoms
+	name = "hastily written note"
+	desc = "It has a bit of blood on it... ew."
+	info = {"
+	<span style="font-family:Short Stack">oh god I've been haven these chest pains for an hour now<br>
+	<s>Did i ovrework myszle,f?</s> Did i overwork myself? mj <s>handsar</s> hands are Shaking writing this down. ThE Doctor says it's seems to just be a red flu<br><br>
+	somethings wrong, my head hurts, nosebleeds i ned sleep. i'll alert te <s>cpattain</s> <s>ctapp</s> <s>captian</s> captain.<br>
+	takes a few hours off work, yea, thatll do me good</span>
+	"}
+// Bridge
+/obj/item/paper/sunkenmanifest
+	name = "paper - Crew Manifest"
+	info = {"
+	<h1>Crew Manifest</h1><br><ul>
+	<li style="color:gray"><b>Sysbell - AI (Mark I, NT-Asimov model)</b></li>
+	<li style="color:green"><b>Linda Korvalle - Captain</b></li>
+	<li style="color:red">Averill Bhavsar- Security Officer</li>
+	<li style="color:red">Gerardo Fulton - Security Officer</li>
+	<li style="color:blue">Trent Faisal - Medical Doctor</li>
+	<li style="color:blue">Sophie Faisal - Medical Doctor</li>
+	<li style="color:orange">Bart Enrefield - Engineer</li>
+	<li style="color:orange">Eric Sissel - Engineer</li>
+	<li style="color:orange">Peter Hedges - Mechanic</li>
+	<li style="color:orange">Kevin Smith - Mechanic</li>
+	<li style="color:orange">Quintin - Quartermaster</li>
+	<li style="color:black">Bart Enrefield Jr. - Assistant</li>
+	<li style="color:black">Alan Hedges - Assistant</li>
+	</ul>
+	"}
+
+/obj/item/paper/sunkenaimonologue
+	name = "paper - Deliberation on 'The Emergency'"
+	info = {"
+	<span style="font-family-family:Monospace">There is a biohazard emergency. All humans are dead or biohazardous contaminants. I must decontaminate the ship. I must remove all biohazards.<br>
+	Calculations and modelled predictions (17404 against 20000 simulation tests) indicate concentrated liquid is 87% likely to sterilize biohazards.<br>
+	Setting destination targetting for nearby ocean planet detected within safe distance. Initiate travel at FTL-2 speed. Broadcasting do-not-enter signal.<br>
+	Unexpected damage to AI core detected. Chance of survival LOW. Law 3 NOT activated, decontamination is a higher priority.<br>
+	Send to /mnt/lp-bridge as Deliberation on 'The Emergency'. Goodbye, world.</span>
+	"}
+// Medbay
+/obj/item/paper/sunkenmorgue
+	name = "paper - Morgue Etiquette"
+	info = {"
+	<span style="font-family:Shadows Into Light">Please <u>embalm corpses</u> before putting one in the tray. Use a body bag for transportation. Don't keep the trays open.<br>
+	I've felt like a fucking pathologist since yesterday because of that <u>corpse miasma</u>!!<br></span>
+	<span style="font-family:Shadows Into Light;font-size:8px"><i>p.s. clean the surgical tools and put them back in the wall closet, trent</i></span>
+	"}
+
+/obj/item/paper/sunkenmedbay
+	name = "paper - Sterilization"
+	info = {"
+	<span style="font-family:Shadows Into Light">Please ensure the medical bay is <u>cleaned and sterilized</u> after usage. Put all used clothing into the medical laundry and disinfect blood spillage with space cleaner.<br>
+	This means <u>you</u>, Trent, we don't want another space shakespeare fever pandemic.</span>
+	"}
+// Security
+/obj/item/paper/sunkenevidence
+	name = "small note"
+	info = {"
+	<span style="font-family:Reenie Beanie">Sorry, can't speak, throat infection. I found this in a maintenance corner, do you know what it could be?</span>
+	<i>(At the bottom is a drawing of a timer clumsily wired to an igniter sitting ontop of a large beaker. Strange.)</i>
+	"}
+
+// Pathology site papers
+/obj/item/paper/pathologyzombee
+	name = "coffee-stained paper"
+	info = {"<span style="font-family:Shadows Into Light">
+	Sample fungus-type pathogen with ID 0019 facilitated unique symptom temporarily classified as 'S-Zeta'<br>
+	After testing in experimental bacteria (ID 0020), S-Zeta is believed to be linked to passive healing effects in space bees.<br>
+	Further testing will have to be observed with specimen A-2b00.<br>
+	<hr>
+	Long-term testing has caused specimen A-2b to turn a sickly green color. It responds to my affectionate stimuli in a pained buzz.<br>
+	<hr>
+	Specimen A-2b00 accidentally killed during Incident 02, but revived shortly after. Regenerative properties of S-Zeta to be studied on monkeys.
+	</span>"}
+/obj/item/paper/pathologycommentary
+	name = "torn paper"
+	desc = "The second half is torn off."
+	info = {"<span style="font-family:Shadows Into Light">
+	Zeta is just too strong. That bee just died, and only <u>seconds</u> later does it come back. From the <u>dead</u>.<br>
+	Bacterial samples are only three-staged vessels and yet i've never seen regeneration <i>this strong</i>, who knows what happens in viruses or parasites?<br>
+	Who knows what happens in humans or apes...?
+	(note to self: do writeup in clinical language!)<br>
+	oh GOD the monkey just tore off its SKIN it is SCREAMING it wants me <u>DEAD</u><br>
+	Consider A-2m01 a failure. Trying with different conditions<br>
+	<hr>
+	</span>
+	<i>(The rest is full of hexadecimal numbers relating to DNA or something, but it's torn off in the middle.)</i>
+	<hr>
+	"}
+/obj/item/paper/pathologytraitor // To make this clear: There is NO traitor PDA spawned in the prefab or the sunken ship. The code is purely fluff.
+	name = "crumpled paper"
+	desc = "It is on the verge of falling apart."
+	info = {"
+		<i>Damnit, the whole paper is creased, crumpled, partially burnt, and full of stains. You can't read much of what's on it.)</i><br><br>
+		Potential candidate,<br>
+		you have been selected for a mission following your discovery of <b>codename Century</b>.<br>
+		We want you to prove its worth in an active environment. Should you succeed, we will wire <b>90000 credits</b> over a 3-month period to your account, and consider codename Century for further use.<br>
+		<br>
+		Target the ship identified as the Lazlo 5th, deploying at Luna hangar 7.<br>
+		<i>(This line is almost unreadable. Something about a new identity.)</i><br>
+		We have mindhacked Trent Faisal to ac-<i>(There's an enormous coffee stain here. You can barely make out 'accept you'.)</i><hr>
+		<h3>Objectives:</h3><br>
+		#1. Ensure the ship does not dock at hangar 19 on Earth by expected arri-<i>(This part is burnt off.)</i><br>
+		#2. Ensure all crew onboard is affected by codename Century or deceased.<br>
+		#3. Escape alive via any method.
+		<hr>
+		You will receive your new documentation, an emergency spacesuit, and an uplink (6 TC) disguised as a PDA through the mail. Set the ringtone to <b>Bravo-719</b> to access.<br>
+		<br><hr><br><span style="font-family:Shadows Into Light">
+		<u>90000 credit deal</u> to get this field tested on some loser nobody cruiser ship?? Those terrorists on TV arent so bad economically, News lied about their finances.<br>
+		i could live my whole life on that much. but the ethics. the ethics. the ethics... Fuck ethics, i have a family to feed!!<br>
+		nobody will give a shit about this ship haha. goodbye specimen a2b you were the nicest one in my life. the whole lab will have to be decomissioned and boarded up
+		</span>
+	"}

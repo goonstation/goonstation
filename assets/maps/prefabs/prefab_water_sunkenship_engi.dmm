@@ -1,0 +1,1594 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bh" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power.dmi';
+	icon_state = "term";
+	name = "corroded terminal";
+	desc = "If this weren't full of rust and corrosion, it'd transfer power from cables to machinery.";
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"bp" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"cI" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"dh" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "0-1";
+	name = "power cable";
+	color = "red"
+	},
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"dk" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 9
+	},
+/area/prefab/sunkenship/engineering)
+"ej" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"ey" = (
+/obj/item/paper/sunkenengine{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"fm" = (
+/obj/storage/crate/bin/trash,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"fG" = (
+/obj/critter/domestic_bee/trauma{
+	name = "Quartermaster Quintin"
+	},
+/obj/item/toy/plush/small/stress_ball{
+	pixel_y = 10;
+	pixel_x = 7
+	},
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/stool/bee_bed/double,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"fJ" = (
+/obj/machinery/light/beacon,
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fZ" = (
+/obj/decal/fakeobjects/pipe/heat{
+	icon_state = "6"
+	},
+/obj/fluid_spawner{
+	amount = 500;
+	delay = 35
+	},
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"ge" = (
+/obj/item/cable_coil/cut/small,
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"gm" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"gz" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4;
+	icon_state = "leadwindow_gray_2"
+	},
+/area/prefab/sunkenship/engineering)
+"hq" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power.dmi';
+	icon_state = "smes-old";
+	name = "broken SMES-unit";
+	desc = "The screen doesn't turn on. Seems this one's busted.";
+	dir = 8;
+	density = 1;
+	anchored = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"hs" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10
+	},
+/area/prefab/sunkenship/engineering)
+"hD" = (
+/obj/machinery/manufacturer/mining,
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "bigstripe-edge2";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/engineering)
+"hL" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "sunkenshipcargo"
+	},
+/obj/machinery/activation_button/driver_button{
+	id = "sunkenshipcargo";
+	pixel_y = -21;
+	pixel_x = -5
+	},
+/obj/decal/stripe_caution,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5d"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"il" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "0-4";
+	name = "power cable";
+	color = "red"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"iV" = (
+/obj/decal/cleanable/blood,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"kd" = (
+/obj/plasticflaps,
+/obj/decal/cleanable/blood{
+	icon_state = "gibmid1"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"ks" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "drip2"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"li" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "broken computer";
+	density = 1
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"lF" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"lH" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"lM" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/item/storage/wall/fire{
+	pixel_y = -27
+	},
+/obj/decal/cleanable/rust,
+/obj/critter/zombie/radiation,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "drip4d"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"mc" = (
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/robotics_supplies,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"md" = (
+/turf/variableTurf/clear,
+/area/allowGenerate/trench)
+"ml" = (
+/obj/machinery/manufacturer/medical,
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/engineering)
+"mw" = (
+/obj/machinery/door/airlock/gannets/glass/engineering,
+/obj/access_spawn/engineering_mechanic,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"mA" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"mQ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/engineering)
+"na" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-c";
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"ni" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"ns" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 2;
+	pixel_y = -16;
+	layer = 2.98
+	},
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-t";
+	dir = 1;
+	layer = 2.99
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It is still kinda warm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "busted machine"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"nv" = (
+/obj/map/light/lava,
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "turbine";
+	dir = 8;
+	desc = "Haha, it looks like a trumpet!";
+	name = "lava engine heat compressor";
+	density = 1
+	},
+/turf/unsimulated/floor/lava,
+/area/prefab/sunkenship/engineering)
+"nH" = (
+/obj/decal/fakeobjects/pipe/heat,
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-s";
+	dir = 1
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"nZ" = (
+/obj/decal/fakeobjects/cpucontroller{
+	desc = "A gigantic computer box of some sort. You can't tell, and it's not plugged in.";
+	name = "janky mainframe thing"
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"of" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"oq" = (
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"oF" = (
+/obj/table/auto,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old ThinkDOS computer covered in encouraging sticky notes. Burnt into the screen is some sort of spacenet chat program.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "inactive computer";
+	density = 1
+	},
+/obj/machinery/junctionbox/varianta{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"pt" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/internals,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"px" = (
+/obj/storage/cart/mechcart,
+/obj/decal/cleanable/rust,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"pJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/sunkenship/engineering)
+"pL" = (
+/obj/item/sheet/steel/fullstack,
+/obj/rack,
+/obj/item/storage/toolbox/mechanical/yellow_tools,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"pW" = (
+/obj/decal/fakeobjects/airmonitor_broken{
+	pixel_y = 26
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 2;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"qs" = (
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"qx" = (
+/obj/machinery/door/airlock/gannets/engineering/alt,
+/obj/access_spawn/engineering_engine,
+/turf/simulated/floor/stairs/dark{
+	dir = 8;
+	icon_state = "dark_stairs"
+	},
+/area/prefab/sunkenship/engineering)
+"qH" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"qR" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/engineering)
+"rC" = (
+/obj/map/light/lava,
+/turf/unsimulated/floor/lava,
+/area/prefab/sunkenship/engineering)
+"rM" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"su" = (
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip1a"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"sQ" = (
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"sR" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 8;
+	icon_state = "leadcap_gray"
+	},
+/area/prefab/sunkenship/engineering)
+"sT" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"th" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor2"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"tk" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "drip3f"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"tF" = (
+/obj/machinery/door/airlock/gannets/engineering/alt,
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/engineering_mechanic,
+/turf/simulated/floor/stairs/dark{
+	dir = 1;
+	icon_state = "dark_stairs"
+	},
+/area/prefab/sunkenship/engineering)
+"tR" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gibbl2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"tV" = (
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_y = 8
+	},
+/obj/item/toy/plush/small/buddy{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"um" = (
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"uE" = (
+/obj/decal/fakeobjects/pipe/heat{
+	dir = 10
+	},
+/obj/fluid_spawner{
+	amount = 500;
+	delay = 35
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"vu" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/engineering)
+"vz" = (
+/obj/machinery/door/airlock/gannets/glass/engineering/alt,
+/obj/access_spawn/engineering_mechanic,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"vQ" = (
+/obj/lattice,
+/obj/item/paper/sunkensymptoms{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"we" = (
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"xQ" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"ye" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"yp" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"yT" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/engineering)
+"zb" = (
+/obj/machinery/door/airlock/gannets/glass/engineering/alt,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"zK" = (
+/obj/machinery/manufacturer/qm,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"zT" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "4-8";
+	name = "power cable";
+	color = "red"
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power.dmi';
+	icon_state = "term";
+	name = "corroded terminal";
+	desc = "If this weren't full of rust and corrosion, it'd transfer power from cables to machinery."
+	},
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = -24
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Aj" = (
+/obj/decal/fakeobjects/pipe/heat{
+	icon = 'icons/obj/atmospherics/pipes/junction_pipe.dmi';
+	dir = 1
+	},
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Aq" = (
+/obj/decal/fakeobjects/pipe/heat{
+	icon = 'icons/obj/atmospherics/pipes/junction_pipe.dmi';
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"AV" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_x = -24
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"BD" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/airless/yellow/side{
+	dir = 1
+	},
+/area/noGenerate)
+"BZ" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "0-2";
+	name = "power cable"
+	},
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "compressor";
+	dir = 4;
+	name = "lava engine turbine";
+	desc = "Some rickety-old generator that makes power from combining lava and water.";
+	density = 1
+	},
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/sunkenship/engineering)
+"Cu" = (
+/turf/simulated/floor/airless/yellow/side{
+	dir = 1
+	},
+/area/noGenerate)
+"Cv" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/engineering)
+"CU" = (
+/obj/machinery/manufacturer/mechanic,
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "bigstripe-edge2";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/engineering)
+"Do" = (
+/obj/railing/orange,
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"Dv" = (
+/obj/machinery/rkit,
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "bigstripe-edge2";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/engineering)
+"El" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4;
+	icon_state = "leadcap_gray"
+	},
+/area/prefab/sunkenship/engineering)
+"Ew" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 2
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Ey" = (
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip1d"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "maskblood_c"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Ez" = (
+/obj/item/storage/toolbox/mechanical/yellow_tools,
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"EB" = (
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"Fq" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"FB" = (
+/obj/decal/fakeobjects/pipe/heat,
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Gz" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"IR" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "0-2";
+	name = "power cable";
+	color = "red"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip3e"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"IS" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/portables_connector.dmi';
+	name = "rusted connector";
+	dir = 8
+	},
+/obj/decal/fakeobjects/oldcanister,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"IV" = (
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/robotparts,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"JD" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"KF" = (
+/obj/machinery/vending/mechanics,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"KQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A very old atmospheric freezer machine. It still makes a faint whirring noise.";
+	icon = 'icons/obj/Cryogenic2.dmi';
+	icon_state = "oldfreezer";
+	name = "old cold circulator";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Ld" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/decal/fakeobjects/oldcanister,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"Lg" = (
+/obj/lattice,
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Lk" = (
+/obj/critter/domestic_bee/sea/bart,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"Lt" = (
+/obj/lattice,
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"LB" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"LE" = (
+/obj/plasticflaps,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"LK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Me" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Mm" = (
+/obj/decal/stripe_delivery,
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"Mp" = (
+/obj/lattice,
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Mw" = (
+/obj/item/cable_coil,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"MF" = (
+/obj/storage/secure/closet/engineering/engineer,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"Nn" = (
+/obj/item/sheet/glass/fullstack,
+/obj/rack,
+/obj/item/storage/toolbox/mechanical/yellow_tools,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"NL" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/junctionbox/variantb{
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"NZ" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"Ot" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/wooden,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"OJ" = (
+/obj/critter/zombie/radiation,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"OK" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Pi" = (
+/obj/storage/cart,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"Pw" = (
+/obj/storage/crate/bin/trash,
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"PS" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 2
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "drip2"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Rt" = (
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip3e"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/generic,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"RB" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"Sr" = (
+/obj/storage/secure/closet/engineering/mechanic,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"SG" = (
+/obj/storage/secure/closet/engineering/mechanic,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+"SQ" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"To" = (
+/obj/machinery/manufacturer/general,
+/obj/machinery/light/incandescent/blueish,
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "bigstripe-edge2";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/engineering)
+"Tx" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"TD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"TH" = (
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"UG" = (
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"UL" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"UN" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate,
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/orange,
+/area/prefab/sunkenship/engineering)
+"UV" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ve" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/prefab/sunkenship/engineering)
+"VQ" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/obj/storage/crate/packing,
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"VV" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"Ws" = (
+/obj/machinery/bot/firebot{
+	name = "Officer Magma"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"WL" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Xk" = (
+/obj/item/toy/plush/small/bee{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/toy/plush/small/monkey{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/junctionbox{
+	pixel_y = -32;
+	pixel_x = -13
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/engineering)
+"XA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 2;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"XQ" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sunkenship/engineering)
+"Yj" = (
+/obj/stool/chair,
+/turf/simulated/floor/orangeblack,
+/area/prefab/sunkenship/engineering)
+"Yq" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6
+	},
+/area/prefab/sunkenship/engineering)
+"Zz" = (
+/obj/railing/orange{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/sunkenship/engineering)
+"ZY" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/twotone/yellow,
+/area/prefab/sunkenship/engineering)
+
+(1,1,1) = {"
+md
+md
+md
+md
+gm
+UV
+UV
+UV
+UV
+gm
+UV
+UV
+UV
+md
+md
+md
+md
+md
+"}
+(2,1,1) = {"
+md
+UV
+UV
+gm
+UV
+UG
+UV
+UG
+UV
+dk
+pJ
+mw
+pJ
+pJ
+hs
+UV
+md
+md
+"}
+(3,1,1) = {"
+UV
+UG
+dk
+pJ
+pJ
+qx
+pJ
+pJ
+pJ
+yT
+px
+EB
+EB
+Nn
+mQ
+UV
+UV
+md
+"}
+(4,1,1) = {"
+dk
+pJ
+yT
+lH
+lF
+IR
+dh
+ge
+il
+tF
+EB
+EB
+EB
+pL
+Cv
+UV
+UG
+md
+"}
+(5,1,1) = {"
+mQ
+rC
+WL
+Ws
+we
+su
+Ey
+we
+zT
+mQ
+Sr
+EB
+EB
+To
+mQ
+UG
+md
+md
+"}
+(6,1,1) = {"
+mQ
+nv
+WL
+XA
+bp
+ni
+ey
+ks
+hq
+mQ
+SG
+ZY
+Lk
+ml
+Cv
+ej
+md
+md
+"}
+(7,1,1) = {"
+vu
+BZ
+yT
+na
+ns
+Ew
+PS
+th
+bh
+mQ
+Dv
+EB
+EB
+hD
+mQ
+rM
+UG
+md
+"}
+(8,1,1) = {"
+mQ
+fZ
+nH
+Aj
+UL
+Mw
+sT
+tk
+lM
+mQ
+CU
+fm
+EB
+KF
+mQ
+xQ
+UV
+md
+"}
+(9,1,1) = {"
+mQ
+uE
+FB
+Aq
+SQ
+XQ
+cI
+Tx
+OK
+vu
+pJ
+pJ
+vz
+pJ
+pJ
+hs
+BD
+md
+"}
+(10,1,1) = {"
+Ve
+pJ
+yT
+Ez
+Me
+LK
+KQ
+KQ
+IS
+mQ
+nZ
+JD
+TH
+AV
+yp
+zb
+Cu
+md
+"}
+(11,1,1) = {"
+md
+md
+Ve
+pJ
+pJ
+pJ
+pJ
+qR
+pJ
+Yq
+TH
+ye
+TH
+Pi
+Pi
+mQ
+UG
+md
+"}
+(12,1,1) = {"
+md
+md
+md
+md
+md
+gm
+vQ
+mQ
+MF
+sQ
+TH
+TH
+RB
+LB
+LB
+mQ
+UV
+md
+"}
+(13,1,1) = {"
+md
+md
+md
+md
+md
+gm
+UV
+mQ
+li
+Yj
+TH
+TH
+Gz
+NZ
+UN
+gz
+UV
+UG
+"}
+(14,1,1) = {"
+md
+md
+md
+md
+md
+gm
+UV
+Ve
+pJ
+hs
+Pw
+Fq
+of
+Ot
+VQ
+mQ
+UV
+UG
+"}
+(15,1,1) = {"
+md
+md
+md
+md
+md
+md
+UV
+UV
+UV
+mQ
+zK
+TH
+mA
+Ld
+pt
+gz
+UV
+md
+"}
+(16,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+mQ
+pW
+oq
+Zz
+IV
+mc
+mQ
+md
+md
+"}
+(17,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+mQ
+Rt
+Do
+qH
+VV
+NL
+mQ
+md
+md
+"}
+(18,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+mQ
+Mm
+hL
+sR
+TD
+Xk
+mQ
+md
+md
+"}
+(19,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+mQ
+LE
+kd
+mQ
+um
+tV
+mQ
+md
+md
+"}
+(20,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+El
+qs
+qs
+mQ
+oF
+fG
+mQ
+md
+md
+"}
+(21,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+Mp
+UV
+UV
+Ve
+pJ
+pJ
+Yq
+md
+md
+"}
+(22,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+Lg
+gm
+iV
+md
+md
+md
+md
+md
+md
+"}
+(23,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+Lt
+gm
+gm
+md
+md
+md
+md
+md
+md
+"}
+(24,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+UV
+OJ
+tR
+md
+md
+md
+md
+md
+md
+"}
+(25,1,1) = {"
+md
+md
+md
+md
+md
+md
+md
+md
+md
+fJ
+gm
+gm
+md
+md
+md
+md
+md
+md
+"}

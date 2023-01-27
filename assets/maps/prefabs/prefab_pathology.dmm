@@ -1,0 +1,1328 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aF" = (
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"aP" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"bn" = (
+/obj/item/crowbar/red,
+/turf/simulated/floor/caution/south,
+/area/prefab/pathologysite)
+"bX" = (
+/obj/item/cable_coil/cut,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"ck" = (
+/obj/decal/poster/wallsign/stencil/left/b{
+	pixel_y = 6
+	},
+/obj/decal/poster/wallsign/hazard_bio{
+	pixel_y = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"cH" = (
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibmid3"
+	},
+/obj/item/paper/pathologytraitor,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"cM" = (
+/obj/machinery/chem_master,
+/obj/item/device/reagentscanner,
+/turf/simulated/floor/purplewhite/corner,
+/area/prefab/pathologysite)
+"cY" = (
+/obj/decal/poster/wallsign/no_smoking,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"eX" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1"
+	},
+/obj/machinery/vending/pathology,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"fL" = (
+/obj/item/pipebomb/frame,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"gC" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 8
+	},
+/obj/item/raw_material/scrap_metal/steel,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"hK" = (
+/obj/machinery/chem_heater,
+/obj/machinery/light/small/purpleish{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/fire{
+	pixel_y = 34
+	},
+/turf/simulated/floor/purplewhite,
+/area/prefab/pathologysite)
+"ia" = (
+/obj/storage/closet,
+/obj/item/clothing/suit/labcoat/pathology,
+/obj/item/clothing/under/rank/pathologist,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/under/rank/medical,
+/obj/item/clothing/shoes/red,
+/obj/item/clothing/suit/labcoat/medical,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"iF" = (
+/obj/lattice,
+/obj/item/reagent_containers/glass/petridish{
+	pixel_y = 5;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = -2
+	},
+/turf/variableTurf/floor,
+/area/prefab/pathologysite)
+"iK" = (
+/obj/decal/poster/wallsign/stencil/left/a{
+	pixel_y = 6
+	},
+/obj/decal/poster/wallsign/hazard_bio{
+	pixel_y = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"iO" = (
+/obj/machinery/r_door_control{
+	id = "hangar_pathology";
+	name = "Pathology Hangar Bay Door";
+	pixel_x = 3
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"jf" = (
+/obj/machinery/computer/pathology,
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"jk" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"ki" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"kC" = (
+/obj/decal/cleanable/rust,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "smear1";
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"lj" = (
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"lX" = (
+/obj/item/paper/pathologyzombee,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_x = -29;
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"mr" = (
+/obj/decal/poster/wallsign/escape_sign{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"mI" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1"
+	},
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 9
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"nm" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"nt" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/machinery/light/incandescent/harsh/very{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"nw" = (
+/obj/cabinet/pathology,
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 10
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"on" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/decal/cleanable/rust,
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_y = -30
+	},
+/turf/simulated/floor/purplewhite/corner{
+	dir = 1
+	},
+/area/prefab/pathologysite)
+"pl" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 8
+	},
+/obj/machinery/microscope,
+/obj/table/auto,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"pz" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"pE" = (
+/obj/stool/bee_bed,
+/obj/critter/domestic_bee/zombee{
+	name = "Specimen A-2b00"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"pR" = (
+/obj/machinery/autoclave,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"qe" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"qx" = (
+/obj/storage/closet/welding_supply,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/decal/poster/wallsign/fire{
+	pixel_y = 29;
+	pixel_x = -13
+	},
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"qK" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 8
+	},
+/obj/item/device/analyzer/healthanalyzer,
+/obj/decal/poster/wallsign/testsubject{
+	pixel_x = -32
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"rj" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"rJ" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"sb" = (
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"sE" = (
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/disposaloutlet/south,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"sF" = (
+/obj/lattice,
+/obj/item/paper/pathologycommentary,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ty" = (
+/obj/machinery/door_control{
+	id = "hangar_pathology";
+	pixel_x = -24;
+	name = "Pathology Hangar Bay Door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"ve" = (
+/obj/machinery/glass_recycler,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
+	},
+/area/prefab/pathologysite)
+"vt" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 4
+	},
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1";
+	dir = 5
+	},
+/obj/machinery/centrifuge,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"vu" = (
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"vw" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 4
+	},
+/obj/decal/tile_edge/line/orange{
+	icon_state = "tile1";
+	dir = 10
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/chsl{
+	pixel_y = -32
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"vD" = (
+/obj/item/device/timer,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"vR" = (
+/obj/decal/poster/wallsign/escape_sign{
+	pixel_y = 6;
+	pixel_x = 32
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"wf" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "footprints1"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"wB" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"xb" = (
+/obj/item/storage/box/beakerbox{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/decal/cleanable/desk_clutter,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/prefab/pathologysite)
+"xD" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"yw" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "smear3";
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"yB" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 1;
+	id = "hangar_pathology";
+	name = "Pathology Site";
+	icon_state = "bdoormid1"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"yK" = (
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"zS" = (
+/obj/machinery/light/small/greenish{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/prefab/pathologysite)
+"Af" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -1;
+	pixel_y = -10
+	},
+/obj/decal/poster/wallsign/statistics1{
+	pixel_y = -24
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/prefab/pathologysite)
+"An" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
+/area/prefab/pathologysite)
+"Aq" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"Cj" = (
+/obj/stool/chair/office/green{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"Cl" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"Ct" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibmid3"
+	},
+/obj/fluid_spawner/polluted_filth/blood,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"Cu" = (
+/obj/lattice,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"CB" = (
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 8
+	},
+/area/prefab/pathologysite)
+"CH" = (
+/obj/critter/zombie,
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gibmid2"
+	},
+/obj/fluid_spawner/polluted_filth/blood{
+	amount = 80
+	},
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"CL" = (
+/obj/item/plank{
+	amount = 3
+	},
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"CW" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"Do" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"DN" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "footprints1"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/item/clothing/suit/labcoat/pathology,
+/obj/item/clothing/under/rank/pathologist{
+	pixel_y = -7;
+	pixel_x = 8
+	},
+/turf/simulated/floor/caution/south,
+/area/prefab/pathologysite)
+"Eg" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/structure/woodwall,
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"Ez" = (
+/obj/table/reinforced,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/prefab/pathologysite)
+"Ff" = (
+/obj/storage/cart/medcart,
+/obj/item/reagent_containers/glass/bottle/spaceacillin,
+/obj/item/reagent_containers/glass/bottle/coldmedicine,
+/obj/machinery/light/small/frostedred{
+	dir = 4
+	},
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe/formaldehyde,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"Fy" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
+	desc = "A slab of meat from a monkey. It has mandible indentations and chew marks on its side."
+	},
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"FQ" = (
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"Ge" = (
+/obj/machinery/manufacturer/hangar,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"Gl" = (
+/obj/decal/poster/wallsign/biohazard,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"Hl" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 1;
+	id = "hangar_pathology";
+	name = "Pathology Site";
+	icon_state = "bdoormid1"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "smear1";
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"Hx" = (
+/obj/health_scanner/floor{
+	dir = 1
+	},
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"HC" = (
+/obj/machinery/incubator,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"HV" = (
+/obj/disposalpipe/junction{
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"JS" = (
+/obj/machinery/door/airlock/gannets/maintenance,
+/obj/access_spawn/pathology,
+/turf/simulated/floor/stairs/medical{
+	dir = 8
+	},
+/area/prefab/pathologysite)
+"Kj" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/pathologysite)
+"Ll" = (
+/obj/machinery/door/airlock/gannets/glass/alt,
+/obj/access_spawn/pathology,
+/turf/simulated/floor/white,
+/area/prefab/pathologysite)
+"Lq" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/decal/tile_edge/line/orange{
+	icon_state = "tile1";
+	dir = 6
+	},
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1";
+	dir = 6
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"Lu" = (
+/obj/lattice,
+/obj/storage/secure/closet/fridge/pathology,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Mh" = (
+/obj/decal/cleanable/rust,
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/prefab/pathologysite)
+"Mt" = (
+/obj/lattice,
+/obj/structure/woodwall,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"ND" = (
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"Oo" = (
+/obj/grille/steel/broken,
+/obj/item/rods/steel,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"OK" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Pp" = (
+/obj/machinery/light/small/greenish{
+	dir = 4
+	},
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"QD" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"QI" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"QY" = (
+/obj/machinery/synthomatic,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"Rg" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor,
+/area/prefab/pathologysite)
+"RP" = (
+/obj/lattice,
+/obj/item/furniture_parts/table,
+/turf/variableTurf/floor,
+/area/prefab/pathologysite)
+"Si" = (
+/obj/item/bee_egg_carton,
+/turf/simulated/floor/plating,
+/area/prefab/pathologysite)
+"SA" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
+/area/prefab/pathologysite)
+"Tu" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/pathologysite)
+"TB" = (
+/turf/simulated/floor/caution/south,
+/area/prefab/pathologysite)
+"Ui" = (
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/prefab/pathologysite)
+"Vr" = (
+/obj/item/sheet/steel,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"Wd" = (
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/stool/chair/office/purple,
+/obj/decal/cleanable/water,
+/turf/simulated/floor/purple,
+/area/prefab/pathologysite)
+"Wr" = (
+/obj/machinery/door/airlock/gannets/toxins/alt,
+/obj/access_spawn/pathology,
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
+/area/prefab/pathologysite)
+"Xg" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/prefab/pathologysite)
+"XH" = (
+/obj/structure/woodwall,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"XK" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 4
+	},
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1";
+	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"XW" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/gannets/chemistry/alt,
+/obj/access_spawn/pathology,
+/turf/simulated/floor/white,
+/area/prefab/pathologysite)
+"Yn" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 1
+	},
+/obj/machinery/pathogen_manipulator,
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"Yv" = (
+/obj/machinery/disposal/small/west,
+/obj/decal/tile_edge/line/orange{
+	icon_state = "noedge-tile1";
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor/airless/white,
+/area/prefab/pathologysite)
+"Zk" = (
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/stool/bed,
+/obj/machinery/light/small/greenish,
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+"ZX" = (
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gib3"
+	},
+/obj/item/organ/tail/monkey,
+/obj/health_scanner/floor{
+	dir = 1
+	},
+/turf/simulated/floor/twotone/green,
+/area/prefab/pathologysite)
+
+(1,1,1) = {"
+nm
+nm
+nm
+nm
+nm
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+nm
+nm
+nm
+nm
+"}
+(2,1,1) = {"
+nm
+nm
+nm
+nm
+qe
+qe
+wB
+wB
+wB
+wB
+wB
+wB
+wB
+wB
+wB
+qe
+qe
+qe
+qe
+nm
+"}
+(3,1,1) = {"
+nm
+nm
+nm
+nm
+qe
+wB
+wB
+Tu
+Tu
+Tu
+Tu
+Tu
+wB
+wB
+wB
+wB
+OK
+OK
+qe
+qe
+"}
+(4,1,1) = {"
+nm
+nm
+nm
+qe
+qe
+wB
+wB
+Tu
+Cl
+Rg
+Ez
+Tu
+Tu
+Tu
+Tu
+iO
+Cu
+OK
+qe
+qe
+"}
+(5,1,1) = {"
+nm
+nm
+qe
+qe
+wB
+wB
+wB
+Tu
+qx
+CL
+TB
+Aq
+Aq
+pz
+ty
+yB
+Cu
+OK
+qe
+qe
+"}
+(6,1,1) = {"
+nm
+qe
+qe
+wB
+wB
+wB
+wB
+Tu
+Ge
+vu
+DN
+wf
+Kj
+yw
+kC
+Hl
+Cu
+OK
+qe
+qe
+"}
+(7,1,1) = {"
+nm
+qe
+qe
+wB
+wB
+wB
+wB
+Tu
+jk
+CW
+bn
+Ct
+Aq
+vR
+Aq
+yB
+Cu
+OK
+qe
+qe
+"}
+(8,1,1) = {"
+nm
+qe
+wB
+wB
+wB
+wB
+wB
+Tu
+Gl
+Eg
+Mh
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+OK
+OK
+qe
+"}
+(9,1,1) = {"
+nm
+qe
+wB
+wB
+wB
+Tu
+Tu
+Tu
+mr
+Wr
+cY
+Tu
+An
+Tu
+Hx
+Zk
+rj
+wB
+wB
+qe
+"}
+(10,1,1) = {"
+qe
+qe
+wB
+wB
+wB
+rJ
+nw
+qK
+pl
+gC
+mI
+Ll
+zS
+Ll
+FQ
+aF
+rj
+wB
+wB
+qe
+"}
+(11,1,1) = {"
+qe
+wB
+wB
+wB
+Cu
+Oo
+jf
+Cj
+xD
+Xg
+eX
+iK
+Tu
+Tu
+Tu
+Tu
+Tu
+wB
+wB
+qe
+"}
+(12,1,1) = {"
+qe
+wB
+wB
+wB
+Cu
+sb
+Yn
+Do
+Xg
+lj
+QY
+aP
+Vr
+Tu
+ZX
+Zk
+rj
+wB
+wB
+qe
+"}
+(13,1,1) = {"
+qe
+XH
+OK
+OK
+Cu
+rJ
+nt
+lj
+vD
+bX
+lj
+Mt
+Pp
+QI
+cH
+CH
+rj
+wB
+qe
+qe
+"}
+(14,1,1) = {"
+qe
+XH
+OK
+OK
+yK
+RP
+iF
+sb
+fL
+Xg
+pR
+ck
+Tu
+Tu
+Tu
+Tu
+Tu
+OK
+qe
+qe
+"}
+(15,1,1) = {"
+qe
+XH
+OK
+Cu
+Cu
+rJ
+ki
+QD
+SA
+HV
+HC
+ND
+sE
+sF
+XH
+OK
+OK
+qe
+qe
+qe
+"}
+(16,1,1) = {"
+qe
+wB
+wB
+OK
+Lu
+sb
+Lq
+XK
+vt
+Yv
+vw
+Tu
+Cu
+Cu
+XH
+OK
+qe
+qe
+qe
+qe
+"}
+(17,1,1) = {"
+qe
+wB
+wB
+wB
+Cu
+Tu
+Tu
+XW
+Tu
+Tu
+JS
+Tu
+Tu
+Tu
+wB
+OK
+OK
+OK
+qe
+qe
+"}
+(18,1,1) = {"
+qe
+qe
+wB
+wB
+Cu
+Tu
+cM
+Ui
+CB
+Tu
+Fy
+lX
+Si
+Tu
+wB
+wB
+OK
+OK
+qe
+qe
+"}
+(19,1,1) = {"
+qe
+qe
+wB
+wB
+wB
+Tu
+hK
+Wd
+Af
+Tu
+ia
+Ff
+pE
+Tu
+wB
+wB
+wB
+wB
+qe
+qe
+"}
+(20,1,1) = {"
+qe
+qe
+wB
+wB
+wB
+Tu
+ve
+xb
+on
+Tu
+Tu
+Tu
+Tu
+Tu
+wB
+wB
+wB
+qe
+qe
+nm
+"}
+(21,1,1) = {"
+nm
+qe
+qe
+wB
+wB
+Tu
+rj
+rj
+rj
+Tu
+wB
+wB
+wB
+wB
+wB
+wB
+qe
+qe
+nm
+nm
+"}
+(22,1,1) = {"
+nm
+nm
+qe
+qe
+OK
+Cu
+Cu
+Cu
+OK
+wB
+wB
+wB
+wB
+wB
+wB
+qe
+qe
+nm
+nm
+nm
+"}
+(23,1,1) = {"
+nm
+nm
+nm
+qe
+qe
+qe
+qe
+OK
+OK
+wB
+wB
+wB
+qe
+qe
+qe
+qe
+nm
+nm
+nm
+nm
+"}
+(24,1,1) = {"
+nm
+nm
+nm
+nm
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+nm
+nm
+nm
+nm
+nm
+nm
+nm
+"}

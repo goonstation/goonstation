@@ -1,0 +1,764 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aW" = (
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip2e"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"ba" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 2
+	},
+/turf/simulated/floor/twotone/red,
+/area/prefab/sunkenship/security)
+"bN" = (
+/obj/table/reinforced/auto{
+	icon_state = "1"
+	},
+/obj/machinery/light/incandescent/harsh,
+/obj/item/reagent_containers/food/drinks/cola/random,
+/obj/item/reagent_containers/food/snacks/donut/custom/random{
+	pixel_y = 17;
+	pixel_x = 2
+	},
+/turf/simulated/floor/twotone,
+/area/prefab/sunkenship/security)
+"cv" = (
+/obj/machinery/door/airlock/gannets/security,
+/obj/access_spawn/security,
+/turf/simulated/floor/stairs/dark,
+/area/prefab/sunkenship/security)
+"dh" = (
+/obj/storage/secure/closet/brig,
+/obj/item/device/flash/turbo,
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/obj/critter/zombie,
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/security)
+"dk" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 9
+	},
+/area/prefab/sunkenship/security)
+"do" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"en" = (
+/obj/decoration/vent/vent2,
+/turf/simulated/floor/red/side,
+/area/prefab/sunkenship/security)
+"eI" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/critter/zombie/security,
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "bloodhit4"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"ft" = (
+/turf/simulated/floor/red/side,
+/area/prefab/sunkenship/security)
+"fB" = (
+/obj/table/reinforced/auto{
+	icon_state = "1"
+	},
+/obj/item/device/flash{
+	pixel_y = 15;
+	pixel_x = -1
+	},
+/obj/machinery/light/incandescent/harsh,
+/obj/item/audio_tape/sunkeninvestigation,
+/turf/simulated/floor/twotone/red,
+/area/prefab/sunkenship/security)
+"gz" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4;
+	icon_state = "leadwindow_gray_2"
+	},
+/area/prefab/sunkenship/security)
+"hd" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/prefab/sunkenship/security)
+"hs" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10
+	},
+/area/prefab/sunkenship/security)
+"hV" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 8;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/security)
+"ij" = (
+/obj/machinery/door/airlock/gannets/glass/security/alt,
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"jB" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating,
+/area/prefab/sunkenship/security)
+"jQ" = (
+/obj/item/clothing/suit/armor/vest/light{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor3";
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/turf/simulated/floor/red/side,
+/area/prefab/sunkenship/security)
+"ld" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/stool/chair/red,
+/obj/critter/zombie,
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"lv" = (
+/obj/lattice,
+/obj/structure/girder/displaced,
+/turf/variableTurf/clear,
+/area/prefab/sunkenship/security)
+"lQ" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib6"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/turf/simulated/floor/red/side,
+/area/prefab/sunkenship/security)
+"md" = (
+/turf/variableTurf/clear,
+/area/allowGenerate/trench)
+"mx" = (
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/prefab/sunkenship/security)
+"mQ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4
+	},
+/area/prefab/sunkenship/security)
+"nf" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/item/clothing/suit/bedsheet/red,
+/obj/stool/bed/brig,
+/obj/machinery/light/small/harsh{
+	dir = 1
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"nl" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor4"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/security)
+"nm" = (
+/obj/machinery/vending/security,
+/obj/decal/tile_edge/line/grey{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"oY" = (
+/obj/machinery/door/airlock/gannets/glass/security/alt,
+/obj/access_spawn/security,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"pJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/sunkenship/security)
+"ql" = (
+/obj/table/reinforced/auto{
+	icon_state = "2"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_y = 6;
+	pixel_x = 1
+	},
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/turf/simulated/floor/twotone,
+/area/prefab/sunkenship/security)
+"sa" = (
+/obj/storage/cart/forensic,
+/turf/simulated/floor/red/corner{
+	dir = 1
+	},
+/area/prefab/sunkenship/security)
+"sk" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"sD" = (
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/prefab/sunkenship/security)
+"sJ" = (
+/obj/storage/secure/closet/brig,
+/obj/item/clothing/suit/labcoat/pathology,
+/obj/item/reagent_containers/glass/beaker/fungal,
+/obj/item/assembly/time_ignite,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/light/small/harsh{
+	dir = 8
+	},
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/security)
+"vu" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/security)
+"vC" = (
+/turf/simulated/floor/red/corner,
+/area/prefab/sunkenship/security)
+"vQ" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/storage/crate/bin/trash,
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"wp" = (
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/turf/simulated/floor/red/side,
+/area/prefab/sunkenship/security)
+"wA" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/critter/zombie/security,
+/turf/simulated/floor/twotone/red,
+/area/prefab/sunkenship/security)
+"xn" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1";
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/hardhat/security{
+	pixel_y = -8;
+	pixel_x = 6
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"xy" = (
+/obj/storage/secure/closet/security/equipment,
+/obj/storage/secure/closet/security/equipment,
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"yT" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
+	},
+/area/prefab/sunkenship/security)
+"zd" = (
+/obj/machinery/door/airlock/gannets/security/alt,
+/obj/access_spawn/sec_lockers,
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/security)
+"zW" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip5d"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"Au" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"Bx" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line-broken1";
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"Ep" = (
+/turf/simulated/floor/red/corner{
+	dir = 4
+	},
+/area/prefab/sunkenship/security)
+"Gi" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/stool/chair/red,
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"Gr" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/storage/closet/wardrobe/red/security_gimmick,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"IF" = (
+/obj/machinery/door/airlock/gannets/glass/security,
+/obj/access_spawn/security,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"Jg" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip1a"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "maskblood_c"
+	},
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip3e"
+	},
+/turf/simulated/floor/twotone,
+/area/prefab/sunkenship/security)
+"JJ" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"Lq" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/machinery/vending/snack,
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"NN" = (
+/turf/simulated/floor/red,
+/area/prefab/sunkenship/security)
+"PM" = (
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 8
+	},
+/obj/item/paper/sunkenevidence{
+	pixel_y = 4;
+	pixel_x = -7
+	},
+/turf/simulated/floor/red/corner{
+	dir = 8
+	},
+/area/prefab/sunkenship/security)
+"PN" = (
+/obj/table/reinforced/auto{
+	icon_state = "2"
+	},
+/obj/decoration/clock{
+	pixel_y = 31
+	},
+/obj/item/device/audio_log/sunkenohshit,
+/turf/simulated/floor/twotone/red,
+/area/prefab/sunkenship/security)
+"Qb" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5d"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/fluid_spawner/polluted_filth/blood,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/prefab/sunkenship/security)
+"Qc" = (
+/obj/machinery/door/airlock/gannets/security,
+/obj/decal/cleanable/blood/drip/low{
+	icon_state = "drip2e"
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor/stairs,
+/area/prefab/sunkenship/security)
+"QF" = (
+/obj/storage/secure/closet/security/equipment,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"QI" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/twotone,
+/area/prefab/sunkenship/security)
+"QK" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"Rx" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray,
+/area/prefab/sunkenship/security)
+"SI" = (
+/obj/decal/fakeobjects/tapedeck{
+	desc = "It seems to be holding a lot of interrogation recordings.";
+	pixel_y = 16
+	},
+/turf/simulated/floor/red/corner{
+	dir = 8
+	},
+/area/prefab/sunkenship/security)
+"UG" = (
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"UV" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ve" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/prefab/sunkenship/security)
+"WT" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line-broken1";
+	dir = 1
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "smear3"
+	},
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"XB" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5d"
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/sunkenship/security)
+"Yc" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadjunction_gray_4way"
+	},
+/area/prefab/sunkenship/security)
+"Yq" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6
+	},
+/area/prefab/sunkenship/security)
+"Yw" = (
+/obj/storage/closet/wardrobe/red/security_gimmick,
+/turf/simulated/floor,
+/area/prefab/sunkenship/security)
+"YI" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib5"
+	},
+/turf/simulated/floor/red/corner{
+	dir = 1
+	},
+/area/prefab/sunkenship/security)
+
+(1,1,1) = {"
+md
+md
+md
+dk
+pJ
+pJ
+hs
+md
+md
+md
+md
+md
+md
+"}
+(2,1,1) = {"
+md
+md
+md
+mQ
+sJ
+dh
+mQ
+md
+md
+md
+md
+md
+md
+"}
+(3,1,1) = {"
+md
+md
+md
+mQ
+NN
+nl
+mQ
+UV
+UV
+UV
+md
+md
+md
+"}
+(4,1,1) = {"
+md
+md
+md
+vu
+pJ
+zd
+hV
+hs
+jB
+UV
+md
+md
+md
+"}
+(5,1,1) = {"
+dk
+pJ
+pJ
+yT
+SI
+sD
+sa
+Ve
+hs
+UV
+md
+md
+md
+"}
+(6,1,1) = {"
+mQ
+nf
+sk
+gz
+xn
+vC
+Ep
+Yw
+mQ
+UV
+UV
+md
+md
+"}
+(7,1,1) = {"
+mQ
+Gi
+Au
+IF
+Bx
+ft
+mx
+Gr
+vu
+pJ
+pJ
+hs
+UV
+"}
+(8,1,1) = {"
+vu
+pJ
+pJ
+yT
+vQ
+en
+mx
+aW
+Qc
+Jg
+QI
+lv
+UV
+"}
+(9,1,1) = {"
+mQ
+nf
+XB
+gz
+eI
+jQ
+hd
+nm
+mQ
+ql
+bN
+mQ
+JJ
+"}
+(10,1,1) = {"
+mQ
+ld
+QK
+IF
+WT
+lQ
+Qb
+QF
+vu
+Rx
+Rx
+yT
+UV
+"}
+(11,1,1) = {"
+Ve
+pJ
+pJ
+yT
+Lq
+wp
+mx
+xy
+mQ
+PN
+fB
+mQ
+md
+"}
+(12,1,1) = {"
+md
+md
+md
+mQ
+do
+PM
+YI
+zW
+cv
+ba
+wA
+mQ
+md
+"}
+(13,1,1) = {"
+md
+md
+md
+Ve
+pJ
+ij
+oY
+pJ
+Yc
+pJ
+pJ
+Yq
+md
+"}
+(14,1,1) = {"
+md
+md
+md
+md
+UV
+UV
+UV
+UG
+UV
+md
+md
+md
+md
+"}
+(15,1,1) = {"
+md
+md
+md
+md
+md
+UV
+md
+md
+md
+md
+md
+md
+md
+"}

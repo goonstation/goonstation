@@ -1372,6 +1372,33 @@
 	icon_body = "seabee"
 	sleeping_icon_state = "seabee-sleep"
 
+/obj/critter/domestic_bee/sea/bart // from the sunken ship prefab
+	name = "li'l Bart Enrefield"
+	beeKid = rgb(247,43,28)
+	gender = MALE
+
+	New()
+		..()
+		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
+		hat_that_bee(src.hat)
+
+	attack_hand(mob/user)
+		if (src.alive)
+			var/mob/living/carbon/human/userhuman = user
+			if (istype(userhuman) && userhuman.mind && userhuman.mind.assigned_role == "Bartender") // bart ender
+				src.visible_message("<span class='alert'>[user] touches [src], causing \him to violently explode into [prob(90)?"subatomic particles":"apions"]! <b>OH GOD!!</b></span>")
+				make_fake_explosion(src)
+				qdel(src)
+				userhuman.add_karma(-15)
+				SPAWN(5 SECONDS)
+					if(ischangeling(userhuman))
+						boutput(userhuman, "<span class='notice'>We are in an unnatural state of guilt and mourning.</span>")
+					else
+						boutput(userhuman, "<span class='notice'>You feel incredibly guilty.</span>")
+				return
+		..()
+
+
 /obj/critter/domestic_bee/sonic
 	name = "sonic bee"
 	desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"

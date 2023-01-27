@@ -1556,6 +1556,27 @@ area/prefab/torpedo_deposit
 	name = "Torpedo Deposit"
 	icon_state = "purple"
 
+area/prefab/sunkenship
+	name = "Sunken Ship"
+	icon_state = "purple"
+
+	medbay
+		name = "Sunken Medbay"
+		icon_state = "purple"
+	security
+		name = "Sunken Security"
+		icon_state = "red"
+	engineering
+		name = "Sunken Engineering"
+		icon_state = "yellow"
+	bridge
+		name = "Sunken Bridge"
+		icon_state = "blue"
+
+area/prefab/pathologysite
+	name = "Derelcit Pathology Site"
+	icon_state = "green"
+
 // zewaka - vspace areas //
 ABSTRACT_TYPE(/area/sim)
 /area/sim
