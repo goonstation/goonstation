@@ -130,7 +130,6 @@ const PurchaseInfo = (_, context) => {
             <Button
               color="green"
               disabled={data.selectedItemCost > data.money}
-              icon="dollar-sign"
               onClick={() => act('purchase')}>
               {!(data.selectedItemCost > data.money) ? `Purchase` : `Insufficient Cash`}
             </Button>
