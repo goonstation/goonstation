@@ -129,15 +129,6 @@ datum
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
-		harmful/acid/barium_chloride
-			name = "barium chloride"
-			id = "barium_chloride"
-			description = "A corrosive powder."
-			fluid_r = 255
-			fluid_g = 255
-			fluid_b = 255
-			blob_damage = 1.1
-
 		harmful/acid/clacid
 			name = "hydrochloric acid"
 			id = "clacid"
@@ -240,6 +231,38 @@ datum
 						location = get_turf(my_atom)
 						explosion(my_atom, location, 0, 1, 4, 5)
 				..()
+
+		harmful/barium_chloride
+			name = "barium chloride"
+			id = "barium_chloride"
+			description = "A highly-toxic salt."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			depletion_rate = 1
+			blob_damage = 0.8
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				if (!M) M = holder.my_atom
+				M.take_toxin_damage(1 * mult)
+
+				target_organs = list("left_lung","right_lung","heart","left_kidney","right_kidney")
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.organHolder)
+						H.organHolder.damage_organs(0, 0, 1*mult, target_organs, 30)
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
+				. = ..()
+				if(method == TOUCH)
+					M.take_eye_damage(rand(1,6))
+					M.losebreath += 1 * mult
+				if(method == INGEST)
+					if (ishuman(M) || ismonkey(M))
+						var/mob/living/carbon/C = M
+						C.contract_disease(/datum/ailment/malady/hypokalemia, null, null, 1) // path, name, strain, bypass resist
 
 		harmful/coniine
 			name = "coniine" // big brother to cyanide, very strong

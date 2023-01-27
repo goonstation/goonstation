@@ -2295,15 +2295,6 @@ datum
 			required_reagents = list("chlorine" = 2, "barium" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture settles into a grainy white powder."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				var/location = get_turf(holder.my_atom)
-				for (var/mob/living/carbon/human/H in location)
-					if (ishuman(H))
-						if (!H.wear_mask)
-							boutput(H, "<span class='alert'>The corrosive powder burns you!</span>")
-							H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN)
-							H.emote("scream")
-				return
 
 		acid
 			name = "Sulfuric Acid" // COGWERKS CHEM REVISION PROJECT: This could be Fluorosulfuric Acid instead

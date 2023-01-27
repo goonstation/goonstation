@@ -154,6 +154,49 @@
 			if (probmult(5))
 				affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 
+/*------------------- Hypokalemia --------------------*/
+/datum/ailment/malady/hypokalemia
+	name = "Hypokalemia"
+	scantype = "Medical Concern"
+	max_stages = 2
+	recureprob = 90
+	info = "The patient has low potassium"
+	cure = "Potassium supplements"
+	affected_species = list("Human", "Monkey")
+	reagentcure = list("potassium")
+	stage_prob = 10
+
+/datum/ailment/malady/hypokalemia/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
+	if(..())
+		return
+	switch(D.stage)
+		if(1)
+			if (probmult(10))
+				affected_mob.emote(pick("tremble", "twitch", "yawn"))
+			if (probmult(9))
+				boutput(affected_mob, "<span class='alert'>You feel [pick("weak", "tired", "confused", "sore")].</span>")
+			if (probmult(4))
+				if (ishuman(affected_mob))
+					var/mob/living/carbon/human/H = affected_mob
+					H.changeStatus("drowsy", rand(1,3) SECONDS)
+		if(2)
+			if (probmult(9))
+				affected_mob.emote(pick("tremble", "twitch", "moan", "yawn"))
+			if (probmult(8))
+				boutput(affected_mob, "<span class='alert'>[pick("Your chest hurts!", "Your muscles ache!", "You feel exhausted.")]</span>")
+			if (probmult(10))
+				affected_mob.losebreath += (1 * mult)
+				affected_mob.reagents.add_reagent("anti_fart", 1 * mult)
+				if (ishuman(affected_mob))
+					var/mob/living/carbon/human/H = affected_mob
+					switch(rand(1,3))
+						if(1)
+							H.changeStatus("weakened", 2 SECONDS * mult)
+						if(2)
+							H.changeStatus("drowsy", rand(4,8) SECONDS)
+						if(3)
+							H.setStatusMin("paralysis", 1 SECONDS * mult)
+
 /*------------------- Hypoglycemia -------------------*/
 /datum/ailment/malady/hypoglycemia
 	name = "Hypoglycemia"
