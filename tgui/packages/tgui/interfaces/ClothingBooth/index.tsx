@@ -1,10 +1,13 @@
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { ClothingBoothData } from './type';
+
+import { capitalize } from '../common/stringUtils';
 
 export const ClothingBooth = (_, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<ClothingBoothData>(context);
   const categories = data.clothingBoothCategories || [];
 
   const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
@@ -70,7 +73,7 @@ export const ClothingBooth = (_, context) => {
 };
 
 const ClothingBoothItem = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ClothingBoothData>(context);
   const { item } = props;
 
   return (
@@ -86,7 +89,7 @@ const ClothingBoothItem = (props, context) => {
           <img src={`data:image/png;base64,${item.img}`} />
         </Stack.Item>
         <Stack.Item grow={1}>
-          <Box bold>{item.name}</Box>
+          <Box bold>{capitalize(item.name)}</Box>
         </Stack.Item>
         <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
       </Stack>
@@ -96,7 +99,7 @@ const ClothingBoothItem = (props, context) => {
 };
 
 const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ClothingBoothData>(context);
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
@@ -122,7 +125,7 @@ const CharacterPreview = (_, context) => {
 };
 
 const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ClothingBoothData>(context);
   return (
     <Stack bold vertical textAlign="center">
       {data.selectedItemName ? (
