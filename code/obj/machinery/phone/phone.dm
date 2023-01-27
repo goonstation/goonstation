@@ -285,6 +285,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.ringing = FALSE
 		src.handset = null
 		src.icon_state = "[phone_icon]"
+		tgui_process.close_uis(src)
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
