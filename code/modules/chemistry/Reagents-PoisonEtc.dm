@@ -1138,7 +1138,7 @@ datum
 		harmful/hydrogen_sulfide
 			name = "hydrogen sulfide"
 			id = "hydrogen_sulfide"
-			description = "A dangerous asphyxiant substance that inhibits celular respiration."
+			description = "A dangerous asphyxiant substance that inhibits cellular respiration."
 			reagent_state = SOLID
 			fluid_r = 255
 			fluid_g = 255
