@@ -13333,6 +13333,10 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aNb" = (
@@ -17485,6 +17489,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -17872,6 +17879,10 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -18672,6 +18683,10 @@
 /obj/decal/tile_edge/line/white{
 	dir = 10;
 	icon_state = "line2"
+	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -25931,17 +25946,14 @@
 	},
 /area/station/solar/east)
 "bNj" = (
-/obj/disposalpipe/segment{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/turf/simulated/floor/purplewhite,
+/area/station/medical/medbay/pharmacy)
 "bNm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28002,6 +28014,9 @@
 /obj/machinery/chem_master{
 	pixel_y = 5
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "dXn" = (
@@ -28857,11 +28872,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -36661,6 +36672,10 @@
 /area/station/maintenance/central)
 "muw" = (
 /obj/firedoor_spawn,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mvl" = (
@@ -36904,6 +36919,10 @@
 /obj/item/reagent_containers/glass/beaker/large/brute,
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/glass/beaker/large/antitox,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 8
 	},
@@ -36918,6 +36937,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "mHm" = (
@@ -41157,12 +41177,7 @@
 /obj/cable{
 	dir = null
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	noalerts = 1;
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "raQ" = (
@@ -41415,6 +41430,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"rlM" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/pharmacy)
 "rlN" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -43138,6 +43164,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/medical/medbay/pharmacy)
 "tgr" = (
@@ -44360,15 +44390,6 @@
 	},
 /area/station/hallway/primary/east)
 "urZ" = (
-/obj/machinery/power/apc{
-	areastring = "Pharmacy";
-	dir = 1;
-	name = "Pharmacy APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -73357,7 +73378,7 @@ aAX
 aBT
 axS
 urZ
-bNj
+keH
 aPd
 aQA
 cFO
@@ -73890,9 +73911,9 @@ aVb
 aYU
 aGe
 bbq
-bcE
+rlM
 dWA
-aKG
+bNj
 tfJ
 bjI
 vDT
