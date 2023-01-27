@@ -20956,6 +20956,7 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/engineering)
 "bvP" = (
