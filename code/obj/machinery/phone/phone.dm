@@ -218,23 +218,39 @@ TYPEINFO(/obj/machinery/phone)
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/phonebook = list()
+		var/list/list/list/phonebook = list()
 		for_by_tcl(P, /obj/machinery/phone)
-			if (P.unlisted) continue
-			var/list/this_phone_data = list(
-				"category" = P.phone_category,
-				"id" = P.phone_id
-			)
-			phonebook += list(this_phone_data)
-		sortList(phonebook, /proc/cmp_phone_data)
+			var/match_found = FALSE
+			if(P.unlisted) continue
+			if(length(phonebook))
+				for(var/i in 1 to length(phonebook))
+					if(phonebook[i]["category"] == P.phone_category)
+						match_found = TRUE
+						phonebook[i]["phones"] += list(list(
+							"id" = P.phone_id
+						))
+						break
+			if(!match_found)
+				phonebook += list(list(
+					"category" = P.phone_category,
+					"color" = P.stripe_color,
+					"phones" = list(list(
+						"id" = P.phone_id
+					))
+				))
+		for(var/i in 1 to length(phonebook))
+			var/list/list_to_sort = phonebook[i]["phones"]
+			sortList(list_to_sort, /proc/cmp_phone_data)
+			phonebook[i]["phones"] = list_to_sort
 
 		. = list(
 			"dialing" = src.dialing,
 			"inCall" = src.linked,
 			"lastCaller" = src.last_caller,
-			"name" = src.name,
-			"phonebook" = phonebook,
+			"name" = src.name
 		)
+
+		.["phonebook"] = phonebook
 
 	ui_act(action, params)
 		. = ..()
