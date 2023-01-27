@@ -33939,6 +33939,10 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/station/security/brig)
+"jMr" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "jMs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34793,6 +34797,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "kBA" = (
@@ -71903,7 +71908,7 @@ hff
 pBl
 wdS
 bbd
-bpL
+jMr
 bvj
 hUG
 goz
