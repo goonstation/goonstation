@@ -751,7 +751,10 @@ var/flock_signal_unleashed = FALSE
 			src.center_marker.alpha = 0
 			for (var/turf/T in range(3, src.center_marker))
 				for (var/atom/A in T)
-					if (A.density)
+					if (ismob(A))
+						var/mob/M = A
+						M.gib()
+					else if (A.density)
 						qdel(A)
 				T.ReplaceWith(/turf/simulated/floor/feather)
 			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
