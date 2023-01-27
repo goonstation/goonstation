@@ -255,14 +255,14 @@ TYPEINFO(/obj/machinery/phone)
 			if ("call")
 				if(src.dialing == TRUE || src.linked)
 					return
+				. = TRUE
+				src.add_fingerprint(usr)
 				var/id = params["target"]
 				for_by_tcl(P, /obj/machinery/phone)
 					if(P.phone_id == id)
 						src.call_other(P)
 						return
 				boutput(usr, "<span class='alert'>Unable to connect!</span>")
-		src.add_fingerprint(usr)
-		. = TRUE
 
 	update_icon()
 		. = ..()
