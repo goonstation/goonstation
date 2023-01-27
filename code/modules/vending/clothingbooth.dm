@@ -168,9 +168,11 @@ var/list/clothingbooth_paths = list()
 		.["clothingBoothCategories"] = clothingbooth_stock
 
 	ui_data(mob/user)
+		var/icon/preview_icon = src.preview.get_icon()
 		. = list(
 			"money" = src.money,
-			"preview" = src.preview?.preview_id,
+			"previewIcon" = icon2base64(preview_icon),
+			"previewHeight" = preview_icon.Height(),
 			"previewItem" = src.preview_item,
 			"selectedItemCost" = src.item_to_purchase?.cost,
 			"selectedItemName" = src.item_to_purchase?.name

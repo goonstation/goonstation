@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, Divider, Dropdown, Section, Stack } from '../../components';
+import { Box, Button, Divider, Dropdown, Section, Stack, Image } from '../../components';
 import { Window } from '../../layouts';
 import { ClothingBoothData } from './type';
 
@@ -103,13 +103,7 @@ const CharacterPreview = (_, context) => {
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
-        <ByondUi
-          params={{
-            id: data.preview,
-            type: 'map',
-          }}
-          className="clothingbooth__preview"
-        />
+        <Image height={data.previewHeight * 2 + "px"} pixelated src={`data:image/png;base64,${data.previewIcon}`} />
       </Stack.Item>
       <Stack.Item>
         <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />

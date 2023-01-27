@@ -2,7 +2,8 @@ export interface ClothingBoothData {
   clothingBoothCategories: ClothingBoothCategory[];
   money: number;
   name: string;
-  preview: string;
+  previewHeight: number;
+  previewIcon: string;
   selectedItemCost: number;
   selectedItemName: string;
 }
