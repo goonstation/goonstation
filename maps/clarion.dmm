@@ -34792,6 +34792,7 @@
 	name = "Medical Doctor"
 	},
 /obj/disposalpipe/segment,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "kBA" = (
