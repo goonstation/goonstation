@@ -998,11 +998,14 @@ TYPEINFO(/obj/machinery/networked/storage)
 			return
 
 	update_icon()
-		src.overlays = null
 		if(tank1) //Update tank overlays.
-			src.overlays += image(src.icon,"bscanner-tank1")
+			UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
+		else
+			UpdateOverlays(null, "tank1")
 		if(tank2)
-			src.overlays += image(src.icon,"bscanner-tank2")
+			UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
+		else
+			UpdateOverlays(null, "tank2")
 
 		if(status & BROKEN)
 			icon_state = "bomb_scannerb"
@@ -2130,9 +2133,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return
 
 	update_icon()
-		src.overlays = null
 		if(src.jam) //Update jam overlay.
-			src.overlays += image(src.icon,"printer-jamoverlay")
+			src.UpdateOverlays(image(src.icon,"printer-jamoverlay"), "jam")
+		else
+			src.UpdateOverlays(null, "jam")
 
 		if(status & BROKEN)
 			icon_state = "printerb"
@@ -4010,9 +4014,10 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br><b>Wattage:</b> [src.wattage]W<br><b>Voltage:</b> [src.voltage]V"
 
 	update_icon()
-		src.overlays = null
 		if (src.contents.len)
-			src.overlays += image('icons/obj/networked.dmi', "elecbox-doors")
+			src.UpdateOverlays(image('icons/obj/networked.dmi', "elecbox-doors"), "doors")
+		else
+			src.UpdateOverlays(null, "doors")
 		..()
 
 	process()
@@ -4226,8 +4231,10 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br>Radiation Strength:</b> [src.radstrength * 10]%"
 
 	update_icon()
-		src.overlays = null
-		if (src.contents.len) src.overlays += image('icons/obj/networked.dmi', "xray-lid")
+		if (src.contents.len)
+			src.UpdateOverlays(image('icons/obj/networked.dmi', "xray-lid"), "lid")
+		else
+			src.UpdateOverlays(null, "lid")
 		..()
 
 	attackby(var/obj/item/I, mob/user)
@@ -4430,7 +4437,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return "<b>Active:</b> [src.active ? "YES" : "NO"]<br><br>Target Temperature:</b> [src.temptarget]K<br>Current Temperature:</b> [src.temperature]K"
 
 	update_icon()
-		src.overlays = null
 		switch(src.temperature)
 			if (371 to INFINITY)
 				heat_overlay.icon_state = "heat+3"
@@ -4446,7 +4452,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
-		src.overlays += heat_overlay
+		src.UpdateOverlays(heat_overlay, "heat")
 		..()
 
 	attackby(var/obj/item/I, mob/user)
