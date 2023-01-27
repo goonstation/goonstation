@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/dialicon = "phone_dial"
 	var/phone_icon = "phone"
 	var/ringing_icon = "phone_ringing"
-	var/last_caller = null
+	var/last_called = null
 	var/phone_category = null
 	var/phone_id = null
 	var/stripe_color = null
@@ -233,20 +233,15 @@ TYPEINFO(/obj/machinery/phone)
 			if(!match_found)
 				phonebook += list(list(
 					"category" = P.phone_category,
-					"color" = P.stripe_color,
 					"phones" = list(list(
 						"id" = P.phone_id
 					))
 				))
-		for(var/i in 1 to length(phonebook))
-			var/list/list_to_sort = phonebook[i]["phones"]
-			sortList(list_to_sort, /proc/cmp_phone_data)
-			phonebook[i]["phones"] = list_to_sort
 
 		. = list(
 			"dialing" = src.dialing,
 			"inCall" = src.linked,
-			"lastCaller" = src.last_caller,
+			"lastCalled" = src.last_called,
 			"name" = src.name
 		)
 
@@ -285,7 +280,6 @@ TYPEINFO(/obj/machinery/phone)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
-			src.linked.last_caller = src.unlisted ? "Undisclosed" : "[src.phone_id]"
 			src.linked = null
 		src.ringing = FALSE
 		src.handset = null
@@ -301,6 +295,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.dialing = TRUE
 		tgui_process?.update_uis(src)
 		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
+		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || !target.connected)
@@ -314,6 +309,7 @@ TYPEINFO(/obj/machinery/phone)
 			src.ringing = TRUE
 			src.linked.ringing = TRUE
 			src.dialing = FALSE
+			src.linked.last_called = src.unlisted ? "Undisclosed" : "[src.phone_id]"
 			return
 
 /obj/machinery/phone/custom_suicide = TRUE
