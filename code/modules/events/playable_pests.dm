@@ -1,6 +1,7 @@
 /datum/random_event/major/player_spawn/pests
 	name = "Pests (playable)"
 	customization_available = 1
+	targetable = TRUE
 	var/num_pests = 0 //custom critter limit
 	var/pest_type = null //custom critter path
 
@@ -42,6 +43,31 @@
 		else
 			cleanup()
 
+	proc/get_spawn_loc()
+		if (src.custom_spawn_turf)
+			return src.custom_spawn_turf
+
+		var/list/EV = list()
+
+		if (length(landmarks[LANDMARK_PESTSTART]))
+			EV += landmarks[LANDMARK_PESTSTART]
+		if (length(landmarks[LANDMARK_MONKEY]))
+			EV += landmarks[LANDMARK_MONKEY]
+		if (length(landmarks[LANDMARK_BLOBSTART]))
+			EV += landmarks[LANDMARK_BLOBSTART]
+		if (length(landmarks[LANDMARK_KUDZUSTART]))
+			EV += landmarks[LANDMARK_KUDZUSTART]
+		EV += job_start_locations["Clown"]
+
+		if(!EV.len)
+			EV += landmarks[LANDMARK_LATEJOIN]
+			if (!EV.len)
+				message_admins("Pests event couldn't find any valid landmarks!")
+				logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
+				src.cleanup()
+				return
+		return pick(EV)
+
 	event_effect(var/source)
 		..()
 
@@ -57,27 +83,8 @@
 
 
 		if (candidates.len)
-			var/list/EV = list()
+			var/atom/pestlandmark = src.get_spawn_loc()
 
-			if (length(landmarks[LANDMARK_PESTSTART]))
-				EV += landmarks[LANDMARK_PESTSTART]
-			if (length(landmarks[LANDMARK_MONKEY]))
-				EV += landmarks[LANDMARK_MONKEY]
-			if (length(landmarks[LANDMARK_BLOBSTART]))
-				EV += landmarks[LANDMARK_BLOBSTART]
-			if (length(landmarks[LANDMARK_KUDZUSTART]))
-				EV += landmarks[LANDMARK_KUDZUSTART]
-			EV += job_start_locations["Clown"]
-
-			if(!EV.len)
-				EV += landmarks[LANDMARK_LATEJOIN]
-				if (!EV.len)
-					message_admins("Pests event couldn't find any valid landmarks!")
-					logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
-					src.cleanup()
-					return
-
-			var/atom/pestlandmark = pick(EV)
 			var/list/select = list()
 			if (src.pest_type) //customized
 				select += src.pest_type
@@ -110,4 +117,5 @@
 	cleanup()
 		src.num_pests = 0
 		src.pest_type = null
+		src.custom_spawn_turf = null
 
