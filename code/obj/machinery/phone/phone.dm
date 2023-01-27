@@ -262,6 +262,7 @@ TYPEINFO(/obj/machinery/phone)
 						return
 				boutput(usr, "<span class='alert'>Unable to connect!</span>")
 		src.add_fingerprint(usr)
+		. = TRUE
 
 	update_icon()
 		. = ..()
