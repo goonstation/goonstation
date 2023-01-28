@@ -4308,7 +4308,7 @@ var/global/noir = 0
 		if (current_state >= GAME_STATE_PLAYING)
 			dat += "Current Mode: [ticker.mode.name], Timer at [round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]<br>"
 			if (src.level >= LEVEL_MOD)
-				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A><br>"
+				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A> - Next: [next_round_mode]<br>"
 			if (emergency_shuttle.online)
 				dat += "<a href='?src=\ref[src];action=call_shuttle&type=2'><b>Shuttle Status:</b></a> <a href='?src=\ref[src];action=edit_shuttle_time'>[shuttletext]</a>"
 			else
