@@ -156,6 +156,7 @@ TYPEINFO(/obj/machinery/vending)
 		src.panel_image = image(src.icon, src.icon_panel)
 		if (!src.chat_text)
 			src.chat_text = new
+		src.vis_contents += src.chat_text
 	var/lastvend = 0
 
 	disposing()
@@ -858,7 +859,7 @@ TYPEINFO(/obj/machinery/vending)
 		else
 			text_out = message
 		slogan_text = make_chat_maptext(src, text_out, "color: [src.slogan_text_color];", alpha = src.slogan_text_alpha)
-		if (slogan_text && src.chat_text)
+		if (slogan_text && src.chat_text && length(src.chat_text.lines))
 			slogan_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
 				if (I != slogan_text)
