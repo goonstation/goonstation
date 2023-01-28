@@ -15,6 +15,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
 	var/max_wclass = W_CLASS_NORMAL
+	var/fed_ice = FALSE // hungy
 
 	New()
 		..()
@@ -23,6 +24,11 @@ TYPEINFO(/obj/machinery/deep_fryer)
 
 		reagents.add_reagent("grease", 25)
 		reagents.set_reagent_temp(src.frytemp)
+
+	get_desc()
+		. = ..()
+		if (HAS_FLAG(status, BROKEN))
+			. += " It looks broken."
 
 	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
@@ -36,6 +42,9 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks/shell/deepfry))
 			boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
+			return
+		if (HAS_FLAG(status, BROKEN))
+			boutput(user, "<span class='alert'>It looks like the fryer is broken!</span>")
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
@@ -80,8 +89,10 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.dropped(user)
+		W.add_fingerprint(user)
 		src.start_frying(W)
 		SubscribeToProcess()
+		src.check_hunger(user, W)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
@@ -138,6 +149,17 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			src.cooktime++
 
 		if (src.fryitem.material?.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+			if (ismob(fed_ice)) // have we asked someone for ice?
+				var/mob/ice_feeder = fed_ice
+				fed_ice = TRUE
+				var/msg = "Oh, now I can die a warrior's death! Thank you!"
+				src.audible_message("<span class='game radio' style='color: #e8ae2a'>\
+						<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>",
+						assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
+				ADD_FLAG(src.status, BROKEN)
+				ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.fingerprintslast) // in case someone else had to fufill, no direct ref
+				ice_feeder?.unlock_medal("Deep Freeze", TRUE)
+
 			qdel(src.fryitem)
 			src.fryitem = null
 			src.visible_message("<span class='alert'>The ice reacts violently with the hot oil!</span>")
@@ -289,3 +311,21 @@ TYPEINFO(/obj/machinery/deep_fryer)
 				src.visible_message("<span class='alert'>[usr] drains and refreshes the frying oil!</span>")
 
 		return
+
+/// Shivers: You notice the fryer looks famished, needing to consume ice - VxnipVk6j5A
+/obj/machinery/deep_fryer/proc/check_hunger(mob/M, obj/item/W)
+	if (!M.client || (src.fed_ice != FALSE)) // no monke sry
+		return
+	var/shivers = 1
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
+			shivers = 3
+	if (prob(0.03 * shivers))
+		fed_ice = M // asked this mob
+		src.name = "Absolutely Famished [src.name]"
+		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"
+		boutput(M, "<span class='game radio' style='color: #e8ae2a'>\
+			<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>")
+		var/image/chat_maptext/maptext = make_chat_maptext(src, msg, "color: #e8ae2a;")
+		maptext.show_to(M.client)
