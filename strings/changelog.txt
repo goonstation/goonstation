@@ -1,5 +1,25 @@
 
+(t)fri jan 27 23
+(u)Kubius
+(p)12721
+(e)🗺|A-Mapping
+(+)Donut 2 is now equipped with an interdictor crate for all your spatial phenomena needs.
+(u)LeahTheTech
+(+)Josh now buys HoS boots for a decent price.
+(t)wed jan 25 23
+(u)LeahTheTech
+(+)Thick blob membranes now properly displace fluids.
 (t)tue jan 24 23
+(u)Amylizzle
+(p)12869
+(e)🎨|C-Sprites
+(*)Oh no, that white hole connects to a nuclear reactor!
+(u)pali
+(+)You can now clickdrag crates onto custom vending machines to load stuff from them en masse. Clicking on the machine with a satchel will now also work correctly.
+(u)Tyrant
+(p)12728
+(e)🗺💅|A-Mapping, C-QoL
+(+)Engine room cables are now brown, solar cabling is now all in a consistent yellow, and PTL cables are black across all maps.
 (u)Tanker
 (p)12805
 (e)🗺|A-Mapping

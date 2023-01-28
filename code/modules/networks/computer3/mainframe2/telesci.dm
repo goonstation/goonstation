@@ -48,6 +48,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
+	power_usage = 200
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -408,6 +409,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		return
 
 	process()
+		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
 				qdel(start_portal)
@@ -417,8 +419,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				badreceive()
 
 			return
-
-		use_power(200)
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
