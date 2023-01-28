@@ -456,12 +456,14 @@
 		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
 			return TRUE // floor running drones can *always* pass through flockwalls
 
-	if(T.passability_cache != null && !options[POP_IGNORE_CACHE])
-		return T.passability_cache
-	if(T.density || !T.pathable)
-		return FALSE
 	var/direction = get_dir(source, T)
 	if(!direction)
+		return FALSE
+	if(T.passability_cache != null && !options[POP_IGNORE_CACHE] \
+			&& !T.pass_unstable && !source.pass_unstable && \
+			is_cardinal(direction))
+		return T.passability_cache
+	if(T.density || !T.pathable)
 		return FALSE
 	if(!is_cardinal(direction))
 		var/turf/corner_1 = get_step(source, turn(direction, 45))
@@ -494,10 +496,10 @@
 					else
 						return FALSE
 		if(!A.Cross(passer))
-			if(!T.pass_unstable)
+			if(!T.pass_unstable && !source.pass_unstable)
 				T.passability_cache = FALSE
 			return FALSE
-	if(!T.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
+	if(!T.pass_unstable && !source.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
 		T.passability_cache = .
 
 #undef CAN_STEP
