@@ -480,6 +480,77 @@ datum
 				if (istype(B, /obj/blob/lipid))
 					B.take_damage(B.health_max, 2, "chaos")
 
+		harmful/dinitrophenol
+			name = "dinitrophenol"
+			id = "dinitrophenol"
+			description = "A highly toxic compound, once proposed for weight loss, that turned out to be much better suited to striking down than slimming down."
+			reagent_state = LIQUID
+			fluid_r = 220
+			fluid_g = 210
+			fluid_b = 160
+			transparency = 200
+			depletion_rate = 0.3
+			target_organs = list("stomach", "intestines")
+			threshold = THRESHOLD_INIT
+			var/is_syndicate = FALSE
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.client && (istraitor(M) || isspythief(M)))
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "dinitrophenol", 5)
+						is_syndicate = TRUE
+					else
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "dinitrophenol", -2)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "dinitrophenol")
+				..()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+
+				flush(M, 5 * mult)
+				if (!is_syndicate)
+					if (M.nutrition > 120) // can be easily confused for lipolicide if the target is well fed
+						if (prob(30))
+							switch(rand(1,2))
+								if (1)
+									boutput(M, "<span class='alert'>You feel hungry...</span>")
+								if (2)
+									M.take_toxin_damage(1 * mult)
+									boutput(M, "<span class='alert'>Your stomach grumbles painfully!</span>")
+
+					else if (M.nutrition < 20 || prob(clamp(120 - M.nutrition, 0, 100)))
+						M.take_toxin_damage(3 * mult)
+						switch(rand(1,3))
+							if (1)
+								if (prob(50))
+									boutput(M, "<span class='alert'>You're dying of hunger!</span>")
+								M.take_toxin_damage(rand(5,10) * mult)
+							if (2)
+								if (prob(50))
+									boutput(M, "<span class='alert'>You feel a horrendous pain in your stomach!</span>")
+								M.setStatusMin("weakened", 2 SECONDS * mult)
+							if (3)
+								if (prob(50))
+									boutput(M, "<span class='alert'>The hunger is making you feel faint...</span>")
+								M.change_eye_blurry(5, 25)
+								M.change_misstep_chance(15 * mult)
+
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (H.organHolder)
+							H.organHolder.damage_organs(0, 0, 2*mult, target_organs, 75)
+
+					var/fat_to_burn = max(round(M.nutrition/40,1), 5) * mult
+					M.nutrition = max(M.nutrition-fat_to_burn,-50)
+				..()
+				return
+
 		harmful/initropidril
 			name = "initropidril"
 			id = "initropidril"

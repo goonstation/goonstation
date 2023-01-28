@@ -90,9 +90,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 /obj/item/reagent_containers/food/snacks/condiment/syndisauce
 	name = "syndicate sauce"
 	desc = "Traitorous tang."
-	icon_state = "sachet-cold"
-	initial_volume = 100
-	initial_reagents = list("amanitin"=50)
+	icon_state = "sachet-syndie"
+	initial_volume = 50
+	initial_reagents = "dinitrophenol"
 
 /obj/item/reagent_containers/food/snacks/condiment/cream
 	name = "cream"
