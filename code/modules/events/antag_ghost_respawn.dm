@@ -339,7 +339,7 @@
 						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
-						role = ROLE_HUNTER
+						role = ROLE_CHANGELING
 					else
 						failed = 1
 
