@@ -1154,7 +1154,11 @@ datum
 				if (!M) M = holder.my_atom
 				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
                                                                                         //the target goes up with time
-				switch(counter+= (1 * mult))
+				if(M.reagents?.has_reagent("perfluorodecalin")) //perf slows down the proggression
+					counter+= (0.75 * mult)
+				else
+					counter+= (1 * mult)
+				switch(counter)
 					if (6 to 12)
 						if(probmult(5))
 							M.emote(pick("cough", "gasp"))
