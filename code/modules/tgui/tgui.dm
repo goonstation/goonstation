@@ -93,6 +93,7 @@
 		with_data = TRUE,
 		with_static_data = TRUE))
 	tgui_process.on_open(src)
+	SEND_SIGNAL(user, COMSIG_TGUI_WINDOW_OPEN, src)
 
 /**
  * public
@@ -205,6 +206,7 @@
 			"size" = window_size,
 			"fancy" = user.client.preferences.tgui_fancy,
 			"locked" = user.client.preferences.tgui_lock,
+			"mode" = user.client.darkmode ? "dark" : "light", // |GOONSTATION-ADD|
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,

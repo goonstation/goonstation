@@ -18,6 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
+	var/can_recycle = FALSE //can this be put in a glass recycler?
 	move_triggered = 1
 	var/last_new_initial_reagents = 0 //fuck
 
@@ -110,6 +111,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
 proc/ui_describe_reagents(atom/A)
+	if (!istype(A))
+		return null
 	var/datum/reagents/R = A.reagents
 	var/list/thisContainerData = list(
 		name = A.name,
@@ -148,7 +151,7 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	var/can_recycle = TRUE //can this be put in a glass recycler?
+	can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
@@ -436,7 +439,8 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

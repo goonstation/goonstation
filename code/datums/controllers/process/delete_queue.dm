@@ -186,13 +186,14 @@ var/global/harddel_count = 0
 
 		#ifdef UPSCALED_MAP //this causes a ton of lag. no clue why.
 		return
-		#endif
+		#else
 
 		L.lying = FALSE
 		L.dir = SOUTH
 		L.invisibility = INVIS_NONE
 		L.update_lying()
 		put_mob_in_centcom_cloner(L, indirect=TRUE)
+		#endif
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG

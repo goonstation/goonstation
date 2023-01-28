@@ -49,7 +49,7 @@
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
 			sticker.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
 			sticker.icon_state = src.icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			//pox = clamp(-round(A.bound_width/2), pox, round(A.bound_width/2))
 			//poy = clamp(-round(A.bound_height/2), pox, round(A.bound_height/2))
@@ -143,9 +143,9 @@
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -234,7 +234,7 @@
 		..()
 
 	disposing()
-		src.remove_from_attached()
+		src.remove_from_attached(do_loc = FALSE)
 		..()
 
 	set_loc(newloc)

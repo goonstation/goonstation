@@ -481,8 +481,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/splash_all_contents = 1
 	doants = 0
 	throw_speed = 1
-	var/can_recycle = 1
+	can_recycle = TRUE
 	var/can_chug = 1
+	var/is_sealed = FALSE
 
 	New()
 		..()
@@ -617,6 +618,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
 	// still copy paste btw
 	afterattack(obj/target, mob/user , flag)
+		if (is_sealed)
+			boutput(user, "<span class='alert'>[src] is sealed.</span>")
+			return
 		user.lastattacked = target
 		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
@@ -690,7 +694,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			reagents.physical_shock(14)
-
 			var/splash_volume
 			if (src.splash_all_contents)
 				splash_volume = src.reagents.maximum_volume
