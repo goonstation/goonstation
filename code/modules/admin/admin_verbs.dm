@@ -1994,7 +1994,7 @@ var/list/fun_images = list()
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
 		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
-		newHTML = input("Upload that file!", "Upload that file!") as file
+		newHTML = input("Upload that file!", "Upload that file!") as file|null
 		if(newHTML)
 			newHTML = file2text(newHTML)
 	if(newHTML)
