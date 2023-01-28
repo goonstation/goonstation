@@ -9,7 +9,7 @@ import { useBackend } from '../../backend';
 import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../../components';
 import { capitalize } from '../common/stringUtils';
 import { Window } from '../../layouts';
-import { PhoneData } from './type';
+import { PhoneData, Phonebook } from './type';
 
 const CategoryColors = [
   { department: 'bridge', color: 'green' },
@@ -47,7 +47,7 @@ export const Phone = (props, context) => {
           <Stack.Item grow={1}>
             <Section title="Phonebook" fill scrollable>
               {phonebook.map((category) => (
-                <AddressGroup key={category.category} category={category} />
+                <AddressGroup key={category.category} phonebook={category} />
               ))}
             </Section>
           </Stack.Item>
@@ -57,14 +57,17 @@ export const Phone = (props, context) => {
   );
 };
 
-const AddressGroup = (props, context) => {
+type AddressGroupProps = {
+  phonebook: Phonebook;
+};
+
+const AddressGroup = ({ phonebook }: AddressGroupProps, context) => {
   const { act } = useBackend<PhoneData>(context);
-  const { category } = props;
-  const categoryName = capitalize(category.category);
-  const phones = category.phones.sort(idSort);
+  const categoryName = capitalize(phonebook.category);
+  const phones = phonebook.phones.sort(idSort);
 
   const getCategoryColor
-    = CategoryColors[CategoryColors.findIndex(({ department }) => department === category.category)].color;
+    = CategoryColors[CategoryColors.findIndex(({ department }) => department === phonebook.category)].color;
 
   return (
     <Collapsible title={categoryName} color={!!getCategoryColor && getCategoryColor}>
