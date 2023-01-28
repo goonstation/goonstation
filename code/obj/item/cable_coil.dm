@@ -96,6 +96,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return 0
 		amount -= used
 		if (src.amount <= 0)
+			if (currently_laying && usr)
+				UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 			return 1
 		else
@@ -107,6 +109,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	update_icon()
 		if (amount <= 0)
+			if (currently_laying && ismob(src.loc))
+				UnregisterSignal(src.loc, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)
 			set_icon_state("coil[amount][iconmod]")
