@@ -7,6 +7,7 @@
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
 	anchored = 1
+	power_usage = 100
 	density = 0
 	flags = NOSPLASH
 	plane = PLANE_NOSHADOW_BELOW
@@ -254,8 +255,7 @@
 		if(status & NOPOWER)			// won't charge if no power
 			return
 
-		use_power(100)		// base power usage
-
+		..()
 		if(mode != 1)		// if off or ready, no need to charge
 			return
 		return
@@ -390,7 +390,7 @@
 		if(status & NOPOWER)			// won't charge if no power
 			return
 
-		use_power(100)		// base power usage
+		..()
 
 		if(mode == 1)
 			mode = 2

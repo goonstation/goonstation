@@ -461,9 +461,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateIcon()
 			update_name()
 
-		if(!HAS_FLAG(status, NOPOWER))
-			use_power(power_usage)
-
 	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
@@ -1839,6 +1836,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 TYPEINFO(/obj/machinery/hydro_growlamp)
 	mats = 6
 
+#define ACTIVE_POWER_USAGE 100
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
@@ -1848,7 +1846,6 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 	anchored = 0
 	var/active = 0
 	var/datum/light/light
-	power_usage = 100
 
 	New()
 		..()
@@ -1874,7 +1871,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
-			use_power(power_usage)
+			use_power(ACTIVE_POWER_USAGE)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
@@ -1903,6 +1900,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
 
+#undef ACTIVE_POWER_USAGE
 TYPEINFO(/obj/machinery/hydro_mister)
 	mats = 6
 

@@ -29,7 +29,6 @@
 	..()
 	if(status & (NOPOWER|BROKEN))
 		return
-	use_power(250)
 	src.updateDialog()
 	return
 
