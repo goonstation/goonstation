@@ -87,6 +87,8 @@ TYPEINFO(/obj/machinery/vending)
 	var/last_slogan = 0 //When did we last pitch?
 	var/slogan_delay = 600 //How long until we can pitch again?
 	var/slogan_chance = 5
+	var/slogan_text_alpha = 140
+	var/slogan_text_color = "#C2BEBE"
 
 	//Icons
 	var/icon_panel = "generic-panel"
@@ -152,6 +154,8 @@ TYPEINFO(/obj/machinery/vending)
 		light.set_color(light_r, light_g, light_b)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
+		if (!src.chat_text)
+			src.chat_text = new
 	var/lastvend = 0
 
 	disposing()
@@ -846,11 +850,24 @@ TYPEINFO(/obj/machinery/vending)
 	if (!message)
 		return
 
-	for (var/mob/O in hearers(src, null))
+	var/image/chat_maptext/slogan_text
+	if (istype(src.loc, /turf))
+		var/text_out
 		if (src.glitchy_slogans)
-			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+			text_out = voidSpeak(message)
 		else
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			text_out = message
+		slogan_text = make_chat_maptext(src, text_out, "color: [src.slogan_text_color];", alpha = src.slogan_text_alpha)
+		if (slogan_text && src.chat_text)
+			slogan_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != slogan_text)
+					I.bump_up(slogan_text.measured_height)
+
+	if (src.glitchy_slogans)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2, assoc_maptext = slogan_text)
+	else
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = slogan_text)
 
 	return
 
