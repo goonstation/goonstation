@@ -170,7 +170,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (src.cooktime < 60)
 		if (src.cooktime == 30)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			src.visible_message("<span class='notice'>[src] dings!</span>")
+			src.audible_message("<span class='notice'>[src] dings!</span>")
 		else if (src.cooktime == 60) //Welp!
 			src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")
 	else if(src.cooktime >= 120)
