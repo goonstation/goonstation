@@ -197,7 +197,7 @@
 	var/block_it_up = TRUE
 	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		for(var/obj/stool/stool_candidate in src.loc)
-			if (stool_candidate.buckle_in(src, src, 1))
+			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
 				break //found one, no need to continue
 
@@ -1100,7 +1100,7 @@
 	if (sims) //this is still a thing. huh.
 		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
 
-///multipler to unarmed damage recieved
+///multipler to unarmed damage received
 /mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
 	SHOULD_CALL_PARENT(TRUE)
 	return 1

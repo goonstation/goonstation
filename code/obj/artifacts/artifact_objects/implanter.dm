@@ -53,8 +53,6 @@
 				var/wizardImp = pick(/obj/item/implant/artifact/wizard/wizard_good, /obj/item/implant/artifact/wizard/wizard_gimmick, /obj/item/implant/artifact/wizard/wizard_bad)
 				imp = new wizardImp
 
-		H.implant.Add(imp)
-		imp.set_loc(H)
 		imp.implanted(H, H)
 
 		O.ArtifactFaultUsed(H)

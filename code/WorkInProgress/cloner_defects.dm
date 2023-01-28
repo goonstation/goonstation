@@ -66,6 +66,8 @@
 
 	/// Add a cloner defect of the given severity
 	proc/add_cloner_defect(severity)
+		if (!severity)
+			CRASH("Tried to add cloner defect with falsy severity [isnull(severity) ? "NULL" : severity].")
 		var/picked
 		var/is_valid = FALSE
 		while (!is_valid)
@@ -73,13 +75,12 @@
 			// If the picked defect can stack, pass automatically. If it can't stack, check if we have it already; if not, pass.
 			is_valid = initial(picked:stackable) || !src.has_defect(picked)
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
-		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 
 	/// Add a cloner defect, rolling severity according to weights
-	proc/add_random_cloner_defect()
+	proc/add_random_cloner_defect(var/severity_override)
 		var/static/list/severity_weights = list(CLONER_DEFECT_SEVERITY_MINOR=CLONER_DEFECT_PROB_MINOR,
 												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR)
-		src.add_cloner_defect(weighted_pick(severity_weights))
+		src.add_cloner_defect(severity_override || weighted_pick(severity_weights))
 
 	/// Debug proc- add a cloner defect of a specific type.
 	proc/add_specific_cloner_defect(type)
@@ -143,6 +144,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 		if (!istype(target))
 			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
+		logTheThing(LOG_COMBAT, src.owner, "gained the [src] cloner defect. Data: [json_encode(src.data)]")
 		src.on_add()
 
 	disposing()
@@ -317,6 +319,10 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 
 	on_add()
 		. = ..()
+		// Ugly fix because I can't 'hook' into the brain damage proc- don't want to instantly kill people with weak organs
+		var/damage = src.data["amount"]
+		if (src.owner.traitHolder.hasTrait("weakorgans"))
+			damage /= 2 // ends up the same for frail people and non-frail
 		src.owner.take_brain_damage(data["amount"])
 
 
@@ -436,7 +442,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	desc = "Subject has sustained nerve damage, resulting in some impairments to motor control."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
+	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,

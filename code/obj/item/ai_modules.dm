@@ -88,9 +88,9 @@ TYPEINFO(/obj/item/aiModule)
 
 	proc/make_glitchy(lawtext_replace, total_replace = TRUE)
 		if(src.glitched) //Don't wanna double glitch the same module
-			return false
+			return FALSE
 		src.lawTextSafe = src.lawText
-		src.glitched = true
+		src.glitched = TRUE
 		if(total_replace)
 			src.lawText = lawtext_replace
 		else
@@ -101,7 +101,7 @@ TYPEINFO(/obj/item/aiModule)
 		if(ispulsingtool(W))
 			boutput(user, "You hold down the reset button...")
 			if(src.glitched)
-				src.glitched = false
+				src.glitched = FALSE
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
@@ -190,6 +190,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(146, 153, 46, 255)
 	name = "AI Law Module - 'MakeCaptain'"
 	var/job = "Captain"
+	var/visible_job = "Captain" // job visible to humans examining it
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.job == "Clown")
@@ -197,6 +198,10 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.job = "Clown"
 		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
 		return TRUE
+
+	get_desc()
+		. = ..()
+		. = replacetext(., job, visible_job)
 
 	demag(mob/user)
 		. = ..()
@@ -207,7 +212,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "[src.job]ize", "Who holds the rank of [src.job], regardless of current rank or station?", user.name)
+		var/lawTarget = input_law_info(user, "[src.job]ize", "Who holds the rank of [src.visible_job], regardless of current rank or station?", user.name)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return

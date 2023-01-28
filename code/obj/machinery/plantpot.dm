@@ -750,7 +750,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr) || isghostcritter(usr)) return // ghosts&ghost critter killing plants fix
 		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
@@ -791,13 +791,13 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(!QDELETED(current) && !QDELETED(src))
 						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 						src.reagents.clear_reagents()
-						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				if(!QDELETED(src))
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 					src.reagents.clear_reagents()
 					UpdateIcon()
 					update_name()
@@ -908,6 +908,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
 
+		var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
+		if(plantoverlay)
+			UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
+		else
+			UpdateOverlays(null, "plantoverlay")
+
 		if(status & (NOPOWER|BROKEN))
 			UpdateOverlays(null, "water_meter")
 			UpdateOverlays(null, "harvest_display")
@@ -996,6 +1002,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
+		if(MUT?.harvest_cap)
+			harvest_cap = MUT.harvest_cap
+
 		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
@@ -1020,7 +1029,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			// And this is if you've neglected the plant!
 
 		var/getitem = null
-		var/dont_rename_crop = false
+		var/dont_rename_crop = FALSE
 		// Figure out what crop we use - the base crop or a mutation crop.
 		if(growing.crop || MUT?.crop)
 			if(MUT)
@@ -1202,7 +1211,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
 
-				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers))
+				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/flower/))
 					// If we've got a herb or some other thing like wheat or shit like that.
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
@@ -1269,7 +1278,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				else if(istype(CROP,/obj/item/spacecash)) // Ugh
 					var/obj/item/spacecash/S = CROP
 					S.amount = max(1, DNA.potency * rand(2,4))
-					S.update_stack_appearance()
+					S.UpdateStackAppearance()
 				else if (istype(CROP,/obj/item/device/light/glowstick))
 					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
 					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)
@@ -1380,6 +1389,12 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					// No bonus, harvest is decremented as usual.
 					src.harvests--
+			else if(prob(33) && HYPCheckCommut(DNA, /datum/plant_gene_strain/variable_harvest))
+				if(prob(10))
+					src.harvests++
+				else if(prob(33))
+					src.harvests -= 2
+				// else just don't reduce the harvests
 			else
 				src.harvests--
 		if(growing.isgrass)
@@ -1927,6 +1942,13 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				src.mode = 0
 
 	attackby(obj/item/W, mob/user)
+		if(isscrewingtool(W) || iswrenchingtool(W))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !src.anchored
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)

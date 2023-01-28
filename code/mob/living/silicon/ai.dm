@@ -1,5 +1,5 @@
 var/global/list/available_ai_shells = list()
-var/datum/tgui/map_ui
+var/atom/movable/minimap_ui_handler/ai_minimap_ui
 var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
@@ -204,7 +204,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
-	AddComponent(/datum/component/minimap_marker, MAP_AI, "ai")
+	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -441,7 +441,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
-			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
+			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
 				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return
@@ -1028,7 +1028,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -1960,25 +1959,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
 		return
+	if (!ai_minimap_ui)
+		ai_minimap_ui = new(src, "ai_map", src.ai_station_map, "AI Station Map", "ntos")
 
-	map_ui = tgui_process.try_update_ui(usr, message_mob, map_ui)
-	if (!map_ui)
-		if (!winexists(usr, "ai_map"))
-			winset(message_mob.client, "ai_map", list2params(list(
-				"type" = "map",
-				"size" = "300,300",
-			)))
-			var/atom/movable/screen/handler = new
-			handler.plane = 0
-			handler.mouse_opacity = 0
-			handler.screen_loc = "ai_map:1,1"
-			message_mob.client.screen += handler
-
-			ai_station_map.screen_loc = "ai_map;1,1"
-			handler.vis_contents += ai_station_map
-			message_mob.client.screen += ai_station_map
-		map_ui = new(usr, message_mob, "AIMap")
-		map_ui.open()
+	ai_minimap_ui.ui_interact(message_mob)
 
 /mob/living/silicon/ai/verb/rename_self()
 	set category = "AI Commands"
@@ -2681,6 +2665,12 @@ proc/get_mobs_trackable_by_AI()
 		src.UpdateOverlays(src.image_background_overlay, "background")
 		src.UpdateOverlays(src.image_top_overlay, "top")
 
+
+/mob/living/silicon/ai/latejoin
+	New()
+		..()
+		qdel(src.brain)
+		src.brain = new /obj/item/organ/brain/latejoin(src)
 
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit

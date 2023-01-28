@@ -41,13 +41,11 @@ TYPEINFO(/obj/machinery/cell_charger)
 		//boutput(world, "nl: [newlevel]")
 
 		if(chargelevel != newlevel)
-
-			overlays = null
-			overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
+			src.UpdateOverlays(image('icons/obj/power.dmi', "ccharger-o[newlevel]"), "charge")
 
 			chargelevel = newlevel
 	else
-		overlays = null
+		src.UpdateOverlays(null, "charge")
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	add_fingerprint(user)

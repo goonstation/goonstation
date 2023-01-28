@@ -106,9 +106,9 @@ MATERIAL
 			src.color = src.material.color
 			src.alpha = src.material.alpha
 		inventory_counter?.update_number(amount)
-		update_stack_appearance()
+		UpdateStackAppearance()
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if (amount <= 10)
 			icon_state = "[icon_state_base]_1"
 		else if (amount <= 20)
@@ -514,7 +514,7 @@ MATERIAL
 	New()
 		..()
 		SPAWN(0)
-			update_stack_appearance()
+			UpdateStackAppearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
 	check_valid_stack(atom/movable/O as obj)
@@ -529,7 +529,7 @@ MATERIAL
 			return 0
 		return 1
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if (amount <= 10)
 			icon_state = "rods_1"
 		else if (amount <= 20)
@@ -546,7 +546,7 @@ MATERIAL
 		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		update_stack_appearance()
+		UpdateStackAppearance()
 		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
 
 	examine()
@@ -602,7 +602,7 @@ MATERIAL
 			src.change_stack_amount(-(weldinput * 2))
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
-			update_stack_appearance()
+			UpdateStackAppearance()
 			if(src.amount < 1)	qdel(src)
 			return
 
@@ -864,7 +864,7 @@ MATERIAL
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
 		SPAWN(0)
-			update_stack_appearance()
+			UpdateStackAppearance()
 			src.inventory_counter?.update_number(amount)
 		return
 
@@ -878,7 +878,7 @@ MATERIAL
 			return 0
 		return 1
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if (amount <= 10)
 			icon_state = "tile_1"
 		else if (amount <= 20)
