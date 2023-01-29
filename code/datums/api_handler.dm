@@ -75,6 +75,7 @@ var/global/datum/apiHandler/apiHandler
 				return retryApiQuery(arglist(args), attempt = attempt)
 
 			src.apiError("API Error: Request timed out during [safeReq]")
+			return 1
 
 		var/datum/http_response/response = request.into_response()
 
