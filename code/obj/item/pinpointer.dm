@@ -90,7 +90,7 @@ TYPEINFO(/obj/item/pinpointer)
 				var/mob/user = src.loc
 				if (istype(user))
 					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
-					arrow.change_target(src.target)
+					arrow?.change_target(src.target)
 			work_check()
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
