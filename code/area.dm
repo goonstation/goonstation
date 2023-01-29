@@ -1574,7 +1574,7 @@ area/prefab/sunkenship
 		icon_state = "blue"
 
 area/prefab/pathologysite
-	name = "Derelcit Pathology Site"
+	name = "Derelict Pathology Site"
 	icon_state = "green"
 
 // zewaka - vspace areas //
