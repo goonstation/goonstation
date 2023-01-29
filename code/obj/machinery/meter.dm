@@ -5,6 +5,7 @@
 	var/obj/machinery/atmospherics/pipe/target = null
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = 1
+	power_usage = 5
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
@@ -24,7 +25,7 @@
 		icon_state = "meter0"
 		return 0
 
-	use_power(5)
+	..()
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
