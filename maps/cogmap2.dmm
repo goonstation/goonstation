@@ -31016,7 +31016,7 @@
 /area/station/crew_quarters/heads)
 "byA" = (
 /obj/table/wood/auto,
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /obj/item/stamp/hop,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
