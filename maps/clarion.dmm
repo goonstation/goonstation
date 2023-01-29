@@ -16856,7 +16856,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/carpet{
 	dir = 8;
