@@ -35,7 +35,7 @@ var/global/datum/apiHandler/apiHandler
 		//the sleep delay grows as attempts increases
 		sleep(apiRetryDelay * attempt)
 		//arglist() doesnt recognise named params lol
-		givenArgs[givenArgs.len] = attempt + 1
+		givenArgs[4] = attempt + 1
 		return src.queryAPI(arglist(givenArgs))
 
 
