@@ -10,6 +10,7 @@
 	invisibility = INVIS_CLOAK
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
+	power_usage = 50
 	var/lasers = 0
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
@@ -88,7 +89,6 @@
 
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	use_power(50)
 	var/area/area = get_area(loc)
 	if (istype(area))
 		if(!target_list)

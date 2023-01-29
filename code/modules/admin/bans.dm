@@ -103,8 +103,8 @@ var/global/list/playersSeen = list()
 		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
-		addData["compID"] = row["compID"] ? compID : null // don't record CID if the original ban doesn't have one down
-		addData["ip"] = row["ip"] ? ip : null // don't record ip if the original ban doesn't have one down
+		addData["compID"] = (row["compID"] == "N/A" ? "N/A" : compID) // don't record CID if the original ban doesn't have one down
+		addData["ip"] = (row["ip"] == "N/A" ? "N/A" : ip) // don't record ip if the original ban doesn't have one down
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
 		addData["akey"] = "Auto Banner"

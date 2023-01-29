@@ -88,6 +88,16 @@
 		L.shock(src, 5000)
 		qdel(grab) //in case they don't fall over from our shock
 
+//dumb stupid idiot proc to prevent flockdrones dropping their incapacitor cells on being exploded
+/mob/living/critter/flock/drone/proc/kill_cell()
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = locate() in src.contents
+	if (cell)
+		qdel(cell)
+
+/mob/living/critter/flock/drone/gib()
+	src.kill_cell()
+	..()
+
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
 		if (controller)
@@ -99,9 +109,7 @@
 		AH.drone_controller.cast(src)
 	src.selected_by = null
 	src.remove_simple_light("drone_light")
-	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = locate() in src.contents
-	if (cell)
-		qdel(cell)
+	src.kill_cell()
 	..()
 
 /mob/living/critter/flock/drone/describe_state()

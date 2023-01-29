@@ -196,7 +196,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 	process()
 		..()
-		use_power(power_usage)
 
 	proc/active()
 		if (!active) return
@@ -1039,6 +1038,8 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			UnsubscribeProcess()
 		if(heating)
 			heat_up()
+		else
+			src.power_usage = initial(src.power_usage)
 		if(distilling)
 			distill(mult)
 		if(cracking)
