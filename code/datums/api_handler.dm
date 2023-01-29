@@ -10,6 +10,8 @@ var/global/datum/apiHandler/apiHandler
 	var/maxApiRetries = 5 //how many times should a query attempt to run before giving up
 	var/apiRetryDelay = 10 //base delay between query attempts, gets multiplied by attempt number
 
+	var/emergency_shutoff_counter = 0
+
 	New()
 		..()
 		if (!config.goonhub_api_endpoint)
@@ -21,6 +23,11 @@ var/global/datum/apiHandler/apiHandler
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
 	proc/apiError(message = "", forceErrorException = 0)
 		if (config.server_id != "local" || forceErrorException)
+			if (emergency_shutoff_counter++ > 25)
+				logTheThing(LOG_DEBUG, null, "DISABLING API REQUESTS - Too many errors.")
+				logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
+				message_admins("API requests have been disabled due to too many errors (check logs).")
+				enabled = 0
 			throw EXCEPTION(message)
 
 
@@ -87,6 +94,9 @@ var/global/datum/apiHandler/apiHandler
 				return retryApiQuery(args, attempt = attempt)
 
 			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
+
+		// At this point we assume the request was a success, so reset the error counter
+		emergency_shutoff_counter = 0
 
 		if (forceResponse)
 			// Parse the response
