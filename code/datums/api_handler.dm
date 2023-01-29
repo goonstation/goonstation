@@ -35,7 +35,7 @@ var/global/datum/apiHandler/apiHandler
 		//the sleep delay grows as attempts increases
 		sleep(apiRetryDelay * attempt)
 		//arglist() doesnt recognise named params lol
-		givenArgs[givenArgs.len] = attempt + 1
+		givenArgs[4] = attempt + 1
 		return src.queryAPI(arglist(givenArgs))
 
 
@@ -65,7 +65,18 @@ var/global/datum/apiHandler/apiHandler
 		var/datum/http_request/request = new()
 		request.prepare(RUSTG_HTTP_METHOD_GET, req, "", "")
 		request.begin_async()
-		UNTIL(request.is_complete())
+		var/time_started = TIME
+		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
+		if(!request.is_complete())
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[safeReq]</b> (Attempt: [attempt])")
+			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [safeReq] (Attempt: [attempt])", "debug")
+
+			if (attempt < maxApiRetries)
+				return retryApiQuery(args, attempt = attempt)
+
+			src.apiError("API Error: Request timed out during [safeReq]")
+			return 1
+
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)

@@ -33519,7 +33519,6 @@
 /area/space)
 "bNJ" = (
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "bNK" = (
 /obj/machinery/vending/standard,
