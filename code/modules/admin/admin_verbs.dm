@@ -378,6 +378,7 @@ var/list/admin_verbs = list(
 		/client/proc/replace_space_exclusive,
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
+		/client/proc/showLoadingHint,
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
 		/client/proc/test_mass_flock_convert,
@@ -1966,6 +1967,32 @@ var/list/fun_images = list()
 	if(ghost_notifier)
 		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
 
+/client/proc/showLoadingHint()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Show Loading Hint"
+	set desc = "Show everyone a fun loading screen hint."
+	set waitfor = FALSE
+
+	if (global.current_state != GAME_STATE_PREGAME)
+		return
+	var/hint = pick(dd_file2list("strings/roundstart_hints.txt"))
+	for (var/client/C)
+		if (!istype(C.mob,/mob/new_player))
+			continue
+		var/html = "\
+<html>\
+	<style>\
+		body {background-color:black;}\
+		div {text-align: center; font-family: Arial, sans-serif; font-size: 30px; top: 50%; width:100%; position:absolute; color:white;}\
+    </style>\
+    <body>\
+		<div>Tip: [hint]</div>\
+	</body>\
+</html>"
+		pregameHTML = html
+		C << browse(html, "window=pregameBrowser")
+		winshow(C, "pregameBrowser", 1)
+
 /client/proc/showPregameHTML()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Display Pregame HTML"
@@ -1994,7 +2021,7 @@ var/list/fun_images = list()
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
 		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
-		newHTML = input("Upload that file!", "Upload that file!") as file
+		newHTML = input("Upload that file!", "Upload that file!") as file|null
 		if(newHTML)
 			newHTML = file2text(newHTML)
 	if(newHTML)

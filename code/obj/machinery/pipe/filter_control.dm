@@ -1,6 +1,10 @@
 // Currently only used to control /obj/machinery/inlet/filter
 // todo: expand to vent control as well?
 
+/obj/machinery/filter_control
+	power_usage = 5
+	power_channel = ENVIRON
+
 /obj/machinery/filter_control/New()
 	..()
 	SPAWN(0.5 SECONDS)	//wait for world
@@ -39,7 +43,7 @@
 
 /obj/machinery/filter_control/process()
 	if(!(status & NOPOWER))
-		use_power(5,ENVIRON)
+		..()
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 	src.UpdateIcon()
