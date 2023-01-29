@@ -72,7 +72,7 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [safeReq] (Attempt: [attempt])", "debug")
 
 			if (attempt < maxApiRetries)
-				return retryApiQuery(arglist(args), attempt = attempt)
+				return retryApiQuery(args, attempt = attempt)
 
 			src.apiError("API Error: Request timed out during [safeReq]")
 			return 1
