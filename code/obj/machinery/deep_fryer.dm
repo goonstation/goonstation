@@ -152,6 +152,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 					<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>",
 					assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
 			ADD_FLAG(src.status, BROKEN)
+			name = "Satiated [initial(src.name)]"
 			ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.fingerprintslast) // in case someone else had to fufill, no direct ref
 			ice_feeder?.unlock_medal("Deep Freeze", TRUE)
 
@@ -308,8 +309,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
-			shivers = 3
-	if (prob(0.03 * shivers))
+			shivers = 20
+	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
 		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"
