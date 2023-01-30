@@ -2203,7 +2203,7 @@ var/list/fun_images = list()
 			if (!proc_name)
 				var/split_list = splittext("[proc_path]", "/")
 				proc_name = split_list[length(split_list)]
-			type_procs["*[proc_name]"] = proc_path
+			type_procs["[proc_name] *"] = proc_path
 	verbs += type_procs
 
 	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE)
