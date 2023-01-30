@@ -2194,9 +2194,11 @@ var/list/fun_images = list()
 	var/typeinfo/atom/typeinfo = A.get_typeinfo()
 	var/list/type_procs = list()
 	if (typeinfo.admin_procs)
-		for (var/proc_path in typeinfo.admin_procs)
-			var/split_list = splittext("[proc_path]", "/")
-			var/proc_name = split_list[length(split_list)]
+		for (var/procpath/proc_path as anything in typeinfo.admin_procs)
+			var/proc_name = proc_path.name
+			if (!proc_name)
+				var/split_list = splittext("[proc_path]", "/")
+				proc_name = split_list[length(split_list)]
 			type_procs["*[proc_name]"] = proc_path
 	verbs += type_procs
 
