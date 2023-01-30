@@ -58,7 +58,12 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
 			message_admins("API requests have been disabled due to too many errors (check logs).")
 			enabled = 0
-
+			SPAWN(60 SECONDS)
+			emergency_shutoff_counter = 0
+				logTheThing(LOG_DEBUG, null, "RE-ENABLING API REQUESTS - Cooldown expired.")
+				logTheThing(LOG_DIARY, null, "RE-ENABLING API REQUESTS - Cooldown expired.", "debug")
+				message_admins("API requests have been re-enabled after waiting.")
+				enabled = 1
 		return
 
 
@@ -83,6 +88,11 @@ var/global/datum/apiHandler/apiHandler
 		req += "data_version=[config.goonhub_api_version]&" //Append API version
 		var/safeReq = req //for outputting errors without the auth code
 		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
+
+		while (lazy_concurrent_counter > 50)
+			// if we have too many requests out, just wait a little to let some finish
+			sleep(rand(1, 5))
+
 
 		// Fetch via HTTP from goonhub
 		lazy_concurrent_counter++
