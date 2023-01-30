@@ -311,7 +311,6 @@ TYPEINFO(/obj/machinery/chem_master)
 	var/mob/roboworking = null
 	var/emagged = FALSE
 	var/list/whitelist = list()
-	var/item_name = null
 
 	var/list/regular_bottles = list(
 		/obj/item/reagent_containers/ampoule, // 5u ampoule
@@ -541,23 +540,28 @@ TYPEINFO(/obj/machinery/chem_master)
 					volume = current_reagent.volume
 				)))
 
+	proc/manufacture_name(var/param_name)
+		var/name = param_name
+		name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
+		if(isnull(name) || !length(name) || name == " ")
+			name = null
+			if(src.beaker)
+				name = src.beaker.reagents.get_master_reagent_name()				
+		return name
+
 	ui_data(mob/user)
 		. = list()
 
 		if(src.beaker)
-			.["item_name"] = isnull(src.item_name) ? src.beaker.reagents.get_master_reagent_name() : src.item_name
+			.["default_name"] = src.beaker.reagents.get_master_reagent_name()
 		else
-			.["item_name"] = null
+			.["default_name"] = null
 		.["container"] = beaker_cache
 
 	ui_act(action, list/params, datum/tgui/ui)
 		. = ..()
 		if(.)
 			return
-
-		if(!src.item_name && src.beaker?.reagents)
-			src.item_name = src.beaker.reagents.get_master_reagent_name()
-			. = TRUE
 
 		switch(action)
 			if("insert")
@@ -609,18 +613,12 @@ TYPEINFO(/obj/machinery/chem_master)
 					. = TRUE
 
 			// Operations
-			if("setname")
-				var/name = params["name"]
-				name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
-				if(isnull(name) || !length(name) || name == " ")
-					name = null
-				src.item_name = name
-				. = TRUE
 			if("makepill")
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] pill labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -629,10 +627,10 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/pill_icon = params["icon"] // handled in design_pill
 
 				var/obj/item/reagent_containers/pill/P = new(src)
-				P.name = "[src.item_name] pill"
+				P.name = "[item_name] pill"
 				src.beaker.reagents.trans_to(P, reagent_amount)
 				design_pill(P, pill_icon)
-				global.phrase_log.log_phrase("pill", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("pill", item_name, no_duplicates=TRUE)
 				logTheThing(LOG_COMBAT, usr, "used [src] to create a [P] pill containing [log_reagents(P)] at [log_loc(src)].")
 
 				TRANSFER_OR_DROP(src, P)
@@ -647,7 +645,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] pill labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -656,7 +655,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/use_pill_bottle = params["use_bottle"]
 				var/pill_icon = params["icon"] // handled in design_pill
 
-				global.phrase_log.log_phrase("pill", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("pill", item_name, no_duplicates=TRUE)
 
 				var/pillcount = round(src.beaker.reagents.total_volume / reagent_amount)
 				if(!pillcount)
@@ -673,7 +672,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				for(var/i = 0, i < pillcount, ++i)
 					var/obj/item/reagent_containers/pill/P = new(src)
-					P.name = "[src.item_name] pill"
+					P.name = "[item_name] pill"
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					design_pill(P, pill_icon)
 					if(pill_bottle)
@@ -694,7 +693,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] bottle labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -706,9 +706,9 @@ TYPEINFO(/obj/machinery/chem_master)
 					return
 				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, bottle.initial_volume)
 
-				global.phrase_log.log_phrase("bottle", src.item_name, no_duplicates=TRUE)
+				global.phrase_log.log_phrase("bottle", item_name, no_duplicates=TRUE)
 
-				bottle.name = "[src.item_name] [bottle.name]"
+				bottle.name = "[item_name] [bottle.name]"
 				src.beaker.reagents.trans_to(bottle, reagent_amount)
 
 				logTheThing(LOG_COMBAT, usr, "used the [src] to create [bottle] containing [log_reagents(bottle)] at [log_loc(src)].")
@@ -725,7 +725,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] patcher labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -740,7 +741,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				// unused by log_phrase?
 				//global.phrase_log.log_phrase("patch", src.item_name, no_duplicates=TRUE)
 
-				patch.name = "[src.item_name] patch"
+				patch.name = "[item_name] patch"
 				patch.medical = src.check_patch_whitelist()
 				src.beaker.reagents.trans_to(patch, reagent_amount)
 
@@ -760,7 +761,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(!src.beaker || !src.beaker.reagents.total_volume)
 					return
 
-				if(!src.item_name) // how did we get here?
+				var/item_name = manufacture_name(params["item_name"])
+				if(!item_name) // how did we get here?
 					boutput(ui.user, "[src] patcher labeller makes a weird buzz. That can't be good.")
 					return
 
@@ -797,11 +799,11 @@ TYPEINFO(/obj/machinery/chem_master)
 						patch_box.icon_open = "patchbox-open"
 						patch_box.icon_empty = "patchbox-empty"
 
-				logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [src.item_name] patches from [log_reagents(src.beaker)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [item_name] patches from [log_reagents(src.beaker)] at [log_loc(src)].")
 
 				for(var/i = 0, i < patchcount, ++i)
 					var/obj/item/reagent_containers/patch/P = new patch_path(src)
-					P.name = "[src.item_name] [P.name]"
+					P.name = "[item_name] [P.name]"
 					P.medical = is_medical_patch
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					P.on_reagent_change()
