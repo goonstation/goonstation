@@ -1,7 +1,4 @@
-TYPEINFO(/obj/machinery/nuclearbomb)
-TYPEINFO_NEW(/obj/machinery/nuclearbomb)
-	. = ..()
-	admin_procs += list(/obj/machinery/nuclearbomb/proc/arm)
+ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, /obj/machinery/nuclearbomb/proc/arm)
 
 /obj/machinery/nuclearbomb
 	name = "nuclear bomb"
