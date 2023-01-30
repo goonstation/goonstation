@@ -5,7 +5,7 @@
 //if you miss any of these, things are probably gonna break
 
 #define ADD_SWITCHED_OBJ(cat) if(!switched_objs[cat]) { switched_objs[cat] = list() }; \
-if(!switched_objs[cat][src:id]) { switched_objs[cat][src:id] = list() }; \
-switched_objs[cat][src:id] += src
+	if(!switched_objs[cat][src:id]) { switched_objs[cat][src:id] = list() }; \
+	switched_objs[cat][src:id] += src
 
 #define REMOVE_SWITCHED_OBJ(cat) switched_objs[cat][src:id] -= src
