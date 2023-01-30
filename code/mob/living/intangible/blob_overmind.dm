@@ -98,7 +98,7 @@
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
-		src.nucleus_overlay.appearance_flags = RESET_COLOR
+		src.nucleus_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		SPAWN(0)
 			while (src)

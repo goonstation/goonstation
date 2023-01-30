@@ -51,11 +51,13 @@
 @include meta.load-css('./interfaces/common/ListSearch.scss');
 @include meta.load-css('./interfaces/Airlock.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/Cashreg.scss');
 @include meta.load-css('./interfaces/ComUplink.scss');
 @include meta.load-css('./interfaces/Boardgame/main.scss');
 @include meta.load-css('./interfaces/ChemDispenser.scss');
 @include meta.load-css('./interfaces/ChemHeater.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
+@include meta.load-css('./interfaces/ClothingBooth.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/Gameclock.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');

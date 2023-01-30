@@ -232,9 +232,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -604,9 +601,14 @@
 	game_stats.Increment("deaths")
 #endif
 
+	if (src.mind?.key)
+		var/datum/player/P = find_player(src.mind.key)
+		P.last_death_time = world.timeofday
+
+
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
-		if (src.unkillable && src.mind.dnr) //Unless they have dnr set in which case rip for good
+		if (src.unkillable && src.mind.get_player()?.dnr) //Unless they have dnr set in which case rip for good
 			logTheThing(LOG_COMBAT, src, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
 				src.gib()
@@ -3246,9 +3248,9 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id()
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
-	if(.)
+	if(. || not_worn)
 		return
 	if(istype(src.wear_id, /obj/item/card/id))
 		return src.wear_id

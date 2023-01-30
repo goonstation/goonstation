@@ -1258,7 +1258,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	bound_height = 32
 	bound_width = 32
 

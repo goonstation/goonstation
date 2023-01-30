@@ -441,7 +441,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
-			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
+			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
 				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return
@@ -1028,7 +1028,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -2666,6 +2665,12 @@ proc/get_mobs_trackable_by_AI()
 		src.UpdateOverlays(src.image_background_overlay, "background")
 		src.UpdateOverlays(src.image_top_overlay, "top")
 
+
+/mob/living/silicon/ai/latejoin
+	New()
+		..()
+		qdel(src.brain)
+		src.brain = new /obj/item/organ/brain/latejoin(src)
 
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit
