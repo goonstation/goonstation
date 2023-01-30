@@ -2190,6 +2190,10 @@ var/list/fun_images = list()
 		verbs += client.holder.admin_interact_verbs["turf"]
 	else
 		verbs += client.holder.admin_interact_verbs["obj"]
+		if (isobj(A))
+			var/obj/object = A
+			if (istype(object.artifact, /datum/artifact))
+				verbs += "Activate Artifact"
 
 	var/typeinfo/atom/typeinfo = A.get_typeinfo()
 	var/list/type_procs = list()
@@ -2296,6 +2300,9 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
+		if ("Activate Artifact")
+			var/obj/object = A
+			object.ArtifactActivated()
 
 	src.update_cursor()
 
