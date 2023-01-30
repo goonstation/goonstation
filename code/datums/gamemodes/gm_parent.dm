@@ -440,11 +440,11 @@ ABSTRACT_TYPE(/datum/game_mode)
 //what do we do when a mob dies
 /datum/game_mode/proc/on_human_death(var/mob/M)
 
-/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
+/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor, var/objective_path, var/datum/antagonist/antag_role)
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path(null, traitor)
+	var/datum/objective/O = new objective_path(null, traitor, antag_role)
 
 	return O
 
