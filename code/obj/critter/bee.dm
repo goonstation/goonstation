@@ -1531,8 +1531,8 @@
 	honey_color = "#ff0033"
 
 	do_reagentStuff(mob/M)
-		if (M.reagents.get_reagent_amount("honkfartium") < 10)
-			M.reagents.add_reagent("honkfartium", 5)
+		if (M.reagents.get_reagent_amount("honk_fart") < 10)
+			M.reagents.add_reagent("honk_fart", 5)
 		M.reagents.add_reagent("lube", 5)
 
 
