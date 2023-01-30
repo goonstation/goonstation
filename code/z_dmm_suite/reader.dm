@@ -207,7 +207,7 @@ dmm_suite
 				topTurf.underlays.Add(underlay)
 				#ifdef RUNTIME_CHECKING
 				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
-					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd]")
+					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
 				#endif
 
 		loadModel(atomPath, list/attributes, list/strings, xcrd, ycrd, zcrd)
