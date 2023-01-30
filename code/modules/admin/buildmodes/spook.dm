@@ -19,16 +19,46 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 	var/spookData
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		if( object.spookTypes )
-			//var/list/otypes = object.spookTypes
-			activeSpook = input( "Select a Spook" ) as null|anything in object.spook_getspooks()
-			activeType = object.type
+		var/list/choices = list()
+		if(object.spookTypes)
+			choices += object.spook_getspooks()
+
+		var/typeinfo/atom/typeinfo = object.get_typeinfo()
+		if (typeinfo.admin_procs)
+			for (var/procpath/proc_path as anything in typeinfo.admin_procs)
+				var/proc_name = proc_path.name
+				if (!proc_name)
+					var/split_list = splittext("[proc_path]", "/")
+					proc_name = split_list[length(split_list)]
+				choices["[proc_name] *"] = proc_path
+
+		if(!choices.len)
+			return
+
+		var/choice = tgui_input_list(usr, "What spook?", "Spook", choices)
+		activeSpook = choice
+
+		if(!activeSpook)
+			return
+
+		activeType = object.type
+		update_button_text("[activeType]: [choice]")
+
+		if(choices[activeSpook])
+			activeSpook = choices[activeSpook]
+
+		if(istext(activeSpook))
 			spookData = object.spook_data( activeSpook )
-			update_button_text("[activeType]: [activeSpook]")
+		else if(isproc(activeSpook))
+			spookData = null
 
 	click_left(atom/object)
-		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
+		if(istext(activeSpook) && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
 			object.spook_act( activeSpook, spookData )
+		else if(isproc(activeSpook))
+			var/typeinfo/atom/typeinfo = object.get_typeinfo()
+			if (typeinfo.admin_procs && (activeSpook in typeinfo.admin_procs))
+				call(object, activeSpook)()
 
 /obj/machinery/light/spookTypes = "Break;Set Color;Toggle"
 /obj/machinery/light/spook_data(what)
