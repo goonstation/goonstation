@@ -151,16 +151,6 @@
 		..()
 		JobEquipSpawned("Inspector")
 
-/mob/living/carbon/human/normal/wizard
-	New()
-		..()
-		if (src.gender && src.gender == "female")
-			src.real_name = pick_string_autokey("names/wizard_female.txt")
-		else
-			src.real_name = pick_string_autokey("names/wizard_male.txt")
-
-		equip_wizard(src, 1)
-
 /mob/living/carbon/human/normal/rescue
 	New()
 		..()
