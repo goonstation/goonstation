@@ -12,7 +12,7 @@
 
 /**
  * Makes the given procs available for use with the admin interact menu
- * Example: `ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, /obj/machinery/nuclearbomb/proc/arm, /obj/machinery/nuclearbomb/proc/disarm)`
+ * Example: `ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/disarm)`
  * would add the `*arm` and `*disarm` options to the admin interact menu for nuclear bombs.
 **/
 #define ADMIN_INTERACT_PROCS(TYPE, PROCNAME...)\
