@@ -38,10 +38,11 @@
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
 
-		src.owner.current.assign_gimmick_skull()
+		SPAWN(2.5 SECONDS)
+			src.owner.current.assign_gimmick_skull()
 
 	assign_objectives()
-		new /datum/objective_set/vampire(src.owner)
+		new /datum/objective_set/vampire(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

@@ -1009,6 +1009,11 @@
 	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
+
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
 		if (damage_mult == 0)
 			return
@@ -1032,6 +1037,12 @@
 	gas_impermeable = TRUE
 	health = 40
 	health_max = 40
+	flags = ALWAYS_SOLID_FLUID
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

@@ -22025,7 +22025,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/disposalpipe/junction/right/east,
+/obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "jHl" = (
@@ -34281,6 +34281,13 @@
 /obj/stool/chair/blue{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
@@ -40864,7 +40871,7 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/junction/right/west,
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -43772,20 +43779,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
-"tye" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 6
-	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
 "tyJ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/sci_alt{
@@ -45877,7 +45870,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/biofilter/left,
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -50900,7 +50895,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/junction/right/east,
+/obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "wYE" = (
@@ -51970,6 +51965,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "xyR" = (
@@ -101536,7 +101532,7 @@ qYB
 tam
 bjQ
 bjQ
-tye
+bjQ
 paY
 raq
 liD

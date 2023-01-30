@@ -538,49 +538,49 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.flavor_text = new_text
+					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.security_note = new_text
+					src.security_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.medical_note = new_text
+					src.medical_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
-					src.synd_int_note = new_text
+					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE

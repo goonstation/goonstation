@@ -21,6 +21,8 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating)
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
@@ -232,6 +234,10 @@ TYPEINFO(/obj/machinery/power/apc)
 		else
 			. += "The cover is closed."
 
+/obj/machinery/power/apc/proc/toggle_operating()
+	src.operating = !src.operating
+	src.update()
+	UpdateIcon()
 
 /obj/machinery/power/apc/proc/getMaxExcess()
 	var/netexcess = 0
