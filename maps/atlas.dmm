@@ -18347,7 +18347,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
 "Vw" = (

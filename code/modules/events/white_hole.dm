@@ -427,6 +427,9 @@
 			/obj/item/reagent_containers/glass/water_pipe = 1,
 			/obj/item/device/light/lava_lamp = 1,
 			/obj/item/paper = 3,
+			/obj/critter/killertomato = 0.5,
+			/mob/living/critter/small_animal/cat/synth = 1,
+			/mob/living/critter/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -508,7 +511,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random = 5,
+			/obj/item/spacecash/random/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
