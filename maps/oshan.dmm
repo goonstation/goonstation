@@ -178,7 +178,6 @@
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "aaB" = (
 /obj/item/inner_tube/random,
@@ -26446,7 +26445,7 @@
 	},
 /area/station/bridge)
 "bve" = (
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bvf" = (
@@ -33519,7 +33518,6 @@
 /area/space)
 "bNJ" = (
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "bNK" = (
 /obj/machinery/vending/standard,

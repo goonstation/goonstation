@@ -223,7 +223,7 @@ proc/debug_map_apc_count(delim,zlim)
 	proc/makeText(text, additional_flags=0, align_left=FALSE, moreattrib="", tall=FALSE)
 		var/mutable_appearance/mt = new
 		mt.plane = FLOAT_PLANE
-		mt.icon = 'icons/effects/effects.dmi'
+		mt.icon = 'icons/misc/debug.dmi'
 		mt.icon_state = "nothing"
 		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol' [moreattrib]>[text]</span>"
 
@@ -381,7 +381,7 @@ proc/debug_map_apc_count(delim,zlim)
 				if(group)
 					img.app.color = debug_color_of(group)
 					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(group.air)]Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
-					if (group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
 					/*
 					var/list/borders_space = list()
 					for(var/turf/spaceses in group.space_borders)
@@ -392,7 +392,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_space[++borders_space.len] = "SOUTH"
 								if(dir & EAST) borders_space[++borders_space.len] = "EAST"
 								if(dir & WEST) borders_space[++borders_space.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								img.app.overlays += airrowe
 					if(borders_space.len)
@@ -407,7 +407,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_individual[++borders_individual.len] = "SOUTH"
 								if(dir & EAST) borders_individual[++borders_individual.len] = "EAST"
 								if(dir & WEST) borders_individual[++borders_individual.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								img.app.overlays += airrowe
 					if(borders_individual.len)
@@ -421,7 +421,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_group[++borders_group.len] = "SOUTH"
 								if(dir & EAST) borders_group[++borders_group.len] = "EAST"
 								if(dir & WEST) borders_group[++borders_group.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								if(T.parent)
 									airrowe.color = debug_color_of(T.parent)
@@ -429,19 +429,19 @@ proc/debug_map_apc_count(delim,zlim)
 					if(borders_group.len)
 						img.app.desc += "<br/>(borders groups to the [borders_group.Join(" ")])"
 					if(theTurf in group.borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.space_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "space_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "space_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.self_tile_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "individual_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "individual_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.self_group_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "group_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "group_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 				else
@@ -528,7 +528,7 @@ proc/debug_map_apc_count(delim,zlim)
 						gt.color = is_group
 						img.app.overlays += gt
 
-					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group?.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
 
 					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
 
@@ -1259,6 +1259,19 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!isnull(val))
 				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
 
+	jps_passable_turfs
+		name = "jps passable turfs"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.alpha = 0
+			for(var/dir in alldirs)
+				var/turf/neigh = get_step(theTurf, dir)
+				if(!neigh || neigh == theTurf) continue
+				if(jpsTurfPassable(neigh, theTurf, usr))
+					var/image/I = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
+					I.alpha = 100
+					I.appearance_flags |= RESET_ALPHA
+					img.app.overlays += I
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
@@ -1284,7 +1297,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.appearance = app
 
 /mutable_appearance/debug_overlay_appearance
-	icon = 'icons/effects/white.dmi'
+	icon = 'icons/misc/debug.dmi'
 	plane = PLANE_SCREEN_OVERLAYS
 	override = 0
 	color = null

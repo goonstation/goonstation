@@ -1029,6 +1029,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /* -------------------- Drinking Glasses -------------------- */
 /* ========================================================== */
 
+ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, proc/smash)
+
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Caution - fragile."

@@ -198,7 +198,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -705,7 +704,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -1121,7 +1119,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(120)
 
 		if(!host_id || !link)
 			return
@@ -1487,7 +1484,6 @@ TYPEINFO(/obj/machinery/networked/radio)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(100)
 
 		if(!host_id || !link)
 			return
@@ -1873,7 +1869,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if(status & NOPOWER)
 			printing = 0
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2286,7 +2281,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2524,7 +2518,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if (status & NOPOWER)
 			return
-		use_power(power_usage)
 
 		if (active_time > 0)
 			active_time--
@@ -3060,9 +3053,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if (status & NOPOWER)
 			return
-
-		use_power(power_usage)
-
 		return
 
 	receive_signal(datum/signal/signal)
@@ -3541,7 +3531,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return 1
 
 		if(active)
-			use_power(power_usage)
+			use_power(power_usage) // power use doubles when active
 
 		return 0
 
@@ -3999,6 +3989,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 	icon_state = "elecbox0"
 	density = 1
 	dragload = 1
+	power_usage = 220
 
 	setup_base_icon_state = "elecbox"
 	setup_test_id = "ELEC_BOX"
@@ -4006,12 +3997,12 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 	setup_capability_value = "B"
 
 	var/voltage = 10 // runs from 1 to 100
-	var/wattage = 1  // runs from 1 to 50
+	var/amperage = 1  // runs from 1 to 50
 	var/timer = 0
 	var/list/sensed = list("???","???","100")
 
 	return_html_interface()
-		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br><b>Wattage:</b> [src.wattage]W<br><b>Voltage:</b> [src.voltage]V"
+		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br><b>Amperage:</b> [src.amperage]A<br><b>Voltage:</b> [src.voltage]V"
 
 	update_icon()
 		if (src.contents.len)
@@ -4021,10 +4012,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		..()
 
 	process()
-		if (src.active && src.contents.len && !(status & BROKEN))
-			power_usage = src.wattage * src.voltage + 220
-		else
-			power_usage = 220
 		if (..())
 			if (src.active && (status & NOPOWER))
 				src.active = 0
@@ -4037,7 +4024,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 
 		if (src.active)
-			use_power(src.wattage * src.voltage) // ???????? (voltwatts????)
+			use_power(src.amperage * src.voltage)
 			if (src.timer > 0)
 				src.timer--
 			if (src.timer == 0)
@@ -4049,19 +4036,17 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 			src.electrify_contents()
 
-		else use_power(20)
-
 		return
 
 	proc/electrify_contents()
-		var/current = src.wattage * src.voltage
+		var/wattage = src.amperage * src.voltage
 		if (locate(/mob/living/) in src.contents)
 			for (var/mob/living/carbon/OUCH in src.contents)
-				OUCH.TakeDamage("All",0,current / 500)
+				OUCH.TakeDamage("All",0,wattage / 500)
 		else if(length(src.contents))
 			var/obj/O = pick(src.contents)
 			if (istype(O.artifact,/datum/artifact/))
-				O.ArtifactStimulus("elec", current)
+				O.ArtifactStimulus("elec", wattage)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
@@ -4094,13 +4079,13 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Voltage,Wattage&readinglist=Test Amps-A,Load Impedance-Ohm,Circuit Capacity-J,Interference-%")
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Voltage,Amperage&readinglist=Load Impedance-Ohm,Returned Amperage-A,Circuit Capacity-J,Interference-%")
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
 
 			if ("poke")
-				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "wattage")
+				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "amperage")
 					message_host("command=nack")
 					return
 
@@ -4111,11 +4096,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						return
 					src.voltage = pokeval
 
-				if (lowertext(packetData["field"]) == "wattage")
+				if (lowertext(packetData["field"]) == "amperage")
 					if (pokeval < 1 || pokeval > 50)
 						message_host("command=nack")
 						return
-					src.wattage = pokeval
+					src.amperage = pokeval
 
 				if (src.active)
 					src.electrify_contents()
@@ -4123,24 +4108,24 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 
 			if ("peek")
-				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "wattage")
+				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "amperage")
 					message_host("command=nack")
 					return
 
 				if (lowertext(packetData["field"]) == "voltage")
 					message_host("command=peeked&field=voltage&value=[voltage]")
-				else if (lowertext(packetData["field"]) == "wattage")
-					message_host("command=peeked&field=wattage&value=[wattage]")
+				else if (lowertext(packetData["field"]) == "amperage")
+					message_host("command=peeked&field=amperage&value=[amperage]")
 
 			if ("read")
 				if(src.sensed[1] == null || src.sensed[2] == null || src.sensed[3] == null || !src.active)
 					message_host("command=nack")
 				else
-					// Electrobox - returns Returned Current, Circuit Capacity, Circuit Interference
-					var/current = "ERROR"
-					if (src.wattage > 0 && src.voltage > 0)
-						current = src.wattage / src.voltage
-					message_host("command=read&data=[current],[src.sensed[1]],[src.sensed[2]],[src.sensed[3]]")
+					// Electrobox - returns Ohms, Return Amperage, Circuit Capacity, Circuit Interference
+					var/ohms = "ERROR"
+					if (src.amperage > 0 && src.voltage > 0)
+						ohms = src.voltage / src.amperage
+					message_host("command=read&data=[ohms],[src.sensed[1]],[src.sensed[2]],[src.sensed[3]]")
 					message_host("command=ack")
 
 			if ("sense")
@@ -4148,12 +4133,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					var/obj/M = pick(src.contents)
 					if (istype(M.artifact,/datum/artifact/))
 						var/datum/artifact/A = M.artifact
-						var/current = src.wattage / src.voltage
 
 						if (A.react_elec[1] == "equal")
-							src.sensed[1] = src.voltage / current
+							src.sensed[1] = src.amperage
 						else
-							src.sensed[1] = src.voltage / (current * A.react_elec[1])
+							src.sensed[1] = src.amperage * A.react_elec[1]
 
 						src.sensed[2] = A.react_elec[2]
 
@@ -4177,7 +4161,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.sensed[2] = "???"
 						src.sensed[3] = "100"
 				else message_host("command=nack")
-				// Electrobox - returns Returned Current, Circuit Capacity, Circuit Interference
+				// Electrobox - returns Ohms, Return Amperage, Circuit Capacity, Circuit Interference
 
 			if ("activate")
 				if (src.contents.len && !src.active)
@@ -4488,8 +4472,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 
 		if (src.active)
-			use_power(80)
-
 			if (src.temperature < src.temptarget)
 				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
@@ -4505,7 +4487,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.visible_message("<b>[src.name]</b> reaches its target temperature and shuts down.")
 				playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		else
-			use_power(20)
 			if (src.temperature > 310)
 				src.temperature--
 			else if (src.temperature < 310)
@@ -4934,7 +4915,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return
 
 	process()
-		if (active)
+		if (src.active)
 			power_usage = 300
 		else
 			power_usage = 200
@@ -4942,7 +4923,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 
 		if (src.active)
-			use_power(100)
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
@@ -4957,9 +4937,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				pulses--
 				if (pulses < 1)
 					active = 0
-
-		else
-			use_power(20)
 
 		return
 

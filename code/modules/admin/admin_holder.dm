@@ -9,7 +9,7 @@
 	var/extratoggle = 0
 	var/popuptoggle = 0
 	var/servertoggles_toggle = 0
-	var/animtoggle = 1
+	var/disable_atom_verbs = 1
 	var/attacktoggle = 1
 	var/ghost_respawns = 1
 	var/adminwho_alerts = 1
@@ -141,7 +141,7 @@
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
@@ -189,12 +189,13 @@
 			src.owner:toggle_server_toggles_tab()
 		servertoggles_toggle = saved_servertoggles_toggle
 
-		var/saved_animtoggle = AP["animtoggle"]
-		if (isnull(saved_animtoggle))
-			saved_animtoggle = 1
-		if (saved_animtoggle == 0 && animtoggle != 0)
+		//yes the var name makes no sense, but I'm not resetting everyone's prefs for it
+		var/saved_disable_atom_verbs = AP["animtoggle"]
+		if (isnull(saved_disable_atom_verbs))
+			saved_disable_atom_verbs = 1
+		if (saved_disable_atom_verbs == 0 && disable_atom_verbs != 0)
 			src.owner:toggle_atom_verbs()
-		animtoggle = saved_animtoggle
+		disable_atom_verbs = saved_disable_atom_verbs
 
 		var/saved_attacktoggle = AP["attacktoggle"]
 		if (isnull(saved_attacktoggle))
@@ -342,7 +343,7 @@
 		AP["auto_alias_global_save"] = auto_alias_global_save
 		AP["popuptoggle"] = popuptoggle
 		AP["servertoggles_toggle"] = servertoggles_toggle
-		AP["animtoggle"] = animtoggle
+		AP["animtoggle"] = disable_atom_verbs
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
 		AP["uncool_word_filtering"] = uncool_word_filtering
