@@ -38,7 +38,16 @@
 		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	assign_objectives()
-		new /datum/objective_set/hunter(src.owner)
+		new /datum/objective_set/hunter(src.owner, src)
+
+	handle_round_end(log_data)
+		var/list/dat = ..()
+		for (var/datum/objective/specialist/hunter/trophy/T in src.owner.objectives)
+			if (src.owner.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
+				dat.Insert(2, {"<b>Combined trophy value:</b> [src.owner.current.get_skull_value()]"})
+				return dat
+
+		return dat
 
 
 // Called for every human mob spawn and mutantrace change. The value of non-standard skulls is defined in organ.dm.
@@ -357,10 +366,7 @@
 
 	src.unequip_all()
 
-	var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(src)
-	src.implant.Add(B)
-	B.implanted = 1
-	B.implanted(src)
+	new /obj/item/implant/revenge/microbomb/hunter(src)
 
 	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), slot_w_uniform) // srcust be at the top of the list.
 	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), slot_wear_mask)

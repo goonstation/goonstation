@@ -296,9 +296,6 @@ var/global/cloning_with_records = TRUE
 	R["defects"] = subject.cloner_defects.copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.

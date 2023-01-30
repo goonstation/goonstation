@@ -3098,7 +3098,7 @@
 		souladjust(1)
 	return 1
 
-/mob/proc/get_id()
+/mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()

@@ -307,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a [log_object(trigger)] [log_loc(trigger)] to a [log_object(receiver)] [log_loc(receiver)].")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
