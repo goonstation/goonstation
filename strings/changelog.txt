@@ -1,4 +1,11 @@
 
+(t)sun jan 29 23
+(u)Kubius
+(p)12853
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Pilot personnel have found a way to reach Nadir - arrive this way at your own peril.
+(*)Nadir's artifact ejector is no longer biofiltered, for improved ejection reliability. Don't fall in.
+(+)Nadir's cargo market no longer restricts purchase of ship component fabricators.
 (t)sat jan 28 23
 (u)tarmunora
 (+)toolboxes are now a little heavier.

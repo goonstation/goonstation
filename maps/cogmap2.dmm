@@ -31016,7 +31016,7 @@
 /area/station/crew_quarters/heads)
 "byA" = (
 /obj/table/wood/auto,
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /obj/item/stamp/hop,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
@@ -58626,14 +58626,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
-"cLk" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "cLl" = (
 /obj/grille/steel,
 /turf/space,
@@ -109844,7 +109836,7 @@ buO
 aaF
 aaS
 aaS
-cLk
+aaS
 aaS
 aah
 ade
@@ -109984,7 +109976,7 @@ ddh
 ddh
 aah
 aaS
-cLk
+aaS
 aaS
 aaS
 aaF

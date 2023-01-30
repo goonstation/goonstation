@@ -594,6 +594,9 @@
 	if (istype(target, /obj/decal/point))
 		return
 
+	if(!IN_RANGE(src, target, 12)) // don't point through cameras
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
