@@ -19,7 +19,7 @@
 	TYPEINFO(TYPE); \
 	TYPEINFO_NEW(TYPE){ \
 		. = ..(); \
-		admin_procs += list(##PROCNAME); \
+		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
 	}
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these

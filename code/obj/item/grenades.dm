@@ -12,7 +12,7 @@ PIPE BOMBS + CONSTRUCTION
 TYPEINFO(/obj/item/old_grenade)
 	mats = 6
 
-ADMIN_INTERACT_PROCS(/obj/item/old_grenade, /obj/item/old_grenade/proc/prime)
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
@@ -1639,7 +1639,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			..()
 			return
 
-ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, /obj/item/pipebomb/bomb/proc/arm)
+ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
