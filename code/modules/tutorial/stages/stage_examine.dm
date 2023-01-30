@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/tutorial/task/examine)
 		. = ..()
 
 // lol this is so shitty but i'm not putting a signal on examine
+// SHOULD BE MOVED TO EXAMINE COMPONENT
 /obj/item/extinguisher/examine(mob/user)
 	. = ..()
 	var/datum/tutorial/player_state/state = tutorial_manager.player_to_state[user.client.ckey]
