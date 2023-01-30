@@ -51,7 +51,7 @@ var/global/datum/apiHandler/apiHandler
 			emergency_shutoff_counter = 0
 			return
 
-		if (emergency_shutoff_counter++ > 25)
+		if (enabled && emergency_shutoff_counter++ > 50)
 			logTheThing(LOG_DEBUG, null, "DISABLING API REQUESTS - Too many errors.")
 			logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
 			message_admins("API requests have been disabled due to too many errors (check logs).")
