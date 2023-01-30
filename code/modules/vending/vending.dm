@@ -852,8 +852,9 @@ TYPEINFO(/obj/machinery/vending)
 		return
 
 	var/image/chat_maptext/slogan_text
+	var/text_out
+
 	if (istype(src.loc, /turf))
-		var/text_out
 		if (src.glitchy_slogans)
 			text_out = voidSpeak(message)
 		else
@@ -865,10 +866,13 @@ TYPEINFO(/obj/machinery/vending)
 				if (I != slogan_text)
 					I.bump_up(slogan_text.measured_height)
 
+	if (!text_out)
+		return
+
 	if (src.glitchy_slogans)
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2, assoc_maptext = slogan_text)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(text_out)]\"", 2, assoc_maptext = slogan_text)
 	else
-		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = slogan_text)
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
 	return
 
