@@ -59,7 +59,7 @@ var/global/datum/apiHandler/apiHandler
 			message_admins("API requests have been disabled due to too many errors (check logs).")
 			enabled = 0
 			SPAWN(60 SECONDS)
-			emergency_shutoff_counter = 0
+				emergency_shutoff_counter = 0
 				logTheThing(LOG_DEBUG, null, "RE-ENABLING API REQUESTS - Cooldown expired.")
 				logTheThing(LOG_DIARY, null, "RE-ENABLING API REQUESTS - Cooldown expired.", "debug")
 				message_admins("API requests have been re-enabled after waiting.")
