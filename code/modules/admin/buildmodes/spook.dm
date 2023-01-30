@@ -68,6 +68,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			return list( hex2num(copytext(ret, 2, 4)) / 255.0, hex2num(copytext(ret, 4, 6)) / 255.0, hex2num(copytext(ret, 6, 8)) / 255.0 )
 		else
 			.=..()
+
 /obj/machinery/light/spook_act(what,data)
 	switch(what)
 		if("Break")
@@ -79,13 +80,9 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		else
 			..()
 
-/obj/machinery/door/spookTypes = "Open;Close;Toggle"
+/obj/machinery/door/spookTypes = "Toggle"
 /obj/machinery/door/spook_act(what, data)
 	switch(what)
-		if("Open")
-			open()
-		if("Close")
-			close()
 		if("Toggle")
 			if (src.density)
 				open()
@@ -93,22 +90,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 				close()
 		else
 			.=..()
-/obj/machinery/door/airlock/spook_getspooks()
-	return ..() + "Deny Sound"
-/obj/machinery/door/airlock/spook_act(what, data)
-	switch(what)
-		if("Deny Sound")
-			play_deny()
-		else
-			.=..()
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/spookTypes = "Break"
-/obj/item/reagent_containers/food/drinks/drinkingglass/spook_act(what)
-	switch(what)
-		if("Break")
-			smash()
-		else
-			.=..()
 /obj/item/device/light/flashlight/spookTypes = "Set Color;Toggle"
 /obj/item/device/light/flashlight/spook_data(what)
 	switch(what)
@@ -133,20 +115,6 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			toggle()
 		if("Thump")
 			animate_storage_thump(src)
-		else .=..()
-/*/obj/storage/secure
-	spookTypes = "Toggle;Secure"//just because i'm lazy, don't do this please
-	spook_act(what)
-		switch(what)
-			if("Toggle Lock")
-				toggle()
-			else .=..()
-*/
-/obj/machinery/vending/spookTypes = "Throw Item"
-/obj/machinery/vending/spook_act(what)
-	switch(what)
-		if("Throw Item")
-			throw_item()
 		else .=..()
 
 /obj/item/spookTypes = "Spook;Come Alive"
@@ -175,23 +143,5 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			src.dance()
 		if("Honey")
 			src.puke_honey()
-		else
-			. = ..()
-
-/obj/machinery/light_switch/spookTypes = "Toggle"
-/obj/machinery/light_switch/spook_act(what, data)
-	switch(what)
-		if("Toggle")
-			src.attack_hand(usr)
-		else
-			. = ..()
-
-/obj/machinery/power/apc/spookTypes = "Toggle"
-/obj/machinery/power/apc/spook_act(what, data)
-	switch(what)
-		if("Toggle")
-			src.operating = !src.operating
-			src.update()
-			UpdateIcon()
 		else
 			. = ..()
