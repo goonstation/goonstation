@@ -366,7 +366,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
 	icon_state = "intact"
 	anchored = 1
-	layer = 2.9
+	layer = DECAL_LAYER
 
 	heat
 		icon = 'icons/obj/atmospherics/pipes/heat_pipe.dmi'
