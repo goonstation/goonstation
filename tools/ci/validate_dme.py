@@ -7,6 +7,7 @@ reading = False
 
 FORBID_INCLUDE = [
     # Sekrits
+	r'\+secret/**/*.dm',
     r'code/_placeholder.dm',
     r'code/_publicVersion.dm',
 
