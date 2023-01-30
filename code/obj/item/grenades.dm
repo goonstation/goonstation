@@ -12,6 +12,8 @@ PIPE BOMBS + CONSTRUCTION
 TYPEINFO(/obj/item/old_grenade)
 	mats = 6
 
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, /obj/item/old_grenade/proc/prime)
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
@@ -1637,6 +1639,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			..()
 			return
 
+ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, /obj/item/pipebomb/bomb/proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
@@ -1665,11 +1668,14 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	var/list/throw_objs = new /list()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (armed)
 			return
+		src.arm(user)
+
+	proc/arm(mob/user)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
-		armed = 1
+		armed = TRUE
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat && user)
 			if(is_dangerous)
