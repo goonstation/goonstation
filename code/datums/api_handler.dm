@@ -10,7 +10,7 @@ var/global/datum/apiHandler/apiHandler
 	var/maxApiRetries = 5 //how many times should a query attempt to run before giving up
 	var/apiRetryDelay = 10 //base delay between query attempts, gets multiplied by attempt number
 
-	var/emergency_shutoff_counter = 0
+	var/emergency_shutoff_counter = 0 // how many api errors there have been since a successful one
 
 	New()
 		..()
@@ -23,11 +23,6 @@ var/global/datum/apiHandler/apiHandler
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
 	proc/apiError(message = "", forceErrorException = 0)
 		if (config.server_id != "local" || forceErrorException)
-			if (emergency_shutoff_counter++ > 25)
-				logTheThing(LOG_DEBUG, null, "DISABLING API REQUESTS - Too many errors.")
-				logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
-				message_admins("API requests have been disabled due to too many errors (check logs).")
-				enabled = 0
 			throw EXCEPTION(message)
 
 
@@ -44,6 +39,25 @@ var/global/datum/apiHandler/apiHandler
 		//arglist() doesnt recognise named params lol
 		givenArgs[4] = attempt + 1
 		return src.queryAPI(arglist(givenArgs))
+
+
+	/**
+	 * Increments or resets the recent error counter
+	 *
+	 * @reset (bool) reset the counter (eg successful request)
+	 */
+	proc/trackRecentError(reset = 0)
+		if (reset)
+			emergency_shutoff_counter = 0
+			return
+
+		if (emergency_shutoff_counter++ > 25)
+			logTheThing(LOG_DEBUG, null, "DISABLING API REQUESTS - Too many errors.")
+			logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
+			message_admins("API requests have been disabled due to too many errors (check logs).")
+			enabled = 0
+
+		return
 
 
 	/**
@@ -75,9 +89,9 @@ var/global/datum/apiHandler/apiHandler
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
 		if(!request.is_complete())
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [safeReq] (Attempt: [attempt])", "debug")
-
+			trackRecentError()
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])", "debug")
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
@@ -87,8 +101,9 @@ var/global/datum/apiHandler/apiHandler
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
+			trackRecentError()
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])", "debug")
 
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
@@ -96,15 +111,15 @@ var/global/datum/apiHandler/apiHandler
 			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
 
 		// At this point we assume the request was a success, so reset the error counter
-		emergency_shutoff_counter = 0
+		trackRecentError(TRUE)
 
 		if (forceResponse)
 			// Parse the response
 			var/list/data = json_decode(response.body)
 
 			if (!data)
-				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
-				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
+				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])")
+				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter])", "debug")
 
 				if (attempt < maxApiRetries)
 					return retryApiQuery(args, attempt = attempt)
