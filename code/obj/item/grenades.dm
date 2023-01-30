@@ -1679,7 +1679,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat && user)
 			if(is_dangerous)
-				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+				message_admins("[key_name(user || usr)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
