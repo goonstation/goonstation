@@ -3,6 +3,8 @@ import functools
 import glob
 import sys
 
+# Originally from https://github.com/tgstation/tgstation/pull/66831 + changes - courtesy of mothblocks
+
 reading = False
 
 FORBID_INCLUDE = [
