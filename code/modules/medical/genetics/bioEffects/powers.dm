@@ -207,6 +207,7 @@
 				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
 				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
 				qdel(the_object)
+			logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 
 
 
