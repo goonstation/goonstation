@@ -166,6 +166,9 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (!src.fryitem.reagents)
 		src.fryitem.create_reagents(50)
 
+	if (src.fryitem.reagents.is_full())
+		src.fryitem.reagents.maximum_volume += 2
+
 	src.reagents.trans_to(src.fryitem, 2)
 
 	if (src.cooktime < 60)
