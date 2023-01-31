@@ -94,7 +94,6 @@
 			if (M)
 				M.apply_flash(35, 0, 0, 25)
 
-		return
 
 	proc/flash_mob(mob/living/M, mob/user)
 		src.add_fingerprint(user)
@@ -143,7 +142,6 @@
 		M.lastattacker = user
 		M.lastattackertime = world.time
 
-		return
 
 	update_icon()
 		if (src.loaded)
@@ -209,4 +207,3 @@
 			src.amount_left = 0
 
 		inventory_counter?.update_number(src.amount_left)
-		return
