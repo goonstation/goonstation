@@ -41,3 +41,6 @@
 #define ROLE_FLOOR_GOBLIN "floor_goblin"
 #define ROLE_SLASHER "slasher"
 #define ROLE_LICENSED "licensed_traitor"
+#define ROLE_PIRATE "pirate"
+#define ROLE_PIRATE_FIRST_MATE "pirate_first_mate"
+#define ROLE_PIRATE_CAPTAIN "pirate_captain"
