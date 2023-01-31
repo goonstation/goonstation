@@ -14,6 +14,7 @@
  * Makes the given procs available for use with the admin interact menu
  * Example: `ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/disarm)`
  * would add the `*arm` and `*disarm` options to the admin interact menu for nuclear bombs.
+ * Will display the "name" of the proc if it has one, for example `set name = "foo"` will result in the proc's entry in the interact menu being "Foo".
 **/
 #define ADMIN_INTERACT_PROCS(TYPE, PROCNAME...)\
 	TYPEINFO(TYPE); \
