@@ -11,7 +11,7 @@
 
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
-
+ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
