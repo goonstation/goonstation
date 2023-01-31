@@ -113,18 +113,6 @@
 		src.loaded = FALSE
 		src.UpdateIcon()
 
-		// Play animations.
-		if (isrobot(user))
-			SPAWN(0)
-				var/atom/movable/overlay/animation = new(user.loc)
-				animation.layer = user.layer + 1
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = user
-				flick("blspell", animation)
-				sleep(0.5 SECONDS)
-				qdel(animation)
-
 		// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
 		var/blind_success = M.apply_flash(
 			src.flash_animation_duration,

@@ -536,7 +536,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/flintlock
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
-	hit_ground_chance = 100
+	hit_ground_chance = 50
 	casing = null
 	impact_image_state = "bhole-small"
 
@@ -576,13 +576,13 @@ toxic - poisons
 				M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 				SPAWN(0.5 SECONDS) // Wait until the target is at rest before exploding.
-					explosion_new(null, get_turf(hit), 4, 1.75)
+					explosion_new(proj, get_turf(hit), 4, 1.75)
 			else
-				explosion_new(null, get_turf(hit), 4, 1.75)
+				explosion_new(proj, get_turf(hit), 4, 1.75)
 			..()
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 4, 1.75)
+			explosion_new(O, get_turf(O), 4, 1.75)
 
 //0.72
 /datum/projectile/bullet/a12

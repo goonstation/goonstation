@@ -497,28 +497,25 @@
 
 	Entered(Obj, OldLoc)
 		..()
-		for (var/obj/item/O in contents)
-			if (istype(O, /obj/item/gun/kinetic/single_action/flintlock/rifle))
-				icon_state = initial(icon_state) + "-1"
-				item_state = initial(item_state) + "-1"
+		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+			icon_state = initial(icon_state) + "-1"
+			item_state = initial(item_state) + "-1"
 
-				if (istype(src.loc, /mob))
-					var/mob/parent = src.loc
-					parent.update_clothing()
+			if (istype(src.loc, /mob))
+				var/mob/parent = src.loc
+				parent.update_clothing()
 
-				return
+			return
 
 	Exited(Obj, newloc)
 		..()
-		for (var/obj/item/O in contents)
-			if (istype(O, /obj/item/gun/kinetic/single_action/flintlock/rifle))
-				return
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
+		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
 
-		if (istype(src.loc, /mob))
-			var/mob/parent = src.loc
-			parent.update_clothing()
+			if (istype(src.loc, /mob))
+				var/mob/parent = src.loc
+				parent.update_clothing()
 
 /* -------------------- Fanny Packs -------------------- */
 
