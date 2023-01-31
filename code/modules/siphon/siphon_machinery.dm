@@ -1,8 +1,12 @@
 //handheld device for manual calibration of siphon systems
+TYPEINFO(/obj/item/device/calibrator)
+	mats = list("CRY-1", "CON-1")
+
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
 	throwforce = 5.0
@@ -11,7 +15,6 @@
 	desc = "A small handheld device specially built for calibration and readout of harmonic siphon systems."
 	m_amt = 50
 	g_amt = 20
-	mats = list("CRY-1", "CON-1")
 
 
 
@@ -282,7 +285,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.visible_message("<B>[src]</B> shuts down. Its internal storage is full.")
 
 		power_usage = total_draw
-		use_power(power_usage)
 		..()
 
 	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //DEBUG DEBUG DEBUG
@@ -646,7 +648,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
 		else if(istype(W,/obj/item/device/calibrator))
-			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()

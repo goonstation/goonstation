@@ -1,13 +1,17 @@
+TYPEINFO(/obj/machinery/crusher)
+	mats = 20
+
 /obj/machinery/crusher
 	name = "Crusher Unit"
 	desc = "Breaks things down into metal/glass/waste"
+	pass_unstable = TRUE
 	density = 1
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
 	anchored = 1
-	mats = 20
 	is_syndicate = 1
+	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
@@ -222,7 +226,6 @@
 /obj/machinery/crusher/process()
 	..()
 	if(status & (NOPOWER|BROKEN))	return
-	use_power(500)
 
 /obj/machinery/crusher/New()
 	..()

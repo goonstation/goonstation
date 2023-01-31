@@ -310,7 +310,7 @@ mob/new_player
 					location = pick_landmark(JOB.special_spawn_location)
 				if (!isnull(location))
 					character.set_loc(location)
-			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
+			else if (character.traitHolder && character.traitHolder.hasTrait("stowaway"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
@@ -397,16 +397,46 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
+			var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
-				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
-
+				slots += {"<a href='byond://?src=\ref[src];
+				SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];
+				' title='Join the round as [J.name].'>&#x2713;
+				&#xFE0E;
+				</a>"}
 			// show slots up to the limit
-			// extra people beyond the limit will be shown as a [+X] card
+			// extra people beyond the limit will be shown as a [+X] card, supposedly
 			for (var/i = shown, i > 0, i--)
-				slots += (i <= c ? "<div class='latejoin-card latejoin-full' style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' title='Slot filled.'>[(i == 1 && c > shown) ? "+[c - maxslots]" : "&times;"]</div>" : "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>")
-
+				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
+				if (i <= c)
+					if (i == 1 && c > shown)
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>+[c - maxslots]
+						</div>
+						"}
+					else
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>&times;
+						</div>
+						"}
+				else
+					slots += {"
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
+					title='Join the round as [J.name].'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
 			return {"
 				<tr><td class='latejoin-link'>
 					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
@@ -639,19 +669,12 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
-
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						//Another one I need input on
 						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
-						{
 							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
-						}
-						else{
+						else
 							bad_type = pick(ticker.mode.latejoin_antag_roles)
-						}
-						}
-
-
 					else
 						bad_type = ROLE_TRAITOR
 
@@ -706,14 +729,12 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
-				traitor.special_role = ROLE_CHANGELING
-				objective_set_path = /datum/objective_set/changeling
-				traitormob.make_changeling()
+				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_VAMPIRE)
-				traitor.special_role = ROLE_VAMPIRE
-				objective_set_path = /datum/objective_set/vampire
-				traitormob.make_vampire()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRESTLER)
 				traitor.special_role = ROLE_WRESTLER
@@ -887,8 +908,8 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			src.mind.dnr = 1
-			src.mind.joined_observer=1
+			src.mind.get_player()?.dnr = TRUE
+			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()

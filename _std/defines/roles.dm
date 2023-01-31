@@ -1,6 +1,7 @@
 #define ROLE_TRAITOR "traitor"
 #define ROLE_SPY_THIEF "spy_thief"
 #define ROLE_NUKEOP "nukeop"
+#define ROLE_NUKEOP_COMMANDER "nukeop_commander"
 #define ROLE_VAMPIRE "vampire"
 #define ROLE_GANG_LEADER "gang_leader"
 #define ROLE_WIZARD "wizard"
@@ -39,3 +40,4 @@
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"
 #define ROLE_SLASHER "slasher"
+#define ROLE_LICENSED "licensed_traitor"

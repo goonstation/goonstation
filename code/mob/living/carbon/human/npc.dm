@@ -10,8 +10,8 @@
 			istype(x, /obj/item/clothing) || \
 			istype(x, /obj/item/device/radio/headset) || \
 			istype(x, /obj/item/card/id) || \
-			x.flags & ONBELT || \
-			x.flags & ONBACK \
+			x.c_flags & ONBELT || \
+			x.c_flags & ONBACK \
 		) && !IS_NPC_HATED_ITEM(x) \
 	)
 
@@ -32,6 +32,16 @@
 			set_clothing_icon_dirty()
 		SPAWN(2 SECONDS)
 			ai_init()
+
+/mob/living/carbon/human/npc/mutantrace
+	var/spawn_mutantrace
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			if(spawn_mutantrace)
+				src.set_mutantrace(text2path(spawn_mutantrace))
+				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
@@ -199,6 +209,13 @@
 		ai_lastaction = world.time
 		walk_towards(src, null)
 		return
+
+	// Strange to have this so high up, but we're considered 'restrained' if we have a missing limb on our active hand
+	// thus the AI thinks it's cuffed or whatever and never does anything other than moving if it loses the active arm
+	if(!src.limbs.l_arm)
+		src.swap_hand(0)
+	else if(!src.limbs.r_arm)
+		src.swap_hand(1)
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
@@ -565,7 +582,7 @@
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.c_flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -595,7 +612,7 @@
 					poured = TRUE
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
-			// do nothing
+			; // do nothing
 		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else

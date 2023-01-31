@@ -599,30 +599,6 @@
 
 /////////////////////////////////////////
 
-/turf/simulated/floor/airless/delivery
-	icon_state = "delivery"
-
-/turf/simulated/floor/airless/delivery/white
-	icon_state = "delivery_white"
-
-/turf/simulated/floor/airless/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/simulated/floor/airless/bot
-	icon_state = "bot"
-
-/turf/simulated/floor/airless/bot/white
-	icon_state = "bot_white"
-
-/turf/simulated/floor/airless/bot/blue
-	icon_state = "bot_blue"
-
-/turf/simulated/floor/airless/bot/caution
-	icon_state = "botcaution"
-
-/////////////////////////////////////////
-
 /turf/simulated/floor/airless/engine
 	name = "reinforced floor"
 	icon_state = "engine"

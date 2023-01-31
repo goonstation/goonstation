@@ -49,15 +49,6 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
-//Any special things when it hits shit?
-	on_hit(atom/hit, direction, obj/projectile/P)
-		if (ishuman(hit) && src.hit_type)
-			if (hit_type != DAMAGE_BLUNT)
-				take_bleeding_damage(hit, null, round(src.damage / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
-		..()//uh, what the fuck, call your parent
-		//return // BULLETS CANNOT BLEED, HAINE
-
 //no caliber
 /datum/projectile/bullet/staple
 	name = "staple"
@@ -483,7 +474,7 @@ toxic - poisons
 	sname = "biodegradable CyberFoam dart"
 	damage_type = D_KINETIC
 	damage = 0
-	stun = 2.5// about 33 shots to down a full-stam person
+	stun = 2.5 // about 33 shots to down a full-stam person
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
@@ -737,9 +728,6 @@ toxic - poisons
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
-			//if (src.hit_type)
-			// impact_image_effect("K", hit)
-				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
 /datum/projectile/bullet/sledgehammer
 	name = "\"sledgehammer\" round"
@@ -1341,9 +1329,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
@@ -1439,9 +1425,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 

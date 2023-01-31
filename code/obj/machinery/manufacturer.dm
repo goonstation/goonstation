@@ -6,6 +6,9 @@
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
 
+TYPEINFO(/obj/machinery/manufacturer)
+	mats = 20
+
 /obj/machinery/manufacturer
 	name = "manufacturing unit"
 	desc = "A 3D printer-like machine that can construct items from raw materials."
@@ -14,7 +17,6 @@
 	var/icon_base = "general" //! This is used to make icon state changes cleaner by setting it to "fab-[icon_base]"
 	density = TRUE
 	anchored = TRUE
-	mats = 20
 	power_usage = 200
 	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
@@ -178,7 +180,6 @@
 		if (status & NOPOWER)
 			return
 
-		power_usage = src.active_power_consumption + 200 * mult
 		..()
 
 		if (src.mode == "working")
@@ -1734,23 +1735,25 @@
 				src.time_left *= 1.5
 			src.time_left /= src.speed
 
+		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
 				var/obj/item/disk/data/floppy/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-					if(MD.fablimit == 0)
+					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.queue = list()
 						return
 					else
-						MD.fablimit -= 1
+						MD.num_working++
+					manudrive_file = MD
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()
 
-		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left), src)
+		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left, manudrive_file), src)
 
 
 	proc/output_loop(datum/manufacture/M)
@@ -2269,6 +2272,19 @@
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/whistle)
 
+#define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
+
+/obj/machinery/manufacturer/general/grody
+	name = "grody manufacturer"
+	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
+	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
+	free_resource_amt = 0
+	free_resources = list()
+	malfunction = TRUE
+	wires = MALFUNCTION_WIRE_CUT
+
+#undef MALFUNCTION_WIRE_CUT
+
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
@@ -2648,6 +2664,7 @@
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
+		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 
@@ -2888,7 +2905,7 @@
 	blueprint = /datum/manufacture/alastor
 
 /obj/item/paper/manufacturer_blueprint/interdictor_kit
-	name = "Interdictor Assembly Kit"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_kit
@@ -2946,10 +2963,12 @@
 	id = "manufacturer"
 	var/obj/machinery/manufacturer/MA
 	var/completed = FALSE
+	var/datum/computer/file/manudrive/manudrive_file
 
-	New(machine, dur)
+	New(machine, dur, datum/computer/file/manudrive/manudrive_file)
 		MA = machine
 		duration = dur
+		src.manudrive_file = manudrive_file
 		..()
 
 	onUpdate()
@@ -2968,10 +2987,22 @@
 		MA.error = null
 		MA.mode = "ready"
 		MA.build_icon()
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
 
 	onEnd()
 		..()
 		src.completed = TRUE
+		if(src.manudrive_file)
+			src.manudrive_file.num_working--
+			if(src.manudrive_file.num_working < 0)
+				CRASH("Manudrive num_working negative.")
+			if(src.manudrive_file.fablimit == 0)
+				CRASH("Manudrive fablimit 0.")
+			else if(src.manudrive_file.fablimit > 0)
+				src.manudrive_file.fablimit--
 		MA.finish_work()
 		// call dispense
 

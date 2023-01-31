@@ -3,7 +3,8 @@
 	desc = "A hand-held genetic scanner able to compare a person's DNA with a database of known genes."
 	icon_state = "genetic_analyzer"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5

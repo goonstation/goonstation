@@ -4,7 +4,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	name = "gun"
 	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/gunpoint
@@ -271,10 +272,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if(user.a_intent != INTENT_HELP && isliving(M))
 		if (user.a_intent == INTENT_GRAB)
-			attack_particle(user,M)
-			return ..()
-		else
-			src.shoot_point_blank(M, user)
+			var/datum/limb/current_limb = user.equipped_limb()
+			if (current_limb.can_gun_grab)
+				attack_particle(user,M)
+				return ..()
+		src.shoot_point_blank(M, user)
 	else
 		..()
 		attack_particle(user,M)

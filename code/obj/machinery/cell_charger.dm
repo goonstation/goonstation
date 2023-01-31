@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/cell_charger)
+	mats = 8
+
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "A charging unit for power cells."
@@ -7,7 +10,6 @@
 	var/chargerate = 250 // power per tick
 	var/chargelevel = -1
 	anchored = 1
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	power_usage = 50
 
@@ -39,13 +41,11 @@
 		//boutput(world, "nl: [newlevel]")
 
 		if(chargelevel != newlevel)
-
-			overlays = null
-			overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
+			src.UpdateOverlays(image('icons/obj/power.dmi', "ccharger-o[newlevel]"), "charge")
 
 			chargelevel = newlevel
 	else
-		overlays = null
+		src.UpdateOverlays(null, "charge")
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -68,10 +68,6 @@
 /obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
 		return
-	if (charging)
-		power_usage = 50 + src.chargerate / CELLRATE
-	else
-		power_usage = 50
 	..()
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)
@@ -92,3 +88,9 @@
 	. = ..()
 	if(Obj == src.charging)
 		src.charging = null
+
+/obj/machinery/cell_charger/get_desc(dist)
+	. = ..()
+	if(!charging)
+		return
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"

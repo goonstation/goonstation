@@ -692,6 +692,11 @@
 		my_head = src.organHolder.head
 		var/y_to_offset = AHH.customization_first_offset_y
 
+		if(my_head.head_image_nose)
+			UpdateOverlays(my_head.head_image_nose, "nose", 1, 1)
+		else
+			UpdateOverlays(null, "nose", 1, 1)
+
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
 			src.image_eyes.pixel_y = AHH.e_offset_y
@@ -748,6 +753,7 @@
 		UpdateOverlays(null, "hair_special_two", 1, 1)
 		UpdateOverlays(null, "hair_special_three", 1, 1)
 
+		UpdateOverlays(null, "nose", 1, 1)
 		UpdateOverlays(null, "eyes", 1, 1)
 
 
@@ -1302,7 +1308,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 	else if (burn > 25)
 		burn_state = 1
 
-	var/obj/item/organ/head/HO = organs["head"]
+	var/obj/item/organ/head/HO = organHolder?.get_organ("head")
 	var/head_damage = null
 	if (HO && organHolder?.head)
 		var/head_brute = min(3,round(HO.brute_dam/10))

@@ -6,13 +6,15 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text, datum/mind/owner)
+	New(text, datum/mind/owner, datum/antagonist/antag_role)
 		..()
 		if(text)
 			src.explanation_text = text
 		if(istype(owner))
 			src.owner = owner
 			owner.objectives += src
+			if (antag_role)
+				antag_role.objectives += src
 		else
 			stack_trace("objective/New got called without a mind")
 		src.set_up()
@@ -704,10 +706,11 @@ proc/create_fluff(datum/mind/target)
 		if(!in_centcom(src.owner.current))
 			return 0
 
-		if (!owner.is_changeling)
+		if (!ischangeling(src.owner.current))
 			return 0
 
-		if (owner.is_changeling.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
+		var/datum/abilityHolder/changeling/ability_holder = src.owner.current.get_ability_holder(/datum/abilityHolder/changeling)
+		if (ability_holder?.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
 			return 1
 
 /datum/objective/specialist/drinkblood
@@ -1428,7 +1431,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
-	New(datum/mind/enemy)
+	New(datum/mind/enemy, datum/antagonist/antag_role)
 		..()
 		if(!istype(enemy))
 			return 1
@@ -1440,7 +1443,9 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if(!initial(objective.enabled))
 				src.objective_list -= X
 				continue
-			ticker.mode.bestow_objective(enemy,X)
+			objective = new X(null, enemy)
+			if (antag_role)
+				antag_role.objectives.Add(objective)
 
 		for(var/X in escape_choices)
 			var/datum/objective/objective = X
@@ -1450,7 +1455,9 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)
 			if (ispath(escape_path))
-				ticker.mode.bestow_objective(enemy,escape_path)
+				var/datum/objective/objective = new escape_path(null, enemy)
+				if (antag_role)
+					antag_role.objectives.Add(objective)
 
 		SPAWN(0)
 			qdel(src)

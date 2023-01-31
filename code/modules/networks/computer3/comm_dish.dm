@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/communications_dish)
+	mats = 25
+
 /obj/machinery/communications_dish
 	name = "Communications dish"
 	icon = 'icons/mob/hivebot.dmi'
@@ -13,7 +16,6 @@
 	var/frequency = FREQ_COMM_DISH
 	var/list/cargo_logs = list()
 
-	mats = 25
 	deconstruct_flags = DECON_NONE
 
 	New()

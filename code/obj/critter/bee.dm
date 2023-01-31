@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types."
@@ -840,8 +843,10 @@
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 		heisentier_hat()
 		..()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 		..()
 
@@ -1529,8 +1534,8 @@
 	honey_color = "#ff0033"
 
 	do_reagentStuff(mob/M)
-		if (M.reagents.get_reagent_amount("honkfartium") < 10)
-			M.reagents.add_reagent("honkfartium", 5)
+		if (M.reagents.get_reagent_amount("honk_fart") < 10)
+			M.reagents.add_reagent("honk_fart", 5)
 		M.reagents.add_reagent("lube", 5)
 
 
@@ -2039,6 +2044,7 @@
 	name = "bee beard"
 	desc = "A beard. From a bee."
 	icon_state = "beard"
+	c_flags = null
 
 /obj/item/reagent_containers/food/snacks/beefood
 	name = "bee kibble"

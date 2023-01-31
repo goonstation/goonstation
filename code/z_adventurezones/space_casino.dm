@@ -7,11 +7,13 @@
 
 // Item slot machine
 
+TYPEINFO(/obj/submachine/slot_machine/item)
+	mats = null
+
 /obj/submachine/slot_machine/item
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	mats = null
 	var/uses = 0
 	max_roll = 1000
 	icon_base = "slotsitem"
@@ -97,7 +99,7 @@
 		if (!prize_type)
 			prize_type = /obj/item/raw_material/rock
 		var/obj/item/prize = new prize_type
-		prize.loc = src.loc
+		prize.set_loc(src.loc)
 		prize.layer += 0.1
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")
 		playsound(get_turf(src), "[win_sound]", 55, 1)

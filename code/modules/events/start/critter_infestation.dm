@@ -9,7 +9,7 @@
 
 	var/list/invasion_critter_types = list(\
 	list(/obj/critter/wasp),\
-	list(/obj/critter/spacescorpion),\
+	list(/mob/living/critter/small_animal/scorpion),\
 	list(/obj/critter/wraithskeleton),\
 	list(/mob/living/critter/spider,/mob/living/critter/spider/baby),\
 	list(/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby),\

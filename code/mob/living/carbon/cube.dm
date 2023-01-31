@@ -48,7 +48,6 @@
 			if(2)
 				if (prob(25))
 					src.gib(1)
-			else
 		return
 
 	proc/get_cube_idle()
@@ -70,6 +69,7 @@
 		return 1
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))

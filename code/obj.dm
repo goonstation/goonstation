@@ -1,3 +1,6 @@
+TYPEINFO(/obj)
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
+
 /obj
 	var/real_name = null
 	var/real_desc = null
@@ -8,7 +11,6 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
@@ -31,7 +33,8 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		if (!isnull(src.mats) && src.mats != 0 && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		var/typeinfo/obj/typeinfo = src.get_typeinfo()
+		if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
 			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
@@ -128,7 +131,6 @@
 		for(var/mob/M in src.contents)
 			M.set_loc(src.loc)
 		tag = null
-		mats = null
 		if (artifact && !isnum(artifact))
 			qdel(artifact)
 			artifact = null
@@ -449,6 +451,7 @@
 /obj/overlay
 	name = "overlay"
 	anchored = TRUE
+	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
@@ -484,13 +487,6 @@
 	name = "Projection"
 	anchored = 1
 
-/obj/deskclutter
-	name = "desk clutter"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "deskclutter"
-	desc = "What a mess..."
-	anchored = 1
-
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/proc/alter_health()
@@ -519,20 +515,21 @@
 		qdel(O)
 
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
-	. = 0
+	. = FALSE
 	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
-		if (user && !(W.cant_drop))
-			var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
-			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
+		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
+		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
+		if (user)
+			if (W.cant_drop)
+				return
 			user.drop_item()
-			if(W.dir != dirbuffer)
-				W.set_dir(dirbuffer)
-			if (W?.loc)
-				W.set_loc(src.loc)
-				if (islist(params) && params["icon-y"] && params["icon-x"])
-					W.pixel_x = text2num(params["icon-x"]) - 16
-					W.pixel_y = text2num(params["icon-y"]) - 16
-				. = 1
+		if(W.dir != dirbuffer)
+			W.set_dir(dirbuffer)
+		W.set_loc(src.loc)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			W.pixel_x = text2num(params["icon-x"]) - 16
+			W.pixel_y = text2num(params["icon-y"]) - 16
+		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys

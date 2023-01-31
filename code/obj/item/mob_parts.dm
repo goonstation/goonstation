@@ -5,7 +5,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????
@@ -102,8 +103,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder?.organs?[src.slot] == src)
-				holder.organs[src.slot] = null
 		holder = null
 
 		if (bones)
@@ -118,7 +117,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
-			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null

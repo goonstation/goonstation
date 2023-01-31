@@ -1,12 +1,14 @@
+ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode
 	var/name = "invalid" // Don't implement ticker.mode.name or .config_tag checks again, okay? I've had to swap them all to get game mode children to work.
 	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) when checking instead, but this must be set in new game mode
 	var/votable = 1
+	var/regular = TRUE
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
 
 	var/shuttle_available = 1 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
-	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == 2.
+	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == SHUTTLE_AVAILABLE_DELAY.
 	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
@@ -108,29 +110,6 @@
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
-					var/dna_absorbed = 0
-					var/absorbed_identities = null
-					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
-					if (C && istype(C))
-						absorbed_identities = list()
-						dna_absorbed = max(0, C.absorbtions)
-						for (var/DNA in C.absorbed_dna)
-							absorbed_identities += DNA
-					else
-						dna_absorbed = "N/A (body destroyed)"
-
-					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
-					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
-
-				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
-					var/blood_acquired = 0
-					if (isvampire(traitor.current))
-						blood_acquired = traitor.current.get_vampire_blood(1)
-					else
-						blood_acquired = "N/A (body destroyed)"
-					stuff_to_output += "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]"
-
 				if (traitor.special_role == ROLE_WEREWOLF)
 					// Werewolves may not have the feed objective, so we don't want to make this output universal.
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
@@ -147,13 +126,6 @@
 							break
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
-
-				if (traitor.special_role == ROLE_HUNTER)
-					// Same reasoning here, really.
-					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
-						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-							var/S = traitor.current.get_skull_value()
-							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
@@ -188,7 +160,7 @@
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
 						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
 							if(length(flock.trace_minds))
 								stuff_to_output += "Flocktraces:"
 								for (var/trace_name in flock.trace_minds)
@@ -345,45 +317,19 @@
 			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
-			objective_set_path = /datum/objective_set/changeling
-			antag.current.make_changeling()
+			antag.add_antagonist(ROLE_CHANGELING)
+			do_objectives = FALSE
 
 		if (ROLE_WIZARD)
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			antag.current.unequip_all(1)
-
-			if (!job_start_locations["wizard"])
-				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-			else
-				antag.current.set_loc(pick(job_start_locations["wizard"]))
-
-			equip_wizard(antag.current)
-
-			var/randomname
-			if (antag.current.gender == "female")
-				randomname = pick_string_autokey("names/wizard_female.txt")
-			else
-				randomname = pick_string_autokey("names/wizard_male.txt")
-
-			SPAWN(0)
-				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-				if(newname && newname != randomname)
-					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
-				if (length(ckey(newname)) == 0)
-					newname = randomname
-
-				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname)
-					antag.current.real_name = newname
-					antag.current.UpdateName()
+			antag.add_antagonist(ROLE_WIZARD)
+			do_objectives = FALSE
 
 		if (ROLE_WRAITH)
 			generate_wraith_objectives(antag)
 
 		if (ROLE_VAMPIRE)
-			objective_set_path = /datum/objective_set/vampire
-			antag.current.make_vampire()
+			antag.add_antagonist(ROLE_VAMPIRE)
+			do_objectives = FALSE
 
 		if (ROLE_HUNTER)
 			antag.add_antagonist(ROLE_HUNTER)
@@ -428,6 +374,10 @@
 			antag.add_antagonist(ROLE_ARCFIEND)
 			do_objectives = FALSE
 
+		if (ROLE_SALVAGER)
+			antag.add_antagonist(ROLE_SALVAGER)
+			do_objectives = FALSE
+
 	if (do_objectives)
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(antag)
@@ -438,7 +388,24 @@
 
 /datum/game_mode/proc/check_win()
 
-/datum/game_mode/proc/send_intercept()
+/datum/game_mode/proc/send_intercept(badguy_list)
+	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
+	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
+
+	var/list/possible_modes = list()
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	for(var/i = 1 to pick(2, 3))
+		possible_modes.Remove(pick(possible_modes))
+
+	var/datum/intercept_text/i_text = new /datum/intercept_text
+
+	for(var/g_mode in possible_modes)
+		intercepttext += i_text.build(g_mode, pick((islist(badguy_list) && length(badguy_list)) ? badguy_list : ticker.minds))
+
+	for_by_tcl(C, /obj/machinery/communications_dish)
+		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
+
+	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 ////////////////////////////
 // Objective related code //
@@ -447,11 +414,11 @@
 //what do we do when a mob dies
 /datum/game_mode/proc/on_human_death(var/mob/M)
 
-/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
+/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor, var/objective_path, var/datum/antagonist/antag_role)
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path(null, traitor)
+	var/datum/objective/O = new objective_path(null, traitor, antag_role)
 
 	return O
 
@@ -500,3 +467,8 @@
 	twraith.special_role = ROLE_WRAITH
 
 
+/proc/build_valid_game_modes()
+	. = list()
+	for (var/M in config.modes)
+		. += M
+	global.valid_modes += .

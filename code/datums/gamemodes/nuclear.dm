@@ -2,9 +2,9 @@
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
 
 /datum/game_mode/nuclear
-	name = "nuclear emergency"
+	name = "Nuclear Emergency"
 	config_tag = "nuclear"
-	shuttle_available = 2
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	/// The name of our target area(s). Used for text output.
 	var/list/target_location_names = list()
 	/// Our area.type, which can be multiple per plant location (e.g. medbay).
@@ -147,6 +147,8 @@
 	else //Add every single typepath into a list
 		for(var/i in 1 to length(target_location_names))
 			target_location_type += target_locations[target_location_names[i]]
+	src.create_plant_location_markers(target_locations, target_location_names)
+
 	if (!target_location_type)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
@@ -168,7 +170,6 @@
 	syndicates |= chosen_syndicates
 	for (var/datum/mind/syndicate in syndicates)
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
@@ -186,12 +187,6 @@
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()
-	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
-	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
-	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
-
 	var/datum/mind/leader_mind = src.pick_leader()
 
 	//Building the plant location strings
@@ -215,8 +210,6 @@
 			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
 
 	for(var/datum/mind/synd_mind in syndicates)
-		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
-
 		var/obj_count = 1
 		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 		for(var/datum/objective/objective in synd_mind.objectives)
@@ -227,27 +220,16 @@
 		boutput(synd_mind.current, to_output)
 
 		if(synd_mind == leader_mind)
-			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
-			if(!synd_mind.current.loc)
-				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
-			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-			equip_syndicate(synd_mind.current, 1)
-			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
-			synd_mind.current.show_antag_popup("nukeop-commander")
+			synd_mind.add_antagonist(ROLE_NUKEOP_COMMANDER)
+			var/mob/living/carbon/human/H = synd_mind.current
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
 		else
-			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
-			var/callsign = pick(callsign_list)
-			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			callsign_list -= callsign
-			equip_syndicate(synd_mind.current, 0)
-			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
-			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
-			synd_mind.current.show_antag_popup("nukeop")
-		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+			synd_mind.add_antagonist(ROLE_NUKEOP)
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
@@ -392,28 +374,7 @@
 	else return 0
 
 /datum/game_mode/nuclear/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(ticker.minds))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(ticker.minds)
 /datum/game_mode/nuclear/proc/random_radio_frequency()
 	. = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
@@ -423,6 +384,35 @@
 		. = rand(1352, 1439)
 
 	while (. in blacklisted)
+
+/datum/game_mode/nuclear/proc/create_plant_location_markers(var/list/target_locations, var/list/target_location_names)
+	// Find the centres of the plant sites.
+	for (var/i in 1 to length(target_location_names))
+		var/marker_name
+		var/list/area/areas = list()
+		for (var/area_type in target_locations[target_location_names[i]])
+			areas += get_areas(area_type)
+
+		var/max_x = 1
+		var/min_x = world.maxx
+		var/max_y = 1
+		var/min_y = world.maxy
+
+		for (var/area/area in areas)
+			if (area.z != Z_LEVEL_STATION)
+				continue
+			for (var/turf/T in area)
+				max_x = max(max_x, T.x)
+				min_x = min(min_x, T.x)
+				max_y = max(max_y, T.y)
+				min_y = min(min_y, T.y)
+			if (!marker_name)
+				marker_name = capitalize(area.name)
+		var/target_x = (max_x + min_x) / 2
+		var/target_y = (max_y + min_y) / 2
+
+		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
+		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
 
 /datum/game_mode/nuclear/process()
 	set background = 1

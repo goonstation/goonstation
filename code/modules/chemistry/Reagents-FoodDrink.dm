@@ -87,12 +87,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (bone_system)
-						for (var/obj/item/organ/O in H.organs)
-							if (O.bones)
-								O.bones.repair_damage(1 * mult)
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
@@ -664,16 +658,17 @@ datum
 
 					if (silent)
 						M.TakeDamage("All", volume * 0.5, 0, 0, DAMAGE_BLUNT)
-					else if (prob(75))
+					else if (prob(75) && !H.disfigured && volume >= 5)
 						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
-						if(!H.disfigured)
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.disfigured = TRUE
-							H.UpdateName()
+						boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+						H.disfigured = TRUE
+						H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
-						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)
+						M.TakeDamage("All", min(5, volume / 2), 0, 0, DAMAGE_BLUNT)
+						if(prob(50))
+							M.emote("scream")
 
 				if(istype(H))
 					if(method == INGEST && H.reagents && H.reagents.has_reagent("super_hairgrownium")) //if this starts being abused i will change it, but only admins seem to use grog so fuck it
@@ -2395,7 +2390,7 @@ datum
 			addiction_prob = 4
 			addiction_prob2 = 10
 			var/tickcounter = 0
-			thirst_value = 0.055
+			thirst_value = -0.2
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
@@ -2475,7 +2470,7 @@ datum
 				return
 
 		fooddrink/honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of honey in it."
 			reagent_state = LIQUID
@@ -2484,7 +2479,7 @@ datum
 			fluid_b = 52
 			taste = "delicate"
 			transparency = 232
-			thirst_value = 0.075
+			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
 			addiction_prob = 1
@@ -2506,7 +2501,7 @@ datum
 				return
 
 		fooddrink/mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant. There's a little bit of mint in it."
 			reagent_state = LIQUID
@@ -2536,7 +2531,7 @@ datum
 			fluid_b = 127
 			transparency = 160
 			taste = "fizzy"
-			thirst_value = 0.078
+			thirst_value = 0.78
 			bladder_value = 0.05
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2696,9 +2691,10 @@ datum
 			reagent_state = LIQUID
 			taste = "purrplexing"
 
-			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/cat))
-					var/obj/critter/cat/theCat = O
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
+				if (istype(M, /mob/living/critter/small_animal/cat))
+					var/mob/living/critter/small_animal/cat/theCat = M
 					theCat.catnip_effect()
 
 		fooddrink/vanilla
@@ -3293,6 +3289,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3329,6 +3326,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3356,6 +3354,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3549,6 +3548,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3790,6 +3790,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -4527,11 +4528,59 @@ datum
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
-			id = "pumpkinspicelatte"
 			fluid_r = 231
 			fluid_g = 106
 			fluid_b = 0
 			description = "Whether or not it contains actual pumpkin juice has been up for debate."
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
+			thirst_value = 1
+
+		fooddrink/lavender_essence
+			name = "lavender essence"
+			id = "lavender_essence"
+			fluid_r = 190
+			fluid_g = 159
+			fluid_b = 254
+			description = "Essential."
+			reagent_state = LIQUID
+			taste = list("soothing", "pleasant")
+			thirst_value = 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					M.changeStatus("fragrant", volume * 5 SECONDS)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+
+				if (probmult(5))
+					. = ""
+					switch (rand(1, 5))
+						if (1)
+							. = "calm"
+						if (2)
+							. = "quiet"
+						if (3)
+							. = "serene"
+						if (4)
+							. = "at peace"
+						if (5)
+							. = "sleepy"
+
+					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
+
+				..()
+
+		fooddrink/lavenderlatte
+			name = "lavender latte"
+			id = "lavender_latte"
+			fluid_r = 157
+			fluid_g = 134
+			fluid_b = 186
+			description = "The whimsical cousin of the pumpkin spice latte."
+			reagent_state = LIQUID
+			taste = "like living in a cottage in the countryside"
 			thirst_value = 1

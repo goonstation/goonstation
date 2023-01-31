@@ -179,7 +179,7 @@
 			//var/turf/T = target
 			//boutput(world, "[T] [isturf(target)] [findtext(control, "map_viewport")] [control]")
 			if( isturf(target) && findtext(control, "map_viewport") )
-				set_loc(src, target)
+				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
@@ -266,6 +266,7 @@
 		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 

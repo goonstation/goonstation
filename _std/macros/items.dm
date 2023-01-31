@@ -19,3 +19,8 @@
 
 /// Returns true if x is equipped or inside & usable in what's equipped (currently only applicable to magtractors)
 #define equipped_or_holding(x,source) (source.equipped() == x || (source.equipped()?.useInnerItem && (x in source.equipped())))
+
+/// Returns TRUE if item is worn by a human other than `user`, FALSE otherwise
+#define IS_WORN_BY_SOMEONE_OTHER_THAN(item, user) (istype(item.loc, /mob/living/carbon/human) && user != item.loc)
+
+

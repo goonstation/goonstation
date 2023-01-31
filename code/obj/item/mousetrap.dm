@@ -350,21 +350,19 @@
 		if (!src || !src.armed)
 			return
 
-		var/obj/item/affecting = null
+		var/zone = null
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
 					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
-						affecting = H.organs[pick("l_leg", "r_leg")]
+						zone = pick("l_leg", "r_leg")
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
-						affecting = H.organs[type]
+						zone = type
 						H.changeStatus("stunned", 3 SECONDS)
-			if (affecting)
-				affecting.take_damage(1, 0)
-				H.UpdateDamageIcon()
+			H.TakeDamage(zone, 1, 0, 0, DAMAGE_CRUSH)
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target

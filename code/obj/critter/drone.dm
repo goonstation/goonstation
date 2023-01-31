@@ -1,3 +1,42 @@
+TYPEINFO(/obj/critter/gunbot/drone)
+	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
+
+TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
+	mats = null
+
+TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
+	mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
+
+TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
+	mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
+
+TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
+	mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
+
+TYPEINFO(/obj/critter/gunbot/drone/raildrone)
+	mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
+
+TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
+	mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
+
+TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
+	mats = 	24
+
+TYPEINFO(/obj/critter/gunbot/drone/laser)
+	mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
+
+TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
+	mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
+
+TYPEINFO(/obj/critter/gunbot/drone/assdrone)
+	mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
+
+TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
+	mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
+
+TYPEINFO(/obj/critter/gunbot/drone/helldrone)
+	mats = null
+
 /obj/critter/gunbot/drone
 	name = "Syndicate Drone"
 	desc = "An armed and automated Syndicate scout drone."
@@ -20,7 +59,6 @@
 	luminosity = 5
 	seekrange = 15
 	flying = 1
-	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 	var/score = 10
 	dead_state = "drone-dead"
 	var/obj/item/droploot = null
@@ -403,7 +441,6 @@
 		droploot = /obj/bomberman
 		projectile_type = /datum/projectile/bullet/glitch
 		current_projectile = new/datum/projectile/bullet/glitch
-		mats = null
 		New()
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
@@ -421,7 +458,6 @@
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40
-		mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
 		New()
 			..()
 			name = "Drone HK-[rand(1,999)]"
@@ -505,7 +541,6 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
-		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
@@ -525,7 +560,6 @@
 		projectile_type = /datum/projectile/bullet/akm
 		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
-		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
@@ -542,7 +576,6 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
-		mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
@@ -604,7 +637,6 @@
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
 		attack_range = 1
-		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
 			if(target && !attacking)
@@ -655,7 +687,6 @@
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
 			event_handler_flags = IMMUNE_MANTA_PUSH
-			mats = 24
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
 			New()
@@ -704,7 +735,6 @@
 		dead_state = "vrdrone_red"
 		projectile_type = /datum/projectile/laser
 		current_projectile = new/datum/projectile/laser
-		mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
 
 		New()
 			..()
@@ -720,7 +750,6 @@
 		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
-		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -735,7 +764,6 @@
 		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
-		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
 
 		New()
 			..()
@@ -751,7 +779,6 @@
 		dead_state = "vrdrone_green"
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
-		mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
 		New()
 			..()
 			name = "Drone CA-[rand(1,999)]"
@@ -775,7 +802,6 @@
 		current_projectile = new/datum/projectile/bullet/autocannon/plasma_orb
 		attack_cooldown = 70
 		smashes_shit = 1
-		mats = null
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
@@ -853,6 +879,9 @@
 			name = "Battledrone Omega-[rand(1,10)]"
 			return
 
+TYPEINFO(/obj/critter/gunbot/drone/iridium)
+	mats = null //no
+
 /obj/critter/gunbot/drone/iridium // the worstest jerk, even worse than the previous worst jerk.
 	name = "Y-Class Battledrone"
 	desc = "One of the prototype battledrones from the Syndicate's PROJECT IRIDIUM, utilizing adapted artifact technologies."
@@ -867,7 +896,6 @@
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
-	mats = null //no
 	projectile_type = /datum/projectile/laser/precursor/sphere
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
@@ -1217,6 +1245,9 @@
 		..()
 
 
+TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
+	mats = 12 //this should be funny
+
 /obj/critter/gunbot/drone/miniature_syndie
 	name = "miniature Syndicate Operative"
 	desc = "They look determined."
@@ -1247,7 +1278,6 @@
 	projectile_type = /datum/projectile/bullet/bullet_22
 	current_projectile = new/datum/projectile/bullet/bullet_22
 	attack_cooldown = 20
-	mats = 12 //this should be funny
 
 	var/voice_gender = "male"
 

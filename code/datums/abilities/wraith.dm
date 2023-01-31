@@ -798,18 +798,17 @@
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
-
-		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
-		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
-		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
-		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
-		boutput(P, "Don't venture too far from your portal or your master!")
+		if (lucky_dude.current)
+			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
+			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
+			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
+			boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
+			boutput(P, "Don't venture too far from your portal or your master!")
 
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
@@ -872,8 +871,8 @@
 
 			holder.owner.mind.transfer_to(W)
 			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
-			new_holder.regenRate = AH.regenRate - 2
-			new_holder.corpsecount = AH.corpsecount - 1
+			new_holder.regenRate = max(AH.regenRate - 2, 1)
+			new_holder.corpsecount = max(AH.corpsecount - 1, 0)
 			qdel(holder.owner)
 
 			return W
@@ -1363,34 +1362,38 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						H.setStatusMin("paralysis", 8 SECONDS)
 						sleep(8 SECONDS)
 						if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
-						var/mob/dead/observer/O = H.ghostize()
-						if(W.mind == null)	//Wraith died or was removed in the meantime
+						if(isnull(W.mind))	//Wraith died or was removed in the meantime
 							return
+						var/datum/player/target_player = H.mind?.get_player()
+						target_player?.dnr++
+						var/mob/dead/observer/O = H.ghostize()
 						if (O?.mind)
 							human_mind = O.mind
 							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 							WG = O.insert_slasher_observer(H)
-							WG.mind.dnr = TRUE
-							WG.verbs -= list(/mob/verb/setdnr)
 						wraith_mind = W.mind
 						W.mind.transfer_to(H)
 						APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
 						sleep(45 SECONDS)
-						if (!H?.loc) return
+						if (!H?.loc)
+							target_player?.dnr--
+							return
 						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
 						sleep(20 SECONDS)
-						if(!H?.loc && !W.loc) return //Everyone's dead, go home
+						if(!H?.loc && !W.loc) //Everyone's dead, go home
+							target_player?.dnr--
+							return
 						if(!W.loc) //wraith got gibbed, kick them into the aether and put the human back
 							boutput(H, "<span class='alert'>You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost.</span>")
 							H.ghostize()
 							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 							if (human_mind)
-								WG.mind.dnr = FALSE
-								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
 								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 								boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
+							target_player?.dnr--
 							return
+						target_player?.dnr--
 						if(!H?.loc) //Human gibbed, put the wraith back into their body
 							var/mob/M2 = ckey_to_mob(wraith_key)
 							M2.mind.transfer_to(W)
@@ -1399,8 +1402,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 							wraith_mind.transfer_to(W)
 							if (human_mind)
-								WG.mind.dnr = FALSE
-								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
 								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 						AH.possession_points = 0
@@ -1665,7 +1666,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "You gather your energy and open a portal")
 				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
 				if(mob_choice != null)
-					V.random_mode = false
+					V.random_mode = FALSE
 				V.set_loc(W.loc)
 				V.master = W
 				V.alpha = 0
@@ -1720,17 +1721,20 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
-			src.doCooldown()
-			make_summon(holder.owner, T)
-			return 0
-		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-			return 1
+		if (!T || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density)
+				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				return TRUE
+		boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
+		src.doCooldown()
+		make_summon(holder.owner, T)
+		return FALSE
 
 	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
@@ -1790,7 +1794,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/total_plague_rats = 0
 		for (var/client/C in clients)
@@ -1803,17 +1807,21 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
 			var/turf/T = get_turf(holder.owner)
-			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
-				src.doCooldown()
-				make_plague_rat(holder.owner, T)
-				return 0
-			else
-				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-				return 1
+			if (!T || !istype(T,/turf/simulated/floor))
+				boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+				return TRUE
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					return TRUE
+			boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
+			src.doCooldown()
+			make_plague_rat(holder.owner, T)
+			return FALSE
+
 		else
 			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
-			return 1
+			return TRUE
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
 		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
@@ -1892,6 +1900,33 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		boutput(usr, "<b>You whisper to your summons:</b> [message]")
 		return 0
+
+/datum/targetable/wraithAbility/toggle_deadchat
+	name = "Toggle deadchat"
+	desc = "Silences or re-enables the whispers of the dead."
+	icon_state = "hide_chat"
+	targeted = 0
+	cooldown = 0
+	pointCost = 0
+
+	cast(mob/target)
+		if (!holder)
+			return TRUE
+
+		var/mob/living/intangible/wraith/W = holder.owner
+
+		if (!W)
+			return TRUE
+
+		//hearghosts is checked in deadsay.dm and chatprocs.dm
+		W.hearghosts = !W.hearghosts
+		if (W.hearghosts)
+			src.icon_state = "hide_chat"
+			boutput(W, "<span class='notice'>Now listening to the dead again.</span>")
+		else
+			src.icon_state = "show_chat"
+			boutput(W, "<span class='notice'>No longer listening to the dead.</span>")
+		return FALSE
 
 /obj/spookMarker
 	name = "Spooky Marker"

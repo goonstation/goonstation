@@ -640,7 +640,7 @@
 "cE" = (
 /obj/machinery/nanofab/mining,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -878,7 +878,7 @@
 "dE" = (
 /obj/machinery/manufacturer/qm,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
@@ -1581,7 +1581,7 @@
 "fU" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
@@ -1829,7 +1829,7 @@
 "gN" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
@@ -2107,7 +2107,7 @@
 	},
 /obj/cable,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -2160,7 +2160,7 @@
 "hW" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
@@ -2692,7 +2692,9 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "kj" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/control_point_computer{
+	name = "Fortuna Station Control Console"
+	},
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
 "km" = (
@@ -3134,10 +3136,6 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/maintdock)
-"lX" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black,
-/area/pod_wars/spacejunk/fstation/computercore)
 "lY" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/plating,
@@ -4537,6 +4535,8 @@
 /area/pod_wars/asteroid/major/maj_14)
 "qK" = (
 /obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
@@ -4748,7 +4748,9 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "rG" = (
-/obj/table/reinforced/auto,
+/obj/control_point_computer{
+	name = "UBV-67 Control Console"
+	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "rH" = (
@@ -5816,7 +5818,7 @@
 /area/pod_wars/team1/bridge)
 "vH" = (
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
 /turf/unsimulated/floor{
@@ -6268,7 +6270,7 @@
 	output = 5000
 	},
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -6366,7 +6368,7 @@
 "xv" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
@@ -6477,7 +6479,7 @@
 "xM" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/unsimulated/floor/red/side{
 	dir = 1
@@ -6572,7 +6574,7 @@
 /area/pod_wars/team2/hangar)
 "yj" = (
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
@@ -7197,7 +7199,7 @@
 "AL" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
@@ -8058,7 +8060,7 @@
 "Ee" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
@@ -8533,7 +8535,7 @@
 /obj/machinery/light/small/floor/netural,
 /obj/machinery/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
@@ -9278,7 +9280,7 @@
 "IN" = (
 /obj/machinery/processor,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -10369,15 +10371,6 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team1/hangar)
-"Nc" = (
-/obj/table/reinforced/auto,
-/obj/control_point_computer{
-	name = "UBV-67 Control Console";
-	pixel_x = -16;
-	pixel_y = 10
-	},
-/turf/simulated/floor/black,
-/area/pod_wars/spacejunk/uvb67/power)
 "Nd" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/yellow/side{
@@ -10385,10 +10378,8 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Ne" = (
-/obj/control_point_computer{
-	dir = 8;
-	name = "Fortuna Station Control Console"
-	},
+/obj/decal/fakeobjects/operatorconsole,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Ni" = (
@@ -11004,7 +10995,7 @@
 "PE" = (
 /obj/machinery/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12242,7 +12233,7 @@
 "Uq" = (
 /obj/machinery/manufacturer/mining/pod_wars,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -12968,6 +12959,8 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Xf" = (
 /obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
@@ -13141,7 +13134,7 @@
 "XM" = (
 /obj/machinery/nanofab/refining,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -13569,7 +13562,7 @@
 "Zk" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -56357,7 +56350,7 @@ Xc
 Xc
 Xc
 fe
-Nc
+pd
 iD
 pd
 pd
@@ -181552,8 +181545,8 @@ aa
 JJ
 au
 gj
+cW
 Dn
-lX
 pS
 Ne
 gj
@@ -182054,8 +182047,8 @@ by
 by
 cB
 gj
-SE
 gj
+SE
 gj
 gj
 gj

@@ -259,6 +259,9 @@
 				var/mob/M = AM
 				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 			AM.set_loc(src.loc)
+
+		src.occupant = null
+		src.target = null
 		..()
 
 	relaymove(mob/user as mob)

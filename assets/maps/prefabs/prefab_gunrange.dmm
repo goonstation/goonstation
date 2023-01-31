@@ -39,7 +39,8 @@
 /area/prefab/shooting_range)
 "aY" = (
 /obj/item/casing/shotgun/gray,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "bp" = (
 /obj/decoration/bullethole{
@@ -114,7 +115,8 @@
 /obj/item/casing/shotgun/red{
 	dir = 1
 	},
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/shooting_range)
 "fD" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -402,13 +404,15 @@
 /area/prefab/shooting_range)
 "ze" = (
 /obj/item/caution/target_sheet,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "zM" = (
 /turf/simulated/floor/damaged5,
 /area/prefab/shooting_range)
 "Ar" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "AI" = (
 /obj/item/parts/robot_parts/arm/right/heavy,
@@ -504,7 +508,8 @@
 /area/prefab/shooting_range)
 "KL" = (
 /obj/decal/fakeobjects/robot,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/shooting_range)
 "Lu" = (
 /obj/item/storage/wall/clothingrack/clothes_shooting_range,
@@ -532,7 +537,8 @@
 /turf/simulated/floor/dojo,
 /area/prefab/shooting_range)
 "Nk" = (
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/shooting_range)
 "Oz" = (
 /obj/machinery/light/incandescent/cool/very{
@@ -559,7 +565,8 @@
 	pixel_y = 28
 	},
 /obj/decal/fakeobjects/cargopad,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/shooting_range)
 "PM" = (
 /obj/item/casing/cannon,

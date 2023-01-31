@@ -130,6 +130,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
+		/client/proc/toggle_random_job_selection,
 
 		/client/proc/debug_deletions,
 
@@ -160,6 +161,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_mute_temp,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_as_new_self,
+		/client/proc/respawn_as_job,
 		/datum/admins/proc/toggletraitorscaling,
 		/client/proc/toggle_flourish,
 
@@ -341,6 +343,8 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
 		/client/proc/respawn_as,
+		/client/proc/whitelist_add_temp,
+		/client/proc/whitelist_toggle,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
@@ -374,8 +378,15 @@ var/list/admin_verbs = list(
 		/client/proc/replace_space_exclusive,
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
+		/client/proc/showLoadingHint,
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
+		/client/proc/test_mass_flock_convert,
+		/client/proc/BK_finance_debug,
+		/client/proc/BK_alter_funds,
+		/client/proc/debug_variables,
+		/client/proc/cmd_randomize_look,
+		/client/proc/flock_cheat,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -395,11 +406,7 @@ var/list/admin_verbs = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/BK_finance_debug,
-		/client/proc/BK_alter_funds,
-		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
-		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
 		/client/proc/get_admin_state,
 		/client/proc/call_proc,
@@ -407,11 +414,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adsound,
 		/datum/admins/proc/pcap,
 		/client/proc/toggle_extra_verbs,
-		/client/proc/cmd_randomize_look,
 		/client/proc/toggle_numbers_station_messages,
-		// /client/proc/export_async_banlist,
-		// /client/proc/import_banlist,
-		/client/proc/flock_cheat,
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
@@ -443,7 +446,6 @@ var/list/admin_verbs = list(
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
 		/client/proc/edit_color_matrix,
-		/client/proc/test_mass_flock_convert,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
@@ -455,6 +457,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
+		/client/proc/TestMarketReq,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -530,10 +533,24 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
-	if(!src.holder)
+	if(src.player.tempmin && src.player.perm_admin)
+		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
+
+	// The idea is that player.tempmin and player.perm_admin are set when the given player
+	// is adminned for the first time during a round and are persistent. Essentially, if
+	// the player is adminned by code during round initialization then their src.holder
+	// has already been set and they are marked as perm_admin for the rest of the round.
+	// Other ways of getting adminned (such as using the player options) will not set
+	// src.holder and the first call to this proc will mark the player as tempminned for
+	// the rest of the round.
+	if((!src.holder || src.player.tempmin) && !src.player.perm_admin)
 		src.holder = new /datum/admins(src)
-		src.holder.tempmin = 1
+		src.holder.tempmin = TRUE
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
+		src.player.tempmin = TRUE
+	else
+		src.player.perm_admin = TRUE
 
 	src.holder.rank = rank
 
@@ -661,7 +678,8 @@ var/list/special_pa_observing_verbs = list(
 		update_admins(rank)
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		src.mob.mind?.damned = 0
+		src.mob.mind?.damned = FALSE
+		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -683,6 +701,7 @@ var/list/special_pa_observing_verbs = list(
 
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
+		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
 		boutput(src, "<span class='notice'>You are now playing</span>")
 	else
 		boutput(src, "<span class='notice'>You are already playing!</span>")
@@ -705,6 +724,10 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	if (src.holder.tempmin)
+		logTheThing(LOG_ADMIN, usr, "tried to access the player panel")
+		logTheThing(LOG_DIARY, usr, "tried to access the player panel", "admin")
+		message_admins("[key_name(usr)] tried to access the player panel but was denied.")
+		alert("You need to be an actual admin to access the player panel.")
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
@@ -1005,6 +1028,15 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
+/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs))
+	set name = "Respawn As Job"
+	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
+
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
 	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
@@ -1025,7 +1057,7 @@ var/list/fun_images = list()
 	respawn_as_self_internal(new_self=FALSE)
 
 
-/client/proc/respawn_as_self_internal(new_self=FALSE)
+/client/proc/respawn_as_self_internal(new_self=FALSE, jobstring = "Staff Assistant")
 	ADMIN_ONLY
 
 	if (!src.preferences)
@@ -1061,7 +1093,7 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)
@@ -1537,7 +1569,7 @@ var/list/fun_images = list()
 		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
 		if (!M)
 			return
-	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1565,7 +1597,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1597,7 +1629,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1935,12 +1967,39 @@ var/list/fun_images = list()
 	if(ghost_notifier)
 		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
 
+/client/proc/showLoadingHint()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Show Loading Hint"
+	set desc = "Show everyone a fun loading screen hint."
+	set waitfor = FALSE
+
+	if (global.current_state != GAME_STATE_PREGAME)
+		return
+	var/hint = pick(dd_file2list("strings/roundstart_hints.txt"))
+	for (var/client/C)
+		if (!istype(C.mob,/mob/new_player))
+			continue
+		var/html = "\
+<html>\
+	<style>\
+		body {background-color:black;}\
+		div {text-align: center; font-family: Arial, sans-serif; font-size: 30px; top: 50%; width:100%; position:absolute; color:white;}\
+    </style>\
+    <body>\
+		<div>Tip: [hint]</div>\
+	</body>\
+</html>"
+		pregameHTML = html
+		C << browse(html, "window=pregameBrowser")
+		winshow(C, "pregameBrowser", 1)
+
 /client/proc/showPregameHTML()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Display Pregame HTML"
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
 	ADMIN_ONLY
+	// Previous HTML (so you can replace without always resetting to the default)
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
@@ -1960,9 +2019,9 @@ var/list/fun_images = list()
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
-		newHTML = input("Gib HTML, then.", "FEED ME HTML", "<b>memes</b>") as message
+		newHTML = input("Gib HTML, then.", "FEED ME HTML", pregameHTML) as message
 	else
-		newHTML = input("Upload that file!", "Upload that file!") as file
+		newHTML = input("Upload that file!", "Upload that file!") as file|null
 		if(newHTML)
 			newHTML = file2text(newHTML)
 	if(newHTML)
@@ -2001,9 +2060,6 @@ var/list/fun_images = list()
 		for (var/mob/living/carbon/human/H in mobs)
 			var/obj/item/implant/revenge/microbomb/MB = new (H)
 			MB.power = microbombs_4_everyone
-			MB.implanted = 1
-			H.implant.Add(MB)
-			MB.implanted(H, 0)
 			implanted ++
 		SPAWN(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
@@ -2108,31 +2164,56 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list(clicked_turf)
-		for(var/atom/thing as anything in clicked_turf)
-			atoms += thing
+		var/list/atom/atoms = list()
+		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
+			if(thing.name)
+				atoms += thing
+			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
+				if(initial(thing.name))
+					atoms["nameless [initial(thing.name)]"] = thing
+				else
+					atoms["nameless [thing.type]"] = thing
 		if (atoms.len)
 			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
+		if(istext(A))
+			A = atoms[A]
 
-	var/choice = 0
-
-	if (!client.holder.animtoggle)
-		if (ismob(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]), start_with_search=FALSE)
-		else if (isturf(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]), start_with_search=FALSE)
-		else
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]), start_with_search=FALSE)
+	var/title = "What do?"
+	var/list/verbs = list()
+	if (!client.holder.disable_atom_verbs)
+		title += " (Atom verbs are ON)"
+		verbs += client.holder.admin_interact_atom_verbs
+	if (ismob(A))
+		verbs += client.holder.admin_interact_verbs["mob"]
+	else if (isturf(A))
+		verbs += client.holder.admin_interact_verbs["turf"]
 	else
-		if (ismob(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"], start_with_search=FALSE)
-		else if (isturf(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"], start_with_search=FALSE)
-		else
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"], start_with_search=FALSE)
+		verbs += client.holder.admin_interact_verbs["obj"]
+		if (isobj(A))
+			var/obj/object = A
+			if (istype(object.artifact, /datum/artifact))
+				verbs += "Activate Artifact"
+
+	var/typeinfo/atom/typeinfo = A.get_typeinfo()
+	var/list/type_procs = list()
+	if (typeinfo.admin_procs)
+		for (var/procpath/proc_path as anything in typeinfo.admin_procs)
+			var/proc_name = proc_path.name
+			if (!proc_name)
+				var/split_list = splittext("[proc_path]", "/")
+				proc_name = split_list[length(split_list)]
+			type_procs["[proc_name] *"] = proc_path
+	verbs += type_procs
+
+	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE)
 
 	var/client/C = src.client
+	if (choice in type_procs)
+		call(A, type_procs[choice])()
+		src.update_cursor()
+		return
+
 	switch(choice)
 		if("Get Thing")
 			C.cmd_admin_get_mobject(A)
@@ -2217,6 +2298,11 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Set Material")
+			C.cmd_set_material(A)
+		if ("Activate Artifact")
+			var/obj/object = A
+			object.ArtifactActivated()
 
 	src.update_cursor()
 
@@ -2304,3 +2390,68 @@ var/list/fun_images = list()
 
 	global.phrase_log?.upload_uncool_words()
 	global.phrase_log?.load()
+
+
+/client/proc/whitelist_add_temp(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Whitelist Add Temp"
+	set desc = "Temporarily whitelist a ckey (for this round only)"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	ckey = ckey(ckey)
+	if(!ckey)
+		return
+
+	if(isnull(global.whitelistCkeys))
+		global.whitelistCkeys = list()
+	global.whitelistCkeys += ckey
+
+
+/client/proc/whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle Whitelist"
+	set desc = "Toggle the server whitelist on or off"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	var/current_status = config.whitelistEnabled ? "ON" : "OFF"
+	if(!config.whitelistEnabled && config.baseWhitelistEnabled)
+		if(config.roundsLeftWithoutWhitelist == 0)
+			current_status += " (will be enabled next round)"
+		else
+			current_status += " (will be enabled in [config.roundsLeftWithoutWhitelist] rounds)"
+
+	if(tgui_alert(src, "The whitelist is currently [current_status]. Are you sure you want to change that?", "Toggle whitelist?", list("Yes", "No")) != "Yes")
+		return
+
+	if(config.whitelistEnabled)
+		var/rounds_duration = 0
+		if(config.baseWhitelistEnabled)
+			rounds_duration = tgui_input_number(src, "How many rounds should the whitelist be disabled for? (0 = just current round)", "Whitelist duration", 0, 10, 0)
+		if(isnull(rounds_duration))
+			return
+		if(rounds_duration)
+			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			world.save_intra_round_value("whitelist_disabled", rounds_duration)
+		else
+			message_admins("[src] has disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+		config.whitelistEnabled = FALSE
+		config.roundsLeftWithoutWhitelist = rounds_duration
+	else
+		var/kick_existing = tgui_alert(src, "Do you want to kick all players who are not whitelisted?", "Kick non-whitelisted players?", list("Yes", "No")) == "Yes"
+		config.whitelistEnabled = TRUE
+		config.roundsLeftWithoutWhitelist = 0
+		if(kick_existing)
+			for(var/client/C in clients)
+				if(C.holder || (C in global.whitelistCkeys))
+					continue
+				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
+				del(C)
+		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		world.save_intra_round_value("whitelist_disabled", 0)
+
+	set_station_name(src.mob, manual=FALSE, name=station_name)

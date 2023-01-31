@@ -46,7 +46,7 @@
 				boutput(user, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
 				return
 			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
-				src.visible_message("<span class='alert'>[usr] opened the valve and triggered the detonation process.</span>")
+				src.visible_message("<span class='alert'>[user] opened the valve and triggered the detonation process.</span>")
 				src.custom_suicide = 0
 				src.det.detonate()
 			return
@@ -410,18 +410,9 @@
 		"releasePressure" = src.release_pressure,
 		"valveIsOpen" = src.valve_open,
 		"hasValve" = src.has_valve ? TRUE : FALSE,
-		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"holding" = src.holding?.ui_describe(),
 		"detonator" = null,
 	)
-
-	if(src.holding)
-		. += list(
-			"holding" = list(
-				"name" = src.holding.name,
-				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-			)
-		)
 
 	if(src.det)
 		. += list(
@@ -447,10 +438,10 @@
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 
-		var/has_paper = false
+		var/has_paper = FALSE
 		for(var/obj/item/paper/sheet in src.det.attachments)
 			. += list("paperData" = sheet.ui_static_data())
-			has_paper = true
+			has_paper = TRUE
 		. += list("hasPaper" = has_paper)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)

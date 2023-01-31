@@ -209,6 +209,9 @@
 /* -------------------- IV Stand -------------------- */
 /* ================================================== */
 
+TYPEINFO(/obj/iv_stand)
+	mats = 10
+
 /obj/iv_stand
 	name = "\improper IV stand"
 	desc = "A metal pole that you can hang IV bags on, which is useful since we aren't animals that go leaving our sanitized medical equipment all over the ground or anything!"
@@ -220,7 +223,6 @@
 	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/IV = null
 	var/obj/paired_obj = null
-	mats = 10
 
 	get_desc()
 		if (src.IV)

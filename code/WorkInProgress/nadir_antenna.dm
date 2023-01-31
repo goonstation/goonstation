@@ -48,6 +48,9 @@ receive_a_thing pulls a thing out of a queue (shipping market or direct queue) w
 and delivers it to the pad after a few seconds, or returns it to the queue it came from if the transception fails
 */
 
+TYPEINFO(/obj/machinery/communications_dish/transception)
+	mats = 0
+
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
 	desc = "Sends and receives both energy and matter over a considerable distance. Questionably safe."
@@ -55,7 +58,6 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	icon_state = "array"
 	bound_height = 64
 	bound_width = 96
-	mats = 0
 
 	///Whether array is currently transceiving (interfacing with a pad for the process of sending or receiving a thing)
 	var/is_transceiving = FALSE
@@ -624,6 +626,9 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 #define INTERLINK_RANGE 100
 
+TYPEINFO(/obj/machinery/transception_pad)
+	mats = list("MET-2"=5,"CON-2"=2,"CON-1"=5)
+
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
@@ -631,7 +636,6 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	anchored = 1
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = list("MET-2"=5,"CON-2"=2,"CON-1"=5)
 	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
@@ -773,7 +777,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 				for(var/nerd in oofed_nerds)
 					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
-					thing2send.loc = src
+					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
 						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
@@ -821,7 +825,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 				else
 					tele_obstructed = TRUE
 				if(!tele_obstructed && transception_array.transceive(netnumber))
-					thing2get.loc = src.loc
+					thing2get.set_loc(src.loc)
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else

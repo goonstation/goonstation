@@ -101,6 +101,9 @@
 		..()
 
 
+TYPEINFO(/obj/machinery/networked/storage)
+	mats = 12
+
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
@@ -108,7 +111,6 @@
 	density = 1
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
@@ -196,7 +198,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -703,7 +704,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -996,11 +996,14 @@
 			return
 
 	update_icon()
-		src.overlays = null
 		if(tank1) //Update tank overlays.
-			src.overlays += image(src.icon,"bscanner-tank1")
+			UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
+		else
+			UpdateOverlays(null, "tank1")
 		if(tank2)
-			src.overlays += image(src.icon,"bscanner-tank2")
+			UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
+		else
+			UpdateOverlays(null, "tank2")
 
 		if(status & BROKEN)
 			icon_state = "bomb_scannerb"
@@ -1022,6 +1025,9 @@
 	file_amount = 4
 
 
+TYPEINFO(/obj/machinery/networked/nuclear_charge)
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
+
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = 2
@@ -1038,7 +1044,6 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1114,7 +1119,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(120)
 
 		if(!host_id || !link)
 			return
@@ -1347,6 +1351,9 @@
 #undef DISARM_CUTOFF
 
 
+TYPEINFO(/obj/machinery/networked/radio)
+	mats = 8
+
 /obj/machinery/networked/radio
 	name = "Network Radio"
 	desc = "A networked radio interface."
@@ -1355,7 +1362,6 @@
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
 	//var/freq = FREQ_BUDDY
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
 	var/transmission_range = 100 //How far does our signal reach?
@@ -1478,7 +1484,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(100)
 
 		if(!host_id || !link)
 			return
@@ -1668,6 +1673,9 @@
 		return
 
 
+TYPEINFO(/obj/machinery/networked/printer)
+	mats = 6
+
 /obj/machinery/networked/printer
 	name = "Printer"
 	desc = "A networked printer.  It's designed to print."
@@ -1676,7 +1684,8 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
-	mats = 6
+	power_usage = 200
+	machine_registry_idx = MACHINES_PRINTERS
 	var/print_id = null //Just like databanks.
 	var/temp_msg = "PRINTER OK" //Appears in the interface window.
 	var/printing = 0 //Are we printing RIGHT NOW?
@@ -1684,7 +1693,6 @@
 	var/jam = 0 //Oh no! A jam! I hope somebody unjams us right quick!
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
-	power_usage = 200
 
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
@@ -1861,7 +1869,6 @@
 		if(status & NOPOWER)
 			printing = 0
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2121,9 +2128,10 @@
 			return
 
 	update_icon()
-		src.overlays = null
 		if(src.jam) //Update jam overlay.
-			src.overlays += image(src.icon,"printer-jamoverlay")
+			src.UpdateOverlays(image(src.icon,"printer-jamoverlay"), "jam")
+		else
+			src.UpdateOverlays(null, "jam")
 
 		if(status & BROKEN)
 			icon_state = "printerb"
@@ -2273,7 +2281,6 @@
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2511,7 +2518,6 @@
 		..()
 		if (status & NOPOWER)
 			return
-		use_power(power_usage)
 
 		if (active_time > 0)
 			active_time--
@@ -3047,9 +3053,6 @@
 		..()
 		if (status & NOPOWER)
 			return
-
-		use_power(power_usage)
-
 		return
 
 	receive_signal(datum/signal/signal)
@@ -3372,6 +3375,9 @@
 		return
 
 //Generic test apparatus
+TYPEINFO(/obj/machinery/networked/test_apparatus)
+	mats = 8
+
 /obj/machinery/networked/test_apparatus
 	name = "Generic Testing Apparatus"
 	desc = "A large device designed to facilitate...some manner... of analysis."
@@ -3386,7 +3392,6 @@
 	var/setup_capability_value = "E" //E for Enactor (provides a stimulus), S for Sensor (Records stimulus), or B for both.
 	//Don't forget to give devices unique device_tag values of the form "PNET_XXXXXXXXX"
 	device_tag = "PNET_TEST_APPT" //This is the device tag used to interface with the mainframe GTPIO driver.
-	mats = 8
 	deconstruct_flags = DECON_DESTRUCT
 
 	power_usage = 200
@@ -3526,7 +3531,7 @@
 			return 1
 
 		if(active)
-			use_power(power_usage)
+			use_power(power_usage) // power use doubles when active
 
 		return 0
 
@@ -3984,6 +3989,7 @@
 	icon_state = "elecbox0"
 	density = 1
 	dragload = 1
+	power_usage = 220
 
 	setup_base_icon_state = "elecbox"
 	setup_test_id = "ELEC_BOX"
@@ -3991,24 +3997,21 @@
 	setup_capability_value = "B"
 
 	var/voltage = 10 // runs from 1 to 100
-	var/wattage = 1  // runs from 1 to 50
+	var/amperage = 1  // runs from 1 to 50
 	var/timer = 0
 	var/list/sensed = list("???","???","100")
 
 	return_html_interface()
-		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br><b>Wattage:</b> [src.wattage]W<br><b>Voltage:</b> [src.voltage]V"
+		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br><b>Amperage:</b> [src.amperage]A<br><b>Voltage:</b> [src.voltage]V"
 
 	update_icon()
-		src.overlays = null
 		if (src.contents.len)
-			src.overlays += image('icons/obj/networked.dmi', "elecbox-doors")
+			src.UpdateOverlays(image('icons/obj/networked.dmi', "elecbox-doors"), "doors")
+		else
+			src.UpdateOverlays(null, "doors")
 		..()
 
 	process()
-		if (src.active && src.contents.len && !(status & BROKEN))
-			power_usage = src.wattage * src.voltage + 220
-		else
-			power_usage = 220
 		if (..())
 			if (src.active && (status & NOPOWER))
 				src.active = 0
@@ -4021,7 +4024,7 @@
 			return
 
 		if (src.active)
-			use_power(src.wattage * src.voltage) // ???????? (voltwatts????)
+			use_power(src.amperage * src.voltage)
 			if (src.timer > 0)
 				src.timer--
 			if (src.timer == 0)
@@ -4033,19 +4036,17 @@
 				return
 			src.electrify_contents()
 
-		else use_power(20)
-
 		return
 
 	proc/electrify_contents()
-		var/current = src.wattage * src.voltage
+		var/wattage = src.amperage * src.voltage
 		if (locate(/mob/living/) in src.contents)
 			for (var/mob/living/carbon/OUCH in src.contents)
-				OUCH.TakeDamage("All",0,current / 500)
+				OUCH.TakeDamage("All",0,wattage / 500)
 		else if(length(src.contents))
 			var/obj/O = pick(src.contents)
 			if (istype(O.artifact,/datum/artifact/))
-				O.ArtifactStimulus("elec", current)
+				O.ArtifactStimulus("elec", wattage)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
@@ -4078,13 +4079,13 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Voltage,Wattage&readinglist=Test Amps-A,Load Impedance-Ohm,Circuit Capacity-J,Interference-%")
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=Voltage,Amperage&readinglist=Load Impedance-Ohm,Returned Amperage-A,Circuit Capacity-J,Interference-%")
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
 
 			if ("poke")
-				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "wattage")
+				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "amperage")
 					message_host("command=nack")
 					return
 
@@ -4095,11 +4096,11 @@
 						return
 					src.voltage = pokeval
 
-				if (lowertext(packetData["field"]) == "wattage")
+				if (lowertext(packetData["field"]) == "amperage")
 					if (pokeval < 1 || pokeval > 50)
 						message_host("command=nack")
 						return
-					src.wattage = pokeval
+					src.amperage = pokeval
 
 				if (src.active)
 					src.electrify_contents()
@@ -4107,24 +4108,24 @@
 				return
 
 			if ("peek")
-				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "wattage")
+				if (lowertext(packetData["field"]) != "voltage" && lowertext(packetData["field"]) != "amperage")
 					message_host("command=nack")
 					return
 
 				if (lowertext(packetData["field"]) == "voltage")
 					message_host("command=peeked&field=voltage&value=[voltage]")
-				else if (lowertext(packetData["field"]) == "wattage")
-					message_host("command=peeked&field=wattage&value=[wattage]")
+				else if (lowertext(packetData["field"]) == "amperage")
+					message_host("command=peeked&field=amperage&value=[amperage]")
 
 			if ("read")
 				if(src.sensed[1] == null || src.sensed[2] == null || src.sensed[3] == null || !src.active)
 					message_host("command=nack")
 				else
-					// Electrobox - returns Returned Current, Circuit Capacity, Circuit Interference
-					var/current = "ERROR"
-					if (src.wattage > 0 && src.voltage > 0)
-						current = src.wattage / src.voltage
-					message_host("command=read&data=[current],[src.sensed[1]],[src.sensed[2]],[src.sensed[3]]")
+					// Electrobox - returns Ohms, Return Amperage, Circuit Capacity, Circuit Interference
+					var/ohms = "ERROR"
+					if (src.amperage > 0 && src.voltage > 0)
+						ohms = src.voltage / src.amperage
+					message_host("command=read&data=[ohms],[src.sensed[1]],[src.sensed[2]],[src.sensed[3]]")
 					message_host("command=ack")
 
 			if ("sense")
@@ -4132,12 +4133,11 @@
 					var/obj/M = pick(src.contents)
 					if (istype(M.artifact,/datum/artifact/))
 						var/datum/artifact/A = M.artifact
-						var/current = src.wattage / src.voltage
 
 						if (A.react_elec[1] == "equal")
-							src.sensed[1] = src.voltage / current
+							src.sensed[1] = src.amperage
 						else
-							src.sensed[1] = src.voltage / (current * A.react_elec[1])
+							src.sensed[1] = src.amperage * A.react_elec[1]
 
 						src.sensed[2] = A.react_elec[2]
 
@@ -4161,7 +4161,7 @@
 						src.sensed[2] = "???"
 						src.sensed[3] = "100"
 				else message_host("command=nack")
-				// Electrobox - returns Returned Current, Circuit Capacity, Circuit Interference
+				// Electrobox - returns Ohms, Return Amperage, Circuit Capacity, Circuit Interference
 
 			if ("activate")
 				if (src.contents.len && !src.active)
@@ -4215,8 +4215,10 @@
 		return "<b>Loaded:</b> [src.contents.len ? "YES" : "NO"]<br><b>Active:</b> [src.active ? "YES" : "NO"]<br><br>Radiation Strength:</b> [src.radstrength * 10]%"
 
 	update_icon()
-		src.overlays = null
-		if (src.contents.len) src.overlays += image('icons/obj/networked.dmi', "xray-lid")
+		if (src.contents.len)
+			src.UpdateOverlays(image('icons/obj/networked.dmi', "xray-lid"), "lid")
+		else
+			src.UpdateOverlays(null, "lid")
 		..()
 
 	attackby(var/obj/item/I, mob/user)
@@ -4419,7 +4421,6 @@
 		return "<b>Active:</b> [src.active ? "YES" : "NO"]<br><br>Target Temperature:</b> [src.temptarget]K<br>Current Temperature:</b> [src.temperature]K"
 
 	update_icon()
-		src.overlays = null
 		switch(src.temperature)
 			if (371 to INFINITY)
 				heat_overlay.icon_state = "heat+3"
@@ -4435,7 +4436,7 @@
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
-		src.overlays += heat_overlay
+		src.UpdateOverlays(heat_overlay, "heat")
 		..()
 
 	attackby(var/obj/item/I, mob/user)
@@ -4471,8 +4472,6 @@
 			return
 
 		if (src.active)
-			use_power(80)
-
 			if (src.temperature < src.temptarget)
 				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
@@ -4488,7 +4487,6 @@
 				src.visible_message("<b>[src.name]</b> reaches its target temperature and shuts down.")
 				playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		else
-			use_power(20)
 			if (src.temperature > 310)
 				src.temperature--
 			else if (src.temperature < 310)
@@ -4698,14 +4696,14 @@
 		return
 
 /obj/machinery/networked/test_apparatus/laserR
-	name = "Laser Reciever"
+	name = "Laser receiver"
 	desc = "Catches a laser beam and analyses how it was changed since emission."
 	icon_state = "laserR0"
 	density = 1
 
 	setup_base_icon_state = "laserR"
 	setup_test_id = "LASER_R"
-	setup_device_name = "Laser Reciever"
+	setup_device_name = "Laser receiver"
 	setup_capability_value = "S"
 
 	var/list/sensed = list(null,null)*/
@@ -4917,7 +4915,7 @@
 		return
 
 	process()
-		if (active)
+		if (src.active)
 			power_usage = 300
 		else
 			power_usage = 200
@@ -4925,7 +4923,6 @@
 			return
 
 		if (src.active)
-			use_power(100)
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
@@ -4940,9 +4937,6 @@
 				pulses--
 				if (pulses < 1)
 					active = 0
-
-		else
-			use_power(20)
 
 		return
 

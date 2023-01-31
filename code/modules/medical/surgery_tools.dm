@@ -24,7 +24,8 @@ CONTAINS:
 	icon_state = "scalpel1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -93,7 +94,8 @@ CONTAINS:
 	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
@@ -160,7 +162,8 @@ CONTAINS:
 	icon_state = "spoon"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SPOONING
 	hit_type = DAMAGE_STAB
@@ -228,7 +231,7 @@ CONTAINS:
 	throw_speed = 4
 	throw_range = 20
 	force = 5
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
@@ -342,6 +345,9 @@ CONTAINS:
 /* -------------------- Defib -------------------- */
 /* =============================================== */
 
+TYPEINFO(/obj/item/robodefibrillator)
+	mats = 10
+
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
@@ -356,7 +362,6 @@ CONTAINS:
 	var/emagged = 0
 	var/makeshift = 0
 	var/obj/item/cell/cell = null
-	mats = 10
 
 	emag_act(var/mob/user)
 		if (src.makeshift)
@@ -631,6 +636,9 @@ CONTAINS:
 		parent = null
 		..()
 
+TYPEINFO(/obj/machinery/defib_mount)
+	mats = 25
+
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
@@ -638,7 +646,6 @@ CONTAINS:
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
-	mats = 25
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
@@ -1106,7 +1113,8 @@ CONTAINS:
 	icon_state = "hemostat"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -1240,6 +1248,9 @@ CONTAINS:
 /* -------------------- Penlight -------------------- */
 /* ================================================== */
 
+TYPEINFO(/obj/item/device/light/flashlight/penlight)
+	mats = 1
+
 /obj/item/device/light/flashlight/penlight
 	name = "penlight"
 	desc = "A small light used for testing photopupillary reflexes."
@@ -1254,7 +1265,6 @@ CONTAINS:
 	throw_range = 15
 	m_amt = 50
 	g_amt = 10
-	mats = 1
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7

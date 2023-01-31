@@ -167,6 +167,7 @@
 			if ("Inhale")
 				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
 				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
+				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
 				return
 

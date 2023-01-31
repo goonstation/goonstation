@@ -11,7 +11,8 @@
 	icon = 'icons/obj/sec_tape.dmi'
 	icon_state = "sec_tape_roll"
 	w_class = W_CLASS_TINY
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab

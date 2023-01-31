@@ -9,6 +9,11 @@ PIPE BOMBS + CONSTRUCTION
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
+TYPEINFO(/obj/item/old_grenade)
+	mats = 6
+
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
@@ -23,9 +28,9 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	is_syndicate = 0
-	mats = 6
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -123,19 +128,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
+	var/amount_to_spawn = 5
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
-			for (var/i = 1; i<= 8; i= i*2)
-				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
-					new payload(get_step(T,i))
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
+				if (istype(adjacent,/turf/simulated/floor))
+					new payload(adjacent)
 				else
 					new payload(T)
 		qdel(src)
-		return
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
@@ -189,6 +195,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/graviton)
+	mats = 12
+
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
@@ -198,7 +207,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -248,6 +256,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/singularity)
+	mats = 12
+
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
@@ -257,7 +268,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp"
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -563,6 +573,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/oxygen)
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
+
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -571,7 +584,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "oxy"
 	item_state = "flashbang"
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
@@ -1157,7 +1169,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0
 	var/expl_light = 1
@@ -1275,7 +1288,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2
@@ -1626,6 +1639,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			..()
 			return
 
+ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
@@ -1654,15 +1668,18 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	var/list/throw_objs = new /list()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (armed)
 			return
+		src.arm(user)
+
+	proc/arm(mob/user)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
-		armed = 1
+		armed = TRUE
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat && user)
 			if(is_dangerous)
-				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+				message_admins("[key_name(user || usr)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
@@ -1868,11 +1885,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.bleed_time = 25 * sqstrength
-			implanted.owner = M
-			M.implant += implanted
-			implanted.implanted(M, null)
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1885,9 +1899,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.owner = M
-			M.implant += implanted
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
@@ -1923,11 +1935,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (M.get_ranged_protection()>=1.5)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.bleed_time = 25 * sqstrength
-				implanted.owner = M
-				M.implant += implanted
-				implanted.implanted(M, null)
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+				implanted.implanted(M, null, 25 * sqstrength)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

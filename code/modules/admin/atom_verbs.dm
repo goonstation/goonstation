@@ -61,6 +61,8 @@ var/global/atom_emergency_stop = 0
 		var/transmute_total = 0
 
 		for (var/atom/A as anything in find_all_by_type(transmute_path))
+			if(istype(A, /obj/overlay/tile_effect) || istype(A, /atom/movable/screen))
+				continue
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing(LOG_ADMIN, usr, "type transmute command terminated due to an emergency stop.")

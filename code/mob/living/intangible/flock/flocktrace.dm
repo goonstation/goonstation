@@ -25,7 +25,7 @@
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
-		src.flock.partitions_made++
+		src.flock.stats.partitions_made++
 		if (free)
 			src.flock.free_traces++
 	else
@@ -34,6 +34,10 @@
 	src.real_name = src.flock ? src.flock.pick_name("flocktrace") : name
 	src.name = src.real_name
 	src.update_name_tag()
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
@@ -67,6 +71,11 @@
 		<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
 		<br>###=-</span></span>"}
 
+/mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
+	if (src.flock?.flockmind.tutorial)
+		return
+	..()
+
 /mob/living/intangible/flock/trace/proc/promoteToFlockmind(remove_flockmind_from_flock)
 	var/was_in_drone = FALSE
 	var/mob/living/critter/flock/drone/controlled = src.loc
@@ -78,6 +87,7 @@
 	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
+	original.tutorial?.Finish()
 	if (remove_flockmind_from_flock)
 		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
 		src.mind.transfer_to(F)
