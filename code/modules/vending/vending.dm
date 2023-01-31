@@ -53,6 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."

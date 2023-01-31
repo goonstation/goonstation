@@ -39,10 +39,8 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WIZARD
 		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-		M.show_antag_popup("adminwizard")
-		M.verbs += /client/proc/gearspawn_wizard
+		M.mind.add_antagonist(ROLE_WIZARD, do_relocate = FALSE)
 
 /obj/traitorifier/changeling
 	name = "Fleshy Protuberance"
@@ -208,7 +206,9 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
-			equip_wizard(M, 1, 1)
+			M.mind?.add_antagonist(ROLE_WIZARD, do_equip = FALSE, do_relocate = FALSE, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			var/datum/antagonist/wizard/antag_role = M.mind?.get_antagonist(ROLE_WIZARD)
+			antag_role.give_equipment(TRUE)
 
 	nuclear
 		name = "NUKE_TKN.EXE"
@@ -230,4 +230,4 @@
 		makeAntag(mob/living/carbon/human/M)
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
 			// No need to specify other arguments here; pseudo does most of this on its own
-			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE)
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)

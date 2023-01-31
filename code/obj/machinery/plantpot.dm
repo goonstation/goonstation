@@ -868,6 +868,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			UpdateOverlays(null, "plantoverlay")
 			if(status & (NOPOWER|BROKEN))
 				UpdateOverlays(null, "water_meter")
 			return

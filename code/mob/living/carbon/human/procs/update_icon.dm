@@ -692,6 +692,11 @@
 		my_head = src.organHolder.head
 		var/y_to_offset = AHH.customization_first_offset_y
 
+		if(my_head.head_image_nose)
+			UpdateOverlays(my_head.head_image_nose, "nose", 1, 1)
+		else
+			UpdateOverlays(null, "nose", 1, 1)
+
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
 			src.image_eyes.pixel_y = AHH.e_offset_y
@@ -748,6 +753,7 @@
 		UpdateOverlays(null, "hair_special_two", 1, 1)
 		UpdateOverlays(null, "hair_special_three", 1, 1)
 
+		UpdateOverlays(null, "nose", 1, 1)
 		UpdateOverlays(null, "eyes", 1, 1)
 
 

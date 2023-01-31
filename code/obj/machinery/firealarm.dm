@@ -1,7 +1,7 @@
 //
 // Firealarm
 //
-
+ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
