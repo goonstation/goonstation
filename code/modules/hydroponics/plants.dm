@@ -264,7 +264,8 @@ ABSTRACT_TYPE(/datum/plant)
 			src.d_endurance = rand(0,1)
 			// optimise this later
 
-	proc/get_effective_value(gene_stat as text) ///This gives out a plant stat, modified by all commuts that affect produce
+	/// This gives out a plant stat, modified by all commuts that affect produce
+	proc/get_effective_value(gene_stat as text) 
 		var/output_base = 0
 		switch(gene_stat)
 			if("growtime")
