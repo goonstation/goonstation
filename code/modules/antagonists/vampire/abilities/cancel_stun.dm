@@ -20,6 +20,9 @@
 		if (!M)
 			return
 
+		if (is_incapacitated(M) && M.stamina < 40)
+			M.set_stamina(40)
+
 		M.delStatus("stunned")
 		M.delStatus("weakened")
 		M.delStatus("paralysis")
@@ -28,9 +31,6 @@
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
 		M.delStatus("drowsy")
-
-		if (M.get_stamina() < 0) // Tasers etc.
-			M.set_stamina(20)
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
