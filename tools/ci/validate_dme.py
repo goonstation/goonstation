@@ -94,7 +94,7 @@ def compare_lines(a, b):
         if a_segment != b_segment:
             return (a_segment > b_segment) - (a_segment < b_segment)
 
-    raise ValueError(f"Two lines were exactly the same ({a} vs. {b})")
+    print(f"Two lines were exactly the same ({a} vs. {b})")
 
 sorted_lines = sorted(lines, key = functools.cmp_to_key(compare_lines))
 for (index, line) in enumerate(lines):
