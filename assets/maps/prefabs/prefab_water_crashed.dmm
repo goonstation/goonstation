@@ -378,15 +378,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
-"bu" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor{
-	icon_state = "floorscorched1"
-	},
-/area/station/turret_protected/sea_crashed)
 "bv" = (
 /obj/decal/fakeobjects/firealarm_broken{
 	dir = 1;
@@ -394,11 +385,6 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
-/area/station/turret_protected/sea_crashed)
-"bw" = (
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
 /area/station/turret_protected/sea_crashed)
 "bx" = (
 /obj/machinery/light{
@@ -456,26 +442,17 @@
 /area/station/turret_protected/sea_crashed)
 "bI" = (
 /obj/storage/crate/biohazard,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bJ" = (
 /obj/storage/secure/crate/plasma,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bK" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bL" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray,
@@ -511,24 +488,15 @@
 /area/station/turret_protected/sea_crashed)
 "bR" = (
 /obj/storage/crate/clown,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bS" = (
 /obj/storage/crate/materials,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bT" = (
 /obj/storage/crate/robotics_supplies,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bU" = (
 /obj/decal/fakeobjects{
@@ -580,32 +548,17 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/sea_crashed)
-"ca" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "damaged4"
-	},
-/area/station/turret_protected/sea_crashed)
 "cb" = (
 /obj/storage/crate/internals,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cc" = (
 /obj/storage/crate/furnacefuel,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cd" = (
 /obj/storage/secure/crate/bee,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ce" = (
 /obj/machinery/door/poddoor{
@@ -620,24 +573,15 @@
 /obj/storage/crate/freezer{
 	name = "Freezer - Spare Parts"
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cg" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ch" = (
 /obj/storage/crate/rcd,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ci" = (
 /obj/decal/cleanable/rust,
@@ -690,12 +634,6 @@
 "cq" = (
 /obj/decal/fakeobjects/lighttube_broken,
 /turf/simulated/floor/grime,
-/area/station/turret_protected/sea_crashed)
-"cr" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "damaged2"
-	},
 /area/station/turret_protected/sea_crashed)
 "cs" = (
 /turf/simulated/floor/red/side,
@@ -1633,7 +1571,7 @@ as
 be
 bs
 bs
-bw
+as
 bJ
 as
 cc
@@ -1801,7 +1739,7 @@ aZ
 as
 bk
 be
-bu
+bx
 bA
 bF
 bN
@@ -1843,7 +1781,7 @@ bP
 bO
 cj
 cn
-cr
+as
 be
 be
 be
@@ -1903,7 +1841,7 @@ bc
 ar
 as
 bq
-bw
+as
 bA
 bF
 bP
@@ -2145,7 +2083,7 @@ bs
 bs
 as
 bS
-ca
+as
 cg
 ar
 bs

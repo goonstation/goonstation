@@ -102,7 +102,7 @@ export const ListInputModal = (_, context) => {
     }
     let currentSelectedText = filteredItems[selected];
     let newDisplayed = items.filter(val => (
-      val.toLowerCase().search(query.toLowerCase()) !== -1
+      val.toLowerCase().includes(query.toLowerCase())
     ));
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
