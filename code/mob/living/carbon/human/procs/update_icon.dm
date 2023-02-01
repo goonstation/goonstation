@@ -654,20 +654,24 @@
 	if(our_tail.clothing_image_icon && icon_state)
 		var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
-			human_tail_image = our_tail.clothing_image_icon
+			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
 			src.tail_standing_oversuit.overlays += human_tail_image
+			src.update_tail_overlays()
+			return
 
-	else
-		human_tail_image = our_tail.tail_image_1
-		src.tail_standing.overlays += human_tail_image
+	human_tail_image = our_tail.tail_image_1
+	src.tail_standing.overlays += human_tail_image
 
-		human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-		src.tail_standing.overlays += human_tail_image
+	human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
+	src.tail_standing.overlays += human_tail_image
 
-		human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-		src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
+	human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
+	src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
 
+	src.update_tail_overlays()
+
+/mob/living/carbon/human/proc/update_tail_overlays()
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
 	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
