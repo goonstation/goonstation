@@ -20,6 +20,7 @@
 	shock - has a chance of electrocuting its target.
 */
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny)
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds

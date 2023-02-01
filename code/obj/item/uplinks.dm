@@ -1291,7 +1291,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			if (user.abilityHolder.getAbility(assoc_spell))
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			if (antag_role.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
@@ -1301,8 +1302,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			user.abilityHolder.addAbility(src.assoc_spell)
-			user.abilityHolder.updateButtons()
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			antag_role.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))

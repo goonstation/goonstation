@@ -14679,11 +14679,6 @@
 	},
 /turf/space,
 /area/space)
-"bgE" = (
-/obj/decal/nav_danger,
-/obj/map/light/dimred,
-/turf/space,
-/area/space)
 "bgF" = (
 /obj/cable{
 	d1 = 1;
@@ -100203,7 +100198,7 @@ aaa
 aaa
 aaa
 bkK
-bgE
+bkj
 bkP
 aaa
 aaa

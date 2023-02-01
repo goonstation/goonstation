@@ -1570,3 +1570,38 @@ obj/decoration/pottedfern
 
 			qdel(src)
 		return
+
+ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
+/obj/lever
+	name = "lever"
+	desc = "A big satisfying wall lever, ready to be pulled."
+	density = 0
+	anchored = TRUE
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "wall-lever-up"
+	var/on = FALSE
+
+	attack_hand(mob/user)
+		. = ..()
+		src.toggle()
+
+	proc/toggle()
+		if (ON_COOLDOWN(src, "toggle", 0.7 SECONDS))
+			return
+		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+		if (on)
+			on = FALSE
+			flick("wall-lever-up-anim", src)
+			src.icon_state = "wall-lever-up"
+			src.off()
+		else
+			on = TRUE
+			flick("wall-lever-down-anim", src)
+			src.icon_state = "wall-lever-down"
+			src.on()
+
+	proc/on()
+		return
+
+	proc/off()
+		return

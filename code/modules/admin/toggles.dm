@@ -437,12 +437,12 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
 	ADMIN_ONLY
-	if(!src.holder.animtoggle)
-		src.holder.animtoggle = 1
-		boutput(src, "Atom interaction options toggled on.")
-	else
-		src.holder.animtoggle = 0
+	if(!src.holder.disable_atom_verbs)
+		src.holder.disable_atom_verbs = 1
 		boutput(src, "Atom interaction options toggled off.")
+	else
+		src.holder.disable_atom_verbs = 0
+		boutput(src, "Atom interaction options toggled on.")
 
 /client/proc/toggle_view_range()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

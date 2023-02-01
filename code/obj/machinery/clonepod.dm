@@ -1167,6 +1167,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			return 0
 		if (src.process_timer > 0)
 			return 0
+		if (src.occupant)
+			boutput(user, "<span class='alert'>[src] is full, you can't climb inside!</span>")
+			return 0
 
 		src.visible_message("<span class='alert'><b>[user] climbs into [src] and turns it on!</b></span>")
 

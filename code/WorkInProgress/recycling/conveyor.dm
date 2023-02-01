@@ -247,7 +247,7 @@
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return
-	use_power(power_usage)
+	..()
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
