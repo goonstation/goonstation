@@ -1,4 +1,9 @@
 
+(t)wed feb 01 23
+(u)Cheffie
+(p)12751
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Halved the damage from cancel stuns and gives the vampire a bit more stamina back when it successfully cancels a stun. Cooldown increased to 4 seconds.
 (t)tue jan 31 23
 (u)pali & Shiiba
 (+)Ghosts now have a button to observe objects. (Previously it was just a verb.)

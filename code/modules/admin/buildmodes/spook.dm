@@ -60,7 +60,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			if (typeinfo.admin_procs && (activeSpook in typeinfo.admin_procs))
 				call(object, activeSpook)()
 
-/obj/machinery/light/spookTypes = "Break;Set Color;Toggle"
+/obj/machinery/light/spookTypes = "Set Color"
 /obj/machinery/light/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -71,12 +71,8 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 
 /obj/machinery/light/spook_act(what,data)
 	switch(what)
-		if("Break")
-			broken()
 		if("Set Color")
 			light.set_color( arglist(data || list(1,1,1)) )
-		if("Toggle")
-			src.seton(!src.on)
 		else
 			..()
 
@@ -91,7 +87,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		else
 			.=..()
 
-/obj/item/device/light/flashlight/spookTypes = "Set Color;Toggle"
+/obj/item/device/light/flashlight/spookTypes = "Set Color"
 /obj/item/device/light/flashlight/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -103,8 +99,6 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 	switch(what)
 		if("Set Color")
 			light.set_color(arglist( data ))
-		if("Toggle")
-			attack_self()
 		else
 			.=..()
 
