@@ -1478,8 +1478,14 @@
 
 	ADMIN_ONLY
 
-	if(!A.reagents)
+	var/datum/reagents/reagents = A.reagents
+
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		reagents = fluid.group?.reagents
+	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
+		reagents = A.reagents
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -1502,11 +1508,11 @@
 	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
 	if(!amount)
 		return
-	var/overflow = amount - (A.reagents.maximum_volume - A.reagents.total_volume)
+	var/overflow = amount - (reagents.maximum_volume - reagents.total_volume)
 	if (overflow > 0) // amount exceeds reagent space
 		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
 			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
-			A.reagents.maximum_volume += overflow
+			reagents.maximum_volume += overflow
 			if (ismob(A) && amount > 800) // rough estimate
 				if (tgui_alert(usr, "That amount of reagents will probably make [A] explode. Want to prevent them from exploding due to excessive blood?",
 					"Bloodgib Status", list("Yes", "No")) == "Yes")
@@ -1515,13 +1521,17 @@
 			// didn't increase cap, only report actual amount added.
 			amount = -(overflow - amount)
 
-	A.reagents.add_reagent(reagent.id, amount)
+	reagents.add_reagent(reagent.id, amount)
 	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name].</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
 	logTheThing(LOG_ADMIN, src, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
 	if (ismob(A))
 		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		fluid.group?.update_loop()
 
 
 /client/proc/cmd_set_material(var/atom/A in world)

@@ -21,7 +21,7 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
-ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating)
+ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc
 	name = "area power controller"
@@ -251,6 +251,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating)
 	return netexcess
 
 /obj/machinery/power/apc/proc/zapStuff() // COGWERKS NOTE: disabling calls to this proc for now, it is ruining the live servers
+	set name = "Zap Stuff"
 	var/atom/target = null
 	var/atom/last = src
 
