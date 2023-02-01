@@ -5,7 +5,7 @@
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 10
+	cooldown = 40
 	pointCost = 0
 	not_when_in_an_object = FALSE
 	when_stunned = 2
@@ -30,7 +30,7 @@
 		M.delStatus("drowsy")
 
 		if (M.get_stamina() < 0) // Tasers etc.
-			M.set_stamina(1)
+			M.set_stamina(20)
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
@@ -62,7 +62,7 @@
 			return 1
 
 		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
-		greatest_stun = round(greatest_stun / 10)
+		greatest_stun = round(greatest_stun / 20)
 
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
