@@ -1529,6 +1529,10 @@
 	if (ismob(A))
 		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		fluid.group?.update_loop()
+
 
 /client/proc/cmd_set_material(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
