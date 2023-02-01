@@ -695,7 +695,7 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]

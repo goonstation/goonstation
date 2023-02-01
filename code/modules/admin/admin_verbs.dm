@@ -2179,24 +2179,41 @@ var/list/fun_images = list()
 		if(istext(A))
 			A = atoms[A]
 
-	var/choice = 0
-
-	if (!client.holder.animtoggle)
-		if (ismob(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]), start_with_search=FALSE)
-		else if (isturf(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]), start_with_search=FALSE)
-		else
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]), start_with_search=FALSE)
+	var/title = "What do?"
+	var/list/verbs = list()
+	if (!client.holder.disable_atom_verbs)
+		title += " (Atom verbs are ON)"
+		verbs += client.holder.admin_interact_atom_verbs
+	if (ismob(A))
+		verbs += client.holder.admin_interact_verbs["mob"]
+	else if (isturf(A))
+		verbs += client.holder.admin_interact_verbs["turf"]
 	else
-		if (ismob(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"], start_with_search=FALSE)
-		else if (isturf(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"], start_with_search=FALSE)
-		else
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"], start_with_search=FALSE)
+		verbs += client.holder.admin_interact_verbs["obj"]
+		if (isobj(A))
+			var/obj/object = A
+			if (istype(object.artifact, /datum/artifact))
+				verbs += "Activate Artifact"
+
+	var/typeinfo/atom/typeinfo = A.get_typeinfo()
+	var/list/type_procs = list()
+	if (typeinfo.admin_procs)
+		for (var/procpath/proc_path as anything in typeinfo.admin_procs)
+			var/proc_name = proc_path.name
+			if (!proc_name)
+				var/split_list = splittext("[proc_path]", "/")
+				proc_name = split_list[length(split_list)]
+			type_procs["[proc_name] *"] = proc_path
+	verbs += type_procs
+
+	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE)
 
 	var/client/C = src.client
+	if (choice in type_procs)
+		call(A, type_procs[choice])()
+		src.update_cursor()
+		return
+
 	switch(choice)
 		if("Get Thing")
 			C.cmd_admin_get_mobject(A)
@@ -2283,6 +2300,9 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
+		if ("Activate Artifact")
+			var/obj/object = A
+			object.ArtifactActivated()
 
 	src.update_cursor()
 

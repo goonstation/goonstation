@@ -12,6 +12,7 @@ var/global/datum/apiHandler/apiHandler
 
 	var/emergency_shutoff_counter = 0 // how many api errors there have been since a successful one
 	var/lazy_concurrent_counter = 0 // lazy count of how many are up/down
+	var/lazy_waiting_counter = 0 // number of how many are waiting
 
 	New()
 		..()
@@ -58,7 +59,12 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
 			message_admins("API requests have been disabled due to too many errors (check logs).")
 			enabled = 0
-
+			SPAWN(60 SECONDS)
+				emergency_shutoff_counter = 0
+				logTheThing(LOG_DEBUG, null, "RE-ENABLING API REQUESTS - Cooldown expired.")
+				logTheThing(LOG_DIARY, null, "RE-ENABLING API REQUESTS - Cooldown expired.", "debug")
+				message_admins("API requests have been re-enabled after waiting.")
+				enabled = 1
 		return
 
 
@@ -83,6 +89,13 @@ var/global/datum/apiHandler/apiHandler
 		req += "data_version=[config.goonhub_api_version]&" //Append API version
 		var/safeReq = req //for outputting errors without the auth code
 		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
+
+		lazy_waiting_counter++
+		while (lazy_concurrent_counter > 50)
+			// if we have too many requests out, just wait a little to let some finish
+			sleep(rand(1, 5))
+		lazy_waiting_counter--
+
 
 		// Fetch via HTTP from goonhub
 		lazy_concurrent_counter++

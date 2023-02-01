@@ -102,8 +102,6 @@ TYPEINFO(/datum/component/radioactive)
 		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
-		else if(ismob(parent))
-			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)

@@ -178,7 +178,6 @@
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "aaB" = (
 /obj/item/inner_tube/random,

@@ -25,6 +25,7 @@
 
 	return
 
+// Remove when omnitraitors are datumised.
 /client/proc/gearspawn_wizard()
 	set category = "Commands"
 	set name = "Call Wizards"
