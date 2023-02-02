@@ -222,17 +222,21 @@ export const ListInputModal = (_, context) => {
     }
   };
 
+  let actualWindowWidth = windowWidth;
   if (windowWidth === null) {
     let maxWidth = 325;
     const font = getCanvasFont();
     for (const item of items) {
       maxWidth = Math.max(maxWidth, getTextWidth(item, font));
     }
-    setWindowWidth(maxWidth);
+    // No clue why the nextTick is necessary but it seems like if you do it directly then there's about
+    // 50% chance something in Inferno will race condition and crash. Pls help.
+    nextTick(() => setWindowWidth(maxWidth));
+    actualWindowWidth = maxWidth;
   }
 
   return (
-    <Window title={title} width={windowWidth} height={windowHeight}>
+    <Window title={title} width={actualWindowWidth} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onkeydown={handleKey}>
