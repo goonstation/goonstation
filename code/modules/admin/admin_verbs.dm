@@ -345,6 +345,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
