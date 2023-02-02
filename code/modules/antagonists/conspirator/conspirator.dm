@@ -51,12 +51,7 @@
 		src.headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/conspirator)
 
 	remove_equipment()
-		src.headset.wiretap = null
-
-		var/obj/item/device/radio/headset/headset = new src.headset.type
-		src.headset.secure_frequencies = headset.secure_frequencies
-		src.headset.secure_classes = headset.secure_classes
-		src.headset.set_secure_frequencies()
+		src.headset.remove_radio_upgrade()
 
 	do_popup(override)
 		if (!override)

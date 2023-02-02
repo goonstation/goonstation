@@ -40,12 +40,7 @@
 			boutput(user, "<span class='notice'>You remove [src.wiretap] from [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.put_in_hand_or_drop(src.wiretap)
-			src.wiretap = null
-
-			var/obj/item/device/radio/headset/headset = new src.type
-			src.secure_frequencies = headset.secure_frequencies
-			src.secure_classes = headset.secure_classes
-			set_secure_frequencies(src)
+			src.remove_radio_upgrade()
 		..()
 
 	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
@@ -62,6 +57,14 @@
 
 		set_secure_frequencies(src)
 		R.set_loc(src)
+
+	proc/remove_radio_upgrade()
+		src.wiretap = null
+
+		var/obj/item/device/radio/headset/headset = new src.type
+		src.secure_frequencies = headset.secure_frequencies
+		src.secure_classes = headset.secure_classes
+		src.set_secure_frequencies()
 
 /obj/item/device/radio/headset/wizard
 	emp_act()
