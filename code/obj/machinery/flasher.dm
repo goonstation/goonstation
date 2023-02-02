@@ -1,5 +1,5 @@
 // It is a gizmo that flashes a small area
-
+ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 /obj/machinery/flasher
 	name = "\improper Mounted Flash"
 	desc = "A wall-mounted flashbulb device."

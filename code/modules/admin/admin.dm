@@ -4891,17 +4891,26 @@ var/global/noir = 0
 
 	if(!length(matches))
 		return null
-
-	var/chosen
 	if(length(matches) == 1)
-		chosen = text2path(matches[1])
-	else
-		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
-		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
-		if(!chosen)
-			return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+		return text2path(matches[1])
 
-	. = chosen
+	var/prefix = get_longest_common_prefix(matches)
+	if(length(prefix))
+		if(prefix in matches)
+			var/last_slash = findlasttext(prefix, "/")
+			prefix = copytext(prefix, 1, last_slash + 1)
+		strip_prefix_from_list(matches, prefix)
+	else
+		prefix = null
+
+	var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
+	var/msg = "Select \a [base] type."
+	if(prefix)
+		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
+	if(!.)
+		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+	. = text2path(prefix + .)
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
