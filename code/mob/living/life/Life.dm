@@ -245,8 +245,6 @@
 
 		update_item_abilities()
 
-		update_objectives()
-
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
@@ -506,36 +504,6 @@
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
-
-
-	proc/update_objectives()
-		if (!src.mind)
-			return
-		if (!src.mind.objectives)
-			return
-		if (!istype(src.mind.objectives, /list))
-			return
-		if (src.mind.stealth_objective)
-			for (var/datum/objective/O in src.mind.objectives)
-				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf(src)
-					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
-						O:score = max(0, O:score - 1)
-						if (prob(20))
-							boutput(src, "<span class='alert'><B>Being away from the station is making you lose your composure...</B></span>")
-						src << sound('sound/effects/env_damage.ogg')
-						continue
-					if (T && isturf(T) && T.RL_GetBrightness() < 0.2)
-						O:score++
-					else
-						var/spotted_by_mob = 0
-						for (var/mob/living/M in oviewers(src, 5))
-							if (M.client && M.sight_check(1))
-								O:score = max(0, O:score - 5)
-								spotted_by_mob = 1
-								break
-						if (!spotted_by_mob)
-							O:score++
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
