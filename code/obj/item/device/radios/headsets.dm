@@ -26,19 +26,10 @@
 			if (wiretap)
 				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! It doesn't have room for any more!</span>")
 				return
-			src.wiretap = R
 
-			for (var/frequency in R.secure_frequencies)
-				if (!(frequency in src.secure_frequencies))
-					src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
-			for (var/class in R.secure_classes)
-				if (!(class in src.secure_classes))
-					src.secure_classes[class] = R.secure_classes[class]
-
+			src.install_radio_upgrade(R)
 			boutput(user, "<span class='notice'>You install [R] into [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-			set_secure_frequencies(src)
-			R.set_loc(src)
 			user.u_equip(R)
 
 		else if (issnippingtool(O) && wiretap)
@@ -56,6 +47,21 @@
 			src.secure_classes = headset.secure_classes
 			set_secure_frequencies(src)
 		..()
+
+	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
+		if (wiretap)
+			return
+
+		src.wiretap = R
+		for (var/frequency in R.secure_frequencies)
+			if (!(frequency in src.secure_frequencies))
+				src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
+		for (var/class in R.secure_classes)
+			if (!(class in src.secure_classes))
+				src.secure_classes[class] = R.secure_classes[class]
+
+		set_secure_frequencies(src)
+		R.set_loc(src)
 
 /obj/item/device/radio/headset/wizard
 	emp_act()
