@@ -340,7 +340,7 @@
 				return TRUE
 		else
 			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
-			return FALSE
+			return TRUE
 
 /datum/targetable/wraithAbility/command
 	name = "Command"
