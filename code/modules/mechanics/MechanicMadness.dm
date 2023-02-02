@@ -2128,7 +2128,7 @@
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return 0
 		LIGHT_UP_HOUSING
-		if(random)
+		if(random && length(signals))
 			input.signal = pick(signals)
 		else if(!current_index || current_index > length(signals) || !length(signals))
 			return

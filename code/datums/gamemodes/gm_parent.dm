@@ -321,34 +321,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_WIZARD)
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			antag.current.unequip_all(1)
-
-			if (!job_start_locations["wizard"])
-				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-			else
-				antag.current.set_loc(pick(job_start_locations["wizard"]))
-
-			equip_wizard(antag.current)
-
-			var/randomname
-			if (antag.current.gender == "female")
-				randomname = pick_string_autokey("names/wizard_female.txt")
-			else
-				randomname = pick_string_autokey("names/wizard_male.txt")
-
-			SPAWN(0)
-				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-				if(newname && newname != randomname)
-					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
-				if (length(ckey(newname)) == 0)
-					newname = randomname
-
-				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname)
-					antag.current.real_name = newname
-					antag.current.UpdateName()
+			antag.add_antagonist(ROLE_WIZARD)
+			do_objectives = FALSE
 
 		if (ROLE_WRAITH)
 			generate_wraith_objectives(antag)

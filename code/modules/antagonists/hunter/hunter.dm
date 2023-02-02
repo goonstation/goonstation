@@ -157,24 +157,22 @@
 											skull_desc = "A meaningless trophy from a weak opponent. You feel disgusted to even look at it."
 
 				// Assign new skull or change value/desc.
-				if (!isnull(skull_type))
-					var/obj/item/skull/new_skull = new skull_type
-					skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+				if (isnull(skull_type))
+					skull_type = /obj/item/skull
 
-					if (S.type != new_skull.type)
-						//setup skull AFTER the qdel! otherwise skull gets set to null
-						qdel(S)
-						new_skull.donor = H
-						new_skull.preddesc = skull_desc
-						new_skull.set_loc(H)
-						H.organHolder.skull = new_skull
-						//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
-					else
-						qdel(new_skull)
-						S.value = skull_value
-						S.preddesc = skull_desc
-						//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
+				var/obj/item/skull/new_skull = new skull_type
+				skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+
+				if (S.type != new_skull.type)
+					//setup skull AFTER the qdel! otherwise skull gets set to null
+					qdel(S)
+					new_skull.donor = H
+					new_skull.preddesc = skull_desc
+					new_skull.set_loc(H)
+					H.organHolder.skull = new_skull
+					//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
 				else
+					qdel(new_skull)
 					S.value = skull_value
 					S.preddesc = skull_desc
 					//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
