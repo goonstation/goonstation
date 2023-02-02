@@ -26,6 +26,7 @@ const nextTick
    timeout: number;
    title: string;
    start_with_search: number;
+   capitalize: number;
  };
 
 
@@ -62,7 +63,7 @@ const getCanvasFont = (el = document.body) => {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title, start_with_search } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search, capitalize } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -265,6 +266,7 @@ export const ListInputModal = (_, context) => {
                 onFocusSearch={onFocusSearch}
                 searchBarVisible={searchBarVisible}
                 selected={selected}
+                capitalize={capitalize}
               />
             </Stack.Item>
             {searchBarVisible && (
@@ -291,7 +293,7 @@ export const ListInputModal = (_, context) => {
   */
 const ListDisplay = (props, context) => {
   const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected }
+  const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected, capitalize }
      = props;
 
   return (
@@ -325,7 +327,7 @@ const ListDisplay = (props, context) => {
               'animation': 'none',
               'transition': 'none',
             }}>
-            {item.replace(/^\w/, (c) => c.toUpperCase())}
+            {capitalize ? item.replace(/^\w/, (c) => c.toUpperCase()) : item}
           </Button>
         );
       })}
