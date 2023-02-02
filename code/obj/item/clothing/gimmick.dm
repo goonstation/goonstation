@@ -56,6 +56,9 @@
 	desc = "Uhh, how long has this even been here? It looks kinda grubby and, uhh, singed. Wait, is that blood?"
 	icon_state = "santa"
 	item_state = "santahat"
+	hides_from_examine = C_EARS
+	c_flags = null
+	see_face = 1
 
 	noslow
 		setupProperties()
@@ -336,6 +339,7 @@
 	icon_state = "batman"
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
+	hides_from_examine = C_EARS
 	see_face = 0
 
 /obj/item/clothing/head/helmet/batman
@@ -343,6 +347,9 @@
 	desc = "I AM THE BAT"
 	icon_state = "batcowl"
 	item_state = "batcowl"
+	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_EARS
+	see_face = 0
 
 // see procitizen.dm for batman verbs
 
