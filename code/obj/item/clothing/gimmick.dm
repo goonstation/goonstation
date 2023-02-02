@@ -1508,6 +1508,7 @@
 	name = "werewolf mask"
 	desc = "The mask of a wolfman getup."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_GLASSES|C_MASK|C_EARS
 	seal_hair = 1
 	icon_state = "wwmask"
 
@@ -1537,6 +1538,7 @@
 	name = "abomination mask"
 	desc =  "The abomination mask straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
 	seal_hair = 1
 	icon_state = "abommask"
 
@@ -1544,6 +1546,7 @@
 	name = "zombie mask"
 	desc = "The mask of a zombie. Man, they really captured the discolouration of rotten flesh."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
 	seal_hair = 1
 	icon_state = "zombmask"
 
@@ -1763,6 +1766,11 @@
 	desc = "Wow! It's just like the real thing!"
 	icon_state = "big_lizard"
 	item_state = "big_lizard"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	seal_hair = 1
+	see_face = 0
+
 
 //sock hats
 
