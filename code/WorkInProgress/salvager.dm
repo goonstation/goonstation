@@ -285,11 +285,7 @@
 	name = "salvager rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
-	spawn_contents = list(/obj/item/storage/box/salvager_frame_compartment,
-						  /obj/item/deconstructor,
-						  /obj/item/tool/omnitool,
-						  /obj/item/weldingtool,
-						  /obj/item/tank/air)
+	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	in_list_or_max = 1
@@ -315,6 +311,22 @@
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
+
+/datum/manufacture/pod/armor_light/salvager
+	name = "Salvager Pod Armor"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,20)
+	item_outputs = list(/obj/item/podarmor/salvager)
+	time = 20 SECONDS
+	create = 1
+	category = "Component"
+
+/obj/item/podarmor/salvager
+	name = "Salvager Pod Armor"
+	desc = "Exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
@@ -478,6 +490,7 @@
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
 /obj/salvager_cryotron
+/obj/item/salvager_hand_tele
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell
 ABSTRACT_TYPE(/datum/commodity/magpie/buy)

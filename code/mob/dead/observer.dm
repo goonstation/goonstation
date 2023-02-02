@@ -57,14 +57,16 @@
 			src.set_cursor('icons/cursors/examine.dmi')
 
 /mob/dead/observer/click(atom/target, params, location, control)
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
-		return
-	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
-		src.insert_observer(target)
-		return
+	// If we have an ability active, skip all this and go straight to parent call.
+	if (!src.targeting_ability)
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+			src.insert_observer(target)
+			return
 	return ..()
 
 /mob/dead/observer/Login()
@@ -277,7 +279,7 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				src.mind?.dnr = 1
+				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
 			else
@@ -299,6 +301,7 @@
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
+		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
 		var/mob/dead/our_ghost = null
@@ -330,7 +333,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		if(!istype(src, /mob/dead))
+		if(!istype(src, /mob/dead) && !mind?.get_player()?.dnr)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -462,7 +465,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -599,7 +602,7 @@
 	//set category = "Ghost"
 	// ooooo its a secret, oooooo!!
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -692,129 +695,29 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
+	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
 
-	// Same thing you could do with the old auth disk. The bomb is equally important
-	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
-			var/name = "Nuclear bomb"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = N.the_bomb
-
-
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		var/datum/game_mode/football/F = ticker.mode
-		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
-			var/name = "THE FOOTBALL"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = F.the_football
-
-
-	for_by_tcl(O, /obj/observable)
-		LAGCHECK(LAG_LOW)
-		var/name = O.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = O
-
-	for_by_tcl(GB, /obj/item/ghostboard)
-		LAGCHECK(LAG_LOW)
-		var/name = "Ouija board"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = GB
-
-	for_by_tcl(G, /obj/item/gnomechompski)
-		var/name = "Gnome Chompski"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = G
-
-	for_by_tcl(CR, /obj/cruiser_camera_dummy)
-		var/name = CR.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = CR
-
-	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
-		var/name = L.name
-		if (name != "strangelet loaf")
+	for (var/atom/A in all_observables)
+		// isghostrestrictedz also filters out objects in NULL
+		// bomb is only tracked in nuclear mode
+		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
 			continue
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = L
+		// this doesn't distinguish objects with the same name on the same tile. that's fine
+		var/area/area = get_area(A)
+		var/turf/turf = get_turf(A)
+		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
 
-	for (var/obj/machinery/bot/B in machine_registry[MACHINES_BOTS])
-		LAGCHECK(LAG_LOW)
-		if (isghostrestrictedz(B.z)) continue
-		var/name = "*[B.name]"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = B
+	sortList(observable_map, /proc/cmp_text_asc)
+	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
 
-
-	for(var/name in creatures)
-		var/obj/O = creatures[name]
-		if(!istype(O))
-			creatures -= name
-		else
-			// let people observe these regardless of where they are. who cares
-			// there's probably a way to do this better (some bots have no-camera mode for example)
-			// which would work but someone else can fix it later. jhon madden
-			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
-				var/turf/T = get_turf(O)
-				if(!T || isghostrestrictedz(T.z))
-					creatures -= name
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
+	if (!picked_label)
 		return
 
-	insert_observer(creatures[eye_name])
+	insert_observer(observable_map[picked_label])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer

@@ -1995,7 +1995,7 @@
 			//If dead, instaconvert.
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)
@@ -2179,6 +2179,27 @@
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
+
+/datum/statusEffect/fragrant
+	id = "fragrant"
+	name = "Fragrant"
+	desc = "You smell very nice."
+	icon_state = "fragrant"
+	maxDuration = 5 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			var/particles/petals/P = new
+			M.UpdateParticles(P, "fragrant")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.ClearSpecificParticles("fragrant")
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"

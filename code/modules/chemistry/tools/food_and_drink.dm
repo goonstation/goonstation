@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/splash_all_contents = 1
 	doants = 0
 	throw_speed = 1
-	var/can_recycle = 1
+	can_recycle = TRUE
 	var/can_chug = 1
 	var/is_sealed = FALSE
 
@@ -1028,6 +1028,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /* ========================================================== */
 /* -------------------- Drinking Glasses -------------------- */
 /* ========================================================== */
+
+ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, proc/smash)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"

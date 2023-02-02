@@ -74,3 +74,21 @@ Example:
 #define TUPLE_GET_3_OR_DUMMY(x) x(_GETTER_3_OR_DUMMY)
 #define _GETTER_4_OR_DUMMY(args...) _GETTER_4(##args, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY, DUMMY)
 #define TUPLE_GET_4_OR_DUMMY(x) x(_GETTER_4_OR_DUMMY)
+
+
+
+// non-tuple stuff follows
+
+/// Given a prefix and a list of arguments, adds the prefix to each argument
+#define APPLY_PREFIX(prefix, ARGS...) _APPLY_PREFIX(prefix, ##ARGS, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define _APPLY_PREFIX(prefix, a, b, c, d, e, f, g, h, i, j, ...) _APPLY_PREFIX_##j(prefix, a, b, c, d, e, f, g, h, i, j)
+#define _APPLY_PREFIX_0(prefix, a, b, c, d, e, f, g, h, i, j, ...)
+#define _APPLY_PREFIX_1(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a
+#define _APPLY_PREFIX_2(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_1(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_3(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_2(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_4(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_3(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_5(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_4(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_6(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_5(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_7(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_6(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_8(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_7(prefix, b, c, d, e, f, g, h, i, j, -1)
+#define _APPLY_PREFIX_9(prefix, a, b, c, d, e, f, g, h, i, j, ...) prefix##a, _APPLY_PREFIX_8(prefix, b, c, d, e, f, g, h, i, j, -1)

@@ -777,6 +777,8 @@
 		remove_object(I)
 
 	proc/update_hands()
+		if(QDELETED(master))
+			return
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else

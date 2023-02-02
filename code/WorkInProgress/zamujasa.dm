@@ -300,7 +300,7 @@
 			var/obj/item/reagent_containers/food/snacks/plant/I = W
 			base_score = 2 + I.quality
 
-		else if (istype(W, /obj/item/plant))
+		else if (istype(W, /obj/item/plant) || istype(W, /obj/item/clothing/head/flower))
 			var/obj/item/plant/I = W
 			base_score = 2 + I.quality
 
@@ -1015,13 +1015,13 @@
 				maptext_suffix = "</span>"
 
 				New()
-					maptext_y += 20
 					..()
+					maptext_y += 21
 
 				offset
 					New()
-						maptext_x += 16
 						..()
+						maptext_x += 16
 
 
 	score_tracker
@@ -1237,7 +1237,7 @@
 				var/mob/M = C.mob
 				if(!M || isnewplayer(M)) continue
 				if (isdead(M) && !isliving(M))
-					if (M.mind?.joined_observer)
+					if (M.mind?.get_player()?.joined_observer)
 						results["observer"]++
 					else
 						results["dead"]++
@@ -1497,12 +1497,13 @@ Other Goonstation servers:[serverList]</span>"})
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
-	desc = "Genetically engineered for passiveness and bred for badminning, the greater domestic zambee is increasingly unpopular among grayshirts and griefers."
+	desc = "Finally, badminnery in the form of a bad pun. Dead on the inside."
 	limb_path = /datum/limb/small_critter/bee/strong
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting/zambee,
 						 /datum/targetable/critter/bee_swallow,
-						 /datum/targetable/critter/bee_teleport)
+						 /datum/targetable/critter/bee_teleport,
+						 /datum/targetable/critter/bee_puke_honey)
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
