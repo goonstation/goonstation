@@ -386,6 +386,11 @@ TYPEINFO(/area)
 		for (var/obj/window/W in our_contents)
 			value++
 
+		if (length(flocks))
+			for (var/atom/A as anything in our_contents)
+				if (isfeathertile(A) || istype(A, /obj/machinery/light/flock) || istype(A, /obj/window/auto/feather))
+					value--
+
 		return value
 
 	proc/calculate_area_cleanliness()
