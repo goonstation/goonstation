@@ -15628,11 +15628,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"bhY" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
 "bhZ" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Engineering Hallway";
@@ -26399,16 +26394,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/wreckage)
-"fpB" = (
-/obj/securearea{
-	desc = "";
-	icon_state = "shock";
-	name = "Danger: High Voltage"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
 "fpO" = (
 /obj/cable,
 /obj/cable{
@@ -29125,9 +29110,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
+/area/station/turret_protected/ai_upload)
 "hfe" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -32300,9 +32283,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
+/area/station/turret_protected/ai_upload)
 "jmK" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -34725,9 +34706,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
+/area/station/turret_protected/ai_upload)
 "kTU" = (
 /obj/table/auto,
 /obj/item/bee_egg_carton{
@@ -36795,13 +36774,6 @@
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"mCg" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "mCm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43091,9 +43063,7 @@
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/AIbasecore1{
-	name = "Upload Station"
-	})
+/area/station/turret_protected/ai_upload)
 "qOa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -86147,7 +86117,7 @@ fqH
 fqH
 fqH
 pYD
-fpB
+cNR
 oHb
 oHb
 oHb
@@ -86450,8 +86420,8 @@ tIN
 tIN
 tIN
 tIN
-acd
-mCg
+tIN
+tIN
 aaa
 aaa
 bsS
@@ -88260,10 +88230,10 @@ tIN
 tIN
 tIN
 tIN
-aBQ
-bhY
-bhY
-bhY
+tIN
+tIN
+tIN
+tIN
 bgH
 bgH
 uNC
@@ -88554,7 +88524,7 @@ aaa
 aaa
 aaa
 aCy
-fpB
+cNR
 jmD
 kTN
 qNZ
@@ -88563,7 +88533,7 @@ qNZ
 qNZ
 qNZ
 hfd
-fpB
+cNR
 azU
 azU
 azU
