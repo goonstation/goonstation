@@ -677,7 +677,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						S.set_loc(pick(last_chance_turfs))
 					else
 						S.set_loc(get_random_station_turf())
-				return TRUE
+			return TRUE
 
 	/////////////////////////////////////
 	//CLOTHING (FITS HUMAN AND CYBORGS)//
