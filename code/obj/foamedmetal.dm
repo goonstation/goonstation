@@ -72,6 +72,12 @@
 		else
 			boutput(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (prob((AM.throwforce + thr.bonus_throwforce) * 10 - src.metal * 25))
+			AM.visible_message("<span class='alert'>[AM] smashes through the foamed metal.</span>")
+			dispose()
+
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
 		if (istype(source))

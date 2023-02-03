@@ -1,5 +1,6 @@
 #define KNOCK_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"

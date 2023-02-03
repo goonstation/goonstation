@@ -41,6 +41,8 @@
 TYPEINFO(/obj/item/device/light/flashlight)
 	mats = 2
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
+
 /obj/item/device/light/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -102,14 +104,14 @@ TYPEINFO(/obj/item/device/light/flashlight)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
-				user.apply_flash(60, 2, 0, 0, rand(2, 8), rand(1, 15), 0, 25, 100, stamina_damage = 70, disorient_time = 10)
+				user?.apply_flash(60, 2, 0, 0, rand(2, 8), rand(1, 15), 0, 25, 100, stamina_damage = 70, disorient_time = 10)
 				for (var/mob/M in oviewers(2, get_turf(src)))
 					if (in_cone_of_vision(user, M)) // If the mob is in the direction we're looking
 						var/mob/living/target = M
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
-							logTheThing(LOG_COMBAT, user, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
-				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
+							logTheThing(LOG_COMBAT, user || usr, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
+				user?.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
 				icon_state = icon_broken

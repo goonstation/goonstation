@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."

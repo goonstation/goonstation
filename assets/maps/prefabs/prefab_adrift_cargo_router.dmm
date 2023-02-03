@@ -124,6 +124,12 @@
 /obj/lattice,
 /turf/space,
 /area/noGenerate)
+"iq" = (
+/obj/machinery/conveyor/WN{
+	id = "lostrouter"
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
 "iy" = (
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/engine,
@@ -218,10 +224,10 @@
 	name = "strange biohazard crate";
 	desc = "A crate for biohazardous materials. You can hear a faint scratching from it..."
 	},
-/mob/living/critter/small_animal/mouse/mad,
-/mob/living/critter/small_animal/mouse/mad,
 /obj/critter/fermid,
 /obj/critter/bat/buff,
+/obj/critter/bat/buff,
+/obj/critter/fermid,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -825,7 +831,7 @@ nV
 kW
 fJ
 fJ
-fJ
+iq
 qV
 vz
 vz

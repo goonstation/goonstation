@@ -50,7 +50,7 @@
 		H.traitHolder.addTrait("training_engineer")
 
 	assign_objectives()
-		new /datum/objective_set/salvager(src.owner)
+		new /datum/objective_set/salvager(src.owner, src)
 
 	relocate()
 #ifdef SECRETS_ENABLED
