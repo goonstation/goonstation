@@ -652,13 +652,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			return 0
 
 	candy_heart
-		name = "Candy Heart Delivery"
+		name = "Send Candy Heart"
 		cost = 2500
 		icon = 'icons/obj/foodNdrink/food_candy.dmi'
 		icon_state = "heart-1"
 
 		Create(var/mob/M)
-			SPAWN(3 SECONDS)
+			SPAWN(rand(3 SECONDS, 15 SECONDS)) // stagger in case multiple purchases
 				var/datum/db_record/R = pick(data_core.general.records)
 				var/obj/storage/S = new /obj/storage/crate/packing
 				S.name = "special delivery ([R["name"]])"
