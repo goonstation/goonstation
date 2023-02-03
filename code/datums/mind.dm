@@ -59,13 +59,7 @@ datum/mind
 	var/karma = 0 //fuck
 	var/const/karma_min = -420
 	var/const/karma_max = 69
-	var/damned = 0 // If 1, they go to hell when are die
-
-	// Capture when they die. Used in the round-end credits
-	//var/icon/death_icon = null
-
-	//avoid some otherwise frequent istype checks
-	var/stealth_objective = 0
+	var/damned = 0 //! If 1, they go to hell when are die
 
 	var/show_respawn_prompts = TRUE
 

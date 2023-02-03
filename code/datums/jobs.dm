@@ -122,9 +122,6 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-			if (M.traitHolder && !M.traitHolder.hasTrait("loyalist"))
-				cant_spawn_as_rev = 1 //Why would an NT Loyalist be a revolutionary?
-
 // Command Jobs
 
 ABSTRACT_TYPE(/datum/job/command)
