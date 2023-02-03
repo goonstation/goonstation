@@ -1,4 +1,9 @@
 
+(t)fri feb 03 23
+(u)Flourish
+(e)🆕|C-Feature
+(*)February special - "Candy Heart Delivery" spacebux purchase. For a mere 2500 spacebux, you can send a random crewmember from the manifest a candy heart through QM. No guarantee the QMs will actually deliver it though.
+(+)Removed "Mail Order" spacebux purchase.
 (t)wed feb 01 23
 (u)Cheffie
 (p)12751
