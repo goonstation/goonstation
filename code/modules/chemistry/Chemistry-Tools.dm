@@ -509,7 +509,7 @@ proc/ui_describe_reagents(atom/A)
 		qdel(src)
 
 	afterattack(obj/target, mob/user, flag)
-		if(!istype(target, /obj/machinery/door))
+		if(!istype(target, /obj/machinery/door/unpowered/wood))
 			return ..()
 		if(locate(/obj/item/reagent_containers/glass/bucket) in target)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
