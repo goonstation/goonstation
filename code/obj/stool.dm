@@ -1234,6 +1234,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 	New()
 		..()
+		if (src.dir in ordinal)
+			src.layer = FLY_LAYER+1
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)
 
@@ -1494,7 +1496,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			return
 		if (!A.powered(EQUIP))
 			return
-		A.use_power(EQUIP, 5000)
+		A.use_power(5000, EQUIP)
 		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))

@@ -183,7 +183,7 @@
 						var/mob/living/critter/flock/drone/flockdrone = M.current
 						flock_joined = flockdrone.flock
 					special = "Part of Flock [flock_joined.name]"
-			if (ROLE_NUKEOP)
+			if (ROLE_NUKEOP, ROLE_NUKEOP_COMMANDER)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
 					if (ticker.mode:nuke_detonated)

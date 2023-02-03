@@ -176,77 +176,77 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
-			call(X,  "execute")(owner, entering)
+			X.execute(owner, entering)
 		return
 
 	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
-			call(X,  "execute")(owner, attacker, attacked, weapon)
+			X.execute(owner, attacker, attacked, weapon)
 		return
 
 	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
-			call(X,  "execute")(owner, attacked, projectile)
+			X.execute(owner, attacked, projectile)
 		return
 
 	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
-			call(X,  "execute")(owner, attacker, attacked)
+			X.execute(owner, attacker, attacked)
 		return
 
 	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I, mult)
+			X.execute(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)
-			call(X,  "execute")(location)
+			X.execute(location)
 		return
 
 	proc/triggerOnRemove(var/location)
 		for(var/datum/materialProc/X in triggersOnRemove)
-			call(X,  "execute")(location)
+			X.execute(location)
 		return
 
 	proc/triggerChem(var/location, var/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
-			call(X,  "execute")(location, chem, amount)
+			X.execute(location, chem, amount)
 		return
 
 	proc/triggerPickup(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersPickup)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerDrop(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersDrop)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerTemp(var/location, var/temp)
 		for(var/datum/materialProc/X in triggersTemp)
-			call(X,  "execute")(location, temp)
+			X.execute(location, temp)
 		return
 
 	proc/triggerExp(var/location, var/sev)
 		for(var/datum/materialProc/X in triggersExp)
-			call(X,  "execute")(location, sev)
+			X.execute(location, sev)
 		return
 
 	proc/triggerEat(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersOnEat)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerOnBlobHit(var/atom/owner, var/blobPower)
 		for(var/datum/materialProc/X in triggersOnBlobHit)
-			call(X,  "execute")(owner, blobPower)
+			X.execute(owner, blobPower)
 		return
 
 	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackobj, attacker, meleeorthrow)
 		return
 
 
@@ -504,7 +504,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 1 //Can not be easily modified.
+	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 	quality = 60
@@ -1067,7 +1067,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 3)
 		setProperty("reflective", 6)
-		setProperty("radioactive", 2)
+		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
 
 
@@ -1511,3 +1511,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/metal/plutonium
+	mat_id = "plutonium"
+	name = "plutonium 239"
+	canMix = 0 //Can not be easily modified.
+	desc = "Weapons grade refined plutonium."
+	color = "#230e4d"
+	quality = 60
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 8)
+		setProperty("hard", 7)
+		setProperty("n_radioactive", 5)
+		setProperty("radioactive", 3)
+		setProperty("electrical", 7)

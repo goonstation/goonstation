@@ -320,13 +320,7 @@
 					boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
 					master.lock.show_lock_panel(user)
 			if ("return_to_station")
-				if(master.com_system)
-					if(master.com_system.active)
-						master.going_home = 1
-					else
-						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
-				else
-					boutput(user, "[master.ship_message("System not installed in ship!")]")
+				master.return_to_station()
 			if ("leave")
 				master.leave_pod(user)
 			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM

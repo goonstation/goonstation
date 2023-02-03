@@ -187,7 +187,6 @@
 	..()
 	if(status & NOPOWER)
 		return
-	use_power(power_usage)
 
 /obj/machinery/computer/update_icon()
 	if(src.glow_in_dark_screen)

@@ -72,6 +72,8 @@
 	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
 	ircbot.export_async("help", ircmsg)
 
+	return msg
+
 /mob/verb/mentorhelp()
 	set category = "Commands"
 	set name = "mentorhelp"
@@ -227,6 +229,7 @@
 					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
 					if(vol)
 						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user) //C is a passed ckey
 
@@ -247,7 +250,7 @@
 		M = ckey_to_mob(C)
 		user = user_client.mob
 
-		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
+		if(!(user && user.client && user.client.holder && user.client.holder.level >= LEVEL_ADMIN))
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN * 4)
 		if (!( t ))
 			return

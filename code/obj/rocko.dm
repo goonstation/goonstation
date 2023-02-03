@@ -138,7 +138,7 @@ obj/item/rocko
 			painted = pick(list("#000","#151","#514","#511","#218"))
 
 		smiley.color = painted
-		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 
 		src.UpdateOverlays(smiley, "face")
 		update_hat()
@@ -148,7 +148,7 @@ obj/item/rocko
 			var/icon/working_icon = icon(src.hat.wear_image_icon, src.hat.icon_state, SOUTH )
 			working_icon.Shift(SOUTH, 10)
 			var/image/working_hat = image(working_icon)
-			working_hat.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			working_hat.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 			src.UpdateOverlays(working_hat, "hat")
 		else
 			src.UpdateOverlays(null, "hat")

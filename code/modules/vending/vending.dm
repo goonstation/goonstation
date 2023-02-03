@@ -53,6 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -624,7 +625,7 @@ TYPEINFO(/obj/machinery/vending)
 	else // make a new one
 		vended = new product.product_path(src.get_output_location())
 	vended.name = product.product_name
-	vended.loc = src.get_output_location()
+	vended.set_loc(src.get_output_location())
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
 		if (src.vend_inhand)
@@ -1081,7 +1082,7 @@ TYPEINFO(/obj/machinery/vending)
 	if (!PN) //Wire note: Fix for Cannot read null.avail
 		return 0
 
-	if (user.shock(src, PN.avail, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0))
+	if (in_interact_range(src, user) && user.shock(src, PN.avail, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0))
 		for (var/mob/M in AIviewers(src))
 			if (M == user)	continue
 			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
@@ -1984,7 +1985,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		crtoverlay.layer = src.layer + 0.2
 		crtoverlay.plane = PLANE_DEFAULT
 		//These stop the overlay from being selected instead of the item by your mouse?
-		crtoverlay.appearance_flags = NO_CLIENT_COLOR
+		crtoverlay.appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
 		crtoverlay.mouse_opacity = 0
 		updateAppearance()
 
@@ -2041,29 +2042,39 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 
-	proc/addProduct(obj/item/target, mob/user)
+	proc/addProduct(obj/item/target, mob/user, quiet = FALSE)
 		if (target.cant_drop)
-			boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+			if(!quiet)
+				boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
 			return
-		var/obj/item/storage/targetContainer = target
-		if (!istype(targetContainer))
+		var/obj/item/targetContainer = target
+		if (!istype(targetContainer, /obj/item/storage) && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
-			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			if(!quiet)
+				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
-		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
+		var/action = quiet ? "Empty it into the vending machine" : \
+			input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
 		var/cantuse
 		if (action)
 			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
 		if (action == "Place it in the vending machine" && !cantuse)
 			productListUpdater(target, user)
-			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			if(!quiet)
+				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
 		else if (cantuse || !action)
 			return
-		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
+		if(!quiet)
+			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
+
+		var/obj/item/storage/targetStorage = null
+		if(istype(targetContainer, /obj/item/storage))
+			targetStorage = targetContainer
 		for (var/obj/item/R in targetContainer)
-			targetContainer.hud.remove_object(R)
+			targetStorage?.hud.remove_object(R)
 			productListUpdater(R, user)
+
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -2108,6 +2119,34 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()
+
+	MouseDrop_T(atom/movable/dropped, mob/user)
+		..()
+		if (!dropped || !user || !isliving(user) || isintangible(user) || BOUNDS_DIST(dropped, user) > 0 || !in_interact_range(src, user) || !can_act(user))
+			return
+
+		if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart))
+			if(!loading || !panel_open)
+				boutput(user, "<span class='alert'>\The [src]'s chute is not open to load stuff in!</span>")
+				return
+
+			var/obj/storage/store = dropped
+			if(istype(store) && (store.welded || store.locked))
+				boutput(user, "<span class='alert'>You cannot load from a [store] that cannot open!</span>")
+				return
+
+			var/num_loaded = 0
+			for (var/obj/item/I in dropped.contents)
+				addProduct(I, user, quiet=TRUE)
+				if(I.loc == src)
+					num_loaded++
+			if(num_loaded)
+				boutput(user, "<span class='notice'>You load [num_loaded] item\s from \the [dropped] into \the [src].</span>")
+				update_static_data(user)
+			else if(length(dropped.contents))
+				boutput(user, "<span class='alert'>\The [dropped] is empty!</span>")
+			else
+				boutput(user, "<span class='alert'>No items were loaded from \the [dropped] into \the [src]!</span>")
 
 	attackby(obj/item/target, mob/user)
 		if (loading && panel_open)
@@ -2623,10 +2662,12 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
+		product_list += new/datum/data/vending_product(/obj/item/boardgame/chess, 1, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/gameclock, 5, cost=PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/Mono, 5, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/MONOrules, 5, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
@@ -3002,3 +3043,45 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
+
+/obj/machinery/vending/jobclothing/catering
+	name = "Catering Apparel"
+	desc = "A vending machine that vends Catering clothing."
+	icon_state = "catclothing" //At first it was static on the bartender outfit, but it made it feel like it was only a bartender vendor, so I made it animated to switch between chef and bartender clothing.
+	icon_panel = "snack-panel"
+	icon_off = "catclothing-off"
+	icon_broken = "catclothing-broken"
+	icon_fallen = "catclothing-fallen"
+	pay = 1
+	acceptcard = 1
+	req_access = list(access_bar, access_kitchen)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/butler, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/maid, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/chef, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/souschef, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/chef, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wcoat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/black, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/chef, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/that, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/maid, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/souschefhat, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhatpuffy, 1)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/civilian, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 2, cost=PAY_TRADESMAN/1.5) //Currently, Chef and Barkeep have unique PDA's, but they are functionally the same. So putting a generic PDA here until that changes.
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack, 2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel, 2)
+		//There isn't april fools versions of chef and bartender suits to put... Yet! - But I think the Chef's Sushi outfit (Being a level 0 reward) can do just great as a hidden item for now if the hidden items don't strictly have to be just alternative jumpsuits.
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
+		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)

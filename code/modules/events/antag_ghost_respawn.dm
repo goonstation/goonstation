@@ -1,4 +1,16 @@
-/datum/random_event/major/antag/antagonist
+/datum/random_event/major/player_spawn
+	///Can this event be given a custom spawn location
+	var/targetable = FALSE
+	var/turf/custom_spawn_turf = null
+	admin_call(var/source)
+		if (src.targetable)
+			var/custom_loc = alert("Custom spawn location?","[src.name]","Default","Custom") == "Custom"
+			if (custom_loc)
+				src.custom_spawn_turf = get_turf(pick_ref(usr))
+
+	cleanup()
+		src.custom_spawn_turf = null
+/datum/random_event/major/player_spawn/antag/antagonist
 	name = "Antagonist Spawn"
 	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = 1
@@ -6,6 +18,7 @@
 	centcom_headline = "Biogenic Outbreak"
 	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
 	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
+	targetable = TRUE
 	var/antagonist_type = "Blob"
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
 	var/respawn_lock = 0
@@ -84,7 +97,7 @@
 				..() // Report spawn().
 			else
 				message_admins("Couldn't spawn AI blob (no blobstart landmark found).")
-			src.post_event()
+			src.cleanup()
 			return
 
 		// Don't lock up the event controller.
@@ -100,7 +113,7 @@
 		return ..()
 
 	proc/do_event(var/source)
-		if (!src || !istype(src, /datum/random_event/major/antag/antagonist))
+		if (!src || !istype(src, /datum/random_event/major/player_spawn/antag/antagonist))
 			return
 
 		src.respawn_lock = 1
@@ -118,7 +131,7 @@
 		if (!islist(candidates) || !length(candidates))
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
-			src.post_event()
+			src.cleanup()
 			global.random_events.next_spawn_event = TIME + 1 MINUTE
 			return
 
@@ -159,7 +172,7 @@
 			if (!(lucky_dude && istype(lucky_dude) && lucky_dude.current))
 				message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
 				logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
-				src.post_event()
+				src.cleanup()
 				return
 
 			candidates -= lucky_dude
@@ -170,7 +183,7 @@
 				M3 = lucky_dude.current
 			else
 				if (src.respawn_lock != 1) // Respawn might be in progress still.
-					src.post_event()
+					src.cleanup()
 				return
 
 			// Shouldn't happen, will happen.
@@ -236,22 +249,13 @@
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/carbon/human/R = M3.humanize()
-					if (R && istype(R))
-						M3 = R
-						R.unequip_all(1)
-						equip_wizard(R, 1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
 						send_to = 2
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						SPAWN(0)
-							if (R.gender && R.gender == "female")
-								R.real_name = pick_string_autokey("names/wizard_female.txt")
-							else
-								R.real_name = pick_string_autokey("names/wizard_male.txt")
-							R.choose_name(3, "wizard")
-
 					else
 						failed = 1
 
@@ -269,7 +273,7 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
 					else
 						failed = 1
@@ -278,7 +282,7 @@
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
 					else
 						failed = 1
@@ -312,22 +316,22 @@
 						failed = 1
 
 				if ("Vampire")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_vampire()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_VAMPIRE
-						objective_path = /datum/objective_set/vampire
 					else
 						failed = 1
 
 				if ("Changeling")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_changeling()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
 					else
 						failed = 1
 
@@ -335,9 +339,7 @@
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/changeling/headspider)
 					if (C && istype(C))
 						M3 = C
-						C.make_changeling()
-						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
+						C.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						C.remove_ability_holder(/datum/abilityHolder/changeling/)
 					else
 						failed = 1
@@ -345,8 +347,9 @@
 				if ("Arcfiend")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_ARCFIEND)
+						L.mind?.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_ARCFIEND
 					else
 						failed = 1
@@ -359,13 +362,12 @@
 			if (failed != 0)
 				message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
 				logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
-				src.post_event()
+				src.cleanup()
 				return
 
 			lucky_dude.assigned_role = "MODE"
 			lucky_dude.special_role = role
 			lucky_dude.random_event_special_role = 1
-			lucky_dude.dnr = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
 			M3.antagonist_overlay_refresh(1, 0)
@@ -383,20 +385,23 @@
 				boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 				i++
 
-			switch (send_to)
-				if (1)
-					if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
-						latejoin_missile_spawn(M3)
-					else
+			if (src.custom_spawn_turf)
+				M3.set_loc(src.custom_spawn_turf)
+			else
+				switch (send_to)
+					if (1)
+						if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
+							latejoin_missile_spawn(M3)
+						else
+							M3.set_loc(ASLoc)
+					if (2)
+						if (!job_start_locations["wizard"])
+							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+							M3.set_loc(ASLoc)
+						else
+							M3.set_loc(pick(job_start_locations["wizard"]))
+					if (3)
 						M3.set_loc(ASLoc)
-				if (2)
-					if (!job_start_locations["wizard"])
-						boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-						M3.set_loc(ASLoc)
-					else
-						M3.set_loc(pick(job_start_locations["wizard"]))
-				if (3)
-					M3.set_loc(ASLoc)
 			//nah
 			/*
 			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
@@ -408,18 +413,16 @@
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-		src.post_event()
+		src.cleanup()
 		return
 
 	// Restore defaults.
-	proc/post_event()
-		if (!src || !istype(src, /datum/random_event/major/antag/antagonist))
+	cleanup()
+		if (!src || !istype(src, /datum/random_event/major/player_spawn/antag/antagonist))
 			return
-
+		..()
 		src.antagonist_type = initial(src.antagonist_type)
 		src.respawn_lock = initial(src.respawn_lock)
 		src.message_delay = initial(src.message_delay)
 		src.admin_override = initial(src.admin_override)
 		src.antag_count = initial(src.antag_count)
-
-		return

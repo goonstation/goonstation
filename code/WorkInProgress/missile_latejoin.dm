@@ -146,7 +146,7 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.set_loc(start)
 
-proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite, async=FALSE)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(missile_sprite)
 		missile.icon_state = "[missile_sprite]"
@@ -155,7 +155,12 @@ proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_spri
 	else
 		missile.reset_to_aim_at(target, dir)
 		missile.target = target
-	missile.lunch(thing)
+
+	if(async)
+		SPAWN(0)
+			missile.lunch(thing)
+	else
+		missile.lunch(thing)
 	return missile
 
 proc/latejoin_missile_spawn(var/mob/character)

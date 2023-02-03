@@ -32,18 +32,25 @@
 			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
 
-		H.equip_if_possible(new /obj/item/salvager(H), H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/gloves/long(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
+
+		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/deconstructor, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/tool/omnitool, H.slot_in_backpack)
+		H.equip_new_if_possible(/obj/item/weldingtool, H.slot_in_backpack)
+
 		H.traitHolder.addTrait("training_engineer")
 
 	assign_objectives()
-		new /datum/objective_set/salvager(src.owner)
+		new /datum/objective_set/salvager(src.owner, src)
 
 	relocate()
 #ifdef SECRETS_ENABLED

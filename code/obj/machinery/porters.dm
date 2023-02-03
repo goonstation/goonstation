@@ -507,8 +507,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
-		victim.set_loc(src.brig)
 		src.brig.occupant = victim
+		victim.set_loc(src.brig)
 		for(var/obj/O in src.brig)
 			O.set_loc(src.brig.loc)
 		src.brig.build_icon()
@@ -851,6 +851,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	p_class = 1.2
 	can_fall = 0
 	ai_control_enabled = 1
+	power_usage = 0
 	var/homeloc = null
 
 	New()

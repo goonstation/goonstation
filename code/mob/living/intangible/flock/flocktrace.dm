@@ -27,13 +27,19 @@
 		if (free)
 			src.flock.free_traces++
 		src.flock.addTrace(src)
-		src.flock.partitions_made++
+		src.flock.stats.partitions_made++
+		if (free)
+			src.flock.free_traces++
 	else
 		src.death()
 
 	src.real_name = src.flock ? src.flock.pick_name("flocktrace") : name
 	src.name = src.real_name
 	src.update_name_tag()
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)

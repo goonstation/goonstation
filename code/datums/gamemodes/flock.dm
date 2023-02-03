@@ -1,18 +1,10 @@
 /datum/game_mode/flock
-	name = "flock"
+	name = "Flock (Beta)"
 	config_tag = "flock"
+	regular = FALSE
 
-	shuttle_available = SHUTTLE_CALL_MANUAL_CALL_DISABLED
-
-	antag_token_support = TRUE // this can allow the flock to have more members than usual, but should be rare
-	escape_possible = FALSE
-
-	latejoin_antag_compatible = TRUE
-	latejoin_only_if_all_antags_dead = TRUE
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_VAMPIRE, ROLE_CHANGELING, ROLE_ARCFIEND)
-
-	do_random_events = FALSE
-	do_antag_random_spawns = FALSE
+	shuttle_available = 2
+	shuttle_available_threshold = 12000 // 20 min, default value, probably change this
 
 	var/starting_players = 0
 	var/datum/mind/start_flockmind = null

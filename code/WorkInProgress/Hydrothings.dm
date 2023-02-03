@@ -360,7 +360,7 @@ obj/item/gnomechompski/elf
 	desc = "Wait this isn't a gnome..."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnelf"
-	item_state = "gnelf"
+	item_state = "gnome"
 
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"

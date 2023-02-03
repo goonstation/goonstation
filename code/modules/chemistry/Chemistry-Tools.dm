@@ -18,6 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
+	var/can_recycle = FALSE //can this be put in a glass recycler?
 	move_triggered = 1
 	var/last_new_initial_reagents = 0 //fuck
 
@@ -110,6 +111,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
 proc/ui_describe_reagents(atom/A)
+	if (!istype(A))
+		return null
 	var/datum/reagents/R = A.reagents
 	var/list/thisContainerData = list(
 		name = A.name,
@@ -148,7 +151,7 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	var/can_recycle = TRUE //can this be put in a glass recycler?
+	can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
@@ -293,7 +296,10 @@ proc/ui_describe_reagents(atom/A)
 				splash_volume = src.amount_per_transfer_from_this
 			splash_volume = min(splash_volume, src.reagents.total_volume) // cap the reaction at the amount of reagents we have
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -303,9 +309,10 @@ proc/ui_describe_reagents(atom/A)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 
 	attackby(obj/item/I, mob/user)
@@ -432,7 +439,8 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

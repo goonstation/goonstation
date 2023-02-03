@@ -5,6 +5,7 @@
 	desc = "A display case for antique possessions."
 	density = 1
 	anchored = 1
+	material_amt = 0.3
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0

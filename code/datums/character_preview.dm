@@ -21,6 +21,8 @@ datum/character_preview
 	/// May be useful to access directly if you want to put clothes on it or whatever.
 	var/mob/living/carbon/human/preview_mob
 	var/obj/overlay/background = null
+	///Do not access directly, use get_icon instead
+	var/icon/flat_icon = null
 
 	New(client/viewer, window_id, control_id = null)
 		. = ..()
@@ -94,6 +96,7 @@ datum/character_preview
 
 	/// Sets the appearance, mutant race, and facing direction of the human mob.
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH, name = "human")
+		src.flat_icon = null
 		src.preview_mob.dir = direction
 		src.preview_mob.set_mutantrace(null)
 		src.preview_mob.bioHolder.mobAppearance.CopyOther(AH)
@@ -105,6 +108,11 @@ datum/character_preview
 		src.preview_mob.set_face_icon_dirty()
 		src.preview_mob.real_name = "clone of " + name
 		src.preview_mob.name = "clone of " + name
+
+	proc/get_icon()
+		if (!src.flat_icon)
+			src.flat_icon = getFlatIcon(src.preview_mob)
+		return src.flat_icon
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
