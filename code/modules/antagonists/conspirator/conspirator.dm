@@ -26,13 +26,12 @@
 		. = ..()
 
 	give_equipment()
-		if (!ishuman(src.owner.current))
-			return FALSE
-
-		var/mob/living/carbon/human/H = src.owner.current
-
 		src.owner.store_memory(src.meeting_point)
 		src.owner.store_memory(src.conspirator_list)
+
+		if (!ishuman(src.owner.current))
+			return
+		var/mob/living/carbon/human/H = src.owner.current
 
 		// If possible, get the conspirator's headset.
 		if (istype(H.ears, /obj/item/device/radio/headset))
