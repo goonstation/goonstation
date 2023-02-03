@@ -320,11 +320,17 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
-/obj/item/paper/book/from_file/MONOrules
-	name = "MONO card game rules"
-	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+/obj/item/paper/book/from_file/DWrulebook
+	name = "Stationfinder"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stationfinder. It was made based on the Stations and Syndicates 5th edition SRD after a dispute over licensing."
+	icon_state = "bookcc"
+	file_path = "strings/books/stationfinder.txt"
+
+/obj/item/paper/book/from_file/solo_rules
+	name = "SOLO card game rules"
+	desc = "A pamphlet describing the rules of SOLO, the family-friendly and legally distinct card game for all ages!"
 	icon_state = "paper"
-	file_path = "strings/books/MONOrules.txt"
+	file_path = "strings/books/solo_rules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary

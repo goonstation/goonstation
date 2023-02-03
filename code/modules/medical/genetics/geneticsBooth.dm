@@ -239,7 +239,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
-				if (entry_time + process_time < world.timeofday)
+				if (entry_time + process_time < TIME)
 					eject_occupant()
 			else
 				UpdateOverlays(abilityoverlay, "abil", 0, 1)
@@ -372,7 +372,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			M.set_loc(src)
 			occupant = M
 			letgo_hp = initial(letgo_hp)
-			entry_time = world.timeofday
+			entry_time = TIME
 			started = 0
 
 			UpdateIcon()

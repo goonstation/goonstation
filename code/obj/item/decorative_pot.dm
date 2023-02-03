@@ -25,7 +25,9 @@ TYPEINFO(/obj/decorative_pot)
 						if(!t.plantyboi)
 								return
 						src.UpdateOverlays(t.plantyboi,"plant")
+						src.UpdateOverlays(t.plantyboi_plantoverlay, "plantoverlay")
 						t.plantyboi = null
+						t.plantyboi_plantoverlay = null
 						t.icon_state = "trowel"
 						return
 				if(istype(weapon,/obj/item/seed))

@@ -623,9 +623,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	can_strip(mob/M, showInv = 0)
+	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
-		if(!showInv && check_target_immunity(src, 0, M))
+		if(check_target_immunity(src, 1, M))
 			return 0
 		if (!HH)
 			return 0
@@ -1229,14 +1229,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
 		. = list()
-		for (var/mob/living/carbon/human/H in view(range, src))
+		for (var/mob/living/carbon/human/H in view(range, get_turf(src)))
 			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 				. += H
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, get_turf(src)))
 			. += S
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
@@ -1358,6 +1358,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	var/modifier = power / 20
 	var/damage = rand(modifier, 12 + 8 * modifier)
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, damage * 2, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
 
 	if (shielded)
 		damage /= 4
