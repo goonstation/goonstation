@@ -751,9 +751,8 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_WEREWOLF)
-				traitor.special_role = ROLE_WEREWOLF
-				objective_set_path = /datum/objective_set/werewolf
-				traitormob.make_werewolf()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
 				traitor.special_role = ROLE_WRAITH

@@ -367,8 +367,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 				src.spy_market.update_bounty_readouts()
 
 		if (ROLE_WEREWOLF)
-			objective_set_path = /datum/objective_set/werewolf
-			antag.current.make_werewolf()
+			antag.add_antagonist(ROLE_WEREWOLF)
+			do_objectives = FALSE
 
 		if (ROLE_ARCFIEND)
 			antag.add_antagonist(ROLE_ARCFIEND)
