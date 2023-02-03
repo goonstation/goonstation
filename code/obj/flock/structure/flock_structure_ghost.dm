@@ -53,6 +53,7 @@
 			src.uses_health_icon = FALSE
 			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
 			src.info_tag?.set_tag_offset(64, -4) // see comments for same numbers in relay file
+			START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	src.info_tag?.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
@@ -60,6 +61,7 @@
 	if (src.flock)
 		if (src.flock.relay_in_progress && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
 			src.flock.relay_in_progress = FALSE
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	STOP_TRACKING
 	. = ..()
 
