@@ -64,6 +64,5 @@
 	announce_objectives()
 		SPAWN(1 SECOND)
 			. = ..()
-
 			boutput(src.owner.current, src.meeting_point)
 			boutput(src.owner.current, src.conspirator_list)
