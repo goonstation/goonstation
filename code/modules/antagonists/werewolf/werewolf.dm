@@ -53,7 +53,7 @@
 	handle_round_end(log_data)
 		var/list/dat = ..()
 		if (length(dat) && src.ability_holder)
-			dat.Insert(2, {"They fed on the following crew members: [english_list(src.ability_holder.feed_objective?.mobs_fed_on)]."})
+			dat.Insert(2, {"They fed on a total of [length(src.ability_holder.feed_objective?.mobs_fed_on)] crew members during this shift."})
 
 			if (!iswerewolf(src.owner.current))
 				dat.Insert(3, {"Their body was destroyed."})
