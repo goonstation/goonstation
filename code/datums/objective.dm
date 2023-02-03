@@ -704,10 +704,11 @@ proc/create_fluff(datum/mind/target)
 		if(!in_centcom(src.owner.current))
 			return 0
 
-		if (!owner.is_changeling)
+		if (!ischangeling(src.owner.current))
 			return 0
 
-		if (owner.is_changeling.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
+		var/datum/abilityHolder/changeling/ability_holder = src.owner.current.get_ability_holder(/datum/abilityHolder/changeling)
+		if (ability_holder?.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
 			return 1
 
 /datum/objective/specialist/drinkblood

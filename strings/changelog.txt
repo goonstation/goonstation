@@ -1,5 +1,362 @@
 
+(t)tue jan 24 23
+(u)Tyrant
+(p)12728
+(e)🗺💅|A-Mapping, C-QoL
+(+)Engine room cables are now brown, solar cabling is now all in a consistent yellow, and PTL cables are black across all maps.
+(u)Tanker
+(p)12805
+(e)🗺|A-Mapping
+(*)Replaces the Pathology Lab on Kondaru with a Psychiatrist's Office. For the trauma caused by diseases.
+(t)sun jan 22 23
+(u)pali
+(p)12774
+(e)💅📄|C-QoL, A-UI
+(*)Light mode users will now have light mode applied to (most) TGUI windows too
+(t)sat jan 21 23
+(u)RubberRats
+(p)12839
+(e)|
+(+)Rolled blunts inherit any size modifiers from the plant used to make them.
+(u)goonstation-enjoyer
+(p)12643
+(e)💅📦|C-QoL, A-Game-Objects
+(+)AI intercom override now uses the frequency of your second radio
+(u)DisturbHerb
+(p)12619
+(e)🔎💅🔄📄📦|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Game-Objects
+(+)Credit transfer devices have been reworked and TGUI-ified.
+(t)fri jan 20 23
+(u)aloe
+(+)Going shambler or monkey mode as a changeling now removes pins.
+(u)tarmunora
+(+)Biblethump brain damage is now affected by head armor instead of blocked outright by helmets
+(u)pali & Leah
+(p)12824
+(e)🆕🎨🌠|C-Feature, C-Sprites, A-Events
+(*)Added a new random event - the white hole. Which is like the other end of a black hole. So stuff is thrown out of it. Better build some barricades.
+(t)thu jan 19 23
+(u)Walpvrgis + Flourish
+(p)12817
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Added gardenias, hydrangeas, birds of paradise, and lavender as both growable botany plants and wearable head accessories
+(*)Also added lavender essence and lavender latte (lavender essence + milk + espresso) as reagents. Lavender essence, when applied via TOUCH, will apply the "fragrant" status effect to the user, with each unit increasing the status duration by 5 seconds.
+(u)Tanker
+(p)12487
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(*)Adds french toast. Simply combine bread, two eggs, and milk in the oven.
+(+)Baguettes will now produce french bread slices when sliced.
+(t)wed jan 18 23
+(u)tarmunora
+(+)beakers/etc in chem dispensers count as closed containers. fluorosurfactant recipe uses carbon again instead of oil
+(u)Amylizzle. Spritework by Mr Moriarty & Hans
+(p)12795
+(e)🪲🎨⚖🔄📦|C-Bug, C-Sprites, C-Balance, C-Rework, A-Game-Objects
+(*)Reworked nuclear centrifuges. See minor changes for details.
+(+)Centrifuges now accept multiple rods and nuclear waste items at once.
+(+)For each point of fissile isotopes material property, one plutonium bar is produced
+(+)Any remaining fissile isotopes are output as nuclear waste, which can be added back into the centrifuge when you have more fuel to process.
+(u)LeahTheTech
+(+)Flock sentinels now chain to less targets by default, but more with sapper power.
+(u)LeahTheTech
+(+)Flockdrones now dodge a little slower.
+(u)LeahTheTech
+(+)Flock compute nodes now provide 50 compute, down from 60.
+(u)LeahTheTech
+(+)Flockminds and traces now have a tracker hud element pointing to the relay while it is active.
+(u)goonstation-enjoyer
+(p)12658
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Leaving the afterlife bar now teleports you anywhere but the afterlife bar.
+(t)tue jan 17 23
+(u)DisturbHerb
+(p)12783
+(e)📦🗺⛔|A-Game-Objects, A-Mapping, C-Removal
+(+)The rollout of more advanced chessboards aboard NanoTrasen assets is now complete.
+(u)Zamujasa
+(*)Football mode now removes all traits. No more spawning blind/deaf/whatever.
+(u)Emily
+(*)Stationfinder RPG added to the tabletop gaming kits
+(u)DrWolfy
+(p)11826
+(e)🆕🔎⚖💅📄⚗🤖|C-Feature, C-Code-Quality, C-Balance, C-QoL, A-UI, A-Chemistry, A-Silicons
+(*)CheMaster3000 rework with TGUI.
+(u)Cheffie
+(p)12717
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)The penalty for draining a corpse as a thrall now only applies if it's rotting.
+(u)Flaborized
+(p)12761
+(e)🆕🎨|C-Feature, C-Sprites
+(+)There are now unique sprites for joints rolled out of space credits.
+(u)DisturbHerb
+(p)12784
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gaming machines now have 5 board game clocks available for purchase.
+(u)Flourish
+(e)💅|C-QoL
+(*)Added a bunch more emotes - *squint, *scoff, *nodslowly, *starehands, *rubface, *rubtemples, *scratchhead, *jazzhands, *thumbsup, *pose, *rolleyes, *sideeye, *examine, and a very special and secret *jsay!
+(t)mon jan 16 23
+(u)Flourish
+(e)🪲|C-Bug
+(*)Hitting Z / blocking on non-grab intent while on top of a chair will now buckle you in again. It was a bug that all intents made you climb the chair, so I've fixed it. I know this was a pretty longstanding bug, though, so let me know if you have feedback or want buckling to be help intent only.
+(u)Flourish
+(e)💅|C-QoL
+(+)Injector belts and vapomatics can now only hold small sized items. This means they can no longer hold artbeakers.
+(+)Phones now record their last caller on their screen.
+(+)You can now compost organs with the compost tank.
+(+)When drinking something, bartenders can now discern both the reagents and how it tastes.
+(u)Flourish
+(e)🎨💅|C-Sprites, C-QoL
+(*)The cloning console now has an "in-progress" screen for when all connected pods are in use (i.e. currently cloning someone).
+(u)Sovexe
+(p)12588
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Rancher now spawns with a belt that can fit chicken carriers and fishing rods. Sprite by BatElite.
+(u)LeahTheTech
+(*)Vampiric thralls now have a HUD element to track their master.
+(t)sun jan 15 23
+(u)Zamujasa
+(*)Football mode is now 10 minutes long.
+(*)Football players have a team-colored outline.
+(*)New type of license to kill that adds a crappy visual indicator over your head. Now everyone will know who's valid.
+(u)pali & Shiiba
+(*)Ghosts now have a button to toggle seeing other ghosts and even themselves.
+(u)FlameArrow57
+(p)11684
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flockdrones will now deal less damage when attacking with items and point-blank shoot instead of gun-grab.
+(u)goonstation-enjoyer
+(p)12730
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adds a cleaning grenade manudrive to the janitor locker on Atlas
+(t)sat jan 14 23
+(u)DisturbHerb + Grokberg
+(p)12390
+(e)🆕🎨🔄🔊📄📦📜|C-Feature, C-Sprites, C-Rework, C-Sound, A-UI, A-Game-Objects, C-Documentation
+(*)The NanoTrasen Recreational Appropriations Committee has secured funding to upgrade the quality of crew entertainment in its stations. Chess boards and game clocks have been made available at gaming vendor machines, and a further rollout of the new equipment is anticipated in the near future.
+(u)Buyrcsp2
+(p)12731
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unopened cans of soda now can't be poured, unless popped open.
+(u)Amylizzle
+(p)12405
+(e)🗺💅📦🔬|A-Mapping, C-QoL, A-Game-Objects, A-Science
+(+)The quartermaster's office now contains a chemical request console, so you can ask chemistry for meth to sell!
+(t)fri jan 13 23
+(u)aloe
+(*)Rebalanced cloner defect numbers. You'll get less defects for the first few clonings, but are guaranteed to get some if you've been cloned a few times. You can no longer get major defects on the first cloning.
+(u)Amylizzle
+(p)12720
+(e)💅📄💨📦|C-QoL, A-UI, A-Atmospherics, A-Game-Objects
+(+)You can now use the gas analyser on the nuclear reactor and turbine.
+(u)Kubius
+(p)12667
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir has received a nuclear engine and a mining department.
+(+)The mining department is fairly small, and two miners are on staff. Their cherished reinforced exploratory pod lives in a hangar below surface.
+(+)Other things changed in Nadir include a larger Hydroponics Bay, a slightly wider Kitchen, several new random room spots, and a small Crime Conduit.
+(u)LeahTheTech
+(*)Flockdrones are now less resistant to burn damage (0.2 -> 0.4 damage multiplier), sentinels are slightly less powerful, and the relay cannot be cancelled.
+(t)thu jan 12 23
+(u)Tanker
+(p)12678
+(e)🗺|A-Mapping
+(*)Updates Atlas' Medbay. Medistan above all!
+(t)wed jan 11 23
+(u)aloe
+(+)ghosts can use the examine and point hotkeys to examine and point at humans without also observing them now.
+(t)tue jan 10 23
+(u)Zamujasa
+(*)Artifact analysis results will now tell you what you got incorrect (but not what the correct answer was).
+(u)LeahTheTech
+(p)12508
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Cyborg docking stations are now easier to refill.
+(u)Cherman0
+(p)12688
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Gave the CE more useful tools in their locker and PDA.
+(u)Mr. Moriarty & LeahTheTech
+(p)12463
+(e)🆕🗺🎨🧫📄🧛|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-UI, A-Gamemodes
+(*)The Syndicate have installed the Cairngorm with a new station map display and associated controller remote, in the hope that these investments will result in a higher mission success rate. See Minor Changelog for details.
+(+)The Cairngorm station map will display, alongside the station, the location of the listening post, the two plant locations, all station warp beacons, and the position of the AI. The map controller may pan and zoom the map, and may place, delete, or toggle the visibility of the aforementioned map markers.
+(u)Tyrant
+(p)12364
+(e)🗺|A-Mapping
+(+)Unspaghetti'd the Cog2 TEG room cables.
+(u)Amylizzle
+(p)12609
+(e)⚖🧱|C-Balance, A-Materials
+(+)Koshmarite becomes even spookier, as it is now a weak source of neutron radiation.
+(u)Lord_Earthfire
+(p)12530
+(e)🆕|C-Feature
+(+)The botanical mister can be anchored into the ground by the use of a wrench or screwdriver.
+(u)goonstation-enjoyer
+(p)12659
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds a single cargo locker to Clarion
+(u)Amylizzle
+(p)12431
+(e)🆕🗺🧛|C-Feature, A-Mapping, A-Gamemodes
+(+)Flock statistics can now be found on  a teal stained note in Sa.Le's flockship.
+(u)Binne Boi
+(p)12103
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Sounds synth components will now also output text above them when activated. Along with a robotic bweep.
+(u)LeahTheTech
+(p)12674
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Flock sentinels will no longer target incapacitated enemies.
+(t)mon jan 09 23
+(u)LeahTheTech
+(p)12684
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Flockdrones can now stun silicons again.
+(t)sun jan 08 23
+(u)Zamujasa
+(+)Corpses stop farting miasma everywhere when they fully decompose.
+(u)LeahTheTech
+(p)12479
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)More types of stones can now be broken with mining tools.
+(u)LeahTheTech
+(p)12673
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock incapacitors now take 3 hits to stun a human rather than 2.
+(t)sat jan 07 23
+(u)Mr. Moriarty
+(p)12632
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited .38 FMJ, Stun, and AP speedloaders.
+(t)fri jan 06 23
+(u)goonstation-enjoyer
+(p)12644
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Ranch random room is no longer airless
+(u)Amylizzle
+(p)12598
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Building external radiation shielding for the nuclear engine is now much more effective.
+(t)thu jan 05 23
+(u)pali
+(e)🐛|bug
+(+)The custom emote and whisper popups now autofocus correctly when opened again
+(+)Tgui input popups no longer eat last few characters when typing quickly
+(u)Azrun
+(p)12631
+(e)|
+(+)Generated planets may contain ore and be constructed on.
+(t)wed jan 04 23
+(u)tarmunora
+(+)killer tomato and buttbot plants have stricter yield limits
+(u)glowbold
+(p)12386
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs can override an intercom to the AI intercom frequency by holding the Bolting key and clicking on it.
+(+)AI intercom override locks down the frequency for one minute and enables microphones and speakers.
+(t)tue jan 03 23
+(u)tarmunora
+(*)Vampiric thralls burn in space and the chapel. Space/chapel burning drains blood from vampires and thralls
+(u)aloe
+(*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
+(u)aloe
+(+)Werewolves now have 100% cold protection. So much floof!
+(u)LeahTheTech
+(p)12585
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone incapacitors now recharge at half speed while not on a flock tile.
+(t)mon jan 02 23
+(u)aloe
+(*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
+(+)Vampiric thralls lose blood at half speed on RP mode.
+(u)BatElite
+(p)12581
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)You can now clean up those mugs and shit that's been soaking into the desks for over a decade
+(u)Amylizzle
+(p)12594
+(e)🪲🧛📦|C-Bug, A-Gamemodes, A-Game-Objects
+(+)Flock gnesis turrets will now only shoot at targets they can hit, instead of trying to shoot through obstructions.
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12464
+(e)🎨⚖⚗|C-Sprites, C-Balance, A-Chemistry
+(+)Radioactive floortiles now have a glow overlay, instead of an outline, to make them more obvious.
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
+(t)thu dec 29 22
+(u)Amylizzle
+(p)12550
+(e)🪲📄|C-Bug, A-UI
+(+)Slightly upped the radiation shielding on the nuclear engine.
+(t)wed dec 28 22
+(u)Amylizzle, Danger Noodle, WALPVRGIS, ZeWaka
+(p)8767
+(e)🆕🗺🎨❗📄💡|C-Feature, A-Mapping, C-Sprites, E-FUCK, A-UI, A-Station-Systems
+(*)Adds a nuclear fission engine which replaces the TEG on Clarion. Sprites by WALPVRGIS and ZeWaka, mapping by Danger Noodle.
+(+)Make reactor components out of mined and alloyed material: pizza control rods, ice heat exchangers, erebite fuel rods.
+(+)Feed gas into the reactor to cool it and use the heat to generate power in the turbine.
+(+)Mechcomp integration as standard!
+(t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
 (t)wed dec 21 22
+(u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
 (u)Amylizzle
 (p)12471
 (e)🪲📦|C-Bug, A-Game-Objects
@@ -406,7 +763,7 @@
 (u)Bartimeus973
 (p)11876
 (e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
-(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(*)Wraith-summoned critters received some changes! Details in minor notes.
 (+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
 (+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
 (u)Bartimeus973
@@ -763,7 +1120,7 @@
 (u)Ikea
 (p)11015
 (e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
-(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(*)27-30 minutes into a rev round everyone receives a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping

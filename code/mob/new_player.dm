@@ -669,19 +669,12 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
-
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						//Another one I need input on
 						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
-						{
 							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
-						}
-						else{
+						else
 							bad_type = pick(ticker.mode.latejoin_antag_roles)
-						}
-						}
-
-
 					else
 						bad_type = ROLE_TRAITOR
 
@@ -736,14 +729,12 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
-				traitor.special_role = ROLE_CHANGELING
-				objective_set_path = /datum/objective_set/changeling
-				traitormob.make_changeling()
+				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_VAMPIRE)
-				traitor.special_role = ROLE_VAMPIRE
-				objective_set_path = /datum/objective_set/vampire
-				traitormob.make_vampire()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRESTLER)
 				traitor.special_role = ROLE_WRESTLER
@@ -917,8 +908,8 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			src.mind.dnr = 1
-			src.mind.joined_observer=1
+			src.mind.get_player()?.dnr = TRUE
+			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()

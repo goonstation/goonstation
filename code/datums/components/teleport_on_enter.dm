@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/teleport_on_enter)
 	)
 
 /datum/component/teleport_on_enter/Initialize(var/destination, var/noisy = TRUE)
+	. = ..()
 	if (!istype(parent, /atom))
 		return COMPONENT_INCOMPATIBLE
 	if (!destination)

@@ -49,6 +49,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/widescreen = 0
 	var/vert_split = 1
+	var/darkmode = TRUE
 
 	var/tg_controls = 0
 	var/tg_layout = 0
@@ -132,6 +133,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
+	// technically not disposing but it really should be here for feature parity
+	SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
+
 	src.mob?.move_dir = 0
 
 	if (player_capa && src.login_success)
@@ -362,28 +366,28 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					var/result = postscan(data)
 					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
-						global.vpn_ip_checks["[src.address]"] = false
+						global.vpn_ip_checks["[src.address]"] = FALSE
 
 					else
 						data = json_decode(html_decode(data["response"]))
 
 						// VPN checker service returns error responses in a "message" property
-						if (data["success"] == false)
+						if (data["success"] == FALSE)
 							// Yes, we're forcing a cache for a no-VPN response here on purpose
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
-							global.vpn_ip_checks["[src.address]"] = false
+							global.vpn_ip_checks["[src.address]"] = FALSE
 							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
 							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (result || (((data["vpn"] == true) || (data["tor"] == true)) && (data["fraud_score"] > 75)))
+						else if (result || (((data["vpn"] == TRUE) || (data["tor"] == TRUE)) && (data["fraud_score"] > 75)))
 							vpn_bonk(data["host"], data["asn"], data["organization"], data["fraud_score"])
 							return
 						// IP is not a known VPN
 						else
-							global.vpn_ip_checks["[src.address]"] = false
+							global.vpn_ip_checks["[src.address]"] = FALSE
 
 			catch(var/exception/e)
 				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
@@ -1321,7 +1325,7 @@ var/global/curr_day = null
 		logTheThing(LOG_DIARY, src, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
 		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 	else
-		global.vpn_ip_checks["[src.address]"] = true
+		global.vpn_ip_checks["[src.address]"] = TRUE
 		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
 
 		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
@@ -1702,6 +1706,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #define _SKIN_COMMAND_BG "#28294c"
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-dark")
+		src.darkmode = TRUE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG
@@ -1715,6 +1720,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 	else
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-default")
+		src.darkmode = FALSE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG

@@ -126,19 +126,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
+	var/amount_to_spawn = 5
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
-			for (var/i = 1; i<= 8; i= i*2)
-				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
-					new payload(get_step(T,i))
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
+				if (istype(adjacent,/turf/simulated/floor))
+					new payload(adjacent)
 				else
 					new payload(T)
 		qdel(src)
-		return
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
@@ -1878,11 +1879,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.bleed_time = 25 * sqstrength
-			implanted.owner = M
-			M.implant += implanted
-			implanted.implanted(M, null)
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1895,9 +1893,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.owner = M
-			M.implant += implanted
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
@@ -1933,11 +1929,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			if (M.get_ranged_protection()>=1.5)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.bleed_time = 25 * sqstrength
-				implanted.owner = M
-				M.implant += implanted
-				implanted.implanted(M, null)
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+				implanted.implanted(M, null, 25 * sqstrength)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

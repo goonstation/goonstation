@@ -1268,7 +1268,8 @@ About the new airlock wires panel:
 
 	if(!net) // cable is unpowered
 		return 0
-
+	if (!in_interact_range(src, user))
+		return 0
 	if(src.electrocute(user, 100, net)) //this is on purpose so the rng wont roll twice
 		return 1
 

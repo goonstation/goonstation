@@ -41,7 +41,8 @@ ABSTRACT_TYPE(/datum/plant)
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
 	var/harvested_proc = 0 // Take a guess
 
-	var/dont_rename_crop = false	// don't rename the crop after the plant
+	/// Don't rename the crop after the plant.
+	var/dont_rename_crop = FALSE
 
 
 	var/category = null // Used for vendor filtering
@@ -64,6 +65,8 @@ ABSTRACT_TYPE(/datum/plant)
 		else
 			return "[src.name]-G[grow_level]"
 
+	proc/getIconOverlay(grow_level, datum/plantmutation/MUT)
+		return
 
 	proc/getBase64Img()
 		var/path = src.type

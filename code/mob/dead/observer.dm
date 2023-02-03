@@ -18,6 +18,7 @@
 	var/obj/item/clothing/head/wig/wig = null
 	var/in_point_mode = 0
 	var/datum/hud/ghost_observer/hud
+	var/auto_tgui_open = TRUE
 
 	mob_flags = MOB_HEARS_ALL
 
@@ -33,32 +34,39 @@
 
 	..()
 
-/mob/dead/observer/proc/toggle_point_mode(var/force_off = 0)
+/mob/dead/observer/proc/toggle_point_mode(var/force_off = FALSE)
 	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
+		src.in_point_mode = FALSE
+	else
+		src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
+
 /mob/dead/observer/hotkey(name)
 	switch (name)
 		if ("togglepoint")
 			src.toggle_point_mode()
 		else
-			.=..()
+			. = ..()
+
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
 		if (src.in_point_mode || src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
-			return
-/mob/dead/observer/click(atom/target, params, location, control)
+		else if (src.client.check_key(KEY_EXAMINE))
+			src.set_cursor('icons/cursors/examine.dmi')
 
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
-		return
+/mob/dead/observer/click(atom/target, params, location, control)
+	// If we have an ability active, skip all this and go straight to parent call.
+	if (!src.targeting_ability)
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+			src.insert_observer(target)
+			return
 	return ..()
 
 /mob/dead/observer/Login()
@@ -229,7 +237,7 @@
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
-
+	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -271,7 +279,7 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				src.mind?.dnr = 1
+				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
 			else
@@ -293,6 +301,7 @@
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
+		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
 		var/mob/dead/our_ghost = null
@@ -324,7 +333,8 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		if(!istype(src, /mob/dead) && !mind?.get_player()?.dnr)
+			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
@@ -455,7 +465,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -478,7 +488,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 
 
-	if(!src.key && delete_on_logout)
+	if(delete_on_logout)
 		//qdel(src)
 		// so here's a fun thing im gonna do: ghosts dont go away now.
 		// theres too much shit that relies on ghosts staying aroudn post-qdel.
@@ -519,6 +529,16 @@
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
+
+/mob/dead/observer/proc/toggle_tgui_auto_open()
+	set category = "Ghost"
+	set name = "Toggle TGUI auto-observing"
+	if(src.auto_tgui_open)
+		boutput(src, "No longer auto-opening TGUI windows of observed mobs.")
+		src.auto_tgui_open = FALSE
+	else
+		boutput(src, "Observed mob's TGUI windows will now auto-open")
+		src.auto_tgui_open = TRUE
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
@@ -582,7 +602,7 @@
 	//set category = "Ghost"
 	// ooooo its a secret, oooooo!!
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -609,6 +629,23 @@
 				render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
+
+
+/mob/dead/observer/verb/toggle_ghosts()
+	set name = "Toggle Ghosts"
+	set category = null
+
+	if (src.see_invisible >= INVIS_GHOST)
+		src.see_invisible = INVIS_NONE
+		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
+	else if(HAS_FLAG(src.sight, SEE_SELF))
+		src.sight &= ~SEE_SELF
+		boutput(src, "You can no longer see yourself.", group="ghostsight")
+	else
+		src.see_invisible = INVIS_SPOOKY
+		src.sight |= SEE_SELF
+		boutput(src, "You can now see other ghosts and yourself.", group="ghostsight")
+
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
@@ -661,136 +698,36 @@
 	set name = "Observe Objects"
 	set category = "Ghost"
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
+	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
 
-	// Same thing you could do with the old auth disk. The bomb is equally important
-	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
-			var/name = "Nuclear bomb"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = N.the_bomb
-
-
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		var/datum/game_mode/football/F = ticker.mode
-		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
-			var/name = "THE FOOTBALL"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = F.the_football
-
-
-	for_by_tcl(O, /obj/observable)
-		LAGCHECK(LAG_LOW)
-		var/name = O.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = O
-
-	for_by_tcl(GB, /obj/item/ghostboard)
-		LAGCHECK(LAG_LOW)
-		var/name = "Ouija board"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = GB
-
-	for_by_tcl(G, /obj/item/gnomechompski)
-		var/name = "Gnome Chompski"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = G
-
-	for_by_tcl(CR, /obj/cruiser_camera_dummy)
-		var/name = CR.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = CR
-
-	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
-		var/name = L.name
-		if (name != "strangelet loaf")
+	for (var/atom/A in all_observables)
+		// isghostrestrictedz also filters out objects in NULL
+		// bomb is only tracked in nuclear mode
+		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
 			continue
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = L
+		// this doesn't distinguish objects with the same name on the same tile. that's fine
+		var/area/area = get_area(A)
+		var/turf/turf = get_turf(A)
+		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
 
-	for (var/obj/machinery/bot/B in machine_registry[MACHINES_BOTS])
-		LAGCHECK(LAG_LOW)
-		if (isghostrestrictedz(B.z)) continue
-		var/name = "*[B.name]"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = B
+	sortList(observable_map, /proc/cmp_text_asc)
+	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
 
-
-	for(var/name in creatures)
-		var/obj/O = creatures[name]
-		if(!istype(O))
-			creatures -= name
-		else
-			// let people observe these regardless of where they are. who cares
-			// there's probably a way to do this better (some bots have no-camera mode for example)
-			// which would work but someone else can fix it later. jhon madden
-			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
-				var/turf/T = get_turf(O)
-				if(!T || isghostrestrictedz(T.z))
-					creatures -= name
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
+	if (!picked_label)
 		return
 
-	insert_observer(creatures[eye_name])
+	insert_observer(observable_map[picked_label])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
-	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
 	newobs.ghost = src
+	newobs.set_observe_target(target)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
