@@ -1,7 +1,9 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+
+ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
-/obj/item/plant/
+/obj/item/plant
 	name = "plant"
 	var/crop_suffix = ""
 	var/crop_prefix = ""
@@ -18,6 +20,7 @@
 		if (!src.reagents)
 			src.create_reagents(100)
 
+ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
 	health = 4
@@ -40,6 +43,7 @@
 				P.litstate = "ciglit-[W.icon_state]"
 				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
+			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
@@ -56,6 +60,7 @@
 			if(B.flavor)
 				doink.flavor = B.flavor
 			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
 			W.reagents.trans_to(doink, W.reagents.total_volume)
@@ -453,6 +458,7 @@
 
 // FLOWERS //
 
+ABSTRACT_TYPE(/obj/item/plant/flower)
 /obj/item/plant/flower
 	// PLACEHOLDER FOR FLOURISH'S PLANT PLOT STUFF
 

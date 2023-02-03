@@ -147,6 +147,7 @@
 #include "matrix.dm"
 #include "pathfinding.dm"
 #include "plane.dm"
+#include "procpath.dm"
 #include "promises.dm"
 #include "rust_g.dm"
 #include "record_db.dm"

@@ -461,9 +461,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateIcon()
 			update_name()
 
-		if(!HAS_FLAG(status, NOPOWER))
-			use_power(power_usage)
-
 	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
@@ -871,6 +868,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateOverlays(null, "health_display")
 			UpdateOverlays(null, "plant")
 			UpdateOverlays(null, "plantdeath")
+			UpdateOverlays(null, "plantoverlay")
 			if(status & (NOPOWER|BROKEN))
 				UpdateOverlays(null, "water_meter")
 			return
@@ -910,6 +908,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.plant_sprite.icon_state = planticon
 		src.plant_sprite.layer = 4
 		UpdateOverlays(plant_sprite, "plant")
+
+		var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
+		if(plantoverlay)
+			UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
+		else
+			UpdateOverlays(null, "plantoverlay")
 
 		if(status & (NOPOWER|BROKEN))
 			UpdateOverlays(null, "water_meter")
@@ -1208,7 +1212,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
 
-				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers))
+				else if(istype(CROP,/obj/item/plant/) || istype(CROP,/obj/item/reagent_containers) || istype(CROP,/obj/item/clothing/head/flower/))
 					// If we've got a herb or some other thing like wheat or shit like that.
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
@@ -1386,6 +1390,12 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					// No bonus, harvest is decremented as usual.
 					src.harvests--
+			else if(prob(33) && HYPCheckCommut(DNA, /datum/plant_gene_strain/variable_harvest))
+				if(prob(10))
+					src.harvests++
+				else if(prob(33))
+					src.harvests -= 2
+				// else just don't reduce the harvests
 			else
 				src.harvests--
 		if(growing.isgrass)
@@ -1827,6 +1837,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 TYPEINFO(/obj/machinery/hydro_growlamp)
 	mats = 6
 
+#define ACTIVE_POWER_USAGE 100
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
@@ -1836,7 +1847,6 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 	anchored = 0
 	var/active = 0
 	var/datum/light/light
-	power_usage = 100
 
 	New()
 		..()
@@ -1862,7 +1872,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
-			use_power(power_usage)
+			use_power(ACTIVE_POWER_USAGE)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
@@ -1891,6 +1901,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
 
+#undef ACTIVE_POWER_USAGE
 TYPEINFO(/obj/machinery/hydro_mister)
 	mats = 6
 

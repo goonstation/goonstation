@@ -636,7 +636,6 @@ function lineEnter (ev)
 	..()
 	if(status & NOPOWER)
 		return
-	use_power(250)
 
 	for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 		P.process()

@@ -3,6 +3,7 @@
 	extension = "MNUDR"
 	size = 20
 	var/list/drivestored = list()
+	var/num_working = 0
 	var/fablimit = -1 //This fablimit gets replaced so just ignore this one and dont worry about it.
 
 	disposing()

@@ -384,24 +384,6 @@ var/global/debug_messages = 0
 	else
 		alert("This only works on human mobs.")
 
-/* Just use the set traitor dialog thing
-/client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set name = "Make Changeling"
-	set popup_menu = 0
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(ishuman(M) && M.mind != null)
-		logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a changeling.")
-		logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a changeling.", "admin")
-		SPAWN(1 SECOND)
-			M.mind.absorbed_dna[M.bioHolder] = M.real_name
-			M.make_changeling()
-	else
-		alert("Invalid mob")
-*/
-
 /client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
@@ -663,8 +645,7 @@ body
 					location = pick(job_start_locations[job])
 				var/mob/living/carbon/human/npc/monkey/M = new /mob/living/carbon/human/npc/monkey(location)
 				if(prob(10))
-					var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(M)
-					implant.implanted(M, M)
+					new /obj/item/implant/access/infinite/shittybill(M)
 				M.ai_offhand_pickup_chance = rand(20,80)
 				M.ai_poke_thing_chance = rand(20,50)
 		if ("Monkey Chemistry")
@@ -1382,6 +1363,33 @@ var/datum/flock/testflock
 			;
 		while(world.time == last_tick)
 			sleep(0.001)
+
+/client/proc/list_adminteract_buttons()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/list/lines = list("<html><head><title>Admin Interact Buttons</title></head><body>")
+	for(var/type in typesof(/typeinfo/atom))
+		var/typeinfo/atom/typeinfo = get_singleton(type)
+		var/list/procpath/proc_paths = typeinfo.admin_procs
+		var/typeinfo/atom/parent_typeinfo = get_singleton(type2parent(typeinfo))
+		if(istype(parent_typeinfo))
+			proc_paths = proc_paths - parent_typeinfo.admin_procs // remove inherited procs
+			// also note that we do NOT want -= here because that would edit the list in the typeinfo
+		if(length(proc_paths))
+			var/name = copytext("[typeinfo]", 10)
+			lines += "<b>[name]</b><ul>"
+			for(var/procpath/proc_path as anything in proc_paths)
+				var/proc_name = proc_path.name
+				if (!proc_name)
+					var/split_list = splittext("[proc_path]", "/")
+					proc_name = split_list[length(split_list)]
+				lines += "<li>[proc_name]</li>"
+			lines += "</ul>"
+
+	lines += "</body></html>"
+	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
 
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE

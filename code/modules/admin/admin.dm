@@ -13,7 +13,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD:" : "ADMIN LOG:"]</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN<br>LOG"]</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -26,7 +26,7 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -36,11 +36,11 @@ var/global/noir = 0
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
+			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK<br>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -1199,6 +1199,12 @@ var/global/noir = 0
 					usr.client.cmd_admin_admindamn(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+		if("rapture")
+			if(src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				heavenly_spawn(M, reverse = TRUE)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -2262,7 +2268,7 @@ var/global/noir = 0
 									evilize(M, ROLE_TRAITOR)
 							if(ROLE_NUKEOP)
 								if (tgui_alert(usr,"Commander?","Hierarchy",list("Yes", "No")) == "Yes")
-									evilize(M, ROLE_NUKEOP, "commander", do_objectives = FALSE)
+									evilize(M, ROLE_NUKEOP_COMMANDER, do_objectives = FALSE)
 								else
 									evilize(M, ROLE_NUKEOP, do_objectives = FALSE)
 							else
@@ -4302,7 +4308,7 @@ var/global/noir = 0
 		if (current_state >= GAME_STATE_PLAYING)
 			dat += "Current Mode: [ticker.mode.name], Timer at [round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]<br>"
 			if (src.level >= LEVEL_MOD)
-				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A><br>"
+				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A> - Next: [next_round_mode]<br>"
 			if (emergency_shuttle.online)
 				dat += "<a href='?src=\ref[src];action=call_shuttle&type=2'><b>Shuttle Status:</b></a> <a href='?src=\ref[src];action=edit_shuttle_time'>[shuttletext]</a>"
 			else
@@ -4556,6 +4562,12 @@ var/global/noir = 0
 	set desc="Delay the server restart"
 	set name="Delay Round End"
 
+	// If the game end is delayed AT ALL, confirm removing the delay
+	// so that mutiple admins don't end up cancelling their own delays
+	if (game_end_delayed)
+		if (alert(usr, "The restart was delayed by [game_end_delayer]. Remove delay?", "Hold up, pardner", "Remove delay", "Cancel") != "Remove delay")
+			return
+
 	if (game_end_delayed == 2)
 		logTheThing(LOG_ADMIN, usr, "removed the restart delay and triggered an immediate restart.")
 		logTheThing(LOG_DIARY, usr, "removed the restart delay and triggered an immediate restart.", "admin")
@@ -4733,21 +4745,17 @@ var/global/noir = 0
 					M.mind.special_role = ROLE_HARDMODE_TRAITOR
 					M.show_antag_popup("traitorhard")
 			if(ROLE_CHANGELING)
-				M.mind.special_role = ROLE_CHANGELING
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
-				M.make_changeling()
+				M.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WIZARD)
-				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-				M.show_antag_popup("adminwizard")
-				M.verbs += /client/proc/gearspawn_wizard
+				M.mind.add_antagonist(ROLE_WIZARD, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_VAMPIRE)
-				M.mind.special_role = ROLE_VAMPIRE
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
-				M.make_vampire()
+				M.mind.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_HUNTER)
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE)
+				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WRESTLER)
 				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
@@ -4767,7 +4775,7 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-				M.mind.add_antagonist(ROLE_ARCFIEND)
+				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -4810,14 +4818,11 @@ var/global/noir = 0
 				new objective_set_path(M.mind)
 				equip_spy_theft(tmob)
 			if(ROLE_NUKEOP)
-				M.show_text("<h1><font color=red><B>You have been chosen as a nuclear operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
-				var/mob/living/carbon/human/H = M
-				var/rank = (special == "commander" ? "Syndicate Operative Commander" : "Syndicate Operative")
-				H.unequip_all(delete_stuff = TRUE)
-				H.JobEquipSpawned(rank)
-				var/datum/game_mode/nuclear/nukemode = ticker.mode
-				nukemode.syndicates += H.mind
-				nukemode.bestow_objective(H.mind, /datum/objective/specialist/nuclear)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+			if(ROLE_NUKEOP_COMMANDER)
+				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative Commander! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 
 	else
 		M.show_text("<h2><font color=red><B>You have become evil and are now an antagonist!</B></font></h2>", "red")
@@ -4886,17 +4891,26 @@ var/global/noir = 0
 
 	if(!length(matches))
 		return null
-
-	var/chosen
 	if(length(matches) == 1)
-		chosen = text2path(matches[1])
-	else
-		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
-		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
-		if(!chosen)
-			return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+		return text2path(matches[1])
 
-	. = chosen
+	var/prefix = get_longest_common_prefix(matches)
+	if(length(prefix))
+		if(prefix in matches)
+			var/last_slash = findlasttext(prefix, "/")
+			prefix = copytext(prefix, 1, last_slash + 1)
+		strip_prefix_from_list(matches, prefix)
+	else
+		prefix = null
+
+	var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
+	var/msg = "Select \a [base] type."
+	if(prefix)
+		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
+	if(!.)
+		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+	. = text2path(prefix + .)
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

@@ -439,7 +439,8 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
