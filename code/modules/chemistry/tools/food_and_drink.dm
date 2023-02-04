@@ -28,7 +28,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/slice_inert = FALSE
 	/// When we want to name them slices or wedges or what-have-not. Default is slice
 	var/slice_suffix = "slice"
-	rc_flags = 0
+	rc_desc_flags = 0
+	rc_flags = CAN_RECEIVE
 
 	proc/on_table()
 		if (!isturf(src.loc)) return 0
@@ -125,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	heal_amt = 1
 	initial_volume = 100
 	festivity = 0
-	rc_flags = 0
+	rc_desc_flags = 0
 	edible = 1
 	rand_pos = 1
 	var/has_cigs = 0
@@ -445,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	heal_amt = 0
 	initial_volume = 100
 	festivity = 0
-	rc_flags = 0
+	rc_desc_flags = 0
 	edible = 1
 	rand_pos = 1
 	bites_left = 1
@@ -475,15 +476,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = CAN_SPLASH | CAN_RECEIVE | CAN_TRANSFER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
-	var/splash_all_contents = 1
 	doants = 0
 	throw_speed = 1
 	can_recycle = TRUE
 	var/can_chug = 1
-	var/is_sealed = FALSE
 
 	New()
 		..()
@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					JOB_XP(user, "Bartender", 1)
 			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
 				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
-				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
+				if (soda_can.can_receive() && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
 			else
@@ -559,16 +559,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
-	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
-	attack_self(mob/user as mob)
-		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
-			src.splash_all_contents = 0
-		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
-			src.splash_all_contents = 1
-		return
-
 	attack(mob/M, mob/user, def_zone)
 		// in this case m is the consumer and user is the one holding it
 		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
@@ -614,111 +604,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		consumer.urine += 0.1
 		eat_twitch(consumer)
-
-	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
-	// still copy paste btw
-	afterattack(obj/target, mob/user , flag)
-		if (is_sealed)
-			boutput(user, "<span class='alert'>[src] is sealed.</span>")
-			return
-		user.lastattacked = target
-		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/obj/fluid/F = target
-			if (!src.reagents.total_volume)
-				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
-					F.removed()
-					return
-
-				if (reagents.total_volume >= reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[src] is full.</span>")
-					return
-				//var/transferamt = min(src.reagents.maximum_volume - src.reagents.total_volume, F.amt)
-
-				F.group.reagents.skip_next_update = 1
-				F.group.update_amt_per_tile()
-				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
-				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
-
-			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
-				var/turf/T = get_turf(F)
-
-				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
-				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
-
-		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
-			if (!target.reagents.total_volume && target.reagents)
-				boutput(user, "<span class='alert'>[target] is empty.</span>")
-				return
-
-			if (reagents.total_volume >= reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[src] is full.</span>")
-				return
-
-			var/transferamt = src.reagents.maximum_volume - src.reagents.total_volume
-			var/trans = target.reagents.trans_to(src, transferamt)
-			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-
-		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if (!reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is empty.</span>")
-				return
-
-			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[target] is full.</span>")
-				return
-
-			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
-			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
-
-		else if (istype(target, /obj/item/sponge)) // dump contents onto it
-			if (!reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is empty.</span>")
-				return
-
-			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[target] is full.</span>")
-				return
-
-			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
-			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
-
-		else if (reagents.total_volume)
-
-			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
-				return
-			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-			reagents.physical_shock(14)
-			var/splash_volume
-			if (src.splash_all_contents)
-				splash_volume = src.reagents.maximum_volume
-			else
-				splash_volume = src.amount_per_transfer_from_this
-
-			splash_volume = min(splash_volume, src.reagents.total_volume)
-
-			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
-			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
-
-			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
-
-			var/turf/T
-			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
-				T = get_turf(target)
-			else if (target.density)
-				// if we splashed on a wall or a dense obj, we still want to flow out onto the floor we're pouring from (avoid pouring under windows and on walls)
-				T = get_turf(user)
-
-			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				// first remove everything that reacted in the first reaction
-				for(var/id in reacted_reagents)
-					splash.del_reagent(id)
-				splash.reaction(T, TOUCH, splash.total_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */
@@ -1189,7 +1074,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				S.shakes ++
 				return
 
-		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))
+		else if (istype(W, /obj/item/reagent_containers) && W.can_receive() && W.reagents.has_reagent("salt"))
 			if (src.salted)
 				return
 			else if (W.reagents.get_reagent_amount("salt") >= 5)

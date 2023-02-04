@@ -511,14 +511,15 @@
 // WHY
 /obj/item/clothing/mask/cigarette/custom
 	desc = "There could be anything in this."
-	flags = FPRINT|TABLEPASS|OPENCONTAINER
+	flags = FPRINT|TABLEPASS
+	rc_flags = CAN_RECEIVE
 
 	New()
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
 
-	is_open_container()
+	can_receive()
 		return 1
 
 /* ================================================= */

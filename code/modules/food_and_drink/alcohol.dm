@@ -299,7 +299,7 @@
 	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
-	rc_flags = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 125
 	initial_reagents = "moonshine"
 
@@ -308,7 +308,7 @@
 	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
 	icon_state = "curacao"
 	heal_amt = 1
-	rc_flags = RC_FULLNESS
+	rc_desc_flags = RC_FULLNESS
 	initial_volume = 100
 	initial_reagents = "curacao"
 
@@ -388,7 +388,7 @@
 
 		var/datum/reagents/target_reagents = null
 		var/msg
-		if (target.reagents && target.is_open_container())
+		if (target.reagents && target.can_receive())
 			target_reagents = target.reagents
 			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
 		else if (istype(target, /obj/fluid))

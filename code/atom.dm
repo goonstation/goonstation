@@ -11,6 +11,10 @@ TYPEINFO(/atom)
 	plane = PLANE_DEFAULT
 	var/level = 2
 	var/flags = FPRINT
+	/// flags for descriptions of reagents inside containers
+	var/rc_desc_flags = null
+	/// flags for reagent container behavior
+	var/rc_flags = null
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -204,13 +208,15 @@ TYPEINFO(/atom)
 	proc/return_air()
 		return null
 
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
-	proc/is_open_container()
-		return flags & OPENCONTAINER
+	/// can receive reagents from other containers
+	proc/can_receive()
+		return rc_flags & CAN_RECEIVE
+	/// can transfer to other containers
+	proc/can_transfer()
+		return rc_flags & CAN_TRANSFER
+	/// can splash reagent inside this container
+	proc/can_splash()
+		return rc_flags & CAN_SPLASH
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A

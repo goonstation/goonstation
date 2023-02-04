@@ -1,5 +1,6 @@
 /obj/item/pen/sleepypen
-	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	rc_flags = CAN_RECEIVE
 	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
@@ -43,7 +44,8 @@
 	name = "greasy pen"
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
-	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	rc_flags = CAN_RECEIVE
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 

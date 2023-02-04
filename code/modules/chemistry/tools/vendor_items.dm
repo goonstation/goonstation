@@ -8,11 +8,12 @@
 	desc = "A generic parent item for the chemical vendor chem containers. You really shouldn't be able to see this thing!"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vendvial"
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS
+	rc_flags = CAN_RECEIVE | CAN_SPLASH | CAN_TRANSFER
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	var/image/fluid_image
-	rc_flags = RC_FULLNESS | RC_VISIBLE
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE
 
 /* ============================================== */
 /* -------------------- Vial -------------------- */
@@ -22,7 +23,7 @@
 	name = "small vial"
 	desc = "A little vial. Can hold up to 5 units."
 	icon_state = "minivial"
-	rc_flags = RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
 		..()
