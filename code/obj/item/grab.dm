@@ -34,7 +34,7 @@
 
 			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
-			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
+			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
@@ -979,7 +979,7 @@
 			src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
 			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
-	is_open_container()
+	can_receive()
 		.= 1
 
 

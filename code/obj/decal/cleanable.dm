@@ -130,7 +130,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
-		if (src.can_sample && W.is_open_container() && W.reagents)
+		if (src.can_sample && W.can_receive() && W.reagents)
 			src.Sample(W, user)
 		if (istype(W,/obj/item/mop))
 			return
@@ -810,9 +810,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -914,7 +914,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (!src.can_sample)
 			return 0
 
-		if (W.is_open_container() && W.reagents)
+		if (W.can_receive() && W.reagents)
 			if (W.reagents.total_volume >= W.reagents.maximum_volume - 2)
 				user.show_text("[W] is too full!", "red")
 				return
@@ -1327,6 +1327,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
+
+/obj/decal/cleanable/machine_debris/radioactive
+	New()
+		.=..()
+		src.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
 
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"

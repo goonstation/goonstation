@@ -20,7 +20,7 @@
 	var/mode = S_DRAW
 	var/image/fluid_image
 	var/image/image_inj_dr
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
@@ -111,7 +111,7 @@
 					boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 					return
 
-				if (!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
+				if (!target.can_receive() && !istype(target,/obj/reagent_dispensers))
 					boutput(user, "<span class='alert'>You cannot directly remove reagents from this object.</span>")
 					return
 
@@ -143,7 +143,7 @@
 					boutput(user, "<span class='alert'>[target] is full.</span>")
 					return
 
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/reagent_containers/patch))
+				if (target.can_receive() != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/reagent_containers/patch))
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
@@ -202,7 +202,7 @@
 					logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 				else
 					boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
-					
+
 			if(S_INJECT)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)

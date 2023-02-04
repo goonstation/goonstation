@@ -24,7 +24,7 @@
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
-	rc_flags = RC_SPECTRO		// only spectroscopic analysis
+	rc_desc_flags = RC_SPECTRO		// only spectroscopic analysis
 	var/in_use = 0
 	var/good_throw = 0
 
@@ -231,7 +231,7 @@
 
 			sticker.layer = A.layer + 1
 			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
@@ -252,7 +252,7 @@
 
 			sticker.layer = A.layer + 1
 			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
@@ -466,10 +466,11 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | TABLEPASS | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = CAN_RECEIVE
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
 	var/list/whitelist = list()
 	var/use_volume = 8
@@ -499,7 +500,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		src.UpdateIcon()
 
 
-	is_open_container()
+	can_receive()
 		if (borg)
 			.= 0
 		else

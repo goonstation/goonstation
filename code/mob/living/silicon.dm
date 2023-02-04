@@ -447,8 +447,15 @@ var/global/list/module_editors = list()
 		return
 
 	if (!M.module)
-		boutput(src, "<span class='alert'>That robot has no module yet.</span>")
-		return
+		if(tgui_alert(src, "Would you like to give them a module?", "No module yet", list("Yes", "No")) == "Yes")
+			var/list/module_types = concrete_typesof(/obj/item/robot_module)
+			var/module_type = tgui_input_list(src, "Select a module type", "Module type", module_types)
+			if (!module_type)
+				return
+			M.set_module(new module_type)
+			M.freemodule = FALSE
+		else
+			return
 
 	var/datum/module_editor/editor = module_editors[ckey]
 	if (!editor)
@@ -625,7 +632,7 @@ var/global/list/module_editors = list()
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.can_receive() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
 	random_brute_damage(src, AM.throwforce,1)
 
 	#ifdef DATALOGGER

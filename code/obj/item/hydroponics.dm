@@ -476,7 +476,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	rand_pos = 1
-	var/image/plantyboi
+	var/image/plantyboi //! The "plant" overlay of the plant
+	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
 
 	New()
 		..()
@@ -494,6 +495,11 @@ TYPEINFO(/obj/item/plantanalyzer)
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
+					if(pot.GetOverlayImage("plantoverlay"))
+						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
+						plantyboi_plantoverlay.pixel_x = 2
+					else
+						plantyboi_plantoverlay = null
 				else
 					return
 				pot.HYPdestroyplant()
@@ -510,7 +516,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	item_state = "wateringcan"
 	amount_per_transfer_from_this = 60
 	w_class = W_CLASS_NORMAL
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 120
 	can_recycle = FALSE
 
@@ -551,7 +557,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "compost"
 	amount_per_transfer_from_this = 10
 	w_class = W_CLASS_NORMAL
-	rc_flags = 0
+	rc_desc_flags = 0
 	initial_volume = 60
 
 	New()
@@ -640,7 +646,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	amount_per_transfer_from_this = 50
 	w_class = W_CLASS_NORMAL
 	incompatible_with_chem_dispensers = 1
-	rc_flags = RC_SCALE
+	rc_desc_flags = RC_SCALE
 	initial_volume = 250
 	initial_reagents = list("saltpetre"=50, "ammonia"=50, "potash"=50, "poo"=50, "space_fungus"=50)
 
@@ -659,7 +665,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	amount_per_transfer_from_this = 25
 	w_class = W_CLASS_NORMAL
 	incompatible_with_chem_dispensers = TRUE
-	rc_flags = RC_FULLNESS | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_SPECTRO
 	initial_volume = 200
 
 /obj/item/reagent_containers/glass/jug/mutagenicbulk

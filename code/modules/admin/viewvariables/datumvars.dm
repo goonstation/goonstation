@@ -831,7 +831,8 @@
 					x.vars[variable] = initial(x.vars[variable])
 			else
 				if (D == "GLOB")
-					global.vars[variable] = initial(global.vars[variable])
+					// global.vars[variable] = initial(global.vars[variable]) // <- this trick does not work on global.vars
+					boutput(src, "<span class='alert'>You can't restore global variables.</span>")
 				else
 					D.vars[variable] = initial(D.vars[variable])
 

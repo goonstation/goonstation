@@ -10,7 +10,7 @@
 //Also, make sure the bridges can extend in a straight line. Or you're gonna have a really bad time
 
 /* -------------------- Controller -------------------- */
-
+ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressurize)
 /obj/airbridge_controller
 	name = "Airbridge Controller"
 	desc = "This is an invisible thing. Yet you can see it. You notice reality unraveling around you."

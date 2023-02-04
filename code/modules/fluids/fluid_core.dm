@@ -28,6 +28,8 @@ var/list/depth_levels = list(2,50,100,200)
 
 var/mutable_appearance/fluid_ma
 
+ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
+
 /obj/fluid
 	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
@@ -98,7 +100,8 @@ var/mutable_appearance/fluid_ma
 				src.removed()
 				return
 
-		flags |= OPENCONTAINER | UNCRUSHABLE
+		flags |= UNCRUSHABLE
+		rc_flags |= CAN_RECEIVE
 
 		//src.floated_atoms = list()
 
@@ -107,7 +110,6 @@ var/mutable_appearance/fluid_ma
 
 		if (!fluid_ma)
 			fluid_ma = new(src)
-
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
@@ -655,6 +657,12 @@ var/mutable_appearance/fluid_ma
 			animate( F, color = F.finalcolor, alpha = finalalpha, time = 5 )
 			sleep(0.1 SECONDS)
 
+	proc/admin_clear_fluid()
+		set name = "Clear Fluid"
+		if(src.group)
+			src.group.evaporate()
+		else
+			qdel(src)
 
 
 

@@ -8,6 +8,7 @@
 
 #define RELAYMOVE_DELAY 50
 
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"

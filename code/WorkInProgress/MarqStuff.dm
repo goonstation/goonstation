@@ -432,9 +432,6 @@
 				A.arrow = src
 				A.name = name
 				set_loc(A)
-				A.set_loc(target)
-				A.owner = target
-				H.implant += A
 				A.implanted(H, null, 100)
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
@@ -444,7 +441,7 @@
 			return 1
 		else
 			var/obj/item/I = target
-			if (istype(I) && I.is_open_container() == 1 && I.reagents)
+			if (istype(I) && I.can_receive() == 1 && I.reagents)
 				if (reagents.total_volume == reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
 				else if (!I.reagents.total_volume)

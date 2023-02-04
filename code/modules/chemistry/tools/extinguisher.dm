@@ -12,7 +12,8 @@
 	///Does it get destroyed from exploding
 	var/reinforced = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	rc_flags = CAN_RECEIVE
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
@@ -116,9 +117,7 @@
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.owner = M
-				M.implant += implanted
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 			qdel(src)
@@ -202,7 +201,7 @@
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		ADD_FLAG(src.flags, OPENCONTAINER)
+		ADD_FLAG(src.rc_flags, CAN_RECEIVE)
 		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
@@ -210,7 +209,7 @@
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		REMOVE_FLAG(src.rc_flags, CAN_RECEIVE)
 		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)

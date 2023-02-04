@@ -13,7 +13,7 @@
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
@@ -299,7 +299,7 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations.."
+	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 

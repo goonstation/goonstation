@@ -48,7 +48,6 @@
 			if(2)
 				if (prob(25))
 					src.gib(1)
-			else
 		return
 
 	proc/get_cube_idle()
