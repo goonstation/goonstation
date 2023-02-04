@@ -1364,6 +1364,33 @@ var/datum/flock/testflock
 		while(world.time == last_tick)
 			sleep(0.001)
 
+/client/proc/list_adminteract_buttons()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/list/lines = list("<html><head><title>Admin Interact Buttons</title></head><body>")
+	for(var/type in typesof(/typeinfo/atom))
+		var/typeinfo/atom/typeinfo = get_singleton(type)
+		var/list/procpath/proc_paths = typeinfo.admin_procs
+		var/typeinfo/atom/parent_typeinfo = get_singleton(type2parent(typeinfo))
+		if(istype(parent_typeinfo))
+			proc_paths = proc_paths - parent_typeinfo.admin_procs // remove inherited procs
+			// also note that we do NOT want -= here because that would edit the list in the typeinfo
+		if(length(proc_paths))
+			var/name = copytext("[typeinfo]", 10)
+			lines += "<b>[name]</b><ul>"
+			for(var/procpath/proc_path as anything in proc_paths)
+				var/proc_name = proc_path.name
+				if (!proc_name)
+					var/split_list = splittext("[proc_path]", "/")
+					proc_name = split_list[length(split_list)]
+				lines += "<li>[proc_name]</li>"
+			lines += "</ul>"
+
+	lines += "</body></html>"
+	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
+
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE
 #undef ARG_INFO_DESC

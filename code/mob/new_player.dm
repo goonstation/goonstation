@@ -319,7 +319,7 @@ mob/new_player
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (istype(ticker.mode, /datum/game_mode/assday))

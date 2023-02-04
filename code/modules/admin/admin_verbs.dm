@@ -345,6 +345,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
@@ -2182,7 +2183,7 @@ var/list/fun_images = list()
 	var/title = "What do?"
 	var/list/verbs = list()
 	if (!client.holder.disable_atom_verbs)
-		title += " (Atom verbs are ON)"
+		title += " (atom verbs ON)"
 		verbs += client.holder.admin_interact_atom_verbs
 	if (ismob(A))
 		verbs += client.holder.admin_interact_verbs["mob"]
@@ -2205,6 +2206,9 @@ var/list/fun_images = list()
 				proc_name = split_list[length(split_list)]
 			type_procs["[proc_name] *"] = proc_path
 	verbs += type_procs
+
+	if (length(type_procs))
+		title += " ([length(type_procs)] custom)"
 
 	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE)
 
