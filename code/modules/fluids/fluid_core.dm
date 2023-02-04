@@ -100,8 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				src.removed()
 				return
 
-		flags |= UNCRUSHABLE
-		rc_flags |= CAN_RECEIVE
+		flags |= OPENCONTAINER | UNCRUSHABLE
 
 		//src.floated_atoms = list()
 
@@ -110,6 +109,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 		if (!fluid_ma)
 			fluid_ma = new(src)
+
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return

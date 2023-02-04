@@ -9,7 +9,7 @@
 /// put this on either a thing you don't want to be hit rapidly, or a thing you don't want people to hit other stuff rapidly with
 #define USEDELAY						 (1<<3)
 /// 1 second extra delay on use
-#define EXTRADELAY						 (1<<4)
+#define EXTRADELAY					 (1<<4)
 /// weapon not affected by shield. MBC also put this flag on cloak/shield device to minimize istype checking, so consider this more SHIELD_ACT (rename? idk)
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
@@ -23,29 +23,31 @@
 /// can pass through a closed door
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
-#define TALK_INTO_HAND 					 (1<<11)
+#define TALK_INTO_HAND 			 (1<<11)
+/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
+#define OPENCONTAINER				 (1<<12)
 /// No beaker etc. splashing. For Chem machines etc.
-#define NOSPLASH 						 (1<<12)
+#define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.
-#define SUPPRESSATTACK 					 (1<<13)
+#define SUPPRESSATTACK 			 (1<<14)
 /// gets an overlay when submerged in fluid
-#define FLUID_SUBMERGE 					 (1<<14)
+#define FLUID_SUBMERGE 			 (1<<15)
 /// gets a perspective overlay from adjacent fluids
-#define IS_PERSPECTIVE_FLUID			 (1<<15)
+#define IS_PERSPECTIVE_FLUID (1<<16)
 /// specifically note this object as solid
-#define ALWAYS_SOLID_FLUID				 (1<<16)
+#define ALWAYS_SOLID_FLUID	 (1<<17)
 /// Calls equipment_click from hand_range_attack on items worn with this flag set.
-#define HAS_EQUIP_CLICK					 (1<<17)
+#define HAS_EQUIP_CLICK			 (1<<18)
 /// Has the possibility for a TGUI interface
-#define TGUI_INTERACTIVE				 (1<<18)
+#define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
-#define ATTACK_SELF_DELAY				 (1<<19)
+#define ATTACK_SELF_DELAY		 (1<<20)
 /// Counts as dense for purposes of fluids. *scream.
-#define FLUID_DENSE						 (1<<20)
+#define FLUID_DENSE		 (1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
-#define CLICK_DELAY_IN_CONTENTS			 (1<<21)
+#define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher
-#define UNCRUSHABLE         		     (1<<22)
+#define UNCRUSHABLE              (1<<23)
 
 //Item function flags
 

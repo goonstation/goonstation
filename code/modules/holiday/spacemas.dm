@@ -1321,7 +1321,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "nog"
 	heal_amt = 1
 	festivity = 1
-	rc_desc_flags = RC_FULLNESS
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("eggnog"=40)
 

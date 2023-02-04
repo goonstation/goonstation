@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 		src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
 		src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
-/obj/item/cloth/can_receive()
+/obj/item/cloth/is_open_container()
 	.= 1
 
 ABSTRACT_TYPE(/obj/item/cloth/towel)

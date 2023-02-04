@@ -763,7 +763,7 @@ datum
 					if (!istype(holder,/datum/reagents/fluid_group))
 						name = "steam"
 						description = "Water turned steam."
-					if (holder.my_atom && holder.my_atom.can_receive() || istype(holder,/datum/reagents/fluid_group))
+					if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
 						//boil off
 						var/list/covered = holder.covered_turf()
 						if (covered.len < 5)
@@ -894,7 +894,7 @@ datum
 				else if (exposed_temperature > T0C + 100)
 					name = "tonic steam"
 					description = "Water turned steam. Steam that protects against Space Malaria."
-					if (holder.my_atom && holder.my_atom.can_receive())
+					if (holder.my_atom && holder.my_atom.is_open_container())
 						//boil off
 						var/list/covered = holder.covered_turf()
 						if (covered.len < 5)

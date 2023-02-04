@@ -14,9 +14,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	rc_flags = CAN_RECEIVE
-	rc_desc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
+	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
 	var/image/fluid_image = null
@@ -57,7 +56,7 @@
 			src.UpdateOverlays(null, "inj_dr")
 		signal_event("icon_updated")
 
-	can_receive()
+	is_open_container()
 		return 1
 
 	pickup(mob/user)
@@ -118,7 +117,6 @@
 	attackby(obj/A, mob/user)
 		if (iscuttingtool(A) && !(src.slashed))
 			src.slashed = 1
-			rc_flags |= CAN_TRANSFER
 			src.desc = "[src.desc] It has been sliced open with a scalpel."
 			boutput(user, "You carefully slice [src] open.")
 			return

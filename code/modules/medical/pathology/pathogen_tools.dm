@@ -244,8 +244,7 @@
 		dirty_reason = reason
 		update_dish_icon()
 
-	flags = TABLEPASS | CONDUCT | FPRINT
-	rc_flags = CAN_RECEIVE
+	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
 
 
 /obj/item/reagent_containers/glass/vial
@@ -254,7 +253,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
-	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
 		..()
