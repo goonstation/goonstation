@@ -51784,6 +51784,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"gRA" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
+	})
 "gUP" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
@@ -60627,6 +60635,10 @@
 /obj/landmark{
 	name = "blobstart"
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Medical Storage"
@@ -61941,6 +61953,9 @@
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -65129,7 +65144,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/medical,
-/obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -102728,7 +102742,7 @@ kPp
 ntb
 xbA
 tzA
-iXN
+gRA
 iXN
 gUP
 dhz
