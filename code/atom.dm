@@ -207,13 +207,14 @@ TYPEINFO(/atom)
 
 	proc/return_air()
 		return null
-	///checks if the container has CAN_RECEIVE and returns it
+
+	/// can receive reagents from other containers
 	proc/can_receive()
 		return rc_flags & CAN_RECEIVE
-	///checks if the container has CAN_TRANSFER and returns it
+	/// can transfer to other containers
 	proc/can_transfer()
 		return rc_flags & CAN_TRANSFER
-	///checks if the container has CAN_SPLASH and returns it
+	/// can splash reagent inside this container
 	proc/can_splash()
 		return rc_flags & CAN_SPLASH
 
