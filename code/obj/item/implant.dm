@@ -955,7 +955,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	flintlock
 		name= "flintlock round"
-		desc = "Rather unperfect round ball. Looks very old."
+		desc = "A rather imperfect round ball. It looks very old indeed."
 		icon_state = "flintlockbullet"
 
 	bullet_50

@@ -142,7 +142,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -814,9 +816,8 @@
 		boutput(B, "<span class='alert'>You eject!</span>")
 		ship.leave_pod(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
+		for(var/i in 1 to 3)
+			step(B, turn(ship.dir, 180), 0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)

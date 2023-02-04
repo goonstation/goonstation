@@ -3,6 +3,9 @@
 	*
   * Lots of functionality resides in this type.
   */
+TYPEINFO(/atom)
+	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	var/list/admin_procs = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
