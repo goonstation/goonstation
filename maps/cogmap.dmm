@@ -22186,9 +22186,33 @@
 /turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bic" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/wrench{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "bid" = (
 /obj/disposalpipe/segment{
@@ -47909,6 +47933,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"cIz" = (
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "cKD" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -48247,6 +48279,15 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"dhz" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "diC" = (
 /obj/storage/secure/closet/security/armory,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51743,6 +51784,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"gUP" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
+	})
 "gVv" = (
 /obj/machinery/atmospherics/valve,
 /obj/machinery/firealarm{
@@ -52775,11 +52822,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"ikX" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
-	})
 "ilc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -53018,9 +53060,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "iHn" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/medical,
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /turf/simulated/floor/white,
@@ -53206,6 +53246,11 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"iXN" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
+	})
 "iXU" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -54565,6 +54610,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/sortingRoom)
+"kPp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "kPB" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56475,7 +56527,6 @@
 	},
 /area/station/medical/medbay)
 "ntb" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -57114,6 +57165,10 @@
 	pixel_x = 16;
 	pixel_y = -5
 	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -57340,6 +57395,14 @@
 	dir = 6
 	},
 /area/station/medical/staff)
+"orp" = (
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "osd" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -57545,6 +57608,9 @@
 	id = "hangar_medical";
 	name = "Medical Hangar Door Control";
 	pixel_x = 24
+	},
+/obj/landmark{
+	name = "kudzustart"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -58662,25 +58728,14 @@
 /turf/simulated/floor,
 /area/station/routing/medsci)
 "pZI" = (
-/obj/table/auto,
-/obj/item/storage/box/biohazard_bags{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = -10
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_y = 10;
-	pixel_x = -10
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/fluid_canister,
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "pZP" = (
 /obj/grille/catwalk,
@@ -58847,14 +58902,14 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "qkl" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 8
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/decal/cleanable/cobweb2,
+/obj/machinery/drone_recharger,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "qlP" = (
 /obj/machinery/conveyor/NS{
@@ -60568,10 +60623,13 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sez" = (
-/obj/decal/cleanable/dirt/dirt2,
+/obj/random_item_spawner/junk/few,
+/obj/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "seX" = (
 /obj/disposalpipe/segment{
@@ -61729,22 +61787,10 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "tnz" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/traymachine/locking/crematorium{
-	name = "incinerator";
-	id = "med_incinerator";
-	desc = "These were built to handle biohazardous waste but rarely see use nowadays."
-	},
-/obj/machinery/crema_switch{
-	id = "med_incinerator";
-	pixel_y = 28;
-	name = "incinerator igniter"
-	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "toe" = (
 /obj/disposalpipe/segment/food,
@@ -61892,16 +61938,13 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "tzA" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "tzN" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
@@ -62066,6 +62109,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"tKs" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
+	})
 "tKx" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
@@ -64036,13 +64085,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"vSj" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
-	})
 "vTo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64938,6 +64980,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"wVj" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/storage{
+	name = "Medical Storage"
+	})
 "wVo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -65077,16 +65124,16 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "xbA" = (
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/pathology,
+/obj/machinery/door/airlock/pyro/medical,
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage{
-	name = "Medical Incinerator"
+/area/station/maintenance/storage{
+	name = "Medical Storage"
 	})
 "xbR" = (
 /obj/machinery/sleeper/compact,
@@ -102079,7 +102126,7 @@ hGk
 hGk
 hGk
 hGk
-adC
+wVj
 adC
 adC
 aah
@@ -102377,12 +102424,12 @@ sXy
 pTs
 gli
 rzH
-ikX
+wVj
 tnz
 sez
 bic
-adC
-adC
+wVj
+cIz
 adC
 aah
 adC
@@ -102677,14 +102724,14 @@ rsK
 crE
 crE
 kFI
-crE
+kPp
 ntb
 xbA
 tzA
-vSj
-bic
-aaw
-aar
+iXN
+iXN
+gUP
+dhz
 aar
 aap
 aar
@@ -102981,12 +103028,12 @@ uwB
 nGY
 obH
 uXd
-ikX
+wVj
 qkl
 pZI
-bic
-aaG
-adC
+tKs
+wVj
+orp
 adC
 aay
 adC
