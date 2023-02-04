@@ -306,7 +306,7 @@
 
 	New()
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
+		src.lock = new /obj/item/shipcomponent/secondary_system/lock/bioscan(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
@@ -380,11 +380,13 @@
 				if(ship.health_percentage < (health_perc - 30))
 					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
 				else if(ship.engine.active && ship.engine.ready && src.active)
+					var/old_color = ship.color
 					animate_teleport(ship)
 					sleep(0.8 SECONDS)
 					ship.set_loc(target)
+					ship.color = old_color // revert color from teleport color-shift
 				else
-					boutput(usr, "[ship.ship_message("Trajectory calculatoin failure! Loss of systems!")]")
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
 
 				ship.engine.ready = 0
 				ship.engine.warp_autopilot = 0
@@ -420,14 +422,7 @@
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
 
-#ifdef SECRETS_ENABLED
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-#endif
-
-		for(var/buy_type in concrete_typesof(/datum/commodity/magpie/buy))
+		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
 		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
@@ -486,12 +481,17 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
 
+
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
+/obj/item/shipcomponent/secondary_system/lock/bioscan
+
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell
 ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 /datum/commodity/magpie/buy
+ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
+/datum/commodity/magpie/buy/random_buy
