@@ -1300,22 +1300,22 @@
 
 //return 1 on successful dodge or parry, 0 on fail
 /mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
-	.= 0
-	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
+	. = 0
+	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && !src.stat)
 		src.set_dir(get_dir(src, M))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
 		else
-			src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			if (prob(50))
 				step_away(M, src, 15)
 			else
+				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
-		.= 1
+		. = 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))

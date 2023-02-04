@@ -281,6 +281,8 @@ TYPEINFO(/obj/item/baton)
 						return
 					if (M.do_dodge(user, src))
 						return
+					if (M.parry_or_dodge(user, src))
+						return
 					src.do_stun(user, M, "stun", 2)
 
 		return
