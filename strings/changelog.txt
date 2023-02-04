@@ -1,4 +1,9 @@
 
+(t)sat feb 04 23
+(u)Lord_Earthfire
+(p)12518
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Reworked superior/inferior quality to work on most plant interaction scaling of potency, e.g. potato batteries & money trees. These gene strains now increase/reduce effective potency by 20%.
 (t)fri feb 03 23
 (u)Amylizzle
 (p)12499
