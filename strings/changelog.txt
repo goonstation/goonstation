@@ -1,4 +1,13 @@
 
+(t)fri feb 03 23
+(u)Amylizzle
+(p)12499
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Prank your friends and/or enemies with a hilarious bucket-above-the-door prank! Just click a wooden door with a bucket to set it up. Don't forget to fill the bucket with glitter for some extra harmless fun!
+(u)Flourish
+(e)🆕|C-Feature
+(*)February special - "Send Candy Heart" spacebux purchase. For a mere 2500 spacebux, you can send a random crewmember from the manifest a candy heart through QM. No guarantee the QMs will actually deliver it though.
+(+)Removed "Mail Order" spacebux purchase.
 (t)wed feb 01 23
 (u)Cheffie
 (p)12751
