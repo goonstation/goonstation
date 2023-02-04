@@ -62425,6 +62425,9 @@
 	dir = 8
 	},
 /area/station/engine/engineering/ce)
+"ucm" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/psychiatrist)
 "udw" = (
 /obj/machinery/cargo_router/Router15,
 /turf/simulated/floor/plating,
@@ -100611,7 +100614,7 @@ kfp
 mRI
 sfM
 vMs
-hGk
+ucm
 xuy
 dvn
 xPS
@@ -100913,7 +100916,7 @@ xiQ
 xYQ
 sfo
 jWl
-hGk
+ucm
 eyg
 sbD
 wiv
@@ -101517,7 +101520,7 @@ jwL
 xCr
 sfo
 pbP
-hGk
+ucm
 hgI
 xox
 yfT
@@ -101819,7 +101822,7 @@ vnq
 nRJ
 qwd
 sWR
-hGk
+ucm
 rWI
 ljI
 gMP
@@ -102120,8 +102123,8 @@ mky
 mky
 mky
 mky
-fLo
-hGk
+mky
+ucm
 tmX
 hGk
 hGk
@@ -103331,9 +103334,9 @@ iHn
 nKV
 nZV
 dNd
-diN
-diN
-diN
+jbK
+jbK
+jbK
 jbK
 jbK
 oVT
