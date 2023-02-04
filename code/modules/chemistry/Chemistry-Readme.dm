@@ -105,7 +105,7 @@ About the Holder:
 			Internally called whenever the reagents change - this calls my_atom.on_reagent_change()
 			and also clears the description text (for refreshing whenever it is next needed)
 
-		get_description(var/user, var/rc_flags)
+		get_description(var/user, var/rc_desc_flags)
 			Returns the text description of the reagents. Usually the inexact description,
 			but also the exact reagents in some cases depending on the container flags
 
@@ -113,7 +113,7 @@ About the Holder:
 		get_exact_description(var/user)
 			Returns the amount and type of each reagent present, if the user should be able to see them
 
-		get_inexact_description(var/rc_flags)
+		get_inexact_description(var/rc_desc_flags)
 			Returns the inexact text description of the reagents.
 			e.g. "It is half full of an opaque, brown liquid."
 			Refreshes the description if necessary. Container flags show whether to report fullness, color, etc.
@@ -265,8 +265,8 @@ About the Tools:
 			It simply tells us how much to transfer when
 			'pouring' our reagents into something else.
 
-		atom/proc/is_open_container()
-			Checks atom/var/flags & OPENCONTAINER.
+		atom/proc/can_receive()
+			Checks atom/var/flags & CAN_RECEIVE.
 			If this returns 1 , you can use syringes, beakers etc
 			to manipulate the contents of this object.
 			If it's 0, you'll need to write your own custom reagent

@@ -13,9 +13,10 @@ WET FLOOR SIGN
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
-	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = CAN_RECEIVE
 	throwforce = 3
 	w_class = W_CLASS_SMALL
 	throw_speed = 2
@@ -39,7 +40,7 @@ WET FLOOR SIGN
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
-	rc_flags = RC_VISIBLE | RC_SPECTRO | RC_SCALE
+	rc_desc_flags = RC_VISIBLE | RC_SPECTRO | RC_SCALE
 
 	New()
 		..()
@@ -258,7 +259,7 @@ WET FLOOR SIGN
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flags)]</span>"
 	return
 
 // MOP
@@ -568,9 +569,9 @@ WET FLOOR SIGN
 				choices |= "Wipe down"
 		if (src.reagents.total_volume && !target_is_fluid)
 			choices |= "Wipe down"
-			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+			if ((istype(target, /obj/item/reagent_containers/glass) && target.can_receive()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 				choices |= "Wring out"
-		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.can_receive()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
 				choices |= "Wet"
 

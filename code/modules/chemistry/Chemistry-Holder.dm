@@ -900,13 +900,13 @@ datum
 
 		// returns text description of reagent(s)
 		// plus exact text of reagents if using correct equipment
-		proc/get_description(mob/user, rc_flags=0)
-			if(rc_flags == 0)	// Report nothing about the reagents in this case
+		proc/get_description(mob/user, rc_desc_flags=0)
+			if(rc_desc_flags == 0)	// Report nothing about the reagents in this case
 				return null
 
 			if(reagent_list.len)
-				. += get_inexact_description(rc_flags)
-				if(rc_flags & RC_SPECTRO)
+				. += get_inexact_description(rc_desc_flags)
+				if(rc_desc_flags & RC_SPECTRO)
 					. += get_exact_description(user)
 
 			else
@@ -938,14 +938,14 @@ datum
 		proc/get_reagents_fullness()
 			.= get_fullness(total_volume / maximum_volume * 100)
 
-		proc/get_inexact_description(var/rc_flags=0)
-			if(rc_flags == 0)
+		proc/get_inexact_description(var/rc_desc_flags=0)
+			if(rc_desc_flags == 0)
 				return null
 
 			var/full_text = get_reagents_fullness()
 
 			if(full_text == "empty")
-				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
+				if(rc_desc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
 					. += "<span class='notice'>It is empty.</span>"
 				return
 
@@ -966,16 +966,16 @@ datum
 
 			var/t = "[opaque_text][nearest_color_text]"
 
-			if(rc_flags & RC_VISIBLE)
-				if(rc_flags & RC_SCALE)
+			if(rc_desc_flags & RC_VISIBLE)
+				if(rc_desc_flags & RC_SCALE)
 					. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
 					. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
-				if(rc_flags & RC_SCALE)
+				if(rc_desc_flags & RC_SCALE)
 					. += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
-					if(rc_flags & RC_FULLNESS)
+					if(rc_desc_flags & RC_FULLNESS)
 						. += "<span class='notice'>It is [full_text].</span>"
 
 			return .

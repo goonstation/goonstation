@@ -346,7 +346,8 @@
 	brutevuln = 1
 	angertext = "buzzes at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER
+	flags = NOSPLASH
+	rc_flags = CAN_RECEIVE
 	flying = 1
 	//var/neurotoxin = 2
 	chase_text = "stings"
