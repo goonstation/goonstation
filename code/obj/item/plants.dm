@@ -544,6 +544,12 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			SPAWN(0.1 SECONDS)
 				user.drop_item(src, FALSE)
 
+		attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/paper))
+			user.visible_message("[user] roll up the [src] into a bouquet.", "You roll up the [src].")
+			var/obj/item/bouquet/rose/P = new(get_turf(user))
+			qdel(src)
+
 /obj/item/plant/flower/rose/poisoned
 	///Trick roses don't poison on attack, only on pickup
 	var/trick = FALSE
