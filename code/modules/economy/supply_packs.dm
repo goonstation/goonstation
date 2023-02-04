@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/suit/tuxedo_jacket = 2,
 					/obj/item/clothing/gloves/ring = 2,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
-	cost = 3000
+	cost = 10000
 	containertype = /obj/storage/crate
 	containername = "Wedding Supplies"
 
