@@ -144,4 +144,4 @@
 	src.text += {"<BR><BR>An anomalous radio entity has been detected by long range sensors in your sector. Its goal is unclear, but from previous
 				 reports, it's believed that it will attempt to collect your station's resources through the use of swarms of drones. This entity is
 				 also believed to have a remarkable influence over radio devices, so caution around trusted technology is highly advised. It's unclear
-				 how aggressive the entity actually is, but extreme reservation must be taken.}
+				 how aggressive the entity actually is, but extreme reservation must be taken."}
