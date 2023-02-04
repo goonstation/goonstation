@@ -654,7 +654,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/wedding
 	name = "Wedding Supplies"
-	desc = "Your very own DIY wedding! Chaplin not included."
+	desc = "Your very own DIY wedding! Chaplain not included."
 	contains = list(/obj/item/clothing/under/gimmick/wedding_dress = 2,
 					/obj/item/clothing/head/veil = 2,
 					/obj/item/clothing/under/misc/fancy_vest = 2,
