@@ -1299,7 +1299,10 @@
 			sims.affectMotive("fun", 2.5)
 
 //return 1 on successful dodge or parry, 0 on fail
-/mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
+/mob/proc/parry_or_dodge(mob/M, obj/item/W)
+	return 0
+
+/mob/living/parry_or_dodge(mob/M, obj/item/W)
 	. = 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && !src.stat)
 		src.set_dir(get_dir(src, M))
