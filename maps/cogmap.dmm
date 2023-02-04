@@ -22185,35 +22185,6 @@
 "bib" = (
 /turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
-"bic" = (
-/obj/rack,
-/obj/item/device/light/flashlight{
-	pixel_x = -6;
-	pixel_y = -4
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/wrench{
-	pixel_x = -7;
-	pixel_y = -2
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage{
-	name = "Medical Storage"
-	})
 "bid" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -48698,11 +48669,14 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "dFn" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/cable,
+/obj/machinery/door_control{
+	id = "hangar_medical";
+	name = "Medical Hangar Door Control";
+	pixel_x = -24
+	},
 /turf/simulated/floor/white,
 /area/station/hangar/medical)
 "dGl" = (
@@ -52430,10 +52404,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
-"hIV" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/white,
-/area/station/hangar/medical)
 "hJn" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -53254,11 +53224,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
-"iXN" = (
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage{
-	name = "Medical Storage"
-	})
 "iXU" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -55304,7 +55269,6 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "lJN" = (
-/obj/reagent_dispensers/foamtank,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -55438,6 +55402,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"lUG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/hangar/medical)
 "lVc" = (
 /obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
@@ -57403,14 +57376,6 @@
 	dir = 6
 	},
 /area/station/medical/staff)
-"orp" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/space)
 "osd" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -57612,11 +57577,6 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "oEu" = (
-/obj/machinery/door_control{
-	id = "hangar_medical";
-	name = "Medical Hangar Door Control";
-	pixel_x = 24
-	},
 /obj/landmark{
 	name = "kudzustart"
 	},
@@ -58814,6 +58774,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
+"qen" = (
+/obj/reagent_dispensers/foamtank,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/white,
+/area/station/hangar/medical)
 "qfa" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8
@@ -58910,11 +58878,11 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "qkl" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/drone_recharger,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/landmark{
+	name = "blobstart"
+	},
+/obj/random_item_spawner/junk/few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Medical Storage"
@@ -60631,14 +60599,35 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sez" = (
-/obj/random_item_spawner/junk/few,
-/obj/landmark{
-	name = "blobstart"
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = 2
 	},
-/obj/machinery/power/apc/autoname_west,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/tank/air{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/wrench{
+	pixel_x = 7;
+	pixel_y = -2
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Medical Storage"
@@ -61800,6 +61789,10 @@
 /area/station/medical/medbay/psychiatrist)
 "tnz" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Medical Storage"
@@ -62124,12 +62117,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"tKs" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage{
-	name = "Medical Storage"
-	})
 "tKx" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
@@ -102140,7 +102127,7 @@ hGk
 hGk
 hGk
 hGk
-wVj
+adC
 adC
 adC
 aah
@@ -102441,9 +102428,9 @@ rzH
 wVj
 tnz
 sez
-bic
 wVj
 cIz
+adC
 adC
 aah
 adC
@@ -102743,9 +102730,9 @@ ntb
 xbA
 tzA
 gRA
-iXN
 gUP
 dhz
+aar
 aar
 aap
 aar
@@ -103045,9 +103032,9 @@ uXd
 wVj
 qkl
 pZI
-tKs
 wVj
-orp
+bxP
+adC
 adC
 aay
 adC
@@ -104249,8 +104236,8 @@ ddE
 dvF
 xzu
 nZV
-tHf
-fIH
+qen
+lUG
 tpf
 ffe
 ffe
@@ -104551,7 +104538,7 @@ cxw
 lbq
 uCP
 nZV
-hIV
+tHf
 fIH
 wVo
 kgH
