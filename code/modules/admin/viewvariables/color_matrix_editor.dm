@@ -24,7 +24,7 @@
 	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
 	if(_target)
 		target = get_weakref(_target)
-		if(!(_target.appearance_flags & PLANE_MASTER))
+		if(istype(_target) && !(_target.appearance_flags & PLANE_MASTER)) // see: client.color
 			view = image(_target)
 
 	src.preview = new(owner, "color_matrix_editor-\ref[src]")
@@ -80,6 +80,9 @@
 	var/atom/target_atom = target.deref()
 	if(istype(target_atom))
 		target_atom.color = current_color
+	else if (istype(target_atom, /client))
+		var/client/C = target_atom
+		C.color = current_color
 
 // Unused Currently, but a decent idea
 
