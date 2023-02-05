@@ -415,11 +415,6 @@
 
 	return
 
-#define CHECK_AHEAD_LIST list(NORTH, EAST, NORTHWEST, NORTHEAST)
-// this define is for the /obj/cablespawner/proc/check()
-// as everything in the 'ahead' list should be cablespawners, and stuff behind already be cables.
-// speeds it up a tiny tiny bit
-
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
 	name = "power cable spawner"
@@ -436,23 +431,22 @@
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
-	/// reinforced, thick cables. They should also connect to the regular kind.
-	node
-		name = "node reinforced cable spawner"
-		override_centre_connection = TRUE
-		icon_state = "superstate-node"
+/obj/cablespawner/node
+	name = "node reinforced cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-node"
 
-	reinforced
-		name = "reinforced power cable spawner"
-		icon = 'icons/obj/power_cond.dmi'
-		icon_state = "superstate-thick"
-		cable_type = /obj/cable/reinforced
-		color = "#075C90"
+/obj/cablespawner/reinforced
+	name = "reinforced power cable spawner"
+	icon = 'icons/obj/power_cond.dmi'
+	icon_state = "superstate-thick"
+	cable_type = /obj/cable/reinforced
+	color = "#075C90"
 
-		node
-			name = "node reinforced cable spawner"
-			override_centre_connection = TRUE
-			icon_state = "superstate-thick-node"
+/obj/cablespawner/reinforced/node
+	name = "node reinforced cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-thick-node"
 
 /obj/cablespawner/New()
 	..()
@@ -477,7 +471,7 @@
 			selftile += self_loc
 	if (length(selftile) > 1)
 		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
-	for (var/dir_to_cs in CHECK_AHEAD_LIST)
+	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
 	// checks for cablespawners around itself
 		// declarer is the dir being checked at present
 		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
@@ -573,5 +567,3 @@
 	// d1 and d2 have to be manually assigned here
 	current.d1 = min(dir1, dir2)
 	current.d2 = max(dir1, dir2)
-
-#undef CHECK_AHEAD_LIST
