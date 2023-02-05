@@ -13,6 +13,7 @@ import { Window } from '../layouts';
 
 interface ColorMatrixEditorData {
   previewRef: string;
+  targetIsClient: boolean;
   currentColor: string[][];
 }
 
@@ -76,6 +77,20 @@ export const ColorMatrixEditor = (props, context) => {
                   content="Confirm"
                   confirmContent="Confirm?"
                   onClick={() => act("confirm")} />
+                {
+                  data.targetIsClient
+                    ? (
+                      <>
+                        <Button
+                          content="Preview Color"
+                          onClick={() => act("client-preview")} />
+                        <Button
+                          content="Reset Your Color"
+                          onClick={() => act("client-reset")} />
+                      </>
+                    )
+                    : ''
+                }
               </Stack.Item>
             </Stack>
           </Stack.Item>

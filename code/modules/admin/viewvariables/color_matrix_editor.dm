@@ -11,21 +11,25 @@
 	var/datum/movable_preview/preview
 	var/list/current_color
 	var/closed
+	/// Set if we're varediting a client, used to restore owner's color after preview
+	var/matrix/old_owner_color = null
 
 /datum/color_matrix_editor/New(user, atom/_target = null)
 	owner = user
-	if(islist(_target?.color))
+	if (islist(_target?.color))
 		current_color = _target.color
-	else if(istext(_target?.color))
+	else if (istext(_target?.color))
 		current_color = normalize_color_to_matrix(_target.color)
 	else
 		current_color = COLOR_MATRIX_IDENTITY
 
 	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
-	if(_target)
+	if (_target)
 		target = get_weakref(_target)
-		if(istype(_target) && !(_target.appearance_flags & PLANE_MASTER)) // see: client.color
+		if (istype(_target) && !(_target.appearance_flags & PLANE_MASTER)) // see: client.color
 			view = image(_target)
+		if (istype(_target, /client))
+			src.old_owner_color = owner.color
 
 	src.preview = new(owner, "color_matrix_editor-\ref[src]")
 	src.preview.add_background("#000")
@@ -45,12 +49,13 @@
 
 /datum/color_matrix_editor/ui_static_data(mob/user)
 	. = list(
-		"previewRef" = preview.preview_id
+		"previewRef" = preview.preview_id,
+		"targetIsClient" = !!src.old_owner_color,
 	)
 
 /datum/color_matrix_editor/ui_data(mob/user)
 	. = list(
-		"currentColor" = current_color
+		"currentColor" = current_color,
 	)
 
 /datum/color_matrix_editor/ui_interact(mob/user, datum/tgui/ui)
@@ -67,9 +72,16 @@
 		if("transition_color")
 			current_color = params["color"]
 			animate(preview.preview_thing, time = 0.4 SECONDS, color = current_color)
+		if("client-preview")
+			if (src.old_owner_color) // make sure they can access this button
+				owner.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
+		if("client-reset")
+			if (src.old_owner_color)
+				owner.set_color(src.old_owner_color)
 		if("confirm")
 			on_confirm()
 			tgui_process.close_uis(src)
+
 
 /datum/color_matrix_editor/ui_close(mob/user)
 	. = ..()
@@ -81,8 +93,8 @@
 	if(istype(target_atom))
 		target_atom.color = current_color
 	else if (istype(target_atom, /client))
-		var/client/C = target_atom
-		C.animate_color(matrix = current_color, time = 0.4 SECONDS, easing=SINE_EASING)
+		var/client/target_client = target_atom
+		target_client.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
 
 // Unused Currently, but a decent idea
 
