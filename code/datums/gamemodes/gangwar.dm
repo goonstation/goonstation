@@ -836,7 +836,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
 				return
 
-		var/validLocation = false
+		var/validLocation = FALSE
 		if (istype(target,/obj/decal/gangtag))
 			var/obj/decal/gangtag/tag = target
 			if (tag.owners != user.mind.gang)
@@ -845,11 +845,11 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE*2,target))
 					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE*2)) continue
 					if (locker.gang == user.mind.gang)
-						validLocation = true
+						validLocation = TRUE
 				for (var/obj/decal/gangtag/otherTag in orange(GANG_TAG_INFLUENCE*2,target))
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
 					if (otherTag.owners && otherTag.owners == user.mind.gang)
-						validLocation = true
+						validLocation = TRUE
 			else
 				boutput(user, "<span class='alert'>You can't spray over your own tags!</span>")
 				return
@@ -858,14 +858,14 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			for (var/obj/decal/gangtag/tag in orange(GANG_TAG_INFLUENCE,target))
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.mind.gang)
-					validLocation = true
+					validLocation = TRUE
 				else if (tag.owners)
 					boutput(user, "<span class='alert'>You can't spray in another gang's territory! Spray over their tag, instead!</span>")
 					return
 			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE,target))
 				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE)) continue
 				if (locker.gang == user.mind.gang)
-					validLocation = true
+					validLocation = TRUE
 				else
 					boutput(user, "<span class='alert'>There's better places to tag than here! </span>")
 					return

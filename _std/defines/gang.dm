@@ -1,5 +1,5 @@
 
-#define GANG_TAG_INFLUENCE 12 // radius of influence around gang tags tiles
+#define GANG_TAG_INFLUENCE 15 // radius of influence around gang tags tiles
 
 
 #define GANG_TAG_MINIMUM_RANGE 8  //minimum range between two gang tags

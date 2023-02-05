@@ -164,7 +164,7 @@
 			return 1
 
 		if (!M.mind && !M.mind.gang)
-			boutput(M, __red("Gang territory? What? You'd need to be in a gang to get it."))
+			boutput(M, "<span class='alert'>Gang territory? What? You'd need to be in a gang to get it.</span>")
 			return 1
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
@@ -172,7 +172,7 @@
 		else
 			imgroup.add_mind(M.mind)
 
-		boutput(M, __blue("Gang territories turned [imgroup.subscribed_minds_with_subcount[M.mind] ? "on" : "off"]."))
+		boutput(M, "Gang territories turned [imgroup.subscribed_minds_with_subcount[M.mind] ? "on" : "off"].")
 		return 0
 
 

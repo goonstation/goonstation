@@ -586,7 +586,7 @@ toxic - poisons
 			explosion_new(O, get_turf(O), 4, 1.75)
 
 //0.72
-/datum/projectile/bullet/a12 //standard slugs
+/datum/projectile/bullet/a12
 	name = "buckshot"
 	icon_state = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -603,7 +603,6 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-
 			if(proj.power >= 30)
 				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
@@ -657,7 +656,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 
-/datum/projectile/bullet/buckshot // buckshot pellets
+/datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
 	sname = "buckshot"
 	icon_state = "trace"
@@ -665,14 +664,6 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 3
 	damage_type = D_KINETIC
-	on_pre_hit(atom/hit, dirflag, obj/projectile/proj)
-		if(ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			if (M.get_ranged_protection() > 1)
-				hit_type = DAMAGE_BLUNT //prevents armored guys from bleeding and having bullets in them
-				proj.implanted = false
-				boutput(world,"done")
-		..()
 
 /datum/projectile/bullet/nails
 	name = "nails"
@@ -681,7 +672,7 @@ toxic - poisons
 	damage = 4
 	dissipation_rate = 3
 	dissipation_delay = 4
-	damage_type = D_PIERCING //flechette-style rounds
+	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
 //for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
@@ -1214,30 +1205,6 @@ datum/projectile/bullet/autocannon
 			if(P)
 				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
-/datum/projectile/bullet/pbpellet //direct less-lethal 40mm option
-	name = "plastic baton round"
-	shot_sound = 'sound/weapons/launcher.ogg'
-	power = 15
-	ks_ratio = 0.5
-	dissipation_rate = 5
-	dissipation_delay = 4
-	max_range = 20
-	implanted = null
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole-large"
-	casing = /obj/item/casing/grenade
-	implanted = null
-
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (ishuman(hit))
-			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
-		if(!ismob(hit))
-			shot_volume = 0
-			var/obj/projectile/P = shoot_reflected_bounce(proj, hit, 1, PROJ_RAPID_HEADON_BOUNCE)
-			shot_volume = 100
-			if(P)
-				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"

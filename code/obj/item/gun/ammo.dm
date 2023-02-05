@@ -36,7 +36,6 @@
 	// 0.40 - blowgun
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
-	// 0.77 - shotgun shell, 20ga
 	// 0.787 - 20mm cannon round
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
@@ -525,7 +524,6 @@
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
-
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm frangible"
 	name = "9mm frangible magazine"
@@ -535,13 +533,6 @@
 	max_amount = 18
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
-
-	mac10
-		name = "9mm McTen magazine"
-		icon_state = "caseless_grey"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
-		icon_empty = "caseless-empty"
-		amount_left = 30.0
-		max_amount = 30.0
 
 	mag_fifteen
 		icon_state = "pistol_magazine"
@@ -620,7 +611,6 @@
 	ammo_cat = AMMO_REVOLVER_DETECTIVE
 	amount_left = 10.0
 	max_amount = 10.0
-
 
 //0.38
 /obj/item/ammo/bullets/a38/AP
@@ -751,7 +741,7 @@
 	weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
-/obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo, for illicit purposes. weaker than slugs
+/obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
 	name = "buckshot ammo box"
 	desc = "This buckshot looks a little old..."
@@ -763,9 +753,6 @@
 	icon_dynamic = 0
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	six
-		amount_left = 6.0
-		max_amount = 6.0
 
 ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/bullets/pipeshot
@@ -816,9 +803,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_dynamic = 1
 	icon_empty = "custom-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	six
-		amount_left = 6.0
-		max_amount = 6.0
 
 /obj/item/ammo/bullets/aex
 	sname = "12ga AEX"
@@ -865,35 +849,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	single
 		amount_left = 1
 		max_amount = 1
-//0.77
-
-/obj/item/ammo/bullets/tengauge // oh god oh fuck
-	sname = "10ga Buckshot"
-	name = "10ga buckshot ammo box"
-	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/wideshot
-	icon_state = "custom-8"
-	icon_short = "custom"
-	amount_left = 8.0
-	max_amount = 8.0
-	ammo_cat = AMMO_COACHGUN
-	icon_dynamic = 1
-	icon_empty = "custom-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	twoshot
-		amount_left = 2
-		max_amount = 2
-	loose //for spawning in tiny volumes in gang crates
-		name = "10 gauge buckshot shell"
-		icon = 'icons/obj/items/casings.dmi'
-		icon_state = "shotgun_gray"
-		icon_dynamic = 0
-		amount_left = 1
-		max_amount = 2 //for convenience carrying one spare coachgun load
-		update_icon()
-			if(amount_left == 0)
-				qdel(src)
-			else
-				..()
 
 //0.75
 /obj/item/ammo/bullets/flintlock/rifle

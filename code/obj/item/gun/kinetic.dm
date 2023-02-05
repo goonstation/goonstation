@@ -592,9 +592,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/akm)
 		..()
-	weak
-		default_magazine = /obj/item/ammo/bullets/ak47
-
 
 
 /obj/item/gun/kinetic/hunting_rifle
@@ -800,6 +797,33 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			spread_angle = 0
 			shoot_delay = 2 DECI SECONDS
 
+/obj/item/gun/kinetic/beretta //somewhat less common gang pistol
+	desc = "The world's handgun of choice before the Clock-188, it quickly flooded black markets after the Clock became the standard."
+	name = "Purretta"
+	icon_state = "beretta"
+	item_state = "beretta"
+	shoot_delay = 1
+	spread_angle = 3
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	max_ammo_capacity = 15
+	auto_eject = 1
+	has_empty_state = 1
+	gildable = FALSE
+	fire_animation = FALSE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+		..()
+
+
+	on_spin_emote(var/src)
+		if (prob(30))
+			playsound(src, "sound/voice/animal/cat.ogg", 70, 1)
+		..()
+
 
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
@@ -919,7 +943,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
-
+		..()
 
 //38 ACP gang gun, supports speedloaders because it's cheap and weird, maybe.
 /obj/item/gun/kinetic/hipoint
@@ -943,7 +967,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38)
 		..()
-
 //0.393
 /obj/item/gun/kinetic/foamdartgun
 	name = "foam dart gun"
@@ -1253,12 +1276,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 
 	New()
-		src.load_ammo()
-		..()
-
-	proc/load_ammo()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
+		..()
 
 	update_icon()
 		. = ..()
@@ -1338,126 +1358,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new default_magazine
 		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
 		..()
-
-
-	sawnoff
-		name = "Sawn-off Shotgun"
-		desc = "A sawed-down shotgun once meant for suppressing riots. Looks a lot meaner now."
-		spread_angle = 5
-		icon = 'icons/obj/items/gun.dmi'
-		icon_state = "sawnshotty-empty"
-		item_state = "sawnshotty"
-		max_ammo_capacity = 6
-		force = MELEE_DMG_PISTOL //no stock to whack em with
-		default_magazine = /obj/item/ammo/bullets/buckshot_burst/six
-		contraband = 5
-		auto_eject = 0
-		can_dual_wield = 0
-		two_handed = 1
-		has_empty_state = 1
-		gildable = 1
-
-
-		load_ammo()
-			ammo = new default_magazine
-			set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst)
-
-		update_icon()
-			. = ..()
-			src.icon_state = "sawnshotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
-
-		canshoot()
-			return(..() && src.racked_slide)
-
-		attack_self(mob/user as mob)
-			..()
-			src.rack(user)
-
-		rack(var/atom/movable/user)
-			var/mob/mob_user = null
-			if(ismob(user))
-				mob_user = user
-			if (!src.racked_slide) //Are we racked?
-				if (src.ammo.amount_left == 0)
-					boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-					UpdateIcon()
-				else
-					src.racked_slide = TRUE
-					if (src.icon_state == "sawnshotty[src.gilded ? "-golden" : ""]") //"animated" racking
-						src.icon_state = "sawnshotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-						animate(src, time = 0.2 SECONDS)
-						animate(icon_state = "sawnshotty[gilded ? "-golden" : ""]")
-					else
-						UpdateIcon() // Slide already open? Just close the slide
-					boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
-					playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
-					src.casings_to_eject = 0
-					if (src.ammo.amount_left < 6) // Do not eject shells if you're racking a full "clip"
-						var/turf/T = get_turf(src)
-						if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
-
-
-	sawnoff
-		name = "Sawn-off Shotgun"
-		desc = "A sawed-down shotgun once meant for suppressing riots. Looks a lot meaner now."
-		spread_angle = 5
-		icon = 'icons/obj/items/gun.dmi'
-		icon_state = "sawnshotty-empty"
-		item_state = "sawnshotty"
-		max_ammo_capacity = 6
-		force = MELEE_DMG_PISTOL //no stock to whack em with
-		default_magazine = /obj/item/ammo/bullets/buckshot_burst/six
-		contraband = 5
-		auto_eject = 0
-		can_dual_wield = 0
-		two_handed = 1
-		has_empty_state = 1
-		gildable = 1
-
-
-		load_ammo()
-			ammo = new default_magazine
-			set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst)
-
-		update_icon()
-			. = ..()
-			src.icon_state = "sawnshotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
-
-		canshoot()
-			return(..() && src.racked_slide)
-
-		attack_self(mob/user as mob)
-			..()
-			src.rack(user)
-
-		rack(var/atom/movable/user)
-			var/mob/mob_user = null
-			if(ismob(user))
-				mob_user = user
-			if (!src.racked_slide) //Are we racked?
-				if (src.ammo.amount_left == 0)
-					boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-					UpdateIcon()
-				else
-					src.racked_slide = TRUE
-					if (src.icon_state == "sawnshotty[src.gilded ? "-golden" : ""]") //"animated" racking
-						src.icon_state = "sawnshotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-						animate(src, time = 0.2 SECONDS)
-						animate(icon_state = "sawnshotty[gilded ? "-golden" : ""]")
-					else
-						UpdateIcon() // Slide already open? Just close the slide
-					boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
-					playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
-					src.casings_to_eject = 0
-					if (src.ammo.amount_left < 6) // Do not eject shells if you're racking a full "clip"
-						var/turf/T = get_turf(src)
-						if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
 
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."
