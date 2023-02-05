@@ -1,4 +1,9 @@
 
+(t)sun feb 05 23
+(u)Lord_Earthfire
+(p)12977
+(e)|
+(+)Blocking with a katana enables you to slice fruits thrown at you in midair!
 (t)sat feb 04 23
 (u)Lord_Earthfire
 (p)12518
