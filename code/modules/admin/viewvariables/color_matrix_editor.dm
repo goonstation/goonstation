@@ -66,7 +66,7 @@
 	switch(action)
 		if("transition_color")
 			current_color = params["color"]
-			animate(preview.preview_thing, time = 4, color = current_color)
+			animate(preview.preview_thing, time = 0.4 SECONDS, color = current_color)
 		if("confirm")
 			on_confirm()
 			tgui_process.close_uis(src)
@@ -82,7 +82,7 @@
 		target_atom.color = current_color
 	else if (istype(target_atom, /client))
 		var/client/C = target_atom
-		C.color = current_color
+		C.animate_color(matrix = current_color, time = 0.4 SECONDS, easing=SINE_EASING)
 
 // Unused Currently, but a decent idea
 
