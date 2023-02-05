@@ -88,8 +88,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
+		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
 
 
@@ -107,11 +107,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(src.mat_changedesc)
 		src.desc = initial(src.desc)
 
-	src.alpha = initial(src.alpha)
-	src.color = initial(src.color)
-
-	src.UpdateOverlays(null, "material")
-
+	src.setMaterialAppearance(null)
 	src.material = null
 
 //Time for some super verbose proc names.
@@ -182,27 +178,67 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc += " It's probably not very valuable to a reputable buyer."
 	if(appearance)
 		src.setMaterialAppearance(mat1)
-
+	src.material_applied_appearance = appearance //set the flag for whether we want to reapply material appearance on icon update
 	src.material?.triggerOnRemove(src)
 	src.material = mat1
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
 
+/atom/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
+/image/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
-/atom/proc/setMaterialAppearance(var/datum/material/mat1)
-	var/set_color_alpha = TRUE
-	src.alpha = 255
-	src.color = null
-	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-		if (mat1.name in src.mat_appearances_to_ignore)
-			set_color_alpha = FALSE
-	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
+/// Order of precedence is as follows:
+/// if the material is in the list of appearences to ignore, do nothing
+/// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
+/// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
+/atom/proc/setMaterialAppearance(datum/material/mat1)
+	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
+	src.color = initial(src.color)
+	var/base_icon_state = materialless_icon_state()
+	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
+		src.icon_state = base_icon_state
+		src.setTexture(null, key="material")
+		return
+
+	var/potential_new_icon_state = "[base_icon_state]$$[mat1.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		src.icon_state = potential_new_icon_state
+		src.setTexture(null, key="material")
+		return
+
+	if (src.mat_changeappearance)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
-		src.alpha = mat1.alpha
-		src.color = mat1.color
+		else
+			src.setTexture(null, key="material")
+		if(mat1.applyColor)
+			src.alpha = mat1.alpha
+			src.color = mat1.color
+
+/// Applies material icon_state override to an /image based on this atom's material (or the material provided)
+/atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
+	if(isnull(mat))
+		mat = src.material
+	var/base_icon_state = img.materialless_icon_state()
+	if (isnull(mat) || length(src.mat_appearances_to_ignore) && (mat in src.mat_appearances_to_ignore))
+		img.icon_state = base_icon_state
+		return
+	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		img.icon_state = potential_new_icon_state
+		return
+
+/atom/proc/is_valid_icon_state(var/state)
+	if(isnull(global.valid_icon_states[src.icon]))
+		global.valid_icon_states[src.icon] = list()
+		for(var/icon_state in icon_states(src.icon))
+			global.valid_icon_states[src.icon][icon_state] = 1
+	return state in global.valid_icon_states[src.icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -244,8 +280,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
-		if(newMat)
-			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -260,8 +294,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
-			if(newMat)
-				newProc.owner = newMat
 	return newList
 
 /// Merges two materials and returns result as new material.
@@ -527,3 +559,25 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()
+
+/**
+ * Returns the heat transfer coefficient between two materials based on (in order, if present): thermal conductivity, electrical conductivity
+ * Defaults to 0.5 if neither property is present.
+ * The result for each material is multiplied together. This is intended for use as h in hA(T1-T2), where A is the contact area and T1 and T2 are the tempertatures respectively
+*/
+proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/material/matB)
+	//heat transfer coefficient as a product of the thermal coefficient of each material
+	//fun fact I learned while looking into this: the thermal conductivity of materials is strongly related to the electrical conductivity
+	var/hTC1 = 1
+	var/hTC2 = 1
+	if(matA)
+		if(matA.hasProperty("thermal"))
+			hTC1 = max(matA.getProperty("thermal"),0)/10
+		else
+			hTC1 = 0.5 //default value
+	if(matB)
+		if(matB.hasProperty("thermal"))
+			hTC2 = max(matB.getProperty("thermal"),0)/10
+		else
+			hTC2 = 0.5 //default value
+	return hTC1*hTC2

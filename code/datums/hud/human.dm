@@ -423,7 +423,7 @@
 				if (icon_y > 16 || master.in_throw_mode)
 					master.toggle_throw_mode()
 				else
-					master.drop_item()
+					master.drop_item(null, TRUE)
 
 			if ("resist")
 				master.resist()
@@ -777,6 +777,8 @@
 		remove_object(I)
 
 	proc/update_hands()
+		if(QDELETED(master))
+			return
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else

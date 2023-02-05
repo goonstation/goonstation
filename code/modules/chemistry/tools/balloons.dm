@@ -167,6 +167,7 @@
 			if ("Inhale")
 				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
 				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
+				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
 				return
 
@@ -184,7 +185,7 @@
 				src.tied = TRUE
 
 	afterattack(obj/target, mob/user)
-		if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

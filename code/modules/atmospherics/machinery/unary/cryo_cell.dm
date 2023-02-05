@@ -7,6 +7,7 @@
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	power_usage = 50
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
 	var/ARCHIVED(temperature)
@@ -16,6 +17,7 @@
 
 	var/current_heat_capacity = 50
 	var/pipe_direction //! Direction of the pipe leading into this, set in New() based on dir
+	var/occupied_power_use = 500 //! Additional power usage when the pod is occupied (and on)
 
 	var/reagent_scan_enabled = 0
 	var/reagent_scan_active = 0
@@ -70,7 +72,7 @@
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
 				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
-
+					use_power(occupied_power_use, EQUIP)
 					process_occupant()
 				else
 					if(occupant.mind)
@@ -116,11 +118,11 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
 		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"

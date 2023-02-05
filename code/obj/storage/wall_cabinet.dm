@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/storage/wall)
+	mats = 8
+
 /obj/item/storage/wall
 	name = "cabinet"
 	desc = "It's basically a big box attached to the wall."
@@ -10,7 +13,6 @@
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 8
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
 	max_wclass = W_CLASS_BULKY
@@ -223,7 +225,7 @@
 
 /obj/item/storage/wall/clothingrack/clothes1
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
-	/obj/item/clothing/under/misc/syndicate = 1,
+	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
@@ -262,7 +264,7 @@
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
-	/obj/item/clothing/under/gimmick/hunter = 1,
+	/obj/item/clothing/under/misc/mobster = 1,
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
@@ -371,3 +373,19 @@ obj/item/storage/wall/clothingrack/hatrack
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
+
+/obj/item/storage/wall/surgery
+	name = "surgical cabinet"
+	desc = "A wall-mounted cabinet containing surgical tools."
+	icon_state = "minimed"
+	slots = 13
+	spawn_contents = list(
+		/obj/item/scalpel = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/scissors/surgical_scissors = 1,
+		/obj/item/surgical_spoon = 1,
+		/obj/item/staple_gun = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/suture = 1,
+		/obj/item/device/analyzer/healthanalyzer = 1,
+	)

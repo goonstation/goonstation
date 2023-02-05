@@ -65,6 +65,8 @@ labelMappings:
     "[GAMEMODES]": a-gamemodes
     "[GAME MODES]": a-gamemodes
     "[MODES]": a-gamemodes
+    "[HYDRO]": a-hydroponics
+    "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
@@ -82,3 +84,4 @@ labelMappings:
     "[EVENTS]": a-events
     "[RP]": a-rp
     "[ROLEPLAY]": a-rp
+    "[VEHICLES]": a-vehicles

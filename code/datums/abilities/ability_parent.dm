@@ -161,23 +161,24 @@
 			abilitystat = new
 			abilitystat.owner = src
 
+		var/list/lines = list()
+
 		var/i = 0
 		var/longest_line = 0
-		var/msg = ""
-		//var/style = "font-size: 7px;"
 		var/list/stats = onAbilityStat()
 		for (var/x in stats)
-			var/line_length = length(x) + 1 + length(num2text(stats[x]))
+			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
 			longest_line = max(longest_line, line_length)
-			msg += "[x] [stats[x]]<br>"
+			lines += "[x] [stats[x]]"
 			i++
 
-		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[lines.Join("<br>")]</span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
-		if (i > 2)
-			abilitystat.maptext_height = (32 + ((i-2) * 16))
-			abilitystat.maptext_y = ((i-2) * -16) - 7
-		else if (abilitystat.maptext_height > 32)
+
+		if (i >= 2)
+			abilitystat.maptext_height = i * 15
+			abilitystat.maptext_y = -abilitystat.maptext_height + 32
+		else
 			abilitystat.maptext_height = initial(abilitystat.maptext_height)
 			abilitystat.maptext_y = initial(abilitystat.maptext_y)
 
@@ -297,6 +298,7 @@
 		src.updateButtons()
 
 	proc/getAbility(var/abilityType)
+		RETURN_TYPE(/datum/targetable)
 		if (!ispath(abilityType))
 			return null
 		for (var/datum/targetable/A in src.abilities)

@@ -106,6 +106,7 @@
 	return ..(gibbed)
 
 /mob/living/silicon/hivebot/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
@@ -944,6 +945,8 @@ Frequency:
 		if(!bioHolder)
 			bioHolder = new/datum/bioHolder( src )
 		SPAWN(0.5 SECONDS)
+			if (QDELETED(src)) //bleh
+				return
 			if (src.module)
 				qdel(src.module)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))

@@ -7,6 +7,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
+	pass_unstable = TRUE
 	var/obj/item/card/id/botcard // ID card that the bot "holds".
 	var/access_lookup = "Assistant" // For the get_access() proc. Defaults to staff assistant.
 	var/locked = null
@@ -264,7 +265,7 @@
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
-	if((BOUNDS_DIST(the_target, src) == 0))
+	if((BOUNDS_DIST(the_target, src) < 0))
 		return
 	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
@@ -272,7 +273,8 @@
 		return 0
 
 	src.KillPathAndGiveUp(0)
-	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	var/datum/robot_mover/mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	src.bot_mover = !QDELETED(mover) ? mover : null
 	return 0
 
 /// movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm

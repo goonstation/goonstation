@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from '../../../common/react';
 
 export enum PowerMonitorType {
   Apc = 'apc',

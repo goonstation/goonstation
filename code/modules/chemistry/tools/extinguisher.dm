@@ -90,7 +90,7 @@
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
 		return
 
-	if ( istype(target, /obj/reagent_dispensers) && BOUNDS_DIST(src, target) == 0)
+	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
 		var/obj/o = target
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -116,9 +116,7 @@
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.owner = M
-				M.implant += implanted
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 			qdel(src)

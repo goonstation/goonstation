@@ -6,7 +6,8 @@
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev)
 
-Want to get the code up and running? This guide is the place to go. <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
+Want to get the code up and running to test changes? This guide is the place to go. 
+<br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
 
 ## COMMUNITY
 

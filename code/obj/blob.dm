@@ -317,7 +317,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
 		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
-			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
+			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>", group="blobweaklyattacked")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
@@ -326,7 +326,7 @@
 			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
 			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
-		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
+		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>", group="blobattacked")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
@@ -777,6 +777,7 @@
 	hit_ground_chance = 50
 	window_pass = 0
 	override_color = 1
+	disruption = 33
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		..()
@@ -1008,6 +1009,11 @@
 	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
+
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
 		if (damage_mult == 0)
 			return
@@ -1031,6 +1037,12 @@
 	gas_impermeable = TRUE
 	health = 40
 	health_max = 40
+	flags = ALWAYS_SOLID_FLUID
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

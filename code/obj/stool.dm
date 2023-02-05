@@ -1039,6 +1039,9 @@
 /* -------------------- Wheelchairs -------------------- */
 /* ===================================================== */
 
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mats = 15
+
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
@@ -1052,7 +1055,6 @@
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
 	mat_appearances_to_ignore = list("steel")
-	mats = 15
 
 	New()
 		..()
@@ -1232,6 +1234,8 @@
 
 	New()
 		..()
+		if (src.dir in ordinal)
+			src.layer = FLY_LAYER+1
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)
 
@@ -1492,7 +1496,7 @@
 			return
 		if (!A.powered(EQUIP))
 			return
-		A.use_power(EQUIP, 5000)
+		A.use_power(5000, EQUIP)
 		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
@@ -1523,3 +1527,13 @@
 
 		A.UpdateIcon()
 		return
+
+/* ========================================================= */
+/* ---------------------- Pool Chairs ---------------------- */
+/* ========================================================= */
+/obj/stool/chair/pool
+	name = "pool chair"
+	desc = "This chair is perfect for lounging at the side of a pool."
+	icon_state = "chair_pool"
+	rotatable = FALSE
+	foldable = FALSE

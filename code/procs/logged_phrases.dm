@@ -23,6 +23,8 @@
  *  name-bee - custom bee / bee larva name
  *  name-critter - custom critter name (you can rename those with a pen too, whoa)
  *  seed - custom botany seed name
+ *  paper - stuff people write on papers
+ *  crayon-queue - crayon queue mode inputs
  */
 
 var/global/datum/phrase_log/phrase_log = new
@@ -59,17 +61,19 @@ var/global/datum/phrase_log/phrase_log = new
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
-			"overrides all",
+			"overrides? all",
 			"the shuttle",
 			"daddy",
 			"uwu",
 			"owo",
 			"non.?human",
-			"overrides.*1",
+			"overrides?.*1",
 			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
-			"murder")
+			"murder",
+			"sus",
+			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
 			@"\bsus(:?|sy)\b",
@@ -94,7 +98,9 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\buwu",
 			@"forgor",
 			@"admeme",
-			@"\bmorb(?!id)"
+			@"sadge",
+			@"\bmorb(?!id)",
+			@"1984"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
@@ -153,7 +159,8 @@ var/global/datum/phrase_log/phrase_log = new
 			ircmsg["key"] = usr.key
 			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
-			ircbot.export("admin", ircmsg)
+			SPAWN(0)
+				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)

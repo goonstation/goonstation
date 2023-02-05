@@ -36,7 +36,7 @@
 		..()
 		var/datum/handHolder/HH = hands[3]
 		HH.name = "control of fire"
-		HH.limb = new /datum/limb/gun/fire_elemental
+		HH.limb = new /datum/limb/gun/kinetic/fire_elemental
 		HH.icon_state = "fire_essence"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "fire essence"

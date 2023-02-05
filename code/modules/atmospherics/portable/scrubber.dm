@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/scrubber
 	name = "Portable Air Scrubber"
 
@@ -7,7 +10,6 @@
 
 	var/on = FALSE
 	var/inlet_flow = 100 // percentage
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
 	desc = "A device which filters out harmful air from an area."
@@ -17,6 +19,13 @@
 	//for smoke
 	var/drain_min = 5
 	var/drain_max = 12
+	///Temporary reagent buffer, reagents are stored in src.reagents
+	var/obj/item/reagent_containers/glass/buffer = null
+
+	New()
+		..()
+		src.buffer = new(src, 500)
+		src.create_reagents(500)
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	if(on)
@@ -77,17 +86,20 @@
 		return
 
 	if(on)
-		var/power_usage = src.inlet_flow * 50 WATTS
+		var/active_power_usage = src.inlet_flow * 50 WATTS
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/F = my_turf.active_airborne_liquid
 			if (F?.group)
-				power_usage += (inlet_flow / 8) * 5 KILO WATTS
-				F.group.queued_drains += inlet_flow / 8
-				F.group.last_drain = my_turf
-				if (!F.group.draining)
-					F.group.add_drain_process()
+				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
+				F.group.drain(F, inlet_flow / 8, src.buffer)
+				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
+				if (src.reagents.total_volume < src.reagents.maximum_volume)
+					src.buffer.transfer_all_reagents(src)
+				else
+					src.buffer.reagents.reaction(get_turf(src), TOUCH, src.buffer.reagents.total_volume)
+				src.buffer.reagents.clear_reagents()
 
 		var/original_my_moles = TOTAL_MOLES(src.air_contents)
 		if(src.holding)
@@ -97,8 +109,8 @@
 				if(issimulatedturf(T) && isfloor(T))
 					src.scrub_turf(T, T == src.loc ? src.inlet_flow : src.inlet_flow / 2)
 		var/filtered_out_moles = TOTAL_MOLES(src.air_contents) - original_my_moles
-		power_usage += filtered_out_moles * 700 WATTS
-		A.use_power(power_usage, ENVIRON)
+		active_power_usage += filtered_out_moles * 700 WATTS
+		A.use_power(active_power_usage, ENVIRON)
 		src.updateDialog()
 	src.UpdateIcon()
 
@@ -149,11 +161,8 @@
 		"inletFlow" = src.inlet_flow
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding?.ui_describe()
+	.["reagent_container"] = ui_describe_reagents(src)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
 	. = list(

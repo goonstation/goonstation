@@ -470,6 +470,9 @@
 				pickedup = 1
 
 
+TYPEINFO(/obj/vehicle/marsrover)
+	mats = 8
+
 /obj/vehicle/marsrover
 	name = "Rover"
 	desc = "A rover designed to let researchers explore hazardous planets safely and efficiently. It looks pretty old."
@@ -477,7 +480,6 @@
 	rider_visible = 0
 	layer = MOB_LAYER + 1
 	sealed_cabin = 1
-	mats = 8
 
 /obj/vehicle/marsrover/proc/update()
 	if(rider)

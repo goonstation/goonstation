@@ -6,7 +6,8 @@
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -271,7 +272,7 @@
 	attack_hand(mob/user)
 		if(istype(src.loc, /obj/item/storage/backpack))
 			if (user.s_active)
-				user.detach_hud(usr.s_active)
+				user.detach_hud(user.s_active)
 				user.s_active = null
 			user.s_active = src.hud
 			hud.update(user)
@@ -284,11 +285,7 @@
 	name = "salvager rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
-	spawn_contents = list(/obj/item/storage/box/salvager_frame_compartment,
-						  /obj/item/deconstructor,
-						  /obj/item/tool/omnitool,
-						  /obj/item/weldingtool,
-						  /obj/item/tank/air)
+	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	in_list_or_max = 1
@@ -302,30 +299,108 @@
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 1.5
-	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	speed = 0.85
 
 	New()
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
+		src.lock = new /obj/item/shipcomponent/secondary_system/lock/bioscan(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
 
-	go_home()
-		if((POD_ACCESS_SALVAGER in src.com_system?.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
-			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
+/datum/manufacture/pod/armor_light/salvager
+	name = "Salvager Pod Armor"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,20)
+	item_outputs = list(/obj/item/podarmor/salvager)
+	time = 20 SECONDS
+	create = 1
+	category = "Component"
+
+/obj/item/podarmor/salvager
+	name = "Salvager Pod Armor"
+	desc = "Exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
 
 /obj/item/shipcomponent/communications/salvager
-		name = "Salvager Communication Array"
-		desc = "An rats nest of cables and extra parts fashioned into a shipboard communicator."
-		color = "#91681c"
-		access_type = list(POD_ACCESS_SALVAGER)
+	name = "Salvager Communication Array"
+	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
+	color = "#91681c"
+	access_type = list(POD_ACCESS_SALVAGER)
 
+	go_home()
+		var/escape_planet
+#ifdef UNDERWATER_MAP
+		escape_planet = !isrestrictedz(ship.z)
+#else
+		escape_planet = !isnull(station_repair.station_generator) && (ship.z == Z_LEVEL_STATION)
+#endif
+
+		if(!escape_planet)
+			return
+
+		var/turf/target = get_home_turf()
+		if(!src.active)
+			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate trajectory!")]")
+			return TRUE
+		if(!target)
+			boutput(usr, "[ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
+			return TRUE
+
+		if(ship.engine.active)
+			if(ship.engine.ready)
+				//brake the pod, we must stop to calculate warp trajectory.
+				if (istype(ship.movement_controller, /datum/movement_controller/pod))
+					var/datum/movement_controller/pod/MCP = ship.movement_controller
+					if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate trajectory to destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+				else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+					var/datum/movement_controller/tank/MCT = ship.movement_controller
+					if (MCT.input_x != 0 || MCT.input_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate trajectory destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+
+
+				ship.engine.warp_autopilot = 1
+				boutput(usr, "[ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
+
+				var/health_perc = ship.health_percentage
+				ship.going_home = FALSE
+				sleep(5 SECONDS)
+
+				if(ship.health_percentage < (health_perc - 30))
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
+				else if(ship.engine.active && ship.engine.ready && src.active)
+					var/old_color = ship.color
+					animate_teleport(ship)
+					sleep(0.8 SECONDS)
+					ship.set_loc(target)
+					ship.color = old_color // revert color from teleport color-shift
+				else
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
+
+				ship.engine.ready = 0
+				ship.engine.warp_autopilot = 0
+				ship.engine.ready()
+			else
+				boutput(usr, "[ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
+		else
+			boutput(usr, "[ship.ship_message("Engines inactive! Unable to calculate trajectory!")]")
+
+		return TRUE
+
+	get_home_turf()
+		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
+			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
@@ -347,14 +422,7 @@
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
 
-#ifdef SECRETS_ENABLED
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
-#endif
-
-		for(var/buy_type in concrete_typesof(/datum/commodity/magpie/buy))
+		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
 			src.goods_buy += new buy_type(src)
 
 		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
@@ -413,11 +481,17 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
 
+
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
 /obj/salvager_cryotron
+/obj/item/salvager_hand_tele
+/obj/item/shipcomponent/secondary_system/lock/bioscan
+
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell
 ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 /datum/commodity/magpie/buy
+ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
+/datum/commodity/magpie/buy/random_buy

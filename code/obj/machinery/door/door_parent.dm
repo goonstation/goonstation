@@ -1,5 +1,6 @@
 #define KNOCK_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
@@ -12,6 +13,7 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
+	pass_unstable = TRUE
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = TRUE
@@ -40,6 +42,9 @@
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
+	var/atom/movable/bumper = null
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
@@ -104,10 +109,7 @@
 				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
-					var/obj/item/affecting = H.organs["head"]
-					if (affecting)
-						affecting.take_damage(9, 0)
-						H.UpdateDamageIcon()
+					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 					H.changeStatus("weakened", 1 SECOND)
 				else
 					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")
@@ -369,6 +371,7 @@
 	if (src.allowed(AM))
 		if (src.density)
 			last_used = world.time
+			src.bumper = AM
 			if (src.open() == 1)
 				return 1
 			else
@@ -514,6 +517,8 @@
 		src.update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
+		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
+		src.bumper = null
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
@@ -652,6 +657,7 @@
 	src.add_fingerprint(user)
 	if (src.allowed(user))
 		if (src.density)
+			src.bumper = user
 			open()
 		else
 			close()

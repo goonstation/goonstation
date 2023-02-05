@@ -49,7 +49,7 @@
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
 			sticker.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
 			sticker.icon_state = src.icon_state
-			sticker.appearance_flags = RESET_COLOR
+			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 			//pox = clamp(-round(A.bound_width/2), pox, round(A.bound_width/2))
 			//poy = clamp(-round(A.bound_height/2), pox, round(A.bound_height/2))
@@ -143,9 +143,9 @@
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -212,7 +212,7 @@
 			src.plane = F.plane
 			F.vis_contents += src
 
-	proc/remove_from_attached()
+	proc/remove_from_attached(do_loc = TRUE)
 		if (!src.attached)
 			return
 		if (istype(src.attached, /atom/movable))
@@ -221,8 +221,8 @@
 		else if (istype(src.attached, /turf))
 			var/turf/F = src.attached
 			F.vis_contents -= src
-
-		src.set_loc(src.attached.loc)
+		if(do_loc)
+			src.set_loc(src.attached.loc)
 		src.layer = initial(src.layer)
 		src.plane = initial(src.plane)
 		src.pixel_x = initial(src.pixel_x)
@@ -234,8 +234,19 @@
 		..()
 
 	disposing()
-		src.remove_from_attached()
+		src.remove_from_attached(do_loc = FALSE)
 		..()
+
+	set_loc(newloc)
+		. = ..()
+		if(src.attached && src.loc != src.attached)
+			remove_from_attached(do_loc = FALSE)
+
+	Move(NewLoc, direct)
+		. = ..()
+		if(src.attached && src.loc != src.attached)
+			remove_from_attached(do_loc = FALSE)
+
 
 /obj/item/sticker/gold_star
 	name = "gold star sticker"

@@ -9,7 +9,7 @@
 	var/linked_critters = 0
 	var/max_critters = 5
 	var/next_spawn_check = 10 SECONDS
-	var/process_range = 5
+	var/process_range = 2
 
 	New()
 		..()
@@ -33,7 +33,7 @@
 			if (src.next_spawn_check < TIME)
 				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
-					var/obj/critter/mouse/mad/ratden/M = new /obj/critter/mouse/mad/ratden(src.loc)
+					var/mob/living/critter/small_animal/mouse/mad/rat_den/M = new /mob/living/critter/small_animal/mouse/mad/rat_den(src.loc)
 					M.linked_den = src
 					linked_critters ++
 
@@ -43,5 +43,5 @@
 			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
-					hh.HealDamage(3)
+					hh.HealDamage(6)
 				boutput(P, "The proximity of the rat den fills you with renewed malevolence.")

@@ -300,7 +300,7 @@
 			var/obj/item/reagent_containers/food/snacks/plant/I = W
 			base_score = 2 + I.quality
 
-		else if (istype(W, /obj/item/plant))
+		else if (istype(W, /obj/item/plant) || istype(W, /obj/item/clothing/head/flower))
 			var/obj/item/plant/I = W
 			base_score = 2 + I.quality
 
@@ -504,7 +504,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -561,6 +562,7 @@
 	name = "Space American Football Field"
 	icon_state = "green"
 	dont_log_combat = TRUE
+	allowed_restricted_z = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -723,6 +725,17 @@
 	var/update_delay = 0
 	var/require_var_or_list = 1
 
+	/// If enabled and autosize_target is set, scales the target based on the monitored value and the set scale and value boundaries.
+	var/autosize_enabled = 0
+	var/atom/autosize_target
+	// scale min/max - range in which target gets scaled
+	// single value means both x and y, a list(x, y) dictates respective x and y values
+	var/autosize_scale_min = 1
+	var/autosize_scale_max = 1
+	// monitored value bounds - the range of values to which scaling adjusts
+	var/autosize_min_monitored_value_bounds = 0
+	var/autosize_max_monitored_value_bounds = 0
+
 	New()
 		..()
 		src.maptext_x = -100
@@ -732,6 +745,8 @@
 
 	disposing()
 		UnsubscribeProcess()
+		if (autosize_target)
+			autosize_target_reset_transform()
 		..()
 
 	process()
@@ -740,6 +755,8 @@
 			UnsubscribeProcess()
 			SPAWN(0)
 				while (src.update_delay)
+					if(QDELETED(src))
+						return
 					src.update_monitor()
 					sleep(update_delay)
 
@@ -791,9 +808,54 @@
 				src.last_value = current_value
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
+				if (autosize_enabled && autosize_target)
+					autosize_update_target()
 		catch(var/exception/e)
 			src.maptext = "<span class='c pixel sh'>[src.monitored]\n(Err: [e])</span>"
 
+	proc/autosize_update_target()
+		var/input_value = clamp(last_value, autosize_min_monitored_value_bounds, autosize_max_monitored_value_bounds)
+		var/output_x_start
+		var/output_x_end
+		var/output_y_start
+		var/output_y_end
+		if (islist(autosize_scale_min))
+			var/list/output_start_list = autosize_scale_min
+			if (length(autosize_scale_min) != 2)
+				// shouldn't occur, reverting to safe values
+				output_x_start = 1
+				output_y_start = 1
+			else
+				output_x_start = output_start_list[1]
+				output_y_start = output_start_list[2]
+		else
+			output_x_start = autosize_scale_min
+			output_y_start = autosize_scale_min
+		if (islist(autosize_scale_max))
+			var/list/output_end_list = autosize_scale_max
+			if (length(autosize_scale_max) != 2)
+				// shouldn't occur, reverting to safe values
+				output_x_end = 1
+				output_y_end = 1
+			else
+				output_x_end = output_end_list[1]
+				output_y_end = output_end_list[2]
+		else
+			output_x_end = autosize_scale_max
+			output_y_end = autosize_scale_max
+
+		var/mapping_slope_x = (1.0 * (output_x_end - output_x_start) / (autosize_max_monitored_value_bounds - autosize_min_monitored_value_bounds))
+		var/output_x = output_x_start + mapping_slope_x * (input_value - autosize_min_monitored_value_bounds)
+		var/mapping_slope_y = (1.0 * (output_y_end - output_y_start) / (autosize_max_monitored_value_bounds - autosize_min_monitored_value_bounds))
+		var/output_y = output_y_start + mapping_slope_y * (input_value - autosize_min_monitored_value_bounds)
+
+		var/matrix/new_matrix = matrix()
+		new_matrix.Scale(output_x, output_y)
+		autosize_target.transform = new_matrix
+
+	proc/autosize_target_reset_transform()
+		var/matrix/default_matrix = matrix()
+		autosize_target.transform = default_matrix
 
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
@@ -812,7 +874,7 @@
 			if ("percent")
 				return (val * 100)
 			if ("temperature")
-				return "[val - T0C]&deg;C"
+				return "[TO_CELSIUS(val)]&deg;C"
 			if ("round")
 				return round(val)
 
@@ -934,6 +996,52 @@
 						return "Departing in [..(val)]"
 
 
+	ticker
+		New()
+			// Global ticker var
+			monitored = ticker
+			..()
+
+		round_timer
+			maptext_prefix = "<span class='c pixel sh'>Shift Time\n<span class='xfont'>"
+			monitored_var = "round_elapsed_ticks"
+			display_mode = "time"
+			update_delay = 1 SECOND
+
+			wall_clock
+				name = "digital wall clock"
+				desc = "A digital readout of how long the shift has been so far."
+				maptext_prefix = "<span class='c xfont ol'>"
+				maptext_suffix = "</span>"
+
+				New()
+					..()
+					maptext_y += 21
+
+				offset
+					New()
+						..()
+						maptext_x += 16
+
+
+	score_tracker
+		New()
+			// Global score_tracker var
+			monitored = score_tracker
+			..()
+
+		artifacts_analyzed
+			maptext_prefix = "<span class='c pixel sh'>Artifacts\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_analyzed"
+			ding_on_change = 1
+
+		artifacts_analyzed_correctly
+			maptext_prefix = "<span class='c pixel sh'>Correctly\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_correctly_analyzed"
+			ding_on_change = 1
+			// u did it
+			ding_sound = 'sound/machines/futurebuddy_beep.ogg'
+
 
 	location
 		require_var_or_list = 0
@@ -955,7 +1063,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -987,7 +1095,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -1012,12 +1120,18 @@
 		farts
 			monitored_var = "farts"
 			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
+
+		slips
+			monitored_var = "slips"
+			maptext_prefix = "<span class='c pixel sh'>Slips:\n<span class='vga'>"
+			update_delay = 1
 
 		deaths
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = 'sound/misc/lose.ogg'
+			update_delay = 1
 
 			players
 				monitored_var = "playerdeaths"
@@ -1042,7 +1156,7 @@
 		violence
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
 
 		clones
 			monitored_var = "clones"
@@ -1054,6 +1168,8 @@
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
 			ding_sound = 'sound/misc/lose.ogg'
+			ding_on_change = 0
+			update_delay = 1
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])
@@ -1121,7 +1237,7 @@
 				var/mob/M = C.mob
 				if(!M || isnewplayer(M)) continue
 				if (isdead(M) && !isliving(M))
-					if (M.mind?.joined_observer)
+					if (M.mind?.get_player()?.joined_observer)
 						results["observer"]++
 					else
 						results["dead"]++
@@ -1381,12 +1497,13 @@ Other Goonstation servers:[serverList]</span>"})
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
-	desc = "Genetically engineered for passiveness and bred for badminning, the greater domestic zambee is increasingly unpopular among grayshirts and griefers."
+	desc = "Finally, badminnery in the form of a bad pun. Dead on the inside."
 	limb_path = /datum/limb/small_critter/bee/strong
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting/zambee,
 						 /datum/targetable/critter/bee_swallow,
-						 /datum/targetable/critter/bee_teleport)
+						 /datum/targetable/critter/bee_teleport,
+						 /datum/targetable/critter/bee_puke_honey)
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)

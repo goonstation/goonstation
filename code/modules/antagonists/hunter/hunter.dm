@@ -38,7 +38,16 @@
 		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	assign_objectives()
-		new /datum/objective_set/hunter(src.owner)
+		new /datum/objective_set/hunter(src.owner, src)
+
+	handle_round_end(log_data)
+		var/list/dat = ..()
+		for (var/datum/objective/specialist/hunter/trophy/T in src.owner.objectives)
+			if (src.owner.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
+				dat.Insert(2, {"<b>Combined trophy value:</b> [src.owner.current.get_skull_value()]"})
+				return dat
+
+		return dat
 
 
 // Called for every human mob spawn and mutantrace change. The value of non-standard skulls is defined in organ.dm.
@@ -148,24 +157,22 @@
 											skull_desc = "A meaningless trophy from a weak opponent. You feel disgusted to even look at it."
 
 				// Assign new skull or change value/desc.
-				if (!isnull(skull_type))
-					var/obj/item/skull/new_skull = new skull_type
-					skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+				if (isnull(skull_type))
+					skull_type = /obj/item/skull
 
-					if (S.type != new_skull.type)
-						//setup skull AFTER the qdel! otherwise skull gets set to null
-						qdel(S)
-						new_skull.donor = H
-						new_skull.preddesc = skull_desc
-						new_skull.set_loc(H)
-						H.organHolder.skull = new_skull
-						//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
-					else
-						qdel(new_skull)
-						S.value = skull_value
-						S.preddesc = skull_desc
-						//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
+				var/obj/item/skull/new_skull = new skull_type
+				skull_value = new_skull.value // Defined in organ.dm. Copied because there isn't always a need to replace the skull.
+
+				if (S.type != new_skull.type)
+					//setup skull AFTER the qdel! otherwise skull gets set to null
+					qdel(S)
+					new_skull.donor = H
+					new_skull.preddesc = skull_desc
+					new_skull.set_loc(H)
+					H.organHolder.skull = new_skull
+					//DEBUG_MESSAGE("[H]'s skull: [new_skull.type] (V: [new_skull.value], D: [new_skull.preddesc])")
 				else
+					qdel(new_skull)
 					S.value = skull_value
 					S.preddesc = skull_desc
 					//DEBUG_MESSAGE("[H]'s skull: [S.type] (V: [S.value], D: [S.preddesc])")
@@ -357,10 +364,7 @@
 
 	src.unequip_all()
 
-	var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(src)
-	src.implant.Add(B)
-	B.implanted = 1
-	B.implanted(src)
+	new /obj/item/implant/revenge/microbomb/hunter(src)
 
 	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), slot_w_uniform) // srcust be at the top of the list.
 	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), slot_wear_mask)

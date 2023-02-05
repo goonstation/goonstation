@@ -6,11 +6,13 @@
 // light_status values shared between lighting fixtures and items
 // defines moved to _setup.dm by ZeWaka
 
+TYPEINFO(/obj/item/light_parts)
+	mats = 4
+
 /obj/item/light_parts
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	mats = 4
 	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
@@ -74,6 +76,8 @@
 
 // the standard tube light fixture
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/admin_fix)
+
 /var/global/stationLights = new/list()
 /obj/machinery/light
 	name = "light fixture"
@@ -85,6 +89,9 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+	material_amt = 0.2
+
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
 
@@ -824,6 +831,7 @@
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
+		user.lastattacked = src
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -831,8 +839,7 @@
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-
-
+		user.lastattacked = src
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
@@ -921,6 +928,8 @@
 // break the light and make sparks if was on
 
 /obj/machinery/light/proc/broken(var/nospark = 0)
+	set name = "Break"
+
 	if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
 		return
 
@@ -957,6 +966,20 @@
 /obj/machinery/light/blob_act(var/power)
 	if(prob(power * 2.5))
 		broken()
+
+/obj/machinery/light/proc/admin_toggle()
+	set name = "Toggle"
+	on = (!on && current_lamp.light_status == LIGHT_OK)
+	update()
+
+/obj/machinery/light/proc/admin_fix()
+	set name = "Fix"
+	if(isnull(current_lamp))
+		current_lamp = new light_type
+	current_lamp.light_status = LIGHT_OK
+	current_lamp.update()
+	on = TRUE
+	update()
 
 //mbc : i threw away this stuff in favor of a faster machine loop process
 /*
@@ -1024,6 +1047,9 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
+TYPEINFO(/obj/item/light)
+	mats = 1
+
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -1031,13 +1057,12 @@
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
-	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
-	mats = 1
 	var/color_r = 1
 	var/color_g = 1
 	var/color_b = 1

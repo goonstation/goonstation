@@ -402,6 +402,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
 
+/datum/cookingrecipe/toasted_french
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/french
+	cookbonus = 5
+	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
+
 /datum/cookingrecipe/sandwich_m_h
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
@@ -837,7 +842,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/eggtoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastegg
 
@@ -1080,9 +1085,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/onionchips
 	item1 = /obj/item/reagent_containers/food/snacks/onion_slice
-	item2 = /obj/item/reagent_containers/food/snacks/onion_slice
-	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/onionchips
 
@@ -1254,11 +1259,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		for (var/obj/item/T in ourCooker.contents)
 
 			if (T.type == item1 && !found1)
-				found1 = true
+				found1 = TRUE
 				continue
 
 			if (T.type == item2 && !found2)
-				found2 = true
+				found2 = TRUE
 				continue
 
 			anItem = T
@@ -1600,7 +1605,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1641,7 +1646,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1738,8 +1743,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sushi_roll
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
-	item3 = /obj/item/reagent_containers/food/snacks/rice_ball
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/sushi_roll
 
@@ -1831,9 +1836,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/cheesewheel
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	amt1 = 2
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cheesewheel
 
@@ -1844,6 +1847,20 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ratatouille
+
+/datum/cookingrecipe/churro
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/dippable/churro
+
+/datum/cookingrecipe/french_toast
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/drinks/milk
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/french_toast
 
 /datum/cookingrecipe/zongzi
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo
@@ -1903,4 +1920,3 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
-

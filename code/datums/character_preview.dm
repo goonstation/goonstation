@@ -23,6 +23,8 @@
 	var/atom/movable/preview_thing = null
 	/// Set to true if you want to handle the creation of the `preview_thing`
 	var/custom_setup = FALSE
+	///Do not access directly, use get_icon instead
+	var/icon/flat_icon = null
 
 /// Pass the viewer client, the name of the window, the control to bind it to, and the size you want
 /datum/movable_preview/New(client/viewer, window_id, control_id = null, size = 128)
@@ -126,6 +128,7 @@
 	/// Sets the appearance, mutant race, and facing direction of the human mob.
 	/// Assumes the `preview_thing` is a mob
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH, name = "human")
+		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
 		preview_mob.set_mutantrace(null)
@@ -138,6 +141,11 @@
 		preview_mob.set_face_icon_dirty()
 		preview_mob.real_name = "clone of " + name
 		preview_mob.name = "clone of " + name
+
+	proc/get_icon()
+		if (!src.flat_icon)
+			src.flat_icon = getFlatIcon(src.preview_mob)
+		return src.flat_icon
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.

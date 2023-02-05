@@ -185,6 +185,10 @@
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
 	spawn_contents = list(/obj/item/gnomechompski)
 
+/obj/storage/crate/bin/trash
+	name = "trash can"
+	desc = "A can for trash. Garbage. That kind of thing."
+
 /obj/storage/crate/adventure
 	name = "adventure crate"
 	desc = "Only distantly related to the adventure closet."
@@ -253,7 +257,23 @@
 	name = "building materials crate"
 	spawn_contents = list(/obj/item/sheet/steel/fullstack,
 	/obj/item/sheet/glass/fullstack)
-
+/obj/storage/crate/radio
+	name = "radio headsets crate"
+	spawn_contents = list(
+		/obj/item/storage/box/PDAbox,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/research,
+		/obj/item/device/radio/headset/research,
+	)
 /*
  *	SPOOKY haunted crate!
  */

@@ -46,6 +46,7 @@
 			ailments.Cut()
 			real_name = name_override
 			name = name_override
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_HIDE_ICONS, "underfloor")
 
 	cluwnegib()
 		return
@@ -391,8 +392,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
 		//src.equip_new_if_possible(/obj/item/clothing/head/biker_cap, slot_head)
 
-		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-		implant.implanted(src, src)
+		new /obj/item/implant/access/infinite/shittybill(src)
 
 		var/obj/item/power_stones/G = new /obj/item/power_stones/Gall
 		G.set_loc(src)

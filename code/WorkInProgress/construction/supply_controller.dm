@@ -548,15 +548,19 @@
 	bullet_act()
 		return
 
+TYPEINFO(/obj/supply_pad/incoming)
+	mats = 10
+
 /obj/supply_pad/incoming
 	name = "Incoming supply pad"
 	direction = 0
+
+TYPEINFO(/obj/supply_pad/outgoing)
 	mats = 10
 
 /obj/supply_pad/outgoing
 	name = "Outgoing supply pad"
 	direction = 1
-	mats = 10
 
 /obj/machinery/computer/special_supply
 	// This is a grade 1 workstation. Contains bare-bones supplies.

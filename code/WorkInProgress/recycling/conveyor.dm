@@ -14,6 +14,7 @@
 #endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
+	pass_unstable = TRUE
 	anchored = 1
 	power_usage = 100
 	layer = 2
@@ -246,7 +247,7 @@
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return
-	use_power(power_usage)
+	..()
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -367,6 +368,8 @@
 	if(!operating)
 		return
 	if(!loc)
+		return
+	if(AM.loc != src.loc) //fixes race condition where AM gets yoinked during the turf-to-turf loop that calls Crossed on everything (& ends up with an active walk inside another object)
 		return
 	move_thing(AM)
 
@@ -547,6 +550,7 @@
 	icon_state = "diverter0"
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
+	pass_unstable = TRUE
 	anchored = 1
 	layer = FLY_LAYER
 	event_handler_flags = USE_FLUID_ENTER
@@ -662,6 +666,7 @@
 
 
 
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 /// the conveyor control switch
 /obj/machinery/conveyor_switch

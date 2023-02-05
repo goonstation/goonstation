@@ -30,7 +30,7 @@
 /datum/robot/module_tool_creator/item_type/amount/steel_rod/setup(obj/item/rods/steel/I)
 	..()
 	if (!isnull(I))
-		I.update_stack_appearance()
+		I.UpdateStackAppearance()
 	return I
 
 /datum/robot/module_tool_creator/item_type/amount/steel_sheet

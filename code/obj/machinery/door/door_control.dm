@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -401,10 +402,13 @@
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if((src.status & (NOPOWER|BROKEN)) || inuse)
-		return
-
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+		return
+	src.toggle(user)
+	src.add_fingerprint(user)
+
+/obj/machinery/door_control/proc/toggle(mob/user)
+	if((src.status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	src.use_power(5)
@@ -414,7 +418,7 @@
 	if (!src.id)
 		return
 
-	logTheThing(LOG_STATION, user, "toggled the [src.name] at [log_loc(src)].")
+	logTheThing(LOG_STATION, user || usr, "toggled the [src.name] at [log_loc(src)].")
 
 	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
@@ -458,7 +462,6 @@
 	SPAWN(1.5 SECONDS)
 		if(!(src.status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()

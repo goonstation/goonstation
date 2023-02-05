@@ -12,7 +12,7 @@
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial_base/blob/tutorial
+	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -98,7 +98,7 @@
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
-		src.nucleus_overlay.appearance_flags = RESET_COLOR
+		src.nucleus_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		SPAWN(0)
 			while (src)

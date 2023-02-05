@@ -22,6 +22,8 @@
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
+	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
+	var/explosion_immune = FALSE
 
 	New()
 		..()
@@ -587,6 +589,9 @@
 /turf/simulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -810,6 +815,12 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/white,
+	icon_state = "twotone_white")
+
+DEFINE_FLOORS(twotone/black,
+	icon_state = "twotone_black")
+
 /////////////////////////////////////////
 
 DEFINE_FLOORS(terrazzo,
@@ -845,16 +856,84 @@ DEFINE_FLOORS(marble/border_wb,
 
 /////////////////////////////////////////
 
-DEFINE_FLOORS(glassblock,
-	name = "glass block tiling";\
-	icon = 'icons/turf/floors.dmi';\
-	icon_state = "glass_small";\
-	mat_appearances_to_ignore = list("steel","synthrubber");\
-	step_material = "step_wood";\
-	step_priority = STEP_PRIORITY_MED)
+/turf/simulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = FALSE
 
-DEFINE_FLOORS(glassblock/large,
-	icon_state = "glass_large")
+	pry_tile(obj/item/C as obj, mob/user as mob, params)
+		boutput(user, "<span class='alert'>This is glass flooring, you can't pry this up!</span>")
+
+	to_plating()
+		return
+
+	break_tile_to_plating()
+		return
+
+	break_tile()
+		return
+
+	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
+	burn_tile()
+		return
+
+	attackby(obj/item/C, mob/user, params)
+		if (istype(C, /obj/item/rods))
+			boutput(user, "<span class='alert'>You can't reinforce this tile.</alert>")
+			return
+		if(istype(C, /obj/item/cable_coil))
+			boutput(user, "<span class='alert'>You can't put cable over this tile, it would be too exposed.</span>")
+			return
+		..()
+
+/turf/simulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/simulated/floor/glassblock/transparent
+	icon_state = "glasstr_cyan"
+
+	New()
+		var/image/I
+		#ifdef UNDERWATER_MAP
+		var/sand_icon
+		var/direction
+		switch(rand(1, 3))
+			if(1)
+				sand_icon = "sand_other_texture"
+				direction = pick(alldirs)
+			if(2)
+				sand_icon = "sand_other_texture2"
+				direction = pick(alldirs)
+			if(3)
+				sand_icon = "sand_other_texture3"
+				direction = pick(cardinal)
+		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
+		#else
+		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		#endif
+		I.plane = PLANE_SPACE
+		src.underlays += I
+		plate_mat = getMaterial("glass")
+		..()
+
+/turf/simulated/floor/glassblock/transparent/cyan
+	icon_state = "glasstr_cyan"
+
+/turf/simulated/floor/glassblock/transparent/indigo
+	icon_state = "glasstr_indigo"
+
+/turf/simulated/floor/glassblock/transparent/red
+	icon_state = "glasstr_red"
+
+/turf/simulated/floor/glassblock/transparent/grey
+	icon_state = "glasstr_grey"
+
+/turf/simulated/floor/glassblock/transparent/purple
+	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
 
@@ -927,33 +1006,6 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/escape/corner
 	icon_state = "escapecorner"
-
-/////////////////////////////////////////
-
-/turf/simulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/simulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/simulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/simulated/floor/bot
-	icon_state = "bot"
-
-/turf/simulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/simulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/simulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/turf/simulated/floor/bot/caution
-	icon_state = "botcaution"
 
 /////////////////////////////////////////
 
@@ -1620,6 +1672,29 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
+/turf/simulated/floor/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		if (!( locate(/obj/machinery/mass_driver, src) ))
+			var/obj/machinery/vehicle/O = mover
+			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+				if (I.crashable)
+					mover.Bump(src)
+					return TRUE
+			return FALSE
+	return ..()
+
+/turf/simulated/shuttle/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		return 0
+	return ..()
+
+/turf/unsimulated/floor/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		if (!( locate(/obj/machinery/mass_driver, src) ))
+			return 0
+	return ..()
+
 /turf/simulated/floor/burn_down()
 	if (src.intact)
 		src.ex_act(2)
@@ -1627,6 +1702,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
+	if(src.explosion_immune)
+		return
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()
@@ -1977,7 +2054,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"readster's very own girder",
 				"just a girder",
 				"a gourder",//60
-				"a fuckable girder",
 				"a herd of girders",
 				"an A.D.G.S",
 				"the... thing",
@@ -1988,7 +2064,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"nice",
 				"the girder egg")
 				msg = insert_girder[min(count+1, insert_girder.len)]
-				if(count >= 70)
+				if(count >= 69) //nice
 					girder_egg = 1
 					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
 				else
@@ -2014,14 +2090,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if  (!grab_smash(G, user))
 			return ..(C, user)
 		else
-			return
-
-	// hi i don't know where else to put this :D - cirr
-	else if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 
 	//also in turf.dm. Put this here for lowest priority.
@@ -2182,8 +2250,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 // --------------------------------------------
 
 /turf/proc/fall_to(var/turf/T, var/atom/movable/A)
-	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
+	if(istype(A, /obj/overlay) || A.anchored == 2)
 		return
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state <= GAME_STATE_WORLD_NEW)
+		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+	#endif
 	if (isturf(T))
 		visible_message("<span class='alert'>[A] falls into [src]!</span>")
 		if (ismob(A))

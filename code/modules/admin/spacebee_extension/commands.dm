@@ -345,8 +345,14 @@
 		if(new_mode in global.valid_modes)
 			var/which = "next round's "
 			if (current_state <= GAME_STATE_PREGAME)
+#ifndef MAP_OVERRIDE_POD_WARS
+				if (new_mode == "pod_wars")
+					system.reply("You can only set the mode to Pod Wars if the current map is a Pod Wars map! If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!", user)
+					return
+#endif
 				master_mode = new_mode
 				which = ""
+
 			world.save_mode(new_mode)
 			logTheThing(LOG_ADMIN, "[user] (Discord)", null, "set the [which]mode as [new_mode]")
 			logTheThing(LOG_DIARY, "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
@@ -431,6 +437,7 @@
 	name = "cryo"
 	help_message = "Cryos a given ckey."
 	action_name = "cryo"
+	allow_disconnected = TRUE
 
 	perform_action(user, mob/target)
 		if (!length(by_type[/obj/cryotron]))

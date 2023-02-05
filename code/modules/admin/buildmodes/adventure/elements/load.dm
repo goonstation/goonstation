@@ -143,7 +143,6 @@
 								F["[base].OBJ.[objid].type"] >> objt
 								if (ispath(objt))
 									O = new objt(Q)
-									O.flags |= ISADVENTURE
 									var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
 									if (!istype(O, /obj/critter))
 										if (result & DESERIALIZE_NEED_POSTPROCESS)

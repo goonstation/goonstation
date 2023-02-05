@@ -13,7 +13,7 @@
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS
+	flags = TABLEPASS | FPRINT
 	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
@@ -115,6 +115,8 @@
 
 		..()
 
+	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
+		. = ..()
 
 	New(loc, datum/organHolder/nholder)
 		..()
@@ -150,8 +152,6 @@
 					holder.vars[thing] = null
 
 
-		if (donor?.organs) //not all mobs have organs/organholders (fish)
-			donor.organs -= src
 		donor = null
 
 		if (bones)
@@ -297,7 +297,7 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
-		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
+		if((isvampire(donor) || istype(ticker?.mode, /datum/game_mode/battle_royale)) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head)))
 			return //vampires are already dead inside
 
 		src.brute_dam += brute

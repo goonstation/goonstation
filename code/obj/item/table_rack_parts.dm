@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
-			stack_trace("[user] tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.")
+			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
 			qdel(src)
 			return

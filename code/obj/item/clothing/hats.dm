@@ -1647,12 +1647,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		icon_state = "hbow-yellowpolkadot"
 		item_state = "hbow-yellowpolkadot"
 
-/obj/item/clothing/head/rafflesia
-	name = "rafflesia"
-	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-	icon_state = "rafflesiahat"
-	item_state = "rafflesiahat"
-
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
 	desc = "A hat for hunting space deer or solving a mystery."
@@ -1836,12 +1830,26 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
 
+/obj/item/clothing/head/pirate_captain
+	name = "pirate captain's hat"
+	desc = "A traditional pirate tricorne, adorned with a crimson feather, just to tell everyone who's boss."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+
+/obj/item/clothing/head/pirate_first_mate
+	name = "pirate first mate's hat"
+	desc = "Who needs a fancy red feather to show authority?"
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+
 //Lesbian Hat
+
+TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	mats = list("FAB-1"=5, "honey"=5)
 
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."
-	mats = list("FAB-1"=5, "honey"=5)
 	icon_state = "lesbeean"
 	item_state = "lesbeean"
 

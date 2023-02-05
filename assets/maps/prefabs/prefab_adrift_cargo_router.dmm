@@ -31,7 +31,8 @@
 /turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "bv" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "cm" = (
 /obj/storage/crate/medical{
@@ -123,6 +124,12 @@
 /obj/lattice,
 /turf/space,
 /area/noGenerate)
+"iq" = (
+/obj/machinery/conveyor/WN{
+	id = "lostrouter"
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
 "iy" = (
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/engine,
@@ -142,7 +149,8 @@
 /area/prefab/adrift_cargorouter)
 "jn" = (
 /obj/machinery/launcher_loader/north,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "kW" = (
 /obj/machinery/conveyor/SN{
@@ -184,7 +192,8 @@
 /obj/machinery/conveyor/SN{
 	id = "lostrouter"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "or" = (
 /obj/machinery/light,
@@ -215,10 +224,10 @@
 	name = "strange biohazard crate";
 	desc = "A crate for biohazardous materials. You can hear a faint scratching from it..."
 	},
-/obj/critter/mouse/mad,
-/obj/critter/mouse/mad,
 /obj/critter/fermid,
 /obj/critter/bat/buff,
+/obj/critter/bat/buff,
+/obj/critter/fermid,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -284,7 +293,8 @@
 /turf/space,
 /area/noGenerate)
 "vz" = (
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/adrift_cargorouter)
 "vM" = (
 /obj/machinery/disposal/transport{
@@ -556,7 +566,8 @@
 /obj/machinery/mass_driver{
 	dir = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "Ss" = (
 /obj/item/storage/wall/office{
@@ -820,7 +831,7 @@ nV
 kW
 fJ
 fJ
-fJ
+iq
 qV
 vz
 vz

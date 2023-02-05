@@ -57,6 +57,9 @@
 			set_secure_frequencies(src)
 		..()
 
+/obj/item/device/radio/headset/wizard
+	emp_act()
+		return //hax
 
 /obj/item/device/radio/headset/command
 	name = "command headset"
@@ -467,6 +470,31 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+/obj/item/device/radio/headset/pirate
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	chat_class = RADIOCL_SYNDICATE
+	locked_frequency = TRUE
+	secure_frequencies = list("p" = R_FREQ_PIRATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	protected_radio = 1
+	icon_override = "pirate"
+	icon_tooltip = "Space Pirate"
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			src.frequency = R_FREQ_PIRATE
+
+	first_mate
+		icon_override = "pirate_first_mate"
+		icon_tooltip = "Space Pirate First Mate"
+
+	captain
+		icon_override = "pirate_captain"
+		icon_tooltip = "Space Pirate Captain"
+
 /obj/item/device/radio/headset/deaf
 	name = "auditory headset"
 	desc = "A radio headset that also interfaces with the ear canal, allowing the deaf to hear normally while wearing it."
@@ -531,6 +559,9 @@ Secure Frequency:
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 
+TYPEINFO(/obj/item/device/radio_upgrade)
+	mats = 12
+
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "wiretap radio upgrade"
 	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
@@ -538,7 +569,6 @@ Secure Frequency:
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
-	mats = 12
 	var/secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,

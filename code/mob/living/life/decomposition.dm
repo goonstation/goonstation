@@ -27,11 +27,11 @@
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
 				suspend_rot = !(stinkbox.status & NOPOWER)
 
-			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
-				icky_icky_miasma(T)
-
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()
+
+			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
+				icky_icky_miasma(T)
 
 			var/env_temp = 0
 
@@ -58,4 +58,12 @@
 				max_produce_miasma = 0
 
 		if (max_produce_miasma)
-			T.fluid_react_single("miasma", 3, airborne = 1)
+			// Devera-class interdictor: prohibit miasma formation
+			var/miasma_blocked = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(30,src,TRUE,ITDR_DEVERA))
+					miasma_blocked = TRUE
+					break
+
+			if(!miasma_blocked)
+				T.fluid_react_single("miasma", 3, airborne = 1)

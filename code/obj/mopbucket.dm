@@ -6,7 +6,7 @@
 	density = 1
 	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	p_class = 1.2

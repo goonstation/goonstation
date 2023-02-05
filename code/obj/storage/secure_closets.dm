@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
@@ -170,9 +171,9 @@
 	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
 		. = ..()
 		if (. == 1 && length(spawn_contents)) //if we've not spawned stuff before (also empty lockers get no backpack)
-			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
+			var/backwear = pick(/obj/item/storage/backpack/withO2,/obj/item/storage/backpack/withO2/blue,/obj/item/storage/backpack/withO2/red,/obj/item/storage/backpack/withO2/green)
 			new backwear(src)
-			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
+			backwear = pick(/obj/item/storage/backpack/satchel/withO2,/obj/item/storage/backpack/satchel/withO2/blue,/obj/item/storage/backpack/satchel/withO2/red,/obj/item/storage/backpack/satchel/withO2/green)
 			new backwear(src)
 
 /obj/storage/secure/closet/personal/empty
@@ -303,32 +304,35 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
-	/obj/item/storage/toolbox/mechanical/yellow_tools,
-	/obj/item/storage/backpack/engineering,
-	/obj/item/storage/box/clothing/chief_engineer,
-	/obj/item/clothing/gloves/yellow,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/shoes/magnetic,
-	/obj/item/clothing/ears/earmuffs,
-	/obj/item/clothing/glasses/meson,
-	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/prepared/ceshielded,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/head/helmet/hardhat,
-	/obj/item/device/multitool,
-	/obj/item/device/flash,
-	/obj/item/stamp/ce,
-	/obj/item/clothing/suit/hi_vis,
-#ifdef UNDERWATER_MAP
-	/obj/item/clothing/suit/space/diving/engineering,
-	/obj/item/clothing/head/helmet/space/engineer/diving,
-#else
-	/obj/item/clothing/suit/space/engineer,
-	/obj/item/clothing/head/helmet/space/engineer,
-#endif
-	/obj/item/device/radio/headset/command/ce)
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded,
+		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+	#ifdef MAP_OVERRIDE_OSHAN
+		/obj/item/clothing/shoes/stomp_boots,
+	#endif
+	#ifdef UNDERWATER_MAP
+		/obj/item/clothing/suit/space/diving/engineering,
+		/obj/item/clothing/head/helmet/space/engineer/diving,
+		/obj/item/clothing/shoes/flippers
+	#else
+		/obj/item/clothing/suit/space/engineer,
+		/obj/item/clothing/head/helmet/space/engineer,
+	#endif
+
+	)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -818,10 +822,7 @@
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
 	req_access = list(access_kitchen)
-	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
-	/obj/item/storage/box/clothing/souschef,\
-	/obj/item/clothing/head/chefhatpuffy,\
-	/obj/item/storage/box/cutlery,\
+	spawn_contents = list(/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
 	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
@@ -829,9 +830,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
-	/obj/item/storage/box/clothing/waiter,\
-	/obj/item/gun/russianrevolver,\
+	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\

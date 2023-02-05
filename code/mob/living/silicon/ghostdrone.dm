@@ -29,6 +29,8 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
+	var/sees_static = TRUE
+
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
@@ -98,6 +100,9 @@
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
 
+		if(sees_static)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
+
 		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
@@ -125,24 +130,10 @@
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
 
-	proc/updateStatic()
-		if (!src.client)
-			return
-		src.client.images.Remove(mob_static_icons)
-		for (var/image/I in mob_static_icons)
-			if (!I || !I.loc || !src)
-				continue
-			if (I.loc.invisibility && I.loc != src.loc)
-				continue
-			else
-				src.client.images.Add(I)
-
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
-			src.mind.dnr = 0
-
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
 			ghost.icon_state = "drone-ghost"
@@ -648,6 +639,7 @@
 		src.hud.update_charge()
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -1294,7 +1286,6 @@
 
 	if (ishuman(target))
 		M.unequip_all()
-		for(var/t in M.organs) qdel(M.organs[text("[t]")])
 
 	M.transforming = 1
 	M.canmove = 0
@@ -1313,7 +1304,6 @@
 
 	G.job = "Ghostdrone"
 	theMind.assigned_role = "Ghostdrone"
-	theMind.dnr = 1
 
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
@@ -1332,6 +1322,7 @@
 // Same laws, same crap HP, but more useful for just buildin' shit
 /mob/living/silicon/ghostdrone/deluxe
 	robot_talk_understand = 1
+	sees_static = FALSE
 
 	New()
 		..()
@@ -1363,9 +1354,6 @@
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
-
-	updateStatic()
-		return
 
 	say_understands(mob/other, forced_language)
 		return 1

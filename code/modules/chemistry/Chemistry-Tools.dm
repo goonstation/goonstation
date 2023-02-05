@@ -18,22 +18,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
-	var/can_mousedrop = 1
+	var/can_recycle = FALSE //can this be put in a glass recycler?
 	move_triggered = 1
-	///Types that should be quickly refilled by mousedrop
-	var/static/list/mousedrop_refill = list(
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/reagent_dispensers,
-		/obj/item/spraybottle,
-		/obj/machinery/plantpot,
-		/obj/mopbucket,
-		/obj/item/reagent_containers/mender,
-		/obj/item/tank/jetpack/backtank,
-		/obj/item/reagent_containers/syringe/baster,
-		/obj/machinery/bathtub
-	)
-
 	var/last_new_initial_reagents = 0 //fuck
 
 	New(loc, new_initial_reagents)
@@ -92,9 +78,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
 			return
-		if (!can_mousedrop)
-			boutput(usr, "<span class='alert'>Nope.</span>")
-			return
 		if(usr.restrained())
 			return
 		if(!istype(usr.loc, /turf))
@@ -112,14 +95,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					ok = 0
 			if(!ok)
 				return
-		// First filter out everything we don't want to refill or empty quickly.
-		// feels like there should be a macro for this or something
-		var/type_found = FALSE
-		for (var/type in mousedrop_refill)
-			if (istype(over_object, type))
-				type_found = TRUE
-				break
-		if (!type_found)
+
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -130,6 +107,37 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
+///Note that this is not a built in TGUI proc
+proc/ui_describe_reagents(atom/A)
+	if (!istype(A))
+		return null
+	var/datum/reagents/R = A.reagents
+	var/list/thisContainerData = list(
+		name = A.name,
+		maxVolume = R.maximum_volume,
+		totalVolume = R.total_volume,
+		contents = list(),
+		finalColor = "#000000"
+	)
+
+	var/list/contents = thisContainerData["contents"]
+	if(istype(R) && R.reagent_list.len>0)
+		thisContainerData["finalColor"] = R.get_average_rgb()
+		// Reagent data
+		for(var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+			contents.Add(list(list(
+				name = reagents_cache[reagent_id],
+				id = reagent_id,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				volume = current_reagent.volume
+			)))
+	return thisContainerData
 
 /* ====================================================== */
 /* -------------------- Glass Parent -------------------- */
@@ -143,9 +151,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	var/can_recycle = TRUE //can this be put in a glass recycler?
+	can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -188,7 +196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
 				logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
-				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
 					src.reagents.clear_reagents()
@@ -222,7 +229,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -289,7 +296,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				splash_volume = src.amount_per_transfer_from_this
 			splash_volume = min(splash_volume, src.reagents.total_volume) // cap the reaction at the amount of reagents we have
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -299,9 +309,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 
 	attackby(obj/item/I, mob/user)
@@ -428,7 +439,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -499,6 +511,66 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
 		qdel(src)
+
+	afterattack(obj/target, mob/user, flag)
+		if(!istype(target, /obj/machinery/door/unpowered/wood))
+			return ..()
+		if(locate(/obj/item/reagent_containers/glass/bucket) in target)
+			boutput(user,"<b>There's already a bucket prank set up!</b>")
+			return ..()
+		boutput(user, "You start propping \the [src] above \the [target]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/setup_bucket_prank, list(target, user), src.icon, src.icon_state, \
+					src.visible_message("<span class='alert'><B>[user] props a [src] above \the [target]</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/setup_bucket_prank(obj/machinery/door/targetDoor, mob/user)
+		if(locate(/obj/item/reagent_containers/glass/bucket) in targetDoor) //check again, just in case callback triggers after someone else did it
+			boutput(user,"<b>There's already a bucket prank set up!</b>")
+			return
+		logTheThing(LOG_COMBAT, user, "Set up a bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
+		RegisterSignal(targetDoor, COMSIG_DOOR_OPENED, .proc/bucket_prank)
+		user.u_equip(src)
+		src.set_loc(targetDoor)
+		user.visible_message("<span class='alert'>Props \the [src] above \the [targetDoor]!</span>","<span class='alert'>You prop \the [src] above \the [targetDoor]. The next person to come through will get splashed!</span>")
+		var/image/I = image(src.icon, src, src.icon_state, targetDoor.layer+0.1, ,  )
+		I.transform = matrix(I.transform, 0.5, 0.5, MATRIX_SCALE)
+		I.transform = matrix(I.transform, (targetDoor.dir & (WEST | EAST) ? 0 : -16), (targetDoor.dir & (NORTH | SOUTH) ? 0 : -16), MATRIX_TRANSLATE)
+		targetDoor.UpdateOverlays(I, "bucketprank")
+
+	proc/bucket_prank(obj/machinery/door/targetDoor, atom/movable/AM)
+		//fall off the door, splash the user, land on their head if you can
+		//note that AM can be null, and this is caught by !IN_RANGE
+		UnregisterSignal(targetDoor, COMSIG_DOOR_OPENED)
+		targetDoor.UpdateOverlays(null, "bucketprank")
+		var/splash = (src.reagents.total_volume > 1)
+		if(!IN_RANGE(AM, targetDoor, 1)) //not in range or AM is null
+			src.set_loc(get_turf(targetDoor))
+			src.reagents.reaction(get_turf(targetDoor))
+			src.visible_message("<span class='alert'>[src] falls from \the [targetDoor][splash? ", splashing its contents on the floor" : ""].</span>")
+		else //we're in range, splash the AM, splash the floor
+			logTheThing(LOG_COMBAT, AM, "Victim of bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
+			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
+			src.reagents.reaction(get_turf(targetDoor)) //half on the floor
+			if(ishuman(AM))
+				//the bucket lands on your head for maximum comedy
+				var/mob/living/carbon/human/H = AM
+				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new src.hat_bucket_type(src.loc)
+				if(isnull(H.head))
+					H.equip_if_possible(bucket_hat, H.slot_head)
+					H.set_clothing_icon_dirty()
+					H.visible_message("<span class='alert'>[src] falls from \the [targetDoor], landing on [H] like a hat[splash? ", and splashing [him_or_her(H)] with its contents" : ""]! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
+										"<span class='alert'>[src] falls from \the [targetDoor], landing on your head like a hat[splash? ", and splashing you with its contents" : ""]!</span>")
+				else
+					bucket_hat.set_loc(get_turf(H))
+					H.visible_message("<span class='alert'>[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [H] and falling to the floor.</span>", \
+										"<span class='alert'>[src] falls from \the [targetDoor], [splash? "splashing you and " : ""]bouncing off your hat.</span>")
+				qdel(src) //it's a hat now
+			else
+				//aw, fine, it just falls on the floor
+				src.set_loc(get_turf(targetDoor))
+				targetDoor.visible_message("<span class='alert'>[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [AM]!</span>")
+
+
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

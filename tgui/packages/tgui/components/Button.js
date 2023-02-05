@@ -21,6 +21,8 @@ export const Button = props => {
     icon,
     iconRotation,
     iconSpin,
+    iconColor,
+    iconPosition,
     color,
     disabled,
     selected,
@@ -33,6 +35,7 @@ export const Button = props => {
     children,
     onclick,
     onClick,
+    verticalAlignContent,
     ...rest
   } = props;
   const hasContent = !!(content || children);
@@ -44,8 +47,15 @@ export const Button = props => {
       + `'onClick' instead and read: `
       + `https://infernojs.org/docs/guides/event-handling`);
   }
-  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
-  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
+  rest.onClick = e => {
+    if (!disabled && onClick) {
+      onClick(e);
+    }
+  };
+  // IE8: Use "unselectable" because "user-select" doesn't work.
+  if (Byond.IS_LTE_IE8) {
+    rest.unselectable = true;
+  }
   let buttonContent = (
     <Box
       className={classes([
@@ -57,19 +67,21 @@ export const Button = props => {
         ellipsis && 'Button--ellipsis',
         circular && 'Button--circular',
         compact && 'Button--compact',
+        iconPosition && 'Button--iconPosition--' + iconPosition,
+        verticalAlignContent && "Button--flex",
+        (verticalAlignContent && fluid) && "Button--flex--fluid",
+        verticalAlignContent && 'Button--verticalAlignContent--' + verticalAlignContent,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={Byond.IS_LTE_IE8}
-      onClick={e => {
-        if (!disabled && onClick) {
-          onClick(e);
+      onKeyUp={e => {
+        if (props.captureKeys === false) {
+          return;
         }
-      }}
-      onKeyDown={e => {
+
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
@@ -86,14 +98,26 @@ export const Button = props => {
         }
       }}
       {...rest}>
-      {icon && (
-        <Icon
-          name={icon}
-          rotation={iconRotation}
-          spin={iconSpin} />
-      )}
-      {content}
-      {children}
+      <div className="Button__content">
+        {icon && iconPosition !== 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
+        {content}
+        {children}
+        {icon && iconPosition === 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
+      </div>
     </Box>
   );
 

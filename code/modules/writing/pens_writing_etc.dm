@@ -19,7 +19,8 @@
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -68,6 +69,7 @@
 		">" = "Greater Than",
 		"[CREDIT_SIGN]" = "Credit"
 	)
+	var/suitable_for_canvas = TRUE
 
 	New()
 		. = ..()
@@ -110,7 +112,7 @@
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
-		src.in_use = 1
+		src.in_use = TRUE
 		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
@@ -142,10 +144,15 @@
 			src.reagents.clear_reagents()
 
 			src.remove_filter("reagent_coloration")
-			src.color_name = initial(src.color_name)
-			src.font_color = initial(src.font_color)
+			src.reset_color()
 
-		src.in_use = 0
+		src.in_use = FALSE
+
+	/// Reset the color of this crayon. Default behavior is to reset to initial color, but random crayons might save their color and rainbow ones
+	/// might just re-randomize, etc
+	proc/reset_color()
+		src.color_name = initial(src.color_name)
+		src.font_color = initial(src.font_color)
 
 	onMaterialChanged()
 		..()
@@ -181,7 +188,7 @@
 			src.add_filter("reagent_coloration", 1, color_matrix_filter(normalize_color_to_matrix(src.reagents.get_average_rgb())))
 			src.color = src.reagents.get_average_color()
 			src.font_color = src.color
-			src.color_name = get_nearest_color(src.reagents.get_average_color()) // why the fuck are there 3 vars for this
+			src.color_name = get_nearest_color(src.reagents.get_average_color())
 
 			if (src.material)
 				src.removeMaterial() // no
@@ -189,7 +196,7 @@
 
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
 		. = ..()
-		src.reagents.clear_reagents() // no
+		src.reagents?.clear_reagents() // no
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
@@ -412,9 +419,15 @@
 		font_color = "#FF00FF"
 
 	random
+		var/picked_color
+
 		New()
 			..()
-			src.color = random_color()
+			src.picked_color = random_color()
+			src.reset_color()
+
+		reset_color()
+			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -484,6 +497,12 @@
 		font_color = "#FF00FF"
 		color_name = "pink"
 
+	transparent
+		name = "transparent crayon"
+		color = "#aaaaaa"
+		font_color = "#00000000"
+		color_name = "transparent"
+
 	golden // HoP's crayon
 		name = "golden crayon"
 		desc = "The result of years of bribes and extreme bureaucracy."
@@ -498,9 +517,15 @@
 			src.setMaterial(getMaterial("gold"))
 
 	random
+		var/picked_color
+
 		New()
 			..()
-			src.color = random_color()
+			src.picked_color = random_color()
+			src.reset_color()
+
+		reset_color()
+			src.color = src.picked_color
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] crayon"
@@ -509,11 +534,9 @@
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
-				..(user)
-				src.color = random_color()
-				src.font_color = src.color
-				src.color_name = hex2color_name(src.color)
-				src.name = "[src.color_name] crayon"
+				..()
+				src.picked_color = random_color()
+				src.reset_color()
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
 
 		robot
@@ -521,10 +544,8 @@
 
 			attack(mob/M, mob/user, def_zone)
 				if (M == user)
-					src.color = random_color()
-					src.font_color = src.color
-					src.color_name = hex2color_name(src.color)
-					src.name = "[src.color_name] crayon"
+					src.picked_color = random_color()
+					src.reset_color()
 					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
 					return
 
@@ -596,6 +617,7 @@
 		if(. == "queue input")
 			var/inp = tgui_input_text(user, "Type letters you want to write.", "Crayon Letter Queue")
 			inp = uppertext(inp)
+			phrase_log.log_phrase("crayon-queue", inp, no_duplicates=TRUE)
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
 				var/c = copytext(inp, i, i + 1)
@@ -708,8 +730,7 @@
 			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
 
 			src.remove_filter("reagent_coloration")
-			src.color_name = initial(src.color_name)
-			src.font_color = initial(src.font_color)
+			src.reset_color()
 
 	get_desc()
 		. = ..()
@@ -730,12 +751,13 @@
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
+		var/picked_color
 		New()
 			..()
-			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
-			src.font_color = src.color
-			src.color_name = hex2color_name(src.color)
-			src.name = "[src.color_name] chalk"
+			src.assign_color(src.picked_color)
+
+		reset_color()
+			src.assign_color(src.picked_color)
 
 	proc/assign_color(var/color)
 		if(isnull(color))
@@ -768,6 +790,9 @@
 			src.icon_state = "chalk-0"
 		else
 			src.icon_state = "chalk-[src.chalk_health]"
+
+	reset_color()
+		src.assign_color(initial(src.color))
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob)
 		..()
@@ -859,7 +884,8 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ONBELT
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
 	rand_pos = 1
 
 	get_desc()
@@ -900,7 +926,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label")), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -965,10 +991,7 @@
 		src.label = "DEAD"
 		Label(user,user,1)
 
-		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN(50 SECONDS)
-			if (user && !isdead(user))
-				user.suiciding = 0
+		user.death()
 		return 1
 
 /* =============== CLIPBOARDS =============== */
@@ -1368,7 +1391,7 @@
 			P.pixel_y = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 
 		P.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
-		P.appearance_flags = RESET_COLOR
+		P.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		user.visible_message("<b>[user]</b> sticks a sticky note to [T].",\
 		"You stick a sticky note to [T].")
@@ -1397,7 +1420,8 @@
 	desc = "A portable typewriter, whoa!"
 	icon_state = "portable_typewriter"
 	icon = 'icons/obj/writing.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	var/paper_creation_cooldown = 1 MINUTE

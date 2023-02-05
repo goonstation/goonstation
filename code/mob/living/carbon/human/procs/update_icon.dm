@@ -654,20 +654,24 @@
 	if(our_tail.clothing_image_icon && icon_state)
 		var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
-			human_tail_image = our_tail.clothing_image_icon
+			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
 			src.tail_standing_oversuit.overlays += human_tail_image
+			src.update_tail_overlays()
+			return
 
-	else
-		human_tail_image = our_tail.tail_image_1
-		src.tail_standing.overlays += human_tail_image
+	human_tail_image = our_tail.tail_image_1
+	src.tail_standing.overlays += human_tail_image
 
-		human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-		src.tail_standing.overlays += human_tail_image
+	human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
+	src.tail_standing.overlays += human_tail_image
 
-		human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-		src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
+	human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
+	src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
 
+	src.update_tail_overlays()
+
+/mob/living/carbon/human/proc/update_tail_overlays()
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
 	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
@@ -691,6 +695,11 @@
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
 		var/y_to_offset = AHH.customization_first_offset_y
+
+		if(my_head.head_image_nose)
+			UpdateOverlays(my_head.head_image_nose, "nose", 1, 1)
+		else
+			UpdateOverlays(null, "nose", 1, 1)
 
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
@@ -748,6 +757,7 @@
 		UpdateOverlays(null, "hair_special_two", 1, 1)
 		UpdateOverlays(null, "hair_special_three", 1, 1)
 
+		UpdateOverlays(null, "nose", 1, 1)
 		UpdateOverlays(null, "eyes", 1, 1)
 
 
@@ -1302,7 +1312,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 	else if (burn > 25)
 		burn_state = 1
 
-	var/obj/item/organ/head/HO = organs["head"]
+	var/obj/item/organ/head/HO = organHolder?.get_organ("head")
 	var/head_damage = null
 	if (HO && organHolder?.head)
 		var/head_brute = min(3,round(HO.brute_dam/10))

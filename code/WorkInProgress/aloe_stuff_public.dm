@@ -40,18 +40,6 @@
 		src.venom2 = pick(all_functional_reagent_ids)
 		src.amt2 = rand(1, 10)
 
-/obj/critter/cat/brixley
-	name = "Brixley"
-	desc = "Very fuzzy, likes to roll over."
-	death_text = "%src% rolls over!"
-	icon_state = "catbrix"
-	cattype = "brix"
-	health = 30
-	randomize_cat = 0
-	generic = FALSE
-	butcherable = FALSE
-	is_pet = 1
-
 /mob/living/critter/small_animal/cat/brixley
 	name = "Brixley"
 	desc = "Very fuzzy, likes to roll over."
@@ -91,7 +79,7 @@
 
 	New()
 		..()
-		src.occupant = new /obj/critter/cat/brixley(src)
+		src.occupant = new /mob/living/critter/small_animal/cat/brixley(src)
 		src.build_icon()
 /obj/item/storage/desk_drawer/aloe
 	spawn_contents = list(/obj/item/reagent_containers/patch/LSD,

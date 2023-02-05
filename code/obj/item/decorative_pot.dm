@@ -1,3 +1,6 @@
+TYPEINFO(/obj/decorative_pot)
+	mats = list("ALL" = 1)
+
 /obj/decorative_pot
 		name = "plant pot"
 		desc = "A decorative plant pot, sans the Hydroponic Tray's fancy hypergrowth tech."
@@ -5,7 +8,6 @@
 		icon_state = "plantpot"
 		anchored = 0
 		density = 1
-		mats = list("ALL" = 1)
 
 		attackby(obj/item/weapon, mob/user)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
@@ -23,7 +25,9 @@
 						if(!t.plantyboi)
 								return
 						src.UpdateOverlays(t.plantyboi,"plant")
+						src.UpdateOverlays(t.plantyboi_plantoverlay, "plantoverlay")
 						t.plantyboi = null
+						t.plantyboi_plantoverlay = null
 						t.icon_state = "trowel"
 						return
 				if(istype(weapon,/obj/item/seed))

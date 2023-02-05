@@ -40,8 +40,6 @@
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
 
-	var/obj/item/device/energy_shield/energy_shield = null
-
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
@@ -126,9 +124,6 @@
 
 	var/respawning = 0
 
-	var/obj/hud/hud_used = null
-
-	var/list/organs = null
 	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
@@ -145,8 +140,6 @@
 	var/nodamage = 0
 
 	var/spellshield = 0
-
-	var/bomberman = 0
 
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null
@@ -187,7 +180,7 @@
 
 	var/list/datum/hud/huds = null
 
-	var/client/last_client // actually the current client, used by Logout due to BYOND
+	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
 	var/joined_date = null
 	mat_changename = 0
@@ -233,6 +226,8 @@
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
+	/// A list of emotes that trigger a special action for this mob
+	var/list/trigger_emotes = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -243,7 +238,6 @@
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
-	organs = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -416,7 +410,6 @@
 	ckey = null
 	client = null
 	internals = null
-	energy_shield = null
 	hallucinations = null
 	buckled = null
 	handcuffs = null
@@ -427,7 +420,6 @@
 	s_active = null
 	wear_mask = null
 	ears = null
-	organs = null
 	grabbed_by = null
 	oldmob = null
 	oldmind = null
@@ -448,6 +440,8 @@
 	..()
 
 /mob/Login()
+	if (!src.client)
+		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -560,7 +554,10 @@
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				src.throw_at(get_edge_cheap(source, turn(get_dir(A, src),rand(-1,1)*45)),  20, 3)
+				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
+				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
+
 				return
 
 	if (ismob(AM))
@@ -585,8 +582,8 @@
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -607,8 +604,14 @@
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
-				tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
-				src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
+				var/target_dir = get_dir(src, tmob)
+				var/src_dir = get_dir(tmob, src)
+				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
+				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
+
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
+
 				return
 			if ((!tmob.now_pushing && !src.now_pushing) && (tmob.bioHolder?.HasEffect("magnets_pos") && src.bioHolder?.HasEffect("magnets_neg")) || (tmob.bioHolder?.HasEffect("magnets_neg") && src.bioHolder?.HasEffect("magnets_pos")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -627,8 +630,8 @@
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
 
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -824,6 +827,8 @@
 		apply_camera(src.client)
 
 /mob/proc/apply_camera(client/C)
+	if (!C)
+		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
@@ -833,8 +838,8 @@
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
-/mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(M, 0, src))
+/mob/proc/can_strip(mob/M)
+	if(check_target_immunity(M, 1, src))
 		return 0
 	return 1
 
@@ -957,32 +962,37 @@
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
-	var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
-	if (confirm != "Yes")
-		return
-	if (!src.mind)
-		tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
-		return
-//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
-#if defined(MAP_OVERRIDE_POD_WARS)
-	if (isliving(src) && !isdead(src))
-		var/double_confirm = tgui_alert(src, "Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", list("Yes", "No"))
-		if (double_confirm != "Yes")
+	if(isadmin(src))
+		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
+		boutput(src, "<span class='alert'>DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!</span>")
+	else
+		var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
+		if (confirm != "Yes")
 			return
-		src.death()
-	src.verbs -= list(/mob/verb/setdnr)
-	src.mind.dnr = 1
-	boutput(src, "<span class='alert'>DNR status set!</span>")
-	boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
-	if (istype(ticker.mode, /datum/game_mode/pod_wars))
-		var/datum/game_mode/pod_wars/mode = ticker.mode
-		mode.team_NT.members -= src.mind
-		mode.team_SY.members -= src.mind
-		message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
+		if (!src.mind)
+			tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
+			return
+	//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (isliving(src) && !isdead(src))
+			var/double_confirm = tgui_alert(src, "Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", list("Yes", "No"))
+			if (double_confirm != "Yes")
+				return
+			src.death()
+		src.verbs -= list(/mob/verb/setdnr)
+		src.mind.get_player()?.dnr = TRUE
+		boutput(src, "<span class='alert'>DNR status set!</span>")
+		boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.team_NT.members -= src.mind
+			mode.team_SY.members -= src.mind
+			message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
 #else
-	src.verbs -= list(/mob/verb/setdnr)
-	src.mind.dnr = 1
-	boutput(src, "<span class='alert'>DNR status set!</span>")
+
+		src.verbs -= list(/mob/verb/setdnr)
+		src.mind.get_player()?.dnr = TRUE
+		boutput(src, "<span class='alert'>DNR status set!</span>")
 #endif
 
 /mob/proc/unequip_all(var/delete_stuff=0)
@@ -1097,11 +1107,6 @@
 	health += max(0, burn)
 	health += max(0, tox)
 	health = min(max_health, health)
-
-/mob/setStatus(statusId, duration, optional)
-	if (src.nodamage)
-		return
-	. = ..()
 
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
@@ -1224,7 +1229,7 @@
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey)
+	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	//stop piloting pods or whatever
 	src.use_movement_controller = null
@@ -1252,7 +1257,7 @@
 		if (item)
 			item.layer = initial(item.layer)
 
-/mob/proc/drop_item(obj/item/W)
+/mob/proc/drop_item(obj/item/W, grabs_first)
 	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
@@ -1268,14 +1273,14 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 
-		if (W.chokehold != null)
+		if (W.chokehold != null && grabs_first)
 			W.drop_grab()
 			return
 
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
-				if (V.throw_dropped_items_overboard == 1)
+				if (V.can_eject_items)
 					W.set_loc(get_turf(V))
 				else
 					W.set_loc(src.loc)
@@ -2457,6 +2462,15 @@
 	return abilityHolder?.getAbility(abilityType)
 
 /mob/proc/full_heal()
+	var/mob/ghost = find_ghost_by_key(src.last_ckey)
+	if(ghost)
+		ghost.mind.transfer_to(src)
+		if(isliving(src))
+			var/mob/living/L = src
+			L.is_npc = FALSE
+		if(isobserver(ghost))
+			qdel(ghost)
+
 	src.HealDamage("All", 100000, 100000)
 	src.delStatus("drowsy")
 	src.stuttering = 0
@@ -2818,7 +2832,7 @@
 				continue
 			else
 				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+					if(!src.traitHolder.hasTrait("stowaway"))// stowaway entertainers shouldn't be on the manifest
 						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
 							if (R)
@@ -3093,7 +3107,7 @@
 		souladjust(1)
 	return 1
 
-/mob/proc/get_id()
+/mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()
@@ -3203,6 +3217,8 @@
 
 /// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
 /mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	if(check_target_immunity(src, TRUE))
+		return
 	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
@@ -3228,3 +3244,17 @@
 	src.set_loc(get_turf(src.observing))
 	src.observing = null
 	src.ghostize()
+
+/// search for any radio device, starting with hands and then equipment
+/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+/// (more practically, they won't hear it)
+/mob/proc/find_radio()
+	if(istype(src.ears, /obj/item/device/radio))
+		return src.ears
+	. = src.find_type_in_hand(/obj/item/device/radio)
+	if(!.)
+		. = src.find_in_equipment(/obj/item/device/radio)
+
+///Returns the default HUD of the mob, whatever that may be
+/mob/proc/get_hud()
+	return null
