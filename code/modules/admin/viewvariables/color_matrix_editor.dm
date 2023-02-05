@@ -3,6 +3,7 @@
  */
 
 // TODO for whoever wants to do it: allow pasting in a list-formatted matrix to preview
+// This might be funky with multiple windows open due to how it's a single datum? Have fun!
 
 /// Nice admin editor for editing color matricies with a preview
 /datum/color_matrix_editor
@@ -11,7 +12,7 @@
 	var/datum/movable_preview/preview
 	var/list/current_color
 	var/closed
-	/// Set if we're varediting a client, used to restore owner's color after preview
+	/// Set if we're varediting a client, used to restore owner's color
 	var/matrix/old_owner_color = null
 
 /datum/color_matrix_editor/New(user, atom/_target = null)
@@ -95,16 +96,3 @@
 	else if (istype(target_atom, /client))
 		var/client/target_client = target_atom
 		target_client.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
-
-// Unused Currently, but a decent idea
-
-// /datum/color_matrix_editor/proc/wait()
-// 	while (owner && !closed && !QDELETED(src))
-// 		sleep(1)
-
-// /client/proc/open_color_matrix_editor(atom/in_atom)
-// 	var/datum/color_matrix_editor/editor = new /datum/color_matrix_editor(src, in_atom)
-// 	editor.ui_interact(mob)
-// 	editor.wait()
-// 	. = editor.current_color
-// 	qdel(editor)
