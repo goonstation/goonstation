@@ -11,22 +11,26 @@ import { toFixed } from 'common/math';
 import { Box, Stack, Section, ByondUi, NumberInput, Button } from '../components';
 import { Window } from '../layouts';
 
+interface ColorMatrixEditorData {
+  previewRef: string;
+  currentColor: string[][];
+}
+
 export const ColorMatrixEditor = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { mapRef, currentColor } = data;
+  const { act, data } = useBackend<ColorMatrixEditorData>(context);
   const [
     [rr, rg, rb, ra],
     [gr, gg, gb, ga],
     [br, bg, bb, ba],
     [ar, ag, ab, aa],
     [cr, cg, cb, ca],
-  ] = currentColor;
+  ] = data.currentColor;
   const prefixes = ['r', 'g', 'b', 'a', 'c'];
   return (
     <Window
       title="Color Matrix Editor"
-      width={600}
-      height={220}>
+      width={560}
+      height={245}>
       <Window.Content>
         <Stack fill>
           <Stack.Item align="center">
@@ -49,12 +53,12 @@ export const ColorMatrixEditor = (props, context) => {
                               </Box>
                               <NumberInput
                                 inline
-                                value={currentColor[row*4+col]}
+                                value={data.currentColor[row*4+col]}
                                 step={0.01}
                                 width="50px"
                                 format={value => toFixed(value, 2)}
-                                onDrag={(e, value) => {
-                                  let retColor = currentColor;
+                                onDrag={(_e, value: string[]) => {
+                                  let retColor = data.currentColor;
                                   retColor[row*4+col] = value;
                                   act("transition_color", { color: retColor });
                                 }} />
@@ -77,11 +81,14 @@ export const ColorMatrixEditor = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <ByondUi
-              height="100%"
               params={{
-                id: mapRef,
+                id: data.previewRef,
                 type: 'map',
-              }} />
+              }}
+              style={{
+                height: '100%',
+              }}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>

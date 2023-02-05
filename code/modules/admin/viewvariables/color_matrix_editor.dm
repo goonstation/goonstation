@@ -19,15 +19,18 @@
 	else
 		current_color = COLOR_MATRIX_IDENTITY
 
-	src.preview = new()
-	src.preview.add_background("#000", height_mult=1)
+	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
 	if(_target)
 		target = get_weakref(_target)
-		src.preview.preview_thing.appearance = image(_target)
-	else
-		src.preview.preview_thing.appearance = image('icons/misc/colortest.dmi', "colors")
+		if(!(_target.appearance_flags & PLANE_MASTER))
+			view = image(_target)
 
+	src.preview = new(owner, "color_matrix_editor-\ref[src]")
+	src.preview.add_background("#000")
+
+	src.preview.preview_thing.appearance = view
 	src.preview.preview_thing.color = current_color
+	src.preview.preview_thing.layer = HUD_LAYER // needed to get it above the background object
 	. = ..()
 
 /datum/color_matrix_editor/disposing(force, ...)
@@ -40,7 +43,7 @@
 
 /datum/color_matrix_editor/ui_static_data(mob/user)
 	. = list(
-		"mapRef" = preview.preview_id
+		"previewRef" = preview.preview_id
 	)
 
 /datum/color_matrix_editor/ui_data(mob/user)
@@ -69,6 +72,7 @@
 /datum/color_matrix_editor/ui_close(mob/user)
 	. = ..()
 	closed = TRUE
+	qdel(src)
 
 /datum/color_matrix_editor/proc/on_confirm()
 	var/atom/target_atom = target.deref()
