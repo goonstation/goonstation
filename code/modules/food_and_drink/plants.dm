@@ -1420,9 +1420,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 
 /obj/item/reagent_containers/food/snacks/plant/mustard
-	name = "mustard fruit"
-	crop_suffix = " fruit"
-	desc = "Faith larger than a mustard seed."
+	name = "mustard seed pod"
+	crop_suffix = " seed pod"
+	desc = "Not as technologically advanced as the name might suggest."
 	icon_state = "mustard"
 	planttype = /datum/plant/fruit/mustard
 	bites_left = 1
