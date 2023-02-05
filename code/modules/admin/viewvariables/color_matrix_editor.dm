@@ -2,6 +2,8 @@
  *  Interface originally by Y0SH1M4S73R @ /tg/, licensed to Goonstation exclusively under MIT
  */
 
+// TODO for whoever wants to do it: allow pasting in a list-formatted matrix to preview
+
 /// Nice admin editor for editing color matricies with a preview
 /datum/color_matrix_editor
 	var/client/owner
