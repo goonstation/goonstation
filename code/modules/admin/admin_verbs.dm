@@ -446,7 +446,6 @@ var/list/admin_verbs = list(
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
-		/client/proc/edit_color_matrix,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
