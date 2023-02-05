@@ -710,12 +710,7 @@ toxic - poisons
 	name = "fragments"
 	sname = "fragments"
 	icon_state = "trace"
-<<<<<<< HEAD
 	dissipation_delay = 4
-=======
-	power = 4
-	armor_ignored = 0.2
->>>>>>> 0348e4d5e (fix guns post-calibre rework)
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 8

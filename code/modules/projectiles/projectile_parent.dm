@@ -876,7 +876,7 @@ ABSTRACT_TYPE(/datum/projectile)
 			if (isobj(shooter))
 				for (var/mob/M in shooter)
 					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
-0
+
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
 		game_stats.Increment("gunfire")
