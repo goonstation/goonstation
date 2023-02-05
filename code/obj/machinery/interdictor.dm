@@ -10,30 +10,41 @@
 	density = 1
 	anchored = 0
 	req_access = list(access_engineering)
-	var/obj/item/cell/intcap = null //short for internal capacitor.
-	var/chargerate = 700 // internal cell charge rate, per tick
-	var/connected = 0 //whether this is tied into a wire
+
+	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
+	var/obj/item/cell/intcap = null
+
+	///Maximum target rate at which the internal capacitor can be charged, per tick.
+	var/chargerate = 700
+
+	///Tracks whether interdictor is tied into area power and ready to attempt operation.
+	var/connected = 0
+
+	///Cooldown after the magnetic lock switches on or off before it can be toggled again.
 	var/maglock_cooldown = 3 SECONDS
-	var/emagged = 0 // emagging axes access requirement
 
-	var/canInterdict = 0 // indication of operability
-	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
+	///Tracks whether the interdictor has been emagged, removing the device's maglock access restriction.
+	var/emagged = 0
 
-	var/cumulative_cost = 0 // keeps a tally of used power per tick
-	//used to play interdiction noise / modulate its volume
+	///Indication of operability; if 0, whether from depletion or new installation, internal cell must fill to set this to 1 and activate interdiction
+	var/canInterdict = 0
 
-	var/radstorm_paid = FALSE // set during the special radstorm interdiction proc
-	//when true, a cost has already been paid for this process, letting radstorm interdict proc know it doesn't need to expend cell charge again
+	///Tally of power used for interdiction in this machine tick. Used to determine presence and volume of the interdictor operating noise.
+	var/cumulative_cost = 0
 
-	var/interdict_range = 5 // range of the interdictor's field
-	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
+	///Set during radstorm interdiction; when true, a cost has been paid in this tick, and further radstorm interdictions inside the tick are free.
+	var/radstorm_paid = FALSE
 
-	var/interdict_class = ITDR_STANDARD // type of interdictor
-	//standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality
+	///Range of the interdictor's field; for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength.
+	var/interdict_range = 5
 
-	var/interdict_cost_mult = 1 // interdiction cost multiplier
-	//some part selections can influence this value, raising or lowing the effective energy cost of interdiction activity
+	///Type of interdictor. Standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality.
+	var/interdict_class = ITDR_STANDARD
 
+	///Interdiction cost multiplier. Some part selections can influence this value, raising or lowing the effective energy cost of device functions.
+	var/interdict_cost_mult = 1
+
+	///List of fields that the interdictor has deployed; these fields are strictly visual, and outline the interdictor's operating range for clarity.
 	var/list/deployed_fields = list()
 
 	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
@@ -390,8 +401,12 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
-	var/interdist = 4 //how far the interdictor constructed with this rod will extend its interdiction field
-	var/power_multiplier = null //if present, influences the efficiency of interdictor operation
+
+	///How far the interdictor constructed with this rod will extend its interdiction field. Also influences strength against non-localized phenomena.
+	var/interdist = 4
+
+	///If present, influences the efficiency of interdictor operation. Lower number is more efficiency.
+	var/power_multiplier = null
 
 	phi
 		name = "Phi phase-control rod"
