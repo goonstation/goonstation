@@ -1,3 +1,6 @@
+(t)sat feb 4 23
+(u)LeahTheTech
+(+)The player options panel now shows if someone is mentor or HoS whitelisted at the top.
 (t)tue jan 31 23
 (u)LeahTheTech and pali
 (*)Admin interact now has the ability to call certain procs on objects. These options are marked with a * and can be easily added to types using the ADMIN_INTERACT_PROCS macro. Examples include open and close procs on doors, toggle proc on airbridges, and arm proc on nuclear bombs.

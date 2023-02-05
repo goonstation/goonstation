@@ -1,4 +1,23 @@
 
+(t)sun feb 05 23
+(u)Lord_Earthfire
+(p)12977
+(e)|
+(+)Blocking with a katana enables you to slice fruits thrown at you in midair!
+(t)sat feb 04 23
+(u)Lord_Earthfire
+(p)12518
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Reworked superior/inferior quality to work on most plant interaction scaling of potency, e.g. potato batteries & money trees. These gene strains now increase/reduce effective potency by 20%.
+(t)fri feb 03 23
+(u)Amylizzle
+(p)12499
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Prank your friends and/or enemies with a hilarious bucket-above-the-door prank! Just click a wooden door with a bucket to set it up. Don't forget to fill the bucket with glitter for some extra harmless fun!
+(u)Flourish
+(e)🆕|C-Feature
+(*)February special - "Send Candy Heart" spacebux purchase. For a mere 2500 spacebux, you can send a random crewmember from the manifest a candy heart through QM. No guarantee the QMs will actually deliver it though.
+(+)Removed "Mail Order" spacebux purchase.
 (t)wed feb 01 23
 (u)Cheffie
 (p)12751
