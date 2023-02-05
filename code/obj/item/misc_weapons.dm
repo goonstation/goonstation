@@ -1031,6 +1031,7 @@ TYPEINFO(/obj/item/bat)
 	is_syndicate = TRUE
 	var/delimb_prob = 1
 	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)

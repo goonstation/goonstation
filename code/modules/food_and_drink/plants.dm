@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/mob/target = hit_atom
 			var/obj/item/swords/wielded_sword = target.equipped()
 			//We remove a little bit of stamina
-			target.remove_stamina(5)
+			target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
 			src.already_burst = TRUE
 			var/turf/T = get_turf(src)
 			playsound(T, wielded_sword.hitsound, 65, 1)
@@ -1240,7 +1240,29 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			src.split()
 		..()
 
-	proc/split()
+	//Because coconuts create a drink item, we need to put that in seperatly
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom && ismob(hit_atom) && !src.already_burst)
+			var/mob/target = hit_atom
+			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/swords))
+				var/obj/item/swords/wielded_sword = target.equipped()
+				if (wielded_sword.midair_fruit_slice)
+					target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
+					src.already_burst = TRUE
+					var/turf/T = get_turf(src)
+					playsound(T, wielded_sword.hitsound, 65, 1)
+					target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", "You cut the flying [src] with your [wielded_sword] midair!].")
+					src.split(TRUE)
+				else
+					..()
+			else
+				..()
+		else
+			..()
+
+
+
+	proc/split(var/throws_food = FALSE)
 		var/turf/T = get_turf(src)
 		var/makeslices = 3
 		while (makeslices > 0)
@@ -1252,8 +1274,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
+			if (throws_food)
+				var/target_point = get_turf(pick(orange(4, src)))
+				P.throw_at(target_point, rand(0, 10), rand(1, 4))
 		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
 		src.reagents.trans_to(drink, src.reagents.total_volume)
+		if (throws_food)
+			var/target_point = get_turf(pick(orange(4, src)))
+			drink.throw_at(target_point, rand(0, 10), rand(1, 4))
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
