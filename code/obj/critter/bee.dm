@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types."

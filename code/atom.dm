@@ -3,6 +3,9 @@
 	*
   * Lots of functionality resides in this type.
   */
+TYPEINFO(/atom)
+	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	var/list/admin_procs = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -200,12 +203,11 @@
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 

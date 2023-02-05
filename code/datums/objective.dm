@@ -752,24 +752,6 @@ proc/create_fluff(datum/mind/target)
 		else
 			return 0
 
-/datum/objective/specialist/stealth
-	var/min_score
-	var/score = 0
-	var/list/datum/mind/safe_minds = list()
-
-	set_up()
-		var/num_players = 0
-		for(var/mob/living/player in mobs)
-			if (player.client) num_players++
-		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
-		explanation_text = "Remain out of sight and accumulate [min_score] points."
-		owner.stealth_objective = 1
-
-	check_completion()
-		if(score >= min_score)
-			return 1
-		else
-			return 0
 
 /datum/objective/specialist/gang
 	explanation_text = "Kill the leaders of every other gang without being killed yourself."
