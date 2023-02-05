@@ -18,8 +18,11 @@
 	var/client/viewer
 	var/atom/movable/screen/handler
 	var/obj/overlay/background = null
-	/// The atom/movable to show in the preview
-	/// May be useful to access directly if you want to mess with it
+	/**
+	 * The atom/movable to show in the preview - useful to access directly to mess with it
+	 *
+	 * For the /character subtype, this is always a human.
+	 */
 	var/atom/movable/preview_thing = null
 	/// Set to true if you want to handle the creation of the `preview_thing`
 	var/custom_setup = FALSE
@@ -107,7 +110,7 @@
 /**
  * # Character Preview
  *
- * This is intended only for use with humans.
+ * This is intended only for use with humans. `preview_thing` will be a generic human.
  *
  * This parent type is for use in single-client windows.
  * See [/datum/movable_preview/character/window] for a detatched window and and [/datum/movable_preview/character/multiclient] for a multi-client variant.
@@ -144,7 +147,7 @@
 
 	proc/get_icon()
 		if (!src.flat_icon)
-			src.flat_icon = getFlatIcon(src.preview_mob)
+			src.flat_icon = getFlatIcon(src.preview_thing)
 		return src.flat_icon
 
 /// Manages its own window.
