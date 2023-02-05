@@ -1,5 +1,6 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security") // "cargo")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
+	"medbay", "security", "cargo", "nuclear", "janitorial")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -78,6 +79,7 @@
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_BELOW
+	pixel_point = TRUE
 	var/static/list/valid_locations = VALID_WHITE_HOLE_LOCATIONS
 	var/source_location = null
 	var/start_time
@@ -86,6 +88,7 @@
 	var/grow_duration = 0
 	var/active_duration = 0
 	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
+	var/datum/light/light = null
 
 	var/static/list/spawn_probs = list(
 		"artlab" = list(
@@ -148,7 +151,7 @@
 		"flock" = list(
 			"flockconverted" = 15,
 			/mob/living/critter/flock/drone = 2,
-			/mob/living/critter/flock/bit = 2,
+			/obj/flock_structure/egg/bit = 2,
 			/obj/item/organ/brain/flockdrone = 2,
 			/obj/item/organ/flock_crystal = 2,
 			/datum/projectile/energy_bolt/flockdrone = 4,
@@ -395,6 +398,7 @@
 			/obj/decal/stalagmite = 5,
 			/obj/decal/cleanable/molten_item = 10,
 			/obj/item/paper = 3,
+			/obj/critter/bat/hellbat = 5,
 			"corpse" = 5,
 			// yeah idk where I was going with "hell" either
 		),
@@ -424,6 +428,9 @@
 			/obj/item/reagent_containers/glass/water_pipe = 1,
 			/obj/item/device/light/lava_lamp = 1,
 			/obj/item/paper = 3,
+			/obj/critter/killertomato = 0.5,
+			/mob/living/critter/small_animal/cat/synth = 1,
+			/mob/living/critter/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -467,7 +474,7 @@
 			/obj/item/aiModule/random = 20,
 			/mob/living/silicon/hivebot/eyebot = 10,
 			/obj/item/circuitboard/robotics = 2,
-			/mob/living/silicon/ai = 1,
+			/mob/living/silicon/ai/latejoin = 1,
 			/obj/item/storage/box/diskbox = 1,
 			/obj/item/storage/box/tapebox = 1,
 			/obj/item/paper/book/from_file/guardbot_guide = 1,
@@ -494,6 +501,8 @@
 			/obj/item/cable_coil = 1,
 			/obj/item/wrench = 1,
 			/obj/item/paper = 2,
+			/obj/item/clothing/suit/cardboard_box/ai = 1,
+			/obj/item/disk/data/floppy/manudrive/ai = 1,
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
@@ -503,7 +512,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random = 5,
+			/obj/item/spacecash/random/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
@@ -626,7 +635,34 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			// TODO, I am too tired rn
+			/obj/item/spacecash/five = 10,
+			/obj/item/spacecash/ten = 10,
+			/obj/item/spacecash/twenty = 10,
+			/obj/item/spacecash/fifty = 5,
+			/obj/item/spacecash/hundred = 3,
+			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/paper = 15,
+			/obj/item/paper_bin = 5,
+			/obj/item/hand_labeler = 5,
+			/obj/item/stamp/qm = 5,
+			/obj/storage/crate = 5,
+			/obj/storage/crate/internals = 1,
+			/obj/storage/crate/freezer = 0.75,
+			/obj/storage/secure/crate/dan = 0.25,
+			/obj/storage/crate/medical = 0.75,
+			/obj/storage/crate/biohazard = 0.25,
+			/obj/storage/crate/packing = 1,
+			/obj/storage/crate/wooden = 1,
+			/obj/storage/crate/bee = 0.25,
+			/obj/storage/crate/bloody = 0.25,
+			/obj/storage/crate/classcrate/qm = 0.25,
+			/obj/item/cargotele = 3,
+			/obj/item/device/appraisal = 5,
+			/obj/item/paper/book/from_file/pocketguide/quartermaster = 3,
+			/obj/item/storage/box/clothing/qm = 3,
+			/obj/machinery/manufacturer/qm = 1,
+			/obj/machinery/bot/mulebot = 0.3,
+			/obj/vehicle/forklift = 0.2
 		),
 
 		// not actual location, just a helper thing since it's shared between asteroid and trench
@@ -655,6 +691,68 @@
 			/obj/item/material_piece/cloth/carbon = 0.02,
 			/obj/item/raw_material/gemstone = 3,
 		),
+		//haha get irradiated nerds
+		"nuclear" = list(
+			"radgas" = 50,
+			"plasma" = 30,
+			/obj/item/reactor_component/control_rod/random_material = 20,
+			/obj/item/reactor_component/fuel_rod/random_material = 20,
+			/obj/item/reactor_component/gas_channel/random_material= 20,
+			/obj/item/reactor_component/heat_exchanger/random_material = 20,
+			/datum/projectile/neutron = 50,
+			/obj/item/nuclear_waste = 20,
+			/obj/decal/cleanable/machine_debris/radioactive = 20,
+			/obj/item/storage/pill_bottle/antirad = 15,
+			/obj/item/clothing/glasses/meson = 1,
+			/obj/item/reagent_containers/emergency_injector/anti_rad = 15,
+			/obj/storage/closet/radiation = 10,
+			/obj/item/reagent_containers/pill/antirad = 10,
+			/obj/item/clothing/mask/gas = 5,
+			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/gloves/yellow = 5,
+			/obj/item/clothing/head/rad_hood = 5,
+			/obj/item/wrench/yellow = 10,
+			/obj/item/weldingtool/yellow = 10,
+			/obj/item/crowbar/yellow = 10,
+			/obj/item/extinguisher = 10,
+			/obj/machinery/portable_atmospherics/canister/toxins = 4,
+			/obj/machinery/portable_atmospherics/canister/oxygen = 2,
+			/obj/machinery/portable_atmospherics/canister/nitrogen = 2,
+			/obj/machinery/portable_atmospherics/canister/carbon_dioxide = 2,
+			/obj/item/paper/book/from_file/nuclear_engineering = 10,
+			/obj/item/chem_grenade/firefighting = 5,
+			/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
+			/obj/item/material_piece/plutonium = 1,
+			/obj/item/raw_material/cerenkite = 10,
+		),
+		"janitorial" = list(
+			/obj/machinery/bot/cleanbot = 5,
+			/obj/machinery/bot/cleanbot/emagged = 3,
+			/obj/item/caution = 10,
+			/obj/item/caution/traitor = 2,
+			/obj/item/spraybottle/cleaner = 5,
+			/obj/item/reagent_containers/glass/bottle/cleaner = 3,
+			/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+			"body_bag" = 2,
+			/obj/item/mop = 5,
+			/obj/item/sponge = 5,
+			/datum/reagent/water = 10,
+			/datum/reagent/space_cleaner = 5,
+			/obj/item/mousetrap/armed = 5,
+			/obj/item/chem_grenade/cleaner = 10,
+			/obj/item/clothing/gloves/long = 3,
+			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/head/bio_hood = 1,
+			/obj/item/clothing/shoes/white = 1,
+			/obj/mopbucket = 3,
+			/obj/submachine/laundry_machine = 1,
+			/obj/item/reagent_containers/bath_bomb = 10,
+			/obj/storage/cart/trash = 2,
+			/obj/item/scrap = 5,
+			/obj/item/reagent_containers/glass/bucket = 4,
+			/obj/vehicle/floorbuffer = 1,
+			/obj/item/handheld_vacuum = 1
+		)
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
@@ -670,6 +768,17 @@
 		if(isnull(source_location))
 			source_location = pick(valid_locations)
 		src.source_location = source_location
+
+		var/image/illum = image(src.icon, src.icon_state)
+		illum.plane = PLANE_LIGHTING
+		illum.blend_mode = BLEND_ADD
+		illum.alpha = 100
+		src.UpdateOverlays(illum, "illum")
+
+		light = new /datum/light/point
+		light.set_brightness(0.7)
+		light.attach(src)
+		light.enable()
 
 		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.source_location)
 		location_image.alpha = 160
@@ -703,7 +812,10 @@
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)
-		boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
+		if(istype(I, /obj/item/fishing_rod))
+			. = ..()
+		else
+			boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
@@ -850,6 +962,15 @@
 					gas.oxygen += rand(1, 10)
 				var/turf/T = get_turf(src)
 				T.assume_air(gas)
+			if("radgas")
+				var/datum/gas_mixture/gas = new
+				gas.radgas += rand(10, 100)
+				if(prob(20))
+					gas.radgas += rand(100, 500)
+				if(prob(20))
+					gas.temperature += rand(100, 3000)
+				var/turf/T = get_turf(src)
+				T.assume_air(gas)
 			if("flockconverted")
 				. = generate_thing(pick(valid_locations - list("flock")))
 				var/atom/A = .
@@ -902,7 +1023,8 @@
 			if ("organ")
 				spawn_type = pick(concrete_typesof(/obj/item/organ))
 				. = new spawn_type(src.loc)
-			if ("corpse")
+			if ("corpse", "body_bag")
+				var/bag_it = (spawn_type == "body_bag")
 				spawn_type = pick( //safe jobs that don't introduce too much loot
 					1; /mob/living/carbon/human/normal/assistant,
 					1; /mob/living/carbon/human/normal/clown,
@@ -919,6 +1041,11 @@
 				human.death()
 				human.set_loc(src.loc)
 				. = human
+				if (bag_it)
+					var/obj/item/body_bag/bag = new(src.loc)
+					bag.UpdateIcon()
+					human.set_loc(bag)
+					. = bag
 			if("geneinjector")
 				var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
 				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
@@ -1109,6 +1236,9 @@
 		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
 
 	disposing()
+		if(src.light)
+			qdel(src.light)
+			src.light = null
 		processing_items.Remove(src)
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/whitehole_warning, src))
 			particleMaster.RemoveSystem(/datum/particleSystem/whitehole_warning)
@@ -1142,8 +1272,15 @@
 			par.pixel_x += rand(-128,128)
 			par.pixel_y += rand(-128,128)
 			par.color = "#ffffff"
-			par.alpha = 5
+			par.alpha = 2
 			par.plane = PLANE_NOSHADOW_ABOVE
+
+			var/image/illum = par.SafeGetOverlayImage("illum", src.icon, src.icon_state)
+			illum.appearance_flags = PIXEL_SCALE | RESET_ALPHA
+			illum.plane = PLANE_LIGHTING
+			illum.blend_mode = BLEND_ADD
+			illum.alpha = 6
+			par.UpdateOverlays(illum, "illum")
 
 			first.Scale(0.1,0.1)
 			par.transform = first
@@ -1154,5 +1291,29 @@
 			first.Scale(0.1 / 50)
 			animate(transform = first, time = 15 SECONDS, alpha = 5)
 			first.Reset()
+
+
+/datum/fishing_spot/whitehole
+	fishing_atom_type = /obj/whitehole
+
+	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		var/obj/whitehole/whitehole = target
+		if(!istype(whitehole))
+			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
+		. = whitehole.generate_thing(whitehole.source_location)
+
+	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		. = ..()
+		if(.)
+			var/obj/whitehole/whitehole = target
+			if(!istype(whitehole))
+				CRASH("try_fish called on whitehole fishing spot with non-whitehole target")
+			if(prob(5))
+				whitehole.spew_out_stuff(whitehole.source_location)
+			if(whitehole.state in list("static", "growing"))
+				whitehole.grow_duration += 10 SECONDS
+				boutput(user, "<span class='notice'>You feel the white hole shrink a little.</span>")
+			else
+				whitehole.active_duration -= 5 SECONDS
 
 #undef VALID_WHITE_HOLE_LOCATIONS

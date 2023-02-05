@@ -86,13 +86,13 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		return
 
 	if(on)
-		var/power_usage = src.inlet_flow * 50 WATTS
+		var/active_power_usage = src.inlet_flow * 50 WATTS
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/F = my_turf.active_airborne_liquid
 			if (F?.group)
-				power_usage += (inlet_flow / 8) * 5 KILO WATTS
+				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)
 				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
 				if (src.reagents.total_volume < src.reagents.maximum_volume)
@@ -109,8 +109,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 				if(issimulatedturf(T) && isfloor(T))
 					src.scrub_turf(T, T == src.loc ? src.inlet_flow : src.inlet_flow / 2)
 		var/filtered_out_moles = TOTAL_MOLES(src.air_contents) - original_my_moles
-		power_usage += filtered_out_moles * 700 WATTS
-		A.use_power(power_usage, ENVIRON)
+		active_power_usage += filtered_out_moles * 700 WATTS
+		A.use_power(active_power_usage, ENVIRON)
 		src.updateDialog()
 	src.UpdateIcon()
 

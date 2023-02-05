@@ -232,9 +232,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -900,14 +897,8 @@
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
 		stat(null, " ")
-		if (src.mind && src.mind.stealth_objective)
-			if (src.mind.objectives && istype(src.mind.objectives, /list))
-				for (var/datum/objective/O in src.mind.objectives)
-					if (istype(O, /datum/objective/specialist/stealth))
-						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
 		/*
-
 		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
 
 		if (src.internal)
@@ -3251,9 +3242,9 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id()
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
-	if(.)
+	if(. || not_worn)
 		return
 	if(istype(src.wear_id, /obj/item/card/id))
 		return src.wear_id

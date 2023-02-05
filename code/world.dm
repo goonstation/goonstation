@@ -58,6 +58,7 @@ var/global/mob/twitch_mob = 0
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
 	var/path = "data/intra_round.sav"

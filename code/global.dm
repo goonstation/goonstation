@@ -255,6 +255,7 @@ var/global
 	game_version = "Goonstation 13 (r" + vcs_revision + ")"
 
 	master_mode = "traitor"
+	next_round_mode = "traitor"
 
 	host = null
 	game_start_delayed = 0
@@ -433,6 +434,7 @@ var/global
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
 	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
@@ -445,6 +447,9 @@ var/global
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
+	antag_pirate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate")
+	antag_pirate_first_mate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_first_mate")
+	antag_pirate_captain = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_captain")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")

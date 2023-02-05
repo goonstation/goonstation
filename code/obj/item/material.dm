@@ -480,6 +480,7 @@
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
 	icon_state = "cotton"
+	material_name = "Cotton"
 
 /obj/item/raw_material/ice
 	name = "ice chunk"

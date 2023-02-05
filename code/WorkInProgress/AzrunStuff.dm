@@ -103,7 +103,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -113,7 +113,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
@@ -124,7 +124,7 @@
 			reagents_temp.my_atom = POT
 
 			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -186,7 +186,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -289,6 +289,10 @@
 	var/active_stage
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 
+	New()
+		..()
+		gimmick_events = list()
+
 	get_desc()
 		var/datum/gimmick_event/AE = get_active_event()
 		if(!AE)
@@ -357,7 +361,6 @@
 
 		New()
 			..()
-			gimmick_events = list()
 			gimmick_events += new /datum/gimmick_event/test1
 			gimmick_events += new /datum/gimmick_event/test2
 			active_stage = 1
@@ -377,7 +380,6 @@
 
 /obj/gimmick_obj/ui_data()
 	. = list()
-
 
 	.["activeStage"] = active_stage
 	.["eventList"] = list()
@@ -441,6 +443,8 @@
 		if("active_step")
 			active_stage = id
 			. = TRUE
+
+	active_stage = clamp(active_stage, 1, length(gimmick_events))
 
 /obj/item/aiModule/ability_expansion/taser
 	name = "CLF:Taser Expansion Module"
