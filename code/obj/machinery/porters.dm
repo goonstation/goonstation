@@ -851,6 +851,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	p_class = 1.2
 	can_fall = 0
 	ai_control_enabled = 1
+	power_usage = 0
 	var/homeloc = null
 
 	New()

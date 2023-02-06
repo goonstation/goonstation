@@ -20,6 +20,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
 	var/pseudo = FALSE
+	/// The objectives assigned to the player by this specific antagonist role.
+	var/list/datum/objective/objectives = list()
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
 		. = ..()
@@ -55,8 +57,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (take_gear)
 			src.remove_equipment()
 
+		src.remove_objectives()
+
 		if (!silent)
 			src.announce_removal()
+			src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
@@ -123,12 +128,17 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
+	/// Remove objectives from the antagonist and the mind.
+	proc/remove_objectives()
+		for (var/datum/objective/objective in src.objectives)
+			src.owner.objectives.Remove(objective)
+			src.objectives.Remove(objective)
+			qdel(objective)
+
 	// Show the player what objectives they have in their mind.
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/objective in owner.objectives)
-			if (istype(objective, /datum/objective/crew))
-				continue
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [objective.explanation_text]")
 			obj_count++
 

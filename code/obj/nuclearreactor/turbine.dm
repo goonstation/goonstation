@@ -64,6 +64,9 @@
 		terminal.master = src
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("turbine_light", list(255,255,255,255))
+		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
+		for(var/turf/simulated/floor/F in src.locs)
+			F.explosion_immune = TRUE
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)
@@ -71,6 +74,8 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("turbine_light")
+		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
+			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
 	proc/_set_statorload_mechchomp(var/datum/mechanicsMessage/inp)

@@ -332,6 +332,9 @@
 	proc/update_density()
 		src.density = src.possessed_thing.density
 
+	get_hud()
+		return src.hud
+
 /mob/living/object/ai_controlled
 	is_npc = 1
 	New()

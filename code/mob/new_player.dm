@@ -319,7 +319,7 @@ mob/new_player
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (istype(ticker.mode, /datum/game_mode/assday))
@@ -729,14 +729,12 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
-				traitor.special_role = ROLE_CHANGELING
-				objective_set_path = /datum/objective_set/changeling
-				traitormob.make_changeling()
+				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_VAMPIRE)
-				traitor.special_role = ROLE_VAMPIRE
-				objective_set_path = /datum/objective_set/vampire
-				traitormob.make_vampire()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRESTLER)
 				traitor.special_role = ROLE_WRESTLER
@@ -753,9 +751,8 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_WEREWOLF)
-				traitor.special_role = ROLE_WEREWOLF
-				objective_set_path = /datum/objective_set/werewolf
-				traitormob.make_werewolf()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
 				traitor.special_role = ROLE_WRAITH
@@ -910,8 +907,8 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			src.mind.dnr = 1
-			src.mind.joined_observer=1
+			src.mind.get_player()?.dnr = TRUE
+			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()

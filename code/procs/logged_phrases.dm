@@ -159,7 +159,8 @@ var/global/datum/phrase_log/phrase_log = new
 			ircmsg["key"] = usr.key
 			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
-			ircbot.export("admin", ircmsg)
+			SPAWN(0)
+				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)
