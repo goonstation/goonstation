@@ -1,3 +1,6 @@
+(t)sun feb 5 23
+(u)ZeWaka
+(*)When you edit <code>color</code> in View Variables, there is a new 'Color Matrix Editor' option to preview color matrix changes on your selection before applying.
 (t)sat feb 4 23
 (u)LeahTheTech
 (+)The player options panel now shows if someone is mentor or HoS whitelisted at the top.

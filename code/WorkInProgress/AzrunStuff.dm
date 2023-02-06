@@ -103,7 +103,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -113,7 +113,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
@@ -124,7 +124,7 @@
 			reagents_temp.my_atom = POT
 
 			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -186,7 +186,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
