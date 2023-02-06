@@ -5,11 +5,11 @@
 	tgui_process.update_uis(src.inventory)
 
 /// Get list of slots obstructed by other items
-/mob/living/carbon/human/proc/GetObstructedSlots()
+/mob/living/carbon/human/proc/get_obstructed_Slots()
 	var/list/obsctructedSlots = list()
 	var/ItemFlags = null
 
-	for(var/obj/item/clothing/I in GetWornItems())
+	for(var/obj/item/clothing/I in get_worn_items())
 		ItemFlags |= I.obstructs
 
 	if(ItemFlags & C_GLASSES)
@@ -28,7 +28,7 @@
 	return obsctructedSlots
 
 ///Get all items as a list in worn slots
-/mob/living/carbon/human/proc/GetWornItems()
+/mob/living/carbon/human/proc/get_worn_items()
 	return list(
 		src.head,
 		src.belt,
@@ -44,7 +44,16 @@
 	)
 
 ///Check the inventory slot against the list of obstructed slots
-/mob/living/carbon/human/proc/CheckObstructed(var/id)
-	for (var/obj/slot as anything in GetObstructedSlots())
+/mob/living/carbon/human/proc/check_obstructed(var/id)
+	for (var/obj/slot as anything in get_obstructed_Slots())
 		if(id == slot)
 			return TRUE
+
+/mob/living/carbon/human/proc/obstructed_by(var/slot)
+	var/list/headslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
+	for (var/obj/item as anything in headslots)
+		if (slot == item)
+			if (src.head.obstructs & C_MASK)
+				return src.head
+			else return src.wear_mask
+	return src.wear_suit

@@ -946,6 +946,7 @@ var/datum/action_controller/actions
 
 		if(obstructed)
 			boutput(source, "<span class='alert'>There are clothes in the way you can't [item ? "place that on" : "take that from"] [him_or_her(target)]!</span>")
+			boutput(source, "<span class='alert'>Try removing their [target.obstructed_by(slot)] first!")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
