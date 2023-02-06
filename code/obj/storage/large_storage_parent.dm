@@ -898,7 +898,11 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			I.setMaterial(M)
 		qdel(the_storage)
 
-ADMIN_INTERACT_PROCS(/obj/storage/secure, ..proc/lock, ..proc/unlock)
+//this is written out manually because the linter got very angry when I tried to use .. in the macro version
+TYPEINFO(/obj/storage/secure)
+TYPEINFO_NEW(/obj/storage/secure)
+	. = ..()
+	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
