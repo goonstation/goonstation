@@ -53,7 +53,8 @@
 	var/list/headslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
 	for (var/obj/item as anything in headslots)
 		if (slot == item)
-			if (src.head.obstructs & C_MASK)
+			if (src.head && src.head.obstructs & C_MASK)
 				return src.head
-			else return src.wear_mask
+			else
+				return src.wear_mask
 	return src.wear_suit
