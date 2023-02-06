@@ -103,7 +103,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -113,7 +113,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
@@ -124,7 +124,7 @@
 			reagents_temp.my_atom = POT
 
 			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -186,7 +186,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -744,3 +744,80 @@
 		unlock()
 			iterations = 0
 			..()
+
+/obj/item/ammo/bullets/pipeshot/web
+	sname = "web load"
+	desc = "This appears to be some sticky webbing shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/bullet/web
+	icon_state = "makeshift_u"
+
+	New()
+		..()
+		var/image/overlay = image(src.icon,"makeshift_o")
+		overlay.color = "#eee"
+		UpdateOverlays(overlay,"overlay")
+
+/datum/pipeshotrecipe/web
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/web
+	accepteditem = /obj/item/material_piece/cloth/spidersilk
+	craftname = "web"
+
+/datum/projectile/bullet/web
+	name = "web slug"
+	icon_state = "acidspit"
+	color_icon = COLOR_MATRIX_GRAYSCALE
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	damage = 0
+	stun = 10
+	dissipation_rate = 5
+	dissipation_delay = 3
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bhole"
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			new /obj/icecube/web(get_turf(M), M)
+
+/obj/icecube/web
+	name = "bundle of web"
+	desc = "A big wad of web. Someone seems to be stuck inside it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "web"
+	health = 10
+	steam_on_death = FALSE
+	add_underlay = FALSE
+
+	New(loc, mob/iced as mob)
+		..()
+		if(iced.rest_mult)
+			icon_state = "web2"
+
+/obj/item/ammo/bullets/pipeshot/flash
+	sname = "flashbang load"
+	desc = "This appears to be some chemical wadding shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/bullet/reagent_burst/flashbang
+	icon_state = "makeshift_u"
+
+	New()
+		..()
+		var/image/overlay = image(src.icon,"makeshift_o")
+		overlay.color = "#ccc"
+		UpdateOverlays(overlay,"overlay")
+
+/datum/projectile/bullet/reagent_burst
+	max_range = 1
+
+/datum/projectile/bullet/reagent_burst/flashbang
+	name = "flashbang round"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		flashpowder_reaction(get_turf(O), 20)
+		sonicpowder_reaction(get_turf(O), 20)
