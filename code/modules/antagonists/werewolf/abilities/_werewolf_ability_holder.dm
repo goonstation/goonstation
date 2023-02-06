@@ -5,6 +5,7 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
+// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
 /mob/proc/make_werewolf()
 	if (ishuman(src))
 		var/datum/abilityHolder/werewolf/A = src.get_ability_holder(/datum/abilityHolder/werewolf)

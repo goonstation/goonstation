@@ -52,6 +52,7 @@
 ABSTRACT_TYPE(/datum/random_event/major)
 ABSTRACT_TYPE(/datum/random_event/major/antag)
 ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
+ABSTRACT_TYPE(/datum/random_event/major/player_spawn/antag)
 ABSTRACT_TYPE(/datum/random_event/minor)
 ABSTRACT_TYPE(/datum/random_event/special)
 ABSTRACT_TYPE(/datum/random_event/start)
