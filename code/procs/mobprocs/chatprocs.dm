@@ -1065,7 +1065,7 @@
 
 	var/class = "flocksay"
 
-	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary)
+	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary || speak_as_admin)
 		class += " sentient"
 		if (istype(mob_speaking, /mob/living/intangible/flock/flockmind))
 			class += " flockmind"

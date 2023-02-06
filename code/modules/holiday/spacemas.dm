@@ -1257,6 +1257,16 @@ proc/compare_ornament_score(list/a, list/b)
 	var/danger_chance = 1
 	var/booby_trapped = 0
 
+	safe
+		// Has a zero% chance of giving you Fun items
+		danger_chance = 0
+
+	very_not_safe
+		// has a 100% chance of giving you Fun items
+		name = "very fun stocking"
+		desc = "This festive little sock is just full of <i>Fun!</i>"
+		danger_chance = 100
+
 	New()
 		..()
 		if (prob(50))
