@@ -15,10 +15,11 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 /datum/game_mode/football
 	name = "Football"
 	config_tag = "football"
+	regular = FALSE
 	var/score_red = 0
 	var/score_blue = 0
 	var/game_state = FOOTBALL_PREGAME
-	var/time_left = 15 MINUTES
+	var/time_left = 10 MINUTES
 	var/time_next_state = 15 SECONDS
 	var/obj/item/football/the_big_one/the_football = null
 	var/last_tick = 0
@@ -41,7 +42,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				if (player.mind)
 					src.init_player(player, 0, 1)
 
-		time_left = 15 MINUTES
+		time_left = 10 MINUTES
 		time_next_state = 30 SECONDS
 
 		clock_num = list(locate("football_clock1000"), locate("football_clock100"), locate("football_clock10"), locate("football_clock1"))
@@ -66,7 +67,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			last_tick = ticker.round_elapsed_ticks
 			src.update_game_clock()
 			boutput(world, "Game starts in 30 seconds.")
-			while (true)
+			while (TRUE)
 				delta = ticker.round_elapsed_ticks - last_tick
 				last_tick = ticker.round_elapsed_ticks
 				time_next_state -= delta
@@ -214,6 +215,8 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			var/mob/new_player/N = M
 			N.mind.assigned_role = "MODE"
 			footballer = N.create_character(new /datum/job/football)
+			footballer.traitHolder.removeAll()
+			footballer.full_heal()
 
 		if (!ishuman(footballer))
 			boutput(M, "something went wrong. dunno what. sorry. football machine broke")
@@ -245,6 +248,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football(footballer), footballer.slot_head)
 			footballer.equip_if_possible(new /obj/item/clothing/under/football(footballer), footballer.slot_w_uniform)
+			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(0,0,255)))
 			I.name = "Blue Team"
 			I.assignment = "Blue Team"
 			I.color = "#0000ff"
@@ -252,6 +256,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(footballer), footballer.slot_head)
 			footballer.equip_if_possible(new /obj/item/clothing/under/football/red(footballer), footballer.slot_w_uniform)
+			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,0,0)))
 			I.name = "Red Team"
 			I.assignment = "Red Team"
 			I.color = "#ff0000"

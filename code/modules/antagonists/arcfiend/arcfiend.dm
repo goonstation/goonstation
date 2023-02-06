@@ -1,7 +1,7 @@
 /datum/antagonist/arcfiend
 	id = ROLE_ARCFIEND
 	display_name = "arcfiend"
-	
+
 	/// The ability holder of this arcfiend, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/arcfiend/ability_holder
 
@@ -28,7 +28,7 @@
 
 		H.bioHolder.AddEffect("resist_electric", power = 2, magical = TRUE)
 		H.ClearSpecificOverlays("resist_electric")
-	
+
 	remove_equipment()
 		// now this is pod racing
 		src.ability_holder.removeAbility(/datum/targetable/arcfiend/sap_power)
@@ -42,7 +42,7 @@
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/arcfiend)
 
 	assign_objectives()
-		new /datum/objective_set/arcfiend(src.owner)
+		new /datum/objective_set/arcfiend(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

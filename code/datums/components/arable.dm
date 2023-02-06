@@ -22,6 +22,7 @@ TYPEINFO(/datum/component/arable)
 	initialization_args = list()
 
 /datum/component/arable/Initialize()
+	. = ..()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/plant_seed)

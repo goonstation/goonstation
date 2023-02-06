@@ -10,6 +10,9 @@
 /datum/ailment/disease/avian_flu/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if(!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
 	switch(D.stage)
 		if(2)
 			if(probmult(5))

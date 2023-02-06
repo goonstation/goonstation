@@ -8,7 +8,7 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6
+	force = 8
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
@@ -19,7 +19,7 @@
 	burn_point = 4500
 	burn_output = 4800
 	burn_type = 1
-	stamina_damage = 47
+	stamina_damage = 50
 	stamina_cost = 20
 	stamina_crit_chance = 10
 

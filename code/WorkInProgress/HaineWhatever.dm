@@ -256,27 +256,27 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/species = "critter"
 
 /datum/species_info/parrot
-	name = "space parrot" // ....................................... obj|mob
-	desc = "A spacefaring species of parrot." // ................... obj|mob
-	species = "parrot" // .......................................... obj|mob
-	var/list/subspecies = null // .................................. obj|mob
-	var/icon = 'icons/misc/bird.dmi' // ............................ obj|mob
-	var/gender = PLURAL // ............................................. mob
-	var/learned_words = null // .................................... obj ...
-	var/learned_phrases = null // .................................. obj ...
-	var/learn_words_chance = 33 // ................................. obj ...
-	var/learn_phrase_chance = 10 // ................................ obj ...
-	var/learn_words_max = 64 // .................................... obj ...
-	var/learn_phrase_max = 32 // ................................... obj ...
-	var/chatter_chance = 2 // ...................................... obj ...
-	var/find_treasure_chance = 2 // ................................ obj ...
-	var/destroys_treasure = 0 // ................................... obj ...
-	var/sells_furniture = 0 // ..................................... obj ...
-	var/hops = 0 // ................................................ obj|mob
-	var/pixel_x = 0 // ............................................. obj|mob
-	var/hat_offset_y = -5 // ....................................... obj|mob
-	var/hat_offset_x = 0 // ........................................ obj|mob
-	var/feather_color = "#ba1418" // ................................obj|mob
+	name = "space parrot" //						obj|mob
+	desc = "A spacefaring species of parrot." //	obj|mob
+	species = "parrot" //							obj|mob
+	var/list/subspecies = null //					obj|mob
+	var/icon = 'icons/misc/bird.dmi' //				obj|mob
+	var/gender = PLURAL //								mob
+	var/learned_words = null //						obj ...
+	var/learned_phrases = null //					obj ...
+	var/learn_words_chance = 33 //					obj ...
+	var/learn_phrase_chance = 10 //					obj ...
+	var/learn_words_max = 64 //						obj ...
+	var/learn_phrase_max = 32 //					obj ...
+	var/chatter_chance = 2 //						obj ...
+	var/find_treasure_chance = 2 //					obj ...
+	var/destroys_treasure = 0 //					obj ...
+	var/sells_furniture = 0 //						obj ...
+	var/hops = 0 //									obj|mob
+	var/pixel_x = 0 //								obj|mob
+	var/hat_offset_y = -5 //						obj|mob
+	var/hat_offset_x = 0 //							obj|mob
+	var/feather_color = "#ba1418" //				obj|mob
 
 /datum/species_info/parrot/eclectus
 	name = "space eclectus"
@@ -537,12 +537,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		if (src.amount <= 1)
 			src.icon_state = "chip"
@@ -1382,7 +1382,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
 			C.amount -= max_accept
-			C.update_stack_appearance()
+			C.UpdateStackAppearance()
 			src.cash_amt = src.cash_max
 		else
 			src.cash_amt += C.amount

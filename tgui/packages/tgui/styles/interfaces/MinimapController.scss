@@ -1,0 +1,17 @@
+.minimap-controller {
+  &__number-inputs {
+    width: 70px;
+  }
+
+  &__buttons {
+    font-size: 1.7rem;
+  }
+
+  &__marker-list {
+    background-color: rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    padding: 5px;
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+  }
+}

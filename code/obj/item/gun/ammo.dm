@@ -694,14 +694,19 @@
 	icon_empty = "speedloader_empty"
 
 //0.58
-/obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
+/obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
-	name = ".58 Flintlock"
+	name = ".58 flintlock pouch"
+	desc = "A small pouch containing .58 lead balls for flintlock pistols."
 	ammo_type = new/datum/projectile/bullet/flintlock
-	icon_state = null
-	amount_left = 1
-	max_amount = 1
+	icon_state = "flintlock_ammo_pouch"
+	amount_left = 15
+	max_amount = 15
 	ammo_cat = AMMO_FLINTLOCK
+
+	single
+		amount_left = 1
+		max_amount = 1
 
 //0.72
 /obj/item/ammo/bullets/a12
@@ -824,6 +829,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_LOW
 	icon_dynamic = 0
 	icon_empty = "flare-0"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+//0.75
+/obj/item/ammo/bullets/flintlock/rifle
+	sname = ".75 Flintlock"
+	name = ".75 flintlock pouch"
+	desc = "A small pouch containing .75 lead balls for flintlock rifles."
+	ammo_type = new/datum/projectile/bullet/flintlock/rifle
+	icon_state = "flintlock_rifle_ammo_pouch"
+	ammo_cat = AMMO_FLINTLOCK_RIFLE
 
 	single
 		amount_left = 1
@@ -1108,6 +1126,26 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+//2.5
+/obj/item/ammo/bullets/flintlock/mortar
+	sname = "2.5 Mortar"
+	name = "2.5 mortar grenades"
+	desc = "Ancient 63.5mm grenades, meant for use in a hand mortar."
+	ammo_type = new/datum/projectile/bullet/flintlock/mortar
+	icon_state = "mortar-10"
+	icon_empty = "mortar-0"
+	icon_dynamic = TRUE
+	icon_short = "mortar"
+	ammo_cat = AMMO_FLINTLOCK_MORTAR
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	amount_left = 10
+	max_amount = 10
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //3.0
 /obj/item/ammo/bullets/gun
 	name = "Briefcase of guns"
@@ -1197,10 +1235,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 	var/rechargable = TRUE
+	var/component_type = /datum/component/power_cell
 
 	New()
 		..()
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay, rechargable)
+		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
@@ -1331,7 +1370,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 		charge = max_charge
 
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_delay, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay)
 		return
 
 
@@ -1346,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
 			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 6 //weight this too
 
-			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_delay, recharge_rate)
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate, recharge_delay)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
@@ -1441,6 +1480,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "You should not be seeing this!"
 	max_charge = 40
 	recharge_rate = 5
+	component_type = /datum/component/power_cell/flockdrone
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

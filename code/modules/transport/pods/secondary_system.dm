@@ -142,7 +142,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -814,9 +816,8 @@
 		boutput(B, "<span class='alert'>You eject!</span>")
 		ship.leave_pod(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
+		for(var/i in 1 to 3)
+			step(B, turn(ship.dir, 180), 0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
@@ -914,7 +915,7 @@
 	f_active = 1
 	hud_state = "SRS_icon"
 	var/cooldown = 0
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/health_snapshot
 	var/image/rewind
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
@@ -960,7 +961,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SRS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
@@ -968,7 +969,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SRS")
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)
