@@ -1043,7 +1043,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	wear_state = "foamdartshotgun"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	contraband = 1
-	two_handed = 1
+	two_handed = TRUE
 	auto_eject = FALSE
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = 2
