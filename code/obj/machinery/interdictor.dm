@@ -217,7 +217,7 @@
 	UpdateOverlays(I_actv, "active", 0, 1)
 
 
-//updates only the charge overlay, used when charge is depleted by interdiction
+///Small visual update proc used for interdictions that want to immediately show an expenditure of charge and don't need a full update_icon
 /obj/machinery/interdictor/proc/updatecharge()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
