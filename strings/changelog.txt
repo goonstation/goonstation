@@ -1,5 +1,9 @@
 
 (t)sun feb 05 23
+(u)BatElite
+(p)12978
+(e)🪲|C-Bug
+(+)Deconstructing roundstart walls no longer generates gaps in the station's atmosphere, so remodeling projects are more viable.
 (u)DisturbHerb
 (p)12791
 (e)🆕🗺⛔|C-Feature, A-Mapping, C-Removal
