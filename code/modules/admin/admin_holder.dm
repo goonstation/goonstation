@@ -39,6 +39,7 @@
 
 	var/datum/filter_editor/filteriffic = null
 	var/datum/particle_editor/particool = null
+	var/datum/color_matrix_editor/color_matrix_editor = null
 
 	var/list/hidden_categories = null
 

@@ -1,4 +1,25 @@
 
+(t)sun feb 05 23
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new mechanics component that you can count on. It counts things. It's a counter. No more feedback-loop arithmatic chains!
+(u)BatElite
+(p)12978
+(e)🪲|C-Bug
+(+)Deconstructing roundstart walls no longer generates gaps in the station's atmosphere, so remodeling projects are more viable.
+(u)DisturbHerb
+(p)12791
+(e)🆕🗺⛔|C-Feature, A-Mapping, C-Removal
+(*)Cogmap 1's Pathology Lab has been replaced by a wing containing a Psychiatrist's Office and Podbay.
+(u)Lord_Earthfire
+(p)12977
+(e)|
+(+)Blocking with a katana enables you to slice fruits thrown at you in midair!
+(t)sat feb 04 23
+(u)Lord_Earthfire
+(p)12518
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Reworked superior/inferior quality to work on most plant interaction scaling of potency, e.g. potato batteries & money trees. These gene strains now increase/reduce effective potency by 20%.
 (t)fri feb 03 23
 (u)Amylizzle
 (p)12499

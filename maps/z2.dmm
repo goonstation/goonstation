@@ -62824,7 +62824,7 @@
 /area/centcom/lounge)
 "dIv" = (
 /obj/table/wood/round/auto,
-/obj/storage/crate/wooden,
+/obj/random_item_spawner/pizza,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"

@@ -48,7 +48,8 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
 				name = "Drone [mode.agent_radiofreq]"
-
+			else if (length(flocks))
+				name = "Flockdrone"
 			else
 				//Make them suffer with an overly cute name
 				name = "Drone [pick(list("Princess", "Lord", "King", "Queen", "Duke", "Baron"))] [pick(list("Bubblegum", "Wiffleypop", "Shnookems", "Cutesypie", "Fartbiscuits", "Rolypoly"))]"
