@@ -50,11 +50,11 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag)+concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
