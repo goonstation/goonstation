@@ -1,5 +1,8 @@
 
 (t)sun feb 05 23
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new mechanics component that you can count on. It counts things. It's a counter. No more feedback-loop arithmatic chains!
 (u)BatElite
 (p)12978
 (e)🪲|C-Bug
