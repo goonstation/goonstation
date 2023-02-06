@@ -168,7 +168,7 @@
 	New()
 		src.add_filter("flock_sentinel_rays", 0, rays_filter(x = -0.2, y = 6, size = 1, color = rgb(255,255,255), offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
 		var/dm_filter/filter = src.get_filter("flock_sentinel_rays")
-		UNLINT(animate(filter, size = 0, time = 5 MINUTES, loop = -1, offset = f.offset + 100))
+		UNLINT(animate(filter, size = 0, time = 5 MINUTES, loop = -1, offset = filter.offset + 100))
 		..()
 
 #undef NOT_CHARGED
