@@ -1,6 +1,7 @@
 /**
 * Not related to the other shield generator at all.
 */
+ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off)
 /obj/machinery/shieldgenerator
 	name = "Shield generator parent"
 	desc = "fix me please"
@@ -208,19 +209,28 @@
 				src.shield_off()
 		else
 			if(src.active)
-				src.shield_off()
+				src.turn_off()
 			else
-				if(PCEL)
-					if(PCEL.charge > 0)
-						src.shield_on()
-					else
-						boutput(user, "The [src.name]'s battery light flickers briefly.")
-				else	//turn on power if connected to a power grid with power in it
-					if(line_powered() && connected)
-						src.shield_on()
-						src.visible_message("<b>[user.name]</b> powers up the [src.name].")
-					else
-						boutput(user, "The [src.name]'s battery light flickers briefly.")
+				src.turn_on()
+
+	proc/turn_on(mob/user)
+		if (src.active)
+			return
+		if(PCEL)
+			if(PCEL.charge > 0)
+				src.shield_on()
+			else
+				boutput(user, "The [src.name]'s battery light flickers briefly.")
+		else	//turn on power if connected to a power grid with power in it
+			if(line_powered() && connected)
+				src.shield_on()
+				src.visible_message("<b>[user.name]</b> powers up the [src.name].")
+			else
+				boutput(user, "The [src.name]'s battery light flickers briefly.")
+		build_icon()
+
+	proc/turn_off()
+		src.shield_off()
 		build_icon()
 
 	attackby(obj/item/W, mob/user)

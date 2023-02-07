@@ -878,12 +878,21 @@ obj/item/assembly/radio_horn/receive_signal()
 
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
+
+ABSTRACT_TYPE(/datum/pipeshotrecipe)
 /datum/pipeshotrecipe
 	var/thingsneeded = null
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
 	var/craftname = null
 	var/success = FALSE
+	var/allow_subtypes = TRUE
+
+	proc/check_match(obj/item/craftingitem)
+		if(allow_subtypes)
+			. = istype(craftingitem, accepteditem)
+		else
+			. = craftingitem.type == accepteditem
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 
@@ -902,12 +911,19 @@ obj/item/assembly/radio_horn/receive_signal()
 
 				//consume material- proc handles deleting
 			craftingitem.change_stack_amount(-consumed)
+			. = TRUE
+
 /datum/pipeshotrecipe/plasglass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/plasglass
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
 	var/matid = "plasmaglass"
+
+	check_match(obj/item/craftingitem)
+		. = ..()
+		if(. && matid != craftingitem.material.mat_id)
+			. = FALSE
 
 	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 		if(matid == craftingitem.material.mat_id)
@@ -918,28 +934,34 @@ obj/item/assembly/radio_horn/receive_signal()
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
 	accepteditem = /obj/item/raw_material/scrap_metal
 	craftname = "scrap chunk"
+
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/glass/
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
+
 /obj/item/assembly/pipehulls
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
 
+	var/static/list/datum/pipeshotrecipe/recipes_list = list()
 	var/datum/pipeshotrecipe/recipe = null
+
+	New()
+		..()
+		if(!length(recipes_list))
+			for(var/recipe_type in concrete_typesof(/datum/pipeshotrecipe))
+				recipes_list += new recipe_type
 
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
-			if (istype(W, /obj/item/raw_material/shard))
-				if(W.material.mat_id == "plasmaglass")
-					recipe = new/datum/pipeshotrecipe/plasglass
-				else
-					recipe = new/datum/pipeshotrecipe/glass
-			if (istype(W, /obj/item/raw_material/scrap_metal))
-				recipe = new/datum/pipeshotrecipe/scrap
-		if(recipe) //probably a better way, but it works well enough
-			recipe.craftwith(W, src, user)
+			for(var/datum/pipeshotrecipe/R in recipes_list)
+				if(R.check_match(W))
+					recipe = new R.type()
+					break
+		if(recipe?.craftwith(W, src, user))
+			return //don't bang objects together unless they are wrong...
 		..()
 

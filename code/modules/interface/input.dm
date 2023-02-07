@@ -230,6 +230,9 @@ var/list/dirty_keystates = list()
 				filtered.Add(A)
 			if(filtered.len) object = pick(filtered)
 
+		if(control == "infowindow.info" && text2num(parameters["icon-x"]) > 32)
+			parameters["icon-x"] = "16"
+
 		var/next = user.click(object, parameters, location, control)
 
 		if (isnum(next) && src.preferences.use_click_buffer && src.queued_click != object && next <= max(user.click_delay, user.combat_click_delay))
