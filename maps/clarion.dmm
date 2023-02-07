@@ -26103,7 +26103,7 @@
 	},
 /area/station/engine/substation/west)
 "bMw" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary{
 	name = "Community Center"

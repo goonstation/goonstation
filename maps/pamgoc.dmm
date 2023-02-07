@@ -55951,7 +55951,7 @@
 	},
 /area/station/security/main)
 "cek" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},

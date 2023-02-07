@@ -30,7 +30,7 @@
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "N" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "Q" = (

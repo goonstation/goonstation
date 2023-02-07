@@ -67697,7 +67697,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "utD" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -80727,7 +80727,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "yff" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';

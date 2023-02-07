@@ -14233,7 +14233,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/quarters)
 "aOx" = (

@@ -3794,7 +3794,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "akd" = (

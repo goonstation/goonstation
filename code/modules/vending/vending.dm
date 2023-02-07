@@ -3107,3 +3107,26 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)
+
+/obj/machinery/vending/jobclothing/pride //being gay isn't really a job but
+	name = "Pride Apparel"
+	desc = "A vending machine that vends pride clothing."
+	icon_state = "prideclothing"
+	icon_panel = "snack-panel"
+	icon_off = "prideclothing-off"
+	icon_broken = "prideclothing-broken"
+	icon_fallen = "prideclothing-fallen"
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/ace, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/aro, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/bi, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/inter, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/lesb, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/gaymasc, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/nb, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/pan, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/poly, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/pride/trans, 2)

@@ -57443,7 +57443,7 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
 "wgE" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12

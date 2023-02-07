@@ -57287,7 +57287,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "yhy" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /obj/cable{
 	icon_state = "1-2"
 	},

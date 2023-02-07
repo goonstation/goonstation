@@ -391,7 +391,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "abG" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "abH" = (

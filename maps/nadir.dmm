@@ -40372,7 +40372,7 @@
 	name = "Transception Array Control"
 	})
 "sbw" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /obj/cable{
 	icon_state = "0-4"
 	},

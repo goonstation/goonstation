@@ -18014,7 +18014,7 @@
 	},
 /area/station/chapel/sanctuary)
 "Uv" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Uw" = (

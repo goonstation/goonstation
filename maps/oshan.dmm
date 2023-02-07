@@ -4787,7 +4787,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "alJ" = (

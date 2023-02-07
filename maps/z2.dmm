@@ -31926,7 +31926,7 @@
 	layer = 2.8;
 	mouse_opacity = 0
 	},
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "bUz" = (
@@ -54906,7 +54906,7 @@
 	},
 /area/afterlife/bar)
 "ddJ" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/carpet/grime,
 /area/afterlife/bar)

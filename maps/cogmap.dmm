@@ -11595,7 +11595,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aHq" = (
-/obj/storage/closet/wardrobe/pride,
+/obj/machinery/vending/jobclothing/pride,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
