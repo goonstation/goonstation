@@ -1633,14 +1633,14 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		. = src.return_text_header()
 
 		var/booth_counter = 0
-		for_by_tcl(GB, /obj/machinery/genetics_booth)
+		for_by_tcl(booth, /obj/machinery/genetics_booth)
 			booth_counter += 1
 			. += "<hr><h4>GeneBooth [booth_counter]</h4>"
-			for (var/datum/geneboothproduct/P as anything in GB.offered_genes)
-				. += "<b>[P.name]</b> [P.cost][CREDIT_SIGN] | [P.uses] uses left"
-				if(P.locked)
+			for (var/datum/geneboothproduct/product as anything in booth.offered_genes)
+				. += "<b>[product.name]</b> [product.cost][CREDIT_SIGN] | [product.uses] uses left"
+				if(product.locked)
 					. += " (locked)"
 				. += "<br>"
-				if(P.desc)
-					. += P.desc
+				if(product.desc)
+					. += product.desc
 					. += "<br>"
