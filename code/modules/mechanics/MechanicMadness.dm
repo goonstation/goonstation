@@ -1510,6 +1510,7 @@
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
+	var/replacesignal = TRUE
 	var/exact_match = FALSE
 	var/single_output = FALSE
 
@@ -1519,7 +1520,7 @@
 	var/list/outgoing_filters
 
 	get_desc()
-		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]<br>Replace Signal is [replacesignal ? "on.":"off."]</span>"
 
 	New()
 		..()
@@ -1530,6 +1531,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing",.proc/toggleReplaceing)
 
 	disposing()
 		var/list/signals = list(\
@@ -1542,6 +1544,12 @@
 
 	loosen()
 		src.outgoing_filters.Cut()
+
+	proc/toggleReplaceing(obj/item/W as obj, mob/user as mob)
+		replacesignal = !replacesignal
+		boutput(user, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
+		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
 		exact_match = !exact_match
@@ -1564,13 +1572,14 @@
 
 	//This will get called from the component-datum when a device is being linked
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
-		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		var/filter = input(user, "Add regex/text filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 		if(!in_interact_range(src, user) || user.stat)
 			return
 		if (length(filter))
 			if (!src.outgoing_filters[receiver]) src.outgoing_filters[receiver] = list()
 			src.outgoing_filters.Add(receiver)
 			src.outgoing_filters[receiver] = splittext(filter, ",")
+			filter = sanitize(html_encode(filter))
 			boutput(user, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]</span>")
 		else
 			boutput(user, "<span class='success'>Passing all messages to the [receiver.name]</span>")
@@ -1581,15 +1590,29 @@
 		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
+	proc/runFilter(var/comsig_target, atom/receiver, var/datum/mechanicsMessage/input)
+		var/signal = input.signal
 		if(!(receiver in src.outgoing_filters))
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		for (var/filter in src.outgoing_filters[receiver])
-			var/text_found = findtext(signal, filter)
+			var/text_found = findtext(signal,filter)
 			if (exact_match)
 				text_found = text_found && (length(signal) == length(filter))
+
+			// this part below handles finding out if the filter creates a regex match
+			var/regex/R = new(filter, "g")
+			if (R)
+				text_found = R.Find(signal)
+				if(text_found)
+					if(replacesignal)
+						return src.single_output ? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD
+					else
+						input.signal = R.match
+				else
+					return 1
+
 			if (text_found)
-				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
+				return src.single_output ? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it
 
 	update_icon()
