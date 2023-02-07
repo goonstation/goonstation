@@ -33,7 +33,7 @@
 		START_TRACKING
 		src.minimap_holder = new
 		src.minimap_holder.vis_flags = VIS_INHERIT_LAYER
-		src.minimap_holder.appearance_flags = KEEP_TOGETHER
+		src.minimap_holder.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 		src.minimap_holder.mouse_opacity = 0
 
 		src.minimap_render = new
@@ -48,7 +48,7 @@
 			src.map.icon = z_level_maps["[src.z_level]-[minimap_type]"]
 
 		src.minimap_render.vis_flags = VIS_INHERIT_LAYER
-		src.minimap_render.appearance_flags = KEEP_TOGETHER
+		src.minimap_render.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 		src.minimap_render.mouse_opacity = 0
 		src.map.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER
 		src.map.mouse_opacity = 0

@@ -35,6 +35,12 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 
+	attack_self(mob/user)
+		var/area/A = get_area(src)
+		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
+			boutput(user, "<span class='notice'>You can't prime [src] here!</span>")
+			return
+		..()
 
 	prime()
 		var/turf/T =  get_turf(src)
@@ -103,6 +109,9 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 				S.foldself()
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
+			var/area/A = get_area(S)
+			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
+				continue
 			if (S.issawfly == TRUE) //check if we're allowed to prime the grenade
 				if (istype(S, /obj/item/old_grenade/sawfly))
 					S.visible_message("<span class='alert'>[S] suddenly springs open as its engine purrs to a start!</span>")

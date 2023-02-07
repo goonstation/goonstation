@@ -41,13 +41,11 @@ TYPEINFO(/obj/machinery/cell_charger)
 		//boutput(world, "nl: [newlevel]")
 
 		if(chargelevel != newlevel)
-
-			overlays = null
-			overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
+			src.UpdateOverlays(image('icons/obj/power.dmi', "ccharger-o[newlevel]"), "charge")
 
 			chargelevel = newlevel
 	else
-		overlays = null
+		src.UpdateOverlays(null, "charge")
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -70,10 +68,6 @@ TYPEINFO(/obj/machinery/cell_charger)
 /obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
 		return
-	if (charging)
-		power_usage = 50 + src.chargerate / CELLRATE
-	else
-		power_usage = 50
 	..()
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)

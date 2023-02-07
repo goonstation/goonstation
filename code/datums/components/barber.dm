@@ -15,7 +15,9 @@ TYPEINFO(/datum/component/toggle_tool_use)
 	initialization_args = list()
 
 /datum/component/toggle_tool_use
+
 /datum/component/toggle_tool_use/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
@@ -62,15 +64,18 @@ TYPEINFO(/datum/component/barber)
 
 /datum/component/barber
 /datum/component/barber/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_shave)
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)

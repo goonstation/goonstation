@@ -6,6 +6,7 @@ TYPEINFO(/datum/component/transfer_on_attack)
 		ARG_INFO("trans_amt", DATA_INPUT_NUM, "amount of reagent to try to transfer", 5)
 	)
 /datum/component/transfer_on_attack/Initialize(var/trans_amt)
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	if(trans_amt)

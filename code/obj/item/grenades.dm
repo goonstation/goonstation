@@ -12,6 +12,8 @@ PIPE BOMBS + CONSTRUCTION
 TYPEINFO(/obj/item/old_grenade)
 	mats = 6
 
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
@@ -1637,6 +1639,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			..()
 			return
 
+ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
@@ -1665,15 +1668,18 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	var/list/throw_objs = new /list()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (armed)
 			return
+		src.arm(user)
+
+	proc/arm(mob/user)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
-		armed = 1
+		armed = TRUE
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat && user)
 			if(is_dangerous)
-				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+				message_admins("[key_name(user || usr)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
@@ -1879,11 +1885,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.bleed_time = 25 * sqstrength
-			implanted.owner = M
-			M.implant += implanted
-			implanted.implanted(M, null)
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1896,9 +1899,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.owner = M
-			M.implant += implanted
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
@@ -1934,11 +1935,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			if (M.get_ranged_protection()>=1.5)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.bleed_time = 25 * sqstrength
-				implanted.owner = M
-				M.implant += implanted
-				implanted.implanted(M, null)
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+				implanted.implanted(M, null, 25 * sqstrength)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

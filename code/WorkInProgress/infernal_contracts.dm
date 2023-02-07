@@ -709,7 +709,7 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.make_vampire(1)
+			user.mind?.add_antagonist(ROLE_VAMPIRE, do_pseudo = TRUE)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
 		return 1

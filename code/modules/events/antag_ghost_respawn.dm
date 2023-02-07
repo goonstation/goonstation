@@ -248,32 +248,23 @@
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/carbon/human/R = M3.humanize()
-					if (R && istype(R))
-						M3 = R
-						R.unequip_all(1)
-						equip_wizard(R, 1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
 						send_to = 2
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						SPAWN(0)
-							if (R.gender && R.gender == "female")
-								R.real_name = pick_string_autokey("names/wizard_female.txt")
-							else
-								R.real_name = pick_string_autokey("names/wizard_male.txt")
-							R.choose_name(3, "wizard")
-
 					else
 						failed = 1
 
 				if ("Werewolf")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_werewolf()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WEREWOLF
-						objective_path = /datum/objective_set/werewolf
 					else
 						failed = 1
 
@@ -281,7 +272,7 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
 					else
 						failed = 1
@@ -290,7 +281,7 @@
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
 					else
 						failed = 1
@@ -324,22 +315,22 @@
 						failed = 1
 
 				if ("Vampire")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_vampire()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_VAMPIRE
-						objective_path = /datum/objective_set/vampire
 					else
 						failed = 1
 
 				if ("Changeling")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_changeling()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
 					else
 						failed = 1
 
@@ -347,9 +338,7 @@
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/changeling/headspider)
 					if (C && istype(C))
 						M3 = C
-						C.make_changeling()
-						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
+						C.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						C.remove_ability_holder(/datum/abilityHolder/changeling/)
 					else
 						failed = 1
@@ -357,8 +346,9 @@
 				if ("Arcfiend")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_ARCFIEND)
+						L.mind?.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_ARCFIEND
 					else
 						failed = 1
@@ -377,7 +367,6 @@
 			lucky_dude.assigned_role = "MODE"
 			lucky_dude.special_role = role
 			lucky_dude.random_event_special_role = 1
-			lucky_dude.dnr = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
 			M3.antagonist_overlay_refresh(1, 0)

@@ -99,7 +99,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		if (!prize_type)
 			prize_type = /obj/item/raw_material/rock
 		var/obj/item/prize = new prize_type
-		prize.loc = src.loc
+		prize.set_loc(src.loc)
 		prize.layer += 0.1
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")
 		playsound(get_turf(src), "[win_sound]", 55, 1)
