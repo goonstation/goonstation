@@ -907,7 +907,6 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			src.mind.get_player()?.dnr = TRUE
 			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)

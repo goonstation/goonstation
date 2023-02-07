@@ -206,7 +206,7 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
 					var/picked_critter = pick(select)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided

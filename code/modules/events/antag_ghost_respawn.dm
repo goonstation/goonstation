@@ -141,7 +141,7 @@
 			var/datum/mind/lucky_dude = null
 
 			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-				lucky_dude = pick(candidates)
+				lucky_dude = candidates[1]
 				attempts++
 				/*
 				// Latejoin antagonists ignore antag prefs and so should this

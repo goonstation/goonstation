@@ -797,7 +797,7 @@
 				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.current)
 			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				SPAWN(3 MINUTES)
 					make_summon(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		if (lucky_dude.current)
@@ -1851,7 +1851,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				SPAWN(3 MINUTES)
 					make_plague_rat(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
 		if (lucky_dude.current)

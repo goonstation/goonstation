@@ -72,7 +72,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		xmas_respawn_lock = 0
 		return
 
-	var/datum/mind/M = pick(candidates)
+	var/datum/mind/M = candidates[1]
 	if (!(M && istype(M) && M.current))
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (candidate selection failed).")
 		xmas_respawn_lock = 0
