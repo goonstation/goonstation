@@ -18,6 +18,8 @@
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
 	var/inhand_color = null
+	/// storage datum holding it
+	var/datum/storage/stored = null
 
 	/*_______*/
 	/*Burning*/
@@ -1109,10 +1111,8 @@
 
 	var/atom/oldloc = src.loc
 	var/atom/oldloc_sfx = src.loc
-	src.set_loc(user) // this is to fix some bugs with storage items
-	if (istype(oldloc, /obj/item/storage))
-		var/obj/item/storage/S = oldloc
-		S.hud.remove_item(src) // ugh
+	if (src.stored)
+		src.stored.transfer_stored_item(src, user)
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
@@ -1435,10 +1435,7 @@
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
-	if(istype(src.loc, /obj/item/storage))
-		var/obj/item/storage/storage = src.loc
-		src.set_loc(null) // so the storage doesn't add it back >:(
-		storage.hud?.remove_item(src)
+	src.stored?.transfer_stored_item(src, null)
 
 	var/turf/T = loc
 	if (!istype(T))

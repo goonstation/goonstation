@@ -44,6 +44,8 @@ TYPEINFO(/atom)
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
 	var/tmp/pass_unstable = TRUE
 
+	var/datum/storage/storage = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -173,6 +175,9 @@ TYPEINFO(/atom)
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
+
+		qdel(src.storage)
+		src.storage = null
 		..()
 
 	proc/Turn(var/rot)
@@ -262,6 +267,7 @@ TYPEINFO(/atom)
 	return 0
 
 /atom/proc/emp_act()
+	src.storage?.storage_emp_act()
 	return
 
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!

@@ -88,6 +88,7 @@ TYPEINFO(/obj)
 			x = x.loc
 		if (!x || isarea(x))
 			return 0
+		src.storage?.storage_item_move_triggered(M, kindof)
 		return 1
 
 	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)

@@ -200,16 +200,10 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
 
 		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (length(my_contents) <= 0)
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
@@ -285,18 +279,10 @@ obj/item/storage/wall/clothingrack/hatrack
 	density = 0
 	can_hold = list(/obj/item/clothing/head)
 
-
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
-
 	update_icon()
 
 		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (length(my_contents) <= 0)
 			src.icon_state = "hatrack-empty"
 		else
 			src.icon_state = "hatrack"
@@ -337,15 +323,9 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon_state = "toolshelf"
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
 		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (length(my_contents) <= 0)
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "toolshelf"
@@ -361,15 +341,9 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
 		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (length(my_contents) <= 0)
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
