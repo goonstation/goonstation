@@ -110,6 +110,7 @@
 	name = "Splice Disabler"
 	desc = "Chromosomal alterations prevent seeds from this plant from being spliced at all."
 	negative = 1
+	chance = 100
 	splice_mod = 100
 
 /datum/plant_gene_strain/damage_res
