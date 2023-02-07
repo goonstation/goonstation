@@ -8,6 +8,7 @@
 (u)Zamujasa
 (e)🆕|C-Feature
 (*)A new mechanics component that you can count on. It counts things. It's a counter. No more feedback-loop arithmatic chains!
+(+)Sliiiiiiightly tweaked the meteor shower event. Just a little. Fun for admins too.
 (u)BatElite
 (p)12978
 (e)🪲|C-Bug
