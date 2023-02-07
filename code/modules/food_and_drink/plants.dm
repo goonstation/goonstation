@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	var/datum/plant/planttype = null
 	var/datum/plantgenes/plantgenes = null
 	edible = TRUE     // Can this just be eaten as-is?
+	var/already_burst = FALSE //! For bowling melons and midair katana slicing
 	var/generation = 0 // For genetics tracking.
 	var/validforhat = null
 	var/crop_prefix = ""	// Prefix for crop name when harvested ("rainbow" melon)
@@ -76,6 +77,37 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				HYPpassplantgenes(DNA,PDNA)
 
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (src.midair_slice_check(hit_atom, thr))
+			//The check above checks if the user is wielding a sword and is in fact a mob
+			var/mob/target = hit_atom
+			var/obj/item/swords/wielded_sword = target.equipped()
+			//We remove a little bit of stamina
+			target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
+			src.already_burst = TRUE
+			var/turf/T = get_turf(src)
+			playsound(T, wielded_sword.hitsound, 65, 1)
+			target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", "You cut the flying [src] with your [wielded_sword] midair!].")
+			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
+			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			for (var/i in 1 to src.slice_amount)
+				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				src.process_sliced_products(slice, amount_to_transfer)
+				var/target_point = get_turf(pick(orange(4, src)))
+				slice.throw_at(target_point, rand(0, 10), rand(1, 4))
+			qdel (src)
+		else
+			..()
+
+	/// This proc checks if the produce that is thrown gets sliced midair, important for produce with special on-throw effects e.g. tomatoes, bowling melons
+	/// The conditions are 1. the produce is sliceable 2. the target is a mob 3. the target is blocking and 4. the target wields a sword that can cut produce midair
+	proc/midair_slice_check(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom && ismob(hit_atom) && src.sliceable && !src.already_burst)
+			var/mob/target = hit_atom
+			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/swords))
+				var/obj/item/swords/wielded_sword = target.equipped()
+				if (wielded_sword.midair_fruit_slice)
+					return TRUE
 
 /obj/item/reagent_containers/food/snacks/plant/bamboo/
 	name = "bamboo shoot"
@@ -102,16 +134,17 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
-		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		var/obj/decal/cleanable/tomatosplat/splat = new
-		if(src.reagents)
-			src.reagents.handle_reactions()
-			splat.reagents = new(10000)
-			src.reagents.trans_to(splat, src.reagents.total_volume)
-		splat.set_loc(T)
-		splat.setup(T)
-		qdel(src)
+		if (src && !src.midair_slice_check(A, thr)) //If the tomato gets sliced midair, we don't want it to splat
+			src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			var/obj/decal/cleanable/tomatosplat/splat = new
+			if(src.reagents)
+				src.reagents.handle_reactions()
+				splat.reagents = new(10000)
+				src.reagents.trans_to(splat, src.reagents.total_volume)
+			splat.set_loc(T)
+			splat.setup(T)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	name = "tomato"
@@ -428,7 +461,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
-		if (ismob(hit_atom) && prob(50))
+		if (src && !src.midair_slice_check(hit_atom, thr) && ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
 			hit_atom.visible_message("<span class='alert'>[src] explodes from the sheer force of the blow!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
@@ -459,7 +492,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "Just keep rollin' rollin'."
 	icon_state = "bowling-melon"
 	var/base_icon_state = "bowling-melon"
-	var/already_burst = 0
 	w_class = W_CLASS_NORMAL
 	force = 5
 	throw_speed = 1
@@ -500,55 +532,58 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		var/mob/living/carbon/human/user = usr
 
-		if(hit_atom)
-			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
-			if (ismob(hit_atom))
-				var/mob/hitMob = hit_atom
-				if (ishuman(hitMob))
-					SPAWN( 0 )
-						if (istype(user))
-							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-								src.hitHard(hitMob, user)
+		if (src.midair_slice_check(hit_atom, thr))
+			..()
+		else
+			if(hit_atom)
+				playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
+				if (ismob(hit_atom))
+					var/mob/hitMob = hit_atom
+					if (ishuman(hitMob))
+						SPAWN( 0 )
+							if (istype(user))
+								if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+									src.hitHard(hitMob, user)
 
-								if(!(hitMob == user))
-									user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
+									if(!(hitMob == user))
+										user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
+								else
+									src.hitWeak(hitMob, user)
 							else
 								src.hitWeak(hitMob, user)
-						else
-							src.hitWeak(hitMob, user)
-			if(already_burst)
-				return
-			already_burst = 1
-			src.icon_state = "[base_icon_state]-burst"
-			SPAWN(0.1 SECONDS)
-				var/n_slices = rand(1, 5)
-				var/amount_per_slice = 0
-				if(src.reagents)
-					amount_per_slice = src.reagents.total_volume / 5
-					src.reagents.inert = 1
-				while(n_slices)
-					var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
-					slice.name = "[src.name] slice"
+				if(already_burst)
+					return
+				already_burst = TRUE
+				src.icon_state = "[base_icon_state]-burst"
+				SPAWN(0.1 SECONDS)
+					var/n_slices = rand(1, 5)
+					var/amount_per_slice = 0
 					if(src.reagents)
-						slice.reagents = new
-						// temporary inert is here so this doesn't hit people with 5 potassium + water explosions at once
-						slice.reagents.inert = 1
-						src.reagents.trans_to(slice, amount_per_slice)
-						slice.reagents.inert = 0
-					var/datum/plantgenes/DNA = src.plantgenes
-					var/datum/plantgenes/PDNA = slice.plantgenes
-					if(DNA)
-						HYPpassplantgenes(DNA,PDNA)
-					if(istype(hit_atom, /mob/living) && prob(1))
-						var/mob/living/dork = hit_atom
-						boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
-						slice.Eat(dork, dork)
-					else
-						var/target = get_turf(pick(orange(4, src)))
-						slice.throw_at(target, rand(0, 10), rand(1, 4))
-					n_slices--
-				sleep(0.1 SECONDS)
-				qdel(src)
+						amount_per_slice = src.reagents.total_volume / 5
+						src.reagents.inert = 1
+					while(n_slices)
+						var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
+						slice.name = "[src.name] slice"
+						if(src.reagents)
+							slice.reagents = new
+							// temporary inert is here so this doesn't hit people with 5 potassium + water explosions at once
+							slice.reagents.inert = 1
+							src.reagents.trans_to(slice, amount_per_slice)
+							slice.reagents.inert = 0
+						var/datum/plantgenes/DNA = src.plantgenes
+						var/datum/plantgenes/PDNA = slice.plantgenes
+						if(DNA)
+							HYPpassplantgenes(DNA,PDNA)
+						if(istype(hit_atom, /mob/living) && prob(1))
+							var/mob/living/dork = hit_atom
+							boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
+							slice.Eat(dork, dork)
+						else
+							var/target = get_turf(pick(orange(4, src)))
+							slice.throw_at(target, rand(0, 10), rand(1, 4))
+						n_slices--
+					sleep(0.1 SECONDS)
+					qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/chili/
 	name = "chili pepper"
@@ -785,7 +820,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else ..()
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)	//An apple a day, keeps the doctors away
-		if (ishuman(hit_atom))
+		if (!src.midair_slice_check(hit_atom, thr) && ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(H.traitHolder.hasTrait("training_medical"))
 				random_brute_damage(H, 3)
@@ -1205,7 +1240,29 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			src.split()
 		..()
 
-	proc/split()
+	//Because coconuts create a drink item, we need to put that in seperatly
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom && ismob(hit_atom) && !src.already_burst)
+			var/mob/target = hit_atom
+			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/swords))
+				var/obj/item/swords/wielded_sword = target.equipped()
+				if (wielded_sword.midair_fruit_slice)
+					target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
+					src.already_burst = TRUE
+					var/turf/T = get_turf(src)
+					playsound(T, wielded_sword.hitsound, 65, 1)
+					target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", "You cut the flying [src] with your [wielded_sword] midair!].")
+					src.split(TRUE)
+				else
+					..()
+			else
+				..()
+		else
+			..()
+
+
+
+	proc/split(var/throws_food = FALSE)
 		var/turf/T = get_turf(src)
 		var/makeslices = 3
 		while (makeslices > 0)
@@ -1217,8 +1274,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
+			if (throws_food)
+				var/target_point = get_turf(pick(orange(4, src)))
+				P.throw_at(target_point, rand(0, 10), rand(1, 4))
 		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
 		src.reagents.trans_to(drink, src.reagents.total_volume)
+		if (throws_food)
+			var/target_point = get_turf(pick(orange(4, src)))
+			drink.throw_at(target_point, rand(0, 10), rand(1, 4))
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
