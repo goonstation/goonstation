@@ -142,7 +142,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1

@@ -12,6 +12,8 @@
 #define ROLE_HEAD_REV "head_rev"
 #define ROLE_CONSPIRATOR "conspirator"
 #define ROLE_ARCFIEND "arcfiend"
+#define ROLE_FLOCKMIND "flockmind"
+#define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_MISC "misc"
 
 // special antagonist roles
@@ -34,10 +36,11 @@
 
 // gimmicks
 #define ROLE_BATTLER "battler"
-#define ROLE_FLOCKMIND "flockmind"
-#define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"
 #define ROLE_SLASHER "slasher"
 #define ROLE_LICENSED "licensed_traitor"
+#define ROLE_PIRATE "pirate"
+#define ROLE_PIRATE_FIRST_MATE "pirate_first_mate"
+#define ROLE_PIRATE_CAPTAIN "pirate_captain"

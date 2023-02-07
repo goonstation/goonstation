@@ -203,12 +203,11 @@ TYPEINFO(/atom)
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 

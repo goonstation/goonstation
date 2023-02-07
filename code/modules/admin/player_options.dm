@@ -19,6 +19,9 @@
 		if (AI.deployed_to_eyecam)
 			M = AI.eyecam
 
+	var/mentor = M.client?.player?.mentor
+	var/hos = (M.ckey in NT)
+
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
@@ -75,6 +78,14 @@
 			color: #f55;
 		}
 
+		.mentor {
+			color: #a24cff;
+		}
+
+		.hos {
+			color: #2237AD;
+		}
+
 		#topBar {
 			position: fixed;
 			padding: 0.2em 0.5em;
@@ -123,7 +134,7 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[html_key_string]</tt>)
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""]
 </div>
 
 <div id="mobInfo">
