@@ -61,6 +61,21 @@
 	emp_act()
 		return //hax
 
+/obj/item/device/radio/headset/command/nt/commander
+	name = "\improper NT Commander's headset"
+	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY
+		)
+	icon_override = "ntboss"
+	icon_tooltip = "Nanotrasen Commander"
+
 /obj/item/device/radio/headset/command
 	name = "command headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by support staff."
