@@ -48,9 +48,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 	if (src.occupant)
 		src.process_occupant(mult)
-
-	use_power(power_usage)
-	return TRUE
+	return 1
 
 /obj/machinery/recharge_station/allow_drop()
 	return FALSE

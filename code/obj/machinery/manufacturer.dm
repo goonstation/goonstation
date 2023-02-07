@@ -23,6 +23,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
+	layer = STORAGE_LAYER
 
 	// General stuff
 	var/health = 100
@@ -180,7 +181,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (status & NOPOWER)
 			return
 
-		power_usage = src.active_power_consumption + 200 * mult
 		..()
 
 		if (src.mode == "working")
@@ -1741,7 +1741,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(src.queue[1] in src.drive_recipes)
 				var/obj/item/disk/data/floppy/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-					if(MD.fablimit == -1 || MD.fablimit - MD.num_working <= 0)
+					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.queue = list()

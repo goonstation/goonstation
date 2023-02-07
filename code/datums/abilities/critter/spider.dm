@@ -199,7 +199,6 @@
 					holder.owner.set_loc(pick(neightbors))
 				SPAWN(0)
 					var/obj/icecube/cube = new /obj/icecube(get_turf(H), H)
-					H.set_loc(cube)
 					if (istype(S))
 						switch (S.encase_in_web)
 							if (2)
@@ -207,6 +206,7 @@
 								"<span class='combat'><b>You encase [H] in cotton candy!</b></span>")
 								cube.name = "bundle of cotton candy"
 								cube.desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "candyweb2"
 								cube.steam_on_death = 0
 
@@ -215,6 +215,7 @@
 								"<span class='combat'><b>You encase [H] in web!</b></span>")
 								cube.name = "bundle of web"
 								cube.desc = "A big wad of web. Someone seems to be stuck inside it."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "web2"
 								cube.steam_on_death = 0
 

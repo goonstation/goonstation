@@ -57,14 +57,16 @@
 			src.set_cursor('icons/cursors/examine.dmi')
 
 /mob/dead/observer/click(atom/target, params, location, control)
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
-		return
-	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
-		src.insert_observer(target)
-		return
+	// If we have an ability active, skip all this and go straight to parent call.
+	if (!src.targeting_ability)
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+			src.insert_observer(target)
+			return
 	return ..()
 
 /mob/dead/observer/Login()
@@ -693,7 +695,7 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
