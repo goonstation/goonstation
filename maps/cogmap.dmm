@@ -16886,12 +16886,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
-"aUy" = (
-/obj/machinery/portableowl/attached{
-	name = "A Pretty Owl"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "aUz" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -20346,8 +20340,8 @@
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
-	pixel_y = 24;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 24
 	},
 /obj/blind_switch/area/north{
 	pixel_x = 6
@@ -34266,8 +34260,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 4;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 10
@@ -48864,6 +48858,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
+"dbs" = (
+/obj/machinery/portableowl/attached{
+	name = "A Pretty Owl"
+	},
+/turf/simulated/wall{
+	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "grass";
+	name = "tall grass"
+	},
+/area/station/garden/owlery)
 "dbY" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -48968,6 +48973,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
+"dmv" = (
+/obj/tree{
+	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "dmC" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Defendant Stand"
@@ -54521,17 +54532,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"kdm" = (
-/obj/tree{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
-/area/station/garden/owlery)
 "kdP" = (
 /obj/stool/chair{
 	dir = 8
@@ -106118,7 +106118,7 @@ aRn
 aSl
 aSl
 aTm
-aTm
+dbs
 aXc
 aUz
 aTm
@@ -106721,7 +106721,7 @@ aId
 aRo
 aSl
 aTm
-aUy
+aUz
 aVM
 aXc
 aUz
@@ -107022,8 +107022,8 @@ aPj
 aQr
 aLd
 aSl
-kdm
-aUz
+aTm
+dmv
 aUz
 aXd
 aYq
