@@ -190,7 +190,7 @@
 
 /obj/item/device/radio/headset/command/hop
 	name = "head of personnel's headset"
-	desc = "The HoP can listen to the security frequency, but they can't speak on it anymore. Not since the incident."
+	desc = "The HoP cannot listen or speak on the security frequency anymore, not since the incident."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
