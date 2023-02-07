@@ -819,5 +819,5 @@
 
 	on_launch(obj/projectile/O)
 		. = ..()
-		flashpowder_reaction(get_turf(O), 20)
-		sonicpowder_reaction(get_turf(O), 20)
+		flashpowder_reaction(get_turf(O), 15)
+		sonicpowder_reaction(get_turf(O), 15)
