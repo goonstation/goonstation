@@ -26,10 +26,9 @@ var/global/totally_random_jobs = FALSE
 			continue
 		var/datum/preferences/P  = player.client.preferences
 		if(checktraitor(player))
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
-				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
-				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
-				continue
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
+				if (J.cant_spawn_as_rev || ("loyalist" in P.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
+					continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
 			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)

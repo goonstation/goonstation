@@ -345,6 +345,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
@@ -445,7 +446,6 @@ var/list/admin_verbs = list(
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
-		/client/proc/edit_color_matrix,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
@@ -1145,8 +1145,8 @@ var/list/fun_images = list()
 			return
 		send_to_arrival_shuttle = 1
 	else if (isintangible(M))
-		if (M.mind && M.mind.special_role == ROLE_BLOB)
-			remove_antag(M, src, 0, 1) // Ditto.
+		if (M.mind && M.mind.special_role == ROLE_BLOB || M.mind.special_role == ROLE_FLOCKMIND || M.mind.special_role == ROLE_FLOCKTRACE)
+			remove_antag(M, src, FALSE, TRUE) // Ditto.
 			return
 		send_to_arrival_shuttle = 1
 	else if (isAI(M))

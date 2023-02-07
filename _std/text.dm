@@ -113,3 +113,22 @@ proc/md5_to_more_pronouncable(text)
 		. += consonants[num % length(consonants) + 1]
 		. += vowels[round(num / length(consonants)) + 1]
 	. = jointext(., "")
+
+
+proc/strip_prefix_from_list(list/L, prefix)
+	for(var/i in 1 to length(L))
+		if(copytext(L[i], 1, length(prefix) + 1) == prefix)
+			L[i] = copytext(L[i], length(prefix) + 1)
+
+proc/get_longest_common_prefix(list/L)
+	if(!length(L))
+		return ""
+	. = L[1]
+	for(var/i in 2 to length(L))
+		var/cur = L[i]
+		var/len = min(length(.), length(cur))
+		for(var/j in len to 1 step -1)
+			if(copytext(., 1, j + 1) == copytext(cur, 1, j + 1))
+				if(j < length(.))
+					. = copytext(., 1, j + 1)
+				break

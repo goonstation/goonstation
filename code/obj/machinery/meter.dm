@@ -66,37 +66,21 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 
-/obj/machinery/meter/examine()
-	. = list("A gas flow meter. ")
+/obj/machinery/meter/get_desc(dist, mob/user)
+	. = ..()
+	. += "A gas flow meter. "
 	if(status & (NOPOWER|BROKEN))
 		. += "It appears to be nonfunctional."
 	else if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			. += text("The pressure gauge reads [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
+			. += "The pressure gauge reads [round(MIXTURE_PRESSURE(environment), 0.1)] kPa"
 		else
 			. += "The sensor error light is blinking."
 	else
 		. += "The connect error light is blinking."
 
 
-/obj/machinery/meter/Click()
-
-	if(status & (NOPOWER|BROKEN))
-		return
-
-	var/t = null
-	if (GET_DIST(usr, src) <= 3 || isAI(usr))
-		if (src.target)
-			var/datum/gas_mixture/environment = target.return_air()
-			if(environment)
-				t = text("<B>Pressure:</B> [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
-			else
-				t = "<span class='alert'><B>Results: Sensor Error!</B></span>"
-		else
-			t = "<span class='alert'><B>Results: Connection Error!</B></span>"
-	else
-		boutput(usr, "<span class='notice'><B>You are too far away.</B></span>")
-
-	boutput(usr, t)
-	return
+/obj/machinery/meter/attack_hand(mob/user)
+	. = ..()
+	user.examine_verb(src)
