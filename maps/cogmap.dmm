@@ -50474,12 +50474,6 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"fom" = (
-/obj/tree{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "foS" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/heavy{
@@ -51340,12 +51334,12 @@
 	pixel_y = -2
 	},
 /obj/item/pen{
-	pixel_y = 4;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
@@ -52631,6 +52625,7 @@
 	name = "crematorium pipe"
 	},
 /obj/landmark/gps_waypoint,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "hRo" = (
@@ -60713,10 +60708,6 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"sfL" = (
-/mob/living/critter/small_animal/mouse,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "sfM" = (
 /obj/stool/chair/comfy/blue,
 /turf/simulated/floor/wood/two,
@@ -61457,8 +61448,8 @@
 /area/station/maintenance/east)
 "sRN" = (
 /obj/item/toy/plush/small{
-	pixel_y = 4;
-	layer = 3.1
+	layer = 3.1;
+	pixel_y = 4
 	},
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -107170,8 +107161,8 @@ aQr
 aLd
 aSl
 aTm
-fom
 aUz
+wht
 aXd
 aYq
 aUz
@@ -107473,7 +107464,7 @@ aGZ
 aSl
 aTm
 aUz
-sfL
+aUz
 hQs
 aYr
 aYr
