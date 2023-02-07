@@ -436,6 +436,11 @@
 	desc = "Contains pills used induce emesis."
 	spawn_contents = list(/obj/item/reagent_containers/pill/ipecac = 7)
 
+/obj/item/storage/pill_bottle/mannitol
+	name = "pill bottle (mannitol)"
+	desc = "Contains pills used to treat... brain damage."
+	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
+
 /* -------------------- Pill Bottles - Drugs -------------------- */
 
 /obj/item/storage/pill_bottle/methamphetamine

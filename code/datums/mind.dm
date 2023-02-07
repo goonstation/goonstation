@@ -40,9 +40,6 @@ datum/mind
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
-	//Ability holders.
-	var/datum/abilityHolder/changeling/is_changeling = 0
-
 	var/list/intrinsic_verbs = list()
 
 	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
@@ -62,13 +59,7 @@ datum/mind
 	var/karma = 0 //fuck
 	var/const/karma_min = -420
 	var/const/karma_max = 69
-	var/damned = 0 // If 1, they go to hell when are die
-
-	// Capture when they die. Used in the round-end credits
-	//var/icon/death_icon = null
-
-	//avoid some otherwise frequent istype checks
-	var/stealth_objective = 0
+	var/damned = 0 //! If 1, they go to hell when are die
 
 	var/show_respawn_prompts = TRUE
 
@@ -118,10 +109,6 @@ datum/mind
 			current.addOverlaysClient(current.client)
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")
-
-
-		//if (is_changeling)
-		//	new_character.make_changeling()
 
 		for (var/intrinsic_verb in intrinsic_verbs)
 			Z_LOG_DEBUG("Mind/TransferTo", "Adding [intrinsic_verb]")

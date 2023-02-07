@@ -64,6 +64,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	for(var/turf/T as anything in turfs_to_update)
 		if (global.explosions.exploding || ON_COOLDOWN(T, "camera_coverage_update", CAM_TURF_UPDATE_COOLDOWN))
 			LAZYLISTADDUNIQUE(src.turf_update_queue, turfs_to_update)
+			return
 		T.aiImage?.loc = length(T.camera_coverage_emitters) ? null : T
 
 /**
