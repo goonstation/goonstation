@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && POT.health > P.starthealth / 2 && prob(33))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && POT.health > P.starthealth / 2 && prob(33))
 			for (var/obj/machinery/plantpot/C in range(1,POT))
 				var/datum/plant/growing = C.current
 				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))

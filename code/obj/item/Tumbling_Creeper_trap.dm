@@ -65,7 +65,7 @@
 
 		// raise the reagent storage limit linear from 0 potency to max potency
 		src.reagent_storage = clamp(
-			round(src.reagent_storage_min + (DNA.potency/src.potency_for_max) * (src.reagent_storage_max - src.reagent_storage_min)),
+			round(src.reagent_storage_min + (DNA?.get_effective_value("potency")/src.potency_for_max) * (src.reagent_storage_max - src.reagent_storage_min)),
 			src.reagent_storage_min,
 			src.reagent_storage_max)
 
@@ -91,12 +91,12 @@
 
 		// raise the damage of the plant linear from 0 endurance to max endurance
 		src.crashed_force = clamp(
-			round(src.crashed_force_min + (DNA.endurance/src.endurance_for_max) * (src.crashed_force_max - src.crashed_force_min)),
+			round(src.crashed_force_min + (DNA?.get_effective_value("endurance")/src.endurance_for_max) * (src.crashed_force_max - src.crashed_force_min)),
 			src.crashed_force_min,
 			src.crashed_force_max)
 
 		src.armed_force = clamp(
-			round(src.armed_force_min + (DNA.endurance/src.endurance_for_max) * (src.armed_force_max - src.armed_force_min)),
+			round(src.armed_force_min + (DNA?.get_effective_value("endurance")/src.endurance_for_max) * (src.armed_force_max - src.armed_force_min)),
 			src.armed_force_min,
 			src.armed_force_max)
 
