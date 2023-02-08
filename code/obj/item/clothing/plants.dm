@@ -5,12 +5,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/bouquet_type = /obj/item/bouquet // if no actual bouquet assigned, we use this one
 
 	proc/make_bouquet(obj/item/paperitem, mob/user)
-		// first check if it's the right kind of flower, right amount, allocate bouquet
-		// have some fail messages
-		// make bouquet
-		// we do a little storing, put the paper and flowers into flowers_stored and paper_used
-		// then we possibly qdel it idk, probably don't need to if we're storing it
-		var/flowernum = 2
+		var/flowernum = 2 // this is just a default number
 		var/obj/item/bouquet/bouquet_dummy = src.bouquet_type
 		if (istype_exact(bouquet_dummy, /obj/item/bouquet))
 			user.visible_message("This flower can't be turned into a bouquet!")
@@ -231,4 +226,4 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	flower_type_used = /obj/item/clothing/head/flower/rose
 
 //obj/item/bouquet/mixed
-// this can be done later if needed
+// this can be done later if needed, it'll take a bit of work though, and no idea how you'd construct them
