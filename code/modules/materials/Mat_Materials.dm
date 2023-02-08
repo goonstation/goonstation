@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
+	color = "#534747"
 	New()
 		..()
 		setProperty("density", 4)
