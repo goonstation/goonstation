@@ -1,5 +1,9 @@
 
 (t)wed feb 08 23
+(u)KolisDumb, DeadMan164
+(p)12984
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a foam dart shotgun to the loot crate item pool.
 (u)gabringis
 (p)12914
 (e)🪲📄|C-Bug, A-UI
