@@ -53038,7 +53038,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "iHn" = (
-/obj/machinery/door/airlock/pyro/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /turf/simulated/floor/white,
