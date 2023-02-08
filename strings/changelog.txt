@@ -1,4 +1,9 @@
+
 (t)wed feb 08 23
+(u)DrWolfy
+(p)12855
+(e)🆕💊|C-Feature, A-Medical
+(+)A genebooth info PDA program for Geneticists has been added.
 (u)LeahTheTech
 (*)Flockdrones are now affected by EMPs.
 (+)Mob critters can now be flung by pulse rifles.
