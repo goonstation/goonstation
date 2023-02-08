@@ -97,6 +97,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 
 				else
 					H.vision.set_scan(0)
+					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 					get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_mob(H)
 
 	equipped(var/mob/living/user, var/slot)
