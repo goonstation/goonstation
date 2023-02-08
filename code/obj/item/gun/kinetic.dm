@@ -1034,6 +1034,28 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
+/obj/item/gun/kinetic/foamdartshotgun
+	name = "foam dart shotgun"
+	icon_state = "foamdartshotgun"
+	desc = "The more powerful, older brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	item_state = "foamdartshotgun"
+	wear_state = "foamdartshotgun"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	contraband = 1
+	two_handed = TRUE
+	auto_eject = FALSE
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	force = 2
+	ammo_cats = list(AMMO_FOAMDART)
+	max_ammo_capacity = 12
+	muzzle_flash = null
+	default_magazine = /obj/item/ammo/bullets/foamdarts
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/foamdarts)
+		..()
 
 //0.40
 /obj/item/gun/kinetic/blowgun
