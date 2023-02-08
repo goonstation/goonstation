@@ -793,7 +793,7 @@
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = TRUE
-	crop = /obj/item/plant/flower/rose/holorose
+	crop = /obj/item/clothing/head/flower/rose/holorose
 
 /datum/plantmutation/hydrangea
 	var/flower_color

@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	desc = "Red is the color of passion; or, of the medbay."
 	icon_state = "bouquet_rose"
 	item_state = "bouquet_rose"
-	flower_type_used = /obj/item/plant/flower/rose
+	flower_type_used = /obj/item/clothing/head/flower/rose
 
 //obj/item/bouquet/mixed
 // this can be done later if needed
