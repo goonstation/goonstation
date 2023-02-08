@@ -209,9 +209,14 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	var/max_flowers = 10 // 10 seems like a reasonable amount for now, lets not have 99 flowers in one bouquet
 	var/min_flowers = 2 // can't have a bouquet with only one flower
 	var/flower_type_used = null
-	proc/unroll(mob/user)
+	attackby(/obj/item/W, mob/user)
 		// should give us back the paper and flowers when done with snipping tool
 		// actually this should be under dispose shouldnt it
+		if (issnippingtool(W))
+			boutput(user, "<span class='notice'>You disassemble the [src].</span>")
+			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
+			// how do i make it spit out things
+			qdel(src)
 
 /obj/item/bouquet/lavender
 	name = "lavender bouquet"
