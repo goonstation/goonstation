@@ -209,7 +209,7 @@
 	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing(LOG_ADMIN, picked.key, "respawned as a Flocktrace under [src.real_name].")
+	log_respawn_event(picked, "Flocktrace", src.real_name)
 
 	picked.make_flocktrace(get_turf(src), src.flock, free)
 

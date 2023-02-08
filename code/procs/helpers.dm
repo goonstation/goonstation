@@ -1909,6 +1909,15 @@ proc/countJob(rank)
 	shuffle_list(observers)
 	return minds + observers
 
+///Logs a player respawning as something from a respawn event, noting if they joined the round as an observer or not
+///Note: should be called BEFORE they are transferred to the new body
+/proc/log_respawn_event(datum/mind/mind, respawning_as, source)
+	var/is_round_observer = FALSE
+	if (istype(mind.current, /mob/dead/observer))
+		var/mob/dead/observer/ghost = mind.current
+		is_round_observer = ghost.observe_round
+	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
+
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G?.mind || G.mind.get_player()?.dnr)

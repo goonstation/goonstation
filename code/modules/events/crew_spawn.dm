@@ -49,6 +49,7 @@
 			if (!length(candidates))
 				return
 			var/datum/mind/mind = candidates[1]
+			log_respawn_event(mind, src.respawn_job, source)
 			src.spawn_as_job(src.respawn_job, mind.current, src.custom_spawn_turf || pick_landmark(LANDMARK_LATEJOIN))
 			candidates -= mind
 			if (src.objective_text)
