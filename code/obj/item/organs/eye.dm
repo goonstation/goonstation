@@ -231,9 +231,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 			if (src.on)
 				src.assigned.vision.set_scan(1)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MESONVISION, src)
+				get_image_group(CLIENT_IMAGE_GROUP_MESON).add_mob(M)
 
 	on_removal()
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+		get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_mob(assigned)
 		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
 			return
 		else
@@ -246,9 +248,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			get_image_group(CLIENT_IMAGE_GROUP_MESON).add_mob(assigned)
 		else
 			assigned.vision.set_scan(0)
 			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_mob(assigned)
 
 TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	mats = 7

@@ -1163,7 +1163,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 	Del()
 		if (meson_overlay)
-			get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+			get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_image(meson_overlay)
 		..()
 	update_icon()
 		. = ..()
@@ -1190,11 +1190,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
 			if (meson_overlay)
-				get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+				get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_image(meson_overlay)
 				qdel(meson_overlay)
 			src.meson_overlay = image('icons/turf/walls_asteroid.dmi',src,"[src.ore?.name][src.orenumber]")
 			src.meson_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
-			get_image_group(CLIENT_IMAGE_GROUP_ORES).add_image(meson_overlay)
+			get_image_group(CLIENT_IMAGE_GROUP_MESON).add_image(meson_overlay)
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1293,7 +1293,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (meson_overlay)
-			get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+			get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_image(meson_overlay)
 			qdel(meson_overlay)
 			meson_overlay = null
 		if (src.invincible)

@@ -117,6 +117,7 @@
 	prevent_excavation = 1
 	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
 	var/image/warning_overlay = null
+	var/image/warning_meson_overlay = null
 
 	New()
 		..()
@@ -125,11 +126,20 @@
 	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		AST.overlays += warning_overlay
+		warning_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
+		warning_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
+		AST.UpdateOverlays(warning_overlay, "ast_event")
+
+		warning_meson_overlay = image('icons/turf/walls_asteroid.dmi',AST,"unstable")
+		warning_meson_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[AST.icon_state]"))
+		get_image_group(CLIENT_IMAGE_GROUP_MESON).add_image(warning_meson_overlay)
 		var/timer = rand(3,6) * 10
 		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
 				AST.invincible = 0
+				if(warning_meson_overlay)
+					get_image_group(CLIENT_IMAGE_GROUP_MESON).remove_image(warning_meson_overlay)
+					qdel(warning_meson_overlay)
 				explosion(AST, AST, 1, 2, 3, 4, 1)
 
 /datum/ore/event/radioactive
