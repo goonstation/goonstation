@@ -1114,10 +1114,6 @@
 	if (src.stored)
 		src.stored.transfer_stored_item(src, user)
 		oldloc_sfx = oldloc.loc
-	if (src in bible_contents)
-		bible_contents.Remove(src) // UNF
-		for_by_tcl(bible, /obj/item/storage/bible)
-			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)
