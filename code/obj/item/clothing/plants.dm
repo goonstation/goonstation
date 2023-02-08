@@ -22,7 +22,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			// if too many flowers we just take the max flowers out of the stack, usually 10
 		var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
 		new_bouquet.paper_used = paperitem
-		src.split_stack(flowernum).set_loc(new_bouquet)
+		var/obj/item/clothing/head/flower/allocated_flowers = src.split_stack(flowernum)
+		allocated_flowers.set_loc(new_bouquet)
 		user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s into a bouquet.")
 
 	attackby(obj/item/W, mob/user)
