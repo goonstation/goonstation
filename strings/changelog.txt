@@ -1,4 +1,7 @@
-
+(t)wed feb 08 23
+(u)LeahTheTech
+(*)Flockdrones are now affected by EMPs.
+(+)Mob critters can now be flung by pulse rifles.
 (t)mon feb 06 23
 (u)Piesuu
 (p)12989
