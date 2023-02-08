@@ -56219,7 +56219,7 @@
 /area/station/engine/ptl)
 "qRy" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -75504,7 +75504,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"

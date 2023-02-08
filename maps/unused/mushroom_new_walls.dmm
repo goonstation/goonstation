@@ -8939,7 +8939,7 @@
 /area/station/chapel/sanctuary)
 "aJM" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "aJN" = (
@@ -9762,7 +9762,7 @@
 /area/station/hallway/primary/north)
 "aMZ" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},

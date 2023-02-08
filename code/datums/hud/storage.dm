@@ -65,7 +65,7 @@
 							px = temp
 
 						//ddumb hack for offset storage
-						var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/storage/bible))
+						var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
 
 						var/pixel_y_adjust = 0
 						if (user && user.client && user.client.tg_layout && !turfd)
@@ -119,7 +119,7 @@
 		var sy = master.slots + 1
 		var/turfd = 0
 
-		if (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/storage/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (master.slots + 1) / 2

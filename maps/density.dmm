@@ -4425,7 +4425,7 @@
 "jC" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 2
 	},
 /turf/simulated/floor/carpet{
@@ -5929,7 +5929,7 @@
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8

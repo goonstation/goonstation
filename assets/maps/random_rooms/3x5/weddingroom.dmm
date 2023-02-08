@@ -54,7 +54,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/light/small/floor/warm,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_y = 4;
 	pixel_x = 6
 	},

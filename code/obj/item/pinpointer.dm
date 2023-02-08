@@ -544,7 +544,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 
 /obj/item/pinpointer/category/bibles
 	name = "bible pinpointer"
-	category = /obj/item/storage/bible
+	category = /obj/item/bible
 	thing_name = "bible"
 
 /obj/item/pinpointer/category/gps
