@@ -337,7 +337,8 @@ toxic - poisons
 			O.die()
 			var/mob/living/mob = hit
 			mob.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
-			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
+			var/throw_type = mob.can_lie ? THROW_GUNIMPACT : THROW_NORMAL //fallback to just chucking them if they can't be knocked down
+			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = throw_type)
 			mob.emote("twitch_v")
 
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)

@@ -1620,3 +1620,27 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		signal.data["sender"] = src.master.net_id
 
 		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+//Genebooth Tracker
+/datum/computer/file/pda_program/genebooth_tracker
+	name = "Genebooth Tracker"
+	size = 6
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		var/booth_counter = 0
+		for_by_tcl(booth, /obj/machinery/genetics_booth)
+			booth_counter += 1
+			. += "<hr><h4>GeneBooth [booth_counter]</h4>"
+			for (var/datum/geneboothproduct/product as anything in booth.offered_genes)
+				. += "<b>[product.name]</b> [product.cost][CREDIT_SIGN] | [product.uses] uses left"
+				if(product.locked)
+					. += " (locked)"
+				. += "<br>"
+				if(product.desc)
+					. += product.desc
+					. += "<br>"
