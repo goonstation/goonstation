@@ -1,20 +1,38 @@
 ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower
 // hi flourish. Plant pot stuff for in future can go here i guess.
-	var/bouquet_type = null // null if no bouquet assigned
-	proc/make_bouquet(/obj/item/floweritem, obj/item/paperitem, mob/user)
+	max_stack = 10 //this seems about right. Plus, this is also how much can fit into a bouquet.
+	var/bouquet_type = /obj/item/bouquet // if no actual bouquet assigned, we use this one
+
+	proc/make_bouquet(obj/item/paperitem, mob/user)
 		// first check if it's the right kind of flower, right amount, allocate bouquet
 		// have some fail messages
 		// make bouquet
 		// we do a little storing, put the paper and flowers into flowers_stored and paper_used
 		// then we possibly qdel it idk, probably don't need to if we're storing it
-		if (!istype(src.bouquet_type, /obj/item/bouquet))
+		var/flowernum = 2
+		var/obj/item/bouquet/bouquet_dummy = src.bouquet_type
+		if (istype_exact(bouquet_dummy, /obj/item/bouquet))
 			user.visible_message("This flower can't be turned into a bouquet!")
 			return
+		if (!istype(bouquet_dummy, /obj/item/bouquet))
+			CRASH("Somehow, this flower has no real bouquet type. [src]")
+		if (src.amount < bouquet_dummy.min_flowers)
+			user.visible_message("You need more than one flower to make a bouquet!")
+			return
+		if (src.amount <= bouquet_dummy.max_flowers)
+			flowernum = src.amount
+		else
+			flowernum = bouquet_dummy.max_flowers
+			// if too many flowers we just take the max flowers out of the stack, usually 10
+		var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
+		new_bouquet.paper_used = paperitem
+		new_bouquet.flowers_stored = src.split_stack(flowernum)
+		user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s.")
 
-		//user.visible_message("[user] rolls up the [src] into a bouquet.", "You roll up the [src].")
-		//var/obj/item/bouquet/lavender/P = new(get_turf(user))
-		//qdel(src)
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/paper))
+			make_bouquet(src, W, user)
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
 	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
@@ -61,10 +79,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	New()
 		src.create_reagents(100)
 		..()
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/paper))
-			make_bouquet(src, W, mob/user)
 
 /obj/item/clothing/head/flower/rose
 	name = "rose"
@@ -131,8 +145,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			src.thorned = FALSE
 			src.desc += " Its thorns have been snipped off."
 			return
-		if (istype(W, /obj/item/paper))
-			make_bouquet(src, W, mob/user)
 		..()
 
 	attack(mob/living/carbon/human/M, mob/user, def_zone)
@@ -187,4 +199,33 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			possible_names += M
 		return possible_names
 
+// I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
+ABSTRACT_TYPE(/obj/item/bouquet)
+/obj/item/bouquet
+	name = "abstract bouquet"
+	desc = "If you're seeing this, something's wrong"
+	var/paper_used = null
+	var/flowers_stored = null
+	var/max_flowers = 10 // 10 seems like a reasonable amount for now, lets not have 99 flowers in one bouquet
+	var/min_flowers = 2 // can't have a bouquet with only one flower
+	var/flower_type_used = null
+	proc/unroll(mob/user)
+		// should give us back the paper and flowers when done with snipping tool
+		// actually this should be under dispose shouldnt it
 
+/obj/item/bouquet/lavender
+	name = "lavender bouquet"
+	desc = "They smell pretty, and the purple can't be beat."
+	icon_state = "bouquet_lavender"
+	item_state = "bouquet_lavender"
+	flower_type_used = /obj/item/clothing/head/flower/lavender
+
+/obj/item/bouquet/rose
+	name = "rose bouquet"
+	desc = "Red is the color of passion; or, of the medbay."
+	icon_state = "bouquet_rose"
+	item_state = "bouquet_rose"
+	flower_type_used = /obj/item/plant/flower/rose
+
+//obj/item/bouquet/mixed
+// this can be done later if needed
