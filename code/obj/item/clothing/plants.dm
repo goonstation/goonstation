@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			flowernum = bouquet_dummy.max_flowers
 			// if too many flowers we just take the max flowers out of the stack, usually 10
 		var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
-		new_bouquet.paper_used = paperitem
+		paperitem.set_loc(new_bouquet)
 		var/obj/item/clothing/head/flower/allocated_flowers = src.split_stack(flowernum)
 		allocated_flowers.set_loc(new_bouquet)
 		user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s into a bouquet.")
@@ -200,13 +200,11 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 /obj/item/bouquet
 	name = "abstract bouquet"
 	desc = "If you're seeing this, something's wrong"
-	var/paper_used = null
 	var/max_flowers = 10 // 10 seems like a reasonable amount for now, lets not have 99 flowers in one bouquet
 	var/min_flowers = 2 // can't have a bouquet with only one flower
 	var/flower_type_used = null
 	attackby(/obj/item/W, mob/user)
 		// should give us back the paper and flowers when done with snipping tool
-		// actually this should be under dispose shouldnt it
 		if (issnippingtool(W))
 			boutput(user, "<span class='notice'>You disassemble the [src].</span>")
 			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
