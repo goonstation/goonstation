@@ -906,7 +906,7 @@ a.latejoin-card:hover {
 			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
-
+			ticker.minds |= src.mind
 			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)

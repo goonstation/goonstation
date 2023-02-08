@@ -296,6 +296,7 @@
 
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
+	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
