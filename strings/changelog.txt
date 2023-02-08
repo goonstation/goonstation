@@ -1,5 +1,9 @@
 
 (t)wed feb 08 23
+(u)Flaborized
+(p)12790
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(+)Added unique sprites for many construct-able things made out of mauxite sheets, for that industrial warehouse look. Includes walls, floors, tables, and chairs. Go build stuff with it! Mind the rust.
 (u)DrWolfy
 (p)12855
 (e)🆕💊|C-Feature, A-Medical
