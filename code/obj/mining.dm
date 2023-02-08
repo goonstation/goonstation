@@ -236,10 +236,12 @@
 		var/turf/dr = locate(origin.x + width - 1, origin.y, origin.z)
 		return dr
 
+	New()
+		..()
+		START_TRACKING
+
 	disposing()
-		var/datum/client_image_group/cig = get_image_group(src)
-		for(var/image/i in cig.images)
-			cig.remove_image(i)
+		STOP_TRACKING
 		..()
 
 	proc/construct()
