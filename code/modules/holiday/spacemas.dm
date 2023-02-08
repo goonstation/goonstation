@@ -72,7 +72,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		xmas_respawn_lock = 0
 		return
 
-	var/datum/mind/M = pick(candidates)
+	var/datum/mind/M = candidates[1]
 	if (!(M && istype(M) && M.current))
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (candidate selection failed).")
 		xmas_respawn_lock = 0
@@ -87,7 +87,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
 		xmas_respawn_lock = 0
 		return
-
+	log_respawn_event(M, "[which_one == 0 ? "Santa Claus" : "Krampus"]", null)
 	if (which_one == 0)
 		L = new /mob/living/carbon/human/santa
 		if (!(L && ismob(L)))
@@ -126,7 +126,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		krampus_spawned = 1
 
 	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.key] at [log_loc(L)].")
-	logTheThing(LOG_ADMIN, L, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
 	xmas_respawn_lock = 0
 	return
 

@@ -1,4 +1,36 @@
 
+(t)wed feb 08 23
+(u)LeahTheTech
+(p)13010
+(e)⚖|C-Balance
+(*)Joining the round as an observer no longer sets DNR, observers can get respawn events but other ghosts will be prioritized over them. Observers can also once again respawn on RP.
+(u)Wisemonster
+(p)12980
+(e)🗺💅|A-Mapping, C-QoL
+(+)The radio station pod bay doors now come with atmos shields.
+(u)KolisDumb, DeadMan164
+(p)12984
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a foam dart shotgun to the loot crate item pool.
+(u)gabringis
+(p)12914
+(e)🪲📄|C-Bug, A-UI
+(+)custom emotes with quotes and other characters no longer show up as escaped HTML characters
+(u)Piesuu
+(p)12998
+(e)📦|A-Game-Objects
+(+)Nanotrasen has restocked all snack vending machines with nougat bars.
+(u)Flaborized
+(p)12790
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(+)Added unique sprites for many construct-able things made out of mauxite sheets, for that industrial warehouse look. Includes walls, floors, tables, and chairs. Go build stuff with it! Mind the rust.
+(u)DrWolfy
+(p)12855
+(e)🆕💊|C-Feature, A-Medical
+(+)A genebooth info PDA program for Geneticists has been added.
+(u)LeahTheTech
+(*)Flockdrones are now affected by EMPs.
+(+)Mob critters can now be flung by pulse rifles.
 (t)mon feb 06 23
 (u)Piesuu
 (p)12989
