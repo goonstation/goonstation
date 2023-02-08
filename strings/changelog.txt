@@ -1,5 +1,9 @@
 
 (t)wed feb 08 23
+(u)LeahTheTech
+(p)13010
+(e)⚖|C-Balance
+(*)Joining the round as an observer no longer sets DNR, observers can get respawn events but other ghosts will be prioritized over them. Observers can also once again respawn on RP.
 (u)Wisemonster
 (p)12980
 (e)🗺💅|A-Mapping, C-QoL
