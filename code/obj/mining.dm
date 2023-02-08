@@ -236,12 +236,10 @@
 		var/turf/dr = locate(origin.x + width - 1, origin.y, origin.z)
 		return dr
 
-	New()
-		..()
-		START_TRACKING
-
 	disposing()
-		STOP_TRACKING
+		var/datum/client_image_group/cig = get_image_group(src)
+		for(var/image/i in cig.images)
+			cig.remove_image(i)
 		..()
 
 	proc/construct()
@@ -884,6 +882,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
+	var/image/meson_overlay
 
 	dark
 		fullbright = 0
@@ -1162,7 +1161,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else if(health_prc < 0.33)
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
-
+	Del()
+		if (meson_overlay)
+			get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+		..()
 	update_icon()
 		. = ..()
 		src.color = src.stone_color
@@ -1183,10 +1185,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',src,"[src.ore?.name][src.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
+			if (meson_overlay)
+				get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+				qdel(meson_overlay)
+			src.meson_overlay = image('icons/turf/walls_asteroid.dmi',src,"[src.ore?.name][src.orenumber]")
+			src.meson_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+			get_image_group(CLIENT_IMAGE_GROUP_ORES).add_image(meson_overlay)
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1284,6 +1292,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	proc/destroy_asteroid(var/dropOre=1)
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
+		if (meson_overlay)
+			get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_image(meson_overlay)
+			qdel(meson_overlay)
+			meson_overlay = null
 		if (src.invincible)
 			return
 		if (E)

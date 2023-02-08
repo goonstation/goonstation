@@ -93,9 +93,11 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 				if (src.on)
 					H.vision.set_scan(1)
 					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					get_image_group(CLIENT_IMAGE_GROUP_ORES).add_mob(H)
+
 				else
 					H.vision.set_scan(0)
-					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_mob(H)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -104,12 +106,14 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+			get_image_group(CLIENT_IMAGE_GROUP_ORES).add_mob(user)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
+		get_image_group(CLIENT_IMAGE_GROUP_ORES).remove_mob(user)
 
 	unequipped(mob/user)
 		. = ..()
