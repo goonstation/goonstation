@@ -907,6 +907,7 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 			ticker.minds |= src.mind
+			respawn_controller.subscribeNewRespawnee(src.ckey)
 			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
