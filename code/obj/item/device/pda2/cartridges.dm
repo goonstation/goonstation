@@ -90,6 +90,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portabrig(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
@@ -153,6 +154,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portananomed(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.read_only = 1
 
 
@@ -248,6 +250,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.read_only = 1
 
 	quartermaster
