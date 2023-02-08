@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	var/max_flowers = 10 // 10 seems like a reasonable amount for now, lets not have 99 flowers in one bouquet
 	var/min_flowers = 2 // can't have a bouquet with only one flower
 	var/flower_type_used = null
-	attackby(/obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user)
 		// should give us back the paper and flowers when done with snipping tool
 		if (issnippingtool(W))
 			boutput(user, "<span class='notice'>You disassemble the [src].</span>")
