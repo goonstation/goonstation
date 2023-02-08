@@ -1246,6 +1246,7 @@
 		if(length(inp))
 			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
+			tooltip_rebuild = 1
 			boutput(user, "Signal set to [inp]")
 			return 1
 		return 0
