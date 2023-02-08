@@ -526,6 +526,8 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			src.thorned = FALSE
 			src.desc += " Its thorns have been snipped off."
 			return
+		if (istype(W, /obj/item/paper))
+			make_bouquet(src, W, mob/user)
 		..()
 
 	attack(mob/living/carbon/human/M, mob/user, def_zone)
@@ -543,12 +545,6 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			src.prick(user)
 			SPAWN(0.1 SECONDS)
 				user.drop_item(src, FALSE)
-
-		attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/paper))
-			user.visible_message("[user] roll up the [src] into a bouquet.", "You roll up the [src].")
-			var/obj/item/bouquet/rose/P = new(get_turf(user))
-			qdel(src)
 
 /obj/item/plant/flower/rose/poisoned
 	///Trick roses don't poison on attack, only on pickup

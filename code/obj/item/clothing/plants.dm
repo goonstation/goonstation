@@ -49,6 +49,4 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper))
-			user.visible_message("[user] roll up the [src] into a bouquet.", "You roll up the [src].")
-			var/obj/item/bouquet/lavender/P = new(get_turf(user))
-			qdel(src)
+			make_bouquet(src, W, mob/user)
