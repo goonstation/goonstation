@@ -65,7 +65,6 @@
 
 	remove_self()
 		src.conspirators -= src.owner
-
 		. = ..()
 
 	proc/generate_conspirator_list()
