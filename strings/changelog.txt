@@ -1,5 +1,9 @@
 
 (t)wed feb 08 23
+(u)gabringis
+(p)12914
+(e)🪲📄|C-Bug, A-UI
+(+)custom emotes with quotes and other characters no longer show up as escaped HTML characters
 (u)Piesuu
 (p)12998
 (e)📦|A-Game-Objects
