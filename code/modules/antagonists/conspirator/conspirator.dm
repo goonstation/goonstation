@@ -2,9 +2,9 @@
 	id = ROLE_CONSPIRATOR
 	display_name = "conspirator"
 
+	var/static/list/datum/mind/conspirators
 	var/static/conspirator_objective
 	var/static/meeting_point
-	var/static/conspirator_list
 	var/obj/item/device/radio/headset/headset
 
 	New(datum/mind/new_owner)
@@ -14,20 +14,22 @@
 		if (!src.meeting_point)
 			src.meeting_point = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
 
-		if (!src.conspirator_list)
-			src.conspirator_list = "The conspiracy consists of: "
+		if (!src.conspirators)
+			src.conspirators = list()
 
 		src.owner = new_owner
-		if (src.owner.assigned_role == "Clown")
-			src.conspirator_list += "<b>a Clown</b>, "
-		else
-			src.conspirator_list += "<b>[src.owner.current.real_name]</b>, "
+		src.conspirators += src.owner
 
 		. = ..()
 
 	give_equipment()
-		src.owner.store_memory(src.meeting_point)
-		src.owner.store_memory(src.conspirator_list)
+		SPAWN(1 SECOND)
+			var/conspirator_list = src.generate_conspirator_list()
+
+			src.owner.store_memory(src.meeting_point)
+			src.owner.store_memory(conspirator_list)
+			boutput(src.owner.current, src.meeting_point)
+			boutput(src.owner.current, conspirator_list)
 
 		if (!ishuman(src.owner.current))
 			return
@@ -61,9 +63,18 @@
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, src.conspirator_objective, src)
 
-	announce_objectives()
-		SPAWN(1 SECOND)
-			. = ..()
+	remove_self()
+		src.conspirators -= src.owner
 
-			boutput(src.owner.current, src.meeting_point)
-			boutput(src.owner.current, src.conspirator_list)
+		. = ..()
+
+	proc/generate_conspirator_list()
+		var/conspirator_list = "The conspiracy consists of: "
+
+		for (var/datum/mind/conspirator in src.conspirators)
+			if (conspirator.assigned_role == "Clown")
+				conspirator_list += "<b>a Clown</b>, "
+			else
+				conspirator_list += "<b>[conspirator.current.real_name]</b>, "
+
+		return conspirator_list
