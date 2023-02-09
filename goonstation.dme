@@ -82,6 +82,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\disease.dm"
 #include "code\datums\disjoint_turf.dm"
 #include "code\datums\dna.dm"
+#include "code\datums\dynamic_player_memory.dm"
 #include "code\datums\dynamicQueue.dm"
 #include "code\datums\ehjax.dm"
 #include "code\datums\embedded_controller.dm"
