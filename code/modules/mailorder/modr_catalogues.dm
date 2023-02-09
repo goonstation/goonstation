@@ -171,7 +171,7 @@
 					var/creditCheck = src.authCard(usr)
 					if(creditCheck == "SUCCESS")
 						var/destination = "Send to QM"
-						if(pick_landmark(LANDMARK_MAILORDER_SPAWN)) //pick a destination if mail insertion is supported by map
+						if(length(landmarks?[LANDMARK_MAILORDER_SPAWN])) //pick a destination if mail insertion is supported by map
 							var/list/possible_mail_dests = list("Send to QM")
 							for_by_tcl(S, /obj/machinery/disposal/mail)
 								possible_mail_dests += S.mail_tag
@@ -225,7 +225,7 @@
 
 		if(destination != "Send to QM")
 			success_style = DELIVERED_TO_MAIL
-			if(!pick_landmark(LANDMARK_MAILORDER_SPAWN) || !pick_landmark(LANDMARK_MAILORDER_TARGET)) //tried to mail-ship without map support
+			if(!length(landmarks?[LANDMARK_MAILORDER_SPAWN]) || !length(landmarks?[LANDMARK_MAILORDER_TARGET])) //tried to mail-ship without map support
 				src.voidCart() //therefore can't ship, fail without paying
 				return 0
 
