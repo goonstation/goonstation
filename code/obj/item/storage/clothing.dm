@@ -325,7 +325,7 @@
 
 	make_my_stuff()
 		..()
-		var/obj/item/clothing/under/color/orange/jump = new
+		var/obj/item/clothing/under/color/orange/jump = new /obj/item/clothing/under/color/orange(src)
 		src.storage.add_contents(jump)
 		jump.name = "meth scientist uniform"
 		jump.desc = "What? This clearly isn't a repurposed prison uniform, we promise."
@@ -335,12 +335,12 @@
 
 	make_my_stuff()
 		..()
-		var/obj/item/clothing/mask/cmask = new /obj/item/clothing/mask/spiderman
+		var/obj/item/clothing/mask/cmask = new /obj/item/clothing/mask/spiderman(src)
 		src.storage.add_contents(cmask)
 		cmask.name = "red alien mask"
 		cmask.desc = "The material of this mask can probably scrape off your face. 'Spook*Corp Costumes' on embedded on the side of it."
 
-		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/gimmick/spiderman
+		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/gimmick/spiderman(src)
 		src.storage.add_contents(sunder)
 		sunder.name = "red alien suit"
 		sunder.desc = "Just looking at this thing makes you feel itchy! 'Spook*Corp Costumes' is embedded on the side of it."
@@ -351,17 +351,17 @@
 
 	make_my_stuff()
 		..()
-		var/obj/item/clothing/head/chat = new /obj/item/clothing/head/that/purple
+		var/obj/item/clothing/head/chat = new /obj/item/clothing/head/that/purple(src)
 		src.storage.add_contents(chat)
 		chat.name = "victorian confectionery factory owner hat"
 		chat.desc = "This hat really feels like something you shouldn't be putting near your brain! 'Spook*Corp Costumes' on embedded on the side of it."
 
-		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/suit/purple
+		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/suit/purple(src)
 		src.storage.add_contents(sunder)
 		sunder.name = "victorian confectionery factory owner suit"
 		sunder.desc = "Just looking at this thing makes you feel itchy! 'Spook*Corp Costumes' is embedded on the side of it."
 
-		var/obj/item/acane = new /obj/item/crowbar
+		var/obj/item/acane = new /obj/item/crowbar(src)
 		src.storage.add_contents(acane)
 		acane.name = "cane"
 		acane.desc = "Totally a cane."
@@ -378,7 +378,7 @@
 
 	make_my_stuff()
 		..()
-		var/obj/item/e_g_g = new /obj/item/reagent_containers/food/snacks/ingredient/egg
+		var/obj/item/e_g_g = new /obj/item/reagent_containers/food/snacks/ingredient/egg(src)
 		src.storage.add_contents(e_g_g)
 		e_g_g.name = "e g g"
 		e_g_g.desc = "Smash the world's shell!"
@@ -393,10 +393,10 @@
 
 	make_my_stuff()
 		var/my_color = random_color()
-		var/obj/item/clothing/suit/S = new /obj/item/clothing/suit/gimmick/werewolf/odd
+		var/obj/item/clothing/suit/S = new /obj/item/clothing/suit/gimmick/werewolf/odd(src)
 		src.storage.add_contents(S)
 		S.color = my_color
-		var/obj/item/clothing/head/H = new /obj/item/clothing/head/werewolf/odd
+		var/obj/item/clothing/head/H = new /obj/item/clothing/head/werewolf/odd(src)
 		src.storage.add_contents(H)
 		H.color = my_color
 

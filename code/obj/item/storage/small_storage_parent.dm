@@ -94,16 +94,16 @@
 	make_my_stuff(onlyMaskAndOxygen)
 		..()
 		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
-			src.storage.add_contents(new /obj/item/tank/emergency_oxygen)
+			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
 		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
-			src.storage.add_contents(new /obj/item/crowbar/red)
+			src.storage.add_contents(new /obj/item/crowbar/red(src))
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
-		src.storage.add_contents(new /obj/item/clothing/suit/space/emerg)
-		src.storage.add_contents(new /obj/item/clothing/head/emerg)
+		src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
+		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
 #else
 		if (prob(10)) // put these together
-			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg)
-			src.storage.add_contents(new /obj/item/clothing/head/emerg)
+			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
+			src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
 #endif
 
 

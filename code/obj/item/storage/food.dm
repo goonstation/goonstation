@@ -112,10 +112,10 @@
 		var/made_sponge = FALSE
 		for (var/i = 1 to src.storage.slots)
 			if(prob(5) && !made_sponge)
-				src.storage.add_contents(new /obj/item/sponge/cheese)
+				src.storage.add_contents(new /obj/item/sponge/cheese(src))
 				made_sponge = TRUE
 			else
-				src.storage.add_contents(new /obj/item/reagent_containers/food/snacks/ingredient/cheese)
+				src.storage.add_contents(new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src))
 
 /obj/item/storage/goodybag
 	name = "goodybag"
@@ -127,7 +127,7 @@
 		var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
 		for (var/i=6, i>0, i--)
 			var/newcandy_path = pick(candytypes)
-			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path
+			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)
 			src.storage.add_contents(newcandy)
 			if (prob(5))
 				newcandy.razor_blade = 1

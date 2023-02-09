@@ -301,13 +301,13 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,9)
 		switch (loot)
 			if (1)
-				src.storage.add_contents(new /obj/item/stamped_bullion)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=6, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (2)
 				for (var/i=2, i>0, i--)
-					src.storage.add_contents(new /obj/item/stamped_bullion)
+					src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=4, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
@@ -317,31 +317,31 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					S.setup(src, try_add_to_storage = TRUE)
 			if (4)
 				for (var/i=4, i>0, i--)
-					src.storage.add_contents(new /obj/item/skull)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (5)
 				for (var/i=2, i>0, i--)
-					src.storage.add_contents(new /obj/item/skull)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (6)
 				for (var/i=2, i>0, i--)
-					src.storage.add_contents(new /obj/item/gun/energy/laser_gun)
+					src.storage.add_contents(new /obj/item/gun/energy/laser_gun(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
-				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255)
-				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five)
+				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (8)
 				for (var/i=7, i>0, i--)
-					src.storage.add_contents(new /obj/item/raw_material/telecrystal)
+					src.storage.add_contents(new /obj/item/raw_material/telecrystal(src))
 			if (9)
 				var/list/treasures = list(/obj/item/stamped_bullion,\
 				/obj/item/raw_material/telecrystal,\
@@ -376,14 +376,14 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					if (ispath(treasure))
 						if (ispath(treasures[treasure])) // for things that should spawn with specific other things, ie guns & ammo
 							if (i <= 5) // if there's enough room for two things
-								src.storage.add_contents(new treasure)
+								src.storage.add_contents(new treasure(src))
 								var/treasure_extra = treasures[treasure]
-								src.storage.add_contents(new treasure_extra)
+								src.storage.add_contents(new treasure_extra(src))
 								i-- // one less thing since we spawned two
 							else // if there's not enough room
 								i++ // try again
 						else // if there's no matching thing to spawn
-							src.storage.add_contents(new treasure)
+							src.storage.add_contents(new treasure(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
 

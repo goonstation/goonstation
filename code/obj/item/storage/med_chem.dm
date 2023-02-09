@@ -355,7 +355,7 @@
 			if (eyez.len)
 				for (var/i=rand(2,3), i>0, i--)
 					var/epath = pick(eyez)
-					src.storage.add_contents(new epath)
+					src.storage.add_contents(new epath(src))
 
 /* -------------------- Wall Storage -------------------- */
 
@@ -369,25 +369,25 @@
 
 	make_my_stuff()
 		..()
-		src.storage.add_contents(new /obj/item/bandage)
-		src.storage.add_contents(new /obj/item/storage/pill_bottle/salicylic_acid)
-		src.storage.add_contents(new /obj/item/storage/pill_bottle/menthol)
+		src.storage.add_contents(new /obj/item/bandage(src))
+		src.storage.add_contents(new /obj/item/storage/pill_bottle/salicylic_acid(src))
+		src.storage.add_contents(new /obj/item/storage/pill_bottle/menthol(src))
 
 		if (prob(40))
-			src.storage.add_contents(new /obj/item/storage/firstaid/regular)
+			src.storage.add_contents(new /obj/item/storage/firstaid/regular(src))
 		if (prob(40))
-			src.storage.add_contents(new /obj/item/reagent_containers/glass/bottle/ethanol)
+			src.storage.add_contents(new /obj/item/reagent_containers/glass/bottle/ethanol(src))
 
 		switch (weighted_pick(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
 			if ("gloves")
-				src.storage.add_contents(new /obj/item/clothing/gloves/latex)
+				src.storage.add_contents(new /obj/item/clothing/gloves/latex(src))
 			if ("mask")
-				src.storage.add_contents(new /obj/item/clothing/mask/surgical)
+				src.storage.add_contents(new /obj/item/clothing/mask/surgical(src))
 			if ("autoinjector")
-				src.storage.add_contents(new /obj/item/reagent_containers/emergency_injector/spaceacillin)
+				src.storage.add_contents(new /obj/item/reagent_containers/emergency_injector/spaceacillin(src))
 			if ("both")
-				src.storage.add_contents(new /obj/item/clothing/gloves/latex)
-				src.storage.add_contents(new /obj/item/clothing/mask/surgical)
+				src.storage.add_contents(new /obj/item/clothing/gloves/latex(src))
+				src.storage.add_contents(new /obj/item/clothing/mask/surgical(src))
 
 /* -------------------- Pill Bottles - Medical -------------------- */
 
