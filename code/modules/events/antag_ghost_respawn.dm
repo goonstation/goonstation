@@ -141,7 +141,7 @@
 			var/datum/mind/lucky_dude = null
 
 			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-				lucky_dude = pick(candidates)
+				lucky_dude = candidates[1]
 				attempts++
 				/*
 				// Latejoin antagonists ignore antag prefs and so should this
@@ -202,7 +202,7 @@
 			var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			var/failed = 0
-
+			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
 					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
@@ -411,7 +411,6 @@
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.cleanup()
 		return
 
