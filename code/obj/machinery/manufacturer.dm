@@ -2493,6 +2493,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/gasmask,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/shoes_white,
+		/datum/manufacture/audiotape,
+		/datum/manufacture/audiolog,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass)
