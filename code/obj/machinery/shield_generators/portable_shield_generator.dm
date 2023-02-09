@@ -59,6 +59,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 
 	process()
 		if(src.active)
+			src.power_usage = get_draw()
 			if(PCEL && !connected)
 				process_battery()
 			else
@@ -74,24 +75,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 				qdel(src)
 				return
 			if(2)
-				if(PCEL && !connected && active)
-					src.PCEL.use(120 * src.range * (src.power_level * src.power_level))
-				else if(connected && active)
-					use_power(src.power_usage * 4)
+				use_power(src.power_usage * 4)
 				if(prob(50))
 					shield_off(1)
 				return
 			if(3)
-				if(PCEL && !connected && active)
-					src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
-					return
-				else if(connected && active)
-					use_power(src.power_usage * 2)
-				return
+				use_power(src.power_usage * 2)
 
 	blob_act(var/power)
 		if(PCEL && !connected && active)
-			src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
+			use_power(src.power_usage * 2)
 		else if(connected && active)
 			use_power(src.power_usage * power/10)
 		if(prob(25 * power/20))
@@ -117,6 +110,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			if (net.avail - net.newload > power_usage)
 				. = TRUE
 		return
+
+	use_power(var/amount, var/chan=EQUIP)
+		if(PCEL && !connected && active)
+			PCEL.use(src.power_usage)
+		if(connected && active)
+			var/datum/powernet/net = src.connected_wire.get_powernet()
+			net?.newload += src.power_usage
 
 	proc/process_wired()
 		//check for linepower
@@ -144,7 +144,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			return
 
 	proc/process_battery()
-		PCEL.use(get_draw())
+		PCEL.use(src.power_usage)
 		var/charge_percentage = 0
 		var/current_battery_level = 0
 		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
@@ -216,7 +216,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	proc/turn_on(mob/user)
 		if (src.active)
 			return
-		if(PCEL)
+		if(PCEL && !connected)
 			if(PCEL.charge > 0)
 				src.shield_on()
 			else
@@ -373,7 +373,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			if(MS.PCEL && !MS.connected && MS.active)
 				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
 			else if(MS.connected)
-				MS.use_power(MS.power_usage + force_value )
+				MS.use_power(MS.power_usage + force_value)
 
 			playsound(src, src.sound_shieldhit, 20, 1)
 			return
@@ -394,7 +394,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 				force_value = damage / 1.7
 
 			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+				MS.use_power(force_value * MS.range * (MS.power_level * MS.power_level))
 			else if(MS.connected)
 				MS.use_power(MS.power_usage + force_value )
 
@@ -404,7 +404,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(60 * MS.range)
+				MS.use_power(60 * MS.range)
 			else if(MS.connected && MS.active)
 				MS.use_power(MS.power_usage)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -421,17 +421,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 					qdel(src)
 					return
 				if(2)
-					if(MS.PCEL && !MS.connected && MS.active)
-						MS.PCEL.use(120 * MS.range)
-					else if(MS.connected && MS.active)
-						MS.use_power(MS.power_usage * 4)
+					MS.use_power(MS.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 				if(3)
-					if(MS.PCEL && !MS.connected && MS.active)
-						MS.PCEL.use(60 * MS.range)
-					else if(MS.connected && MS.active)
-						MS.use_power(MS.power_usage * 2)
+					MS.use_power(MS.power_usage * 2)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 
@@ -439,10 +433,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 
-			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(60 * MS.range * (MS.power_level * MS.power_level))
-			else if(MS.connected && MS.active)
-				MS.use_power(MS.power_usage * 2)
+			MS.use_power(MS.power_usage * 2)
 			if(prob(25 * power/20))
 				MS.shield_off(1)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -589,7 +580,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			//unless the power level is 3, which blocks solid objects, meteors should pass through untoucheda
 			if(ES.power_level == 3)
 				if(ES.PCEL && !ES.connected && ES.active)	//Technically these shields can be used as emergency meteor shields, but they are very bad a blocking them
-					ES.PCEL.use(120 * ES.range * (ES.power_level * ES.power_level))
+					ES.use_power(ES.power_usage * 4)
 				else if(ES.connected && ES.active)
 					ES.use_power(ES.power_usage * 2)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -607,14 +598,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 					return
 				if(2)
 					if(ES.PCEL && !ES.connected && ES.active)
-						ES.PCEL.use(60 * ES.range * (ES.power_level * ES.power_level))
+						ES.use_power(ES.power_usage * 2)
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 				if(3)
 					if(ES.PCEL && !ES.connected && ES.active)
-						ES.PCEL.use(30 * ES.range * (ES.power_level * ES.power_level))
+						ES.use_power(ES.power_usage)
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 2)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
