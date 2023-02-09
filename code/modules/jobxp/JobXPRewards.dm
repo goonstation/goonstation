@@ -253,11 +253,9 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "The jumpsuit pops into existance!")
-		var/obj/item/I = new/obj/item/clothing/under/misc/hydroponics()
-		I.set_loc(get_turf(C.mob))
+		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		var/obj/item/I = new/obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
 		C.mob.put_in_hand(I)
-		return
 
 /datum/jobXpReward/botanist/wateringcan/old
 	name = "Antique Watering Can"
