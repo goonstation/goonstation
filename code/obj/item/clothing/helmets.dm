@@ -339,6 +339,7 @@
 		setupProperties()
 			..()
 			setProperty("exploprot", 10)
+			setProperty("radprot", 50)
 
 		infiltrator
 			name = "specialist combat helmet"
