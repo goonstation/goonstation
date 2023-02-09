@@ -234,6 +234,13 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	item_state = "bouquet_rose"
 	flower_type_used = /obj/item/clothing/head/flower/rose
 
+/obj/item/bouquet/poppy
+	name = "poppy bouquet"
+	desc = ""
+	icon_state = "bouquet_poppy"
+	item_state = "bouquet_poppy"
+	flower_type_used = /obj/item/clothing/head/flower/poppy
+
 /obj/item/bouquet/hydrangea
 	name = "hydrangea bouquet"
 	desc = "A summer favorite, here to stay; these bushy flowers make a perfect colorful arrangement."
