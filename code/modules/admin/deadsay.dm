@@ -28,10 +28,10 @@
 			continue
 		if (M.client && M.client.deadchatoff)
 			continue
-		if (istype(M,/mob/dead/target_observer/hivemind_observer))
-			continue
-		if (istype(M,/mob/dead/target_observer/slasher_ghost))
-			continue
+		if (istype(M,/mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
 		if (iswraith(M))
 			var/mob/living/intangible/wraith/the_wraith = M
 			if (!the_wraith.hearghosts)

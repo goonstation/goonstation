@@ -1861,6 +1861,7 @@ proc/countJob(rank)
 					continue
 
 			if (candidates.len)
+				candidates = prioritize_dead_players(candidates)
 				if (return_minds == 1)
 					return candidates
 				else
@@ -1883,21 +1884,43 @@ proc/countJob(rank)
 		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
 			continue
 		if (!(O in candidates))
-			candidates.Add(O)
-
+			candidates.Add(O.mind)
+	candidates = prioritize_dead_players(candidates)
 	if (return_minds == 1)
-		var/list/datum/mind/minds = list()
-		for (var/mob/M2 in candidates)
-			if (M2.mind && !(M2.mind in minds))
-				minds.Add(M2.mind)
+		return candidates
+	else
+		var/list/mob/mobs = list()
+		for (var/datum/mind/M3 in candidates)
+			if (M3.current && ismob(M3.current))
+				if (!(M3.current in mobs))
+					mobs.Add(M3.current)
+		return mobs
 
-		return minds
+///Returns a randomized list of minds with players who joined as observer at the back
+/proc/prioritize_dead_players(list/datum/mind/minds)
+	var/list/observers = list()
+	for (var/datum/mind/mind in minds)
+		if (istype(mind.current, /mob/dead/observer))
+			var/mob/dead/observer/ghost = mind.current
+			if (ghost.observe_round)
+				minds -= mind
+				observers += mind
+	shuffle_list(minds)
+	shuffle_list(observers)
+	return minds + observers
 
-	return candidates
+///Logs a player respawning as something from a respawn event, noting if they joined the round as an observer or not
+///Note: should be called BEFORE they are transferred to the new body
+/proc/log_respawn_event(datum/mind/mind, respawning_as, source)
+	var/is_round_observer = FALSE
+	if (istype(mind.current, /mob/dead/observer))
+		var/mob/dead/observer/ghost = mind.current
+		is_round_observer = ghost.observe_round
+	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G?.mind || G.mind.dnr)
+	if (!G?.mind || G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 	// 	return 0
@@ -1925,7 +1948,7 @@ proc/countJob(rank)
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
 	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.

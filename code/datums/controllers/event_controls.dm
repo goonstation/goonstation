@@ -41,6 +41,7 @@ var/datum/event_controller/random_events
 
 	var/start_events_enabled = FALSE
 	var/list/start_events = list()
+	var/list/datum/random_event/delayed_start = list()
 
 	New()
 		..()
@@ -49,11 +50,11 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag)+concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
@@ -73,6 +74,9 @@ var/datum/event_controller/random_events
 		// prevent random events near round end
 		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
 			return
+
+		if (ticker.round_elapsed_ticks == 0)
+			roundstart_events()
 
 		if (ticker.round_elapsed_ticks >= major_events_begin)
 			if (ticker.round_elapsed_ticks >= next_major_event)
@@ -150,6 +154,11 @@ var/datum/event_controller/random_events
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Random Events:</b> do_random_event couldn't find any eligible events")
 
+	proc/roundstart_events()
+		for(var/datum/random_event/RE in delayed_start)
+			var/source = delayed_start[RE]
+			SPAWN(0) RE.event_effect(source)
+
 	proc/force_event(var/string,var/reason)
 		if (!string)
 			return
@@ -159,7 +168,7 @@ var/datum/event_controller/random_events
 		var/list/allevents = events | minor_events | special_events
 		for (var/datum/random_event/RE in allevents)
 			if (RE.name == string)
-				RE.event_effect(string,reason)
+				RE.event_effect(reason)
 				break
 
 	///////////////////

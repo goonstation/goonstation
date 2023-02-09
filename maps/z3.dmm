@@ -496,7 +496,7 @@
 /area/space_hive)
 "abJ" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "abK" = (
@@ -895,12 +895,6 @@
 	icon_state = "floor"
 	},
 /area/space_hive)
-"acR" = (
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
-"acS" = (
-/turf/simulated/wall/auto/asteroid/lighted,
-/area/space)
 "acT" = (
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -1284,6 +1278,12 @@
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "adY" = (
@@ -1294,7 +1294,7 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aea" = (
 /obj/item/wirecutters,
@@ -1392,7 +1392,7 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aet" = (
 /obj/item/shipcomponent/secondary_system/cargo/small,
@@ -1404,6 +1404,12 @@
 	icon_state = "bdoorleft1";
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -1433,10 +1439,13 @@
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
-/area/radiostation/podbay)
-"aeA" = (
-/turf/simulated/floor/plating/airless/shuttlebay,
 /area/radiostation/podbay)
 "aeB" = (
 /turf/simulated/floor/caution/west,
@@ -1512,7 +1521,7 @@
 /area/radiostation/podbay)
 "aeS" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeT" = (
 /obj/decal/cleanable/oil/streak,
@@ -1525,6 +1534,12 @@
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeV" = (
@@ -1534,11 +1549,17 @@
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeW" = (
 /obj/machinery/light,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeX" = (
 /obj/rack,
@@ -1622,7 +1643,7 @@
 /obj/item/reagent_containers/glass/oilcan,
 /obj/machinery/light,
 /obj/decal/cleanable/oil/streak,
-/turf/simulated/floor/plating/airless/shuttlebay,
+/turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "afj" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
@@ -1630,6 +1651,12 @@
 	icon_state = "bdoorright1";
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -2629,11 +2656,7 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "tile1"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
-"amj" = (
-/obj/landmark/artifact,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "amk" = (
 /obj/machinery/power/data_terminal,
@@ -2891,7 +2914,7 @@
 	icon_state = "tile1"
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ana" = (
 /obj/decal/fakeobjects/pipe,
@@ -3504,8 +3527,8 @@
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_name = 0;
-	randomize_look = 0
+	randomize_look = 0;
+	randomize_name = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -14692,11 +14715,6 @@
 	},
 /turf/space,
 /area/space)
-"bgE" = (
-/obj/decal/nav_danger,
-/obj/map/light/dimred,
-/turf/space,
-/area/space)
 "bgF" = (
 /obj/cable{
 	d1 = 1;
@@ -20357,8 +20375,8 @@
 "lJu" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/transit_shuttle/mining{
-	icon_state = "shuttle-embed";
 	embed = 1;
+	icon_state = "shuttle-embed";
 	pixel_y = -25
 	},
 /turf/unsimulated/floor/shuttle{
@@ -22070,10 +22088,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"qqQ" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "qsv" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -54487,11 +54501,11 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -54788,15 +54802,15 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55089,19 +55103,19 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55391,20 +55405,20 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55692,22 +55706,22 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-qqQ
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+paS
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -55993,24 +56007,24 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-amj
-acR
-acR
-acR
-acR
-acR
-acS
-acS
-acS
-acS
-acR
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aOw
+aac
+aac
+aac
+aac
+aac
+aab
+aab
+aab
+aab
+aac
 aaa
 aaa
 aaa
@@ -56293,13 +56307,13 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
+aab
+aab
 afR
 afR
 afR
@@ -56311,8 +56325,8 @@ afR
 afR
 afR
 afR
-acS
-acS
+aab
+aab
 aaa
 aaa
 aaa
@@ -56594,14 +56608,14 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 afR
 afR
 afR
@@ -56613,9 +56627,9 @@ afR
 afR
 afR
 afR
-acS
-acS
-acR
+aab
+aab
+aac
 aaa
 aaa
 aaa
@@ -56896,7 +56910,7 @@ aaa
 aaa
 aaa
 aaa
-acS
+aab
 afR
 afR
 afR
@@ -56915,8 +56929,8 @@ erR
 ann
 afR
 afR
-acS
-acS
+aab
+aab
 aaa
 aaa
 aaa
@@ -57198,7 +57212,7 @@ aaa
 aaa
 aaa
 aaa
-acS
+aab
 afR
 afR
 afR
@@ -57217,9 +57231,9 @@ ani
 ani
 afR
 afR
-acS
-acS
-acS
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -57499,8 +57513,8 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
+aac
+aab
 afR
 ahR
 afR
@@ -57519,9 +57533,9 @@ anj
 anu
 afR
 afR
-acS
-acS
-acS
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -57799,10 +57813,10 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
+aac
+aac
+aab
+aab
 afR
 oWB
 ajt
@@ -57821,9 +57835,9 @@ ank
 amB
 afR
 afR
-acS
-acS
-acS
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -58101,10 +58115,10 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
 afR
 ajp
 afR
@@ -58123,9 +58137,9 @@ mMS
 any
 anz
 anz
-acS
-acS
-acS
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -58403,10 +58417,10 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
 afR
 afR
 afR
@@ -58425,9 +58439,9 @@ afR
 afR
 afR
 afR
-acS
-acS
-acR
+aab
+aab
+aac
 aaa
 aaa
 aaa
@@ -58705,10 +58719,10 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
 afR
 afR
 afR
@@ -58727,8 +58741,8 @@ afR
 afR
 afR
 afR
-acS
-acS
+aab
+aab
 aaa
 aaa
 aaa
@@ -59007,29 +59021,29 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
 amZ
 afR
 amB
 amI
 afR
-acR
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -59308,30 +59322,30 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acR
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aac
 ami
 amo
 amB
 amT
 afR
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -59610,29 +59624,29 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acR
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aac
 ami
 afR
 afR
 afR
 afR
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -59912,27 +59926,27 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -60214,26 +60228,26 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -60516,26 +60530,26 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -60819,25 +60833,25 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -61121,24 +61135,24 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -61425,22 +61439,22 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -61728,20 +61742,20 @@ aaa
 aaa
 aaa
 aaa
-acR
-acS
-acS
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aab
+aab
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -62030,21 +62044,21 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acS
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aab
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -62331,21 +62345,21 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acR
-acR
-acS
-acS
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aac
+aac
+aab
+aab
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -62633,21 +62647,21 @@ aaa
 aaa
 aaa
 aaa
-acR
-acR
-acR
-acR
-acR
-acR
-acR
-acR
-acR
-acS
-acS
-acS
-acS
-acS
-acS
+aac
+aac
+aac
+aac
+aac
+aac
+aac
+aac
+aac
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -62934,20 +62948,20 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acR
-acR
-acR
-acR
-acR
+aab
+aab
+aab
+aab
+aac
+aac
+aac
+aac
+aac
 aaa
 aaa
 aaa
-acS
-acS
+aab
+aab
 aaa
 aaa
 aaa
@@ -63235,15 +63249,15 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acR
-acR
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aac
+aac
 aaa
 aaa
 aaa
@@ -63536,15 +63550,15 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -63838,15 +63852,15 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -64141,14 +64155,14 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -64443,14 +64457,14 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -64746,12 +64760,12 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
-acS
-acS
-acS
-acS
+aab
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -65051,8 +65065,8 @@ aaa
 aaa
 aaa
 aaa
-acS
-acS
+aab
+aab
 aGW
 aan
 aaa
@@ -100220,7 +100234,7 @@ aaa
 aaa
 aaa
 bkK
-bgE
+bkj
 bkP
 aaa
 aaa
@@ -106127,7 +106141,7 @@ aaa
 adJ
 adO
 adZ
-aeA
+adY
 aeW
 adO
 akS

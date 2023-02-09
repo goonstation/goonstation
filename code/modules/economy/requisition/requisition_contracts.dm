@@ -191,9 +191,9 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
 			switch(index)
 				if("Maturation")
-					if(cultivar.plantgenes.growtime <= gene_reqs["Maturation"]) gene_count++
+					if(cultivar.plantgenes.growtime >= gene_reqs["Maturation"]) gene_count++
 				if("Production")
-					if(cultivar.plantgenes.harvtime <= gene_reqs["Production"]) gene_count++
+					if(cultivar.plantgenes.harvtime >= gene_reqs["Production"]) gene_count++
 				if("Lifespan")
 					if(cultivar.plantgenes.harvests >= gene_reqs["Lifespan"]) gene_count++
 				if("Yield")

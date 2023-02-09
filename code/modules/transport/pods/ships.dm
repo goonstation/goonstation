@@ -187,6 +187,7 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -955,6 +956,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
@@ -1316,6 +1318,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."

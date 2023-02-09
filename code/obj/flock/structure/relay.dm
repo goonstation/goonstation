@@ -40,6 +40,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
@@ -60,6 +61,9 @@ TYPEINFO(/obj/flock_structure/relay)
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
+	src.flock.flockmind.AddComponent(/datum/component/tracker_hud/flock, src)
+	for (var/mob/living/intangible/flock/trace/trace in src.flock.traces)
+		trace.AddComponent(/datum/component/tracker_hud/flock, src)
 	play_sound()
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
@@ -80,6 +84,7 @@ TYPEINFO(/obj/flock_structure/relay)
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
@@ -130,7 +135,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/center_loc = get_turf(src)
 	SPAWN(0)
 		for(var/mob/M as anything in mobs)
-			M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
+			M.playsound_local(M, 'sound/misc/flockmind/Flock_Reactor.ogg', 30, 0, 2)
 			boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()
@@ -145,7 +150,6 @@ TYPEINFO(/obj/flock_structure/relay)
 		return
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
-	src.flock.relay_finished = TRUE
 	src.flock.stats.won = TRUE
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
@@ -175,6 +179,7 @@ TYPEINFO(/obj/flock_structure/relay)
 			for(var/y = -2 to 2)
 				flockdronegibs(locate(location.x + x, location.y + y, location.z))
 		explosion_new(src, location, 2000)
+		src.flock.relay_finished = TRUE
 		gib(location)
 		flock_signal_unleashed = TRUE
 		sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
