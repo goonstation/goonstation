@@ -464,10 +464,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
 	if(src.lethal)
 		logTheThing(LOG_COMBAT, user || usr, "set turrets to LETHAL from control \[[log_loc(src)]].")
-		message_admins("[key_name(user)] set turrets to LETHAL from control \[[log_loc(src)]].")
+		message_admins("[key_name(user || usr)] set turrets to LETHAL from control \[[log_loc(src)]].")
 	else
 		logTheThing(LOG_COMBAT, user || usr, "set turrets to STUN from control \[[log_loc(src)]].")
-		message_admins("[key_name(user)] set turrets to STUN from control \[[log_loc(src)]].")
+		message_admins("[key_name(user || usr)] set turrets to STUN from control \[[log_loc(src)]].")
 	src.updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
