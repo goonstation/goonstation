@@ -36,8 +36,6 @@
 	var/max_wclass = W_CLASS_SMALL
 	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
 	var/slots = 7
-	/// Initial contents when created
-	var/list/spawn_contents = list()
 	/// specify if storage should grab other items on turf
 	var/grab_stuff_on_spawn = FALSE
 	/// Does moving the linked storage item cause anything to happen to stored items
@@ -77,8 +75,8 @@
 		RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, .proc/storage_item_on_drop)
 
 		//SPAWN(1 DECI SECOND)
-		if (length(src.spawn_contents))
-			src.make_my_stuff()
+		if (length(spawn_contents))
+			src.make_my_stuff(spawn_contents)
 
 		if (src.grab_stuff_on_spawn)
 			for (var/obj/item/I in src.linked_item.loc)
@@ -122,11 +120,11 @@
 	//proc/storage_item_entered(atom/source, atom/movable/AM, atom/oldLoc)
 	//	src.add_contents(AM)
 
-	proc/make_my_stuff()
-		if (!length(src.spawn_contents))
+	proc/make_my_stuff(list/spawn_contents)
+		if (!length(spawn_contents))
 			return
 		var/total_amt = 0
-		for (var/thing in src.spawn_contents)
+		for (var/thing in spawn_contents)
 			var/amt = 1
 			if (!ispath(thing))
 				continue
@@ -134,8 +132,7 @@
 				amt = abs(spawn_contents[thing])
 			total_amt += amt
 			while (amt > 0)
-				var/obj/O = new thing(get_turf(src.linked_item))
-				src.add_contents(O)
+				src.add_contents(new thing)
 				amt--
 		if (total_amt > slots)
 			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src.linked_item] has more than [slots] items in it!")
