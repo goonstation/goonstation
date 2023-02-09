@@ -199,6 +199,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			possible_names += M
 		return possible_names
 
+/obj/item/clothing/head/poppy
+	name = "poppy"
+	desc = "A distinctive red flower."
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "poppy"
+
 // I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
 ABSTRACT_TYPE(/obj/item/bouquet)
 /obj/item/bouquet

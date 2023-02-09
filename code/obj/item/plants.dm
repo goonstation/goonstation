@@ -385,12 +385,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "catnip"
 	brew_result = "catdrugs"
 
-/obj/item/plant/herb/poppy
-	name = "poppy"
-	crop_suffix	= ""
-	desc = "A distinctive red flower."
-	icon_state = "poppy"
-
 /obj/item/plant/herb/tea
 	name = "tea leaves"
 	crop_suffix = " leaves"
