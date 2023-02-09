@@ -70,7 +70,7 @@
 			var/yeetbegin = pick_landmark(LANDMARK_MAILORDER_SPAWN)
 			var/yeetend = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			if(!yeetbegin || !yeetend)
-				logTheThing("debug",null,null,"[src] failed to launch at intended destination, tell kubius")
+				CRASH("[src] failed to launch at intended destination, tell kubius")
 			src.set_loc(get_turf(yeetbegin))
 			src.throw_at(yeetend, 100, 1)
 
