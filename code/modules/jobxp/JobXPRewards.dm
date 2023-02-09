@@ -254,7 +254,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
-		var/obj/item/I = new/obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
+		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 
 /datum/jobXpReward/botanist/wateringcan/old
