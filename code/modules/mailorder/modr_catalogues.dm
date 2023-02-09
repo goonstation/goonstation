@@ -270,7 +270,7 @@
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(src.master.ID_card.registered)
 		if (account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Authorize Purchase")
 			if (enterpin == src.master.ID_card.pin)
 				var/bux = account["current_money"]
 				if (bux < src.cartcost)
