@@ -52,18 +52,22 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "Hydrangeas are popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
+	bouquet_type = /obj/item/bouquet/hydrangea
 	pink
 		name = "pink hydrangea"
 		icon_state = "flower_hyd-pink"
 		item_state = "flower_hyd-pink"
+		bouquet_type = /obj/item/bouquet/hydrangea/pink
 	blue
 		name = "blue hydrangea"
 		icon_state = "flower_hyd-blue"
 		item_state = "flower_hyd-blue"
+		bouquet_type = /obj/item/bouquet/hydrangea/blue
 	purple
 		name = "purple hydrangea"
 		icon_state = "flower_hyd-purple"
 		item_state = "flower_hyd-purple"
+		bouquet_type = /obj/item/bouquet/hydrangea/purple
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
@@ -224,5 +228,25 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	item_state = "bouquet_rose"
 	flower_type_used = /obj/item/clothing/head/flower/rose
 
+/obj/item/bouquet/hydrangea
+	name = "hydrangea bouquet"
+	desc = "A summer favorite, here to stay; these bushy flowers make a perfect colorful arrangement."
+	icon_state = "bouquet_hydrangea"
+	item_state = "bouquet_hydrangea"
+	flower_type_used = /obj/item/clothing/head/flower/hydrangea
+	pink
+		icon_state = "bouquet_hydrangea_pink"
+		item_state = "bouquet_hydrangea_pink"
+		flower_type_used = /obj/item/clothing/head/flower/hydrangea/pink
+	blue
+		icon_state = "bouquet_hydrangea_blue"
+		item_state = "bouquet_hydrangea_blue"
+		flower_type_used = /obj/item/clothing/head/flower/hydrangea/blue
+	purple
+		icon_state = "bouquet_hydrangea_purple"
+		item_state = "bouquet_hydrangea_purple"
+		flower_type_used = /obj/item/clothing/head/flower/hydrangea/purple
+//obj/item/bouquet/poppy
+// poppies are under herb, moving it will break things
 //obj/item/bouquet/mixed
 // this can be done later if needed, it'll take a bit of work though, and no idea how you'd construct them
