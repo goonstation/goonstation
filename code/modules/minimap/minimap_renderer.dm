@@ -144,7 +144,7 @@
 		return minimap_render_object
 
 	///Recolours a specified area group to a specified colour.
-	proc/recolour_area(var/area_group, var/colour)
+	proc/recolor_area(var/area_group, var/colour)
 		for (var/map_type in src.dynamic_area_overlays)
 			var/list/area_group_list = src.dynamic_area_overlays[map_type]
 

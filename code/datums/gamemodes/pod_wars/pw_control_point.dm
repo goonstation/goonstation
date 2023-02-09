@@ -108,9 +108,9 @@
 		//Update minimaps.
 		switch(team_num)
 			if (TEAM_NANOTRASEN)
-				minimap_renderer.recolour_area(src.capture_area.dynamic_map_colour_group, MAPC_NANOTRASEN)
+				minimap_renderer.recolor_area(src.capture_area.dynamic_map_colour_group, MAPC_NANOTRASEN)
 			if (TEAM_SYNDICATE)
-				minimap_renderer.recolour_area(src.capture_area.dynamic_map_colour_group, MAPC_SYNDICATE)
+				minimap_renderer.recolor_area(src.capture_area.dynamic_map_colour_group, MAPC_SYNDICATE)
 
 		//log player_stats. Increment nearby player's capture point stat
 		if (mode.stats_manager)
