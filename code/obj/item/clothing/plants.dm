@@ -3,32 +3,32 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 // hi flourish. Plant pot stuff for in future can go here i guess.
 	max_stack = 10 //this seems about right. Plus, this is also how much can fit into a bouquet.
 	var/bouquet_type = /obj/item/bouquet // if no actual bouquet assigned, we use this one
-
-	proc/make_bouquet(obj/item/paperitem, mob/user)
-		var/flowernum = 2 // this is just a default number
-		var/obj/item/bouquet/bouquet_dummy = src.bouquet_type
-		if (istype_exact(bouquet_dummy, /obj/item/bouquet))
-			user.visible_message("This flower can't be turned into a bouquet!")
-			return
-		if (!istype(bouquet_dummy, /obj/item/bouquet))
-			CRASH("Somehow, this flower has no real bouquet type. [src]")
-		if (src.amount < bouquet_dummy.min_flowers)
-			user.visible_message("You need more than one flower to make a bouquet!")
-			return
-		if (src.amount <= bouquet_dummy.max_flowers)
-			flowernum = src.amount
-		else
-			flowernum = bouquet_dummy.max_flowers
-			// if too many flowers we just take the max flowers out of the stack, usually 10
-		var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
-		paperitem.set_loc(new_bouquet)
-		var/obj/item/clothing/head/flower/allocated_flowers = src.split_stack(flowernum)
-		allocated_flowers.set_loc(new_bouquet)
-		user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s into a bouquet.")
-
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper))
 			make_bouquet(src, W, user)
+
+/obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
+	var/flowernum = 2 // this is just a default number
+	var/obj/item/bouquet/bouquet_dummy = src.bouquet_type
+	if (istype_exact(bouquet_dummy, /obj/item/bouquet))
+		user.visible_message("This flower can't be turned into a bouquet!")
+		return
+	if (!istype(bouquet_dummy, /obj/item/bouquet))
+		CRASH("Somehow, this flower has no real bouquet type. [src]")
+	if (src.amount < bouquet_dummy.min_flowers)
+		user.visible_message("You need more than one flower to make a bouquet!")
+		return
+	if (src.amount <= bouquet_dummy.max_flowers)
+		flowernum = src.amount
+	else
+		flowernum = bouquet_dummy.max_flowers
+		// if too many flowers we just take the max flowers out of the stack, usually 10
+	var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
+	paperitem.set_loc(new_bouquet)
+	var/obj/item/clothing/head/flower/allocated_flowers = src.split_stack(flowernum)
+	allocated_flowers.set_loc(new_bouquet)
+	user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s into a bouquet.")
+
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
 	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
