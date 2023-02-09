@@ -46,8 +46,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/process()
 	if (spy_market)
 		spy_market.process()
+	#ifndef NO_SHUTTLE_CALLS
 	if (shuttle_available && shuttle_auto_call_time)
 		process_auto_shuttle_call()
+	#endif
 
 /datum/game_mode/proc/process_auto_shuttle_call()
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)

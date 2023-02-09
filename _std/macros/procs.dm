@@ -2,7 +2,7 @@
 #define GLOBAL_PROC "THIS_IS_A_GLOBAL_PROC_CALLBACK" //used instead of null because clients can be callback targets and then go null from disconnect before invoked, and we need to be able to differentiate when that happens or when it's just a global proc.
 
 #define CALLBACK new /datum/callback
-#define INVOKE_ASYNC ImmediateInvokeAsync
+#define INVOKE_ASYNC(TRG, PR, ARG...) if ((TRG) == GLOBAL_PROC) { SPAWN(-1) call(PR)(##ARG); } else { SPAWN(-1) call(TRG, PR)(##ARG); }
 
 //supposedly for direct arg instertion. whatever that means??
 #define CONCALL(OBJ, TYPE, CALL, VARNAME) var##TYPE/##VARNAME=OBJ;if(istype(##VARNAME)) ##VARNAME.##CALL
