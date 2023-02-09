@@ -276,14 +276,16 @@ proc/is_weak_rollable_contract(type)
 
 			var/tempcontract = null
 			tempcontract = pick(strongcontracts)
-			var/obj/item/contract/I = new tempcontract(src)
+			var/obj/item/contract/I = new tempcontract
+			src.storage.add_contents(I)
 			I.merchant = src.merchant
 
 			var/list/tempweakcontracts = weakcontracts.Copy()
 			for (var/i in 1 to 3)
 				tempcontract = pick(tempweakcontracts)
 				tempweakcontracts.Remove(tempcontract)
-				var/obj/item/contract/T = new tempcontract(src)
+				var/obj/item/contract/T = new tempcontract
+				src.storage.add_contents(T)
 				T.merchant = src.merchant
 
 	attack(mob/M, mob/user, def_zone)

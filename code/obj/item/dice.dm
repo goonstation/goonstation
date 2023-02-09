@@ -790,7 +790,7 @@ var/list/rollList = list()
 
 	proc/colorpick()
 		src.setcolor = pick("#D65555","#D88A41","#D8D856","#5FBF91","#6AC2D8","#9F6AD8", "null","#D882B3")
-		for(var/obj/item/dice/i in src)
+		for(var/obj/item/dice/i in src.storage.get_contents())
 			i.color = src.setcolor
 
 	make_my_stuff()

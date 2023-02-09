@@ -32,8 +32,14 @@
 		..(loc)
 		src.UpdateStackAppearance()
 
-	proc/setup(var/atom/L, var/amt = 1 as num)
-		set_loc(L)
+	proc/setup(var/atom/L, var/amt = 1 as num, try_add_to_storage = FALSE)
+		if (!try_add_to_storage)
+			set_loc(L)
+		else
+			if (L.storage)
+				L.storage.add_contents(src)
+			else
+				src.set_loc(L)
 		set_amt(amt)
 
 	proc/set_amt(var/amt = 1 as num)

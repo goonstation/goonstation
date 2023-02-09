@@ -47,25 +47,12 @@
 	// TODO: initalize
 	New()
 		src.storage = new /datum/storage(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
+		src.make_my_stuff()
 		..()
 
-	proc/make_my_stuff() // use this rather than overriding the container's New()
-		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
-			return 0
-		var/total_amt = 0
-		for (var/thing in src.spawn_contents)
-			var/amt = 1
-			if (!ispath(thing))
-				continue
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			total_amt += amt
-			for (amt, amt>0, amt--)
-				new thing(src)
-		if (total_amt > slots)
-			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
-		total_amt = null
-		return 1
+	// override this with specific additions to add to the storage
+	proc/make_my_stuff()
+		return
 
 	attack(mob/M, mob/user)
 		if (surgeryCheck(M, user))
@@ -107,16 +94,16 @@
 	make_my_stuff(onlyMaskAndOxygen)
 		..()
 		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
-			new /obj/item/tank/emergency_oxygen(src)
+			src.storage.add_contents(new /obj/item/tank/emergency_oxygen)
 		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
-			new /obj/item/crowbar/red(src)
+			src.storage.add_contents(new /obj/item/crowbar/red)
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
-		new /obj/item/clothing/suit/space/emerg(src)
-		new /obj/item/clothing/head/emerg(src)
+		src.storage.add_contents(new /obj/item/clothing/suit/space/emerg)
+		src.storage.add_contents(new /obj/item/clothing/head/emerg)
 #else
 		if (prob(10)) // put these together
-			new /obj/item/clothing/suit/space/emerg(src)
-			new /obj/item/clothing/head/emerg(src)
+			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg)
+			src.storage.add_contents(new /obj/item/clothing/head/emerg)
 #endif
 
 

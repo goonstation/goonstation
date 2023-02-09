@@ -1277,9 +1277,9 @@
 	var/datum/gang/gang = null
 
 	make_my_stuff()
-		..() //spawn the flyers
+		..()
 
-		for(var/obj/item/gang_flyer/flyer in contents)
+		for(var/obj/item/gang_flyer/flyer in src.storage.get_contents())
 			var/gang_name = gang?.gang_name || "C0D3R"
 			flyer.name = "[gang_name] recruitment flyer"
 			flyer.desc = "A flyer offering membership in the [gang_name] gang."

@@ -371,7 +371,7 @@
 
 	// when adding an item in
 	proc/add_contents(obj/item/I)
-		I.dropped()
+		//I.dropped()
 		src.stored_items += I
 		I.set_loc(src.linked_item)
 		src.hud.add_item(I)

@@ -125,6 +125,7 @@
 	/obj/item/crowbar)
 
 	make_my_stuff()
+		..()
 		var/picked = pick(/obj/item/cable_coil,\
 		/obj/item/cable_coil/yellow,\
 		/obj/item/cable_coil/orange,\
@@ -135,10 +136,10 @@
 		/obj/item/cable_coil/hotpink,\
 		/obj/item/cable_coil/brown,\
 		/obj/item/cable_coil/white)
-		spawn_contents.Add(picked)
+		src.storage.add_contents(new picked)
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
-			spawn_contents.Add(picked,picked)
-		. = ..()
+			for (var/i = 1 to 2)
+			src.storage.add_contents(new picked)
 
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
