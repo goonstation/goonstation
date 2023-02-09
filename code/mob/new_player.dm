@@ -690,10 +690,15 @@ a.latejoin-card:hover {
 		if(new_character?.client)
 			new_character.client.loadResources()
 
-
-
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
+
+#ifdef SECRETS_ENABLED
+		if(new_character.ckey == "cursedkatey")
+			new_character.curse_katey()
+			return
+#endif
+
 		return new_character
 
 	Move()
@@ -882,7 +887,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -906,8 +911,8 @@ a.latejoin-card:hover {
 			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
-
-			src.mind.get_player()?.dnr = TRUE
+			ticker.minds |= src.mind
+			respawn_controller.subscribeNewRespawnee(src.ckey)
 			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
