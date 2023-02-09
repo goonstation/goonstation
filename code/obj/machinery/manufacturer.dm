@@ -66,7 +66,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// Production options
 	var/search = null
 	var/category = null
-	var/list/categories = list("Tool","Clothing","Resource","Component","Machinery","Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
 	var/list/download = list() //! Options gained from scanned blueprints
