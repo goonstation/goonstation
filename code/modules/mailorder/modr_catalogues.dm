@@ -186,7 +186,7 @@
 								if(spender)
 									spender["current_money"] -= final_bill
 								else
-									message_admins("<span class='alert'>[src] tried to charge a card that doesn't exist, yell at kubius</span>")
+									CRASH("[src] tried to charge a card that doesn't exist, yell at kubius")
 								displayMessage = "[bicon(master)] Thank you for your purchase! Order will arrive when cleared by local quartermasters."
 								src.mode = MODE_LIST
 							src.master.display_message(displayMessage)
