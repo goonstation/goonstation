@@ -250,7 +250,7 @@
 					user.u_equip(src.linked_item)
 					user.put_in_hand_or_drop(src.linked_item, 1)
 		// if mouse dropping storage item onto self, look inside
-		else if (over_object == user && in_interact_range(src, user) && isliving(user) && !user.stat && !isintangible(user))
+		else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !user.stat && !isintangible(user))
 			if (user.s_active)
 				user.detach_hud(user.s_active)
 				user.s_active = null

@@ -15,12 +15,13 @@ TYPEINFO(/obj/item/storage/wall)
 	density = 0
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
-	max_wclass = W_CLASS_BULKY
-	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
-	attack_hand(mob/user)
-		return mouse_drop(user)
+	New()
+		..()
+		qdel(src.storage)
+		// these can't move so I guess we may as well let them store more stuff?
+		src.storage = new /datum/storage/unholdable(src, slots = 13, max_wclass = W_CLASS_BULKY)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -30,23 +31,23 @@ TYPEINFO(/obj/item/storage/wall)
 	make_my_stuff()
 		..()
 		if (prob(40))
-			new /obj/item/storage/toolbox/emergency(src)
+			src.storage.add_contents(new /obj/item/storage/toolbox/emergency())
 		if (prob(33))
-			new /obj/item/clothing/suit/space/emerg(src)
-			new /obj/item/clothing/head/emerg(src)
+			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg())
+			src.storage.add_contents(new /obj/item/clothing/head/emerg())
 		if (prob(10))
-			new /obj/item/storage/firstaid/oxygen(src)
+			src.storage.add_contents(new /obj/item/storage/firstaid/oxygen())
 		if (prob(10))
-			new /obj/item/tank/air(src)
+			src.storage.add_contents(new /obj/item/tank/air())
 		if (prob(2))
-			new /obj/item/tank/oxygen(src)
+			src.storage.add_contents(new /obj/item/tank/oxygen())
 		if (prob(2))
-			new /obj/item/clothing/mask/gas/emergency(src)
+			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency())
 		for (var/i=rand(2,3), i>0, i--)
 			if (prob(40))
-				new /obj/item/tank/mini_oxygen(src)
+				src.storage.add_contents(new /obj/item/tank/mini_oxygen())
 			if (prob(40))
-				new /obj/item/clothing/mask/breath(src)
+				src.storage.add_contents(new /obj/item/clothing/mask/breath())
 
 /obj/item/storage/wall/fire
 	name = "firefighting supplies"
@@ -56,16 +57,16 @@ TYPEINFO(/obj/item/storage/wall)
 	make_my_stuff()
 		..()
 		if (prob(80))
-			new /obj/item/extinguisher(src)
+			src.storage.add_contents(new /obj/item/extinguisher())
 		if (prob(50))
-			new /obj/item/clothing/head/helmet/firefighter(src)
+			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter())
 		if (prob(30))
-			new /obj/item/clothing/suit/fire(src)
-			new /obj/item/clothing/mask/gas/emergency(src)
+			src.storage.add_contents(new /obj/item/clothing/suit/fire())
+			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency())
 		if (prob(10))
-			new /obj/item/storage/firstaid/fire(src)
+			src.storage.add_contents(new /obj/item/storage/firstaid/fire())
 		if (prob(5))
-			new /obj/item/storage/toolbox/emergency(src)
+			src.storage.add_contents(new /obj/item/storage/toolbox/emergency())
 
 /obj/item/storage/wall/random
 	pixel_y = 32
@@ -73,13 +74,13 @@ TYPEINFO(/obj/item/storage/wall)
 		..()
 		var/thing1 = pick(10;/obj/item/screwdriver, 10;/obj/item/wrench, 5;/obj/item/crowbar, 3;/obj/item/wirecutters)
 		if (ispath(thing1))
-			new thing1(src)
+			src.storage.add_contents(new thing1())
 		var/thing2 = pick(10;/obj/item/device/radio, 4;/obj/item/device/radio/signaler, 30;/obj/item/device/light/glowstick, 15;/obj/item/device/light/flashlight, 1;/obj/item/device/multitool)
 		if (ispath(thing2))
-			new thing2(src)
+			src.storage.add_contents(new thing2())
 		var/thing3 = pick(10;/obj/item/cigpacket/propuffs, 15;/obj/item/reagent_containers/food/snacks/chips, 5;/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2;/obj/item/reagent_containers/pill/cyberpunk)
 		if (ispath(thing3))
-			new thing3(src)
+			src.storage.add_contents(new thing3())
 		return
 
 /obj/item/storage/wall/office // basically the same as the office supply closet but in wall cabinet form!!
@@ -98,10 +99,10 @@ TYPEINFO(/obj/item/storage/wall)
 		..()
 		var/markers = pick(66;/obj/item/storage/box/marker/basic, 34;/obj/item/storage/box/marker)
 		if (ispath(markers))
-			new markers(src)
+			src.storage.add_contents(new markers())
 		var/crayons = pick(66;/obj/item/storage/box/crayon/basic, 34;/obj/item/storage/box/crayon)
 		if (ispath(crayons))
-			new crayons(src)
+			src.storage.add_contents(new crayons())
 		return
 
 /obj/item/storage/wall/medical_wear
