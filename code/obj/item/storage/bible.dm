@@ -258,6 +258,6 @@ var/global/list/bible_contents = list()
 	get_desc()
 		. = ..()
 		var/datum/storage/bible/loaded/stored = src.storage
-		if (!stored.stored_faith)
+		if (!stored.faith)
 			return
 		. += " It feels a bit heavier than it should."
