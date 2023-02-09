@@ -2,6 +2,8 @@
 (t)thu fab 09 23
 (u)aloe
 (+)Sleepers (the medbay ones) now eject dead people. The port-a-med doesn't.
+(u)LeahTheTech
+(+)Radstorms now inflict a lower radiation dosage per tick. (average of 0.25sv reduced to an average of 0.15sv per life tick).
 (t)wed feb 08 23
 (u)Cherman0
 (p)12710
