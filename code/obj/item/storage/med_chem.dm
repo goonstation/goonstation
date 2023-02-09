@@ -369,7 +369,7 @@
 
 	make_my_stuff()
 		..()
-		src.storage.add_contents(new /obj/item/bandage())
+		src.storage.add_contents(new /obj/item/bandage)
 		src.storage.add_contents(new /obj/item/storage/pill_bottle/salicylic_acid)
 		src.storage.add_contents(new /obj/item/storage/pill_bottle/menthol)
 
