@@ -9,7 +9,7 @@
 	bound_height = 32
 	bound_width = 32
 	layer = EFFECTS_LAYER_1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
 	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user) || issilicon(user) || isobserver(user))
+		if (ismobcritter(user) || issilicon(user) || isobserver(user) || isAI(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)
@@ -145,10 +145,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -239,11 +239,11 @@
 
 	New()
 		slots["1"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["2"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["3"] = new/obj/item/reagent_containers/mender/brute(src)
+		slots["2"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
+		slots["3"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
 		slots["4"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["5"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["6"] = new/obj/item/reagent_containers/mender/burn(src)
+		slots["5"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
+		slots["6"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
 		rebuildOverlays()
 		return ..()
 
@@ -268,5 +268,14 @@
 		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
 		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
 		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/ammo // for the shooting range prefab
+	New()
+		slots["1"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["2"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["3"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["4"] = new /obj/item/ammo/bullets/bullet_22(src)
 		rebuildOverlays()
 		return ..()

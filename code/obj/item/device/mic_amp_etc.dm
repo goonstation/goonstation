@@ -23,9 +23,9 @@
 					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
-			playsound(get_turf(user), 'sound/misc/miccheck.ogg', 30, 1)
+			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
 		else
 			return ..()
@@ -57,7 +57,7 @@
 				if (H in mobs_messaged)
 					continue
 				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[min(src.max_font, max(0, speakers - round(get_dist(H, S) / 2), 1))]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
+				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for_by_tcl(S, /obj/loudspeaker)
@@ -65,29 +65,31 @@
 				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
+TYPEINFO(/obj/mic_stand)
+	mats = 10
+
 /obj/mic_stand
 	name = "microphone stand"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
-	mats = 10
 	layer = FLY_LAYER
 	var/obj/item/device/microphone/myMic = null
 
 	New()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			if (!myMic)
 				myMic = new(src)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!myMic)
 			return ..()
 		user.put_in_hand_or_drop(myMic)
 		myMic = null
-		src.update_icon()
+		src.UpdateIcon()
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/microphone))
 			if (myMic)
 				user.show_text("There's already a microphone on [src]!", "red")
@@ -96,7 +98,7 @@
 			myMic = W
 			user.u_equip(W)
 			W.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return ..()
 
@@ -107,7 +109,7 @@
 		if (M in range(1, T))
 			myMic.talk_into(M, msg)
 
-	proc/update_icon()
+	update_icon()
 		if (myMic)
 			switch (myMic.icon_state)
 				if ("radio_mic1")
@@ -119,13 +121,16 @@
 		else
 			src.icon_state = "micstand-empty"
 
+TYPEINFO(/obj/loudspeaker)
+	mats = 15
+
 /obj/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
 	anchored = 1
 	density = 1
-	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()
 		. = ..()

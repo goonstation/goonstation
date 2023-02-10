@@ -25,7 +25,7 @@
 	attack_ai(mob/user as mob)
 		. = attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.on = !src.on
 		if (src.on)
 			SubscribeToProcess()
@@ -61,13 +61,16 @@
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
+				if (isnull(src.reagents.reagent_list[current_id]))
+					stack_trace("[identify_object(src)] had `[current_id]` in its reagent list, but the value was null")
+					continue
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 				if (current_reagent.id == "water" || current_reagent.id == "cleaner")
 					continue
 				if (current_reagent.volume < 0.5)
 					src.reagents.del_reagent(current_reagent.id)
 
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(5, 0, get_turf(src))
 			steam.attach(src)
 			steam.start()
@@ -80,12 +83,12 @@
 					var/mob/M = A
 					if (!isdead(M))
 						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && src.reagents.reagent_list.len > 2))
-							logTheThing("combat", M, null, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
+							logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
 				spawn(0)
 					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (src?.reagents?.total_volume)
 				src.reagents.del_reagent(default_reagent)
 				src.reagents.remove_any(40)

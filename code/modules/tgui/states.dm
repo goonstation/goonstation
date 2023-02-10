@@ -30,7 +30,7 @@
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		if(get_dist(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
+		if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 			. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction
@@ -61,6 +61,8 @@
 /mob/proc/shared_ui_interaction(src_object)
 	if(!client) // Close UIs if mindless.
 		return UI_CLOSE
+	else if(istype(src, /mob/dead/target_observer))
+		return UI_UPDATE
 	else if(stat) // Disable UIs if unconcious.
 		return UI_DISABLED
 	else if(!can_act(src, include_cuffs = 1)) // Update UIs if incapicitated but concious.
@@ -115,7 +117,7 @@
 	if (istype(src_object.loc, /obj/item/storage)) // If the object is in a storage item, like a backpack.
 		return UI_CLOSE
 
-	var/dist = get_dist(src_object, src)
+	var/dist = min(GET_DIST(src_object, src), bounds_dist(src_object, src) / world.icon_size)
 
 	if(viewcheck && !(dist <= 1 || (src_object in view(src)))) // If the object is obscured, close it.
 		return UI_CLOSE

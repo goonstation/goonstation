@@ -9,54 +9,76 @@
 	icon_state = "dispenser_handcuffs"
 	pixel_y = 28
 	anchored = 1
-	var/filled_icon_state = "" //i tried to do this in a smart way but it was a PITA so here have this stinky code instead
-	var/empty_icon_state = "" //autoset by the s y s t e m, dont set this yourself
-	var/amount = 3 //how many items does it have?
-	var/deposit_type = null //this is a type that this item will accept to "reload" itself
-	var/withdraw_type = null //this is a type that this item will dispense
-	var/cant_deposit = 0 //set this to 1 if you want people to not be able to put items into it
-	var/cant_withdraw = 0 //set this to 1 if you want people to not be able to take items out of it (why would you ever use this? why????)
-	var/display_amount = 1 //displays amount of item in dispenser
+	var/filled_icon_state = "" 		//i tried to do this in a smart way but it was a PITA so here have this stinky code instead
+	var/empty_icon_state = "" 		//autoset by the s y s t e m, dont set this yourself
+	var/amount = 3 					//how many items does it have?
+	var/deposit_type = null 		//this is a type that this item will accept to "reload" itself
+	var/withdraw_type = null 		//this is a type that this item will dispense
+	var/cant_deposit = 0 			//set this to 1 if you want people to not be able to put items into it
+	var/cant_withdraw = 0 			//set this to 1 if you want people to not be able to take items out of it (why would you ever use this? why????)
+	var/dispense_rate = 0			//How long must you wait (in deciseconds) between each dispensation
+	var/last_dispense_time = 0		//Time when an item was last dispensed.
+	var/display_amount = 1 			//displays amount of item in dispenser
 
 	New()
 		..()
 		src.empty_icon_state = "[src.filled_icon_state]0"
-		src.update_icon()
+		src.UpdateIcon()
 
 	get_desc()
 		if(display_amount)
 			. += "There's [src.amount] left."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.cant_deposit)
 			..()
 			return
 		if (istype(W, src.deposit_type))
 			user.u_equip(W)
 			src.amount++
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
+		user.lastattacked = src //prevents spam
 		if (src.cant_withdraw)
 			..()
 			return
+
 		if (src.amount >= 1)
+			if (last_dispense_time + dispense_rate > TIME)
+				boutput(user, "<span class='alert'>The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)/10)] second(s) before the next item is ready!</span>")
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+				return
 			src.amount--
-			src.update_icon()
+			last_dispense_time = TIME 	//gotta go before the UpdateIcon
+			src.UpdateIcon()
 			var/obj/item/I = new src.withdraw_type
-			boutput(user, "<span class='notice'>You put \the [I] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
+			boutput(user, "<span class='notice'>You take \the [I] from \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			user.put_in_hand_or_drop(I)
+
+			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
+			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
+				SPAWN(dispense_rate)
+					UpdateIcon()
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
 
-	proc/update_icon()
+	update_icon()
 		if (src.amount <= 0)
 			src.icon_state = src.empty_icon_state
 		else
-			src.icon_state = src.filled_icon_state
+			//if a dispenser has a dispense_rate then we display the sprite based on time left, because of the spawn: UpdateIcon in attack_hand
+			if (dispense_rate > 0)
+				if (last_dispense_time + dispense_rate <= TIME)
+					src.icon_state = src.filled_icon_state
+				else
+					src.icon_state = src.empty_icon_state
+
+			else
+				src.icon_state = src.filled_icon_state
 
 ///////////////////
 //ITEM DISPENSERS//
@@ -86,16 +108,16 @@
 	deposit_type = /obj/item/clothing/mask/medical
 	withdraw_type = /obj/item/clothing/mask/medical
 
-/obj/item_dispenser/perscription_glasses
-	name = "perscription glasses dispenser"
-	desc = "A storage container that easily dispenses perscription glasses."
+/obj/item_dispenser/prescription_glasses
+	name = "prescription glasses dispenser"
+	desc = "A storage container that easily dispenses prescription glasses."
 	icon_state = "dispenser_glasses"
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
 
 /obj/item_dispenser/idcarddispenser
-	name = "ID card dispenser"
+	name = "\improper ID card dispenser"
 	desc = "A storage container that easily dispenses fresh ID cards. It can be refilled with paper."
 	icon_state = "dispenser_id"
 	filled_icon_state = "dispenser_id"
@@ -103,9 +125,9 @@
 	withdraw_type = /obj/item/card/id
 	amount = 7
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.cant_withdraw && src.amount >= 1)
-			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
+			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 25, 1)
 		..()
 
 /obj/item_dispenser/icedispenser
@@ -120,7 +142,7 @@
 	pixel_y = 0
 	flags = FPRINT | NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
 				W.reagents.add_reagent("ice", 10, null, (T0C - 50))

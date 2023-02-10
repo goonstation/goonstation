@@ -14,8 +14,6 @@
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
 	stamina_damage = 0
 	stamina_cost = 0
-	module_research = list("hydroponics" = 1, "efficiency" = 1)
-	module_research_type = /obj/item/seed
 	rand_pos = 1
 
 	New(var/loc,var/do_color = 1)
@@ -26,11 +24,14 @@
 		// harvesting a plant or what-have-you.
 		// Scatter the seed's sprite around a bit so you can make big ol' piles of them.
 		if (src.auxillary_datum && !src.planttype)
-			src.planttype = new src.auxillary_datum(src)
+			src.planttype = HY_get_species_from_path(src.auxillary_datum)
 		if (do_color)
 			docolor()
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
 		// standard seed packet sprite shouldn't do this or it'll end up looking stupid.
+
+		if (src.planttype)
+			src.name = "[src.planttype.name] seed"
 
 	//kudzumen can analyze seeds via ezamine when close.
 	get_desc(dist, mob/user)
@@ -46,23 +47,10 @@
 	proc/removecolor()
 		src.overlays = 0
 
-	unpooled()
+	disposing()
+		planttype = null
+		plantgenes = null
 		..()
-		src.plantgenes = new /datum/plantgenes(src)
-
-		if (src.auxillary_datum && !src.planttype)
-			src.planttype = new src.auxillary_datum(src)
-
-		if (src.planttype)
-			src.name = "[src.planttype.name] seed"
-
-	pooled()
-		..()
-		seeddamage = 0
-		generation = 0
-		planttype = 0
-		plantgenes = 0
-		seedcolor = "#000000"
 
 	proc/generic_seed_setup(var/datum/plant/P)
 		// This proc is pretty much entirely for regular seeds you find from the vendor
@@ -104,7 +92,7 @@
 		// The proc for when the manipulator is infusing seeds with a reagent. This is sort of a
 		// framing proc simply to check if the seed is in good enough condition to withstand the
 		// infusion or not - the actual gameplay effects are handled in a different proc:
-		// proc/HYPinfusionP, /datums/plants.dm, line 115
+		// proc/HYPinfusionP, /datums/plants.dm, line 111
 		// Note that this continues down the chain and checks the proc for individual plant
 		// datums after it's finished executing the base plant datum infusion proc.
 
@@ -119,10 +107,10 @@
 			// Whoops, you did it too often and now the seed broke. Good job doofus!!
 
 		var/datum/plant/P = src.planttype
-		if (P.HYPinfusionP(src,reagent) == 99)
-			// The proc call both executes the infusion on the species AND performs a check -
-			// The check is for a return value of 99, basically an error code for "Whoops you
-			// destroyed the seed you dumbass".
+		//this proc handles all statistics changes of the plant that depends on the chemical used, like phlogs 80-100 damage.
+		P.HYPinfusionP(src,reagent)
+		if (src.seeddamage > 99)
+			// "Whoops you destroyed the seed you dumbass".
 			M.seeds -= src
 			qdel(src)
 			return 1 // We'll want to tell the manipulator that so it can inform the user, too.
@@ -136,6 +124,7 @@
 
 /obj/item/seed/maneater/
 	name = "strange seed"
+	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
 /obj/item/seed/creeper/
@@ -153,17 +142,22 @@
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 // weird alien plants
 
 /obj/item/seed/alien
 	name = "strange seed"
+	icon_state = "seeds-alien"
 	isstrange = 1
 
 	New()
-		..()
-		gen_plant_type()
-
-	unpooled()
 		..()
 		gen_plant_type()
 

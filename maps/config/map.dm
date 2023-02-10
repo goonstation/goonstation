@@ -1,6 +1,9 @@
 #if defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #include "blank.dm"
 
+#elif defined(UNIT_TESTS)
+#include "unit_tests.dm"
+
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "blank_underwater.dm"
 
@@ -43,6 +46,9 @@
 #elif defined(MAP_OVERRIDE_HORIZON)
 #include "horizon.dm"
 
+#elif defined(MAP_OVERRIDE_CRASH)
+#include "crash.dm"
+
 #elif defined(MAP_OVERRIDE_ATLAS)
 #include "atlas.dm"
 
@@ -54,6 +60,9 @@
 
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 #include "ozymandias.dm"
+
+#elif defined(MAP_OVERRIDE_NADIR)
+#include "nadir.dm"
 
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"
@@ -70,6 +79,12 @@
 #elif defined(MAP_OVERRIDE_WRESTLEMAP)
 #include "wrestlemap.dm"
 
+#elif defined(MAP_OVERRIDE_POD_WARS)
+#include "pod_wars.dm"
+
+#elif defined(MAP_OVERRIDE_EVENT)
+#include "event.dm"
+
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
@@ -78,6 +93,6 @@
 #include "standard.dm"
 #endif
 
-#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
-#include "..\zamujasa\football2.dmm"
+#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(UNIT_TESTS) && !defined(SPACE_PREFAB_RUNTIME_CHECKING) && !defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+INCLUDE_MAP("../zamujasa/football2.dmm")
 #endif

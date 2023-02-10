@@ -1,4 +1,5 @@
 /obj/map
 	icon = 'icons/effects/mapeditor.dmi'
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 2
+	flags = UNCRUSHABLE

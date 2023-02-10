@@ -221,8 +221,8 @@
 	var/database/query/q = new(queryList)
 
 	if(!q.Execute(db))
-		logTheThing("debug", null, null, "<b>Local Callback Error</b> - callback failed in <b>getBanApiFallback</b> with message: <b>Unable to query database</b>: \[[q.Error()]\] [q.ErrorMsg()]")
-		logTheThing("diary", null, null, "Local Callback Error - callback failed in getBanApiFallback with message: Unable to query database: \[[q.Error()]\] [q.ErrorMsg()]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Local Callback Error</b> - callback failed in <b>getBanApiFallback</b> with message: <b>Unable to query database</b>: \[[q.Error()]\] [q.ErrorMsg()]")
+		logTheThing(LOG_DIARY, null, "Local Callback Error - callback failed in getBanApiFallback with message: Unable to query database: \[[q.Error()]\] [q.ErrorMsg()]", "debug")
 		return 0
 
 	//We gotta put all our rows in a list so we can count them for pagination

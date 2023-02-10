@@ -22,7 +22,7 @@ Contents:
 		return
 
 	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
 		if (isturf(T))
@@ -31,8 +31,8 @@ Contents:
 				var/mob/M = A
 				if(!M.stat && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				random_brute_damage(M, 33)
 				M.changeStatus("stunned", 10 SECONDS)
 			A.set_loc(T)
@@ -146,7 +146,7 @@ Contents:
 	name = "deep abyss"
 	desc = "You can't see the bottom."
 	icon_state = "void_gray"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0

@@ -14,6 +14,6 @@
 
 	on_deplete()
 		holder.visible_message("<span class='alert'>[holder] collapses!</span>")
-		holder.changeStatus("paralysis", 60)
+		holder.changeStatus("paralysis", 6 SECONDS)
 
 	// @todo finish this

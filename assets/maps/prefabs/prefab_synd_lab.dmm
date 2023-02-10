@@ -1,0 +1,611 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/simulated/floor/redblack,
+/area/prefab/synd_lab)
+"c" = (
+/obj/decal/cleanable/shattered_traitorcoin,
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"d" = (
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"e" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/grey,
+/area/prefab/synd_lab)
+"f" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/synd_lab)
+"g" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/grey,
+/area/prefab/synd_lab)
+"h" = (
+/obj/critter/gunbot/heavy{
+	desc = "A 2030's-era security robot, retrofitted for Syndicate purposes.";
+	dir = 4;
+	name = "syndicate security robot"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"i" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/prefab/synd_lab)
+"j" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/submachine/chem_extractor{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/prefab/synd_lab)
+"k" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/prefab/synd_lab)
+"l" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/raw_material/rock{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/raw_material/shard/glass{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/fluid_spawner{
+	amount = 40;
+	reagent_id = "port"
+	},
+/obj/item/pen/fancy{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/synd_lab)
+"m" = (
+/obj/decal/cleanable/shattered_traitorcoin{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/raw_material/rock,
+/obj/storage/crate{
+	open = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/synd_lab)
+"n" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/raw_material/telecrystal{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/raw_material/telecrystal{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/paper/synd_lab_note2{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"o" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/synd_lab)
+"p" = (
+/obj/machinery/conveyor/NS,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"r" = (
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/prefab/synd_lab)
+"s" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/synd_lab)
+"t" = (
+/obj/machinery/shower,
+/turf/simulated/floor/redblack,
+/area/prefab/synd_lab)
+"u" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/glass/flask/black_powder{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/flask/black_powder{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/flask/black_powder{
+	pixel_x = -6
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"v" = (
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/synd_lab)
+"w" = (
+/obj/overlay{
+	density = 1;
+	desc = "Some strange device, you're not sure what its purpose was. It seems pretty busted up!";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "strange device"
+	},
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"x" = (
+/turf/simulated/floor/black/grime,
+/area/prefab/synd_lab)
+"y" = (
+/obj/grille/steel,
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/synd_lab)
+"z" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2";
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/raw_material/rock,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"A" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/synd_lab)
+"B" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/prefab/synd_lab)
+"C" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"D" = (
+/obj/machinery/conveyor/EW,
+/obj/machinery/light,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"E" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"F" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/synd_lab)
+"G" = (
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"H" = (
+/obj/critter/gunbot/heavy{
+	desc = "A 2030's-era security robot, retrofitted for Syndicate purposes.";
+	dir = 8;
+	name = "syndicate security robot"
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/synd_lab)
+"I" = (
+/obj/item/raw_material/rock,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"J" = (
+/obj/critter/gunbot/drone/minigundrone,
+/turf/space,
+/area/space)
+"K" = (
+/obj/machinery/conveyor/NS{
+	desc = "A conveyor belt. This one looks pretty battered."
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/synd_lab)
+"L" = (
+/obj/storage/crate{
+	open = 1
+	},
+/obj/item/explosive_uplink_telecrystal,
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"M" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"N" = (
+/obj/machinery/conveyor/NS{
+	desc = "A conveyor belt. This one looks pretty battered."
+	},
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"O" = (
+/obj/overlay{
+	density = 1;
+	desc = "Some strange device, you're not sure what its purpose was. This one seem pretty busted up!";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "strange device"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/synd_lab)
+"P" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"Q" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/prefab/synd_lab)
+"R" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"S" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/paper/synd_lab_note{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/robot_chemaster/prototype{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/synd_lab)
+"T" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/synd_lab)
+"U" = (
+/obj/item/raw_material/rock{
+	pixel_x = -10;
+	pixel_y = -4
+	},
+/obj/item/raw_material/rock{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/prefab/synd_lab)
+"V" = (
+/turf/simulated/floor/grey,
+/area/prefab/synd_lab)
+"W" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2"
+	},
+/turf/variableTurf/floor,
+/area/prefab/synd_lab)
+"X" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/redblack,
+/area/prefab/synd_lab)
+"Y" = (
+/turf/variableTurf/floor,
+/area/prefab/synd_lab)
+"Z" = (
+/turf/variableTurf/wall,
+/area/prefab/synd_lab)
+
+(1,1,1) = {"
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+"}
+(2,1,1) = {"
+o
+o
+o
+o
+o
+j
+n
+u
+d
+E
+h
+k
+o
+a
+a
+a
+"}
+(3,1,1) = {"
+o
+g
+o
+r
+P
+B
+G
+G
+G
+G
+G
+b
+o
+a
+a
+a
+"}
+(4,1,1) = {"
+e
+V
+e
+f
+G
+G
+x
+G
+p
+L
+G
+b
+o
+a
+a
+a
+"}
+(5,1,1) = {"
+e
+i
+e
+v
+F
+Q
+p
+w
+D
+o
+R
+X
+o
+a
+a
+a
+"}
+(6,1,1) = {"
+o
+o
+o
+o
+o
+s
+C
+C
+C
+o
+T
+t
+o
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+o
+o
+o
+s
+C
+y
+C
+o
+R
+X
+o
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+o
+o
+S
+G
+z
+x
+M
+U
+b
+o
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+o
+l
+c
+x
+G
+x
+x
+b
+Z
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+o
+o
+m
+Q
+G
+N
+W
+Y
+Z
+Z
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+o
+o
+A
+I
+x
+Y
+Z
+Z
+Z
+Z
+a
+"}
+(12,1,1) = {"
+a
+a
+J
+a
+a
+a
+o
+H
+K
+O
+Y
+Z
+Z
+Z
+Z
+Z
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+o
+o
+o
+o
+Z
+Z
+Z
+Z
+Z
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Z
+Z
+Z
+a
+a
+"}

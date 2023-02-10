@@ -8,3 +8,6 @@ if(istype(M, /mob/living/carbon/human)){\
 else{\
 	M.anchored = 0;}}\
 while(FALSE)
+
+/// Moves `mover` from inside thing `loc` to `loc`'s turf, iff `mover` is inside `loc`
+#define MOVE_OUT_TO_TURF_SAFE(mover, loc) if (mover in loc) mover.set_loc(get_turf(loc))

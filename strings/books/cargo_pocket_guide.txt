@@ -1,0 +1,54 @@
+<h1>QUARTERMASTER'S COMPENDIUM</h1>
+		<p><i>Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2048 All Rights Reserved</i></p>
+		<h2>YOUR DUTIES</h2>
+		<br>
+		<hr>
+		<h3>IMPORT SUPPLIES AS NECESSARY</h3>
+		<br>
+		During the course of a standard shift, departments may require supplies beyond those which have been provided by default.
+		<br>
+		<br>
+		It is advised that you comply with supply requests made through the official supply requisition system, available on PDA and through supply request consoles.
+		<br>
+		<br>
+		When a crate arrives, open doors and operate conveyors as necessary to bring it into your main handling area. <b>Close external doors as soon as possible.</b>
+		<br>
+		<br>
+		If a crate becomes stuck outside, it is advised to use a pod or submarine to retrieve the crate and return it to the station or vessel.
+		<br>
+		<br>
+		The means of delivering your order vary by station:
+		<ul>
+			<li>Cargo transport pads are present at specific locations, and storage objects may be sent to them by way of the rechargeable handheld cargo transporter. To operate, press the transporter against the cargo and select the destination on the interface.
+			<li>The M.U.L.E. bot can automatically transfer cargo from a loading dock to any configured beacon, and is typically operated using your PDA.
+			<li>Some stations are equipped with belt-based cargo transfer, utilizing a bar code system to route cargo. You can print a barcode label and stick it to an item, then push the cargo onto the belt for it to automatically send to the labelled location.
+			<li>If all else fails, take your cargo to the order location by foot. Some stations are provided with forklifts or cargo tugs for this, and cargo can be loaded safely onto a forklift or tug cart by dragging the crate to the vehicle.
+		</ul>
+		<br>
+		<br>
+		Some products are high in popularity, such as the honey production crate for Hydroponics. Be sure to ask if anyone needs anything, and encourage them to use the supply request system.
+		<br>
+		<hr>
+		<h3>EXPORT ONBOARD PRODUCTS</h3>
+		<br>
+		As the shift progresses, one or more departments are likely to ready exports. It is your task to sell these to appropriate buyers.
+		<br>
+		<br>
+		To sell products to a specific trader, use your bar code computer to print a label indicating a crate for sale to said trader. Place this label on the exterior of the closed crate and then push the crate onto the outgoing exports belt.
+		<br>
+		<br>
+		Available traders rotate over time, and it is recommended to check the listing of available traders each market cycle.
+		<br>
+		<br>
+		You may also sell goods directly to the primary market by not applying a label.
+		<br>
+		<br>
+		Advanced quartermasters may also seek to manufacture, or ask for the manufacture of, goods currently in demand by market traders to earn profit.
+		<br>
+		It is advised that you consult with the Captain or Head of Personnel before investing considerable amounts of the supply budget into profit-driven endeavors.
+		<br>
+		<hr>
+		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+		<ul>
+			<li><a href="https://wiki.ss13.co/Quartermaster" target="Goonstation Wiki: Quartermaster">https://wiki.ss13.co/Quartermaster</a></li></ul>
+		Thank you for your service to Nanotrasen.</i></p>

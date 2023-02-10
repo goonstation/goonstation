@@ -21,13 +21,13 @@
 	smoke.set_up(10, 0, usr.loc)
 	smoke.start()
 	for(var/turf/T in range(1))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			new /mob/living/carbon/human/fake_waldo(T)
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked)) return
 	usr.set_loc(picked)
 	usr.verbs -= /client/proc/waldo_decoys
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		usr.verbs += /client/proc/waldo_decoys
 
 /client/proc/mass_teleport()
@@ -51,7 +51,7 @@
 
 	var/A
 	usr.verbs -= /client/proc/mass_teleport
-	SPAWN_DBG(SPcool)
+	SPAWN(SPcool)
 		usr.verbs += /client/proc/mass_teleport
 
 	var/list/theareas = new/list()
@@ -95,7 +95,7 @@
 
 		var/list/mob/teleportees = list()
 		for(var/mob/living/M in orange(usr, 4))
-			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", "wizard")))
+			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", ROLE_WIZARD)))
 				teleportees.Add(M)
 
 		usr.set_loc(pick(L))

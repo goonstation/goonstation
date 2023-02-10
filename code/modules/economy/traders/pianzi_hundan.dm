@@ -62,7 +62,7 @@
 	comtype = /obj/item/sheet/steel
 	price_boundary = list(5,9)
 	possible_alt_types = list(/obj/item/paper)
-	alt_type_chance = 50
+	alt_type_chance = 80
 	possible_names = list("I am selling sheets of a lightweight and flexible building material! Very useful!",
 	"Now for sale, I have these material sheets - very light, very flexible. Could be used for anything, theoretically!")
 
@@ -71,7 +71,7 @@
 	comtype = /obj/critter/domestic_bee
 	amount = 10
 	price_boundary = list(75,120)
-	possible_alt_types = list(/obj/critter/roach)
+	possible_alt_types = list(/mob/living/critter/small_animal/cockroach)
 	alt_type_chance = 50
 	possible_names = list("I have a number of very friendly live insects for sale! Very cute too!",
 	"I'm now selling some very adorable bugs! They could be very useful for hydroponics work!")
@@ -82,7 +82,7 @@
 	amount = 3
 	price_boundary = list(300,500)
 	possible_alt_types = list(/obj/item/device/light/flashlight)
-	alt_type_chance = 55
+	alt_type_chance = 50
 	possible_names = list("Now for sale; a handful of devices that can be used for viewing cameras far more easily!",
 	"I happen to have a few devices that will make camera viewing much easier! It's a bargain for this price!")
 

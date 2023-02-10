@@ -148,6 +148,7 @@
 		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard(src) )
 		src.root.add_file( new /datum/computer/file/guardbot_task/security/area_guard(src) )
 		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard/heckle(src) )
+		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard/cheer_up(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/guardbot_interface(src))
 		src.root.add_file( new /datum/computer/file/record/pr6_readme(src))
 		src.root.add_file( new /datum/computer/file/record/patrol_script(src))

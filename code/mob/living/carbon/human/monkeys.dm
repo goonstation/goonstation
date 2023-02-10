@@ -8,6 +8,7 @@
 
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
@@ -15,7 +16,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("monkey")
 				src.get_static_image()
@@ -35,7 +36,7 @@
 	ai_offhand_pickup_chance = 1 // very civilized
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/mrs_muggles
@@ -45,7 +46,7 @@
 	ai_offhand_pickup_chance = 1 // also very civilized
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/mr_rathen
@@ -53,9 +54,10 @@
 	real_name = "Mr. Rathen"
 	gender = "male"
 	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
+	ai_poke_thing_chance = 0.3 // don't mess up the engine too much
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/albert
@@ -63,9 +65,10 @@
 	real_name = "Albert"
 	gender = "male"
 	ai_offhand_pickup_chance = 10 // more curious than most monkeys
+	ai_poke_thing_chance = 3
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
 
@@ -76,7 +79,7 @@
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
 
@@ -85,21 +88,55 @@
 	real_name = "Oppenheimer"
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
+	ai_poke_thing_chance = 2
 	ai_aggressive = TRUE
 	ai_calm_down = FALSE
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = 0
+	var/preferred_card_type = /obj/item/card/id/syndicate
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+			var/obj/item/card/id/ID = new/obj/item/card/id(src)
+			ID.name = "Oppenheimer's ID Card"
+			ID.assignment = "Syndicate Monkey"
+			ID.registered = "Oppenheimer"
+			ID.icon = 'icons/obj/items/card.dmi'
+			ID.icon_state = "id_syndie"
+			ID.desc = "Oppenheimer's identification card."
+
+			src.equip_if_possible(ID, slot_wear_id)
+
 
 	ai_is_valid_target(mob/M)
 		if(!isliving(M) || !isalive(M))
 			return FALSE
-		return !istype(M.get_id(), /obj/item/card/id/syndicate)
+		return !istype(M.get_id(), preferred_card_type)
+
+/mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
+	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
+
+	New()
+		START_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+
+	ai_is_valid_target(mob/M)
+		var/team_num = get_pod_wars_team_num(M)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)	//1
+				return TRUE
+			if (TEAM_SYNDICATE)		//2
+				return FALSE
+			else
+				return ..()
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
@@ -108,7 +145,8 @@
 	New()
 		..()
 		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
-		SPAWN_DBG(1 SECOND)
+		ai_poke_thing_chance = rand(50)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
 
 /mob/living/carbon/human/npc/monkey/tanhony
@@ -118,7 +156,7 @@
 	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
 
 /mob/living/carbon/human/npc/monkey/krimpus
@@ -128,18 +166,20 @@
 	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
 	real_name = "Monsieur Stirstir"
 	gender = "male"
 	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
+	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
+		SPAWN(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
@@ -149,6 +189,7 @@
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
@@ -158,12 +199,13 @@
 	ai_default_intent = INTENT_HELP
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
+	var/ai_poke_thing_chance = 1
 
 	New()
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.cust_one_state = "None"
+			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
@@ -200,6 +242,36 @@
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
+			if(prob(ai_poke_thing_chance))
+				var/list/atom/things_to_pick = list()
+				for(var/obj/O in range(1, get_turf(src)))
+					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0 || !O.mouse_opacity)
+						continue
+					if(istype(O, /obj/machinery/light) && prob(90)) // don't break lights too often pls
+						continue
+					things_to_pick += O
+				if(prob(15))
+					for(var/mob/M in range(1, get_turf(src)))
+						things_to_pick += M
+				if(!length(things_to_pick))
+					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands", "healingtouch")) // this monkey's all gene'd up
+					var/atom/thing_to_poke = pick(things_to_pick)
+					var/datum/bioEffect/power/healing_touch/healing_touch = src.bioHolder.GetEffect("healing_touch")
+					var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
+					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands")
+					if (ismob(thing_to_poke) && healing_touch && healing_touch.ability.last_cast < world.time)
+						healing_touch.ability.handleCast(thing_to_poke)
+					else if (!ismob(thing_to_poke) && midas_touch && midas_touch?.ability.last_cast < world.time)
+						midas_touch.ability.handleCast(thing_to_poke)
+					else
+						ink_glands?.ability.handleCast(thing_to_poke)
+				else if(src.equipped())
+					var/atom/thing_to_poke = pick(things_to_pick)
+					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
+				else
+					var/atom/thing_to_poke = pick(things_to_pick)
+					src.hand_attack(thing_to_poke)
 			if(prob(0.5))
 				var/list/priority_targets = list()
 				var/list/targets = list()
@@ -233,10 +305,11 @@
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
-			src.emote("scream")
+			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
+				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
-			if (get_dist(src, pal) > 7)
+			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
@@ -250,9 +323,20 @@
 			pal.shitlist[T] ++
 			pals ++
 			if (prob(40))
-				src.emote("scream")
+				if(!ON_COOLDOWN(pal, "monkey_harmed_scream", 5 SECONDS))
+					pal.emote("scream")
+			if(src.client)
+				break
+
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
+
+	ai_is_valid_target(mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (istype(H.wear_suit, /obj/item/clothing/suit/monkey))
+				return FALSE
+		return ..()
 
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
@@ -261,13 +345,13 @@
 			src.was_harmed(A)
 		else
 			walk_away(src, A, 10, 1)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				walk(src, 0)
 
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 11))
+		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else
@@ -384,9 +468,9 @@
 		if(!theft_target)
 			return
 		walk_towards(src, null)
-		src.a_intent = INTENT_DISARM
-		theft_target.attack_hand(src)
-		src.a_intent = src.ai_default_intent
+		src.set_a_intent(INTENT_DISARM)
+		theft_target.Attackhand(src)
+		src.set_a_intent(src.ai_default_intent)
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
 		if (isalive(src) && messages)
@@ -411,7 +495,8 @@
 							"You sound like you singing in two keys at same time!", \
 							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
 							if (prob(40))
-								src.emote("scream")
+								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
+									src.emote("scream")
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
@@ -458,7 +543,12 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
+		if (!(source.has_hand(1) || source.has_hand(0)))
+			source.show_text("You can't take something without hands.", "red")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		logTheThing(LOG_COMBAT, source, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
@@ -470,14 +560,16 @@
 	onEnd()
 		..()
 
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/obj/item/I = target.get_slot(slot)
+		if(!I)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/obj/item/I = target.get_slot(slot)
-
 		if(I.handle_other_remove(source, target))
-			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
+			logTheThing(LOG_COMBAT, source, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
 			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
 			else
@@ -494,7 +586,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -514,9 +606,27 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
 			src.equip_new_if_possible(head, slot_head)
+			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
+			src.put_in_hand_or_drop(new weap)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "angry_monkey", 5)
+		src.add_stam_mod_max("angry_monkey", 100)
+
+	get_disorient_protection()
+		. = ..()
+		return clamp(.+25, 80, .)
+
+	ai_is_valid_target(mob/M)
+		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
+
+/mob/living/carbon/human/npc/monkey/angry/testing
+	ai_attacknpc = TRUE
+
+	ai_is_valid_target(mob/M)
+		return isalive(M)
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
@@ -527,7 +637,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("seamonkey")
 				src.get_static_image()
@@ -545,7 +655,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
 			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
 
@@ -558,7 +668,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
 			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, slot_l_hand)
 			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
@@ -572,7 +682,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/head/crown, slot_head)
 
 /mob/living/carbon/human/npc/monkey/sea/lab
@@ -581,7 +691,7 @@
 	gender = "female"
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/scientist, slot_w_uniform)
 
@@ -592,7 +702,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, src.slot_shoes)
 

@@ -1,0 +1,1130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/cable{
+	icon_state = "2-8";
+	level = 2
+	},
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"aM" = (
+/obj/cable/green{
+	icon_state = "0-9"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cs" = (
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"ct" = (
+/obj/cable/purple{
+	icon_state = "1-9"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cG" = (
+/obj/stool/chair/blue,
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"cU" = (
+/obj/cable/green{
+	icon_state = "1-6"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"dq" = (
+/obj/cable{
+	icon_state = "5-8";
+	level = 2
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"dJ" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"dL" = (
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/prefab/lesbeeans/interior)
+"eD" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/seed/alien{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"fm" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/prefab/lesbeeans/exterior)
+"fX" = (
+/obj/decal/poster/wallsign/teaparty,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/prefab/lesbeeans/interior)
+"in" = (
+/obj/machinery/power/solar,
+/turf/unsimulated/floor/airless/solar,
+/area/prefab/lesbeeans/exterior)
+"jl" = (
+/obj/item/gardentrowel,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"jq" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/cable/purple{
+	icon_state = "0-2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jx" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"lL" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -6
+	},
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"lS" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/prefab/lesbeeans/exterior)
+"mX" = (
+/obj/critter/domestic_bee{
+	name = "lesbian space-farm bee"
+	},
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"oP" = (
+/obj/map/light/brighterwhite,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pm" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/prefab/lesbeeans/exterior)
+"pr" = (
+/obj/machinery/plantpot/bareplant/crop,
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"pH" = (
+/obj/cable{
+	icon_state = "1-4";
+	level = 2
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"qi" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"ry" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"sk" = (
+/obj/cable/white{
+	icon_state = "0-4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sm" = (
+/obj/grille/catwalk,
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/prefab/lesbeeans/exterior)
+"tG" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/critter/domestic_bee{
+	name = "lesbian space-farm bee"
+	},
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"uH" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"uM" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/cable/purple{
+	icon_state = "1-6"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ve" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vx" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/prefab/lesbeeans/exterior)
+"wc" = (
+/obj/cable/white{
+	icon_state = "5-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"zN" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/cable/orange{
+	icon_state = "1-6"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"AN" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/prefab/lesbeeans/exterior)
+"AY" = (
+/obj/cable{
+	icon_state = "5-8";
+	level = 2
+	},
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"BB" = (
+/obj/window/auto,
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"BJ" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"BZ" = (
+/obj/machinery/light/small/cool{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"Ck" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/cable/green{
+	icon_state = "1-2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Du" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/prefab/lesbeeans/exterior)
+"DV" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ec" = (
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"Fi" = (
+/obj/cable{
+	icon_state = "0-5"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"FW" = (
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"GZ" = (
+/obj/cable{
+	icon_state = "1-4";
+	level = 2
+	},
+/obj/map/light/brighterwhite,
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"HA" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"Id" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/prefab/lesbeeans/exterior)
+"Ig" = (
+/obj/cable{
+	icon_state = "4-8";
+	level = 2
+	},
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"Ix" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"Jn" = (
+/obj/cable/white{
+	icon_state = "1-10"
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jp" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jt" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"JJ" = (
+/obj/decal/poster/wallsign/lesb_flag,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/prefab/lesbeeans/interior)
+"JR" = (
+/obj/cable/blue{
+	icon_state = "0-4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ko" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/cable/blue{
+	icon_state = "1-2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"La" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"LD" = (
+/obj/cable/blue{
+	icon_state = "1-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Mq" = (
+/obj/rack,
+/obj/item/reagent_containers/glass/wateringcan,
+/obj/item/shovel,
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"Mu" = (
+/obj/decorative_pot,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/paper/folded/ball/bee_farm_note{
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/wood/five,
+/area/prefab/lesbeeans/interior)
+"NT" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"OB" = (
+/obj/machinery/deep_fryer{
+	desc = "These bees seem to have rather worrying dietary habits..."
+	},
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"Pv" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/color/lightblue{
+	name = "chewed-on sky blue jumpsuit";
+	pixel_x = -2
+	},
+/obj/item/clothing/under/gimmick/shirtnjeans{
+	name = "nibbled-on shirt and jeans";
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/clothing/shoes/brown{
+	desc = "These are fucking soaked in bee saliva, eww.";
+	name = "half-eaten brown shoes";
+	pixel_y = -12
+	},
+/obj/item/clothing/head/lesbian_hat{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/misc/casdressgrn{
+	name = "lightly-mangled Green Tshirt Dress";
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"Qz" = (
+/obj/stool/bee_bed/double,
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"QS" = (
+/obj/table/round/auto,
+/obj/item/decoration/flower_vase,
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"Ro" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"Rq" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Sq" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Sz" = (
+/obj/cable{
+	icon_state = "2-10";
+	level = 2
+	},
+/turf/unsimulated/floor/auto/dirt,
+/area/prefab/lesbeeans/exterior)
+"Tb" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"VK" = (
+/obj/machinery/plantpot/bareplant/flower,
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+"WN" = (
+/obj/machinery/power/solar,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/airless/solar,
+/area/prefab/lesbeeans/exterior)
+"Xr" = (
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Xv" = (
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"XB" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1
+	},
+/obj/item/paper/bee_love_letter,
+/turf/unsimulated/floor/wood/three,
+/area/prefab/lesbeeans/interior)
+"Ye" = (
+/obj/cable{
+	icon_state = "1-10";
+	level = 2
+	},
+/turf/unsimulated/grass,
+/area/prefab/lesbeeans/exterior)
+
+(1,1,1) = {"
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(2,1,1) = {"
+Tb
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(3,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+Tb
+Tb
+Jp
+Jp
+Tb
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+"}
+(4,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+"}
+(5,1,1) = {"
+Tb
+Tb
+Rq
+Jp
+Jp
+Jp
+Jp
+Jp
+dL
+BB
+dL
+dL
+fX
+dL
+dL
+dL
+Jp
+Jp
+Jp
+sk
+Tb
+Tb
+Tb
+Tb
+"}
+(6,1,1) = {"
+Tb
+Tb
+BJ
+La
+Jp
+Jp
+Jp
+dL
+JJ
+FW
+Qz
+dL
+Mu
+BZ
+eD
+dL
+Ix
+Jp
+Jp
+wc
+Jp
+Tb
+Tb
+Tb
+"}
+(7,1,1) = {"
+Tb
+Tb
+Tb
+BJ
+La
+Jp
+oP
+dL
+XB
+mX
+Ro
+dL
+jl
+tG
+Mq
+dL
+Ec
+Ec
+Jn
+Jp
+Jp
+Fi
+Tb
+Tb
+"}
+(8,1,1) = {"
+Tb
+Tb
+Tb
+Jp
+BJ
+uH
+Ix
+BB
+FW
+FW
+Pv
+dL
+dL
+dJ
+dL
+dL
+Ix
+Ec
+DV
+Jp
+NT
+Jp
+Tb
+Tb
+"}
+(9,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Ix
+dL
+OB
+FW
+dL
+dL
+Ix
+Ix
+lL
+Ix
+Ec
+cs
+Ec
+Sq
+Jp
+Tb
+Tb
+Tb
+"}
+(10,1,1) = {"
+Tb
+aZ
+La
+Jp
+Jp
+Jp
+Ix
+dL
+dL
+ry
+dL
+Ix
+Ec
+Ec
+Ec
+Ec
+cs
+VK
+Ec
+La
+JR
+Jp
+Tb
+Tb
+"}
+(11,1,1) = {"
+Tb
+Tb
+BJ
+uH
+uH
+uH
+Ec
+ah
+GZ
+Ix
+Ix
+Ec
+Ec
+Ec
+pr
+VK
+pr
+cs
+Ec
+Ko
+LD
+Jp
+Tb
+Tb
+"}
+(12,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Ec
+pr
+Ig
+VK
+pr
+cs
+cs
+VK
+cs
+cs
+pr
+Ec
+Ec
+Ck
+cU
+Jp
+Jp
+Tb
+"}
+(13,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+in
+in
+Ec
+Ec
+AY
+pr
+VK
+cs
+pr
+cs
+pr
+Ec
+Ec
+Ec
+Ec
+DV
+Jp
+aM
+Jp
+Tb
+"}
+(14,1,1) = {"
+Tb
+Jp
+Jp
+in
+Du
+sm
+Ec
+Sz
+pH
+Ec
+Ec
+Ec
+qi
+Ec
+Ec
+Ec
+Ec
+pr
+Ec
+uM
+Jp
+Jp
+Tb
+Tb
+"}
+(15,1,1) = {"
+Tb
+Jp
+in
+Du
+pm
+Du
+sm
+cs
+dq
+Ec
+Ec
+cG
+QS
+HA
+Ec
+Ec
+pr
+cs
+Jt
+jq
+ct
+Tb
+Tb
+Tb
+"}
+(16,1,1) = {"
+Tb
+Jp
+in
+vx
+Du
+pm
+WN
+Ye
+VK
+pr
+Ec
+Ec
+jx
+Ec
+Ec
+cs
+VK
+Ec
+zN
+Jp
+Jp
+Tb
+Tb
+Tb
+"}
+(17,1,1) = {"
+Tb
+Jp
+in
+Id
+pm
+in
+Du
+sm
+pr
+cs
+cs
+pr
+pr
+cs
+pr
+cs
+Ec
+ve
+Jp
+Xv
+Tb
+Tb
+Tb
+Tb
+"}
+(18,1,1) = {"
+Jp
+Jp
+Jp
+in
+in
+Du
+pm
+in
+Ec
+Ec
+pr
+VK
+cs
+pr
+Ec
+Ec
+Ec
+Jp
+Jp
+Xr
+Jp
+Tb
+Tb
+Tb
+"}
+(19,1,1) = {"
+Jp
+Jp
+Jp
+Jp
+in
+vx
+in
+Du
+pm
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Ec
+Jp
+Jp
+Tb
+Jp
+Jp
+Tb
+Tb
+Tb
+"}
+(20,1,1) = {"
+Jp
+Jp
+Jp
+Jp
+in
+Id
+sm
+pm
+in
+Jp
+Jp
+Ec
+Ec
+Ec
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(21,1,1) = {"
+Jp
+Jp
+Jp
+Jp
+Jp
+in
+in
+in
+Jp
+Jp
+Jp
+Jp
+fm
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(22,1,1) = {"
+Tb
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+lS
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(23,1,1) = {"
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Jp
+Jp
+Jp
+AN
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}
+(24,1,1) = {"
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Jp
+Jp
+Jp
+Jp
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+"}

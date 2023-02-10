@@ -1,0 +1,58 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler{
+	density = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/box/glassbox{
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/item/plant/wheat,
+/obj/item/plant/wheat,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+O
+a
+O
+a
+O
+"}
+(2,1,1) = {"
+f
+W
+W
+W
+Q
+"}
+(3,1,1) = {"
+i
+Q
+f
+D
+a
+"}

@@ -9,10 +9,10 @@ Left Mouse Button on turf/mob/obj      = Load a .dmm file (with the tile clicked
 Right Mouse Button on the mode         = Cycle loading modes<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/loading = 0
-	var/dmm_suite/dmm_suite
+	var/tmp/loading = 0
+	var/tmp/dmm_suite/dmm_suite
 	var/mode_number = 0
-	var/list/mode_names = list("no deleting", "delete objects first (slow!)", "delete objects AND MOBS first (slow!)")
+	var/static/list/mode_names = list("no deleting", "delete objects first (slow!)", "delete objects AND MOBS first (slow!)")
 
 	selected()
 		. = ..()
@@ -27,7 +27,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if(!dmm_suite)
-			dmm_suite = new
+			dmm_suite = new(debug_id="buildmode")
 		var/turf/A = get_turf(object)
 		if (!A) return
 		blink(A)
@@ -38,6 +38,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		if(!target)
 			loading = 0
 			return
+		dmm_suite.debug_id = "buildmode [target]"
 		var/text = file2text(target)
 		if(!text)
 			loading = 0
@@ -49,7 +50,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 			overwrite_flags |= DMM_OVERWRITE_OBJS
 		else if(mode_number == LOAD_MODE_DEL_ALL)
 			overwrite_flags |= DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS
-		dmm_suite.read_map(text, A.x, A.y, A.z, overwrite = overwrite_flags)
+		dmm_suite.read_map(text, A.x, A.y, A.z, flags = overwrite_flags)
 		boutput(usr, "<span class='notice'>Loading finished.</span>")
 		loading = 0
 

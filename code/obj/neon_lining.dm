@@ -29,7 +29,7 @@
 		light.attach(src)
 		light.enable()
 
-	proc/lining_update_icon()
+	proc/lining_UpdateIcon()
 		if (lining_color == "pink")
 			light.set_color(108, 7, 67)
 		else if (lining_color == "yellow")
@@ -105,14 +105,14 @@
 				lining_shape++
 			else
 				lining_shape = 1
-			lining_update_icon()
+			lining_UpdateIcon()
 			return
 		if (isscrewingtool(W))
 			if (lining_rotation >-1 && lining_rotation <3)
 				lining_rotation++
 			else
 				lining_rotation = 0
-			lining_update_icon()
+			lining_UpdateIcon()
 			return
 		if (issnippingtool(W))
 			if (lining_neOn == 0)
@@ -123,13 +123,13 @@
 			else
 				lining_neOn = 0
 				light.set_brightness(0.1)
-				lining_update_icon()
+				lining_UpdateIcon()
 			return
 		if (ispulsingtool(W))
 			if (lining_pattern > -1 && lining_pattern < 7)
 				lining_pattern++
 			else
 				lining_pattern = 0
-			lining_update_icon()
+			lining_UpdateIcon()
 			return
 		return

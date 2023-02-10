@@ -17,7 +17,7 @@
 	/datum/commodity/trader/buford/whiteweed,
 	/datum/commodity/trader/buford/omegaweed,
 	/datum/commodity/trader/buford/psilocybin,
-	/datum/commodity/trader/buford/pizza)// 6
+	/datum/commodity/trader/buford/pizza)
 
 	base_goods_sell = list(/datum/commodity/trader/buford/alienseeds,
 	/datum/commodity/trader/buford/weedseeds,
@@ -182,7 +182,7 @@
 	possible_names = list("You got any magic mushrooms? The Psilocybin kind.")
 
 /datum/commodity/trader/buford/pizza
-	comname = "Pizza"
+	comname = "Pizza (Priced per Slice)"
 	comtype = /obj/item/reagent_containers/food/snacks/pizza
-	price_boundary = list(50,250)
-	possible_names = list("You got any pizza?")
+	price_boundary = list(10,42)
+	possible_names = list("You got any pizza?","Got some pizza? I'm dying for a slice, man. Or, like. Maybe a whole one.")

@@ -11,8 +11,16 @@
 	var/last_tick = 0
 	var/const/max_time = 300
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		..()
+		STOP_TRACKING
+
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)
@@ -179,63 +187,48 @@
 			src.time = 0
 			src.timing = FALSE
 			last_tick = 0
-		src.update_icon()
+		src.UpdateIcon()
 		last_tick = TIME
 	else
 		last_tick = 0
 	return
 
 /obj/machinery/door_timer/power_change()
-	update_icon()
+	src.UpdateIcon()
 
 
 // Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 /obj/machinery/door_timer/proc/alarm()
 	if (!src)
 		return
-	if (status & (NOPOWER|BROKEN))
+	if (src.status & (NOPOWER|BROKEN))
 		return
-/*
-	for(var/obj/machinery/sim/chair/C in range(30, src))
-		if (C.id == src.id)
-			if(!C.active)
-				continue
-			if(C.con_user)
-				C.con_user.network_device = null
-				C.active = 0
-*/
 
-	//	MBC : wow this proc is suuuuper fucking costly
-	//loop through range(30) three times. sure. whatever.
-	//FIX LATER, putting it in a spawn and lagchecking for now.
+	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
+		if (!IN_RANGE(M, src, 30))
+			continue
+		if (M.id == src.id)
+			SPAWN(0)
+				if (M) M.close()
 
-	SPAWN_DBG(0)
-		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
-			if (M.id == src.id)
-				SPAWN_DBG(0)
-					if (M) M.close()
-			LAGCHECK(LAG_HIGH)
+	for_by_tcl(FF, /obj/machinery/floorflusher)
+		if (!IN_RANGE(FF, src, 30))
+			continue
+		if (FF.id == src.id)
+			if (FF.open != 1)
+				FF.openup()
 
-		LAGCHECK(LAG_LOW)
+	for_by_tcl(B, /obj/storage/secure/closet/brig_automatic)
+		if (!IN_RANGE(B, src, 30))
+			continue
+		if (B.id == src.id && B.our_timer == src)
+			if (B.locked)
+				B.locked = 0
+				B.UpdateIcon()
+				B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
 
-		for (var/obj/machinery/floorflusher/FF in range(30, src))
-			if (FF.id == src.id)
-				if (FF.open != 1)
-					FF.openup()
-			LAGCHECK(LAG_HIGH)
-
-		LAGCHECK(LAG_LOW)
-
-		for (var/obj/storage/secure/closet/brig/automatic/B in range(30, src))
-			if (B.id == src.id && B.our_timer == src)
-				if (B.locked)
-					B.locked = 0
-					B.update_icon()
-					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
-			LAGCHECK(LAG_HIGH)
-
-	src.updateUsrDialog()
-	src.update_icon()
+	tgui_process.update_uis(src)
+	src.UpdateIcon()
 	return
 
 /obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
@@ -254,11 +247,24 @@
 		"time" = src.time,
 	)
 
-	for (var/obj/machinery/flasher/F in range(10, src))
+	for_by_tcl(F, /obj/machinery/flasher)
+		if (!IN_RANGE(F, src, 10))
+			continue
 		if (F.id == src.id)
 			. += list(
 				"flasher" = TRUE,
-				"recharging" = F.last_flash && world.time < F.last_flash + 150
+				"recharging" = GET_COOLDOWN(F, "flash")
+			)
+			break
+
+	for_by_tcl(FF, /obj/machinery/floorflusher)
+		if (!IN_RANGE(FF, src, 30))
+			continue
+		if (FF.id == src.id)
+			. += list(
+				"flusher" = TRUE,
+				"flusheropen" = FF.open,
+				"opening" = FF.opening
 			)
 			break
 
@@ -277,50 +283,74 @@
 		if ("set-time")
 			src.add_fingerprint(usr)
 			var/previous_time = src.time
-			src.time = min(max(round(params["time"]), 0), src.max_time)
+			src.time = clamp(0, round(params["time"]), src.max_time)
 			if (params["finish"])
-				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 
 			return TRUE
 
 		if ("toggle-timing")
 			if (src.timing == FALSE)
-				for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
+				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
+					if (!IN_RANGE(M, src, 10))
+						continue
 					if (M.id == src.id)
 						M.close() //close the cell door up when the timer starts.
 						break
 			else
-				for (var/obj/machinery/door/window/brigdoor/M in range(10, src))
+				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
+					if (!IN_RANGE(M, src, 10))
+						continue
 					if (M.id == src.id)
 						M.open() //open the cell door if the timer is stopped.
 						break
 
 			src.timing = !src.timing
-			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
 
 			src.add_fingerprint(usr)
-			src.update_icon()
+			src.UpdateIcon()
 			return TRUE
 
 		if ("activate-flasher")
-			for (var/obj/machinery/flasher/F in range(10, src))
+			for_by_tcl(F, /obj/machinery/flasher)
+				if (!IN_RANGE(F, src, 10))
+					continue
 				if (F.id == src.id)
 					src.add_fingerprint(usr)
+					if (GET_COOLDOWN(F, "flash"))
+						return
 					F.flash()
-					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "sets off flashers from a door timer: [src] [log_loc(src)].")
+					return TRUE
+
+		if ("toggle-flusher")
+			for_by_tcl(FF,/obj/machinery/floorflusher)
+				if (!IN_RANGE(FF, src, 30))
+					continue
+				if (FF.id == src.id)
+					src.add_fingerprint(usr)
+					if (FF.flush == TRUE || FF.opening == TRUE)
+						return
+					if (FF.open != 1)
+						FF.openup()
+						logTheThing(LOG_STATION, usr, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+					else
+						FF.closeup()
+						logTheThing(LOG_STATION, usr, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 /obj/machinery/door_timer/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_timer/attack_hand(mob/user)
 	return src.ui_interact(user)
 
-/obj/machinery/door_timer/proc/update_icon()
-	if (status & (NOPOWER))
+/obj/machinery/door_timer/update_icon()
+	if (src.status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return
-	else if (status & (BROKEN))
+	else if (src.status & (BROKEN))
 		icon_state = "doortimer-b"
 		return
 	else
@@ -329,6 +359,6 @@
 		else if (src.time > 0)
 			icon_state = "doortimer0"
 		else
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"

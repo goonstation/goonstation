@@ -4,14 +4,14 @@
 	desc = "Ew, this thing is just the wurst."
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3.0
+	organ_holder_required_op_stage = 3
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -24,6 +24,19 @@
 				holder.liver = null
 		..()
 
+/obj/item/organ/liver/synth
+	name = "synthliver"
+	organ_name = "synthliver"
+	icon_state = "plant"
+	desc = "For all you vegan Hannibal Lecters."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_liver", "plant_liver_bloom")
+
+TYPEINFO(/obj/item/organ/liver/cyber)
+	mats = 6
+
 /obj/item/organ/liver/cyber
 	name = "cyberliver"
 	desc = "A fancy robotic liver to replace one that someone's lost!"
@@ -33,7 +46,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	var/overloading = 0
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -62,9 +74,9 @@
 		return 1
 
 	breakme()
-		. = ..()
-		overloading = 0
+		if(..())
+			overloading = 0
 
 	on_removal()
-		. = ..()
 		overloading = 0
+		. = ..()

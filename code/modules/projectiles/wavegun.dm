@@ -3,14 +3,12 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "wave-r"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 12.5
+	stun = 12.5
 //How much ammo this costs
-	cost = 30
+	cost = 25
 //How fast the power goes away
 	dissipation_rate = 0 //doesn't use standard falloff
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "inversion wave"
 //file location for the sound you want it to play
@@ -23,7 +21,7 @@
 	//Can we pass windows
 	window_pass = 0
 
-	projectile_speed = 42
+	projectile_speed = 56
 
 	brightness = 1
 	color_red = 1
@@ -31,15 +29,15 @@
 	color_blue = 0
 
 	get_power(obj/projectile/P, atom/A)
-		return 12.5 + 2.5 * clamp(get_dist(A, P.orig_turf) - 4, 0, 7)
+		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)
 
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
 	shot_number = 1
-	power = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
+	stun = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
 	max_range = 5 //super short. about 4 tile max range
-	projectile_speed = 28
-	cost = 50
+	projectile_speed = 36
+	cost = 40
 	hit_ground_chance = 100 //no escape
 	pierces = -1 //no limits
 	goes_through_walls = 1
@@ -57,9 +55,9 @@
 
 /datum/projectile/wavegun/bouncy
 	sname = "reflection wave"
-	power = 10
-	projectile_speed = 28
-	cost = 50
+	stun = 10
+	projectile_speed = 36
+	cost = 25
 	max_range = 7
 	icon_state = "wave-emp"
 

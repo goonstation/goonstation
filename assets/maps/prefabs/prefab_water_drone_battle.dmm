@@ -1,38 +1,639 @@
-"a" = (/turf/unsimulated/wall/trench,/area/noGenerate)
-"b" = (/turf/variableTurf/clear,/area/space)
-"c" = (/turf/variableTurf/clear,/area/noGenerate)
-"d" = (/turf/variableTurf/wall,/area/noGenerate)
-"e" = (/obj/critter/gunbot/drone/raildrone,/turf/variableTurf/clear,/area/noGenerate)
-"f" = (/obj/critter/gunbot/drone,/turf/variableTurf/clear,/area/noGenerate)
-"m" = (/obj/item/clothing/under/misc/turds{desc = "It has an NT logo on it."; name = "NT-S.O. Jumpsuit"},/obj/item/clothing/suit/armor/NT_alt{desc = "It has the Nanotrasen logo on it and an unknown rank insignia."; name = "NT-S.O. Armor"},/obj/item/clothing/head/helmet/NT{desc = "It looks pretty fancy."; name = "NT-S.O. Helmet"},/obj/storage/crate{name = "Dented Crate"},/turf/variableTurf/clear,/area/noGenerate)
-"n" = (/obj/item/skull,/obj/item/raw_material/miracle,/obj/item/raw_material/miracle,/obj/storage/crate{name = "Dented Crate"},/obj/item/shipcomponent/sensor/ecto,/turf/variableTurf/clear,/area/noGenerate)
-"o" = (/obj/storage/crate{name = "Dented Crate"},/obj/item/shieldwallgen,/obj/item/shieldwallgen,/turf/variableTurf/clear,/area/noGenerate)
-"p" = (/obj/decal/cleanable/machine_debris,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/item/raw_material/plasmastone,/obj/storage/crate{name = "Dented Crate"},/obj/item/gun/russianrevolver/fake357,/turf/variableTurf/clear,/area/noGenerate)
-"q" = (/obj/decal/fakeobjects/lighttube_broken{icon_state = "tube-broken"; dir = 8},/obj/item/cell/cerenkite,/obj/storage/crate{name = "Dented Crate"},/obj/item/peripheral/card_scanner/register,/obj/item/clothing/under/gimmick/jetson,/turf/variableTurf/clear,/area/noGenerate)
-"r" = (/obj/item/gun/energy/phaser_gun,/turf/variableTurf/clear,/area/noGenerate)
-"s" = (/obj/item/ammo/power_cell/med_power,/turf/variableTurf/clear,/area/noGenerate)
-"t" = (/turf/unsimulated/wall/trench/side,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/trench,
+/area/noGenerate)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"d" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"e" = (
+/obj/critter/gunbot/drone/raildrone,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"f" = (
+/obj/critter/gunbot/drone,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"m" = (
+/obj/item/clothing/under/misc/turds{
+	desc = "It has an NT logo on it.";
+	name = "NT-S.O. Jumpsuit"
+	},
+/obj/item/clothing/suit/armor/NT_alt{
+	desc = "It has the Nanotrasen logo on it and an unknown rank insignia.";
+	name = "NT-S.O. Armor"
+	},
+/obj/item/clothing/head/helmet/NT{
+	desc = "It looks pretty fancy.";
+	name = "NT-S.O. Helmet"
+	},
+/obj/storage/crate/bloody,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"n" = (
+/obj/item/skull,
+/obj/item/raw_material/miracle,
+/obj/item/raw_material/miracle,
+/obj/storage/crate/bloody,
+/obj/item/shipcomponent/sensor/ecto,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"o" = (
+/obj/storage/crate/bloody,
+/obj/item/shieldwallgen,
+/obj/item/shieldwallgen,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"p" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/storage/crate/bloody,
+/obj/item/gun/russianrevolver/fake357,
+/obj/item/sea_ladder,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"q" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	icon_state = "tube-broken";
+	dir = 8
+	},
+/obj/item/cell/cerenkite,
+/obj/storage/crate/bloody,
+/obj/item/peripheral/card_scanner/register,
+/obj/item/clothing/under/gimmick/jetson,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"r" = (
+/obj/item/gun/energy/phaser_gun,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"s" = (
+/obj/item/ammo/power_cell/med_power,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"t" = (
+/turf/unsimulated/wall/trench/side,
+/area/noGenerate)
 
 (1,1,1) = {"
-bbbbbddddddaaaaaaddddddb
-bbbddddddddattttaddddddb
-bbcddddddddamnopaddddddb
-bbcddddddccaqcccacddddbb
-bccdddcccccaccrcacddddbb
-bccddccecccaascaaccddcbb
-dccddccccccttccttccddcbb
-dccddccccccccccccccddccb
-dccddccccccccccccccddccb
-dcfccccccccccccccccddccb
-dcccccccccccccccccdddccd
-dcccccccccccccccccdddccd
-dccddccccccccccccccdcccd
-dccddcccddddcccccccccfcd
-dccddddcdddddddccccccccd
-bccddddddddddddddddddccd
-bcccddddddddddddddddcccd
-bccccccccfcccccccccccccd
-bbccccccccccccccccccccdd
-bbbbbddddddddddddddddddd
-bbbbbddddddddddddddddddd
+b
+b
+b
+b
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+c
+c
+c
+c
+c
+c
+c
+f
+c
+c
+c
+c
+c
+c
+c
+c
+c
+b
+b
+"}
+(4,1,1) = {"
+b
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+c
+d
+d
+d
+d
+c
+c
+c
+b
+b
+"}
+(5,1,1) = {"
+b
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+c
+d
+d
+d
+d
+d
+c
+c
+b
+b
+"}
+(6,1,1) = {"
+d
+d
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+c
+c
+d
+d
+"}
+(7,1,1) = {"
+d
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+c
+c
+d
+d
+"}
+(8,1,1) = {"
+d
+d
+d
+d
+c
+e
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(9,1,1) = {"
+d
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+d
+c
+c
+d
+d
+"}
+(10,1,1) = {"
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+d
+f
+c
+d
+d
+"}
+(11,1,1) = {"
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+d
+c
+c
+d
+d
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+t
+c
+c
+c
+c
+c
+c
+d
+d
+d
+d
+c
+c
+d
+d
+"}
+(13,1,1) = {"
+a
+t
+m
+q
+c
+a
+t
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+c
+c
+d
+d
+"}
+(14,1,1) = {"
+a
+t
+n
+c
+c
+s
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+c
+c
+d
+d
+"}
+(15,1,1) = {"
+a
+t
+o
+c
+r
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+c
+c
+d
+d
+"}
+(16,1,1) = {"
+a
+t
+p
+c
+c
+a
+t
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+t
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(18,1,1) = {"
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(19,1,1) = {"
+d
+d
+d
+d
+d
+c
+c
+c
+c
+c
+d
+d
+c
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(20,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+d
+d
+c
+c
+d
+d
+"}
+(21,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+c
+d
+c
+c
+c
+d
+d
+"}
+(22,1,1) = {"
+d
+d
+d
+d
+d
+c
+c
+c
+c
+c
+c
+c
+c
+f
+c
+c
+c
+c
+c
+d
+d
+"}
+(23,1,1) = {"
+d
+d
+d
+b
+b
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+d
+d
+d
+"}
+(24,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
 "}

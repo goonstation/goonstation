@@ -1,0 +1,3031 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/wall/void,
+/area)
+"ab" = (
+/turf/background_canvas,
+/area)
+"ac" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadwall_gray";
+	dir = 9
+	},
+/area)
+"ad" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	icon_state = "leadwindow_gray_1";
+	dir = 8
+	},
+/area)
+"ae" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadwall_gray";
+	dir = 5
+	},
+/area)
+"af" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadwall_gray";
+	dir = 6
+	},
+/area)
+"ag" = (
+/obj/machinery/computer/communications,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue4";
+	dir = 8
+	},
+/area)
+"ah" = (
+/obj/machinery/sim/vr_bed/flight_chair{
+	stars_id = "arjuna"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue1";
+	dir = 10
+	},
+/area)
+"ai" = (
+/obj/machinery/computer/announcement,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue4";
+	dir = 4
+	},
+/area)
+"aj" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadwall_gray";
+	dir = 10
+	},
+/area)
+"ak" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area)
+"al" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 9
+	},
+/area)
+"am" = (
+/obj/stool/chair/office/blue{
+	icon_state = "office_chair_blue";
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 1
+	},
+/area)
+"an" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 5
+	},
+/area)
+"ao" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 8
+	},
+/area)
+"ap" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 6
+	},
+/area)
+"aq" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 10
+	},
+/area)
+"ar" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 4
+	},
+/area)
+"as" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray,
+/area)
+"at" = (
+/obj/machinery/lrteleporter/planetary_teleporter{
+	ship_id = "arjuna"
+	},
+/turf/simulated/floor/engine,
+/area)
+"au" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 5
+	},
+/area)
+"av" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 9
+	},
+/area)
+"aw" = (
+/turf/simulated/floor/engine,
+/area)
+"ax" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 10
+	},
+/area)
+"ay" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 2
+	},
+/area)
+"az" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 6
+	},
+/area)
+"aA" = (
+/obj/machinery/door/airlock/gannets/glass/toxins,
+/turf/simulated/floor/engine,
+/area)
+"aB" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	icon_state = "leadwall_gray";
+	dir = 4
+	},
+/area)
+"aC" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue4";
+	dir = 8
+	},
+/area)
+"aD" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue4";
+	dir = 4
+	},
+/area)
+"aE" = (
+/turf/simulated/floor/black,
+/area)
+"aF" = (
+/obj/machinery/clonegrinder,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area)
+"aG" = (
+/obj/landmark/ship_marker{
+	ship_id = "arjuna"
+	},
+/turf/simulated/floor/black,
+/area)
+"aH" = (
+/turf/simulated/floor/bluegreen,
+/area)
+"aI" = (
+/obj/machinery/clonepod,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area)
+"aL" = (
+/obj/stool/chair/office{
+	icon_state = "office_chair";
+	dir = 4
+	},
+/turf/simulated/floor/bluegreen,
+/area)
+"aM" = (
+/obj/machinery/computer/cloning{
+	icon_state = "dna";
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area)
+"aP" = (
+/obj/machinery/clone_scanner,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area)
+"aS" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/black,
+/area)
+"aT" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/bluegreen,
+/area)
+"aV" = (
+/turf/simulated/floor/blue/checker,
+/area)
+"aW" = (
+/obj/storage/secure/closet/fridge,
+/turf/simulated/floor/blue/checker,
+/area)
+"aX" = (
+/obj/machinery/vending/port_a_nanomed,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"aY" = (
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"aZ" = (
+/obj/table/auto,
+/obj/machinery/chem_master,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"ba" = (
+/obj/table/auto,
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bb" = (
+/obj/table/auto,
+/obj/machinery/chem_heater,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"be" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/blue/checker,
+/area)
+"bf" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bg" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bh" = (
+/turf/simulated/floor/circuit/off,
+/area)
+"bi" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area)
+"bk" = (
+/obj/submachine/chef_oven{
+	icon_state = "oven_off";
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker,
+/area)
+"bl" = (
+/obj/stool/chair,
+/turf/simulated/floor/blue/checker,
+/area)
+"bm" = (
+/obj/storage/secure/closet/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bn" = (
+/obj/machinery/optable,
+/obj/item/surgical_spoon,
+/obj/item/suture,
+/obj/item/scalpel,
+/obj/item/circular_saw,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bo" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/black,
+/area)
+"bp" = (
+/obj/machinery/door/airlock/gannets/command/alt,
+/turf/simulated/floor/black,
+/area)
+"bs" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/blue/checker,
+/area)
+"bt" = (
+/obj/table/auto,
+/obj/item/storage/box/cutlery,
+/obj/item/storage/box/plates,
+/turf/simulated/floor/blue/checker,
+/area)
+"bu" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/black,
+/area)
+"bv" = (
+/obj/table/auto,
+/obj/item/storage/box/iv_box,
+/obj/item/storage/box/patchbox,
+/obj/item/kitchen/food_box/lollipop,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bw" = (
+/obj/table/auto,
+/obj/item/storage/box/syringes,
+/obj/item/remote/porter/port_a_nanomed,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"bx" = (
+/obj/table/auto,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/specialroom/medbay,
+/area)
+"by" = (
+/obj/machinery/networked/mainframe,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area)
+"bz" = (
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/turf/simulated/floor/blue/checker,
+/area)
+"bA" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area)
+"bB" = (
+/turf/simulated/floor/purple,
+/area)
+"bC" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/purple,
+/area)
+"bD" = (
+/obj/stool/chair/couch/red{
+	icon_state = "chair_couch-red";
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 9
+	},
+/area)
+"bE" = (
+/obj/stool/chair/couch/red{
+	icon_state = "chair_couch-red";
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 5
+	},
+/area)
+"bF" = (
+/obj/stool/chair/couch/green{
+	icon_state = "chair_couch-green";
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 9
+	},
+/area)
+"bG" = (
+/obj/stool/chair/couch/green{
+	icon_state = "chair_couch-green";
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 5
+	},
+/area)
+"bH" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/blue/checker,
+/area)
+"bI" = (
+/obj/item/storage/toilet{
+	icon_state = "toilet";
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area)
+"bJ" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/purple,
+/area)
+"bK" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 8
+	},
+/area)
+"bL" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red3";
+	dir = 5
+	},
+/area)
+"bM" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 1
+	},
+/area)
+"bN" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 5
+	},
+/area)
+"bO" = (
+/obj/machinery/door/airlock/gannets/glass/security,
+/turf/simulated/floor/black,
+/area)
+"bP" = (
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 9
+	},
+/area)
+"bQ" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "green2"
+	},
+/area)
+"bR" = (
+/turf/simulated/floor/carpet{
+	icon_state = "green3";
+	dir = 9
+	},
+/area)
+"bS" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "green2"
+	},
+/area)
+"bT" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/blue/checker,
+/area)
+"bU" = (
+/obj/table/auto,
+/obj/submachine/mixer,
+/turf/simulated/floor/blue/checker,
+/area)
+"bV" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 10
+	},
+/area)
+"bW" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 2
+	},
+/area)
+"bX" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red3";
+	dir = 10
+	},
+/area)
+"bY" = (
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 4
+	},
+/area)
+"bZ" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "green2"
+	},
+/area)
+"ca" = (
+/turf/simulated/floor/carpet{
+	icon_state = "green3";
+	dir = 6
+	},
+/area)
+"cb" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 2
+	},
+/area)
+"cc" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 6
+	},
+/area)
+"cd" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area)
+"cf" = (
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 10
+	},
+/area)
+"cg" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/carpet{
+	icon_state = "red2";
+	dir = 6
+	},
+/area)
+"ch" = (
+/obj/machinery/door/airlock/gannets/engineering/alt,
+/turf/simulated/floor/black,
+/area)
+"ci" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "green2"
+	},
+/area)
+"cj" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/carpet{
+	icon_state = "green2";
+	dir = 6
+	},
+/area)
+"ck" = (
+/obj/machinery/power/rtg,
+/turf/simulated/floor/engine,
+/area)
+"cl" = (
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area)
+"cm" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/engine,
+/area)
+"cn" = (
+/obj/storage/closet/biohazard,
+/obj/item/clothing/head/rad_hood,
+/obj/item/clothing/suit/rad,
+/turf/simulated/floor/engine,
+/area)
+"co" = (
+/obj/storage/secure/closet/engineering,
+/turf/simulated/floor/engine,
+/area)
+"cp" = (
+/obj/machinery/power/smes,
+/turf/simulated/floor/engine,
+/area)
+"cq" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(3,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(4,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(5,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(6,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(7,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(8,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(9,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(10,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(11,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(12,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(13,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+as
+as
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(14,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+as
+ak
+af
+bA
+bI
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(15,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+as
+af
+aE
+aE
+bu
+bB
+bB
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(16,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+as
+af
+aE
+aE
+aE
+ac
+aj
+bC
+bB
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(17,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+aE
+aE
+aE
+ac
+ak
+af
+ae
+ak
+bJ
+ae
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(18,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+aE
+aE
+ac
+ak
+af
+bf
+bm
+aB
+bD
+bK
+bV
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(19,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+aE
+aE
+ac
+ak
+af
+aX
+aY
+bn
+aB
+bE
+bL
+bW
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(20,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+aE
+aE
+ac
+af
+aH
+aT
+aY
+aY
+aY
+ae
+aj
+bM
+bW
+ae
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(21,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+as
+ak
+af
+aE
+aE
+ac
+af
+aH
+aH
+aB
+aZ
+aY
+aY
+bv
+aB
+bM
+bX
+cf
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(22,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+at
+aw
+aA
+aE
+ac
+af
+aH
+aL
+aH
+aB
+ba
+bg
+aY
+bw
+aB
+bN
+bY
+cg
+ae
+as
+ak
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(23,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ak
+ak
+as
+ak
+aj
+aE
+aB
+aF
+aI
+aM
+aP
+aB
+bb
+aY
+aY
+bx
+aB
+bO
+ak
+ac
+af
+cm
+co
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(24,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+af
+al
+ao
+ao
+ax
+aB
+aE
+ae
+ak
+ak
+as
+ak
+ae
+ak
+as
+bo
+ak
+af
+aE
+aE
+aB
+ck
+aw
+aw
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(25,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ad
+ag
+am
+ap
+au
+ay
+aC
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ch
+cl
+aw
+cp
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(26,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ad
+ah
+am
+aq
+av
+ay
+aD
+aE
+aE
+aE
+aE
+aE
+aE
+aG
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ch
+cl
+aw
+cp
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(27,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ad
+ai
+am
+aq
+av
+ay
+aD
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ch
+cl
+aw
+cp
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(28,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+an
+ar
+ar
+az
+aB
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ac
+as
+bp
+ak
+aj
+aE
+aE
+aB
+ck
+aw
+aw
+aB
+cq
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(29,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+ak
+ak
+al
+ax
+aB
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aB
+bh
+bh
+bh
+aB
+aS
+ak
+ae
+aj
+cn
+co
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(30,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+an
+az
+aB
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aB
+bi
+bh
+by
+aB
+bP
+bZ
+ci
+ac
+as
+ak
+af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(31,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+as
+ak
+aj
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ae
+ak
+ak
+ak
+af
+bQ
+ca
+cj
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(32,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ac
+af
+bQ
+cb
+ac
+af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(33,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aB
+bF
+bR
+cb
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(34,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+aE
+aE
+ac
+ak
+ak
+ak
+ak
+af
+bG
+bS
+cc
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(35,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+aj
+aE
+aS
+aV
+be
+bk
+bs
+ae
+ak
+bT
+ac
+af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(36,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+as
+aj
+aW
+aV
+aV
+aV
+aV
+aV
+aV
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(37,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+as
+aj
+bl
+bt
+bz
+aV
+aV
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(38,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+as
+ak
+aj
+bH
+bU
+aB
+cd
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(39,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+as
+as
+af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(40,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(41,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(42,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(43,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(44,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(45,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(46,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(47,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(48,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(49,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(50,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

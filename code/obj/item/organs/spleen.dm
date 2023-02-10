@@ -3,7 +3,7 @@
 	organ_name = "spleen"
 	organ_holder_name = "spleen"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "spleen"
 	body_side = L_ORGAN
 
@@ -32,6 +32,19 @@
 				holder.spleen = null
 		..()
 
+/obj/item/organ/spleen/synth
+	name = "synthspleen"
+	organ_name = "synthspleen"
+	icon_state = "plant"
+	desc = "I guess you could say, the person missing this has spleen better days!"
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
+
+TYPEINFO(/obj/item/organ/spleen/cyber)
+	mats = 6
+
 /obj/item/organ/spleen/cyber
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
@@ -40,5 +53,4 @@
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0
-	mats = 6
 	created_decal = /obj/decal/cleanable/oil

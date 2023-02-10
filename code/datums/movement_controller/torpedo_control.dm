@@ -32,6 +32,7 @@
 			if("fire")
 				master.fire()
 			if("exit")
+				master.inUse = FALSE
 				master.exit()
 
 	modify_keymap(client/C)

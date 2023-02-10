@@ -9,7 +9,7 @@
 	var/attachedObjective = "For the free market!"
 	var/uses = -1 // -1 for infinite uses
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (issilicon(M))
 			boutput(M, "Silly robot.")
 			return
@@ -20,19 +20,16 @@
 		*/
 		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
-			var/datum/objective/newObj = new /datum/objective(attachedObjective)
-			newObj.owner = M.mind
-			newObj.set_up()
-			M.mind.objectives += newObj
+			new /datum/objective(attachedObjective, M.mind)
 			uses--
 			if (uses == 0)
 				qdel(src)
 
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
-		M.mind.special_role = "traitor"
+		M.mind.special_role = ROLE_TRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
-		SHOW_TRAITOR_RADIO_TIPS(M)
+		M.show_antag_popup("traitorradio")
 
 /obj/traitorifier/wizard
 	name = "Eldritch Altar"
@@ -42,10 +39,8 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wizard"
 		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-		SHOW_ADMINWIZARD_TIPS(M)
-		M.verbs += /client/proc/gearspawn_wizard
+		M.mind.add_antagonist(ROLE_WIZARD, do_relocate = FALSE)
 
 /obj/traitorifier/changeling
 	name = "Fleshy Protuberance"
@@ -55,9 +50,8 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "changeling"
 		M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
-		M.make_changeling()
+		M.mind.add_antagonist(ROLE_CHANGELING)
 
 /obj/traitorifier/vampire
 	name = "Fang-Marked Coffin"
@@ -68,9 +62,8 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "vampire"
 		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
-		M.make_vampire()
+		M.mind.add_antagonist(ROLE_VAMPIRE)
 
 /obj/traitorifier/wrestler
 	name = "VERY Haunted Championship Belt"
@@ -80,7 +73,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wrestler"
+		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
 		M.make_wrestler(1)
 
@@ -93,10 +86,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "hunter"
-		M.mind.assigned_role = "Hunter"
-		M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-		M.make_hunter()
+		M.mind?.add_antagonist(ROLE_HUNTER)
 
 /obj/traitorifier/werewolf
 	name = "Shadowy Dog Thing"
@@ -107,9 +97,8 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "werewolf"
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.make_werewolf()
+		M.mind.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -119,7 +108,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "omnitraitor"
+		M.mind.special_role = ROLE_OMNITRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
 		M.verbs += /client/proc/gearspawn_wizard
 		M.make_changeling()
@@ -128,7 +117,7 @@
 		M.make_wrestler(1)
 		M.make_grinch()
 		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		SHOW_TRAITOR_OMNI_TIPS(M)
+		M.show_antag_popup("traitoromni")
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
@@ -165,7 +154,7 @@
 	meteorhit(obj/meteor)
 		return
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 
 		if (!istype(M, /mob/living/carbon/human))
 			boutput(M, "You aren't a human so you can't use these.")
@@ -195,8 +184,8 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_werewolf(1)
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
+			M.mind.add_antagonist(ROLE_WEREWOLF, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
 
 	wrestler
 		name = "WRESTL~1.EXE"
@@ -216,7 +205,9 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
-			equip_wizard(M, 1, 1)
+			M.mind?.add_antagonist(ROLE_WIZARD, do_equip = FALSE, do_relocate = FALSE, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			var/datum/antagonist/wizard/antag_role = M.mind?.get_antagonist(ROLE_WIZARD)
+			antag_role.give_equipment(TRUE)
 
 	nuclear
 		name = "NUKE_TKN.EXE"
@@ -228,3 +219,14 @@
 			var/token = new /obj/item/requisition_token/syndicate/vr(get_turf(M))
 			M.put_in_hand_or_eject(token) // try to eject it into the users hand, if we can
 			boutput(M, "<span class='combat'>Redeem your freshly mined syndicoin in the nearby weapon vendor.</span>")
+
+	arcfiend
+		name = "ARCF13ND.EXE"
+		desc = "Turns you into an arcfiend, using a bit of the processing power of vr."
+		icon = 'icons/obj/power.dmi'
+		icon_state = "apc0"
+
+		makeAntag(mob/living/carbon/human/M)
+			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
+			// No need to specify other arguments here; pseudo does most of this on its own
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)

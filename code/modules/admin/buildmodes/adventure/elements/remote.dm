@@ -6,7 +6,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		key_name = input("Remote name", "Remote name", "remote control") as text
 		boutput(usr, "<span class='notice'>Left click to place remotes, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
@@ -19,7 +19,7 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -33,7 +33,7 @@
 				var/obj/item/adventurepuzzle/triggerer/remotecontrol/key = new /obj/item/adventurepuzzle/triggerer/remotecontrol(T)
 				key.name = key_name
 				key.triggered = selected_triggerable.Copy()
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					key.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))

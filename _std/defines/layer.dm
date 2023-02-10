@@ -1,6 +1,6 @@
 #define PLATING_LAYER     (TURF_LAYER-0.2)
 #define BETWEEN_FLOORS_LAYER     (TURF_LAYER-0.1)
-#define LATTICE_LAYER 		(TURF_LAYER+0.10)
+#define LATTICE_LAYER 		(TURF_LAYER+0.1)
 #define DISPOSAL_PIPE_LAYER (TURF_LAYER+0.11)
 #define PIPE_LAYER 			(TURF_LAYER+0.12) // MR MARIO HE WAS A PIPE LAYER
 #define FLUID_PIPE_LAYER	(TURF_LAYER+0.125)
@@ -17,6 +17,10 @@
 #define GRILLE_LAYER 		(TURF_LAYER+0.9)
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
 
+// More specific obj layers
+#define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep lockers etc below items
+#define ABOVE_OBJ_LAYER 	(OBJ_LAYER + 0.01) // For objects that should generally layer above other objects
+
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
@@ -26,11 +30,15 @@
 #define MOB_HEAD_LAYER2		(MOB_OVERLAY_BASE-4) // helmets
 #define MOB_OVERMASK_LAYER (MOB_OVERLAY_BASE-4.8) // for mutant details that go over masks
 #define MOB_HEAD_LAYER1		(MOB_OVERLAY_BASE-5) // masks
-#define MOB_HAIR_LAYER2		(MOB_OVERLAY_BASE-6)
-#define MOB_GLASSES_LAYER 	(MOB_OVERLAY_BASE-7)
+#define MOB_EARS_LAYER		(MOB_OVERLAY_BASE-5.5)
+#define MOB_GLASSES_LAYER2 (MOB_OVERLAY_BASE-5.9) // For eyewear that should layer OVER hair
+#define MOB_HAIR_LAYER2 	(MOB_OVERLAY_BASE-6)
+#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)  // For eyewear that should layer UNDER hair
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
-#define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.7)	// For mutant oversuit (de)tails when facing north
-#define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.8)	// If we have another one
+#define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.6)	// For mutant oversuit (de)tails when facing north
+#define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.7)	// If we have another one
+#define MOB_SHEATH_LAYER 	(MOB_OVERLAY_BASE-8.8)
+#define MOB_BACK_LAYER_SATCHEL  (MOB_OVERLAY_BASE-8.9)  // For satchels so they don't show over a tail or something
 #define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves
 #define MOB_HAND_LAYER1 	(MOB_OVERLAY_BASE-11)
@@ -41,7 +49,7 @@
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
 #define MOB_BODYDETAIL_LAYER3 	(MOB_OVERLAY_BASE-18)
-#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	//
+#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	// Used for limb overlays. you can use it for other things too, I won't stop you
 #define MOB_BODYDETAIL_LAYER1 	(MOB_OVERLAY_BASE-20) // Mostly just for torso stuff
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-21)
 #define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-23) // Tail detail
@@ -88,3 +96,9 @@
 #define LIGHTING_LAYER_BASE 1
 #define LIGHTING_LAYER_FULLBRIGHT 2
 #define LIGHTING_LAYER_DARKNESS_EFFECTS 3
+
+// Mining asteroid Layers
+#define ASTEROID_LAYER TURF_LAYER
+#define ASTEROID_TOP_OVERLAY_LAYER (TURF_LAYER+0.01)
+#define ASTEROID_ORE_OVERLAY_LAYER (TURF_LAYER+0.02)
+#define ASTEROID_MINING_SCAN_DECAL_LAYER (TURF_LAYER+0.03)

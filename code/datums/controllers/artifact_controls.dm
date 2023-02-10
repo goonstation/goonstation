@@ -1,14 +1,26 @@
 var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_controller
+	/// list of all artifacts
 	var/list/artifacts = list()
+	/// list with an instance of each artifact type, sorted by size and alphabetically
 	var/list/datum/artifact/artifact_types = list()
+	/// associative list with the instance from above, with the key being the type name
+	var/list/datum/artifact/artifact_types_from_name = list()
+	/// associative list of lists, with the keys being artifact origin names (and "all") and artifact types
+	/// the value is the rarity of the type.
+	/// This is used with weighted_pick for randomly generated artifacts (sometimes of specific origin)
 	var/list/artifact_rarities = list()
+	/// list with an instance of each artifact origin
 	var/list/artifact_origins = list()
 
+	/// list of artifact origin names, for artifact forms
 	var/list/artifact_origin_names = list()
+	/// list of artifact type names, for artifact forms
 	var/list/artifact_type_names = list()
+	/// list of artifact fault names, for artifact forms
 	var/list/artifact_fault_names = list()
+	/// list of artifact trigger names, for artifact forms (unused)
 	var/list/artifact_trigger_names = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
@@ -24,20 +36,22 @@ var/datum/artifact_controller/artifact_controls
 			artifact_origin_names += AO.type_name
 			artifact_rarities[AO.name] = list()
 
-		// type list
-		// also make one list for each origin of all artifact types
-		// and also one that just holds all types
-		// the type is the index, the value the rarity
-		// for use with weighted_pick
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
+			if(!AI.type_name)
+				continue
 			artifact_types += AI
-			artifact_type_names += AI.type_name
+			artifact_types_from_name[AI.type_name] = AI
 
 			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)
 				if(origin in AI.validtypes)
 					artifact_rarities[origin][A] = AI.rarity_weight
+
+		sortList(artifact_types, /proc/compareArtifactTypes)
+
+		for (var/datum/artifact/AI in artifact_types)
+			artifact_type_names += list(list(AI.type_name, AI.type_size))
 
 		// fault list
 		for (var/X in concrete_typesof(/datum/artifact_fault))
@@ -61,8 +75,8 @@ var/datum/artifact_controller/artifact_controls
 	// Added. Admin actions related to artfacts were not logged at all (Convair880).
 	proc/log_me(var/mob/user, var/obj/O, var/type_of_action, var/trigger_alert = 0)
 		if (type_of_action == "spawns")
-			logTheThing("admin", user, null, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].")
-			logTheThing("diary", user, null, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].", "admin")
+			logTheThing(LOG_ADMIN, user, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].")
+			logTheThing(LOG_DIARY, user, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].", "admin")
 			return
 
 		if (!O || !istype(O.artifact, /datum/artifact) || !type_of_action)
@@ -70,8 +84,8 @@ var/datum/artifact_controller/artifact_controls
 
 		var/datum/artifact/A = O.artifact
 
-		logTheThing("admin", user, null, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].")
-		logTheThing("diary", user, null, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].", "admin")
+		logTheThing(LOG_ADMIN, user, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].")
+		logTheThing(LOG_DIARY, user, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].", "admin")
 		if (trigger_alert)
 			message_admins("[key_name(user)] [type_of_action] an artifact ([A.type]) at [log_loc(O)].")
 		return
@@ -132,7 +146,7 @@ var/datum/artifact_controller/artifact_controls
 		usr.Browse(dat,"window=artifacts;size=400x600")
 
 	Topic(href, href_list[])
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["Activate"])
 			var/obj/O = locate(href_list["Activate"]) in src.artifacts
 			if (!istype(O,/obj/))
@@ -204,6 +218,8 @@ var/datum/artifact_controller/artifact_controls
 	var/fx_green_max = 255
 	var/fx_blue_min = 0
 	var/fx_blue_max = 255
+	var/fx_alpha_min = 200
+	var/fx_alpha_max = 255
 	var/nofx = 0 // If set to 1, does not apply an overlay but a flat icon_state change.
 	var/scramblechance = 10 //probability to have "fake" artifact with altered appearance
 	var/list/activation_sounds = list()
@@ -226,6 +242,13 @@ var/datum/artifact_controller/artifact_controls
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
 		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
+		if(prob(20 * rarityMod))
+			var/angle = prob(20 * rarityMod) ? pick(90, -90) : rand(0, 360)
+			artifact.transform.Turn(angle)
+		if(prob(3*rarityMod))
+			artifact.blend_mode = pick(BLEND_ADD, BLEND_SUBTRACT)
+			if(artifact.blend_mode == BLEND_SUBTRACT)
+				artifact.plane = PLANE_FLOOR
 
 	proc/generate_name()
 		return "unknown object"
@@ -242,10 +265,10 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/explode = 10,
 		/datum/artifact_fault/messager/ai_laws = 10)
 	activation_sounds = list('sound/machines/ArtifactAnc1.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Ancient_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Ancient_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Ancient_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Ancient_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Ancient_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Ancient_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Ancient_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Ancient_4.ogg')
 	impact_reaction_one = 1
 	impact_reaction_two = 0.5
 	heat_reaction_one = 1.5
@@ -265,11 +288,16 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			var/scaling = 1.1 + rand() * 0.2
+			var/scaling = randfloat(1.1, 1.3)
+			while(prob(min(60 * rarityMod, 95)))
+				scaling *= 1.1
 			artifact.transform = matrix(artifact.transform, scaling, scaling, MATRIX_SCALE)
 		if(prob(100 * rarityMod))
 			var/col = rand(100, 230)
 			artifact.color = rgb(col, col, col)
+		else if(prob(100 * rarityMod))
+			var/bright = randfloat(1.1, 1.5)
+			artifact.color = list(bright, 0, 0, 0, bright, 0, 0, 0, bright)
 
 	generate_name()
 		return "unit [pick("alpha","sigma","tau","phi","gamma","epsilon")]-[pick("x","z","d","e","k")] [rand(100,999)]"
@@ -287,10 +315,10 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/shrink = 8,
 		/datum/artifact_fault/messager/emoji = 10)
 	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Martian_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Martian_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Martian_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Martian_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Martian_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_4.ogg')
 	impact_reaction_one = 1
 	impact_reaction_two = 0
 	heat_reaction_one = 0.99
@@ -321,12 +349,9 @@ var/datum/artifact_controller/artifact_controls
 			if(prob(20))
 				distortion_icon = turn(distortion_icon, rand(360))
 			var/size = rand(4, 6 + 8 * rarityMod) * pick(-1, 1)
-			artifact.filters += filter(
-				type="displace",
-				icon=distortion_icon,
-				size=size)
+			artifact.add_filter("martian distortion", 1, displacement_map_filter(icon=distortion_icon, size=size))
 			if(prob(80 * rarityMod))
-				var/filter = artifact.filters[length(artifact.filters)]
+				var/filter = artifact.get_filter("martian distortion")
 				var/anim_time = pick(rand() * 1 SECOND + 1 SECOND, rand() * 5 SECONDS, rand() * 1 MINUTE)
 				var/new_size = size + rand(-8, 8)
 				if(prob(15) || anim_time > 5 SECONDS && prob(70))
@@ -373,10 +398,10 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/messager/what_people_said = 5,
 		/datum/artifact_fault/messager/emoji = 5)
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Wizard_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Wizard_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Wizard_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Wizard_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Wizard_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Wizard_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Wizard_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Wizard_4.ogg')
 	impact_reaction_one = 8
 	impact_reaction_two = 6
 	heat_reaction_one = 0.75
@@ -386,6 +411,8 @@ var/datum/artifact_controller/artifact_controls
 	fx_green_max = 255
 	fx_blue_min = 125
 	fx_blue_max = 255
+	fx_alpha_min = 125
+	fx_alpha_max = 200
 	adjectives = list("ornate","regal","imposing","fancy","elaborate","elegant","ostentatious")
 	nouns_large = list("jewel","crystal","sculpture","statue","brazier","ornament","edifice")
 	nouns_small = list("wand","scepter","staff","rod","cane","crozier","trophy")
@@ -399,22 +426,39 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(300*rarityMod))
-			var/hue1 = prob(100*rarityMod) ? rand(360) : (55 + rand(-10, 10))
-			var/list/col1
-			if(prob(150*rarityMod))
-				col1 = hsv2rgblist(hue1, rand() * 0.2 + 0.5, rand() * 0.2 + 0.6)
-			else
-				col1 = list(255, 168, 0)
-			var/hue2 = 180 + hue1 + rand(-135, 135)
-			if(prob(100*rarityMod))
-				hue2 = rand(360)
-			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)
-			artifact.color = affine_color_mapping_matrix(
-				list("#000000", "#ffa800", "#ae2300", "#0000ff"),
-				list(random_color(), col1, col2, "#0000ff")
-			)
+			if(startswith(artifact.icon_state, "wizard"))
+				var/gem_icon_state = "[artifact.icon_state]-gem"
+				var/image/gem_image = image(artifact.icon, gem_icon_state)
+				var/metal_hue = 360 * 0.1098039215686274 // gold metal yellow
+				var/metal_color = null
+				if(prob(60 * rarityMod))
+					if(prob(60 * rarityMod))
+						metal_color = pick(list(
+							list(200, 200, 200), // silver
+							list(205, 127, 50) // bronze
+						))
+					else
+						metal_hue = rand(360)
+						metal_color = hsv2rgblist(metal_hue, randfloat(50, 70), randfloat(60, 80))
+				var/gem_hue = 180 + metal_hue + rand(-135, 135)
+				if(prob(200 * rarityMod))
+					gem_hue = rand(360)
+				var/gem_color = hsv2rgb(gem_hue, randfloat(70, 100), randfloat(90, 100))
+				gem_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+				gem_image.color = gem_color
+				if(prob(15 * rarityMod))
+					var/scale = randfloat(1.5, 2.5)
+					gem_image.transform = matrix(null, scale, scale, MATRIX_SCALE)
+					gem_image.alpha = rand(50, 100)
+					gem_image.layer = artifact.layer - 0.1
+				artifact.UpdateOverlays(gem_image, "gem")
+				if(metal_color)
+					artifact.color = color_mapping_matrix(
+						list("#ffa800", "#ae2300", "#0000ff"),
+						list(metal_color, "#ae2300", "#0000ff")
+					)
 		if(prob(50*rarityMod))
-			artifact.alpha = rand(200, 255)
+			artifact.alpha = rand(50, 150)
 
 	generate_name()
 		var/namestring = ""
@@ -427,10 +471,10 @@ var/datum/artifact_controller/artifact_controls
 	type_name = "Eldritch"
 	name = "eldritch"
 	activation_sounds = list('sound/machines/ArtifactEld1.ogg','sound/machines/ArtifactEld2.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Eldritch_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Eldritch_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg')
 	fault_types = list(
 		/datum/artifact_fault/murder = 2,
 		/datum/artifact_fault/messager/creepy_whispers = 5,
@@ -503,12 +547,11 @@ var/datum/artifact_controller/artifact_controls
 	type_name = "Precursor"
 	name = "precursor"
 	activation_sounds = list('sound/machines/ArtifactPre1.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Precursor_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Precursor_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Precursor_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Precursor_4.ogg",
-		"sound/musical_instruments/artifact/Artifact_Precursor_5.ogg",
-		"sound/musical_instruments/artifact/Artifact_Precursor_6.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Precursor_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Precursor_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg',
+		'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg')
 	fault_types = list(
 		/datum/artifact_fault/irradiate = 10,
 		/datum/artifact_fault/shutdown = 5,
@@ -553,7 +596,7 @@ var/datum/artifact_controller/artifact_controls
 			var/n_balls = rand(1, 4) + round(rarityMod * 3)
 			for(var/i = 1 to n_balls)
 				var/delay = (i - 1) * time / n_balls
-				SPAWN_DBG(delay)
+				SPAWN(delay)
 					var/obj/effect/ball = new
 					ball.icon = 'icons/obj/artifacts/artifactEffects.dmi'
 					ball.icon_state = icon_state
@@ -614,35 +657,35 @@ var/datum/artifact_controller/artifact_controls
 /datum/artifact_origin/bee
 	name = "bee"
 	activation_sounds = list('sound/machines/ArtifactBee1.ogg', 'sound/machines/ArtifactBee2.ogg', 'sound/machines/ArtifactBee3.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Bee_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Bee_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Bee_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Bee_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Bee_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Bee_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Bee_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Bee_4.ogg')
 	max_sprites = 6
 
 /datum/artifact_origin/void
 	name = "void"
 	activation_sounds = list('sound/machines/ArtifactVoi1.ogg', 'sound/machines/ArtifactVoi2.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Void_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Void_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Void_3.ogg",
-		"sound/musical_instruments/artifact/Artifact_Void_4.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Void_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Void_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Void_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Void_4.ogg')
 	max_sprites = 6
 
 /datum/artifact_origin/lattice
 	name = "lattice"
 	activation_sounds = list('sound/machines/ArtifactLat1.ogg', 'sound/machines/ArtifactLat2.ogg', 'sound/machines/ArtifactLat3.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Lattice_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Lattice_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Lattice_3.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Lattice_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Lattice_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Lattice_3.ogg')
 	max_sprites = 6
 
 /datum/artifact_origin/feather
 	name = "feather"
 	activation_sounds = list('sound/machines/ArtifactFea1.ogg', 'sound/machines/ArtifactFea2.ogg', 'sound/machines/ArtifactFea3.ogg')
-	instrument_sounds = list("sound/musical_instruments/artifact/Artifact_Feather_1.ogg",
-		"sound/musical_instruments/artifact/Artifact_Feather_2.ogg",
-		"sound/musical_instruments/artifact/Artifact_Feather_3.ogg")
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Feather_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Feather_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Feather_3.ogg')
 	max_sprites = 6
 
 

@@ -1,10 +1,4 @@
 contact_links:
-  - name: Report an Exploit
-    url: https://gitreports.com/issue/goonstation/goonstation-secret
-    about: Report exploits via this form (which includes /but is not limited to/ duplication bugs, code-injection vulnerabilities, etc.) Report bugged secret content here too!
-  - name: Report a Bug (No GitHub Account)
-    url: https://gitreports.com/issue/goonstation/goonstation
-    about: If you want to report a bug, but don't have a GitHub account, use this.
   - name: Request a Feature
     url: https://forum.ss13.co/forumdisplay.php?fid=8
     about: Please request features on our forum.

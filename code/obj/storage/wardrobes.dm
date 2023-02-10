@@ -6,8 +6,12 @@
 	icon_closed = "dresser"
 	icon_opened = "dresser-open"
 	soundproofing = 10
+	open_sound = 'sound/misc/coffin_open.ogg'
+	close_sound = 'sound/misc/coffin_close.ogg'
 	var/trick = 0 //enjoy some gimmicky bullfuckery
 	var/id = null
+	weld_image_offset_X = -6
+	weld_image_offset_Y = 2
 
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
@@ -20,6 +24,7 @@
 
 /obj/storage/closet/wardrobe/pride
 	name = "pride wardrobe"
+	desc = "A label on it reads: In order to improve workplace efficiency, employees are encouraged to spend no more than 5 minutes in the closet at a time."
 	icon_state = "gay"
 	icon_closed = "gay"
 	spawn_contents = list(/obj/item/clothing/under/pride = 2,
@@ -31,6 +36,7 @@
 	/obj/item/clothing/under/pride/poly = 2,
 	/obj/item/clothing/under/pride/nb = 2,
 	/obj/item/clothing/under/pride/lesb = 2,
+	/obj/item/clothing/under/pride/gaymasc = 2,
 	/obj/item/clothing/under/pride/trans = 2)
 
 /obj/storage/closet/wardrobe/black
@@ -126,7 +132,7 @@
 	/obj/item/clothing/head/bio_hood/janitor = 1,
 	/obj/item/clothing/mask/gas = 1,
 	/obj/item/clothing/gloves/long = 1,
-	/obj/item/clothing/shoes/galoshes = 1,
+	/obj/item/clothing/shoes/galoshes/torn = 1,
 	/obj/item/device/light/flashlight = 1)
 
 
@@ -145,6 +151,8 @@
 	/obj/item/clothing/head/formal_turban,
 	/obj/item/clothing/head/turban,
 	/obj/item/clothing/shoes/black,
+	/obj/item/clothing/under/misc/chaplain/nun,
+	/obj/item/clothing/head/nunhood,
 	/obj/item/clothing/shoes/sandal)
 
 /obj/storage/closet/wardrobe/black/formalwear
@@ -168,7 +176,7 @@
 	spawn_contents = list(/obj/item/clothing/shoes/brown = 4,
 	/obj/item/clothing/under/color/red,
 	/obj/item/clothing/under/gimmick/police,
-	/obj/item/clothing/under/misc/head_of_security,
+	/obj/item/clothing/under/misc/dirty_vest,
 	/obj/item/clothing/under/misc/tourist,
 	/obj/item/clothing/under/misc/tourist/max_payne,
 	/obj/item/clothing/under/misc/serpico,

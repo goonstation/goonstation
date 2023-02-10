@@ -1,0 +1,37 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/white,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/item/storage/toilet/random{
+	name = "THE toilet";
+	desc = "My god...It's...It's THE toilet! You feel honored to even look at it."
+	},
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/item/clothing/head/plunger{
+	pixel_x = -13
+	},
+/turf/simulated/floor/white,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+f
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+"}

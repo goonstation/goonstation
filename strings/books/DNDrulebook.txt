@@ -1,0 +1,38 @@
+<body>
+<h2>Character Creation</h2>
+<hr>
+<p>
+<br>1 – Select your race as well as a job assignment appropriate to the setting of your session. Job assignments can be provided by your GM
+<br><b>Human/Lizard/Roach/Skeleton/Squid/Cow/Pug/Monkey</b>
+<br>
+<br>2 – Rank your attributes.<br>
+Apply one of each of the following modifiers to an attribute listed below.
+<br><b>+3, +2, +1, 0, -1, -2</b>
+<br><b>Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.</b>
+<br>
+<br>3 – Rank your archetypes.
+<br>These are skills corresponding to your attributes. Apply one of each of the modifiers to an attribute, just as you did above.
+<b>Fighter, Rogue, Explorer, Sage, Artist, Diplomat.</b>
+<br>
+<br>4 – Give yourself 10 points of resolve. How resolve works is explained in “Playing the game”
+<br>
+<br>5 – Choose a name and appearance.
+<br>
+<br>6 – Start with whatever basic gear makes sense for your race and job assigment.<br>
+<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausability and limit of what items you could possess should be consulted with your GM.
+
+<h2>Playing The Game</h2>
+<hr>
+<p>
+<br>1 – Start a quest<br>
+<br>2 – To take an action, describe what you want to do and then – if the GM asks – make a success check. If you fail, the GM can make a reaction against you.<br>
+<br><b>Success Check or Reaction = 1d20 +  Attribute +  Archetype vs Difficulty Class</b><br>
+<br>3 – If something attacks or acts against you, make a success check to defend.<br>
+<br>4 – If you suffer harm, you lose 1 resolve. If you deal harm, your target loses 1 resolve.<br>
+<br>5 – You can spend 1 resolve to roll with advantage or attempt an extraordinary feat.<br>
+<br>6 – If you have 0 resolve, you are knocked out. You gain 1 resolve when you finish a long rest.<br>
+<br>7 – You can carry 3 significant items at once.<br>
+<br>8 – When the quest is resolved, the game ends! If you survive, gain a perk. Choose either +1  Attribute point, +1 Archetype point or +1 maximum resolve.<br>
+
+This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found <a href="https://giffyglyph.com/quickquest" target="_blank">here</a>.
+</p>

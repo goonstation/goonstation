@@ -3,7 +3,7 @@
 #define SPACEBEE_EXTENSION_ASAY_PREFIX ";"
 
 /// server id of the server that processes commands with server_targeting = COMMAND_TARGETING_MAIN_SERVER
-#define SPACEBEE_EXTENSION_MAIN_SERVER "main3"
+#define SPACEBEE_EXTENSION_MAIN_SERVER "main4"
 
 /// values for the server_targeting var of commands, picks which server processes a given command
 

@@ -1,54 +1,41 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "5.2.2"
+#define TGS_DMAPI_VERSION "6.0.4"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
 // CONFIGURATION
 
-/// Create this define if you want to do TGS configuration outside of this file.
-#ifndef TGS_EXTERNAL_CONFIGURATION
-
-// Comment this out once you've filled in the below.
-#error TGS API unconfigured
-
-// Uncomment this if you wish to allow the game to interact with TGS 3.
-// This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
-//#define TGS_V3_API
-
-// Required interfaces (fill in with your codebase equivalent):
-
 /// Create a global variable named `Name` and set it to `Value`.
-#define TGS_DEFINE_AND_SET_GLOBAL(Name, Value)
+#define TGS_DEFINE_AND_SET_GLOBAL(Name, Value) var/global/##Name = ##Value
 
 /// Read the value in the global variable `Name`.
-#define TGS_READ_GLOBAL(Name)
+#define TGS_READ_GLOBAL(Name) global.##Name
 
 /// Set the value in the global variable `Name` to `Value`.
-#define TGS_WRITE_GLOBAL(Name, Value)
-
-/// Disallow ANYONE from reflecting a given `path`, security measure to prevent in-game use of DD -> TGS capabilities.
-#define TGS_PROTECT_DATUM(Path)
+#define TGS_WRITE_GLOBAL(Name, Value) global.##Name = ##Value
 
 /// Display an announcement `message` from the server to all players.
-#define TGS_WORLD_ANNOUNCE(message)
+#define TGS_WORLD_ANNOUNCE(message) boutput(world, "<B>[##message]</B>")
 
 /// Notify current in-game administrators of a string `event`.
-#define TGS_NOTIFY_ADMINS(event)
+#define TGS_NOTIFY_ADMINS(event) message_admins("TGS: [##event]")
 
 /// Write an info `message` to a server log.
-#define TGS_INFO_LOG(message)
+#define TGS_INFO_LOG(message) logTheThing(LOG_DIARY, null, "TGS Info: [##message]", "debug")
 
 /// Write an warning `message` to a server log.
-#define TGS_WARNING_LOG(message)
+#define TGS_WARNING_LOG(message) logTheThing(LOG_DIARY, null, "TGS Warning: [##message]", "debug")
 
 /// Write an error `message` to a server log.
-#define TGS_ERROR_LOG(message)
+#define TGS_ERROR_LOG(message) logTheThing(LOG_DIARY, null, "TGS ERROR: [##message]", "debug")
+
+/// Disallow ANYONE from reflecting a given `path`, security measure to prevent in-game use of DD -> TGS capabilities. - haha no
+#define TGS_PROTECT_DATUM(Path)
 
 /// Get the number of connected /clients.
-#define TGS_CLIENT_COUNT
+#define TGS_CLIENT_COUNT length(clients)
 
-#endif
 
 // EVENT CODES
 
@@ -67,7 +54,7 @@
 #define TGS_EVENT_REPO_CHECKOUT 1
 /// When the repository performs a fetch operation. No parameters
 #define TGS_EVENT_REPO_FETCH 2
-/// When the repository merges a pull request. Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user
+/// When the repository test merges. Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
 /// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
@@ -81,7 +68,7 @@
 #define TGS_EVENT_COMPILE_START 8
 /// When a compile is cancelled. No parameters
 #define TGS_EVENT_COMPILE_CANCELLED 9
-/// When a compile fails. Parameters: Game directory path, TRUE/FALSE based on if the cause for failure was DMAPI validation
+/// When a compile fails. Parameters: Game directory path, [TRUE]/[FALSE] based on if the cause for failure was DMAPI validation
 #define TGS_EVENT_COMPILE_FAILURE 10
 /// When a compile operation completes. Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the [TGS_EVENT_DEPLOYMENT_COMPLETE] instead. Parameters: Game directory path
 #define TGS_EVENT_COMPILE_COMPLETE 11
@@ -95,6 +82,15 @@
 #define TGS_EVENT_WATCHDOG_SHUTDOWN 15
 /// Before the watchdog detaches for a TGS update/restart. No parameters.
 #define TGS_EVENT_WATCHDOG_DETACH 16
+// We don't actually implement these 4 events as the DMAPI can never receive them.
+// #define TGS_EVENT_WATCHDOG_LAUNCH 17
+// #define TGS_EVENT_WATCHDOG_CRASH 18
+// #define TGS_EVENT_WORLD_END_PROCESS 19
+// #define TGS_EVENT_WORLD_REBOOT 20
+/// Watchdog event when TgsInitializationComplete() is called. No parameters.
+#define TGS_EVENT_WORLD_PRIME 21
+// DMAPI also doesnt implement this
+// #define TGS_EVENT_DREAM_DAEMON_LAUNCH 22
 
 // OTHER ENUMS
 
@@ -115,22 +111,21 @@
 //REQUIRED HOOKS
 
 /**
-  * Call this somewhere in [/world/proc/New] that is always run. This function may sleep!
-  *
-  * * event_handler - Optional user defined [/datum/tgs_event_handler].
-  * * minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated. Can be one of [TGS_SECURITY_ULTRASAFE], [TGS_SECURITY_SAFE], or [TGS_SECURITY_TRUSTED].
-  */
+ * Call this somewhere in [/world/proc/New] that is always run. This function may sleep!
+ *
+ * * event_handler - Optional user defined [/datum/tgs_event_handler].
+ * * minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated. Can be one of [TGS_SECURITY_ULTRASAFE], [TGS_SECURITY_SAFE], or [TGS_SECURITY_TRUSTED].
+ */
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	return
 
 /**
-  * Call this when your initializations are complete and your game is ready to play before any player interactions happen.
-  *
-  * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
-  * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
-  * Before this point, note that any static files or directories may be in use by another server. Your code should account for this.
-  * This function should not be called before ..() in [/world/proc/New].
-  */
+ * Call this when your initializations are complete and your game is ready to play before any player interactions happen.
+ *
+ * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
+ * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
+ * This function should not be called before ..() in [/world/proc/New].
+ */
 /world/proc/TgsInitializationComplete()
 	return
 
@@ -138,8 +133,8 @@
 #define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 /**
-  * Call this at the beginning of [world/proc/Reboot].
-  */
+ * Call this as late as possible in [world/proc/Reboot].
+ */
 /world/proc/TgsReboot()
 	return
 
@@ -150,6 +145,8 @@
 /datum/tgs_revision_information
 	/// Full SHA of the commit.
 	var/commit
+	/// ISO 8601 timestamp of when the commit was created
+	var/timestamp
 	/// Full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch.
 	var/origin_commit
 
@@ -173,36 +170,34 @@
 	var/deprefixed_parameter
 
 /**
-  * Returns TRUE/FALSE based on if the [/datum/tgs_version] contains wildcards.
-  */
+ * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] contains wildcards.
+ */
 /datum/tgs_version/proc/Wildcard()
 	return
 
 /**
-  * Returns TRUE/FALSE based on if the [/datum/tgs_version] equals some other version.
-  *
-  * other_version - The [/datum/tgs_version] to compare against.
-  */
+ * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] equals some other version.
+ *
+ * other_version - The [/datum/tgs_version] to compare against.
+ */
 /datum/tgs_version/proc/Equals(datum/tgs_version/other_version)
 	return
 
 /// Represents a merge of a GitHub pull request.
 /datum/tgs_revision_information/test_merge
-	/// The pull request number.
+	/// The test merge number.
 	var/number
-	/// The pull request title when it was merged.
+	/// The test merge source's title when it was merged.
 	var/title
-	/// The pull request body when it was merged.
+	/// The test merge source's body when it was merged.
 	var/body
-	/// The GitHub username of the pull request's author.
+	/// The Username of the test merge source's author.
 	var/author
-	/// An http URL to the pull request.
+	/// An http URL to the test merge source.
 	var/url
-	/// The SHA of the pull request when that was merged.
-	var/pull_request_commit
-	/// ISO 8601 timestamp of when the pull request was merged.
-	var/time_merged
-	/// (Nullable) Comment left by the TGS user who initiated the merge..
+	/// The SHA of the test merge when that was merged.
+	var/head_commit
+	/// Optional comment left by the TGS user who initiated the merge.
 	var/comment
 
 /// Represents a connected chat channel.
@@ -213,9 +208,9 @@
 	var/friendly_name
 	/// Name of the chat connection. This is the IRC server address or the Discord guild.
 	var/connection_name
-	/// TRUE/FALSE based on if the server operator has marked this channel for game admins only.
+	/// [TRUE]/[FALSE] based on if the server operator has marked this channel for game admins only.
 	var/is_admin_channel
-	/// TRUE/FALSE if the channel is a private message channel for a [/datum/tgs_chat_user].
+	/// [TRUE]/[FALSE] if the channel is a private message channel for a [/datum/tgs_chat_user].
 	var/is_private_channel
 	/// Tag string associated with the channel in TGS
 	var/custom_tag
@@ -232,10 +227,10 @@
 	var/datum/tgs_chat_channel/channel
 
 /**
-  * User definable callback for handling TGS events.
-  *
-  * event_code - One of the TGS_EVENT_ defines. Extra parameters will be documented in each
-  */
+ * User definable callback for handling TGS events.
+ *
+ * event_code - One of the TGS_EVENT_ defines. Extra parameters will be documented in each
+ */
 /datum/tgs_event_handler/proc/HandleEvent(event_code, ...)
 	set waitfor = FALSE
 	return
@@ -250,67 +245,67 @@
 	var/admin_only_goon_sucks = FALSE
 
 /**
-  * Process command activation. Should return a string to respond to the issuer with.
-  *
-  * sender - The [/datum/tgs_chat_user] who issued the command.
-  * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
-  */
+ * Process command activation. Should return a string to respond to the issuer with.
+ *
+ * sender - The [/datum/tgs_chat_user] who issued the command.
+ * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
+ */
 /datum/tgs_chat_command/proc/Run(datum/tgs_chat_user/sender, params)
 	CRASH("[type] has no implementation for Run()")
 
 // API FUNCTIONS
 
 /// Returns the maximum supported [/datum/tgs_version] of the DMAPI.
-/world/proc/TgsMaximumAPIVersion()
+/world/proc/TgsMaximumApiVersion()
 	return
 
 /// Returns the minimum supported [/datum/tgs_version] of the DMAPI.
-/world/proc/TgsMinimumAPIVersion()
+/world/proc/TgsMinimumApiVersion()
 	return
 
 /**
-  * Returns TRUE if DreamDaemon was launched under TGS, the API matches, and was properly initialized. FALSE will be returned otherwise.
-  */
+ * Returns [TRUE] if DreamDaemon was launched under TGS, the API matches, and was properly initialized. [FALSE] will be returned otherwise.
+ */
 /world/proc/TgsAvailable()
 	return
 
 // No function below this succeeds if it TgsAvailable() returns FALSE or if TgsNew() has yet to be called.
 
 /**
-  * Forces a hard reboot of DreamDaemon by ending the process.
-  *
-  * Unlike del(world) clients will try to reconnect.
-  * If TGS has not requested a [TGS_REBOOT_MODE_SHUTDOWN] DreamDaemon will be launched again
-  */
+ * Forces a hard reboot of DreamDaemon by ending the process.
+ *
+ * Unlike del(world) clients will try to reconnect.
+ * If TGS has not requested a [TGS_REBOOT_MODE_SHUTDOWN] DreamDaemon will be launched again
+ */
 /world/proc/TgsEndProcess()
 	return
 
 /**
-  * Send a message to connected chats.
-  *
-  * message - The string to send.
-  * admin_only: If TRUE, message will be sent to admin connected chats. Vice-versa applies.
-  */
+ * Send a message to connected chats.
+ *
+ * message - The string to send.
+ * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
+ */
 /world/proc/TgsTargetedChatBroadcast(message, admin_only_goon_sucks = FALSE)
 	return
 
 /**
-  * Send a private message to a specific user.
-  *
-  * message - The string to send.
-  * user: The [/datum/tgs_chat_user] to PM.
-  */
+ * Send a private message to a specific user.
+ *
+ * message - The string to send.
+ * user: The [/datum/tgs_chat_user] to PM.
+ */
 /world/proc/TgsChatPrivateMessage(message, datum/tgs_chat_user/user)
 	return
 
 // The following functions will sleep if a call to TgsNew() is sleeping
 
 /**
-  * Send a message to connected chats that are flagged as game-related in TGS.
-  *
-  * message - The string to send.
-  * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
-  */
+ * Send a message to connected chats that are flagged as game-related in TGS.
+ *
+ * message - The string to send.
+ * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
+ */
 /world/proc/TgsChatBroadcast(message, list/channels = null)
 	return
 

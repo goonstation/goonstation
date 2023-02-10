@@ -380,6 +380,9 @@
 			if (R.next_char == "u")
 				new_string = "oo"
 				used = 2
+			else if ((R.next_char == "n" && R.prev_char == "c") || (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t"))))
+				new_string = "een"
+				used = 2
 			else if (R.next_char == "n")
 				new_string = "un"
 				used = 2
@@ -389,6 +392,9 @@
 		if("A")
 			if (R.next_char == "U")
 				new_string = "OO"
+				used = 2
+			else if ((R.next_char == "N" && R.prev_char == "C") || (R.next_char == "N" && (R.next_next_char == "T" || (R.next_next_char == "'" && R.next_next_next_char == "T"))))
+				new_string = "EEN"
 				used = 2
 			else if (R.next_char == "N")
 				new_string = "UN"
@@ -414,216 +420,216 @@
 	switch (S)
 		if ("y")
 			if (cmptext(R.next_char, "a"))
-				new_string = "&#x44f;"	//Ya
+				new_string = "я"	//Ya
 				used = 2
 			else if (cmptext(R.next_char,"u"))
-				new_string = "&#x44e;"
+				new_string = "ю"
 				used = 2
 			else if (cmptext(R.next_char,"o"))
-				new_string = "&#x451;"
+				new_string = "ё"
 				used = 2
 			else if (cmptext(R.next_char, "e"))
-				new_string = "&#x435;"
+				new_string = "е"
 				used = 2
 			else
-				new_string = "&#x44b;"
+				new_string = "ы"
 				used = 1
 		if ("Y")
 			if (cmptext(R.next_char, "a"))
-				new_string = "&#x42f;"	//Ya
+				new_string = "Я"	//Ya
 				used = 2
 			else if (cmptext(R.next_char,"u"))
-				new_string = "&#x42e;"
+				new_string = "Ю"
 				used = 2
 			else if (cmptext(R.next_char,"o"))
-				new_string = "&#x401;"
+				new_string = "Ё"
 				used = 2
 			else if (cmptext(R.next_char, "e"))
-				new_string = "&#x415;"
+				new_string = "Е"
 				used = 2
 			else
-				new_string = "&#x42b;"
+				new_string = "Ы"
 				used = 1
 		if ("s")
 			if (cmptext(R.next_char,"h"))
 				if (cmptext(R.next_next_char, "c") && cmptext(R.next_next_next_char,"h"))
-					new_string = "&#x449;"
+					new_string = "щ"
 					used = 4
 				else
-					new_string = "&#x448;"
+					new_string = "ш"
 					used = 2
 			else
-				new_string = "&#x441;"
+				new_string = "с"
 				used = 1
 
 		if ("S")
 			if (cmptext(R.next_char,"h"))
 				if (cmptext(R.next_next_char, "c") && cmptext(R.next_next_next_char,"h"))
-					new_string = "&#x429;"
+					new_string = "Щ"
 					used = 4
 				else
-					new_string = "&#x428;"
+					new_string = "Ш"
 					used = 2
 			else
-				new_string = "&#x421;"
+				new_string = "С"
 				used = 1
 
 		if ("k")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x445;"	//x
+				new_string = "х"	//x
 				used = 2
 			else
-				new_string = "&#x43A;"	//k
+				new_string = "к"	//k
 				used = 1
 
 		if ("K")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x425;"	//x
+				new_string = "Х"	//x
 				used = 2
 			else
-				new_string = "&#x41A;"	//k
+				new_string = "К"	//k
 				used = 1
 
 		if ("c")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x447;"
+				new_string = "ч"
 				used = 2
 			else if (cmptext(R.next_char, "z"))
-				new_string = "&#x446;"	//ts
+				new_string = "ц"	//ts
 				used = 2
 
 		if ("C")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x427;"
+				new_string = "Ч"
 				used = 2
 			else if (cmptext(R.next_char,"z"))
-				new_string = "&#x426;"	//ts
+				new_string = "Ц"	//ts
 				used = 2
 
 		if ("t")
 			if (cmptext(R.next_char, "s"))
-				new_string = "&#x446;"	//ts
+				new_string = "ц"	//ts
 				used = 2
 			else
-				new_string = "&#x442;"	//t
+				new_string = "т"	//t
 				used = 1
 
 		if ("T")
 			if (cmptext(R.next_char, "s"))
-				new_string = "&#x426;"	//ts
+				new_string = "Ц"	//ts
 				used = 2
 			else
-				new_string = "&#x422;"	//t
+				new_string = "Т"	//t
 				used = 1
 
 		if ("i")
-			new_string = "&#x438;"
+			new_string = "и"
 		if ("I")
-			new_string = "&#x418;"
+			new_string = "И"
 
 		if ("z")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x436;"
+				new_string = "ж"
 				used = 2
 			else
-				new_string = "&#x437;"
+				new_string = "з"
 
 		if ("Z")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x416;"
+				new_string = "Ж"
 				used = 2
 			else
-				new_string = "&#x417;"
+				new_string = "З"
 
 		if ("e")
 			if (!R.prev_char || R.prev_char == " ")
-				new_string = "&#x44d;"
+				new_string = "э"
 			else
-				new_string = "&#x435;"
+				new_string = "е"
 
 		if ("E")
 			if (!R.prev_char || R.prev_char == " ")
-				new_string = "&#x42d;"
+				new_string = "Э"
 			else
-				new_string = "&#x415;"
+				new_string = "Е"
 
 		if ("t")
-			new_string = "&#x442;"
+			new_string = "т"
 		if ("T")
-			new_string = "&#x422;"
+			new_string = "Т"
 
 		if ("u")
-			new_string = "&#x443;"
+			new_string = "у"
 		if ("U")
-			new_string = "&#x423;"
+			new_string = "У"
 
 		if ("p")
-			new_string = "&#x43f;"
+			new_string = "п"
 		if ("P")
-			new_string = "&#x41f;"
+			new_string = "П"
 
 		if ("n")
-			new_string = "&#x43d;"
+			new_string = "н"
 		if ("N")
-			new_string = "&#x41d;"
+			new_string = "Н"
 
 		if ("m")
-			new_string = "&#x43c;"
+			new_string = "м"
 		if ("M")
-			new_string = "&#x41c;"
+			new_string = "М"
 
 		if ("l")
-			new_string = "&#x43b;"
+			new_string = "л"
 		if ("L")
-			new_string = "&#x41b;"
+			new_string = "Л"
 
 		if ("d")
-			new_string = "&#x434;"
+			new_string = "д"
 		if ("D")
-			new_string = "&#x414;"
+			new_string = "Д"
 
 		if ("g")
-			new_string = "&#x433;"
+			new_string = "г"
 		if ("G")
-			new_string = "&#x413;"
+			new_string = "Г"
 
 		if ("b")
-			new_string = "&#x431;"
+			new_string = "б"
 		if ("B")
-			new_string = "&#x411;"
+			new_string = "Б"
 
 		if ("v","w")
-			new_string = "&#x432;"
+			new_string = "в"
 		if ("V","W")
-			new_string = "&#x412;"
+			new_string = "В"
 
 		if ("r")
-			new_string = "&#x440;"
+			new_string = "р"
 		if ("R")
-			new_string = "&#x420;"
+			new_string = "Р"
 
 		if ("f")
-			new_string = "&#x444;"
+			new_string = "ф"
 		if ("F")
-			new_string = "&#x424;"
+			new_string = "Ф"
 
 		if ("o")
-			new_string = "&#x43E;"
+			new_string = "о"
 		if ("O")
-			new_string = "&#x41E;"
+			new_string = "О"
 
 		if ("j")
-			new_string = "&#x439;"
+			new_string = "й"
 		if ("J")
-			new_string = "&#x419;"
+			new_string = "Й"
 
 		if ("a")
-			new_string = "&#x430;"
+			new_string = "а"
 		if ("A")
-			new_string = "&#x410;"
+			new_string = "А"
 
 		if ("'")
-			new_string = "&#x44a;"
+			new_string = "ъ"
 
 	if(new_string == "")
 		new_string = R.curr_char
@@ -790,7 +796,7 @@
 
 		// That legendary harsh R
 		if("r")
-			if(lowertext(R.next_char) != "r")
+			if(lowertext(R.next_char) != "r" && R.prev_char != ":") //stop duplicating the research radio shortcut
 				new_string = "rr"
 				used = 1
 		if("i")
@@ -921,12 +927,12 @@
 				if(lowertext(T.prev_char) == "n" || lowertext(T.prev_char) == "c")
 					modded += "gh"
 				else
-					modded += "g"
+					modded += "k"
 			if("K")
 				if(lowertext(T.prev_char) == "N" || lowertext(T.prev_char) == "C")
 					modded += "GH"
 				else
-					modded += "G"
+					modded += "K"
 
 			if("s")
 				modded += "sh"
@@ -938,17 +944,17 @@
 					modded += "du"
 					T.curr_char_pos++
 				else if(lowertext(T.prev_char) == "n")
-					modded += "thf"
+					modded += "dh"
 				else
-					modded += "ff"
+					modded += "dd"
 			if("T")
 				if(lowertext(T.next_char) == "H")
 					modded += "DU"
 					T.curr_char_pos++
 				else if(lowertext(T.prev_char) == "N")
-					modded += "THF"
+					modded += "DH"
 				else
-					modded += "FF"
+					modded += "DD"
 			else
 				modded += T.curr_char
 		T.curr_char_pos++
@@ -1186,6 +1192,9 @@
 		if("a")
 			if (lowertext(R.next_char) == "u")
 				new_string = "oo"
+				used = 2
+			else if ((lowertext(R.next_char) == "n" && lowertext(R.prev_char) == "c") || (lowertext(R.next_char) == "n" && (lowertext(R.next_next_char) == "t" || (lowertext(R.next_next_char) == "'" && lowertext(R.next_next_next_char) == "t"))))
+				new_string = "een"
 				used = 2
 			else if (lowertext(R.next_char) == "n")
 				new_string = "un"
@@ -1529,50 +1538,6 @@ var/list/zalgo_mid = list(
     P.string = new_string
     P.chars_used = used
     return P
-
-//OwO whats this?
-/proc/owotalk(var/string)
-	var/modded = ""
-	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
-	if(prob(13))
-		modded += "rawr x3 "
-
-	if(prob(10))
-		modded += "whats this? "
-
-	if(prob(9))
-		modded += "owo "
-
-	if(prob(8))
-		modded += "uwu "
-
-	if(prob(3))
-		modded += "fucko boingo "
-
-
-	for(var/i = 0, i < length(string), i=i)
-		var/datum/parse_result/P = owo_parse(T)
-		modded += P.string
-		i += P.chars_used
-		T.curr_char_pos = T.curr_char_pos + P.chars_used
-		T.update()
-
-	if(prob(15))
-		modded += " :3c"
-
-	if(prob(13))
-		modded += "~"
-
-	if(prob(10))
-		modded += " uwu"
-
-	if(prob(11))
-		modded += " owo"
-
-
-	return modded
-
 
 /**
 * uwutalk
@@ -2377,3 +2342,10 @@ var/list/zalgo_mid = list(
 		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
 
 	return modded
+
+/proc/thrall_parse(var/string)
+	var/list/end_punctuation = list("!", "?", ".")
+	var/pos = length(string)
+	while (pos > 0 && (string[pos] in end_punctuation))
+		string = copytext(string, 1, pos--)
+	return string + "..."

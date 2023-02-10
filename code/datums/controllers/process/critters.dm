@@ -1,11 +1,12 @@
-// handles critters
-datum/controller/process/critters
+
+/// handles critters
+/datum/controller/process/critters
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 
 	setup()
 		name = "Critter"
-		schedule_interval = 16 // 1.6 seconds
+		schedule_interval = 1.6 SECONDS
 
 		detailed_count = new
 

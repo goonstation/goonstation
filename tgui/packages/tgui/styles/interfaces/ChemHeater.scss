@@ -1,0 +1,77 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+
+$neutral: #AAAAAA !default;
+$hot: #f2711c !default;
+$cold: #2185d0 !default;
+
+@keyframes ChemHeater__heating {
+  to {
+    box-shadow: 0 0 15px 0 $hot;
+    border-color: $hot;
+  }
+}
+
+@keyframes ChemHeater__cooling {
+  to {
+    box-shadow: 0 0 15px 0 $cold;
+    border-color: $cold;
+  }
+}
+
+@keyframes ChemHeater__heating_fill {
+  to {
+    color: $hot;
+  }
+}
+
+@keyframes ChemHeater__cooling_fill {
+  to {
+    color: $cold;
+  }
+}
+
+
+.ChemHeater {
+
+  &__TemperatureNumber {
+    transition: color 500ms ease-out;
+  }
+
+  &__TemperatureArrow {
+    color: $neutral;
+    transition: transform 500ms ease-out;
+
+    &__heating {
+      animation: ChemHeater__heating_fill 2s ease infinite alternate;
+    }
+
+    &__cooling {
+      animation: ChemHeater__cooling_fill 2s ease infinite alternate;
+    }
+  }
+
+  &__TemperatureBox {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0);
+    border-color: $neutral;
+    border-style: solid;
+    border-radius: 4px;
+    height: 3em;
+    text-align: center;
+
+    &__heating {
+      animation: ChemHeater__heating 2s ease infinite alternate;
+    }
+
+    &__cooling {
+      animation: ChemHeater__cooling 2s ease infinite alternate;
+    }
+  }
+}

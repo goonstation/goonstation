@@ -33,6 +33,11 @@
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
+/turf/space/shuttle_transit/safe
+	temperature = T20C
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+
 /turf/simulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
@@ -41,8 +46,6 @@
 	heat_capacity = 0
 	turf_flags = MOB_STEP
 
-	attackby()
-	attack_hand()
 	hitby()
 		. = ..()
 	reagent_act()
@@ -62,6 +65,44 @@
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
 
+	hitby()
+		. = ..()
+	reagent_act()
+	bullet_act()
+	ex_act()
+	blob_act()
+	meteorhit()
+	damage_heat()
+	damage_corrosive()
+	damage_piercing()
+	damage_slashing()
+	damage_blunt()
+
+
+TYPEINFO(/turf/simulated/wall/auto/shuttle)
+	connect_overlay = 1
+	connect_across_areas = FALSE
+TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
+	. = ..()
+	// override parent so we can connect to ourselves
+	connects_to_exceptions = list()
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
+	))
+	connects_with_overlay = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
+		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+	))
+/turf/simulated/wall/auto/shuttle
+	name = "shuttle wall"
+	desc = "A shuttle wall. Pretty reinforced."
+	icon = 'icons/turf/walls_shuttle.dmi'
+	light_mod = "wall-"
+	opacity = 0
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+
 	attackby()
 	attack_hand()
 	hitby()
@@ -77,20 +118,7 @@
 	damage_slashing()
 	damage_blunt()
 
-
-/turf/simulated/wall/auto/shuttle
-	icon = 'icons/turf/walls_shuttle.dmi'
-	light_mod = "wall-"
-	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
-	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
-/*
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
-*/
-	/////////////////////////////////////////////////////////////////OBJECTS
+// ---------------------------------------------- OBJECTS -------------------------------------
 
 /obj/indestructible/
 	anchored = 2
@@ -110,7 +138,8 @@
 	damage_slashing()
 	damage_blunt()
 
-/obj/indestructible/invisible_block // an invisible thing to stop people walking where they 'aint meant to.
+/// an invisible thing to stop people walking where they 'aint meant to.
+/obj/indestructible/invisible_block
 	density = 1
 	mouse_opacity = 0
 
@@ -155,33 +184,6 @@
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-/turf/simulated/wall/auto/shuttle
-	name = "shuttle wall"
-	desc = "A shuttle wall. Pretty reinforced."
-	icon = 'icons/turf/walls_shuttle.dmi'
-	light_mod = "wall-"
-	opacity = 0
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner)
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
-
-	attackby()
-	attack_hand()
-	hitby()
-		. = ..()
-	reagent_act()
-	bullet_act()
-	ex_act()
-	blob_act()
-	meteorhit()
-	damage_heat()
-	damage_corrosive()
-	damage_piercing()
-	damage_slashing()
-	damage_blunt()
-
 //TODO: CLEAN UP
 /turf/simulated/shuttle/wall
 	name = "shuttle wall"
@@ -189,12 +191,12 @@
 	var/icon_style = "wall"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 0
 
 	New()
 		..()
-		SPAWN_DBG(6 SECONDS) // patch up some ugly corners in derelict mode
+		SPAWN(6 SECONDS) // patch up some ugly corners in derelict mode
 			if (derelict_mode)
 				if (src.icon_state == "[src.icon_style]_space")
 					src.icon_state = "[src.icon_style]_void"

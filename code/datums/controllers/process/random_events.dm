@@ -1,4 +1,5 @@
-// handles random events
+
+/// handles random events
 datum/controller/process/randomevents
 	hang_warning_time = 5 MINUTES
 	hang_alert_time = 5.5 MINUTES
@@ -9,4 +10,6 @@ datum/controller/process/randomevents
 		schedule_interval = 2.5 MINUTES
 
 	doWork()
+		#ifndef NO_RANDOM_EVENTS
 		random_events.process()
+		#endif

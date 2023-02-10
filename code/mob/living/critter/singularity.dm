@@ -9,7 +9,7 @@
   if(!S.affects_mobs && ismob(T))
     S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
     return
-  if(get_dist(T, user) <= grav_range)
+  if(GET_DIST(T, user) <= grav_range)
     if(!T.anchored)
       if(!T.throwing)
         S.visible_message("<span style='color:red; font-weight:bold'>[S] [pick("sucks", "draws", "pulls", "yanks", "tugs", "flings")] [T] towards itself!</span>")
@@ -76,7 +76,7 @@
   HH.limb_name = "gravitational pull"
   HH.can_range_attack = 1
 
-/mob/living/critter/singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/mob/living/critter/singularity/attackby(var/obj/item/I, var/mob/user)
   if (istype(I, /obj/item/clothing/mask/cigarette))
     var/obj/item/clothing/mask/cigarette/C = I
     if (!C.on)
@@ -109,15 +109,16 @@
       step_towards(M, src)
 
 /mob/living/critter/singularity/proc/eat(atom/movable/A)
-  // TODO: heal based on consumption?
-  if(src.affects_mobs && isliving(A))
-    var/mob/living/M = A
-    if(M && !istype(M, /mob/living/critter/singularity))
-      M.gib()
-  else if(isobj(A) && A.anchored != 2)
-    A.ex_act(1.0)
-    if(A)
-      qdel(A)
+	// TODO: heal based on consumption?
+	if(src.affects_mobs && isliving(A))
+		var/mob/living/M = A
+		if(M && !istype(M, /mob/living/critter/singularity))
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+			M.gib()
+	else if(isobj(A) && A.anchored != 2)
+		A.ex_act(1)
+		if(A)
+			qdel(A)
 
 
 /mob/living/critter/singularity/Crossed(atom/movable/A)
@@ -145,4 +146,4 @@
   return ..()
 
 /mob/living/critter/singularity/setup_healths()
-  add_hh_robot(-150, 150, 1.15)
+  add_hh_robot(150, 1.15)

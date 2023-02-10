@@ -27,7 +27,7 @@
 		master = null
 		..()
 
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 		switch (id)
@@ -127,7 +127,7 @@
 
 			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 				if(!master.statusEffects || !(S in master.statusEffects) )
-					pool(statusUiElements[S])
+					qdel(statusUiElements[S])
 					src.statusUiElements.Remove(S)
 					qdel(S)
 
@@ -146,7 +146,7 @@
 						pos_x -= spacing
 					else
 						if(S.visible)
-							var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
+							var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
 							U.init(master,S)
 							U.icon = icon_hud
 							statusUiElements.Add(S)

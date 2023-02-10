@@ -244,6 +244,9 @@
 						src.print_error_text("<b>Error:</b> File not found.")
 						return
 
+					if(target.dont_copy)
+						src.print_error_text("<b>Error:</b> File unable to be copied.")
+						return
 					src.clipboard = target
 					src.print_text("File marked.")
 
@@ -346,7 +349,7 @@
 							var/sig_filename = null
 
 							if(command_list.len >= 3) //These two args are needed for this mode
-								id = round(text2num(command_list[2]))
+								id = round(text2num_safe(command_list[2]))
 								pcommand = strip_html(command_list[3])
 
 							if(command_list.len >= 4) //Having a signal file is optional, however
@@ -425,7 +428,7 @@
 						if("kill", "k") //Okay now that we know them it is time to BE RID OF THEM
 							var/target_id = 0
 							if(command_list.len >= 2)
-								target_id = round(text2num(command_list[2]))
+								target_id = round(text2num_safe(command_list[2]))
 							else
 								src.print_error_text("Target ID Required.")
 								return
@@ -445,7 +448,7 @@
 						if("switch", "s")
 							var/target_id = 0
 							if(command_list.len >= 2)
-								target_id = round(text2num(command_list[2]))
+								target_id = round(text2num_safe(command_list[2]))
 							else
 								src.print_error_text("Target ID Required.")
 								return
@@ -736,7 +739,7 @@
 			if(!acc_name || !acc_job)
 				return
 
-			if(!src.active_account && !src.initialize_accounts()) //Oh welp we can't write it to file
+			if(!src.initialize_accounts() && !src.active_account) //Oh welp we can't write it to file
 				src.print_text("<b>Error:</b> Unable to write account file.")
 				return -1
 
@@ -749,7 +752,7 @@
 			if(access_string && !all_access)
 				var/list/decoding = splittext(access_string, ";")
 				for(var/x in decoding)
-					src.active_account.access += text2num(x)
+					src.active_account.access += text2num_safe(x)
 
 			else if(all_access)
 				src.active_account.access = get_all_accesses()

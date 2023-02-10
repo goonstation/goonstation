@@ -14,4 +14,4 @@
 	ches_mod = "Medical Insignia"
 	fx = list(0, 255, 0)
 	painted = 1
-	paint = list(150, 150, 150)
+	paint = "#969696"

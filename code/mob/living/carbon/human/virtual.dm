@@ -13,7 +13,7 @@
 		sound_fart = 'sound/voice/virtual_gassy.ogg'
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
 	Life(datum/controller/process/mobs/parent)
@@ -31,20 +31,16 @@
 				return
 
 			if(!isghost && src.body)
-				if(!istype(src.body, /mob/dead/aieye) && isdead(src.body) || !src.body:network_device)
+				if(!isAIeye(src) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
 
 	death(gibbed)
-		for (var/atom/movable/a in contents)
-			if (a.flags & ISADVENTURE)
-				a.set_loc(get_turf(src))
-
 		Station_VNet.Leave_Vspace(src)
 
+		. = ..()
 		qdel(src)
-		return
 
 	disposing()
 		if (isghost && src.client)
@@ -127,10 +123,11 @@
 
 	cast()
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
-		setdead(holder.owner)
-		holder.owner.death(0)
+		var/mob/M = holder.owner
+		setdead(M)
+		M.death(FALSE)
 
-		Station_VNet.Leave_Vspace(holder.owner)
+		Station_VNet.Leave_Vspace(M)
 
 
 
@@ -157,7 +154,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 		*/

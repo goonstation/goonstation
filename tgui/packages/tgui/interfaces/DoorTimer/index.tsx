@@ -1,5 +1,12 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { useBackend } from '../../backend';
-import { Box, Button, Knob, LabeledControls, LabeledList, Section, Stack, TimeDisplay } from '../../components';
+import { Button, Knob, LabeledControls, Section, Stack, TimeDisplay } from '../../components';
 import { formatTime } from '../../format';
 import { Window } from '../../layouts';
 import { DoorTimerData } from './type';
@@ -8,7 +15,7 @@ export const DoorTimer = (_props, context) => {
   const { act, data } = useBackend<DoorTimerData>(context);
 
   return (
-    <Window width={260} height={data.flasher ? 205 : 135}>
+    <Window width={260} height={data.flasher ? 279 : 207}>
       <Window.Content>
         <Stack vertical fill justify="stretch">
           <Stack.Item grow={1}>
@@ -38,10 +45,23 @@ export const DoorTimer = (_props, context) => {
               </LabeledControls>
             </Section>
           </Stack.Item>
+          {!!data.flusher && (
+            <Stack.Item>
+              <Section title="Floor Flusher" fill>
+                <Button
+                  onClick={() => act('toggle-flusher')}
+                  backgroundColor={data.opening ? 'orange' : undefined}>
+                  {data.opening ? (data.flusheropen ? 'Opening...' : 'Closing...') : (data.flusheropen ? 'Close Flusher' : 'Open Flusher')}
+                </Button>
+              </Section>
+            </Stack.Item>
+          )}
           {!!data.flasher && (
             <Stack.Item>
               <Section title="Flasher" fill>
-                <Button onClick={() => act('activate-flasher')} backgroundColor={data.recharging ? 'orange' : undefined}>
+                <Button
+                  onClick={() => act('activate-flasher')}
+                  backgroundColor={data.recharging ? 'orange' : undefined}>
                   Flash Cell {!!data.recharging && '(Recharging)'}
                 </Button>
               </Section>

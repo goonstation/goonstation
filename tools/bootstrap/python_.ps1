@@ -60,7 +60,7 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 if (!(Test-Path "$PythonDir/Scripts/pip.exe")) {
 	$host.ui.RawUI.WindowTitle = "Downloading Pip..."
 
-	Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" `
+	Invoke-WebRequest "https://bootstrap.pypa.io/pip/3.6/get-pip.py" `
 		-OutFile "$Cache/get-pip.py" `
 		-ErrorAction Stop
 

@@ -20,6 +20,7 @@ var/global/runtime_count = 0
 		"file" = !invalid ? E.file : "",
 		"line" = !invalid ? E.line : "",
 		"desc" = E.desc ? E.desc : "",
+		"usr" = usr ? "[usr] ([usr.ckey])" : "null",
 		"seen" = timestamp,
 		"invalid" = invalid
 	)
@@ -34,6 +35,10 @@ var/global/runtime_count = 0
 			world.log << "[E.desc]"
 #endif
 
+	// if we're in a fucked up state and generating lots of runtimes we don't want to make the performance of the runtimes even worse
+	if(runtime_count < 1000)
+		usr?.unlock_medal("Call 1-800-CODER", 1)
+
 
 /client/proc/cmd_view_runtimes()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -41,7 +46,7 @@ var/global/runtime_count = 0
 	set desc = "View a detailed list of the runtimes during this round"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!cdn)
 		var/list/viewerResources = list(
@@ -56,7 +61,7 @@ var/global/runtime_count = 0
 /client/Topic(href, href_list)
 
 	if (href_list["action"] == "getRuntimeData")
-		usr_admin_only
+		USR_ADMIN_ONLY
 		src << output(url_encode(json_encode(runtimeDetails)), "runtimeviewer.browser:refreshRuntimes")
 
 	..()

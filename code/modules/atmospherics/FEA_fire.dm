@@ -1,6 +1,8 @@
+#define HOTSPOT_MEDIUM_LIGHTS
+
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, exposed_volume)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	return null
@@ -9,22 +11,24 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
+	if (reagents)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
+	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
+		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
+			for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+				item.temperature_expose(null, exposed_temperature, exposed_volume)
+				if (item?.flags & FLUID_SUBMERGE)
+					item.electric_expose(electric)
+		else
+			for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+				item.temperature_expose(null, exposed_temperature, exposed_volume)
+
+
 
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = 0)
 	. = ..()
 	var/datum/gas_mixture/air_contents = return_air()
 
-	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
-
-	if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
-		for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
-			item.temperature_expose(null, exposed_temperature, exposed_volume)
-			if (item?.flags & FLUID_SUBMERGE)
-				item.electric_expose(electric)
-	else
-		for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
-			item.temperature_expose(null, exposed_temperature, exposed_volume)
 
 	if (!air_contents)
 		return 0
@@ -32,7 +36,7 @@
 	if (active_hotspot)
 		if (locate(/obj/fire_foam) in src)
 			active_hotspot.dispose() // have to call this now to force the lighting cleanup
-			pool(active_hotspot)
+			qdel(active_hotspot)
 			active_hotspot = null
 
 		if (soh)
@@ -59,7 +63,7 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		active_hotspot = unpool(/obj/hotspot)
+		active_hotspot = new /obj/hotspot
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 		active_hotspot.set_loc(src)
@@ -73,8 +77,9 @@
 /obj/hotspot
 	mouse_opacity = 0
 	anchored = 2
+	flags = UNCRUSHABLE
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_ABOVE_LIGHTING
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"
@@ -82,7 +87,9 @@
 	//layer = TURF_LAYER
 	alpha = 160
 	blend_mode = BLEND_ADD
+#ifndef HOTSPOT_MEDIUM_LIGHTS
 	var/datum/light/light
+#endif
 
 	animate_movement = NO_STEPS // fix for weird unpool sliding
 
@@ -96,27 +103,22 @@
 		..()
 		START_TRACKING
 		set_dir(pick(cardinal))
+#ifndef HOTSPOT_MEDIUM_LIGHTS
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
 		light.attach(src)
 		// note: light is left disabled until the color is set
+#endif
 
 	disposing()
 		STOP_TRACKING
+#ifndef HOTSPOT_MEDIUM_LIGHTS
 		light.disable(queued_run = 1)
-		if (loc)
-			loc:active_hotspot = null
+#endif
+		var/turf/simulated/floor/location = loc
+		if (istype(location))
+			location.active_hotspot = null
 		..()
-
-	pooled()
-		STOP_TRACKING
-		..()
-
-	unpooled()
-		..()
-		START_TRACKING
-		if (!light.attached_to)
-			light.attach(src)
 
 	// now this is ss13 level code
 	proc/set_real_color()
@@ -157,11 +159,19 @@
 		//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
 		//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
 
+#ifndef HOTSPOT_MEDIUM_LIGHTS
 		var/red_mean = ((red + light.r*255) /2) // mean of R components in the two compared colors
 
 		var/deltaR2 = (red   - (light.r*255))**2
 		var/deltaG2 = (blue  - (light.b*255))**2
 		var/deltaB2 = (green - (light.g*255))**2
+#else
+		var/list/curc = medium_light_rgbas?["hotspot"] || list(0, 0, 0, 100)
+		var/red_mean = ((red + curc[1]) /2) // mean of R components in the two compared colors
+		var/deltaR2 = (red   - (curc[1]))**2
+		var/deltaG2 = (blue  - (curc[2]))**2
+		var/deltaB2 = (green - (curc[3]))**2
+#endif
 
 		//this is our weighted euclidean distance function, weights based on red component
 		var/color_delta = ( (((512+red_mean)*(deltaR2**2))>>8) + (4*(deltaG2**2)) + (((767-red_mean)*(deltaB2**2))>>8) )
@@ -169,12 +179,13 @@
 		//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [light.r*255]|[light.g*255]|[light.b*255]")
 
 		if (color_delta > 144) //determined via E'' sampling in science paper above, 144=12^2
-			red /= 255
-			green /= 255
-			blue /= 255
 
+#ifndef HOTSPOT_MEDIUM_LIGHTS
 			light.set_color(red, green, blue, queued_run = 1)
 			light.enable(queued_run = 1)
+#else
+			add_medium_light("hotspot", list(red, green, blue, 100))
+#endif
 
 	proc/perform_exposure()
 		var/turf/simulated/floor/location = loc
@@ -218,10 +229,11 @@
 		set_real_color()
 
 	Crossed(var/atom/A)
+		..()
 		A.temperature_expose(null, temperature, volume)
 		if (isliving(A))
 			var/mob/living/H = A
-			var/B = min(55, max(0, temperature - 100 / 550))
+			var/B = clamp(temperature - 100 / 550, 0, 55)
 			H.update_burning(B)
 
 	proc/process(list/turf/simulated/possible_spread)
@@ -231,19 +243,19 @@
 
 		var/turf/simulated/floor/location = loc
 		if (!istype(location) || (locate(/obj/fire_foam) in location))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if ((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-			pool(src)
+			qdel(src)
 			return 0
 
 		if (!location.air || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-			pool(src)
+			qdel(src)
 			return 0
 
 		for (var/mob/living/L in loc)
-			L.update_burning(min(max(temperature / 60, 5),33))
+			L.update_burning(clamp(temperature / 60, 5, 33))
 
 		perform_exposure()
 

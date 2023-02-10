@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -85,7 +85,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -118,17 +118,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1
@@ -182,7 +182,7 @@
 		locker.gang = M.mind.gang
 		ticker.mode:gang_lockers += locker
 		M.mind.gang.locker = locker
-		locker.update_icon()
+		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 

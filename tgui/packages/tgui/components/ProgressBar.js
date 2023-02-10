@@ -7,6 +7,7 @@
 import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
+import { CSS_COLORS } from '../constants';
 
 export const ProgressBar = props => {
   const {
@@ -15,6 +16,7 @@ export const ProgressBar = props => {
     minValue = 0,
     maxValue = 1,
     color,
+    textColor,
     ranges = {},
     children,
     ...rest
@@ -24,21 +26,36 @@ export const ProgressBar = props => {
   const effectiveColor = color
     || keyOfMatchingRange(value, ranges)
     || 'default';
+
+  // We permit colors to be in hex format, rgb()/rgba() format,
+  // a name for a color-<name> class, or a base CSS class.
+  const outerProps = computeBoxProps(rest);
+  const outerClasses = [
+    'ProgressBar',
+    className,
+    computeBoxClassName(rest),
+  ];
+  const fillStyles = {
+    'width': clamp01(scaledValue) * 100 + '%',
+  };
+  if (CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
+    // If the color is a color-<name> class, just use that.
+    outerClasses.push('ProgressBar--color--' + effectiveColor);
+  } else {
+    // Otherwise, set styles directly.
+    outerProps.style = (outerProps.style || "")
+      + `border-color: ${effectiveColor};`;
+    fillStyles['background-color'] = effectiveColor;
+  }
+
   return (
     <div
-      className={classes([
-        'ProgressBar',
-        'ProgressBar--color--' + effectiveColor,
-        className,
-        computeBoxClassName(rest),
-      ])}
-      {...computeBoxProps(rest)}>
+      className={classes(outerClasses)}
+      {...outerProps}>
       <div
         className="ProgressBar__fill ProgressBar__fill--animated"
-        style={{
-          width: clamp01(scaledValue) * 100 + '%',
-        }} />
-      <div className="ProgressBar__content">
+        style={fillStyles} />
+      <div className="ProgressBar__content" style={textColor && { color: textColor }}>
         {hasContent
           ? children
           : toFixed(scaledValue * 100) + '%'}

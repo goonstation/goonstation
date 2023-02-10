@@ -1,10 +1,17 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { WeaponVendorData, WeaponVendorStockData } from './type';
 
-export const pluralize = (word, n) => (n !== 1 ? word + 's' : word);
+import { pluralize } from '../common/stringUtils';
 
 export const WeaponVendor = (_props, context) => {
   const { data } = useBackend<WeaponVendorData>(context);

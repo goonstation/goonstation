@@ -20,11 +20,10 @@
 			message_admins("TGS: Deployment failed!")
 		if(TGS_EVENT_DEPLOYMENT_COMPLETE)
 			message_admins("TGS: Deployment complete!")
-			boutput(world, "<B>Server updated, changes will be applied on the next round...</B>")
 		if(TGS_EVENT_WATCHDOG_DETACH)
 			message_admins("TGS restarting...")
 			attached = FALSE
-			SPAWN_DBG(600)
+			SPAWN(600)
 				if(!attached)
 					message_admins("Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")
 		if(TGS_EVENT_WATCHDOG_REATTACH)
@@ -35,3 +34,8 @@
 			else
 				message_admins("TGS: Back online")
 			attached = TRUE
+		if(TGS_EVENT_WATCHDOG_SHUTDOWN)
+			boutput(world, "<B>Server is shutting down!<B>")
+
+/datum/tgs_event_handler/impl/proc/LateOnReattach()
+	message_admins("TGS Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")

@@ -19,6 +19,7 @@
 	icon_state = "power"
 	density = 1
 	anchored = 1
+	power_usage = 250
 	var/locked = 1
 	var/open = 0
 	var/mainsupply = 1
@@ -107,15 +108,15 @@
 
 /obj/machinery/power/switchgear/Topic(href, href_list)
 	..()
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["set_main"] )
-			var/value = text2num(href_list["set_main"])
+			var/value = text2num_safe(href_list["set_main"])
 			mainsupply = value
 			src.updateDialog()
 			return
 		if( href_list["set_apc"] )
 			var/obj/machinery/power/apc/A = locate(href_list["set_apc"])
-			if (A) A.circuit_disabled = min(max(0, text2num(href_list["circuit_disabled"])), 1)
+			if (A) A.circuit_disabled = clamp(text2num_safe(href_list["circuit_disabled"]), 0, 1)
 			// todo: messing with the APC was a hack, need to have the APCs check the switchgear somehow
 			src.updateDialog()
 			return
@@ -134,9 +135,7 @@
 		src.remove_dialog(usr)
 
 /obj/machinery/power/switchgear/process()
-	if(!(status & (NOPOWER|BROKEN)) )
-		use_power(250)
-
+	..()
 	src.updateDialog()
 
 /obj/machinery/power/switchgear/power_change()
@@ -150,6 +149,6 @@
 				icon_state = initial(icon_state)
 				status &= ~NOPOWER
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER

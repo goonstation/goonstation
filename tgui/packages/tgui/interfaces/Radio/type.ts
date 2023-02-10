@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 export interface RadioData {
@@ -14,6 +21,9 @@ export interface RadioData {
   }[];
   wires: number;
   modifiable: BooleanLike;
+  code: number;
+  hasMicrophone: BooleanLike;
+  sendButton: BooleanLike;
 }
 
 export enum RadioWires {

@@ -1,0 +1,71 @@
+	<h1>CONTRACTOR'S COMPENDIUM</h1>
+		<p><i>Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2048 All Rights Reserved</i></p>
+		<h2>YOUR DUTIES</h2>
+		<br>
+		<hr>
+		<h3>ENSURE STATION REMAINS POWERED</h3>
+		<br>
+		The post to which you are assigned possesses one or more on-board power systems.
+		<br>
+		If you have been stationed on a space-faring vessel or station, it is advised that you first configure the solar arrays if present.
+		<br>
+		<br>
+		Solar arrays have two primary components to configure: the solar tracker, and the SMES storage cell(s).
+		<br>
+		<br>
+		For each array, ensure the solar tracker has been set to Auto. There may not be power output at all times due to shifts in solar position.
+		<br>
+		<br>
+		After the array has been configured, proceed to its associated SMES cell or cells and configure their input and output.
+		<br>
+		<br>
+		SMES cells cannot charge above their set input level, so it is crucial to calibrate them based on input from the electrical source charging them.
+		<br>
+		<br>
+		Output should be set to a level lower than the input, though exact value is ideally determined by station load.
+		<br>
+		<br>
+		It is likely that your assigned post also has a primary engine, such as a Thermo-electric Generator.
+		<br>
+		<br>
+		Please refer to your respective engine's documentation for further set-up information, following all appropriate procedures.
+		<br>
+		<hr>
+		<h3>ENSURE STATION INTEGRITY</h3>
+		It is likely that the post to which you have been assigned is subject to dangers external and internal.
+		<br>
+		<b>In the event of a hull breach or other damage to station, repairing this damage is to be your top priority if possible.</b>
+		<br>
+		<br>
+		Before approaching a breach, it is recommended you equip yourself with an internal oxygen supply and space suit, as well as appropriate repair tools.
+		<br>
+		<br>
+		The most crucial supply to obtain is metal sheeting; this can be found in most engineering supply rooms, and can be ordered by station quartermasters.
+		<br>
+		<br>
+		To repair damage to flooring, create floor tiles from the metal sheeting and apply them to missing floors. Damaged tiles are a low priority.
+		<br>
+		<br>
+		Walls broken down to a girder may be repaired by direct application of metal sheets; missing walls will require the creation of a girder from sheets.
+		<br>
+		<br>
+		Damaged windows may be repaired by applying glass to a grille; if the grille is damaged or missing, repair it with metal rods from sheets or storage.
+		<br>
+		<br>
+		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting. Alternatively utilize an oxygen grenade ensuring no staff members are in the blast zone prior to activation.
+		<br>
+		<br>
+		Station integrity can be further ensured during localized events through the construction of Spatial Interdictors. All Nanotrasen stations and ships come standard with one assembly kit for a Spatial Interdictor located in the Engineering Department.
+		<br>
+		<br>
+		Additional Spatial Interdictor units can be constructed from blueprints available in the Engineering Department. These blueprints can be slotted into any fabricator to produce a frame.
+		<br>
+		<br>
+		Please refer to the Spatial Interdictor's documentation for further set-up information, following all appropriate procedures.
+		<br>
+		<br>
+		<hr>
+		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
+		<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="Goonstation Wiki: Powering the Station">https://wiki.ss13.co/Powering_the_Station</a></li>
+		<li><a href="https://wiki.ss13.co/Engineer" target="Goonstation Wiki: Engineer">https://wiki.ss13.co/Engineer</a></li></ul>
+		Thank you for your service to Nanotrasen.</i></p>

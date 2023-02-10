@@ -21,9 +21,11 @@
 		master = M
 		if (sloc)
 			slocation = sloc
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(I))
 				icon_hud = I
+			else if (isrobot(master))
+				icon_hud = 'icons/mob/hud_robot.dmi'
 			else
 				var/icon/hud_style = hud_style_selection[get_hud_style(master)]
 				if (isicon(hud_style))
@@ -44,7 +46,7 @@
 		master = null
 		..()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (!id || id == "background" || id == "selection")
 			return
 		src.select_zone(id)

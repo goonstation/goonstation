@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Divider, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 

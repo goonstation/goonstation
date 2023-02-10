@@ -6,8 +6,8 @@
 	var/oxyloss = 0
 	var/toxloss = 0
 	var/brainloss = 0
-	//var/brain_op_stage = 0.0
-	//var/heart_op_stage = 0.0
+	//var/brain_op_stage = 0
+	//var/heart_op_stage = 0
 
 	infra_luminosity = 4
 
@@ -27,8 +27,12 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				switch (T.wet)
-					if (1)
+				var/wet_adjusted = T.wet
+				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+					wet_adjusted = max(wet_adjusted, 2) //whee
+
+				switch (wet_adjusted)
+					if (1) //ATM only the ancient mop does this
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
 							T.wet = 0
@@ -40,20 +44,27 @@
 							src.inertia_dir = 0
 							return
 					if (2) //lube
-						src.pulling = null
-						src.changeStatus("weakened", 35)
+						src.remove_pulling()
+						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
-						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 6 SECONDS)
-						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
+
+		var/turf/T = NewLoc
+		if(T.sticky)
+			if(src.getStatusDuration("slowed")<1)
+				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
+			if(src.getStatusDuration("slowed")< 30 SECONDS)
+				src.changeStatus("slowed", 2 SECONDS, optional = 2)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
@@ -68,9 +79,10 @@
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='alert'><B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
-				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
 
 				if(prob(get_brute_damage() - 50))
+					logTheThing(LOG_COMBAT, user, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
 					src.gib()
 
 /mob/living/carbon/gib(give_medal, include_ejectables)
@@ -86,12 +98,12 @@
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
-			playsound(get_turf(src), "sound/misc/pourdrink.ogg", 50, 1)
-			pee_target.reagents.add_reagent("urine", 20)
+			playsound(src, 'sound/misc/pourdrink.ogg', 50, 1)
+			pee_target.reagents.add_reagent("urine", 4)
 			return
 
 		// possibly change the text colour to the gray emote text
@@ -118,19 +130,11 @@
 			var/perpname = src.name
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
-			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
-							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
-
-							break
-
-
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
@@ -140,7 +144,7 @@
 
 /mob/living/carbon/lastgasp()
 	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if (!src || !src.client) return														// break if it's an npc or a disconnected player
 		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
@@ -166,7 +170,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -180,14 +184,19 @@
 	if (!toxloss && amount < 0)
 		amount = 0
 	if (..())
-		return
+		return 1
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
-		src.toxloss = 0
-		return 1 //prevent organ damage
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic && amount > 0)
+		if(resist_toxic > 1)
+			src.toxloss = 0
+			return 1 //prevent organ damage
+		else
+			amount *= 0.33
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -198,9 +207,14 @@
 	if (..())
 		return
 
-	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BREATHLESS))
 		src.oxyloss = 0
 		return
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

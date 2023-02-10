@@ -1,7 +1,7 @@
 //FLAGS BITMASK
 
-/// can be put in back slot
-#define ONBACK							 (1<<0)
+/// unused
+//#define							 (1<<0)
 /// can pass by a table or rack
 #define TABLEPASS						 (1<<1)
 /// thing doesn't drift in space
@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can be put in belt slot
-#define ONBELT							 (1<<7)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
@@ -24,10 +24,8 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// is an open container for chemistry purposes
+/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
-/// is an atom spawned in an adventure area
-#define ISADVENTURE 				 (1<<13)
 /// No beaker etc. splashing. For Chem machines etc.
 #define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.
@@ -44,7 +42,12 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
-
+/// Counts as dense for purposes of fluids. *scream.
+#define FLUID_DENSE		 (1<<21)
+/// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
+#define CLICK_DELAY_IN_CONTENTS  (1<<22)
+/// If an item cannot be crushed by the crusher
+#define UNCRUSHABLE              (1<<23)
 
 //Item function flags
 
@@ -56,6 +59,8 @@
 #define SMOKELESS 4
 /// makes items immune to acid
 #define IMMUNE_TO_ACID 8
+/// prevents items from heating anything up while burning
+#define COLD_BURN 16
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -70,6 +75,15 @@
 #define TOOL_WRENCHING 512
 #define TOOL_CHOPPING 1024 // for firaxes, does additional damage to doors.
 
+//omnitool flags
+#define OMNI_MODE_PRYING 1
+#define OMNI_MODE_SNIPPING 2
+#define OMNI_MODE_WRENCHING 3
+#define OMNI_MODE_SCREWING 4
+#define OMNI_MODE_PULSING 5
+#define OMNI_MODE_CUTTING 6
+#define OMNI_MODE_WELDING 7
+
 //tooltip flags for rebuilding
 
 /// rebuild tooltip every single time without exception
@@ -82,7 +96,7 @@
 #define REBUILD_SPECTRO				8
 
 // blood system and item damage things
-#define DAMAGE_BLUNT 1
+#define DAMAGE_BLUNT 1 // 420
 #define DAMAGE_CUT 2
 #define DAMAGE_STAB 4
 #define DAMAGE_BURN 8
@@ -135,12 +149,14 @@
 #define LIMB_STONE    (1<<12)
 /// Limb typically belongs to a vicious bear
 #define LIMB_BEAR     (1<<13)
-/// Limb typically belongs to a wendigo
-#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a brullbar
+#define LIMB_BRULLBAR  (1<<14)
 /// Limb typically belongs to a large angry dog
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
 #define LIMB_SKELLY   (1<<16)
+/// Limb is an artifact limb
+#define LIMB_ARTIFACT (1<<17)
 
 // islimb macros
 #define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
@@ -157,13 +173,13 @@
 #define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
 #define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
 #define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
-#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define isbrullbarlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR)
 #define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
 #define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
 #define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
 #define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
@@ -179,3 +195,19 @@
 #define W_CLASS_HUGE 5
 #define W_CLASS_GIGANTIC 6
 #define W_CLASS_BUBSIAN 10
+
+// for firesource logging
+/// Firesource is capable of starting fires on its own when dropped
+#define FIRESOURCE_OPEN_FLAME 1
+/// Firesource can not cause fires on its own when dropped
+#define FIRESOURCE_IGNITER 2
+
+// for pen reagent dipping
+#define PEN_REAGENT_CAPACITY 4
+
+/// The default, the attack is animated, a message is given, and particles are shown (most items)
+#define ATTACK_VISIBLE 0
+/// The attack is fully hidden. No animation, no message, no particles (sleepy pen, silenced .22)
+#define ATTACK_FULLY_HIDDEN 1
+/// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
+#define ATTACK_PARTIALLY_HIDDEN 2

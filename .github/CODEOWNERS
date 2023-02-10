@@ -6,12 +6,17 @@
 # to the same file or dir, add them to the end under Multiple Owners
 
 # Adharainspace
-/_std/ @Adharainspace
+# /_std/ @Adharainspace
+
+# Aloe
+/code/mob/dead/ @frawhst
 
 # Flourish
 /code/obj/item/toys.dm @flrsh
-/maps/manta.dmm @flrsh
 /maps/oshan.dmm @flrsh
+
+# Gannets
+/code/datums/gamemodes/nuclear.dm @Gannets
 
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
@@ -22,8 +27,29 @@
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Sord
+/maps/donut2.dmm @Sord213
+
+# Sovexe
+/code/modules/antagonists/arcfiend/ @Sovexe
+
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
+/code/modules/chemistry/Reagents-Base.dm @Tarmunora
+/code/modules/chemistry/Reagents-Diseases.dm @Tarmunora
+/code/modules/chemistry/Reagents-Drugs.dm @Tarmunora
+/code/modules/chemistry/Reagents-ExplosiveFire.dm @Tarmunora
+/code/modules/chemistry/Reagents-FoodDrink.dm @Tarmunora
+/code/modules/chemistry/Reagents-Medical.dm @Tarmunora
+/code/modules/chemistry/Reagents-Misc.dm @Tarmunora
+/code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
+/code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
+
+# Virvatuli
+/sound/ @virvatuli-gh
+
+# Walpvrgis
+/icons/misc/critter.dmi @WALPVRGIS
 
 # ZeWaka
 *.md @ZeWaka

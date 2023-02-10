@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gib2"
+	},
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon_state = "clowncorpse"
+	},
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/reagent_dispensers/heliumtank,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/item/clothing/mask/clown_hat,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit4"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip2d"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/item/instrument/bikehorn,
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"W" = (
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+W
+s
+"}
+(2,1,1) = {"
+a
+F
+W
+"}
+(3,1,1) = {"
+n
+t
+u
+"}

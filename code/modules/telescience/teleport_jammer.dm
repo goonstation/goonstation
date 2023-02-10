@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/telejam)
+	mats = 9
+
 /obj/machinery/telejam
 	name = "teleportation jammer"
 	desc = "Generates a force field interferes with teleportation devices."
@@ -6,7 +9,6 @@
 	density = 1
 	opacity = 0
 	anchored = 0
-	mats = 9
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -27,7 +29,6 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,7 +42,7 @@
 		sound_off = null
 		sound_battwarning = null
 
-		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		..()
 
 	get_desc(dist, mob/user)
@@ -87,7 +88,7 @@
 				src.turn_off()
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null
@@ -107,7 +108,7 @@
 					boutput(user, "Nothing happens.")
 		build_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.coveropen = !src.coveropen
 			src.visible_message("<b>[user.name]</b> [src.coveropen ? "opens" : "closes"] [src]'s cell cover.")
@@ -162,14 +163,21 @@
 
 		src.anchored = 1
 		src.active = 1
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
 
 	proc/turn_off()
 		src.anchored = 0
 		src.active = 0
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
 
 	active
 		New()

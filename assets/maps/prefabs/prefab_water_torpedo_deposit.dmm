@@ -1,0 +1,1130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"bg" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"bk" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cT" = (
+/obj/item/paper/book/torpedo,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cZ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/torpedo_deposit)
+"dg" = (
+/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"dj" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fe" = (
+/obj/decal/fakeobjects/bookcase{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"gm" = (
+/obj/table/wood/auto/desk{
+	pixel_y = 2
+	},
+/obj/item/paper/book/deep_blue_sea{
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"gs" = (
+/obj/decal/fakeobjects/bookcase{
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"gI" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"il" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jj" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jo" = (
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gibdown"
+	},
+/turf/simulated/floor/damaged1,
+/area/prefab/torpedo_deposit)
+"jN" = (
+/turf/simulated/floor/damaged4,
+/area/prefab/torpedo_deposit)
+"jS" = (
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"kf" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"kU" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"lz" = (
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/shrub{
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"lK" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/torpedo_deposit)
+"lL" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/torpedo_deposit)
+"mI" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/prefab/torpedo_deposit)
+"nq" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/item/paper/book/the_trial{
+	pixel_y = 3
+	},
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"oM" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"oP" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 8;
+	name = "Engine Room"
+	},
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"pF" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib5"
+	},
+/turf/simulated/floor/damaged5,
+/area/prefab/torpedo_deposit)
+"pX" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"qn" = (
+/obj/torpedo_tray{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"qA" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/device/light/flashlight{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/crowbar,
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"qH" = (
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"qL" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Commander's quarters"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"qP" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Commander's quarters"
+	},
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"qQ" = (
+/obj/item/bananapeel,
+/obj/decal/cleanable/writing{
+	desc = "Someone's scribbled something here. It is very poorly written.";
+	words = "I CAN'T STAY HERE FOR MUCH LONGER."
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"qR" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/torpedo_deposit)
+"sm" = (
+/turf/simulated/floor/carpet/blue,
+/area/prefab/torpedo_deposit)
+"tt" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/torpedo_deposit)
+"ur" = (
+/obj/table/wood/auto,
+/obj/random_item_spawner/desk_stuff/three,
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"uL" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"uW" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vr" = (
+/obj/decal/floatingtiles,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"wV" = (
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/damaged3,
+/area/prefab/torpedo_deposit)
+"xu" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/prefab/torpedo_deposit)
+"xM" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/prefab/torpedo_deposit)
+"ym" = (
+/obj/decal/cleanable/writing{
+	desc = "Someone's scribbled something here. the hand writing is awful.";
+	words = "I DON'T WANT TO BE ALONE ANYMORE."
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/prefab/torpedo_deposit)
+"yx" = (
+/obj/storage/closet/command/ruined,
+/obj/item/device/transfer_valve/briefcase,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/brown{
+	pixel_y = -9
+	},
+/obj/item/clothing/head/sea_captain,
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"yA" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"yI" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/damaged4,
+/area/prefab/torpedo_deposit)
+"zp" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/pen/fancy{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"Ao" = (
+/obj/critter/gunbot/drone/buzzdrone/fish{
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"AB" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_x = -15
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"Bx" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"BO" = (
+/turf/simulated/floor/damaged2,
+/area/prefab/torpedo_deposit)
+"Ch" = (
+/turf/simulated/floor/damaged3,
+/area/prefab/torpedo_deposit)
+"Cy" = (
+/obj/item/storage/wall/medical{
+	pixel_y = 32
+	},
+/turf/simulated/floor/damaged1,
+/area/prefab/torpedo_deposit)
+"DN" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/torpedo_deposit)
+"DX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"Ee" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"EH" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/prefab/torpedo_deposit)
+"Fw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/storage/closet/emergency,
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"FJ" = (
+/obj/item/storage/wall/random,
+/turf/simulated/floor/damaged4,
+/area/prefab/torpedo_deposit)
+"GM" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"He" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"Hf" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/torpedo_deposit)
+"HQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"HY" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/random_item_spawner/tools{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/light/flashlight{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"Ip" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/torpedo_deposit)
+"II" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/storage/secure/closet/fridge/opened,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/vintage{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/wood/two{
+	name = "wooden floor"
+	},
+/area/prefab/torpedo_deposit)
+"Jw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"JE" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 8
+	},
+/area/prefab/torpedo_deposit)
+"Kj" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/torpedo_deposit)
+"KR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/storage/box/glowstickbox{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/gas/emergency,
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"KT" = (
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/prefab/torpedo_deposit)
+"Lj" = (
+/turf/simulated/floor/yellow,
+/area/prefab/torpedo_deposit)
+"LQ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/prefab/torpedo_deposit)
+"Ne" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/light/small/broken{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Np" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/storage/wall/fire{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Ns" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 32
+	},
+/turf/simulated/floor/damaged2,
+/area/prefab/torpedo_deposit)
+"Nw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Ny" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/reagent_containers/syringe/jenkem,
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Pl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Qo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"RK" = (
+/turf/variableTurf/clear,
+/area/space)
+"TV" = (
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"WB" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/critter/gunbot/heavy,
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"WO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Xb" = (
+/obj/decal/cleanable/dirt,
+/obj/torpedo_tray/random_loaded{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Xd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"Yq" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"YU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/torpedo_tray/random_loaded{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"ZC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/broken,
+/obj/torpedo_tray/random_loaded{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+"ZD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/light/small/broken,
+/obj/torpedo_tray/random_loaded{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/torpedo_deposit)
+
+(1,1,1) = {"
+aj
+aj
+aj
+aj
+uW
+aj
+aj
+RK
+RK
+aj
+aj
+aj
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(2,1,1) = {"
+aj
+aj
+gI
+aj
+aj
+aj
+aj
+RK
+RK
+aj
+aj
+aj
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(3,1,1) = {"
+bk
+aj
+il
+cT
+aj
+jj
+aj
+RK
+RK
+aj
+aj
+aj
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(4,1,1) = {"
+aj
+Ao
+aj
+dj
+aj
+aj
+aj
+RK
+RK
+aj
+aj
+aj
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(5,1,1) = {"
+aj
+dj
+aj
+aj
+aj
+yA
+aj
+RK
+RK
+DN
+GM
+DN
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(6,1,1) = {"
+RK
+RK
+jj
+oM
+vr
+RK
+RK
+RK
+RK
+kU
+He
+kU
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(7,1,1) = {"
+RK
+RK
+cZ
+oP
+cZ
+RK
+RK
+RK
+cZ
+cZ
+Hf
+cZ
+cZ
+RK
+RK
+cZ
+cZ
+kU
+cZ
+cZ
+RK
+"}
+(8,1,1) = {"
+RK
+cZ
+cZ
+pF
+cZ
+cZ
+RK
+cZ
+cZ
+DX
+HQ
+Jw
+cZ
+cZ
+RK
+cZ
+Ne
+Qo
+Xb
+cZ
+cZ
+"}
+(9,1,1) = {"
+RK
+cZ
+jo
+pX
+wV
+cZ
+dg
+cZ
+Ns
+jN
+BO
+JE
+KT
+Ip
+cZ
+cZ
+Np
+TV
+Xd
+ZC
+cZ
+"}
+(10,1,1) = {"
+RK
+cZ
+FJ
+qn
+jS
+yI
+jS
+Bx
+Ch
+Ee
+qH
+Kj
+Lj
+Bx
+jS
+Bx
+Nw
+WB
+Nw
+TV
+kU
+"}
+(11,1,1) = {"
+RK
+cZ
+bg
+qA
+kf
+cZ
+kU
+cZ
+Cy
+EH
+EH
+jS
+LQ
+cZ
+cZ
+cZ
+Ny
+TV
+Yq
+ZD
+cZ
+"}
+(12,1,1) = {"
+RK
+cZ
+cZ
+qH
+Ip
+cZ
+RK
+cZ
+cZ
+Fw
+HY
+KR
+cZ
+cZ
+RK
+cZ
+Pl
+WO
+YU
+cZ
+cZ
+"}
+(13,1,1) = {"
+RK
+RK
+cZ
+qL
+cZ
+RK
+RK
+RK
+cZ
+cZ
+kU
+cZ
+cZ
+RK
+RK
+cZ
+cZ
+kU
+cZ
+cZ
+RK
+"}
+(14,1,1) = {"
+RK
+RK
+kU
+jS
+kU
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(15,1,1) = {"
+RK
+cZ
+cZ
+qP
+cZ
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(16,1,1) = {"
+cZ
+cZ
+lz
+qQ
+II
+cZ
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(17,1,1) = {"
+cZ
+fe
+lK
+qR
+xu
+zp
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(18,1,1) = {"
+dg
+gm
+lL
+sm
+xM
+AB
+kU
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(19,1,1) = {"
+cZ
+gs
+mI
+tt
+ym
+ur
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(20,1,1) = {"
+cZ
+cZ
+nq
+uL
+yx
+cZ
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}
+(21,1,1) = {"
+RK
+cZ
+cZ
+kU
+cZ
+cZ
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+RK
+"}

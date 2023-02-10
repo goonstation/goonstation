@@ -11,7 +11,7 @@
 	New()
 		..()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				src.setup()
 				qdel(src)
 
@@ -101,8 +101,6 @@
 	req_access = list(access_pathology)
 	#elif defined(SCIENCE_PATHO_MAP)
 	req_access = list(access_research)
-	#elif defined(MAP_OVERRIDE_DESTINY) // stupid destiny has patho in genetics
-	req_access = list(access_medlab)
 	#else
 	req_access = list(access_medical)
 	#endif
@@ -321,6 +319,26 @@
 	name = "syndie_shuttle access spawn"
 	req_access = list(access_syndicate_shuttle)
 	color = SECURITY
+
+/obj/access_spawn/research_foyer
+	name = "research foyer access spawn"
+	req_access = list(access_researchfoyer)
+	color = RESEARCH
+
+/obj/access_spawn/artlab
+	name = "artlab access spawn"
+	req_access = list(access_artlab)
+	color = RESEARCH
+
+/obj/access_spawn/telesci
+	name = "telesci access spawn"
+	req_access = list(access_telesci)
+	color = RESEARCH
+
+/obj/access_spawn/robotdepot
+	name = "robot depot access spawn"
+	req_access = list(access_robotdepot)
+	color = RESEARCH
 
 //////////////////////owlzone access///////
 /obj/access_spawn/owlmaint

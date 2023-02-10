@@ -5,13 +5,11 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
 	density = 0
 	canmove = 1
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/invisibility_old = 0
-	var/mob/corpse = null	//	observer mode
 	var/observe_round = 0
 	var/health_shown = 0
 	var/arrest_shown = 0
@@ -20,6 +18,7 @@
 	var/obj/item/clothing/head/wig/wig = null
 	var/in_point_mode = 0
 	var/datum/hud/ghost_observer/hud
+	var/auto_tgui_open = TRUE
 
 	mob_flags = MOB_HEARS_ALL
 
@@ -35,32 +34,39 @@
 
 	..()
 
-/mob/dead/observer/proc/toggle_point_mode(var/force_off = 0)
+/mob/dead/observer/proc/toggle_point_mode(var/force_off = FALSE)
 	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
+		src.in_point_mode = FALSE
+	else
+		src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
+
 /mob/dead/observer/hotkey(name)
 	switch (name)
 		if ("togglepoint")
 			src.toggle_point_mode()
 		else
-			.=..()
+			. = ..()
+
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
 		if (src.in_point_mode || src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
-			return
-/mob/dead/observer/click(atom/target, params, location, control)
+		else if (src.client.check_key(KEY_EXAMINE))
+			src.set_cursor('icons/cursors/examine.dmi')
 
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point(target)
-		if (src.in_point_mode)
-			src.toggle_point_mode()
-		return
+/mob/dead/observer/click(atom/target, params, location, control)
+	// If we have an ability active, skip all this and go straight to parent call.
+	if (!src.targeting_ability)
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+			src.insert_observer(target)
+			return
 	return ..()
 
 /mob/dead/observer/Login()
@@ -68,16 +74,17 @@
 	if(src.client)
 		src.updateOverlaysClient(src.client)
 		src.updateButtons()
+		src.hud.update_ability_hotbar()
 	// ok so in logout we set your ghost to 101 invisibility.
 	// in login we set it back to whatever it was. so you keep your ghost.
 	// is there a better way to do this? probably. i dont care.
 	// heres a thought: maybe ghostize() could look for your ghost or smth
 	// and put you in it instead of just making a new one.
 	// idk this codebase is an eldritch horror and i dont wanna try rn
-	src.invisibility = src.invisibility_old
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
-/mob/dead/observer/point_at(var/atom/target)
+/mob/dead/observer/point_at(atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc))
 		return
 
@@ -89,9 +96,10 @@
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
 	if(prob(20))
-		point_invisibility = 0
+		point_invisibility = INVIS_NONE
 #endif
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -104,9 +112,9 @@
 	if (!P.AH)
 		return
 
-	var/cust_one_state = customization_styles[P.AH.customization_first]
-	var/cust_two_state = customization_styles[P.AH.customization_second]
-	var/cust_three_state = customization_styles[P.AH.customization_third]
+	var/cust_one_state = P.AH.customization_first.id
+	var/cust_two_state = P.AH.customization_second.id
+	var/cust_three_state = P.AH.customization_third.id
 
 	var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
 	hair.color = P.AH.customization_first_color
@@ -145,7 +153,7 @@
 
 
 //#ifdef HALLOWEEN
-/mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
@@ -209,7 +217,7 @@
 			if (M.client && isliving(M) && !M.unobservable)
 				candidates += M
 		if (candidates.len)
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				src.insert_observer(pick(candidates))
 #endif
 
@@ -223,19 +231,24 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	src.invisibility = 10
-	src.invisibility_old = 10
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = 16
+	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
-
-	if(corpse && ismob(corpse))
+	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
+	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.name = corpse.real_name
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		src.gender = src.bioHolder.mobAppearance.gender
+		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
+	else
+		stack_trace("Observer New() called with non-mob thing [identify_object(corpse)] (\ref [corpse]) as a corpse.")
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -248,7 +261,7 @@
 	if (render_special)
 		render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
 //#ifdef HALLOWEEN
@@ -263,8 +276,10 @@
 
 	if(!isdead(src))
 		if (src.hibernating == 1)
-			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
+			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
+				respawn_controller.subscribeNewRespawnee(src.ckey)
+				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
 			else
@@ -279,34 +294,56 @@
 
 
 /mob/proc/ghostize()
-	RETURN_TYPE(/mob/dead/observer)
+	RETURN_TYPE(/mob/dead)
+	// do nothing for NPCs
 	if(src.key || src.client)
+
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
-		var/mob/dead/observer/O = new/mob/dead/observer(src)
-		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
-		if (src.client && src.client.holder && src.stat !=2)
-			// genuinely not sure what this is here for since we're setting the
-			// alive/dead status of the *ghost*.
-			// this seems to have made bizarre issues where
-			// some parts would think you were still alive even as a ghost
-			setalive(O)
+		var/datum/mind/mind = src.mind
 
-		// so, fuck that, you're dead, shithead. get over it.
-		setdead(O)
+		// step 1: either find a ghost or make one
+		var/mob/dead/our_ghost = null
 
-		src.mind?.transfer_to(O)
-		src.ghost = O
+		// if we already have a ghost, just go get that instead
+		if (src.ghost && !src.ghost.disposed)
+			our_ghost = src.ghost
+		// no existing ghost, make a new one
+		else
+			our_ghost = new/mob/dead/observer(src)
+			our_ghost.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
+			if(!src.mouse_opacity)
+				our_ghost.mouse_opacity = 0
+				our_ghost.alpha = 0
+			src.ghost = our_ghost
+
+		var/turf/T = get_turf(src)
+		if (T && (!isghostrestrictedz(T.z) || restricted_z_allowed(src, T) || (src.client?.holder && !src.client.holder.tempmin)))
+			our_ghost.set_loc(T)
+		else
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+		// step 2: make sure they actually make it to the ghost
+		if (src.mind)
+			src.mind.transfer_to(our_ghost)
+		else
+			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
+
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
-		O.update_item_abilities()
-		return O
-	return null
 
+		if(!istype(src, /mob/dead) && !mind?.get_player()?.dnr)
+			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
+		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
+			respawnee.update_time_display()
+			//var/mob/dead/observer/our_observer = our_ghost
+			//our_observer.hud?.get_join_other() // remind them of the other server
+
+		our_ghost.update_item_abilities()
+		return our_ghost
+	return null
 
 /mob/dead/observer/movement_delay()
 #ifdef HALLOWEEN
@@ -332,6 +369,17 @@
 	..()
 	C.apply_keybind("human")
 
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
+
 /mob/dead/observer/is_spacefaring()
 	return 1
 
@@ -349,17 +397,17 @@
 		O.overlays += glass
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
+		var/image/hair = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = 192
 		O.overlays += hair
 
-		var/image/beard = image('icons/mob/human_hair.dmi', src.cust_two_state)
+		var/image/beard = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = 192
 		O.overlays += beard
 
-		var/image/detail = image('icons/mob/human_hair.dmi', src.cust_three_state)
+		var/image/detail = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = 192
 		O.overlays += detail
@@ -371,7 +419,7 @@
 		O.wig.setMaterial(wigmat)
 		O.wig.name = "[O.name]'s hair"
 		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = cust_one_state
+		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
 		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
 		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
@@ -391,56 +439,56 @@
 /mob/dead/observer/verb/show_health()
 	set category = "Ghost"
 	set name = "Toggle Health"
-	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client?.images)
-			for(var/image/I in health_mon_icons)
-				if (I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
+		boutput(src, "Health status toggled on.")
 	else
 		health_shown = 0
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
+		boutput(src, "Health status toggled off.")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client?.images)
-			for(var/image/I in arrestIconsAll)
-				if(I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
 		boutput(src, "Arrest status toggled on.")
 	else
 		arrest_shown = 0
-		client.images.Remove(arrestIconsAll)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 		boutput(src, "Arrest status toggled off.")
-
 
 /mob/dead/observer/verb/ai_laws()
 	set name = "AI Laws"
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
-	if(!ticker || !ticker.centralized_ai_laws)
+	if(!ticker || !ticker.ai_law_rack_manager)
 		boutput( src, "Abort abort abort! No laws! No laws!!" )
 		return
 
-	boutput( src, "<b>AI laws:</b>" )
-	ticker.centralized_ai_laws.show_laws(usr)
+	boutput( src, ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE) )
 
 
 /mob/dead/observer/Logout()
 	..()
-	if(last_client)
-		health_shown = 0
-		last_client.images.Remove(health_mon_icons)
 
-	if(!src.key && delete_on_logout)
+	if(last_client)
+		if(health_shown)
+			health_shown = 0
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
+		if(arrest_shown)
+			arrest_shown = 0
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
+
+
+	if(delete_on_logout)
 		//qdel(src)
 		// so here's a fun thing im gonna do: ghosts dont go away now.
 		// theres too much shit that relies on ghosts staying aroudn post-qdel.
@@ -451,41 +499,22 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		src.invisibility_old = src.invisibility
-		src.invisibility = 101
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless", INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(!canmove) return
 
-	if (NewLoc && isghostrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder && !src.client.holder.tempmin))
-		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (OS)
-			src.set_loc(OS)
-		else
-			src.z = 1
-		return OnMove()
-
-	if (!isturf(src.loc))
-		src.set_loc(get_turf(src))
-	if (NewLoc)
-		set_dir(get_dir(loc, NewLoc))
-		src.set_loc(NewLoc)
+	var/turf/NewTurf = get_turf(NewLoc)
+	if (NewLoc && isghostrestrictedz(NewTurf.z) && !restricted_z_allowed(src, NewTurf) && !(src.client && src.client.holder && !src.client.holder.tempmin))
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
+		src.set_loc(OS)
 		OnMove()
 		return
 
-	set_dir(direct)
-	if((direct & NORTH) && src.y < world.maxy)
-		src.y++
-	if((direct & SOUTH) && src.y > 1)
-		src.y--
-	if((direct & EAST) && src.x < world.maxx)
-		src.x++
-	if((direct & WEST) && src.x > 1)
-		src.x--
-	OnMove()
+	. = ..()
 
-/mob/dead/observer/MouseDrop(atom/A)
+/mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
 		var/mob/M = A
@@ -501,11 +530,21 @@
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
 
+/mob/dead/observer/proc/toggle_tgui_auto_open()
+	set category = "Ghost"
+	set name = "Toggle TGUI auto-observing"
+	if(src.auto_tgui_open)
+		boutput(src, "No longer auto-opening TGUI windows of observed mobs.")
+		src.auto_tgui_open = FALSE
+	else
+		boutput(src, "Observed mob's TGUI windows will now auto-open")
+		src.auto_tgui_open = TRUE
+
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
 	if(!corpse || corpse.disposed)
-		alert("You don't have a corpse!")
+		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
@@ -524,8 +563,8 @@
 		boutput(usr, "Not when you're not dead!")
 		return
 	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in get_teleareas()
+	var/list/tele_areas = get_teleareas()
+	A = tgui_input_list(src, "Area to jump to", "Jump", tele_areas)
 	if (!A)
 		// aaaaaaaaaaaaaaaaaaaagggggggggggg
 		return
@@ -563,7 +602,7 @@
 	//set category = "Ghost"
 	// ooooo its a secret, oooooo!!
 
-	if(!mind || !mind.dnr)
+	if(!mind || !mind.get_player()?.dnr)
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
@@ -591,6 +630,23 @@
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
 
+
+/mob/dead/observer/verb/toggle_ghosts()
+	set name = "Toggle Ghosts"
+	set category = null
+
+	if (src.see_invisible >= INVIS_GHOST)
+		src.see_invisible = INVIS_NONE
+		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
+	else if(HAS_FLAG(src.sight, SEE_SELF))
+		src.sight &= ~SEE_SELF
+		boutput(src, "You can no longer see yourself.", group="ghostsight")
+	else
+		src.see_invisible = INVIS_SPOOKY
+		src.sight |= SEE_SELF
+		boutput(src, "You can now see other ghosts and yourself.", group="ghostsight")
+
+
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
 	set category = null
@@ -599,18 +655,17 @@
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe
 		if (!isliving(M) && !iswraith(M) && !isAI(M))
+			continue
+		// admins aren't observable unless they're in player mode
+		if (C.holder && !C.player_mode)
 			continue
 		// remove any secret mobs that someone is controlling
 		if (M.unobservable)
@@ -630,17 +685,8 @@
 		creatures[name] = M
 
 	var/eye_name = null
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
+	sortList(creatures, /proc/cmp_text_asc)
+	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
 		return
@@ -649,152 +695,39 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
+	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
 
-	//prefix list with option for alphabetic sorting
-	var/const/SORT = "* Sort alphabetically..."
-	creatures.Add(SORT)
-
-	// Same thing you could do with the old auth disk. The bomb is equally important
-	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
-			var/name = "Nuclear bomb"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = N.the_bomb
-
-
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		var/datum/game_mode/football/F = ticker.mode
-		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
-			var/name = "THE FOOTBALL"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = F.the_football
-
-
-	for_by_tcl(O, /obj/observable)
-		LAGCHECK(LAG_LOW)
-		var/name = O.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = O
-
-	for_by_tcl(GB, /obj/item/ghostboard)
-		LAGCHECK(LAG_LOW)
-		var/name = "Ouija board"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = GB
-
-	for_by_tcl(G, /obj/item/gnomechompski)
-		var/name = "Gnome Chompski"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = G
-
-	for_by_tcl(CR, /obj/cruiser_camera_dummy)
-		var/name = CR.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = CR
-
-	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
-		var/name = L.name
-		if (name != "strangelet loaf")
+	for (var/atom/A in all_observables)
+		// isghostrestrictedz also filters out objects in NULL
+		// bomb is only tracked in nuclear mode
+		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
 			continue
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = L
+		// this doesn't distinguish objects with the same name on the same tile. that's fine
+		var/area/area = get_area(A)
+		var/turf/turf = get_turf(A)
+		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
 
-	for (var/obj/machinery/bot/B in machine_registry[MACHINES_BOTS])
-		LAGCHECK(LAG_LOW)
-		if (isghostrestrictedz(B.z)) continue
-		var/name = "*[B.name]"
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = B
+	sortList(observable_map, /proc/cmp_text_asc)
+	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
 
-	var/eye_name = null
-
-	for(var/name in creatures)
-		var/obj/O = creatures[name]
-		if(!istype(O))
-			creatures -= name
-		else
-			// let people observe these regardless of where they are. who cares
-			// there's probably a way to do this better (some bots have no-camera mode for example)
-			// which would work but someone else can fix it later. jhon madden
-			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
-				var/turf/T = get_turf(O)
-				if(!T || isghostrestrictedz(T.z))
-					creatures -= name
-
-	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (eye_name == SORT)
-		creatures.Remove(SORT)
-
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-
-		//redisplay sorted list
-		eye_name = input("Please, select a target!", "Observe (Sorted)", null, null) as null|anything in creatures
-
-	if (!eye_name)
+	if (!picked_label)
 		return
 
-	insert_observer(creatures[eye_name])
+	insert_observer(observable_map[picked_label])
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
-	var/mob/dead/target_observer/newobs = unpool(/mob/dead/target_observer)
-	newobs.set_observe_target(target)
+	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
+	src.set_loc(newobs)
+	newobs.attach_hud(hud)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
-	newobs.my_ghost = src
+	newobs.ghost = src
+	newobs.set_observe_target(target)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
@@ -805,6 +738,24 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		mind.transfer_to(newobs)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
+
+mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
+	newobs.attach_hud(hud)
+	newobs.set_observe_target(target)
+	newobs.name = src.name
+	newobs.real_name = src.real_name
+	newobs.corpse = src.corpse
+	newobs.ghost = src
+	delete_on_logout_reset = delete_on_logout
+	delete_on_logout = 0
+	if (target?.invisibility)
+		newobs.see_invisible = target.invisibility
+	if (src.corpse)
+		corpse.ghost = newobs
+	if (src.mind)
+		mind.transfer_to(newobs)
+	else if (src.client)
+		src.client.mob = newobs
 	set_loc(newobs)
-	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+	return newobs

@@ -1,0 +1,36 @@
+	    <br><BIG><b>The Bartender's Beginner Booklet</b></BIG>
+	    <br>So you wanna bartend, eh? Well then, look no further than this handy booklet provided to you! The Bartender's job is to serve beverages to the crew to bolster their moral, spirits and their blood alcohol level. Of course, there is no need to carry around and stock hundreds of different bottles of spirits here, as magical space technology has given you the Alcohol, Soda, and Chemical Dispensers, all in the same place!
+	    <br><hr>
+	    <br><b>Part One, Prepping the workplace</b>
+	    <br>So right off the bat, you should get yourself familiarized with your surroundings. Nearby you should find a locked Mixology locker or a crate of similar proportions, within are the tools of your trade. Inside you can find a toxins medical kit, which is used to treat poisoning; some large beakers; glassware boxes which contain drinking glasses; and a hand labeler for naming your drinks.
+	    <br>
+	    <br>Exiting your office, you should eventually find yourself your main work area, the Bar. Here, you can find every tool you need to mix up any drink imaginable. If you have worked within the Research department, you might notice all of these tools are very similar. Truth is, being a Bartender is very similar to being a chemist. Main difference being people drink your concoctions (mostly) voluntarily. On this side of the Bar table you can also find those three dispensers mentioned earlier, those being the Alcohol, Soda and Chemical Dispensers. You can also find an espresso machine here for those fancy types who can't handle a real drink, and a glassware recycler which can be filled with glass objects in order to create new fancy glassware for your Bar.
+	    <br><hr>
+	    <br><b>Part Two, Preparing the drinks</b>
+	    <br>While your main job is to mix drinks, people nowadays are so busy they barely take the time to inspect your well-made drinks. Remember that the first taste is with the eyes, and luckily you are supplied with various decorations to make those drinks beautiful. These include a box of tiny umbrellas, fruit wedges and little doodads like celery sticks, cherries and olives. In addition, the glassware recycler can create a multitude of different glass types such as cocktail glasses, old-fashioned lowball glasses, shot glasses, drinking glasses and a bunch more stuff like entire pitches and plates.
+			<br>You can add the decorations to a glass by slapping them in there, but you can only add a single fruit wedge and doodad or umbrella at a time. All about visual balance, yes?
+			<br>Additionally, you can really kick your drinks up a notch by adding ice or salt to them. You have a blue Ice Dispenser in the Bar that will automatically create chunks of ice you can toss into a drink.
+			<br>To salt the rim of a glass, just pour salt into a beaker or make some of your own at a Chemical Dispenser, then hit the glass with it. You'll want to do this when you've already poured your drink of choice into the glass, so you don't accidentally end up adding salt into the drinking glass!
+	    <br><hr>
+	    <b>Part Three, Defending the bar and beyond the drink dispenser</b>
+	    <br>Look at that, now you know the basics. While normally the Bar is a fairly peaceful place, sometimes people have a bad day or made poor decisions and choose to take it out on your patrons. Luckily for you, a sawn-off double barreled shotgun has been issued to you in order to silence these rough-housers. Be warned though, you don't formally have a gun licence on the station and the robots might not take kindly to you luggin' it around.
+	    <br>
+	    <br>And now, if you are still feeling lost, here is a small list of the most commonly ordered drinks by crew.
+	    <br>
+	    <br>Gin & Tonic: Gin + Tonic Water
+	    <br>Old Fashioned: Bourbon + Bitters + Sugar + Water
+	    <br>Screwdriver: Vodka + Orange Juice
+	    <br>Martini: Gin + Vermouth
+	    <br>Bliss on the Beach: Screwdriver + Cranberry Juice
+	    <br>Whiskey Sour: Bourbon + Lemonade
+	    <br>
+	    <br>Now, if you still feel like you can do better, maybe it might be in your best interest to do some real Mixology and try your hand at discovering some of the drinks Nanotrasen doesn't want you to know about.
+	    <br>
+	    <br>Dragon's Breath: Spicy, alcoholic liquid firewater, fairly safe after new mixing regulations came into play but still has a very slight chance to instantly turn you to dust when drinking it.
+	    <br>Freeze: Liquid hypothermia, somehow extremely cold even if you heat it to 1000 Kelvin; like Dragon's Breath it has a very slight chance toruin your shift by turning you into an ice statue.
+	    <br>Grog: A pirate's disgusting dream, somehow perfectly safe to drink even with a PH level of 1 and a piratry level of over 9000.
+	    <br>Mutini: An odd drink of clashing chemicals. Gives you both horrific mutations and brain damage while curing it at the same time. A very good party starter.
+	    <br><hr>
+	    <br>Additional Mixology information:
+	    <br><ul>><li><a href="https://wiki.ss13.co/Foods_and_Drinks" target="Goonstation Wiki: Foods and Drinks">https://wiki.ss13.co/Foods_and_Drinks</a></li>
+	    <br><li><a href="https://wiki.ss13.co/Chemicals" target="Goonstation Wiki: Chemicals">https://wiki.ss13.co/Chemicals</a></li></ul>

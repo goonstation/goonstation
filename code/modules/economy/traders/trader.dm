@@ -4,10 +4,10 @@
 	var/crate_tag = "trader"    // What to label a crate if selling to them
 	var/list/base_patience = list(0,0) // min and max patience for this trader
 	var/patience = 0      // how many times you can haggle the price before they get pissed off and leave, randomise it
-	var/hiketolerance = 20// if the haggled price hike is this % or greater of the current price, reject it
+	var/hiketolerance = 25// if the haggled price hike is this % or greater of the current price, reject it
 	var/hidden = 0              // Makes the trader not show up on the QM console
-	var/chance_leave = 20       // Chance for a trader to go hidden during a market shift
-	var/chance_arrive = 33      // Chance for a trader to stop hiding during a market shift
+	var/chance_leave = 35       // Chance for a trader to go hidden during a market shift
+	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
 	// lists of commodity datums that the trader will buy or sell, and the cart
@@ -24,23 +24,61 @@
 
 	var/current_message = "what"// draws from dialogue to display a message
 	// dialogue banks
-	var/list/dialogue_greet = list("Hello there. Care to take a look at my wares?")
-	var/list/dialogue_leave = list("This is going nowhere. I'm outta here.")
-	var/list/dialogue_purchase = list("Thank you for your purchase! Your goods should arrive shortly.")
+	var/list/dialogue_greet = list("Hello there. Care to take a look at my wares?",
+	"Hey, got some new selection for you! Take a look.",
+	"Just finished getting everything set up! Come and browse my selection.",
+	"I've got some very impressive goods to sell today!",
+	"I've finally gotten rid of the cargo holds. Please buy something, I need to make the money back.")
+	var/list/dialogue_leave = list("This is going nowhere. I'm outta here.",
+	"This is the best Nanotrasen has to offer? We're finished here, goodbye.",
+	"What a joke. I can't believe I bothered with you. Bye.",
+	"Yeah, clearly we aren't seeing eye to eye. I'll come back another time, alright?",
+	"Are you expecting me to just give you what you want for free? Nah, I'm gone.")
+	var/list/dialogue_purchase = list("Thank you for your purchase! Your goods should arrive shortly.",
+	"Alright, we'll send the merchandise over now. Watch your head!",
+	"Transaction complete! Your items should be on the way!",
+	"That settles it. We'll ship the goods over now, I hope your conveyors can handle it!")
 	var/list/dialogue_haggle_accept = list("Alright, how's this sound?",
 	"You drive a hard bargain. How's this price?",
 	"You're busting my balls here. How's this?",
+	"Anything more than this and I'll go broke!",
+	"Alright, that seems like a fair exchange.",
+	"I think this price will benefit both of us!",
+	"Agh! Alright fine, but no higher!",
+	"Okay, this is my last offer. I'm being serious.",
+	"Fine, but any higher and I won't make a profit anymore.",
+	"I can't go any higher than this, alright?",
 	"I'm being more than generous here, I think you'll agree.",
 	"This is my final offer. Can't do better than this.")
 	var/list/dialogue_haggle_reject = list("No way. That's too much of a stretch.",
 	"You're kidding, right?",
 	"That's just not reasonable.",
 	"I can't go for that.",
+	"No, I don't think I'll let that slide.",
+	"I'm not an idiot, be more reasonable.",
+	"There's no way you're actually expecting me to accept that, right?",
+	"I don't think that's fair, how about this?",
+	"Money doesn't grow on trees here, you know?",
+	"Drop it down a notch and we'll see how I feel.",
+	"I have a budget to maintain as well, sorry.",
+	"There's no way I can do that.",
 	"I'm afraid that's unacceptable.")
-	var/list/dialogue_wrong_haggle_accept = list("...huh. If you say so!")
-	var/list/dialogue_wrong_haggle_reject = list("Are you sure about that?")
-	var/list/dialogue_cant_afford_that = list("I'm sorry, but you can't afford that.")
-	var/list/dialogue_out_of_stock = list("Sorry, that item is out of stock.")
+	var/list/dialogue_wrong_haggle_accept = list("...huh. If you say so!",
+	"I mean if you're offering, sure!",
+	"Well I'm not going to say no to a deal like that!",
+	"Now I see why people told me trading with this station is profitable.")
+	var/list/dialogue_wrong_haggle_reject = list("Are you sure about that?",
+	"I'm gonna pretend I didn't see that, alright?",
+	"Please make sure to proof read your messages, alright?",
+	"Did you make a mistake or are you trying to get on my good side?")
+	var/list/dialogue_cant_afford_that = list("I'm sorry, but you can't afford that.",
+	"There's not enough to cover the purchase in your budget, sorry.",
+	"Your card declined, should I try again?",
+	"It looks like you don't have the budget for this purchase. Did someone nab it?",)
+	var/list/dialogue_out_of_stock = list("Sorry, that item is out of stock.",
+	"I just sold out a few minutes ago, sorry!",
+	"We're fresh out, check back in a bit!",
+	"You just bought everything I had, didn't you?")
 
 	var/currently_selling = 0 //Are we currently processing an order?
 
@@ -79,7 +117,7 @@
 			howmanysell--
 			var/the_commodity = pick(goods_sell_temp)
 			var/datum/commodity/COM = new the_commodity(src)
-			if(COM.type == /datum/commodity) logTheThing("debug", src, null, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
+			if(COM.type == /datum/commodity) logTheThing(LOG_DEBUG, src, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
 			src.goods_sell += COM
 			goods_sell_temp -= the_commodity
 
@@ -105,14 +143,14 @@
 
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(H.traitHolder && H.traitHolder.hasTrait("smoothtalker"))
+			if (H.traitHolder.hasTrait("smoothtalker") || H.traitHolder.hasTrait("training_quartermaster"))
 				adjustedTolerance = round(adjustedTolerance * 1.5)
 
 		var/hikeperc = askingprice - goods.price
 		hikeperc = (hikeperc / goods.price) * 100
 		var/negatol = 0 - adjustedTolerance
 
-		if ((buying && hikeperc <= negatol) || (!buying && hikeperc >= adjustedTolerance))
+		if ((buying && (hikeperc <= negatol || askingprice < goods.baseprice / 5)) || (!buying && (hikeperc >= adjustedTolerance || askingprice > goods.baseprice * 5)))
 			// you are being a rude nerd and pushing it too far!
 			src.current_message = pick(src.dialogue_haggle_reject)
 			src.patience--
@@ -155,17 +193,16 @@
 			while(putamount > 0)
 				putamount--
 				new C.comtype(S)
-			invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-			wagesystem.shipping_budget -= total_price
+		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-			src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
+		wagesystem.shipping_budget -= total_price
+
+		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
 
 	proc/wipe_cart(var/sold_stuff)
@@ -173,6 +210,7 @@
 			if (COM.reference && istype(COM.reference,/datum/commodity/))
 				if (COM.reference.amount > -1 && !sold_stuff) //If we sold shit then don't increase the amount. Fuck.
 					COM.reference.amount += COM.amount
+			COM.amount = 0
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
 
@@ -192,6 +230,7 @@
 		if(prob(src.alt_type_chance) && length(src.possible_alt_types))
 			src.comtype = pick(src.possible_alt_types)
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
+		src.baseprice = price
 
 /datum/commodity/trader/incart/
 	var/datum/commodity/reference = null

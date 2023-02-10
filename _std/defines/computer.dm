@@ -11,3 +11,6 @@
 
 #define COMP_HIDDEN 0
 #define COMP_ALLACC 511
+
+#define MIN_NUKE_TIME 120
+#define MAX_NUKE_TIME 600

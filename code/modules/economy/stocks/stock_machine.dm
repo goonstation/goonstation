@@ -12,9 +12,9 @@
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
 		return 0
-	var/datum/data/record/B = FindBankAccountByName(logged_in)
+	var/datum/db_record/B = FindBankAccountByName(logged_in)
 	if (B)
-		return B.fields["current_money"]
+		return B["current_money"]
 	return "--- account not found ---"
 
 /obj/machinery/computer/stockexchange/attack_hand(mob/user)
@@ -143,15 +143,15 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(ID.registered)
 		if(account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+			var/enterpin = user.enter_pin("Stock Exchange")
 			if (enterpin == ID.pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.logged_in = ID.registered
@@ -161,7 +161,7 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.logged_in = null
-	else src.attack_hand(user)
+	else ..()
 	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/ticker/S, mob/user)
@@ -183,7 +183,7 @@
 	var/amt = round(input(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
 	if (!user)
 		return
-	if (!amt)
+	if (!isnum_safe(amt))
 		return
 	if (!(user in range(1, src)))
 		return
@@ -219,7 +219,7 @@
 	var/amt = round(input(user, "How many shares? (Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
 	if (!user)
 		return
-	if (!amt)
+	if (!isnum_safe(amt))
 		return
 	if (!(user in range(1, src)))
 		return

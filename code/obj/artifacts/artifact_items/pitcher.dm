@@ -3,7 +3,6 @@
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	desc = "You have no idea what this thing is!"
 	artifact = 1
-	module_research_no_diminish = 1
 	mat_changename = 0
 	can_recycle = 0
 
@@ -13,7 +12,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
@@ -65,6 +64,8 @@
 			reagents.add_reagent("werewolf_serum", 2)
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
+		if (prob(3))
+			reagents.add_reagent("rat_spit", 5)
 		if (prob(1))
 			reagents.add_reagent("rat_venom", 5)
 		if (prob(3))
@@ -129,7 +130,7 @@
 		for(var/i in 1 to fillerAmt)
 			reagents.add_reagent(pick(fillerDrinks), 50)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -145,6 +146,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
+
 		return //Can't be activated, so the icon should never change
 
 	smash()
@@ -153,13 +155,13 @@
 	//Annoyingly duplicated code to override pitcher's explosion behavior (smashing)
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -182,13 +184,13 @@
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	type_name = "Pitcher"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0
 	max_triggers = 0
+	no_activation = TRUE
 	react_xray = list(2,85,12,8,"HOLLOW")
-	module_research = list("medicine" = 5, "science" = 5, "miniaturization" = 15)
-	module_research_insight = 3
 
 
 	New()

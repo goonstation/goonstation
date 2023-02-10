@@ -12,29 +12,35 @@
 	var/vision_radius = 3
 	var/mob/the_user = null
 	//Prolonged use causes damage.
-	New(mob/target, atom/location)
+	New(atom/location, mob/target)
 		..()
 		src.set_loc(location)
-		the_user = target
-		target.set_loc(src)
-		img = image('icons/effects/effects.dmi',src ,"energyorb")
-		target << img
+		if(target)
+			the_user = target
+			target.set_loc(src)
+			img = image('icons/effects/effects.dmi',src ,"energyorb")
+			target << img
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
+		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
-		//SPAWN_DBG(0) check() but why
+		//SPAWN(0) check() but why
+
+	proc/handle_dropped_item(mob/user, atom/movable/AM)
+		AM.set_loc(get_turf(user))
 
 	remove_air(amount as num)
-		var/datum/gas_mixture/Air = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/Air = new /datum/gas_mixture
 		Air.oxygen = amount
 		Air.temperature = 310
 		return Air
 
 	proc/spawn_sparks()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			// Check spawn limits
 			if(limiter.canISpawn(/obj/effects/sparks))
-				var/obj/effects/sparks/O = unpool(/obj/effects/sparks)
+				var/obj/effects/sparks/O = new /obj/effects/sparks
 				O.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (O) pool(O)
+				SPAWN(2 SECONDS) if (O) qdel(O)
 
 	relaymove(mob/user, direction)
 
@@ -55,11 +61,12 @@
 
 				src.set_loc(new_loc)
 				can_move = 0
-				SPAWN_DBG(speed) can_move = 1
+				SPAWN(speed) can_move = 1
 		return
 
 	disposing()
-		the_user.client.images -= cableimgs
+		the_user?.client.images -= cableimgs
+		REMOVE_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 		the_user = null
 		return ..()
 
@@ -93,12 +100,11 @@
 	var/on_cooldown = 0
 	var/power = 100
 	var/power_icon = ""
-	module_research = list("devices" = 5, "energy" = 20, "miniaturization" = 20)
 	var/list/cableimgs = list()
 	var/vision_radius = 2
 	New()
 		handle_overlay()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			check()//ohly fucke pls rewrite me
 		cableimgs = new/list((vision_radius*2+1)**2)
 		var/obj/cable/ctype = /obj/cable
@@ -195,7 +201,7 @@
 							continue
 						var/image/img = cableimgs[idx]
 						img.appearance = C.appearance
-						img.invisibility = 0
+						img.invisibility = INVIS_NONE
 						img.alpha = 255
 						img.layer = 100
 						img.plane = 100
@@ -211,7 +217,7 @@
 					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target
 					deactivate()
-					old_trg.changeStatus("stunned", 200)
+					old_trg.changeStatus("stunned", 20 SECONDS)
 				sleep(1 SECOND)
 
 	proc/deactivate()
@@ -220,13 +226,13 @@
 		activating = 1
 
 		on_cooldown = 1
-		SPAWN_DBG(3 SECONDS) on_cooldown = 0
+		SPAWN(3 SECONDS) on_cooldown = 0
 
 		var/atom/dummy = D
 		if(D)
-			dummy.invisibility = 101
+			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, "sound/effects/shielddown2.ogg", 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
 		O.anchored = 1
@@ -260,7 +266,7 @@
 
 			activating = 1
 
-			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1
@@ -272,7 +278,7 @@
 			user.transforming = 0
 			qdel(O)
 
-			D = new/obj/dummy/voltron(user, get_turf(src))
+			D = new/obj/dummy/voltron(get_turf(src), user)
 
 			target = user
 			active = 1
@@ -311,10 +317,10 @@
 					return
 				EXIT = PH.parent.linked.handset
 				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.drop_item(PH)
 				user.set_loc(target_loc)
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
 				boutput(user, "<span class='notice'>You activate the [src].</span>")

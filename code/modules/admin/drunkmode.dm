@@ -22,7 +22,6 @@ var/list/dangerousVerbs = list(\
 
 //Shitguy stuff
 /client/proc/debug_variables,\
-/client/proc/cmd_mass_modify_object_variables,\
 /client/proc/cmd_debug_mutantrace,\
 /client/proc/cmd_debug_del_all,\
 /client/proc/general_report,\
@@ -37,7 +36,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/BK_finance_debug,\
 /client/proc/BK_alter_funds,\
 /client/proc/debug_pools,\
-/client/proc/cmd_claim_rs_verbs,\
 /client/proc/debug_variables,\
 /client/proc/debug_global_variable,\
 /client/proc/call_proc,\
@@ -86,7 +84,7 @@ var/list/dangerousVerbs = list(\
 	set desc = "Are you drunk and slightly responsible still? Turn this on!"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
 		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
@@ -103,7 +101,7 @@ var/list/dangerousVerbs = list(\
 	set desc = "Done being drunk? We'll see."
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	//Puzzle goes here
 	var/message = "Hello! You are drunk! Think you're not? Solve this simple puzzle then.\n\n"
@@ -137,7 +135,7 @@ var/list/dangerousVerbs = list(\
 
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	//Apparently if the onlineAdmins list contains only one entry, it just picks it by default without giving any input
 	if (src == C)
@@ -150,7 +148,7 @@ var/list/dangerousVerbs = list(\
 /client/proc/toggleDrunkMode(var/client/C, var/is_actually_high = 0)
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	var/forced = 0
 	if (C != src)
@@ -178,8 +176,8 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/enableDrunkMode
 
 		var/logMessage = (forced ? "was forced out of drunk-mode by [key_name(src)]" : "has disabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
 	else
@@ -195,8 +193,8 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/disableDrunkMode
 
 		var/logMessage = (forced ? "was forced into drunk-mode by [key_name(src)]" : "has enabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
 		if (!is_actually_high)

@@ -10,8 +10,9 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	flags = FPRINT | CONDUCT | USEDELAY
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/metal = 1		// 1=aluminium, 2=iron
+	gas_impermeable = TRUE
 
 	New()
 		..()
@@ -20,7 +21,7 @@
 			loc:ReplaceWithMetalFoam(metal)
 
 		update_nearby_tiles(1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			RL_SetOpacity(1)
 
 	disposing()
@@ -29,7 +30,7 @@
 		update_nearby_tiles(1)
 		..()
 
-	proc/updateicon()
+	update_icon()
 		if(metal == 1)
 			icon_state = "metalfoam"
 		else
@@ -71,9 +72,11 @@
 		else
 			boutput(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
-	// only air group geometry can pass
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		return air_group
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (prob((AM.throwforce + thr.bonus_throwforce) * 10 - src.metal * 25))
+			AM.visible_message("<span class='alert'>[AM] smashes through the foamed metal.</span>")
+			dispose()
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc

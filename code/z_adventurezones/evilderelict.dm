@@ -10,7 +10,7 @@ var/maniac_previous_victim = "Unknown"
 	var/mob/target = null
 
 	New()
-		SPAWN_DBG(1 DECI SECOND) process()
+		SPAWN(1 DECI SECOND) process()
 		..()
 
 
@@ -18,17 +18,17 @@ var/maniac_previous_victim = "Unknown"
 
 	proc/process()
 		if(target)
-			if (get_dist(src, src.target) <= 1)
+			if (BOUNDS_DIST(src, src.target) == 0)
 				proximity_act()
 
-			var/dist = get_dist(src, src.target)
+			var/dist = GET_DIST(src, src.target)
 			if(dist > world.view * 2)
 				walk_towards(src, src.target, 3)
 			else
 				walk_to(src, src.target, 0, 3)
 
 			sleep(1 SECOND)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				process()
 
 /obj/chaser/maniac
@@ -51,7 +51,7 @@ var/maniac_previous_victim = "Unknown"
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				var/victimkey = target.ckey
 				var/victimname = target.name
 				boutput(target, "Connection axed.")
@@ -60,8 +60,8 @@ var/maniac_previous_victim = "Unknown"
 				var/mob/dead/observer/ghost = new/mob/dead/observer
 				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
 					ghost.set_loc(T)
-					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
-					meat.name = "[victimname] meat"
+					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T,target)
+
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname
@@ -77,7 +77,7 @@ var/maniac_previous_victim = "Unknown"
 		if(!targeting)
 			targeting = 1
 			target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
+			SPAWN(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
 				sleep(rand(100,400))
@@ -91,19 +91,19 @@ var/maniac_previous_victim = "Unknown"
 	name = "evil maniac trigger"
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "chaser"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!(maniac_active & 1))
 			if(isliving(AM))
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 1
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~1
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~1
+						SPAWN(rand(10,30))
 							var/obj/chaser/maniac/C = new /obj/chaser/maniac(src.loc)
 							C.target = AM
 
@@ -111,19 +111,19 @@ var/maniac_previous_victim = "Unknown"
 	name = "evil maniac trigger"
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "chaser"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!(maniac_active & 1))
 			if(isliving(AM))
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 1
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~1
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~1
+						SPAWN(rand(10,30))
 							var/obj/chaser/maniac/C = new /obj/chaser/rpmaniac(src.loc)
 							C.target = AM
 
@@ -155,12 +155,12 @@ var/maniac_previous_victim = "Unknown"
 				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == src.id)
 						if (!P.density)
-							SPAWN_DBG( 0 )
+							SPAWN( 0 )
 								P.close()
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(id == "evilreaverbridge")
 						playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
-						var/obj/item/paper/PA = unpool(/obj/item/paper)
+						var/obj/item/paper/PA = new /obj/item/paper
 						PA.set_loc(src.loc)
 
 						PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
@@ -240,7 +240,7 @@ var/maniac_previous_victim = "Unknown"
 	name = "obsolete space suit"
 	desc = "You probably wouldn't be able to fit into this."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "space_old"
 	item_state = "space_old"
@@ -271,7 +271,7 @@ var/maniac_previous_victim = "Unknown"
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				boutput(target, "You better run..")
 
 				var/the_limb = null
@@ -289,7 +289,7 @@ var/maniac_previous_victim = "Unknown"
 		if(!targeting)
 			targeting = 1
 			target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
+			SPAWN(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
 				sleep(rand(100,400))

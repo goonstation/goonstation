@@ -23,7 +23,7 @@
 
 /obj/adventurepuzzle/triggerable/foamtrap
 	name = "foam trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beakerlarge"
 	density = 0

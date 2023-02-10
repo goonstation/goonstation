@@ -24,12 +24,12 @@
 		activate()
 			..()
 			ship.add_sm_light("pod_lights\ref[src]", list(col_r*255,col_g*255,col_b*255,255), directional = 1)
-			src.toggle_sm_light(1)
+			ship.toggle_sm_light(1)
 			return
 
 		deactivate()
 			..()
-			src.toggle_sm_light(0)
+			ship.toggle_sm_light(0)
 			return
 
 	pod_2x2
@@ -106,8 +106,8 @@
 			return
 
 		weeoo_in_progress = 10
-		SPAWN_DBG(0)
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+		SPAWN(0)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 
 			ship.add_sm_light("pod_lights\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
 			src.toggle_sm_light(1)

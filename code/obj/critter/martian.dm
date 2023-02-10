@@ -39,13 +39,16 @@
 			O.show_message("<b>[src]</b> screeches, 'GBVQW UVQWIBJZ PKDDR!!!'", 1)
 		if (!ishuman(target))
 			return
-		playsound(target.loc, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(target.loc, 'sound/effects/ghost2.ogg', 100, 1)
 		var/mob/living/carbon/human/H = target
-		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat))
-			boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat) || H.bioHolder?.HasEffect("psy_resist") == 2)
+			if(istype(H.head, /obj/item/clothing/head/tinfoil_hat))
+				boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+			else
+				boutput(H, "<span class='notice'>The psyblast bounces off you harmlessly!</span>")
 		else
 			boutput(H, "<span class='alert'>You are blasted by psychic energy!</span>")
-			H.changeStatus("paralysis", 70)
+			H.changeStatus("paralysis", 7 SECONDS)
 			H.stuttering += 60
 			H.take_brain_damage(20)
 			H.TakeDamage("head", 0, 5)
@@ -93,7 +96,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='alert'><b>[src]</b> shoots at [C.name]!</span>")
-				playsound(src.loc, "sound/weapons/lasermed.ogg", 100, 1)
+				playsound(src.loc, 'sound/weapons/lasermed.ogg', 100, 1)
 				if (prob(66))
 					C.TakeDamage("chest", 0, rand(3,5)/C.get_ranged_protection())
 					elecflash(C)
@@ -109,9 +112,9 @@
 	name = "martian mutant"
 	icon_state = "martianP"
 	health = 10
+	atksilicon = 0
 	aggressive = 1
 	seekrange = 4
-	var/gib_delay = 55
 	var/do_stun = 1
 	var/max_gib_distance = 6
 	var/gib_counter = 0
@@ -125,6 +128,8 @@
 			icon_state = initial(icon_state)
 
 	seek_target()
+		if(GET_COOLDOWN(src, "gib_attack"))
+			return
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
@@ -136,29 +141,10 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='alert'><b>[src]</b> stares at [C.name]!</span>")
-				playsound(src.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
-				boutput(C, "<span class='alert'>You feel a horrible pain in your head!</span>")
-				gib_counter = 0
 				if (do_stun)
 					C.changeStatus("stunned", 2 SECONDS)
-				SPAWN_DBG(0)
-					for (var/i = 0, i <= round(gib_delay / 10), i++)
-						if ((get_dist(src, C) <= max_gib_distance) && src.alive)
-							if (gib_counter == gib_delay)
-								C.visible_message("<span class='alert'><b>[C.name]'s</b> head explodes!</span>")
-								logTheThing("combat", C, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-								C.gib()
-						else
-							C.show_message("<span class='alert'>You no longer feel the [name]'s psychic glare.</span>")
-							break
-						if (gib_delay - gib_counter >= 10)
-							gib_delay += 10
-							sleep(1 SECOND)
-						else
-							var/slp = gib_delay - gib_counter
-							gib_delay = gib_counter
-							sleep(slp)
+				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 7 SECONDS, max_gib_distance), src)
+				ON_COOLDOWN(src, "gib_attack", 7 SECONDS)
 				src.attack = 0
 				sleeping = 7
 				return
@@ -168,7 +154,6 @@
 
 /obj/critter/martian/psychic/weak
 	name = "martian mutant initiate"
-	gib_delay = 55
 	do_stun = 0
 	seekrange = 3
 	max_gib_distance = 4
@@ -193,8 +178,8 @@
 	ChaseAttack(mob/M)
 		..()
 		if (prob(33)) M.changeStatus("weakened", 3 SECONDS)
-		SPAWN_DBG(2.5 SECONDS)
-			if (get_dist(src, M) <= 1)
+		SPAWN(2.5 SECONDS)
+			if (BOUNDS_DIST(src, M) == 0)
 				src.visible_message("<span class='alert'><B>[src]</B> starts strangling [M]!</span>")
 
 	CritterAttack(mob/M)
@@ -211,7 +196,7 @@
 			src.visible_message("<span class='alert'><B>[src]'s</B> grip slips!</span>")
 			M.delStatus("stunned")
 			sleeping = 1
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span class='alert'><b>[src]</b> screeches, 'KBWKB WVYPGD!!'</span>", 1)
 			src.task = "thinking"
@@ -296,7 +281,7 @@
 			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
 			qdel (src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		src.health -= W.force
 		if (src.active && src.timeleft > 10)

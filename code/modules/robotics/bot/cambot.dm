@@ -28,16 +28,16 @@
 	/// Minimum time between photography
 	var/shot_cooldown = 5 SECONDS
 
-	var/obj/item/camera_test/camera = null
+	var/obj/item/camera/camera = null
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
 
 /obj/machinery/bot/cambot/New()
 	..()
 	src.clear_invalid_targets = TIME
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
-			src.camera = new /obj/item/camera_test(src)
+			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -48,10 +48,10 @@
 			user.show_text("You short out the flash control circuit on [src]!", "red")
 			src.emagger = user
 			src.add_fingerprint(user)
-			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 50, 1)
 		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
@@ -75,10 +75,10 @@
 
 /obj/machinery/bot/cambot/ex_act(severity)
 	switch (severity)
-		if (1.0)
+		if (1)
 			src.explode()
 			return
-		if (2.0)
+		if (2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -105,16 +105,16 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 
 	var/turf/T = get_turf(src)
 	if (T && isturf(T))
-		new /obj/item/camera_test(T)
+		new /obj/item/camera(T)
 		new /obj/item/device/prox_sensor(T)
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left(T)
+			new /obj/item/parts/robot_parts/arm/left/standard(T)
 
 	qdel(src)
 	return
@@ -180,7 +180,7 @@
 		if (!src)
 			return
 
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 60)
+		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			if (!(src.target in src.targets_invalid))
@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 
@@ -225,7 +225,7 @@
 				continue
 
 			if (ismob(M))
-				if ((!isliving(M) || M.invisibility) && prob(99)) // 1% chance to take a picture of a ghost or an invisible thing  :I
+				if ((!isliving(M) || M.invisibility > INVIS_NONE) && prob(99)) // 1% chance to take a picture of a ghost or an invisible thing  :I
 					continue
 				mob_options += (M)
 			else
@@ -271,21 +271,21 @@
 	src.photographing = 1
 	src.flash_blink(3, 1)
 
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src.on)
-			if (get_dist(src,target) <= 1)
+			if (BOUNDS_DIST(src, target) == 0)
 				src.flash_blink(1, 5)
 				if (src.camera) // take the picture
 					var/obj/item/photo/P = src.camera.create_photo(target, src.emagged)
 					if (P)
 						src.visible_message("[src] takes \a [target == src ? "selfie! How?" : P]!")
-					playsound(get_turf(src), "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
+					playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
 
 				if (src.emagged) // if emagged, flash the target too
 					if (ismob(target))
 						var/mob/M = target
 						M.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-					playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+					playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 
 			// don't sit there taking pictures of the same thing over and over
 			if (!(target in src.photographed))
@@ -312,7 +312,7 @@
 	var/build_step = 0
 	var/created_name = "Cambot"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
 			B.name = src.created_name

@@ -91,7 +91,7 @@
 
 	var/num_common_products = 13 //how many of these to pick for sale
 
-	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/spareid,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
+	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
 	var/num_rare_products = 2 //how many of these to pick for sale
 
 	New()
@@ -110,7 +110,7 @@
 			rare_products -= C //so we don't get duplicates
 
 	proc/process()
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			if(prob(20) && !scan)
 				teleport()
 			process()
@@ -120,7 +120,7 @@
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
 		teleport()
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -163,7 +163,7 @@
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(angry)
@@ -274,8 +274,8 @@
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
 
 		if (href_list["access"] && href_list["allowed"])
-			var/access_type = text2num(href_list["access"])
-			var/access_allowed = text2num(href_list["allowed"])
+			var/access_type = text2num_safe(href_list["access"])
+			var/access_allowed = text2num_safe(href_list["allowed"])
 
 			if(access_type == 37)
 				src.card_access -= access_type
@@ -291,7 +291,7 @@
 			src.Topic(href, params2list(href))
 
 		if(href_list["timer"])
-			src.card_timer = text2num(href_list["timer"])
+			src.card_timer = text2num_safe(href_list["timer"])
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -343,8 +343,8 @@
 
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
-			if(isnum(input))
-				src.card_duration = min(max(input,1),600)
+			if(isnum_safe(input))
+				src.card_duration = clamp(input, 1, 600)
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -357,17 +357,17 @@
 				src.updateUsrDialog()
 				return
 			updatecardprice() //should be updated but just to be sure
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if(!account)
 				src.temp = {"That's odd I can't seem to find your account
 							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-			else if(account.fields["current_money"] < src.card_price)
+			else if(account["current_money"] < src.card_price)
 				src.temp = {"Sorry [pick("buddy","pal","mate","friend","chief","bud","boss","champ")], you can't afford that!<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
 				if(spawncard())
-					account.fields["current_money"] -= src.card_price
+					account["current_money"] -= src.card_price
 					src.temp = {"There ya go. You've got [src.card_duration] seconds to abuse that thing before its access is revoked.<BR>
 								<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 					//reset to default so people can't go snooping and find out the last ordered card
@@ -401,11 +401,13 @@
 			if (src.scan.registered in FrozenAccounts)
 				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -416,8 +418,8 @@
 				var/datum/commodity/P = locate(href_list["doorder"])
 
 				if(P)
-					if(account.fields["current_money"] >= P.price * quantity)
-						account.fields["current_money"] -= P.price * quantity
+					if(account["current_money"] >= P.price * quantity)
+						account["current_money"] -= P.price * quantity
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -440,7 +442,7 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggleb"])
 				if(N)
 					if(patience == N.haggleattempts)
@@ -463,10 +465,10 @@
 				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-					var/datum/data/record/account = null
+					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
@@ -515,10 +517,10 @@
 		dat = portrait_setup
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<HR>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<HR>"
 			else
 				dat+="<HR>"
 		else

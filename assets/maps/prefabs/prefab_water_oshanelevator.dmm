@@ -60,13 +60,15 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "m" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "n" = (
 /obj/landmark{
 	name = "seafall"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "o" = (
 /turf/simulated/floor/scorched2,
@@ -137,6 +139,8 @@
 /obj/table/auto,
 /obj/item/paper/fortune,
 /obj/item/pen,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 "C" = (

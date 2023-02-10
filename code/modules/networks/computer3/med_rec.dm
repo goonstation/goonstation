@@ -8,6 +8,7 @@
 #define MENU_SEARCH_INPUT 4
 #define MENU_VIRUS_INDEX 5
 #define MENU_VIRUS_RECORD 6
+#define MENU_SEARCH_PICK 7
 
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
@@ -39,11 +40,12 @@
 	var/tmp/menu = MENU_MAIN
 	var/tmp/field_input = 0
 	var/tmp/authenticated = null //Are we currently logged in?
+	var/datum/record_database/record_database = null
 	var/datum/computer/file/user_data/account = null
-	var/list/record_list = list()  //List of records, for jumping direclty to a specific ID
-	var/datum/data/record/active_general = null //General record
-	var/datum/data/record/active_medical = null //Medical record
+	var/datum/db_record/active_general = null //General record
+	var/datum/db_record/active_medical = null //Medical record
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
+	var/list/datum/db_record/possible_active = null
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "medlog" //What name do we give our logdump textfile?
@@ -57,7 +59,7 @@
  |_|  |_\\___\\__,_|     |_| |_| \\__,_|_\\_\\</pre>"}
 */
 		src.authenticated = null
-		src.record_list = data_core.general.Copy() //Initial setting of record list.
+		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
@@ -89,25 +91,25 @@
 
 		switch(menu)
 			if (MENU_MAIN)
-				switch (command)
-					if ("0") //Exit program
+				switch (round( max( text2num_safe(command), 0) ))
+					if (0) //Exit program
 						src.print_text("Quitting...")
 						src.master.unload_program(src)
 						return
 
-					if ("1") //View records
-						src.record_list = data_core.general
+					if (1) //View records
+						src.record_database = data_core.general
 
 						src.menu = MENU_INDEX
 						src.print_index()
 
-					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, or fingerprint.")
+					if (2) //Search records
+						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
 
-					if ("3") //Viral records.
+					if (3) //Viral records.
 
 						src.master.temp = null
 						src.print_text(virusmenu_text())
@@ -116,31 +118,29 @@
 						return
 
 			if (MENU_INDEX)
-				var/index_number = round( max( text2num(command), 0) )
+				var/index_number = round( max( text2num_safe(command), 0) )
 				if (index_number == 0)
 					src.menu = MENU_MAIN
 					src.master.temp = null
 					src.print_text(mainmenu_text())
 					return
 
-				if (!istype(record_list) || index_number > record_list.len)
+				if (!istype(record_database) || index_number > record_database.records.len)
 					src.print_text("Invalid record.")
 					return
 
-				var/datum/data/record/check = src.record_list[index_number]
+				var/datum/db_record/check = src.record_database.records[index_number]
 				if(!check || !istype(check))
 					src.print_text("<b>Error:</b> Record Data Invalid.")
 					return
 
 				src.active_general = check
-				src.active_medical = null
-				if (data_core.general.Find(check))
-					for (var/datum/data/record/E in data_core.medical)
-						if ((E.fields["name"] == src.active_general.fields["name"] || E.fields["id"] == src.active_general.fields["id"]))
-							src.active_medical = E
-							break
+				if (data_core.general.has_record(check))
+					src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+					if(!src.active_medical)
+						data_core.medical.find_record("name", src.active_general["name"])
 
-				src.log_string += "<br>Log loaded: [src.active_general.fields["id"]]"
+				src.log_string += "<br>Log loaded: [src.active_general["id"]]"
 
 				if (src.print_active_record())
 					src.menu = MENU_IN_RECORD
@@ -164,35 +164,35 @@
 
 						//Okay, let's put together something to print.
 						var/info = "<center><B>Medical Record</B></center><br>"
-						if (istype(src.active_general, /datum/data/record) && data_core.general.Find(src.active_general))
+						if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 							info += {"
-							Full Name: [src.active_general.fields["full_name"]] ID: [src.active_general.fields["id"]]
-							<br><br>Sex: [src.active_general.fields["sex"]]
-							<br><br>Age: [src.active_general.fields["age"]]
-							<br><br>Rank: [src.active_general.fields["rank"]]
-							<br><br>Fingerprint: [src.active_general.fields["fingerprint"]]
-							<br><br>DNA: [src.active_general.fields["dna"]]
-							<br><br>Photo: [istype(src.active_general.fields["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
-							<br><br>Physical Status: [src.active_general.fields["p_stat"]]
-							<br><br>Mental Status: [src.active_general.fields["m_stat"]]"}
+							Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]
+							<br><br>Sex: [src.active_general["sex"]]
+							<br><br>Age: [src.active_general["age"]]
+							<br><br>Rank: [src.active_general["rank"]]
+							<br><br>Fingerprint: [src.active_general["fingerprint"]]
+							<br><br>DNA: [src.active_general["dna"]]
+							<br><br>Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+							<br><br>Physical Status: [src.active_general["p_stat"]]
+							<br><br>Mental Status: [src.active_general["m_stat"]]"}
 						else
 							info += "<b>General Record Lost!</b><br>"
-						if ((istype(src.active_medical, /datum/data/record) && data_core.medical.Find(src.active_medical)))
+						if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 							info += {"
 							<br><br><center><b>Medical Data</b></center><br>
-							<br><br>Current Health: [src.active_medical.fields["h_imp"]]
-							<br>Blood Type: [src.active_medical.fields["bioHolder.bloodType"]]
-							<br><br>Minor Disabilities: [src.active_medical.fields["mi_dis"]]
-							<br><br>Details: [src.active_medical.fields["mi_dis_d"]]
-							<br><br><br>Major Disabilities: [src.active_medical.fields["ma_dis"]]
-							<br><br>Details: [src.active_medical.fields["ma_dis_d"]]
-							<br><br><br>Allergies: [src.active_medical.fields["alg"]]
-							<br><br>Details: [src.active_medical.fields["alg_d"]]
-							<br><br><br>Current Diseases: [src.active_medical.fields["cdi"]] (per disease info placed in log/comment section)
-							<br>Details: [src.active_medical.fields["cdi_d"]]<br><br><br>
-							<br>Traits: [src.active_medical.fields["traits"]]<br><br><br>
+							<br><br>Current Health: [src.active_medical["h_imp"]]
+							<br>Blood Type: [src.active_medical["bioHolder.bloodType"]]
+							<br><br>Minor Disabilities: [src.active_medical["mi_dis"]]
+							<br><br>Details: [src.active_medical["mi_dis_d"]]
+							<br><br><br>Major Disabilities: [src.active_medical["ma_dis"]]
+							<br><br>Details: [src.active_medical["ma_dis_d"]]
+							<br><br><br>Allergies: [src.active_medical["alg"]]
+							<br><br>Details: [src.active_medical["alg_d"]]
+							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
+							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
+							<br>Traits: [src.active_medical["traits"]]<br><br><br>
 							Important Notes:<br>
-							<br>&emsp;[src.active_medical.fields["notes"]]<br>"}
+							<br>&emsp;[src.active_medical["notes"]]<br>"}
 
 						else
 							info += "<br><center><b>Medical Record Lost!</b></center><br>"
@@ -205,7 +205,7 @@
 						src.print_text("Printing...")
 						return
 
-				var/field_number = round( max( text2num(command), 0) )
+				var/field_number = round( max( text2num_safe(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
 					src.print_index()
@@ -227,24 +227,23 @@
 						if (src.active_medical)
 							return
 
-						var/datum/data/record/R = new /datum/data/record(  )
-						R.fields["name"] = src.active_general.fields["name"]
-						R.fields["full_name"] = src.active_general.fields["full_name"]
-						R.fields["id"] = src.active_general.fields["id"]
-						R.name = "Medical Record #[R.fields["id"]]"
-						R.fields["bioHolder.bloodType"] = "Unknown"
-						R.fields["mi_dis"] = "None"
-						R.fields["mi_dis_d"] = "No minor disabilities have been declared."
-						R.fields["ma_dis"] = "None"
-						R.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
-						R.fields["alg"] = "None"
-						R.fields["alg_d"] = "No allergies have been detected in this patient."
-						R.fields["cdi"] = "None"
-						R.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-						R.fields["notes"] = "No notes."
-						R.fields["h_imp"] = "No health implant detected."
-						R.fields["traits"] = "No known traits."
-						data_core.medical += R
+						var/datum/db_record/R = new /datum/db_record(  )
+						R["name"] = src.active_general["name"]
+						R["full_name"] = src.active_general["full_name"]
+						R["id"] = src.active_general["id"]
+						R["bioHolder.bloodType"] = "Unknown"
+						R["mi_dis"] = "None"
+						R["mi_dis_d"] = "No minor disabilities have been declared."
+						R["ma_dis"] = "None"
+						R["ma_dis_d"] = "No major disabilities have been diagnosed."
+						R["alg"] = "None"
+						R["alg_d"] = "No allergies have been detected in this patient."
+						R["cdi"] = "None"
+						R["cdi_d"] = "No diseases have been diagnosed at the moment."
+						R["notes"] = "No notes."
+						R["h_imp"] = "No health implant detected."
+						R["traits"] = "No known traits."
+						data_core.medical.add_record(R)
 						src.active_medical = R
 
 						src.log_string += "<br>New medical record created."
@@ -266,24 +265,24 @@
 				switch (field_input)
 					if (FIELDNUM_NAME)
 						if (ckey(inputText))
-							src.active_general.fields["name"] = copytext(inputText, 1, FULLNAME_MAX)
+							src.active_general["name"] = copytext(inputText, 1, FULLNAME_MAX)
 						else
 							return
 
 					if (FIELDNUM_FULLNAME)
 						if (ckey(inputText))
-							src.active_general.fields["full_name"] = copytext(inputText, 1, FULLNAME_MAX)
+							src.active_general["full_name"] = copytext(inputText, 1, FULLNAME_MAX)
 						else
 							return
 
 					if (FIELDNUM_SEX)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								src.active_general.fields["sex"] = "Female"
+								src.active_general["sex"] = "Female"
 							if (2)
-								src.active_general.fields["sex"] = "Male"
+								src.active_general["sex"] = "Male"
 							if (3)
-								src.active_general.fields["sex"] = "Other"
+								src.active_general["sex"] = "Other"
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
@@ -291,35 +290,35 @@
 								return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 99) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return
 
-						src.active_general.fields["age"] = newAge
-						return
+						src.active_general["age"] = newAge
+
 
 					if (FIELDNUM_PSTAT)
 						if (ckey(inputText))
-							src.active_general.fields["p_stat"] = copytext(inputText, 1, 33)
+							src.active_general["p_stat"] = copytext(inputText, 1, 33)
 						else
 							return
 
 					if (FIELDNUM_MSTAT)
 						if (ckey(inputText))
-							src.active_general.fields["m_stat"] = copytext(inputText, 1, 33)
+							src.active_general["m_stat"] = copytext(inputText, 1, 33)
 						else
 							return
 
 					if (FIELDNUM_PRINT)
 						if (ckey(inputText))
-							src.active_general.fields["fingerprint"] = copytext(inputText, 1, 33)
+							src.active_general["fingerprint"] = copytext(inputText, 1, 33)
 						else
 							return
 
 					if (FIELDNUM_DNA)
 						if (ckey(inputText))
-							src.active_general.fields["dna"] = copytext(inputText, 1, 40)
+							src.active_general["dna"] = copytext(inputText, 1, 40)
 						else
 							return
 
@@ -330,25 +329,25 @@
 							src.menu = MENU_IN_RECORD
 							return
 
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								src.active_medical.fields["bioHolder.bloodType"] = "A+"
+								src.active_medical["bioHolder.bloodType"] = "A+"
 							if (2)
-								src.active_medical.fields["bioHolder.bloodType"] = "A-"
+								src.active_medical["bioHolder.bloodType"] = "A-"
 							if (3)
-								src.active_medical.fields["bioHolder.bloodType"] = "B+"
+								src.active_medical["bioHolder.bloodType"] = "B+"
 							if (4)
-								src.active_medical.fields["bioHolder.bloodType"] = "B-"
+								src.active_medical["bioHolder.bloodType"] = "B-"
 							if (5)
-								src.active_medical.fields["bioHolder.bloodType"] = "AB+"
+								src.active_medical["bioHolder.bloodType"] = "AB+"
 							if (6)
-								src.active_medical.fields["bioHolder.bloodType"] = "AB-"
+								src.active_medical["bioHolder.bloodType"] = "AB-"
 							if (7)
-								src.active_medical.fields["bioHolder.bloodType"] = "O+"
+								src.active_medical["bioHolder.bloodType"] = "O+"
 							if (8)
-								src.active_medical.fields["bioHolder.bloodType"] = "O-"
+								src.active_medical["bioHolder.bloodType"] = "O-"
 							if (9)
-								src.active_medical.fields["bioHolder.bloodType"] = "Zesty Ranch"
+								src.active_medical["bioHolder.bloodType"] = "Zesty Ranch"
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
@@ -362,7 +361,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["mi_dis"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["mi_dis"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -373,7 +372,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["mi_dis_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["mi_dis_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -384,7 +383,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["ma_dis"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["ma_dis"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -395,7 +394,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["ma_dis_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["ma_dis_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -406,7 +405,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["alg"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["alg"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -417,7 +416,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["alg_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["alg_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -428,7 +427,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["cdi"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["cdi"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -439,7 +438,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["cdi_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["cdi_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -450,7 +449,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["traits"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["traits"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -461,7 +460,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_medical.fields["notes"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["notes"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -469,16 +468,16 @@
 						switch (ckey(inputText))
 							if ("y")
 								if (src.active_medical)
-									src.log_string += "<br>M-Record [src.active_medical.fields["id"]] deleted."
-									data_core.medical -= src.active_medical
+									src.log_string += "<br>M-Record [src.active_medical["id"]] deleted."
+									src.active_medical.delete()
 									qdel(src.active_medical)
 									src.print_active_record()
 									src.menu = MENU_IN_RECORD
 
 								else if (src.active_general)
-									data_core.general -= src.active_general
+									src.active_general.delete()
 
-									src.log_string += "<br>Record [src.active_general.fields["id"]] deleted."
+									src.log_string += "<br>Record [src.active_general["id"]] deleted."
 									qdel(src.active_general)
 									src.menu = MENU_INDEX
 									src.print_index()
@@ -493,16 +492,45 @@
 				src.menu = MENU_IN_RECORD
 				return
 
+			if (MENU_SEARCH_PICK)
+				var/input = text2num_safe(ckey(strip_html(text)))
+				if(isnull(input) || input < 0 || input >> length(src.possible_active))
+					src.print_text("Cancelled")
+					src.menu = MENU_MAIN
+					return
+
+				var/datum/db_record/result = src.possible_active[input]
+				src.active_general = result
+				src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+				if(!src.active_medical)
+					data_core.medical.find_record("name", src.active_general["name"])
+
+				src.menu = MENU_IN_RECORD
+				src.print_active_record()
+
 			if (MENU_SEARCH_INPUT)
 				var/searchText = ckey(strip_html(text))
 				if (!searchText)
 					return
 
-				var/datum/data/record/result = null
-				for(var/datum/data/record/R in data_core.general)
-					if((ckey(R.fields["name"]) == searchText) || (ckey(R.fields["dna"]) == searchText) || (ckey(R.fields["id"]) == searchText) || (ckey(R.fields["fingerprint"]) == searchText))
-						result = R
-						break
+				var/list/datum/db_record/results = list()
+				for(var/datum/db_record/R as anything in data_core.general.records)
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					if(findtext(haystack, searchText))
+						results += R
+
+				var/datum/db_record/result = null
+				if(length(results) == 1)
+					result = results[1]
+				else if(length(results) > 1)
+					src.print_text("Multiple results found:")
+					var/i = 1
+					for(var/datum/db_record/R as anything in results)
+						src.print_text("\[[i++]\] [R["name"]]")
+					src.print_text("\[0\] Cancel")
+					src.menu = MENU_SEARCH_PICK
+					src.possible_active = results
+					return
 
 				if(!result)
 					src.print_text("No results found.")
@@ -510,11 +538,9 @@
 					return
 
 				src.active_general = result
-				src.active_medical = null //Time to find the accompanying medical record, if it even exists.
-				for (var/datum/data/record/E in data_core.medical)
-					if ((E.fields["name"] == src.active_general.fields["name"] || E.fields["id"] == src.active_general.fields["id"]))
-						src.active_medical = E
-						break
+				src.active_medical = data_core.medical.find_record("id", src.active_general["id"])
+				if(!src.active_medical)
+					data_core.medical.find_record("name", src.active_general["name"])
 
 				src.menu = MENU_IN_RECORD
 				src.print_active_record()
@@ -522,13 +548,13 @@
 
 			if (MENU_VIRUS_INDEX)
 				var/entrydat = null
-				switch (copytext(text, 1,2))
-					if ("0")
+				switch (round( max( text2num_safe(text), 0) ))
+					if (0)
 						src.menu = MENU_MAIN
 						src.master.temp = null
 						src.print_text(virusmenu_text())
 						return
-					if ("1")
+					if (1)
 						entrydat = {"<b>Name:</b> GBS
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Airborne Transmission
@@ -538,7 +564,7 @@
 						<br><b>Notes:</b> If left untreated death will occur.
 						<br>
 						<br><b>Severity:</b> Major"}
-					if ("2")
+					if (2)
 						entrydat = {"<b>Name:</b> Common Cold
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -548,7 +574,7 @@
 						<br><b>Notes:</b> If left untreated the subject will contract the flu.
 						<br>
 						<br><b>Severity:</b> Minor"}
-					if ("3")
+					if (3)
 						entrydat = {"<b>Name:</b> The Flu
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -559,8 +585,8 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("4")
-						entrydat = {"<b>Name:</b> Jungle Fever
+					if (4)
+						entrydat = {"<b>Name:</b> Monkey Madness
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Airborne Transmission
 						<br><b>Possible Cure:</b> None
@@ -570,7 +596,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("5")
+					if (5)
 						entrydat = {"<b>Name:</b> Clowning Around
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Contact Transmission
@@ -581,7 +607,7 @@
 						<br>
 						<br><b>Severity:</b> Laughable"}
 
-					if ("6")
+					if (6)
 						entrydat = {"<b>Name:</b> Space Rhinovirus
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Airborne Transmission
@@ -592,7 +618,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("7")
+					if (7)
 						entrydat = {"<b>Name:</b> Robot Transformation
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Infected food
@@ -603,7 +629,7 @@
 						<br>
 						<br><b>Severity:</b> Major"}
 
-					if ("8")
+					if (8)
 						entrydat = {"<b>Name:</b> Teleportitis
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Unknown
@@ -615,7 +641,7 @@
 						in physical position of subject.  Keep patients away from active engines.<br>
 						<br><b>Severity:</b> Unknown"}
 
-					if ("9")
+					if (9)
 						entrydat = {"<b>Name:</b> Berserker
 						<br><b>Number of stages:</b> 2
 						<br><b>Spread:</b> Contact Transmission
@@ -636,7 +662,7 @@
 				src.menu = MENU_VIRUS_RECORD
 
 			if (MENU_VIRUS_RECORD)
-				if (copytext(text, 1,2) == "0")
+				if (round( max( text2num_safe(command), 0) ) == 0)
 					src.master.temp = null
 					src.menu = MENU_MAIN
 					src.print_text(mainmenu_text())
@@ -662,7 +688,7 @@
 					(01) GBS<br>
 					(02) Common Cold<br>
 					(03) Flu<br>
-					(04) Jungle Fever<br>
+					(04) Monkey Madness<br>
 					(05) Clowning Around<br>
 					(06) Space Rhinovirus<br>
 					(07) Robot Transformation<br>
@@ -679,32 +705,32 @@
 			src.master.temp = null
 
 			var/view_string = {"
-			\[01]Name: [src.active_general.fields["name"]] ID: [src.active_general.fields["id"]]
-			<br>\[02]Full Name: [src.active_general.fields["full_name"]]
-			<br>\[03]<b>Sex:</b> [src.active_general.fields["sex"]]
-			<br>\[04]<b>Age:</b> [src.active_general.fields["age"]]
-			<br>\[__]<b>Rank:</b> [src.active_general.fields["rank"]]
-			<br>\[05]<b>Fingerprint:</b> [src.active_general.fields["fingerprint"]]
-			<br>\[06]<b>DNA:</b> [src.active_general.fields["dna"]]
-			<br>\[__]Photo: [istype(src.active_general.fields["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
-			<br>\[07]Physical Status: [src.active_general.fields["p_stat"]]
-			<br>\[08]Mental Status: [src.active_general.fields["m_stat"]]"}
+			\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
+			<br>\[02]Full Name: [src.active_general["full_name"]]
+			<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
+			<br>\[04]<b>Age:</b> [src.active_general["age"]]
+			<br>\[__]<b>Rank:</b> [src.active_general["rank"]]
+			<br>\[05]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
+			<br>\[06]<b>DNA:</b> [src.active_general["dna"]]
+			<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+			<br>\[07]Physical Status: [src.active_general["p_stat"]]
+			<br>\[08]Mental Status: [src.active_general["m_stat"]]"}
 
-			if ((istype(src.active_medical, /datum/data/record) && data_core.medical.Find(src.active_medical)))
+			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 				view_string += {"<br><center><b>Medical Data:</b></center>
-				<br>\[__]Current Health: [src.active_medical.fields["h_imp"]]
-				<br>\[09]Blood Type: [src.active_medical.fields["bioHolder.bloodType"]]
-				<br>\[10]Minor Disabilities: [src.active_medical.fields["mi_dis"]]
-				<br>\[11]Details: [src.active_medical.fields["mi_dis_d"]]
-				<br>\[12]<br>Major Disabilities: [src.active_medical.fields["ma_dis"]]
-				<br>\[13]Details: [src.active_medical.fields["ma_dis_d"]]
-				<br>\[14]<br>Allergies: [src.active_medical.fields["alg"]]
-				<br>\[15]Details: [src.active_medical.fields["alg_d"]]
-				<br>\[16]<br>Current Diseases: [src.active_medical.fields["cdi"]] (per disease info placed in log/comment section)
-				<br>\[17]Details: [src.active_medical.fields["cdi_d"]]
-				<br>\[18]Traits: [src.active_medical.fields["traits"]]
+				<br>\[__]Current Health: [src.active_medical["h_imp"]]
+				<br>\[09]Blood Type: [src.active_medical["bioHolder.bloodType"]]
+				<br>\[10]Minor Disabilities: [src.active_medical["mi_dis"]]
+				<br>\[11]Details: [src.active_medical["mi_dis_d"]]
+				<br>\[12]<br>Major Disabilities: [src.active_medical["ma_dis"]]
+				<br>\[13]Details: [src.active_medical["ma_dis_d"]]
+				<br>\[14]<br>Allergies: [src.active_medical["alg"]]
+				<br>\[15]Details: [src.active_medical["alg_d"]]
+				<br>\[16]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
+				<br>\[17]Details: [src.active_medical["cdi_d"]]
+				<br>\[18]Traits: [src.active_medical["traits"]]
 				<br>\[19]Important Notes:
-				<br>&emsp;[src.active_medical.fields["notes"]]"}
+				<br>&emsp;[src.active_medical["notes"]]"}
 			else
 				view_string += "<br><br><b>Medical Record Lost!</b>"
 				view_string += "<br>\[99] Create New Medical Record.<br>"
@@ -717,19 +743,19 @@
 		print_index()
 			src.master.temp = null
 			var/dat = ""
-			if(!src.record_list || !length(src.record_list))
+			if(!src.record_database || !length(src.record_database.records))
 				src.print_text("<b>Error:</b> No records found in database.")
 
 			else
 				dat = "Please select a record:"
-				var/leadingZeroCount = length("[src.record_list.len]")
-				for(var/x = 1, x <= src.record_list.len, x++)
-					var/datum/data/record/R = src.record_list[x]
+				var/leadingZeroCount = length("[src.record_database.records.len]")
+				for(var/x = 1, x <= src.record_database.records.len, x++)
+					var/datum/db_record/R = src.record_database.records[x]
 					if(!R || !istype(R))
 						dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b><font color=red>ERR: REDACTED</font>"
 						continue
 
-					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R.fields["id"]]: [R.fields["name"]]"
+					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R["id"]]: [R["name"]]"
 
 			dat += "<br><br>Enter record number, or 0 to return."
 
@@ -755,6 +781,7 @@
 #undef MENU_SEARCH_INPUT
 #undef MENU_VIRUS_INDEX
 #undef MENU_VIRUS_RECORD
+#undef MENU_SEARCH_PICK
 
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME

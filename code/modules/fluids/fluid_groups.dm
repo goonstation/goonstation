@@ -64,13 +64,13 @@
 			if(my_group.last_depth_level == 4)
 				.= "very deep"
 
-	temperature_reagents()
+	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0)
 		..()
 		src.update_total()
 
 	play_mix_sound(var/mix_sound) //play sound at random locs
 		for (var/i = 0, i < length(my_group.members) / 20, i++)
-			playsound(get_turf(pick(my_group.members)), mix_sound, 80, 1)
+			playsound(pick(my_group.members), mix_sound, 80, 1)
 			if (i > 8) break
 
 //We use datum/controller/process/fluid_group to do evaporation
@@ -111,7 +111,6 @@
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
-	var/waitforit = 0 //prevent smoke from being inhaled during the creation process
 	var/draining = 0
 	var/queued_drains = 0 // how many tiles to drain on next update?
 	var/turf/last_drain = 0 // tile from which we should try to drain from
@@ -135,7 +134,7 @@
 		processing_fluid_spreads -= src
 		processing_fluid_drains -= src
 
-		members = 0
+		members.Cut()
 
 		reagents.my_group = null
 		reagents = null
@@ -158,7 +157,6 @@
 		last_drain = 0
 		master_reagent_id = 0
 		drains_floor = 1
-		waitforit = 0
 		..()
 
 	New()
@@ -182,14 +180,14 @@
 
 		for (var/obj/fluid/F as anything in src.members)
 			if (!F) continue
-			if (F.pooled) continue
+			if (F.disposed) continue
 			src.remove(F,0,1,1)
 
-		if (!src.pooled)
+		if (!src.disposed)
 			qdel(src)
 
 	proc/add(var/obj/fluid/F, var/gained_fluid = 0, var/do_update = 1, var/guarantee_is_member = 0)
-		if (!F || src.pooled || !members) return
+		if (!F || src.disposed || !members) return
 
 		if (gained_fluid)
 			spread_member = F
@@ -204,7 +202,7 @@
 				F.group = src
 
 		if (length(src.members) == 1)
-			F.update_icon() //update icon of the very first fluid in this group
+			F.UpdateIcon() //update icon of the very first fluid in this group
 
 		src.last_add_time = world.time
 
@@ -229,7 +227,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled || src.disposed) return 0
+		if (!F || F.disposed || src.disposed) return 0
 		if (!members || !length(src.members) || !(F in members)) return 0
 
 		if (!lightweight)
@@ -238,7 +236,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -246,7 +244,7 @@
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
-		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
+		if(src.disposed || F.disposed) return 0 // UpdateIcon lagchecks, rip
 
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -260,7 +258,7 @@
 		if(removed_loc)
 			F.turf_remove_cleanup(F.loc)
 
-		pool(F)
+		qdel(F)
 
 		if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))
@@ -274,7 +272,7 @@
 	/* identical to remove, except this proc returns the fluids removed
 	 * vol_max sets upper limit for fluid volume to be removed */
 	proc/suck(var/obj/fluid/F, var/vol_max, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 1)
-		if (!F || F.pooled) return 0
+		if (!F || F.disposed) return 0
 		if (!members || !length(src.members) || !(F in members)) return 0
 
 		var/datum/reagents/R = null
@@ -285,7 +283,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -312,7 +310,7 @@
 				src.reagents.skip_next_update = 1
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
-		pool(F)
+		qdel(F)
 
 		/*if (!lightweight || lightweight == 2)
 			if (!src.try_split(removed_loc))
@@ -327,10 +325,13 @@
 		if (!members || !F) return
 		if (length(src.members) == 1)
 			var/turf/T
+			var/blocked
 			for( var/dir in cardinal )
 				T = get_step( F, dir )
-				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
-				if (T.canpass())
+				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) )
+					blocked++
+					continue
+				if (T.Enter(src))
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
 					else
@@ -338,6 +339,10 @@
 						F.set_loc(T)
 						T.active_liquid = F
 					break
+				else
+					blocked++
+			if(blocked == length(cardinal)) // failed
+				src.remove(F,0,2)
 		else
 			var/turf/T
 			for( var/dir in cardinal )
@@ -392,6 +397,7 @@
 		var/reagents = 0
 
 		for(var/reagent_id in src.reagents.reagent_list)
+			if (QDELETED(src.reagents)) return
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[reagent_id]
 
 			if (isnull(current_reagent))
@@ -453,9 +459,8 @@
 			if (force)
 				fluids_to_create = force
 
-			var/list/created = src.spread(fluids_to_create)
-			if (length(created) && !src.qdeled)
-				src.members += created
+			var/created = src.spread(fluids_to_create)
+			if (created && !src.qdeled)
 				return
 
 		LAGCHECK(LAG_HIGH)
@@ -473,6 +478,7 @@
 				break
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/datum/color/last_color = src.average_color
 		src.average_color = src.reagents?.get_average_color()
@@ -488,6 +494,7 @@
 			return 1
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
@@ -502,7 +509,7 @@
 
 		for (var/obj/fluid/F as anything in src.members)
 			LAGCHECK(LAG_HIGH)
-			if (!F || F.pooled || src.qdeled) continue
+			if (!F || F.disposed || src.qdeled) continue
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Set_amt gets called a lot. Let's reduce proc call overhead : by being stupid and pasting the whole thing in this fuckin loop ugh
@@ -512,7 +519,7 @@
 			if (F.touched_channel)
 				src.displace_channel(get_dir(F,F.touched_channel), F, F.touched_channel)
 				F.touched_channel = 0
-				if (!F || F.pooled || src.qdeled) continue
+				if (!F || F.disposed || src.qdeled) continue
 
 			//We update objects manually here because they don't move. A mob that moves around will call HasEntered on its own, so let that case happen naturally
 
@@ -522,12 +529,12 @@
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
 					if (O?.submerged_images)
-						F.HasEntered(O,O.loc)
+						F.Crossed(O)
 
 				depth_changed = 1
 
 			if (my_depth_level)
-				var/splash_level = max(1,min(my_depth_level, 3))
+				var/splash_level = clamp(my_depth_level, 1, 3)
 				F.step_sound = "sound/misc/splash_[splash_level].ogg"
 
 			F.movement_speed_mod = F.last_depth_level <= 1 ? 0 : (viscosity_SLOW_COMPONENT(F.avg_viscosity,F.max_viscosity,F.max_speed_mod) + DEPTH_SLOW_COMPONENT(F.amt,F.max_reagent_volume,F.max_speed_mod))
@@ -540,9 +547,9 @@
 		fluid_ma.alpha = targetalpha
 
 		for (var/obj/fluid/F as anything in src.members)
-			if (!F || F.pooled || src.qdeled) continue
+			if (!F || F.disposed || src.qdeled) continue
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//Same shit here with update_icon
+			//Same shit here with UpdateIcon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			fluid_ma.name = src.master_reagent_name //maybe obscure later?
@@ -593,23 +600,22 @@
 		return 1
 
 	proc/spread(var/fluids_to_create) //spread in respect to members
-		.= list() //return created fluids
-		var/created = 0
+		.= 0 //return created fluids
 		var/obj/fluid/F
-		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
-		for (var/i = 1, i <= length(src.members), i++)
+		var/membercount = length(src.members)
+		for (var/i = 1, i <= membercount, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
-			if (i > length(src.members)) continue
+			if (i > membercount) continue
 			F = members[i]
 			if (!F || F.group != src) continue //This can happen if a fluid is deleted/caught with its pants down during an update loop.
 
 			if (F.blocked_dirs < 4) //skip that update if we were blocked (not an edge tile)
-				amt_per_tile = contained_amt / (length(src.members) + created)
+				amt_per_tile = contained_amt / (membercount + .)
 
 				for (var/obj/fluid/C as anything in F.update())
 					LAGCHECK(LAG_HIGH)
-					if (!C || C.pooled) continue
+					if (!C || C.disposed || src.disposed) continue
 					var/turf/T = C.loc
 					if (istype(T) && drains_floor)
 						T.react_all_cleanables() // bug here regarding fluids doing their whole spread immediately if they're in a patch of cleanables. can't figure it out and its not TERRIBLE, fix later!!!
@@ -621,13 +627,13 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					.+= C
-					created++
+					members |= C
+					.++
 
-				if ((length(members) + created)<=0) //this can happen somehow
+				if ((membercount + .)<=0) //this can happen somehow
 					continue
 
-				amt_per_tile = contained_amt / (length(members) + created)
+				amt_per_tile = contained_amt / (membercount + .)
 
 			if (F.touched_other_group && src != F.touched_other_group)
 				if (src.join(F.touched_other_group))
@@ -635,9 +641,8 @@
 					break
 				F.touched_other_group = 0
 
-			if (created >= fluids_to_create)
+			if (. >= fluids_to_create)
 				break
-		src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
@@ -649,7 +654,7 @@
 			if (transfer_to && transfer_to.reagents && src.reagents)
 				src.reagents.trans_to_direct(transfer_to.reagents,min(fluids_to_remove * amt_per_tile, src.reagents.total_volume))
 				src.contained_amt = src.reagents.total_volume
-			else
+			else if(remove_reagent)
 				src.reagents.remove_any(fluids_to_remove * amt_per_tile)
 
 			src.update_loop()

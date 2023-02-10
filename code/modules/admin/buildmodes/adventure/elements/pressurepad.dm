@@ -9,7 +9,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		button_type = input("Pad type", "Pad type", "ancient") in list("ancient", "runes")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Pressure pad name", "Pressure pad name", "pressure pad") as text
@@ -23,7 +23,7 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -40,7 +40,7 @@
 				button.pad_type = button_type
 				button.triggered = selected_triggerable.Copy()
 				button.triggered_unpress = selected_triggerable_untrigger.Copy()
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					button.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
@@ -71,11 +71,13 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	layer = 2
 	var/pad_type
 	var/pressed = 0
 	var/list/pressing = list()
 
 	Crossed(atom/movable/O)
+		..()
 		if (isliving(O) && !(O in pressing) && O.loc == loc)
 			pressing += O
 			press()
@@ -98,7 +100,7 @@
 			return
 		pressed = 1
 		flick("pressure_[pad_type]_pressing", src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_pressed"
 			post_trigger()
 
@@ -107,7 +109,7 @@
 			return
 		pressed = 0
 		flick("pressure_[pad_type]_unpressing", src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_unpressed"
 			post_untrigger()
 

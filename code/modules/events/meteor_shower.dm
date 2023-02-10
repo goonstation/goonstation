@@ -3,12 +3,16 @@ var/global/meteor_shower_active = 0
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
 	// centcom message handled modularly here
+#ifdef RP_MODE
 	required_elapsed_round_time = 55 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 	var/wave_direction = 1
 	var/meteors_in_wave = 20
 	var/delay_between_meteors = 5
-	var/tile_inaccuracy = 3
+	var/tile_inaccuracy = 10
 	var/map_boundary = 25
 	var/warning_delay = 5 MINUTES
 	var/meteor_speed = 8
@@ -22,12 +26,30 @@ var/global/meteor_shower_active = 0
 	var/meteor_type = /obj/newmeteor/massive
 #endif
 
+	is_event_available(var/ignore_time_lock = 0)
+		. = ..()
+		if(.)
+			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
+				. = FALSE
+
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
 
-		if (!isnum(direction) || !(direction in valid_directions))
-			direction = pick(valid_directions)
+		if (isnum(direction) && direction == -1)
+			// dear station: get fucked
+			// this is redundant. i'm a little stoned but
+			// it feels better than leaving an empty code block
+			direction = -1
+
+		else
+			if (!isnum(direction) || !(direction in valid_directions))
+				// pick a random direction if no valid one given
+				direction = pick(valid_directions)
+				if (prob(2))
+					// this is not nearly as bad as it might seem since so many miss
+					direction = -1
+
 		wave_direction = direction
 
 		if (!isnum(amount))
@@ -47,14 +69,18 @@ var/global/meteor_shower_active = 0
 		meteor_speed = speed
 
 		var/comdir = "an unknown direction"
-		if (station_or_ship() == "ship")
-			comdir = "the [dir2nautical(direction, map_settings ? map_settings.dir_fore : NORTH, 1)] of the ship"
+		if (direction == -1)
+			comdir = "from all directions"
 		else
-			comdir = "from the [dir2text(direction)]"
+			if (station_or_ship() == "ship")
+				comdir = "the [dir2nautical(direction, map_settings ? map_settings.dir_fore : NORTH, 1)] of the ship"
+			else
+				comdir = "from the [dir2text(direction)]"
 
 		var/comsev = "Indeterminable"
 		switch(amount)
-			if(50 to INFINITY) comsev = "Catastrophic"
+			if(300 to INFINITY) comsev = "Apocalyptic" // one per world border size, ish
+			if(50 to 299) comsev = "Catastrophic"
 			if(25 to 49) comsev = "Major"
 			if(11 to 24) comsev = "Significant"
 			if(0 to 10) comsev = "Minor"
@@ -62,47 +88,55 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
-			world << 'sound/machines/engine_alert2.ogg'
-			meteor_shower_active = direction
+			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert", alert_origin = ALERT_WEATHER)
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+			// for all directions, just give, uh, up
+			// todo: someone make shields have an all-sides option
+			meteor_shower_active = (direction == -1 ? NORTH : direction)
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
-				S.update_icon()
+				S.UpdateIcon()
 
-		SPAWN_DBG(warning_delay)
+		SPAWN(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
-				world << 'sound/machines/engine_alert1.ogg'
+				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
+				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
 
 			var/start_x
 			var/start_y
 			var/targ_x
 			var/targ_y
-
+			var/effective_direction
 			while(meteors_in_wave > 0)
 				meteors_in_wave--
 
-				switch(src.wave_direction)
-					if(1) // north
+				// default to the given direction, but override it
+				// for the special "every direction" one
+				effective_direction = src.wave_direction
+				if (effective_direction == -1)
+					effective_direction = pick(valid_directions)
+
+				switch(effective_direction)
+					if(NORTH) // north
 						start_y = world.maxy-map_boundary
 						targ_y = map_boundary
 						start_x = rand(map_boundary, world.maxx-map_boundary)
 						targ_x = start_x
-					if(2) // south
+					if(SOUTH) // south
 						start_y = map_boundary
 						targ_y = world.maxy-map_boundary
 						start_x = rand(map_boundary, world.maxx-map_boundary)
 						targ_x = start_x
-					if(4) // east
+					if(EAST) // east
 						start_y = rand(map_boundary,world.maxy-map_boundary)
 						targ_y = start_y
 						start_x = world.maxx-map_boundary
 						targ_x = map_boundary
-					if(8) // west
+					if(WEST) // west
 						start_y = rand(map_boundary, world.maxy-map_boundary)
 						targ_y = start_y
 						start_x = map_boundary
 						targ_x = world.maxx-map_boundary
-					else // anywhere
+					else // anywhere. this should not happen ever
 						if(prob(50))
 							start_y = pick(map_boundary,world.maxy-map_boundary)
 							start_x = rand(map_boundary, world.maxx-map_boundary)
@@ -121,19 +155,19 @@ var/global/meteor_shower_active = 0
 
 			meteor_shower_active = 0
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
-				S.update_icon()
+				S.UpdateIcon()
 
 	admin_call(var/source)
 		if (..())
 			return
 
-		var/amtinput = input(usr,"How many meteors?",src.name) as num|null
+		var/amtinput = input(usr,"How many meteors? (10~50++)",src.name) as num|null
 		if (!isnum(amtinput) || amtinput < 1)
 			return
 		var/delinput = input(usr,"Tick delay between meteors? (10 = 1 second)",src.name) as num|null
 		if (!isnum(delinput) || delinput < 1)
 			return
-		var/dirinput = input(usr,"Which direction should the meteors come from?",src.name) as null|anything in list("north","south","east","west")
+		var/dirinput = input(usr,"Which direction should the meteors come from?",src.name) as null|anything in list("north","south","east","west","random","yes")
 		if (!dirinput || !istext(dirinput))
 			return
 		switch(dirinput)
@@ -141,10 +175,12 @@ var/global/meteor_shower_active = 0
 			if ("south") dirinput = SOUTH
 			if ("east") dirinput = EAST
 			if ("west") dirinput = WEST
+			if ("random") dirinput = 0 // 0 = randomly chosen
+			if ("yes") dirinput = -1 // yes
 		var/timinput = input(usr,"How many ticks between the warning and the event? (10 = 1 second)",src.name) as num|null
 		if (!isnum(timinput) || timinput < 1)
 			return
-		var/spdinput = input(usr,"How fast do the meteors move?",src.name) as num|null
+		var/spdinput = input(usr,"How fast do the meteors move? (1~15, lower=faster)",src.name) as num|null
 		if (!isnum(spdinput) || spdinput < 1)
 			return
 
@@ -161,7 +197,7 @@ var/global/meteor_shower_active = 0
 	icon_state = "flaming"
 	desc = "A chunk of space debris. You might want to stop staring at it and run."
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/speed = 1
 	var/pix_speed = 8
 	var/hit_object = 0 //If we hit something we skip the next step (we dont move)
@@ -205,7 +241,7 @@ var/global/meteor_shower_active = 0
 		//animate_spin(src, dir = "R", T = 1, looping = -1)
 		src.set_loc(my_spawn)
 		target = get_turf(trg)
-		SPAWN_DBG(time_to_die)
+		SPAWN(time_to_die)
 			qdel(src)
 		walk_towards(src, target, speed, pix_speed)
 		process()
@@ -216,8 +252,8 @@ var/global/meteor_shower_active = 0
 		last_tile = null
 		..()
 
-	Bump(atom/A)
-		SPAWN_DBG(0)
+	bump(atom/A)
+		SPAWN(0)
 			if (A)
 				A.meteorhit(src)
 				if (sound_impact)
@@ -228,17 +264,18 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
 			last_tile = src.loc
-			src.loc.Exit()
+			src.loc.Exit(src, NewLoc)
 			if(NewLoc.Enter())
 				src.set_loc(NewLoc)
 				src.set_dir(Dir)
@@ -264,7 +301,7 @@ var/global/meteor_shower_active = 0
 		if (src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		last_tile = src.loc
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/check_hits()
@@ -304,7 +341,7 @@ var/global/meteor_shower_active = 0
 	proc/shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
 		qdel(source)
@@ -315,9 +352,9 @@ var/global/meteor_shower_active = 0
 			var/type
 			if (prob(1)) type = pick(oredrops_rare)
 			else type = pick(oredrops)
-			var/atom/movable/A = unpool(type)
+			var/atom/movable/A = new type
 			A.set_loc(T)
-			A.name = "meteor chunk"
+			A.name = "[A.name] chunk"
 
 		var/atom/source = src
 		qdel(source)
@@ -326,10 +363,10 @@ var/global/meteor_shower_active = 0
 
 /obj/newmeteor/massive
 	name = "huge asteroid"
-	icon = 'icons/obj/meteor96x96.dmi'
+	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	//bound_width = 96
 	//bound_height = 96
@@ -354,7 +391,7 @@ var/global/meteor_shower_active = 0
 	shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
 			if(prob(15))

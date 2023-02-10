@@ -203,7 +203,7 @@
 /obj/neon_lining{
 	dir = 8
 	},
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = -28
@@ -395,7 +395,7 @@
 /turf/simulated/wall/auto/reinforced/jen/cyan,
 /area/prefab/candy_shop)
 "Df" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a confectioner.";
 	name = "Carlisle"
 	},
@@ -525,7 +525,7 @@
 	dir = 4;
 	lining_color = "pink"
 	},
-/obj/decal/pole{
+/obj/decal/fakeobjects/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = 28

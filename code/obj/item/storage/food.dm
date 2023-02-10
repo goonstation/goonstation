@@ -124,7 +124,7 @@
 
 	make_my_stuff()
 		..()
-		var/list/candytypes = typesof(/obj/item/reagent_containers/food/snacks/candy)
+		var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
 		for (var/i=6, i>0, i--)
 			var/newcandy_path = pick(candytypes)
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)

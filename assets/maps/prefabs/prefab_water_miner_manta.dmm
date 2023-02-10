@@ -102,6 +102,8 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aw" = (
@@ -156,7 +158,7 @@
 "aI" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/caution/north,
 /area/prefab/sea_mining)
 "aJ" = (
@@ -238,31 +240,38 @@
 /area/prefab/sea_mining)
 "aX" = (
 /obj/machinery/oreaccumulator,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aY" = (
 /obj/item/extinguisher,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aZ" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "ba" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bb" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bc" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "be" = (
 /obj/item/device/gps{

@@ -1,0 +1,499 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"df" = (
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"et" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"fu" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"gx" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"hE" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/device/radio,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"jj" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"jq" = (
+/obj/machinery/door/airlock/pyro/medical,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"jz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"jM" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"lg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom)
+"lK" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
+"oY" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom)
+"qC" = (
+/obj/machinery/door/airlock/pyro/security,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
+"sb" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/centcom)
+"sL" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"tH" = (
+/obj/item/storage/wall/emergency,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"tO" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = -6
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 2
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"uE" = (
+/turf/space/fluid,
+/area/centcom)
+"wC" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"yl" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"AF" = (
+/obj/item/storage/wall/medical{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"AL" = (
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"Bn" = (
+/obj/indestructible/shuttle_corner,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
+"Cd" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"CC" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"Dt" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"Dx" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"Dy" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
+"DW" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
+"Il" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"IJ" = (
+/obj/machinery/computer/shuttle,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"IR" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"Jj" = (
+/obj/machinery/shuttle/engine/propulsion/sea_propulsion,
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"JA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"KM" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/centcom)
+"LV" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"MK" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"Nu" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"Pb" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"Pd" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"PZ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/centcom)
+"QE" = (
+/obj/indestructible/shuttle_corner,
+/turf/space/fluid,
+/area/shuttle/escape/centcom)
+"RD" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom)
+"RQ" = (
+/obj/machinery/door/airlock/pyro/command,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"VK" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"Ww" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
+"XK" = (
+/obj/stool/chair/comfy/shuttle/green,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"XR" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"XY" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/centcom)
+"Zh" = (
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+uE
+uE
+uE
+uE
+uE
+QE
+Pd
+Pd
+et
+Cd
+Ww
+et
+Dx
+sb
+RD
+RD
+XY
+"}
+(2,1,1) = {"
+AL
+QE
+Ww
+et
+et
+oY
+Nu
+Pb
+Zh
+XR
+IR
+tO
+JA
+Dx
+uE
+uE
+fu
+"}
+(3,1,1) = {"
+AL
+Pd
+Nu
+gx
+Pd
+Pb
+Zh
+Pb
+Zh
+Pb
+IR
+AF
+XK
+JA
+df
+Jj
+sb
+"}
+(4,1,1) = {"
+AL
+Pd
+Zh
+LV
+Pd
+Pb
+XR
+Pb
+Zh
+Zh
+jq
+CC
+VK
+XK
+JA
+Dx
+AL
+"}
+(5,1,1) = {"
+Pd
+Pd
+XR
+LV
+IR
+Pb
+Zh
+Pb
+Zh
+Pb
+IR
+Dt
+Dt
+CC
+XK
+jj
+MK
+"}
+(6,1,1) = {"
+Pd
+IJ
+yl
+Zh
+RQ
+Zh
+Zh
+Zh
+Zh
+Pb
+lg
+et
+et
+et
+et
+Il
+MK
+"}
+(7,1,1) = {"
+Pd
+Pd
+XR
+LV
+IR
+Pb
+Zh
+Pb
+Zh
+Pb
+IR
+Dy
+Dy
+Dy
+lK
+sL
+MK
+"}
+(8,1,1) = {"
+AL
+Pd
+Zh
+LV
+Pd
+Pb
+XR
+Pb
+Zh
+Zh
+qC
+Dy
+DW
+lK
+Bn
+jz
+AL
+"}
+(9,1,1) = {"
+AL
+Pd
+wC
+hE
+Pd
+Pb
+Zh
+Pb
+Zh
+Pb
+tH
+Dy
+lK
+Bn
+df
+Jj
+PZ
+"}
+(10,1,1) = {"
+AL
+jM
+oY
+et
+et
+Ww
+wC
+Pb
+Zh
+XR
+IR
+lK
+Bn
+jz
+uE
+uE
+fu
+"}
+(11,1,1) = {"
+uE
+uE
+uE
+uE
+uE
+jM
+Pd
+Pd
+et
+Cd
+oY
+et
+jz
+PZ
+RD
+RD
+KM
+"}

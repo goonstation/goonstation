@@ -19,7 +19,7 @@
 
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			return 0
@@ -60,7 +60,8 @@
 		var/list/blocked_numbers = list()
 		/// List of mailgroups we don't want to hear from anymore
 		var/list/muted_mailgroups = list()
-
+		/// Whether there's a PDA-report packet-reply-triggered UI update queued
+		var/report_refresh_queued = FALSE
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -191,7 +192,7 @@
 									continue
 								pdaOwnerNames += P_name
 								pdaOwnerNames[P_name] = P_id
-							pdaOwnerNames = sortList(pdaOwnerNames)
+							sortList(pdaOwnerNames, /proc/cmp_text_asc)
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 
@@ -371,7 +372,7 @@
 				return
 
 			if(href_list["mode"])
-				var/newmode = text2num(href_list["mode"])
+				var/newmode = text2num_safe(href_list["mode"])
 				src.mode = max(newmode, 0)
 
 			if(href_list["delTone"])
@@ -404,7 +405,7 @@
 
 			else if(href_list["scanner"])
 				if(src.master.scan_program)
-					src.master.scan_program = null
+					src.master.set_scan_program(null)
 
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
@@ -422,7 +423,13 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/t = input(usr, "Please enter new ring message", src.name, src.message_tone) as text
+						var/prompt = "Please enter new ring message."
+						var/default = src.message_tone
+						if (usr.ckey == src.master?.uplink?.owner_ckey)
+							default = src.master.uplink.lock_code
+							prompt += " Your uplink code has been pre-entered for your convenience."
+
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -432,13 +439,13 @@
 						if(!(src.holder in src.master))
 							return
 
-						if ((src.master.uplink) && (cmptext(t,src.master.uplink.lock_code)))
+						if (t == src.master?.uplink?.lock_code)
 							boutput(usr, "The PDA softly beeps.")
 							src.master.uplink.unlock()
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, null, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing(LOG_PDAMSG, usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -544,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 
@@ -691,7 +698,7 @@
 								return
 
 						else if (istype(target, /datum/computer/file/text))
-							if(!isnull(src.master.uplink) && src.master.uplink.active)
+							if(src.master.uplink?.active)
 								return
 							else
 								src.note = target:data
@@ -721,15 +728,39 @@
 
 
 			else if(href_list["message_mode"])
-				var/newmode = text2num(href_list["message_mode"])
+				var/newmode = text2num_safe(href_list["message_mode"])
 				src.message_mode = max(newmode, 0)
 
 			src.master.add_fingerprint(usr)
 			src.master.updateSelfDialog()
 			return
 
+		on_set_host(obj/item/device/pda2/pda)
+			pda.AddComponent(
+				/datum/component/packet_connected/radio, \
+				"pda",\
+				pda.frequency, \
+				pda.net_id, \
+				null, \
+				FALSE, \
+				null, \
+				FALSE \
+			)
+			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 
-		network_hook(datum/signal/signal)
+		on_unset_host(obj/item/device/pda2/pda)
+			qdel(get_radio_connection_by_id(pda, "pda"))
+			UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+		proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+			if(!istype(holder) || !istype(master) || !src.master.owner)
+				return
+			if(!(holder in src.master.contents))
+				if(master.active_program == src)
+					master.set_active_program(null)
+				return
+			if(connection_id != "pda")
+				return
 
 			if(signal.data["command"] == "report_pda")
 				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
@@ -741,13 +772,43 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-				src.master.updateSelfDialog()
-			return
+				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+					src.master.updateSelfDialog()
+				else if(!src.report_refresh_queued)
+					src.report_refresh_queued = TRUE
+					SPAWN(1 SECOND)
+						src.report_refresh_queued = FALSE
+						src.master.updateSelfDialog()
 
+			if(signal.encryption) return
 
-		receive_signal(datum/signal/signal)
-			if(..())
-				return
+			if(signal.data["address_1"] && signal.data["address_1"] != src.master.net_id)
+				if((signal.data["address_1"] == "ping") && signal.data["sender"])
+					var/datum/signal/pingreply = new
+					pingreply.source = src.master
+					pingreply.data["device"] = "NET_PDA_51XX"
+					pingreply.data["netid"] = src.master.net_id
+					pingreply.data["address_1"] = signal.data["sender"]
+					pingreply.data["command"] = "ping_reply"
+					pingreply.data["data"] = src.master.owner
+					SPAWN(0.5 SECONDS)
+						src.post_signal(pingreply)
+					return
+
+				else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
+					return
+
+			if (islist(signal.data["group"]))
+				var/any_member = FALSE
+				for (var/group in signal.data["group"])
+					if (group in src.master.mailgroups)
+						any_member = TRUE
+						break
+				if (!any_member) // not a member of any specified group; discard
+					return
+			else if (signal.data["group"])
+				if (!(signal.data["group"] in src.master.mailgroups) && !(signal.data["group"] in src.master.alertgroups)) // not a member of the specified group; discard
+					return
 
 			var/filename = signal.data["file_name"]
 			var/sender = signal.data["sender"]
@@ -798,7 +859,7 @@
 						if (islist(groupAddress))
 							senderstring += " to [jointext(groupAddress,", ")]"
 						else
-							senderstring += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							senderstring += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -808,7 +869,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 
@@ -826,7 +887,7 @@
 						if (islist(groupAddress))
 							displayMessage += " to [jointext(groupAddress,", ")]"
 						else
-							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 
@@ -944,7 +1005,13 @@
 					detected_pdas[newsender] = sender_name
 					master.pdasay_autocomplete[sender_name] = newsender
 
-					src.master.updateSelfDialog()
+					if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+						src.master.updateSelfDialog()
+					else if(!src.report_refresh_queued)
+						src.report_refresh_queued = TRUE
+						SPAWN(1 SECOND)
+							src.report_refresh_queued = FALSE
+							src.master.updateSelfDialog()
 
 			return
 
@@ -996,7 +1063,7 @@
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
 			src.message_last = world.time
 
-			logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)
@@ -1057,7 +1124,6 @@
 
 			src.hosted_files[file_passkey] = file
 
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"
 			signal.data["message"] = "[file.name] hosted on [src.master.owner]'s [src.master]. Text [file_passkey] to this PDA to receive a copy of this file!"
@@ -1065,8 +1131,7 @@
 			signal.data["sender_name"] = "FILE-MAN"
 			signal.data["sender"] = "UNKNOWN"
 			signal.data["address_1"] = src.master.net_id
-			signal.transmission_method = TRANSMISSION_RADIO
-			transmit_connection.post_signal(null, signal)
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 			if(!group)
 				return

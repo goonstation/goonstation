@@ -73,7 +73,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		if (I) //ZeWaka: Fix for null.ship
 			var/obj/machinery/cruiser/P = I.ship
 			if (P.engine)
@@ -95,7 +95,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		cooldown = P.fireAt(target)
 
@@ -114,7 +114,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		P.overload_shields()
 
@@ -133,7 +133,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		P.overload_weapons()
 
@@ -152,7 +152,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		P.toggleShieldModulation()
 
@@ -171,7 +171,7 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		P.switchFireMode()
 
@@ -190,6 +190,6 @@
 			return 1
 
 		var/obj/machinery/cruiser_destroyable/cruiser_pod/C = holder.owner.loc
-		var/area/ship_interior/I = C.loc.loc
+		var/area/cruiser/I = C.loc.loc
 		var/obj/machinery/cruiser/P = I.ship
 		P.enableRamming()

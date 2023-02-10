@@ -1,62 +1,66 @@
 /*Clothing Booth UI*/
 //list creation
-var/clothingbooth_json
-var/list/clothingbooth_items = list()
+var/list/clothingbooth_stock = list()
+var/list/clothingbooth_paths = list()
 
-/proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
+/proc/clothingbooth_setup()
 	var/list/list/list/boothlist = list()
-	for(var/T in childrentypesof(/datum/clothingbooth_item))
-		var/datum/clothingbooth_item/I = new T
-		var/itemname = I.name
-		var/pathname = "[I.path]"
-		var/categoryname = I.category
+	for(var/datum/clothingbooth_item/type as anything in concrete_typesof(/datum/clothingbooth_item))
+		var/datum/clothingbooth_item/I = new type
+		var/item_name = I.name
+		var/path_name = "[I.path]"
+		var/category_name = I.category
 		var/cost = I.cost
-		var/matchfound = 0
-		if(boothlist.len>0)
+
+		var/atom/dummy_atom = I.path
+		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state), frame = 1)
+		var/item_img = icon2base64(dummy_icon)
+
+		var/match_found = FALSE
+		if(length(boothlist))
 			for(var/i=1, i<=boothlist.len, i++)
-				if(boothlist[i]["name"] == categoryname)
-					boothlist[i]["items"].Add(list(list("name"=itemname, "path"=pathname, "cost"=cost)))
-					matchfound = 1
+				if(boothlist[i]["category"] == category_name)
+					match_found = TRUE
+					boothlist[i]["items"] += list(list(
+							"cost" = cost,
+							"img" = item_img,
+							"name" = item_name,
+							"path" = path_name
+					))
 					break
-		if(matchfound == 0)
-			boothlist.Add(list(list("name"=categoryname, "items"=list(list("name"=itemname, "path"=pathname, "cost"=cost)))))
-		clothingbooth_items[pathname] = I
-	clothingbooth_json = json_encode(boothlist)
+		if(!match_found)
+			boothlist += list(list(
+				"category" = category_name,
+				"items" = list(list(
+					"cost" = cost,
+					"img" = item_img,
+					"name" = item_name,
+					"path" = path_name
+				))
+			))
 
-//setting up player-side UI data
-/obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
-	if(!user.client)
-		return
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/H = user
-	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
-	qdel(src.preview_item)
-	src.preview_item = null
-	src.preview.remove_all_clients()
-	src.preview.add_client(user.client)
-
-	user << browse_rsc('browserassets/css/clothingbooth.css')
-	user << browse_rsc('browserassets/js/clothingbooth.js')
-	user << browse(replacetext(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "!!PREVIEW_ID!!", src.preview.preview_id), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
-
+		clothingbooth_paths[path_name] = I
+	clothingbooth_stock = boothlist
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
-	var/datum/character_preview/multiclient/preview
-	var/obj/item/preview_item = null
-	var/money = 0
-	var/open = 1
-	var/yeeting = 0
 	name = "Clothing Booth"
-	desc = "Please hand your credits to the goblin tailor before entering."
+	desc = "Contains a sophisticated autoloom system capable of manufacturing a variety of clothing items on demand."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
-	anchored = 1
+	flags = FPRINT | TGUI_INTERACTIVE
+	anchored = TRUE
 	density = 1
-	//power_usage = 100
+	var/datum/movable_preview/character/multiclient/preview
 	var/datum/light/light
+	var/datum/clothingbooth_item/item_to_purchase = null
+	var/mob/living/carbon/human/occupant
+	var/obj/item/preview_item = null
+	var/money = 0
+	var/open = TRUE
+	var/preview_direction
+	var/preview_direction_default = SOUTH
+
 	New()
 		..()
 		UnsubscribeProcess()
@@ -66,137 +70,198 @@ var/list/clothingbooth_items = list()
 		light.set_height(1.5)
 		light.enable()
 		src.preview = new()
+		src.preview.add_background()
+		src.preview_direction = src.preview_direction_default
 
-	relaymove(mob/user as mob)
-		if (user.stat != 0 || user.getStatusDuration("stunned"))
-			return
-		src.set_open(1)
-		sleep(2 SECONDS)
-		if(!(user in src))
-			return
-		user.set_loc(src.loc) //possible fix to the for loop bug (possibly need to clear contents of src upon dropping items)
-		for (var/obj/O in src.contents)
-			user.put_in_hand_or_drop(O)
-		if(money > 0)
-			var/obj/item/moneyreturn = new /obj/item/spacecash(get_turf(src),src.money)
-			src.money = 0
-			user.put_in_hand_or_drop(moneyreturn)
+	attackby(obj/item/weapon, mob/user)
+		if(istype(weapon, /obj/item/spacecash))
+			if(!(locate(/mob) in src))
+				src.money += weapon.amount
+				weapon.amount = 0
+				user.visible_message("<span class='notice'>[user.name] inserts credits into [src]")
+				playsound(user, 'sound/machines/capsulebuy.ogg', 80, 1)
+				user.u_equip(weapon)
+				weapon.dropped(user)
+				qdel(weapon)
+			else
+				boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
 
-	Topic(href, href_list)
-		var/datum/clothingbooth_item/cb_item = clothingbooth_items[href_list["path"]]
-		if(!istype(cb_item))
+		else if (istype(weapon, /obj/item/grab))
+			var/obj/item/grab/G = weapon
+			if (ismob(G.affecting))
+				var/mob/GM = G.affecting
+				if (src.open)
+					GM.set_loc(src)
+					src.occupant = GM
+					src.preview.add_client(GM.client)
+					src.update_preview()
+					ui_interact(GM)
+					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
+					src.close()
+					qdel(G)
+					logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
+		else
+			..()
+
+	attack_hand(mob/user)
+		if (!ishuman(user))
+			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
 			return
-		if(!(usr in src.contents))
+		if (!IN_RANGE(user, src, 1))
 			return
-		var/itempath = text2path(href_list["path"])
-		switch(href_list["command"])
-			if("spawn")
-				if(text2num(cb_item.cost) <= src.money)
-					money -= text2num(cb_item.cost)
-					usr.put_in_hand_or_drop(new itempath(src))
-				else
-					boutput(usr, "<span class='alert'>The clothing machine rattles and roars with anger! You must offer more tribute to the goblin tailor!</span>")
-					var/wiggle = 6
-					while(wiggle > 0)
-						wiggle--
-						src.pixel_x = rand(-3,3)
-						src.pixel_y = rand(-3,3)
-						sleep(0.1 SECONDS)
-					src.pixel_x = 0
-					src.pixel_y = 0
-			if("render")
-				if (src.preview_item)
-					src.preview.preview_mob.u_equip(src.preview_item)
-					qdel(src.preview_item)
-					src.preview_item = null
-				src.preview_item = new itempath()
-				src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
+		if (!can_act(user))
+			return
+		if (open)
+			user.set_loc(src.loc)
+			SPAWN(0.5 SECONDS)
+				if (!open) return
+				user.set_loc(src)
+				src.close()
+				src.occupant = user
+				src.preview.add_client(user.client)
+				src.update_preview()
+				ui_interact(user)
+		else
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, .proc/eject, null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 	Click()
-		if(!ishuman(usr))
-			boutput(usr,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
-			return
 		if((usr in src) && (src.open == 0))
 			if(istype(usr.equipped(),/obj/item/spacecash))
 				var/obj/item/dummycredits = usr.equipped()
 				src.money += dummycredits.amount
 				dummycredits.amount = 0
 				qdel(dummycredits)
-				return
-			else
-				uisetup(usr)
-				return
+			src.ui_interact(usr)
 		..()
 
-/obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
-	if(istype(weapon, /obj/item/spacecash))
-		src.money += weapon.amount
-		weapon.amount = 0
-		user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
-		user.u_equip(weapon)
-		weapon.dropped()
-		qdel(weapon)
-	else
-		var/obj/item/grab/G = weapon
-		if(istype(G))
-			if (ismob(G.affecting))
-				var/mob/GM = G.affecting
-				if ((istype(src, /obj/machinery/clothingbooth)) && (src.open == 1))
-					GM.set_loc(src)
-					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
-					src.set_open(0)
-					qdel(G)
-					logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-					actions.interrupt(G.affecting, INTERRUPT_MOVE)
-					actions.interrupt(user, INTERRUPT_ACT)
+	disposing()
+		qdel(src.preview)
+		qdel(src.preview_item)
+		qdel(src.item_to_purchase)
+		..()
 
-/obj/machinery/clothingbooth/proc/set_open(var/new_open)
-	if(new_open == src.open)
-		return
-	if(new_open)
-		src.icon_state = "clothingbooth-opening"
-		animate(src, time = 20)
-		animate(icon_state = "clothingbooth-open")
-	else
-		src.icon_state = "clothingbooth-closing"
-		animate(src, time = 21.5)
-		animate(icon_state = "clothingbooth-closed")
-	src.open = new_open
+	relaymove(mob/user as mob)
+		if (!isalive(user))
+			return
+		eject(user)
 
-/obj/machinery/clothingbooth/attack_hand(mob/user as mob)
-	if(!ishuman(user))
-		boutput(user,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
-		return
-	if(!(user in range(1,src)))
-		return
-	if((src.open == 1)&&(!user.stat))
-		user.set_loc(src.loc)
-		src.set_open(0)
-		sleep(0.5 SECONDS)
-		user.set_loc(src)
-		boutput(user, "<span class='success'><br>Welcome to the clothing booth! Click an item to view its preview. Click again to purchase. Purchasing items will pull from the credits you insert into the machine prior to entering.<br></span>")
-		uisetup(user)
-	else
-		if(src.yeeting == 0)
-			src.yeeting = 1
-			user.visible_message("<span class='alert'>Uh oh...It looks like [user.name] is thinking about charging into the clothing booth...</span>","<span class='alert'>You are working up the nerve to pull the occupant out...</span>")
-			SPAWN_DBG(4 SECONDS)
-				if((user in range(1, src)) && (locate(/mob) in src))
-					if (prob(45))
-						user.visible_message("<span class='success'>phew...[user.name] decided not to enter the booth.</span>","<span class='success'>Maybe not...they could be changing...</span>")
+	ui_interact(mob/user, datum/tgui/ui)
+		if(!user.client)
+			return
+		if(!ishuman(user))
+			return
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ClothingBooth")
+			ui.open()
+
+	ui_close(mob/user)
+		. = ..()
+		if (!isnull(src.preview_item))
+			qdel(src.preview_item)
+			src.preview_item = null
+
+	ui_static_data(mob/user)
+		. = list(
+			"name" = src.name
+		)
+		.["clothingBoothCategories"] = clothingbooth_stock
+
+	ui_data(mob/user)
+		var/icon/preview_icon = src.preview.get_icon()
+		. = list(
+			"money" = src.money,
+			"previewIcon" = icon2base64(preview_icon),
+			"previewHeight" = preview_icon.Height(),
+			"previewItem" = src.preview_item,
+			"selectedItemCost" = src.item_to_purchase?.cost,
+			"selectedItemName" = src.item_to_purchase?.name
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (. || !(usr in src.contents))
+			return
+
+		switch(action)
+			if("purchase")
+				if(src.item_to_purchase)
+					if(text2num_safe(src.item_to_purchase.cost) <= src.money)
+						src.money -= text2num_safe(src.item_to_purchase.cost)
+						var/purchased_item_path = src.item_to_purchase.path
+						usr.put_in_hand_or_drop(new purchased_item_path(src))
 					else
-						if((user in range(1, src)) && (locate(/mob) in src))
-							user.visible_message("<span class='alert'><b>OH GOD, [uppertext(user.name)] IS GOING IN! THEY'RE INSANE!</b></span>","<span class='alert'>You're going in...</span>")
-							src.set_open(1)
-							if((user in range(1, src)) && (locate(/mob) in src))
-								for(var/mob/M in src.contents)
-									M.set_loc(src.loc)
-									M.changeStatus("weakened", 2 SECONDS)
-									M.changeStatus("stunned", 2 SECONDS)
-									src.visible_message("<span class='alert'><b>[uppertext(user.name)] EMERGES FROM THE BOOTH DRAGGING [uppertext(M.name)] BY THE LEGS!</b></span>")
+						boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+						animate_shake(src, 12, 3, 3)
+					. = TRUE
 				else
-					user.visible_message("<span class='success'>It looks like [user.name] decided against entering the booth.</span>","<span class='alert'>You are too far away from the booth or the occupant has escaped.</span>")
-			src.yeeting = 0
+					boutput(usr, "<span class='alert'>No item selected!</span>")
+			if ("rotate-cw")
+				src.preview_direction = turn(src.preview_direction, -90)
+				update_preview()
+				. = TRUE
+			if ("rotate-ccw")
+				src.preview_direction = turn(src.preview_direction, 90)
+				update_preview()
+				. = TRUE
+			if("select")
+				var/datum/clothingbooth_item/selected_item = clothingbooth_paths[params["path"]]
+				if(!istype(selected_item))
+					return
+				var/selected_item_path = text2path(params["path"])
+				var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
+				if(src.preview_item)
+					preview_mob.u_equip(src.preview_item)
+					qdel(src.preview_item)
+					src.preview_item = null
+				src.preview_item = new selected_item_path
+				preview_mob.force_equip(src.preview_item, selected_item.slot)
+				src.item_to_purchase = selected_item
+				update_preview()
+				. = TRUE
 
-		else
-			boutput(user, "<span class='alert'>Someone is already working up the nerve to pull the ouccupant out.</span>")
+	/// open the booth
+	proc/open()
+		flick("clothingbooth-opening", src)
+		src.icon_state = "clothingbooth-open"
+		open = TRUE
+
+	/// close the booth
+	proc/close()
+		flick("clothingbooth-closing", src)
+		src.icon_state = "clothingbooth-closed"
+		open = FALSE
+
+	/// ejects occupant if any along with any contents
+	proc/eject(mob/occupant)
+		if (open) return
+		open()
+		SPAWN(2 SECONDS)
+			qdel(src.preview_item)
+			qdel(src.item_to_purchase)
+			src.preview.remove_all_clients()
+			src.preview_direction = src.preview_direction_default
+			src.item_to_purchase = null
+			tgui_process.close_uis(src)
+			var/turf/T = get_turf(src)
+			if (!occupant)
+				occupant = locate(/mob/living/carbon/human) in src
+			if (occupant?.loc == src) //ensure mob wasn't otherwise removed during out spawn call
+				occupant.set_loc(T)
+				if(src.money > 0)
+					occupant.put_in_hand_or_drop(new /obj/item/spacecash(T, src.money))
+				src.money = 0
+				for (var/obj/item/I in src.contents)
+					occupant.put_in_hand_or_drop(I)
+				for (var/atom/movable/AM in contents)
+					AM.set_loc(T) //dump anything that's left in there on out
+			else
+				if(src.money > 0)
+					new /obj/item/spacecash(T, src.money)
+				src.money = 0
+				for (var/atom/movable/AM in contents)
+					AM.set_loc(T)
+
+	/// generates a preview of the current occupant
+	proc/update_preview()
+		src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.preview_direction, src.occupant.real_name)

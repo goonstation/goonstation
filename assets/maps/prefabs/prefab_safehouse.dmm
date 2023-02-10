@@ -1,0 +1,1995 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aE" = (
+/obj/decal/fakeobjects/safehouse/mechcomp_cabinet{
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"aM" = (
+/obj/decal/fakeobjects/safehouse/conduit{
+	dir = 8
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"bp" = (
+/obj/table/reinforced/auto,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/staple_gun,
+/obj/item/hemostat,
+/obj/item/surgical_spoon,
+/obj/item/suture,
+/obj/item/reagent_containers/syringe/calomel,
+/obj/item/implanter{
+	pixel_x = -5
+	},
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 4;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = 10
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/prefab/safehouse)
+"cg" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/decal/fakeobjects/safehouse/cloner{
+	dir = 1
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"cj" = (
+/obj/decal/fakeobjects/safehouse/biotube{
+	pixel_y = 1
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "A vent. You can't feel any airflow.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "grimy vent";
+	tag = ""
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"cr" = (
+/obj/decal/fakeobjects/safehouse/biomatter_tank{
+	dir = 1
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"cy" = (
+/obj/decal/fakeobjects/safehouse/reclaimer,
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"cI" = (
+/obj/ladder{
+	id = "saferoom"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"dh" = (
+/obj/decal/fakeobjects/safehouse/cloning_console,
+/obj/decal/cleanable/blood,
+/obj/item/raw_material/shard/glass{
+	layer = 3.2;
+	pixel_x = -3
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/obj/item/raw_material/shard/glass{
+	layer = 3.2;
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"dK" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 9;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 9;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 4;
+	pixel_y = 14
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	pixel_x = 15;
+	pixel_y = 11
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 8;
+	layer = 3.2;
+	pixel_x = 9;
+	pixel_y = -8
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody{
+	dir = 5;
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody{
+	dir = 9;
+	pixel_y = -3
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"en" = (
+/obj/table/auto{
+	layer = 3
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 4
+	},
+/obj/item/storage/briefcase/safehouse{
+	layer = 3.1
+	},
+/obj/item/storage/pill_bottle/methamphetamine{
+	pixel_x = 9;
+	pixel_y = 8;
+	spawn_contents = list(/obj/item/reagent_containers/pill/methamphetamine = 7)
+	},
+/obj/item/storage/pill_bottle/bathsalts{
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"eq" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 5;
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 4
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 1;
+	pixel_y = -6
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 6;
+	pixel_x = -7;
+	pixel_y = 18
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody{
+	dir = 8;
+	layer = 3.2;
+	pixel_x = -10
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"et" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 4;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"eX" = (
+/turf/simulated/floor/bluewhite/corner,
+/area/prefab/safehouse)
+"fp" = (
+/obj/item/storage/wall/medical{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/prefab/safehouse)
+"fx" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/iv_drip/dead_exec{
+	layer = 3.1;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/iv_drip/dead_exec{
+	layer = 3.1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/prefab/safehouse)
+"gf" = (
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2";
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"gh" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 1;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"gj" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/prefab/safehouse)
+"go" = (
+/obj/decal/cleanable/blood{
+	icon_state = "handblood";
+	pixel_y = 7
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/safehouse)
+"gz" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "private quarters"
+	},
+/obj/access_spawn/public,
+/turf/simulated/floor/wood/two,
+/area/prefab/safehouse)
+"hp" = (
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody{
+	dir = 10;
+	pixel_y = -5
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/item/raw_material/shard/glass{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/implant/health/exp_health_implant{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8
+	},
+/turf/unsimulated/floor/circuit/vintage/vintage_CO2,
+/area/prefab/safehouse)
+"hx" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 10;
+	pixel_x = 10;
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"id" = (
+/obj/item/clothing/shoes/dress_shoes{
+	pixel_y = -8
+	},
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/suit,
+/obj/decal/cleanable/wardrobe_scuff_marks,
+/obj/item/clothing/under/suit{
+	pixel_x = 5
+	},
+/obj/item/clothing/under/suit{
+	pixel_x = 2
+	},
+/obj/item/clothing/shoes/dress_shoes{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/item/clothing/shoes/dress_shoes{
+	pixel_x = -3;
+	pixel_y = -9
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/safehouse)
+"ii" = (
+/obj/decal/poster/wallsign/dead_exec_portrait,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/safehouse)
+"iL" = (
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area/prefab/safehouse)
+"jj" = (
+/obj/table/wood/auto,
+/obj/decoration/clock{
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/prefab/safehouse)
+"kl" = (
+/obj/access_spawn/public,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"kB" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 1;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_y = 14
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"kC" = (
+/obj/access_spawn/public,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"kL" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/access_spawn/public,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"kN" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/prefab/safehouse)
+"kP" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. You can't feel any airflow.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"lh" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/standard/narrow/east,
+/area/prefab/safehouse)
+"lj" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"lv" = (
+/turf/simulated/floor/carpet/red/standard/narrow/T_south,
+/area/prefab/safehouse)
+"lF" = (
+/obj/machinery/door/poddoor{
+	id = "clone room";
+	name = "lab doors"
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"lG" = (
+/obj/machinery/power/terminal,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"lO" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"lY" = (
+/obj/stool/bed{
+	pixel_y = 11
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/royal{
+	pixel_y = 11
+	},
+/obj/item/clothing/suit/bedsheet/royal,
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 4;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab/safehouse)
+"mf" = (
+/obj/submachine/chef_oven,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/black,
+/area/prefab/safehouse)
+"mo" = (
+/obj/machinery/optable,
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/prefab/safehouse)
+"mv" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/noGenerate)
+"my" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 1;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_y = 14
+	},
+/obj/submachine/chef_sink,
+/turf/simulated/floor/black,
+/area/prefab/safehouse)
+"mB" = (
+/turf/simulated/floor/carpet/red/fancy/edge,
+/area/prefab/safehouse)
+"mM" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/two,
+/area/prefab/safehouse)
+"np" = (
+/obj/storage/crate/bin{
+	layer = 2.9
+	},
+/obj/item/paper{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/paper,
+/obj/item/chem_pill_bottle,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/wood/two,
+/area/prefab/safehouse)
+"ns" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/black,
+/area/prefab/safehouse)
+"nz" = (
+/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"nK" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/black,
+/area/prefab/safehouse)
+"nQ" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"nW" = (
+/obj/storage/secure/closet/fridge/kitchen{
+	layer = 2.9;
+	locked = 0;
+	pixel_x = -4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/window/east,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne,
+/turf/simulated/floor/black,
+/area/prefab/safehouse)
+"or" = (
+/obj/machinery/bio_handscanner{
+	pixel_y = 29
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"ot" = (
+/obj/item/reagent_containers/syringe{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/syringe/morphine{
+	pixel_y = -1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/prefab/safehouse)
+"ou" = (
+/obj/rack,
+/obj/item/tank/oxygen,
+/obj/item/device/light/flashlight{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/gas/emergency,
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"ox" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"oM" = (
+/obj/access_spawn/public,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 1;
+	name = "private medbay"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"oY" = (
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 8;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = -10
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/prefab/safehouse)
+"pl" = (
+/turf/simulated/floor/carpet/red/standard/narrow/eastwest,
+/area/prefab/safehouse)
+"pA" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"rf" = (
+/obj/item/cigbutt{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"rm" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"rq" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/safehouse)
+"rI" = (
+/obj/item/paper/safehouse/delivery_note{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/decal/fakeobjects/beacon{
+	layer = 4;
+	pixel_x = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"rK" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate{
+	desc = "You bet your grandma would like this.";
+	name = "antique plate"
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_x = -11;
+	pixel_y = 12
+	},
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"sN" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/device/light/zippo/gold,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"tJ" = (
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"ue" = (
+/obj/machinery/door_control{
+	id = "podbay_safehouse";
+	name = "Safehouse Hangar Door Control";
+	pixel_x = -24
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/safehouse)
+"uv" = (
+/obj/window/cubicle{
+	dir = 4
+	},
+/obj/machinery/bot/medbot{
+	pixel_x = -3
+	},
+/turf/simulated/floor/circuit,
+/area/prefab/safehouse)
+"uQ" = (
+/turf/simulated/floor/carpet/red/fancy/narrow/nw,
+/area/prefab/safehouse)
+"vP" = (
+/obj/stool/chair/couch/red{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_north,
+/area/prefab/safehouse)
+"wc" = (
+/obj/stool/chair/couch/red{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/ne,
+/area/prefab/safehouse)
+"wp" = (
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 8;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = -10
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/safehouse)
+"wy" = (
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/decal/cleanable/vomit{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"wA" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"wI" = (
+/obj/decal/cleanable/oil/streak,
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 4;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = 10
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/safehouse)
+"wS" = (
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/prefab/safehouse)
+"xm" = (
+/obj/table/wood/round,
+/obj/decal/statue/dead_exec_bust,
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"ym" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/red/standard/narrow/west{
+	dir = 1
+	},
+/area/prefab/safehouse)
+"yx" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 1;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_y = 14
+	},
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"yH" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of the area's air supply system.";
+	dir = 10
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"zo" = (
+/obj/machinery/bio_handscanner{
+	pixel_x = 7;
+	pixel_y = -32
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 4;
+	pixel_x = 14;
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"zK" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor/blue,
+/area/prefab/safehouse)
+"As" = (
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray,
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_y = 6
+	},
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 4;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_east,
+/area/prefab/safehouse)
+"CW" = (
+/obj/machinery/r_door_control{
+	id = "podbay_safehouse"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/safehouse)
+"Dc" = (
+/obj/machinery/atmospherics/pipe/tank/air{
+	volume = 0
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Dl" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Dm" = (
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 9;
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec/bloody{
+	dir = 8;
+	pixel_y = 6
+	},
+/obj/decal/fakeobjects/safehouse/dead_exec{
+	dir = 5;
+	pixel_y = -5
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/circuit/green/green_CO2,
+/area/prefab/safehouse)
+"Du" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"DA" = (
+/turf/simulated/floor/carpet/red/standard/narrow/west,
+/area/prefab/safehouse)
+"Ed" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/safehouse)
+"EM" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"EN" = (
+/turf/simulated/floor/carpet/red/standard/narrow/east,
+/area/prefab/safehouse)
+"Fa" = (
+/obj/stool/chair/couch/red{
+	dir = 5
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/se,
+/area/prefab/safehouse)
+"Fs" = (
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"Gp" = (
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal/safehouse,
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/prefab/safehouse)
+"GD" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Part of the area's air supply system."
+	},
+/obj/item/device/analyzer/atmospheric/upgraded,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Hm" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"HL" = (
+/obj/table/reinforced/bar/auto,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/prefab/safehouse)
+"Il" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/safehouse)
+"IS" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler{
+	glass_amt = 10;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Ke" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/standard/narrow/eastwest,
+/area/prefab/safehouse)
+"Kz" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/hangover{
+	pixel_y = 3
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/prefab/safehouse)
+"KU" = (
+/obj/decal/floatingtiles,
+/turf/space,
+/area/noGenerate)
+"LI" = (
+/obj/machinery/door_control/podbay/suspiciousdebris,
+/obj/item/parts/robot_parts/arm/right/light{
+	pixel_x = -7
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"MT" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/standard/narrow/west,
+/area/prefab/safehouse)
+"NB" = (
+/turf/simulated/floor/carpet/red/fancy/narrow/T_west,
+/area/prefab/safehouse)
+"Op" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/blue,
+/area/prefab/safehouse)
+"Ou" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/carpet/red/fancy/innercorner/omni,
+/area/prefab/safehouse)
+"Pn" = (
+/turf/simulated/wall/auto/asteroid{
+	icon_state = null
+	},
+/area/noGenerate)
+"Qc" = (
+/obj/machinery/power/smes{
+	charge = 1e7;
+	chargelevel = 1e5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"RE" = (
+/obj/machinery/door/poddoor/blast/asteroid/podbay_autoclose/asteroid_horizontal{
+	id = "podbay_safehouse";
+	name = "asteroid"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/safehouse/asteroiddoors)
+"RR" = (
+/turf/space,
+/area/noGenerate)
+"Sr" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8
+	},
+/turf/simulated/floor/blue,
+/area/prefab/safehouse)
+"SW" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/access_spawn/public,
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"TW" = (
+/obj/machinery/chem_master,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"UL" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "safehouse_storage";
+	pixel_y = 20
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"UM" = (
+/turf/space,
+/area/allowGenerate)
+"UV" = (
+/obj/storage/crate/wooden{
+	layer = 2.9
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Vt" = (
+/obj/table/wood/round,
+/obj/decal/fakeobjects/recordplayer{
+	pixel_y = 4
+	},
+/obj/machinery/light{
+	brightness = 1.4;
+	dir = 8;
+	layer = 9.1;
+	name = "worn light fixture";
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/red/decal/outercross,
+/area/prefab/safehouse)
+"Wi" = (
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"Wl" = (
+/obj/shrub/dead,
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"Wt" = (
+/turf/simulated/floor/carpet/red/fancy/narrow/sw,
+/area/prefab/safehouse)
+"WS" = (
+/obj/stool/chair/couch/red{
+	dir = 9
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_south,
+/area/prefab/safehouse)
+"WZ" = (
+/turf/simulated/floor/wood,
+/area/prefab/safehouse)
+"XO" = (
+/obj/access_spawn/public,
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	name = "storage airlock"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Yk" = (
+/obj/ladder{
+	id = "safehouse_storage"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Yq" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "saferoom";
+	pixel_y = 20
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	pixel_y = -10
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/safehouse)
+"YA" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/safehouse)
+"YK" = (
+/obj/machinery/shower,
+/obj/window/cubicle{
+	dir = 8
+	},
+/obj/machinery/door/window/eastleft{
+	dir = 1
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/blue,
+/area/prefab/safehouse)
+"YZ" = (
+/obj/decal/fakeobjects/safehouse/airfilter,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Zb" = (
+/turf/simulated/floor/airless/stairs,
+/area/prefab/safehouse)
+"Zd" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"Zf" = (
+/obj/storage/crate/packing{
+	layer = 2.9
+	},
+/obj/item/storage/box/lightbox/bulbs{
+	pixel_x = 5
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	desc = "This light might be broken.  It's probably not wired up, though.";
+	dir = 4;
+	icon_state = "tube0";
+	layer = 4;
+	name = "inactive light tube";
+	pixel_x = 10;
+	tag = "icon-tube-broken (NORTH)"
+	},
+/obj/item/paper/safehouse/contractors_note{
+	layer = 3.2;
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/device/reagentscanner{
+	pixel_x = -5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Zm" = (
+/turf/simulated/floor/wood/two,
+/area/prefab/safehouse)
+"Zp" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating,
+/area/prefab/safehouse)
+"Zw" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/safehouse)
+
+(1,1,1) = {"
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}
+(2,1,1) = {"
+UM
+UM
+Zd
+Zd
+Zd
+UM
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}
+(3,1,1) = {"
+UM
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}
+(4,1,1) = {"
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+rI
+EM
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}
+(5,1,1) = {"
+UM
+Zd
+Zd
+Il
+Il
+Il
+Il
+Il
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+"}
+(6,1,1) = {"
+Zd
+Zd
+Zd
+Il
+aE
+dh
+hp
+Il
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+"}
+(7,1,1) = {"
+UM
+Zd
+Zd
+Il
+aM
+et
+zo
+go
+Il
+YA
+YA
+YA
+YA
+YA
+YA
+YA
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+"}
+(8,1,1) = {"
+UM
+Zd
+Zd
+Il
+cg
+gf
+Dm
+dK
+Il
+or
+Wi
+YA
+Dc
+YZ
+nz
+YA
+Zd
+Zd
+Zd
+UM
+UM
+UM
+UM
+"}
+(9,1,1) = {"
+UM
+Zd
+Zd
+Il
+cj
+gh
+hx
+eq
+lF
+Wi
+Yq
+YA
+Dl
+yH
+GD
+YA
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+"}
+(10,1,1) = {"
+Zd
+Zd
+Zd
+Il
+cr
+cy
+en
+Il
+Il
+rm
+Wi
+YA
+Du
+lG
+Qc
+YA
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+"}
+(11,1,1) = {"
+Zd
+Zd
+Zd
+Il
+Il
+Il
+Il
+Il
+YA
+YA
+YA
+YA
+kL
+YA
+YA
+YA
+YA
+Zd
+Zd
+EM
+EM
+Zd
+Zd
+"}
+(12,1,1) = {"
+UM
+Zd
+Zd
+Zd
+Zd
+Zd
+YA
+YA
+YA
+YA
+YA
+xm
+DA
+YA
+Op
+zK
+YA
+Zd
+Zd
+Zd
+UM
+UM
+UM
+"}
+(13,1,1) = {"
+UM
+Zd
+Zd
+Zd
+YA
+YA
+YA
+Gp
+kN
+Zm
+YA
+WZ
+pl
+mM
+Sr
+YK
+Zw
+Zd
+Zd
+Zd
+UM
+UM
+UM
+"}
+(14,1,1) = {"
+UM
+UM
+Zd
+Zd
+YA
+cI
+gj
+id
+mB
+Zm
+gz
+ym
+lv
+YA
+YA
+YA
+YA
+YA
+Zd
+Zd
+UM
+UM
+UM
+"}
+(15,1,1) = {"
+UM
+UM
+Zd
+Zd
+YA
+YA
+YA
+ii
+mB
+np
+YA
+yx
+pl
+YA
+TW
+wy
+IS
+YA
+Zd
+Zd
+Zd
+UM
+UM
+"}
+(16,1,1) = {"
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+jj
+lY
+rq
+YA
+xm
+EN
+YA
+UL
+nQ
+Hm
+YA
+Zd
+Zd
+Zd
+Zd
+UM
+"}
+(17,1,1) = {"
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+YA
+YA
+YA
+YA
+YA
+SW
+YA
+UV
+Zf
+Zp
+YA
+Zd
+Zd
+Zd
+Zd
+UM
+"}
+(18,1,1) = {"
+UM
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+mf
+ox
+HL
+MT
+WZ
+YA
+YA
+YA
+YA
+YA
+YA
+YA
+Zd
+Zd
+UM
+"}
+(19,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+Zd
+YA
+my
+Fs
+rK
+Ke
+WZ
+WZ
+Vt
+YA
+fx
+oY
+uv
+YA
+Zd
+Zd
+UM
+"}
+(20,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+Zd
+YA
+ns
+Fs
+HL
+Ke
+WZ
+WZ
+Wl
+YA
+fp
+iL
+Kz
+YA
+Zd
+Zd
+UM
+"}
+(21,1,1) = {"
+UM
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+nK
+Fs
+sN
+lh
+WZ
+WZ
+WZ
+oM
+wS
+eX
+ot
+YA
+Zd
+Zd
+UM
+"}
+(22,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+YA
+YA
+nW
+Fs
+tJ
+WZ
+WZ
+wA
+wA
+YA
+mo
+bp
+YA
+YA
+Zd
+Zd
+UM
+"}
+(23,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+YA
+Wi
+Zb
+Fs
+uQ
+NB
+Wt
+YA
+XO
+YA
+YA
+YA
+YA
+Zd
+Zd
+Zd
+UM
+"}
+(24,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+YA
+kl
+YA
+YA
+vP
+Ou
+WS
+YA
+Yk
+YA
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+"}
+(25,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+YA
+kB
+ou
+YA
+wc
+As
+Fa
+YA
+YA
+YA
+Zd
+Zd
+Zd
+Zd
+Zd
+RR
+UM
+"}
+(26,1,1) = {"
+UM
+UM
+UM
+Zd
+Zd
+Zd
+YA
+Wi
+lO
+YA
+YA
+YA
+YA
+YA
+Zd
+Zd
+Zd
+Zd
+Zd
+RR
+RR
+RR
+UM
+"}
+(27,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+YA
+kC
+YA
+YA
+YA
+YA
+Pn
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+RR
+RR
+KU
+"}
+(28,1,1) = {"
+UM
+UM
+UM
+Zd
+Zd
+Zd
+YA
+Wi
+Wi
+ue
+wp
+Ed
+RE
+RR
+RR
+RR
+RR
+EM
+LI
+Zd
+Zd
+RR
+UM
+"}
+(29,1,1) = {"
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+kP
+Wi
+Ed
+Ed
+Ed
+RE
+RR
+RR
+RR
+RR
+EM
+Zd
+Zd
+Zd
+UM
+UM
+"}
+(30,1,1) = {"
+UM
+Zd
+Zd
+Zd
+Zd
+Zd
+YA
+lj
+pA
+Ed
+Ed
+Ed
+RE
+RR
+RR
+RR
+RR
+RR
+Zd
+Zd
+UM
+UM
+UM
+"}
+(31,1,1) = {"
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+YA
+YA
+rf
+Ed
+wI
+Ed
+RE
+RR
+RR
+RR
+mv
+RR
+RR
+UM
+UM
+UM
+UM
+"}
+(32,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+Zd
+YA
+YA
+YA
+YA
+CW
+Pn
+Zd
+Zd
+RR
+RR
+RR
+RR
+UM
+UM
+UM
+UM
+"}
+(33,1,1) = {"
+UM
+UM
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+RR
+RR
+RR
+UM
+UM
+UM
+UM
+"}
+(34,1,1) = {"
+UM
+UM
+UM
+UM
+UM
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}
+(35,1,1) = {"
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+Zd
+UM
+Zd
+Zd
+Zd
+UM
+Zd
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+UM
+"}

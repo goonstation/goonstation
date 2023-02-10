@@ -1,0 +1,612 @@
+	<h1>To Serve Man</h1>
+	<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.</i></p>
+	<p><i>It is also important to remember that every oven works differently and the cooking times for these recipes might not be optimal.</i></p>
+	<hr>
+	<p>This is meant as a basic guide for cooking with some common recipes. However, if you want to become a true chef, you must willing to experiment and try new things.
+	Only someone who is not afraid of failure can become a master chef!</p>
+	<hr>
+	<h2>Burger</h2>
+	<h3>Ingredients</h3>
+	<div class = "burger">
+	<li>1-3 Pieces of Meat
+	<li>1 Dough
+	</div>
+	<div class ="burgersteps">
+	<li>Cook the ingredients in the oven for 6 seconds on high
+	</div>
+
+	<hr>
+	<h2>Luau Burger</h2>
+	<h3>Ingredients</h3>
+	<div class = "luau">
+	<li>1 Pineapple Slice
+	<li>1 Piece of Meat
+	<li>1 Dough
+	</div>
+	<div class ="luausteps">
+	<li>Cook the ingredients in the oven for 7 seconds on high
+	</div>
+
+	<hr>
+	<h2>Coconut Burger</h2>
+	<h3>Ingredients</h3>
+	<div class = "coconut">
+	<li>1 Piece of Coconut Meat
+	<li>1 Dough
+	</div>
+	<div class ="coconutsteps">
+	<li>Cook the ingredients in the oven for 7 seconds on high
+	</div>
+
+	<hr>
+	<h2>Tiki Burger</h2>
+	<h3>Ingredients</h3>
+	<div class = "tiki">
+	<li>1 Pineapple Slice
+	<li>1 Piece of Meat
+	<li>1 Piece of Coconut Meat
+	<li>1 Dough
+	</div>
+	<div class ="tikisteps">
+	<li>Cook the ingredients in the oven for 9 seconds on high
+	</div>
+
+	<hr>
+	<h2>Cake Batter</h2>
+	<h3>Ingredients</h3>
+	<div class = "cakebatter">
+	<li>1 Sweet Dough
+	<li>2 Eggs
+	</div>
+	<h3>Steps</h3>
+	<div class = "cakebattersteps">
+	<li>Mix the ingredients together
+	</div>
+
+	<hr>
+	<h2>Cake</h2>
+	<h3>Ingredients</h3>
+	<div class = "cake">
+	<li>1 Cake Batter
+	<li>1 Food Item of Your Choice
+	<li>Icing Tube Full of a Reagent of Your Choice
+	</div>
+	<h3>Steps</h3>
+	<div class = "cakesteps">
+	<li>Mix the first two ingredients together (Use the mixer)
+	<li>Cook the cake in the oven for 9 seconds on low.
+	<li>Use the icing tube on the cake.
+	<li>Cut the cake.
+	</div>
+
+	<hr>
+	<h2>Cream of Mushroom</h2>
+	<h3>Ingredients</h3>
+	<div class = "creamofmush">
+	<li>1 Mushroom
+	<li>1 Milk
+	</div>
+	<h3>Steps</h3>
+	<div class = "creamofmushsteps">
+	<li> Mix the ingredients together
+	<li>Cook the ingredients in the oven for 7 seconds on low
+	</div>
+
+	<hr>
+	<h2>Mint Chutney</h2>
+	<h3>Ingredients</h3>
+	<div class = "mintchutney">
+	<li>1 Mint Leaves
+	<li>1 Garlic
+	<li>1 Whole Onion
+	<li>1 Chili Pepper
+	</div>
+	<h3>Steps</h3>
+	<div class = "mintchutneysteps">
+	<li>Cook the ingredients in the oven for 7 seconds on high.
+	</div>
+
+	<hr>
+	<h2>Refried Beans</h2>
+	<h3>Ingredients</h3>
+	<div class = "refried">
+	<li>2 Bean Pods
+	<li>1 Slice of Raw Bacon
+	</div>
+	<h3>Steps</h3>
+	<div class = "refried">
+	<li>Cook the ingredients in the oven for 7 seconds on high.
+	</div>
+
+	<hr>
+	<h2>Rice And Beans</h2>
+	<h3>Ingredients</h3>
+	<div class = "riceandbeans">
+	<li>1 Bean Pod
+	<li>1 Rice Sprig
+	</div>
+	<h3>Steps</h3>
+	<div class = "riceandbeans">
+	<li>Cook the ingredients in the oven for 10 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Fried Rice</h2>
+	<h3>Ingredients</h3>
+	<div class = "friedrice">
+	<li>1 Rice Sprig
+	<li>1 Egg
+	<li>1 Whole Onion
+	<li>1 Garlic
+	</div>
+	<h3>Steps</h3>
+	<div class = "friedrice">
+	<li>Cook the ingredients in the oven for 10 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Omurice</h2>
+	<h3>Ingredients</h3>
+	<div class = "omurice">
+	<li>1 Rice Sprig
+	<li>1 Egg
+	<li>1 Ketchup
+	</div>
+	<h3>Steps</h3>
+	<div class = "omurice">
+	<li>Cook the ingredients in the oven for 8 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Risotto</h2>
+	<h3>Ingredients</h3>
+	<div class = "risotto">
+	<li>1 Rice Sprig
+	<li>1 Butter
+	<li>1 Whole Onion
+	<li>1 Garlic
+	</div>
+	<h3>Steps</h3>
+	<div class = "risotto">
+	<li>Cook the ingredients in the oven for 10 seconds on low.
+	</div>
+
+<hr>
+	<h2>Ratatouille</h2>
+	<h3>Ingredients</h3>
+	<div class = "ratatouille">
+	<li>1 Cucumber
+	<li>1 Eggplant
+	<li>1 Garlic
+	<li>1 Tomato
+	</div>
+	<h3>Steps</h3>
+	<div class = "ratatouille">
+	<li>Cook the ingredients in the oven for 3 seconds on high.
+	</div>
+
+	<hr>
+	<h2>Donut</h2>
+	<h3>Ingredients</h3>
+	<div class = "donut">
+	<li>1 Dough Circle
+	<li>1 Sugar
+	</div>
+	<h3>Steps</h3>
+	<div class = "donutsteps">
+	<li>Cook the ingredients in the oven for 3 seconds on low
+	</div>
+
+	<hr>
+	<h2>Dough</h2>
+	<h3>Ingredients</h3>
+	<div class = "dough">
+	<li>1 Flour
+	</div>
+	<h3>Steps</h3>
+	<div class = "doughsteps">
+	<li>Add water to the flour via a sink
+	</div>
+
+	<hr>
+	<h2>Dough Strip</h2>
+	<h3>Ingredients</h3>
+	<div class = "doughstrip">
+	<li>1 Dough
+	</div>
+	<h3>Steps</h3>
+	<div class = "doughstripsteps">
+	<li>Cut the dough in half with a cutting implement.
+	</div>
+
+	<hr>
+	<h2>Dough Circle</h2>
+	<h3>Ingredients</h3>
+	<div class = "doughcircle">
+	<li>1 Dough Strip
+	</div>
+	<h3>Steps</h3>
+	<div class = "doughcirclesteps">
+	<li>Knead the dough strip into a circle with your hands.
+	</div>
+
+	<hr>
+	<h2>Holey Dough</h2>
+	<h3>Ingredients</h3>
+	<div class = "holedoughcircle">
+	<li>1 Dough
+	</div>
+	<h3>Steps</h3>
+	<div class = "holedoughcirclesteps">
+	<li>Stab the dough with a fork.
+	</div>
+
+	<hr>
+	<h2>Bagel</h2>
+	<h3>Ingredients</h3>
+	<div class = "bagel">
+	<li>1 Dough Circle
+	</div>
+	<h3>Steps</h3>
+	<div class = "bagelteps">
+	<li>Add the dough to the oven.
+	<li>Cook the ingredients in the oven for 3 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Crumpet</h2>
+	<h3>Ingredients</h3>
+	<div class = "crumpet">
+	<li>1 Holey Dough
+	</div>
+	<h3>Steps</h3>
+	<div class = "crumpetteps">
+	<li>Add the holey dough to the oven.
+	<li>Cook the ingredients in the oven for 3 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Mashed Potatoes</h2>
+	<h3>Ingredients</h3>
+	<div class = "mash">
+	<li>3 Potatoes
+	</div>
+	<h3>Steps</h3>
+	<div class = "mashsteps">
+	<li>Mash the potatoes in the mixer until at desired consistency.
+	</div>
+
+	<hr>
+	<h2>Omelette</h2>
+	<h3>Ingredients</h3>
+	<div class = "omelette">
+	<li>2 Eggs
+	<li>1 Piece of Meat
+	<li>1 Slice of Cheese
+	</div>
+	<h3>Steps</h3>
+	<div class = "omelettesteps">
+	<li>Cook the Omelette in the oven for 7 seconds on high
+	</div>
+
+	<hr>
+	<h2>Pancakes</h2>
+	<h3>Ingredients</h3>
+	<li>2 Eggs
+	<li>1 Milk
+	<li>1 Sweet Dough
+	</div>
+	<h3>Steps</h3>
+	<div class ="pancakesteps">
+	<li>Mix the ingredients together
+	<li>Cook the batter in the oven for 4 seconds on high
+	</div>
+
+	<hr>
+	<h2>Pizza</h2>
+	<h3>Ingredients</h3>
+	<div class = "pizza">
+	<li>1 Dough
+	<li>1 Ketchup
+	<li>1 Cheese
+	<li>Toppings of your choice (Optional)
+	</div>
+	<h3>Steps</h3>
+	<div class = "pizzasteps">
+	<li>Roll out the dough with a rolling pin
+	<li>Apply ketchup to the Pizza
+	<li>Sprinkle cheese on the pizza
+	<li>Apply the toppings of your choice to the pizza
+	<li>Cook the pizza in the oven for 9 seconds on high
+	</div>
+
+	<hr>
+	<h2>Meatpaste</h2>
+	<h3>Ingredients</h3>
+	<div class = "meatpaste">
+	<li>1 Piece of Meat
+	</div>
+	<h3>Steps</h3>
+	<div class = "meatpastesteps">
+	<li>Mix the meat in the mixer
+	</div>
+
+	<hr>
+	<h2>Wontons</h2>
+	<h3>Ingredients</h3>
+	<div class = "wontons">
+	<li> 1 Egg
+	<li> 1 Package Flour
+	</div>
+	<h3>Steps</h3>
+	<div class = "wontonssteps">
+	<li>Mix egg and flour together
+	<li>Place filling of choice into wrapper and wrap
+	<li>Place wrapped wonton into deep fryer, fry until fully cooked
+	</div>
+
+	<hr>
+	<h2>Steak</h2>
+	<div class = "steak">
+	<li>1 Piece of Meat
+	</div>
+	<h3>Steps</h3>
+	<div class = "steaksteps">
+	<li>Cook the meat in the oven for 9 seconds on low
+	</div>
+
+	<hr>
+	<h2>Sloppy Joe</h2>
+	<h3>Ingredients</h3>
+	<div class = "sloppy">
+	<li>1 Meatpaste
+	<li>1 Dough
+	</div>
+	<h3>Steps</h3>
+	<div class = "sloppysteps">
+	<li>Cook the ingredients in the oven for 8 seconds on high
+	</div>
+
+	<hr>
+	<h2>Sweet Dough</h2>
+	<h3>Ingredients</h3>
+	<div class = "sweetdough">
+	<li>1 Dough
+	<li>1 Sugar
+	</div>
+	<h3>Steps</h3>
+	<div class = "sweetdoughsteps">
+	<li>Knead the sugar and dough together with your hands.
+	</div>
+
+	<hr>
+	<h2>Nougat Bar</h2>
+	<h3>Ingredients</h3>
+	<div class = "nougatbar">
+	<li>1 Honey Blob
+	<li>1 Sugar
+	</div>
+	<h3>Steps</h3>
+	<div class = "nougatbarsteps">
+	<li>Cook the ingredients in the oven for 5 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Candy Cane</h2>
+	<h3>Ingredients</h3>
+	<div class = "candycane">
+	<li>1 Mint Leaves
+	<li>1 Sugar
+	</div>
+	<h3>Steps</h3>
+	<div class = "candycanesteps">
+	<li>Cook the ingredients in the oven for 5 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Granola Bar</h2>
+	<h3>Ingredients</h3>
+	<div class = "granolabar">
+	<li>1 Honey Blob
+	<li>1 Oatmeal
+	</div>
+	<h3>Steps</h3>
+	<div class = "granolabarsteps">
+	<li>Cook the ingredients in the oven for 5 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Biscuit</h2>
+	<h3>Ingredients</h3>
+	<div class = "biscuit">
+	<li>1 Flour
+	<li>1 Dough
+	</div>
+	<h3>Steps</h3>
+	<div class = "biscuitsteps">
+	<li>Cook the ingredients in the oven for 4 seconds on low
+	</div>
+
+	<hr>
+	<h2>English Muffin</h2>
+	<h3>Instructions</h3>
+	<div class ="emuffinsteps">
+	<li>Slice a biscuit in half. Don't forget the butter!
+	</div>
+
+	<hr>
+	<h2>Hardtack</h2>
+	<h3>Ingredients</h3>
+	<div class = "hardtack">
+	<li>1 Dough
+	<li>1 Iron Fillings
+	</div>
+	<h3>Steps</h3>
+	<div class = "Hardtack">
+	<li>Cook the ingredients in the oven for 6 seconds on high
+	</div>
+
+	<hr>
+	<h2>Butter Burger</h2>
+	<h3>Ingredients</h3>
+	<div class = "burger">
+	<li>1 Butter
+	<li>1 Dough
+	</div>
+	<div class ="butterburgersteps">
+	<li>Cook the ingredients in the oven for 6 seconds on high
+	</div>
+
+	<hr>
+	<h2>Sausage MacGuffin</h2>
+	<h3>Ingredients</h3>
+	<div class = "macguffin">
+	<li>2 English Muffins
+	<li>1 Slice of Cheese
+	<li>1 egg
+	<li>1 meat
+	</div>
+	<div class ="macguffinsteps">
+	<li>Cook the ingredients in the oven for 6 seconds on high
+	</div>
+
+	<hr>
+	<h2>Hard-Boiled Egg</h2>
+	<h3>Ingredients</h3>
+	<div class = "hardboiled">
+	<li>1 Egg
+	</div>
+	<h3>Steps</h3>
+	<div class = "hardboiledsteps">
+	<li>Cook the ingredients in the oven for 4 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Deviled Egg</h2>
+	<h3>Instructions</h3>
+	<div class = "hardboiledsteps">
+	<li>Slice a hard boiled egg in half with a knife..
+	</div>
+
+	<hr>
+	<h2>Egg Salad</h2>
+	<h3>Ingredients</h3>
+	<div class = "eggsalad">
+	<li>1 Hard-Boiled Egg
+	<li>1 Salad
+	<li>1 Mayo
+	</div>
+	<h3>Steps</h3>
+	<div class = "eggsaladsteps">
+	<li>Cook the ingredients in the oven for 5 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Scotch Egg</h2>
+	<h3>Ingredients</h3>
+	<div class = "scotchegg">
+	<li>1 Slice of Bread, for breading</li>
+	<li>1 Piece of Meat</li>
+	<li>1 Egg</li>
+	</div>
+	<h3>Steps</h3>
+	<div class = "scotcheggsteps">
+	<li>Cook the ingredients in the oven for 3 seconds on high.</li>
+	</div>
+
+	<hr>
+	<h2>Haggis</h2>
+	<h3>Ingredients</h3>
+	<div class = "haggis">
+	<li>1 Organ (any will do)</li>
+	<li>1 Whole Onion</li>
+	<li>1 Oatmeal</li>
+	</div>
+	<h3>Steps</h3>
+	<div class = "haggissteps">
+	<li>Cook the ingredients in the oven for 9 seconds on high.</li>
+	</div>
+
+	<hr>
+	<h2>Banh Mi</h2>
+	<h3>Ingredients</h3>
+	<div class = "banhmi">
+	<li>1 Loaf of Honeywheat Bread
+	<li>1 Slice of Raw Bacon
+	<li>1 Carrot
+	<li>1 Cucumber
+	</div>
+	<h3>Steps</h3>
+	<div class = "banhmisteps">
+	<li>Cook the ingredients in the oven for 5 seconds on low.
+	</div>
+
+	<hr>
+	<h2>Onion Chips</h2>
+	<h3>Ingredients</h3>
+	<div class = "onionchips">
+	<li>2 Onion Rings
+	<li>1 Garlic
+	<li>1 Cheese
+	</div>
+	<h3>Steps</h3>
+	<div class = "onionchipssteps">
+	<li>Cook the ingredients in the oven for 7 seconds on high.
+	</div>
+
+	<hr>
+	<h2>Butt-er</h2>
+	<h3>Ingredients</h3>
+	<div class = "butters">
+	<li>1 Butt
+	<li>1 Milk
+	</div>
+	<h3>Steps</h3>
+	<div class = "butterssteps">
+	<li>Mix the butt and egg together.
+	</div>
+
+	<hr>
+	<h2>Pickle</h2>
+	<h3>Ingredients</h3>
+	<div class = "pickle">
+	<li>1 Cucumber
+	</div>
+	<h3>Steps</h3>
+	<div class = "picklesteps">
+	<li>Place the cucumber in a food processor and hit process.
+	</div>
+	<hr>
+
+	<p><i>The following items are for man's best friend: bees.</i></p>
+
+	<hr>
+	<h2>Bee Kibble</h2>
+	<h3>Ingredients</h3>
+	<div class = "beekibble">
+	<li>1 Wheat
+	<li>1 Honey Blob
+	<li>1 ????
+	</div>
+	<h3>Steps</h3>
+	<div class = "beekibblesteps">
+	<li>Cook the ingredients in the oven for 10 seconds on high.
+	</div>
+
+	<hr>
+	<h2>Birthday Cupcake</h2>
+	<h3>Ingredients</h3>
+	<div class = "birthdaycupcake">
+	<li>1 Bee Kibble
+	<li>1 Royal Jelly
+	<li>1 Sugar
+	<li>1 Small Candle
+	</div>
+	<h3>Steps</h3>
+	<div class = "birthdaycupcakesteps">
+	<li>Cook the ingredients in the oven for 10 seconds on high.
+	</div>
+	<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+	<ul>
+		<li><a href="https://wiki.ss13.co/Foods_and_Drinks" target="Goonstation Wiki: Foods and Drinks">https://wiki.ss13.co/Foods_and_Drinks</a></li></ul>
+	Thank you for your service to Nanotrasen.</i></p>

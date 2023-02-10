@@ -16,7 +16,7 @@
 
 		if (hivebot_owner)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
-				hivebot_owner.see_invisible = 9
+				hivebot_owner.see_invisible = INVIS_CONSTRUCTION
 
 		if (critter_owner)
 			critter_owner.hud.update_health()
@@ -61,33 +61,6 @@
 				human_owner.vision.animate_color_mod(rgb(rand(80, 255), rand(80, 255), rand(80, 255)), 15)
 			else
 				human_owner.vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
-
-			if (istype(human_owner.glasses, /obj/item/clothing/glasses/healthgoggles))
-				var/obj/item/clothing/glasses/healthgoggles/G = human_owner.glasses
-				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
-					G.assigned = human_owner.client
-					processing_items |= G
-					//G.updateIcons()
-
-			if (istype(human_owner.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
-				var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = human_owner.head
-				if (human_owner.client && !(M.assigned || M.assigned == human_owner.client))
-					M.assigned = human_owner.client
-					processing_items |= M
-					//G.updateIcons()
-
-			else if (human_owner.organHolder && istype(human_owner.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))
-				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.left_eye
-				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
-					G.assigned = human_owner.client
-					processing_items |= G
-					//G.updateIcons()
-			else if (human_owner.organHolder && istype(human_owner.organHolder.right_eye, /obj/item/organ/eye/cyber/prodoc))
-				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.right_eye
-				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
-					G.assigned = human_owner.client
-					processing_items |= G
-					//G.updateIcons()
 		else
 			if (owner.druggy)
 				owner.vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)

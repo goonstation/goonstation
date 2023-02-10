@@ -7,7 +7,7 @@
 	cure = "Time"
 	affected_species = list("Human")
 
-/datum/ailment/addiction/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/addiction/D)
+/datum/ailment/addiction/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)
 	if (..())
 		return
 	if (prob(20) && (world.timeofday > (D.last_reagent_dose + D.withdrawal_duration)))
@@ -48,7 +48,7 @@
 		if (5)
 			if (D.max_severity == "LOW")
 				if (prob(6))
-					affected_mob.changeStatus("slowed", 30)
+					affected_mob.changeStatus("slowed", 3 SECONDS)
 					boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
 			else // D.max_severity is HIGH or whatever
 				if (prob(6))

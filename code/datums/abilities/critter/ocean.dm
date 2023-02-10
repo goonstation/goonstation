@@ -20,8 +20,7 @@
 		holder.owner.set_loc(C)
 
 		if (holder.owner.ai)
-			holder.owner.ai.enabled = 0
-			holder.owner.ai.stop_move()
+			holder.owner.ai.disable()
 
 
 /obj/overlay/tile_effect/cracks
@@ -35,10 +34,10 @@
 			src.relaymove(AM,pick(cardinal))
 
 	relaymove(var/mob/user, direction)
-		playsound(get_turf(src), 'sound/effects/shovel1.ogg', 50, 1, 0.3)
+		playsound(src, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
 		for (var/mob/M in src)
 			if (M.ai)
-				M.ai.enabled = 1
+				M.ai.enable()
 			M.set_loc(src.loc)
 		qdel(src)
 

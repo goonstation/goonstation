@@ -2,7 +2,8 @@
 	var/list/context = list()
 
 /proc/icon_serializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/icon, var/icon_state)
-	var/iname = "[icon]"
+	var/iname = "[icon]" || "ref[copytext(ref(icon), 4, 11)]"
+	// the ref bit is for procedurally generated icons
 	F["[path].icon"] << iname
 	F["[path].icon_state"] << icon_state
 	if (!("icon" in sandbox.context))
@@ -17,7 +18,7 @@
 	var/icon/icon
 	var/icon_state
 
-/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState)
+/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState, var/grab_file_reference_from_rsc_cache = 0)
 	var/iname
 	var/datum/iconDeserializerData/IDS = new()
 	IDS.icon = defaultIcon
@@ -42,7 +43,10 @@
 			else if (IDS.icon)
 				F["[path].icon_state"] >> IDS.icon_state
 	else
-		IDS.icon = icon(file(iname))
+		if (grab_file_reference_from_rsc_cache)
+			IDS.icon = fcopy_rsc(iname)
+		else
+			IDS.icon = icon(file(iname))
 		F["[path].icon_state"] >> IDS.icon_state
 	return IDS
 

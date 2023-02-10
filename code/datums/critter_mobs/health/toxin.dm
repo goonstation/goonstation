@@ -4,7 +4,6 @@
 
 	maximum_value = 0
 	value = 0
-	minimum_value = -200
 	depletion_threshold = -200
 
 	on_life()

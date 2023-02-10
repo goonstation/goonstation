@@ -12,6 +12,9 @@
 
 //////////////////////////////////////// Sleeper control console //////////////////////////////
 
+TYPEINFO(/obj/machinery/sleep_console)
+	mats = 8
+
 /obj/machinery/sleep_console
 	name = "sleeper console"
 	desc = "A device that displays the vital signs of the occupant of the sleeper, and can dispense chemicals."
@@ -19,7 +22,6 @@
 	icon_state = "sleeperconsole"
 	anchored = 1
 	density = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
@@ -33,34 +35,30 @@
 	New()
 		..()
 		if (src.find_sleeper_in_range)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				our_sleeper = locate() in get_step(src,src.dir)
 				if (!our_sleeper)
 					our_sleeper = locate() in orange(src,1)
 		else if (!our_sleeper && istype(src.loc, /obj/machinery/sleeper))
 			our_sleeper = src.loc
-		return
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
 			else
-		return
 
 	// Just relay emag_act() here.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.add_fingerprint(user)
 		if (!src.our_sleeper)
 			return 0
-		switch (src.our_sleeper.emag_act(user, E))
-			if (0) return 0
-			if (1) return 1
+		return src.our_sleeper.emag_act(user, E)
 
 	proc/wake_occupant()
 		if (!src || !src.our_sleeper)
@@ -76,35 +74,40 @@
 				else
 					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
-			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
-		return
+			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	process()
-		if (!src)
+		if (src.status & (NOPOWER | BROKEN))
 			return
-		if (src.status & (NOPOWER|BROKEN))
-			return
+
 		if (!src.our_sleeper)
 			src.time = 0
 			src.timing = 0
 			src.time_started = 0
 			src.updateDialog()
 			return
+
+		// non-anchored sleeper assumed to be portable, don't want to eject
+		// in case someone is using it for body transport
+		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
+			src.our_sleeper.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
+			src.time = 0
+			src.timing = 0
+			src.time_started = 0
+			src.our_sleeper.go_out()
+			src.updateDialog()
+			return
+
 		if (src.timing)
 			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
 						var/mob/living/carbon/human/O = occupant
-						if (isdead(O))
-							src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No further life signs detected from occupant.\"")
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
-							src.timing = 0
-							src.time_started = 0
-						else
-							if (O.sleeping != 5)
-								O.sleeping = 5
-							src.our_sleeper.alter_health(O)
+						if (O.sleeping != 5)
+							O.sleeping = 5
+						src.our_sleeper.alter_health(O)
 				else
 					src.timing = 0
 					src.time_started = 0
@@ -114,8 +117,9 @@
 				src.timing = 0
 				src.time_started = 0
 
+
+
 			src.updateDialog()
-		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
 	powered()
@@ -153,7 +157,7 @@
 					if (src.timing)
 						src.time_started = TIME
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
+						logTheThing(LOG_STATION, usr, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time = clamp(src.time + src.time_started - TIME, 0, src.maximum_time)
 						src.time_started = 0
@@ -164,7 +168,7 @@
 					var/t = params["tp"]
 					if (t > 0 && src.timing && src.our_sleeper.occupant)
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
+						logTheThing(LOG_STATION, usr, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
 				. = TRUE
 			if("inject")
@@ -231,6 +235,9 @@
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/sleeper)
+	mats = 25
+
 /obj/machinery/sleeper
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -238,9 +245,8 @@
 	desc = "An enterable machine that analyzes and stabilizes the vital signs of the occupant."
 	density = 1
 	anchored = 1
-	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -265,10 +271,12 @@
 	var/maximum_poison = 5
 	var/inject_poison = 2.5
 
+	var/allow_self_service = 1
+
 	New()
 		..()
-		src.update_icon()
-		SPAWN_DBG(0.6 SECONDS)
+		src.UpdateIcon()
+		SPAWN(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -279,64 +287,54 @@
 
 	disposing()
 		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+			MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
-		return
-
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				for (var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				qdel(src)
-				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
-			if (3.0)
+			if (3)
 				if (prob(25))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
-		return
 
 	// Let's get us some poisons.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.add_fingerprint(user)
-		if (src.emagged == 1)
-			return 0
+		if (src.emagged)
+			return FALSE
 		else
-			src.emagged = 1
+			src.emagged = TRUE
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
-			return 1
+			logTheThing(LOG_STATION, user, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			return TRUE
 
 	demag(var/mob/user)
 		if (!src.emagged)
-			return 0
+			return FALSE
 		if (user)
 			user.show_text("You repair [src]'s reagent synthesis safety protocols.", "blue")
-		src.emagged = 0
-		return 1
+		src.emagged = FALSE
+		return TRUE
 
 	blob_act(var/power)
 		if (prob(power * 3.75))
@@ -347,9 +345,9 @@
 		return
 
 	allow_drop()
-		return 0
+		return FALSE
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
 
 		if (!istype(G) || !ishuman(G.affecting))
@@ -362,7 +360,7 @@
 		var/mob/living/carbon/human/H = G.affecting
 		H.set_loc(src)
 		src.occupant = H
-		src.update_icon()
+		src.UpdateIcon()
 #ifdef DATALOGGER
 		game_stats.Increment("sleeper")
 #endif
@@ -371,7 +369,7 @@
 				continue
 			O.set_loc(src.loc)
 		qdel(G)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 30, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 30, 1)
 		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
@@ -435,10 +433,9 @@
 				injected_anything = TRUE
 
 		if (injected_anything)
-			playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
+			playsound(src.loc, 'sound/items/hypo.ogg', 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
-		return
 
 	// Called by sleeper console when injecting stuff manually.
 	proc/inject(mob/user_feedback as mob, var/manual_injection = 0)
@@ -481,8 +478,8 @@
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
-					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+					if (manual_injection)
+						logTheThing(LOG_STATION, user_feedback, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
 					var/inject_c = src.inject_reagent
@@ -508,55 +505,59 @@
 			src.no_med_spam = world.time
 
 			if (injected_anything)
-				playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
-
-		return
+				playsound(src.loc, 'sound/items/hypo.ogg', manual_injection ? 50 : 25, 1)
 
 
 	proc/go_out()
 		if (!src || !src.occupant)
 			return
-		for (var/obj/O in src)
-			if (O == src.our_console) // don't barf out the internal sleeper console tia
-				continue
-			O.set_loc(src.loc)
-		src.add_fingerprint(usr)
-		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 1 SECOND)
-		src.occupant.force_laydown_standup()
-		src.occupant = null
-		src.update_icon()
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-		return
+		MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			for (var/obj/O in src)
+				if (O == src.our_console) // don't barf out the internal sleeper console tia
+					continue
+				O.set_loc(src.loc)
+				src.add_fingerprint(usr)
+			src.occupant.changeStatus("weakened", 1 SECOND)
+			src.occupant.force_laydown_standup()
+			src.occupant = null
+			src.UpdateIcon()
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
-		return
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
-			move_inside()
+			if(allow_self_service)
+				move_inside()
+			else
+				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
-			target.attack_hand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			target.Attackhand(user)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
-						src.attackby(user.equipped(), user)
-		return
+						src.Attackby(user.equipped(), user)
 
 	proc/can_operate(var/mob/M)
-		if (!IN_RANGE(src, M, 1))
+		if (!(BOUNDS_DIST(src, M) == 0))
 			return FALSE
 		if (istype(M) && is_incapacitated(M))
 			return FALSE
@@ -570,7 +571,7 @@
 			usr.show_text("The [src.name] is already occupied!", "red")
 			return FALSE
 
-		.= TRUE
+		. = TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -580,22 +581,21 @@
 
 		if (!can_operate(usr)) return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/obj/O in src)
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
 			O.set_loc(src.loc)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
-		return
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -606,10 +606,9 @@
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user)) return
+		if (!isalive(user) || iswraith(user) || isintangible(user)) return
 		src.go_out()
 		add_fingerprint(user)
 
@@ -634,7 +633,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return
@@ -655,22 +654,24 @@
 				reply.data["address_1"] = signal.data["sender"]
 				reply.data["sender"] = src.net_id
 				reply.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.link.post_signal(src, reply)
 
 			if("inject")
 				src.inject(null, 1)
 
-		return
+
+TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
+	mats = 30
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
-	desc = "An emergency transportation device for critically injured patients."
+	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
-	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
@@ -683,6 +684,8 @@
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		..()
@@ -693,9 +696,9 @@
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
-			our_console.attack_hand(user)
+			our_console.Attackhand(user)
 			interact_particle(user,src)
 
 	examine()
@@ -703,7 +706,7 @@
 		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if (src.occupant)
 			..()
 			return
@@ -713,21 +716,25 @@
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+		return
+
+	move_inside()
+		boutput(usr, "<span class='notice'>You can't seem to shove yourself into the [src] without it tipping over as you climb in.</span>")
 		return
 
 /// Yells at doctors to check the thing when it's sent home
@@ -735,9 +742,6 @@
 	if (src.loc != homeloc)
 		return
 	if (!occupant)
-		return
-	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-	if (!transmit_connection)
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
@@ -753,16 +757,15 @@
 	var/datum/signal/PDAsignal = get_free_signal()
 
 	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
-	PDAsignal.transmission_method = TRANSMISSION_RADIO
-	transmit_connection.post_signal(src, PDAsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
-	desc = "Your usual sleeper, but compact this time. Wow!"
+	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
-	anchored = 1
+	anchored = TRUE
 
 	New()
 		..()
@@ -777,7 +780,7 @@
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
-			our_console.attack_hand(user)
+			our_console.Attackhand(user)
 			interact_particle(user,src)

@@ -8,7 +8,7 @@
 	var/oneshot
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		key_type = input("Key type", "Key type", "key") in list("key", "keycard", "artifact", "chtonic")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		key_name = input("Key name", "Key name", "[key_type]") as text
@@ -23,7 +23,7 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -39,7 +39,7 @@
 				key.icon_state = "key_[key_type]"
 				key.triggered = selected_triggerable.Copy()
 				key.oneshot = oneshot
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					key.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))

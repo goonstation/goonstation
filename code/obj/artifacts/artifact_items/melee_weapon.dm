@@ -2,10 +2,9 @@
 	name = "artifact melee weapon"
 	artifact = 1
 	associated_datum = /datum/artifact/melee
-	module_research_no_diminish = 1
 	click_delay = COMBAT_CLICK_DELAY
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
@@ -19,6 +18,7 @@
 /datum/artifact/melee
 	associated_object = /obj/item/artifact/melee_weapon
 	type_name = "Melee Weapon"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(14,95,95,7,"DENSE")
@@ -27,8 +27,6 @@
 	var/stamina_dmg = 0
 	var/sound/hitsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("weapons" = 8, "miniaturization" = 8)
-	module_research_insight = 1
 
 	New()
 		..()

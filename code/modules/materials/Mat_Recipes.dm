@@ -26,15 +26,6 @@
 	proc/apply_to_obj(var/obj/O)
 		return
 
-/datum/material_recipe/spacelag
-	name = "spacelag"
-	result_id = "spacelag"
-	result_item = /obj/item/material_piece/spacelag
-
-	validate(var/datum/material/M)
-		if(M.hasProperty("stability") && M.getProperty("stability") <= 1) return 1
-		else return 0
-
 /datum/material_recipe/dyneema
 	name = "dyneema"
 	result_id = "dyneema"
@@ -174,9 +165,11 @@
 		var/one = 0
 		var/two = 0
 
+		var/regex/R = regex("rubber")
+
 		for(var/datum/material/CM in M.parent_materials)
 			if(CM.mat_id == "coral") one = 1
-			if(CM.mat_id == "synthrubber") two = 1
+			if(R.Find(CM.mat_id)) two = 1
 
 		if(one && two) return 1
 		else return 0

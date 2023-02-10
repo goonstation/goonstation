@@ -41,6 +41,15 @@
 
 	chart
 
+		pasiphae
+			name = "damaged chart"
+			sizex = 533
+			sizey = 450
+			desc = "Some sort of complex chart. It's strangely degraded, as though the ink boiled out of the paper, and you can't make much out - how was this damaged?"
+			New()
+				..()
+				info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/charts/damaged_report.png")]'></body></html>"
+
 		system
 			name = "Atlas Survey Mission chart X0"
 			desc = "A chart of nearby moons and Nanotrasen assets around . Not to scale."

@@ -53,18 +53,18 @@
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
 #ifdef RP_MODE
-			if(source=="random")
+			if(source==null)
 				return
 #endif
 			if (emergency_shuttle.online)
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
-		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
-		SPAWN_DBG(0)
+		logTheThing(LOG_ADMIN, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
+		SPAWN(0)
 			src.lock = 1
-			do_event(source=="spawn_antag")
+			do_event(source=="spawn_antag", source)
 
-	proc/do_event(var/force_antags = 0)
+	proc/do_event(var/force_antags = 0, var/source)
 		gen_numbers()
 		gather_listeners()
 		if (!listeners.len)
@@ -82,23 +82,24 @@
 					num_agents = 1
 				else
 					num_agents = 0
-		if(!num_agents)
-			cleanup_event()
-			return
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			broadcast_sound(signal_intro)
+			sleep(8 SECONDS)
 			play_all_numbers()
 			broadcast_sound(signal_intro)
 
-			sleep(30 SECONDS) //30s to let the signal play
-			var/mob/living/carbon/human/H = null
-			num_agents = min(num_agents,candidates.len)
-			for(var/i = 0, i<num_agents,i++)
-				H = pick(candidates)
-				candidates -= H
-				if(istype(H))
-					awaken_sleeper_agent(H)
+			sleep(2 SECONDS)
+			if (length(candidates))
+				var/mob/living/carbon/human/H = null
+				num_agents = min(num_agents, length(candidates))
+				for(var/i in 1 to num_agents)
+					H = pick(candidates)
+					candidates -= H
+					if(istype(H))
+						awaken_sleeper_agent(H, source)
+			else
+				message_admins("No valid candidates to wake for sleeper event.")
 
 			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
 				sleep(src.message_delay)
@@ -109,53 +110,10 @@
 			cleanup_event()
 		return
 
-	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)
-		var/list/eligible_objectives = list(
-			/datum/objective/regular/assassinate,
-			/datum/objective/regular/steal,
-			/datum/objective/regular/multigrab,
-			/datum/objective/regular/killstirstir,
-		)
-
-		var/list/escape_objectives = list(
-			/datum/objective/escape,
-#ifndef RP_MODE
-			/datum/objective/escape/hijack,
-#endif
-			/datum/objective/escape/survive,
-			/datum/objective/escape/kamikaze,
-			/datum/objective/escape/stirstir,
-		)
-		var/list/objectives = list()
-		var/num_objectives = rand(1,3)
-		var/datum/objective/new_objective = null
-		for(var/i = 0, i < num_objectives, i++)
-			new_objective = pick(eligible_objectives)
-			if (new_objective == /datum/objective/regular/killstirstir) // single-use
-				eligible_objectives -= /datum/objective/regular/killstirstir
-				escape_objectives -= /datum/objective/escape/stirstir
-			objectives += new new_objective
-		var/datum/objective/gimmick = new /datum/objective/regular/gimmick
-		objectives += gimmick
-		var/escape_objective = pick(escape_objectives)
-		var/datum/objective/esc = new escape_objective
-		objectives += esc
-		for(var/datum/objective/objective in objectives)
-			objective.owner = H.mind
-			objective.set_up()
-			H.mind.objectives += objective
-
-		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
-		H.mind.special_role = "sleeper agent"
-		H << browse(grabResource("html/traitorTips/traitorsleeperTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
-		if(!(H.mind in ticker.mode.traitors))
-			ticker.mode.traitors += H.mind
-		if (H.mind.current)
-			H.mind.current.antagonist_overlay_refresh(1, 0)
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in H.mind.objectives)
-			boutput(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-			obj_count++
+	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H, var/source)
+		H.mind.add_antagonist(ROLE_SLEEPER_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
+		logTheThing(LOG_ADMIN, H, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 
 	proc/gen_numbers()
 		var/num_numbers = length(numbers)
@@ -174,10 +132,10 @@
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
-					if (H.client && !checktraitor(H) && (H.client.preferences.be_traitor || src.override_player_pref))
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
+					if (H.client && !checktraitor(H) && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
-						if (J.allow_traitors)
+						if (J?.allow_traitors)
 							candidates.Add(H)
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
@@ -195,8 +153,8 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M << sound(soundfile, volume = 50, channel = sound_channel, wait = 1)
-
+				M.playsound_local(M, soundfile, 15, 0)
+		sleep(1 SECOND)
 
 	proc/play_all_numbers()
 		var/batch = 0

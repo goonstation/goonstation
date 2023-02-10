@@ -7,6 +7,7 @@
 	icon_redlight = "securecrater"
 	icon_greenlight = "securecrateg"
 	icon_sparks = "securecratesparks"
+	icon_welded = "welded-crate"
 	//var/emag = "securecrateemag"
 	density = 1
 	always_display_locks = 1
@@ -83,7 +84,9 @@
 		grenades
 			name = "special grenades crate"
 			spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
-			/obj/item/storage/box/QM_grenadekit_experimentalweapons)
+			/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
+			/obj/item/storage/box/stinger_kit,\
+			/obj/item/storage/box/stun_landmines)
 
 	sarin_grenades
 		name = "nerve agent crate (DANGER)"
@@ -125,3 +128,44 @@
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
 		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+
+	interdictor
+		name = "interdictor fabrication crate"
+		desc = "Contains a drive with spatial interdictor manufacture data, power cells, and a usage guide for spatial interdictors."
+		req_access = list(access_engineering)
+
+		make_my_stuff()
+			if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+				var/obj/item/disk/data/floppy/manudrive/interdictor_parts/B1 = new(src)
+				B1.pixel_x = 8
+				B1.pixel_y = 3
+
+				var/obj/item/cell/supercell/B2 = new(src)
+				B2.pixel_x = -6
+				B2.pixel_y = -3
+
+				var/obj/item/cell/supercell/B3 = new(src)
+				B3.pixel_x = -6
+
+				var/obj/item/cell/supercell/B4 = new(src)
+				B4.pixel_x = -6
+				B4.pixel_y = 3
+
+				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
+				B5.pixel_y = 1
+				return 1
+
+/obj/storage/secure/crate/medical
+	desc = "A secure medical crate."
+	name = "medical crate"
+	icon_state = "securemedicalcrate"
+	density = 1
+	icon_opened = "securemedicalcrateopen"
+	icon_closed = "securemedicalcrate"
+	weld_image_offset_Y = -2
+	req_access = list(access_medical_lockers)
+
+	monkey
+		name = "Lab Monkey Crate"
+		desc = "Warning: Contains live monkeys!"
+		req_access = list(access_medical_lockers, access_tox_storage)

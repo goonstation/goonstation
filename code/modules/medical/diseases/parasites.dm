@@ -50,31 +50,32 @@
 			return 1
 
 
-/datum/ailment/parasite/spidereggs/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/parasite/spidereggs/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	switch(D.stage)
 		if(2)
-			if(prob(3))
+			if(probmult(3))
 				affected_mob.reagents.add_reagent("histamine", 2)
 		if(3)
-			if(prob(5))
+			if(probmult(5))
 				affected_mob.reagents.add_reagent("histamine", 3)
 		if(4)
-			if(prob(12))
+			if(probmult(12))
 				affected_mob.reagents.add_reagent("histamine", 5)
 		if(5)
 			boutput(affected_mob, "<span class='alert'>You feel like something is tearing its way out of your skin...</span>")
-			affected_mob.reagents.add_reagent("histamine", 10)
-			if(prob(30))
+			affected_mob.reagents.add_reagent("histamine", 10 * mult)
+			if(probmult(30))
 				affected_mob.emote("scream")
 				var/babyspiders = null
 				babyspiders = rand(3,5)
 				if(prob(1))
 					babyspiders = rand(6,12)
 				while(babyspiders-- > 0)
-					new/obj/critter/spider/ice/baby(affected_mob.loc)
+					new /mob/living/critter/spider/ice/baby(affected_mob.loc)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] bursts open! Holy fuck!</b></span>")
+				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob:gib()
 				return
 
@@ -88,34 +89,34 @@
 	temperature_cure = INFINITY
 //
 
-/datum/ailment/parasite/bee_larva/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/parasite/bee_larva/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	switch(D.stage)
 		if (2, 3)
-			if(prob(1))
+			if(probmult(1))
 				affected_mob.emote("sneeze")
-			if(prob(1))
+			if(probmult(1))
 				affected_mob.emote("cough")
-			if(prob(1))
+			if(probmult(1))
 				boutput(affected_mob, "<span class='alert'>Your throat feels sore.</span>")
-			if(prob(1))
+			if(probmult(1))
 				boutput(affected_mob, "<span class='alert'>Mucous runs down the back of your throat.</span>")
 		if(4)
-			if(prob(1))
+			if(probmult(1))
 				affected_mob.emote("sneeze")
-			if(prob(1))
+			if(probmult(1))
 				affected_mob.emote("cough")
-			if(prob(2))
+			if(probmult(2))
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
 		if(5)
 			boutput(affected_mob, "<span class='alert'>You feel something tearing its way out of your stomach...</span>")
 			if (affected_mob.get_toxin_damage() < 30)
-				affected_mob.take_toxin_damage(10)
+				affected_mob.take_toxin_damage(10 * mult)
 
-			if(prob(40))
+			if(probmult(40))
 				var/obj/critter/domestic_bee_larva/larva = new /obj/critter/domestic_bee_larva (get_turf(affected_mob))
 				larva.name = "li'l [affected_mob:real_name]"
 				if (affected_mob.bioHolder && affected_mob.bioHolder.mobAppearance)
@@ -125,8 +126,28 @@
 
 				larva.beeMom = affected_mob
 				larva.beeMomCkey = affected_mob.ckey
-				playsound(affected_mob.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+
+				if (ishuman(affected_mob))
+					var/mob/living/carbon/human/human = affected_mob
+					if (human.head && !istype(human.head, /obj/item/clothing/head/void_crown))
+						var/obj/item/clothing/head/cloned_hat = new human.head.type
+						cloned_hat.set_loc(larva)
+						larva.stored_hat = cloned_hat
+
+					if (human.mind?.assigned_role == "Mime")
+						larva.color = "#ebedeb"
+						if (human.bioHolder.HasEffect(/datum/bioEffect/noir))
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee/noirbee
+						else
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee
+					else if (human.mind?.assigned_role == "Clown")
+						larva.color = "#ff0033"
+						larva.custom_bee_type = /obj/critter/domestic_bee/clownbee
+					else if (iscluwne(human))
+						larva.custom_bee_type = /obj/critter/domestic_bee/cluwnebee
+						larva.color = "#35bf4f"
+
+				playsound(affected_mob.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] horks up a bee larva!  Grody!</b></span>", "<span class='alert'><b>You cough up...a bee larva. Uhhhhh</b></span>")
 
 				affected_mob.cure_disease(D)
-				return

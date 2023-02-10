@@ -21,6 +21,8 @@
 	var/headers
 	/// URL that the request is being sent to
 	var/url
+	/// If present response body will be saved to this file.
+	var/output_file
 	/// The raw response, which will be decoeded into a [/datum/http_response]
 	var/_raw_response
 
@@ -34,8 +36,9 @@
   * * _url - The URL to send the request to
   * * _body - The body of the request, if applicable
   * * _headers - Associative list of HTTP headers to send, if applicable
+  * * _output_file - If present response body will be saved to this file.
   */
-/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers)
+/datum/http_request/proc/prepare(_method, _url, _body = "", list/_headers, _output_file)
 	if(!length(_headers))
 		_headers = ""
 	else
@@ -45,6 +48,7 @@
 	url = _url
 	body = _body
 	headers = _headers
+	output_file = _output_file
 
 /**
   * Blocking executor
@@ -66,13 +70,24 @@
 	if(in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers)
+	id = rustg_http_request_async(method, url, body, headers, build_options())
 
 	if(isnull(text2num(id)))
 		_raw_response = "Proc error: [id]"
 		CRASH("Proc error: [id]")
 	else
 		in_progress = TRUE
+
+/**
+  * Options builder
+  *
+  * Builds a set of request options
+  * Apparently this is only currently used for output_file purposes
+  */
+/datum/http_request/proc/build_options()
+	if(output_file)
+		return json_encode(list("output_filename"=output_file,"body_filename"=null))
+	return "{}"
 
 /**
   * Async completion checker

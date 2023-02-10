@@ -23,9 +23,9 @@
 /// How much grabbing someone costs.
 #define STAMINA_GRAB_COST 25
 /// How much disarming someone costs.
-#define STAMINA_DISARM_COST 10
+#define STAMINA_DISARM_COST 30
 /// Stamina damage of disarming someone with bare hands.
-#define STAMINA_DISARM_DMG 20
+#define STAMINA_DISARM_DMG 15
 /// How much flipping / suplexing costs.
 #define STAMINA_FLIP_COST 25
 /// Base chance of landing a critical hit to stamina.
@@ -36,6 +36,12 @@
 #define STAMINA_BLOCK_CHANCE 40
 /// Chance to block grabs.
 #define STAMINA_GRAB_BLOCK_CHANCE 85
+/// Chance to resist out of passive grabs.
+#define STAMINA_P_GRAB_RESIST_CHANCE 100
+/// Chance to resist out of a strong grab (i.e. werewolves)
+#define STAMINA_S_GRAB_RESIST_CHANCE 60
+/// Chance to resist out of upgraded grabs.
+#define STAMINA_U_GRAB_RESIST_CHANCE 45
 /// Cost of blocking an attack.
 #define STAMINA_DEFAULT_BLOCK_COST 5
 /// Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
@@ -79,6 +85,12 @@
 #define STAMINA_EXHAUSTED_STR "<p style=\"color:red;font-weight:bold;\">You are too exhausted to attack.</p>"
 
 /// How much farting costs. I am not even kidding.
-#define STAMINA_DEFAULT_FART_COST 0
+#define STAMINA_DEFAULT_FART_COST 1
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+//disorient target defines
+#define DISORIENT_NONE 0
+#define DISORIENT_BODY 1
+#define DISORIENT_EYE 2
+#define DISORIENT_EAR 4

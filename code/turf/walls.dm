@@ -9,15 +9,15 @@
 #endif
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
-	var/list/proj_impacts = list()
-	var/list/forensic_impacts = list()
-	var/image/proj_image = null
+	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
 
 	New()
@@ -26,9 +26,18 @@
 		if (P)
 			P.check()
 
-		//for fluids
-		if (src.active_liquid && src.active_liquid.group)
-			src.active_liquid.group.displace(src.active_liquid)
+		src.AddComponent(/datum/component/bullet_holes, 15, 10)
+
+		src.selftilenotify() // displace fluid
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			xmasify()
+		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
@@ -46,17 +55,13 @@
 			if(istype(w))
 				w.tilenotify(src)
 
-	get_desc()
-		if (islist(src.proj_impacts) && length(src.proj_impacts))
-			var/shots_taken = 0
-			for (var/i in src.proj_impacts)
-				shots_taken ++
-			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
-
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			health = material.hasProperty("density") ? round(material.getProperty("density") * 2.5) : health
+			if(src.material.getProperty("density") >= 6)
+				health *= 1.5
+			else if (src.material.getProperty("density") <= 2)
+				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
 		return
@@ -65,24 +70,20 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m steel wall
 	explosion_resistance = 2
 
-	proc/update_projectile_image(var/update_time)
-		if (src.proj_impacts.len > 10)
-			return
-		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
-			return
-		if (!src.proj_image)
-			src.proj_image = image('icons/obj/projectiles.dmi', "blank")
-		//src.overlays -= src.proj_image
-		src.proj_image.overlays = null
-		for (var/image/i in src.proj_impacts)
-			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles")
-		//src.overlays += src.proj_image
+	proc/xmasify()
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
+			new /obj/decal/wreath(src)
+		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
+			SPAWN(1 SECOND)
+				var/turf/T = get_step(src, SOUTH)
+				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+					var/obj/stocking/stocking = new(T)
+					stocking.pixel_y = 26
 
 /turf/simulated/wall/New()
 	..()
 	if(!ticker && istype(src.loc, /area/station/maintenance) && prob(7))
-		make_cleanable( /obj/decal/cleanable/fungus,src)
+		make_cleanable(/obj/decal/cleanable/fungus, src)
 
 // Made this a proc to avoid duplicate code (Convair880).
 /turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
@@ -90,7 +91,6 @@
 		return
 
 	// the wall is the target turf, the source is the turf where the user is standing
-	var/obj/item/light_parts/parts = W
 	var/turf/target = src
 	var/turf/source = get_turf(user)
 
@@ -107,71 +107,37 @@
 	if (!dir)
 		return //..(parts, user)
 
-	if(!instantly)
-		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+	if(!instantly && W && !W.disposed)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
-
-		if (!do_after(user, 4 SECONDS))
-			user.show_text("You were interrupted!", "red")
-			return
-
-	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
+			list(W, user, dir), W.icon, W.icon_state, null, null)
 		return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+	finish_attaching(W, user, dir)
+	return
 
-	var/obj/machinery/light/newlight = new parts.fixture_type(source)
-	newlight.set_dir(dir)
+/turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
+	boutput(user, "You attach the light fixture to [src].")
+	var/obj/item/light_parts/parts = W
+	var/obj/machinery/light/newlight = new parts.fixture_type(get_turf(user))
+	newlight.set_dir(light_dir)
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
-
+	if (istype(src,/turf/simulated/wall/auto))
+		newlight.nostick = 0
+		newlight.autoposition()
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-
 	user.u_equip(parts)
 	qdel(parts)
-	return
 
-/turf/simulated/wall/proc/take_hit(var/obj/item/I)
-	if(src.material)
-		if(I.material)
-			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= (src.material.getProperty("hard") ? src.material.getProperty("hard") : 60))
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-		else
-			if((I.throwing ? I.throwforce : I.force) >= 80)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-	else
-		if(I.material)
-			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= 60)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-		else
-			if((I.throwing ? I.throwforce : I.force) >= 80)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-
-	if(health <= 0)
-		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] destroys [src]!</span>", "<span class='alert'>You destroy [src]!</span>")
-		dismantle_wall(1)
-	return
-
-/turf/simulated/wall/proc/dismantle_wall(devastated=0)
+/turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 			if (src.material)
@@ -180,8 +146,8 @@
 				B.set_reinforcement(src.material)
 			else
 				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
+				A.setMaterial(M, copy = FALSE)
+				B.setMaterial(M, copy = FALSE)
 				B.set_reinforcement(M)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
@@ -189,29 +155,26 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 				if (prob(50))
-					var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
 					if (src.material)
 						B.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						B.setMaterial(M)
+						B.setMaterial(getMaterial("steel"), copy = FALSE)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	else
 		if (!devastated)
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
@@ -221,17 +184,16 @@
 				C.setMaterial(src.material)
 			else
 				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
-				C.setMaterial(M)
+				A.setMaterial(M, copy = FALSE)
+				B.setMaterial(M, copy = FALSE)
+				C.setMaterial(M, copy = FALSE)
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
@@ -239,24 +201,21 @@
 				if (src.material)
 					B.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					B.setMaterial(M)
+					B.setMaterial(getMaterial("steel"), copy = FALSE)
 
 				if (prob(50))
-					var/atom/movable/C = unpool(/obj/item/raw_material/scrap_metal)
+					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
 					if (src.material)
 						C.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						C.setMaterial(M)
+						C.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	var/atom/D = ReplaceWithFloor()
-	if (src.material)
+	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		var/datum/material/M = getMaterial("steel")
-		D.setMaterial(M)
+		D.setMaterial(getMaterial("steel"), copy = FALSE)
 
 /turf/simulated/wall/burn_down()
 	src.ReplaceWithFloor()
@@ -267,10 +226,10 @@
 			src.ReplaceWithSpace()
 			return
 		if(2)
-			if (prob(40))
+			if (prob(66))
 				dismantle_wall(1)
 		if(3)
-			if (prob(66))
+			if (prob(40))
 				dismantle_wall(1)
 		else
 	return
@@ -279,41 +238,34 @@
 	if(prob(power))
 		dismantle_wall(1)
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	if (user.is_hulk())
-		if (prob(70))
-			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-			if (src.material)
-				src.material.triggerOnAttacked(src, user, user, src)
-			for (var/mob/N in AIviewers(usr, null))
-				if (N.client)
-					shake_camera(N, 4, 8, 0.5)
-		if (prob(40))
-			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-			logTheThing("combat", usr, null, "uses hulk to smash a wall at [log_loc(src)].")
-			dismantle_wall(1)
+		if(isrwall(src))
+			boutput(user, text("<span class='notice'>You punch the [src.name], but can't seem to make a dent!</span>"))
 			return
 		else
-			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
-			return
-
-	if(src.material)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-		if(fail)
-			user.visible_message("<span class='alert'>You punch the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] punches the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			dismantle_wall(1)
-			return
+			if (prob(70))
+				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				if (src.material)
+					src.material.triggerOnAttacked(src, user, user, src)
+				for (var/mob/N in AIviewers(user, null))
+					if (N.client)
+						shake_camera(N, 4, 8, 0.5)
+			if (prob(40))
+				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
+				logTheThing(LOG_COMBAT, user, "uses hulk to smash a wall at [log_loc(src)].")
+				dismantle_wall(1)
+				return
+			else
+				boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
+				return
 
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
-	playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 	interact_particle(user,src)
 	return
 
-/turf/simulated/wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 
@@ -335,13 +287,8 @@
 			return
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
-
-		sleep(10 SECONDS)
-
-		if (user.loc == T && (user.equipped() == W || isrobot(user)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-			dismantle_wall()
+		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))
@@ -364,18 +311,13 @@
 
 	else
 		if(src.material)
-			var/fail = 0
-			if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-			if(fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
-		src.take_hit(W)
+			src.material.triggerOnHit(src, W, user, 1)
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
+
+/turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
+	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
+	dismantle_wall()
 
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
@@ -392,12 +334,15 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			health = material.hasProperty("density") ? round(material.getProperty("density") * 4.5) : health
+			if(src.material.getProperty("density") >= 6)
+				health *= 1.5
+			else if (src.material.getProperty("density") <= 2)
+				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
 		return
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 
@@ -438,7 +383,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -446,14 +391,14 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Detaching support rods.</span>")
-			playsound(src, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
@@ -464,18 +409,18 @@
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
-			playsound(src, "sound/items/Wirecutter.ogg", 100, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 			src.d_state = 1
 			var/atom/A = new /obj/item/rods( src )
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"))
+				A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			boutput(user, "<span class='notice'>Removing support lines.</span>")
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -489,7 +434,7 @@
 		if (src.d_state == 3)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying cover off.</span>")
-			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
@@ -500,17 +445,17 @@
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 			else if((isrobot(user) && (user.loc == T)))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 
 	//More spooky halloween key
@@ -535,8 +480,7 @@
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				var/datum/material/M = getMaterial("steel")
-				src.setMaterial(M)
+				src.setMaterial(getMaterial("steel"), copy = FALSE)
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 
 //grabsmash
@@ -550,17 +494,9 @@
 		src.icon_state = "r_wall-[d_state]"
 
 	if(src.material)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
+		src.material.triggerOnHit(src, W, user, 1)
 
-		if(fail)
-			user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			del(src)
-			return
-
-	src.take_hit(W)
+	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)
 
 

@@ -106,7 +106,7 @@
 
 			while (subPlace)
 
-				var/subIndex = text2num( copytext( text, subPlace+4, subPlace+5) )
+				var/subIndex = text2num_safe( copytext( text, subPlace+4, subPlace+5) )
 
 				if (isnum(subIndex) && subIndex > 0 && subIndex <= subcommands.len)
 
@@ -125,7 +125,8 @@
 					else
 						suppress_out = 0
 						return 1
-
+				else
+					return 1
 				subPlace = findtext(text, "_sub")
 
 			//var/list/command_list = parse_string(text, (script_iteration ? src.scriptvars : null))
@@ -221,13 +222,18 @@
 						if (pipetemp)
 							echo_text = pipetemp
 
+						var/add_newline = TRUE
+						if (command_list[1] == "-n")
+							add_newline = FALSE
+							command_list.Cut(1,2)
+
 						if(istype(command_list) && (command_list.len > 0))
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
 							pipetemp = echo_text
 						else
-							if (echo_text && !dd_hassuffix(echo_text, "|n"))
+							if (echo_text && add_newline && !dd_hassuffix(echo_text, "|n"))
 								echo_text += "|n"
 							message_user(echo_text, "multiline")
 
@@ -389,7 +395,7 @@
 						if (!command_list.len)
 							continue
 
-						. = text2num(command_list[1])
+						. = text2num_safe(command_list[1])
 						if (!isnum(.) || . < 0)
 							continue
 
@@ -582,12 +588,12 @@
 
 		//Something something immersion something something 32-bit signed someting fixed point something.
 		script_clampvalue(var/clampnum)
-			//return round( min( max(text2num(clampnum), -2147483647), 2147483648) ) // good riddance
-			return round( min( max(clampnum, -2147483647), 2147483600), 0.01 ) // 2147483648
+			//return round( min( max(text2num_safe(clampnum), -2147483647), 2147483648) ) // good riddance
+			return round( clamp(clampnum, -2147483647, 2147483600), 0.01 ) // 2147483648
 
 		script_isNumResult(var/current, var/result)
 
-			if (isnum(text2num(current)) && isnum(text2num(result)))
+			if (isnum(text2num_safe(current)) && isnum(text2num_safe(result)))
 				return 1
 
 			return 0
@@ -600,11 +606,11 @@
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)
 
-				if (text2num(current_command) != null)
+				if (text2num_safe(current_command) != null)
 					if (stack.len > MAX_STACK_DEPTH)
 						return ERR_STACK_OVER
 
-					stack += script_clampvalue( text2num(current_command) )
+					stack += script_clampvalue( text2num_safe(current_command) )
 					continue
 
 				var/result = null
@@ -615,7 +621,7 @@
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = text2num(stack[stack.len]) + text2num(stack[stack.len-1])
+							result = text2num_safe(stack[stack.len]) + text2num_safe(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else
@@ -671,9 +677,6 @@
 							var/list/explodedString = splittext("[stack[stack.len-1]]", "[stack[stack.len]]")
 							if (explodedString.len + stack.len > MAX_STACK_DEPTH)
 								return ERR_STACK_OVER
-
-							// reverselist is getting removed because it didnt actually do anything other than copy the list, if this line actually intended to reverse it, use reverse_list
-							//explodedString = reverselist(explodedString)
 
 							stack.len -= 2
 							stack += explodedString

@@ -10,6 +10,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
+	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
 	anchored = 0
 	on = 1
@@ -111,11 +112,10 @@
 	if(src.emagged)
 		for(var/atom/A as anything in view(5, src))
 			if(!(A.event_handler_flags & IS_FARTABLE) && !(A in src.fart_memory))
-				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
+				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 15)
 				break
 	else
-		SPAWN_DBG(0)
-			step_rand(src,1)
+		step_rand(src, BUTTBOT_MOVE_SPEED)
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)
@@ -136,7 +136,7 @@
 	if(src.emagged == 1)
 		var/message = src.buttifricky()
 		if(prob(2))
-			playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		speak(message)
 		var/fartmessage = src.fart()
 		if(fartmessage)
@@ -155,7 +155,7 @@
 		if(user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		src.emagged = 1
 		return 1
 	return 0
@@ -168,7 +168,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/bot/buttbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/buttbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/emag))
 		//Do not hit the buttbot with the emag tia
 	else
@@ -216,7 +216,7 @@
 
 
 /obj/machinery/bot/buttbot/Topic(href, href_list)
-	if(!IN_RANGE(usr, src, 1))
+	if(!(BOUNDS_DIST(usr, src) == 0))
 		boutput(usr, "You're too far away from [src], get closer.[prob(5) ? pick(" ...if you really want to."," It won't bite.") : ""]")
 		return
 
@@ -234,7 +234,7 @@
 
 	attack_hand(usr)
 
-/obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
 	var/butt_engine = "Bio-Reactive Organic Ketone Engine"
 	switch(src.butt_fluff)
@@ -294,7 +294,7 @@
 /// cant possibly be a bad idea
 /obj/machinery/bot/buttbot/proc/robo_expel_fart_gas(var/gross)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	gas.vacuum()
 	if(gross == 1)
 		gas.farts = 0.5
@@ -312,8 +312,8 @@
 	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
-	playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-	SPAWN_DBG(2 SECONDS)
+	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	SPAWN(2 SECONDS)
 		var/jitters = 30
 		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
 		src.transform *= 1.1
@@ -324,7 +324,7 @@
 			pixel_x = old_x + rand(-amplitude, amplitude)
 			pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 			sleep(0.1 SECONDS)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			jitters = 30
 			src.visible_message("<span class='alert'><b>[src]</b> bulges!</span>")
 			src.transform *= 1.1
@@ -332,13 +332,13 @@
 				var/amplitude = 5
 				if(prob(1))
 					src.robo_expel_fart_gas(1)
-					playsound(get_turf(src), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				pixel_x = old_x + rand(-amplitude, amplitude)
 				pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 				sleep(0.1 SECONDS)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b>'s ass explodes!</span>")
-				playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/farts/superfart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.robo_expel_fart_gas(2)
 				var/turf/src_turf = get_turf(src)
 				if(src_turf)
@@ -357,7 +357,7 @@
 					src.visible_message("<span class='alert'>[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b></span>")
 					src.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
 					B.burn_possible = 0 // protect the book
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						if(B)
 							B.burn_possible = initial(B.burn_possible) // But only till the explosion's gone
 					explosion_new(oldloc, oldloc, 1, 1)
@@ -380,12 +380,12 @@
 		return
 
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
-		playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	else
 		if(narrator_mode)
-			playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
 	for (var/atom/A as anything in src.loc)
@@ -410,7 +410,7 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				new/obj/decal/implo(get_turf(src))
-				playsound(get_turf(src), 'sound/effects/suck.ogg', 100, 1)
+				playsound(src, 'sound/effects/suck.ogg', 100, 1)
 				src.set_loc(K)
 				break
 			else if(istype(A,/obj/item/photo/voodoo))
@@ -418,7 +418,7 @@
 				var/mob/M = V.cursed_dude
 				if(!M || !M.lying)
 					continue
-				playsound(get_turf(M), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(M, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				switch(rand(1, 7))
 					if(1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
 					if(2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
@@ -431,7 +431,7 @@
 
 	if(!fart_on_other)
 		switch(rand(1, 42))
-			if(1) . = "<B>[src]</B> lets out a girly little 'toot' from their butt."
+			if(1) . = "<B>[src]</B> lets out a little 'toot' from their butt."
 			if(2) . = "<B>[src]</B> farts loudly!"
 			if(3) . = "<B>[src]</B> lets one rip!"
 			if(4) . = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."
@@ -479,7 +479,7 @@
 		if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
 			. = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
 			new/obj/item/material_piece/fart(src.loc)
-			var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+			var/obj/item/material_piece/fart/F = new /obj/item/material_piece/fart
 			F.set_loc(src.loc)
 	fartcount++
 	if(fartcount == 69 || fartcount == 420)

@@ -7,7 +7,7 @@
 	var/obj/item/device/triggering_device = null
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/chem_grenade/payload = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/mob/attacher = "Unknown"
@@ -31,10 +31,10 @@
 		src.triggering_device:sense()
 	return
 
-/obj/item/assembly/chem_bomb/Bump(atom/O)
+/obj/item/assembly/chem_bomb/bump(atom/O)
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
 		if (src.triggering_device:state)
 			//boutput(world, "sending signal")
@@ -54,13 +54,13 @@
 			src.triggering_device:sense()
 			break
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.triggering_device:sense()
 		return
 	return
@@ -77,7 +77,7 @@
 	src.payload = null
 	..()
 
-/obj/item/assembly/chem_bomb/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/chem_bomb/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		var/obj/item/assembly/R = null
 		switch(src.triggering_device.type)
@@ -129,8 +129,8 @@
 	var/turf/bombturf = get_turf(src)
 	var/bombarea = bombturf.loc.name
 
-	logTheThing("bombing", null, null, "Chemical ([src]) Bomb triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
-	message_admins("Chemical Bomb ([src]) triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
+	logTheThing(LOG_BOMBING, null, "Chemical ([src]) Bomb triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
+	message_admins("Chemical Bomb ([src]) triggered in [bombarea] with device attacher: [attacher]. Last touched by: [key_name(src.fingerprintslast)]")
 
 	//boutput(world, "sent explode() to [src.payload]")
 	src.payload.explode()

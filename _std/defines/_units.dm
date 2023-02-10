@@ -1,17 +1,21 @@
 
-/// closer then enough
-#define INFINITY 1e31
+/// Evaluates to an actual IEEE 754 infinity!
+#define INFINITY 1e69
 
 // SI UNIT DEFINES
 
 //ex:  var/time = 10 SECONDS
 #define SECONDS *10
-#define MINUTES *600
-#define HOURS *36000
+#define MINUTES *(60 SECONDS)
+#define HOURS *(60 MINUTES)
+#define DAYS *(24 HOURS)
+#define WEEKS *(7 DAYS)
 
 #define SECOND SECONDS
 #define MINUTE MINUTES
 #define HOUR HOURS
+#define DAY DAYS
+#define WEEK WEEKS
 
 #define WATTS *1
 #define METERS *1
@@ -21,6 +25,7 @@
 #define MOLES *1
 #define CANDELAS *1
 #define PASCALS *1
+#define SIEVERTS *1
 
 #define WATT WATTS
 #define METER METERS
@@ -31,6 +36,7 @@
 #define MOLE MOLES
 #define CANDELA CANDELAS
 #define PASCAL PASCALS
+#define SIEVERT SIEVERTS
 
 #define YOTTA *(10**24)
 #define ZETTA *(10**21)
