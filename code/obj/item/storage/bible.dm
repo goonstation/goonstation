@@ -68,6 +68,12 @@ var/global/list/bible_contents = list()
 			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
+	attackby(var/obj/item/W, var/mob/user)
+		if (istype(W, /obj/item/bible))
+			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
+		else
+			..()
+
 	attack(mob/M, mob/user)
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
@@ -120,6 +126,15 @@ var/global/list/bible_contents = list()
 			playsound(src.loc, "punch", 25, 1, -1)
 
 		return
+
+	attack_hand(var/mob/user)
+		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
+			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 25)
+			user.changeStatus("stunned", 15 SECONDS)
+			user.changeStatus("weakened", 15 SECONDS)
+			return
+		return ..()
 
 	custom_suicide = 1
 	suicide_distance = 0
@@ -251,12 +266,27 @@ var/global/list/bible_contents = list()
 
 	New()
 		..()
-		src.create_storage(/datum/storage/bible/loaded, max_wclass = src.storage_max_wclass)
+		new /obj/item/gun/kinetic/faith(src)
 		desc += " This is the chaplain's personal copy."
 
 	get_desc()
 		. = ..()
-		var/datum/storage/bible/loaded/stored = src.storage
-		if (!stored.faith)
-			return
-		. += " It feels a bit heavier than it should."
+		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
+			. += " It feels a bit heavier than it should."
+
+	attack_hand(mob/user)
+		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
+			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
+			if(F)
+				user.put_in_hand_or_drop(F)
+				return
+		..()
+
+	attackby(var/obj/item/W, var/mob/user)
+		if(istype(W,/obj/item/gun/kinetic/faith))
+			if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+				user.u_equip(W)
+				W.set_loc(src)
+				user.show_text("You hide [W] in \the [src].", "blue")
+				return
+		..()

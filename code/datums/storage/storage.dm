@@ -71,13 +71,8 @@
 		src.sneaky = sneaky
 		src.does_not_open_in_pocket = does_not_open_in_pocket
 
-		RegisterSignal(src.linked_item, COMSIG_ATTACKBY, .proc/storage_item_attack_by)
-		RegisterSignal(src.linked_item, COMSIG_ATTACKHAND, .proc/storage_item_attack_hand)
-		RegisterSignal(src.linked_item, COMSIG_ATOM_MOUSEDROP, .proc/storage_item_mouse_drop)
 		//RegisterSignal(src.linked_item, COMSIG_ATOM_ENTERED, .proc/storage_item_entered)
 		//RegisterSignal(parent, COMSIG_OBJ_MOVE_TRIGGER, .proc/move_trigger) // CHECK
-		RegisterSignal(src.linked_item, COMSIG_ITEM_ATTACK_SELF, .proc/storage_item_attack_self)
-		RegisterSignal(src.linked_item, COMSIG_ITEM_AFTERATTACK, .proc/storage_item_after_attack)
 		RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, .proc/storage_item_on_drop)
 
 		//SPAWN(1 DECI SECOND)
@@ -105,13 +100,7 @@
 
 		src.linked_item = null
 		src.stored_items = null
-
-		UnregisterSignal(src.linked_item, COMSIG_ATTACKBY)
-		UnregisterSignal(src.linked_item, COMSIG_ATTACKHAND)
-		UnregisterSignal(src.linked_item, COMSIG_ATOM_MOUSEDROP)
 		//UnregisterSignal(src.linked_item, COMSIG_ATOM_ENTERED)
-		UnregisterSignal(src.linked_item, COMSIG_ITEM_ATTACK_SELF)
-		UnregisterSignal(src.linked_item, COMSIG_ITEM_AFTERATTACK)
 		UnregisterSignal(src.linked_item, COMSIG_ITEM_DROPPED)
 
 		..()
@@ -144,7 +133,7 @@
 			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src.linked_item] has more than [slots] items in it!")
 
 	// when clicking the storage item with an object
-	proc/storage_item_attack_by(atom/source, obj/item/W, mob/user)
+	proc/storage_item_attack_by(obj/item/W, mob/user)
 		// check if item is the storage item
 		if (W == src.linked_item)
 			boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
@@ -174,7 +163,7 @@
 					return
 			// show pocket storage
 			if(!src.does_not_open_in_pocket)
-				src.storage_item_attack_hand(src, user)
+				src.storage_item_attack_hand(user)
 			// give info message
 			switch (canhold)
 				if (STORAGE_CANT_HOLD)
@@ -208,7 +197,7 @@
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
 	// when clicking the storage item with an empty hand
-	proc/storage_item_attack_hand(atom/source, mob/user)
+	proc/storage_item_attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
 		// check if its in your inventory
@@ -240,7 +229,7 @@
 			src.hud.update(user)
 
 	// storage item is mouse dropped onto something
-	proc/storage_item_mouse_drop(atom/source, mob/user, atom/over_object, src_location, over_location)
+	proc/storage_item_mouse_drop(mob/user, atom/over_object, src_location, over_location)
 		// if mouse dropping storage item onto a hand slot, attempt to hold it
 		if (istype(over_object, /atom/movable/screen/hud))
 			var/atom/movable/screen/hud/S = over_object
@@ -292,11 +281,11 @@
 						M.triggered(user)
 
 	// using storage item in hand
-	proc/storage_item_attack_self(atom/source, mob/user)
-		src.storage_item_attack_hand(src, user)
+	proc/storage_item_attack_self(mob/user)
+		src.storage_item_attack_hand(user)
 
 	// after attacking an object with the storage item
-	proc/storage_item_after_attack(atom/source, atom/target, mob/user, reach)
+	proc/storage_item_after_attack(atom/target, mob/user, reach)
 		// reshuffle item in storage
 		if (target in src.stored_items)
 			return
@@ -315,7 +304,7 @@
 				target.Attackhand(user)
 				if (target in user.equipped_list())
 					//src.add_contents(target)
-					src.storage_item_attack_by(src, target, user)
+					src.storage_item_attack_by(target, user)
 			else
 				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()

@@ -6,5 +6,5 @@
 
 /datum/storage/unholdable
 
-	storage_item_attack_hand(atom/source, mob/user)
-		return src.storage_item_mouse_drop(source, user, user)
+	storage_item_attack_hand(mob/user)
+		src.storage_item_mouse_drop(user, user)

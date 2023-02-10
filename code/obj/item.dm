@@ -905,6 +905,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	src.storage?.storage_item_attack_self(user)
+
 	chokehold?.attack_self(user)
 
 	return
@@ -947,6 +949,7 @@
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_after_attack(target, user, reach)
 	return
 
 /obj/item/dummy/ex_act()
@@ -1073,6 +1076,8 @@
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))
+		// unholdable storage items
+		src.storage?.storage_item_attack_hand(user)
 		return 0
 
 	src.throwing = 0
@@ -1086,6 +1091,10 @@
 		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
 		if (ishuman(user))
+			// storage items worn
+			if (src.storage)
+				src.storage.storage_item_attack_hand(user)
+				return FALSE
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
 				in_pocket = 1

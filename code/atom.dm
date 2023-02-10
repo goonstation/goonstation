@@ -742,6 +742,7 @@ TYPEINFO(/atom)
 
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_attack_hand(user)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
 	return
@@ -762,6 +763,8 @@ TYPEINFO(/atom)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
+	if (src.storage?.storage_item_attack_by(W, user))
+		return
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
@@ -877,6 +880,7 @@ TYPEINFO(/atom)
 
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_mouse_drop(usr, over_object, src_location, over_location)
 	return
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
