@@ -46,7 +46,7 @@
 
 	// TODO: initalize
 	New()
-		src.storage = new /datum/storage(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
 		src.make_my_stuff()
 		..()
 

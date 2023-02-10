@@ -19,7 +19,7 @@ var/global/list/bible_contents = list()
 
 	New()
 		..()
-		src.storage = new /datum/storage/bible(src, max_wclass = W_CLASS_SMALL)
+		src.create_storage(/datum/storage/bible, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
@@ -251,8 +251,7 @@ var/global/list/bible_contents = list()
 
 	New()
 		..()
-		qdel(src.storage)
-		src.storage = new /datum/storage/bible/loaded(src, max_wclass = src.storage_max_wclass)
+		src.create_storage(/datum/storage/bible/loaded, max_wclass = src.storage_max_wclass)
 		desc += " This is the chaplain's personal copy."
 
 	get_desc()

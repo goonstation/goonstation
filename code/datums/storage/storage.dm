@@ -7,12 +7,18 @@
 /* Examples */
 // -Storage datums on clothing items function just like backpacks
 
-
-/atom/proc/create_storage(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_in_pocket = FALSE)
-	//storage_item.storage = new /datum/storage (storage_item, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
+/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_in_pocket = FALSE)
+	var/list/previous_storage = list()
+	for (var/obj/item/I as anything in src.storage?.get_contents())
+		previous_storage += I
+	src.remove_storage()
+	src.storage = new storage_type(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
+	for (var/obj/item/I as anything in previous_storage)
+		src.storage.add_contents(I)
 
 /atom/proc/remove_storage()
-//	storage
+	qdel(src.storage)
+	src.storage = null
 
 #define STORAGE_CAN_HOLD 1
 #define STORAGE_CANT_HOLD 0
@@ -54,7 +60,7 @@
 		lastTooltipContent = .
 	*/
 
-	New(atom/storage_item, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, does_not_open_in_pocket = FALSE)
+	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
 		..()
 		src.linked_item = storage_item
 		src.hud = new (src)

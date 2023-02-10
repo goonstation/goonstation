@@ -176,8 +176,7 @@ TYPEINFO(/atom)
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
 
-		qdel(src.storage)
-		src.storage = null
+		src.remove_storage()
 		..()
 
 	proc/Turn(var/rot)

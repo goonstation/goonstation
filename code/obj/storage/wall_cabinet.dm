@@ -19,9 +19,8 @@ TYPEINFO(/obj/item/storage/wall)
 
 	New()
 		..()
-		qdel(src.storage)
 		// these can't move so I guess we may as well let them store more stuff?
-		src.storage = new /datum/storage/unholdable(src, slots = 13, max_wclass = W_CLASS_BULKY)
+		src.create_storage(/datum/storage/unholdable, slots = 13, max_wclass = W_CLASS_BULKY)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
