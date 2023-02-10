@@ -1116,7 +1116,7 @@ var/datum/action_controller/actions
 						target.internal.add_fingerprint(owner)
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
-	duration = 40
+	duration = 60
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "handcuffsset"
 	icon = 'icons/obj/items/items.dmi'
@@ -1152,7 +1152,7 @@ var/datum/action_controller/actions
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("training_security"))
-				duration = round(duration / 2)
+				duration = round(duration / 1.5)
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to handcuff [target]!</B></span>", 1)
@@ -1240,7 +1240,7 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
-	duration = 600
+	duration = 400
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'

@@ -182,3 +182,4 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
+	apply_multiplier = 0.5
