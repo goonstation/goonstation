@@ -74442,14 +74442,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/iomoon/base)
-"qLm" = (
-/obj/effects/precipitation/snow/grey/tile,
-/obj/tree{
-	pixel_x = -10;
-	pixel_y = 20
-	},
-/turf/unsimulated/outdoors/grass,
-/area/centcom/outside)
 "qMM" = (
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/carpet/darkcarpet/border{
@@ -153265,7 +153257,7 @@ aES
 aES
 aES
 aES
-qLm
+caF
 aES
 wel
 iho
