@@ -78,12 +78,12 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, S) == 0)
+			for (var/obj/item/I as anything in W.storage.get_contents())
+				if (src.storage.is_full())
 					break
+				W.storage.transfer_stored_item(I, src, TRUE)
 			return
 		else
 			return ..()
@@ -167,7 +167,7 @@
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)

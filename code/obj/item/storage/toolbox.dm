@@ -41,8 +41,8 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
-		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tile) && !length(src.storage.get_contents()) && !isrobot(user)) // we are making a floorbot!
 			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
 
 			user.put_in_hand_or_drop(B)
@@ -64,10 +64,10 @@
 			return
 
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, S) == 0)
+			for (var/obj/item/I as anything in W.storage.get_contents())
+				if (src.storage.is_full())
 					break
+				W.storage.transfer_stored_item(I, src, TRUE)
 			return
 		else
 			return ..()

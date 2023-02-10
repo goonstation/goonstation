@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		boutput(user, "You repair the lock on [src].")
 	return TRUE
 
-/obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
+/obj/item/storage/secure/attackby(obj/item/W, mob/user)
 	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this

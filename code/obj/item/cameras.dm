@@ -4,7 +4,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return

@@ -581,7 +581,7 @@
 			return
 		return ..()
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
+	attackby(obj/item/W, mob/user)
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
