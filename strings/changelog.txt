@@ -1,5 +1,9 @@
 
 (t)fri feb 10 23
+(u)Roddy
+(p)12960
+(e)💅🎩|C-QoL, A-Clothing
+(+)Adds in a Wedding Crate to the QM.
 (u)BatElite
 (p)12971
 (e)💅📦|C-QoL, A-Game-Objects
