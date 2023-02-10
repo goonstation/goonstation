@@ -60,7 +60,8 @@ jobs:
           sudo sed -i 's/azure\.//' /etc/apt/sources.list
           sudo apt-get update
 
-      - uses: awalsh128/cache-apt-pkgs-action@v1
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: libstdc++6:i386
           version: latest
@@ -109,12 +110,17 @@ jobs:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
-      - name: Install Dependencies
+      - name: Install i386 Architecture
         run: |
           sudo dpkg --add-architecture i386
           sudo sed -i 's/azure\.//' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386
+          version: latest
 
       - name: Cache BYOND
         uses: actions/cache@v3
