@@ -15,6 +15,8 @@
 	#define COMSIG_MIND_ATTACH_TO_MOB "mind_attach_to_mob"
 	/// when a mind detaches from a mob (mind, mob)
 	#define COMSIG_MIND_DETACH_FROM_MOB "mind_detach_from_mob"
+	/// when a mind should update the contents of its memory
+	#define COMSIG_MIND_UPDATE_MEMORY "update_dynamic_player_memory"
 
 // ---- area signals ----
 

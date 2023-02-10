@@ -19,18 +19,12 @@
 
 		src.owner = new_owner
 		src.conspirators += src.owner
+		for (var/datum/mind/conspirator in src.conspirators)
+			SEND_SIGNAL(conspirator, COMSIG_MIND_UPDATE_MEMORY)
 
 		. = ..()
 
 	give_equipment()
-		SPAWN(1 SECOND)
-			var/conspirator_list = src.generate_conspirator_list()
-
-			src.owner.store_memory(src.meeting_point)
-			src.owner.store_memory(conspirator_list)
-			boutput(src.owner.current, src.meeting_point)
-			boutput(src.owner.current, conspirator_list)
-
 		if (!ishuman(src.owner.current))
 			return
 		var/mob/living/carbon/human/H = src.owner.current
@@ -63,17 +57,17 @@
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, src.conspirator_objective, src)
 
+		SPAWN(1 SECOND)
+			src.owner.store_memory(src.meeting_point)
+			boutput(src.owner.current, src.meeting_point)
+
+			var/datum/dynamic_player_memory/conspirator_list/conspirator_list_memory = new(src.owner)
+			src.owner.dynamic_memories += conspirator_list_memory
+			boutput(src.owner.current, conspirator_list_memory.memory_text)
+
 	remove_self()
 		src.conspirators -= src.owner
-		. = ..()
-
-	proc/generate_conspirator_list()
-		var/conspirator_list = "The conspiracy consists of: "
-
+		src.owner.remove_dynamic_memories_by_type(/datum/dynamic_player_memory/conspirator_list)
 		for (var/datum/mind/conspirator in src.conspirators)
-			if (conspirator.assigned_role == "Clown")
-				conspirator_list += "<b>a Clown</b>, "
-			else
-				conspirator_list += "<b>[conspirator.current.real_name]</b>, "
-
-		return conspirator_list
+			SEND_SIGNAL(conspirator, COMSIG_MIND_UPDATE_MEMORY)
+		. = ..()

@@ -6,6 +6,7 @@ datum/mind
 	var/mob/virtual
 
 	var/memory
+	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
@@ -169,9 +170,17 @@ datum/mind
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
 
+	proc/remove_dynamic_memories_by_type(dynamic_memory_type)
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			if (dynamic_memory.type == dynamic_memory_type)
+				src.dynamic_memories -= dynamic_memory
+
 	proc/show_memory(mob/recipient)
 		var/output = "<B>[current.real_name]'s Memory</B><HR>"
 		output += memory
+
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			output += dynamic_memory.memory_text
 
 		if (objectives.len>0)
 			output += "<HR><B>Objectives:</B><br>"
