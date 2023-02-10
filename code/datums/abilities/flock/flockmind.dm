@@ -371,10 +371,10 @@
 
 /datum/targetable/flockmindAbility/radioStun
 	name = "Radio Stun Burst"
-	desc = "Overwhelm the radio headsets of everyone nearby. Will not work on broken or non-existent headsets."
+	desc = "Overwhelm the radio headsets of everyone within 3m of your target. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
-	cooldown = 20 SECONDS
-	targeted = FALSE
+	cooldown = 30 SECONDS
+	targeted = TRUE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
 	if(..())
@@ -382,7 +382,7 @@
 	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN))
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
+	for(var/mob/living/M in range(3, get_turf(target)))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
