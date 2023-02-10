@@ -48248,17 +48248,6 @@
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
-"diF" = (
-/obj/machinery/portableowl/attached{
-	name = "A Pretty Owl"
-	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
-/area/station/garden/owlery)
 "diH" = (
 /obj/machinery/atmospherics/valve{
 	name = "gas mix supply valve"
@@ -50139,6 +50128,20 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"fjl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_x = -6;
+	pixel_y = 24
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 6
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "fju" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -50494,18 +50497,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"fBj" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/computer/chem_requester/science{
-	area_name = "Quartermaster's office";
-	dir = 4
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 10
-	},
-/area/station/quartermaster/office)
 "fBp" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -51129,14 +51120,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lobby)
-"gcK" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/medical,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/treatment)
 "geM" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -52541,6 +52524,19 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"hRW" = (
+/obj/item/toy/plush/small{
+	layer = 3.1;
+	pixel_y = 4
+	},
+/obj/stool/chair/comfy,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "hSy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -53034,23 +53030,26 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"iIj" = (
+"iHn" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/treatment)
+"iHW" = (
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-8"
+/obj/machinery/computer/chem_requester/science{
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
-/obj/machinery/navbeacon/tour/cog1/tour9,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
+/turf/simulated/floor/neutral/side{
+	dir = 10
 	},
-/obj/landmark/gps_waypoint,
-/mob/living/critter/small_animal/mouse,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/station/quartermaster/office)
 "iJw" = (
 /obj/machinery/status_display,
 /turf/simulated/wall/auto/supernorn,
@@ -54146,30 +54145,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"kcE" = (
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
-/obj/item/clipboard{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/pen/fancy{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/pen{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge{
-	dir = 1
-	},
-/area/station/medical/medbay/psychiatrist)
 "kdP" = (
 /obj/stool/chair{
 	dir = 8
@@ -55621,20 +55596,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/gas)
-"mgo" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_x = -6;
-	pixel_y = 24
-	},
-/obj/blind_switch/area/north{
-	pixel_x = 6
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "mhk" = (
 /obj/stool,
 /obj/decal/cleanable/dirt/dirt2,
@@ -55778,6 +55739,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
+"mry" = (
+/obj/machinery/portableowl/attached{
+	name = "A Pretty Owl"
+	},
+/turf/simulated/wall{
+	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "grass";
+	name = "tall grass"
+	},
+/area/station/garden/owlery)
 "mrS" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -56460,6 +56432,30 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"nng" = (
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/item/clipboard{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/pen/fancy{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 1
+	},
+/area/station/medical/medbay/psychiatrist)
 "noy" = (
 /obj/machinery/light,
 /obj/cable/black{
@@ -60233,6 +60229,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"rJu" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/navbeacon/tour/cog1/tour9,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
+	},
+/obj/landmark/gps_waypoint,
+/mob/living/critter/small_animal/mouse,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "rJL" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 1
@@ -61619,25 +61632,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/bridge)
-"tdA" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor,
-/area/space)
 "tdI" = (
 /obj/table/auto,
 /obj/item/storage/box/stma_kit{
@@ -64831,19 +64825,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
-"wIr" = (
-/obj/item/toy/plush/small{
-	layer = 3.1;
-	pixel_y = 4
-	},
-/obj/stool/chair/comfy,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/psychiatrist)
 "wIz" = (
 /obj/disposalpipe/segment,
 /obj/table/auto,
@@ -66079,6 +66060,25 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"yaZ" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/ptl)
 "ybI" = (
 /obj/storage/cart,
 /turf/simulated/floor/grime,
@@ -92373,7 +92373,7 @@ aZb
 aRT
 baT
 bbP
-mgo
+fjl
 bdT
 beN
 bKt
@@ -101515,8 +101515,8 @@ sfo
 pbP
 ucm
 hgI
-wIr
-kcE
+hRW
+nng
 jGN
 muh
 adC
@@ -103323,7 +103323,7 @@ cwH
 gGk
 nZV
 nZV
-gcK
+iHn
 nKV
 nZV
 dNd
@@ -106258,7 +106258,7 @@ aRn
 aSl
 aSl
 aTm
-diF
+mry
 aXc
 aUz
 aTm
@@ -107467,7 +107467,7 @@ aSl
 aTm
 aUz
 aUz
-iIj
+rJu
 aYr
 aYr
 bao
@@ -117763,7 +117763,7 @@ qzs
 aaG
 brH
 eBA
-tdA
+yaZ
 cDX
 hOM
 brH
@@ -123524,7 +123524,7 @@ bFp
 bMz
 bNX
 bPp
-fBj
+iHW
 btr
 bTB
 bUU

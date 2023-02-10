@@ -455,3 +455,35 @@ toxic - poisons
 	disruption = 2
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/dazzler
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_brute"
+	stun = 4
+	cost = 20
+	max_range = 12
+	window_pass = 1 // maybe keep
+	dissipation_rate = 0 // weak enough as is
+	sname = "dazzle"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 1
+	damage_type = D_ENERGY
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+	on_pointblank(var/obj/projectile/P, var/mob/living/M)
+		M.changeStatus("disorient", 4 SECOND)
+		M.changeStatus("slowed", 3 SECOND)
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("disorient", 2 SECOND)
+			L.changeStatus("slowed", 1.5 SECOND)
+		return
