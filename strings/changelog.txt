@@ -1,4 +1,7 @@
 
+(t)fri feb 10 23
+(u)LeahTheTech
+(*)Reworked flock radio stun burst ability to be a point and click smaller AOE instead of a screen spanning one and increased the cooldown to 30s.
 (t)thu feb 09 23
 (u)aloe
 (+)Sleepers (the medbay ones) now eject dead people. The port-a-med doesn't.
