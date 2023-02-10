@@ -1,5 +1,9 @@
 
 (t)fri feb 10 23
+(u)Kubius
+(p)13025
+(e)🆕🗺|C-Feature, A-Mapping
+(+)A familiar alien vessel has sufficiently fortified itself to reach the Nadir Extraction Site, albeit a bit worse for the wear. It's come to rest by the northern pit face.
 (u)Roddy
 (p)12960
 (e)💅🎩|C-QoL, A-Clothing
