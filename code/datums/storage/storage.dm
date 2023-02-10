@@ -170,7 +170,7 @@
 								O = A
 								if (O.anchored)
 									continue
-							W.storage.transfer_stored_item(A, src)
+							W.storage.transfer_stored_item(A, src.linked_item, TRUE)
 					return
 			// show pocket storage
 			if(!src.does_not_open_in_pocket)
