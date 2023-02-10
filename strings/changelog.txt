@@ -1,5 +1,9 @@
 
 (t)fri feb 10 23
+(u)BatElite
+(p)12971
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Restored search and category filter functions to manufacturers
 (u)LeahTheTech
 (*)Reworked flock radio stun burst ability to be a point and click smaller AOE instead of a screen spanning one and increased the cooldown to 30s.
 (t)thu feb 09 23
