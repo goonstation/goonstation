@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			possible_names += M
 		return possible_names
 
-/obj/item/clothing/head/poppy
+/obj/item/clothing/head/flower/poppy
 	name = "poppy"
 	desc = "A distinctive red flower."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'

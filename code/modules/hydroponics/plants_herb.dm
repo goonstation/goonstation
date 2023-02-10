@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 /datum/plant/herb/poppy
 	name = "Poppy"
 	seedcolor = "#FF1500"
-	crop = /obj/item/plant/herb/poppy
+	crop = /obj/item/clothing/head/flower/poppy
 	starthealth = 10
 	growtime = 50
 	harvtime = 80
