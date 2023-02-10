@@ -83,6 +83,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower/rose
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "rose"
 	var/thorned = TRUE
 	var/backup_name_txt = "names/first.txt"
