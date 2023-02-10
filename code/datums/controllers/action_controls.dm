@@ -512,9 +512,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
@@ -610,8 +611,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
@@ -883,8 +886,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
@@ -1384,9 +1389,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 

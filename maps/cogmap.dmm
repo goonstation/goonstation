@@ -33994,8 +33994,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 4;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 10
@@ -55462,8 +55462,8 @@
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
-	pixel_y = 24;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 24
 	},
 /obj/blind_switch/area/north{
 	pixel_x = 6
@@ -61622,7 +61622,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/engine/ptl)
 "tdI" = (
 /obj/table/auto,
 /obj/item/storage/box/stma_kit{
@@ -65360,8 +65360,8 @@
 /area/station/maintenance/southeast)
 "xox" = (
 /obj/item/toy/plush/small{
-	pixel_y = 4;
-	layer = 3.1
+	layer = 3.1;
+	pixel_y = 4
 	},
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -66129,12 +66129,12 @@
 	pixel_y = -2
 	},
 /obj/item/pen{
-	pixel_y = 4;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1

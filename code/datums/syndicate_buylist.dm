@@ -684,7 +684,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	job = list("Engineer")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
