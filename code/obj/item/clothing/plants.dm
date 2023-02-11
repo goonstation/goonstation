@@ -1,33 +1,21 @@
 ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower
 // hi flourish. Plant pot stuff for in future can go here i guess.
-	max_stack = 10 //this seems about right. Plus, this is also how much can fit into a bouquet.
-	var/bouquet_type = /obj/item/bouquet // if no actual bouquet assigned, we use this one
+	max_stack = 10 //this seems about right.
+	var/can_bouquet = FALSE
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper))
 			make_bouquet(src, W, user)
 
 /obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
-	var/flowernum = 2 // this is just a default number
-	var/obj/item/bouquet/bouquet_dummy = src.bouquet_type
-	if (istype_exact(bouquet_dummy, /obj/item/bouquet))
+	if (!src.can_bouquet)
 		user.visible_message("This flower can't be turned into a bouquet!")
 		return
-	if (!istype(bouquet_dummy, /obj/item/bouquet))
-		CRASH("Somehow, this flower has no real bouquet type. [src]")
-	if (src.amount < bouquet_dummy.min_flowers)
-		user.visible_message("You need more than one flower to make a bouquet!")
-		return
-	if (src.amount <= bouquet_dummy.max_flowers)
-		flowernum = src.amount
-	else
-		flowernum = bouquet_dummy.max_flowers
-		// if too many flowers we just take the max flowers out of the stack, usually 10
 	var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
-	paperitem.set_loc(new_bouquet)
-	var/obj/item/clothing/head/flower/allocated_flowers = src.split_stack(flowernum)
-	allocated_flowers.set_loc(new_bouquet)
-	user.visible_message("[user] rolls up [flowernum] [src]s into a bouquet.", "You roll up the [src]s into a bouquet.")
+	paperitem.set_loc(new_bouquet.paperused)
+	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
+	allocated_flower.set_loc(new_bouquet.flower1)
+	user.visible_message("[user] rolls up a [src] into a bouquet.", "You roll up the [src] into a bouquet.")
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
@@ -52,30 +40,26 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "Hydrangeas are popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
-	bouquet_type = /obj/item/bouquet/hydrangea
+	can_bouquet = TRUE
 	pink
 		name = "pink hydrangea"
 		icon_state = "flower_hyd-pink"
 		item_state = "flower_hyd-pink"
-		bouquet_type = /obj/item/bouquet/hydrangea/pink
 	blue
 		name = "blue hydrangea"
 		icon_state = "flower_hyd-blue"
 		item_state = "flower_hyd-blue"
-		bouquet_type = /obj/item/bouquet/hydrangea/blue
 	purple
 		name = "purple hydrangea"
 		icon_state = "flower_hyd-purple"
 		item_state = "flower_hyd-purple"
-		bouquet_type = /obj/item/bouquet/hydrangea/purple
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
 	desc = "Lavender is usually used as an ingredient or as a source of essential oil; you can tuck a sprig behind your ear for that garden aesthetic too."
 	icon_state = "flower_lav"
 	item_state = "flower_lav"
-	bouquet_type = /obj/item/bouquet/lavender
-
+	can_bouquet = TRUE
 	New()
 		src.create_reagents(100)
 		..()
@@ -85,10 +69,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "rose"
+	can_bouquet = TRUE
 	var/thorned = TRUE
 	var/backup_name_txt = "names/first.txt"
-	bouquet_type = /obj/item/bouquet/rose
-
 	proc/possible_rose_names()
 		var/list/possible_names = list()
 		for(var/mob/M in mobs)
@@ -205,62 +188,36 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "A distinctive red flower."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "poppy"
+	can_bouquet = TRUE
 
 // I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
 ABSTRACT_TYPE(/obj/item/bouquet)
 /obj/item/bouquet
-	name = "abstract bouquet"
+	name = "empty bouquet"
 	desc = "If you're seeing this, something's wrong"
-	var/max_flowers = 10 // 10 seems like a reasonable amount for now, lets not have 99 flowers in one bouquet
-	var/min_flowers = 2 // can't have a bouquet with only one flower
-	var/flower_type_used = null
+	var/max_flowers = 3
+	var/min_flowers = 1 // can't have a bouquet with no flowers
+	var/paperused = null
+	var/flower1 = null
+	var/flower2 = null
+	var/flower3 = null
+	var/hiddenitem = null
 	attackby(obj/item/W, mob/user)
 		// should give us back the paper and flowers when done with snipping tool
 		if (issnippingtool(W))
 			boutput(user, "<span class='notice'>You disassemble the [src].</span>")
 			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 			qdel(src)
-
-/obj/item/bouquet/lavender
-	name = "lavender bouquet"
-	desc = "They smell pretty, and the purple can't be beat."
-	icon_state = "bouquet_lavender"
-	item_state = "bouquet_lavender"
-	flower_type_used = /obj/item/clothing/head/flower/lavender
-
-/obj/item/bouquet/rose
-	name = "rose bouquet"
-	desc = "Red is the color of passion; or, of the medbay."
-	icon_state = "bouquet_rose"
-	item_state = "bouquet_rose"
-	flower_type_used = /obj/item/clothing/head/flower/rose
-
-/obj/item/bouquet/poppy
-	name = "poppy bouquet"
-	desc = ""
-	icon_state = "bouquet_poppy"
-	item_state = "bouquet_poppy"
-	flower_type_used = /obj/item/clothing/head/flower/poppy
-
-/obj/item/bouquet/hydrangea
-	name = "hydrangea bouquet"
-	desc = "A summer favorite, here to stay; these bushy flowers make a perfect colorful arrangement."
-	icon_state = "bouquet_hydrangea"
-	item_state = "bouquet_hydrangea"
-	flower_type_used = /obj/item/clothing/head/flower/hydrangea
-	pink
-		icon_state = "bouquet_hydrangea_pink"
-		item_state = "bouquet_hydrangea_pink"
-		flower_type_used = /obj/item/clothing/head/flower/hydrangea/pink
-	blue
-		icon_state = "bouquet_hydrangea_blue"
-		item_state = "bouquet_hydrangea_blue"
-		flower_type_used = /obj/item/clothing/head/flower/hydrangea/blue
-	purple
-		icon_state = "bouquet_hydrangea_purple"
-		item_state = "bouquet_hydrangea_purple"
-		flower_type_used = /obj/item/clothing/head/flower/hydrangea/purple
-//obj/item/bouquet/poppy
-// poppies are under herb, moving it will break things
-//obj/item/bouquet/mixed
-// this can be done later if needed, it'll take a bit of work though, and no idea how you'd construct them
+		if (istype(W, /obj/item/clothing/head/flower))
+			var/obj/item/clothing/head/flower/dummy_flower = W
+			if (!dummy_flower.can_bouquet)
+				user.visible_message("This flower can't be turned into a bouquet!")
+				return
+			if (!isnull(flower3))
+				user.visible_message("This bouquet is full!")
+				return
+			// now we pick where it goes
+			var/targetslot = src.flower3
+			if (isnull(flower2))
+				targetslot = src.flower2
+			W.set_loc(targetslot)
