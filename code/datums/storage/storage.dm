@@ -127,6 +127,7 @@
 
 	// when clicking the storage item with an object
 	proc/storage_item_attack_by(obj/item/W, mob/user)
+		. = TRUE
 		// check if item is the storage item
 		if (W == src.linked_item)
 			boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
@@ -174,7 +175,7 @@
 				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
 				//Turns out this condition can be met and reliably reproduced by players!
 				//Lets not give players the ability to fucking explode at will eh
-				return
+				return FALSE
 			checkloc = checkloc.loc
 
 		// add item to storage
@@ -213,7 +214,7 @@
 			user.attach_hud(src.hud)
 			src.linked_item.add_fingerprint(user)
 			animate_storage_rustle(src.linked_item)
-			return TRUE
+			return
 		else
 			// ???
 			for (var/mob/M as anything in src.hud.mobs)
