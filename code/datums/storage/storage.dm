@@ -180,15 +180,7 @@
 
 		// add item to storage
 		user.u_equip(W)
-		src.add_contents(W)
-
-		//UpdateIcon()
-		// extra stuff
-		src.linked_item.add_fingerprint(user)
-		animate_storage_rustle(src.linked_item)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src.linked_item]!</span>", "<span class='notice'>You have added [W] to [src.linked_item].</span>")
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		src.add_contents(W, user)
 
 	// when clicking the storage item with an empty hand
 	proc/storage_item_attack_hand(mob/user)
@@ -357,12 +349,23 @@
 		return STORAGE_CAN_HOLD
 
 	// when adding an item in
-	proc/add_contents(obj/item/I, mob/user = usr) // user arg optional unless usr is null
+	proc/add_contents(obj/item/I, mob/user = usr, visible = TRUE) // user arg optional unless usr is null and it needs to be a mob
 		//I.dropped()
 		src.stored_items += I
 		I.set_loc(src.linked_item)
 		src.hud.add_item(I, user)
 		I.stored = src
+
+		// a mob put the item in
+		if (!istype(user))
+			return
+		src.linked_item.add_fingerprint(user)
+		if (visible)
+			animate_storage_rustle(src.linked_item)
+			if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
+				user.visible_message("<span class='notice'>[user] has added [I] to [src.linked_item]!</span>",
+					"<span class='notice'>You have added [I] to [src.linked_item].</span>")
+			playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
 	// when transfering something in the storage out
 	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = usr) // user arg optional, same reason for add_contents()

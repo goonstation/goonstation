@@ -106,7 +106,7 @@ TYPEINFO(/datum/component/cell_holder)
 
 	if(old_cell)
 		if (new_cell_stored)
-			new_cell_stored.storage.add_contents(old_cell, user)
+			new_cell_stored.storage.add_contents(old_cell, user, FALSE)
 		else
 			old_cell.set_loc(old_loc)
 		SEND_SIGNAL(old_cell, COMSIG_UPDATE_ICON)
