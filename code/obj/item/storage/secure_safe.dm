@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	return TRUE
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user)
-	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
+	if ((!src.check_can_hold(W) || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
 	if (src.hackable)
