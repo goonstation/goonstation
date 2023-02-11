@@ -280,12 +280,13 @@
 
 	// after attacking an object with the storage item
 	proc/storage_item_after_attack(atom/target, mob/user, reach)
-		// reshuffle item in storage
+		// if item is stored, drop storage and take it out
 		if (target in src.stored_items)
+			user.drop_item()
+			src.transfer_stored_item(target, get_turf(src.linked_item))
+			SPAWN(1 DECI SECOND)
+				target.Attackhand(user)
 			return
-			//user.drop_item()
-			//SPAWN(1 DECI SECOND)
-			//	O.Attackhand(user)
 		// attempt to load item into storage if you have a free hand
 		else if (isitem(target) && !istype(target, /obj/item/storage))
 			var/obj/O = target
