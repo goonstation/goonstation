@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 			targetslot = src.flower2
 		W.set_loc(targetslot)
 		qdel(targetslot)
-		src.update_icon
+		src.update_icon()
 /obj/item/bouquet/attack_self(mob/user)
 	if (isnull(src.flower2))
 		return
@@ -243,6 +243,7 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	else
 		swapflowers(src.flower1, src.flower3)
 	qdel(reshuffle_cycle)
+	src.update_icon()
 /obj/item/bouquet/proc/swapflowers(f1,f2)
 	var/tempflower = f1
 	f1 = f2
@@ -250,7 +251,6 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	qdel(tempflower)
 /obj/item/bouquet/update_icon()
 	src.overlays = null
-	src.item = null
 	src.item_state = null
 	src.icon_state = null
 
