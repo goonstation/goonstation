@@ -4,9 +4,26 @@
 
 /* Intro */
 
+/* What is a storage datum? */
+// A storage datum is something that can be added to any atom to give it storage functionality.
+// Atom level procs, for things like attacking a storage with an item, close to the level of signal usage, are used to make this work.
+
+/* Looking to add a storage to an item? */
+// Just call atom.create_storage() as below
+// Ex. myatom.create_storage(/datum/storage) creates a very simple storage on an item.
+// Procs for common storage actions, like getting all contents from a storage, are available.
+// The storage datum is organized into "internal" and "public" procs
+//
+// To remove a storage from an item, just call atom.remove_storage().
+
+/* When should a new storage datum type be created? */
+// A new storage datum type should be made if you are looking to override the code for adding/removing an item to a storage, or make a significant
+// change that needs a new type. Ex. See bible storages.
+
 /* Examples */
 // -Storage datums on clothing items function just like backpacks
 
+// add storage to an item
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_in_pocket = FALSE)
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
@@ -16,6 +33,7 @@
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
+// remove an atom's storage
 /atom/proc/remove_storage()
 	qdel(src.storage)
 	src.storage = null
