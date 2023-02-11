@@ -357,23 +357,23 @@
 		return STORAGE_CAN_HOLD
 
 	// when adding an item in
-	proc/add_contents(obj/item/I)
+	proc/add_contents(obj/item/I, mob/user = usr) // user arg optional unless usr is null
 		//I.dropped()
 		src.stored_items += I
 		I.set_loc(src.linked_item)
-		src.hud.add_item(I)
+		src.hud.add_item(I, user)
 		I.stored = src
 
 	// when transfering something in the storage out
-	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage)
+	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = usr) // user arg optional, same reason for add_contents()
 		if (!(I in src.stored_items))
 			return
 		src.stored_items -= I
-		src.hud.remove_item(I)
+		src.hud.remove_item(I, user)
 		I.stored = null
 
-		if (location.storage && add_to_storage)
-			location.storage.add_contents(I)
+		if (location?.storage && add_to_storage)
+			location.storage.add_contents(I, user)
 		else
 			I.set_loc(location)
 			if (isturf(location))

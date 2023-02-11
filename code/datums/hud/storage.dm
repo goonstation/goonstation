@@ -181,6 +181,6 @@
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
 
-	proc/remove_item(obj/item/I)
+	proc/remove_item(obj/item/I, mob/user = usr)
 		remove_object(I)
-		update()
+		update(user)
