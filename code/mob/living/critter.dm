@@ -766,7 +766,21 @@ ABSTRACT_TYPE(/mob/living/critter)
 			drop_equipment()
 		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
+		reduce_lifeprocess_on_death()
 		return ..(gibbed)
+
+	proc/reduce_lifeprocess_on_death() //quit doing stuff when you're dead
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/canmove)
+		remove_lifeprocess(/datum/lifeprocess/disability)
+		remove_lifeprocess(/datum/lifeprocess/fire)
+		remove_lifeprocess(/datum/lifeprocess/hud)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/organs)
+		remove_lifeprocess(/datum/lifeprocess/sight)
+		remove_lifeprocess(/datum/lifeprocess/skin)
+		remove_lifeprocess(/datum/lifeprocess/statusupdate)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	proc/get_health_holder(var/assoc)
 		if (assoc in healthlist)
