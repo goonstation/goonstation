@@ -242,8 +242,8 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 			swapflowers(src.flower1, src.flower3)
 		qdel(reshuffle_cycle)
 	proc/swapflowers(f1,f2)
-			var/tempflower = f1
-			f1 = f2
-			f2 = tempflower
-			qdel(tempflower)
+		var/tempflower = f1
+		f1 = f2
+		f2 = tempflower
+		qdel(tempflower)
 
