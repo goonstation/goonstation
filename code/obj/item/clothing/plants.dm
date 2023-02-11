@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	paperitem.set_loc(new_bouquet.paperused)
 	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 	allocated_flower.set_loc(new_bouquet.flower1)
+	src.update_icon()
 	user.visible_message("[user] rolls up a [src] into a bouquet.", "You roll up the [src] into a bouquet.")
 
 /obj/item/clothing/head/flower/rafflesia
@@ -222,6 +223,7 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 			targetslot = src.flower2
 		W.set_loc(targetslot)
 		qdel(targetslot)
+		src.update_icon
 /obj/item/bouquet/attack_self(mob/user)
 	if (isnull(src.flower2))
 		return
@@ -247,5 +249,8 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	f2 = tempflower
 	qdel(tempflower)
 /obj/item/bouquet/update_icon()
-
+	src.overlays = null
+	src.item = null
+	src.item_state = null
+	src.icon_state = null
 
