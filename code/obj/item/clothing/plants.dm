@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower
-// hi flourish. Plant pot stuff for in future can go here i guess.
+	// hi flourish. Plant pot stuff for in future can go here i guess.
 	max_stack = 10 //this seems about right.
 	var/can_bouquet = FALSE
 	attackby(obj/item/W, mob/user)
