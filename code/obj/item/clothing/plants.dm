@@ -202,48 +202,50 @@ ABSTRACT_TYPE(/obj/item/bouquet)
 	var/flower2 = null
 	var/flower3 = null
 	var/hiddenitem = null
-	attackby(obj/item/W, mob/user)
-		// should give us back the paper and flowers when done with snipping tool
-		if (issnippingtool(W))
-			boutput(user, "<span class='notice'>You disassemble the [src].</span>")
-			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
-			qdel(src)
-		if (istype(W, /obj/item/clothing/head/flower))
-			var/obj/item/clothing/head/flower/dummy_flower = W
-			if (!dummy_flower.can_bouquet)
-				user.visible_message("This flower can't be turned into a bouquet!")
-				return
-			if (!isnull(src.flower3))
-				user.visible_message("This bouquet is full!")
-				return
-			// now we pick where it goes
-			var/targetslot = src.flower3
-			if (isnull(flower2))
-				targetslot = src.flower2
-			W.set_loc(targetslot)
-			qdel(targetslot)
-	attack_self(mob/user)
-		if (isnull(src.flower2))
+/obj/item/bouquet/attackby(obj/item/W, mob/user)
+	// should give us back the paper and flowers when done with snipping tool
+	if (issnippingtool(W))
+		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
+		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
+		qdel(src)
+	if (istype(W, /obj/item/clothing/head/flower))
+		var/obj/item/clothing/head/flower/dummy_flower = W
+		if (!dummy_flower.can_bouquet)
+			user.visible_message("This flower can't be turned into a bouquet!")
 			return
-		if (isnull(src.flower3))
-			swapflowers(src.flower1, src.flower2)
+		if (!isnull(src.flower3))
+			user.visible_message("This bouquet is full!")
 			return
-		// in order to reshuffle 3 flowers and get every possible arrangement, we can either:
-		// take the front one and put it at the back 123 -> 231 or 312
-		// or swap two 123 -> 213 or 132 or 321
-		// gonna make it random between the second method so that flower reshuffling is more random
-		// of course if you want it in an actual order just put them in in the right order silly
-		var/reshuffle_cycle = pick(1, 2, 3)
-		if (reshuffle_cycle == 1)
-			swapflowers(src.flower1, src.flower2)
-		else if (reshuffle_cycle == 2)
-			swapflowers(src.flower2, src.flower3)
-		else
-			swapflowers(src.flower1, src.flower3)
-		qdel(reshuffle_cycle)
-	proc/swapflowers(f1,f2)
-		var/tempflower = f1
-		f1 = f2
-		f2 = tempflower
-		qdel(tempflower)
+		// now we pick where it goes
+		var/targetslot = src.flower3
+		if (isnull(flower2))
+			targetslot = src.flower2
+		W.set_loc(targetslot)
+		qdel(targetslot)
+/obj/item/bouquet/attack_self(mob/user)
+	if (isnull(src.flower2))
+		return
+	if (isnull(src.flower3))
+		swapflowers(src.flower1, src.flower2)
+		return
+	// in order to reshuffle 3 flowers and get every possible arrangement, we can either:
+	// take the front one and put it at the back 123 -> 231 or 312
+	// or swap two 123 -> 213 or 132 or 321
+	// gonna make it random between the second method so that flower reshuffling is more random
+	// of course if you want it in an actual order just put them in in the right order silly
+	var/reshuffle_cycle = pick(1, 2, 3)
+	if (reshuffle_cycle == 1)
+		swapflowers(src.flower1, src.flower2)
+	else if (reshuffle_cycle == 2)
+		swapflowers(src.flower2, src.flower3)
+	else
+		swapflowers(src.flower1, src.flower3)
+	qdel(reshuffle_cycle)
+/obj/item/bouquet/proc/swapflowers(f1,f2)
+	var/tempflower = f1
+	f1 = f2
+	f2 = tempflower
+	qdel(tempflower)
+/obj/item/bouquet/update_icon()
+
 
