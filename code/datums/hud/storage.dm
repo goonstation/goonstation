@@ -97,7 +97,7 @@
 		if (!H || H.id != "boxes") return
 		if (usr)
 			var/obj/item/I = usr.equipped()
-			if (src.master && I && src.master.linked_item.loc == usr && src.master.check_can_hold(I)>0)
+			if (src.master && I && src.master.linked_item.loc == usr && src.master.check_can_hold(I) == STORAGE_CAN_HOLD)
 				sel.screen_loc = empty_obj_loc
 
 

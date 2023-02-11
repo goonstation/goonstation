@@ -70,7 +70,7 @@
 		return src.storage.get_all_contents()
 
 	proc/check_can_hold(atom/A)
-		return src.storage.check_can_hold(A)
+		return src.storage.check_can_hold(A) == STORAGE_CAN_HOLD
 
 /obj/item/storage/box
 	name = "box"

@@ -20,11 +20,6 @@
 	qdel(src.storage)
 	src.storage = null
 
-#define STORAGE_CAN_HOLD 1
-#define STORAGE_CANT_HOLD 0
-#define STORAGE_WONT_FIT -1
-#define STORAGE_IS_FULL -2
-
 /datum/storage
 	/// Types that can be held
 	var/list/can_hold = null

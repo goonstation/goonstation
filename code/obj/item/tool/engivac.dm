@@ -240,7 +240,7 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 		if (target.disposed)
 			break
 	if (!target.disposed) //If we get to here we've still got some left on the stack
-		if (held_toolbox.check_can_hold(target) > 0) // target can fit. check_can_hold returns 0 or lower for various errors
+		if (held_toolbox.check_can_hold(target) == STORAGE_CAN_HOLD) // target can fit
 			held_toolbox.add_contents(target)
 			succeeded = TRUE
 	return succeeded
