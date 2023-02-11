@@ -207,6 +207,8 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
+		. += src.storage?.check_capacity()
+
 		lastTooltipContent = .
 
 	MouseEntered(location, control, params)

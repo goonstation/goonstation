@@ -62,15 +62,6 @@
 	/// All items stored
 	var/list/stored_items = list()
 
-	// check
-	/*
-	buildTooltipContent()
-		. = ..()
-		var/list/L = get_contents()
-		. += "<br>Holding [length(L)]/[slots] objects"
-		lastTooltipContent = .
-	*/
-
 	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
 		..()
 		src.linked_item = storage_item
@@ -402,6 +393,10 @@
 		for (var/atom/A as anything in our_contents)
 			if (A.storage)
 				. += A.storage.get_all_contents()
+
+	// return outputtable capacity
+	proc/check_capacity()
+		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 	// emping storage emps everything inside
 	proc/storage_emp_act()

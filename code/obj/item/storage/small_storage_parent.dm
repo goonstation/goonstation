@@ -29,12 +29,6 @@
 	burn_possible = 1
 	health = 10
 
-	buildTooltipContent()
-		. = ..()
-		var/list/L = get_contents()
-		. += "<br>Holding [length(L)]/[slots] objects"
-		lastTooltipContent = .
-
 	New()
 		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
 		src.make_my_stuff()
