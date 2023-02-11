@@ -1,6 +1,27 @@
 
 (t)fri feb 10 23
 (u)LeahTheTech
+(p)12736
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The flock relay will now automatically realize when the flock reaches 500 compute. See minor changes for details.
+(+)The relay will appear as a ghostly outline at 300 compute, hovering around the centerpoint of the flock's feathertiles and growing more solid as the flock gains compute. Upon reaching 500 compute it will become fully real and activate in the usual way, destroying anything unfortunate enough to be caught underneath it.
+(u)Wisemonster
+(p)13020
+(e)🗺💅|A-Mapping, C-QoL
+(+)The space diner's parking lots now have atmos door shields
+(u)Kubius
+(p)13025
+(e)🆕🗺|C-Feature, A-Mapping
+(+)A familiar alien vessel has sufficiently fortified itself to reach the Nadir Extraction Site, albeit a bit worse for the wear. It's come to rest by the northern pit face.
+(u)Roddy
+(p)12960
+(e)💅🎩|C-QoL, A-Clothing
+(+)Adds in a Wedding Crate to the QM.
+(u)BatElite
+(p)12971
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Restored search and category filter functions to manufacturers
+(u)LeahTheTech
 (*)Reworked flock radio stun burst ability to be a point and click smaller AOE instead of a screen spanning one and increased the cooldown to 30s.
 (t)thu feb 09 23
 (u)aloe
