@@ -99,7 +99,7 @@
 		user.lastattacked = target
 		return
 
-	if (!safety && !istype(target, /obj/item/storage) && !istype(target, /obj/item/storage/secure))
+	if (!safety && !target.storage)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
 			return

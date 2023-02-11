@@ -715,7 +715,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
-		if (istype(target, /obj/item/storage)) return ..()
+		if (target.storage)
+			return ..()
 		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1190,7 +1191,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+				if (target.storage) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
@@ -1296,7 +1297,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+				if (target.storage) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")

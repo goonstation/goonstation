@@ -12,7 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -3338,15 +3338,15 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
 
 	secure()
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			src.loc.AddComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			src.stored.linked_item.AddComponent(/datum/component/legs/four)
 		else
 			src.loc.AddComponent(/datum/component/legs/six)
 
 	loosen()
 		var/datum/component/C
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			C = src.loc.GetComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			C = src.stored.linked_item.GetComponent(/datum/component/legs/four)
 		else
 			C = src.loc.GetComponent(/datum/component/legs/six)
 		if (C)

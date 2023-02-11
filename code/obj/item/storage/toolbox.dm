@@ -139,7 +139,7 @@
 		src.storage.add_contents(new picked(src))
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
 			for (var/i = 1 to 2)
-			src.storage.add_contents(new picked(src))
+				src.storage.add_contents(new picked(src))
 
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.

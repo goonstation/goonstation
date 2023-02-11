@@ -283,13 +283,11 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		for (var/I in A)
-			if (istype(I, /obj/item/storage))
-				. += get_cash_in_thing(I)
+		for (var/obj/item/I in A.storage?.get_all_contents())
 			if (istype(I, /obj/item/spacecash))
 				var/obj/item/spacecash/SC = I
 				. += SC.amount
-			if (istype(I, /obj/item/card/id))
+			else if (istype(I, /obj/item/card/id))
 				var/obj/item/card/id/ID = I
 				. += ID.amount
 

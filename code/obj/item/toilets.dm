@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/storage/toilet)
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
-	if (istype(W, /obj/item/storage))
+	if (W.storage)
 		return
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W

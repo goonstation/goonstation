@@ -741,7 +741,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1

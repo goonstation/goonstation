@@ -2041,12 +2041,12 @@
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
 				equipped = 1
 		if (slot_in_backpack)
-			if (src.back && istype(src.back, /obj/item/storage))
-				I.set_loc(src.back)
+			if (src.back?.storage)
+				src.back.storage.add_contents(I)
 				equipped = 1
 		if (slot_in_belt)
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				I.set_loc(src.belt)
+			if (src.belt?.storage)
+				src.belt.storage.add_contents(I)
 				equipped = 1
 
 	if (equipped)

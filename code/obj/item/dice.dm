@@ -145,7 +145,7 @@ var/list/rollList = list()
 			return 0
 		if (!src.can_have_pals || !Pal.can_have_pals)
 			return 0
-		if (istype(Pal.loc, /obj/item/storage))
+		if (Pal.stored)
 			return 0
 
 		src.dicePals += Pal
@@ -153,7 +153,7 @@ var/list/rollList = list()
 		if (Pal.dicePals.len)
 
 			for (var/obj/item/dice/D in Pal.dicePals)
-				if (istype(D.loc, /obj/item/storage))
+				if (D.stored)
 					Pal.dicePals -= D
 					continue
 				if (ismob(D.loc))

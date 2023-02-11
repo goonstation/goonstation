@@ -247,7 +247,7 @@
 					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
 
 				//If we're over an item that's stored in a container the user has equipped
-				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
+				if (src.z == 0 && src.stored?.linked_item.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
@@ -622,7 +622,7 @@
 
 		after_stack(O, user, added)
 
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
 /obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -803,11 +803,12 @@
 
 	if (. == 1)
 		if (istype(oldloc,/obj/item/storage))
-			var/obj/item/storage/S = oldloc
+			var/obj/item/storage/S = oldloc//
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
+
 	if (W.firesource)
 		if(src.material)
 			src.material.triggerTemp(src ,1500)

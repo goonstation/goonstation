@@ -129,7 +129,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
+		if (W.w_class > src.max_wclass || W.storage)
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 

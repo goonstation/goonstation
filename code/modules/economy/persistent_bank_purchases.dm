@@ -82,9 +82,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
-			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))
+			if (H.back?.storage && H.equip_if_possible(I, H.slot_in_backpack))
 				equipped = 1
-			else if (istype(H.belt, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_belt))
+			else if (H.belt?.storage && H.equip_if_possible(I, H.slot_in_belt))
 				equipped = 1
 			if (!equipped)
 				if (!H.l_store && H.equip_if_possible(I, H.slot_l_store))

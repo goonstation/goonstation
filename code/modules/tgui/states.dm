@@ -114,8 +114,10 @@
  * return UI_state The state of the UI.
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
-	if (istype(src_object.loc, /obj/item/storage)) // If the object is in a storage item, like a backpack.
-		return UI_CLOSE
+	if (istype(src_object, /obj/item))
+		var/obj/item/I = src_object
+		if (I.stored)  // If the object is in a storage item, like a backpack.
+			return UI_CLOSE
 
 	var/dist = min(GET_DIST(src_object, src), bounds_dist(src_object, src) / world.icon_size)
 

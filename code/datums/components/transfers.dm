@@ -104,7 +104,14 @@
 
 /datum/component/transfer_input/proc/handle_incoming(comsig_target, atom/movable/incoming)
 	if(is_permitted(incoming))
-		incoming.set_loc(parent)
+		if (istype(incoming, /obj/item))
+			var/obj/item/I = incoming
+			if (I.stored)
+				I.stored.transfer_stored_item(I, parent)
+			else
+				I.set_loc(parent)
+		else
+			incoming.set_loc(parent)
 		if (transfer_proc)
 			call(parent, transfer_proc)(incoming)
 		return TRUE
@@ -129,10 +136,10 @@
 		if (M.holding)
 			incoming = M.holding
 
-	if (istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
+	if (incoming.storage || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
-			if(length(incoming.contents))
+			if(incoming.storage || length(incoming.contents))
 				action = tgui_input_list(attacker, "What do you want to do with [incoming]?", "[parent]", list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP))
 			else
 				action = CONTAINER_CHOICE_PLACE
@@ -147,14 +154,14 @@
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
-			if (!length(incoming.contents)) // We check here too in case it changed between asking and them responding
+			if ((incoming.storage && !length(incoming.storage.get_contents())) || !length(incoming.contents)) // in case it changed between asking and them responding
 				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
 				return
 			if (istype(incoming, /obj/item/ore_scoop))
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
 			var/transfers = 0
-			for(var/obj/item/I in incoming)
+			for(var/obj/item/I in (incoming.storage?.get_contents() || incoming))
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 				transfers++
 			incoming.UpdateIcon()

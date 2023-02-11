@@ -77,8 +77,8 @@
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
 				if (src.receives_disk && ishuman(M))
-					if (istype(H.back, /obj/item/storage))
-						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
+					if (H.back?.storage)
+						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_all_contents()
 						if (D)
 							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
 							if (R)
