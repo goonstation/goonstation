@@ -169,7 +169,8 @@
 	w_class = W_CLASS_SMALL
 	slots = 6
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/handcuffs = 3,\
+	spawn_contents = list(/obj/item/handcuffs,\
+	/obj/item/handcuffs/guardbot = 2,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
 	/obj/item/instrument/whistle)
@@ -178,7 +179,7 @@
 		spawn_contents = list()
 
 /obj/item/storage/security_pouch/assistant
-	spawn_contents = list(/obj/item/handcuffs = 2,\
+	spawn_contents = list(/obj/item/handcuffs/guardbot = 2,\
 	/obj/item/device/flash = 2,\
 	/obj/item/instrument/whistle,\
 	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
@@ -191,7 +192,7 @@
 	w_class = W_CLASS_SMALL
 	slots = 5
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/handcuffs/ = 1,
+	spawn_contents = list(/obj/item/handcuffs/,
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart)
