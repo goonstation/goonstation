@@ -57,14 +57,14 @@ jobs:
       - name: Install i386 Architecture
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
 
       - name: Fetch cached i386 packages
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: libstdc++6:i386
-          version: latest
+          version: beepsky
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -113,14 +113,14 @@ jobs:
       - name: Install i386 Architecture
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
 
       - name: Fetch cached i386 packages
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: libstdc++6:i386
-          version: pyshit2
+          version: beepsky-pyshit2
 
       - name: Cache BYOND
         uses: actions/cache@v3
