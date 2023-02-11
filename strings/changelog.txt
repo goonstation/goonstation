@@ -1,5 +1,10 @@
 
 (t)fri feb 10 23
+(u)LeahTheTech
+(p)12736
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The flock relay will now automatically realize when the flock reaches 500 compute. See minor changes for details.
+(+)The relay will appear as a ghostly outline at 300 compute, hovering around the centerpoint of the flock's feathertiles and growing more solid as the flock gains compute. Upon reaching 500 compute it will become fully real and activate in the usual way, destroying anything unfortunate enough to be caught underneath it.
 (u)Wisemonster
 (p)13020
 (e)🗺💅|A-Mapping, C-QoL
