@@ -746,7 +746,7 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/process()
 	if (!src.relay_in_progress && !src.relay_finished)
-		if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST)
+		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
 			src.relay_in_progress = TRUE
 			src.center_marker.alpha = 0
 			for (var/turf/T in range(3, src.center_marker))
