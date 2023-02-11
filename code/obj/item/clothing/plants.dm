@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (!src.can_bouquet)
 		user.visible_message("This flower can't be turned into a bouquet!")
 		return
-	var/obj/item/bouquet/new_bouquet = new src.bouquet_type(user.loc)
+	var/obj/item/bouquet/new_bouquet = new
 	paperitem.set_loc(new_bouquet.paperused)
 	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 	allocated_flower.set_loc(new_bouquet.flower1)
