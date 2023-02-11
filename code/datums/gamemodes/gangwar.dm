@@ -651,6 +651,14 @@
 			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
 		if(getarea.gang_owners && getarea.gang_owners != user.mind.gang && !turftarget.tagged)
 			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
+			if (user.GetComponent(/datum/component/tracker_hud))
+				return
+			for (var/turf/T in getarea)
+				if (T.tagged)
+					user.AddComponent(/datum/component/tracker_hud/gang, T)
+					SPAWN(3 SECONDS)
+						var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
+						component.RemoveComponent()
 			return
 		if(getarea.being_captured)
 			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")

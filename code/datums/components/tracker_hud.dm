@@ -92,3 +92,6 @@
 
 /datum/component/tracker_hud/flock
 	color = "#15ccb4"
+
+/datum/component/tracker_hud/gang
+	color = "#5a6edd"
