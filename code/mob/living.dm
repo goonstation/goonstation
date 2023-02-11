@@ -126,7 +126,6 @@
 	can_lie = 1
 
 	var/const/singing_prefix = "%"
-	var/block_shots_when_dead = TRUE
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
@@ -332,10 +331,9 @@
 	return ..()
 
 /mob/living/projCanHit(datum/projectile/P)
-	if (!P) return FALSE
-	if (!src.block_shots_when_dead && isdead(src)) return FALSE
-	if (!src.lying || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || (src:lying && prob(P.hit_ground_chance))) return TRUE
-	return FALSE
+	if (!P) return 0
+	if (!src.lying || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || (src:lying && prob(P.hit_ground_chance))) return 1
+	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
 	target.Attackhand(src, params, location, control, origParams)
