@@ -118,20 +118,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		//first time they click with a storage, it gets dumped. second time container itself is added
-		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
-			var/obj/item/storage/S = I
-
-			if(istype(S, /obj/item/storage/secure))
-				var/obj/item/storage/secure/secS = S
+		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+			if(istype(I, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = I
 				if(secS.locked)
 					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
 					I.set_loc(src)
 					actions.interrupt(user, INTERRUPT_ACT)
 					return
-			for(var/obj/item/O in S)
-				O.set_loc(src)
-				S.hud.remove_object(O)
-			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			for(var/obj/item/O in I.storage.get_contents())
+				I.storage.transfer_stored_item(O, src)
+			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
 			return
 

@@ -104,30 +104,24 @@
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+	if (!R)
+		for (var/obj/item/device/radio/foo in traitor_mob.l_hand?.storage?.get_contents())
 			R = foo
-			loc = "in the [S.name] in your left hand"
+			loc = "in the [traitor_mob.l_hand.name] in your left hand"
 			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+	if (!R)
+		for (var/obj/item/device/radio/foo in traitor_mob.r_hand?.storage?.get_contents())
 			R = foo
-			loc = "in the [S.name] in your right hand"
+			loc = "in the [traitor_mob.r_hand.name] in your right hand"
 			break
-	if (!R && istype(traitor_mob.back, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/radio/foo in L)
+	if (!R)
+		for (var/obj/item/device/radio/foo in traitor_mob.back?.storage?.get_contents())
 			R = foo
-			loc = "in the [S.name] in your backpack"
+			loc = "in the [traitor_mob.back.name] in your backpack"
 			break
 		if(!R)
 			R = new /obj/item/device/radio/headset(traitor_mob)
-			loc = "in the [S.name] in your backpack"
+			loc = "in the [traitor_mob.back.name] in your backpack"
 			// Everything else failed and there's no room in the backpack either, oh no.
 			// I mean, we can't just drop a super-obvious uplink onto the floor. Hands might be full, too (Convair880).
 			if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
@@ -212,33 +206,25 @@
 		R = traitor_mob.r_hand
 		loc = "in your right hand"
 	else
-		if (istype(traitor_mob.l_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.l_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
+		if (!R)
+			for (var/obj/item/device/pda2/foo in traitor_mob.l_hand?.storage?.get_contents())
 				R = foo
-				loc = "in the [S.name] in your left hand"
+				loc = "in the [traitor_mob.l_hand.name] in your left hand"
 				break
-		if (istype(traitor_mob.r_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.r_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
+		if (!R)
+			for (var/obj/item/device/pda2/foo in traitor_mob.r_hand?.storage?.get_contents())
 				R = foo
-				loc = "in the [S.name] in your right hand"
+				loc = "in the [traitor_mob.r_hand.name] in your right hand"
 				break
-		if (istype(traitor_mob.back, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.back
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
+		if (!R)
+			for (var/obj/item/device/pda2/foo in traitor_mob.back?.storage?.get_contents())
 				R = foo
-				loc = "in the [S.name] on your back"
+				loc = "in the [traitor_mob.back.name] on your back"
 				break
-		if (istype(traitor_mob.belt, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.belt
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
+		if (!R)
+			for (var/obj/item/device/pda2/foo in traitor_mob.belt?.storage?.get_contents())
 				R = foo
-				loc = "in the [S.name] on your belt"
+				loc = "in the [traitor_mob.belt.name] on your belt"
 				break
 
 	if (!R) //They have no PDA. Make one!

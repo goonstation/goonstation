@@ -720,10 +720,9 @@
 			var/datum/hud/storage/hud = S.master
 			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
 
-	if (istype(over_object,/obj/item/storage) && over_object != src)
-		var/obj/item/storage/storage = over_object
-		if (istype(storage.loc, /turf))
-			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
+	if (over_object.storage && over_object != src)
+		if (istype(over_object.loc, /turf))
+			if (!(in_interact_range(src,user) && in_interact_range(over_object,user)))
 				return
 
 		src.pick_up_by(user)
@@ -731,7 +730,7 @@
 		if (succ)
 			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					storage.Attackby(src, user)
+					over_object.Attackby(src, user)
 			return
 
 	if (istype(S))

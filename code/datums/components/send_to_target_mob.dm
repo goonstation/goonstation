@@ -23,10 +23,8 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	if (ismob(I.loc))
 		var/mob/M2 = I.loc
 		M2.u_equip(I)
-	if (istype(I.loc, /obj/item/storage))
-		var/obj/item/storage/S_temp = I.loc
-		var/datum/hud/storage/H_temp = S_temp.hud
-		H_temp.remove_object(I)
+
+	I.stored?.transfer_stored_item(I, get_turf(M))
 
 	I.set_loc(get_turf(M))
 	if (teleport_effect)

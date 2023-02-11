@@ -378,7 +378,7 @@
 				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
-			var/obj/item/storage/mechanics/the_container = src.loc
+			var/obj/item/storage/mechanics/the_container = src.storage.linked_item
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
 				the_container.light_up()
 			return
@@ -3365,7 +3365,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (direction == null)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3386,7 +3386,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (!direction)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.storage.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3396,7 +3396,7 @@
 	/// set our glide size in case it was changed
 	/// check if we are in a container or space and stop in that case
 	proc/movement_stuff()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.storage.linked_item
 		if (!walk_check(S))
 			stop_moving()
 			return
@@ -3417,7 +3417,7 @@
 		return TRUE
 
 	proc/stop_moving()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.storage.linked_item
 		if (!istype(S))
 			return
 		walk(S, 0)
