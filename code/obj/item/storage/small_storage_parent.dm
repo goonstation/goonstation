@@ -8,25 +8,16 @@
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	/// Types that will be accepted
-	var/list/can_hold = null//new/list()
-	/// Exact types that will be accepted, in addition to can_hold
+	// variables here are copied from /datum/storage
+	var/list/can_hold = null
 	var/list/can_hold_exact = null
-	/// If can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
 	var/in_list_or_max = 0
 	var/datum/hud/storage/hud
-	/// Don't print a visible message on use.
 	var/sneaky = 0
-	/// Prevent accessing storage when clicked in pocket
-	var/does_not_open_in_pocket = 1
-	/// Maximum  w_class that can be held
+	var/opens_in_pocket = FALSE
 	var/max_wclass = W_CLASS_SMALL
-	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
 	var/slots = 7
-	/// Initial contents when created
 	var/list/spawn_contents = list()
-	/// specify if storage should grab other items on turf
-	var/grab_stuff_on_spawn = FALSE
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
@@ -44,9 +35,8 @@
 		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
-	// TODO: initalize
 	New()
-		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
 		src.make_my_stuff()
 		..()
 

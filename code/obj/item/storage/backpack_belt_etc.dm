@@ -12,7 +12,7 @@
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
@@ -484,7 +484,7 @@
 	w_class = W_CLASS_BULKY
 	slots = 5
 	max_wclass = W_CLASS_NORMAL
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
@@ -546,7 +546,7 @@
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	max_wclass = W_CLASS_SMALL
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5

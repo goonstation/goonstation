@@ -73398,7 +73398,6 @@
 	},
 /obj/item/storage/wall{
 	dir = 4;
-	grab_stuff_on_spawn = 1;
 	pixel_x = -31
 	},
 /turf/simulated/floor/plating,

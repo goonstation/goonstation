@@ -2,6 +2,8 @@
 /* ---------------------STORAGE DATUM FOR BIBLES--------------------- */
 /* ================================================================== */
 
+var/global/list/bible_contents = list()
+
 /datum/storage/bible
 	// stored item list and bible_contents can be read interchangeably
 

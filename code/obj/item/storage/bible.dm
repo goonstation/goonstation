@@ -1,5 +1,4 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/global/list/bible_contents = list()
 
 /obj/item/bible
 	name = "bible"

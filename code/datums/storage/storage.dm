@@ -25,22 +25,20 @@
 	var/list/can_hold = null
 	/// Exact types that can be held, in addition to can_hold
 	var/list/can_hold_exact = null
-	///
-	var/in_list_or_max = 0
+	/// If can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
+	var/in_list_or_max = FALSE
 	/// Storage hud attached to the storage
-	var/datum/hud/storage/hud
+	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
-	var/sneaky = 0
+	var/sneaky = FALSE
 	/// Prevent accessing storage when clicked in pocket
-	var/does_not_open_in_pocket = TRUE
+	var/opens_in_pocket = FALSE
 	/// Maximum w_class that can be held
 	var/max_wclass = W_CLASS_SMALL
 	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
 	var/slots = 7
-	/// specify if storage should grab other items on turf
-	var/grab_stuff_on_spawn = FALSE
 	/// Does moving the linked storage item cause anything to happen to stored items
-	var/move_triggered = 1
+	var/move_triggered = TRUE
 	/// The storage item linked to this datum
 	var/atom/linked_item = null
 	/// All items stored
@@ -55,7 +53,7 @@
 		lastTooltipContent = .
 	*/
 
-	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, does_not_open_in_pocket)
+	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
 		..()
 		src.linked_item = storage_item
 		src.hud = new (src)
@@ -64,7 +62,7 @@
 		src.max_wclass = max_wclass
 		src.slots = slots
 		src.sneaky = sneaky
-		src.does_not_open_in_pocket = does_not_open_in_pocket
+		src.opens_in_pocket = opens_in_pocket
 
 		//RegisterSignal(src.linked_item, COMSIG_ATOM_ENTERED, .proc/storage_item_entered)
 		//RegisterSignal(parent, COMSIG_OBJ_MOVE_TRIGGER, .proc/move_trigger) // CHECK
@@ -73,15 +71,6 @@
 		//SPAWN(1 DECI SECOND)
 		if (length(spawn_contents))
 			src.make_my_stuff(spawn_contents)
-
-		if (src.grab_stuff_on_spawn)
-			for (var/obj/item/I in src.linked_item.loc)
-				if (I == src)
-					continue
-				if (I.anchored)
-					continue
-				if (check_can_hold(I) == STORAGE_CAN_HOLD)
-					src.add_contents(I)
 
 	disposing()
 		for (var/atom/A as anything in src.stored_items)
@@ -157,7 +146,7 @@
 							W.storage.transfer_stored_item(A, src.linked_item, TRUE)
 					return
 			// show pocket storage
-			if(!src.does_not_open_in_pocket)
+			if(src.opens_in_pocket)
 				src.storage_item_attack_hand(user)
 			// give info message
 			switch (canhold)
@@ -196,7 +185,7 @@
 		if (!src.sneaky)
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
 		// check if its in your inventory
-		if (src.linked_item.loc == user && (!src.does_not_open_in_pocket || src.linked_item == user.l_hand || src.linked_item == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
+		if (src.linked_item.loc == user && (src.opens_in_pocket || src.linked_item == user.l_hand || src.linked_item == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
 			// check if storage is attached as an arm
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

@@ -11,7 +11,7 @@
 	w_class = W_CLASS_TINY
 	max_wclass = W_CLASS_TINY
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	can_hold = list(/obj/item/ammo)
 
 	assault_rifle
@@ -110,7 +110,7 @@
 	w_class = W_CLASS_TINY
 	slots = 6
 	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 
 	frag
 		name = "frag grenade pouch"
@@ -157,7 +157,7 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
 	/obj/item/reagent_containers/mender/burn/high_capacity)
 
@@ -168,7 +168,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/handcuffs = 3,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
@@ -190,7 +190,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
@@ -207,7 +207,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/old_grenade/emp = 5)
 
 /obj/item/storage/tactical_grenade_pouch
@@ -217,7 +217,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 7
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/chem_grenade/incendiary = 2,\
 	/obj/item/chem_grenade/shock,\
 	/obj/item/old_grenade/smoke = 1,\
@@ -232,7 +232,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
 	/obj/item/clothing/ears/earmuffs/earplugs)
 
@@ -243,7 +243,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
 
 /obj/item/storage/banana_grenade_pouch
@@ -253,7 +253,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 7 //bonus two slots for the banana grenade kit
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 /obj/item/storage/beartrap_pouch
@@ -262,7 +262,7 @@
 	icon_state = "ammopouch-large"
 	w_class = W_CLASS_SMALL
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/item/beartrap = 4)
 
 /obj/item/storage/landmine_pouch
@@ -271,7 +271,7 @@
 	icon_state = "ammopouch-large"
 	w_class = W_CLASS_SMALL
 	slots = 3
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(/obj/random_item_spawner/landmine/surplus = 3)
 
 /obj/item/storage/pouch/highcap
@@ -280,7 +280,7 @@
 	icon_state = "ammopouch-quad"
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
 
 /obj/item/storage/sawfly_pouch
@@ -290,7 +290,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_in_pocket = TRUE
 	spawn_contents = list(
 		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
