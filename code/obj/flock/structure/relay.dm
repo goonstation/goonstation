@@ -26,9 +26,10 @@ TYPEINFO(/obj/flock_structure/relay)
 	bound_y = -64
 	hitTwitch = FALSE
 	show_in_tutorial = TRUE
-	tutorial_desc = "Your goal and purpose. Unlocked at 500 compute, you must then defend it while it charges before unleashing The Signal."
+	tutorial_desc = "Your goal and purpose. The Relay becomes closer to being real as you gain more compute, eventually becoming solid at 500 compute. You must then defend it while it charges before unleashing The Signal, and if you fail your consciousness will be destroyed."
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
+	passthrough = FALSE
 	var/conversion_radius = 1
 	var/max_conv_radius = 15 // increase back to 100 later if possible. 100 worked fine on local but not as much on live with a lot of people
 	var/list/turfs_to_convert = null

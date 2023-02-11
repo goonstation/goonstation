@@ -16736,6 +16736,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "bnW" = (
@@ -16851,6 +16857,12 @@
 	id = "hangar_spacediner1";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
@@ -18607,6 +18619,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "gLC" = (
@@ -19197,6 +19215,12 @@
 	id = "hangar_spacediner2";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
@@ -22446,6 +22470,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "rtw" = (
@@ -24228,6 +24258,12 @@
 	id = "hangar_spacediner2";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)

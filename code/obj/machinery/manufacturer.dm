@@ -66,6 +66,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	// Production options
 	var/search = null
+	var/category = null
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
 	var/list/download = list() //! Options gained from scanned blueprints
@@ -470,6 +472,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if (istext(src.search) && !findtext(A.name, src.search, 1, null))
 				continue
+			else if (istext(src.category) && src.category != A.category)
+				continue
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
 			if(delete_allowed && src.download.Find(A))
@@ -518,6 +522,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		dat += "</div><div id='info'>"
 		dat += build_material_list(user)
 
+		//Search
+		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
+		//Filter
+		dat += " <A href='?src=\ref[src];category=1'>(Filter: \"[istext(src.category) ? html_encode(src.category) : "----"]\")</A><HR>"
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
@@ -663,6 +671,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if (href_list["repeat"])
 				src.repeat = !src.repeat
+
+			if (href_list["search"])
+				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
+				if (length(src.search) == 0)
+					src.search = null
+
+			if (href_list["category"])
+				var/selection = input("Select which category to filter by.","Manufacturing Unit") as null|anything in list("REMOVE FILTER") + src.categories
+				src.category = ((selection == "REMOVE FILTER") ? null : selection)
 
 			if (href_list["continue"])
 				if (length(src.queue) < 1)
