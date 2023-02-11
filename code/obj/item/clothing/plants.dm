@@ -192,10 +192,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	can_bouquet = TRUE
 
 // I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
-ABSTRACT_TYPE(/obj/item/bouquet)
 /obj/item/bouquet
-	name = "empty bouquet"
-	desc = "If you're seeing this, something's wrong"
+	name = "bouquet"
+	desc = "A lovely arrangement of flowers."
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/paperused = null
