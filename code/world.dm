@@ -571,6 +571,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
 	initialize_gallery_manager()
+	initialize_mail_system()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")

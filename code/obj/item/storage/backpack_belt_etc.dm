@@ -471,6 +471,52 @@
 	icon_state = "sat_turtle_green"
 	item_state = "sat_turtle_green"
 
+/obj/item/storage/backpack/satchel/flintlock_pistol_satchel
+	name = "leather satchel"
+	desc = "A thick, wearable container made of leather, suitable for storing ammunition and other essential equipment for the operation of flintlock weaponry."
+	icon_state = "satchelbr"
+	item_state = "satchelbr"
+	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock,
+						/obj/item/gun/kinetic/single_action/flintlock,
+						/obj/item/ammo/bullets/flintlock)
+
+/obj/item/storage/backpack/satchel/flintlock_rifle_satchel
+	name = "flintlock rifle ammunition pouch"
+	desc = "A small leather pouch, suitable for storing ammunition and other essential equipment for the operation of flintlock weaponry. It has room on it's strap to sling a flintlock rifle over."
+	icon_state = "flintlock_satchel"
+	item_state = "flintlock_satchel"
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/gun/kinetic/single_action/flintlock/rifle)
+	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock/rifle, /obj/item/ammo/bullets/flintlock/rifle)
+	slots = 4
+
+	New()
+		. = ..()
+		icon_state = initial(icon_state) + "-1"
+		item_state = initial(item_state) + "-1"
+
+	Entered(Obj, OldLoc)
+		..()
+		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+			icon_state = initial(icon_state) + "-1"
+			item_state = initial(item_state) + "-1"
+
+			if (istype(src.loc, /mob))
+				var/mob/parent = src.loc
+				parent.update_clothing()
+
+			return
+
+	Exited(Obj, newloc)
+		..()
+		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
+
+			if (istype(src.loc, /mob))
+				var/mob/parent = src.loc
+				parent.update_clothing()
+
 /* -------------------- Fanny Packs -------------------- */
 
 /obj/item/storage/fanny

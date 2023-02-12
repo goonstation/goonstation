@@ -1278,6 +1278,12 @@
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "adY" = (
@@ -1399,6 +1405,12 @@
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aev" = (
@@ -1426,6 +1438,12 @@
 	dir = 4;
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -1516,6 +1534,12 @@
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeV" = (
@@ -1524,6 +1548,12 @@
 	icon_state = "bdoorright1";
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -1621,6 +1651,12 @@
 	icon_state = "bdoorright1";
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -16700,6 +16736,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "bnW" = (
@@ -16815,6 +16857,12 @@
 	id = "hangar_spacediner1";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
@@ -18571,6 +18619,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "gLC" = (
@@ -19161,6 +19215,12 @@
 	id = "hangar_spacediner2";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
@@ -22410,6 +22470,12 @@
 	layer = 4;
 	name = "pod bay door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "rtw" = (
@@ -24192,6 +24258,12 @@
 	id = "hangar_spacediner2";
 	layer = 4;
 	name = "pod bay door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)

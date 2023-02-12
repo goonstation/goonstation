@@ -652,6 +652,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
 
+/datum/supply_packs/wedding
+	name = "Wedding Supplies"
+	desc = "Your very own DIY wedding! Chaplain not included."
+	contains = list(/obj/item/clothing/under/gimmick/wedding_dress = 2,
+					/obj/item/clothing/head/veil = 2,
+					/obj/item/clothing/under/misc/fancy_vest = 2,
+					/obj/item/clothing/suit/tuxedo_jacket = 2,
+					/obj/item/clothing/gloves/ring = 2,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
+	cost = 10000
+	containertype = /obj/storage/crate
+	containername = "Wedding Supplies"
+
 /datum/supply_packs/glowsticks
 	name = "Emergency Glowsticks Crate - 4 pack"
 	desc = "x4 Glowsticks Box (28 glowsticks total)"

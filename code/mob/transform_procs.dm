@@ -889,7 +889,7 @@ var/respawn_arena_enabled = 0
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind
-
+		ticker.mode.Agimmicks |= O.mind
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
 		qdel(src)

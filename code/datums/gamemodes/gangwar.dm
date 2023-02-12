@@ -39,8 +39,8 @@
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
-	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
-	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
+	var/obj/item/device/radio/headset/gang/announcer_radio
+	var/datum/generic_radio_source/announcer_source
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
 	var/shuttle_called = FALSE
@@ -52,6 +52,9 @@
 	boutput(world, "<B>Gang members are antagonists and can kill or be killed!</B>")
 
 /datum/game_mode/gang/pre_setup()
+	announcer_radio = new /obj/item/device/radio/headset/gang()
+	announcer_source = new /datum/generic_radio_source()
+
 	var/num_players = 0
 	for(var/client/C)
 		var/mob/new_player/player = C.mob

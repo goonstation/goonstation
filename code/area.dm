@@ -373,18 +373,25 @@ TYPEINFO(/area)
 	proc/calculate_structure_value()
 		var/value = 0
 		var/list/atom/our_contents = src.contents.Copy()
-		for (var/turf/simulated/wall/W in our_contents)
-			value++
-		for (var/turf/simulated/floor/F in our_contents)
-			if (F.broken || F.burnt)
-				continue
-			value++
-		for (var/obj/machinery/light/L in our_contents)
-			if (L.current_lamp.light_status != 0) //See LIGHT_OK
-				continue
-			value++
-		for (var/obj/window/W in our_contents)
-			value++
+
+		for (var/atom/A as anything in our_contents)
+			if (length(flocks))
+				if (isfeathertile(A) || istype(A, /obj/machinery/light/flock) || istype(A, /obj/window/auto/feather))
+					continue
+			if (istype(A, /turf/simulated/wall))
+				value++
+			else if (istype(A, /turf/simulated/floor))
+				var/turf/simulated/floor/F = A
+				if (F.broken || F.burnt)
+					continue
+				value++
+			else if (istype(A, /obj/machinery/light))
+				var/obj/machinery/light/L = A
+				if (L.current_lamp.light_status != 0) //See LIGHT_OK
+					continue
+				value++
+			else if (istype(A, /obj/window))
+				value++
 
 		return value
 
@@ -395,6 +402,8 @@ TYPEINFO(/area)
 		var/list/dirtyStuff = list(/obj/decal/cleanable,/obj/fluid)
 
 		for (var/turf/simulated/T in src.contents)
+			if (isfeathertile(T))
+				continue
 			dirty = 0
 			total_count++
 			for (var/thing in T.contents)

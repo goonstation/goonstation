@@ -2505,7 +2505,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "afS" = (
 /obj/cable{
@@ -3662,7 +3662,7 @@
 	name = "Chamber Two Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "aiW" = (
 /obj/item/device/radio/intercom/medical{

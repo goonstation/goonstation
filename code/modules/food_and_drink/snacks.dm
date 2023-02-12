@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly plants. Good for healthy eating."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "salad"
-	needfork = 1
+	needfork = TRUE
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_refreshed")
@@ -955,7 +955,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "breakfast"
 	bites_left = 4
 	heal_amt = 4
-	needfork = 1
+	needfork = TRUE
 	food_effects = list("food_energized_big")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
@@ -976,7 +976,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "swedish meatballs"
 	desc = "It's even got a little rice-paper swedish flag in it. How cute."
 	icon_state = "swede_mball"
-	needfork = 1
+	needfork = TRUE
 	bites_left = 6
 	heal_amt = 2
 	food_color ="#663300"
@@ -1151,7 +1151,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
 	var/random_name = TRUE
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 1
 	bites_left = 3
 	food_effects = list("food_brute","food_burn")
@@ -1202,7 +1202,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "boneless spaghetti"
 	desc = "Eh, this isn't very good at all..."
 	icon_state = "spag-dish"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
@@ -1221,7 +1221,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti with tomato sauce"
 	desc = "Eh, the sauce tastes pretty bland..."
 	icon_state = "spag-dish"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1256,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Pasta in a creamy, cheesy sauce."
 	icon_state = "spag-alfredo"
 	random_name = FALSE
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1266,23 +1266,41 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
 	icon_state = "spag-dish-spicy"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
 	initial_reagents = list("capsaicin"=50,"omnizine"=5,"synaptizine"=5)
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
+	/// Is this pizza under high security? (ie will it burn non security members who eat it)
+	var/secured = FALSE
 
 	New()
 		. = ..()
-		name = "[random_spaghetti_name()] arrabbiata"
+		if (istype(get_area(src), /area/station/security))
+			src.secured = TRUE // var is also set in a subtype, hence the seperated checks
+
+		if (src.secured)
+			src.name = "[random_spaghetti_name()] arrabbrigata"
+		else
+			src.name = "[random_spaghetti_name()] arrabbiata"
+
+	heal(mob/M)
+		if (!(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_reagent("milk"))
+			random_burn_damage(M, rand(30, 40))
+			boutput(M, "<span class='alert'>You're not trained to resist this level of spice! No wonder they kept [src] locked up!</span>")
+		else
+			. = ..()
+
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security
+	secured = TRUE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 	name = "spaghetti and meatballs"
 	desc = "That's better!"
 	icon_state = "spag-meatball"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1299,7 +1317,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Spaghetti AND fried chicken? You must be dreaming."
 	icon_state = "spag-chickenparm"
 	random_name = FALSE
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1312,7 +1330,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Fettucine alfredo with grilled chicken on top."
 	icon_state = "spag-c-alfredo"
 	random_name = FALSE
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1325,7 +1343,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Layers of saucy, cheesy goodness."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "lasagna"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1337,7 +1355,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
 	icon_state = "pizzaghetti"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 50
@@ -1523,7 +1541,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. This one is quite different."
 	icon_state = "mushroom-poison"
 	food_color = "#AF2B2B"
-	bites_left = 1
 	heal_amt = 3
 
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
@@ -1531,14 +1548,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. It's slightly more vibrant than usual."
 	icon_state = "mushroom-magic"
 	food_color = "#A76933"
-	bites_left = 1
 	heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It doesn't smell of anything."
 	icon_state = "mushroom-M3"
-	bites_left = 1
 	heal_amt = 0
 
 
@@ -2062,7 +2077,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "omelette"
 	bites_left = 3
 	heal_amt = 4
-	needfork = 1
+	needfork = TRUE
 	food_color = "#FFCC00"
 	initial_volume = 10
 	initial_reagents = list("cholesterol"=1)
@@ -2110,7 +2125,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "mashedpotatoes"
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
+	needfork = TRUE
 	needspoon = 1
 	food_color = "#FFFFFF"
 	initial_volume = 50
@@ -2124,7 +2139,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "mashedbrains"
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
+	needfork = TRUE
 	needspoon = 1
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
@@ -2148,7 +2163,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "meatloaf"
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
+	needfork = TRUE
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up_big")
@@ -2371,7 +2386,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly egg. Good for eating eggs."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eggsalad"
-	needfork = 1
+	needfork = TRUE
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_bad_breath")
@@ -2382,7 +2397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "haggis"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "haggis"
-	needfork = 1
+	needfork = TRUE
 	var/isbutt = 0
 	bites_left = 6
 	heal_amt = 1
@@ -2805,7 +2820,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "tandoorichicken"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
@@ -2817,7 +2832,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A rich Indian curry full of potatoes, carrots, and peas."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "potatocurry"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 15
@@ -2829,7 +2844,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "coconutcurry"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 15
@@ -2841,7 +2856,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "chickenpapplecurry"
-	needfork = 1
+	needfork = TRUE
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 25

@@ -899,6 +899,8 @@
 	flying = 1
 	is_pet = FALSE
 	generic = 0
+	var/cleanable_type = /obj/decal/cleanable/blood
+	var/what_is_sucked_out = "blood"
 
 	New()
 		UpdateParticles(new/particles/bloody_aura, "bloodaura")
@@ -929,7 +931,7 @@
 		else
 			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
+			boutput(M, "<span class='combat'><b>You are forced to the ground by \the [src]!</b></span>")
 			random_brute_damage(M, rand(0,5))
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
@@ -937,15 +939,17 @@
 			return
 
 	CritterAttack(mob/M)
+		if(!what_is_sucked_out)
+			return
 		playsound(src.loc, 'sound/effects/ghost2.ogg', 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
 			if(prob(66))
 				random_brute_damage(M, rand(5,10))
 				take_bleeding_damage(M, null, rand(10,35), DAMAGE_CRUSH, 5, get_turf(M))
-				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
+				boutput(M, "<span class='combat'><b>You feel [what_is_sucked_out] getting drawn out through your skin!</b></span>")
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
+				boutput(M, "<span class='combat'>You feel uncomfortable. Your [what_is_sucked_out] seeks to escape you.</span>")
 				M.changeStatus("slowed", 3 SECONDS, 3)
 
 		SPAWN(0.5 SECONDS)
@@ -973,10 +977,10 @@
 		return
 
 	ai_think()
-		if(!locate(/obj/decal/cleanable/blood) in src.loc)
+		if(!locate(cleanable_type) in src.loc)
 			if(prob(50))
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
-				make_cleanable( /obj/decal/cleanable/blood,loc)
+				make_cleanable(cleanable_type, loc)
 		return ..()
 
 	CritterDeath()
@@ -984,8 +988,14 @@
 			return
 		..()
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
-		new /obj/decal/cleanable/blood(src.loc)
+		new cleanable_type(src.loc)
 		qdel(src)
+
+/obj/critter/bloodling/ketchupling
+	name = "Ketchupling"
+	desc = "A force of pure tomato and evil. They shy away from that which is holy."
+	cleanable_type = /obj/decal/cleanable/tomatosplat
+	what_is_sucked_out = "ketchup"
 
 /obj/critter/blobman
 	name = "mutant"
