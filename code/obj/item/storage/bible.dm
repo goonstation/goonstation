@@ -12,7 +12,6 @@
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
-	var/storage_max_wclass = W_CLASS_SMALL
 	var/mob/affecting = null
 	var/heal_amt = 10
 
