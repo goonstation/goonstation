@@ -8,7 +8,6 @@ var/global/list/bible_contents = list()
 	// stored item list and bible_contents can be read interchangeably
 
 	add_contents(obj/item/I, mob/user = usr, visible = TRUE)
-		I.dropped()
 		for_by_tcl(bible, /obj/item/bible)
 			bible.storage.stored_items += I
 			bible.storage.hud.add_item(I, user)

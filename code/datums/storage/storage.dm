@@ -73,11 +73,8 @@
 		src.sneaky = sneaky
 		src.opens_if_worn = opens_if_worn
 
-		//RegisterSignal(src.linked_item, COMSIG_ATOM_ENTERED, .proc/storage_item_entered)
-		//RegisterSignal(parent, COMSIG_OBJ_MOVE_TRIGGER, .proc/move_trigger) // CHECK
 		RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, .proc/storage_item_on_drop)
 
-		//SPAWN(1 DECI SECOND)
 		if (length(spawn_contents))
 			src.make_my_stuff(spawn_contents)
 
@@ -93,7 +90,7 @@
 
 		src.linked_item = null
 		src.stored_items = null
-		//UnregisterSignal(src.linked_item, COMSIG_ATOM_ENTERED)
+
 		UnregisterSignal(src.linked_item, COMSIG_ITEM_DROPPED)
 
 		..()
@@ -104,9 +101,6 @@
 		for (var/obj/O in src.get_contents())
 			if (O.move_triggered)
 				O.move_trigger(M, kindof)
-
-	//proc/storage_item_entered(atom/source, atom/movable/AM, atom/oldLoc)
-	//	src.add_contents(AM)
 
 	proc/make_my_stuff(list/spawn_contents)
 		if (!length(spawn_contents))
@@ -207,7 +201,7 @@
 			animate_storage_rustle(src.linked_item)
 			return
 		else
-			// ???
+			// make sure only the user can see the storage
 			for (var/mob/M as anything in src.hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
@@ -348,7 +342,6 @@
 
 	// when adding an item in
 	proc/add_contents(obj/item/I, mob/user = usr, visible = TRUE) // user arg optional unless usr is null and it needs to be a mob
-		//I.dropped()
 		if (user?.equipped() == I)
 			user.u_equip(I)
 		src.stored_items += I
