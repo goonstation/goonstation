@@ -1295,7 +1295,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			name = "Table Parts"
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/table_wood.dmi'
-		icon_state = "table_parts"
+			icon_state = "table_parts"
 		dresser
 			recipe_id = "dresser"
 			craftedType = /obj/storage/closet/dresser
