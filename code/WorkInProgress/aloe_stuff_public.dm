@@ -85,7 +85,8 @@
 	spawn_contents = list(/obj/item/reagent_containers/patch/LSD,
 						  /obj/item/reagent_containers/patch/lsd_bee,
 						  /obj/item/cloth/handkerchief/nt,
-						  /obj/item/aiModule/hologram_expansion/elden
+						  /obj/item/aiModule/hologram_expansion/elden,
+						  /obj/item/straw/fast,
 	)
 
 /obj/table/wood/auto/desk/aloe

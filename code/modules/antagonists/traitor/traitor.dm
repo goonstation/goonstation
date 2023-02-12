@@ -82,7 +82,7 @@
 		#else
 		objective_set_path = pick(typesof(/datum/objective_set/traitor))
 		#endif
-		new objective_set_path(src.owner)
+		new objective_set_path(src.owner, src)
 
 	do_popup(override)
 		if (!override) // Display a different popup depending on the type of uplink we got

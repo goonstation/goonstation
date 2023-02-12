@@ -287,6 +287,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
 
+/datum/projectile/special/spreader/buckshot_burst/foamdarts
+	name = "foam dart"
+	sname = "foam dart"
+	spread_angle_variance = 22.5
+	speed_max = 32
+	speed_min = 20
+	cost = 6
+	casing = null
+	pellets_to_fire = 6
+	spread_projectile_type = /datum/projectile/bullet/foamdart
+	shot_sound = 'sound/effects/syringeproj.ogg'
 
 // Really crazy shit
 
@@ -932,6 +943,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/typetospawn = null
 	var/hasspawned = null
 	var/hit_sound = null
+	///Do we get our icon from typetospawn?
+	var/use_type_icon = FALSE
+
+	New()
+		..()
+		if (!src.use_type_icon)
+			return
+		var/atom/thing = src.typetospawn
+		src.icon = initial(thing.icon)
+		src.icon_state = initial(thing.icon_state)
 
 	on_hit(atom/hit, direction, projectile)
 		if(src.hit_sound)
@@ -1138,3 +1159,20 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(O)
 		src.emit_chems(T, O)
 		src.emit_gas(T, 1)
+
+/datum/projectile/special/spawner/handcuff
+	name = "handcuffs"
+	typetospawn = /obj/item/handcuffs/guardbot //ziptie cuffs
+	use_type_icon = TRUE
+	shot_sound = null
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		if (ishuman(hit))
+			var/obj/item/handcuffs/cuffs = new src.typetospawn
+			cuffs.try_cuff(hit, instant = TRUE)
+			src.hasspawned = TRUE
+		else
+			..()
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		src.on_hit(target, O = O)

@@ -30,10 +30,13 @@
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
+	var/mob/living/intangible/flock/selected_by = null
+
 	var/glow_color = "#26ffe6a2"
 
 	var/ai_paused = FALSE
 	var/wander_count = 0
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = null
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
@@ -86,12 +89,23 @@
 		L.shock(src, 5000)
 		qdel(grab) //in case they don't fall over from our shock
 
+/mob/living/critter/flock/drone/gib()
+	qdel(src.cell)
+	..()
+
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
 		if (controller)
 			src.release_control_abrupt()
 		flock_speak(null, "Connection to drone [src.real_name] lost.", src.flock)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	qdel(src.cell)
+	src.cell = null
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -133,6 +147,12 @@
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
 	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
+	if (src.selected_by)
+		if (src.selected_by != pilot)
+			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
+			return
+		var/datum/abilityHolder/flockmind/AH = src.selected_by.abilityHolder
+		AH.drone_controller.cast(src)
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -173,6 +193,10 @@
 		if (flocktrace.dying)
 			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 			src.updateOverlaysClient(src.client)
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -227,6 +251,8 @@
 		controller = null
 		src.update_health_icon()
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
+		var/datum/component/tracker_hud/flock/tracker = src.GetComponent(/datum/component/tracker_hud/flock)
+		tracker?.RemoveComponent()
 	if(!src.flock)
 		src.dormantize()
 
@@ -429,9 +455,9 @@
 	if(istype(F) && F.flock && F.flock == src.flock)
 		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
-			holder.drone_controller.cast(src) //deselect it
-			F.targeting_ability = null
-		src.take_control(usr)
+			holder.drone_controller.cast(src, FALSE) //deselect it
+		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are for preventing message spam
+			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -450,6 +476,9 @@
 	if (isdead(src) || isnull(src.flock))
 		return
 	if (!isflockmob(usr))
+		return
+	if (src.selected_by)
+		boutput(usr, "<span class='alert'>This drone is receiving a command!</span>")
 		return
 	var/mob/living/intangible/flock/flock_controller = usr
 	if (istype(usr, /mob/living/critter/flock))
@@ -784,6 +813,11 @@
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /mob/living/critter/flock/drone/death(var/gibbed)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		AH.drone_controller.cast(src)
+
 	if(src.controller)
 		src.release_control()
 	if(!src.dormant)
@@ -940,11 +974,16 @@
 	else
 		src.ai = new /datum/aiHolder/flock/drone(src)
 
+/mob/living/critter/flock/drone/emp_act()
+	SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cell.max_charge/2)
+
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/flock_grip // an ordinary hand but with some modified messages
+	attack_strength_modifier = 0.2
+	can_gun_grab = FALSE
 	var/attack_hit_prob = 50
 	var/grab_mob_hit_prob = 30
 	var/dam_low = 4 // 2 is human baseline
@@ -1178,6 +1217,10 @@
 /datum/limb/gun/flock_stunner/New()
 	..()
 	src.cell.set_loc(src.holder.holder)
+	var/mob/living/critter/flock/drone/drone = src.holder.holder
+	if (istype(drone))
+		drone.cell = src.cell
+	src.holder.holder.contents |= cell
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()

@@ -23,6 +23,8 @@
 	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
+	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
+		src.icon_state = "baba"
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	if (!F)
@@ -204,10 +206,10 @@
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
-	var/mob/picked = pick(candidates)
+	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing(LOG_ADMIN, picked.key, "respawned as a Flocktrace under [src.real_name].")
+	log_respawn_event(picked, "Flocktrace", src.real_name)
 
 	picked.make_flocktrace(get_turf(src), src.flock, free)
 

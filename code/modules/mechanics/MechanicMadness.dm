@@ -287,9 +287,9 @@
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	density = 1
 	anchored= 1
 	level=1
@@ -1246,6 +1246,7 @@
 		if(length(inp))
 			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
+			tooltip_rebuild = 1
 			boutput(user, "Signal set to [inp]")
 			return 1
 		return 0
@@ -2128,7 +2129,7 @@
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return 0
 		LIGHT_UP_HOUSING
-		if(random)
+		if(random && length(signals))
 			input.signal = pick(signals)
 		else if(!current_index || current_index > length(signals) || !length(signals))
 			return
@@ -2623,9 +2624,9 @@
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
-	icon_state = "comp_button"
-	var/icon_up = "comp_button"
-	var/icon_down = "comp_button1"
+	icon_state = "button_comp_button_unpressed"
+	var/icon_up = "button_comp_button_unpressed"
+	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
 
@@ -2652,11 +2653,11 @@
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
-					icon_up = "comp_switch"
-					icon_down = "comp_switch2"
+					icon_up = "button_comp_switch_unpressed"
+					icon_down = "button_comp_switch_pressed"
 				else
-					icon_up = "comp_button"
-					icon_down = "comp_button2"
+					icon_up = "button_comp_button_unpressed"
+					icon_down = "button_comp_button_pressed"
 				icon_state = icon_up
 				src.set_loc(target)
 		return
@@ -2834,6 +2835,7 @@
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
 			if(Gun.canshoot(null))
@@ -3109,6 +3111,94 @@
 				return
 		if(. == .)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+
+
+/obj/item/mechanics/counter
+	name = "Counting Component"
+	desc = "Count things! Adds (change) to the current value and outputs it when triggered. You can change the amount to change by, the starting value, and reset it as well."
+	icon_state = "comp_arith"
+	var/startingValue = 0
+	var/currentValue = 0
+	var/change = 1
+
+	var/mode = "rng"
+	get_desc()
+		. = ..() // Please don't remove this again, thanks.
+		. += "<br><span class='notice'>Current value: [currentValue] | Changes by [(change >= 0 ? "+" : "-")][change] | Starting value: [startingValue]</span>"
+	secure()
+		icon_state = "comp_arith1"
+	loosen()
+		icon_state = "comp_arith"
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Current Value",.proc/setCurrentValueManually)
+
+	proc/setStartingValueManually(obj/item/W as obj, mob/user as mob)
+		var/input = input("Set starting value to what?", "Starting value", startingValue) as num
+		if(!in_interact_range(src, user) || user.stat || isnull(input))
+			return 0
+		startingValue = input
+		tooltip_rebuild = 1
+		return 1
+
+	proc/setChangeManually(obj/item/W as obj, mob/user as mob)
+		var/input = input("Set Change to what?", "Change", change) as num
+		if(!in_interact_range(src, user) || user.stat || isnull(input))
+			return 0
+		change = input
+		tooltip_rebuild = 1
+		return 1
+
+	proc/setCurrentValueManually(obj/item/W as obj, mob/user as mob)
+		var/input = input("Set current value to what?", "Current value", currentValue) as num
+		if(!in_interact_range(src, user) || user.stat || isnull(input))
+			return 0
+		currentValue = input
+		tooltip_rebuild = 1
+		return 1
+
+
+	proc/setStartingValue(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if (!isnull(text2num_safe(input.signal)))
+			startingValue = text2num_safe(input.signal)
+			tooltip_rebuild = 1
+	proc/setChange(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if (!isnull(text2num_safe(input.signal)))
+			change = text2num_safe(input.signal)
+			tooltip_rebuild = 1
+	proc/resetCounter(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		currentValue = startingValue
+		tooltip_rebuild = 1
+		. = currentValue
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/doImmediateChange(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		if (!isnull(text2num_safe(input.signal)))
+			LIGHT_UP_HOUSING
+			currentValue += text2num_safe(input.signal)
+			. = currentValue
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/doCounting()
+		currentValue += change
+		. = currentValue
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
 
 /obj/item/mechanics/association
 	name = "Association Component"

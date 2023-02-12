@@ -319,7 +319,7 @@ mob/new_player
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (istype(ticker.mode, /datum/game_mode/assday))
@@ -669,19 +669,12 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
-
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						//Another one I need input on
 						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
-						{
 							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
-						}
-						else{
+						else
 							bad_type = pick(ticker.mode.latejoin_antag_roles)
-						}
-						}
-
-
 					else
 						bad_type = ROLE_TRAITOR
 
@@ -697,10 +690,15 @@ a.latejoin-card:hover {
 		if(new_character?.client)
 			new_character.client.loadResources()
 
-
-
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
+
+#ifdef SECRETS_ENABLED
+		if(new_character.ckey == "cursedkatey")
+			new_character.curse_katey()
+			return
+#endif
+
 		return new_character
 
 	Move()
@@ -736,14 +734,12 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
-				traitor.special_role = ROLE_CHANGELING
-				objective_set_path = /datum/objective_set/changeling
-				traitormob.make_changeling()
+				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_VAMPIRE)
-				traitor.special_role = ROLE_VAMPIRE
-				objective_set_path = /datum/objective_set/vampire
-				traitormob.make_vampire()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRESTLER)
 				traitor.special_role = ROLE_WRESTLER
@@ -760,9 +756,8 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_WEREWOLF)
-				traitor.special_role = ROLE_WEREWOLF
-				objective_set_path = /datum/objective_set/werewolf
-				traitormob.make_werewolf()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
 				traitor.special_role = ROLE_WRAITH
@@ -892,7 +887,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -916,12 +911,13 @@ a.latejoin-card:hover {
 			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
-
-			src.mind.dnr = 1
-			src.mind.joined_observer=1
+			ticker.minds |= src.mind
+			src.mind.get_player()?.joined_observer = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()
+
+			respawn_controller.subscribeNewRespawnee(src.ckey)
 
 			qdel(src)
 

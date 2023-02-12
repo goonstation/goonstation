@@ -15851,7 +15851,7 @@
 /area/station/garden/owlery)
 "aKN" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -16089,7 +16089,7 @@
 /area/station/crew_quarters/quarters)
 "aLq" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
@@ -17213,7 +17213,7 @@
 /area/station/crew_quarters/quarters)
 "aNY" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/football,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -24446,7 +24446,7 @@
 /area/station/hallway/primary/central)
 "bdF" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},

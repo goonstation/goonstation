@@ -251,6 +251,9 @@ client/proc/toggle_ghost_respawns()
 	set desc = "Toggle local atags on or off"
 	ADMIN_ONLY
 
+	_toggle_atags()
+
+/client/proc/_toggle_atags()
 	src.holder.see_atags = !src.holder.see_atags
 	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
 
@@ -434,12 +437,12 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
 	ADMIN_ONLY
-	if(!src.holder.animtoggle)
-		src.holder.animtoggle = 1
-		boutput(src, "Atom interaction options toggled on.")
-	else
-		src.holder.animtoggle = 0
+	if(!src.holder.disable_atom_verbs)
+		src.holder.disable_atom_verbs = 1
 		boutput(src, "Atom interaction options toggled off.")
+	else
+		src.holder.disable_atom_verbs = 0
+		boutput(src, "Atom interaction options toggled on.")
 
 /client/proc/toggle_view_range()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
