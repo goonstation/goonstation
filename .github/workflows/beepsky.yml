@@ -120,7 +120,7 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: libstdc++6:i386
-          version: beepsky-pyshit2
+          version: beepsky
 
       - name: Cache BYOND
         uses: actions/cache@v3
