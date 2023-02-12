@@ -363,3 +363,6 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/suture = 1,
 		/obj/item/device/analyzer/healthanalyzer = 1,
 	)
+
+/obj/item/storage/wall/ak_fake
+	spawn_contents = list(/obj/item/bang_gun/ak47)

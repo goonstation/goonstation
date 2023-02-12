@@ -73389,14 +73389,11 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "kLC" = (
-/obj/item/bang_gun/ak47{
-	layer = 2
-	},
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/item/storage/wall{
+/obj/item/storage/wall/ak_fake{
 	dir = 4;
 	pixel_x = -31
 	},
