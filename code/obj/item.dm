@@ -720,7 +720,7 @@
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
-			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
+			over_object = hud.master.linked_item //If dragged into backpack HUD, change over_object to the backpack
 
 	if (over_object.storage && over_object != src)
 		if (istype(over_object.loc, /turf))
