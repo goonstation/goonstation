@@ -878,12 +878,21 @@ obj/item/assembly/radio_horn/receive_signal()
 
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
+
+ABSTRACT_TYPE(/datum/pipeshotrecipe)
 /datum/pipeshotrecipe
 	var/thingsneeded = null
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
 	var/craftname = null
 	var/success = FALSE
+	var/allow_subtypes = TRUE
+
+	proc/check_match(obj/item/craftingitem)
+		if(allow_subtypes)
+			. = istype(craftingitem, accepteditem)
+		else
+			. = craftingitem.type == accepteditem
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 
@@ -891,6 +900,14 @@ obj/item/assembly/radio_horn/receive_signal()
 			//the checks for if an item is actually allowed are local to the recipie, since they can vary
 			var/consumed = min(src.thingsneeded, craftingitem.amount)
 			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
+
+			//consume material- proc handles deleting
+			var/obj/item/crafting_piece = craftingitem.split_stack(consumed)
+			if(crafting_piece)
+				crafting_piece.set_loc(frame)
+			else
+				user.u_equip(craftingitem)
+				craftingitem.set_loc(frame)
 
 			if (thingsneeded > 0)//craft successful, but they'll need more
 				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
@@ -900,8 +917,8 @@ obj/item/assembly/radio_horn/receive_signal()
 				user.put_in_hand_or_drop(shot)
 				qdel(frame)
 
-				//consume material- proc handles deleting
-			craftingitem.change_stack_amount(-consumed)
+			. = TRUE
+
 /datum/pipeshotrecipe/plasglass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/plasglass
@@ -909,37 +926,60 @@ obj/item/assembly/radio_horn/receive_signal()
 	craftname = "shard"
 	var/matid = "plasmaglass"
 
+	check_match(obj/item/craftingitem)
+		. = ..()
+		if(. && matid != craftingitem.material.mat_id)
+			. = FALSE
+
 	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 		if(matid == craftingitem.material.mat_id)
-			..() //call parent, have them run the typecheck
+			. = ..() //call parent, have them run the typecheck
 
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
 	accepteditem = /obj/item/raw_material/scrap_metal
 	craftname = "scrap chunk"
+
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/glass/
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
+
 /obj/item/assembly/pipehulls
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
-
+	flags = NOSPLASH
+	var/static/list/datum/pipeshotrecipe/recipes_list = list()
 	var/datum/pipeshotrecipe/recipe = null
+
+	New()
+		..()
+		create_reagents(80)
+		if(!length(recipes_list))
+			for(var/recipe_type in concrete_typesof(/datum/pipeshotrecipe))
+				recipes_list += new recipe_type
+
+	attack_self(mob/user as mob)
+		if (length(contents) || src.reagents.total_volume)
+			if(tgui_alert(user, "Pour out the [src]?", "Empty hulls", list("Yes", "No")) != "Yes")
+				return
+			boutput(user, "<span class='notice'>The contents inside spill out!</span>")
+			for(var/obj/item in contents)
+				item.set_loc(get_turf(user))
+			if(src.reagents.total_volume)
+				src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume)
+			recipe = null
 
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
-			if (istype(W, /obj/item/raw_material/shard))
-				if(W.material.mat_id == "plasmaglass")
-					recipe = new/datum/pipeshotrecipe/plasglass
-				else
-					recipe = new/datum/pipeshotrecipe/glass
-			if (istype(W, /obj/item/raw_material/scrap_metal))
-				recipe = new/datum/pipeshotrecipe/scrap
-		if(recipe) //probably a better way, but it works well enough
-			recipe.craftwith(W, src, user)
+			for(var/datum/pipeshotrecipe/R in recipes_list)
+				if(R.check_match(W))
+					recipe = new R.type()
+					break
+		if(recipe?.craftwith(W, src, user))
+			return //don't bang objects together unless they are wrong...
 		..()
 

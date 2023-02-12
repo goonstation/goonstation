@@ -1922,3 +1922,27 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
 				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
 		return ..(target, start, user)
+
+/obj/item/gun/energy/dazzler
+	name = "dazzler"
+	icon_state = "taser" // wtb 1 sprite
+	item_state = "taser"
+	uses_multiple_icon_states = 1
+	force = 1
+	cell_type = /obj/item/ammo/power_cell/med_power
+	desc = "The Five Points Armory Dazzler Prototype, an experimental weapon that produces a cohesive electrical charge designed to disorient and slowdown a target. It can even shoot through windows!"
+	muzzle_flash = "muzzle_flash_bluezap"
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "taser[ratio]"
+			return
+		..()

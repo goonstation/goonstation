@@ -267,7 +267,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -679,7 +679,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1))
+		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -688,7 +688,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 				return
 			else
 				return ..()
-		else if (iswrenchingtool(W))
+		else if (iswrenchingtool(W) && user.a_intent == "harm")
 			if (src.status == 1)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return

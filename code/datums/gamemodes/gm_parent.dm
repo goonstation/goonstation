@@ -46,8 +46,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/process()
 	if (spy_market)
 		spy_market.process()
+	#ifndef NO_SHUTTLE_CALLS
 	if (shuttle_available && shuttle_auto_call_time)
 		process_auto_shuttle_call()
+	#endif
 
 /datum/game_mode/proc/process_auto_shuttle_call()
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)
@@ -367,8 +369,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 				src.spy_market.update_bounty_readouts()
 
 		if (ROLE_WEREWOLF)
-			objective_set_path = /datum/objective_set/werewolf
-			antag.current.make_werewolf()
+			antag.add_antagonist(ROLE_WEREWOLF)
+			do_objectives = FALSE
 
 		if (ROLE_ARCFIEND)
 			antag.add_antagonist(ROLE_ARCFIEND)
@@ -393,7 +395,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", "flock", ROLE_CHANGELING)
 	for(var/i = 1 to pick(2, 3))
 		possible_modes.Remove(pick(possible_modes))
 

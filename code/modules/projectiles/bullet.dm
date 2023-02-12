@@ -528,31 +528,61 @@ toxic - poisons
 
 //0.58
 /datum/projectile/bullet/flintlock
-	name = "bullet"
-	damage = 100
-	damage_type = D_PIERCING
+	name = "lead ball"
+	icon_state = "bullet"
+	damage = 40
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/flintlock
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
+	hit_ground_chance = 50
 	casing = null
 	impact_image_state = "bhole-small"
 
-	on_hit(atom/hit, dirflag)
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			if(power > 40)
-#ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-#endif
-			if(power > 80)
+			if(proj.power > 30)
+				M.changeStatus("slowed", 3 SECONDS)
+				M.changeStatus("weakened", 2 SECONDS)
+			if(proj.power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 3, 2, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 		..()
+
+	rifle
+		damage = 70
+		impact_image_state = "bhole-large"
+
+	mortar
+		name = "mortar grenade"
+		icon_state = "mortar"
+		damage = 10 // The explosion should deal most of the damage.
+		impact_image_state = "bhole-large"
+		damage_type = D_KINETIC
+		hit_type = DAMAGE_BLUNT
+
+		on_hit(atom/hit, dirflag, obj/projectile/proj)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+
+				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+
+				if(!M.stat)
+					M.emote("scream")
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+				SPAWN(0.5 SECONDS) // Wait until the target is at rest before exploding.
+					explosion_new(proj, get_turf(hit), 4, 1.75)
+			else
+				explosion_new(proj, get_turf(hit), 4, 1.75)
+			..()
+
+		on_max_range_die(obj/projectile/O)
+			explosion_new(O, get_turf(O), 4, 1.75)
 
 //0.72
 /datum/projectile/bullet/a12

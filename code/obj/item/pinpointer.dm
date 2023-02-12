@@ -235,6 +235,14 @@ TYPEINFO(/obj/item/pinpointer)
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
 
+/obj/item/pinpointer/gold_bee
+	name = "pinpointer (Gold Bee Statue)"
+	desc = "Points in the direction of the Gold Bee Statue."
+	icon_state = "disk_pinoff"
+	icon_type = "disk"
+	target_criteria = /obj/gold_bee
+	hudarrow_color = "#e1940d"
+
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"

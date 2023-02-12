@@ -48,7 +48,7 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
 				name = "Drone [mode.agent_radiofreq]"
-			else if (istype(ticker.mode, /datum/game_mode/flock))
+			else if (length(flocks))
 				name = "Flockdrone"
 			else
 				//Make them suffer with an overly cute name

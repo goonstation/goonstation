@@ -141,7 +141,7 @@
 	src.text += "extended containment, but it will become increasingly more powerful if allowed to consume human blood. If caught, it must be terminated."
 
 /datum/intercept_text/proc/build_flock(correct_mob)
-	src.text += {"<BR><BR>An anomalous radio entity has been detected by long range sensors in your sector. This entity is likely a Flockmind. From
-				 previous reports, it's believed that it will attempt to use your station's resources to build a massive superstructure to transmit a
-				 radio signal, which is harmful to the station and crew. Its Flock may be indirectly aggressive but it could become a threat at any
-				 time."}
+	src.text += {"<BR><BR>An anomalous radio entity has been detected by long range sensors in your sector. Its goal is unclear, but from previous
+				 reports, it's believed that it will attempt to collect your station's resources through the use of swarms of drones. This entity is
+				 also believed to have a remarkable influence over radio devices, so caution around trusted technology is highly advised. It's unclear
+				 how aggressive the entity actually is, but extreme reservation must be taken."}
