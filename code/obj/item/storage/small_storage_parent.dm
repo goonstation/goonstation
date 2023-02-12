@@ -188,17 +188,16 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (target == loc)
 			return
-		if (!src.contents.len)
+		if (!src.storage.get_contents())
 			return
 		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
 			return
-		var/obj/item/I = pick(src.contents)
+		var/obj/item/I = pick(src.storage.get_contents())
 		if (!I)
 			return
 
-		I.set_loc(get_turf(src.loc))
+		src.storage.transfer_stored_item(I, get_turf(src.loc))
 		I.dropped(user)
-		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 

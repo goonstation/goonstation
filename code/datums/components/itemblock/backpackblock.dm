@@ -17,9 +17,8 @@
 	if (!I)
 		return
 	var/turf/target = locate(M.x + rand(-4,4), M.y+rand(-4,4), M.z)
-	I.set_loc(M.loc)
+	S.storage?.transfer_stored_item(I, M.loc)
 	I.dropped(M)
-	S.hud.remove_item(I)
 	I.layer = initial(I.layer)
 	src.updateblock() //has to happen before throw starts
 	I.throw_at(target, 4, 1)
