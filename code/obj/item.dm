@@ -642,7 +642,7 @@
 
 	params = params2list(params)
 
-	if (isliving(over_object) && isliving(usr) && !istype(src,/obj/item/storage)) //pickup action
+	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
@@ -660,12 +660,12 @@
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
 
-		var/is_storage = istype(over_object,/obj/item/storage)
+		var/is_storage = over_object.storage
 		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
@@ -675,7 +675,7 @@
 				try_equip_to_inventory_object(usr, over_object, params)
 
 		else if (isobj(over_object) && !src.check_valid_stack(over_object))
-			if (src.loc == usr || istype(src.loc,/obj/item/storage))
+			if (src.loc == usr || src.stored)
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
 						usr.click(over_object, params, src_location, over_control)
@@ -751,10 +751,12 @@
 
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
-	var/oldloc = src.loc
+	var/atom/was_stored = src.stored?.linked_item
 
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
+
+	was_stored?.storage.transfer_stored_item(src, get_turf(src))
 
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
@@ -803,11 +805,8 @@
 		user.show_text("This item is anchored to the floor!", "blue")
 		.= 0
 
-	if (. == 1)
-		if (istype(oldloc,/obj/item/storage))
-			var/obj/item/storage/S = oldloc//
-			//S.hud.remove_item(src)
-			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
+	if (. == FALSE && was_stored)
+		was_stored.storage.add_contents(src, visible = FALSE)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 

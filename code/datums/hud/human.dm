@@ -341,7 +341,7 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
@@ -400,7 +400,7 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
