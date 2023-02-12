@@ -10,7 +10,7 @@
 
 	var/started = FALSE
 	///Pity respawn max
-	var/max_tries = 3
+	var/max_tries = 2
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
 

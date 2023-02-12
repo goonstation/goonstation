@@ -1,4 +1,6 @@
-
+(t)sun feb 12 23
+(u)LeahTheTech
+(+)Flockminds now have one less pity respawn (3 -> 2 lives aka one actual respawn).
 (t)fri feb 10 23
 (u)LeahTheTech
 (p)12736
