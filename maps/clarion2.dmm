@@ -636,14 +636,25 @@
 /area/station/engine/monitoring)
 "cu" = (
 /obj/table/auto,
-/obj/item/peripheral/network/radio/locked{
-	pixel_y = 9
+/obj/item/motherboard{
+	pixel_y = 12;
+	pixel_x = -7
 	},
-/obj/item/peripheral/network/powernet_card{
-	pixel_y = 4
+/obj/item/device/flash{
+	pixel_y = 12;
+	pixel_x = 6
 	},
-/obj/item/peripheral/printer{
-	pixel_y = -2
+/obj/item/device/multitool{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/screwdriver{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/disk/data/fixed_disk{
+	pixel_y = -1;
+	pixel_x = -6
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -661,6 +672,12 @@
 	dir = 1
 	},
 /area/station/quartermaster/refinery)
+"cz" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "cA" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -1307,6 +1324,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/news_office)
+"fk" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "fl" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/brig/south_side{
@@ -1326,6 +1355,15 @@
 	},
 /turf/space,
 /area/space)
+"fq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/chem_heater,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "fr" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -2230,20 +2268,6 @@
 	name = "Security South Hall";
 	do_not_irradiate = 0
 	})
-"jv" = (
-/obj/table/auto,
-/obj/item/screwdriver,
-/obj/item/disk/data/fixed_disk,
-/obj/item/disk/data/floppy/computer3boot,
-/obj/item/disk/data/floppy/read_only/network_progs,
-/obj/item/disk/data/floppy/read_only/security_progs,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/disk/data/floppy/read_only/medical_progs,
-/obj/item/disk/data/floppy/read_only/terminal_os,
-/obj/item/peripheral/printer,
-/obj/item/device/flash,
-/turf/simulated/floor/grime,
-/area/space)
 "jw" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
@@ -2279,6 +2303,17 @@
 "jE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
+"jG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/chem_master{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "jJ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -2314,6 +2349,15 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"jP" = (
+/obj/machinery/chem_heater,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "jQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -2525,6 +2569,14 @@
 	dir = 6
 	},
 /area/station/teleporter)
+"kT" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/glass_recycler{
+	pixel_y = 10;
+	pixel_x = -1
+	},
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "kU" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/red,
@@ -3287,6 +3339,17 @@
 	dir = 10
 	},
 /area/station/science/hall)
+"nT" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "nU" = (
 /obj/grille/catwalk/cross{
 	dir = 5
@@ -3380,6 +3443,33 @@
 	})
 "og" = (
 /obj/rack,
+/obj/item/peripheral/card_scanner{
+	pixel_y = 8;
+	pixel_x = 2
+	},
+/obj/item/peripheral/drive/cart_reader{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/peripheral/printer{
+	pixel_y = 4;
+	pixel_x = 2
+	},
+/obj/item/peripheral/drive{
+	pixel_y = 2;
+	pixel_x = -3
+	},
+/obj/item/peripheral/network/powernet_card{
+	pixel_x = 2
+	},
+/obj/item/peripheral/network/radio/locked{
+	pixel_y = -2;
+	pixel_x = -3
+	},
+/obj/item/peripheral/sound_card{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "oh" = (
@@ -3523,17 +3613,6 @@
 "oN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
-"oO" = (
-/obj/table/auto,
-/obj/item/peripheral/drive/cart_reader,
-/obj/item/peripheral/drive{
-	pixel_y = 4
-	},
-/obj/item/peripheral/sound_card{
-	pixel_y = 7
-	},
-/turf/simulated/floor/grey/blackgrime/other,
-/area/space)
 "oR" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
@@ -4573,6 +4652,10 @@
 "tE" = (
 /turf/simulated/floor/black,
 /area/station/quartermaster/cargobay)
+"tG" = (
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "tH" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -4684,6 +4767,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "uv" = (
@@ -4863,6 +4947,15 @@
 /obj/fitness/stacklifter,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"vq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "vr" = (
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -5150,6 +5243,10 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"wA" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "wC" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -5546,32 +5643,6 @@
 "yi" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"yl" = (
-/obj/table/auto,
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/disk/data/cartridge/atmos{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/disk/data/cartridge{
-	desc = "A programmable data cartridge for portable microcomputers.";
-	name = "EEPROM Cart"
-	},
-/obj/item/device/audio_log,
-/obj/item/peripheral/card_scanner,
-/obj/item/peripheral/card_scanner,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/item/device/multitool{
-	pixel_x = -7
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "ym" = (
 /turf/simulated/floor/blackwhite{
 	dir = 8
@@ -5768,6 +5839,7 @@
 /area/station/medical/staff)
 "yS" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "yT" = (
@@ -6114,6 +6186,10 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/yellow,
 /area/station/hangar/qm)
+"Ap" = (
+/obj/stool/chair/office/purple,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "Aq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
@@ -6660,6 +6736,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
+"CP" = (
+/obj/cabinet/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "CU" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/brig/south_side{
@@ -7054,6 +7134,16 @@
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
+"EI" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "EK" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
 /turf/simulated/floor/red,
@@ -7916,6 +8006,30 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"Ie" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox{
+	pixel_y = 16;
+	pixel_x = 3
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_y = 7;
+	pixel_x = 3
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = -14;
+	pixel_y = 16
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = -14;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "Ig" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/blackwhite/corner{
@@ -8696,6 +8810,7 @@
 /area/station/solar/west)
 "Lc" = (
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/airlock/pyro/sci_alt,
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/station/science/lab)
 "Le" = (
@@ -10017,23 +10132,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/chapel/sanctuary)
-"QO" = (
-/obj/table/auto,
-/obj/item/peripheral/network/radio/locked{
-	pixel_y = 9
-	},
-/obj/item/peripheral/network/powernet_card{
-	pixel_y = 4
-	},
-/obj/item/peripheral/printer{
-	pixel_y = -2
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "QR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
@@ -10884,7 +10982,7 @@
 /area/station/engine/core/nuclear)
 "Ut" = (
 /obj/machinery/drainage,
-/obj/stool/chair/office/blue{
+/obj/stool/chair/office/purple{
 	dir = 1
 	},
 /turf/simulated/floor/engine,
@@ -10906,6 +11004,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"Uy" = (
+/obj/cabinet/chemistry2,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "UA" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -11569,6 +11671,43 @@
 /turf/simulated/floor/black,
 /area/station/hangar/main)
 "WX" = (
+/obj/rack,
+/obj/item/disk/data/floppy/computer3boot{
+	pixel_y = 8;
+	pixel_x = 7
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/disk/data/floppy/read_only/security_progs{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/disk/data/floppy/read_only/medical_progs{
+	pixel_x = 7
+	},
+/obj/item/disk/data/floppy/read_only/terminal_os{
+	pixel_x = -6
+	},
+/obj/item/disk/data/cartridge/atmos{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/disk/data/cartridge{
+	desc = "A programmable data cartridge for portable microcomputers.";
+	name = "EEPROM Cart";
+	pixel_y = -1;
+	pixel_x = 1
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_y = -1;
+	pixel_x = 9
+	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -11690,6 +11829,10 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/sec_foyer)
+"XI" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "XJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
@@ -11733,6 +11876,15 @@
 	name = "Telescience Lab";
 	icon_state = "telelab"
 	})
+"XS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "XT" = (
 /obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
@@ -42963,10 +43115,10 @@ qF
 qF
 qF
 qF
-QO
-oO
-jv
-yl
+qF
+qF
+qF
+qF
 qF
 qF
 qF
@@ -47448,13 +47600,13 @@ ut
 rj
 GI
 WV
+vq
+jG
+XS
+fq
 WV
 WV
-WV
-WV
-WV
-WV
-WV
+kT
 YT
 ec
 ec
@@ -47756,7 +47908,7 @@ WV
 WV
 WV
 WV
-WV
+cz
 hW
 ec
 ec
@@ -48051,14 +48203,14 @@ Is
 Uw
 rn
 GI
+CP
 WV
 WV
+tG
+tG
 WV
 WV
-WV
-WV
-WV
-WV
+Ap
 YE
 ec
 ec
@@ -48353,11 +48505,11 @@ GI
 GI
 GI
 GI
+Uy
 WV
 WV
-WV
-WV
-WV
+Ie
+tG
 WV
 WV
 WV
@@ -48958,13 +49110,13 @@ wx
 wx
 OH
 WV
-WV
-WV
-WV
-WV
-WV
-WV
-WV
+nT
+fk
+EI
+jP
+wA
+XI
+XI
 YT
 ec
 ec
