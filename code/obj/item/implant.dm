@@ -510,6 +510,7 @@ THROWING DARTS
 			else if (H.mind in ticker.mode:revolutionaries)
 				H.TakeDamage("chest", 1, 1, 0)
 				H.changeStatus("weakened", 1 SECOND)
+				H.setStatus("De-revving")
 				H.force_laydown_standup()
 				H.emote("scream")
 				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
@@ -524,6 +525,7 @@ THROWING DARTS
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
 					H.changeStatus("newcause", 5 SECONDS)
+					H.delStatus("derevving")
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
@@ -533,7 +535,7 @@ THROWING DARTS
 
 					ticker.mode:remove_revolutionary(H.mind)
 				else
-					if (prob(30))
+					if (prob(30) && H.hasStatus("derevving"))
 						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
 						playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
 						H.emote("twitch_v")
