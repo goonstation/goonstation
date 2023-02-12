@@ -114,18 +114,19 @@
 	icon_opened = "fire-open"
 
 	make_my_stuff()
-		..()
-		if (prob(80))
-			src.storage.add_contents(new /obj/item/extinguisher(src))
-		if (prob(50))
-			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter(src))
-		if (prob(30))
-			src.storage.add_contents(new /obj/item/clothing/suit/fire(src))
-			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
-		if (prob(10))
-			src.storage.add_contents(new /obj/item/storage/firstaid/fire(src))
-		if (prob(5))
-			src.storage.add_contents(new /obj/item/storage/toolbox/emergency(src))
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(80))
+				new /obj/item/extinguisher(src)
+			if (prob(50))
+				new /obj/item/clothing/head/helmet/firefighter(src)
+			if (prob(30))
+				new /obj/item/clothing/suit/fire(src)
+				new /obj/item/clothing/mask/gas/emergency(src)
+			if (prob(10))
+				new /obj/item/storage/firstaid/fire(src)
+			if (prob(5))
+				new /obj/item/storage/toolbox/emergency(src)
+			return 1
 
 /obj/storage/closet/janitor
 	name = "custodial supplies closet"
