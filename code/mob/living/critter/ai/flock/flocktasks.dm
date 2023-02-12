@@ -607,7 +607,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner)) // flock can only see /obj/item/storage
-		if(length(I.storage.get_contents()) && I.loc != holder.owner && !I.opens_in_pocket)
+		if(length(I.storage.get_contents()) && I.loc != holder.owner && !I.opens_if_worn)
 			. += I
 
 

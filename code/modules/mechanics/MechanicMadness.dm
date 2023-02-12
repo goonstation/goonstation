@@ -94,7 +94,7 @@
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
 				return
-			src.opens_in_pocket=!src.open
+			src.opens_if_worn=!src.open
 			src.open=!src.open
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
 			if(!src.open)

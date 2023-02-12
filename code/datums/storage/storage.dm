@@ -24,12 +24,12 @@
 // -Storage datums on clothing items function just like backpacks
 
 // add storage to an item
-/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_in_pocket = FALSE)
+/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
+	src.storage = new storage_type(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_if_worn)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -49,8 +49,8 @@
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
 	var/sneaky = FALSE
-	/// Prevent accessing storage when clicked in pocket
-	var/opens_in_pocket = FALSE
+	/// Prevent accessing storage when clicked when worn, ex. in pocket
+	var/opens_if_worn = FALSE
 	/// Maximum w_class that can be held
 	var/max_wclass = W_CLASS_SMALL
 	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
@@ -62,7 +62,7 @@
 	/// All items stored
 	var/list/stored_items = list()
 
-	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
+	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_if_worn)
 		..()
 		src.linked_item = storage_item
 		src.hud = new (src)
@@ -71,7 +71,7 @@
 		src.max_wclass = max_wclass
 		src.slots = slots
 		src.sneaky = sneaky
-		src.opens_in_pocket = opens_in_pocket
+		src.opens_if_worn = opens_if_worn
 
 		//RegisterSignal(src.linked_item, COMSIG_ATOM_ENTERED, .proc/storage_item_entered)
 		//RegisterSignal(parent, COMSIG_OBJ_MOVE_TRIGGER, .proc/move_trigger) // CHECK
@@ -155,8 +155,8 @@
 									continue
 							W.storage.transfer_stored_item(A, src.linked_item, TRUE)
 					return
-			// show pocket storage
-			if(src.opens_in_pocket)
+			// show pocket or other storage
+			if(src.opens_if_worn)
 				src.storage_item_attack_hand(user)
 			// give info message
 			switch (canhold)
@@ -186,7 +186,7 @@
 		if (!src.sneaky)
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
 		// check if its in your inventory
-		if (src.linked_item.loc == user && (src.opens_in_pocket || src.linked_item == user.l_hand || src.linked_item == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
+		if (src.linked_item.loc == user && (src.opens_if_worn || src.linked_item == user.l_hand || src.linked_item == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
 			// check if storage is attached as an arm
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

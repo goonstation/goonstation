@@ -14,7 +14,7 @@
 	var/in_list_or_max = 0
 	var/datum/hud/storage/hud
 	var/sneaky = 0
-	var/opens_in_pocket = FALSE
+	var/opens_if_worn = FALSE
 	var/max_wclass = W_CLASS_SMALL
 	var/slots = 7
 	var/list/spawn_contents = list()
@@ -30,7 +30,7 @@
 	health = 10
 
 	New()
-		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_in_pocket)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_if_worn)
 		src.make_my_stuff()
 		..()
 
