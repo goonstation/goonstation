@@ -3,8 +3,17 @@
 	config_tag = "flock"
 	regular = FALSE
 
-	shuttle_available = 2
-	shuttle_available_threshold = 12000 // 20 min, default value, probably change this
+	shuttle_available = SHUTTLE_CALL_MANUAL_CALL_DISABLED
+
+	antag_token_support = TRUE // this can allow the flock to have more members than usual, but should be rare
+	escape_possible = FALSE
+
+	latejoin_antag_compatible = TRUE
+	latejoin_only_if_all_antags_dead = TRUE
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_VAMPIRE, ROLE_CHANGELING, ROLE_ARCFIEND)
+
+	do_random_events = FALSE
+	do_antag_random_spawns = FALSE
 
 	var/starting_players = 0
 	var/datum/mind/start_flockmind = null
@@ -101,25 +110,6 @@
 /datum/game_mode/flock/declare_completion()
 	boutput(world, src.victory_msg())
 	..()
-
-/datum/game_mode/flock/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	for (var/i = 1 to pick(2, 3))
-		possible_modes -= pick(possible_modes)
-	possible_modes.Insert(rand(length(possible_modes)), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/mode in possible_modes)
-		intercepttext += i_text.build(mode, pick(ticker.minds))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/flock/proc/process_flock_death()
 	src.escape_possible = TRUE
