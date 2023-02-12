@@ -179,7 +179,6 @@
 			checkloc = checkloc.loc
 
 		// add item to storage
-		user.u_equip(W)
 		src.add_contents(W, user)
 
 	// when clicking the storage item with an empty hand
@@ -290,8 +289,7 @@
 			if (user.equipped() == null)
 				target.Attackhand(user)
 				if (target in user.equipped_list())
-					//src.add_contents(target)
-					src.storage_item_attack_by(target, user)
+					src.add_contents(target, user)
 			else
 				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()
@@ -351,6 +349,8 @@
 	// when adding an item in
 	proc/add_contents(obj/item/I, mob/user = usr, visible = TRUE) // user arg optional unless usr is null and it needs to be a mob
 		//I.dropped()
+		if (user?.equipped() == I)
+			user.u_equip(I)
 		src.stored_items += I
 		I.set_loc(src.linked_item)
 		src.hud.add_item(I, user)
