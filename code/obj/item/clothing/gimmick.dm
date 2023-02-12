@@ -653,19 +653,20 @@
 	icon_state = "spiderman"
 	item_state = "bogloves"
 	see_face = 0
+	hides_from_examine = C_GLASSES|C_EARS
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
 	desc = "FAPPO!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	see_face = 0
 
 /obj/item/clothing/mask/horse_mask
 	name = "horse mask"
 	desc = "Neigh."
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_GLASSES|C_EARS
 	see_face = 0
 
 	cursed
@@ -682,6 +683,7 @@
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
+	hides_from_examine = C_EARS|C_GLASSES
 
 //birdman for nieks
 
@@ -691,6 +693,7 @@
 	icon_state = "birdman"
 	see_face = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //FACT: space birds can breathe in space
+	hides_from_examine = C_EARS
 
 /obj/item/clothing/under/gimmick/birdman
 	name = "birdman suit"
