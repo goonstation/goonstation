@@ -1113,6 +1113,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 5)
 		setProperty("hard", 3)
 		setProperty("flammable", 4)
@@ -1128,6 +1129,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 4)
 		setProperty("flammable", 4)
 
