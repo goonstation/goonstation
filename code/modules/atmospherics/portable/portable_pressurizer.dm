@@ -224,7 +224,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			return
 		if (length(I.storage?.get_contents()))
 			for(var/obj/item/O in I.storage.get_contents())
-				I.storage.transfer_stored_item(O, src)
+				I.storage.transfer_stored_item(O, src, user = user)
 				user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			return
 

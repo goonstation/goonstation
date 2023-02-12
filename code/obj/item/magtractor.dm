@@ -189,7 +189,7 @@ TYPEINFO(/obj/item/magtractor)
 		user.set_pulling(null)
 
 		if (W.stored) //For removing items from containers with the tractor
-			W.stored.transfer_stored_item(W, src)
+			W.stored.transfer_stored_item(W, src, user = user)
 			W.layer = 3 //why is this necessary aaaaa!.
 
 		W.set_loc(src)

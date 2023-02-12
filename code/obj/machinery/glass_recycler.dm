@@ -129,7 +129,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 					break
 
 		if (success)
-			W.stored?.transfer_stored_item(W, src)
+			W.stored?.transfer_stored_item(W, src, user = user)
 
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)

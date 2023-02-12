@@ -578,7 +578,7 @@
 			I.set_loc(src.loc)
 			I.dropped(src)
 			I.layer = initial(I.layer)
-			I.storage.transfer_stored_item(taken, get_turf(taken))
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes

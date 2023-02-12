@@ -137,7 +137,7 @@
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
 			if(src.stored)
-				src.stored.transfer_stored_item(src, get_turf(src))
+				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 			else if(istype(src.loc, /mob))
 				var/mob/M = src.loc
 				M.u_equip(src)

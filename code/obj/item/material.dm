@@ -810,7 +810,7 @@
 		. = FALSE
 		if (src.is_valid(W))
 			if (W.stored)
-				W.stored.transfer_stored_item(W, src)
+				W.stored.transfer_stored_item(W, src, user = user)
 			else
 				W.set_loc(src)
 				if (user) user.u_equip(W)

@@ -127,7 +127,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					actions.interrupt(user, INTERRUPT_ACT)
 					return
 			for(var/obj/item/O in I.storage.get_contents())
-				I.storage.transfer_stored_item(O, src)
+				I.storage.transfer_stored_item(O, src, user = user)
 			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
 			return

@@ -147,7 +147,7 @@
 								O = A
 								if (O.anchored)
 									continue
-							W.storage.transfer_stored_item(A, src.linked_item, TRUE)
+							W.storage.transfer_stored_item(A, src.linked_item, TRUE, user)
 					return
 			// show pocket or other storage
 			if(src.opens_if_worn)
@@ -246,7 +246,7 @@
 					return
 			user.visible_message("<span class='alert'>[user] dumps the contents of [src.linked_item.name] onto [over_object]!</span>")
 			for (var/obj/item/I in src.stored_items)
-				src.transfer_stored_item(I, T)
+				src.transfer_stored_item(I, T, user = user)
 				I.layer = initial(I.layer)
 				if (istype(I, /obj/item/mousetrap))
 					var/obj/item/mousetrap/MT = I
@@ -268,7 +268,7 @@
 		// if item is stored, drop storage and take it out
 		if (target in src.stored_items)
 			user.drop_item()
-			src.transfer_stored_item(target, get_turf(src.linked_item))
+			src.transfer_stored_item(target, get_turf(src.linked_item), user = user)
 			SPAWN(1 DECI SECOND)
 				target.Attackhand(user)
 			return
@@ -341,7 +341,7 @@
 		return STORAGE_CAN_HOLD
 
 	// when adding an item in
-	proc/add_contents(obj/item/I, mob/user = usr, visible = TRUE) // user arg optional unless usr is null and it needs to be a mob
+	proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 		if (user?.equipped() == I)
 			user.u_equip(I)
 		src.stored_items += I
@@ -361,7 +361,7 @@
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
 	// when transfering something in the storage out
-	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = usr) // user arg optional, same reason for add_contents()
+	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 		if (!(I in src.stored_items))
 			return
 		src.stored_items -= I

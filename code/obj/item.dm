@@ -756,7 +756,7 @@
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
 
-	was_stored?.storage.transfer_stored_item(src, get_turf(src))
+	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
@@ -806,7 +806,7 @@
 		.= 0
 
 	if (. == FALSE && was_stored)
-		was_stored.storage.add_contents(src, visible = FALSE)
+		was_stored.storage.add_contents(src, user, FALSE)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 
@@ -1122,7 +1122,7 @@
 	var/atom/oldloc = src.loc
 	var/atom/oldloc_sfx = src.loc
 	if (src.stored)
-		src.stored.transfer_stored_item(src, user)
+		src.stored.transfer_stored_item(src, user, user = user)
 		oldloc_sfx = oldloc.loc
 	user.put_in_hand_or_drop(src)
 

@@ -47,8 +47,8 @@
 	proc/get_contents()
 		return src.storage?.get_contents()
 
-	proc/add_contents(atom/A)
-		src.storage.add_contents(A)
+	proc/add_contents(atom/A, mob/user = null)
+		src.storage.add_contents(A, user)
 
 	proc/get_all_contents()
 		return src.storage.get_all_contents()
@@ -67,7 +67,7 @@
 			for (var/obj/item/I as anything in W.storage.get_contents())
 				if (src.storage.is_full())
 					break
-				W.storage.transfer_stored_item(I, src, TRUE)
+				W.storage.transfer_stored_item(I, src, TRUE, user = user)
 			return
 		else
 			return ..()

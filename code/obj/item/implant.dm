@@ -178,7 +178,7 @@ THROWING DARTS
 					return
 				else
 					if (src.stored)
-						src.stored.transfer_stored_item(src, Imp)
+						src.stored.transfer_stored_item(src, Imp, user = user)
 					else
 						src.set_loc(Imp)
 					Imp.imp = src

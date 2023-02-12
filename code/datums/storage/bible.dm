@@ -7,7 +7,7 @@ var/global/list/bible_contents = list()
 /datum/storage/bible
 	// stored item list and bible_contents can be read interchangeably
 
-	add_contents(obj/item/I, mob/user = usr, visible = TRUE)
+	add_contents(obj/item/I, mob/user = null, visible = TRUE)
 		for_by_tcl(bible, /obj/item/bible)
 			bible.storage.stored_items += I
 			bible.storage.hud.add_item(I, user)
@@ -25,7 +25,7 @@ var/global/list/bible_contents = list()
 					"<span class='notice'>You have added [I] to [src.linked_item].</span>")
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
-	transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = usr)
+	transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 		if (!(I in src.stored_items))
 			return
 		for_by_tcl(bible, /obj/item/bible)

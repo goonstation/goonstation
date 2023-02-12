@@ -479,7 +479,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		else if(istype(O, /obj/item))
 			var/obj/item/I = O
-			I.stored?.transfer_stored_item(I, get_turf(I))
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE

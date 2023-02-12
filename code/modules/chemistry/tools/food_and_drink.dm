@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		else if (istype(W, /obj/item/tongs))
 			if (src.stored)
 				boutput(user, "You take [src] out of [src.stored.linked_item].")
-				src.stored.transfer_stored_item(src, get_turf(src))
+				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 				user.put_in_hand_or_drop(src)
 			else
 				src.AttackSelf(user)

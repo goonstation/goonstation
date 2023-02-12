@@ -434,7 +434,7 @@
 					U.u_equip(target)
 				else if (istype(target, /obj/item))
 					var/obj/item/I = target
-					I.stored?.transfer_stored_item(I, src)
+					I.stored?.transfer_stored_item(I, src, user = user)
 				target.set_loc(src)
 				patches += target
 				update_overlay()

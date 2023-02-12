@@ -2093,7 +2093,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 
 		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
-			targetContainer.storage.transfer_stored_item(I, src)
+			targetContainer.storage.transfer_stored_item(I, src, user = user)
 			productListUpdater(I, user)
 
 

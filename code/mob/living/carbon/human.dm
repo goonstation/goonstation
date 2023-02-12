@@ -2042,11 +2042,11 @@
 				equipped = 1
 		if (slot_in_backpack)
 			if (src.back?.storage)
-				src.back.storage.add_contents(I)
+				src.back.storage.add_contents(I, src)
 				equipped = 1
 		if (slot_in_belt)
 			if (src.belt?.storage)
-				src.belt.storage.add_contents(I)
+				src.belt.storage.add_contents(I, src)
 				equipped = 1
 
 	if (equipped)
