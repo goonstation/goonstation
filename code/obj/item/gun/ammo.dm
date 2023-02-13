@@ -179,7 +179,7 @@
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
-				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 			K.UpdateIcon()
 
 			return 1
@@ -231,7 +231,7 @@
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
-					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 

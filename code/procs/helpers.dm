@@ -2149,12 +2149,12 @@ proc/countJob(rank)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
-var/global/nextDectalkDelay = 5 //seconds
+var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg || !config.spacebee_api_key) return 0
-	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = world.timeofday
+	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub

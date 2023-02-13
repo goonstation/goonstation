@@ -36538,12 +36538,6 @@
 	},
 /turf/unsimulated/floor,
 /area/crunch)
-"ciX" = (
-/obj/item/tile/steel,
-/turf/unsimulated/floor/plating{
-	icon_state = ""
-	},
-/area/crunch)
 "ciY" = (
 /obj/critter/domestic_bee/bubs{
 	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> KIDNAPPED!!!"
@@ -90632,7 +90626,7 @@ bLn
 bLn
 bLn
 bLn
-ciX
+bRu
 bLn
 bLn
 bLn

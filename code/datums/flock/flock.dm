@@ -751,7 +751,7 @@ var/flock_signal_unleashed = FALSE
 			src.center_marker.alpha = 0
 			for (var/turf/T in range(3, src.center_marker))
 				for (var/atom/A in T)
-					if (ismob(A) || isflockstructure(A)) //stupid, but flock structures define gib too
+					if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
 						var/mob/M = A
 						M.gib()
 					else if (A.density)
