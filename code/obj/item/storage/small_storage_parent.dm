@@ -44,18 +44,6 @@
 			return
 		..()
 
-	proc/get_contents()
-		return src.storage?.get_contents()
-
-	proc/add_contents(atom/A, mob/user = null)
-		src.storage.add_contents(A, user)
-
-	proc/get_all_contents()
-		return src.storage.get_all_contents()
-
-	proc/check_can_hold(atom/A)
-		return src.storage.check_can_hold(A) == STORAGE_CAN_HOLD
-
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"

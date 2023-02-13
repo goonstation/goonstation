@@ -201,9 +201,7 @@ TYPEINFO(/obj/item/storage/wall)
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	update_icon()
-
-		var/list/my_contents = src.get_contents()
-		if (length(my_contents) <= 0)
+		if (!length(src.storage.get_contents()))
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
@@ -280,9 +278,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/clothing/head)
 
 	update_icon()
-
-		var/list/my_contents = src.get_contents()
-		if (length(my_contents) <= 0)
+		if (!length(src.storage.get_contents()))
 			src.icon_state = "hatrack-empty"
 		else
 			src.icon_state = "hatrack"
@@ -324,8 +320,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
-		if (length(my_contents) <= 0)
+		if (!length(src.storage.get_contents()))
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "toolshelf"
@@ -342,8 +337,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
 	update_icon()
-		var/list/my_contents = src.get_contents()
-		if (length(my_contents) <= 0)
+		if (!length(src.storage.get_contents()))
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
