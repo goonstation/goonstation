@@ -195,6 +195,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet
 	name = "bouquet"
 	desc = "A lovely arrangement of flowers."
+	icon = "icons/obj/items/bouquets.dmi"
+	inhand_image_icon = "icons/obj/items/bouquets.dmi"
+	icon_state = "base"
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/paperused = null
@@ -202,6 +205,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/flower2 = null
 	var/flower3 = null
 	var/hiddenitem = null
+/obj/item/bouquet/New()
+	update_icon()
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
@@ -249,7 +254,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	f2 = tempflower
 	qdel(tempflower)
 /obj/item/bouquet/update_icon()
+	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.item_state = null
+	src.inhand_image = null
 	src.icon_state = null
-
+	src.overlays += image()
