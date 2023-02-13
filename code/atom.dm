@@ -871,7 +871,7 @@ TYPEINFO(/atom)
 					time = 0.1 SECONDS,
 					easing = LINEAR_EASING
 				)
-			else if (BOUNDS_DIST(usr, over_object) == 0)
+			else if (GET_DIST(usr, over_object) <= 1)
 				movablesrc.set_loc(over_object)
 			else
 				movablesrc.throw_at(over_object, 1000, 1, params=params_list)
