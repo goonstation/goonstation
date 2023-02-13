@@ -55392,6 +55392,14 @@
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"lTZ" = (
+/obj/machinery/light/runway_light,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "lUw" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -56077,14 +56085,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"mMD" = (
-/obj/machinery/light/runway_light,
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -58224,6 +58224,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"ppz" = (
+/obj/warp_beacon{
+	name = "Catering Hanger Beacon"
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "pqK" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -58534,6 +58544,22 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"pPn" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "scienceteleporter";
+	name = "Teleporter Blast Shield";
+	panel_open = 1
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Teleporter Pad";
+	req_access_txt = null
+	},
+/obj/access_spawn/telesci,
+/obj/firedoor_spawn,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "pQg" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -58617,16 +58643,6 @@
 /obj/access_spawn/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"pUU" = (
-/obj/warp_beacon{
-	name = "Catering Hanger Beacon"
-	},
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "pVj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59826,22 +59842,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload_foyer)
-"rav" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "scienceteleporter";
-	name = "Teleporter Blast Shield";
-	panel_open = 1
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Teleporter Pad";
-	req_access_txt = null
-	},
-/obj/access_spawn/tox,
-/obj/firedoor_spawn,
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "rbg" = (
 /obj/plasticflaps,
 /obj/machinery/conveyor/WE{
@@ -100890,7 +100890,7 @@ aah
 bIP
 bIP
 ami
-rav
+pPn
 bIP
 bPK
 bRh
@@ -125266,7 +125266,7 @@ adC
 adC
 adC
 adC
-mMD
+lTZ
 adC
 adC
 adC
@@ -126172,7 +126172,7 @@ adC
 adC
 adC
 adC
-pUU
+ppz
 adC
 adC
 adC
