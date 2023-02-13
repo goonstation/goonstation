@@ -200,12 +200,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon_state = "base"
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
-	var/paperused = null
-	var/flower1 = null
-	var/flower2 = null
-	var/flower3 = null
-	var/hiddenitem = null
+	var/obj/item/paper/paperused = null
+	var/obj/item/clothing/head/flower/flower1 = null
+	var/obj/item/clothing/head/flower/flower2 = null
+	var/obj/item/clothing/head/flower/flower3 = null
+	var/obj/item/hiddenitem = null
 /obj/item/bouquet/New()
+	..()
 	update_icon()
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
@@ -256,6 +257,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.inhand_image = null
-	src.icon_state = null
-	src.overlays += image()
+	src.inhand_image = image("icons/obj/items/bouquets.dmi", icon_state = "inhand_base")
+	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower1.name]_1")
+	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower2.name]_2")
+	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
+	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower3.name]_3")
+	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower1.name]_1")
+	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower2.name]_2")
+	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower3.name]_3")
