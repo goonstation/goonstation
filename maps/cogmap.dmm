@@ -58226,7 +58226,7 @@
 /area/station/hallway/secondary/exit)
 "ppz" = (
 /obj/warp_beacon{
-	name = "Catering Hanger Beacon"
+	name = "Catering Hangar Beacon"
 	},
 /obj/lattice{
 	dir = 5;
