@@ -5,7 +5,7 @@
 /* Intro */
 
 /* What is a storage datum? */
-// A storage datum is something that can be added to any atom to give it storage functionality.
+// A storage datum is something that can be added to any atom to give it storage functionality, being able to things of type /obj/item in a HUD.
 // Atom level procs, for things like attacking a storage with an item, close to the level of signal usage, are used to make this work.
 
 /* Looking to add a storage to an item? */
@@ -19,6 +19,11 @@
 /* When should a new storage datum type be created? */
 // A new storage datum type should be made if you are looking to override the code for adding/removing an item to a storage, or make a significant
 // change that needs a new type. Ex. See bible storages.
+
+/* Lower level things to note */
+// -Items in a storage are kept track of in the stored item's contents list and in the storage datum, but when iterating through contents, the procs
+// in this file should be used for getting the contents
+// -For /obj/item, src.loc and src.stored.linked_item will be the same, but the second should be used for consistency and clarity
 
 /* Examples */
 // -Storage datums on clothing items function just like backpacks
@@ -81,8 +86,8 @@
 			src.make_my_stuff(spawn_contents)
 
 	disposing()
-		for (var/atom/A as anything in src.stored_items)
-			src.transfer_stored_item(A, get_turf(src.linked_item))
+		for (var/obj/item/I as anything in src.get_contents())
+			src.transfer_stored_item(I, get_turf(src.linked_item))
 
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M.s_active == src)
@@ -100,9 +105,9 @@
 	// ----------------- "INTERNAL" PROCS ----------------------
 
 	proc/storage_item_move_triggered(mob/M, kindof)
-		for (var/obj/O in src.get_contents())
-			if (O.move_triggered)
-				O.move_trigger(M, kindof)
+		for (var/obj/item/I as anything in src.get_contents())
+			if (I.move_triggered)
+				I.move_trigger(M, kindof)
 
 	proc/make_my_stuff(list/spawn_contents)
 		if (!length(spawn_contents))
@@ -218,10 +223,10 @@
 			if (!user.restrained() && !user.stat && src.linked_item.loc == user)
 				if (S.id == "rhand" && !user.r_hand)
 					user.u_equip(src.linked_item)
-					user.put_in_hand_or_drop(src.linked_item, 0)
+					user.put_in_hand_or_drop(src.linked_item)
 				else if (S.id == "lhand" && !user.l_hand)
 					user.u_equip(src.linked_item)
-					user.put_in_hand_or_drop(src.linked_item, 1)
+					user.put_in_hand_or_drop(src.linked_item)
 		// if mouse dropping storage item onto self, look inside
 		else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !user.stat && !isintangible(user))
 			if (user.s_active)
@@ -247,7 +252,7 @@
 				if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 					return
 			user.visible_message("<span class='alert'>[user] dumps the contents of [src.linked_item.name] onto [over_object]!</span>")
-			for (var/obj/item/I in src.stored_items)
+			for (var/obj/item/I as anything in src.get_contents())
 				src.transfer_stored_item(I, T, user = user)
 				I.layer = initial(I.layer)
 				if (istype(I, /obj/item/mousetrap))
@@ -268,7 +273,7 @@
 	// after attacking an object with the storage item
 	proc/storage_item_after_attack(atom/target, mob/user, reach)
 		// if item is stored, drop storage and take it out
-		if (target in src.stored_items)
+		if (target in src.get_contents())
 			user.drop_item()
 			src.transfer_stored_item(target, get_turf(src.linked_item), user = user)
 			SPAWN(1 DECI SECOND)
@@ -279,7 +284,7 @@
 			var/obj/O = target
 			if (O.anchored)
 				return
-			if (!can_reach(user, target, 1))
+			if (!can_reach(user, target))
 				return
 			user.swap_hand()
 			if (user.equipped() == null)
@@ -298,13 +303,13 @@
 	proc/mousetrap_check(mob/user)
 		if (!ishuman(user) || user.stat)
 			return FALSE
-		for (var/obj/item/mousetrap/MT in src.stored_items)
+		for (var/obj/item/mousetrap/MT in src.get_contents())
 			if (MT.armed)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src.linked_item.name] and sets off a mousetrap!</B></span>",\
 					"<span class='alert'><B>You reach into \the [src.linked_item.name], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				return TRUE
-		for (var/obj/item/mine/M in src.stored_items)
+		for (var/obj/item/mine/M in src.get_contents())
 			if (M.armed && M.used_up != TRUE)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src.linked_item.name] and sets off a [M.name]!</B></span>",\
 					"<span class='alert'><B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B></span>")
@@ -351,6 +356,10 @@
 		src.hud.add_item(I, user)
 		I.stored = src
 
+		src.add_contents_extra(I, user, visible)
+
+	// available if add_contents needs to be overridden
+	proc/add_contents_extra(obj/item/I, mob/user, visible)
 		// a mob put the item in
 		if (!istype(user))
 			return
@@ -364,12 +373,16 @@
 
 	// when transfering something in the storage out
 	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
-		if (!(I in src.stored_items))
+		if (!(I in src.get_contents()))
 			return
 		src.stored_items -= I
 		src.hud.remove_item(I, user)
 		I.stored = null
 
+		src.transfer_stored_item_extra(I, location, add_to_storage, user)
+
+	// for use if transfer_stored_item is overridden
+	proc/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
 		if (location?.storage && add_to_storage)
 			location.storage.add_contents(I, user)
 		else
@@ -400,5 +413,5 @@
 
 	// emping storage emps everything inside
 	proc/storage_emp_act()
-		for (var/atom/A as anything in src.stored_items)
+		for (var/atom/A as anything in src.get_contents())
 			A.emp_act()

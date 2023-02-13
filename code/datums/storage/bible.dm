@@ -15,15 +15,7 @@ var/global/list/bible_contents = list()
 		I.set_loc(src.linked_item)
 		I.stored = src
 
-		if (!istype(user))
-			return
-		src.linked_item.add_fingerprint(user)
-		if (visible)
-			animate_storage_rustle(src.linked_item)
-			if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
-				user.visible_message("<span class='notice'>[user] has added [I] to [src.linked_item]!</span>",
-					"<span class='notice'>You have added [I] to [src.linked_item].</span>")
-			playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		src.add_contents_extra(I, user, visible)
 
 	transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 		if (!(I in src.stored_items))
@@ -34,9 +26,4 @@ var/global/list/bible_contents = list()
 		bible_contents -= I
 		I.stored = null
 
-		if (location.storage && add_to_storage)
-			location.storage.add_contents(I, user)
-		else
-			I.set_loc(location)
-			if (isturf(location))
-				I.dropped()
+		src.transfer_stored_item_extra(I, location, add_to_storage, user)
