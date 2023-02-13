@@ -35,7 +35,7 @@
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
