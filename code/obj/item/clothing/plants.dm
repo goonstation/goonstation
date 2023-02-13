@@ -193,11 +193,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 
 // I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
 /obj/item/bouquet
-	name = 'bouquet'
-	desc = 'A lovely arrangement of flowers.'
+	name = "bouquet"
+	desc = "A lovely arrangement of flowers."
 	icon = 'icons/obj/items/bouquets.dmi'
 	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
-	icon_state = 'base'
+	icon_state = "base"
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/obj/item/paper/paperused = null
@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = 'inhand_base')
+	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base")
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
 	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
