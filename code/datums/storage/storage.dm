@@ -24,12 +24,13 @@
 // -Storage datums on clothing items function just like backpacks
 
 // add storage to an item
-/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), in_list_or_max = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
+/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), check_wclass = FALSE,
+		max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_if_worn)
+	src.storage = new storage_type(src, spawn_contents, can_hold, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -41,10 +42,10 @@
 /datum/storage
 	/// Types that can be held
 	var/list/can_hold = null
-	/// Exact types that can be held, in addition to can_hold
+	/// Exact types that can be held, in addition to can_hold, if it has types
 	var/list/can_hold_exact = null
-	/// If can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
-	var/in_list_or_max = FALSE
+	/// If set, if can_hold is used, an item not in can_hold or can_hold_exact can fit in the storage if its weight is low enough
+	var/check_wclass = FALSE
 	/// Storage hud attached to the storage
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
@@ -62,12 +63,13 @@
 	/// All items stored
 	var/list/stored_items = list()
 
-	New(atom/storage_item, list/spawn_contents, list/can_hold, in_list_or_max, max_wclass, slots, sneaky, opens_if_worn)
+	New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
 		..()
 		src.linked_item = storage_item
 		src.hud = new (src)
 		src.can_hold = can_hold
-		src.in_list_or_max = in_list_or_max
+		src.can_hold_exact = can_hold_exact
+		src.check_wclass = check_wclass
 		src.max_wclass = max_wclass
 		src.slots = slots
 		src.sneaky = sneaky
@@ -322,7 +324,7 @@
 		// if can_hold is defined, check against that
 		if (length(src.can_hold))
 			// early skip if weight class is allowed
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
+			if (src.check_wclass && W.w_class <= src.max_wclass)
 				return STORAGE_CAN_HOLD
 			for (var/type in src.can_hold)
 				if (ispath(type) && istype(W, type))

@@ -287,7 +287,7 @@
 	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
-	in_list_or_max = 1
+	check_wclass = 1
 	color = "#ff9933"
 
 /obj/item/device/radio/headset/salvager

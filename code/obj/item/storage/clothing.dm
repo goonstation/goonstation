@@ -242,7 +242,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown

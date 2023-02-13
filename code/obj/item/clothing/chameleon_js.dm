@@ -1441,7 +1441,7 @@
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
