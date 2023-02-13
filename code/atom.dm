@@ -44,6 +44,7 @@ TYPEINFO(/atom)
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
 	var/tmp/pass_unstable = TRUE
 
+	/// Storage for items
 	var/datum/storage/storage = null
 
 /* -------------------- name stuff -------------------- */
@@ -1020,6 +1021,15 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 	return src
+
+/atom/movable/proc/move_trigger(var/mob/M, var/kindof)
+	var/atom/movable/x = loc
+	while (x && !isarea(x) && x != M)
+		x = x.loc
+	if (!x || isarea(x))
+		return 0
+	src.storage?.storage_item_move_triggered(M, kindof)
+	return 1
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
