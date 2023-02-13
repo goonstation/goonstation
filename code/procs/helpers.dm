@@ -2621,7 +2621,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat))
+		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()
