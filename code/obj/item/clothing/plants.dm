@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	max_stack = 10 //this seems about right.
 	var/can_bouquet = FALSE
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
 			make_bouquet(src, W, user)
 
 /obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
@@ -15,8 +15,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	paperitem.set_loc(new_bouquet.paperused)
 	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 	allocated_flower.set_loc(new_bouquet.flower1)
-	src.update_icon()
-	user.visible_message("[user] rolls up a [src] into a bouquet.", "You roll up the [src] into a bouquet.")
+	new_bouquet.update_icon()
+	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon_state = "base"
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
-	var/obj/item/paper/paperused = null
+	var/obj/item/paperused = null // this has to allow for both /obj/item/paper and /obj/item/wrapping_paper
 	var/obj/item/clothing/head/flower/flower1 = null
 	var/obj/item/clothing/head/flower/flower2 = null
 	var/obj/item/clothing/head/flower/flower3 = null
@@ -217,37 +217,33 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (istype(W, /obj/item/clothing/head/flower))
 		var/obj/item/clothing/head/flower/dummy_flower = W
 		if (!dummy_flower.can_bouquet)
-			user.visible_message("This flower can't be turned into a bouquet!")
+			boutput(user, "This flower can't be turned into a bouquet!")
 			return
 		if (!isnull(src.flower3))
-			user.visible_message("This bouquet is full!")
+			boutput(user, "This bouquet is full!")
 			return
 		// now we pick where it goes
 		var/targetslot = src.flower3
 		if (isnull(flower2))
 			targetslot = src.flower2
 		W.set_loc(targetslot)
+		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		qdel(targetslot)
 		src.update_icon()
 /obj/item/bouquet/attack_self(mob/user)
-	if (isnull(src.flower2))
-		return
-	if (isnull(src.flower3))
-		swapflowers(src.flower1, src.flower2)
-		return
-	// in order to reshuffle 3 flowers and get every possible arrangement, we can either:
-	// take the front one and put it at the back 123 -> 231 or 312
-	// or swap two 123 -> 213 or 132 or 321
-	// gonna make it random between the second method so that flower reshuffling is more random
-	// of course if you want it in an actual order just put them in in the right order silly
-	var/reshuffle_cycle = pick(1, 2, 3)
-	if (reshuffle_cycle == 1)
-		swapflowers(src.flower1, src.flower2)
-	else if (reshuffle_cycle == 2)
-		swapflowers(src.flower2, src.flower3)
+	// a load of code for randomising which two flowers get shuffled
+	if (istype_exact(src.flower1, src.flower2) && istype_exact(src.flower1, src.flower3)) // i.e. if they're all the same
+	else if (istype_exact(src.flower1, src.flower2))
+		swapflowers(src.flower3, pick(src.flower1, src.flower2))
+	else if (istype_exact(src.flower1, src.flower3))
+		swapflowers(src.flower2, pick(src.flower1, src.flower3))
+	else if (istype_exact(src.flower2, src.flower3))
+		swapflowers(src.flower1, pick(src.flower2, src.flower3))
 	else
-		swapflowers(src.flower1, src.flower3)
-	qdel(reshuffle_cycle)
+		var/randompick = pick(src.flower1, src.flower2, src.flower3)
+		var/list/remainder = list(src.flower1, src.flower2, src.flower3)
+		remainder -= randompick
+		swapflowers(randompick, pick(remainder))
 	src.update_icon()
 /obj/item/bouquet/proc/swapflowers(f1,f2)
 	var/tempflower = f1
@@ -257,11 +253,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base")
+	src.icon_state = "base_[src.paperused.name]"
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
 	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
+	//inhand sprites
+	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.paperused.name]")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower1.name]_1")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
