@@ -9,14 +9,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 
 /obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
 	if (!src.can_bouquet)
-		user.visible_message("This flower can't be turned into a bouquet!")
+		user.visible_message('This flower can't be turned into a bouquet!')
 		return
 	var/obj/item/bouquet/new_bouquet = new
 	paperitem.set_loc(new_bouquet.paperused)
 	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 	allocated_flower.set_loc(new_bouquet.flower1)
 	src.update_icon()
-	user.visible_message("[user] rolls up a [src] into a bouquet.", "You roll up the [src] into a bouquet.")
+	user.visible_message('[user] rolls up a [src] into a bouquet.', 'You roll up the [src] into a bouquet.')
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
@@ -193,11 +193,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 
 // I'm putting the bouquet code here because for some reason bouquet.dm wasnt compiling
 /obj/item/bouquet
-	name = "bouquet"
-	desc = "A lovely arrangement of flowers."
-	icon = "icons/obj/items/bouquets.dmi"
-	inhand_image_icon = "icons/obj/items/bouquets.dmi"
-	icon_state = "base"
+	name = 'bouquet'
+	desc = 'A lovely arrangement of flowers.'
+	icon = 'icons/obj/items/bouquets.dmi'
+	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
+	icon_state = 'base'
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/obj/item/paper/paperused = null
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
-		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
+		boutput(user, '<span class='notice'>You disassemble the [src].</span>')
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		qdel(src)
 	if (istype(W, /obj/item/clothing/head/flower))
@@ -220,7 +220,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			user.visible_message("This flower can't be turned into a bouquet!")
 			return
 		if (!isnull(src.flower3))
-			user.visible_message("This bouquet is full!")
+			user.visible_message('This bouquet is full!')
 			return
 		// now we pick where it goes
 		var/targetslot = src.flower3
@@ -257,11 +257,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.inhand_image = image("icons/obj/items/bouquets.dmi", icon_state = "inhand_base")
-	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower1.name]_1")
-	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower2.name]_2")
+	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = 'inhand_base')
+	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = '[src.flower1.name]_1')
+	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = '[src.flower2.name]_2')
 	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
-	src.overlays += image("icons/obj/items/bouquets.dmi", icon_state = "[src.flower3.name]_3")
-	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower1.name]_1")
-	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower2.name]_2")
-	src.inhand_image += image("icons/obj/items/bouquets.dmi", icon_state = "inhand_[src.flower3.name]_3")
+	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = '[src.flower3.name]_3')
+	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = 'inhand_[src.flower1.name]_1')
+	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = 'inhand_[src.flower2.name]_2')
+	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = 'inhand_[src.flower3.name]_3')
