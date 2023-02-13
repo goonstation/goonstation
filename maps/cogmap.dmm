@@ -56077,6 +56077,14 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"mMD" = (
+/obj/machinery/light/runway_light,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -58609,6 +58617,16 @@
 /obj/access_spawn/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"pUU" = (
+/obj/warp_beacon{
+	name = "Catering Hanger Beacon"
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "pVj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -125248,7 +125266,7 @@ adC
 adC
 adC
 adC
-bSY
+mMD
 adC
 adC
 adC
@@ -125550,7 +125568,7 @@ adC
 adC
 adC
 adC
-adC
+aah
 adC
 adC
 adC
@@ -125852,7 +125870,7 @@ adC
 adC
 adC
 adC
-adC
+aah
 adC
 adC
 adC
@@ -126154,7 +126172,7 @@ adC
 adC
 adC
 adC
-adC
+pUU
 adC
 adC
 adC
