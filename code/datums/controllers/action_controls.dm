@@ -512,17 +512,18 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 /datum/action/bar/icon/hitthingwithitem // used when you need to make sure that mob is holding item
 	// and is next to other thing while doing thing
@@ -610,14 +611,17 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
+
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
@@ -882,17 +886,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 #define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
@@ -1383,18 +1389,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 		if(E)
 			if(ismovable(src.target))

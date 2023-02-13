@@ -319,11 +319,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			qdel(A)
 		else
 			var/obj/O = A
+			gain = 2
+			gain += length(O.contents) * 2
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)
 				qdel(O)
-			gain = 2
 
 	else if (isturf(A))
 		var/turf/T = A
