@@ -59820,7 +59820,7 @@
 	name = "Teleporter Pad";
 	req_access_txt = null
 	},
-/obj/access_spawn/tox,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
