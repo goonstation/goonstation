@@ -4,8 +4,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	max_stack = 10 //this seems about right.
 	var/can_bouquet = FALSE
 	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
+			// i feel like fortune cookie wrap is a little small, and printouts probably need a new texture
+			return
 		if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
-			make_bouquet(src, W, user)
+			if (istype(W, /obj/item/paper/folded))
+				boutput("You need to unfold this first!")
+			else
+				make_bouquet(src, W, user)
 
 /obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
 	if (!src.can_bouquet)
@@ -198,6 +204,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon = 'icons/obj/items/bouquets.dmi'
 	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
 	icon_state = "base"
+	var/wrapstyle = null
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/obj/item/paperused = null // this has to allow for both /obj/item/paper and /obj/item/wrapping_paper
@@ -207,6 +214,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/obj/item/hiddenitem = null
 /obj/item/bouquet/New()
 	..()
+	if (istype(paperused, /obj/item/wrapping_paper))
+		var/obj/item/wrapping_paper/dummy = paperused
+		src.wrapstyle = "gw_[dummy.style]"
+	if (istype(paperused, /obj/item/paper))
+		src.wrapstyle = "paper"
 	update_icon()
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
@@ -253,13 +265,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
-	src.icon_state = "base_[src.paperused.name]"
+	src.icon_state = "base_[src.wrapstyle]"
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
 	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
 	//inhand sprites
-	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.paperused.name]")
+	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower1.name]_1")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
 	src.inhand_image += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
