@@ -1,3 +1,7 @@
+(t)tue feb 14 23
+(u)LeahTheTech
+(*)The chance to pick the mixed (action) gamemode has been increased, with changeling, vampire, and arcfiend being lowered to compensate.
+(+)Major threat antags (Blob, Flock and Wraith) are now less common in mixed.
 (t)mon feb 13 23
 (u)Sord
 (+)Donut 2 now has another shower off the side of the pool.
