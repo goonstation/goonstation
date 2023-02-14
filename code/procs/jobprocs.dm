@@ -684,18 +684,18 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack, TRUE))
 			equipped = 1
-		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt, TRUE))
 			equipped = 1
 		if (!equipped)
-			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
+			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store, TRUE))
 				equipped = 1
-			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store))
+			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store, TRUE))
 				equipped = 1
-			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand))
+			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand, TRUE))
 				equipped = 1
-			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand))
+			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand, TRUE))
 				equipped = 1
 
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground

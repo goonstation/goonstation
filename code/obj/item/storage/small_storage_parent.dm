@@ -55,7 +55,8 @@
 			for (var/obj/item/I as anything in W.storage.get_contents())
 				if (src.storage.is_full())
 					break
-				W.storage.transfer_stored_item(I, src, TRUE, user = user)
+				if (src.storage.check_can_hold(I))
+					W.storage.transfer_stored_item(I, src, TRUE, user)
 			return
 		else
 			return ..()
@@ -175,7 +176,7 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (target == loc)
-			return
+		if (!length(src.storage.get_contents()))
 		if (!src.storage.get_contents())
 			return
 		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))

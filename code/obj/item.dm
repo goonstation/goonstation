@@ -732,7 +732,7 @@
 		if (succ)
 			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					over_object.storage.add_contents(src, user)
+					over_object.Attackby(src, user)
 			return
 
 	if (istype(S))

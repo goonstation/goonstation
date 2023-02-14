@@ -2157,7 +2157,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				return
 
 			var/num_loaded = 0
-			for (var/obj/item/I in dropped.contents)
+			for (var/obj/item/I in (dropped.storage?.get_contents() || dropped.contents))
 				addProduct(I, user, quiet=TRUE)
 				if(I.loc == src)
 					num_loaded++

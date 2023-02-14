@@ -54,7 +54,7 @@
 			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
 			return
 		else
-			if (!src.stored?.check_can_hold(W)) // too big to fit in the thing we're in already!
+			if (src.stored && !src.stored.check_can_hold(W)) // too big to fit in the thing we're in already!
 				boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [src.stored.linked_item]!</span>")
 				return
 			user.u_equip(W)

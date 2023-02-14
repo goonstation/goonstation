@@ -166,7 +166,6 @@ Contains:
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
-				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
@@ -555,7 +554,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 					explosion(src, T, 0, strength, strength*2, strength*3)
 			if(src.master)
 				qdel(src.master)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 

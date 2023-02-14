@@ -67,7 +67,8 @@
 			for (var/obj/item/I as anything in W.storage.get_contents())
 				if (src.storage.is_full())
 					break
-				W.storage.transfer_stored_item(I, src, TRUE, user = user)
+				if (src.storage.check_can_hold(I))
+					W.storage.transfer_stored_item(I, src, TRUE, user)
 			return
 		else
 			return ..()
