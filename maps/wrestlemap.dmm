@@ -1043,7 +1043,7 @@
 /area/station/garden/owlery)
 "asf" = (
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "asE" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
@@ -1677,7 +1677,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aHt" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal";
@@ -2409,7 +2409,7 @@
 /area/station/science/chemistry)
 "aYV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aYZ" = (
 /obj/machinery/disposal/mail/autoname{
 	mail_tag = "Engineering";
@@ -2932,7 +2932,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bmd" = (
 /obj/machinery/computer/magnet{
 	dir = 4
@@ -3250,7 +3250,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "brF" = (
 /obj/machinery/manufacturer/mining,
 /obj/disposalpipe/segment,
@@ -3330,7 +3330,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bsX" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blueblack{
@@ -3985,7 +3985,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bGj" = (
 /obj/vehicle/segway,
 /obj/decal/tile_edge/stripe{
@@ -4372,7 +4372,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bPy" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
@@ -6067,7 +6067,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cxz" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -7954,7 +7954,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dlW" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -8802,7 +8802,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dBz" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating,
@@ -9456,7 +9456,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dPO" = (
 /obj/fireworksbox,
 /turf/simulated/floor/plating,
@@ -9860,7 +9860,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dZB" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
@@ -11075,7 +11075,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "eAO" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
@@ -11933,7 +11933,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "eVd" = (
 /obj/machinery/vending/standard,
 /obj/decal/tile_edge/stripe{
@@ -12221,7 +12221,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "eYV" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
@@ -12394,7 +12394,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "fdy" = (
 /obj/machinery/light{
 	dir = 1;
