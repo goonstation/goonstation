@@ -265,6 +265,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
+	src.inhand_image.overlays = null
+	src.inhand_image = null
 	src.icon_state = "base_[src.wrapstyle]"
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
 	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
