@@ -252,13 +252,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	else if (flowernum == 1)
 		W.set_loc(src)
 		src.hiddenitem = TRUE
-/obj/item/bouquet/proc/randomorder()
-	return pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
 /obj/item/bouquet/attack_self(mob/user)
 	update_icon()
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
-	var/temporder = randomorder()
+	var/temporder = pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
 	var/flowercount = 0 // this is to record how many flower icons have been put in so far
 	src.contents
 	src.overlays = null
