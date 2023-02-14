@@ -1,5 +1,6 @@
 (t)mon feb 13 23
 (u)Sord
+(+)Donut 2 now has another shower off the side of the pool.
 (+)Nukie armor is now fairly radiation resistant.
 (u)Flappybat
 (+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 30 to 35 crew. RP scaling unchanged.
