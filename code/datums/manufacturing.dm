@@ -1798,7 +1798,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/audiotape
 	name ="Audio Tape"
 	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_amounts = list(2)
 	item_outputs = list(/obj/item/audio_tape)
 	time = 4 SECONDS
 	create = 1
@@ -1806,8 +1806,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/audiolog
 	name ="Audio Log"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/device/audio_log)
 	time = 5 SECONDS
 	create = 1
