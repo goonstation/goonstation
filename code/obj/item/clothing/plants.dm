@@ -18,13 +18,20 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		boutput("This flower can't be turned into a bouquet!")
 		return
 	var/obj/item/bouquet/new_bouquet = new
-	new_bouquet.initialize(paperitem)
-	paperitem.set_loc(new_bouquet)
 	if (src.amount > 1)
 		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 		allocated_flower.set_loc(new_bouquet)
+		qdel(allocated_flower)
 	else
 		src.set_loc(new_bouquet)
+
+	if (istype(paperitem, /obj/item/wrapping_paper))
+		var/obj/item/wrapping_paper/dummy = paperused
+		src.wrapstyle = "gw_[dummy.style]"
+		qdel(dummy)
+	if (istype(paperused, /obj/item/paper))
+		src.wrapstyle = "paper"
+	paperitem.set_loc(new_bouquet)
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 
@@ -213,12 +220,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/hiddenitem = FALSE
-/obj/item/bouquet/proc/initialize(/obj/item/paperused)
-	if (istype(src.contents[1], /obj/item/wrapping_paper))
-		var/obj/item/wrapping_paper/dummy = paperused
-		src.wrapstyle = "gw_[dummy.style]"
-	if (istype(paperused, /obj/item/paper))
-		src.wrapstyle = "paper"
 /obj/item/bouquet/recheck()
 	// okay so here's my thought process
 	// contents is a list right? so when we add new things to the list it should retain ze order
@@ -249,13 +250,18 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		src.recheck()
 		src.update_icon(list(1,2,3))
+		qdel(dummy_flower)
 	else if (flowernum == 1)
-		W.set_loc(src)
-		src.hiddenitem = TRUE
+		if (!hiddenitem) // only one hidden item allowed
+			W.set_loc(src)
+			src.hiddenitem = TRUE
+		else
+			boutput("This bouquet already has an item in it!")
 /obj/item/bouquet/attack_self(mob/user)
 	update_icon()
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
+	// updating the icon also randomises the order (non negotiable)
 	var/temporder = pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
 	var/flowercount = 0 // this is to record how many flower icons have been put in so far
 	src.contents
@@ -270,3 +276,5 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			flowercount += 1
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[flowercount]]")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[flowercount]]")
+	qdel(temporder)
+	qdel(flowercount)
