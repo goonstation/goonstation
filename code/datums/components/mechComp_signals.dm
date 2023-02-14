@@ -235,7 +235,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
-	//
+
 	//Need to use comsig_target instead of parent, to access .loc
 	if(A.loc != comsig_target.loc) //If these aren't sharing a container
 		var/obj/item/storage/mechanics/cabinet = null

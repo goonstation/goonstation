@@ -130,7 +130,6 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			//SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
 			var/list/tracklist = list()
 			for(var/atom/C in A.storage.get_contents())
 				if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))

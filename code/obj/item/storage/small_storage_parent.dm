@@ -176,8 +176,8 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (target == loc)
+			return
 		if (!length(src.storage.get_contents()))
-		if (!src.storage.get_contents())
 			return
 		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
 			return

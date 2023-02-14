@@ -809,7 +809,6 @@
 		was_stored.storage.add_contents(src, user, FALSE)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
-
 	if (W.firesource)
 		if(src.material)
 			src.material.triggerTemp(src ,1500)

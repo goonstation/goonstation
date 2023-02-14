@@ -304,7 +304,7 @@
 
 	src.update_grab_loc()
 
-	if (src.s_active && !(s_active.master.linked_item in src))
+	if (src.s_active && !(s_active.master?.linked_item in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
 
