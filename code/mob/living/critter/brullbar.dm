@@ -12,10 +12,10 @@
 	can_disarm = 1
 	blood_id = "beff"
 	burning_suffix = "humanoid"
-	health_brute = 75
+	health_brute = 70
 	health_brute_vuln = 0.7
-	health_burn = 75
-	health_burn_vuln = 0.3
+	health_burn = 70
+	health_burn_vuln = 1.2
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
 
@@ -70,11 +70,9 @@
 
 	seek_target(var/range = 7)
 		. = list()
-		var/list/icemooncritters = list(/mob/living/critter/brullbar, /mob/living/critter/brullbar/king, /mob/living/critter/spider/ice, /mob/living/critter/spider/ice/queen, /mob/living/critter/spider/ice/baby)
 		for (var/mob/living/C in hearers(range, src))
-			//if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (C in src.icemooncritters) continue //don't kill icemoon critters
+			if (isintangible(C)) continue //don't attack what you can't touch
+			if (istype(C, /mob/living/critter/brullbar)) continue//don't kill other brullbars
 			. += C
 
 		if(length(.) && prob(20))
@@ -84,10 +82,14 @@
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		if(isdead(target))
-			if (prob(40))
-				//do gib
+			if (prob(60))
+				src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				target.ghostize()
+				new /obj/decal/fakeobjects/skeleton(target.loc)
+				target.gib()
 			else return ..()
-		if (frenzy.cooldowncheck() && prob(30))
+		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(30))
 			frenzy.handleCast(target)
 			return
 		else
@@ -102,7 +104,7 @@
 	health_brute = 250
 	health_brute_vuln = 0.7
 	health_burn = 250
-	health_burn_vuln = 0.3
+	health_burn_vuln = 1.2
 
 	New()
 		..()
