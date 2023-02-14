@@ -2150,7 +2150,7 @@ datum
 			result = "hydrogen_sulfide"
 			required_reagents = list("iron" = 1, "sulfur" = 1, "hydrogen" = 1, "clacid" = 1) // based off ferrous sulfide treatment with hydrochloric acid
 			required_temperature = T0C + 380
-			result_amount = 2
+			result_amount = 1
 			mix_phrase = "The mixture gives off a strong scent of rotten eggs."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
