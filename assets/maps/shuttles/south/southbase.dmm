@@ -233,15 +233,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
-"lJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0;
-	icon_state = "7"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
-/area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects{
@@ -583,11 +574,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Bh" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0;
+/turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/turf/space,
 /area/shuttle/escape/centcom)
 "Bj" = (
 /obj/decal/tile_edge/line/black{
@@ -622,7 +611,9 @@
 	dir = 1;
 	icon_state = "alt_heater-R"
 	},
-/turf/space,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
 /area/shuttle/escape/centcom)
 "CH" = (
 /obj/indestructible/shuttle_corner{
@@ -782,7 +773,9 @@
 	dir = 1;
 	icon_state = "alt_heater-L"
 	},
-/turf/space,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
 /area/shuttle/escape/centcom)
 "Ir" = (
 /obj/machinery/light/small/floor,
@@ -1655,7 +1648,7 @@ XE
 uD
 CH
 NG
-lJ
+ve
 ve
 ve
 sx

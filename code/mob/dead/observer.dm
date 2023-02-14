@@ -543,7 +543,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse || corpse.disposed)
+	if(QDELETED(corpse) || corpse.loc == null)
 		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
@@ -695,7 +695,7 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]

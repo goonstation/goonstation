@@ -13,6 +13,7 @@ cfg/admin.txt
 
 # Build files
 /_stdlib/__build.dm
+/testmerges/
 z_build_opts.dm
 
 # Pre-processor related

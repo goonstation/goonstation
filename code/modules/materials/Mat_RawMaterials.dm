@@ -442,3 +442,12 @@
 	setup_material()
 		src.setMaterial(getMaterial("plutonium"), appearance = 0, setname = 0)
 		..()
+
+/obj/item/material_piece/foolsfoolsgold
+	name = "fool's pyrite bar"
+	desc = "It's gold that isn't. Except it is. MINDFUCK"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("gold"), appearance = TRUE, setname = FALSE)
+		..()

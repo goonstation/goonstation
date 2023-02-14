@@ -3425,7 +3425,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
-		if(src.client && src.client && !src.client.is_mentor())
+		if(src.client && !src.client.is_mentor() && !src.client.holder)
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 

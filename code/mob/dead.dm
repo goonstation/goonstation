@@ -23,9 +23,23 @@
 /mob/dead/can_strip()
 	return 0
 
+/mob/dead/Login()
+	. = ..()
+	if(client?.holder?.ghost_interaction)
+		setalive(src)
 
-/mob/dead/click(atom/target, params)
-	if (targeting_ability)
+/mob/dead/Logout()
+	. = ..()
+	setdead(src)
+
+/mob/dead/click(atom/target, params, location, control)
+	if(src.client?.holder?.ghost_interaction)
+		if(isitem(target))
+			var/obj/item/itemtarget = target
+			itemtarget.AttackSelf(src)
+		else
+			target.Attackhand(src, params, location, control, params)
+	else if (targeting_ability)
 		..()
 	else
 		if (GET_DIST(src, target) > 0)

@@ -255,7 +255,7 @@ var/datum/signal_holder/global_signal_holder
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	if (!target || QDELETED(src))
+	if (!target || !src || src.qdeled)
 		return
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || (!islist(sig_type_or_types) && (!signal_procs[target] || !lookup)))
