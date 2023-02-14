@@ -243,6 +243,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			return
 		// now we pick where it goes
 		W.force_drop(user)
+		src.force_drop(user)
 		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		src.flowernum += 1
