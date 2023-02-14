@@ -221,6 +221,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/hiddenitem = FALSE
+/*	So anywhere here's the naming convention for bouquet.dmi files
+	for the paper, it's either item/paper or item/wrapping_paper
+	so the naming for that is base_src.wrapstyle where wrapstyle is either 'paper' or the src.style of wrapping paper
+	the flowers are named by src.name_number from 1-3
+	the inhand versions are exactly the same except preceded by inhand_
+ */
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
@@ -236,10 +242,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			boutput(user, "This bouquet is full!")
 			return
 		// now we pick where it goes
+		W.force_drop(user)
 		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		src.flowernum += 1
 		src.update_icon(list(1,2,3))
+		user.put_in_hand_or_drop(src)
 	else if (flowernum == 1)
 		if (!hiddenitem) // only one hidden item allowed
 			W.set_loc(src)
