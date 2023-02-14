@@ -1,4 +1,16 @@
-
+(t)tue feb 14 23
+(u)LeahTheTech
+(*)The chance to pick the mixed (action) gamemode has been increased, with changeling, vampire, and arcfiend being lowered to compensate.
+(+)Major threat antags (Blob, Flock and Wraith) are now less common in mixed.
+(t)mon feb 13 23
+(u)Sord
+(+)Donut 2 now has another shower off the side of the pool.
+(+)Nukie armor is now fairly radiation resistant.
+(u)Flappybat
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 30 to 35 crew. RP scaling unchanged.
+(t)sun feb 12 23
+(u)LeahTheTech
+(+)Flockminds now have one less pity respawn (3 -> 2 lives aka one actual respawn).
 (t)fri feb 10 23
 (u)LeahTheTech
 (p)12736
