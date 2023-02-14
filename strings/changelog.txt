@@ -1,4 +1,9 @@
+
 (t)tue feb 14 23
+(u)Munien
+(p)13029
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Audio logs and tapes are now printable from science fabricators.
 (u)LeahTheTech
 (*)The chance to pick the mixed (action) gamemode has been increased, with changeling, vampire, and arcfiend being lowered to compensate.
 (+)Major threat antags (Blob, Flock and Wraith) are now less common in mixed.
