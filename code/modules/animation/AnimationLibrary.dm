@@ -243,6 +243,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -287,6 +289,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x

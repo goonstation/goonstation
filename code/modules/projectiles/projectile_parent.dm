@@ -175,9 +175,6 @@
 		if (ismob(A)) //don't doublehit
 			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
 				return
-			var/mob/M = A
-			if (!M.projCanHit(src.proj_data))
-				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 		var/turf/T = get_turf(A)

@@ -557,7 +557,7 @@ TYPEINFO(/area)
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
-			setdead(jerk)
+			jerk.death(TRUE)
 			// ghostize the mob first to punt them out of their body
 			// before removing the old body, so that we can boot the ghost out
 			var/mob/dead/dead_jerk = jerk.ghostize()

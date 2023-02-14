@@ -387,6 +387,21 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
+/client/proc/cmd_admin_toggle_ghost_interaction()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Interaction"
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	src.holder.ghost_interaction = !src.holder.ghost_interaction
+	boutput(usr, "<span class='notice'><b>Your ghost interaction mode is now [src.holder.ghost_interaction ? "ON" : "OFF"]</b></span>")
+	if(isobserver(mob))
+		setalive(mob)
+
+	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
+
 /client/proc/iddqd()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "iddqd"

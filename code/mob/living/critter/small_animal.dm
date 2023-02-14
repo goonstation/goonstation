@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 1
-	block_shots_when_dead = FALSE
+
 	var/fur_color = 0
 	var/eye_color = 0
 
