@@ -24,7 +24,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		qdel(allocated_flower)
 	else
 		src.set_loc(new_bouquet)
-
 	if (istype(paperitem, /obj/item/wrapping_paper))
 		var/obj/item/wrapping_paper/dummy = paperitem
 		new_bouquet.wrapstyle = "gw_[dummy.style]"
@@ -32,6 +31,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (istype(paperitem, /obj/item/paper))
 		new_bouquet.wrapstyle = "paper"
 	paperitem.set_loc(new_bouquet)
+	new_bouquet.flowernum += 1
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 
@@ -237,6 +237,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		// now we pick where it goes
 		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
+		src.flowernum += 1
 		src.update_icon(list(1,2,3))
 		qdel(dummy_flower)
 	else if (flowernum == 1)
