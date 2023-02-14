@@ -266,14 +266,15 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	src.overlays = null
 	src.inhand_image.overlays = null
-	src.inhand_image = null
 	src.icon_state = "base_[src.wrapstyle]"
-	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
-	src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
-	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
-	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
-	//inhand sprites
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
-	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
-	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
+	if (!isnull(src.flower3))
+		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
+		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
+	if (!isnull(src.hiddenitem))
+		src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
+	if (!isnull(src.flower2))
+		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
+		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
+	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
 	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower1.name]_1")
