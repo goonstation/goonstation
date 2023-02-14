@@ -7,7 +7,6 @@ Contains:
 DynAssembly Parent
 Instrument DynAssemblies
 For fruit DynAssemblies see: fruithat.dm
-For hairball DynAssemblies see: jonescity.dm
 */
 
 //okay this might be shit but it works okay, feel free to un-shit it

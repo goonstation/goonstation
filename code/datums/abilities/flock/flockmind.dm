@@ -371,10 +371,10 @@
 
 /datum/targetable/flockmindAbility/radioStun
 	name = "Radio Stun Burst"
-	desc = "Overwhelm the radio headsets of everyone nearby. Will not work on broken or non-existent headsets."
+	desc = "Overwhelm the radio headsets of everyone within 3m of your target. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
-	cooldown = 20 SECONDS
-	targeted = FALSE
+	cooldown = 30 SECONDS
+	targeted = TRUE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
 	if(..())
@@ -382,7 +382,7 @@
 	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN))
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
+	for(var/mob/living/M in range(3, get_turf(target)))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
@@ -494,6 +494,8 @@
 
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
+	if (!length(F.flock.unlockableStructures))
+		logTheThing(LOG_DEBUG, src.holder, "Flockmind place tealprint ability triggered with empty unlocked structures list. THIS SHOULD NOT HAPPEN.")
 	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
 		if(ufs.check_unlocked())
 			friendlyNames[ufs.friendly_name] = ufs
@@ -504,6 +506,7 @@
 	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create", "Tealprint selection", friendlyNames)
 
 	if (!structurewanted)
+		boutput(holder.get_controlling_mob(), "<span class='alert'>No tealprint selected.</span>")
 		return TRUE
 	var/datum/unlockable_flock_structure/ufs = friendlyNames[structurewanted]
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members

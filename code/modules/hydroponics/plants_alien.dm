@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
 			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				if(stare_extreme(focused, POT))
 					return
 
-			var/extreme_start = prob(max(0, DNA.potency / 30))
+			var/extreme_start = prob(max(0, DNA?.get_effective_value("potency") / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth < (P.harvtime + DNA.harvtime))
+		if (POT.growth < (P.harvtime + DNA?.get_effective_value("harvtime")))
 			return
 
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
@@ -235,11 +235,11 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(16))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
 			playsound(POT,'sound/voice/animal/cat.ogg',30,1,-1)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
 
 		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,1,-1)
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
@@ -279,10 +279,10 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(4))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (P.harvtime + DNA.harvtime))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")))
 			var/obj/critter/maneater/ME = new(get_turf(POT))
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors

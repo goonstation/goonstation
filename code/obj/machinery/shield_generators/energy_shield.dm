@@ -16,6 +16,7 @@
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "energyShield"
 	density = FALSE
+	power_usage = 5
 	var/orientation = HORIZONTAL  //shield extend direction 0 = north/south, 1 = east/west
 	power_level = SHIELD_BLOCK_GAS //1 for atmos shield, 2 for liquid, 3 for solid material
 	var/max_power = SHIELD_BLOCK_ALL
@@ -31,7 +32,6 @@
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
-		src.power_usage = 5
 
 	get_desc(dist, mob/user)
 		..()

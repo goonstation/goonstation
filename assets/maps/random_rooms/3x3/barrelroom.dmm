@@ -21,7 +21,6 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
-/turf/simulated/floor/plating/damaged2,
 /area/dmm_suite/clear_area)
 "r" = (
 /obj/storage/crate,

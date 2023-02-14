@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
-	var/datum/character_preview/multiclient/occupant_preview = null
+	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = 1
 	soundproofing = 10
@@ -283,7 +283,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 	var/s_tone = "#FAD7D0"
 
-	var/datum/character_preview/multiclient/preview = null
+	var/datum/movable_preview/character/multiclient/preview = null
 
 	New(mob/target)
 		..()
@@ -293,7 +293,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 		src.target_mob = target
 		src.preview = new()
-		src.preview.add_background("#092426")
+		src.preview.add_background("#092426", height_mult = 2)
 		src.load_mob_data(src.target_mob)
 		return
 
