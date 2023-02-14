@@ -260,17 +260,28 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	// updating the icon also randomises the order (non negotiable)
+	// we'll also do the name and desc here because why not
 	var/temporder = pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
-	var/flowercount = 0 // this is to record how many flower icons have been put in so far
+	var/flowernames = list()
+	var/hiddentext = ""
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "base_[src.wrapstyle]"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
 		if (istype(temp, /obj/item/clothing/head/flower))
-			flowercount += 1
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[flowercount]]")
-			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[flowercount]]")
+			flowernames += temp.name
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[length(flowernames)]]")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[length(flowernames)]]")
 		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
 			// we want the hidden item to be toward the back, covered by other stuff
 			src.overlays += image(temp.icon, icon_state = temp.icon_state)
+	src.name = "[flowernames[1]] bouquet"
+	if (src.hiddenitem)
+		hiddentext = " There seems to be something else inside it as well."
+	if (flowernum == 1)
+		src.desc = "A single [flowernames[1]] in a nice wrapping. Try adding more flowers to it![hiddentext]"
+	else if (flowernum == 2)
+		src.desc = "A bouquet of beautiful flowers. This one contains both a [flowernames[1]] and a [flowernames[2]].[hiddentext]"
+	else if (flowernum == 3)
+		src.desc = "A bouquet of beautiful flowers. This one contains a [flowernames[1]], [flowernames[2]] and [flowernames[3]].[hiddentext]"
