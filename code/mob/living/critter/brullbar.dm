@@ -12,6 +12,12 @@
 	can_disarm = 1
 	blood_id = "beff"
 	burning_suffix = "humanoid"
+	health_brute = 75
+	health_brute_vuln = 0.7
+	health_burn = 75
+	health_burn_vuln = 0.3
+	ai_type = /datum/aiHolder/brullbar
+	is_npc = TRUE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -50,12 +56,54 @@
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		src.add_stam_mod_max("brullbar", 60)
 		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 
 	setup_healths()
-		add_hh_flesh(100, 0.85)
-		add_hh_flesh_burn(100, 1.4)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
+
+	seek_target(var/range = 7)
+		. = list()
+		var/list/icemooncritters = list(/mob/living/critter/brullbar, /mob/living/critter/brullbar/king, /mob/living/critter/spider/ice, /mob/living/critter/spider/ice/queen, /mob/living/critter/spider/ice/baby)
+		for (var/mob/living/C in hearers(range, src))
+			//if (isdead(C)) continue //don't attack the dead
+			if (isintangible(C)) continue //don't attack the AI eye
+			if (C in src.icemooncritters) continue //don't kill icemoon critters
+			. += C
+
+		if(length(.) && prob(20))
+			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
+
+	critter_attack(var/mob/target)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		if(isdead(target))
+			if (prob(40))
+				//do gib
+			else return ..()
+		if (frenzy.cooldowncheck() && prob(30))
+			frenzy.handleCast(target)
+			return
+		else
+			return ..()
+
+
+/mob/living/critter/brullbar/king
+	name = "brullbar king"
+	real_name = "brullbar king"
+	desc = "You should run."
+	icon_state = "brullbarking"
+	health_brute = 250
+	health_brute_vuln = 0.7
+	health_burn = 250
+	health_burn_vuln = 0.3
+
+	New()
+		..()
+		src.add_stam_mod_max("brullbarking", 120)
