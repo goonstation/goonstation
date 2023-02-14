@@ -4810,7 +4810,7 @@ var/global/noir = 0
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
-				M.show_text("<h1><font color=red><B>You have defected to a Spy Thief!</B></font></h1>", "red")
+				M.show_text("<h1><font color=red><B>You have defected to become a Spy Thief!</B></font></h1>", "red")
 				M.mind.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_NUKEOP)
 				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
