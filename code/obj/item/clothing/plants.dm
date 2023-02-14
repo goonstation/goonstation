@@ -11,19 +11,20 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			if (istype(W, /obj/item/paper/folded))
 				boutput("You need to unfold this first!")
 			else
-				make_bouquet(src, W, user)
+				make_bouquet(W, user)
 
 /obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
 	if (!src.can_bouquet)
-		user.visible_message("This flower can't be turned into a bouquet!")
+		boutput("This flower can't be turned into a bouquet!")
 		return
 	var/obj/item/bouquet/new_bouquet = new
-	paperitem.set_loc(new_bouquet.paperused)
-	if (src.amount != 1)
+	new_bouquet.initialize(paperitem)
+	paperitem.set_loc(new_bouquet)
+	if (src.amount > 1)
 		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
-		allocated_flower.set_loc(new_bouquet.flower1)
+		allocated_flower.set_loc(new_bouquet)
 	else
-		src.set_loc(new_bouquet.flower1)
+		src.set_loc(new_bouquet)
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 
@@ -207,77 +208,61 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	icon = 'icons/obj/items/bouquets.dmi'
 	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
 	icon_state = "base"
+	var/flowernum = 0
 	var/wrapstyle = null
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
-	var/obj/item/paperused = null // this has to allow for both /obj/item/paper and /obj/item/wrapping_paper
-	var/obj/item/clothing/head/flower/flower1 = null
-	var/obj/item/clothing/head/flower/flower2 = null
-	var/obj/item/clothing/head/flower/flower3 = null
-	var/obj/item/hiddenitem = null
+	var/hiddenitem = FALSE
 /obj/item/bouquet/New()
 	..()
-	if (istype(paperused, /obj/item/wrapping_paper))
+/obj/item/bouquet/initialize(/obj/item/paperused)
+	if (istype(src.contents[1], /obj/item/wrapping_paper))
 		var/obj/item/wrapping_paper/dummy = paperused
 		src.wrapstyle = "gw_[dummy.style]"
 	if (istype(paperused, /obj/item/paper))
 		src.wrapstyle = "paper"
-	update_icon()
+/obj/item/bouquet/recheck()
+	flowernum = 0
+	for (var/obj/item/itemname in src.contents)
+		if (istype(itemname, /obj/item/clothing/head/flower))
+			flowernum += 1
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
 		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		qdel(src)
-	if (istype(W, /obj/item/clothing/head/flower))
+	else if (istype(W, /obj/item/clothing/head/flower))
 		var/obj/item/clothing/head/flower/dummy_flower = W
 		if (!dummy_flower.can_bouquet)
 			boutput(user, "This flower can't be turned into a bouquet!")
 			return
-		if (!isnull(src.flower3))
+		if (flowernum >= 3)
 			boutput(user, "This bouquet is full!")
 			return
 		// now we pick where it goes
-		var/targetslot = src.flower3
-		if (isnull(flower2))
-			targetslot = src.flower2
-		W.set_loc(targetslot)
+		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
-		qdel(targetslot)
+		src.recheck()
 		src.update_icon()
+	else if (flowernum == 1)
+		W.set_loc(src)
+		src.hiddenitem = TRUE
 /obj/item/bouquet/attack_self(mob/user)
-	// a load of code for randomising which two flowers get shuffled
-	if (istype_exact(src.flower1, src.flower2) && istype_exact(src.flower1, src.flower3)) // i.e. if they're all the same
-		return
-	else if (istype_exact(src.flower1, src.flower2))
-		swapflowers(src.flower3, pick(src.flower1, src.flower2))
-	else if (istype_exact(src.flower1, src.flower3))
-		swapflowers(src.flower2, pick(src.flower1, src.flower3))
-	else if (istype_exact(src.flower2, src.flower3))
-		swapflowers(src.flower1, pick(src.flower2, src.flower3))
-	else
-		var/randompick = pick(src.flower1, src.flower2, src.flower3)
-		var/list/remainder = list(src.flower1, src.flower2, src.flower3)
-		remainder -= randompick
-		swapflowers(randompick, pick(remainder))
-	src.update_icon()
-/obj/item/bouquet/proc/swapflowers(f1,f2)
-	var/tempflower = f1
-	f1 = f2
-	f2 = tempflower
-	qdel(tempflower)
+	update_icon()
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
+	src.contents
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "base_[src.wrapstyle]"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
-	if (!isnull(src.flower3))
+	if (flowernum == 3)
 		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
 		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
-	if (!isnull(src.hiddenitem))
+	if (hiddenitem)
 		src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
-	if (!isnull(src.flower2))
+	if (flowernum >= 2)
 		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
 		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
 	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
