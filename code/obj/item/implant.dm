@@ -510,7 +510,7 @@ THROWING DARTS
 			else if (H.mind in ticker.mode:revolutionaries)
 				H.TakeDamage("chest", 1, 1, 0)
 				H.changeStatus("weakened", 1 SECOND)
-				H.setStatus("De-revving")
+				H.setStatus("derevving")
 				H.force_laydown_standup()
 				H.emote("scream")
 				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
