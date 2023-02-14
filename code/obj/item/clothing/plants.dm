@@ -245,6 +245,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/bouquet/attack_self(mob/user)
 	// a load of code for randomising which two flowers get shuffled
 	if (istype_exact(src.flower1, src.flower2) && istype_exact(src.flower1, src.flower3)) // i.e. if they're all the same
+		return
 	else if (istype_exact(src.flower1, src.flower2))
 		swapflowers(src.flower3, pick(src.flower1, src.flower2))
 	else if (istype_exact(src.flower1, src.flower3))
