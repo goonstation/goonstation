@@ -19,8 +19,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		return
 	var/obj/item/bouquet/new_bouquet = new
 	paperitem.set_loc(new_bouquet.paperused)
-	var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
-	allocated_flower.set_loc(new_bouquet.flower1)
+	if (src.amount != 1)
+		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
+		allocated_flower.set_loc(new_bouquet.flower1)
+	else
+		src.set_loc(new_bouquet.flower1)
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 
