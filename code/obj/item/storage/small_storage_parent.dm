@@ -38,12 +38,6 @@
 	proc/make_my_stuff()
 		return
 
-	attack(mob/M, mob/user)
-		if (surgeryCheck(M, user))
-			insertChestItem(M, user)
-			return
-		..()
-
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"
