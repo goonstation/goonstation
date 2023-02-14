@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (istype(paperitem, /obj/item/paper))
 		new_bouquet.wrapstyle = "paper"
 	paperitem.set_loc(new_bouquet)
-	new_bouquet.update_icon()
+	new_bouquet.refresh()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
 	user.put_in_hand_or_drop(new_bouquet)
 
@@ -256,8 +256,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		else
 			boutput("This bouquet already has an item in it!")
 /obj/item/bouquet/attack_self(mob/user)
-	update_icon()
-/obj/item/bouquet/update_icon()
+	src.refresh()
+/obj/item/bouquet/proc/refresh()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	// updating the icon also randomises the order (non negotiable)
 	// we'll also do the name and desc here because why not
