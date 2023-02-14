@@ -213,19 +213,23 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/hiddenitem = FALSE
-/obj/item/bouquet/New()
-	..()
-/obj/item/bouquet/initialize(/obj/item/paperused)
+/obj/item/bouquet/proc/initialize(/obj/item/paperused)
 	if (istype(src.contents[1], /obj/item/wrapping_paper))
 		var/obj/item/wrapping_paper/dummy = paperused
 		src.wrapstyle = "gw_[dummy.style]"
 	if (istype(paperused, /obj/item/paper))
 		src.wrapstyle = "paper"
 /obj/item/bouquet/recheck()
+	// okay so here's my thought process
+	// contents is a list right? so when we add new things to the list it should retain ze order
+	// paper used in the wrap, flower1-3, then hidden item
+	// ideally
 	flowernum = 0
 	for (var/obj/item/itemname in src.contents)
 		if (istype(itemname, /obj/item/clothing/head/flower))
 			flowernum += 1
+	if (1 + flowernum + (hiddenitem ? 1 : 0) != src.contents.len)
+		CRASH("There's something wrong with the contents of this bouquet")
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
@@ -244,26 +248,27 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		src.recheck()
-		src.update_icon()
+		src.update_icon(list(1,2,3))
 	else if (flowernum == 1)
 		W.set_loc(src)
 		src.hiddenitem = TRUE
+/obj/item/bouquet/proc/randomorder()
+	return pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
 /obj/item/bouquet/attack_self(mob/user)
 	update_icon()
 /obj/item/bouquet/update_icon()
 	// overlays is for the icon, inhand_image is for, well, the inhand
+	var/temporder = randomorder()
+	var/flowercount = 0 // this is to record how many flower icons have been put in so far
 	src.contents
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "base_[src.wrapstyle]"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
-	if (flowernum == 3)
-		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower3.name]_3")
-		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower3.name]_3")
-	if (hiddenitem)
-		src.overlays += image(src.hiddenitem.icon, icon_state = src.hiddenitem.icon_state)
-	if (flowernum >= 2)
-		src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower2.name]_2")
-		src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower2.name]_2")
-	src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.flower1.name]_1")
-	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.flower1.name]_1")
+	for (var/obj/item/temp in src.contents)
+		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower))
+			src.overlays += image(temp.icon, icon_state = temp.icon_state)
+		if (istype(temp, /obj/item/clothing/head/flower))
+			flowercount += 1
+			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[flowercount]]")
+			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[flowercount]]")
