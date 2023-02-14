@@ -17,7 +17,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (!src.can_bouquet)
 		boutput("This flower can't be turned into a bouquet!")
 		return
-	var/obj/item/bouquet/new_bouquet = new
+	var/obj/item/bouquet/new_bouquet = new(user.loc)
+	paperitem.force_drop(user)
+	src.force_drop(user)
+	new_bouquet.flowernum += 1
 	if (src.amount > 1)
 		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 		allocated_flower.set_loc(new_bouquet)
@@ -28,12 +31,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		new_bouquet.wrapstyle = "gw_[dummy.style]"
 	if (istype(paperitem, /obj/item/paper))
 		new_bouquet.wrapstyle = "paper"
-	var/whereitbetho = paperitem.loc
 	paperitem.set_loc(new_bouquet)
-	new_bouquet.set_loc(whereitbetho)
-	new_bouquet.flowernum += 1
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
+	user.put_in_hand_or_drop(new_bouquet)
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
