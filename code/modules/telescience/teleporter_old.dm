@@ -81,6 +81,7 @@ TYPEINFO(/obj/machinery/teleport)
 			break
 		return found
 
+ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc/disengage)
 /obj/machinery/teleport/portal_generator
 	name = "portal generator"
 	desc = "This fancy piece of machinery generates the portal. You can flick it on and off."

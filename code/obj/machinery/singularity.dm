@@ -319,11 +319,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			qdel(A)
 		else
 			var/obj/O = A
+			gain = 2
+			gain += length(O.contents) * 2
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)
 				qdel(O)
-			gain = 2
 
 	else if (isturf(A))
 		var/turf/T = A
@@ -548,8 +549,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
-/obj/machinery/field_generator/process()
-
+/obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
 			src.set_active(1)
@@ -570,7 +570,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.set_active(2)
 	src.power = clamp(src.power, 0, src.max_power)
 	if(src.active >= 1)
-		src.power -= 1
+		src.power -= 1 * mult
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")

@@ -58,6 +58,7 @@ var/global/mob/twitch_mob = 0
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
 	var/path = "data/intra_round.sav"
@@ -570,6 +571,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
 	initialize_gallery_manager()
+	initialize_mail_system()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")

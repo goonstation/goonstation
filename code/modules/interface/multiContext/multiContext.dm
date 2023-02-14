@@ -166,7 +166,7 @@
 
 		if(background == null)
 			background = image('icons/ui/context16x16.dmi', src, "[action.getBackground(target, user)]0")
-			background.appearance_flags = RESET_COLOR
+			background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		if (A.background_color)
 			src.background.color = A.background_color

@@ -9,6 +9,20 @@
 /// This is relevant to atoms so it goes here!!!! do not @ me
 #define opposite_dir_to(dir) (turn(dir, 180))
 
+
+/**
+ * Makes the given procs available for use with the admin interact menu
+ * Example: `ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/disarm)`
+ * would add the `*arm` and `*disarm` options to the admin interact menu for nuclear bombs.
+ * Will display the "name" of the proc if it has one, for example `set name = "foo"` will result in the proc's entry in the interact menu being "Foo".
+**/
+#define ADMIN_INTERACT_PROCS(TYPE, PROCNAME...)\
+	TYPEINFO(TYPE); \
+	TYPEINFO_NEW(TYPE){ \
+		. = ..(); \
+		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
+	}
+
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted

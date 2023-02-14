@@ -11,6 +11,7 @@
 
 /obj/status_display_proxy
 	plane = PLANE_NOSHADOW_ABOVE
+	mouse_opacity = FALSE
 
 #define MAX_LEN 5
 TYPEINFO(/obj/machinery/status_display)
@@ -24,6 +25,7 @@ TYPEINFO(/obj/machinery/status_display)
 	density = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+	power_usage = 200
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
@@ -72,7 +74,7 @@ TYPEINFO(/obj/machinery/status_display)
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
 		crt_image.layer = src.layer + 0.2
 		crt_image.plane = PLANE_DEFAULT
-		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
+		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
@@ -111,7 +113,7 @@ TYPEINFO(/obj/machinery/status_display)
 			ClearAllOverlays()
 			return
 
-		use_power(200)
+		..()
 
 		update()
 
@@ -368,7 +370,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	anchored = 1
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-
+	power_usage = 200
 	machine_registry_idx = MACHINES_STATUSDISPLAYS
 	var/is_on = FALSE //Distinct from being powered
 
@@ -415,8 +417,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			screen_glow.disable()
 			return
 		update()
-		use_power(200)
-
+		..()
 	proc/update()
 		//Update backing colour
 		if (face_color != owner.faceColor)

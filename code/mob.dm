@@ -124,8 +124,6 @@
 
 	var/respawning = 0
 
-	var/obj/hud/hud_used = null
-
 	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
@@ -2464,6 +2462,15 @@
 	return abilityHolder?.getAbility(abilityType)
 
 /mob/proc/full_heal()
+	var/mob/ghost = find_ghost_by_key(src.last_ckey)
+	if(ghost)
+		ghost.mind.transfer_to(src)
+		if(isliving(src))
+			var/mob/living/L = src
+			L.is_npc = FALSE
+		if(isobserver(ghost))
+			qdel(ghost)
+
 	src.HealDamage("All", 100000, 100000)
 	src.delStatus("drowsy")
 	src.stuttering = 0
@@ -3100,7 +3107,7 @@
 		souladjust(1)
 	return 1
 
-/mob/proc/get_id()
+/mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()
@@ -3247,3 +3254,7 @@
 	. = src.find_type_in_hand(/obj/item/device/radio)
 	if(!.)
 		. = src.find_in_equipment(/obj/item/device/radio)
+
+///Returns the default HUD of the mob, whatever that may be
+/mob/proc/get_hud()
+	return null

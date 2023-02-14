@@ -401,6 +401,16 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/beerkeg/rum
+	name = "barrel of rum"
+	desc = "It better not be empty."
+	icon_state = "rum_barrel"
+
+	New()
+		..()
+		reagents.remove_reagent("beer",1000)
+		reagents.add_reagent("rum",1000)
+
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
@@ -435,7 +445,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)
 		else if (istype(W,/obj/item/seed/)) src.reagents.add_reagent("poo", 2)
-		else if (istype(W,/obj/item/plant/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/plant/) || istype(W,/obj/item/clothing/head/flower/)) src.reagents.add_reagent("poo", 15)
 		else if (istype(W,/obj/item/organ/)) src.reagents.add_reagent("poo", 35)
 		else load = 0
 
@@ -458,7 +468,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
-		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
+		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) || istype(O, /obj/item/clothing/head/flower/))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 			var/itemtype = O.type
 			var/staystill = user.loc
