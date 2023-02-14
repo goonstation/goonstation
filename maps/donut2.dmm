@@ -30842,27 +30842,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "gMo" = (
-/obj/table/reinforced/industrial/auto,
-/obj/item/storage/box/flashbang_kit{
-	pixel_x = 6;
-	pixel_y = 13
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -6;
-	pixel_y = 15
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -8;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 5;
-	pixel_y = 3
-	},
+/obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -38154,8 +38134,30 @@
 	},
 /area/station/crew_quarters/market)
 "mVD" = (
-/obj/machinery/weapon_stand/shotgun_rack,
-/turf/simulated/floor/red,
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
 /area/station/ai_monitored/armory)
 "mVH" = (
 /obj/stool/chair,
@@ -39222,8 +39224,42 @@
 	},
 /area/station/crew_quarters/stockex)
 "nSZ" = (
-/obj/machinery/weapon_stand/rifle_rack/recharger,
-/turf/simulated/floor/red,
+/obj/rack,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/rack,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
 /area/station/ai_monitored/armory)
 "nTh" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -40292,39 +40328,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "oJi" = (
-/obj/rack,
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/rack,
+/obj/machinery/weapon_stand/rifle_rack/recharger,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
