@@ -252,7 +252,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	// updating the icon also randomises the order (non negotiable)
 	var/temporder = pick(list(1, 2, 3), list(1, 3, 2), list(2, 1, 3), list(2, 3, 1), list(3, 1, 2), list(3, 2, 1))
 	var/flowercount = 0 // this is to record how many flower icons have been put in so far
-	src.contents
 	src.overlays = null
 	src.inhand_image.overlays = null
 	src.icon_state = "base_[src.wrapstyle]"
