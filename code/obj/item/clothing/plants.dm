@@ -21,16 +21,16 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	if (src.amount > 1)
 		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
 		allocated_flower.set_loc(new_bouquet)
-		qdel(allocated_flower)
 	else
 		src.set_loc(new_bouquet)
 	if (istype(paperitem, /obj/item/wrapping_paper))
 		var/obj/item/wrapping_paper/dummy = paperitem
 		new_bouquet.wrapstyle = "gw_[dummy.style]"
-		qdel(dummy)
 	if (istype(paperitem, /obj/item/paper))
 		new_bouquet.wrapstyle = "paper"
+	var/whereitbetho = paperitem.loc
 	paperitem.set_loc(new_bouquet)
+	new_bouquet.set_loc(whereitbetho)
 	new_bouquet.flowernum += 1
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
@@ -239,7 +239,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
 		src.flowernum += 1
 		src.update_icon(list(1,2,3))
-		qdel(dummy_flower)
 	else if (flowernum == 1)
 		if (!hiddenitem) // only one hidden item allowed
 			W.set_loc(src)
@@ -265,5 +264,3 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
 			// we want the hidden item to be toward the back, covered by other stuff
 			src.overlays += image(temp.icon, icon_state = temp.icon_state)
-	qdel(temporder)
-	qdel(flowercount)
