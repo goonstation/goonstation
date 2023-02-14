@@ -26,11 +26,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		src.set_loc(new_bouquet)
 
 	if (istype(paperitem, /obj/item/wrapping_paper))
-		var/obj/item/wrapping_paper/dummy = paperused
-		src.wrapstyle = "gw_[dummy.style]"
+		var/obj/item/wrapping_paper/dummy = paperitem
+		new_bouquet.wrapstyle = "gw_[dummy.style]"
 		qdel(dummy)
-	if (istype(paperused, /obj/item/paper))
-		src.wrapstyle = "paper"
+	if (istype(paperitem, /obj/item/paper))
+		new_bouquet.wrapstyle = "paper"
 	paperitem.set_loc(new_bouquet)
 	new_bouquet.update_icon()
 	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
@@ -220,17 +220,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	var/max_flowers = 3
 	var/min_flowers = 1 // can't have a bouquet with no flowers
 	var/hiddenitem = FALSE
-/obj/item/bouquet/recheck()
-	// okay so here's my thought process
-	// contents is a list right? so when we add new things to the list it should retain ze order
-	// paper used in the wrap, flower1-3, then hidden item
-	// ideally
-	flowernum = 0
-	for (var/obj/item/itemname in src.contents)
-		if (istype(itemname, /obj/item/clothing/head/flower))
-			flowernum += 1
-	if (1 + flowernum + (hiddenitem ? 1 : 0) != src.contents.len)
-		CRASH("There's something wrong with the contents of this bouquet")
 /obj/item/bouquet/attackby(obj/item/W, mob/user)
 	// should give us back the paper and flowers when done with snipping tool
 	if (issnippingtool(W))
@@ -248,7 +237,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		// now we pick where it goes
 		W.set_loc(src)
 		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
-		src.recheck()
 		src.update_icon(list(1,2,3))
 		qdel(dummy_flower)
 	else if (flowernum == 1)
@@ -270,11 +258,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	src.icon_state = "base_[src.wrapstyle]"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
-		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower))
-			src.overlays += image(temp.icon, icon_state = temp.icon_state)
 		if (istype(temp, /obj/item/clothing/head/flower))
 			flowercount += 1
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[flowercount]]")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[flowercount]]")
+		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
+			// we want the hidden item to be toward the back, covered by other stuff
+			src.overlays += image(temp.icon, icon_state = temp.icon_state)
 	qdel(temporder)
 	qdel(flowercount)
