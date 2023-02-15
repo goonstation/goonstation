@@ -238,12 +238,13 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/living/intangible/wraith/W = M3.make_wraith()
-					if (W && istype(W))
-						M3 = W
-						role = ROLE_WRAITH
-						generate_wraith_objectives(lucky_dude)
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_WRAITH, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_WRAITH
+						M3 = mind.current
 					else
 						failed = 1
 

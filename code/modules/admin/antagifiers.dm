@@ -19,8 +19,8 @@
 			return
 		*/
 		if (M?.mind && !M.mind.special_role)
-			makeAntag(M)
 			new /datum/objective(attachedObjective, M.mind)
+			makeAntag(M)
 			uses--
 			if (uses == 0)
 				qdel(src)
@@ -127,7 +127,7 @@
 	attachedObjective = "Make them suffer."
 
 	makeAntag(mob/M as mob)
-		M.make_wraith()
+		M.mind?.add_antagonist(ROLE_WRAITH)
 
 /obj/traitorifier/blob
 	name = "Viscous Puddle"

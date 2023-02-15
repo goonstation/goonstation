@@ -327,7 +327,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_WRAITH)
-			generate_wraith_objectives(antag)
+			antag.add_antagonist(ROLE_WRAITH)
+			do_objectives = FALSE
 
 		if (ROLE_VAMPIRE)
 			antag.add_antagonist(ROLE_VAMPIRE)
