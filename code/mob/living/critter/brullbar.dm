@@ -18,11 +18,27 @@
 	health_burn_vuln = 1.2
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
+	var/is_king = FALSE
+
+	on_sleep()
+		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
+		if (!fadeout.disabled && fadeout.cooldowncheck())
+			fadeout.handleCast(src)
+		..()
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		retaliate(user)
+		..()
+
+	attack_hand(var/mob/user as mob)
+		if (user.a_intent != INTENT_HELP) // pets only or you get the claws, but you would get those anyway so...
+			retaliate(user)
+		..()
 
 	on_pet()
-		if(..())
+		if (..())
 			return 1
-		if(prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+		if (prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
 
@@ -64,10 +80,18 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		src.add_stam_mod_max("brullbar", 60)
 		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
+		if (src.is_king) // kings are built like tanks
+			src.add_stam_mod_max("brullbar", 100)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "brullbar", 50)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 50)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "brullbar", 10)
+		else // normal ones are still strong
+			src.add_stam_mod_max("brullbar", 40)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "brullbar", 20)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 20)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -76,19 +100,21 @@
 		add_health_holder(/datum/healthHolder/brain)
 
 	seek_target(var/range = 7)
+		if (src.lastattacker && GET_DIST(src, src.lastattacker) <= range)
+			return list(src.lastattacker)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
 			. += C
 
-		if(length(.) && prob(20))
+		if(length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		if(isdead(target))
+		if (isdead(target))
 			if (prob(30))
 				src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
@@ -99,11 +125,21 @@
 			else
 				src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
 				return
-		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(30))
+		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(50))
 			frenzy.handleCast(target)
 			return
 		else
 			return ..()
+
+	proc/retaliate(mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
+		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if (prob(50) && !tackle.disabled && tackle.cooldowncheck() && !isdead(src))
+			src.lastattacker = attacker
+			src.visible_message("<span class='alert'><b>[src] lunges at [attacker]!</b></span>")
+			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 50, 1)
+			tackle.handleCast(attacker)
+			ai.interrupt()
+
 
 	can_critter_attack()
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
@@ -119,7 +155,4 @@
 	health_brute_vuln = 0.7
 	health_burn = 250
 	health_burn_vuln = 1.2
-
-	New()
-		..()
-		src.add_stam_mod_max("brullbarking", 120)
+	is_king = TRUE
