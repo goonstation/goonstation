@@ -33,6 +33,7 @@
 	var/show_topic_log = FALSE
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
+	var/ghost_interaction = FALSE //! if toggled on then the admin ghost can interact with things
 
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs

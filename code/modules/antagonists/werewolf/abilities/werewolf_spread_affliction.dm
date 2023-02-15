@@ -68,7 +68,7 @@
 		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		var/done = TIME - started
+		var/done = src.time_spent()
 		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.1 && last_complete < 0.1)
 			if (M.werewolf_attack(target, "spread") != 1)
