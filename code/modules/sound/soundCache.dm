@@ -743,6 +743,7 @@ var/global/list/soundCache = list(
  	"sound/machines/tractor_running3.ogg" = 'sound/machines/tractor_running3.ogg',\
  	"sound/machines/tractorrev.ogg" = 'sound/machines/tractorrev.ogg',\
  	"sound/machines/tram_bell.ogg" = 'sound/machines/tram_bell.ogg',\
+ 	"sound/machines/transport_move.ogg" = 'sound/machines/transport_move.ogg',\
  	"sound/machines/twobeep.ogg" = 'sound/machines/twobeep.ogg',\
  	"sound/machines/twobeep2.ogg" = 'sound/machines/twobeep2.ogg',\
  	"sound/machines/typewriter.ogg" = 'sound/machines/typewriter.ogg',\

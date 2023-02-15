@@ -1,5 +1,8 @@
 
 (t)wed feb 15 23
+(u)Sord
+(e)📦|A-Game-Objects
+(*)Transport shuttle computers (Diner shuttle, research shuttle) now play a sound when the shuttle is moving.
 (u)Tanker
 (p)12835
 (e)🎨📦🌱|C-Sprites, A-Game-Objects, A-Hydroponics
