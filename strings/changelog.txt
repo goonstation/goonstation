@@ -1,5 +1,9 @@
 
 (t)tue feb 14 23
+(u)Gannets
+(p)13080
+(e)🪲|C-Bug
+(+)9mm bullets now correctly leave 9mm shrapnel, instead of .22
 (u)Wisemonster
 (p)13074
 (e)🗺💅|A-Mapping, C-QoL
