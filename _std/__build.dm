@@ -30,7 +30,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// OPTIONS TO GO FAST
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
@@ -158,7 +158,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define NO_RANDOM_EVENTS
 #define NO_SHUTTLE_CALLS
 #define I_AM_HACKERMAN
-//#define CHECK_MORE_RUNTIMES
+#define CHECK_MORE_RUNTIMES
 #endif
 
 var/global/vcs_revision = "1"
