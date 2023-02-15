@@ -4,7 +4,7 @@
 	desc = "Oh god."
 	density = 1
 	icon_state = "brullbar"
-	icon_state_dead = "brullbar-dead"
+	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
 	can_throw = 1
@@ -13,6 +13,7 @@
 	blood_id = "beff"
 	burning_suffix = "humanoid"
 	skinresult = /obj/item/material_piece/cloth/brullbarhide
+	max_skins = 3
 	health_brute = 50
 	health_brute_vuln = 0.6
 	health_burn = 50
@@ -141,7 +142,7 @@
 			target.gib()
 			return
 		else
-			src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
+			src.visible_message("<span class='alert'<b>[src] bites a chunk out of [target]!</b></span>")
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1)
 			for(var/damage_type in src.healthlist)
 				var/datum/healthHolder/hh = src.healthlist[damage_type]
@@ -168,7 +169,9 @@
 	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
+	icon_state_dead = "brullbarking"
 	skinresult = /obj/item/material_piece/cloth/kingbrullbarhide
+	max_skins = 5
 	health_brute = 250
 	health_brute_vuln = 0.7
 	health_burn = 250
