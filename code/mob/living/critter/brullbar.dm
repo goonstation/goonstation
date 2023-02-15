@@ -27,7 +27,6 @@
 		if (!fadeout.disabled && fadeout.cooldowncheck())
 			fadeout.handleCast(src)
 
-
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		retaliate(user)
 		..()
@@ -118,8 +117,6 @@
 					continue
 			. += C
 
-
-
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
@@ -139,7 +136,7 @@
 		if (prob(30))
 			src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
+			new /obj/decal/fakeobjects/skeleton(target.loc)
 			target.ghostize()
 			target.gib()
 			return
