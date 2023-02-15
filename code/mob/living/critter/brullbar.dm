@@ -22,7 +22,7 @@
 	on_pet()
 		if(..())
 			return 1
-		if(prob(20) && && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+		if(prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
 
@@ -95,14 +95,19 @@
 				target.ghostize()
 				new /obj/decal/fakeobjects/skeleton(target.loc)
 				target.gib()
+				return
 			else
 				src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
-
+				return
 		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(30))
 			frenzy.handleCast(target)
 			return
 		else
 			return ..()
+
+	can_critter_attack()
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		return can_act(src,TRUE) && !frenzy.disabled
 
 
 /mob/living/critter/brullbar/king
