@@ -571,6 +571,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"bR" = (
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/spectral{
+	name = "Telescience Lab";
+	icon_state = "telelab"
+	})
 "bT" = (
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
@@ -608,7 +616,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack,
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -657,7 +665,9 @@
 	})
 "cf" = (
 /obj/machinery/lrteleporter,
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -1303,6 +1313,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/monitoring)
+"eB" = (
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/medical/medbay/pharmacy)
 "eC" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone,
@@ -1567,6 +1583,7 @@
 /area/station/teleporter)
 "fz" = (
 /obj/table/glass/auto,
+/obj/random_item_spawner/snacks/one,
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 6
 	},
@@ -1800,6 +1817,14 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"gy" = (
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/spectral{
+	name = "Telescience Lab";
+	icon_state = "telelab"
+	})
 "gz" = (
 /obj/machinery/processor,
 /turf/simulated/floor/yellowblack,
@@ -2374,6 +2399,7 @@
 /turf/space,
 /area/space)
 "iN" = (
+/obj/submachine/chem_extractor,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -2546,7 +2572,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -2746,6 +2774,12 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"kn" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/pharmacy)
 "ko" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
@@ -2988,7 +3022,9 @@
 /obj/machinery/power/apc/autoname_north{
 	areastring = "Science Teleporter"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 5
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -3217,7 +3253,9 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 5
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -4355,7 +4393,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -4371,7 +4411,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 9
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -4851,7 +4893,9 @@
 	})
 "rI" = (
 /obj/storage/crate/adventure,
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -5398,8 +5442,17 @@
 /area/station/engine/substation/east)
 "tS" = (
 /obj/table/auto,
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/item_box/pens{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/device/audio_log{
+	pixel_y = 1
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "tT" = (
@@ -5441,7 +5494,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -5792,6 +5847,23 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/cargobay)
+"vL" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/tank/mini_oxygen{
+	pixel_y = -2
+	},
+/turf/simulated/floor/purpleblack,
+/area/station/science/spectral{
+	name = "Telescience Lab";
+	icon_state = "telelab"
+	})
 "vN" = (
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/wood,
@@ -6267,6 +6339,14 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
+	})
+"xv" = (
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/station/science/spectral{
+	name = "Telescience Lab";
+	icon_state = "telelab"
 	})
 "xz" = (
 /obj/wingrille_spawn/auto,
@@ -6905,7 +6985,7 @@
 /area/station/engine/core/nuclear)
 "zA" = (
 /obj/storage/closet/port_a_sci,
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack,
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -7046,7 +7126,9 @@
 	pixel_y = -2;
 	pixel_x = 6
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 6
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -7103,6 +7185,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "Ar" = (
+/obj/machinery/chem_heater,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -7398,6 +7481,17 @@
 /area/mining/magnet)
 "Bx" = (
 /obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/hand_labeler{
+	pixel_x = 15
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "By" = (
@@ -10302,6 +10396,14 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"Mn" = (
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/spectral{
+	name = "Telescience Lab";
+	icon_state = "telelab"
+	})
 "Mo" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/yellow,
@@ -12384,6 +12486,16 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"TZ" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/glass_recycler{
+	pixel_y = 10;
+	pixel_x = -1
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/medical/medbay/pharmacy)
 "Ua" = (
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
@@ -13007,7 +13119,9 @@
 /obj/item/tank/mini_oxygen{
 	pixel_y = -2
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 10
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -13414,7 +13528,9 @@
 /obj/machinery/computer/telescope{
 	dir = 8
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -13433,6 +13549,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "Xz" = (
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -13581,6 +13698,22 @@
 	dir = 8
 	},
 /area/station/engine/storage)
+"Yc" = (
+/obj/table/auto,
+/obj/item/disk/data/tape{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/obj/item/cargotele{
+	pixel_x = -14;
+	pixel_y = -4
+	},
+/obj/item/storage/box/tapebox{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
 "Yd" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /turf/simulated/floor/yellow,
@@ -14045,7 +14178,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/science/spectral{
 	name = "Telescience Lab";
 	icon_state = "telelab"
@@ -47505,7 +47640,7 @@ bI
 dk
 mb
 ZF
-Bx
+Yc
 FW
 Og
 oE
@@ -49317,7 +49452,7 @@ pT
 jy
 pQ
 ZH
-TQ
+bR
 rI
 VZ
 Kg
@@ -49617,11 +49752,11 @@ Qe
 XQ
 lq
 ue
+gy
+gy
+xv
 TQ
-TQ
-TQ
-TQ
-VZ
+vL
 Kg
 Df
 sI
@@ -49921,9 +50056,9 @@ lj
 In
 lj
 av
+Mn
 TQ
-TQ
-VZ
+vL
 dZ
 sA
 Dt
@@ -50223,7 +50358,7 @@ Wa
 FG
 mG
 lj
-TQ
+Mn
 TQ
 zA
 dZ
@@ -54133,8 +54268,8 @@ Cx
 zI
 KY
 Ar
-xj
-xj
+TZ
+eB
 xj
 OA
 MX
@@ -54736,7 +54871,7 @@ Cx
 Cx
 zI
 KY
-Xz
+kn
 nu
 nu
 nu
