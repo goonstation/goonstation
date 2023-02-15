@@ -36,7 +36,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 
-#define STOP_DISTRACTING_ME //All of the below
+//#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
