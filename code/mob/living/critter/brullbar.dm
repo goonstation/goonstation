@@ -102,6 +102,7 @@
 		add_health_holder(/datum/healthHolder/brain)
 
 	seek_target(var/range = 7)
+		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		if (src.lastattacker && GET_DIST(src, src.lastattacker) <= range)
 			return list(src.lastattacker)
 		. = list()
@@ -121,6 +122,9 @@
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
+
+		if (!length(.) && !fadeout.disabled && fadeout.cooldowncheck())
+			fadeout.handleCast(src)
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
@@ -161,7 +165,8 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		return can_act(src,TRUE) && !frenzy.disabled
+		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
+		return can_act(src,TRUE) && !frenzy.disabled || !fadeout.disabled
 
 
 /mob/living/critter/brullbar/king
