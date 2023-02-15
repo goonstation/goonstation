@@ -9491,12 +9491,14 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
-/obj/item/clipboard,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
 	},
 /obj/firedoor_spawn,
+/obj/machinery/phone{
+	pixel_y = -6
+	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -14081,10 +14083,6 @@
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
-"aWV" = (
-/obj/machinery/phone/wall,
-/turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "aWW" = (
 /obj/cable{
@@ -24813,6 +24811,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -31529,9 +31530,6 @@
 "hsm" = (
 /obj/stool/bar,
 /obj/machinery/bot/guardbot/gunner,
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -68805,7 +68803,7 @@ sOb
 eNI
 aVo
 aXq
-aWV
+aUH
 aXB
 aYs
 aZg
