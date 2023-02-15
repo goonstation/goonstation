@@ -30,19 +30,15 @@
 
 			if (M.special_sprint & SPRINT_BAT)
 				M.special_sprint &= ~SPRINT_BAT
-				icon_state = "mist"
 			else
 				M.special_sprint |= SPRINT_BAT
-				icon_state = "mist"
 		else
 			M.special_sprint &= ~SPRINT_BAT
 
 			if (M.special_sprint & SPRINT_BAT_CLOAKED)
 				M.special_sprint &= ~SPRINT_BAT_CLOAKED
-				icon_state = "mist"
 			else
 				M.special_sprint |= SPRINT_BAT_CLOAKED
-				icon_state = "mist"
 
 		boutput(M, "<span class='notice'>Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
 
