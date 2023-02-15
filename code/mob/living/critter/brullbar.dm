@@ -12,19 +12,21 @@
 	can_disarm = 1
 	blood_id = "beff"
 	burning_suffix = "humanoid"
-	health_brute = 70
-	health_brute_vuln = 0.7
-	health_burn = 70
-	health_burn_vuln = 1.2
+	skinresult = /obj/item/material_piece/cloth/brullbarhide
+	health_brute = 50
+	health_brute_vuln = 0.6
+	health_burn = 50
+	health_burn_vuln = 1.3
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
 	var/is_king = FALSE
 
 	on_sleep()
+		..()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		if (!fadeout.disabled && fadeout.cooldowncheck())
 			fadeout.handleCast(src)
-		..()
+
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		retaliate(user)
@@ -104,34 +106,53 @@
 			return list(src.lastattacker)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
+			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
+			if (ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(!is_king && iswerewolf(H))
+					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+					step_away(src, H, 15)
+					src.set_dir(get_dir(src, H))
+					continue
 			. += C
 
-		if(length(.) && prob(10))
+
+
+		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		if (isdead(target))
-			if (prob(30))
-				src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
-				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
-				target.ghostize()
-				target.gib()
-				return
-			else
-				src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
-				return
-		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(50))
+		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if (!tackle.disabled && tackle.cooldowncheck() && prob(20) && !is_incapacitated(target))
+			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
+		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(40))
 			frenzy.handleCast(target)
 			return
 		else
 			return ..()
 
-	proc/retaliate(mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
+	critter_scavenge(var/mob/target)
+		if (prob(30))
+			src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
+			target.ghostize()
+			target.gib()
+			return
+		else
+			src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1)
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(10)
+			return
+
+
+	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (prob(50) && !tackle.disabled && tackle.cooldowncheck() && !isdead(src))
 			src.lastattacker = attacker
@@ -139,7 +160,6 @@
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 50, 1)
 			tackle.handleCast(attacker)
 			ai.interrupt()
-
 
 	can_critter_attack()
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
@@ -151,8 +171,15 @@
 	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
+	skinresult = /obj/item/material_piece/cloth/kingbrullbarhide
 	health_brute = 250
 	health_brute_vuln = 0.7
 	health_burn = 250
-	health_burn_vuln = 1.2
+	health_burn_vuln = 1.4
 	is_king = TRUE
+
+/mob/living/critter/brullbar/strong //orginal health for admin spawns
+	health_brute = 100
+	health_brute_vuln = 0.7
+	health_burn = 100
+	health_burn_vuln = 1.4
