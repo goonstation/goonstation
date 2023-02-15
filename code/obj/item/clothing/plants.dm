@@ -273,9 +273,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			flowernames += temp.name
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[length(flowernames)]]")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[length(flowernames)]]")
-		if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
+		// if (!istype(temp, /obj/item/paper) && !istype(temp, /obj/item/wrapping_paper) && !istype(temp, /obj/item/clothing/head/flower) && flowernum == 1)
 			// we want the hidden item to be toward the back, covered by other stuff
-			src.overlays += image(temp.icon, icon_state = temp.icon_state)
+			// src.overlays += image(temp.icon, icon_state = temp.icon_state)
 	src.name = "[flowernames[1]] bouquet"
 	if (src.hiddenitem)
 		hiddentext = " There seems to be something else inside it as well."
