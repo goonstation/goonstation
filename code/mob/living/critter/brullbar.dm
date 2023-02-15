@@ -19,6 +19,13 @@
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
 
+	on_pet()
+		if(..())
+			return 1
+		if(prob(20) && && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
+			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -72,7 +79,7 @@
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/brullbar)) continue//don't kill other brullbars
+			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
 			. += C
 
 		if(length(.) && prob(20))
@@ -82,13 +89,15 @@
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		if(isdead(target))
-			if (prob(60))
+			if (prob(30))
 				src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				target.ghostize()
 				new /obj/decal/fakeobjects/skeleton(target.loc)
 				target.gib()
-			else return ..()
+			else
+				src.visible_message("<span class='alert'<b>[src] tears a chunk out of [target] and eats it!</b></span>")
+
 		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(30))
 			frenzy.handleCast(target)
 			return
