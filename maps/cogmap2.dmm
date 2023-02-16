@@ -70745,7 +70745,7 @@
 /area/listeningpost)
 "dop" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -70800,7 +70800,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dow" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/swat,
@@ -70808,12 +70808,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dox" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doy" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
@@ -70838,13 +70838,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doC" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doD" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -70853,7 +70853,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doE" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -70881,7 +70881,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doK" = (
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
