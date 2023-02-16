@@ -1108,7 +1108,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	texture = "wood"
 	texture_blend = BLEND_ADD
 
 	New()
@@ -1124,7 +1123,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	texture = "bamboo"
 	texture_blend = BLEND_ADD
 
 	New()

@@ -458,6 +458,7 @@ TYPEINFO_NEW(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
+	mat_appearances_to_ignore = list("wood")
 
 	auto
 		auto = 1

@@ -291,7 +291,7 @@ MATERIAL
 		if (src?.material?.mat_id == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material?.mat_id == "wood")
+		if (src?.material?.material_flags & MATERIAL_WOOD)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
@@ -1270,34 +1270,34 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 
 	wood
 		fl_tiles
-			recipe_id = "fl_tiles"
+			recipe_id = "fl_tiles_wood"
 			craftedType = /obj/item/tile
 			name = "Floor Tile"
 			yield = 4
 			can_craft_multiples = TRUE
 			icon = 'icons/obj/metal.dmi'
-			icon_state = "tile_5"
+			icon_state = "tile_5$$wood"
 		stool
-			recipe_id = "stool"
+			recipe_id = "wood_stool"
 			craftedType = /obj/stool/wooden
 			name = "Stool"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "wstool"
 		chair
-			recipe_id = "chair"
+			recipe_id = "wood_chair"
 			craftedType = /obj/stool/chair/wooden
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
 		table
-			recipe_id = "table"
+			recipe_id = "wood_table"
 			craftedType = /obj/item/furniture_parts/table/wood
 			name = "Table Parts"
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/table_wood.dmi'
 			icon_state = "table_parts"
 		dresser
-			recipe_id = "dresser"
+			recipe_id = "wood_dresser"
 			craftedType = /obj/storage/closet/dresser
 			name = "dresser"
 			sheet_cost = 2
@@ -1311,7 +1311,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon = 'icons/obj/large_storage.dmi'
 			icon_state = "coffin"
 		construct
-			recipe_id = "construct"
+			recipe_id = "wood_construct"
 			craftedType = /obj/structure/girder
 			name = "Wall Girders"
 			sheet_cost = 2
@@ -1321,9 +1321,30 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			recipe_id = "barricade"
 			craftedType = /obj/structure/woodwall
 			name = "Barricade"
-			sheet_cost = 2
+			sheet_cost = 5
 			icon = 'icons/obj/structures.dmi'
 			icon_state = "woodwall"
+		wood_door
+			recipe_id = "wood_door"
+			craftedType = /obj/machinery/door/unpowered/wood
+			name = "Door"
+			sheet_cost = 3
+			icon = 'icons/obj/doors/door_wood.dmi'
+			icon_state = "door1"
+		bookshelf
+			recipe_id = "bookshelf"
+			craftedType = /obj/item/furniture_parts/bookshelf
+			name = "Bookshelf"
+			sheet_cost = 5
+			icon = 'icons/obj/furniture/bookshelf.dmi'
+			icon_state = "bookshelf_parts"
+		wood_double_door
+			recipe_id = "wood_double_door"
+			craftedType = /obj/machinery/door/unpowered/wood/pyro
+			name = "Double Door"
+			sheet_cost = 6
+			icon = 'icons/obj/doors/SL_doors.dmi'
+			icon_state = "wood1"
 
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)

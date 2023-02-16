@@ -183,6 +183,7 @@
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+	mat_appearances_to_ignore = list("wood")
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -1131,6 +1132,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+	mat_appearances_to_ignore = list("wood")
 
 	regal
 		name = "regal chair"
