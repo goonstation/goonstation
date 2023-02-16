@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		var/mob/living/critter/changeling/legworm/worm = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
 		if (!use_mob.mind)
-			CRASH("handspider created from mob with no mind")
+			CRASH("legworm created from mob with no mind")
 		use_mob.mind.transfer_to(worm)
 		worm.mind.add_antagonist(ROLE_LEGWORM)
 		src.attach_to_hivemind(worm)
