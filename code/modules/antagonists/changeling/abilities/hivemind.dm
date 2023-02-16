@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		if (!use_mob.mind)
 			CRASH("handspider created from mob with no mind")
 		use_mob.mind.transfer_to(spider)
-		spider.mind.add_antagonist(ROLE_HANDSPIDER)
+		spider.mind.add_antagonist(ROLE_HANDSPIDER, source = ANTAGONIST_SOURCE_SUMMONED)
 		src.attach_to_hivemind(spider)
 
 		if (original_arm && istype(original_arm, /obj/item/parts/robot_parts))
@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		if (!use_mob.mind)
 			CRASH("eyespider created from mob with no mind")
 		use_mob.mind.transfer_to(spider)
-		spider.mind.add_antagonist(ROLE_EYESPIDER)
+		spider.mind.add_antagonist(ROLE_EYESPIDER, source = ANTAGONIST_SOURCE_SUMMONED)
 		src.attach_to_hivemind(spider)
 
 		return FALSE
@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		if (!use_mob.mind)
 			CRASH("legworm created from mob with no mind")
 		use_mob.mind.transfer_to(worm)
-		worm.mind.add_antagonist(ROLE_LEGWORM)
+		worm.mind.add_antagonist(ROLE_LEGWORM, source = ANTAGONIST_SOURCE_SUMMONED)
 		src.attach_to_hivemind(worm)
 
 		return FALSE
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		if (!use_mob.mind)
 			CRASH("buttcrab created from mob with no mind")
 		use_mob.mind.transfer_to(crab)
-		crab.mind.add_antagonist(ROLE_BUTTCRAB)
+		crab.mind.add_antagonist(ROLE_BUTTCRAB, source = ANTAGONIST_SOURCE_SUMMONED)
 		src.attach_to_hivemind(crab)
 
 		return FALSE
