@@ -341,6 +341,10 @@
 
 /// available if add_contents needs to be overridden
 /datum/storage/proc/add_contents_extra(obj/item/I, mob/user, visible)
+	// make sure stored item tooltip will be updated
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/W = src.linked_item
+		W.tooltip_rebuild = TRUE
 	// a mob put the item in
 	if (!istype(user))
 		return
@@ -364,6 +368,10 @@
 
 /// for use if transfer_stored_item is overridden
 /datum/storage/proc/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
+	// update stored item tooltip
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/W = src.linked_item
+		W.tooltip_rebuild = TRUE
 	if (location?.storage && add_to_storage)
 		location.storage.add_contents(I, user)
 	else

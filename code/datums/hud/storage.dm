@@ -173,9 +173,6 @@
 			src.obj_locs[obj_loc] = I
 			i++
 		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-		if(isitem(master))
-			var/obj/item/I = master
-			I.tooltip_rebuild = 1
 		master.linked_item.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
