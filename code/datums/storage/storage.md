@@ -32,12 +32,12 @@ A new storage datum type should be created when a type is needed that rewrites h
 ## Examples
 One cool case of storage datums is giving storage to clothing items. An example is below:
 ```js
-/obj/item/clothing/fishingvest
-	name = "fishing vest"
-	desc = "A nice fishing vest, with some pockets on the front."
+/obj/item/clothing/suit/space/emerg/pocketed
+	name = "emergency suit"
+	desc = "A standard emergency suit, with some pockets on the front."
 
 	New()
 		..()
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
 ```
-This would create give the vest item three storage slot that can hold small items and that when clicked when worn would allow one to use the storage without taking the item off.
+This would create give the space suit item three storage slot that can hold small items and that when clicked when worn would allow one to use the storage without taking the item off.
