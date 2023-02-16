@@ -6,5 +6,5 @@
 
 /datum/storage/unholdable
 
-	storage_item_attack_hand(mob/user)
-		src.storage_item_mouse_drop(user, user)
+/datum/storage/unholdable/storage_item_attack_hand(mob/user)
+	src.storage_item_mouse_drop(user, user)

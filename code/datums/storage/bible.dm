@@ -7,25 +7,25 @@ var/global/list/bible_contents = list()
 /datum/storage/bible
 	// stored item list and bible_contents can be read interchangeably
 
-	add_contents(obj/item/I, mob/user = null, visible = TRUE)
-		if (user?.equipped() == I)
-			user.u_equip(I)
-		for_by_tcl(bible, /obj/item/bible)
-			bible.storage.stored_items += I
-			bible.storage.hud.add_item(I, user)
-		bible_contents += I
-		I.set_loc(src.linked_item)
-		I.stored = src
+/datum/storage/bible/add_contents(obj/item/I, mob/user = null, visible = TRUE)
+	if (user?.equipped() == I)
+		user.u_equip(I)
+	for_by_tcl(bible, /obj/item/bible)
+		bible.storage.stored_items += I
+		bible.storage.hud.add_item(I, user)
+	bible_contents += I
+	I.set_loc(src.linked_item)
+	I.stored = src
 
-		src.add_contents_extra(I, user, visible)
+	src.add_contents_extra(I, user, visible)
 
-	transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
-		if (!(I in src.stored_items))
-			return
-		for_by_tcl(bible, /obj/item/bible)
-			bible.storage.stored_items -= I
-			bible.storage.hud.remove_item(I, user)
-		bible_contents -= I
-		I.stored = null
+/datum/storage/bible/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
+	if (!(I in src.stored_items))
+		return
+	for_by_tcl(bible, /obj/item/bible)
+		bible.storage.stored_items -= I
+		bible.storage.hud.remove_item(I, user)
+	bible_contents -= I
+	I.stored = null
 
-		src.transfer_stored_item_extra(I, location, add_to_storage, user)
+	src.transfer_stored_item_extra(I, location, add_to_storage, user)
