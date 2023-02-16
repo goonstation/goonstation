@@ -206,7 +206,7 @@
 		. = ..()
 		src.controlled_minimap = minimap
 
-		src.displayed_minimap = new minimap.map_path(minimap.map_type, 1)
+		src.displayed_minimap = new minimap.map_path(minimap.map_type, 1, (1 / minimap.map_scale))
 		for (var/atom/marker_target in minimap_marker_targets)
 			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, displayed_minimap)
 

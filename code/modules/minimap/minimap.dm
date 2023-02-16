@@ -27,6 +27,8 @@
 	var/zoom_coefficient = 1
 	///The current scale of the physical map, as a multiple of the original size (300x300px).
 	var/map_scale = 1
+	///The desired scale of the minimap markers, as a multiple of the original size (32x32px).
+	var/marker_scale = 1
 
 	New(var/minimap_type)
 		. = ..()
@@ -75,7 +77,7 @@
 		if (target in src.minimap_markers)
 			return
 
-		var/datum/minimap_marker/marker = new /datum/minimap_marker(target, marker_name, can_be_deleted_by_player, list_on_ui)
+		var/datum/minimap_marker/marker = new /datum/minimap_marker(target, marker_name, can_be_deleted_by_player, list_on_ui, src.marker_scale)
 		marker.map = src
 		marker.marker.icon = icon(icon, icon_state)
 
@@ -120,7 +122,7 @@
 	///The width in pixels between the edge of the station and the edge of the map.
 	var/border_width = 20
 
-	New(var/minimap_type, var/scale)
+	New(var/minimap_type, var/scale, var/marker_scale)
 		x_max = world.maxx
 		y_max = world.maxy
 
@@ -129,6 +131,8 @@
 
 		if (scale)
 			src.scale_map(scale)
+		if (marker_scale)
+			src.marker_scale = marker_scale
 
 		src.find_focal_point()
 
