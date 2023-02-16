@@ -392,6 +392,10 @@
 			if (isturf(location))
 				I.dropped()
 
+	/// return outputtable capacity
+	proc/get_capacity()
+		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
+
 	/// storage is full or not
 	proc/is_full()
 		return length(src.get_contents()) >= src.slots
@@ -408,10 +412,6 @@
 		for (var/atom/A as anything in our_contents)
 			if (A.storage)
 				. += A.storage.get_all_contents()
-
-	/// return outputtable capacity
-	proc/check_capacity()
-		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 	/// emping storage emps everything inside
 	proc/storage_emp_act()
