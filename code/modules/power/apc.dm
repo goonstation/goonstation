@@ -521,9 +521,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 			var/overspill = 250 - recipient_cell.charge
 			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your cell"] is already fully charged.</span>")
 			else if (donor_cell.charge <= 250)
-				boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
+				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[src] doesn't"] have enough power to transfer!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
