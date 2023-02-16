@@ -66,12 +66,14 @@
 	/// The storage item linked to this datum
 	var/atom/linked_item = null
 	/// All items stored
-	var/list/stored_items = list()
+	var/list/stored_items = null
 
 	New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
 		..()
-		src.linked_item = storage_item
 		src.hud = new (src)
+		src.stored_items = list()
+
+		src.linked_item = storage_item
 		src.can_hold = can_hold
 		src.can_hold_exact = can_hold_exact
 		src.check_wclass = check_wclass
