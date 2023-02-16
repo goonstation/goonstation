@@ -36,10 +36,10 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/sting/dna)
 		src.ability_holder.addAbility(/datum/targetable/changeling/transform)
 		src.ability_holder.addAbility(/datum/targetable/changeling/morph_arm)
-		src.ability_holder.addAbility(/datum/targetable/changeling/handspider)
-		src.ability_holder.addAbility(/datum/targetable/changeling/eyespider)
-		src.ability_holder.addAbility(/datum/targetable/changeling/legworm)
-		src.ability_holder.addAbility(/datum/targetable/changeling/buttcrab)
+		src.ability_holder.addAbility(/datum/targetable/changeling/critter/handspider)
+		src.ability_holder.addAbility(/datum/targetable/changeling/critter/eyespider)
+		src.ability_holder.addAbility(/datum/targetable/changeling/critter/legworm)
+		src.ability_holder.addAbility(/datum/targetable/changeling/critter/buttcrab)
 		src.ability_holder.addAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
@@ -70,10 +70,10 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/dna_target_select)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/transform)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/morph_arm)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/handspider)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/eyespider)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/legworm)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/buttcrab)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/handspider)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/eyespider)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/legworm)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/buttcrab)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
@@ -99,3 +99,27 @@
 				dat.Insert(3, {"Their body was destroyed."})
 
 		return dat
+
+ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
+/datum/antagonist/changeling_critter
+	remove_on_death = TRUE
+	remove_on_clone = TRUE
+
+	is_compatible_with(datum/mind/mind)
+		return istype(mind.current, /mob/living/critter/changeling)
+
+/datum/antagonist/changeling_critter/handspider
+	id = ROLE_HANDSPIDER
+	display_name = "handspider"
+
+/datum/antagonist/changeling_critter/eyespider
+	id = ROLE_EYESPIDER
+	display_name = "eyespider"
+
+/datum/antagonist/changeling_critter/legworm
+	id = ROLE_LEGWORM
+	display_name = "legworm"
+
+/datum/antagonist/changeling_critter/buttcrab
+	id = ROLE_BUTTCRAB
+	display_name = "buttcrab"
