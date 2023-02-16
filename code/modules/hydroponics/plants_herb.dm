@@ -231,18 +231,20 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		var/sting_prob = clamp((33 + DNA.endurance / 2), 33, 100)
+		var/sting_prob = clamp((33 + DNA?.get_effective_value("endurance") / 2), 33, 100)
 		var/chem_protection = 1
 		var/reagent_amount = 0
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(sting_prob)) //how frequently it injects people is based on endurance
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(sting_prob)) //how frequently it injects people is based on endurance
 			reagent_amount = max(1, DNA.potency) // this is the total volume. Divided later between associated chems.
 			for (var/mob/living/M in range(1,POT))
 				if (ishuman(M))
 					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
+				for (var/plantReagent in assoc_reagents) //amount of delivered chems is based on potency
+					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(assoc_reagents) ** 0.5))))))
 
 				boutput(M, "<span class='notice'>You feel something brush against you.</span>")
-				M.reagents?.add_reagent("histamine", 5 * chem_protection)	// Innate histamine is treated special here
 				if (length(assoc_reagents))
 					// Creating a temporary chem holder which holds all the chems inside
 					var/datum/reagents/reagents_temp = new/datum/reagents(reagent_amount)
@@ -273,7 +275,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
 		H.reagents?.add_reagent("histamine", 5)
 		for (var/plantReagent in assoc_reagents)
-			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(assoc_reagents) ** 0.5))))))
 		H.changeStatus("weakened", 4 SECONDS)
 
 /datum/plant/herb/tobacco

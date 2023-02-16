@@ -97,9 +97,8 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WEREWOLF
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.make_werewolf()
+		M.mind.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -185,8 +184,8 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_werewolf()
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
+			M.mind.add_antagonist(ROLE_WEREWOLF, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
 
 	wrestler
 		name = "WRESTL~1.EXE"

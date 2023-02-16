@@ -123,7 +123,8 @@
 					// Transfer player control.
 
 					var/mob/living/critter/changeling/headspider/HS = changeto.current
-					HS.changeling = null //so the spider doesn't have a ref to our holder as well
+					if (istype(HS))
+						HS.changeling = null //so the spider doesn't have a ref to our holder as well
 					changeto.transfer_to(affected_mob)
 					changeto = null
 					affected_mob.change_misstep_chance(-INFINITY)
