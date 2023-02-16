@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 /turf/simulated/wall/false_wall
 	name = "wall"
 	icon = 'icons/obj/doors/Doorf.dmi'

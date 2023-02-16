@@ -2408,7 +2408,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "aYV" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "aYZ" = (
 /obj/machinery/disposal/mail/autoname{
@@ -12386,9 +12386,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
 "fdn" = (
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Teleporter"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -14868,6 +14866,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"gge" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
 "ggj" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -27868,7 +27869,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/engineering/breakroom)
 "lLM" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "lLP" = (
 /obj/cable{
@@ -33047,7 +33048,7 @@
 /area/station/security/main)
 "nVF" = (
 /obj/securearea,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "nVM" = (
 /obj/securearea,
@@ -40025,8 +40026,9 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/hydroponics/bay)
 "qTj" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8;
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
+	dir = 4;
 	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
@@ -42285,7 +42287,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "rRH" = (
 /obj/disposalpipe/junction/middle/east,
@@ -42388,7 +42390,7 @@
 	})
 "rTN" = (
 /obj/securearea,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "rTY" = (
 /obj/machinery/light,
@@ -43229,7 +43231,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "siK" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
 /obj/cable{
@@ -47590,7 +47593,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/main)
 "udw" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "udA" = (
 /obj/machinery/light_switch/east,
@@ -62214,7 +62217,7 @@ tpS
 tpS
 tpS
 tpS
-tvQ
+gge
 jGe
 vnX
 vnX
@@ -62516,7 +62519,7 @@ tEt
 tpS
 rQD
 tEt
-tvQ
+gge
 jGe
 jGe
 vnX
@@ -62817,8 +62820,8 @@ lLM
 lLM
 qTj
 lLM
-tvQ
-tvQ
+gge
+gge
 jGe
 vnX
 vnX
