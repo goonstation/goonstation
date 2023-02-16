@@ -2,31 +2,7 @@
 /* ------------------------- STORAGE DATUM -------------------------- */
 /* ================================================================== */
 
-/* Intro */
-
-/* What is a storage datum? */
-// A storage datum is something that can be added to any atom to give it storage functionality, being able to things of type /obj/item in a HUD.
-// Atom level procs, for things like attacking a storage with an item, close to the level of signal usage, are used to make this work.
-
-/* Looking to add a storage to an item? */
-// Just call atom.create_storage() as below
-// Ex. myatom.create_storage(/datum/storage) creates a very simple storage on an item.
-// Procs for common storage actions, like getting all contents from a storage, are available.
-// The storage datum is organized into "internal" and "public" procs
-//
-// To remove a storage from an item, just call atom.remove_storage().
-
-/* When should a new storage datum type be created? */
-// A new storage datum type should be made if you are looking to override the code for adding/removing an item to a storage, or make a significant
-// change that needs a new type. Ex. See bible storages.
-
-/* Lower level things to note */
-// -Items in a storage are kept track of in the stored item's contents list and in the storage datum, but when iterating through contents, the procs
-// in this file should be used for getting the contents
-// -For /obj/item, src.loc and src.stored.linked_item will be the same, but the second should be used for consistency and clarity
-
-/* Examples */
-// -Storage datums on clothing items function just like backpacks
+// see storage.md for an intro to storage datums
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), check_wclass = FALSE,
