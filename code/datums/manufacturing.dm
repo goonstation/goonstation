@@ -1795,6 +1795,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/audiotape
+	name ="Audio Tape"
+	item_paths = list("MET-1")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/audio_tape)
+	time = 4 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/audiolog
+	name ="Audio Log"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,5)
+	item_outputs = list(/obj/item/device/audio_log)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
