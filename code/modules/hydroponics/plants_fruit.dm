@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 
 /datum/plant/fruit/mustard
-	name = "Mustard" //oh god
+	name = "Sinapis cosmicus" //oh god
 	seedcolor = "#FFCC00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/mustard
 	starthealth = 20
