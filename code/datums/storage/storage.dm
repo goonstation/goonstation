@@ -28,7 +28,7 @@
 /* Examples */
 // -Storage datums on clothing items function just like backpacks
 
-// add storage to an item
+/// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), check_wclass = FALSE,
 		max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
 	var/list/previous_storage = list()
@@ -39,7 +39,7 @@
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
-// remove an atom's storage
+/// remove atom's storage
 /atom/proc/remove_storage()
 	qdel(src.storage)
 	src.storage = null
@@ -104,11 +104,13 @@
 
 	// ----------------- "INTERNAL" PROCS ----------------------
 
+	/// storage item moving triggers a movement of items inside
 	proc/storage_item_move_triggered(mob/M, kindof)
 		for (var/obj/item/I as anything in src.get_contents())
 			if (I.move_triggered)
 				I.move_trigger(M, kindof)
 
+	/// creates initial contents in the storage
 	proc/make_my_stuff(list/spawn_contents)
 		if (!length(spawn_contents))
 			return
@@ -126,7 +128,7 @@
 		if (total_amt > slots)
 			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src.linked_item] has more than [slots] items in it!")
 
-	// when clicking the storage item with an object
+	/// when clicking the storage item with an object
 	proc/storage_item_attack_by(obj/item/W, mob/user)
 		. = TRUE
 		// check if item is the storage item
@@ -182,7 +184,7 @@
 		// add item to storage
 		src.add_contents(W, user)
 
-	// when clicking the storage item with an empty hand
+	/// when clicking the storage item with an empty hand
 	proc/storage_item_attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
@@ -214,7 +216,7 @@
 					M.detach_hud(hud)
 			src.hud.update(user)
 
-	// storage item is mouse dropped onto something
+	/// storage item is mouse dropped onto something
 	proc/storage_item_mouse_drop(mob/user, atom/over_object, src_location, over_location)
 		// if mouse dropping storage item onto a hand slot, attempt to hold it
 		if (istype(over_object, /atom/movable/screen/hud))
@@ -266,11 +268,11 @@
 						M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
 						M.triggered(user)
 
-	// using storage item in hand
+	/// using storage item in hand
 	proc/storage_item_attack_self(mob/user)
 		src.storage_item_attack_hand(user)
 
-	// after attacking an object with the storage item
+	/// after attacking an object with the storage item
 	proc/storage_item_after_attack(atom/target, mob/user, reach)
 		// if item is stored, drop storage and take it out
 		if (target in src.get_contents())
@@ -295,11 +297,11 @@
 				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()
 
-	// storage item is dropped
+	/// storage item is dropped
 	proc/storage_item_on_drop(atom/source, mob/user)
 		src.hud?.update(user)
 
-	// when reaching inside the storage item, check for traps
+	/// when reaching inside the storage item, check for traps
 	proc/mousetrap_check(mob/user)
 		if (!ishuman(user) || user.stat)
 			return FALSE
@@ -318,7 +320,7 @@
 
 	// ----------------- PUBLIC PROCS ----------------------
 
-	// check if the storage can hold an item or not
+	/// check if the storage can hold an item or not
 	proc/check_can_hold(obj/item/W)
 		if (!W)
 			return STORAGE_CANT_HOLD
@@ -347,7 +349,7 @@
 
 		return STORAGE_CAN_HOLD
 
-	// when adding an item in
+	/// when adding an item in
 	proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 		if (user?.equipped() == I)
 			user.u_equip(I)
@@ -358,7 +360,7 @@
 
 		src.add_contents_extra(I, user, visible)
 
-	// available if add_contents needs to be overridden
+	/// available if add_contents needs to be overridden
 	proc/add_contents_extra(obj/item/I, mob/user, visible)
 		// a mob put the item in
 		if (!istype(user))
@@ -371,7 +373,7 @@
 					"<span class='notice'>You have added [I] to [src.linked_item].</span>")
 			playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
-	// when transfering something in the storage out
+	/// when transfering something in the storage out
 	proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 		if (!(I in src.get_contents()))
 			return
@@ -381,7 +383,7 @@
 
 		src.transfer_stored_item_extra(I, location, add_to_storage, user)
 
-	// for use if transfer_stored_item is overridden
+	/// for use if transfer_stored_item is overridden
 	proc/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
 		if (location?.storage && add_to_storage)
 			location.storage.add_contents(I, user)
@@ -390,15 +392,15 @@
 			if (isturf(location))
 				I.dropped()
 
-	// storage is full or not
+	/// storage is full or not
 	proc/is_full()
 		return length(src.get_contents()) >= src.slots
 
-	// return stored contents
+	/// return stored contents
 	proc/get_contents()
 		return src.stored_items
 
-	// return recursive search of all contents
+	/// return recursive search of all contents
 	proc/get_all_contents()
 		. = list()
 		var/our_contents = src.get_contents()
@@ -407,11 +409,11 @@
 			if (A.storage)
 				. += A.storage.get_all_contents()
 
-	// return outputtable capacity
+	/// return outputtable capacity
 	proc/check_capacity()
 		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
-	// emping storage emps everything inside
+	/// emping storage emps everything inside
 	proc/storage_emp_act()
 		for (var/atom/A as anything in src.get_contents())
 			A.emp_act()
