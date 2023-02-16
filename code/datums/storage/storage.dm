@@ -20,6 +20,7 @@
 	qdel(src.storage)
 	src.storage = null
 
+/// a datum for atoms that allows holdable storage of items in a hud
 /datum/storage
 	/// Types that can be held
 	var/list/can_hold = null
