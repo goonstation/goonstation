@@ -105,10 +105,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			spider.icon_prefix = "robo"
 			spider.UpdateIcon()
 
-		spider.show_antag_popup("handspider")
-		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
-		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</font>")
-
 		return FALSE
 
 /datum/targetable/changeling/critter/eyespider
@@ -152,10 +148,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		use_mob.mind.transfer_to(spider)
 		spider.mind.add_antagonist(ROLE_EYESPIDER)
 		src.attach_to_hivemind(spider)
-
-		spider.show_antag_popup("eyespider")
-		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
-		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</font>")
 
 		return FALSE
 
@@ -201,10 +193,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		worm.mind.add_antagonist(ROLE_LEGWORM)
 		src.attach_to_hivemind(worm)
 
-		worm.show_antag_popup("legworm")
-		boutput(worm, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
-		boutput(worm, "<font color=red>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</font>")
-
 		return FALSE
 
 /datum/targetable/changeling/critter/buttcrab
@@ -236,10 +224,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		use_mob.mind.transfer_to(crab)
 		crab.mind.add_antagonist(ROLE_BUTTCRAB)
 		src.attach_to_hivemind(crab)
-
-		crab.show_antag_popup("buttcrab")
-		boutput(crab, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
-		boutput(crab, "<font color=red>You are a very small, very smelly, and weak creature. You are still connected to the hivemind.</font>")
 
 		return FALSE
 

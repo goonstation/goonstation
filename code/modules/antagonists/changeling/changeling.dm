@@ -108,18 +108,44 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 	is_compatible_with(datum/mind/mind)
 		return istype(mind.current, /mob/living/critter/changeling)
 
+	announce()
+		var/mob/living/critter/changeling/critter = src.owner.current
+		if (!istype(critter))
+			return ..()
+		boutput(src.owner.current, "<h3><font color=red>You have reawakened to serve your host [critter.hivemind_owner]! You must follow their commands!</font></h3>")
+
+	//it's pretty obvious when you return to the changeling
+	announce_removal()
+		return
+
 /datum/antagonist/changeling_critter/handspider
 	id = ROLE_HANDSPIDER
 	display_name = "handspider"
+
+	announce()
+		..()
+		boutput(src.owner.current, "<font color=red>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</font>")
 
 /datum/antagonist/changeling_critter/eyespider
 	id = ROLE_EYESPIDER
 	display_name = "eyespider"
 
+	announce()
+		..()
+		boutput(src.owner.current, "<font color=red>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</font>")
+
 /datum/antagonist/changeling_critter/legworm
 	id = ROLE_LEGWORM
 	display_name = "legworm"
 
+	announce()
+		..()
+		boutput(src.owner.current, "<font color=red>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</font>")
+
 /datum/antagonist/changeling_critter/buttcrab
 	id = ROLE_BUTTCRAB
 	display_name = "buttcrab"
+
+	announce()
+		..()
+		boutput(src.owner.current, "<font color=red>You are a very small, very smelly, and weak creature. You are still connected to the hivemind.</font>")
