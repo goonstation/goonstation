@@ -813,7 +813,7 @@
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
 	icon_state = "evolve"
-	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
+	desc = "Choose a form to evolve into once you have absorbed at least 3 souls. This will announce your presence to the station."
 	targeted = 0
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
@@ -863,6 +863,9 @@
 					W = new/mob/living/intangible/wraith/wraith_trickster(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
+
+			if(!istype(ticker.mode, /datum/game_mode/disaster))
+				command_alert("Our sensors have detected that an astral entity has gained significant power. We recommend manifesting this entity by extinguishing candles-on-top-of-skulls near it, or creating salt piles in your workplaces.", "Entity Detected", alert_origin = ALERT_ANOMALY) //Let's crew know that the wraith has evolved, and how to deal with it.
 
 			W.real_name = holder.owner.real_name
 			W.UpdateName()
