@@ -191,7 +191,7 @@
 			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
 				var/datum/antagonist/spy_thief/antag_role = M.get_antagonist(ROLE_SPY_THIEF)
-				for(var/obj/stolen_item as anything in antag_role.stolen_items)
+				for(var/obj/stolen_item in antag_role.stolen_items)
 					if (stolen_item.name != "")
 						special += "[stolen_item.name], "
 
