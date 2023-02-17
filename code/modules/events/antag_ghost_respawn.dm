@@ -242,7 +242,7 @@
 					if (istype(mind))
 						send_to = 3
 						mind.wipe_antagonists()
-						mind.add_antagonist(ROLE_WRAITH, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRAITH
 						M3 = mind.current
 					else

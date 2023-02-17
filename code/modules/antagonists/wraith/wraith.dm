@@ -1,31 +1,7 @@
-/datum/antagonist/wraith
+/datum/antagonist/intangible/wraith
 	id = ROLE_WRAITH
 	display_name = "wraith"
-
-	give_equipment()
-		var/mob/current_mob = src.owner.current
-		var/mob/living/intangible/wraith/wraith = new /mob/living/intangible/wraith(current_mob)
-
-		wraith.set_loc(get_turf(current_mob))
-
-		src.owner.transfer_to(wraith)
-		qdel(current_mob)
-
-	remove_equipment()
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
-
-	relocate()
-		var/turf/T = get_turf(src.owner.current)
-		if (!(T && isturf(T)) || (T.z != 1))
-			var/spawn_loc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (spawn_loc)
-				src.owner.current.set_loc(spawn_loc)
-			else
-				src.owner.current.z = 1
-		else
-			src.owner.current.set_loc(T)
+	intangible_mob_path = /mob/living/intangible/wraith
 
 	assign_objectives()
 		switch (rand(1, 3))

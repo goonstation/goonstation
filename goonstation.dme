@@ -681,6 +681,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\viewvariables\reference_tracking.dm"
 #include "code\modules\animation\AnimationLibrary.dm"
 #include "code\modules\antagonists\__antagonist.dm"
+#include "code\modules\antagonists\__intangible_antagonist.dm"
 #include "code\modules\antagonists\antagonist_helpers.dm"
 #include "code\modules\antagonists\arcfiend\arcfiend.dm"
 #include "code\modules\antagonists\arcfiend\abilities\_arcfiend_ability_holder.dm"
