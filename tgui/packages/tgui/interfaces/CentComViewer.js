@@ -60,8 +60,8 @@ export const CentComViewer = (props, context) => {
       }
 
       return (
-        <Stack.Item key={index}>
-          {(!filterInactive || active) && (
+        (!filterInactive || active) && (
+          <Stack.Item key={index}>
             <Section title={`${type} Ban | ${sourceName}`}>
               <LabeledList>
                 <LabeledList.Item label="Banned">
@@ -94,8 +94,8 @@ export const CentComViewer = (props, context) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-          )}
-        </Stack.Item>
+          </Stack.Item>
+        )
       );
     });
   };
