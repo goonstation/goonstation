@@ -27,13 +27,13 @@
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	. = list(
-		"banData" = response.body,
-		"key" = target_key,
+			"banData" = response.body,
+			"key" = target_key,
 		)
 
 /datum/centcomviewer/ui_data(mob/user)
 	. = list(
-		"filterInactive" = filterInactive
+			"filterInactive" = filterInactive
 		)
 
 /datum/centcomviewer/ui_act(action, params)
