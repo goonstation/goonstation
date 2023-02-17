@@ -77,6 +77,17 @@
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
+	var/turf/T = get_turf(src)
+	if (T.z != Z_LEVEL_STATION)
+		src.emote("scream")
+		if (length(src.flock.units[/mob/living/critter/flock/drone]))
+			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your drones, you retreat back to them to save yourself!</span>")
+			var/mob/living/critter/flock/unit = pick(src.flock.units[/mob/living/critter/flock/drone])
+			src.set_loc(get_turf(unit))
+		else
+			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your entrypoint, you retreat back to it to save yourself!</span>")
+			src.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150,150, Z_LEVEL_STATION)))
+
 	if (src.flock?.relay_finished)
 		return TRUE
 	if (get_turf(src) == src.previous_turf)

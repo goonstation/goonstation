@@ -169,7 +169,7 @@
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
-	if(user && (user.lying || user.stat))
+	if(user && (user.lying || user.stat) && !user.client?.holder?.ghost_interaction)
 		return 1
 	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1

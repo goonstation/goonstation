@@ -1187,6 +1187,7 @@
 			setProperty("exploprot", 40)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
+			setProperty("radprot", 50)
 
 	knight // nukie melee class armor
 		name = "citadel heavy combat cuirass"
@@ -1201,6 +1202,7 @@
 			setProperty("exploprot", 40)
 			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
+			setProperty("radprot", 50)
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1213,6 +1215,7 @@
 			setProperty("exploprot", 30)
 			setProperty("meleeprot", 4)
 			setProperty("rangedprot", 1.5)
+			setProperty("radprot", 50)
 
 		medic
 			name = "specialist operative medic uniform"
@@ -1225,6 +1228,7 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
+				setProperty("radprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1235,6 +1239,7 @@
 			setupProperties()
 				..()
 				setProperty("space_movespeed", -0.25)
+				setProperty("radprot", 50)
 
 
 		firebrand
@@ -1247,16 +1252,23 @@
 			setupProperties()
 				..()
 				setProperty("heatprot", 100)
+				setProperty("radprot", 50)
 
 		engineer
 			name = "specialist operative engineering uniform"
 			icon_state = "syndie_specialist-engineer"
 			item_state = "syndie_specialist-engineer"
+			setupProperties()
+				..()
+				setProperty("radprot", 50)
 
 		sniper
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+			setupProperties()
+				..()
+				setProperty("radprot", 50)
 
 		grenadier
 			name = "specialist operative bombsuit"
@@ -1264,11 +1276,15 @@
 			setupProperties()
 				..()
 				setProperty("exploprot", 60)
+				setProperty("radprot", 50)
 
 		bard
 			name = "road-worn stage uniform"
 			icon_state = "syndie_specialist-bard"
 			item_state = "syndie_specialist-bard"
+			setupProperties()
+				..()
+				setProperty("radprot", 50)
 
 		unremovable
 			cant_self_remove = 1
