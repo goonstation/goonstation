@@ -353,7 +353,7 @@ THROWING DARTS
 	name = "health implant - security issue"
 
 	New()
-		mailgroups.Add(MGD_COMMAND)
+		mailgroups.Add(MGD_SECURITY)
 		..()
 
 /obj/item/implant/health/security/anti_mindhack //HoS implant
