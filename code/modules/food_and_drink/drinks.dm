@@ -241,7 +241,7 @@
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
 	icon_state = "soup"
 	heal_amt = 1
-	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
@@ -297,7 +297,7 @@
 	desc = "A shake designed to cause weight loss.  The package proudly proclaims that it is 'tapeworm free.'"
 	icon_state = "shake"
 	heal_amt = 1
-	rc_desc_flags = RC_FULLNESS
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("lipolicide"=30,"chocolate"=5)
 
@@ -308,11 +308,14 @@
 	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
-	rc_desc_flags = RC_FULLNESS
-	rc_flags = null
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
+	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 	var/shaken = FALSE //sets to TRUE on *twirl emote
 
@@ -321,16 +324,19 @@
 		setup_soda()
 
 	attack(mob/M, mob/user)
-		if (!src.can_receive())
+		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
 		..()
 
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
-		if (!src.can_transfer())
-			rc_flags |= CAN_TRANSFER | CAN_RECEIVE | CAN_SPLASH
+		if (src.is_sealed)
+			is_sealed = 0
 			can_chug = 1
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
+			amount_per_transfer_from_this = 5
 			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
 			if (src.shaken)
 				src.reagents.reaction(user)
@@ -356,6 +362,10 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
+
+	is_open_container()
+		return !is_sealed
+
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
 		if (prob(50)) // without having to change the Space-Cola path
@@ -384,7 +394,7 @@
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
-	rc_desc_flags = RC_FULLNESS
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 
 	New()
@@ -402,7 +412,7 @@
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
 	icon_state = "cola-13"
-	rc_desc_flags = RC_FULLNESS
+	rc_flags = RC_FULLNESS
 	initial_reagents = null
 	initial_volume = 50
 
@@ -423,7 +433,7 @@
 	desc = "A vibrantly colored can of 100% all natural peach juice."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	icon_state = "peach"
-	rc_desc_flagsFULLNESS
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = "juice_peach"
 
@@ -434,7 +444,7 @@
 	item_state = "milk"
 	var/icon_style = "milk"
 	var/glass_style = "milk"
-	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"

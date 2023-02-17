@@ -206,9 +206,10 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
 					var/picked_critter = pick(select)
+					log_respawn_event(M, picked_critter, source)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided
 						var/datum/eventSpawnedCritter/picked_critter_datum = picked_critter
 						M.current.make_critter(pick(picked_critter_datum.critter_types), pestlandmark)

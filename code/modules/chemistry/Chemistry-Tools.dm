@@ -12,11 +12,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = null
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
-	rc_desc_flags = RC_SPECTRO | RC_VISIBLE | RC_FULLNESS
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
-	var/splash_all_contents = TRUE
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
 	var/can_recycle = FALSE //can this be put in a glass recycler?
@@ -74,7 +73,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if (!reagents)
 			return
-		. = "<br><span class='notice'>[reagents.get_description(user,rc_desc_flags)]</span>"
+		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
@@ -107,12 +106,59 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
-		if (can_transfer())
-			src.transfer_all_reagents(over_object, usr)
+		src.transfer_all_reagents(over_object, usr)
 
+///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
+///Note that this is not a built in TGUI proc
+proc/ui_describe_reagents(atom/A)
+	if (!istype(A))
+		return null
+	var/datum/reagents/R = A.reagents
+	var/list/thisContainerData = list(
+		name = A.name,
+		maxVolume = R.maximum_volume,
+		totalVolume = R.total_volume,
+		contents = list(),
+		finalColor = "#000000"
+	)
+
+	var/list/contents = thisContainerData["contents"]
+	if(istype(R) && R.reagent_list.len>0)
+		thisContainerData["finalColor"] = R.get_average_rgb()
+		// Reagent data
+		for(var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+			contents.Add(list(list(
+				name = reagents_cache[reagent_id],
+				id = reagent_id,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				volume = current_reagent.volume
+			)))
+	return thisContainerData
+
+/* ====================================================== */
+/* -------------------- Glass Parent -------------------- */
+/* ====================================================== */
+
+/obj/item/reagent_containers/glass
+	name = " "
+	desc = " "
+	icon = 'icons/obj/chemical.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	icon_state = "null"
+	item_state = "null"
+	amount_per_transfer_from_this = 10
+	can_recycle = TRUE //can this be put in a glass recycler?
+	var/splash_all_contents = 1
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+
+	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if  (ismob(target) && src.can_transfer() && !target.can_receive()) // pour reagents down their neck (if possible)
+		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
@@ -159,7 +205,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
-			if (!src.reagents.total_volume && src.can_receive())
+			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
 					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
 					F.removed()
@@ -175,7 +221,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
-			else if(src.can_splash()) //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
+			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
@@ -183,7 +229,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (is_reagent_dispenser(target) || (target.can_receive() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -198,7 +244,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (src.can_transfer() && target.can_receive() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -213,7 +259,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (istype(target, /obj/item/sponge) && src.can_transfer()) // dump contents onto it
+		else if (istype(target, /obj/item/sponge)) // dump contents onto it
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -226,17 +272,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
-		else if (istype(target, /turf/space/fluid) && src.can_receive()) //specific exception for seafloor rn, since theres no others
+		else if (istype(target, /turf/space/fluid)) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 			else
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
-				boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
+			boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
 
-		else if (reagents.total_volume && src.can_splash())
+		else if (reagents.total_volume)
 			if (isobj(target) && (target:flags & NOSPLASH))
 				return
+
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
@@ -270,7 +317,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attackby(obj/item/I, mob/user)
 
-		if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
+		if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -281,7 +328,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.can_receive() && istype(I, /obj/item/paper))
+		else if (istype(I, /obj/item/paper))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -291,7 +338,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			qdel(I)
 
-		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
+		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -302,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/food/snacks/breadslice))
+		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadslice))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -313,7 +360,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.can_receive() && istype(I,/obj/item/material_piece/rubber))
+		else if (istype(I,/obj/item/material_piece/rubber))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -324,7 +371,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (src.can_transfer() && istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
+		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
 				src.reagents.trans_to(I, 5)
 				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
@@ -332,7 +379,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
-		else if (src.can_transfer() && istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
+		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message("<span class='alert'><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
 				I.tooltip_rebuild = 1
@@ -345,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				else
 					boutput(user, "<span class='notice'>[src] doesn't have enough silver in it to coat [I].</span>")
 
-		else if (src.can_receive() && istype(I, /obj/item/reagent_containers/iv_drip))
+		else if (istype(I, /obj/item/reagent_containers/iv_drip))
 			var/obj/item/reagent_containers/iv_drip/W = I
 			if (W.slashed == 1)
 				if (W.reagents.total_volume)
@@ -367,72 +414,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
-			src.splash_all_contents = FALSE
+			src.splash_all_contents = 0
 		else
 			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
-			src.splash_all_contents = TRUE
+			src.splash_all_contents = 1
 		return
-
-	on_spin_emote(var/mob/living/carbon/human/user as mob)
-		. = ..()
-		if (src.reagents && src.reagents.total_volume > 0)
-			if(user.mind.assigned_role == "Bartender")
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
-			else
-				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-				src.reagents.reaction(get_turf(user), TOUCH)
-				src.reagents.clear_reagents()
-
-	can_receive()
-		if(!istype(src.loc, /obj/machinery/chem_dispenser))
-			return 1
-
-///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
-///Note that this is not a built in TGUI proc
-proc/ui_describe_reagents(atom/A)
-	if (!istype(A))
-		return null
-	var/datum/reagents/R = A.reagents
-	var/list/thisContainerData = list(
-		name = A.name,
-		maxVolume = R.maximum_volume,
-		totalVolume = R.total_volume,
-		contents = list(),
-		finalColor = "#000000"
-	)
-
-	var/list/contents = thisContainerData["contents"]
-	if(istype(R) && R.reagent_list.len>0)
-		thisContainerData["finalColor"] = R.get_average_rgb()
-		// Reagent data
-		for(var/reagent_id in R.reagent_list)
-			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-
-			contents.Add(list(list(
-				name = reagents_cache[reagent_id],
-				id = reagent_id,
-				colorR = current_reagent.fluid_r,
-				colorG = current_reagent.fluid_g,
-				colorB = current_reagent.fluid_b,
-				volume = current_reagent.volume
-			)))
-	return thisContainerData
-
-/* ====================================================== */
-/* -------------------- Glass Parent -------------------- */
-/* ====================================================== */
-
-/obj/item/reagent_containers/glass
-	name = " "
-	desc = " "
-	icon = 'icons/obj/chemical.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	icon_state = "null"
-	item_state = "null"
-	amount_per_transfer_from_this = 10
-	can_recycle = TRUE //can this be put in a glass recycler?
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
-	rc_flags = CAN_SPLASH | CAN_TRANSFER | CAN_RECEIVE
 
 	proc/smash()
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
@@ -441,6 +427,20 @@ proc/ui_describe_reagents(atom/A)
 		var/turf/U = src.loc
 		src.reagents.reaction(U)
 		qdel(src)
+
+	on_spin_emote(var/mob/living/carbon/human/user as mob)
+		. = ..()
+		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
+
+	is_open_container()
+		if(!istype(src.loc, /obj/machinery/chem_dispenser))
+			return 1
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -455,8 +455,8 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
-	flags = FPRINT | SUPPRESSATTACK
-	rc_desc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
@@ -596,8 +596,8 @@ proc/ui_describe_reagents(atom/A)
 	icon_state = "beaker"
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
-	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -605,9 +605,9 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beakerlarge"
 	item_state = "beaker"
-	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"

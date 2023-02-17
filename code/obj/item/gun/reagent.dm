@@ -26,7 +26,7 @@ TYPEINFO(/obj/item/gun/reagent)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
 
-	can_receive()
+	is_open_container()
 		return 1
 
 	alter_projectile(var/obj/projectile/P)

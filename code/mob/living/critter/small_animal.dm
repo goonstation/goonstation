@@ -1755,10 +1755,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
 		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
 
-		if (sting.cooldowncheck() && prob(50))
+		if (!sting.disabled && sting.cooldowncheck() && prob(50))
 			sting.handleCast(target)
 			return
-		else if (pincer_grab.cooldowncheck() && prob(50))
+		else if (!pincer_grab.disabled && pincer_grab.cooldowncheck() && prob(50))
 			pincer_grab.handleCast(target)
 			return
 		else

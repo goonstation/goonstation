@@ -430,7 +430,7 @@
 		hud.update_charge()
 		hud.update_tools()
 
-/mob/living/seanceghost/Life(parent)
+/mob/living/intangible/seanceghost/Life(parent)
 	if (..(parent))
 		return 1
 	if (!src.abilityHolder)

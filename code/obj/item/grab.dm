@@ -979,7 +979,7 @@
 			src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
 			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
-	can_receive()
+	is_open_container()
 		.= 1
 
 

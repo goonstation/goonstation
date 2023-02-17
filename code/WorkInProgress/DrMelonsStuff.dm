@@ -94,8 +94,7 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	flags = ACCEPTS_MOUSEDROP_REAGENTS
-	rc_flags = CAN_RECEIVE
+	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -151,8 +150,7 @@
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
-		if (can_transfer())
-			src.transfer_all_reagents(over_object, usr)
+		src.transfer_all_reagents(over_object, usr)
 
 	get_desc(dist, mob/user)
 		if (dist > 2)
@@ -333,7 +331,7 @@
 		src.add_fingerprint(user)
 		src.enter_bathtub(target)
 
-	can_receive()
+	is_open_container()
 		return 1
 
 /obj/item/clothing/head/apprentice
