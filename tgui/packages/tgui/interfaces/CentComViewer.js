@@ -14,7 +14,7 @@ export const CentComViewer = (props, context) => {
   const { banData, key, filterInactive } = data;
 
   // Parse the JSON string into an array of objects.
-  const banDataJson = JSON.parse(banData);
+  const parsedBanData = JSON.parse(banData);
 
   const getBanLength = (bannedOn, expires) => {
     const ONE_SECOND = 1000;
@@ -32,11 +32,11 @@ export const CentComViewer = (props, context) => {
       { interval: ONE_YEAR, label: 'year' },
     ];
 
-    const banLengthMs = new Date(expires) - new Date(bannedOn);
+    const banLength = new Date(expires) - new Date(bannedOn);
 
     for (const { interval, label } of intervals.reverse()) {
-      if (banLengthMs >= interval) {
-        const count = Number((banLengthMs / interval).toFixed(2));
+      if (banLength >= interval) {
+        const count = Number((banLength / interval).toFixed(2));
         return `${count} ${label}${count === 1 ? '' : 's'}`;
       }
     }
@@ -45,7 +45,7 @@ export const CentComViewer = (props, context) => {
 
   // Define a functional component for rendering each ban object.
   const RenderBans = () => {
-    return banDataJson.map((ban, index) => {
+    return parsedBanData.map((ban, index) => {
       // Destructure the properties of the ban object.
       const { active, bannedOn, expires, jobs, reason, sourceName, type, unbannedBy } = ban;
       const expired = new Date(expires) < new Date();
