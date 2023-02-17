@@ -1963,44 +1963,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a wraith?", "Make Wraith", list("Yes", "No")) == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.ckey = M.ckey
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				if (mind.objectives)
-					mind.objectives.len = 0
-				else
-					mind.objectives = list()
-				switch (tgui_alert(usr,"Objectives?", "Objectives", list("Custom", "Random", "None")))
-					if ("Custom")
-						var/WO = null
-						do
-							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
-							if (WO)
-								new WO(null, mind)
-						while (WO != null)
-					if ("Random")
-						generate_wraith_objectives(mind)
-				var/mob/living/intangible/wraith/Wr = M.wraithize()
-				if (!Wr)
-					if (!iswraith(mind.current))
-						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
-						return
-					else
-						Wr = mind.current
-				if (mind.objectives.len)
-					boutput(Wr, "<b>Your objectives:</b>")
-					var/obj_count = 1
-					for (var/datum/objective/objective in mind.objectives)
-						boutput(Wr, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-						obj_count++
-				mind.special_role = ROLE_WRAITH
-				ticker.mode.Agimmicks += mind
-				Wr.antagonist_overlay_refresh(1, 0)
+				M.mind?.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ADMIN)
 
 		if ("makeblob")
 			if( src.level < LEVEL_PA )
