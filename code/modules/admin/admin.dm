@@ -512,7 +512,7 @@ var/global/noir = 0
 
 			return
 
-		if("centombans")
+		if("centcombans")
 			var/mob/target = locate(href_list["target"])
 			if (isnull(centcomviewer))
 				centcomviewer = new

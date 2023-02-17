@@ -16,6 +16,32 @@ export const CentComViewer = (props, context) => {
   // Parse the JSON string into an array of objects.
   const banDataJson = JSON.parse(banData);
 
+  const getBanLength = (bannedOn, expires) => {
+    const ONE_SECOND = 1000;
+    const ONE_MINUTE = 60 * ONE_SECOND;
+    const ONE_HOUR = 60 * ONE_MINUTE;
+    const ONE_DAY = 24 * ONE_HOUR;
+    const ONE_MONTH = 30 * ONE_DAY;
+    const ONE_YEAR = 365 * ONE_DAY;
+    const intervals = [
+      { interval: ONE_SECOND, label: 'second' },
+      { interval: ONE_MINUTE, label: 'minute' },
+      { interval: ONE_HOUR, label: 'hour' },
+      { interval: ONE_DAY, label: 'day' },
+      { interval: ONE_MONTH, label: 'month' },
+      { interval: ONE_YEAR, label: 'year' },
+    ];
+
+    const banLengthMs = new Date(expires) - new Date(bannedOn);
+
+    for (const { interval, label } of intervals.reverse()) {
+      if (banLengthMs >= interval) {
+        const count = Number((banLengthMs / interval).toFixed(2));
+        return `${count} ${label}${count === 1 ? '' : 's'}`;
+      }
+    }
+    return 'Permanent';
+  };
 
   // Define a functional component for rendering each ban object.
   const RenderBans = () => {
@@ -23,33 +49,6 @@ export const CentComViewer = (props, context) => {
       // Destructure the properties of the ban object.
       const { active, bannedOn, expires, jobs, reason, sourceName, type, unbannedBy } = ban;
       const expired = new Date(expires) < new Date();
-
-      const getBanLength = (bannedOn, expires) => {
-        const ONE_SECOND = 1000;
-        const ONE_MINUTE = 60 * ONE_SECOND;
-        const ONE_HOUR = 60 * ONE_MINUTE;
-        const ONE_DAY = 24 * ONE_HOUR;
-        const ONE_MONTH = 30 * ONE_DAY;
-        const ONE_YEAR = 365 * ONE_DAY;
-        const intervals = [
-          { interval: ONE_SECOND, label: 'second' },
-          { interval: ONE_MINUTE, label: 'minute' },
-          { interval: ONE_HOUR, label: 'hour' },
-          { interval: ONE_DAY, label: 'day' },
-          { interval: ONE_MONTH, label: 'month' },
-          { interval: ONE_YEAR, label: 'year' },
-        ];
-
-        const banLengthMs = new Date(expires) - new Date(bannedOn);
-
-        for (const { interval, label } of intervals.reverse()) {
-          if (banLengthMs >= interval) {
-            const count = Number((banLengthMs / interval).toFixed(2));
-            return `${count} ${label}${count === 1 ? '' : 's'}`;
-          }
-        }
-        return 'Permanent';
-      };
 
       let currentStatus = '';
       if (active && !expired) {
