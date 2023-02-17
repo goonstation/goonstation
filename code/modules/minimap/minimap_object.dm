@@ -376,6 +376,7 @@
 			src.minimap_controller = new(minimap)
 			src.minimap_ui = new(src, "nukeop_map", src.minimap_controller, "Atrium Station Map Controller", "syndicate")
 
+ABSTRACT_TYPE(/obj/machinery/computer/pod_wars_minimap_controller)
 /obj/machinery/computer/pod_wars_minimap_controller
 	name = "debris field map controller"
 	icon = 'icons/obj/large/64x64.dmi'

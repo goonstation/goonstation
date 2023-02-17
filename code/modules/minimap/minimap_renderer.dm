@@ -91,10 +91,10 @@
 	///Separates a given bitflag into a list of the separate bits composing it. Eg. 1011 -> (0001, 0010, 1000), or in base 10: 11 -> (1, 2, 8)
 	proc/separate_bitflag(var/bitflag)
 		var/list/flag_list = list()
-		var/bit_length = ceil(log(2, bitflag + 1))
+		var/bit_length = ceil(log(2, (bitflag + 1)))
 
 		for (var/i = 0 to bit_length)
-			if (2**i & bitflag)
+			if ((2**i) & bitflag)
 				flag_list.Add(2**i)
 
 		return flag_list
