@@ -681,12 +681,12 @@
 
 /datum/limb/brullbar
 	var/log_name = "brullbar limbs"
+	var/quality = 1
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
 		if(check_target_immunity( target ))
 			return
-		var/quality = src.holder.quality
 
 		if (!istype(user))
 			target.Attackhand(user, params, location, control)
@@ -743,7 +743,6 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 
@@ -759,6 +758,9 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
+/datum/limb/brullbar/king
+	log_name = "king brullbar limbs"
+	quality = 1.5
 
 /datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
