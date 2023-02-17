@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2022
+ * @copyright 2023
  * @author Sovexe (https://github.com/Sovexe)
  * @license ISC
  */
