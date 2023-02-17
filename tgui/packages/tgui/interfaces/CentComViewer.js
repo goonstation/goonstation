@@ -42,14 +42,12 @@ export const CentComViewer = (props, context) => {
 
         const banLengthMs = new Date(expires) - new Date(bannedOn);
 
-        for (let i = intervals.length - 1; i >= 0; i--) {
-          const { interval, label } = intervals[i];
+        for (const { interval, label } of intervals.reverse()) {
           if (banLengthMs >= interval) {
-            const count = Math.floor(banLengthMs / interval);
+            const count = Number((banLengthMs / interval).toFixed(2));
             return `${count} ${label}${count === 1 ? '' : 's'}`;
           }
         }
-
         return 'Permanent';
       };
 
