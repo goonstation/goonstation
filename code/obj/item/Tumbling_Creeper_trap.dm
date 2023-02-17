@@ -1,6 +1,6 @@
 /obj/item/Tumbling_Creeper
 	name = "Tumbling Creeper"
-	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground, it serves as a prickly trap. Can absorb chemicals poured onto it."
+	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground with a garden trowel, it serves as a prickly trap. Can absorb chemicals poured onto it."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "Tumbling_Creeper-Unplanted"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -8,7 +8,7 @@
 	flags = TABLEPASS | FPRINT | NOSPLASH
 	w_class = W_CLASS_NORMAL
 	force = 3
-	throwforce = 3
+	throwforce = 0
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
@@ -120,7 +120,6 @@
 			if (prob(src.tumbling_chance) && istype(src.loc, /turf) && issimulatedturf(get_turf(src)))
 				if (!ON_COOLDOWN(src, "tumbling_fun", src.tumbling_cooldown))
 					//the thumbler tries to randomly pick a cardinal direction and throws itself towards it
-					//yes, it will damage people in its way. Yes, it could damage glass walls as well and it's hillarious
 					//It takes a random direction on purpose. Tumbling weeds likes to get stuck
 					var/target_direction = pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 					var/target_distance = rand(src.tumbling_distance_min, src.tumbling_distance_max)
@@ -172,6 +171,27 @@
 
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/gardentrowel) && !src.armed)
+			if (ON_COOLDOWN(user, "arming_tumbling_creeper", user.combat_click_delay))
+				return
+			for(var/obj/item/B in get_turf(src))
+				if (istype(B, /obj/item/Tumbling_Creeper))
+					var/obj/item/Tumbling_Creeper/BM = B
+					if (BM.armed)
+						boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
+						return
+			user.show_text("You start to plant the creeper onto the ground...", "blue")
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+				user,
+				src,
+				src.arming_time,
+				/obj/item/Tumbling_Creeper/proc/arm,
+				\list(user),
+				src.icon,
+				src.icon_state,
+				"[user] finishes planting [src]")
+			actions.start(action_bar, user)
+			return
 		if(issnippingtool(W))
 			if (src.armed)
 				if (ON_COOLDOWN(user, "disarming_tumbling_creeper", user.combat_click_delay))
@@ -219,7 +239,11 @@
 		if (!src.armed)
 			logTheThing(LOG_COMBAT, user, "planted [src] at [src.loc]")
 			set_icon_state("Tumbling_Creeper-Planted")
-			user?.drop_item(src)
+			if (istype(src.loc, /mob))
+				var/mob/owning_mob = src.loc
+				owning_mob.drop_item(src)
+			else
+				src.set_loc(get_turf(src))
 			src.armed = TRUE
 			src.anchored = TRUE
 
@@ -257,29 +281,6 @@
 			"<span class='alert'><B>You crash into the planted [src]!</B></span>")
 			crash_into(victim)
 			qdel(src) //if crashed into, destroys the creeper
-
-	attack_self(mob/user as mob)
-		if (!src.armed)
-			for(var/obj/item/B in get_turf(src))
-				if (istype(B, /obj/item/Tumbling_Creeper))
-					var/obj/item/Tumbling_Creeper/BM = B
-					if (BM.armed)
-						boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
-						return
-			user.show_text("You start to plant the creeper onto the ground...", "blue")
-			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
-				user,
-				src,
-				src.arming_time,
-				/obj/item/Tumbling_Creeper/proc/arm,
-				\list(user),
-				src.icon,
-				src.icon_state,
-				"[user] finishes planting [src]")
-			actions.start(action_bar, user)
-			return
-		..()
-
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

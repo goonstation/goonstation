@@ -602,7 +602,7 @@
 	harvest_override = 1
 	harvest_cap = 3
 	crop = /obj/item/Tumbling_Creeper
-	chance = 20
+	chance = 10
 
 
 // Radweed Mutations
