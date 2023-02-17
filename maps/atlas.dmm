@@ -10245,7 +10245,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aFR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12612,7 +12612,7 @@
 /area/listeningpost)
 "aNL" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aNM" = (
 /turf/simulated/floor/airless/stairs/dark,
 /area/listeningpost/power)
@@ -12730,7 +12730,7 @@
 	name = "Molecular Integrity Hazard"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -12738,7 +12738,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12748,7 +12748,7 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -12756,7 +12756,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOf" = (
 /obj/lattice{
 	dir = 9;
@@ -12828,7 +12828,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOu" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -12888,11 +12888,11 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOD" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -12900,7 +12900,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOF" = (
 /obj/decal/cleanable/ash,
 /obj/cable{
@@ -15892,7 +15892,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aWY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16067,7 +16067,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aXt" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
