@@ -4188,6 +4188,7 @@ datum
 			required_reagents = list("ash" = 1, "ectoplasm" = 1, "salt" = 1)
 			result_amount = 3
 			mix_phrase = "A strange green goopy liquid forms in the container."
+
 		lavender_essence
 			name = "lavender_essence"
 			id = "lavender_essence"
