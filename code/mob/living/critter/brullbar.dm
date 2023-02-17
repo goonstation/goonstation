@@ -21,12 +21,7 @@
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
 	var/is_king = FALSE
-
-	on_sleep()
-		..()
-		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		if (!fadeout.disabled && fadeout.cooldowncheck())
-			fadeout.handleCast(src)
+	var/retaliate = FALSE
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		retaliate(user)
@@ -102,10 +97,6 @@
 		add_health_holder(/datum/healthHolder/brain)
 
 	seek_target(var/range = 7)
-		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		if (src.lastattacker && GET_DIST(src, src.lastattacker) <= range)
-			return list(src.lastattacker)
-		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
@@ -123,8 +114,14 @@
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
 
-		if (!length(.) && !fadeout.disabled && fadeout.cooldowncheck())
-			fadeout.handleCast(src)
+	seek_scavenge_target(var/range = 7)
+		. = list()
+		for (var/mob/living/M in view(range, get_turf(src)))
+			if (!isdead(M)) continue // eat everything yum
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+					. += M
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
@@ -153,20 +150,24 @@
 				hh.HealDamage(10)
 			return
 
+	can_critter_attack()
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		return can_act(src,TRUE) && !frenzy.disabled
 
 	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (prob(50) && !tackle.disabled && tackle.cooldowncheck() && !isdead(src))
-			src.lastattacker = attacker
-			src.visible_message("<span class='alert'><b>[src] lunges at [attacker]!</b></span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 50, 1)
-			tackle.handleCast(attacker)
-			ai.interrupt()
+		if (!istype(attacker, /mob/living/critter/brullbar) || (attacker.health < 0))
+			if (prob(50) && !tackle.disabled && tackle.cooldowncheck() && !isdead(src))
+				src.visible_message("<span class='alert'><b>[src] lunges at [attacker]!</b></span>")
+				playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 50, 1)
+				tackle.handleCast(attacker)
+				ai.interrupt()
 
-	can_critter_attack()
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		return can_act(src,TRUE) && !frenzy.disabled || !fadeout.disabled
+		if (!length(.) && !fadeout.disabled && fadeout.cooldowncheck())
+			fadeout.handleCast(src)
+			return
 
 
 /mob/living/critter/brullbar/king

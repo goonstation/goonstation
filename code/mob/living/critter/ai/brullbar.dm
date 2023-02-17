@@ -8,3 +8,16 @@
 	//transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/brullbar/invis, list(holder, src))
+
+// brullbar invis task
+/datum/aiTask/timed/wander/critter/brullbar/invis
+	name = "go invisible"
+	weight = 2
+
+/datum/aiTask/timed/wander/critter/brullbar/invis/on_tick()
+	var/mob/living/critter/brullbar/C = holder.owner
+	if(!length(C.seek_scavenge_target()) && !length(C.seek_target()))
+		C.go_invis()
+	else
+		src.holder.owner.ai.interrupt()
