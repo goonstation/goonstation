@@ -96,7 +96,8 @@
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
-	seek_target(var/range = 7)
+	seek_target(var/range = 9)
+		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
@@ -114,7 +115,7 @@
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
 
-	seek_scavenge_target(var/range = 7)
+	seek_scavenge_target(var/range = 9)
 		. = list()
 		for (var/mob/living/M in view(range, get_turf(src)))
 			if (!isdead(M)) continue // eat everything yum

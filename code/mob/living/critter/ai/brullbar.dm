@@ -17,7 +17,7 @@
 
 /datum/aiTask/timed/wander/critter/brullbar/invis/on_tick()
 	var/mob/living/critter/brullbar/C = holder.owner
-	if(!length(C.seek_scavenge_target()) && !length(C.seek_target()))
+	if(!length(C.seek_target()) && !length(C.seek_scavenge_target()))
 		C.go_invis()
 	else
 		src.holder.owner.ai.interrupt()
