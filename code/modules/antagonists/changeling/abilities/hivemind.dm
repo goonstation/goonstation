@@ -13,6 +13,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	dont_lock_holder = 0
 	///The observer mob we chose to transfer mind from, this should just be returned from New, but datum/targetable/New relies on truthy fail states
 	var/mob/dead/target_observer/hivemind_observer/use_mob = null
+	///The associated ROLE_ define
+	var/antag_role = null
 
 	incapacitationCheck()
 		return 0
@@ -47,33 +49,35 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		src.use_mob = eligible[use_mob_name]
 
-	proc/attach_to_hivemind(mob/living/critter/changeling/critter)
-		var/datum/abilityHolder/changeling/lingHolder = src.holder
-		lingHolder.hivemind -= src.use_mob
-		lingHolder.hivemind += critter
-		critter.hivemind_owner = lingHolder
-		if (src.holder.owner.mind && src.holder.owner.mind.current && critter.client)
-			var/I = image(antag_changeling, loc = src.holder.owner.mind.current)
-			critter.client.images += I
-		src.use_mob.client = null
-		src.use_mob.key = null
-		qdel(src.use_mob)
-		src.use_mob = null
+		var/obj/item/bodypart = src.get_bodypart()
+		if (!bodypart)
+			return TRUE
+
+		var/datum/mind/mind = use_mob.mind
+		if (!mind)
+			CRASH("changeling critter created from mob with no mind")
+		mind.add_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, do_equip = FALSE)
+		var/datum/antagonist/changeling_critter/antag = mind.get_antagonist(src.antag_role)
+		antag.give_equipment(bodypart, src.holder)
+		logTheThing(LOG_COMBAT, holder.owner, "drops a [antag.display_name] [key_name(mind.current)] as a changeling [log_loc(holder.owner)].")
+
+		return FALSE
+
+	proc/get_bodypart()
+		return
 
 /datum/targetable/changeling/critter/handspider
 	name = "Handspider"
 	desc = "Detach one of your arms and bring it to life using one of the members of your hivemind."
 	icon_state = "handspider"
 	pointCost = 4
+	antag_role = ROLE_HANDSPIDER
 
-	cast(atom/target)
-		if (..())
-			return TRUE
-
+	get_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_arm || owner.limbs.r_arm) || !ishuman(holder.owner))
 			boutput(holder.owner, "<span class='notice'>We have no arms to detach!</span>")
-			return TRUE
+			return null
 
 		var/obj/item/parts/original_arm = null
 
@@ -92,35 +96,21 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
-		logTheThing(LOG_COMBAT, holder.owner, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc), original_arm)
-		if (!use_mob.mind)
-			CRASH("handspider created from mob with no mind")
-		use_mob.mind.transfer_to(spider)
-		spider.mind.add_antagonist(ROLE_HANDSPIDER, source = ANTAGONIST_SOURCE_SUMMONED)
-		src.attach_to_hivemind(spider)
-
-		if (original_arm && istype(original_arm, /obj/item/parts/robot_parts))
-			spider.icon_prefix = "robo"
-			spider.UpdateIcon()
-
-		return FALSE
+		return original_arm
 
 /datum/targetable/changeling/critter/eyespider
 	name = "Eyespider"
 	desc = "Eject one of your eyes as a non-combatant utility form and bring it to life using one of the members of your hivemind."
 	icon_state = "eyespider"
 	pointCost = 0 // free for now, given you have to lose a fuckin' EYE
+	antag_role = ROLE_EYESPIDER
 
-	cast(atom/target)
-		if (..())
-			return TRUE
-
+	get_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.left_eye || owner.organHolder.right_eye) || !ishuman(holder.owner))
 			boutput(holder.owner, "<span class='notice'>We have no eyes to eject!</span>") // what a terrifying fate you've given yourself
-			return 1
+			return null
 
 		var/original_eye = null
 
@@ -139,17 +129,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
-		logTheThing(LOG_COMBAT, holder.owner, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc), original_eye)
-
-		if (!use_mob.mind)
-			CRASH("eyespider created from mob with no mind")
-		use_mob.mind.transfer_to(spider)
-		spider.mind.add_antagonist(ROLE_EYESPIDER, source = ANTAGONIST_SOURCE_SUMMONED)
-		src.attach_to_hivemind(spider)
-
-		return FALSE
+		return original_eye
 
 /datum/targetable/changeling/critter/legworm
 	name = "Legworm"
@@ -157,15 +138,13 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	icon_state = "legworm"
 	cooldown = 1200
 	pointCost = 6
+	antag_role = ROLE_LEGWORM
 
-	cast(atom/target)
-		if (..())
-			return TRUE
-
+	get_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_leg || owner.limbs.r_leg) || !ishuman(holder.owner))
 			boutput(holder.owner, "<span class='notice'>We have no legs to detach!</span>")
-			return 1
+			return null
 
 		var/obj/item/parts/original_leg = null
 
@@ -184,16 +163,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
-		logTheThing(LOG_COMBAT, holder.owner, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/legworm/worm = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
-		if (!use_mob.mind)
-			CRASH("legworm created from mob with no mind")
-		use_mob.mind.transfer_to(worm)
-		worm.mind.add_antagonist(ROLE_LEGWORM, source = ANTAGONIST_SOURCE_SUMMONED)
-		src.attach_to_hivemind(worm)
-
-		return FALSE
+		return original_leg
 
 /datum/targetable/changeling/critter/buttcrab
 	name = "Buttcrab"
@@ -201,31 +172,20 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	icon_state = "buttcrab"
 	cooldown = 600
 	pointCost = 1
+	antag_role = ROLE_BUTTCRAB
 
-	cast(atom/target)
-		if (..())
-			return TRUE
-
+	get_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.butt) || !ishuman(holder.owner))
 			boutput(holder.owner, "<span class='notice'>We have no ass!</span>") // what a terrifying fate you've given yourself
-			return 1
+			return null
 
 		var/obj/item/clothing/head/butt/original_butt = owner.drop_organ("butt")
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
-		logTheThing(LOG_COMBAT, holder.owner, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc), original_butt)
-
-		if (!use_mob.mind)
-			CRASH("buttcrab created from mob with no mind")
-		use_mob.mind.transfer_to(crab)
-		crab.mind.add_antagonist(ROLE_BUTTCRAB, source = ANTAGONIST_SOURCE_SUMMONED)
-		src.attach_to_hivemind(crab)
-
-		return FALSE
+		return original_butt
 
 
 /datum/targetable/changeling/hivesay

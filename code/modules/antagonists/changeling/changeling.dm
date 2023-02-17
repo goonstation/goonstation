@@ -104,9 +104,20 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 /datum/antagonist/changeling_critter
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	var/critter_type = null
 
-	is_compatible_with(datum/mind/mind)
-		return istype(mind.current, /mob/living/critter/changeling)
+	give_equipment(obj/item/bodypart, datum/abilityHolder/changeling/holder)
+		var/mob/old_mob = src.owner.current
+		var/mob/living/critter/changeling/critter = new src.critter_type(get_turf(old_mob), bodypart)
+		if (holder)
+			holder.hivemind -= old_mob
+			holder.hivemind += critter
+			critter.hivemind_owner = holder
+			if (holder.owner.mind && holder.owner.mind.current && critter.client)
+				var/I = image(antag_changeling, loc = holder.owner.mind.current)
+				critter.client.images += I
+		src.owner.transfer_to(critter)
+		qdel(old_mob)
 
 	announce()
 		var/mob/living/critter/changeling/critter = src.owner.current
@@ -119,6 +130,7 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 		return
 
 /datum/antagonist/changeling_critter/handspider
+	critter_type = /mob/living/critter/changeling/handspider
 	id = ROLE_HANDSPIDER
 	display_name = "handspider"
 
@@ -127,6 +139,7 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 		boutput(src.owner.current, "<font color=red>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</font>")
 
 /datum/antagonist/changeling_critter/eyespider
+	critter_type = /mob/living/critter/changeling/eyespider
 	id = ROLE_EYESPIDER
 	display_name = "eyespider"
 
@@ -135,6 +148,7 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 		boutput(src.owner.current, "<font color=red>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</font>")
 
 /datum/antagonist/changeling_critter/legworm
+	critter_type = /mob/living/critter/changeling/legworm
 	id = ROLE_LEGWORM
 	display_name = "legworm"
 
@@ -143,6 +157,7 @@ ABSTRACT_TYPE(/datum/antagonist/changeling_critter)
 		boutput(src.owner.current, "<font color=red>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</font>")
 
 /datum/antagonist/changeling_critter/buttcrab
+	critter_type = /mob/living/critter/changeling/buttcrab
 	id = ROLE_BUTTCRAB
 	display_name = "buttcrab"
 
