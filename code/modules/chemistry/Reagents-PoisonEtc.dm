@@ -198,16 +198,16 @@ datum
 			transparency = 50
 			var/damage_counter = 0
 
-			on_mob_life(var/mob/M, var/mult = 1)
-
-				if (!M) M = holder.my_atom
-				damage_counter += rand(2,4) * mult // RNG rolls moved to accumulation proc for consistency
-
+			on_mob_life(mob/M, mult = 1)
+				if (!M)
+					M = holder.my_atom
+				damage_counter += rand(2, 4) * mult * min(1, volume)
 				..()
 
-			on_mob_life_complete(var/mob/living/M)
+			on_mob_life_complete(mob/living/M)
 				if(M)
-					M.take_toxin_damage(damage_counter + (rand(2,3)))
+					M.take_toxin_damage(damage_counter)
+					logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
 
 
 		harmful/chemilin

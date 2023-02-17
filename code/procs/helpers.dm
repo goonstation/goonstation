@@ -688,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -2149,12 +2149,12 @@ proc/countJob(rank)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
-var/global/nextDectalkDelay = 5 //seconds
+var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg || !config.spacebee_api_key) return 0
-	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = world.timeofday
+	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub
@@ -2621,7 +2621,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat))
+		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()

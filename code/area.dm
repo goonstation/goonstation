@@ -557,7 +557,7 @@ TYPEINFO(/area)
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
-			setdead(jerk)
+			jerk.death(TRUE)
 			// ghostize the mob first to punt them out of their body
 			// before removing the old body, so that we can boot the ghost out
 			var/mob/dead/dead_jerk = jerk.ghostize()
@@ -2720,13 +2720,6 @@ TYPEINFO(/area/station/engine/substation)
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
 
-/area/syndicate_teleporter
-	name = "Syndicate Teleporter"
-	icon_state = "teleporter"
-	requires_power = 0
-	teleport_blocked = 1
-	do_not_irradiate = 1
-
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
 	name = "Medical area"
@@ -3483,6 +3476,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
+
+/area/listeningpost/syndicate_teleporter
+	name = "Syndicate Teleporter"
+	icon_state = "teleporter"
+	requires_power = 0
 
 // Salvager Spawn
 /area/salvager
@@ -4822,7 +4820,7 @@ area/station/crewquarters/cryotron
 	sound_environment = 3
 	workplace = 1
 
-/area/syndicate_teleporter
+/area/listeningpost/syndicate_teleporter
 	name = "Syndicate Teleporter"
 	icon_state = "teleporter"
 	requires_power = 0
