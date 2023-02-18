@@ -872,14 +872,16 @@
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
-		if(O.density && O.anchored != 2)
+		var/turf/T = get_turf(O)
+		if(O.density && O.anchored != 2 && !isrestrictedz(T?.z))
 			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			if(O.bound_width==32 && O.bound_height==32)
+				O.anchored = 0
 			O.throw_at(target, 4, 2)
-			O.anchored = 0
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3
