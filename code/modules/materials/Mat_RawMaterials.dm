@@ -297,7 +297,7 @@
 		..()
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src], leaving behind some usable material.")
+			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src], leaving behind some usable building material.")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
 			new /obj/item/sheet/bamboo(user.loc)
 			if (src.amount > 1)

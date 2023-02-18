@@ -1276,7 +1276,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			yield = 4
 			can_craft_multiples = TRUE
 			icon = 'icons/obj/metal.dmi'
-			icon_state = "tile_5$$wood"
+			icon_state = "tile_5"
 		stool
 			recipe_id = "wood_stool"
 			craftedType = /obj/stool/wooden
