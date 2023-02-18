@@ -140,13 +140,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			src.update()
 			return
 
-		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
-			I.set_loc(src)
-			user.visible_message("[user.name] places \the [I] into \the [src].",\
-			"You place \the [I] into \the [src].")
-			actions.interrupt(user, INTERRUPT_ACT)
-			return
-
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
