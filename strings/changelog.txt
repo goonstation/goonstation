@@ -1,5 +1,9 @@
 
 (t)sat feb 18 23
+(u)Wisemonster
+(p)13071
+(e)💅⏰|C-QoL, A-Status-Effects
+(+)Being actively de-revved by a loyalty implant will now display a status effect.
 (u)Cherman0
 (p)12620
 (e)🗺💅|A-Mapping, C-QoL
