@@ -394,7 +394,7 @@
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
+	description = "Tranquilizer pistol with a pouch of darts, emag and a variety of tools to help you blend in with regular crew."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
@@ -404,7 +404,7 @@
 /datum/materiel/loadout/medic
 	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
-	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
+	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch. As well as an armor-piercing personal defence weapon with single and burst fire capability."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
@@ -427,9 +427,9 @@
 	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
 
 /datum/materiel/loadout/bard
-	name = "Bard (Prototype)"
+	name = "Bard"
 	path = /obj/storage/crate/classcrate/bard
-	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
+	description = "A musicla support class that buffs their team with area of effect songs centered around amp stacks and hitting things with their cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
