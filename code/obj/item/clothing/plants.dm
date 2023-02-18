@@ -227,9 +227,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	W.force_drop(user)
 	src.force_drop(user)
 	W.set_loc(src)
-	user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
+	user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet.")
 	src.flowernum += 1
-	src.update_icon(list(1,2,3))
+	src.refresh()
 	user.put_in_hand_or_drop(src)
 
 /obj/item/bouquet/proc/refresh()
