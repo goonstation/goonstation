@@ -758,6 +758,7 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
+
 /datum/limb/brullbar/king
 	log_name = "king brullbar limbs"
 	quality = 1.5
