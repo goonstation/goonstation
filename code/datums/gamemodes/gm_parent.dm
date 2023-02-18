@@ -141,23 +141,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
 
-				if (traitor.special_role == ROLE_SPY_THIEF)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
-					if (purchases)
-						var/stolen_detail = "Items Thieved: "
-						for (var/i in traitor.spy_stolen_items)
-							stolen_detail += "[i], "
-						var/rewarded_detail = "They Were Rewarded: "
-						for (var/i in traitor.purchased_traitor_items)
-							rewarded_detail += "[bicon(i:item)] [i:name], "
-						rewarded_detail = copytext(rewarded_detail, 1, -2)
-						stuff_to_output += stolen_detail
-						stuff_to_output += rewarded_detail
-						if (stolen >= 7)
-							traitor.current?.unlock_medal("Professional thief", TRUE)
-
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
@@ -358,9 +341,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			bestow_objective(antag, /datum/objective/specialist/flock)
 			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
-			objective_set_path = /datum/objective_set/spy_theft
-			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
-				equip_spy_theft(antag.current)
+			antag.add_antagonist(ROLE_SPY_THIEF)
+			do_objectives = FALSE
 
 			if (!src.spy_market)
 				src.spy_market = new /datum/game_mode/spy_theft
