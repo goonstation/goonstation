@@ -244,7 +244,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	src.icon_state = "base_[src.wrapstyle]"
 	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
-		if (istype(temp, /obj/item/clothing/head/flower))
+		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant/herb))
 			flowernames += temp.name
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[temp.name]_[temporder[length(flowernames)]]")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[temp.name]_[temporder[length(flowernames)]]")
