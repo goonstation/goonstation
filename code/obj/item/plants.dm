@@ -11,6 +11,7 @@ ABSTRACT_TYPE(/obj/item/plant)
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
+	var/can_bouquet = FALSE
 
 	New()
 		..()
@@ -389,9 +390,10 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "poppy"
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
+	can_bouquet = TRUE
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/bouquet, TRUE)
+		src.AddComponent(/datum/component/bouquet, src.can_bouquet)
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"

@@ -197,22 +197,24 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		qdel(src)
-	else if (istype(W, /obj/item/clothing/head/flower))
-		var/obj/item/clothing/head/flower/dummy_flower = W
-		if (!dummy_flower.can_bouquet)
-			boutput(user, "This flower can't be turned into a bouquet!")
+	else if (istype(W, /obj/item/plant/herb))
+		var/obj/item/plant/herb/dummy_herb = W
+		if (!dummy_herb.can_bouquet)
+			boutput(user, "This herb can't be added into a bouquet!")
 			return
 		if (flowernum >= 3)
 			boutput(user, "This bouquet is full!")
 			return
-		// now we pick where it goes
-		W.force_drop(user)
-		src.force_drop(user)
-		W.set_loc(src)
-		user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
-		src.flowernum += 1
-		src.update_icon(list(1,2,3))
-		user.put_in_hand_or_drop(src)
+		src.add_flower(W, user)
+	else if (istype(W, /obj/item/clothing/head/flower))
+		var/obj/item/clothing/head/flower/dummy_flower = W
+		if (!dummy_flower.can_bouquet)
+			boutput(user, "This flower can't be added into a bouquet!")
+			return
+		if (flowernum >= 3)
+			boutput(user, "This bouquet is full!")
+			return
+		src.add_flower(W, user)
 	else if (flowernum == 1)
 		if (!hiddenitem) // only one hidden item allowed
 			W.set_loc(src)
@@ -221,6 +223,15 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 			boutput("This bouquet already has an item in it!")
 /obj/item/bouquet/attack_self(mob/user)
 	src.refresh()
+/obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
+	W.force_drop(user)
+	src.force_drop(user)
+	W.set_loc(src)
+	user.visible_message("[user] adds a [W.name] to the bouquet.", "You add a [W.name] to the bouquet")
+	src.flowernum += 1
+	src.update_icon(list(1,2,3))
+	user.put_in_hand_or_drop(src)
+
 /obj/item/bouquet/proc/refresh()
 	// overlays is for the icon, inhand_image is for, well, the inhand
 	// updating the icon also randomises the order (non negotiable)
