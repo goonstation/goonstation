@@ -391,9 +391,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 	can_bouquet = TRUE
-	New()
-		. = ..()
-		src.AddComponent(/datum/component/bouquet, src.can_bouquet)
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"
