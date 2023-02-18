@@ -91,7 +91,7 @@
 
 ///old title card turf
 /obj/titlecard
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	icon = null //set in New()
 	icon_state = "title_main"
 	layer = 60

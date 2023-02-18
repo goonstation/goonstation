@@ -79,6 +79,10 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
+	var/mob/mobuser = user
+	ENSURE_TYPE(mobuser)
+	if(mobuser?.client?.holder?.ghost_interaction)
+		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
@@ -138,6 +142,8 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
+	if(user.client?.holder?.ghost_interaction)
+		return TRUE
 	if (target in bible_contents)
 		target = locate(/obj/item/storage/bible) in range(1, user) // fuck bibles
 		if (!target)

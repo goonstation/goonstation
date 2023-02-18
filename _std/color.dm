@@ -201,17 +201,38 @@ proc/color_mapping_matrix(list/list/inp, list/list/out)
 	// don't panic, this is essentially just condensed way of writing: inversion of the (i1, i2, i3) matrix multiplied by the (o1, o2, o3) matrix
 	// which essentially means: translate i1 to red, i2 to green, i3 to blue; then translate red to o1, green to o2, blue to o3
 	// see this link (but beware bad variable names): https://www.wolframalpha.com/input/?i=%28invert+%28%28a%2Cb%2Cc%29%2C%28d%2Ce%2Cf%29%2C%28g%2Ch%2Ci%29%29%29%28%28j%2Ck%2Cl%29%2C%28m%2Cn%2Co%29%2C%28p%2Cq%2Cr%29%29
-	var/D = inp[1][1]*inp[2][2]*inp[3][3] - inp[1][1]*inp[2][3]*inp[3][2] - inp[1][2]*inp[2][1]*inp[3][3] + inp[1][2]*inp[2][3]*inp[3][1] + inp[1][3]*inp[2][1]*inp[3][2] - inp[1][3]*inp[2][2]*inp[3][1]
+	// also cache accesses because BYOND doesn't natively
+	var/rr1 = inp[1][1]
+	var/rg1 = inp[1][2]
+	var/rb1 = inp[1][3]
+	var/gr1 = inp[2][1]
+	var/gg1 = inp[2][2]
+	var/gb1 = inp[2][3]
+	var/br1 = inp[3][1]
+	var/bg1 = inp[3][2]
+	var/bb1 = inp[3][3]
+
+	var/rr2 = out[1][1]
+	var/rg2 = out[1][2]
+	var/rb2 = out[1][3]
+	var/gr2 = out[2][1]
+	var/gg2 = out[2][2]
+	var/gb2 = out[2][3]
+	var/br2 = out[3][1]
+	var/bg2 = out[3][2]
+	var/bb2 = out[3][3]
+
+	var/D = rr1*gg1*bb1 - rr1*bg1*gb1 - gr1*rg1*bb1 + gr1*bg1*rb1 + br1*rg1*gb1 - br1*gg1*rb1
 	return list(
-		( inp[1][2]*inp[2][3]*out[3][1] - inp[1][2]*inp[3][3]*out[2][1] - inp[1][3]*inp[2][2]*out[3][1] + inp[1][3]*inp[3][2]*out[2][1] + inp[2][2]*inp[3][3]*out[1][1] - inp[2][3]*inp[3][2]*out[1][1]) / D,
-		( inp[1][2]*inp[2][3]*out[3][2] - inp[1][2]*inp[3][3]*out[2][2] - inp[1][3]*inp[2][2]*out[3][2] + inp[1][3]*inp[3][2]*out[2][2] + inp[2][2]*inp[3][3]*out[1][2] - inp[2][3]*inp[3][2]*out[1][2]) / D,
-		( inp[1][2]*inp[2][3]*out[3][3] - inp[1][2]*inp[3][3]*out[2][3] - inp[1][3]*inp[2][2]*out[3][3] + inp[1][3]*inp[3][2]*out[2][3] + inp[2][2]*inp[3][3]*out[1][3] - inp[2][3]*inp[3][2]*out[1][3]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][1] + inp[1][1]*inp[3][3]*out[2][1] + inp[1][3]*inp[2][1]*out[3][1] - inp[1][3]*inp[3][1]*out[2][1] - inp[2][1]*inp[3][3]*out[1][1] + inp[2][3]*inp[3][1]*out[1][1]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][2] + inp[1][1]*inp[3][3]*out[2][2] + inp[1][3]*inp[2][1]*out[3][2] - inp[1][3]*inp[3][1]*out[2][2] - inp[2][1]*inp[3][3]*out[1][2] + inp[2][3]*inp[3][1]*out[1][2]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][3] + inp[1][1]*inp[3][3]*out[2][3] + inp[1][3]*inp[2][1]*out[3][3] - inp[1][3]*inp[3][1]*out[2][3] - inp[2][1]*inp[3][3]*out[1][3] + inp[2][3]*inp[3][1]*out[1][3]) / D,
-		( inp[1][1]*inp[2][2]*out[3][1] - inp[1][1]*inp[3][2]*out[2][1] - inp[1][2]*inp[2][1]*out[3][1] + inp[1][2]*inp[3][1]*out[2][1] + inp[2][1]*inp[3][2]*out[1][1] - inp[2][2]*inp[3][1]*out[1][1]) / D,
-		( inp[1][1]*inp[2][2]*out[3][2] - inp[1][1]*inp[3][2]*out[2][2] - inp[1][2]*inp[2][1]*out[3][2] + inp[1][2]*inp[3][1]*out[2][2] + inp[2][1]*inp[3][2]*out[1][2] - inp[2][2]*inp[3][1]*out[1][2]) / D,
-		( inp[1][1]*inp[2][2]*out[3][3] - inp[1][1]*inp[3][2]*out[2][3] - inp[1][2]*inp[2][1]*out[3][3] + inp[1][2]*inp[3][1]*out[2][3] + inp[2][1]*inp[3][2]*out[1][3] - inp[2][2]*inp[3][1]*out[1][3]) / D
+		( rg1*gb1*br2 - rg1*bb1*gr2 - rb1*gg1*br2 + rb1*bg1*gr2 + gg1*bb1*rr2 - gb1*bg1*rr2) / D,
+		( rg1*gb1*bg2 - rg1*bb1*gg2 - rb1*gg1*bg2 + rb1*bg1*gg2 + gg1*bb1*rg2 - gb1*bg1*rg2) / D,
+		( rg1*gb1*bb2 - rg1*bb1*gb2 - rb1*gg1*bb2 + rb1*bg1*gb2 + gg1*bb1*rb2 - gb1*bg1*rb2) / D,
+		(-rr1*gb1*br2 + rr1*bb1*gr2 + rb1*gr1*br2 - rb1*br1*gr2 - gr1*bb1*rr2 + gb1*br1*rr2) / D,
+		(-rr1*gb1*bg2 + rr1*bb1*gg2 + rb1*gr1*bg2 - rb1*br1*gg2 - gr1*bb1*rg2 + gb1*br1*rg2) / D,
+		(-rr1*gb1*bb2 + rr1*bb1*gb2 + rb1*gr1*bb2 - rb1*br1*gb2 - gr1*bb1*rb2 + gb1*br1*rb2) / D,
+		( rr1*gg1*br2 - rr1*bg1*gr2 - rg1*gr1*br2 + rg1*br1*gr2 + gr1*bg1*rr2 - gg1*br1*rr2) / D,
+		( rr1*gg1*bg2 - rr1*bg1*gg2 - rg1*gr1*bg2 + rg1*br1*gg2 + gr1*bg1*rg2 - gg1*br1*rg2) / D,
+		( rr1*gg1*bb2 - rr1*bg1*gb2 - rg1*gr1*bb2 + rg1*br1*gb2 + gr1*bg1*rb2 - gg1*br1*rb2) / D
 	)
 
 /**

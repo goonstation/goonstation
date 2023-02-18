@@ -1,0 +1,150 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/allowGenerate)
+"f" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/cigbutt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"v" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/cigbutt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"A" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"D" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"H" = (
+/obj/item/clothing/mask/cigarette{
+	pixel_x = -6
+	},
+/obj/machinery/space_heater,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"J" = (
+/obj/item/reagent_containers/food/drinks/bottle{
+	rand_pos = 1
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/cigbutt,
+/obj/item/cigbutt,
+/obj/item/cigbutt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"K" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"M" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"N" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 9
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"O" = (
+/obj/item/reagent_containers/food/drinks/bottle{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle{
+	rand_pos = 1
+	},
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"P" = (
+/obj/item/reagent_containers/food/drinks/bottle/gin,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"V" = (
+/obj/random_item_spawner/junk/maybe_few,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Y" = (
+/obj/decal/cleanable/dirt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+
+(1,1,1) = {"
+M
+M
+M
+M
+M
+a
+"}
+(2,1,1) = {"
+M
+P
+J
+O
+M
+M
+"}
+(3,1,1) = {"
+M
+A
+V
+H
+D
+M
+"}
+(4,1,1) = {"
+M
+A
+A
+K
+f
+M
+"}
+(5,1,1) = {"
+M
+v
+A
+N
+M
+M
+"}
+(6,1,1) = {"
+M
+M
+Y
+M
+M
+a
+"}

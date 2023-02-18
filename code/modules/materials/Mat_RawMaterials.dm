@@ -8,7 +8,6 @@
 	stack_type = /obj/item/material_piece
 	/// used for prefab bars
 	var/default_material = null
-	var/static/list/valid_icon_states = null
 
 	New()
 		..()
@@ -20,23 +19,7 @@
 	proc/setup_material()
 		.=0
 
-	proc/is_valid_icon_state(var/state)
-		if(isnull(src.valid_icon_states))
-			src.valid_icon_states = list()
-			for(var/icon_state in icon_states('icons/obj/materials.dmi'))
-				src.valid_icon_states[icon_state] = 1
-		return state in src.valid_icon_states
-
-	onMaterialChanged()
-		..()
-		var/potential_new_icon_state = "[src.material.mat_id]-[initial(src.icon_state)]"
-		if(src.is_valid_icon_state(potential_new_icon_state))
-			src.icon_state = potential_new_icon_state
-			src.UpdateOverlays(null, "material")
-			src.color = null
-			src.alpha = 255
-
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
 		return
@@ -69,7 +52,7 @@
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
-	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
@@ -85,7 +68,7 @@
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
-		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.
+		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
@@ -219,17 +202,17 @@
 	icon_state = "bar"
 
 	setup_material()
-		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
+		src.setMaterial(getMaterial("steel"), appearance = TRUE, setname = TRUE)
 		..()
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horriffic smell."
 	default_material = "hamburgris"
-	icon_state = "slag"
+	icon_state = "wad"
 
 	setup_material()
-		src.setMaterial(getMaterial("hamburgris"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("hamburgris"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/glass
@@ -238,7 +221,7 @@
 	icon_state = "block"
 
 	setup_material()
-		src.setMaterial(getMaterial("glass"), appearance = 1, setname = 1)
+		src.setMaterial(getMaterial("glass"), appearance = TRUE, setname = TRUE)
 		..()
 
 /obj/item/material_piece/copper
@@ -247,7 +230,7 @@
 	icon_state = "bar"
 
 	setup_material()
-		src.setMaterial(getMaterial("copper"), appearance = 1, setname = 1)
+		src.setMaterial(getMaterial("copper"), appearance = TRUE, setname = TRUE)
 		..()
 
 /obj/item/material_piece/iridiumalloy
@@ -256,24 +239,24 @@
 	desc = "A chunk of some sort of iridium alloy plating."
 	amount = 5
 	setup_material()
-		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("iridiumalloy"), appearance = FALSE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/spacelag
-	icon_state = "spacelag-bar"
+	icon_state = "bar"
 	name = "spacelag bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
 	amount = 1
 	setup_material()
-		src.setMaterial(getMaterial("spacelag"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("spacelag"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/slag
-	icon_state = "slag"
+	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
 	setup_material()
-		src.setMaterial(getMaterial("slag"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("slag"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/rubber/latex
@@ -282,7 +265,7 @@
 	icon_state = "latex"
 
 	setup_material()
-		src.setMaterial(getMaterial("latex"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("latex"), appearance = FALSE, setname = FALSE)
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
@@ -292,7 +275,7 @@
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	setup_material()
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("wood"), appearance = FALSE, setname = FALSE)
 		..()
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -311,7 +294,7 @@
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
 	setup_material()
-		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("bamboo"), appearance = FALSE, setname = FALSE)
 		..()
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -329,23 +312,23 @@
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
 	setup_material()
-		src.setMaterial(getMaterial("spidersilk"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("spidersilk"), appearance = FALSE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/leather
 	name = "leather"
 	desc = "leather made from the skin of some sort of space critter."
-	icon_state = "leather-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("leather"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("leather"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/synthleather
 	name = "synthleather"
 	desc = "A type of artificial leather."
-	icon_state = "synthleather-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("synthleather"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("synthleather"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/cottonfabric
@@ -353,39 +336,39 @@
 	desc = "A type of natural fabric."
 	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("cotton"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
-	icon_state = "brullbarhide-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("brullbarhide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("brullbarhide"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
-	icon_state = "brullbarhide-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = FALSE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/carbon
 	name = "carbon nano fibre fabric"
 	desc = "carbon based hi-tech material."
-	icon_state = "carbonfibre-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("carbonfibre"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/dyneema
 	name = "dyneema fabric"
 	desc = "carbon nanofibres and space spider silk!"
-	icon_state = "dyneema-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("dyneema"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("dyneema"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/hauntium
@@ -394,23 +377,23 @@
 	icon_state = "dyneema-fabric"
 
 	setup_material()
-		src.setMaterial(getMaterial("hauntium"), appearance = 1, setname = 0)
+		src.setMaterial(getMaterial("hauntium"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/cloth/beewool
 	name = "bee wool"
 	desc = "Some bee wool."
-	icon_state = "beewool-fabric"
+	icon_state = "fabric"
 	setup_material()
-		src.setMaterial(getMaterial("beewool"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("beewool"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/soulsteel
 	name = "soulsteel bar"
 	desc = "A bar of soulsteel. Metal made from souls."
-	icon_state = "soulsteel-bar"
+	icon_state = "bar"
 	setup_material()
-		src.setMaterial(getMaterial("soulsteel"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("soulsteel"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/bone
@@ -418,23 +401,23 @@
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
 	setup_material()
-		src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("bone"), appearance = FALSE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/gnesis
 	name = "gnesis wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
-	icon_state = "gnesis-bar"
+	icon_state = "bar"
 	setup_material()
-		src.setMaterial(getMaterial("gnesis"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("gnesis"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/gnesisglass
 	name = "gnesisglass wafer"
 	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
-	icon_state = "gnesisglass-bar"
+	icon_state = "bar"
 	setup_material()
-		src.setMaterial(getMaterial("gnesisglass"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("gnesisglass"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/coral
@@ -442,7 +425,7 @@
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
 	setup_material()
-		src.setMaterial(getMaterial("coral"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("coral"), appearance = FALSE, setname = TRUE)
 		..()
 
 /obj/item/material_piece/neutronium
@@ -450,5 +433,21 @@
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
 	setup_material()
-		src.setMaterial(getMaterial("neutronium"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("neutronium"), appearance = TRUE, setname = FALSE)
+		..()
+
+/obj/item/material_piece/plutonium
+	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
+	icon_state = "bar"
+	setup_material()
+		src.setMaterial(getMaterial("plutonium"), appearance = 0, setname = 0)
+		..()
+
+/obj/item/material_piece/foolsfoolsgold
+	name = "fool's pyrite bar"
+	desc = "It's gold that isn't. Except it is. MINDFUCK"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("gold"), appearance = TRUE, setname = FALSE)
 		..()

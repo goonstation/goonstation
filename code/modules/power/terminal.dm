@@ -10,7 +10,7 @@
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
-	var/obj/machinery/power/master = null
+	var/obj/machinery/master = null
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
 

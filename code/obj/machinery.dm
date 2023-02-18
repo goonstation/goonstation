@@ -13,7 +13,6 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
-	layer = STORAGE_LAYER
 	pass_unstable = FALSE // Machines hopefully are stable.
 	var/status = 0
 	var/power_usage = 0
@@ -93,11 +92,15 @@
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.
 	// For machines that are part of a pipe network, this routine also calculates the gas flow to/from this machine.
-	if (machines_may_use_wired_power && power_usage)
-		power_change()
-		if (!(status & NOPOWER) && wire_powered)
-			use_power(power_usage, power_channel)
-			power_credit = power_usage
+	if (src.power_usage)
+		if (machines_may_use_wired_power)
+			power_change()
+			if (!(status & NOPOWER) && wire_powered)
+				use_power(src.power_usage, src.power_channel)
+				power_credit = power_usage
+				return
+		if (!(status & NOPOWER))
+			use_power(src.power_usage * mult, src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
@@ -166,7 +169,7 @@
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
-	if(user && (user.lying || user.stat))
+	if(user && (user.lying || user.stat) && !user.client?.holder?.ghost_interaction)
 		return 1
 	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1

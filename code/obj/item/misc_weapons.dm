@@ -45,13 +45,13 @@ TYPEINFO(/obj/item/sword)
 	is_syndicate = 1
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
+	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
-	var/active_stamina_dmg = 40
-	var/active_stamina_cost = 40
-	var/inactive_stamina_dmg = 35
+	var/active_stamina_dmg = 30
+	var/active_stamina_cost = 30
+	var/inactive_stamina_dmg = 40
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -596,12 +596,10 @@ TYPEINFO(/obj/item/sword)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			src.implanted(M)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			src.set_loc(M)
-			src.implanted = 1
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -1032,6 +1030,8 @@ TYPEINFO(/obj/item/bat)
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
 	var/delimb_prob = 1
+	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1129,6 +1129,8 @@ TYPEINFO(/obj/item/swords/katana)
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	hitsound = 'sound/impact_sounds/katana_slash.ogg'
+	midair_fruit_slice = TRUE
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'

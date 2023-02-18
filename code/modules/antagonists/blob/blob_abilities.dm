@@ -230,7 +230,7 @@
 		if (!tutorial_check("deploy", T))
 			return
 
-		if (owner)
+		if (owner && owner.client)
 			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
 				return TRUE
 

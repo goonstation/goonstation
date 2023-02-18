@@ -824,7 +824,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 				user.u_equip(C)
 				qdel(C)
 			else
-				C.update_stack_appearance()
+				C.UpdateStackAppearance()
 
 			FP = new FP(get_turf(src))
 			if (istype(FP, /atom))

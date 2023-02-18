@@ -12,7 +12,6 @@ var/flock_signal_unleashed = FALSE
 	var/name
 	var/used_compute = 0
 	var/total_compute = 0
-	var/peak_compute = 0
 	var/list/all_owned_tiles = list()
 	var/list/busy_tiles = list()
 	var/list/priority_tiles = list()
@@ -50,24 +49,34 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
-	// stats stuff, if not listed above
-	var/drones_made = 0
-	var/bits_made = 0
-	var/deaths = 0
-	var/resources_gained = 0
-	var/partitions_made = 0
-	var/tiles_converted = 0
-	var/structures_made = 0
+	var/center_x = 0
+	var/center_y = 0
+
+	var/obj/dummy/center_marker = null
+
+	var/datum/flockstats/stats
 
 /datum/flock/New()
 	..()
+	src.center_marker = new(locate(0,0,1))
+	src.center_marker.anchored = TRUE
+	src.center_marker.mouse_opacity = 0
+	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
+	src.center_marker.icon_state = "structure-relay"
+	src.center_marker.color = COLOR_MATRIX_FLOCKMIND
+	src.center_marker.alpha = 0
+	src.center_marker.pixel_x = -64
+	src.center_marker.pixel_y = -64
+
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
+	src.stats = new(src)
 	processing_items |= src
 	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
 
 /datum/flock/proc/load_structures()
 	src.unlockableStructures = list()
@@ -208,14 +217,14 @@ var/flock_signal_unleashed = FALSE
 
 		if ("stats")
 			var/list/stats = list(
-				"Drones realized: " = src.drones_made,
-				"Bits formed: " = src.bits_made,
-				"Total deaths: " = src.deaths,
-				"Resources gained: " = src.resources_gained,
-				"Partitions created: " = src.partitions_made,
-				"Tiles converted: " = src.tiles_converted,
-				"Structures created: " = src.structures_made,
-				"Highest compute: " = src.peak_compute
+				"Drones realized: " = src.stats.drones_made,
+				"Bits formed: " = src.stats.bits_made,
+				"Total deaths: " = src.stats.deaths,
+				"Resources gained: " = src.stats.resources_gained,
+				"Partitions created: " = src.stats.partitions_made,
+				"Tiles converted: " = src.stats.tiles_converted,
+				"Structures created: " = src.stats.structures_made,
+				"Highest compute: " = src.stats.peak_compute
 				)
 
 			for (var/stat in stats)
@@ -232,17 +241,6 @@ var/flock_signal_unleashed = FALSE
 	flocks[src.name] = null
 	processing_items -= src
 	..()
-
-//stats should probably be on their own datum, but we'll do this for now
-/datum/flock/proc/reset_stats()
-	src.drones_made = 0
-	src.bits_made = 0
-	src.deaths = 0
-	src.resources_gained = 0
-	src.partitions_made = 0
-	src.tiles_converted = 0
-	src.structures_made = 0
-	src.peak_compute = 0
 
 /datum/flock/proc/total_health_percentage()
 	var/hp = 0
@@ -342,26 +340,26 @@ var/flock_signal_unleashed = FALSE
 	var/image/deconstruct = image('icons/misc/featherzone.dmi', icon_state = "deconstruct")
 	deconstruct.blend_mode = BLEND_ADD
 	deconstruct.plane = PLANE_ABOVE_LIGHTING
-	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	deconstruct.pixel_y = 16
 	.[FLOCK_ANNOTATION_DECONSTRUCT] = deconstruct
 
 	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
 	hazard.blend_mode = BLEND_ADD
 	hazard.plane = PLANE_ABOVE_LIGHTING
-	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	hazard.pixel_y = 16
 	.[FLOCK_ANNOTATION_HAZARD] = hazard
 
 	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
+	priority.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	priority.alpha = 180
 	priority.plane = PLANE_ABOVE_LIGHTING
 	priority.mouse_opacity = FALSE
 	.[FLOCK_ANNOTATION_PRIORITY] = priority
 
 	var/image/reserved = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR
+	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	reserved.alpha = 80
 	reserved.plane = PLANE_ABOVE_LIGHTING
 	reserved.mouse_opacity = FALSE
@@ -370,14 +368,14 @@ var/flock_signal_unleashed = FALSE
 	var/image/flock_face = image('icons/misc/featherzone.dmi', icon_state = "flockmind_face")
 	flock_face.blend_mode = BLEND_ADD
 	flock_face.plane = PLANE_ABOVE_LIGHTING
-	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	flock_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKMIND_CONTROL] = flock_face
 
 	var/image/trace_face = image('icons/misc/featherzone.dmi', icon_state = "flocktrace_face")
 	trace_face.blend_mode = BLEND_ADD
 	trace_face.plane = PLANE_ABOVE_LIGHTING
-	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	trace_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKTRACE_CONTROL] = trace_face
 
@@ -386,13 +384,13 @@ var/flock_signal_unleashed = FALSE
 	health.pixel_x = 10
 	health.pixel_y = 16
 	health.plane = PLANE_ABOVE_LIGHTING
-	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
 	var/image/ignore = image('icons/misc/featherzone.dmi', icon_state = "ignore")
 	ignore.blend_mode = BLEND_ADD
 	ignore.plane = PLANE_ABOVE_LIGHTING
-	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	ignore.pixel_y = 16
 	.[FLOCK_ANNOTATION_IGNORE] = ignore
 
@@ -465,6 +463,9 @@ var/flock_signal_unleashed = FALSE
 				name_found = TRUE
 				src.active_names[name] = TRUE
 		tries++
+		if(phrase_log.is_uncool(jointext(splittext(name,"."),"")))
+			name_found = FALSE
+
 	if (!name_found && tries == max_tries)
 		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
@@ -651,6 +652,9 @@ var/flock_signal_unleashed = FALSE
 	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
+	for (var/turf/simulated/floor/feather/feathertile as anything in src.all_owned_tiles)
+		feathertile.flock = null
+	all_owned_tiles = null
 	if (!real)
 		src.load_structures()
 		return
@@ -660,7 +664,6 @@ var/flock_signal_unleashed = FALSE
 		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))
 	annotations = null
-	all_owned_tiles = null
 	busy_tiles = null
 	priority_tiles = null
 	units = null
@@ -688,10 +691,20 @@ var/flock_signal_unleashed = FALSE
 	if (!T)
 		return
 	src.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
+
+	if (!src.relay_in_progress && !src.relay_finished && ((abs(T.x - src.center_x) + abs(T.y - src.center_y))/2 < 50)) //ignore extreme outliers
+		var/length = length(src.all_owned_tiles)
+		src.center_x += (T.x - src.center_x)/(length + 1)
+		src.center_y += (T.y - src.center_y)/(length + 1)
+		src.center_marker.set_loc(locate(src.center_x, src.center_y, 1))
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+
 	if (isfeathertile(T))
-		src.tiles_converted++
+		src.stats.tiles_converted++
+	if (istype(T, /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/featherturf = T
+		featherturf.flock = src
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -732,15 +745,21 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
-	var/list/floors_no_longer_existing = list()
-
-	for(var/turf/simulated/floor/feather/T in src.all_owned_tiles)
-		if(!T || T.loc == null || T.broken)
-			floors_no_longer_existing |= T
-			continue
-
-	if(length(floors_no_longer_existing))
-		src.all_owned_tiles -= floors_no_longer_existing
+	if (!src.relay_in_progress && !src.relay_finished)
+		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
+			src.relay_in_progress = TRUE
+			src.center_marker.alpha = 0
+			for (var/turf/T in range(3, src.center_marker))
+				for (var/atom/A in T)
+					if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
+						var/mob/M = A
+						M.gib()
+					else if (A.density)
+						qdel(A)
+				T.ReplaceWith(/turf/simulated/floor/feather)
+			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
+		else
+			src.center_marker.alpha = max(0, src.total_compute() - 300)
 
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()

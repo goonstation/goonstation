@@ -689,7 +689,7 @@ stare
 		return FALSE // can't harvest anyway, if not a flockdrone
 
 /datum/aiTask/sequence/goalbased/flock/harvest/valid_target(obj/item/I)
-	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/game_kit)
+	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/boardgame/chess)
 
 /datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
 	. = list()
@@ -831,7 +831,7 @@ stare
 			if(prob(60))
 				// dodge
 				walk(flockdrone, 0)
-				walk_rand(flockdrone, 2, 2)
+				walk_rand(flockdrone, 2, 1)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()

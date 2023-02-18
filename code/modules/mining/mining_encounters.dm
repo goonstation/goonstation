@@ -900,7 +900,7 @@
 
 // Modifiers
 
-/proc/Turfspawn_Asteroid_SeedSpecificOre(var/list/turfs,var/ore_name = "mauxite",var/veins = 0)
+/proc/Turfspawn_Asteroid_SeedSpecificOre(var/list/turfs,var/ore_name = "mauxite",var/veins = 0,fullbright=TRUE)
 	if (!turfs || turfs.len < 1)
 		return list()
 
@@ -929,7 +929,8 @@
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.UpdateOverlays(new /image/fullbright, "fullbright")
+			if(fullbright)
+				AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
@@ -943,7 +944,7 @@
 			turfs -= AST
 	return turfs
 
-/proc/Turfspawn_Asteroid_SeedOre(var/list/turfs,var/veins,var/rarity_mod = 0)
+/proc/Turfspawn_Asteroid_SeedOre(var/list/turfs,var/veins,var/rarity_mod = 0,fullbright=TRUE)
 	if (!turfs || turfs.len < 1)
 		return list()
 
@@ -983,7 +984,8 @@
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.UpdateOverlays(new /image/fullbright, "fullbright")
+			if(fullbright)
+				AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 			O.onGenerate(AST)

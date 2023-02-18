@@ -116,7 +116,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 	else
 		src.status |= NOPOWER
 
-/obj/machinery/door/firedoor/bumpopen(mob/user)
+/obj/machinery/door/firedoor/bumpopen(atom/movable/AM)
 	return
 
 /obj/machinery/door/firedoor/isblocked()

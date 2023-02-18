@@ -18,7 +18,7 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	health = 300
-	emaggable = 1
+	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
@@ -915,7 +915,7 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio <= 0.1)
+		if(P.proj_data.stun && P.proj_data.damage <= 5)
 			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
@@ -969,6 +969,9 @@
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
+		if (!src.emaggable)
+			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
+			return FALSE
 
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
@@ -1269,7 +1272,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
@@ -2404,8 +2407,8 @@
 			if (src.cell.genrate) power_use_tally -= src.cell.genrate
 
 			if (src.max_upgrades > initial(src.max_upgrades))
-				var/delta = src.max_upgrades - initial(src.max_upgrades)
-				power_use_tally += 3 ^ delta
+				var/delta = src.max_upgrades + 1 - initial(src.max_upgrades)
+				power_use_tally += 3 ** delta
 
 			if (power_use_tally < 0) power_use_tally = 0
 
@@ -2486,7 +2489,8 @@
 				// Nimbus-class interdictor: wirelessly charge cyborgs
 				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
+						if (IX.expend_interdict(round(ROBOT_BATTERY_WIRELESS_CHARGERATE*1.7),src,TRUE,ITDR_NIMBUS))
+							//multiplier to charge rate is an efficiency penalty due to over-the-air charging
 							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
 							break
 
@@ -2978,7 +2982,18 @@
 		return max(part_chest.ropart_get_damage_percentage(2), part_head.ropart_get_damage_percentage(2)) // return the most significant damage to the vital bits
 
 	get_valid_target_zones()
-		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
+		var/list/ret = list("chest")
+		if(src.part_arm_l)
+			ret += "l_arm"
+		if(src.part_arm_r)
+			ret += "r_arm"
+		if(src.part_leg_l)
+			ret += "l_leg"
+		if(src.part_leg_r)
+			ret += "r_leg"
+		if(src.part_head)
+			ret += "head"
+		return ret
 
 	disposing()
 		if (src.shell)

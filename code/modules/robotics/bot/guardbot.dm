@@ -102,7 +102,6 @@
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	locked = 1 //Behavior Controls and Tool lock
-	//bot_voice = 'sound/misc/talk/bottalk_4.ogg'
 
 	//var/current_movepath = 0 //If we need to switch movement halfway
 	var/datum/guardbot_mover/mover = null
