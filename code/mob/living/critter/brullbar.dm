@@ -137,7 +137,6 @@
 		else
 			return ..()
 
-
 	critter_scavenge(var/mob/target)
 		if (prob(30))
 			src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
@@ -167,7 +166,7 @@
 				tackle.handleCast(attacker)
 				ai.interrupt()
 
-	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
+	proc/fuck_up_silicons(var/mob/living/silicon/robot/silicon) // taken from orginal object critter behaviour scream
 		if (!silicon.part_head)
 			src.visible_message("<span class='alert'><B>[src]</B> sniffs at [silicon.name].</span>")
 			sleep(1.5 SECONDS)
@@ -176,22 +175,22 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 			logTheThing(LOG_COMBAT, src, "gibs [constructTarget(silicon,"combat")] at [log_loc(src)].")
 			silicon.gib()
+			return
+		if (silicon.part_head.ropart_get_damage_percentage() >= 85)
+			src.visible_message("<span class='alert'><B>[src]</B> grabs [silicon.name]'s head and wrenches it right off!</span>")
+			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+			silicon.compborg_lose_limb(silicon.part_head)
+			sleep(1.5 SECONDS)
+			src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
+			playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
+			make_cleanable( /obj/decal/cleanable/blood,src.loc)
 		else
-			if (silicon.part_head.ropart_get_damage_percentage() >= 85)
-				src.visible_message("<span class='alert'><B>[src]</B> grabs [silicon.name]'s head and wrenches it right off!</span>")
-				playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
-				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> pounds on [silicon.name]'s head furiously!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
+			if (silicon.part_head.ropart_take_damage(rand(20,40),0) == 1)
 				silicon.compborg_lose_limb(silicon.part_head)
-				sleep(1.5 SECONDS)
-				src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
-				playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
-				make_cleanable( /obj/decal/cleanable/blood,src.loc)
-			else
-				src.visible_message("<span class='alert'><B>[src]</B> pounds on [silicon.name]'s head furiously!</span>")
-				playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-				if (silicon.part_head.ropart_take_damage(rand(20,40),0) == 1)
-					silicon.compborg_lose_limb(silicon.part_head)
-				if (prob(33)) playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
+			if (prob(33)) playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 
 	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
