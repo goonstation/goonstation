@@ -83,6 +83,11 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
+	var/list/dont_deepfry = list(/obj/item/phone_handset) //Should I be doing this for a single item? Might be useful to SOMEONE in the future.
+	if(locate(W) in dont_deepfry)
+		boutput(user, "<span class='alert'>There's no way you could deep fry [W].</span>")
+		return
+
 	src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 	user.u_equip(W)
 	W.dropped(user)
