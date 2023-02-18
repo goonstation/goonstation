@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "cannabisleaf"
 	brew_result = list("THC", "CBD")
 	contraband = 1
+	can_bouquet = TRUE
 	w_class = W_CLASS_TINY
 
 /obj/item/plant/herb/cannabis/spawnable
