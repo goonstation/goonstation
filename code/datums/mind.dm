@@ -34,10 +34,7 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/purchased_traitor_items = list()
-	var/list/traitor_crate_items = list()
 	var/list/blob_absorb_victims = list()
-	var/list/spy_stolen_items = list()
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
