@@ -1518,3 +1518,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		cell.swap(gun,user)
+
+/obj/item/ammo/power_cell/redirect
+	component_type = /datum/component/power_cell/redirect
+	var/target_type = null
+	var/internal = FALSE

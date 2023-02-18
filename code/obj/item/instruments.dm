@@ -273,7 +273,7 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
-	note_range = list("c4", "c7")
+	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS

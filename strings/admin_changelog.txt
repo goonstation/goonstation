@@ -1,3 +1,11 @@
+(t)mon feb 17 23
+(u)Sovexe
+(*)You can now view ban data from other servers ingame. There is a new "CentCom" link in the player options panel. Clicking it will launch the CentCom Viewer panel that lists out all known server and job bans associated with the target player.
+(t)mon feb 13 23
+(u)pali
+(*)New experimental ghost interaction mode. Use the toggle-ghost-interaction verb to toggle it on or off.<br>When it's toggled on you can interact with most machines and objects as a ghost by clicking on them.<br>You can also clickdrag things to move them around. When you clickdrag an unanchored thing onto its own tile you change its pixel position, if it's a neighbouring tile you move it there (even if it is a wall etc.), if it is a tile further away you throw the thing.<br>If you clickdrag an item onto some other object it'll act more or less as if you clicked on it with the item in hand.
+(u)Zamujasa
+(*)People who are not dead but can still hear deadchat (ghost VR, afterlife, wraith, etc) can now hear admin dsay as well.
 (t)sun feb 5 23
 (u)ZeWaka
 (*)When you edit <code>color</code> in View Variables, there is a new 'Color Matrix Editor' option to preview color matrix changes on your selection before applying.
