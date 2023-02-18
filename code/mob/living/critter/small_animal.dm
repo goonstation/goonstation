@@ -712,7 +712,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		. = ..()
 		UnregisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY)
 
-	proc/throw_response(target, item, thrower)
+	proc/throw_response(target, obj/item/item, mob/thrower)
 		// Only ai dogs should play fetch
 		if (src == thrower || is_incapacitated(src) || !istype(item, /obj/item) || !src.ai?.enabled || prob(30) || length(src.ai.priority_tasks) > 0)
 			return

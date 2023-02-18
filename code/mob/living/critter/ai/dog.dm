@@ -73,7 +73,7 @@
 	if (playmate && get_dist(the_dog, playmate) < max_dist)
 		var/obj/item/the_item = the_dog.fetch_item
 		//If the item is too tiny, you cannot clearly see it in the dog's mouth
-		var/seen_item = "the item"
+		var/seen_item = "something"
 		if (the_item.w_class > W_CLASS_TINY)
 			seen_item = the_item
 		the_dog.visible_message("<span class='notice'>[the_dog] begins happily running towards [playmate] with [seen_item] in their mouth, wagging their tail furiously!</span>")
