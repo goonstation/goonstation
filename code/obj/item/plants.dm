@@ -392,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "poppy"
 	New()
 		. = ..()
-		src.AddComponent(/datum/components/bouquet, TRUE)
+		src.AddComponent(/datum/component/bouquet, TRUE)
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"
