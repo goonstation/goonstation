@@ -15,7 +15,7 @@
 	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/critter/dog/fetch/New(parentHolder, transTask)
-	..(parentHolder, transTask)
+	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/dog/fetch, list(holder)))
 
 /datum/aiTask/sequence/goalbased/critter/dog/fetch/get_targets()
@@ -64,7 +64,7 @@
 	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/critter/dog/fetch_back/New(parentHolder, transTask)
-	..(parentHolder, transTask)
+	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/dog/fetch_back, list(holder)))
 
 /datum/aiTask/sequence/goalbased/critter/dog/fetch_back/get_targets()
