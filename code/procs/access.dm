@@ -66,6 +66,8 @@
  */
 /obj/proc/allowed(mob/M)
 	. = 0
+	if(M?.client?.holder?.ghost_interaction)
+		return 2
 	// easy out for if no access is required
 	if (src.check_access(null))
 		return 1

@@ -471,7 +471,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
+				param = copytext(sanitize(param), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"

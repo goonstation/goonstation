@@ -4,7 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = TRUE
-	anchored = 1
+	anchored = 2
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
 	power_usage = 50

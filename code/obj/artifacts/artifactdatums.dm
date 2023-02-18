@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	// These are automatically handled. They're used to make the artifact glow different colors.
 	/// the glowy overlay used for when the artifact is activated
 	var/obj/effect/artifact_glowie/fx_image = null
+	/// the glowy overlay used to ensure the glow is visible
+	var/obj/effect/artifact_glowie/fx_fallback = null
 	/// the actual /obj that belongs to this specific artifact instance
 	var/obj/holder = null
 

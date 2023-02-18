@@ -797,27 +797,151 @@
 		if(iced.rest_mult)
 			icon_state = "web2"
 
-/obj/item/ammo/bullets/pipeshot/flash
-	sname = "flashbang load"
-	desc = "This appears to be some chemical wadding shoved into a few cut open pipe frames."
-	ammo_type = new/datum/projectile/bullet/reagent_burst/flashbang
+
+/datum/projectile/special/shotchem/shells
+	name = "chemical shot"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	casing = /obj/item/casing/shotgun/pipe
+	max_range = 3
+	damage = 0
+	stun = 10
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+
+	var/list/reagent_ids
+	var/reagent_volume = 10
+	var/chem_pct_app_tile = 0.3
+	var/speed_mult = 1
+	var/smoke_remaining = FALSE
+
+	on_launch(obj/projectile/O)
+		O.create_reagents(reagent_volume)
+		if(islist(reagent_ids))
+			for(var/R in reagent_ids)
+				O.reagents.add_reagent(R, reagent_ids[R])
+
+		O.special_data["speed_mult"] = speed_mult
+		O.special_data["chem_pct_app_tile"] = chem_pct_app_tile
+
+		O.special_data["IS_LIT"] = TRUE
+		O.special_data["burn_temp"]	= 2500 KELVIN
+		O.special_data["temp_pct_loss_atom"] = 0.3
+
+		O.special_data["proj_color"] = O.reagents.get_average_color()
+		O.color = O.reagents.get_average_rgb()
+		. = ..()
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		..()
+		P.die()
+
+	on_end(obj/projectile/O)
+		if(smoke_remaining && O.reagents.total_volume)
+			smoke_reaction(O.reagents, 1, get_turf(O), do_sfx=FALSE)
+
+/obj/item/ammo/bullets/pipeshot/chems
+	sname = "chem load"
+	desc = "This appears to be some chemical soaked wadding shoved into a few cut open pipe frames."
 	icon_state = "makeshift_u"
+	var/color_override = null
 
 	New()
 		..()
 		var/image/overlay = image(src.icon,"makeshift_o")
-		overlay.color = "#ccc"
+		overlay.color = get_chem_color()
 		UpdateOverlays(overlay,"overlay")
 
-/datum/projectile/bullet/reagent_burst
-	max_range = 1
+	proc/get_chem_color()
+		var/datum/projectile/special/shotchem/shells/S = ammo_type
+		if(color_override)
+			. = color_override
+		else if(istype(S))
+			if(islist(S.reagent_ids))
+				var/datum/reagents/mix = new(100)
+				for(var/R in S.reagent_ids)
+					mix.add_reagent(R, S.reagent_ids[R], donotreact=TRUE)
+				. = mix.get_average_rgb()
+				qdel(mix)
+		if(!.)
+			. = "#ffffff"
 
-/datum/projectile/bullet/reagent_burst/flashbang
-	name = "flashbang round"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	casing = /obj/item/casing/shotgun/pipe
+/datum/pipeshotrecipe/chem
+	accepteditem = /obj/item/reagent_containers
+	thingsneeded = 4
+	var/list/reagents_req
+	var/reagent_volume = 10
 
-	on_launch(obj/projectile/O)
+	check_match(obj/item/craftingitem)
+		if(..() && length(reagents_req))
+			var/obj/item/reagent_containers/RC = craftingitem
+			if(RC.is_open_container())
+				var/datum/reagents/R = new(100)
+				RC.reagents.trans_to_direct(R, reagent_volume)
+				. = TRUE
+				for(var/required_reagent in reagents_req)
+					. &&= R.has_reagent(required_reagent, reagents_req[required_reagent])
+				R.trans_to(RC, R.total_volume)
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(check_match(craftingitem, TRUE))
+			var/obj/item/reagent_containers/RC = craftingitem
+			RC.reagents.trans_to(frame, reagent_volume)
+			thingsneeded -= 1
+
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You carefully pour some of [craftingitem] into \the [frame]. You feel like you'll need more to fill all the shells. </span>")
+
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+			. = TRUE
+
+/obj/item/power_pack
+	name = "battery pack"
+	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
+	icon = 'icons/obj/items/tank.dmi'
+	icon_state = "plasma"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
+	color = "#0000ff"
+	inventory_counter_enabled = 1
+
+	New()
 		. = ..()
-		flashpowder_reaction(get_turf(O), 20)
-		sonicpowder_reaction(get_turf(O), 20)
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{max_charge = 300; recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=300, swappable=FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (src.inventory_counter)
+			src.inventory_counter.show_count()
+
+/obj/item/power_pack/test
+	New()
+		. = ..()
+		new /obj/item/baton/power_pack(src.loc)
+		new /obj/item/gun/energy/taser_gun/power_pack(src.loc)
+
+/obj/item/ammo/power_cell/redirect/power_pack
+	desc = "A passthrough power cell that has cables to hook directly into a power pack."
+	target_type = /obj/item/power_pack
+
+/obj/item/baton/power_pack
+	desc = "A standard baton with a long cable to hook into a power pack."
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE
+
+/obj/item/gun/energy/taser_gun/power_pack
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE

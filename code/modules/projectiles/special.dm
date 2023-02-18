@@ -287,6 +287,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
 
+/datum/projectile/special/spreader/buckshot_burst/foamdarts
+	name = "foam dart"
+	sname = "foam dart"
+	spread_angle_variance = 22.5
+	speed_max = 32
+	speed_min = 20
+	cost = 6
+	casing = null
+	pellets_to_fire = 6
+	spread_projectile_type = /datum/projectile/bullet/foamdart
+	shot_sound = 'sound/effects/syringeproj.ogg'
 
 // Really crazy shit
 
