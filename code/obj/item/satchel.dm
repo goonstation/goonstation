@@ -132,7 +132,7 @@
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))
-				if (!matches(I, O)) continue
+				if (!matches(I, O) || QDELETED(I)) continue
 				if (I in user)
 					continue
 				I.set_loc(src)
@@ -188,6 +188,7 @@
 		icon_state = "hydrosatchel"
 		allowed = list(/obj/item/seed,
 		/obj/item/plant,
+		/obj/item/clothing/head/flower,
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/organ,
 		/obj/item/clothing/head/butt,

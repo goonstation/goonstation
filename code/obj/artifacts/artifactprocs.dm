@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -101,6 +101,14 @@
 	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
 	A.fx_image.plane = PLANE_ABOVE_LIGHTING
 
+	A.fx_fallback = new
+	A.fx_fallback.icon = src.icon
+	A.fx_fallback.icon_state = src.icon_state + "fx"
+	A.fx_fallback.color = A.fx_image.color
+	A.fx_fallback.alpha = A.fx_image.alpha
+	A.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
+	A.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
+
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
 	A.react_heat[1] = AO.heat_reaction_one
@@ -151,6 +159,7 @@
 		src.icon_state = src.icon_state + "fx"
 	else
 		src.vis_contents += A.fx_image
+		src.vis_contents += A.fx_fallback
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -169,6 +178,7 @@
 		src.icon_state = src.icon_state - "fx"
 	else
 		src.vis_contents -= A.fx_image
+		src.vis_contents -= A.fx_fallback
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()

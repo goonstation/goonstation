@@ -198,7 +198,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "T" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/dojo/sand/circle,
 /area/shuttle/escape/centcom)
 "V" = (

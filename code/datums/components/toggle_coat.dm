@@ -6,6 +6,7 @@
 	var/obj/ability_button/coat_toggle/toggle = new
 
 /datum/component/toggle_coat/Initialize(buttoned, coat_style)
+	. = ..()
 	if(!istype(parent, /obj/item/clothing/suit))
 		return COMPONENT_INCOMPATIBLE
 	src.buttoned = buttoned

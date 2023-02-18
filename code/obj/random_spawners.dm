@@ -13,7 +13,7 @@
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
-	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
+	var/list/guaranteed = new/list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
 	New()
@@ -26,7 +26,7 @@
 	proc/spawn_items()
 		SHOULD_NOT_SLEEP(TRUE)
 		if (islist(src.guaranteed) && length(src.guaranteed))
-			for (var/obj/new_item in src.guaranteed)
+			for (var/obj/new_item as anything in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing(LOG_DEBUG, src, "has a non-path item in its guaranteed list, [new_item]")
 					DEBUG_MESSAGE("[src] has a non-path item in its guaranteed list, [new_item]")

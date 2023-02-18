@@ -42,6 +42,8 @@ THROWING DARTS
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+		if (ismob(src.loc))
+			src.implanted(src.loc)
 
 	disposing()
 		if (owner)
@@ -57,14 +59,21 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
+		SHOULD_CALL_PARENT(TRUE)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
-		implanted = 1
+		src.set_loc(M)
+		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.implant.Add(src)
+		else if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
-		return
 
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
@@ -393,6 +402,31 @@ THROWING DARTS
 				src.uses--
 				boutput(source, "You feel a faint click.")
 
+/obj/item/implant/emote_triggered/signaler
+	name = "signaler implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+	scan_category = "syndicate"
+	activation_emote = "wink"
+	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
+	var/obj/item/device/radio/signaler/signaler = null
+
+	New()
+		..()
+		src.signaler = new(src)
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		tgui_process.close_uis(src.signaler)
+
+	attack_self(mob/user)
+		return src.signaler.AttackSelf(user)
+
+	trigger(mob/source, emote)
+		if (emote == src.activation_emote)
+			boutput(source, "You hear a faint beep.")
+			signaler.send_signal()
+
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
@@ -476,6 +510,7 @@ THROWING DARTS
 			else if (H.mind in ticker.mode:revolutionaries)
 				H.TakeDamage("chest", 1, 1, 0)
 				H.changeStatus("weakened", 1 SECOND)
+				H.setStatus("derevving")
 				H.force_laydown_standup()
 				H.emote("scream")
 				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
@@ -490,6 +525,7 @@ THROWING DARTS
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
 					H.changeStatus("newcause", 5 SECONDS)
+					H.delStatus("derevving")
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
@@ -505,6 +541,10 @@ THROWING DARTS
 						H.emote("twitch_v")
 
 		..()
+
+	on_remove(var/mob/M)
+		M.delStatus("derevving")
+		. = ..()
 
 
 // dumb joke
@@ -716,7 +756,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
-
+		logTheThing(LOG_COMBAT, M, "is mindhacked ([src.expire ? "regular" : "deluxe"]) by [constructTarget(I,"combat")] at [log_loc(I)].")
 		M.setStatus("mindhack", expire ? (25 + rand(-5,5)) MINUTES : null, I, custom_orders)
 		src.uses -= 1
 
@@ -921,7 +961,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	flintlock
 		name= "flintlock round"
-		desc = "Rather unperfect round ball. Looks very old."
+		desc = "A rather imperfect round ball. It looks very old indeed."
 		icon_state = "flintlockbullet"
 
 	bullet_50
@@ -934,10 +974,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A weird flechette-like projectile."
 		icon_state = "blowdart"
 
-/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
-	SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, C)
-	implanted = 1
-	owner = C
+/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I, bleed_time)
+	..()
 
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
@@ -948,9 +986,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
 		C.update_clothing()
 
-	if (!src.bleed_time)
+	if (!bleed_time)
 		return
-
+	src.bleed_time = bleed_time
 	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
@@ -1431,14 +1469,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				"<span class='alert'>You have been implanted by [user].</span>",\
 				"<span class='alert'>You implanted the implant into [M].</span>")
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.implant.Add(src.imp)
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants.Add(src.imp)
-
-		src.imp.set_loc(M)
 		src.imp.implanted(M, user)
 
 		src.imp = null
@@ -1496,6 +1526,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		else
 			return ..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.imp?.AttackSelf(user)
+
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
@@ -1539,6 +1573,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implanter1-g"
 	New()
 		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
+		..()
+
+/obj/item/implanter/signaler
+	icon_state = "implanter1-g"
+	New()
+		src.imp = new /obj/item/implant/emote_triggered/signaler( src )
 		..()
 
 /obj/item/implanter/mindhack
@@ -1602,6 +1642,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	//Whether this is the paper type that goes away when emptied
 	var/disposable = FALSE
 
+/obj/item/implantcase/attack_self(mob/user)
+	. = ..()
+	src.imp?.AttackSelf(user)
+
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
 
@@ -1624,6 +1668,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
 	implant_type = /obj/item/implant/emote_triggered/freedom
+
+/obj/item/implantcase/signaler
+	name = "glass case - 'Signaler'"
+	implant_type = /obj/item/implant/emote_triggered/signaler
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
@@ -1917,6 +1965,31 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Zone:</b> Brain Stem<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				dat += {"
+<b>Implant Specifications:</b><br>
+<b>Name:</b> Remote Signaler<br>
+<b>Zone:</b> Left hand near wrist<br>
+<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<HR>
+<b>Implant Details:</b> <BR>
+<b>Function:</b> Transmits a radio signal on a configurable frequency.
+<b>Special Features:</b><BR>
+<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
+<HR>
+Implant Specifics:<BR>
+Frequency (144.1-148.9):
+<A href='byond://?src=\ref[src];freq=-10'>-</A>
+<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(implant.signaler.frequency)]
+<A href='byond://?src=\ref[src];freq=2'>+</A>
+<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+
+ID (1-100):
+<A href='byond://?src=\ref[src];id=-10'>-</A>
+<A href='byond://?src=\ref[src];id=-1'>-</A> [implant.signaler.code]
+<A href='byond://?src=\ref[src];id=1'>+</A>
+<A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
 			else
 				dat += "Implant ID not in database"
 		else
@@ -1933,17 +2006,28 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
+		if (!istype(src.case, /obj/item/implantcase))
+			return
 		if (href_list["freq"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.frequency += text2num_safe(href_list["freq"])
-				T.frequency = sanitize_frequency(T.frequency)
+			var/frequency_change = text2num_safe(href_list["freq"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.frequency += frequency_change
+				implant.frequency = sanitize_frequency(implant.frequency)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.frequency += frequency_change
+				implant.signaler.frequency = sanitize_frequency(implant.signaler.frequency)
 		if (href_list["id"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.id += text2num_safe(href_list["id"])
-				T.id = min(100, T.id)
-				T.id = max(1, T.id)
+			var/id_change = text2num_safe(href_list["id"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.id += id_change
+				implant.id = clamp(implant.id, 1, 100)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.code += id_change
+				implant.signaler.code = clamp(implant.signaler.code, 1, 100)
 		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
@@ -2064,17 +2148,13 @@ TYPEINFO(/obj/item/gun/implanter)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
 			if (my_implant.can_implant(H, implant_master))
-				my_implant.set_loc(H)
 				my_implant.implanted(H, implant_master)
-				H.implant.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(H))
 		else if (ismobcritter(hit))
 			var/mob/living/critter/C = hit
 			if (C.can_implant && my_implant.can_implant(C, implant_master))
-				my_implant.set_loc(C)
 				my_implant.implanted(C, implant_master)
-				C.implants.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(C))
 		else
@@ -2108,7 +2188,6 @@ TYPEINFO(/obj/item/gun/implanter)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			random_brute_damage(M, 1)
-			src.set_loc(M)
 			src.implanted(M)
 
 	attack_hand(mob/user)
@@ -2139,5 +2218,4 @@ TYPEINFO(/obj/item/gun/implanter)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
-			src.set_loc(M)
 			src.implanted(M)

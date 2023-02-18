@@ -402,6 +402,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
 
+/datum/cookingrecipe/toasted_french
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/french
+	cookbonus = 5
+	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
+
 /datum/cookingrecipe/sandwich_m_h
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
@@ -1254,11 +1259,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		for (var/obj/item/T in ourCooker.contents)
 
 			if (T.type == item1 && !found1)
-				found1 = true
+				found1 = TRUE
 				continue
 
 			if (T.type == item2 && !found2)
-				found2 = true
+				found2 = TRUE
 				continue
 
 			anItem = T
@@ -1600,7 +1605,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1641,7 +1646,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1849,6 +1854,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dippable/churro
 
+/datum/cookingrecipe/french_toast
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/drinks/milk
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/french_toast
+
 /datum/cookingrecipe/zongzi
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
@@ -1907,4 +1920,3 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
-

@@ -28,7 +28,7 @@
 	var/lastexcess = 0
 	var/online = 0
 	var/integrity_state = 0		//0 - covered in mangled metal. 1 - normal, panel closed. 2 - normal, panel open.
-	var/core_inserted = true
+	var/core_inserted = TRUE
 	var/obj/machinery/power/terminal/terminal = null
 	var/image/glow
 	var/image/core
@@ -101,13 +101,13 @@
 		elecflash(src)
 		if (src.online)
 			src.online = 0
-		core_inserted = false
+		core_inserted = FALSE
 		user.put_in_hand_or_drop(new /obj/item/sword_core)
 		user.show_message("<span class='notice'>You remove the SWORD core from the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
 		UpdateIcon()
 	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
-		core_inserted = true
+		core_inserted = TRUE
 		qdel(W)
 		user.show_message("<span class='notice'>You insert the SWORD core into the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."

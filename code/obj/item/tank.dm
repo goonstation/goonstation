@@ -200,7 +200,7 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
@@ -282,6 +282,14 @@ Contains:
 			if(isnum(target_pressure))
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
+
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
 
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state

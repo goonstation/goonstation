@@ -158,6 +158,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "An implant that allows instant escape from handcuffs and shackles. Multiple uses possible but not guaranteed."
 
+/datum/syndicate_buylist/generic/signaler_implant
+	name = "Signaler Implant"
+	item = /obj/item/implanter/signaler
+	cost = 1
+	desc = "An implant that can send configurable signals. Can be used while stunned or handcuffed."
+	not_in_crates = 1
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen
@@ -675,7 +684,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	job = list("Engineer")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants

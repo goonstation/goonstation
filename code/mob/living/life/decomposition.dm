@@ -27,11 +27,11 @@
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
 				suspend_rot = !(stinkbox.status & NOPOWER)
 
-			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
-				icky_icky_miasma(T)
-
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()
+
+			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
+				icky_icky_miasma(T)
 
 			var/env_temp = 0
 

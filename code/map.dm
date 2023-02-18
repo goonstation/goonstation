@@ -179,7 +179,7 @@ var/global/list/mapNames = list(
 
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
-		var/dmm_suite/dmm_suite = new
+		var/dmm_suite/dmm_suite = new(debug_id="shuttle [transit_path]")
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
 		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
 		var/turf/transit_start
@@ -455,7 +455,6 @@ var/global/list/mapNames = list(
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
@@ -953,9 +952,6 @@ var/global/list/mapNames = list(
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/engineering/miner = 0 //eventually, assay technicians?
-	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"

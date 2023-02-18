@@ -1,3 +1,5 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve)
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
@@ -410,18 +412,9 @@
 		"releasePressure" = src.release_pressure,
 		"valveIsOpen" = src.valve_open,
 		"hasValve" = src.has_valve ? TRUE : FALSE,
-		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"holding" = src.holding?.ui_describe(),
 		"detonator" = null,
 	)
-
-	if(src.holding)
-		. += list(
-			"holding" = list(
-				"name" = src.holding.name,
-				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-			)
-		)
 
 	if(src.det)
 		. += list(
@@ -447,10 +440,10 @@
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 
-		var/has_paper = false
+		var/has_paper = FALSE
 		for(var/obj/item/paper/sheet in src.det.attachments)
 			. += list("paperData" = sheet.ui_static_data())
-			has_paper = true
+			has_paper = TRUE
 		. += list("hasPaper" = has_paper)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)

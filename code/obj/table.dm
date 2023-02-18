@@ -18,6 +18,7 @@ TYPEINFO_NEW(/obj/table)
 	stops_space_move = TRUE
 	mat_changename = 1
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
@@ -45,7 +46,7 @@ TYPEINFO_NEW(/obj/table)
 		#endif
 
 		SPAWN(0)
-			if (src.auto && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
+			if (src.auto && src.materialless_icon_state() == "0") // if someone's set up a special icon state don't mess with it
 				src.set_up()
 				SPAWN(0)
 					for (var/obj/table/T in orange(1,src))
@@ -76,7 +77,7 @@ TYPEINFO_NEW(/obj/table)
 	proc/set_up()
 		var/connections = get_connected_directions_bitflag(get_typeinfo().smooth_list, cross_areas = TRUE, connect_diagonal = 1)
 		var/cardinals = connections % 16
-		icon_state = num2text(cardinals)
+		set_icon_state(num2text(cardinals))
 		var/ordinals = connectdirs_to_byonddirs(connections)
 
 		if((NORTHEAST & ordinals) == NORTHEAST)
@@ -84,6 +85,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "NE")
 			else
 				working_image.icon_state = "NE"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
@@ -92,6 +94,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "SE")
 			else
 				working_image.icon_state = "SE"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
@@ -100,6 +103,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "SW")
 			else
 				working_image.icon_state = "SW"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "SWcorner")
 		else
 			src.UpdateOverlays(null, "SWcorner")
@@ -109,6 +113,7 @@ TYPEINFO_NEW(/obj/table)
 				src.working_image = image(src.icon, "NW")
 			else
 				working_image.icon_state = "NW"
+			setMaterialAppearanceForImage(working_image)
 			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
@@ -262,7 +267,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -674,7 +679,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1))
+		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -683,7 +688,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 				return
 			else
 				return ..()
-		else if (iswrenchingtool(W))
+		else if (iswrenchingtool(W) && user.a_intent == "harm")
 			if (src.status == 1)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
@@ -829,6 +834,11 @@ TYPEINFO_NEW(/obj/table/glass)
 			src.parts_type = /obj/item/furniture_parts/table/glass/frame
 			src.set_density(0)
 			src.set_up()
+
+		for(var/i_dir in cardinal)
+			var/turf/T = get_step(src, i_dir)
+			for(var/obj/table/glass/G in T)
+				G.smash()
 
 	proc/gnesis_smash()
 		var/color = "#fff"
@@ -1051,7 +1061,7 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/turf/T = get_step(src, direction)
 			if (locate(auto_type) in T)
 				dirs |= direction
-		icon_state = num2text(dirs)
+		set_icon_state(num2text(dirs))
 
 		if (src.glass_broken == GLASS_BROKEN)
 			src.UpdateOverlays(null, "tabletop")
@@ -1067,6 +1077,7 @@ TYPEINFO_NEW(/obj/table/glass)
 			src.working_image = image(src.icon, "[R]g[num2text(dirs)]")
 		else
 			src.working_image.icon_state = "[R]g[num2text(dirs)]"
+			setMaterialAppearanceForImage(working_image)
 		src.UpdateOverlays(working_image, "tabletop")
 
 		var/obj/table/WT = locate(auto_type) in get_step(src, WEST)
@@ -1079,10 +1090,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/SWT = locate(auto_type) in get_step(src, SOUTHWEST)
 			if (SWT)
 				working_image.icon_state = "[R]gSWs"
-				src.UpdateOverlays(working_image, "SWcorner")
 			else
 				working_image.icon_state = "[R]gSW"
-				src.UpdateOverlays(working_image, "SWcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "SWcorner")
 		else
 			src.UpdateOverlays(null, "SWcorner")
 
@@ -1091,10 +1102,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/SET = locate(auto_type) in get_step(src, SOUTHEAST)
 			if (SET)
 				working_image.icon_state = "[R]gSEs"
-				src.UpdateOverlays(working_image, "SEcorner")
 			else
 				working_image.icon_state = "[R]gSE"
-				src.UpdateOverlays(working_image, "SEcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "SEcorner")
 		else
 			src.UpdateOverlays(null, "SEcorner")
 
@@ -1103,10 +1114,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/NET = locate(auto_type) in get_step(src, NORTHEAST)
 			if (NET)
 				working_image.icon_state = "[R]gNEs"
-				src.UpdateOverlays(working_image, "NEcorner")
 			else
 				working_image.icon_state = "[R]gNE"
-				src.UpdateOverlays(working_image, "NEcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "NEcorner")
 		else
 			src.UpdateOverlays(null, "NEcorner")
 
@@ -1115,10 +1126,10 @@ TYPEINFO_NEW(/obj/table/glass)
 			var/obj/table/NWT = locate(auto_type) in get_step(src, NORTHWEST)
 			if (NWT)
 				working_image.icon_state = "[R]gNWs"
-				src.UpdateOverlays(working_image, "NWcorner")
 			else
 				working_image.icon_state = "[R]gNW"
-				src.UpdateOverlays(working_image, "NWcorner")
+			setMaterialAppearanceForImage(working_image)
+			src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
 
