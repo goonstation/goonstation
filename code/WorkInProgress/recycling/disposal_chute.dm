@@ -116,6 +116,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				for(var/obj/item/O in S.contents) O.set_loc(src)
 				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				src.update()
 				return
 		//first time they click with a storage, it gets dumped. second time container itself is added
 		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
@@ -124,15 +125,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(istype(S, /obj/item/storage/secure))
 				var/obj/item/storage/secure/secS = S
 				if(secS.locked)
-					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
-					I.set_loc(src)
+					user.visible_message("[user.name] places \the [secS] into \the [src].",\
+						"You place \the [secS] into \the [src].")
+					user.drop_item()
+					secS.set_loc(src)
 					actions.interrupt(user, INTERRUPT_ACT)
+					src.update()
 					return
 			for(var/obj/item/O in S)
 				O.set_loc(src)
 				S.hud.remove_object(O)
 			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
+			src.update()
 			return
 
 		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
