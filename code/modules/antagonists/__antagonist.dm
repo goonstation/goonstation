@@ -12,6 +12,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
 	var/success_medal = null
+	/// If TRUE, the antag status will be removed when the person dies (changeling critters etc.)
+	var/remove_on_death = FALSE
+	/// If TRUE, the antag status will be removed when the person is cloned (zombies etc.)
+	var/remove_on_clone = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -199,3 +203,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 				owner.current.unlock_medal(success_medal, TRUE)
 		else
 			. += "<span class='alert'><b>\The [src.display_name] has failed!</b></span>"
+
+	proc/on_death()
+		if (src.remove_on_death)
+			src.owner.remove_antagonist(src.id)
+
+//this is stupid, but it's more reliable than trying to keep signals attached to mobs
+/mob/death()
+	if (src.mind)
+		for (var/datum/antagonist/antag in src.mind.antagonists)
+			antag.on_death()
+	..()
