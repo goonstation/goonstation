@@ -385,6 +385,15 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	icon_state = "catnip"
 	brew_result = "catdrugs"
 
+/obj/item/plant/herb/poppy
+	name = "poppy"
+	desc = "A distinctive red flower."
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "poppy"
+	New()
+		. = ..()
+		src.AddComponent(/datum/components/bouquet, TRUE)
+
 /obj/item/plant/herb/tea
 	name = "tea leaves"
 	crop_suffix = " leaves"
