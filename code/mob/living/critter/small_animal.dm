@@ -919,7 +919,6 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
 			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
-			return
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
