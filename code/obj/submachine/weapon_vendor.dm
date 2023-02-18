@@ -429,7 +429,7 @@
 /datum/materiel/loadout/bard
 	name = "Bard"
 	path = /obj/storage/crate/classcrate/bard
-	description = "A musicla support class that buffs their team with area of effect songs centered around amp stacks and hitting things with their cool guitar."
+	description = "A musical support class that buffs their team with area of effect songs centered around amp stacks and hitting things with their cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
