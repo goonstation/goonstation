@@ -1,5 +1,7 @@
 
 (t)sat feb 18 23
+(u)Sord
+(*)Captain now requires 30 rounds played to be selected on all servers.
 (u)Wisemonster
 (p)13071
 (e)💅⏰|C-QoL, A-Status-Effects
