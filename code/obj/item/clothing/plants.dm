@@ -3,38 +3,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	// hi flourish. Plant pot stuff for in future can go here i guess.
 	max_stack = 10 //this seems about right.
 	var/can_bouquet = FALSE
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
-			// i feel like fortune cookie wrap is a little small, and printouts probably need a new texture
-			return
-		if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
-			if (istype(W, /obj/item/paper/folded))
-				boutput("You need to unfold this first!")
-			else
-				make_bouquet(W, user)
-
-/obj/item/clothing/head/flower/proc/make_bouquet(obj/item/paperitem, mob/user)
-	if (!src.can_bouquet)
-		boutput("This flower can't be turned into a bouquet!")
-		return
-	var/obj/item/bouquet/new_bouquet = new(user.loc)
-	paperitem.force_drop(user)
-	src.force_drop(user)
-	new_bouquet.flowernum += 1
-	if (src.amount > 1)
-		var/obj/item/clothing/head/flower/allocated_flower = src.split_stack(1)
-		allocated_flower.set_loc(new_bouquet)
-	else
-		src.set_loc(new_bouquet)
-	if (istype(paperitem, /obj/item/wrapping_paper))
-		var/obj/item/wrapping_paper/dummy = paperitem
-		new_bouquet.wrapstyle = "gw_[dummy.style]"
-	if (istype(paperitem, /obj/item/paper))
-		new_bouquet.wrapstyle = "paper"
-	paperitem.set_loc(new_bouquet)
-	new_bouquet.refresh()
-	user.visible_message("[user] rolls up a [src.name] into a bouquet.", "You roll up the [src.name] into a bouquet.")
-	user.put_in_hand_or_drop(new_bouquet)
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/bouquet, can_bouquet)
 
 /obj/item/clothing/head/flower/rafflesia
 	name = "rafflesia"
