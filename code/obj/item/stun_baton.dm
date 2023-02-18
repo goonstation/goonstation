@@ -280,7 +280,6 @@ TYPEINFO(/obj/item/baton)
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
 					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
-						boutput(user, "<span class='alert'>[M] dodges your blow!</span>")
 						return
 					src.do_stun(user, M, "stun", 2)
 
