@@ -706,10 +706,10 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(isitem(O) && prob(20))
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item, O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						boutput(M, "<span class='alert'>\The [O] melts.</span>")
 					qdel(O)
 
 		fooddrink/alcoholic/port

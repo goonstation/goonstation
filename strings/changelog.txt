@@ -1,4 +1,13 @@
 
+(t)fri feb 17 23
+(u)aloe
+(+)The clown car can now fit people who are stunned but not lying down, and can fit non-human creatures (including borgs).
+(u)Kubius
+(p)12687
+(e)🆕⚖🔄📦🌠|C-Feature, C-Balance, C-Rework, A-Game-Objects, A-Events
+(*)Spatial interdictor mass radiation protection no longer scales with protected individual count, and should reliably weather a whole storm if external power's good.
+(*)Spatial interdictors also no longer require a wire beneath them to initialize, but can't initialize in range of another active interdictor.
+(+)Spatial interdictors ALSO also can now be emagged (removes access requirement), don't need a soldering iron for assembly anymore (securing wires is now done by screwing down wire terminals), and their electrical draw under low use has been cut down a bit.
 (t)wed feb 15 23
 (u)Sord
 (e)📦|A-Game-Objects
