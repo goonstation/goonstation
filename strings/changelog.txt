@@ -1,5 +1,7 @@
 
 (t)fri feb 17 23
+(u)aloe
+(+)The clown car can now fit people who are stunned but not lying down, and can fit non-human creatures (including borgs).
 (u)Kubius
 (p)12687
 (e)🆕⚖🔄📦🌠|C-Feature, C-Balance, C-Rework, A-Game-Objects, A-Events
