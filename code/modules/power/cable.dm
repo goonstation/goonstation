@@ -432,7 +432,7 @@
 	var/cable_surr = 0
 
 /obj/cablespawner/node
-	name = "node reinforced cable spawner"
+	name = "node cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-node"
 
