@@ -68,9 +68,6 @@
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
 
-	var/caneat = 1
-	var/candrink = 1
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 

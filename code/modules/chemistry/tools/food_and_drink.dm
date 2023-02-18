@@ -580,6 +580,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 0
 
 		if (M == user)
+			if(!M.can_drink(src))
+				boutput(M, "<span class='alert'>You can't drink [src]!</span>")
+				return 0
 			src.take_a_drink(M, user)
 			return 1
 		else
@@ -587,6 +590,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			logTheThing(LOG_COMBAT, user, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
+				return 0
+			else if(!M.can_drink(src))
+				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to make [M] drink [src], but they can't drink that!</span>",\
+					"<span class='alert'>You try to make [M] drink [src], but they can't drink that!</span>",\
+					"<span class='alert'><b>[user]</b> tries to give you a drink of [src], but you can't drink that!</span>")
 				return 0
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")

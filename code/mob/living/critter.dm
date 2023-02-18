@@ -1423,6 +1423,12 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
 
+	can_eat()
+		return 0
+
+	can_drink()
+		return 0
+
 	vomit()
 		return
 
