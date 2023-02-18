@@ -388,7 +388,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb/poppy
 	name = "poppy"
 	desc = "A distinctive red flower."
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "poppy"
 	New()
 		. = ..()
