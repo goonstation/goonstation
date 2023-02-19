@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 			return TRUE
 		if (holder.owner.hasStatus("disposals")) //No biting in Disposals, that's cheating.
 			boutput(holder.owner, "<span class='alert'>You definitely can't bite through pipes.</span>")
-			return FALSE
+			return TRUE
 		var/mob/MT = target
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
