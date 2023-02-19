@@ -603,6 +603,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	is_npc = TRUE
 	var/dogtype = "pug"
@@ -869,18 +870,17 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 
 /* -------------------- Shiba -------------------- */
-var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
-
 /mob/living/critter/small_animal/dog/shiba
 	icon_state = "shiba"
 	icon_state_dead = "shiba-lying"
 	dogtype = "shiba"
 	var/randomize_shiba = 1
+	var/static/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 	New()
 		..()
 		if (src.randomize_shiba)
-			src.name = pick(shiba_names)
+			src.name = pick(src.shiba_names)
 			src.real_name = src.name
 
 	weak
