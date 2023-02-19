@@ -373,8 +373,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
-					SPAWN(0)
-						player.Equip_Rank(player.mind.assigned_role)
+					player.Equip_Rank(player.mind.assigned_role)
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
