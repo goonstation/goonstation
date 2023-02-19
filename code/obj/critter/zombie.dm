@@ -227,7 +227,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN(2 SECONDS) 
+						SPAWN(2 SECONDS)
 							playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
@@ -289,7 +289,7 @@
 
 		harmless_smoke_puff(src.loc)
 
-		new /obj/critter/aberration(src.loc)
+		new /mob/living/critter/aberration(src.loc)
 		new /obj/item/clothing/suit/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
