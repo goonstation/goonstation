@@ -13678,6 +13678,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "dVr" = (
@@ -19483,6 +19484,13 @@
 "fLP" = (
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/jen/blue,
+/area/station/medical/morgue)
+"fMv" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "fMw" = (
 /obj/cable{
@@ -37865,6 +37873,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
+"lvL" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "lvR" = (
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -51935,6 +51951,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
@@ -55809,8 +55826,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "qPs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue"
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
@@ -60847,6 +60865,9 @@
 /area/station/ranch)
 "snM" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "snQ" = (
@@ -66460,6 +66481,14 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/light_switch/west{
+	pixel_y = -5;
+	dir = 4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5;
+	dir = 4
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tZt" = (
@@ -67152,6 +67181,13 @@
 	name = "solar paneling"
 	},
 /area/station/solar/west)
+"umx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "umS" = (
 /obj/potted_plant/potted_plant2{
 	dir = 8;
@@ -127000,7 +127036,7 @@ aIa
 cBI
 aWa
 bcE
-pJr
+lvL
 reX
 qxM
 qiP
@@ -127901,8 +127937,8 @@ rdj
 eKH
 eKH
 iuj
-snM
-snM
+fMv
+umx
 snM
 qPs
 fLP

@@ -1,6 +1,8 @@
 (t)sun feb 19 23
-(u)Cogwerks 
-(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly. 
+(u)Cogwerks
+(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
+(u)Flappybat
+(*)The Donut 3 morgue now has blinds, a lightswitch and a solid door to enable crime like most other morgues.
 (t)sat feb 18 23
 (u)Sord
 (*)Captain now requires 30 rounds played to be selected on all servers.
