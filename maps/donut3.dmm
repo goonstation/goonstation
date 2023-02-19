@@ -1714,7 +1714,8 @@
 /area/station/hallway/primary/southeast)
 "aup" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -2716,7 +2717,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aIn" = (
 /obj/machinery/power/apc/autoname_north,
@@ -3266,7 +3267,7 @@
 "aRv" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "aRx" = (
 /obj/disposalpipe/segment/morgue{
@@ -3650,7 +3651,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aWf" = (
 /obj/table/round/auto,
@@ -4049,7 +4050,7 @@
 	dir = 1;
 	name = "kitchen freezer pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bcP" = (
 /obj/decal/tile_edge/line/yellow{
@@ -4229,7 +4230,7 @@
 	name = "utility sink";
 	pixel_y = 7
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "beW" = (
 /obj/decal/cleanable/oil/streak,
@@ -7057,7 +7058,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bWL" = (
 /obj/decal/cleanable/dirt/jen,
@@ -9162,7 +9163,7 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cBK" = (
 /obj/cable{
@@ -10688,7 +10689,7 @@
 	desc = "It surprisingly has managed to keep the bathroom pretty clean...Somehow.";
 	name = "Bathroom Supervisor"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
 "dbt" = (
 /obj/landmark{
@@ -11345,7 +11346,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "dlh" = (
 /obj/cable/black{
@@ -11687,7 +11688,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "dom" = (
 /obj/disposalpipe/segment/ejection,
@@ -11859,7 +11860,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "dsw" = (
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "dsR" = (
 /obj/grille/catwalk/jen/side{
@@ -13632,7 +13633,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "dUF" = (
 /obj/decal/cleanable/dirt/jen,
@@ -13678,6 +13679,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "dVr" = (
@@ -14656,7 +14658,7 @@
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "emk" = (
 /obj/decal/boxingrope,
@@ -14688,7 +14690,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "emP" = (
 /obj/cable{
@@ -14698,7 +14700,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "emQ" = (
 /obj/machinery/vehicle/miniputt/armed{
@@ -15696,7 +15698,8 @@
 /area/station/maintenance/outer/east)
 "eDW" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "chemistry"
@@ -19484,6 +19487,13 @@
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/morgue)
+"fMv" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "fMw" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -19654,7 +19664,8 @@
 /area/station/science/storage)
 "fOt" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "medbay"
@@ -23452,7 +23463,8 @@
 /area/station/hallway/primary/east)
 "gXU" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -25978,7 +25990,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "hNB" = (
 /obj/decal/cleanable/dirt/jen,
@@ -27041,7 +27053,7 @@
 	dir = 6;
 	icon_state = "tile1"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
 "ieU" = (
 /obj/machinery/computer3/generic/communications,
@@ -27477,8 +27489,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
 	},
 /area/station/medical/medbay)
 "ikZ" = (
@@ -27748,7 +27760,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ipk" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -28500,7 +28512,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "iBP" = (
 /obj/decal/tile_edge/line/yellow{
@@ -29042,7 +29054,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "iKb" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32064,7 +32076,7 @@
 	name = "Morgue Outlet"
 	},
 /obj/disposalpipe/trunk/morgue,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "jFY" = (
 /turf/simulated/floor/specialroom/arcade,
@@ -32547,7 +32559,7 @@
 /area/station/science/lobby)
 "jMh" = (
 /obj/machinery/traymachine/morgue,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "jMm" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -34874,7 +34886,7 @@
 	tag = ""
 	},
 /obj/machinery/light/small/sticky/cool/very,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kxV" = (
 /obj/decal/mule/dropoff,
@@ -34993,7 +35005,7 @@
 /area/station/crew_quarters/hor)
 "kzE" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -35564,7 +35576,7 @@
 "kKq" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "kKr" = (
 /obj/machinery/light/small/floor/cool,
@@ -37269,7 +37281,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmX" = (
 /obj/grille/catwalk,
@@ -37865,6 +37877,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
+"lvL" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "lvR" = (
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -38996,7 +39016,7 @@
 	pixel_y = 12
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "lMS" = (
 /obj/item/cargotele{
@@ -40138,7 +40158,8 @@
 /area/station/crew_quarters/arcade/dungeon)
 "mdw" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -41390,8 +41411,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
 	},
 /area/station/medical/medbay)
 "mzX" = (
@@ -43461,7 +43482,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ngn" = (
 /obj/cable{
@@ -51935,6 +51956,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
@@ -53740,7 +53762,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "qkx" = (
 /obj/decal/cleanable/dirt/jen,
@@ -54884,7 +54906,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "qAI" = (
 /obj/decal/tile_edge/line/green{
@@ -55809,8 +55831,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "qPs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue"
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
@@ -56930,7 +56953,7 @@
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rdj" = (
 /turf/space,
@@ -58440,7 +58463,8 @@
 /area/station/crew_quarters/arcade)
 "rBc" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -58565,7 +58589,7 @@
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = 9
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "rEq" = (
 /obj/decal/mule/dropoff,
@@ -59259,7 +59283,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rOa" = (
 /obj/disposalpipe/segment{
@@ -60031,7 +60055,7 @@
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
 /obj/firedoor_spawn,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/kitchen)
 "saU" = (
 /obj/table/reinforced/auto,
@@ -60458,7 +60482,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "shi" = (
 /obj/stool/bench/sauna{
@@ -60847,6 +60871,9 @@
 /area/station/ranch)
 "snM" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "snQ" = (
@@ -63064,7 +63091,8 @@
 /area/station/science/gen_storage)
 "sWF" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "research"
@@ -64330,7 +64358,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "trf" = (
 /turf/simulated/wall/auto/reinforced/jen,
@@ -64439,7 +64467,7 @@
 	dir = 1;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tud" = (
 /obj/machinery/bot/firebot,
@@ -64533,7 +64561,8 @@
 /area/station/hallway/primary/south)
 "tuY" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -66460,7 +66489,15 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/obj/machinery/light_switch/west{
+	pixel_y = -5;
+	dir = 4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5;
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tZt" = (
 /obj/decal/cleanable/dirt/jen,
@@ -67152,6 +67189,13 @@
 	name = "solar paneling"
 	},
 /area/station/solar/west)
+"umx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "umS" = (
 /obj/potted_plant/potted_plant2{
 	dir = 8;
@@ -69403,7 +69447,7 @@
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "robotics"
 	},
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -72717,7 +72761,8 @@
 /area/station/chapel/sanctuary)
 "vQN" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -74712,7 +74757,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
 "wus" = (
 /obj/cable{
@@ -75759,7 +75804,8 @@
 /area/station/hallway/secondary/exit)
 "wJW" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "medical booth"
@@ -76015,7 +76061,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "wNq" = (
 /turf/simulated/floor/plating/jen,
@@ -79251,7 +79297,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
 "xEO" = (
 /obj/cable{
@@ -127000,7 +127046,7 @@ aIa
 cBI
 aWa
 bcE
-pJr
+lvL
 reX
 qxM
 qiP
@@ -127901,8 +127947,8 @@ rdj
 eKH
 eKH
 iuj
-snM
-snM
+fMv
+umx
 snM
 qPs
 fLP
