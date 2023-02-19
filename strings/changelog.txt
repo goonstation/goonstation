@@ -1,4 +1,6 @@
-
+(t)sun feb 19 23
+(u)Cogwerks 
+(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly. 
 (t)sat feb 18 23
 (u)Sord
 (*)Captain now requires 30 rounds played to be selected on all servers.
