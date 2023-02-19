@@ -100,8 +100,7 @@
 		return
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-		if (brute >= 0)
-			return
+		return // no healing
 
 	ex_act(severity)
 		return
