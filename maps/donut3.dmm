@@ -1714,7 +1714,8 @@
 /area/station/hallway/primary/southeast)
 "aup" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -15697,7 +15698,8 @@
 /area/station/maintenance/outer/east)
 "eDW" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "chemistry"
@@ -19662,7 +19664,8 @@
 /area/station/science/storage)
 "fOt" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "medbay"
@@ -23460,7 +23463,8 @@
 /area/station/hallway/primary/east)
 "gXU" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -27485,8 +27489,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
 	},
 /area/station/medical/medbay)
 "ikZ" = (
@@ -35001,7 +35005,7 @@
 /area/station/crew_quarters/hor)
 "kzE" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -40154,7 +40158,8 @@
 /area/station/crew_quarters/arcade/dungeon)
 "mdw" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -41406,8 +41411,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
 	},
 /area/station/medical/medbay)
 "mzX" = (
@@ -58458,7 +58463,8 @@
 /area/station/crew_quarters/arcade)
 "rBc" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -63085,7 +63091,8 @@
 /area/station/science/gen_storage)
 "sWF" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "research"
@@ -64554,7 +64561,8 @@
 /area/station/hallway/primary/south)
 "tuY" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -69439,7 +69447,7 @@
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "robotics"
 	},
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -72753,7 +72761,8 @@
 /area/station/chapel/sanctuary)
 "vQN" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -75795,7 +75804,8 @@
 /area/station/hallway/secondary/exit)
 "wJW" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "medical booth"
