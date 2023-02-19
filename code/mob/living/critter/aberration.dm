@@ -120,6 +120,14 @@
 
 		. = targets
 
+	Cross(atom/movable/mover)
+		if (!istype(mover, /mob))
+			return ..()
+		var/mob/M = mover
+		if (M.lying)
+			return FALSE
+		return ..()
+
 	bump(atom/A)
 		if (istype(A, /obj/machinery/door))
 			var/obj/machinery/door/door = A
