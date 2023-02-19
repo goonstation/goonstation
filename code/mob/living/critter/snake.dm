@@ -19,6 +19,7 @@
 	health_burn_vuln = 0.25
 	ai_type = /datum/aiHolder/snake
 	is_npc = TRUE
+	ai_retaliates = TRUE
 
 	//Special behaviour vars
 	var/double = 0

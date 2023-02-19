@@ -44,6 +44,7 @@
 
 	ai_type = /datum/aiHolder/spider
 	is_npc = TRUE
+	ai_retaliates = TRUE
 
 	New()
 		..()
