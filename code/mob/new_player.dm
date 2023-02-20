@@ -729,15 +729,7 @@ a.latejoin-card:hover {
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
 				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_CHANGELING)
-				traitor.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_VAMPIRE)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				do_objectives = FALSE
 
@@ -753,10 +745,6 @@ a.latejoin-card:hover {
 
 			if (ROLE_HUNTER)
 				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WEREWOLF)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
