@@ -207,6 +207,84 @@
 /datum/aiTask/succeedable/critter/eat/on_reset()
 	has_started = FALSE
 
+
+/// This one makes the mob move towards a target mob and attack it. Repeats until the target is dead, gone, too far, or we are incapacitated. Called upon being attacked if the ai is set to retaliate
+/datum/aiTask/sequence/goalbased/retaliate
+	name = "retaliating"
+	weight = -100
+	max_dist = 7
+	ai_turbo = TRUE
+	var/mob/targetted_mob = null
+	var/start_time = 0
+
+
+/datum/aiTask/sequence/goalbased/retaliate/New(parentHolder, transTask)
+	..()
+	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
+
+/datum/aiTask/sequence/goalbased/retaliate/get_targets()
+	return list(src.targetted_mob)
+
+////////
+
+/datum/aiTask/succeedable/retaliate
+	name = "retaliate subtask"
+	max_dist = 7
+	var/has_started = FALSE
+	var/persistence = 0
+
+
+/datum/aiTask/succeedable/retaliate/failed()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	//failure condition is just that the target escaped
+	if(C && T)
+		return (GET_DIST(C,T) > max_dist)
+	else
+		return TRUE //we also fail if C or T are somehow null
+
+
+/datum/aiTask/succeedable/retaliate/succeeded()
+	var/mob/T = holder.target
+	//for persistence special values
+	if(src.persistence == 0 && src.has_started) //we're on "attack-once" mode, and we've done that. Good job!
+		return TRUE
+	if(src.persistence == -1 && is_incapacitated(T)) //attack until downed, and the target is incapacitated
+		return TRUE
+	if(src.persistence == -2 && isdead(T)) //attack until dead, and the target is dead
+		return TRUE
+	var/datum/aiTask/sequence/goalbased/retaliate/parent_task = holder.current_task
+	if(src.persistence > 0 && ((world.time - parent_task.start_time) > src.persistence)) //otherwise, has the time run out?
+		return TRUE
+	return FALSE
+
+
+/datum/aiTask/succeedable/retaliate/on_tick()
+	//keep moving towards the target and attacking them in range for as long as is necessary
+	//has_started marks that we've hit them once
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(C && T && BOUNDS_DIST(C, T) == 0)
+		C.set_dir(get_dir(C, T))
+		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
+			C.critter_attack(holder.target)
+			src.has_started = TRUE
+	else if(C && T)
+		//we're not in punching range, let's fix that by moving back to the move subtask
+		var/datum/aiTask/sequence/goalbased/retaliate/parent_task = holder.current_task
+		parent_task.current_subtask = parent_task.subtasks[1] //index 1 is always the move task in goalbased
+		parent_task.subtask_index = 1
+		parent_task.current_subtask.reset()
+
+/datum/aiTask/succeedable/retaliate/on_reset()
+	src.has_started = FALSE
+	var/mob/living/critter/C = holder.owner
+	if(C)
+		C.set_a_intent(INTENT_HARM)	//we an angry critter
+		src.persistence = C.ai_retaliate_persistence
+
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter
 	move_through_space = TRUE
+
+
