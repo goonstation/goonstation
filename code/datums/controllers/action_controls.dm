@@ -52,13 +52,18 @@ var/datum/action_controller/actions
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
+					if(OA.interrupt_start != -1)
+						OA.interrupt_time += TIME - OA.interrupt_start
+						OA.interrupt_start = -1
 					OA.onResume(A)
+					OA.onUpdate()
 					qdel(A)
 					return OA
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
 		A.onStart()
+		A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
@@ -71,7 +76,7 @@ var/datum/action_controller/actions
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
-				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
+				if( ((A.duration >= 0 && A.time_spent() >= A.duration) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
 					A.promise?.fulfill(A)
@@ -99,9 +104,19 @@ var/datum/action_controller/actions
 	var/id = "base" //! Unique ID for this action. For when you want to remove actions by ID on a person.
 	var/resumable = TRUE
 	var/datum/promise/promise //! Promise that will be fulfilled when the action is finished or deleted. Finished = fulfilled with the action, deleted = fulfilled with null.
+	var/interrupt_time = 0 //! How long the action spent interrupted. Used to calculate the remaining time when resuming.
+	var/interrupt_start = -1 //! When the action was interrupted. Used to calculate interrupt_time
+
+	proc/time_spent()
+		if(interrupt_start == -1)
+			return TIME - started - interrupt_time
+		else
+			return interrupt_start - started - interrupt_time
 
 	proc/interrupt(var/flag) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
+			if(state != ACTIONSTATE_INTERRUPTED)
+				interrupt_start = TIME
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
@@ -289,7 +304,7 @@ var/datum/action_controller/actions
 	updateBar(var/animate = 1)
 		if (duration <= 0 || isnull(bar))
 			return
-		var/done = TIME - started
+		var/done = src.time_spent()
 		// inflate it a little to stop it from hitting 100% "too early"
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
@@ -512,17 +527,18 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 /datum/action/bar/icon/hitthingwithitem // used when you need to make sure that mob is holding item
 	// and is next to other thing while doing thing
@@ -610,14 +626,17 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
+
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
@@ -882,17 +901,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 #define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
@@ -1160,45 +1181,35 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
+		if(!istype(ownerMob) || !target || !cuffs || target.hasStatus("handcuffed") || cuffs != ownerMob.equipped() || BOUNDS_DIST(owner, target) != 0)
+			return
 
-			var/obj/item/handcuffs/tape/cuffs2
-
-			if (initial(cuffs.amount) > 1)
-				if (cuffs.amount >= 1)
-					cuffs2 = new /obj/item/handcuffs/tape
-					cuffs2.apply_multiplier = cuffs.apply_multiplier
-					cuffs2.remove_self_multiplier = cuffs.remove_self_multiplier
-					cuffs2.remove_other_multiplier = cuffs.remove_other_multiplier
-					cuffs.amount--
-					if (cuffs.amount < 1 && cuffs.delete_on_last_use)
-						ownerMob.u_equip(cuffs)
-						boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
-						qdel(cuffs)
-					else
-						boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
-				else
-					boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
-					interrupt(INTERRUPT_ALWAYS)
-			else
+		if (initial(cuffs.amount) > 1)
+			if (cuffs.amount < 1)
+				boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			var/obj/item/handcuffs/tape/inner_cuffs = new /obj/item/handcuffs/tape
+			inner_cuffs.apply_multiplier = cuffs.apply_multiplier
+			inner_cuffs.remove_self_multiplier = cuffs.remove_self_multiplier
+			inner_cuffs.remove_other_multiplier = cuffs.remove_other_multiplier
+			cuffs.amount--
+			if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 				ownerMob.u_equip(cuffs)
-
-			logTheThing(LOG_COMBAT, ownerMob, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
-
-			if (cuffs2 && istype(cuffs2))
-				cuffs2.set_loc(target)
-				target.handcuffs = cuffs2
+				boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+				qdel(cuffs)
 			else
-				cuffs.set_loc(target)
-				target.handcuffs = cuffs
-			target.drop_from_slot(target.r_hand)
-			target.drop_from_slot(target.l_hand)
-			target.drop_juggle()
-			target.setStatus("handcuffed", duration = INFINITE_STATUS)
-			target.update_clothing()
+				boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
+			cuffs = inner_cuffs
+		else
+			ownerMob.u_equip(cuffs)
 
-			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
+
+		logTheThing(LOG_COMBAT, ownerMob, "handcuffs [constructTarget(target,"combat")] with [cuffs] at [log_loc(ownerMob)].")
+
+		cuffs.cuff(target)
+		for(var/mob/O in AIviewers(ownerMob))
+			O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
@@ -1393,18 +1404,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 		if(E)
 			if(ismovable(src.target))

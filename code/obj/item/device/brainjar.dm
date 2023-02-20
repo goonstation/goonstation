@@ -184,7 +184,7 @@
 				return
 
 			var/obj/item/organ/brain/B = W
-			if(B.owner && !B.owner.dnr)
+			if(B.owner && !B.owner.get_player().dnr)
 				the_brain = B
 				user.u_equip(B)
 				B.set_loc(src)

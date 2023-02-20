@@ -46,8 +46,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/process()
 	if (spy_market)
 		spy_market.process()
+	#ifndef NO_SHUTTLE_CALLS
 	if (shuttle_available && shuttle_auto_call_time)
 		process_auto_shuttle_call()
+	#endif
 
 /datum/game_mode/proc/process_auto_shuttle_call()
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)
@@ -110,29 +112,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
-					var/dna_absorbed = 0
-					var/absorbed_identities = null
-					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
-					if (C && istype(C))
-						absorbed_identities = list()
-						dna_absorbed = max(0, C.absorbtions)
-						for (var/DNA in C.absorbed_dna)
-							absorbed_identities += DNA
-					else
-						dna_absorbed = "N/A (body destroyed)"
-
-					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
-					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
-
-				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
-					var/blood_acquired = 0
-					if (isvampire(traitor.current))
-						blood_acquired = traitor.current.get_vampire_blood(1)
-					else
-						blood_acquired = "N/A (body destroyed)"
-					stuff_to_output += "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]"
-
 				if (traitor.special_role == ROLE_WEREWOLF)
 					// Werewolves may not have the feed objective, so we don't want to make this output universal.
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
@@ -150,13 +129,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-				if (traitor.special_role == ROLE_HUNTER)
-					// Same reasoning here, really.
-					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
-						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-							var/S = traitor.current.get_skull_value()
-							stuff_to_output += "<B>Combined trophy value:</b> [S]"
-
 				if (traitor.special_role == ROLE_BLOB)
 					var/victims = length(traitor.blob_absorb_victims)
 					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
@@ -168,23 +140,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 							else
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
-
-				if (traitor.special_role == ROLE_SPY_THIEF)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
-					if (purchases)
-						var/stolen_detail = "Items Thieved: "
-						for (var/i in traitor.spy_stolen_items)
-							stolen_detail += "[i], "
-						var/rewarded_detail = "They Were Rewarded: "
-						for (var/i in traitor.purchased_traitor_items)
-							rewarded_detail += "[bicon(i:item)] [i:name], "
-						rewarded_detail = copytext(rewarded_detail, 1, -2)
-						stuff_to_output += stolen_detail
-						stuff_to_output += rewarded_detail
-						if (stolen >= 7)
-							traitor.current?.unlock_medal("Professional thief", TRUE)
 
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
@@ -347,45 +302,19 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
-			objective_set_path = /datum/objective_set/changeling
-			antag.current.make_changeling()
+			antag.add_antagonist(ROLE_CHANGELING)
+			do_objectives = FALSE
 
 		if (ROLE_WIZARD)
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			antag.current.unequip_all(1)
-
-			if (!job_start_locations["wizard"])
-				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-			else
-				antag.current.set_loc(pick(job_start_locations["wizard"]))
-
-			equip_wizard(antag.current)
-
-			var/randomname
-			if (antag.current.gender == "female")
-				randomname = pick_string_autokey("names/wizard_female.txt")
-			else
-				randomname = pick_string_autokey("names/wizard_male.txt")
-
-			SPAWN(0)
-				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-				if(newname && newname != randomname)
-					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
-				if (length(ckey(newname)) == 0)
-					newname = randomname
-
-				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname)
-					antag.current.real_name = newname
-					antag.current.UpdateName()
+			antag.add_antagonist(ROLE_WIZARD)
+			do_objectives = FALSE
 
 		if (ROLE_WRAITH)
 			generate_wraith_objectives(antag)
 
 		if (ROLE_VAMPIRE)
-			objective_set_path = /datum/objective_set/vampire
-			antag.current.make_vampire()
+			antag.add_antagonist(ROLE_VAMPIRE)
+			do_objectives = FALSE
 
 		if (ROLE_HUNTER)
 			antag.add_antagonist(ROLE_HUNTER)
@@ -412,9 +341,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			bestow_objective(antag, /datum/objective/specialist/flock)
 			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
-			objective_set_path = /datum/objective_set/spy_theft
-			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
-				equip_spy_theft(antag.current)
+			antag.add_antagonist(ROLE_SPY_THIEF)
+			do_objectives = FALSE
 
 			if (!src.spy_market)
 				src.spy_market = new /datum/game_mode/spy_theft
@@ -423,8 +351,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 				src.spy_market.update_bounty_readouts()
 
 		if (ROLE_WEREWOLF)
-			objective_set_path = /datum/objective_set/werewolf
-			antag.current.make_werewolf()
+			antag.add_antagonist(ROLE_WEREWOLF)
+			do_objectives = FALSE
 
 		if (ROLE_ARCFIEND)
 			antag.add_antagonist(ROLE_ARCFIEND)
@@ -449,7 +377,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", "flock", ROLE_CHANGELING)
 	for(var/i = 1 to pick(2, 3))
 		possible_modes.Remove(pick(possible_modes))
 
@@ -470,11 +398,11 @@ ABSTRACT_TYPE(/datum/game_mode)
 //what do we do when a mob dies
 /datum/game_mode/proc/on_human_death(var/mob/M)
 
-/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
+/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor, var/objective_path, var/datum/antagonist/antag_role)
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path(null, traitor)
+	var/datum/objective/O = new objective_path(null, traitor, antag_role)
 
 	return O
 

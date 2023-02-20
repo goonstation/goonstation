@@ -197,7 +197,7 @@
 	var/block_it_up = TRUE
 	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		for(var/obj/stool/stool_candidate in src.loc)
-			if (stool_candidate.buckle_in(src, src, 1))
+			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
 				break //found one, no need to continue
 
@@ -1034,6 +1034,7 @@
 							for (var/datum/mind/M in target)
 								if (M.current)
 									M.current.changeStatus("newcause", 5 SECONDS)
+									M.current.delStatus("derevving") //Make sure they lose this status upon completion
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 		clear(null)

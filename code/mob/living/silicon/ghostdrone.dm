@@ -48,7 +48,8 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
 				name = "Drone [mode.agent_radiofreq]"
-
+			else if (length(flocks))
+				name = "Flockdrone"
 			else
 				//Make them suffer with an overly cute name
 				name = "Drone [pick(list("Princess", "Lord", "King", "Queen", "Duke", "Baron"))] [pick(list("Bubblegum", "Wiffleypop", "Shnookems", "Cutesypie", "Fartbiscuits", "Rolypoly"))]"
@@ -134,8 +135,6 @@
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
-			src.mind.dnr = 0
-
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
 			ghost.icon_state = "drone-ghost"
@@ -1306,7 +1305,6 @@
 
 	G.job = "Ghostdrone"
 	theMind.assigned_role = "Ghostdrone"
-	theMind.dnr = 1
 
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")

@@ -6,13 +6,15 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text, datum/mind/owner)
+	New(text, datum/mind/owner, datum/antagonist/antag_role)
 		..()
 		if(text)
 			src.explanation_text = text
 		if(istype(owner))
 			src.owner = owner
 			owner.objectives += src
+			if (antag_role)
+				antag_role.objectives += src
 		else
 			stack_trace("objective/New got called without a mind")
 		src.set_up()
@@ -704,10 +706,11 @@ proc/create_fluff(datum/mind/target)
 		if(!in_centcom(src.owner.current))
 			return 0
 
-		if (!owner.is_changeling)
+		if (!ischangeling(src.owner.current))
 			return 0
 
-		if (owner.is_changeling.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
+		var/datum/abilityHolder/changeling/ability_holder = src.owner.current.get_ability_holder(/datum/abilityHolder/changeling)
+		if (ability_holder?.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
 			return 1
 
 /datum/objective/specialist/drinkblood
@@ -749,24 +752,6 @@ proc/create_fluff(datum/mind/target)
 		else
 			return 0
 
-/datum/objective/specialist/stealth
-	var/min_score
-	var/score = 0
-	var/list/datum/mind/safe_minds = list()
-
-	set_up()
-		var/num_players = 0
-		for(var/mob/living/player in mobs)
-			if (player.client) num_players++
-		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
-		explanation_text = "Remain out of sight and accumulate [min_score] points."
-		owner.stealth_objective = 1
-
-	check_completion()
-		if(score >= min_score)
-			return 1
-		else
-			return 0
 
 /datum/objective/specialist/gang
 	explanation_text = "Kill the leaders of every other gang without being killed yourself."
@@ -986,6 +971,106 @@ proc/create_fluff(datum/mind/target)
 	check_completion()
 		if (feed_count >= target_feed_count)
 			return 1
+
+/datum/objective/specialist/salvager
+	proc/check_on_magpie(targetType, frameType=null)
+		. = 0
+		for(var/areaType in typesof(/area/salvager))
+			for (var/turf/T in get_area_turfs(areaType))
+				for (var/obj/O in T.contents)
+					if(istype(O, targetType))
+						if(frameType && targetType == /obj/item/electronics/frame )
+							var/obj/item/electronics/frame/F = O
+							if (istype(F.deconstructed_thing, frameType))
+								. += 1
+						else
+							. += 1
+
+/datum/objective/specialist/salvager/machinery
+	var/target_equipment = null
+	var/target_name
+	var/target_count = 1
+
+	set_up()
+		var/list/choices = list("cyborg recharge stations",
+								"chem dispenser",
+								"nano fabricator",
+								"hydroponics tray",
+								"gibber",
+								"rechargers",
+								"operating table",
+								"toilets")
+
+		target_name = pick(choices)
+		switch(target_name)
+			if ("cyborg recharge stations")
+				target_equipment = /obj/machinery/recharge_station
+				target_count = rand(2,3)
+			if ("chem dispenser")
+				target_equipment = /obj/machinery/chem_dispenser
+			if ("nano fabricator")
+				target_equipment = /obj/machinery/nanofab
+			if ("hydroponics tray")
+				target_equipment = /obj/machinery/plantpot
+				target_count = rand(2,4)
+			if ("gibber")
+				target_equipment = /obj/machinery/gibber
+			if ("rechargers")
+				target_equipment = /obj/machinery/recharger
+				target_count = rand(1,3)
+			if ("operating table")
+				target_equipment = /obj/machinery/optable
+			if ("toilets")
+				target_equipment = /obj/item/storage/toilet
+				target_count = rand(1,2)
+
+		if(target_count > 1)
+			explanation_text = "Disassemble [target_count] [target_name] and have them anywhere on you or the Magpie at the end of the shift."
+		else
+			explanation_text = "Disassemble the [target_name] and have it anywhere on you or the Magpie at the end of the shift."
+		return target_equipment
+
+	check_completion()
+		var/count = 0
+		if(owner.current)
+			var/list/L = owner.current.get_all_items_on_mob()
+			if (length(L))
+				for (var/obj/item/electronics/frame/F in L)
+					if (istype(F.deconstructed_thing, target_equipment))
+						count++
+			count += check_on_magpie(/obj/item/electronics/frame, target_equipment)
+			return count >= target_count
+		else
+			return FALSE
+
+/datum/objective/specialist/salvager/steal
+	var/target_equipment = null
+	var/target_name
+	var/target_count = 1
+
+	set_up()
+		var/list/choices = list(/obj/item/disk/data/floppy/read_only/authentication,
+								/obj/item/disk/data/floppy/read_only/communications,
+								/obj/item/reagent_containers/mender,
+								/obj/item/reagent_containers/hypospray,
+								/obj/item/rcd )
+		target_equipment = pick(choices)
+		var/atom/A = target_equipment
+		target_name = initial(A.name)
+
+		if(target_count > 1)
+			explanation_text = "Steal [target_count] [target_name] and have it anywhere on you or the Magpie at the end of the shift."
+		else
+			explanation_text = "Steal the [target_name] and have it anywhere on or the Magpie you at the end of the shift."
+		return target_equipment
+
+	check_completion()
+		if(owner.current && owner.current.check_contents_for_num(target_equipment, 1, TRUE))
+			return TRUE
+		else if(check_on_magpie(target_equipment))
+			return TRUE
+		else
+			return FALSE
 
 /datum/objective/specialist/ruin_xmas
 	explanation_text = "Ruin Spacemas for everyone! Make sure Spacemas cheer is at or below 20% when the round ends."
@@ -1428,7 +1513,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
-	New(datum/mind/enemy)
+	New(datum/mind/enemy, datum/antagonist/antag_role)
 		..()
 		if(!istype(enemy))
 			return 1
@@ -1440,7 +1525,9 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 			if(!initial(objective.enabled))
 				src.objective_list -= X
 				continue
-			ticker.mode.bestow_objective(enemy,X)
+			objective = new X(null, enemy)
+			if (antag_role)
+				antag_role.objectives.Add(objective)
 
 		for(var/X in escape_choices)
 			var/datum/objective/objective = X
@@ -1450,7 +1537,9 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)
 			if (ispath(escape_path))
-				ticker.mode.bestow_objective(enemy,escape_path)
+				var/datum/objective/objective = new escape_path(null, enemy)
+				if (antag_role)
+					antag_role.objectives.Add(objective)
 
 		SPAWN(0)
 			qdel(src)
@@ -1491,6 +1580,10 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	objective_list = list(/datum/objective/specialist/powerdrain)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/hijack)
+
+/datum/objective_set/salvager
+	objective_list = list(/datum/objective/specialist/salvager/machinery, /datum/objective/specialist/salvager/steal)
+	escape_choices = list(/datum/objective/escape/survive)
 
 // Wraith not listed since it has its own dedicated proc
 

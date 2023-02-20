@@ -447,8 +447,15 @@ var/global/list/module_editors = list()
 		return
 
 	if (!M.module)
-		boutput(src, "<span class='alert'>That robot has no module yet.</span>")
-		return
+		if(tgui_alert(src, "Would you like to give them a module?", "No module yet", list("Yes", "No")) == "Yes")
+			var/list/module_types = concrete_typesof(/obj/item/robot_module)
+			var/module_type = tgui_input_list(src, "Select a module type", "Module type", module_types)
+			if (!module_type)
+				return
+			M.set_module(new module_type)
+			M.freemodule = FALSE
+		else
+			return
 
 	var/datum/module_editor/editor = module_editors[ckey]
 	if (!editor)

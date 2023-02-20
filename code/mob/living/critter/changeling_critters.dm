@@ -147,7 +147,7 @@
 	hand_count = 1
 	var/absorbed_dna = 0
 
-	New()
+	New(loc, obj/item/bodypart)
 		..()
 		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
 		//todo : move to add_abilities list because its cleaner that way
@@ -155,6 +155,10 @@
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
+
+		if (bodypart && istype(bodypart, /obj/item/parts/robot_parts))
+			src.icon_prefix = "robo"
+			src.UpdateIcon()
 
 		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
 		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
@@ -354,9 +358,7 @@
 		src.flags ^= TABLEPASS | DOORPASS
 
 		// EYE CAN SEE FOREVERRRR
-		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
-		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = INVIS_CLOAK
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()

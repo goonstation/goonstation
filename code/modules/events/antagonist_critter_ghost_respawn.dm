@@ -206,9 +206,10 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
 					var/picked_critter = pick(select)
+					log_respawn_event(M, picked_critter, source)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided
 						var/datum/eventSpawnedCritter/picked_critter_datum = picked_critter
 						M.current.make_critter(pick(picked_critter_datum.critter_types), pestlandmark)
@@ -217,9 +218,7 @@
 							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
 					else // only path provided
 						M.current.make_critter(picked_critter, pestlandmark)
-					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
-					O.owner = M.current
-					O.implanted = 1
+					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
 					antagify(M.current, null, 1)

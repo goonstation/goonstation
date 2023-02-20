@@ -19,7 +19,7 @@
 	proc/setup_material()
 		.=0
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
 		return
@@ -209,7 +209,7 @@
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horriffic smell."
 	default_material = "hamburgris"
-	icon_state = "slag"
+	icon_state = "wad"
 
 	setup_material()
 		src.setMaterial(getMaterial("hamburgris"), appearance = TRUE, setname = FALSE)
@@ -252,11 +252,11 @@
 		..()
 
 /obj/item/material_piece/slag
-	icon_state = "slag"
+	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
 	setup_material()
-		src.setMaterial(getMaterial("slag"), appearance = FALSE, setname = FALSE)
+		src.setMaterial(getMaterial("slag"), appearance = TRUE, setname = FALSE)
 		..()
 
 /obj/item/material_piece/rubber/latex
@@ -350,7 +350,7 @@
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
-	icon_state = "brullbarhide-fabric"
+	icon_state = "fabric"
 	setup_material()
 		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = FALSE, setname = FALSE)
 		..()
@@ -437,9 +437,17 @@
 		..()
 
 /obj/item/material_piece/plutonium
-	name = "plutonium"
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
 	setup_material()
 		src.setMaterial(getMaterial("plutonium"), appearance = 0, setname = 0)
+		..()
+
+/obj/item/material_piece/foolsfoolsgold
+	name = "fool's pyrite bar"
+	desc = "It's gold that isn't. Except it is. MINDFUCK"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("gold"), appearance = TRUE, setname = FALSE)
 		..()

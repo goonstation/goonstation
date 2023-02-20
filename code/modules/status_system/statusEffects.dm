@@ -211,7 +211,7 @@
 		icon_state = "stam+"
 		maxDuration = 9 SECONDS
 		unique = 1
-		change = 8
+		change = 12
 
 		getTooltip()
 			. = "A feeling of invigoration permeates you."
@@ -372,7 +372,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -1995,7 +1995,7 @@
 			//If dead, instaconvert.
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
-				if (H.ghost?.mind && !(H.mind && H.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)
@@ -2179,6 +2179,27 @@
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
+
+/datum/statusEffect/fragrant
+	id = "fragrant"
+	name = "Fragrant"
+	desc = "You smell very nice."
+	icon_state = "fragrant"
+	maxDuration = 5 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			var/particles/petals/P = new
+			M.UpdateParticles(P, "fragrant")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.ClearSpecificParticles("fragrant")
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
@@ -2376,3 +2397,8 @@
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
 		H.remove_stam_mod_max("recent_trauma")
 
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
+	icon_state = "mindhack"
