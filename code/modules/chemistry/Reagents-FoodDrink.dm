@@ -2558,21 +2558,8 @@ datum
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.reagents.add_reagent("sugar", 0.8 * mult)
-				if (ispug(M))
+				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
-				else if (istype(M, /mob/living/critter/small_animal/dog))
-					ticks += mult
-					switch (ticks)
-						if (1 to 15)
-							if (prob(5))
-								M.visible_message("<span class='notice'>[M] looks horribly sick! What did they eat?!</span>")
-						if (11 to 40)
-							if (prob(10))
-								M.visible_message("<span class='notice'>[M] suddenly vomits everywhere! They are clearly unwell.</span>")
-								M.vomit()
-						if (40 to INFINITY)
-							M.visible_message("<span class='notice'>[M] flops on their side and stops moving, letting out a tiny whimper.</span>")
-							M.death()
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
