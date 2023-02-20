@@ -219,6 +219,11 @@
 			. += "-r"
 		icon_state = .
 
+	death()
+		..()
+		if (is_king) return // king has his own death noises, spooky
+		playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 50, 1)
+
 /mob/living/critter/brullbar/king
 	name = "brullbar king"
 	real_name = "brullbar king"
@@ -235,8 +240,24 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
 
+	death()
+		..()
+		playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 60, 1)
+		playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 60, 1)
+
 /mob/living/critter/brullbar/strong //orginal health for admin spawns
 	health_brute = 100
 	health_brute_vuln = 0.7
 	health_burn = 100
 	health_burn_vuln = 1.4
+
+////////////////
+////// e-egg?
+///////////////
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/brullbar
+	name = "brullbar egg"
+	desc = "They lay eggs?!"
+	critter_type = /obj/critter/brullbar
+	warm_count = 100
+	critter_reagent = "ice"
