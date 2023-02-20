@@ -51339,7 +51339,7 @@
 /area/owlery/owllock)
 "cVc" = (
 /obj/decal/cleanable/blood,
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "cVd" = (
@@ -69101,7 +69101,7 @@
 	},
 /area/centcom/offices/cogwerks)
 "hDJ" = (
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -69143,7 +69143,7 @@
 	},
 /area/meat_derelict/guts)
 "hIb" = (
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "hIz" = (
@@ -69934,9 +69934,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "iVf" = (
-/obj/critter/brullbar{
-	wanderer = 0
-	},
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "iVt" = (
@@ -73983,7 +73981,7 @@
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
 "pRr" = (
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
@@ -74831,7 +74829,7 @@
 /area/iomoon/base)
 "rrB" = (
 /obj/decal/icefloor,
-/obj/critter/brullbar/king,
+/mob/living/critter/brullbar/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "rst" = (
@@ -77429,9 +77427,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/critter/brullbar{
-	wanderer = 0
-	},
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "vOL" = (
@@ -78101,7 +78097,7 @@
 /area/diner/cow)
 "xch" = (
 /obj/decal/icefloor,
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "xcj" = (
