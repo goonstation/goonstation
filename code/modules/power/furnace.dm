@@ -193,7 +193,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
-					F.update_stack_appearance()
+					F.UpdateStackAppearance()
 		return amtload
 
 	// this is run after it's checked a person isn't being loaded in with a grab

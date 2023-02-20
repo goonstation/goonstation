@@ -15,9 +15,7 @@
 					M.TakeDamage("chest", 5, 0)
 				else
 					M.TakeDamage("chest", 15, 0)
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
@@ -61,7 +59,7 @@
 	explode()
 		var/datum/reagents/R = new /datum/reagents(50)
 		R.my_atom = get_turf(src)
-		R.add_reagent("sarin", 50)
+		R.add_reagent("saxitoxin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
 		SPAWN(30 SECONDS) qdel(R)
@@ -109,7 +107,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
 	anchored = 1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
 	var/id = "torp1"

@@ -1478,8 +1478,14 @@
 
 	ADMIN_ONLY
 
-	if(!A.reagents)
+	var/datum/reagents/reagents = A.reagents
+
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		reagents = fluid.group?.reagents
+	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
+		reagents = A.reagents
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -1502,11 +1508,11 @@
 	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
 	if(!amount)
 		return
-	var/overflow = amount - (A.reagents.maximum_volume - A.reagents.total_volume)
+	var/overflow = amount - (reagents.maximum_volume - reagents.total_volume)
 	if (overflow > 0) // amount exceeds reagent space
 		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
 			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
-			A.reagents.maximum_volume += overflow
+			reagents.maximum_volume += overflow
 			if (ismob(A) && amount > 800) // rough estimate
 				if (tgui_alert(usr, "That amount of reagents will probably make [A] explode. Want to prevent them from exploding due to excessive blood?",
 					"Bloodgib Status", list("Yes", "No")) == "Yes")
@@ -1515,13 +1521,17 @@
 			// didn't increase cap, only report actual amount added.
 			amount = -(overflow - amount)
 
-	A.reagents.add_reagent(reagent.id, amount)
+	reagents.add_reagent(reagent.id, amount)
 	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name].</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
 	logTheThing(LOG_ADMIN, src, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
 	if (ismob(A))
 		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		fluid.group?.update_loop()
 
 
 /client/proc/cmd_set_material(var/atom/A in world)
@@ -1560,6 +1570,39 @@
 				M.playsound_local(M.loc, 'sound/voice/animal/cat.ogg', 30, 30)
 				if(I==1 && !isobserver(M)) new /mob/living/critter/small_animal/cat(M.loc)
 		sleep(rand(10,20))
+
+/client/proc/fake_pda_message_to_all()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Fake PDA Message To All"
+	ADMIN_ONLY
+
+	var/sender_name = tgui_input_text(src, "PDA message sender name", "Name")
+	var/message = tgui_input_text(src, "PDA message contents", "Contents")
+
+	if (!sender_name || !message)
+		alert(src, "Sender name or message cannot be empty.", "Invalid PDA Message", "Ok")
+		return
+
+	var/datum/signal/pdaSignal = get_free_signal()
+	pdaSignal.data = list("command"="text_message", "sender_name"=sender_name, "sender"="00000000", "message"=message)
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+	logTheThing(LOG_ADMIN, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]")
+	logTheThing(LOG_DIARY, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]", "admin")
+
+/client/proc/force_say_in_range()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Force Say In Range"
+	ADMIN_ONLY
+
+	var/speech = tgui_input_text(src, "What to force say", "Say")
+	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+
+	for (var/mob/M in range(range, usr))
+		if (isalive(M))
+			M.say(speech)
+			logTheThing(LOG_ADMIN, src, "forced <b>[M]</b> to say: [speech]")
+			logTheThing(LOG_DIARY, src, "forced <b>[M]</b> to say: [speech]", "admin")
 
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1720,7 +1763,6 @@
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
 	newMind.brain = M.mind.brain
-	newMind.dnr = M.mind.dnr
 	newMind.is_target = M.mind.is_target
 	if (M.mind.former_antagonist_roles.len)
 		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
@@ -1765,8 +1807,7 @@
 		if (ROLE_MINDHACK) M.delStatus("mindhack")
 		if (ROLE_VAMPTHRALL) return
 		if ("spyminion") return
-		if (ROLE_BLOB) M.humanize(1)
-		if (ROLE_WRAITH) M.humanize(1)
+		if (ROLE_BLOB, ROLE_WRAITH, ROLE_FLOCKMIND, ROLE_FLOCKTRACE) M.humanize(TRUE)
 		else
 			if (ishuman(M))
 				// They could be in a pod or whatever, which would have unfortunate results when respawned.

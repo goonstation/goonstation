@@ -2,6 +2,7 @@
 	var/finished = FALSE
 
 /datum/component/proj_door_breach/Initialize()
+	. = ..()
 	if (!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, .proc/check_breach)

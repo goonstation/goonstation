@@ -810,9 +810,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -1327,6 +1327,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
+
+/obj/decal/cleanable/machine_debris/radioactive
+	New()
+		.=..()
+		src.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
 
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"

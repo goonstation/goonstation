@@ -22,6 +22,8 @@
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
+	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
+	var/explosion_immune = FALSE
 
 	New()
 		..()
@@ -861,28 +863,76 @@ DEFINE_FLOORS(marble/border_wb,
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-	mat_changename = 0
+	mat_changename = FALSE
 
-	New()
-		plate_mat = getMaterial("glass")
+	pry_tile(obj/item/C as obj, mob/user as mob, params)
+		boutput(user, "<span class='alert'>This is glass flooring, you can't pry this up!</span>")
+
+	to_plating()
+		return
+
+	break_tile_to_plating()
+		return
+
+	break_tile()
+		return
+
+	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
+	burn_tile()
+		return
+
+	attackby(obj/item/C, mob/user, params)
+		if (istype(C, /obj/item/rods))
+			boutput(user, "<span class='alert'>You can't reinforce this tile.</alert>")
+			return
+		if(istype(C, /obj/item/cable_coil))
+			boutput(user, "<span class='alert'>You can't put cable over this tile, it would be too exposed.</span>")
+			return
 		..()
 
 /turf/simulated/floor/glassblock/large
 	icon_state = "glass_large"
 
-/turf/simulated/floor/glassblock/transparent_cyan
+/turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
 
-/turf/simulated/floor/glassblock/transparent_indigo
+	New()
+		var/image/I
+		#ifdef UNDERWATER_MAP
+		var/sand_icon
+		var/direction
+		switch(rand(1, 3))
+			if(1)
+				sand_icon = "sand_other_texture"
+				direction = pick(alldirs)
+			if(2)
+				sand_icon = "sand_other_texture2"
+				direction = pick(alldirs)
+			if(3)
+				sand_icon = "sand_other_texture3"
+				direction = pick(cardinal)
+		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
+		#else
+		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		#endif
+		I.plane = PLANE_SPACE
+		src.underlays += I
+		plate_mat = getMaterial("glass")
+		..()
+
+/turf/simulated/floor/glassblock/transparent/cyan
+	icon_state = "glasstr_cyan"
+
+/turf/simulated/floor/glassblock/transparent/indigo
 	icon_state = "glasstr_indigo"
 
-/turf/simulated/floor/glassblock/transparent_red
+/turf/simulated/floor/glassblock/transparent/red
 	icon_state = "glasstr_red"
 
-/turf/simulated/floor/glassblock/transparent_grey
+/turf/simulated/floor/glassblock/transparent/grey
 	icon_state = "glasstr_grey"
 
-/turf/simulated/floor/glassblock/transparent_purple
+/turf/simulated/floor/glassblock/transparent/purple
 	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
@@ -1652,6 +1702,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
+	if(src.explosion_immune)
+		return
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()

@@ -31,7 +31,7 @@
 	proc/setup_material()
 		src.setMaterial(getMaterial(lowertext(src.material_name)), appearance = TRUE, setname = src.set_name)
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
 		return
@@ -480,6 +480,7 @@
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
 	icon_state = "cotton"
+	material_name = "Cotton"
 
 /obj/item/raw_material/ice
 	name = "ice chunk"
@@ -974,4 +975,4 @@
 	proc/is_valid(var/obj/item/I)
 		if (!istype(I))
 			return
-		return (I.material && !istype(I,/obj/item/material_piece)) || istype(I,/obj/item/wizard_crystal)
+		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)

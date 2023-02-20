@@ -1,3 +1,24 @@
+(t)mon feb 17 23
+(u)Sovexe
+(*)You can now view ban data from other servers ingame. There is a new "CentCom" link in the player options panel. Clicking it will launch the CentCom Viewer panel that lists out all known server and job bans associated with the target player.
+(t)mon feb 13 23
+(u)pali
+(*)New experimental ghost interaction mode. Use the toggle-ghost-interaction verb to toggle it on or off.<br>When it's toggled on you can interact with most machines and objects as a ghost by clicking on them.<br>You can also clickdrag things to move them around. When you clickdrag an unanchored thing onto its own tile you change its pixel position, if it's a neighbouring tile you move it there (even if it is a wall etc.), if it is a tile further away you throw the thing.<br>If you clickdrag an item onto some other object it'll act more or less as if you clicked on it with the item in hand.
+(u)Zamujasa
+(*)People who are not dead but can still hear deadchat (ghost VR, afterlife, wraith, etc) can now hear admin dsay as well.
+(t)sun feb 5 23
+(u)ZeWaka
+(*)When you edit <code>color</code> in View Variables, there is a new 'Color Matrix Editor' option to preview color matrix changes on your selection before applying.
+(t)sat feb 4 23
+(u)LeahTheTech
+(+)The player options panel now shows if someone is mentor or HoS whitelisted at the top.
+(t)tue jan 31 23
+(u)LeahTheTech and pali
+(*)Admin interact now has the ability to call certain procs on objects. These options are marked with a * and can be easily added to types using the ADMIN_INTERACT_PROCS macro. Examples include open and close procs on doors, toggle proc on airbridges, and arm proc on nuclear bombs.
+(t)sat jan 21 23
+(u)Zamujasa
+(*)Player Notes looks a little different. Feel free to tweak/adjust. (Dimmed entries are automatic notes, red ones are bans. Mostly. I tried.)
+(*)After three thousand years, Delay-Round-End will now prompt for confirmation if someone else has already delayed it instead of just removing it. The future is now.
 (t)mon jan 09 23
 (u)Zamujasa
 (*)Force-Desussification has two new options. They might... shock you!

@@ -21,6 +21,8 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
@@ -232,6 +234,10 @@ TYPEINFO(/obj/machinery/power/apc)
 		else
 			. += "The cover is closed."
 
+/obj/machinery/power/apc/proc/toggle_operating()
+	src.operating = !src.operating
+	src.update()
+	UpdateIcon()
 
 /obj/machinery/power/apc/proc/getMaxExcess()
 	var/netexcess = 0
@@ -245,6 +251,7 @@ TYPEINFO(/obj/machinery/power/apc)
 	return netexcess
 
 /obj/machinery/power/apc/proc/zapStuff() // COGWERKS NOTE: disabling calls to this proc for now, it is ruining the live servers
+	set name = "Zap Stuff"
 	var/atom/target = null
 	var/atom/last = src
 
@@ -514,9 +521,9 @@ TYPEINFO(/obj/machinery/power/apc)
 
 			var/overspill = 250 - recipient_cell.charge
 			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your cell"] is already fully charged.</span>")
 			else if (donor_cell.charge <= 250)
-				boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
+				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[src] doesn't"] have enough power to transfer!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill

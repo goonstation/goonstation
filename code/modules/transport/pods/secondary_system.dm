@@ -142,7 +142,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -814,9 +816,8 @@
 		boutput(B, "<span class='alert'>You eject!</span>")
 		ship.leave_pod(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
+		for(var/i in 1 to 3)
+			step(B, turn(ship.dir, 180), 0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
@@ -871,14 +872,16 @@
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
-		if(O.density && O.anchored != 2)
+		var/turf/T = get_turf(O)
+		if(O.density && O.anchored != 2 && !isrestrictedz(T?.z))
 			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			if(O.bound_width==32 && O.bound_height==32)
+				O.anchored = 0
 			O.throw_at(target, 4, 2)
-			O.anchored = 0
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3

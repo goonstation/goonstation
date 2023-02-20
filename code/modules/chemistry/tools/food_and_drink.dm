@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/splash_all_contents = 1
 	doants = 0
 	throw_speed = 1
-	var/can_recycle = 1
+	can_recycle = TRUE
 	var/can_chug = 1
 	var/is_sealed = FALSE
 
@@ -1028,6 +1028,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /* ========================================================== */
 /* -------------------- Drinking Glasses -------------------- */
 /* ========================================================== */
+
+ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, proc/smash)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
@@ -1936,6 +1938,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "detflask"
 	item_state = "detflask"
 	initial_reagents = list("bojack"=40)
+
+/obj/item/reagent_containers/food/drinks/flask/pirate
+	initial_volume = 20
+	initial_reagents = list("moonshine"=20)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker
 	name = "cocktail shaker"

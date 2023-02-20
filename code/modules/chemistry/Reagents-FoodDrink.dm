@@ -457,12 +457,12 @@ datum
 				. = ..()
 				if(!volume_passed) return
 				if(method == INGEST)
-					if(M.client && (istraitor(M) || isspythief(M)))
+					if(M.client && (istraitor(M) || isspythief(M) || ispirate(M)))
 						M.reagents.add_reagent("omnizine",volume_passed * 2)
 						return
 
 			on_mob_life(var/mob/target, var/mult = 1)
-				if(target.client && (istraitor(target) || isspythief(target)))
+				if(target.client && (istraitor(target) || isspythief(target) || ispirate(target)))
 					target.reagents.del_reagent("moonshine")
 					return
 				..()
@@ -658,16 +658,17 @@ datum
 
 					if (silent)
 						M.TakeDamage("All", volume * 0.5, 0, 0, DAMAGE_BLUNT)
-					else if (prob(75))
+					else if (prob(75) && !H.disfigured && volume >= 5)
 						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
-						if(!H.disfigured)
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.disfigured = TRUE
-							H.UpdateName()
+						boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+						H.disfigured = TRUE
+						H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
-						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)
+						M.TakeDamage("All", min(5, volume / 2), 0, 0, DAMAGE_BLUNT)
+						if(prob(50))
+							M.emote("scream")
 
 				if(istype(H))
 					if(method == INGEST && H.reagents && H.reagents.has_reagent("super_hairgrownium")) //if this starts being abused i will change it, but only admins seem to use grog so fuck it
@@ -705,10 +706,10 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(isitem(O) && prob(20))
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item, O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						boutput(M, "<span class='alert'>\The [O] melts.</span>")
 					qdel(O)
 
 		fooddrink/alcoholic/port
@@ -2924,8 +2925,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) //god fuck this proc
 				if(!M) M = holder.my_atom
 				if (iswizard(M))
-					if(M.reagents.has_reagent("sarin"))
-						M.reagents.remove_reagent("sarin", 5 * mult)
+					if(M.reagents.has_reagent("saxitoxin"))
+						M.reagents.remove_reagent("saxitoxin", 5 * mult)
 				..()
 
 		fooddrink/grease
@@ -4527,11 +4528,59 @@ datum
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
-			id = "pumpkinspicelatte"
 			fluid_r = 231
 			fluid_g = 106
 			fluid_b = 0
 			description = "Whether or not it contains actual pumpkin juice has been up for debate."
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
+			thirst_value = 1
+
+		fooddrink/lavender_essence
+			name = "lavender essence"
+			id = "lavender_essence"
+			fluid_r = 190
+			fluid_g = 159
+			fluid_b = 254
+			description = "Essential."
+			reagent_state = LIQUID
+			taste = list("soothing", "pleasant")
+			thirst_value = 0
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == TOUCH)
+					M.changeStatus("fragrant", volume * 5 SECONDS)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+
+				if (probmult(5))
+					. = ""
+					switch (rand(1, 5))
+						if (1)
+							. = "calm"
+						if (2)
+							. = "quiet"
+						if (3)
+							. = "serene"
+						if (4)
+							. = "at peace"
+						if (5)
+							. = "sleepy"
+
+					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
+
+				..()
+
+		fooddrink/lavenderlatte
+			name = "lavender latte"
+			id = "lavender_latte"
+			fluid_r = 157
+			fluid_g = 134
+			fluid_b = 186
+			description = "The whimsical cousin of the pumpkin spice latte."
+			reagent_state = LIQUID
+			taste = "like living in a cottage in the countryside"
 			thirst_value = 1

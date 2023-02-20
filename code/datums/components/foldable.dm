@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/foldable)
 	)
 
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(!ispath(briefcase_path, /obj/item/objBriefcase))

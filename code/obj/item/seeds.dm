@@ -24,7 +24,7 @@
 		// harvesting a plant or what-have-you.
 		// Scatter the seed's sprite around a bit so you can make big ol' piles of them.
 		if (src.auxillary_datum && !src.planttype)
-			src.planttype = new src.auxillary_datum(src)
+			src.planttype = HY_get_species_from_path(src.auxillary_datum)
 		if (do_color)
 			docolor()
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
