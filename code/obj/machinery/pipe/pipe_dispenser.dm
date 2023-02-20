@@ -40,8 +40,8 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 
 /obj/machinery/disposal_pipedispenser/ui_static_data(mob/user)
 	. = list(
-		"mobile" = src.mobile
-		"max_disposal_pipes" = MAX_BUILD_DISPOSAL
+		"mobile" = src.mobile,
+		"max_disposal_pipes" = MAX_BUILD_DISPOSAL,
 	)
 	for (var/disposaltype in availdisposalpipes)
 		.["disposalpipes"] += list(list(
@@ -68,7 +68,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 			dummy_pipe.ptype = p_type
 			dummy_pipe.update()
 			SETUP_GENERIC_ACTIONBAR(src, null, duration, /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe, list(p_type, amount),\
-			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", null)
+			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", INTERRUPT_NONE)
 			qdel(dummy_pipe) //bit ugly but oh well
 			. = TRUE
 
@@ -94,14 +94,14 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "A tool for removing some of the tedium from pipe-laying."
-	anchored = 0
+	anchored = FALSE
 	icon_state = "fab-mobile"
 	mobile = TRUE
 
-	var/laying_pipe = 0
-	var/removing_pipe = 0
+	var/laying_pipe = FALSE
+	var/removing_pipe = FALSE
 	var/prev_dir = 0
-	var/first_step = 0
+	var/first_step = FALSE
 
 	Move(var/turf/new_loc,direction)
 		var/old_loc = loc
@@ -119,7 +119,7 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 			prev_dir = direction // might want to actually do this even when old_loc == loc but idk, it sucks with attempted diagonal movement
 
 	proc/connect_pipe(var/turf/new_loc, var/new_dir)
-		var/free_dirs = 1 | 2 | 4 | 8
+		var/free_dirs = NORTH|SOUTH|EAST|WEST
 		var/obj/disposalpipe/pipe = null
 		var/obj/disposalpipe/backup_pipe = null
 		var/obj/disposalpipe/backup_backup_pipe = null
@@ -128,9 +128,9 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 			free_dirs &= ~D.dpdir
 			if(istype(D, /obj/disposalpipe/trunk)) // don't wanna mess with those, they are important
 				continue
-			else if(avail_dirs.len >= 2)
+			else if(length(avail_dirs) >= 2)
 				backup_pipe = D
-			else if(avail_dirs.len == 0)
+			else if(length(avail_dirs) == 0)
 				backup_backup_pipe = D
 		if(!pipe)
 			pipe = backup_pipe
@@ -144,7 +144,7 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 	// look I didn't want to duplicate all this code either, I'm sorry :(
 	proc/lay_pipe(var/turf/new_loc, var/old_dir, var/new_dir)
 		var/is_first = src.first_step
-		src.first_step = 0
+		src.first_step = FALSE
 
 		if(new_loc.intact && !istype(new_loc,/turf/space))
 			return
@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 				junction.fix_sprite()
 				return
 
-		var/free_dirs = 1 | 2 | 4 | 8
+		var/free_dirs = NORTH|SOUTH|EAST|WEST
 		var/obj/disposalpipe/new_pipe = null
 		var/obj/disposalpipe/backup_pipe = null
 		var/obj/disposalpipe/backup_backup_pipe = null
@@ -165,13 +165,14 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 			free_dirs &= ~D.dpdir
 			if(istype(D, /obj/disposalpipe/trunk)) // don't wanna mess with those, they are important
 				continue
-			else if(avail_dirs.len == 1)
-				new_pipe = D
-				break
-			else if(avail_dirs.len >= 2)
-				backup_pipe = D
-			else if(avail_dirs.len == 0)
-				backup_backup_pipe = D
+			switch(length(avail_dirs))
+				if(0)
+					backup_backup_pipe = D
+				if(1)
+					new_pipe = D
+					break
+				if(2 to INFINITY)
+					backup_pipe = D
 		if(!new_pipe)
 			new_pipe = backup_pipe
 		if(!new_pipe)
@@ -212,7 +213,7 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 			src.removing_pipe = FALSE
 			src.laying_pipe = !(src.laying_pipe)
 			if(src.laying_pipe)
-				src.first_step = 1
+				src.first_step = TRUE
 				src.color = "#bbffbb"
 			else
 				src.color = "#ffffff"
