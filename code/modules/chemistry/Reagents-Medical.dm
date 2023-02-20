@@ -75,6 +75,7 @@ datum
 			addiction_min = 15
 			overdose = 20
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
+			depletion_rate = 0.2
 			value = 5
 			threshold = THRESHOLD_INIT
 
@@ -102,11 +103,11 @@ datum
 					M.changeStatus("recent_trauma", -5 SECONDS * mult)
 
 				switch(counter += 1 * mult)
-					if(1 to 15)
+					if(1 to 60)
 						if(probmult(7)) M.emote("yawn")
-					if(16 to 35)
+					if(60 to 72)
 						M.setStatus("drowsy", 40 SECONDS)
-					if(36 to INFINITY)
+					if(72 to INFINITY)
 						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
