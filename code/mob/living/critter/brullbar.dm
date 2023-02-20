@@ -258,6 +258,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/brullbar
 	name = "brullbar egg"
 	desc = "They lay eggs?!"
-	critter_type = /obj/critter/brullbar
+	critter_type = /mob/living/critter/brullbar
 	warm_count = 100
 	critter_reagent = "ice"

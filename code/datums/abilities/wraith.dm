@@ -1658,7 +1658,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 					if("Bears")
 						mob_choice = /obj/critter/bear
 					if("Brullbars")
-						mob_choice = /obj/critter/brullbar
+						mob_choice = /mob/living/critter/brullbar
 					if("Heavy gunner drones")
 						mob_choice = /obj/critter/gunbot/heavy
 					if("Random")
