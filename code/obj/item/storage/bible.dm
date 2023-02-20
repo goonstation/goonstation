@@ -30,7 +30,7 @@ var/global/list/bible_contents = list()
 		STOP_TRACKING
 
 	proc/bless(mob/M as mob, var/mob/user)
-		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
+		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
 			if (user.zone_sel)
