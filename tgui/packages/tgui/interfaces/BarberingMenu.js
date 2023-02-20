@@ -1,11 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Image, Stack, ByondUi, Input, Icon, LabeledList, Flex } from '../components';
+import { Box, Button, ByondUi, Icon, Image, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
-export const BarberingMenu = (props, context) => {
+const sidebarWidth = "200px";
+
+export const BarberingMenu = (_props, context) => {
   const { data } = useBackend(context);
-  const { available_styles } = data;
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const { available_styles } = data;
 
   const styles_keys = Object.keys(available_styles);
 
@@ -13,35 +15,21 @@ export const BarberingMenu = (props, context) => {
     <Window
       width={700}
       height={500}
-      title="Barber">
-
-      <Window.Content scrollable>
-        <HairOptions />
-        <hr />
+      title="Barber"
+    >
+      <Window.Content scrollable m={0}>
         <Stack>
-          <Stack.Item width="70%">
-            <Stack justify="space-around" vertical>
-              <Stack.Item mb="10px">
-                <Stack width="100%">
-                  <Stack.Item>
-                    <Icon name="magnifying-glass" />
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <Input width="100%" onInput={(e, value) => setSearchText(value)} />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item>
-                <Stack width="100%" wrap justify="space-around">
-                  <HairPreviewList search_text={searchText}
-                    all_hair_names={styles_keys}
-                    all_hair_styles={available_styles} />
-                </Stack>
-              </Stack.Item>
-            </Stack>
+          <Stack.Item width={sidebarWidth}>
+            <Box position="fixed" width={sidebarWidth}>
+              <Sidebar onSearchTextInput={setSearchText} />
+            </Box>
           </Stack.Item>
-          <Stack.Item position="fixed" width="27%">
-            <PreviewWindow />
+          <Stack.Item grow>
+            <HairPreviewList
+              searchText={searchText}
+              allHairNames={styles_keys}
+              allHairStyles={available_styles}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -49,92 +37,79 @@ export const BarberingMenu = (props, context) => {
   );
 };
 
-const HairPreviewList = function (props, context) {
-  const { search_text, all_hair_names, all_hair_styles } = props;
-
-  const filtered_list = all_hair_names.filter((x) => x.toLowerCase().includes(search_text.toLowerCase()));
-  return filtered_list.map((hairName) => (<HairPreview
-    key={all_hair_styles[hairName].id}
-    hair_style={all_hair_styles[hairName]}
-    hair_name={hairName} />));
+const HairStyleSearchBox = (props) => {
+  const { onInput } = props;
+  return (
+    <Stack>
+      <Stack.Item>
+        <Icon name="magnifying-glass" />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Input style={{ width: '100%' }} onInput={(_e, value) => onInput(value)} placeholder="Search..." />
+      </Stack.Item>
+    </Stack>
+  );
 };
 
-const HairOptions = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { selected_hair_portion } = data;
-
+const HairPreviewList = (props) => {
+  const { searchText, allHairNames, allHairStyles } = props;
+  const lowerSearchText = searchText.toLowerCase();
+  const filteredList = allHairNames.filter((x) => x.toLowerCase().includes(lowerSearchText));
   return (
-    <Flex justify="space-between" fontSize="15px">
-      <Flex.Item>
-        <Button.Checkbox checked={selected_hair_portion === "bottom" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "bottom" })}>Bottom Hair</Button.Checkbox>
-      </Flex.Item>
-      <Flex.Item>
-        <Button.Checkbox checked={selected_hair_portion === "middle" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "middle" })}>Middle Hair</Button.Checkbox>
-      </Flex.Item>
-      <Flex.Item>
-        <Button.Checkbox checked={selected_hair_portion === "top" ? 1 : 0} onClick={() => act("change_hair_portion", { "new_portion": "top" })}>Top Hair</Button.Checkbox>
-      </Flex.Item>
-      <Flex.Item>
-        <Button bold color="red" icon="cut" onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
-      </Flex.Item>
-    </Flex>
+    <Stack wrap>
+      {filteredList.map((hairName) => (
+        <Stack.Item key={allHairStyles[hairName].id} m={1}>
+          <HairPreview
+            hairStyle={allHairStyles[hairName]}
+            hairName={hairName}
+          />
+        </Stack.Item>
+      ))}
+    </Stack>);
+};
+
+const CreateWigButton = (_props, context) => {
+  const { act } = useBackend(context);
+  return (
+    <Button fluid icon="cut" color="red" bold onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
+  );
+};
+
+const ResetPreviewButton = (_props, context) => {
+  const { act } = useBackend(context);
+  return (
+    <Button fluid icon="rotate-left" color="red" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
   );
 };
 
 const HairPreview = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { hair_style, hair_name } = props;
+  const { act } = useBackend(context);
+  const { hairStyle, hairName } = props;
   return (
-    <Section width="140px" direction="column" align="center">
+    <Section width="140px" align="center">
       <Stack vertical>
         <Stack.Item>
-          <Image pixelated width="60px" height="100px" src={`${hair_style["hair_icon"]}`} />
+          <Image pixelated width="60px" height="100px" src={`${hairStyle["hair_icon"]}`} />
         </Stack.Item>
+        <Stack.Item>{hairName}</Stack.Item>
         <Stack.Item>
-          <Box fontSize="15px" textAlign="center">{hair_name}</Box>
-        </Stack.Item>
-        <Stack.Item>
-          <Button color="blue" height="20px" icon="cut" onClick={() => act("do_hair", { "style_id": hair_style["hair_id"] })}>Cut</Button>
-          <Button color="blue" height="20px" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hair_style["hair_id"] })}>Preview</Button>
+          <Button color="blue" icon="cut" onClick={() => act("do_hair", { "style_id": hairStyle["hair_id"] })}>Cut</Button>
+          <Button color="blue" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hairStyle["hair_id"] })}>Preview</Button>
         </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
-const PreviewWindow = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { preview, current_hair_style } = data;
+const ArrowButtons = (_props, context) => {
+  const { act } = useBackend(context);
   return (
-    <Section>
-      <Stack justify="space-around" height="200px" vertical>
-        <Stack.Item>
-          <Button icon="rotate-left" color="red" height="22px" width="100%" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
-        </Stack.Item>
-        <Stack.Item>
-          <ByondUi
-            params={{
-              id: preview,
-              type: "map",
-            }}
-            style={{
-              width: "80px",
-              height: "160px",
-            }} />
-        </Stack.Item>
-      </Stack>
-      <hr />
-      <LabeledList>
-        <LabeledList.Item label="Top Hair">{current_hair_style["top"]}</LabeledList.Item>
-        <LabeledList.Item label="Middle Hair">{current_hair_style["middle"]}</LabeledList.Item>
-        <LabeledList.Item label="Bottom Hair">{current_hair_style["bottom"]}</LabeledList.Item>
-      </LabeledList>
-      <hr />
-      <Stack width="100%" wrap justify="space-around">
-        <Stack.Item>
-          <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
-        </Stack.Item>
-        <Stack width="100%" align="center" justify="space-around">
+    <Stack vertical>
+      <Stack.Item align="center">
+        <Button icon="caret-up" onClick={() => act("update_preview", { "action": "change_direction", "direction": "north" })} />
+      </Stack.Item>
+      <Stack.Item>
+        <Stack justify="space-around">
           <Stack.Item>
             <Button icon="caret-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": "west" })} />
           </Stack.Item>
@@ -142,10 +117,80 @@ const PreviewWindow = (props, context) => {
             <Button icon="caret-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": "east" })} />
           </Stack.Item>
         </Stack>
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Button icon="caret-down" onClick={() => act("update_preview", { "action": "change_direction", "direction": "south" })} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const Sidebar = (props, context) => {
+  const { data } = useBackend(context);
+  const { preview } = data;
+  const { onSearchTextInput } = props;
+  return (
+    <Section>
+      <Stack vertical>
         <Stack.Item>
-          <Button icon="caret-down" onClick={() => act("update_preview", { "action": "change_direction", "direction": "south" })} />
+          <HairStyleSearchBox onInput={onSearchTextInput} />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <HairPortionList />
+        </Stack.Item>
+        <Stack.Divider mt={0} />
+        <Stack.Item align="center" style={{ width: '100%' }}>
+          <Box style={{ width: '100%' }} align="center">
+            <ByondUi
+              params={{
+                id: preview,
+                type: 'map',
+              }}
+              style={{
+                width: "80px",
+                height: "160px",
+              }}
+            />
+          </Box>
+          <ResetPreviewButton />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <ArrowButtons />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <CreateWigButton />
         </Stack.Item>
       </Stack>
     </Section>
+  );
+};
+
+const HairPortionItem = (props, context) => {
+  const { children, hairPortion, icon } = props;
+  const { act, data } = useBackend(context);
+  const { current_hair_style, selected_hair_portion } = data;
+  const rightSlot = <Box align="right">{current_hair_style[hairPortion]}</Box>;
+  return (
+    <Tabs.Tab
+      icon={icon}
+      rightSlot={rightSlot}
+      selected={selected_hair_portion === hairPortion}
+      onClick={() => act('change_hair_portion', { 'new_portion': hairPortion })}
+    >
+      {children}
+    </Tabs.Tab>
+  );
+};
+
+const HairPortionList = () => {
+  return (
+    <Tabs vertical mb={0}>
+      <HairPortionItem hairPortion="top" icon="arrows-up-to-line">Top</HairPortionItem>
+      <HairPortionItem hairPortion="middle" icon="arrow-down-up-across-line">Middle</HairPortionItem>
+      <HairPortionItem hairPortion="bottom" icon="arrows-down-to-line">Bottom</HairPortionItem>
+    </Tabs>
   );
 };
