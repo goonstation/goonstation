@@ -351,7 +351,7 @@
 		qdel(src)
 		return
 
-	can_receive()
+	is_open_container()
 		return TRUE
 
 	red

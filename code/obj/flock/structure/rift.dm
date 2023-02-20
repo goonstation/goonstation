@@ -38,6 +38,8 @@
 		animate_shake(src, severity, severity)
 
 /obj/flock_structure/rift/proc/open()
+	src.flock.center_x = src.x
+	src.flock.center_y = src.y
 	src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
 	for(var/i in 1 to 4)
 		var/obj/item/flockcache/x = new(src.contents)

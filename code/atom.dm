@@ -11,10 +11,6 @@ TYPEINFO(/atom)
 	plane = PLANE_DEFAULT
 	var/level = 2
 	var/flags = FPRINT
-	/// flags for descriptions of reagents inside containers
-	var/rc_desc_flags = null
-	/// flags for reagent container behavior
-	var/rc_flags = null
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -207,16 +203,13 @@ TYPEINFO(/atom)
 
 	proc/return_air()
 		return null
-
-	/// can receive reagents from other containers
-	proc/can_receive()
-		return rc_flags & CAN_RECEIVE
-	/// can transfer to other containers
-	proc/can_transfer()
-		return rc_flags & CAN_TRANSFER
-	/// can splash reagent inside this container
-	proc/can_splash()
-		return rc_flags & CAN_SPLASH
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
+	proc/is_open_container()
+		return flags & OPENCONTAINER
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
@@ -867,6 +860,25 @@ TYPEINFO(/atom)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
+		var/atom/movable/movablesrc = src
+		var/list/params_list = params2list(params)
+		if ((isturf(over_object) || over_object == src) && !movablesrc.anchored)
+			if ((over_object in movablesrc.locs) || over_object == src)
+				animate(src,
+					pixel_x = text2num(params_list["icon-x"]) - 16,
+					pixel_y = text2num(params_list["icon-y"]) - 16,
+					time = 0.1 SECONDS,
+					easing = LINEAR_EASING
+				)
+			else if (BOUNDS_DIST(src, over_object) <= 1)
+				movablesrc.set_loc(over_object)
+			else
+				movablesrc.throw_at(over_object, 1000, 1, params=params_list)
+			return
+		else if(isitem(movablesrc))
+			over_object.Attackby(movablesrc, usr, params_list)
+			return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))

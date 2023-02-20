@@ -348,6 +348,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	on = 0
 	removable_bulb = 1
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
+	disposing()
+		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."

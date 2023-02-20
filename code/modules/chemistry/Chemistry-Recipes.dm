@@ -2153,10 +2153,10 @@ datum
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
-		sarin // oh god why am i adding this
-			name = "Sarin"
-			id = "sarin"
-			result = "sarin"
+		Saxitoxin // replacing Sarin - come back to this with new recipe
+			name = "Saxitoxin"
+			id = "saxitoxin"
+			result = "saxitoxin"
 			required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
 			result_amount = 3 // it is super potent
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
@@ -2167,10 +2167,10 @@ datum
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-				if(holder?.my_atom?.can_receive())
+				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", created_volume / 6)
+					smokeContents.add_reagent("saxitoxin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
 					return
 
@@ -2929,7 +2929,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 				if (holder)
-					if(!holder?.my_atom?.can_receive())
+					if(!holder?.my_atom?.is_open_container())
 						if(holder.my_atom)
 							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 								boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
@@ -3221,7 +3221,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.postfoam)
 					return
-				if(!holder?.my_atom?.can_receive())
+				if(!holder?.my_atom?.is_open_container())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
@@ -3263,7 +3263,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if(!holder?.my_atom?.can_receive())
+				if(!holder?.my_atom?.is_open_container())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
@@ -3299,7 +3299,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if(!holder?.my_atom?.can_receive())
+				if(!holder?.my_atom?.is_open_container())
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, location))
 							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
@@ -4029,7 +4029,7 @@ datum
 			name = "Rajaijah"
 			id = "madness_toxin"
 			result = "madness_toxin"
-			required_reagents = list("prions" = 1, "sarin" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
+			required_reagents = list("prions" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
 			//required_temperature = 100 - T0C
 			result_amount = 8
 			mix_phrase = "The mixture forms a clear greenish liquid, emitting a nauseating smell reminiscent of chlorophyll and rubbing alcohol."

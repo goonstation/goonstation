@@ -13,7 +13,7 @@
 	initial_volume = 50
 	var/image/fluid_image
 	var/icon_style = "beaker"
-	rc_desc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	object_flags = NO_GHOSTCRITTER
 
 	on_reagent_change()
@@ -152,9 +152,8 @@
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
-	flags = FPRINT | TABLEPASS
-	rc_desc_flags = RC_SCALE
-	rc_flags = CAN_RECEIVE | CAN_SPLASH | CAN_TRANSFER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	rc_flags = RC_SCALE
 
 /obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"
@@ -198,7 +197,7 @@
 	icon_state = "eflask"
 	item_state = "flask"
 	var/icon_style = "eflask"
-	rc_desc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
+	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	initial_volume = 15
 	var/smashed = 0
 	var/shard_amt = 1

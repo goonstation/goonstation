@@ -116,6 +116,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	initial_reagents = "matcha"
 	food_color = "#74A12E"
 
+/obj/item/reagent_containers/food/snacks/condiment/mustard
+	name = "mustard"
+	desc = "A sauce of ground mustard seeds."
+	icon_state = "mustard"
+	initial_volume = 30
+	initial_reagents = list("mustard" = 20)
+
 /obj/item/reagent_containers/food/snacks/condiment/chocchips
 	name = "chocolate chips"
 	desc = "Mmm! Little bits of chocolate! Or rabbit droppings. Either or."

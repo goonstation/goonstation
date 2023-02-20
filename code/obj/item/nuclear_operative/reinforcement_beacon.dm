@@ -39,7 +39,8 @@
 		if(!length(candidates))
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
 			src.anchored = FALSE
-		var/datum/mind/chosen = pick(candidates)
+		var/datum/mind/chosen = candidates[1]
+		log_respawn_event(chosen, "syndicate gunbot", user)
 		var/mob/living/critter/robotic/gunbot/syndicate/synd = new/mob/living/critter/robotic/gunbot/syndicate
 		chosen.transfer_to(synd)
 		//user.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes

@@ -65,30 +65,9 @@
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
-	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
-
-	var/conspiratorList = "The conspiracy consists of: "
-	for (var/datum/mind/conspirator in traitors)
-		var/conspirator_name
-		if (conspirator.assigned_role == "Clown")
-			conspirator_name = "a Clown"
-		else
-			conspirator_name = conspirator.current.real_name
-		conspiratorList += "<b>[conspirator_name]</b>, "
-
-	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
-		ticker.mode.bestow_objective(conspirator, pickedObjective)
-
-		conspirator.store_memory(meetingPoint)
-		conspirator.store_memory(conspiratorList)
-		for(var/datum/objective/objective in conspirator.objectives)
-			boutput(conspirator.current, "<B>Objective</B>: [objective.explanation_text]")
-
-		equip_conspirator(conspirator.current)
-
-		boutput(conspirator.current, conspiratorList)
-		boutput(conspirator.current, meetingPoint)
+		if(istype(conspirator))
+			conspirator.add_antagonist(ROLE_CONSPIRATOR)
 
 	for (var/datum/mind/traitor in other_antags)
 		equip_antag(traitor)

@@ -74,8 +74,8 @@
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
-		if (can_transfer())
-			src.transfer_all_reagents(over_object, usr)
+
+		src.transfer_all_reagents(over_object, usr)
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -376,7 +376,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
 		isburst = TRUE
 
-	can_receive()
+	is_open_container()
 		return isburst
 
 /obj/reagent_dispensers/heliumtank

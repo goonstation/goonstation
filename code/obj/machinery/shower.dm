@@ -7,7 +7,7 @@
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
 	anchored = 1
-	rc_flags = CAN_RECEIVE
+	flags = OPENCONTAINER
 
 	var/on = 0 //Are we currently spraying???
 	var/default_reagent = "cleaner" //Some water will also be added.

@@ -72,7 +72,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		xmas_respawn_lock = 0
 		return
 
-	var/datum/mind/M = pick(candidates)
+	var/datum/mind/M = candidates[1]
 	if (!(M && istype(M) && M.current))
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (candidate selection failed).")
 		xmas_respawn_lock = 0
@@ -87,7 +87,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
 		xmas_respawn_lock = 0
 		return
-
+	log_respawn_event(M, "[which_one == 0 ? "Santa Claus" : "Krampus"]", null)
 	if (which_one == 0)
 		L = new /mob/living/carbon/human/santa
 		if (!(L && ismob(L)))
@@ -126,7 +126,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		krampus_spawned = 1
 
 	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.key] at [log_loc(L)].")
-	logTheThing(LOG_ADMIN, L, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
 	xmas_respawn_lock = 0
 	return
 
@@ -1257,6 +1256,16 @@ proc/compare_ornament_score(list/a, list/b)
 	var/danger_chance = 1
 	var/booby_trapped = 0
 
+	safe
+		// Has a zero% chance of giving you Fun items
+		danger_chance = 0
+
+	very_not_safe
+		// has a 100% chance of giving you Fun items
+		name = "very fun stocking"
+		desc = "This festive little sock is just full of <i>Fun!</i>"
+		danger_chance = 100
+
 	New()
 		..()
 		if (prob(50))
@@ -1311,7 +1320,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "nog"
 	heal_amt = 1
 	festivity = 1
-	rc_desc_flags = RC_FULLNESS
+	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("eggnog"=40)
 

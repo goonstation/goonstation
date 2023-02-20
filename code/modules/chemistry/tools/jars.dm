@@ -17,7 +17,7 @@
 	item_state = "beaker"
 	initial_volume = 75
 	var/image/color_underlay = null
-	rc_desc_flags = 0
+	rc_flags = 0
 
 	New()
 		..()
