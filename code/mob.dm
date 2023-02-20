@@ -2461,6 +2461,7 @@
 /mob/proc/getAbility(var/abilityType)
 	return abilityHolder?.getAbility(abilityType)
 
+SHOULD_CALL_PARENT(TRUE)
 /mob/proc/full_heal()
 	var/mob/ghost = find_ghost_by_key(src.last_ckey)
 	if(ghost)
