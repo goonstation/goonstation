@@ -20,10 +20,20 @@
 	health_burn_vuln = 1.3
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
+	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
+	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	var/is_king = FALSE
 	var/retaliate = FALSE
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
+		if(isdead(src) && issawingtool(W))
+			if(user.zone_sel.selecting == "l_arm")
+				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
+				return
+			else if (user.zone_sel.selecting == "r_arm")
+				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
+				return
+			else return ..()
 		retaliate(user)
 		..()
 
@@ -166,8 +176,8 @@
 				tackle.handleCast(attacker)
 				ai.interrupt()
 
-	proc/fuck_up_silicons(var/mob/living/silicon/robot/silicon) // taken from orginal object critter behaviour scream
-		if (!silicon.part_head)
+	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
+		if (!isrobot(silicon))
 			src.visible_message("<span class='alert'><B>[src]</B> sniffs at [silicon.name].</span>")
 			sleep(1.5 SECONDS)
 			src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [silicon.name] to pieces!</span>")
@@ -176,20 +186,21 @@
 			logTheThing(LOG_COMBAT, src, "gibs [constructTarget(silicon,"combat")] at [log_loc(src)].")
 			silicon.gib()
 			return
-		if (silicon.part_head.ropart_get_damage_percentage() >= 85)
-			src.visible_message("<span class='alert'><B>[src]</B> grabs [silicon.name]'s head and wrenches it right off!</span>")
+		var/mob/living/silicon/robot/cyborg = silicon
+		if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
+			src.visible_message("<span class='alert'><B>[src]</B> grabs [cyborg.name]'s head and wrenches it right off!</span>")
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-			silicon.compborg_lose_limb(silicon.part_head)
+			cyborg.compborg_lose_limb(cyborg.part_head)
 			sleep(1.5 SECONDS)
 			src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
 			playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
 			make_cleanable( /obj/decal/cleanable/blood,src.loc)
 		else
-			src.visible_message("<span class='alert'><B>[src]</B> pounds on [silicon.name]'s head furiously!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> pounds on [cyborg.name]'s head furiously!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-			if (silicon.part_head.ropart_take_damage(rand(20,40),0) == 1)
-				silicon.compborg_lose_limb(silicon.part_head)
+			if (cyborg.part_head.ropart_take_damage(rand(20,40),0) == 1)
+				cyborg.compborg_lose_limb(cyborg.part_head)
 			if (prob(33)) playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 
 	proc/go_invis()
@@ -198,6 +209,15 @@
 			fadeout.handleCast(src)
 			return
 
+	update_dead_icon()
+		var/datum/handHolder/HH = hands[1]
+		. = "brullbar"
+		if (!HH.limb)
+			. += "-l"
+		HH = hands[2]
+		if (!HH.limb)
+			. += "-r"
+		icon_state = .
 
 /mob/living/critter/brullbar/king
 	name = "brullbar king"
@@ -212,6 +232,8 @@
 	health_burn = 250
 	health_burn_vuln = 1.4
 	is_king = TRUE
+	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
+	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
 
 /mob/living/critter/brullbar/strong //orginal health for admin spawns
 	health_brute = 100

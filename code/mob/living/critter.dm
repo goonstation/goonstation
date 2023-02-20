@@ -70,6 +70,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
 	var/max_skins = 0
 
+	// for critters with removable arms(brullbar, bear)
+	var/left_arm = null
+	var/right_arm = null
+
 	var/fits_under_table = 0
 	var/table_hide = 0
 
@@ -342,6 +346,23 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		src.ghostize()
 		qdel (src)
+
+	proc/remove_arm(var/mob/living/critter/M, var/arm)
+		if(arm == "left")
+			var/datum/handHolder/HH = hands[1]
+			qdel(HH)
+			new M.left_arm(M.loc)
+			M.update_dead_icon()
+			return
+		if(arm == "right")
+			var/datum/handHolder/HH = hands[2]
+			qdel(HH)
+			new M.right_arm(M.loc)
+			M.update_dead_icon()
+			return
+
+	proc/update_dead_icon() // for brullbar and bear missing arm sprites
+		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
