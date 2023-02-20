@@ -151,7 +151,7 @@
 		if (prob(30))
 			src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			new /obj/decal/fakeobjects/skeleton(target.loc)
+			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
 			target.ghostize()
 			target.gib()
 			return
