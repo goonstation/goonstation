@@ -2174,7 +2174,7 @@ datum
 					if(!issmokeimmune(C))
 						mobs_affected += C
 				for(var/mob/living/carbon/C as anything in mobs_affected)
-					C.reagents.add_reagent("hydrogen_sulfide", (0.6 * created_volume) / length(mobs_affected))
+					C.reagents.add_reagent("hydrogen_sulfide", (created_volume) / length(mobs_affected))
 				return
 
 		Saxitoxin // replacing Sarin - come back to this with new recipe

@@ -1146,7 +1146,6 @@ datum
 			transparency = 0
 			depletion_rate = 0.2
 			penetrates_skin = 1
-			touch_modifier = 0.5 // a cut on skinpen, akin to radium
 			var/counter = 1
 			var/oxy_damage_target = 0
 
@@ -1159,9 +1158,6 @@ datum
 				else
 					counter+= (1 * mult)
 				switch(counter)
-					if (6 to 12)
-						if(probmult(5))
-							M.emote(pick("cough", "gasp"))
 					if (12 to 22)
 						if(probmult(8))
 							M.emote(pick("cough", "choke", "gasp"))
