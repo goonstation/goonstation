@@ -205,7 +205,7 @@
 
 	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		if (!length(.) && !fadeout.disabled && fadeout.cooldowncheck())
+		if (!fadeout.disabled && fadeout.cooldowncheck())
 			fadeout.handleCast(src)
 			return
 
