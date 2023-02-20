@@ -141,6 +141,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
 	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = 0
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -328,6 +330,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
 	ai_retaliates = TRUE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = -1 //attack until you're knocked down
 	ai_type = /datum/aiHolder/cat
 	is_npc = TRUE
 	var/cattype = 1
@@ -606,6 +610,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute = 30
 	health_burn = 30
 	ai_retaliates = TRUE
+	ai_retaliate_patience = 4 //dogoos are big softies
+	ai_retaliate_persistence = -1 //attack until you're knocked down
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.

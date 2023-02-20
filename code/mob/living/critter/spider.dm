@@ -45,6 +45,8 @@
 	ai_type = /datum/aiHolder/spider
 	is_npc = TRUE
 	ai_retaliates = TRUE
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = -2 //spiders kill you so they can eat you
 
 	New()
 		..()
