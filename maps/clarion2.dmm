@@ -13515,7 +13515,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/vehicle/pod_smooth/industrial,
+/obj/machinery/vehicle/pod_smooth/light{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "Xs" = (
@@ -13917,7 +13919,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/obj/machinery/vehicle/miniputt/indyputt/armed,
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "YL" = (
