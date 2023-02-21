@@ -30,9 +30,18 @@
 			retaliate()
 			return ..()
 		if(issawingtool(W))
+			var/datum/handHolder/HH
 			if(user.zone_sel.selecting == "l_arm")
+				HH = hands[1]
+				if (!HH.limb)
+					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
+					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
 			else if (user.zone_sel.selecting == "r_arm")
+				HH = hands[2]
+				if (!HH.limb)
+					boutput(user, ("<span class='alert'><B> [src] has no right arm! </B></span>"))
+					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
 
@@ -162,7 +171,7 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		return can_act(src,TRUE) && !frenzy.disabled
+		return can_act(src,TRUE) && !frenzy.disabled // so they can't attack you while frenzying
 
 	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -175,24 +184,18 @@
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
 		if (!isrobot(silicon))
-			src.visible_message("<span class='alert'><B>[src]</B> sniffs at [silicon.name].</span>")
-			sleep(1.5 SECONDS)
 			src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [silicon.name] to pieces!</span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
-			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
 			logTheThing(LOG_COMBAT, src, "gibs [constructTarget(silicon,"combat")] at [log_loc(src)].")
 			silicon.gib()
 			return
 		var/mob/living/silicon/robot/cyborg = silicon
 		if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
 			src.visible_message("<span class='alert'><B>[src]</B> grabs [cyborg.name]'s head and wrenches it right off!</span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
-			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
 			cyborg.compborg_lose_limb(cyborg.part_head)
-			sleep(1.5 SECONDS)
-			src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
-			make_cleanable( /obj/decal/cleanable/blood,src.loc)
 		else
 			src.visible_message("<span class='alert'><B>[src]</B> pounds on [cyborg.name]'s head furiously!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
