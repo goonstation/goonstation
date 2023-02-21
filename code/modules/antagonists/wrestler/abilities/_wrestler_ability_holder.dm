@@ -54,8 +54,6 @@
 			if (remove_powers == 1)
 				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 				if (istype(A3))
-					if (belt_check == 1 && A3.is_inherent == 1) // Wrestler/omnitraitor vs wrestling belt.
-						return
 					if (!isnull(H.abilityHolder))
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
@@ -90,7 +88,6 @@
 				A5.addAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
 
 				if (make_inherent == 1)
-					A5.is_inherent = 1
 					src.add_stam_mod_max("wrestler", 50)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "wrestler", 5)
 					src.max_health += 50
@@ -138,14 +135,7 @@
 	regenRate = 0
 	tabName = "Wrestler"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
-	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
-
-	deepCopy()
-		. = ..()
-		var/datum/abilityHolder/wrestler/copy = .
-		if(istype(copy) && src.is_inherent == TRUE)
-			copy.is_inherent = TRUE
 
 /datum/abilityHolder/wrestler/fake
 	fake = 1
@@ -224,13 +214,6 @@
 
 		if (!M)
 			return 0
-
-		// The HUD autoequip code doesn't call unequipped() when it should, naturally.
-		if (ishuman(M) && (istype(H) && H.is_inherent != 1))
-			var/mob/living/carbon/human/HH = M
-			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)) && !HAS_ATOM_PROPERTY(M, PROP_MOB_PASSIVE_WRESTLE))
-				boutput(HH, "<span class='alert'>You have to wear the wrestling belt for this.</span>")
-				return 0
 
 		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
 			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")

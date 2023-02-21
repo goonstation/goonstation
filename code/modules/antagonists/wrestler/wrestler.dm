@@ -42,8 +42,6 @@
 			src.ability_holder.addAbility(/datum/targetable/wrestler/throw)
 			src.ability_holder.addAbility(/datum/targetable/wrestler/slam)
 
-		src.ability_holder.is_inherent = TRUE
-
 	remove_equipment()
 		src.owner.current.remove_stam_mod_max("wrestler", 50)
 		REMOVE_ATOM_PROPERTY(src.owner.current, PROP_MOB_STAMINA_REGEN_BONUS, "wrestler")
