@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		src.remove_objectives()
 
-		if (!src.silent)
+		if (!src.silent && !src.pseudo)
 			src.announce_removal()
 			src.announce_objectives()
 

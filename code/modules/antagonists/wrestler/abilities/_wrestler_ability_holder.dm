@@ -210,7 +210,6 @@
 			return 0
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/wrestler/H = holder
 
 		if (!M)
 			return 0
