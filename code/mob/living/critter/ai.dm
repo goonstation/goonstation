@@ -14,6 +14,9 @@ var/list/ai_move_scheduled = list()
 	var/list/datum/aiTask/priority_tasks = list()
 	var/move_target = null
 
+	///INTERNAL: Set to true when the mobai loop is processing this mob.
+	var/_mobai_being_processed = FALSE
+
 	var/move_dist = 0
 	var/move_reverse = 0
 	var/move_side = 0 //merge with reverse later ok messy
