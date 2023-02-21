@@ -572,7 +572,10 @@ TYPEINFO(/datum/component/barber)
 			return TRUE
 
 /datum/component/barber/ui_status(mob/user, datum/ui_state/state)
-	. = user.find_in_hand(src.parent) ? UI_INTERACTIVE : UI_CLOSE // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
+	var/lookup_table = list("0" = UI_CLOSE, "1" = UI_INTERACTIVE)
+	. = user.find_in_hand(src.parent) // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
+	. = . && src.barbee in orange(1, src.barber) // If the previous condition was true, and the barbee is still within barber range, we're good to go.
+	. = lookup_table["[.]"]
 
 /datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
 	src.preview.preview_mob.appearance = null
