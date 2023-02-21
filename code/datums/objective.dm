@@ -972,6 +972,106 @@ proc/create_fluff(datum/mind/target)
 		if (feed_count >= target_feed_count)
 			return 1
 
+/datum/objective/specialist/salvager
+	proc/check_on_magpie(targetType, frameType=null)
+		. = 0
+		for(var/areaType in typesof(/area/salvager))
+			for (var/turf/T in get_area_turfs(areaType))
+				for (var/obj/O in T.contents)
+					if(istype(O, targetType))
+						if(frameType && targetType == /obj/item/electronics/frame )
+							var/obj/item/electronics/frame/F = O
+							if (istype(F.deconstructed_thing, frameType))
+								. += 1
+						else
+							. += 1
+
+/datum/objective/specialist/salvager/machinery
+	var/target_equipment = null
+	var/target_name
+	var/target_count = 1
+
+	set_up()
+		var/list/choices = list("cyborg recharge stations",
+								"chem dispenser",
+								"nano fabricator",
+								"hydroponics tray",
+								"gibber",
+								"rechargers",
+								"operating table",
+								"toilets")
+
+		target_name = pick(choices)
+		switch(target_name)
+			if ("cyborg recharge stations")
+				target_equipment = /obj/machinery/recharge_station
+				target_count = rand(2,3)
+			if ("chem dispenser")
+				target_equipment = /obj/machinery/chem_dispenser
+			if ("nano fabricator")
+				target_equipment = /obj/machinery/nanofab
+			if ("hydroponics tray")
+				target_equipment = /obj/machinery/plantpot
+				target_count = rand(2,4)
+			if ("gibber")
+				target_equipment = /obj/machinery/gibber
+			if ("rechargers")
+				target_equipment = /obj/machinery/recharger
+				target_count = rand(1,3)
+			if ("operating table")
+				target_equipment = /obj/machinery/optable
+			if ("toilets")
+				target_equipment = /obj/item/storage/toilet
+				target_count = rand(1,2)
+
+		if(target_count > 1)
+			explanation_text = "Disassemble [target_count] [target_name] and have them anywhere on you or the Magpie at the end of the shift."
+		else
+			explanation_text = "Disassemble the [target_name] and have it anywhere on you or the Magpie at the end of the shift."
+		return target_equipment
+
+	check_completion()
+		var/count = 0
+		if(owner.current)
+			var/list/L = owner.current.get_all_items_on_mob()
+			if (length(L))
+				for (var/obj/item/electronics/frame/F in L)
+					if (istype(F.deconstructed_thing, target_equipment))
+						count++
+			count += check_on_magpie(/obj/item/electronics/frame, target_equipment)
+			return count >= target_count
+		else
+			return FALSE
+
+/datum/objective/specialist/salvager/steal
+	var/target_equipment = null
+	var/target_name
+	var/target_count = 1
+
+	set_up()
+		var/list/choices = list(/obj/item/disk/data/floppy/read_only/authentication,
+								/obj/item/disk/data/floppy/read_only/communications,
+								/obj/item/reagent_containers/mender,
+								/obj/item/reagent_containers/hypospray,
+								/obj/item/rcd )
+		target_equipment = pick(choices)
+		var/atom/A = target_equipment
+		target_name = initial(A.name)
+
+		if(target_count > 1)
+			explanation_text = "Steal [target_count] [target_name] and have it anywhere on you or the Magpie at the end of the shift."
+		else
+			explanation_text = "Steal the [target_name] and have it anywhere on or the Magpie you at the end of the shift."
+		return target_equipment
+
+	check_completion()
+		if(owner.current && owner.current.check_contents_for_num(target_equipment, 1, TRUE))
+			return TRUE
+		else if(check_on_magpie(target_equipment))
+			return TRUE
+		else
+			return FALSE
+
 /datum/objective/specialist/ruin_xmas
 	explanation_text = "Ruin Spacemas for everyone! Make sure Spacemas cheer is at or below 20% when the round ends."
 	medal_name = "You're a mean one..."
@@ -1480,6 +1580,10 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	objective_list = list(/datum/objective/specialist/powerdrain)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/hijack)
+
+/datum/objective_set/salvager
+	objective_list = list(/datum/objective/specialist/salvager/machinery, /datum/objective/specialist/salvager/steal)
+	escape_choices = list(/datum/objective/escape/survive)
 
 // Wraith not listed since it has its own dedicated proc
 

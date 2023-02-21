@@ -321,7 +321,8 @@
 						<a href='[playeropt_link(M, "sharkban")]'>Ban w/shark</a> &bull;
 						<a href='[playeropt_link(M, "jobbanpanel")]'>Job Bans</a> &bull;
 						<a href='[playeropt_link(M, "banooc")]'>OOC [oocban_isbanned(M) ? "Unban" : "Ban"]</a> &bull;
-						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a>
+						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a> &bull;
+						<a href='[playeropt_link(M, "centcombans")]'>CentCom</a>
 					</div>
 					<div class='l'>
 						Persistent

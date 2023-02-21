@@ -59,7 +59,7 @@
 	explode()
 		var/datum/reagents/R = new /datum/reagents(50)
 		R.my_atom = get_turf(src)
-		R.add_reagent("sarin", 50)
+		R.add_reagent("saxitoxin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
 		SPAWN(30 SECONDS) qdel(R)

@@ -51337,11 +51337,6 @@
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"cVc" = (
-/obj/decal/cleanable/blood,
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "cVd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -59709,18 +59704,6 @@
 	dir = 6
 	},
 /area/centcom/offices/zewaka)
-"dxu" = (
-/obj/stool/chair/couch/blue{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/cal)
-"dxv" = (
-/obj/stool/chair/couch/blue{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/cal)
 "dxw" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4;
@@ -66913,11 +66896,6 @@
 /obj/item/suture,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
-"dTN" = (
-/obj/critter/zombie/hogan,
-/obj/machinery/optable,
-/turf/unsimulated/floor/engine,
-/area/crypt/sigma/lab)
 "dTO" = (
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/healthanalyzer,
@@ -67680,6 +67658,22 @@
 /obj/decal/poster/wallsign/fire,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base)
+"eYO" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "eYW" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/silver_sulfadiazine,
@@ -68050,6 +68044,11 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
+"fHj" = (
+/obj/critter/zombie/wrestler,
+/obj/machinery/optable,
+/turf/unsimulated/floor/engine,
+/area/crypt/sigma/lab)
 "fIi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-11"
@@ -68652,6 +68651,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gKP" = (
+/obj/table/flock/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>";
+	name = "The secret to Flock balance";
+	pixel_w = 1;
+	pixel_y = -1
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -69100,11 +69110,6 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
-"hDJ" = (
-/mob/living/critter/brullbar,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hEq" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -69142,10 +69147,6 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
-"hIb" = (
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hIz" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -69521,6 +69522,10 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"ioJ" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -69933,10 +69938,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iVf" = (
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "iVt" = (
 /obj/machinery/light{
 	dir = 1;
@@ -70764,6 +70765,11 @@
 /mob/living/critter/small_animal/crab/responsive,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"kCD" = (
+/obj/decal/cleanable/blood,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "kCF" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -4
@@ -70827,6 +70833,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"kMm" = (
+/obj/stool/chair/couch/blue/cal{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cal)
 "kMt" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood,
@@ -71651,6 +71663,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
+"mpC" = (
+/mob/living/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "mrd" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -73180,6 +73197,10 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
+"oHM" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "oIH" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/cigbutt{
@@ -73680,6 +73701,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"pwk" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "pxZ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -73980,14 +74009,6 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
-"pRr" = (
-/mob/living/critter/brullbar,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "pRK" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -74827,11 +74848,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base)
-"rrB" = (
-/obj/decal/icefloor,
-/mob/living/critter/brullbar/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "rst" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying the name of the art gallery.";
@@ -76305,6 +76321,11 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"tZe" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "tZr" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -77422,14 +77443,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
-"vOz" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "vOL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77444,17 +77457,6 @@
 	dir = 8
 	},
 /area/iomoon/base)
-"vOS" = (
-/obj/table/flock/auto,
-/obj/item/paper{
-	icon_state = "paper";
-	name = "The secret to Flock balance";
-	pixel_w = 1;
-	pixel_y = -1;
-	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>"
-	},
-/turf/unsimulated/floor/feather,
-/area/centcom/offices/leah)
 "vPQ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -77493,6 +77495,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/cogwerks)
+"vWj" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "vWW" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-35"
@@ -77545,6 +77552,14 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
+"wdx" = (
+/mob/living/critter/brullbar,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "wdR" = (
 /obj/item/decoration/walpfeathers,
 /obj/decal/cleanable/glitter/harmless,
@@ -78095,11 +78110,6 @@
 /obj/reagent_dispensers/still,
 /turf/unsimulated/floor/plating,
 /area/diner/cow)
-"xch" = (
-/obj/decal/icefloor,
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "xcj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -78377,22 +78387,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
-"xyS" = (
-/obj/item/reagent_containers/food/snacks/breadloaf{
-	pixel_y = 12;
-	rand_pos = 0
-	},
-/obj/table/flock/auto,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_y = -2;
-	pixel_x = -7
-	},
-/obj/item/clothing/head/NTberet{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/turf/unsimulated/floor/feather,
-/area/centcom/offices/leah)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78534,6 +78528,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"xJS" = (
+/obj/stool/chair/couch/blue/cal{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cal)
 "xLa" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/orangeblack/side{
@@ -82309,7 +82309,7 @@ aSG
 aSG
 aVL
 aRJ
-vOz
+pwk
 faP
 faP
 faP
@@ -90491,7 +90491,7 @@ aLr
 aLS
 aLN
 bgC
-iVf
+oHM
 aLN
 aLN
 aLN
@@ -97419,7 +97419,7 @@ aIp
 aIp
 bdB
 bdQ
-rrB
+tZe
 aJE
 aJE
 aJE
@@ -98632,7 +98632,7 @@ aIp
 aIp
 aIp
 aIp
-hIb
+ioJ
 aIp
 aIp
 aIp
@@ -101340,7 +101340,7 @@ aIC
 bbs
 aIp
 aIp
-xch
+vWj
 aIp
 aIp
 aIp
@@ -101648,7 +101648,7 @@ aIp
 aIp
 aIp
 aIp
-pRr
+wdx
 aIp
 aIC
 aIC
@@ -102546,7 +102546,7 @@ aNq
 aPE
 aIC
 aIp
-hIb
+ioJ
 aIC
 aIC
 aIC
@@ -103171,7 +103171,7 @@ aIp
 aIp
 aIC
 aJi
-hDJ
+mpC
 aIp
 bgr
 bgr
@@ -104066,12 +104066,12 @@ aIp
 aIp
 aIp
 aIC
-hIb
+ioJ
 aIp
 aYu
 bwn
 aIp
-cVc
+kCD
 aIp
 aIp
 aIp
@@ -105578,7 +105578,7 @@ bwk
 aIC
 aIp
 aIC
-hIb
+ioJ
 aIp
 aIC
 aIC
@@ -120470,7 +120470,7 @@ dFR
 bQt
 bQE
 bQF
-dTN
+fHj
 bRy
 afW
 bSj
@@ -154174,9 +154174,9 @@ niJ
 wel
 xxs
 vCK
-xyS
+eYO
 wel
-dxu
+xJS
 dyh
 dyG
 wel
@@ -154478,7 +154478,7 @@ rBI
 hba
 gUB
 tIu
-dxv
+kMm
 dyh
 dyH
 wel
@@ -154778,7 +154778,7 @@ liR
 wel
 hqN
 obN
-vOS
+gKP
 wel
 dxw
 dyi

@@ -706,10 +706,10 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(isitem(O) && prob(20))
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item, O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						boutput(M, "<span class='alert'>\The [O] melts.</span>")
 					qdel(O)
 
 		fooddrink/alcoholic/port
@@ -2925,8 +2925,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) //god fuck this proc
 				if(!M) M = holder.my_atom
 				if (iswizard(M))
-					if(M.reagents.has_reagent("sarin"))
-						M.reagents.remove_reagent("sarin", 5 * mult)
+					if(M.reagents.has_reagent("saxitoxin"))
+						M.reagents.remove_reagent("saxitoxin", 5 * mult)
 				..()
 
 		fooddrink/grease

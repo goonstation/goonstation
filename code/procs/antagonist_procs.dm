@@ -146,93 +146,6 @@
 			boutput(traitor_mob, "The Syndicate have <s>cunningly</s> disguised a Syndicate Uplink as [T.name]. Simply enter the code \"[pda_pass]\" into the device to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink password:</B> [pda_pass].")
 
-
-/proc/equip_spy_theft(mob/living/carbon/human/traitor_mob)
-	if (!(traitor_mob && ishuman(traitor_mob)))
-		return
-
-	if (!traitor_mob.r_store)
-		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_r_store)
-	else if (!traitor_mob.l_store)
-		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_l_store)
-	else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
-		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_in_backpack)
-	else
-		var/obj/F2 = new /obj/item/camera/spy(get_turf(traitor_mob))
-		traitor_mob.put_in_hand_or_drop(F2)
-
-	var/pda_pass = null
-
-	//find a PDA, hide the uplink inside
-	var/loc = ""
-	var/obj/item/device/R = null
-	if (istype(traitor_mob.belt, /obj/item/device/pda2))
-		R = traitor_mob.belt
-		loc = "on your belt"
-	else if (istype(traitor_mob.wear_id, /obj/item/device/pda2))
-		R = traitor_mob.wear_id
-		loc = "in your ID slot"
-	else if (istype(traitor_mob.r_store, /obj/item/device/pda2))
-		R = traitor_mob.r_store
-		loc = "in your right pocket"
-	else if (istype(traitor_mob.l_store, /obj/item/device/pda2))
-		R = traitor_mob.l_store
-		loc = "in your left pocket"
-	else if (istype(traitor_mob.l_hand, /obj/item/device/pda2))
-		R = traitor_mob.l_hand
-		loc = "in your left hand"
-	else if (istype(traitor_mob.r_hand, /obj/item/device/pda2))
-		R = traitor_mob.r_hand
-		loc = "in your right hand"
-	else
-		if (istype(traitor_mob.l_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.l_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] in your left hand"
-				break
-		if (istype(traitor_mob.r_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.r_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] in your right hand"
-				break
-		if (istype(traitor_mob.back, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.back
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] on your back"
-				break
-		if (istype(traitor_mob.belt, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.belt
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] on your belt"
-				break
-
-	if (!R) //They have no PDA. Make one!
-		R = new /obj/item/device/pda2(traitor_mob)
-		loc = "in your backpack"
-		if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
-			loc = "on the floor"
-			R.set_loc(get_turf(traitor_mob))
-
-	if (istype(R, /obj/item/device/pda2))
-		var/obj/item/device/pda2/P = R
-		var/obj/item/uplink/integrated/pda/spy/T = new /obj/item/uplink/integrated/pda/spy(P)
-		T.setup(traitor_mob.mind, P)
-		pda_pass = T.lock_code
-
-		traitor_mob.show_antag_popup("spythief")
-		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
-	else
-		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
-
 /proc/alive_player_count()
 	. = 0
 	for(var/client/C)
@@ -299,6 +212,7 @@ var/list/roles_to_prefs = list(
 	ROLE_CONSPIRATOR = "be_conspirator",
 	ROLE_ARCFIEND = "be_arcfiend",
 	ROLE_FLOCKMIND = "be_flock",
+	ROLE_SALVAGER = "be_salvager",
 	ROLE_MISC = "be_misc"
 	)
 

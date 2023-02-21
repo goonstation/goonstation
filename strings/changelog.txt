@@ -1,4 +1,40 @@
 
+(t)mon feb 20 23
+(u)Caio029
+(p)13134
+(e)🆕⚖|C-Feature, C-Balance
+(+)Bible beatings from the Chaplain can now burn thralls as well.
+(t)sun feb 19 23
+(u)Azrun
+(*)Beware the Salvagers!  They want your stuff! (Update your preferences accordingly.)
+(u)Cogwerks
+(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
+(u)Flappybat
+(*)The Donut 3 morgue now has blinds, a lightswitch and a solid door to enable crime like most other morgues.
+(t)sat feb 18 23
+(u)Sord
+(*)Captain now requires 30 rounds played to be selected on all servers.
+(u)Wisemonster
+(p)13071
+(e)💅⏰|C-QoL, A-Status-Effects
+(+)Being actively de-revved by a loyalty implant will now display a status effect.
+(u)Cherman0
+(p)12620
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a second bathroom to Donut3, by the bar.
+(u)Shiiba
+(p)12821
+(e)🎨|C-Sprites
+(*)Adds the paper folding option for cigarette packets, make your own customs joints and cigs today!
+(t)fri feb 17 23
+(u)aloe
+(+)The clown car can now fit people who are stunned but not lying down, and can fit non-human creatures (including borgs).
+(u)Kubius
+(p)12687
+(e)🆕⚖🔄📦🌠|C-Feature, C-Balance, C-Rework, A-Game-Objects, A-Events
+(*)Spatial interdictor mass radiation protection no longer scales with protected individual count, and should reliably weather a whole storm if external power's good.
+(*)Spatial interdictors also no longer require a wire beneath them to initialize, but can't initialize in range of another active interdictor.
+(+)Spatial interdictors ALSO also can now be emagged (removes access requirement), don't need a soldering iron for assembly anymore (securing wires is now done by screwing down wire terminals), and their electrical draw under low use has been cut down a bit.
 (t)wed feb 15 23
 (u)Sord
 (e)📦|A-Game-Objects
