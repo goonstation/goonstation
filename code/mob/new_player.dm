@@ -729,19 +729,7 @@ a.latejoin-card:hover {
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
 				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_CHANGELING)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_VAMPIRE)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WRESTLER)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				do_objectives = FALSE
 
@@ -749,14 +737,6 @@ a.latejoin-card:hover {
 				traitor.special_role = ROLE_GRINCH
 				objective_set_path = /datum/objective_set/grinch
 				traitormob.make_grinch()
-
-			if (ROLE_HUNTER)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WEREWOLF)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
 				traitor.special_role = ROLE_WRAITH

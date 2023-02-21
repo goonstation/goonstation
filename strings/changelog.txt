@@ -1,4 +1,12 @@
+
+(t)mon feb 20 23
+(u)Caio029
+(p)13134
+(e)🆕⚖|C-Feature, C-Balance
+(+)Bible beatings from the Chaplain can now burn thralls as well.
 (t)sun feb 19 23
+(u)Azrun
+(*)Beware the Salvagers!  They want your stuff! (Update your preferences accordingly.)
 (u)Cogwerks
 (*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
 (u)Flappybat
