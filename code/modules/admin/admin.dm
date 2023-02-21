@@ -4817,12 +4817,8 @@ var/global/noir = 0
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
-				M.show_text("<h1><font color=red><B>You have defected to a Spy Thief!</B></font></h1>", "red")
-				M.mind.special_role = ROLE_SPY_THIEF
-				var/mob/living/carbon/human/tmob = M
-				var/objective_set_path = /datum/objective_set/spy_theft
-				new objective_set_path(M.mind)
-				equip_spy_theft(tmob)
+				M.show_text("<h1><font color=red><B>You have defected to become a Spy Thief!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_NUKEOP)
 				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
 				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)

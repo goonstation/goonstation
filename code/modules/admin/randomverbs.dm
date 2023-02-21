@@ -1571,6 +1571,39 @@
 				if(I==1 && !isobserver(M)) new /mob/living/critter/small_animal/cat(M.loc)
 		sleep(rand(10,20))
 
+/client/proc/fake_pda_message_to_all()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Fake PDA Message To All"
+	ADMIN_ONLY
+
+	var/sender_name = tgui_input_text(src, "PDA message sender name", "Name")
+	var/message = tgui_input_text(src, "PDA message contents", "Contents")
+
+	if (!sender_name || !message)
+		alert(src, "Sender name or message cannot be empty.", "Invalid PDA Message", "Ok")
+		return
+
+	var/datum/signal/pdaSignal = get_free_signal()
+	pdaSignal.data = list("command"="text_message", "sender_name"=sender_name, "sender"="00000000", "message"=message)
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+	logTheThing(LOG_ADMIN, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]")
+	logTheThing(LOG_DIARY, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]", "admin")
+
+/client/proc/force_say_in_range()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Force Say In Range"
+	ADMIN_ONLY
+
+	var/speech = tgui_input_text(src, "What to force say", "Say")
+	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+
+	for (var/mob/M in range(range, usr))
+		if (isalive(M))
+			M.say(speech)
+			logTheThing(LOG_ADMIN, src, "forced <b>[M]</b> to say: [speech]")
+			logTheThing(LOG_DIARY, src, "forced <b>[M]</b> to say: [speech]", "admin")
+
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Revive All Bees"

@@ -510,6 +510,7 @@ THROWING DARTS
 			else if (H.mind in ticker.mode:revolutionaries)
 				H.TakeDamage("chest", 1, 1, 0)
 				H.changeStatus("weakened", 1 SECOND)
+				H.setStatus("derevving")
 				H.force_laydown_standup()
 				H.emote("scream")
 				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
@@ -524,6 +525,7 @@ THROWING DARTS
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
 					H.changeStatus("newcause", 5 SECONDS)
+					H.delStatus("derevving")
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
@@ -539,6 +541,10 @@ THROWING DARTS
 						H.emote("twitch_v")
 
 		..()
+
+	on_remove(var/mob/M)
+		M.delStatus("derevving")
+		. = ..()
 
 
 // dumb joke

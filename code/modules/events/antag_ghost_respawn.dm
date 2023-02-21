@@ -65,8 +65,11 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
-
+			#ifdef MAP_OVERRIDE_NADIR
+			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#else
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#endif
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
