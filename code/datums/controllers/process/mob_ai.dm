@@ -6,6 +6,7 @@ datum/controller/process/mob_ai
 		schedule_interval = 0.2 SECONDS
 
 	doWork()
+		SHOULD_NOT_SLEEP(TRUE) //any AI that sleeps will hang the entire mobAI loop. This is bad.
 		for(var/X in ai_mobs)
 			var/mob/M = X
 

@@ -230,29 +230,36 @@ var/list/ai_move_scheduled = list()
 
 	/// Called when the task is switched to by the holder
 	proc/switched_to()
+		SHOULD_NOT_SLEEP(TRUE)
 
 	/// Called on every mobAI tick - this tick rate is determined by mobAI priority
 	proc/on_tick()
+		SHOULD_NOT_SLEEP(TRUE)
 
 	/// Called on every mobAI tick - returns a task to switch to, ending this task, or null to continue
 	proc/next_task()
+		SHOULD_NOT_SLEEP(TRUE)
 		return null
 
 	/// Called whenever the task is started or ended. Override this instead of reset()
 	proc/on_reset()
+		SHOULD_NOT_SLEEP(TRUE)
 		holder.target = null
 
 	/// Evaluate the current environment and assign priority to switching to this task
 	proc/evaluate()
+		SHOULD_NOT_SLEEP(TRUE)
 		return 0
 
 	/// Returns a list of atoms that are potential targets for this task
 	proc/get_targets()
+		SHOULD_NOT_SLEEP(TRUE)
 		return list()
 
 	/// Takes a list of atoms which are then evaluated, before setting the holder's target. Note this checks a path exists to each target. The list of
 	/// targets is expected (but not required) to be ordered from best to worst - by default view() will do this if score_target() is based on distance
 	proc/get_best_target(list/atom/targets)
+		SHOULD_NOT_SLEEP(TRUE)
 		. = null
 		var/best_score = -INFINITY
 		var/list/best_path = null
@@ -269,6 +276,7 @@ var/list/ai_move_scheduled = list()
 		holder.target_path = best_path
 
 	proc/score_target(atom/target)
+		SHOULD_NOT_SLEEP(TRUE)
 		. = 0
 		if(target)
 			return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
@@ -278,9 +286,11 @@ var/list/ai_move_scheduled = list()
 	// unless you are building a new direct subtype
 
 	proc/tick()
+		SHOULD_NOT_SLEEP(TRUE)
 		on_tick()
 
 	proc/reset()
+		SHOULD_NOT_SLEEP(TRUE)
 		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
