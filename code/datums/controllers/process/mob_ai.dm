@@ -50,7 +50,8 @@ datum/controller/process/mob_ai
 						continue
 
 				if(M.ai._mobai_being_processed)
-					logTheThing(LOG_DEBUG, "mobAI process", "The mob [constructTarget(M)] overran while processing its AI, and will be skipped for one tick. You should probably check why it's slow. AI = [M.ai] AI task = [M.ai?.current_task]")
+					if(!ON_COOLDOWN(M, "mobAI_overran_warning", 30 SECONDS))
+						logTheThing(LOG_DEBUG, "mobAI process", "The mob [constructTarget(M)] overran while processing its AI, and will be skipped for one tick. You should probably check why it's slow. AI = [M.ai] AI task = [M.ai?.current_task]")
 					continue
 
 				SPAWN(0)
