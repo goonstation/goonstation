@@ -221,7 +221,6 @@
 		slow_process = 0
 
 	for(var/datum/gang/G in gangs)
-
 		if (G.leader)
 			var/mob/living/carbon/human/H = G.leader.current
 			if (istype(H))
@@ -988,13 +987,9 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 	name = "Gang Closet"
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
-	density = 1
+	density = 0
 	anchored = 1
 	var/datum/gang/gang = null
-	var/max_health = 200
-	var/health = 200
-	var/damage_warning_timeout = 0
-	var/broken = 0
 	var/image/default_screen_overlay = null
 	var/HTML = null
 	var/list/buyable_items = list()
@@ -1004,44 +999,25 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
+			new/datum/gang_item/consumable/medkit,
+			new/datum/gang_item/consumable/quickhack,
+			new/datum/gang_item/misc/janktank,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/sneaking_suit,
-			new/datum/gang_item/space/phaser_gun,
-			new/datum/gang_item/space/laser_gun,
-
-			new/datum/gang_item/country_western/colt_saa,
-			new/datum/gang_item/country_western/colt_45_bullet,
-
+			new/datum/gang_item/ninja/discount_katana,
+			//new/datum/gang_item/space/phaser_gun,
+			//new/datum/gang_item/space/laser_gun,
 			new/datum/gang_item/space/discount_csaber,
 			// new/datum/gang_item/space/csaber,
-			new/datum/gang_item/ninja/discount_katana,
 			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
 
-			new/datum/gang_item/misc/janktank,
 			new/datum/gang_item/space/stims)
 
 	examine()
 		. = ..()
-
-		if(health == 0)
-			. += "It is completely destroyed!"
-			return
-
-		switch(round(100*health/max_health))
-			if(1 to 25)
-				. += "It is almost destroyed!"
-			if(26 to 50)
-				. += "It is badly damaged!"
-			if(51 to 75)
-				. += "It is somewhat damaged."
-			if(76 to 99)
-				. += "It is slightly damaged."
-			if(100)
-				. += "It is undamaged."
-
 		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
 	attack_hand(var/mob/living/carbon/human/user)
@@ -1050,10 +1026,6 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			return
 
 		add_fingerprint(user)
-
-		if(health == 0)
-			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
-			return
 
 		// if (!src.HTML)
 		src.generate_HTML()
@@ -1149,10 +1121,6 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	update_icon()
-		if(health <= 0)
-			src.UpdateOverlays(null, "light")
-			src.UpdateOverlays(null, "screen")
-			return
 
 		src.UpdateOverlays(default_screen_overlay, "screen")
 
@@ -1195,10 +1163,9 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		//cash score
 		if (istype(item, /obj/item/spacecash))
 			var/obj/item/spacecash/S = item
-			if (S.amount > 500)
-				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
+			if (S.amount > 10000)
+				boutput(user, "<span class='alert'><b>You can't physically cram more than 10,000[CREDIT_SIGN] into the [src.name] at once!<b></span>")
 				return 0
-
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
 			gang.spendable_points += round(S.amount/CASH_DIVISOR)
 
@@ -1261,53 +1228,9 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 
 		return round(number) //no point rounding it really but fuck it
 
-	proc/take_damage(var/amount)
-		health = max(0,health-amount)
-
-		//alert owning gang
-		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
-			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
-			damage_warning_timeout = 1
-			SPAWN(1 MINUTE)
-				damage_warning_timeout = 0
-
-		if(health <= 0)
-			break_open()
-			if(istype(ticker.mode,/datum/game_mode/gang))
-				gang.spendable_points = round(gang.spendable_points*0.8)
-				ticker.mode:broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!",src.gang)
-			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!<b></span>")
-
-	proc/repair_damage(var/amount)
-		health = min(200,health+amount)
-		if(health > 0 && broken == 1)
-			repair_broken()
-			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!<b></span>")
-
-	ex_act(severity)
-		take_damage(250-50*severity)
-		return
-
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			user.lastattacked = src
-
-			if(health == max_health)
-				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
-				return
-
-			if(W:try_weld(user, 4))
-				repair_damage(20)
-				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
-				return
-
-		if (health <= 0)
-			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
-			return
-
 		if (W.cant_drop)
 			return
-
 
 		//kidnapping event here
 		//if they're the target
@@ -1359,13 +1282,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			return
 
 		user.lastattacked = src
-
-		switch(W.hit_type)
-			if (DAMAGE_BURN)
-				user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
-			else
-				take_damage(W.force)
-				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!<b></span>")
+		user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
@@ -1383,26 +1300,6 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			if (user.loc != staystill) break
 
 		boutput(user, "<span class='notice'>You finish filling the [src]!</span>")
-
-	proc/break_open()
-		broken = 1
-		set_density(0)
-		for(var/obj/O in contents)
-			O.set_loc(src.loc)
-
-		icon_state = "secure-open"
-		UpdateIcon()
-
-		return
-
-	proc/repair_broken()
-		broken = 0
-		set_density(1)
-		icon_state = "gang"
-
-		UpdateIcon()
-
-		return
 
 /obj/item/gang_flyer
 	desc = "A gang recruitment flyer."
@@ -1527,6 +1424,63 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		src.gang.leader.current?.antagonist_overlay_refresh(1, 0)
 
 		return
+
+/obj/item/tool/quickhack
+	name = "QuickHack"
+	desc = "A highly illegal, disposable device can fake an AI's 'open' signal to a door a few times."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "hack"
+	amount = 1
+	throwforce = 1
+	force = 1
+	w_class = W_CLASS_TINY
+	var/max_charges = 5
+	var/charges = 5
+
+	New()
+		..()
+
+	update_icon()
+		var/perc
+		if (src.max_charges >= src.charges > 0)
+			perc = (src.charges / src.max_charges) * 100
+		else
+			perc = 0
+		src.overlays = null
+		switch(perc)
+			if (-INFINITY to 0)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter0")
+			if (1 to 24)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter1")
+			if (25 to 49)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter2")
+			if (50 to 74)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter3")
+			if (75 to 99)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter4")
+			if (100 to INFINITY)
+				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
+		signal_event("icon_updated")
+
+	afterattack(obj/O, mob/user)
+		if (istype(O, /obj/machinery/door/airlock))
+			if (charges == 0)
+				boutput(user, "<span class='alert'>The [src.name] doesn't react. Must be out of charges.</span>")
+				return
+			var/obj/machinery/door/airlock/AL = O
+			if (!AL.hardened && !AL.cant_emag)
+				actions.start(new /datum/action/bar/icon/doorhack(user, AL, src),user)
+
+	proc/force_open(mob/user, obj/machinery/door/airlock/A)
+		if (A.canAIControl())
+			if (A.open())
+				src.charges--
+				boutput(user, "<span class='alert'>The [src.name] beeps!</span>")
+			else
+				boutput(user, "<span class='alert'>The [src.name] buzzes. Maybe something's wrong with the door?</span>")
+		else
+			boutput(user, "<span class='alert'>The [src.name] fizzles and hisses angrily!</span>")
+		update_icon()
 
 /obj/item/storage/box/gang_flyers
 	name = "gang recruitment flyer case"
@@ -1709,6 +1663,8 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	class1 = "Space Gang"
 /datum/gang_item/misc
 	class1 = "Misc Gang"
+/datum/gang_item/consumable
+	class1 = "Consumable"
 
 /datum/gang_item/misc/ratstick
 	name = "Rat Stick"
@@ -1804,7 +1760,6 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	price = 1000
 	// item_path = /obj/item/nunchucks
 
-
 /datum/gang_item/ninja/sneaking_suit
 	name = "Sneaking Suit"
 	desc = "Become the shadows."
@@ -1892,6 +1847,31 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	class2 = "drug"
 	price = 300
 	item_path = /obj/item/implanter/gang
+
+////////////////////////////////////////////////////////
+/////////////CONSUMABLES////////////////////////////
+/////////////////////////////////////////////////////////
+/datum/gang_item/consumable/medkit
+	name = "First Aid Kit"
+	desc = "A set of medicines for those expecting to be beaten up."
+	class2 = "Healing"
+	price = 500
+	item_path = /obj/item/storage/firstaid/regular
+
+/datum/gang_item/consumable/quickhack
+	name = "Doorjack"
+	desc = "A highly illegal tool able to doors 5 times."
+	class2 = "Tools"
+	price = 500
+	item_path = /obj/item/tool/quickhack
+
+/datum/gang_item/consumable/quickhack
+	name = "Doorjack"
+	desc = "A highly illegal tool able to break into doors 5 times."
+	class2 = "Tools"
+	price = 500
+	item_path = /obj/item/tool/quickhack
+
 
 //////////////////////////////////////////////////////////
 /obj/item/implant/gang

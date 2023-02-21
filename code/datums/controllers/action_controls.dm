@@ -1190,6 +1190,42 @@ var/datum/action_controller/actions
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
 
+
+
+/datum/action/bar/icon/doorhack
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "hack"
+	id = "quickhacking"
+	var/maximum_range = 1
+	var/obj/machinery/door/airlock/target
+	var/obj/item/tool/quickhack/hack
+
+	New(Owner, Target, Hack)
+		owner = Owner
+		target = Target
+		hack = Hack
+		..()
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You press the [src.hack.name] against the [src.target.name]...</span>")
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		hack.force_open(owner, target)
+
+
+
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1312,7 +1348,6 @@ var/datum/action_controller/actions
 				for(var/mob/O in AIviewers(H))
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
-
 
 /datum/action/bar/private/welding
 	duration = 2 SECONDS
