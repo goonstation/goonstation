@@ -26,16 +26,15 @@
 	var/retaliate = FALSE
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(isdead(src) && issawingtool(W))
+		if(!isdead(src))
+			retaliate()
+			return ..()
+		if(issawingtool(W))
 			if(user.zone_sel.selecting == "l_arm")
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
-				return
 			else if (user.zone_sel.selecting == "r_arm")
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
-				return
 			else return ..()
-		retaliate(user)
-		..()
 
 	attack_hand(var/mob/user as mob)
 		if (user.a_intent != INTENT_HELP) // pets only or you get the claws, but you would get those anyway so...
@@ -44,7 +43,7 @@
 
 	on_pet()
 		if (..())
-			return 1
+			return TRUE
 		if (prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
@@ -140,10 +139,8 @@
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
 		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(40))
 			frenzy.handleCast(target)
-			return
 		else if (issilicon(target) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
 			fuck_up_silicons(target)
-			return
 		else
 			return ..()
 
@@ -207,7 +204,6 @@
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		if (!fadeout.disabled && fadeout.cooldowncheck())
 			fadeout.handleCast(src)
-			return
 
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
