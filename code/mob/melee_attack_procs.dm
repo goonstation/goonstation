@@ -1034,6 +1034,7 @@
 							for (var/datum/mind/M in target)
 								if (M.current)
 									M.current.changeStatus("newcause", 5 SECONDS)
+									M.current.delStatus("derevving") //Make sure they lose this status upon completion
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 		clear(null)

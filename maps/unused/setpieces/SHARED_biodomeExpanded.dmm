@@ -542,7 +542,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -820,7 +820,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "aWi" = (
-/obj/critter/zombie/hogan,
+/obj/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -6907,7 +6907,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"

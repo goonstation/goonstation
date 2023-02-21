@@ -97,12 +97,13 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-It is likely that when you cloned your github repository, this upstream remote was already set up for you. If that's the case, you can skip adding the remote, and move straight to setting your local master to track the master branch.
+It is likely that when you cloned your github repository, this upstream remote was already set up for you. If that's the case, you can skip **adding the remote**, and move straight to setting your local master to track the master branch.
 
-If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+**Adding the remote:** If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
-It's useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
+It's also useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this, press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
 ```
+git fetch upstream
 git checkout master
 git branch -u upstream/master
 ```
