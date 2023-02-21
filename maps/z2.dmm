@@ -66914,7 +66914,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTN" = (
-/obj/critter/zombie/hogan,
+/obj/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
