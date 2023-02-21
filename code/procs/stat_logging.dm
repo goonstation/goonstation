@@ -190,10 +190,10 @@
 						message["success"] = 1
 			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
-				for(var/stolen_item_name in M.spy_stolen_items)
-					if (stolen_item_name != "")
-						special += stolen_item_name
-						special += ", "
+				var/datum/antagonist/spy_thief/antag_role = M.get_antagonist(ROLE_SPY_THIEF)
+				for(var/obj/stolen_item in antag_role.stolen_items)
+					if (stolen_item.name != "")
+						special += "[stolen_item.name], "
 
 		message["special"] = special
 

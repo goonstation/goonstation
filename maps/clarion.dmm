@@ -25821,7 +25821,7 @@
 /area/listeningpost)
 "bLz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLC" = (
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -25845,7 +25845,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLG" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/swat,
@@ -25853,12 +25853,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLH" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLI" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
@@ -25883,13 +25883,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLM" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLN" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -25898,7 +25898,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLO" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -25926,7 +25926,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bLU" = (
 /turf/space,
 /area/supply/spawn_point)

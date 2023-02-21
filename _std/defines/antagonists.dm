@@ -5,3 +5,4 @@
 #define ANTAGONIST_SOURCE_RANDOM_EVENT "random event "
 #define ANTAGONIST_SOURCE_ADMIN "admin-created "
 #define ANTAGONIST_SOURCE_MUTANT "antag-mutantrace "
+#define ANTAGONIST_SOURCE_SUMMONED "antag-summoned "

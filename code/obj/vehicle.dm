@@ -1006,11 +1006,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
-	for (var/mob/living/carbon/human/H in src)
-		if (H.sims)
-			H.sims.affectMotive("fun", 1)
-			H.sims.affectMotive("Hunger", 1)
-			H.sims.affectMotive("Thirst", 1)
+	for (var/mob/living/L in src)
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+				H.sims.affectMotive("Hunger", 1)
+				H.sims.affectMotive("Thirst", 1)
 	icon_state = second_icon
 	moving = 1
 	if(!(world.timeofday - src.antispam <= 60))
@@ -1028,7 +1030,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M)
+/obj/vehicle/clowncar/attack_hand(mob/living/M)
 	if(!M)
 		..()
 		return
@@ -1038,73 +1040,35 @@ TYPEINFO(/obj/vehicle/clowncar)
 			..()
 			return
 
-	if(M.is_hulk())
-		if(prob(40))
-			boutput(M, "<span class='alert'><B>You smash the puny [src] apart!</B></span>")
-			playsound(src, "shatter", 70, 1)
-			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-
-			for(var/mob/N in AIviewers(M, null))
-				if(N == M)
-					continue
-				N.show_message(text("<span class='alert'><B>[] smashes the [] apart!</B></span>", M, src), 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	if(rider && prob(40))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+		src.visible_message("<span class='alert'><B>[M] has pulled [rider] out of the [src]!</B></span>")
+		if (!rider.hasStatus("weakened"))
+			rider.changeStatus("weakened", 2 SECONDS)
+			rider.force_laydown_standup()
+		eject_rider(0, 0, 0)
+	else
+		if(src.contents.len)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+			src.visible_message("<span class='alert'><B>[M] opens up the [src], spilling the contents out!</B></span>")
 			for(var/atom/A in src.contents)
 				if(ismob(A))
-					if (A != src.rider) // Rider log is called by disposing().
-						src.log_me(src.rider, A, "pax_exit")
 					var/mob/N = A
-					N.show_message(text("<span class='alert'><B>[] smashes the [] apart!</B></span>", M, src), 1)
-					N.set_loc(src.loc)
+					if (N != src.rider)
+						src.log_me(src.rider, N, "pax_exit")
+						N.show_message(text("<span class='alert'><B>You are let out of the [] by []!</B></span>", src, M), 1)
+						N.set_loc(src.loc)
+					else
+						N.changeStatus("weakened", 2 SECONDS)
+						src.eject_rider()
 				else if (isobj(A))
 					var/obj/O = A
 					O.set_loc(src.loc)
-			var/obj/item/scrap/S = new
-			S.size = 4
-			S.update()
-			qdel(src)
 		else
-			boutput(M, "<span class='alert'><B>You punch the puny [src]!</B></span>")
-			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			for(var/mob/N in AIviewers(M, null))
-				if(N == M)
-					continue
-				N.show_message(text("<span class='alert'><B>[] punches the []!</B></span>", M, src), 1)
-			for(var/atom/A in src.contents)
-				if(ismob(A))
-					var/mob/N = A
-					N.show_message(text("<span class='alert'><B>[] punches the []!</B></span>", M, src), 1)
-	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
-		if(rider && prob(40))
-			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message("<span class='alert'><B>[M] has pulled [rider] out of the [src]!</B></span>")
-			if (!rider.hasStatus("weakened"))
-				rider.changeStatus("weakened", 2 SECONDS)
-				rider.force_laydown_standup()
-			eject_rider(0, 0, 0)
-		else
-			if(src.contents.len)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><B>[M] opens up the [src], spilling the contents out!</B></span>")
-				for(var/atom/A in src.contents)
-					if(ismob(A))
-						var/mob/N = A
-						if (N != src.rider)
-							src.log_me(src.rider, N, "pax_exit")
-							N.show_message(text("<span class='alert'><B>You are let out of the [] by []!</B></span>", src, M), 1)
-							N.set_loc(src.loc)
-						else
-							N.changeStatus("weakened", 2 SECONDS)
-							src.eject_rider()
-					else if (isobj(A))
-						var/obj/O = A
-						O.set_loc(src.loc)
-			else
-				boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
-				return
-	return
+			boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
 
-/obj/vehicle/clowncar/MouseDrop_T(mob/living/carbon/human/target, mob/user)
+/obj/vehicle/clowncar/MouseDrop_T(mob/living/target, mob/user)
 	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
 		return
 
@@ -1131,7 +1095,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
 		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
-	else if(target != user && !user.restrained() && target.lying)
+	else if(target != user && !user.restrained() && is_incapacitated(target))
 		target.set_loc(src)
 		src.log_me(user, target, "pax_enter", 1)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
@@ -1356,7 +1320,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/carbon/human/target, mob/user)
+/obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/target, mob/user)
 	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
@@ -1515,7 +1479,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			layer = 3
 	return
 
-/obj/vehicle/cat/MouseDrop_T(mob/living/carbon/human/target, mob/user)
+/obj/vehicle/cat/MouseDrop_T(mob/living/target, mob/user)
 	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
 		return
 
