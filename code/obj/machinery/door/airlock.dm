@@ -637,10 +637,10 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	layer = EFFECTS_LAYER_UNDER_1
 	. = ..()
 
-/obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(mob/user)
+/obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(atom/movable/AM)
 	if (src.density)
 		src.autoclose = TRUE
-	..(user)
+	..()
 
 /obj/machinery/door/airlock/pyro/glass/windoor/attack_hand(mob/user)
 	if (src.density)

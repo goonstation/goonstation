@@ -57,7 +57,6 @@ TYPEINFO(/datum/component/power_cell)
 		if(isnum_safe(rechargable))
 			src.can_be_recharged = rechargable
 
-
 /datum/component/power_cell/proc/attackby(source, obj/item/I, mob/user)
 	SEND_SIGNAL(I, COMSIG_CELL_TRY_SWAP, parent, user)
 
@@ -123,3 +122,58 @@ TYPEINFO(/datum/component/power_cell)
 	else
 		src.recharge_rate = src.original_rate/2
 	..()
+
+/datum/component/power_cell/redirect
+	var/target_type = null
+	var/obj/item/redirect_object = null
+	var/parent_locked = FALSE
+
+/datum/component/power_cell/redirect/Initialize(max, start_charge, recharge, delay, rechargable)
+	. = ..( )
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/update_redirect)
+	processing_items |= parent
+
+/datum/component/power_cell/redirect/can_charge(parent)
+	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_CAN_CHARGE)
+
+/datum/component/power_cell/redirect/use(parent, amount)
+	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_USE, amount)
+
+/datum/component/power_cell/redirect/check_charge(source, amount)
+	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_CHECK_CHARGE, amount)
+
+/datum/component/power_cell/redirect/proc/connect(obj/item/parent, atom/target, mob/user, reach, params)
+	if(istype(target, target_type))
+		redirect_object = target
+		RegisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/check_redirect)
+		boutput(user,"You connect [parent] to [target].")
+
+/datum/component/power_cell/redirect/proc/update_redirect(atom/movable/target, previous_loc, direction)
+	if(istype(parent, /obj/item/ammo/power_cell/redirect))
+		var/obj/item/ammo/power_cell/redirect/cell = parent
+		target_type = cell.target_type
+
+		if(!cell.internal && !parent_locked)
+			parent_locked = TRUE
+			RegisterSignal(cell.loc, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/check_redirect)
+			RegisterSignal(cell.loc, COMSIG_ITEM_AFTERATTACK, .proc/connect)
+
+		var/obj/O = parent
+		while(istype(O) && !istype(O, target_type))
+			O = O.loc
+		if(istype(O, target_type))
+			redirect_object = O
+		else if(cell.internal)
+			CRASH("Target Not Found Internal Power Cell Redirect")
+	else
+		CRASH("[parent] is not /obj/item/ammo/power_cell/redirect")
+
+/datum/component/power_cell/redirect/proc/check_redirect(atom/movable/target, previous_loc, direction)
+	if(redirect_object && (BOUNDS_DIST(parent, src.redirect_object) >= 1))
+		var/obj/item/ammo/power_cell/redirect/cell = parent
+		target.visible_message("[cell.loc]'s connection to [src.redirect_object] reaches the end of the cable... and pops free.")
+		UnregisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+		redirect_object = null

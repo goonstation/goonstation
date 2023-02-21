@@ -1,5 +1,155 @@
-
+(t)sun feb 19 23
+(u)Cogwerks
+(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
+(u)Flappybat
+(*)The Donut 3 morgue now has blinds, a lightswitch and a solid door to enable crime like most other morgues.
+(t)sat feb 18 23
+(u)Sord
+(*)Captain now requires 30 rounds played to be selected on all servers.
+(u)Wisemonster
+(p)13071
+(e)💅⏰|C-QoL, A-Status-Effects
+(+)Being actively de-revved by a loyalty implant will now display a status effect.
+(u)Cherman0
+(p)12620
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a second bathroom to Donut3, by the bar.
+(u)Shiiba
+(p)12821
+(e)🎨|C-Sprites
+(*)Adds the paper folding option for cigarette packets, make your own customs joints and cigs today!
+(t)fri feb 17 23
+(u)aloe
+(+)The clown car can now fit people who are stunned but not lying down, and can fit non-human creatures (including borgs).
+(u)Kubius
+(p)12687
+(e)🆕⚖🔄📦🌠|C-Feature, C-Balance, C-Rework, A-Game-Objects, A-Events
+(*)Spatial interdictor mass radiation protection no longer scales with protected individual count, and should reliably weather a whole storm if external power's good.
+(*)Spatial interdictors also no longer require a wire beneath them to initialize, but can't initialize in range of another active interdictor.
+(+)Spatial interdictors ALSO also can now be emagged (removes access requirement), don't need a soldering iron for assembly anymore (securing wires is now done by screwing down wire terminals), and their electrical draw under low use has been cut down a bit.
+(t)wed feb 15 23
+(u)Sord
+(e)📦|A-Game-Objects
+(*)Transport shuttle computers (Diner shuttle, research shuttle) now play a sound when the shuttle is moving.
+(u)Tanker
+(p)12835
+(e)🎨📦🌱|C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Added a mustard plant. Grow some for the chef's mustard cake.
+(u)Piesuu
+(p)12990
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Nanotrasen Commanders are now entitled to a special headset, worthy of their rank.
+(t)tue feb 14 23
+(u)Gannets
+(p)13080
+(e)🪲|C-Bug
+(+)9mm bullets now correctly leave 9mm shrapnel, instead of .22
+(u)Wisemonster
+(p)13074
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a warp beacon for cog1's catering hanger.
+(u)Munien
+(p)13029
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Audio logs and tapes are now printable from science fabricators.
+(u)LeahTheTech
+(*)The chance to pick the mixed (action) gamemode has been increased, with changeling, vampire, and arcfiend being lowered to compensate.
+(+)Major threat antags (Blob, Flock and Wraith) are now less common in mixed.
+(t)mon feb 13 23
+(u)Sord
+(+)Donut 2 now has another shower off the side of the pool.
+(+)Nukie armor is now fairly radiation resistant.
+(u)Flappybat
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 30 to 35 crew. RP scaling unchanged.
+(t)sun feb 12 23
+(u)LeahTheTech
+(+)Flockminds now have one less pity respawn (3 -> 2 lives aka one actual respawn).
+(t)fri feb 10 23
+(u)LeahTheTech
+(p)12736
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The flock relay will now automatically realize when the flock reaches 500 compute. See minor changes for details.
+(+)The relay will appear as a ghostly outline at 300 compute, hovering around the centerpoint of the flock's feathertiles and growing more solid as the flock gains compute. Upon reaching 500 compute it will become fully real and activate in the usual way, destroying anything unfortunate enough to be caught underneath it.
+(u)Wisemonster
+(p)13020
+(e)🗺💅|A-Mapping, C-QoL
+(+)The space diner's parking lots now have atmos door shields
+(u)Kubius
+(p)13025
+(e)🆕🗺|C-Feature, A-Mapping
+(+)A familiar alien vessel has sufficiently fortified itself to reach the Nadir Extraction Site, albeit a bit worse for the wear. It's come to rest by the northern pit face.
+(u)Roddy
+(p)12960
+(e)💅🎩|C-QoL, A-Clothing
+(+)Adds in a Wedding Crate to the QM.
+(u)BatElite
+(p)12971
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Restored search and category filter functions to manufacturers
+(u)LeahTheTech
+(*)Reworked flock radio stun burst ability to be a point and click smaller AOE instead of a screen spanning one and increased the cooldown to 30s.
+(t)thu feb 09 23
+(u)aloe
+(+)Sleepers (the medbay ones) now eject dead people. The port-a-med doesn't.
+(u)LeahTheTech
+(+)Radstorms now inflict a lower radiation dosage per tick. (average of 0.25sv reduced to an average of 0.15sv per life tick).
+(t)wed feb 08 23
+(u)Cherman0
+(p)12710
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)Added MULE support to Atlas, with one in cargo.
+(u)Sord
+(e)📦|A-Game-Objects
+(*)Disassembling a table now requires you to be on harm intent.
+(u)LeahTheTech
+(p)13010
+(e)⚖|C-Balance
+(*)Joining the round as an observer no longer sets DNR, observers can get respawn events but other ghosts will be prioritized over them. Observers can also once again respawn on RP.
+(u)Wisemonster
+(p)12980
+(e)🗺💅|A-Mapping, C-QoL
+(+)The radio station pod bay doors now come with atmos shields.
+(u)KolisDumb, DeadMan164
+(p)12984
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a foam dart shotgun to the loot crate item pool.
+(u)gabringis
+(p)12914
+(e)🪲📄|C-Bug, A-UI
+(+)custom emotes with quotes and other characters no longer show up as escaped HTML characters
+(u)Piesuu
+(p)12998
+(e)📦|A-Game-Objects
+(+)Nanotrasen has restocked all snack vending machines with nougat bars.
+(u)Flaborized
+(p)12790
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(+)Added unique sprites for many construct-able things made out of mauxite sheets, for that industrial warehouse look. Includes walls, floors, tables, and chairs. Go build stuff with it! Mind the rust.
+(u)DrWolfy
+(p)12855
+(e)🆕💊|C-Feature, A-Medical
+(+)A genebooth info PDA program for Geneticists has been added.
+(u)LeahTheTech
+(*)Flockdrones are now affected by EMPs.
+(+)Mob critters can now be flung by pulse rifles.
+(t)mon feb 06 23
+(u)Piesuu
+(p)12989
+(e)📦|A-Game-Objects
+(+)The HoP's headset no longer hints towards the HoP being capable of listening in on security communications.
 (t)sun feb 05 23
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new mechanics component that you can count on. It counts things. It's a counter. No more feedback-loop arithmatic chains!
+(+)Sliiiiiiightly tweaked the meteor shower event. Just a little. Fun for admins too.
+(u)BatElite
+(p)12978
+(e)🪲|C-Bug
+(+)Deconstructing roundstart walls no longer generates gaps in the station's atmosphere, so remodeling projects are more viable.
+(u)DisturbHerb
+(p)12791
+(e)🆕🗺⛔|C-Feature, A-Mapping, C-Removal
+(*)Cogmap 1's Pathology Lab has been replaced by a wing containing a Psychiatrist's Office and Podbay.
 (u)Lord_Earthfire
 (p)12977
 (e)|
