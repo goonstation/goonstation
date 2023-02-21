@@ -27900,7 +27900,6 @@
 "bzu" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	pixel_y = 32;
 	starts_established = 1
 	},
@@ -27914,7 +27913,6 @@
 "bzy" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	pixel_y = 32
 	},
 /obj/decal/stripe_caution,
@@ -28621,7 +28619,6 @@
 "bBp" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32;
 	starts_established = 1
@@ -30919,7 +30916,6 @@
 "bIY" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32
 	},
@@ -47981,13 +47977,16 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cPW" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "cRc" = (
@@ -49166,10 +49165,10 @@
 	name = "Catering Hangar"
 	})
 "eir" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "eiP" = (
@@ -53098,10 +53097,13 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "iPK" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "iPM" = (
@@ -55802,10 +55804,10 @@
 	},
 /area/station/hydroponics/bay)
 "muh" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "muz" = (
@@ -63302,9 +63304,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
-	icon_state = "camera";
 	name = "autoname - SS13";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/simulated/floor/bluewhite{
@@ -64905,10 +64905,11 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wKl" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
+/obj/cable,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "wNC" = (
