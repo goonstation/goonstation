@@ -103,6 +103,7 @@
 		F["[profileNum]_be_blob"] << src.be_blob
 		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
+		F["[profileNum]_be_salvager"] << src.be_salvager
 		F["[profileNum]_be_misc"] << src.be_misc
 
 		// UI settings. Ehhhhh.
@@ -294,6 +295,7 @@
 		F["[profileNum]_be_blob"] >> src.be_blob
 		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
+		F["[profileNum]_be_salvager"] >> src.be_salvager
 		F["[profileNum]_be_misc"] >> src.be_misc
 
 		// UI settings...

@@ -1,4 +1,77 @@
 
+(t)mon feb 20 23
+(u)Caio029
+(p)13134
+(e)🆕⚖|C-Feature, C-Balance
+(+)Bible beatings from the Chaplain can now burn thralls as well.
+(t)sun feb 19 23
+(u)Azrun
+(*)Beware the Salvagers!  They want your stuff! (Update your preferences accordingly.)
+(u)Cogwerks
+(*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
+(u)Flappybat
+(*)The Donut 3 morgue now has blinds, a lightswitch and a solid door to enable crime like most other morgues.
+(t)sat feb 18 23
+(u)Sord
+(*)Captain now requires 30 rounds played to be selected on all servers.
+(u)Wisemonster
+(p)13071
+(e)💅⏰|C-QoL, A-Status-Effects
+(+)Being actively de-revved by a loyalty implant will now display a status effect.
+(u)Cherman0
+(p)12620
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a second bathroom to Donut3, by the bar.
+(u)Shiiba
+(p)12821
+(e)🎨|C-Sprites
+(*)Adds the paper folding option for cigarette packets, make your own customs joints and cigs today!
+(t)fri feb 17 23
+(u)aloe
+(+)The clown car can now fit people who are stunned but not lying down, and can fit non-human creatures (including borgs).
+(u)Kubius
+(p)12687
+(e)🆕⚖🔄📦🌠|C-Feature, C-Balance, C-Rework, A-Game-Objects, A-Events
+(*)Spatial interdictor mass radiation protection no longer scales with protected individual count, and should reliably weather a whole storm if external power's good.
+(*)Spatial interdictors also no longer require a wire beneath them to initialize, but can't initialize in range of another active interdictor.
+(+)Spatial interdictors ALSO also can now be emagged (removes access requirement), don't need a soldering iron for assembly anymore (securing wires is now done by screwing down wire terminals), and their electrical draw under low use has been cut down a bit.
+(t)wed feb 15 23
+(u)Sord
+(e)📦|A-Game-Objects
+(*)Transport shuttle computers (Diner shuttle, research shuttle) now play a sound when the shuttle is moving.
+(u)Tanker
+(p)12835
+(e)🎨📦🌱|C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Added a mustard plant. Grow some for the chef's mustard cake.
+(u)Piesuu
+(p)12990
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Nanotrasen Commanders are now entitled to a special headset, worthy of their rank.
+(t)tue feb 14 23
+(u)Gannets
+(p)13080
+(e)🪲|C-Bug
+(+)9mm bullets now correctly leave 9mm shrapnel, instead of .22
+(u)Wisemonster
+(p)13074
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a warp beacon for cog1's catering hanger.
+(u)Munien
+(p)13029
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Audio logs and tapes are now printable from science fabricators.
+(u)LeahTheTech
+(*)The chance to pick the mixed (action) gamemode has been increased, with changeling, vampire, and arcfiend being lowered to compensate.
+(+)Major threat antags (Blob, Flock and Wraith) are now less common in mixed.
+(t)mon feb 13 23
+(u)Sord
+(+)Donut 2 now has another shower off the side of the pool.
+(+)Nukie armor is now fairly radiation resistant.
+(u)Flappybat
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 30 to 35 crew. RP scaling unchanged.
+(t)sun feb 12 23
+(u)LeahTheTech
+(+)Flockminds now have one less pity respawn (3 -> 2 lives aka one actual respawn).
 (t)fri feb 10 23
 (u)LeahTheTech
 (p)12736

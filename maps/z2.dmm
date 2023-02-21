@@ -59710,13 +59710,13 @@
 	},
 /area/centcom/offices/zewaka)
 "dxu" = (
-/obj/stool/chair/couch/blue{
+/obj/stool/chair/couch/blue/cal{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cal)
 "dxv" = (
-/obj/stool/chair/couch/blue{
+/obj/stool/chair/couch/blue/cal{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
@@ -66914,7 +66914,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTN" = (
-/obj/critter/zombie/hogan,
+/obj/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -77452,10 +77452,10 @@
 /obj/table/flock/auto,
 /obj/item/paper{
 	icon_state = "paper";
+	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>";
 	name = "The secret to Flock balance";
 	pixel_w = 1;
-	pixel_y = -1;
-	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>"
+	pixel_y = -1
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
@@ -78388,8 +78388,8 @@
 	},
 /obj/table/flock/auto,
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_y = -2;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -2
 	},
 /obj/item/clothing/head/NTberet{
 	pixel_x = 8;

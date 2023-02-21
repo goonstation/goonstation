@@ -897,3 +897,51 @@
 				qdel(frame)
 
 			. = TRUE
+
+/obj/item/power_pack
+	name = "battery pack"
+	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
+	icon = 'icons/obj/items/tank.dmi'
+	icon_state = "plasma"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
+	color = "#0000ff"
+	inventory_counter_enabled = 1
+
+	New()
+		. = ..()
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{max_charge = 300; recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=300, swappable=FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (src.inventory_counter)
+			src.inventory_counter.show_count()
+
+/obj/item/power_pack/test
+	New()
+		. = ..()
+		new /obj/item/baton/power_pack(src.loc)
+		new /obj/item/gun/energy/taser_gun/power_pack(src.loc)
+
+/obj/item/ammo/power_cell/redirect/power_pack
+	desc = "A passthrough power cell that has cables to hook directly into a power pack."
+	target_type = /obj/item/power_pack
+
+/obj/item/baton/power_pack
+	desc = "A standard baton with a long cable to hook into a power pack."
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE
+
+/obj/item/gun/energy/taser_gun/power_pack
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE

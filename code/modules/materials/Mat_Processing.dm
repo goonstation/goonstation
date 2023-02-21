@@ -330,7 +330,7 @@ TYPEINFO(/obj/machinery/processor)
 	desc = "A huge furnace-like machine used to combine materials."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "smelter0"
-	anchored = 1
+	anchored = 2
 	bound_height = 96
 	bound_width = 96
 	density = 1

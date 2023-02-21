@@ -147,7 +147,7 @@
 	hand_count = 1
 	var/absorbed_dna = 0
 
-	New()
+	New(loc, obj/item/bodypart)
 		..()
 		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
 		//todo : move to add_abilities list because its cleaner that way
@@ -155,6 +155,10 @@
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
+
+		if (bodypart && istype(bodypart, /obj/item/parts/robot_parts))
+			src.icon_prefix = "robo"
+			src.UpdateIcon()
 
 		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
 		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)

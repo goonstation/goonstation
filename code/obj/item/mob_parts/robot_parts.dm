@@ -895,6 +895,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/obj/item/parts/robot_parts/l_leg = null
 	var/obj/item/parts/robot_parts/r_leg = null
 	var/obj/item/organ/brain/brain = null
+	appearance_flags = KEEP_TOGETHER
 
 	New()
 		..()
@@ -1067,25 +1068,47 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 	update_icon()
-		src.overlays = null
-		if(src.chest) src.overlays += image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, OBJ_LAYER, 2)
-		if(src.head) src.overlays += image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, OBJ_LAYER, 2)
+		if(src.chest)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, FLOAT_LAYER, 2),"chest")
+		else
+			src.UpdateOverlays(null,"chest")
+
+		if(src.head)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
+		else
+			src.UpdateOverlays(null,"head")
 
 		if(src.l_leg)
-			if(src.l_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.l_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+		else
+			src.UpdateOverlays(null,"l_leg")
 
 		if(src.r_leg)
-			if(src.r_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.r_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+		else
+			src.UpdateOverlays(null,"r_leg")
 
 		if(src.l_arm)
-			if(src.l_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.l_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+		else
+			src.UpdateOverlays(null,"l_arm")
 
 		if(src.r_arm)
-			if(src.r_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.r_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+		else
+			src.UpdateOverlays(null,"r_arm")
 
 	proc/check_completion()
 		if (src.chest && src.head)
