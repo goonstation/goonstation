@@ -1,4 +1,29 @@
+
+(t)tue feb 21 23
+(u)Cherman0
+(p)12484
+(e)🔎📄|C-Code-Quality, A-UI
+(+)TGUI-ified the experimental local generator.
+(t)mon feb 21 23
+(u)Azrun
+(e)𓄿|Salvagers
+(+)Salvager Vessel Magpie is less friendly to non-salvagers. ⚡
+(t)mon feb 20 23
+(u)Caio029
+(p)13134
+(e)🆕⚖|C-Feature, C-Balance
+(+)Bible beatings from the Chaplain can now burn thralls as well.
+(u)glowbold
+(p)12496
+(e)⚖|C-Balance
+(*)Power usage has changed for some machines. Details in minor notes.
+(+)Power usage added: AI Law Rack, Coffee Maker, Sec Scanner, Singularity Emitter, Photocopier
+(+)Power usage increased based on use: Chem Dispenser, Airlock-linked force-field, Cyborg Docking Station, Microwave, Glass Recycler
+(+)Power usage decreased: Conveyors only use power when active
 (t)sun feb 19 23
+(u)Azrun
+(e)𓄿|Salvagers
+(*)Beware the Salvagers!  They want your stuff! (Update your preferences accordingly.)
 (u)Cogwerks
 (*)Sarin reagent is now Saxitoxin. Effects and counters remain the same, recipe will be changing shortly.
 (u)Flappybat
