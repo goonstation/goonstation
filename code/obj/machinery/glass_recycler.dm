@@ -47,7 +47,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	name = "glass recycler"//"Kitchenware Recycler"
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "synthesizer"
+	icon_state = "recycler"
 	anchored = 1
 	density = 0
 	var/glass_amt = 0
