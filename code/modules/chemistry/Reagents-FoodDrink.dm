@@ -4573,6 +4573,17 @@ datum
 					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
 
 				..()
+			on_add()
+				if(holder.get_reagent_amount(miasma) > 0)
+					var/LavenderUnits = (holder.get_reagent_amount(lavender_essence)*2) - holder.get_reagent_amount(miasma)
+						if(LavenderUnits > 0)
+							holder.del_reagent(miasma)
+							holder.del_reagent(lavender_essence)
+							holder.add_reagent(holder.lavender_essence, (LavenderUnits/2))
+						if(LavenderUnits < 0)
+							holder.del_reagent(miasma)
+							holder.del_reagent(lavender_essence)
+							holder.add_reagent(holder.miasma, (abs(LavenderUnits)))
 
 		fooddrink/lavenderlatte
 			name = "lavender latte"

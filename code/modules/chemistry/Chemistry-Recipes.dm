@@ -4189,13 +4189,6 @@ datum
 			result_amount = 3
 			mix_phrase = "A strange green goopy liquid forms in the container."
 
-		lavender_essence
-			name = "lavender_essence"
-			id = "lavender_essence"
-			mix_phrase = null
-			mix_sound = null
-			required_reagents = list("lavender_essence" = 1, "miasma" = 2)
-
 		sakuride
 			name = "sakuride"
 			id = "sakuride"
