@@ -3,6 +3,7 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 //fake_wrestler - For the fake wrestling belt, make it so all abilities do no damage or stuns.
+// Remove when omnitraitors are datumised.
 /mob/proc/make_wrestler(var/make_inherent = 0, var/belt_check = 0, var/remove_powers = 0, var/fake_wrestler = 0)
 	if (ishuman(src) || ismobcritter(src))
 		if (ismobcritter(src))
@@ -229,7 +230,6 @@
 			var/mob/living/carbon/human/HH = M
 			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)) && !HAS_ATOM_PROPERTY(M, PROP_MOB_PASSIVE_WRESTLE))
 				boutput(HH, "<span class='alert'>You have to wear the wrestling belt for this.</span>")
-				HH.make_wrestler(0, 1, 1)
 				return 0
 
 		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))

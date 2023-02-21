@@ -959,11 +959,13 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0, fake)
+		user.mind?.add_antagonist(ROLE_WRESTLER, do_equip = FALSE, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
+		var/datum/antagonist/wrestler/antag_role = user.mind?.get_antagonist(ROLE_WRESTLER)
+		antag_role.give_equipment(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1, fake)
+		user.mind?.remove_antagonist(ROLE_WRESTLER)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
