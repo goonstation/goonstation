@@ -103,7 +103,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -113,7 +113,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
@@ -124,7 +124,7 @@
 			reagents_temp.my_atom = POT
 
 			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -186,7 +186,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 5))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -744,3 +744,204 @@
 		unlock()
 			iterations = 0
 			..()
+
+/obj/item/ammo/bullets/pipeshot/web
+	sname = "web load"
+	desc = "This appears to be some sticky webbing shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/bullet/web
+	icon_state = "makeshift_u"
+
+	New()
+		..()
+		var/image/overlay = image(src.icon,"makeshift_o")
+		overlay.color = "#eee"
+		UpdateOverlays(overlay,"overlay")
+
+/datum/pipeshotrecipe/web
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/web
+	accepteditem = /obj/item/material_piece/cloth/spidersilk
+	craftname = "web"
+
+/datum/projectile/bullet/web
+	name = "web slug"
+	icon_state = "acidspit"
+	color_icon = COLOR_MATRIX_GRAYSCALE
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	damage = 0
+	stun = 10
+	dissipation_rate = 5
+	dissipation_delay = 3
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bhole"
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			new /obj/icecube/web(get_turf(M), M)
+
+/obj/icecube/web
+	name = "bundle of web"
+	desc = "A big wad of web. Someone seems to be stuck inside it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "web"
+	health = 10
+	steam_on_death = FALSE
+	add_underlay = FALSE
+
+	New(loc, mob/iced as mob)
+		..()
+		if(iced.rest_mult)
+			icon_state = "web2"
+
+
+/datum/projectile/special/shotchem/shells
+	name = "chemical shot"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	casing = /obj/item/casing/shotgun/pipe
+	max_range = 3
+	damage = 0
+	stun = 10
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+
+	var/list/reagent_ids
+	var/reagent_volume = 10
+	var/chem_pct_app_tile = 0.3
+	var/speed_mult = 1
+	var/smoke_remaining = FALSE
+
+	on_launch(obj/projectile/O)
+		O.create_reagents(reagent_volume)
+		if(islist(reagent_ids))
+			for(var/R in reagent_ids)
+				O.reagents.add_reagent(R, reagent_ids[R])
+
+		O.special_data["speed_mult"] = speed_mult
+		O.special_data["chem_pct_app_tile"] = chem_pct_app_tile
+
+		O.special_data["IS_LIT"] = TRUE
+		O.special_data["burn_temp"]	= 2500 KELVIN
+		O.special_data["temp_pct_loss_atom"] = 0.3
+
+		O.special_data["proj_color"] = O.reagents.get_average_color()
+		O.color = O.reagents.get_average_rgb()
+		. = ..()
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		..()
+		P.die()
+
+	on_end(obj/projectile/O)
+		if(smoke_remaining && O.reagents.total_volume)
+			smoke_reaction(O.reagents, 1, get_turf(O), do_sfx=FALSE)
+
+/obj/item/ammo/bullets/pipeshot/chems
+	sname = "chem load"
+	desc = "This appears to be some chemical soaked wadding shoved into a few cut open pipe frames."
+	icon_state = "makeshift_u"
+	var/color_override = null
+
+	New()
+		..()
+		var/image/overlay = image(src.icon,"makeshift_o")
+		overlay.color = get_chem_color()
+		UpdateOverlays(overlay,"overlay")
+
+	proc/get_chem_color()
+		var/datum/projectile/special/shotchem/shells/S = ammo_type
+		if(color_override)
+			. = color_override
+		else if(istype(S))
+			if(islist(S.reagent_ids))
+				var/datum/reagents/mix = new(100)
+				for(var/R in S.reagent_ids)
+					mix.add_reagent(R, S.reagent_ids[R], donotreact=TRUE)
+				. = mix.get_average_rgb()
+				qdel(mix)
+		if(!.)
+			. = "#ffffff"
+
+/datum/pipeshotrecipe/chem
+	accepteditem = /obj/item/reagent_containers
+	thingsneeded = 4
+	var/list/reagents_req
+	var/reagent_volume = 10
+
+	check_match(obj/item/craftingitem)
+		if(..() && length(reagents_req))
+			var/obj/item/reagent_containers/RC = craftingitem
+			if(RC.is_open_container())
+				var/datum/reagents/R = new(100)
+				RC.reagents.trans_to_direct(R, reagent_volume)
+				. = TRUE
+				for(var/required_reagent in reagents_req)
+					. &&= R.has_reagent(required_reagent, reagents_req[required_reagent])
+				R.trans_to(RC, R.total_volume)
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(check_match(craftingitem, TRUE))
+			var/obj/item/reagent_containers/RC = craftingitem
+			RC.reagents.trans_to(frame, reagent_volume)
+			thingsneeded -= 1
+
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You carefully pour some of [craftingitem] into \the [frame]. You feel like you'll need more to fill all the shells. </span>")
+
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+			. = TRUE
+
+/obj/item/power_pack
+	name = "battery pack"
+	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
+	icon = 'icons/obj/items/tank.dmi'
+	icon_state = "plasma"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
+	color = "#0000ff"
+	inventory_counter_enabled = 1
+
+	New()
+		. = ..()
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{max_charge = 300; recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=300, swappable=FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (src.inventory_counter)
+			src.inventory_counter.show_count()
+
+/obj/item/power_pack/test
+	New()
+		. = ..()
+		new /obj/item/baton/power_pack(src.loc)
+		new /obj/item/gun/energy/taser_gun/power_pack(src.loc)
+
+/obj/item/ammo/power_cell/redirect/power_pack
+	desc = "A passthrough power cell that has cables to hook directly into a power pack."
+	target_type = /obj/item/power_pack
+
+/obj/item/baton/power_pack
+	desc = "A standard baton with a long cable to hook into a power pack."
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE
+
+/obj/item/gun/energy/taser_gun/power_pack
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE

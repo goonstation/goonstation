@@ -198,16 +198,16 @@ datum
 			transparency = 50
 			var/damage_counter = 0
 
-			on_mob_life(var/mob/M, var/mult = 1)
-
-				if (!M) M = holder.my_atom
-				damage_counter += rand(2,4) * mult // RNG rolls moved to accumulation proc for consistency
-
+			on_mob_life(mob/M, mult = 1)
+				if (!M)
+					M = holder.my_atom
+				damage_counter += rand(2, 4) * mult * min(1, volume)
 				..()
 
-			on_mob_life_complete(var/mob/living/M)
+			on_mob_life_complete(mob/living/M)
 				if(M)
-					M.take_toxin_damage(damage_counter + (rand(2,3)))
+					M.take_toxin_damage(damage_counter)
+					logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
 
 
 		harmful/chemilin
@@ -1755,10 +1755,10 @@ datum
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
-		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
-			id = "sarin"
-			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
+		harmful/saxitoxin // formerly: sarin
+			name = "saxitoxin"
+			id = "saxitoxin"
+			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255

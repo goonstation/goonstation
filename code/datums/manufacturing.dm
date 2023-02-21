@@ -1795,6 +1795,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/audiotape
+	name ="Audio Tape"
+	item_paths = list("MET-1")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/audio_tape)
+	time = 4 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/audiolog
+	name ="Audio Log"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,5)
+	item_outputs = list(/obj/item/device/audio_log)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -3090,7 +3108,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
 	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod)
-	time = 20 SECONDS
+	time = 12 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -3099,9 +3117,28 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
 	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
+	time = 15 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_epsilon
+	name = "Epsilon Phase-Control Rod"
+	item_paths = list("MET-2","electrum","DEN-1","POW-1")
+	item_amounts = list(2,10,5,2)
+	item_outputs = list(/obj/item/interdictor_rod/epsilon)
 	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_phi
+	name = "Phi Phase-Control Rod"
+	item_paths = list("MET-2","CRY-1","CON-1")
+	item_amounts = list(5,10,5)
+	item_outputs = list(/obj/item/interdictor_rod/phi)
+	time = 15 SECONDS
+	create = 1
+	category = "Machinery"
+
 
 /************ NADIR RESONATORS ************/
 

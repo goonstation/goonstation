@@ -65,8 +65,11 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
-
+			#ifdef MAP_OVERRIDE_NADIR
+			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#else
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#endif
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
@@ -141,7 +144,7 @@
 			var/datum/mind/lucky_dude = null
 
 			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-				lucky_dude = pick(candidates)
+				lucky_dude = candidates[1]
 				attempts++
 				/*
 				// Latejoin antagonists ignore antag prefs and so should this
@@ -202,7 +205,7 @@
 			var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			var/failed = 0
-
+			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
 					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
@@ -248,32 +251,23 @@
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/carbon/human/R = M3.humanize()
-					if (R && istype(R))
-						M3 = R
-						R.unequip_all(1)
-						equip_wizard(R, 1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
 						send_to = 2
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						SPAWN(0)
-							if (R.gender && R.gender == "female")
-								R.real_name = pick_string_autokey("names/wizard_female.txt")
-							else
-								R.real_name = pick_string_autokey("names/wizard_male.txt")
-							R.choose_name(3, "wizard")
-
 					else
 						failed = 1
 
 				if ("Werewolf")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_werewolf()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WEREWOLF
-						objective_path = /datum/objective_set/werewolf
 					else
 						failed = 1
 
@@ -420,7 +414,6 @@
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.cleanup()
 		return
 

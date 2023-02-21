@@ -371,16 +371,17 @@ TYPEINFO(/obj/machinery/clonepod)
 				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
-		// Remove zombie antag status as zombie race is removed on cloning
-		var/mob/M = src.occupant
-		if (!M?.mind)
-			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
-		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
-			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
-			if (success)
-				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
-			else
-				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+		if (!src.occupant?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
+		else
+			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
+				if (!antag.remove_on_clone)
+					continue
+				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				if (success)
+					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
+				else
+					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [src.occupant] with return code [success].")
 
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
@@ -1166,6 +1167,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.process_timer > 0)
+			return 0
+		if (src.occupant)
+			boutput(user, "<span class='alert'>[src] is full, you can't climb inside!</span>")
 			return 0
 
 		src.visible_message("<span class='alert'><b>[user] climbs into [src] and turns it on!</b></span>")

@@ -53,6 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -87,6 +88,8 @@ TYPEINFO(/obj/machinery/vending)
 	var/last_slogan = 0 //When did we last pitch?
 	var/slogan_delay = 600 //How long until we can pitch again?
 	var/slogan_chance = 5
+	var/slogan_text_alpha = 140
+	var/slogan_text_color = "#C2BEBE"
 
 	//Icons
 	var/icon_panel = "generic-panel"
@@ -152,6 +155,9 @@ TYPEINFO(/obj/machinery/vending)
 		light.set_color(light_r, light_g, light_b)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
+		if (!src.chat_text)
+			src.chat_text = new
+		src.vis_contents += src.chat_text
 	var/lastvend = 0
 
 	disposing()
@@ -846,11 +852,28 @@ TYPEINFO(/obj/machinery/vending)
 	if (!message)
 		return
 
-	for (var/mob/O in hearers(src, null))
+	var/image/chat_maptext/slogan_text
+	var/text_out
+
+	if (istype(src.loc, /turf))
 		if (src.glitchy_slogans)
-			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+			text_out = voidSpeak(message)
 		else
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			text_out = message
+		slogan_text = make_chat_maptext(src, text_out, "color: [src.slogan_text_color];", alpha = src.slogan_text_alpha)
+		if (slogan_text && src.chat_text && length(src.chat_text.lines))
+			slogan_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != slogan_text)
+					I.bump_up(slogan_text.measured_height)
+
+	if (!text_out)
+		return
+
+	if (src.glitchy_slogans)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
+	else
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
 	return
 
@@ -1182,6 +1205,7 @@ TYPEINFO(/obj/machinery/vending)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/nougat, 10, cost=PAY_UNTRAINED/12)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=PAY_UNTRAINED/8)
@@ -1502,6 +1526,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/counter, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/mc14500, 30)

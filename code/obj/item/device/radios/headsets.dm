@@ -26,19 +26,10 @@
 			if (wiretap)
 				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! It doesn't have room for any more!</span>")
 				return
-			src.wiretap = R
 
-			for (var/frequency in R.secure_frequencies)
-				if (!(frequency in src.secure_frequencies))
-					src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
-			for (var/class in R.secure_classes)
-				if (!(class in src.secure_classes))
-					src.secure_classes[class] = R.secure_classes[class]
-
+			src.install_radio_upgrade(R)
 			boutput(user, "<span class='notice'>You install [R] into [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-			set_secure_frequencies(src)
-			R.set_loc(src)
 			user.u_equip(R)
 
 		else if (issnippingtool(O) && wiretap)
@@ -49,13 +40,31 @@
 			boutput(user, "<span class='notice'>You remove [src.wiretap] from [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.put_in_hand_or_drop(src.wiretap)
-			src.wiretap = null
-
-			var/obj/item/device/radio/headset/headset = new src.type
-			src.secure_frequencies = headset.secure_frequencies
-			src.secure_classes = headset.secure_classes
-			set_secure_frequencies(src)
+			src.remove_radio_upgrade()
 		..()
+
+	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
+		if (wiretap)
+			return
+
+		src.wiretap = R
+		for (var/frequency in R.secure_frequencies)
+			if (!(frequency in src.secure_frequencies))
+				src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
+		for (var/class in R.secure_classes)
+			if (!(class in src.secure_classes))
+				src.secure_classes[class] = R.secure_classes[class]
+
+		set_secure_frequencies(src)
+		R.set_loc(src)
+
+	proc/remove_radio_upgrade()
+		src.wiretap = null
+
+		var/obj/item/device/radio/headset/headset = new src.type
+		src.secure_frequencies = headset.secure_frequencies
+		src.secure_classes = headset.secure_classes
+		src.set_secure_frequencies()
 
 /obj/item/device/radio/headset/wizard
 	emp_act()
@@ -190,7 +199,7 @@
 
 /obj/item/device/radio/headset/command/hop
 	name = "head of personnel's headset"
-	desc = "The HoP can listen to the security frequency, but they can't speak on it anymore. Not since the incident."
+	desc = "The HoP cannot listen or speak on the security frequency anymore, not since the incident."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
@@ -399,6 +408,21 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/headset/command/nt/commander
+	name = "\improper NT Commander's headset"
+	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY
+		)
+	icon_override = "ntboss"
+	icon_tooltip = "Nanotrasen Commander"
+
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
@@ -469,6 +493,31 @@
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+
+/obj/item/device/radio/headset/pirate
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	chat_class = RADIOCL_SYNDICATE
+	locked_frequency = TRUE
+	secure_frequencies = list("p" = R_FREQ_PIRATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	protected_radio = 1
+	icon_override = "pirate"
+	icon_tooltip = "Space Pirate"
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			src.frequency = R_FREQ_PIRATE
+
+	first_mate
+		icon_override = "pirate_first_mate"
+		icon_tooltip = "Space Pirate First Mate"
+
+	captain
+		icon_override = "pirate_captain"
+		icon_tooltip = "Space Pirate Captain"
 
 /obj/item/device/radio/headset/deaf
 	name = "auditory headset"

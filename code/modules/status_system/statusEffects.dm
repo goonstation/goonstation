@@ -211,7 +211,7 @@
 		icon_state = "stam+"
 		maxDuration = 9 SECONDS
 		unique = 1
-		change = 8
+		change = 12
 
 		getTooltip()
 			. = "A feeling of invigoration permeates you."
@@ -372,7 +372,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -2397,3 +2397,8 @@
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
 		H.remove_stam_mod_max("recent_trauma")
 
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
+	icon_state = "mindhack"

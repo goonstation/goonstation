@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.0
+        uses: hecrj/setup-rust-action@v1.4.1
 
       - name: Install Dependencies
         run: |
@@ -38,6 +38,7 @@ jobs:
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
+          tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
 
@@ -134,7 +135,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.0
+        uses: hecrj/setup-rust-action@v1.4.1
 
       - name: Install Dependencies
         run: |
@@ -149,6 +150,7 @@ jobs:
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
+          tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
 

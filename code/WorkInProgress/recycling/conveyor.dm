@@ -668,6 +668,7 @@
 
 
 
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 /// the conveyor control switch
 /obj/machinery/conveyor_switch

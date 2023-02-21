@@ -1,5 +1,5 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
-/mob/living/seanceghost
+/mob/living/intangible/seanceghost
 	name = "Seance Ghost"
 	desc = "Ominous hooded figure!"
 	icon = 'icons/obj/zoldorf.dmi'
@@ -16,6 +16,7 @@
 
 	New(var/mob/M)
 		..()
+		invisibility = INVIS_NONE
 
 	is_spacefaring()
 		return 1
@@ -161,7 +162,7 @@
 	if(originalz) //theres different handling for if that previous mob was a zoldorf or not
 		originalg = originalz
 	if (src.mind || src.client)
-		var/mob/living/seanceghost/Z = new/mob/living/seanceghost(src)
+		var/mob/living/intangible/seanceghost/Z = new/mob/living/intangible/seanceghost(src)
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))

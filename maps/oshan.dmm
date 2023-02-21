@@ -178,7 +178,6 @@
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "aaB" = (
 /obj/item/inner_tube/random,
@@ -2506,7 +2505,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "afS" = (
 /obj/cable{
@@ -3663,7 +3662,7 @@
 	name = "Chamber Two Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "aiW" = (
 /obj/item/device/radio/intercom/medical{
@@ -22193,7 +22192,6 @@
 /area/station/hallway/primary/east)
 "bjx" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -26446,7 +26444,7 @@
 	},
 /area/station/bridge)
 "bve" = (
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bvf" = (
@@ -33519,7 +33517,6 @@
 /area/space)
 "bNJ" = (
 /turf/simulated/floor/airless/plating/damaged2,
-/turf/simulated/floor/damaged1,
 /area/space)
 "bNK" = (
 /obj/machinery/vending/standard,

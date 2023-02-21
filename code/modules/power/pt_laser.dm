@@ -7,7 +7,7 @@
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
-	anchored = 1
+	anchored = 2
 	dir = 4
 	bound_height = 96
 	bound_width = 96
