@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Cherman0 (https://github.com/Cherman0)
+ * @license MIT
+ */
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
