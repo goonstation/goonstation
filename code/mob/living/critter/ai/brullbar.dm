@@ -17,8 +17,8 @@
 /datum/aiTask/critter/brullbar/invis/on_tick()
 	var/mob/living/critter/brullbar/C = holder.owner
 	if(length(C.seek_target()) || length(C.seek_scavenge_target()))
-		C.ai.interrupt() //we've seen a target, go eat them
-    	return
+		C.ai.interrupt()
+		return
 	else
 		C.go_invis()
 
