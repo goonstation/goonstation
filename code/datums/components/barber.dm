@@ -64,7 +64,7 @@ TYPEINFO(/datum/component/barber)
 /datum/component/barber
 	var/list/all_hairs = list()
 	var/datum/appearanceHolder/new_AH
-	var/datum/character_preview/preview
+	var/datum/movable_preview/character/preview
 	var/mob/living/carbon/human/barbee
 	var/mob/barber
 	var/hair_portion = "bottom"
@@ -454,9 +454,9 @@ TYPEINFO(/datum/component/barber)
 
 	if (isnull(src.preview))
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + (istype(src, /datum/component/barber/shave) ? "shave" : "cut") // To avoid mixing up preview IDs, we gotta be *really* specific
-		src.preview = new /datum/character_preview(src.barber.client, "barber", preview_id)
-		src.preview.add_background("#242424")
-		src.preview.preview_mob.appearance = src.barbee.appearance
+		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
+		src.preview.add_background("#242424", 2)
+		src.preview.preview_thing.appearance = src.barbee.appearance
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 		// If you're wondering why I'm calling update_apperarance and also copying the appearance var from the barbee, it's because the appearance var copies the clothes and update_appearance copies the modified hair.
 
@@ -488,7 +488,7 @@ TYPEINFO(/datum/component/barber)
 					return // If there's no barber, it's safe to say we've been disposed of
 
 				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-				src.preview.preview_mob.appearance = src.barbee.appearance
+				src.preview.preview_thing.appearance = src.barbee.appearance
 				src.preview.update_appearance(src.new_AH)
 				return TRUE
 
@@ -521,7 +521,7 @@ TYPEINFO(/datum/component/barber)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.preview.preview_mob.appearance = src.barbee.appearance
+			src.preview.preview_thing.appearance = src.barbee.appearance
 			src.preview.update_appearance(src.new_AH)
 			return TRUE
 
@@ -549,7 +549,7 @@ TYPEINFO(/datum/component/barber)
 							src.new_AH.customization_second = new_hairstyle
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
-					src.preview.preview_mob.appearance = src.barbee.appearance
+					src.preview.preview_thing.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
@@ -561,24 +561,23 @@ TYPEINFO(/datum/component/barber)
 						"north" = NORTH
 					)
 
-					src.preview.preview_mob.appearance = src.barbee.appearance
+					src.preview.preview_thing.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-					src.preview.preview_mob.appearance = src.barbee.appearance
+					src.preview.preview_thing.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
 
 /datum/component/barber/ui_status(mob/user, datum/ui_state/state)
-	var/lookup_table = list("0" = UI_CLOSE, "1" = UI_INTERACTIVE)
 	. = user.find_in_hand(src.parent) // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
-	. = . && src.barbee in orange(1, src.barber) // If the previous condition was true, and the barbee is still within barber range, we're good to go.
-	. = lookup_table["[.]"]
+	. = . && (src.barbee in range(1, src.barber)) // If the previous condition was true, and the barbee is still within barber range, we're good to go.
+	. = . ? UI_INTERACTIVE : UI_CLOSE // If, after checking the previous conditions, return is true, then the user can still cut hair. Otherwise, close the window.
 
 /datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
-	src.preview.preview_mob.appearance = null
+	src.preview.preview_thing.appearance = null
 	qdel(src.new_AH)
 	qdel(src.preview)
 	src.new_AH = null
