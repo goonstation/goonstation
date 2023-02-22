@@ -76,25 +76,39 @@ export const PipeDispenser = (props, context) => {
           })}
         </Section>
         {!!mobile && (
-          <Section
-            title="Automatic Pipe Options">
-            <Button
-              color={laying_pipe ? "average" : "green"}
-              content={laying_pipe ? "Stop Laying Pipe Automatically" : "Start Laying Pipe Automatically"}
-              fluid
-              align="center"
-              onClick={() => act('toggle_laying')}
-            />
-            <Button
-              color={removing_pipe ? "average" : "green"}
-              content={removing_pipe ? "Stop Removing Pipe Automatically" : "Start Removing Pipe Automatically"}
-              fluid
-              align="center"
-              onClick={() => act('toggle_removing')}
-            />
-          </Section>
+          <AutoPipeLaying
+            laying_pipe={laying_pipe}
+            removing_pipe={removing_pipe} />
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+export const AutoPipeLaying = (props, context) => {
+  const { act } = useBackend(context);
+  const {
+    laying_pipe,
+    removing_pipe,
+  } = props;
+
+  return (
+    <Section
+      title="Automatic Pipe Options">
+      <Button
+        color={laying_pipe ? "average" : "green"}
+        content={laying_pipe ? "Stop Laying Pipe Automatically" : "Start Laying Pipe Automatically"}
+        fluid
+        align="center"
+        onClick={() => act('toggle_laying')}
+      />
+      <Button
+        color={removing_pipe ? "average" : "green"}
+        content={removing_pipe ? "Stop Removing Pipe Automatically" : "Start Removing Pipe Automatically"}
+        fluid
+        align="center"
+        onClick={() => act('toggle_removing')}
+      />
+    </Section>
   );
 };
