@@ -45,7 +45,7 @@
 	ai_type = /datum/aiHolder/spider
 	is_npc = TRUE
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 1
+	ai_retaliate_patience = 0 //no patience for spiders
 	ai_retaliate_persistence = -2 //spiders kill you so they can eat you
 
 	New()
@@ -191,6 +191,7 @@
 	venom1 = "toxin"
 	venom2 = "black_goop"
 	ai_type = /datum/aiHolder/spider_peaceful
+	ai_retaliate_patience = 2 //some patience for peaceful spiders
 
 /mob/living/critter/spider/baby
 	name = "li'l space spider"
@@ -252,6 +253,7 @@
 
 /mob/living/critter/spider/ice/nice
 	ai_type = /datum/aiHolder/spider_peaceful
+	ai_retaliate_patience = 2 //some patience for peaceful spiders
 
 /mob/living/critter/spider/ice/baby
 	name = "baby ice spider"
@@ -604,3 +606,4 @@
 	adultpath = /mob/living/critter/spider/nice
 	ai_type = /datum/aiHolder/spider_peaceful
 	desc = "It seems pretty friendly. D'aww."
+	ai_retaliate_patience = 2 //some patience for peaceful spiders
