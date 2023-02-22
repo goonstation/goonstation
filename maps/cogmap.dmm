@@ -48661,7 +48661,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/light_switch/west{
-	pixel_y = -9
+	pixel_y = -10
 	},
 /turf/simulated/floor/white,
 /area/station/hangar/medical)
