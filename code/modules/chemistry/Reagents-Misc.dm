@@ -4186,6 +4186,23 @@ datum
 			description = "A low quality blend of chemical agents, water, an aggregate and cement."
 			concrete_strength = 1
 
+		mirabilis
+			name = "mirabilis"
+			id = "mirabilis"
+			fluid_r = 71
+			fluid_g = 159
+			fluid_b = 188
+
+			on_add()
+				src.RegisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED, .proc/analyzed)
+
+			on_remove()
+				src.UnregisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED)
+
+			proc/analyzed(source, mob/user)
+				if (!issilicon(user) && !isAI(user) && !isintangible(user)) //there's probably other things we should exclude here
+					src.holder.trans_to(user, max(1, src.volume))
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."

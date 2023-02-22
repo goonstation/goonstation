@@ -101,6 +101,8 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemHeater", src.name)
@@ -333,7 +335,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if (src.status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
-		
+
 		if (src.beaker && src.beaker == B)
 			return
 
@@ -461,6 +463,8 @@ TYPEINFO(/obj/machinery/chem_master)
 		return TRUE
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemMaster", "Chemical Master 3000")

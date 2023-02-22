@@ -488,6 +488,7 @@
 				if(cloaker.volume >= 5)
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
+			SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
 
 			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
