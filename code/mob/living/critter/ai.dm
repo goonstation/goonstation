@@ -71,6 +71,8 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/switch_to(var/datum/aiTask/task)
+		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
+		//Do not remove unless you understand the implications.
 		SHOULD_NOT_SLEEP(TRUE)
 		current_task = task
 		if(task?.ai_turbo)
@@ -285,6 +287,8 @@ var/list/ai_move_scheduled = list()
 		on_tick()
 
 	proc/reset()
+		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
+		//Do not remove unless you understand the implications.
 		SHOULD_NOT_SLEEP(TRUE)
 		on_reset()
 
