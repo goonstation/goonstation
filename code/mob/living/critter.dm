@@ -1281,7 +1281,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()
 		var/datum/handHolder/HH = get_active_hand()
-		if(HH && HH.limb)
+		if(HH?.limb)
 			return !HH.limb.is_on_cooldown() //if we have limb cooldowns, use that, otherwise use can_act()
 		return can_act(src,TRUE)
 
