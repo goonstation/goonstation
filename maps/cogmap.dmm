@@ -48660,6 +48660,9 @@
 	name = "Medical Hangar Door Control";
 	pixel_x = -24
 	},
+/obj/machinery/light_switch/west{
+	pixel_y = -9
+	},
 /turf/simulated/floor/white,
 /area/station/hangar/medical)
 "dGl" = (
@@ -54894,6 +54897,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "ljM" = (
