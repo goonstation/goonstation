@@ -346,7 +346,11 @@
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
 
 			if (!src.client && !src.ai_active)
-				. += "<br>[src.name] seems to be staring blankly into space."
+				if (find_player(src.last_ckey)?.client) // using vr goggles or something similar
+					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
+				else
+					. += "<br>[src.name] seems to be staring blankly into space."
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)
