@@ -3488,6 +3488,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "red"
 	sanctuary = 1
 
+/area/salvager/space
+	icon_state = "purple"
+
 /area/salvager/lower
 	icon_state = "orange"
 
