@@ -15691,11 +15691,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
-"eDh" = (
-/turf/simulated/wall/auto/jen,
-/area/station/crew_quarters/toilets{
-	name = "North Bathroom"
-	})
 "eDk" = (
 /obj/item/device/radio/intercom/security{
 	pixel_y = 22
@@ -63260,9 +63255,7 @@
 	name = "barkley's basketball"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/crew_quarters/toilets{
-	name = "North Bathroom"
-	})
+/area/station/maintenance/inner/nw)
 "tat" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/elect)
@@ -118761,7 +118754,7 @@ umn
 bjz
 djE
 dcb
-suy
+tJK
 bqD
 bqD
 bqD
@@ -119063,7 +119056,7 @@ nxv
 rOE
 kyu
 fDa
-suy
+tJK
 muI
 muI
 qmr
@@ -119365,7 +119358,7 @@ pFl
 xVR
 mZA
 wmH
-suy
+tJK
 muI
 muI
 muI
@@ -119667,7 +119660,7 @@ ovT
 hqP
 ykn
 dcb
-suy
+tJK
 muI
 muI
 muI
@@ -119969,7 +119962,7 @@ pFl
 sKR
 qrI
 eXi
-suy
+tJK
 suy
 suy
 suy
@@ -120271,7 +120264,7 @@ gWR
 wKi
 vuI
 dLX
-eDh
+tJK
 tal
 nNm
 dZc
