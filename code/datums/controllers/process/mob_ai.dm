@@ -8,6 +8,7 @@ datum/controller/process/mob_ai
 		schedule_interval = 0.2 SECONDS
 
 	doWork()
+		scheck()
 		for(var/X in ai_mobs)
 			var/mob/M = X
 			last_object = X
@@ -27,9 +28,10 @@ datum/controller/process/mob_ai
 
 			if ((ticknum % 30) == 0)
 				//call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
-				if (istype(X, /mob/living) && M.ai?.exclude_from_mobs_list)
+				if (M.ai?.exclude_from_mobs_list && istype(X, /mob/living))
 					var/mob/living/L = X
 					L.Life(src)
+					scheck()
 				//Lightweight mobs get ticked every 6 seconds
 				if(M.mob_flags & LIGHTWEIGHT_AI_MOB)
 					tickme = TRUE
