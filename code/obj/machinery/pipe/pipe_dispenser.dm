@@ -35,13 +35,13 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 /obj/machinery/disposal_pipedispenser/ui_data(mob/user)
 	. = list(
 		"dispenser_ready" = src.dispenser_ready,
-		"windowName" = src.name,
 	)
 
 /obj/machinery/disposal_pipedispenser/ui_static_data(mob/user)
 	. = list(
 		"mobile" = src.mobile,
 		"max_disposal_pipes" = MAX_BUILD_DISPOSAL,
+		"windowName" = src.name,
 	)
 	for (var/disposaltype in availdisposalpipes)
 		.["disposalpipes"] += list(list(
@@ -60,6 +60,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 				return
 			var/p_type = text2num_safe(availdisposalpipes[params["disposal_type"]])
 			if (isnull(p_type))
+				stack_trace("Tried to get ptype of [params["disposal_type"]] but couldn't find it.")
 				return
 			var/amount = clamp(params["amount"], 0, MAX_BUILD_DISPOSAL)
 			var/duration = dispenser_delay * amount

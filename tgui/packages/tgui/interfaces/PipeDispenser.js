@@ -18,15 +18,13 @@ export const PipeDispenser = (props, context) => {
     <Window
       title={windowName}
       width="300"
-      height={mobile ? 330 : 235}
-      fontFamily="Consolas"
-      font-size="10pt">
+      height={mobile ? 330 : 235}>
       <Window.Content scrollable>
         <Section>
           {disposalpipes.map(disposalpipe => {
             return (
               <Flex key={disposalpipe.disposaltype} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
-                <Flex.Item direction="row">
+                <Flex.Item>
                   {disposalpipe.image && (
                     <Box style={{ "overflow": "show", "height": "32px" }}>
                       <img
@@ -34,7 +32,7 @@ export const PipeDispenser = (props, context) => {
                       />
                     </Box>)}
                 </Flex.Item>
-                <Flex.Item direction="row"
+                <Flex.Item
                   grow style={{
                     "display": "flex",
                     "justify-content": "center",
@@ -46,7 +44,7 @@ export const PipeDispenser = (props, context) => {
                     </Box>
                   </Box>
                 </Flex.Item>
-                <Flex.Item direction="row"
+                <Flex.Item
                   style={{
                     "display": "flex",
                     "justify-content": "center",
@@ -59,7 +57,7 @@ export const PipeDispenser = (props, context) => {
                     maxValue={max_disposal_pipes}
                     onChange={(e, value) => setAmount(Math.round(value))} />
                 </Flex.Item>
-                <Flex.Item bold direction="row" style={{
+                <Flex.Item bold style={{
                   "margin-left": "5px",
                   "display": "flex",
                   "justify-content": "center",
@@ -83,15 +81,15 @@ export const PipeDispenser = (props, context) => {
             <Button
               color={laying_pipe ? "average" : "green"}
               content={laying_pipe ? "Stop Laying Pipe Automatically" : "Start Laying Pipe Automatically"}
-              fluid={1}
-              style={{ "text-align": "center", "padding": "0px" }}
+              fluid
+              align="center"
               onClick={() => act('toggle_laying')}
             />
             <Button
               color={removing_pipe ? "average" : "green"}
               content={removing_pipe ? "Stop Removing Pipe Automatically" : "Start Removing Pipe Automatically"}
-              fluid={1}
-              style={{ "text-align": "center", "padding": "0px" }}
+              fluid
+              align="center"
               onClick={() => act('toggle_removing')}
             />
           </Section>
