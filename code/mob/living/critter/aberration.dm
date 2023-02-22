@@ -112,13 +112,20 @@
 		var/datum/healthHolder/Br = src.get_health_holder("brute")
 		Br?.TakeDamage(damage)
 
-	seek_target(range)
-		var/targets = ..(7)
-		for (var/mob/living/carbon/human/H in targets)
-			if (istype(H.head, /obj/item/clothing/head/void_crown))
-				targets -= H
-
-		. = targets
+	seek_target(range = 7)
+		. = list()
+		for (var/mob/living/M in hearers(range, src))
+			if (isintangible(M))
+				continue
+			if (isdead(M))
+				continue
+			if (istype(M, src.type))
+				continue
+			if (istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if (istype(H.head, /obj/item/clothing/head/void_crown))
+					continue
+			. += M
 
 	Cross(atom/movable/mover)
 		if (!istype(mover, /mob))
