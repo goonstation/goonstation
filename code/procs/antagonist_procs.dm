@@ -212,6 +212,7 @@ var/list/roles_to_prefs = list(
 	ROLE_CONSPIRATOR = "be_conspirator",
 	ROLE_ARCFIEND = "be_arcfiend",
 	ROLE_FLOCKMIND = "be_flock",
+	ROLE_SALVAGER = "be_salvager",
 	ROLE_MISC = "be_misc"
 	)
 

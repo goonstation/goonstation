@@ -2925,8 +2925,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) //god fuck this proc
 				if(!M) M = holder.my_atom
 				if (iswizard(M))
-					if(M.reagents.has_reagent("sarin"))
-						M.reagents.remove_reagent("sarin", 5 * mult)
+					if(M.reagents.has_reagent("saxitoxin"))
+						M.reagents.remove_reagent("saxitoxin", 5 * mult)
 				..()
 
 		fooddrink/grease

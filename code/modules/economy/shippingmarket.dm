@@ -450,7 +450,7 @@
 
 
 		#ifdef SECRETS_ENABLED
-		send_to_brazil(sell_crate)
+		send_to_canada_post(sell_crate)
 		#endif
 
 		if(return_handling)
