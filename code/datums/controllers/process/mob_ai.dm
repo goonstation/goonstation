@@ -50,6 +50,8 @@ datum/controller/process/mob_ai
 				if(isliving(M) && M.ai)
 					if(!L.is_npc || !M.ai.enabled)
 						continue
+				else if(!M.ai || !M.ai.enabled)
+					continue
 
 				if(M.ai._mobai_being_processed)
 					M.ai._mobai_being_processed++
