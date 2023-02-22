@@ -45093,7 +45093,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
 "rqc" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 15000
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},

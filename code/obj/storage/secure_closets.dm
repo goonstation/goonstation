@@ -59,12 +59,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			else
 				var/damage
 				var/damage_text
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
-				if (I.force <= 10)
+				if (I.force < 10)
 					damage = round(I.force * 0.6)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
