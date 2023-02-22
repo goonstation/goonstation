@@ -1,5 +1,8 @@
 
 (t)tue feb 21 23
+(u)Zamujasa
+(+)Experimental: Changed solar panels to full speed again, which should smooth out their output. Hopefully. If the game lags a lot, it's my fault. Sorry. Be sure to revert this if it turns out to make the game unplayable.
+(+)Power-generating furances now output 20kW instead of 5kW.
 (u)Cherman0
 (p)12484
 (e)🔎📄|C-Code-Quality, A-UI
