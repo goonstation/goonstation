@@ -46,7 +46,7 @@
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //no patience for spiders
-	ai_retaliate_persistence = -2 //spiders kill you so they can eat you
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD //spiders kill you so they can eat you
 
 	New()
 		..()

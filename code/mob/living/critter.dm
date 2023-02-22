@@ -95,8 +95,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 	////INTERNAL used for mob ai retaliation patience counting
 	var/_ai_patience_count = 2
 	///If the mob has an ai, and is currently retaliating against being attacked, how long should we do that for? (deciseconds)
-	///Special values: 0 = Attack once, -1 = Attack until the target is incapacitated, -2 = Attck until the target is dead
-	var/ai_retaliate_persistence = 0
+	///Special values: RETALIATE_ONCE = Attack once, RETALIATE_UNTIL_INCAP = Attack until the target is incapacitated, RETALIATE_UNTIL_DEAD = Attck until the target is dead
+	var/ai_retaliate_persistence = RETALIATE_ONCE
 
 	blood_id = "blood"
 

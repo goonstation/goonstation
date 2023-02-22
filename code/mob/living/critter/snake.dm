@@ -21,7 +21,7 @@
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
-	ai_retaliate_persistence = -2 //angry snek kills you
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD //angry snek kills you
 
 	//Special behaviour vars
 	var/double = 0
