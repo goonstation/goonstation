@@ -7,6 +7,8 @@
 // If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
+//uncomment to disable safety checks and win conditions to allow for local testing
+// #define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
 /datum/game_mode/revolution
 	name = "Revolution"
 	config_tag = "revolution"
@@ -83,12 +85,13 @@
 /datum/game_mode/revolution/post_setup()
 
 	var/list/heads = get_living_heads()
-
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 	if(!head_revolutionaries || !heads)
 		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
+#endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
@@ -153,6 +156,7 @@
 	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
 
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
@@ -161,6 +165,7 @@
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
+#endif
 
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())
