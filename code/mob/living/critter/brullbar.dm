@@ -138,7 +138,7 @@
 			if (!isdead(M)) continue // eat everything yum
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (!H.decomp_stage <= 3 || H.bioHolder?.HasEffect("husk")) continue//is dead, isn't a skeleton, isn't a grody husk
+				if (H.decomp_stage >= 3 || H.bioHolder?.HasEffect("husk")) continue //is dead, isn't a skeleton, isn't a grody husk
 			. += M
 
 	critter_attack(var/mob/target)
