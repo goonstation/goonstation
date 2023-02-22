@@ -1090,6 +1090,18 @@
 				set_loc(null)
 
 
+	power
+		name = "power generator monitor"
+		desc = "Shows how much power something or other is generating, probably."
+		display_mode = "power"
+		maptext_prefix = "<span class='c pixel sh'>Power Output:\n<span class='vga'>"
+		maptext_suffix = "W</span></span>"
+		monitored_var = "lastgen"
+		// to use this properly:
+		// spawn, varedit, go to [monitored], refpicker
+		// click the TEG or a solar computer
+		// (some other things may work, and you can always varedit more)
+
 
 	health
 		name = "health monitor"
