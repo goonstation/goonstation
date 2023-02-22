@@ -2413,6 +2413,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Bathroom"
 	icon_state = "showers"
 
+	extra1
+		name = "Restroom #1"
+
+	extra2
+		name = "Restroom #2"
+
 /area/station/crew_quarters/jazz
 	name = "Jazz Lounge"
 	icon_state = "purple"
