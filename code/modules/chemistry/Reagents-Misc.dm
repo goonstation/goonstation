@@ -4200,7 +4200,7 @@ datum
 				src.UnregisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED)
 
 			proc/analyzed(source, mob/user)
-				if (!issilicon(user) && !isAI(user) && !isintangible(user)) //there's probably other things we should exclude here
+				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
