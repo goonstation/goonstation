@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	anchored = 1
 	density = 1
 	directwired = 1
-	processing_tier = PROCESSING_FULL // PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
+	processing_tier = PROCESSING_EIGHTH
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
