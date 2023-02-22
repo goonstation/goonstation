@@ -8,6 +8,7 @@
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
 //uncomment to disable safety checks and win conditions to allow for local testing
+//IF YOU COMMIT THIS TO LIVE EVERYTHING WILL BREAK AND YOUR KNEECAPS WILL BE FORFEIT
 // #define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
 /datum/game_mode/revolution
 	name = "Revolution"
