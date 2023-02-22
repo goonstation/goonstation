@@ -31,7 +31,7 @@ datum/controller/process/mob_ai
 					var/mob/living/L = X
 					L.Life(src)
 				//Lightweight mobs get ticked every 6 seconds
-				if(M.ai && (M.mob_flags & LIGHTWEIGHT_AI_MOB))
+				if(M.mob_flags & LIGHTWEIGHT_AI_MOB)
 					tickme = TRUE
 
 			//normal mobs get ticked every second, heavyweight mobs get ticked every 0.2 seconds
