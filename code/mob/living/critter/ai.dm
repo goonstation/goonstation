@@ -71,6 +71,7 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/switch_to(var/datum/aiTask/task)
+		SHOULD_NOT_SLEEP(TRUE)
 		current_task = task
 		if(task?.ai_turbo)
 			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
@@ -284,6 +285,7 @@ var/list/ai_move_scheduled = list()
 		on_tick()
 
 	proc/reset()
+		SHOULD_NOT_SLEEP(TRUE)
 		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
