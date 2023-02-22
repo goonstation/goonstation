@@ -655,7 +655,7 @@
 
 /obj/machinery/fix_this_shit
 	name = "\proper imcoder"
-	desc = "They're not bugs, okay? They're <em>features</em>."
+	desc = "<i>Error: Cannot call <tt>usr.examine()</tt>.</i>"
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	plane = PLANE_HUD
@@ -970,8 +970,11 @@
 
 
 		emergency_shuttle
+			name = "emergency shuttle status monitor"
+			desc = "Fun fact about these: The 'Stats' tab in DreamSeeker lags my client really bad, so I use these to check how long until the shuttle arrives/leaves. Good job examining this!"
 			// remember those radio-controlled displays? i miss those.
 			// we should bring those back.
+			// 2023 edit: someone did!
 			maptext_prefix = "<span class='c pixel sh'>Emergency Shuttle\n<span class='vga'>"
 			display_mode = "time2"
 			update_delay = 1 SECOND
@@ -1003,6 +1006,8 @@
 			..()
 
 		round_timer
+			name = "round timer"
+			desc = "Time flies when you're having fun!"
 			maptext_prefix = "<span class='c pixel sh'>Shift Time\n<span class='xfont'>"
 			monitored_var = "round_elapsed_ticks"
 			display_mode = "time"
@@ -1031,11 +1036,15 @@
 			..()
 
 		artifacts_analyzed
+			name = "counter of artifacts analyzed"
+			desc = "Shows how many artifacts have been shipped off with an analysis form stuck onto it."
 			maptext_prefix = "<span class='c pixel sh'>Artifacts\nAnalyzed:\n<span class='vga'>"
 			monitored_var = "artifacts_analyzed"
 			ding_on_change = 1
 
 		artifacts_analyzed_correctly
+			name = "counter of artifacts analyzed correctly"
+			desc = "Shows how many artifacts were shipped off with a <i>correct</i> analysis form. How high can <i>you</i> get this number?"
 			maptext_prefix = "<span class='c pixel sh'>Correctly\nAnalyzed:\n<span class='vga'>"
 			monitored_var = "artifacts_correctly_analyzed"
 			ding_on_change = 1
@@ -1044,6 +1053,8 @@
 
 
 	location
+		name = "location monitor"
+		desc = "Shows the location of something. Whatever it is."
 		require_var_or_list = 0
 		maptext_prefix = "<span class='c pixel sh'><span class='xfont'>"
 		maptext_suffix = "</span>"
@@ -1057,6 +1068,8 @@
 
 
 		gps
+			name = "personal GPS"
+			desc = "Shows the location of whatever thing it happens to be on."
 			// Automated GPS! Wow!
 			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 			update_delay = 1
@@ -1079,6 +1092,8 @@
 
 
 	health
+		name = "health monitor"
+		desc = "Shows your current health and damage. For your health!"
 		require_var_or_list = 0
 		maptext_prefix = ""
 		maptext_suffix = ""
@@ -1118,52 +1133,72 @@
 			..()
 
 		farts
+			name = "fart counter"
+			desc = "If you see this you are probably going to push F a lot. Show your respect!"
 			monitored_var = "farts"
 			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
 			update_delay = 1
 
 		slips
+			name = "slips counter"
+			desc = "The number of times someone slipped on something else. May be an indicator of rampant clown crimes."
 			monitored_var = "slips"
 			maptext_prefix = "<span class='c pixel sh'>Slips:\n<span class='vga'>"
 			update_delay = 1
 
 		deaths
+			name = "death counter"
+			desc = "The number of times someone or something died. May not be fully accurate and counts NPCs."
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = 'sound/misc/lose.ogg'
 			update_delay = 1
 
 			players
+				name = "player death counter"
+				desc = "The number of times a player died. May not be fully accurate. You can inflate the number by going to the afterlife bar, if that's your thing."
 				monitored_var = "playerdeaths"
 				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 				ding_sound = 'sound/misc/lose.ogg'
 
 		adminhelps
+			name = "adminhelp counter"
+			desc = "The number of adminhelps. Adminhelping to make this number go up will <em>extremely</em> not end well for you, so <b>don't</b>."
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
 			ding_sound = 'sound/voice/screams/mascream6.ogg'
 
 		mentorhelps
+			name = "mentorhelp counter"
+			desc = "The number of mentorhelps sent. Mentorhelping just to make this number go up will not end well for you, so maybe don't."
 			monitored_var = "mentorhelps"
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
 			ding_sound = 'sound/voice/animal/mouse_squeak.ogg'
 
 		prayers
+			name = "prayer counter"
+			desc = "The number of prayers. Praying to make this number go up will not end well for you, so maybe don't."
 			monitored_var = "prayers"
 			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
 			ding_sound = 'sound/voice/heavenly.ogg'
 
 		violence
+			name = "acts of violence counter"
+			desc = "The number of times someone has Done A Violence&trade;, like punching someone."
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
 			update_delay = 1
 
 		clones
+			name = "clone counter"
+			desc = "The number of cloned players."
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 
 		last_death
+			name = "last death monitor"
+			desc = "RIP this idiot. Hope it wasn't you!"
 			require_var_or_list = 0
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
@@ -1183,22 +1218,31 @@
 			src.monitored = wagesystem
 			..()
 
+		name = "station budget monitor"
+		desc = "This is the current amount of money the Head of Personell has yet to embezzle."
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
 		ding_sound = 'sound/misc/cashregister.ogg'
+		ding_on_change = 1
 
 		station
 			// the default, but explicit...
 		shipping
+			name = "shipping budget monitor"
+			desc = "This is the current amount of money in the cargo/shipping budget."
 			monitored_var = "shipping_budget"
 			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
 		research
+			name = "research budget monitor"
+			desc = "This is the current amount of money in the research budget that has yet to be blown on genetic materials."
 			monitored_var = "research_budget"
 			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
 
 
 	clients
+		name = "total client counter"
+		desc = "The number of your people connected to the game server right now, playing or not."
 		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
 		validate_monitored()
 			return 1
@@ -1206,6 +1250,9 @@
 			. = total_clients()
 
 	players
+		name = "total player counter"
+		desc = "The number of people who aren't sitting at the title screen."
+
 		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
 		var/what_group = "total"
 		validate_monitored()
@@ -1214,12 +1261,18 @@
 			. = get_crew_stats()[what_group]
 
 		alive
+			name = "alive player counter"
+			desc = "The number of your fellow crewmates that are alive. Includes ghost critters, VR, afterlife bar patrons, etc."
 			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
 			what_group = "alive"
 		dead
+			name = "dead player counter"
+			desc = "The number of your fellow crewmates that have shuffled off this mortal coil (and are, critically, still logged in). You can make this go down by becoming an animal or visiting the afterlife bar."
 			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
 			what_group = "dead"
 		observers
+			name = "observing player counter"
+			desc = "The number of people who clicked Observe and are still logged in, watching you. You might even be one!"
 			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
 			what_group = "observer"
 
@@ -1249,8 +1302,10 @@
 
 
 	load
+		name = "server load monitor"
+		desc = "How loaded the server is (and the tick rate). The load is how much of a tick was spent Doing Things&trade;, so it can go over 100%. If it goes over 100%, that means the server is lagging."
 		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
-		update_delay = 1 SECOND
+		update_delay = 1
 
 		validate_monitored()
 			return 1
