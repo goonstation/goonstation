@@ -16,7 +16,7 @@
 	desc = "A conveyor belt."
 	pass_unstable = TRUE
 	anchored = 1
-	power_usage = 100
+	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
@@ -281,9 +281,11 @@
 	if(!operable)
 		operating = OP_OFF
 	if(!operating || (status & NOPOWER))
+		power_usage = 0
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
 	else
+		power_usage = 100
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 

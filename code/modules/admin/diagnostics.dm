@@ -1246,6 +1246,7 @@ proc/debug_map_apc_count(delim,zlim)
 			square_drift = tgui_input_number(C.mob, "Enter a drift value, controls intensity of randomized intermingling of biomes", "Drift Selection", square_drift, 10, 0)
 			if (isnull(square_drift)) square_drift = initial(square_drift)
 			noise_cache = new/list(world.maxx, world.maxy)
+			boutput(C, "rustg_noise_get_at_coordinates() Seed:[seed] Zoom:[perlin_zoom] Square Drift:[square_drift]")
 			for (var/turf/T as anything in block(locate(1, 1, user_turf.z), locate(world.maxx, world.maxy, user_turf.z)))
 				drift_x = (T.x + rand(-square_drift, square_drift)) / perlin_zoom
 				drift_y = (T.y + rand(-square_drift, square_drift)) / perlin_zoom
@@ -1255,6 +1256,102 @@ proc/debug_map_apc_count(delim,zlim)
 			. = ..()
 			if (!length(noise_cache)) return
 			var/val = noise_cache[theTurf.x][theTurf.y]
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	perlin_grid_noise_visualizer
+		name = "perlin grid noise visualizer"
+		help = "Visualize a given perlin noise grid"
+		var/seed = 42069
+		var/accuracy = 4
+		var/stamp_size = 16
+		var/lower_range = 0.5
+		var/upper_range = 1
+		var/noise_cache
+		var/world_size
+
+		OnEnabled(client/C)
+			. = ..()
+			seed = tgui_input_number(C.mob, "Enter a seed value", "Seed Selection", seed, 50000,0)
+			if (isnull(seed)) seed = initial(seed)
+			accuracy = tgui_input_number(C.mob, "Enter a accuracy value, how close to perlin", "Accuracy", accuracy, 500, 1)
+			if (isnull(accuracy)) accuracy = initial(accuracy)
+			stamp_size = tgui_input_number(C.mob, "Enter a stamp_size value, ??? ", "Stamp Size Selection", stamp_size, 32, 1)
+			if (isnull(stamp_size)) stamp_size = initial(stamp_size)
+			lower_range = tgui_input_number(C.mob, "Enter a lower_range value, Lower range to be active.", "Lower Range Selection", lower_range, 1.0, 0.0, round_input=FALSE)
+			if (isnull(lower_range)) lower_range = initial(lower_range)
+			upper_range = tgui_input_number(C.mob, "Enter a upper_range value, Upper range to be active.", "Upper Range Selection", upper_range, 1.0, 0.0, round_input=FALSE)
+			if (isnull(upper_range)) upper_range = initial(upper_range)
+			world_size = world.maxx
+			noise_cache = rustg_dbp_generate("[src.seed]", "[src.accuracy]", "[src.stamp_size]", "[src.world_size]", "[src.lower_range]", "[src.upper_range]")
+			boutput(C, "rustg_dbp_generate(\"[src.seed]\", \"[src.accuracy]\", \"[src.stamp_size]\", \"[src.world_size]\", \"[src.lower_range]\", \"[src.upper_range]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(src.noise_cache)) return
+			var/index = theTurf.x * src.world_size + theTurf.y
+			var/val = 0
+			if(index <= length(noise_cache))
+				val = text2num(noise_cache[index])
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	c_noise_visualizer
+		name = "cellular automata noise visualizer"
+		help = "Visualize a given cellular automata"
+		var/percentage = 55
+		var/smoothing_iterations = 1
+		var/birth_limit = 4
+		var/death_limit = 3
+		var/noise_cache
+		var/maxx
+
+		OnEnabled(client/C)
+			. = ..()
+			percentage = tgui_input_number(C.mob, "Chance of cell starting closed.", "Percentage", percentage, 99, 1)
+			smoothing_iterations = tgui_input_number(C.mob, "Iterate this many times.", "Iterations", 1, 1000, 0)
+			birth_limit = tgui_input_number(C.mob, "Number of neighboring cells is higher than this amount, a cell is born.", "Birth Limit", 6, 8, 0)
+			death_limit = tgui_input_number(C.mob, "Number of neighboring cells is lower than this amount, a cell dies.", "Death Limit", 3, 8, 0)
+			maxx = world.maxx
+			noise_cache = rustg_cnoise_generate("[src.percentage]", "[src.smoothing_iterations]", "[src.birth_limit]", "[src.death_limit]", "[maxx]", "[world.maxy]")
+			boutput(C, "rustg_cnoise_generate(\"[src.percentage]\", \"[src.smoothing_iterations]\", \"[src.birth_limit]\", \"[src.death_limit]\", \"[maxx]\", \"[world.maxy]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(noise_cache)) return
+			var/val = text2num(noise_cache[theTurf.x * src.maxx + theTurf.y])
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	worley_noise_visualizer
+		name = "worley noise visualizer"
+		help = "Visualize a given worley noise"
+		var/region_size = 32
+		var/threshold = 10
+		var/node_per_region_chance = 50
+		var/node_min = 1
+		var/node_max = 8
+		var/maxx
+		var/noise_cache
+
+		OnEnabled(client/C)
+			. = ..()
+			region_size = tgui_input_number(C.mob, "size of regions", "region_size", region_size, 300, 1)
+			threshold = tgui_input_number(C.mob, "If distance greater than threshold then alive", "threshold", threshold, 100, 0)
+			node_per_region_chance = tgui_input_number(C.mob, "chance of a node existing in a region.", "node_per_region_chance", node_per_region_chance, 100, 0)
+			node_min = tgui_input_number(C.mob, "minimum amount of nodes in a region", "node_min", node_min, 300, 0)
+			node_max = tgui_input_number(C.mob, "maximum amount of nodes in a region", "node_max", node_max, 300, 0)
+			maxx = world.maxx
+			noise_cache = rustg_worley_generate("[src.region_size]", "[src.threshold]", "[src.node_per_region_chance]", "[maxx]", "[src.node_min]", "[src.node_max]")
+			boutput(C, "rustg_worley_generate(\"[src.region_size]\", \"[src.threshold]\", \"[src.node_per_region_chance]\", \"[maxx]\", \"[src.node_min]\", \"[src.node_max]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(src.noise_cache)) return
+			var/val = text2num(noise_cache[theTurf.x * src.maxx + theTurf.y])
 			img.app.color = rgb((val*255), 0, (255-val*255))
 			if(!isnull(val))
 				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))

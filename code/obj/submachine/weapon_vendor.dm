@@ -193,7 +193,7 @@
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
-		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/saxitoxin_grenade
 		//materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
@@ -394,7 +394,7 @@
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
+	description = "Tranquilizer pistol with a pouch of darts, emag and a variety of tools to help you blend in with regular crew."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
@@ -404,7 +404,7 @@
 /datum/materiel/loadout/medic
 	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
-	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
+	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch. As well as an armor-piercing personal defence weapon with single and burst fire capability."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
@@ -427,9 +427,9 @@
 	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
 
 /datum/materiel/loadout/bard
-	name = "Bard (Prototype)"
+	name = "Bard"
 	path = /obj/storage/crate/classcrate/bard
-	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
+	description = "A musical support class that buffs their team with area of effect songs centered around amp stacks and hitting things with their cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
@@ -474,9 +474,9 @@
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
-/datum/materiel/utility/sarin_grenade
-	name = "Sarin Grenade"
-	path = /obj/item/chem_grenade/sarin
+/datum/materiel/utility/saxitoxin_grenade
+	name = "Saxitoxin Grenade"
+	path = /obj/item/chem_grenade/saxitoxin
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 /datum/materiel/utility/noslip_boots

@@ -2397,3 +2397,8 @@
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
 		H.remove_stam_mod_max("recent_trauma")
 
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
+	icon_state = "mindhack"

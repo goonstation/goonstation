@@ -244,6 +244,8 @@ var/list/admin_verbs = list(
 		/proc/releasemob,
 		/client/proc/critter_creator_debug,
 		/client/proc/cmd_cat_county,
+		/client/proc/fake_pda_message_to_all,
+		/client/proc/force_say_in_range,
 		/client/proc/find_thing,
 		/client/proc/find_one_of,
 		/client/proc/cmd_admin_advview,

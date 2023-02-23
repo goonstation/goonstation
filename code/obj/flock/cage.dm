@@ -287,10 +287,6 @@
 			src.pixel_x = 0
 			src.pixel_y = 0
 
-	checkhealth()
-		if(src.health <= 0)
-			qdel(src)
-
 	mob_resist_inside(var/mob/user)
 		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
 			return
@@ -313,6 +309,9 @@
 			<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
 			<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
 			<br><span class='bold'>###=-</span></span>"}
+
+	gib(atom/location)
+		qdel(src)
 
 
 

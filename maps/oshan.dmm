@@ -22192,7 +22192,6 @@
 /area/station/hallway/primary/east)
 "bjx" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -45094,7 +45093,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
 "rqc" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 15000
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
