@@ -6,6 +6,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	"Pipe" = 0,
 	"Bent Pipe" = 1,
 	"Junction" = 2,
+	"Flipped Junction" = 3,
 	"Y-Junction" = 4,
 	"Trunk" = 5,
 )
@@ -65,12 +66,13 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 			var/amount = clamp(params["amount"], 0, MAX_BUILD_DISPOSAL)
 			var/duration = dispenser_delay * amount
 			src.dispenser_ready = FALSE
+
 			var/obj/disposalconstruct/dummy_pipe = new
 			dummy_pipe.ptype = p_type
 			dummy_pipe.update()
 			SETUP_GENERIC_ACTIONBAR(src, null, duration, /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe, list(p_type, amount),\
 			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", INTERRUPT_NONE)
-			qdel(dummy_pipe) //bit ugly but oh well
+			qdel(dummy_pipe) //Above creates a construct and changes its icon for usage in the actionbar icon.
 			. = TRUE
 
 /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe(pipe_type, amount)
