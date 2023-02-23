@@ -23,15 +23,14 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	var/is_king = FALSE
-	var/retaliate = FALSE
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(!isdead(src))
+		if (!isdead(src))
 			retaliate()
 			return ..()
-		if(issawingtool(W))
+		if (issawingtool(W))
 			var/datum/handHolder/HH
-			if(user.zone_sel.selecting == "l_arm")
+			if (user.zone_sel.selecting == "l_arm")
 				HH = hands[1]
 				if (!HH.limb)
 					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
@@ -148,7 +147,7 @@
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
 		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(40))
 			frenzy.handleCast(target)
-		else if (issilicon(target) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
+		else if (issilicon(target) && !isAI(target))
 			fuck_up_silicons(target)
 		else
 			return ..()
@@ -183,25 +182,23 @@
 				ai.interrupt()
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
-		if (!isrobot(silicon))
-			src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [silicon.name] to pieces!</span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
-			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
-			logTheThing(LOG_COMBAT, src, "gibs [constructTarget(silicon,"combat")] at [log_loc(src)].")
-			silicon.gib()
-			return
-		var/mob/living/silicon/robot/cyborg = silicon
-		if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
-			src.visible_message("<span class='alert'><B>[src]</B> grabs [cyborg.name]'s head and wrenches it right off!</span>")
-			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
-			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
-			cyborg.compborg_lose_limb(cyborg.part_head)
+		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
+			var/mob/living/silicon/robot/BORG = silicon
+			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
+				src.visible_message("<span class='alert'><B>[src] grabs [BORG.name]'s head and wrenches it right off!</B></span>")
+				playsound(src, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+				BORG.compborg_lose_limb(BORG.part_head)
+			else
+				src.visible_message("<span class='alert'><B>[src] pounds on [BORG.name]'s head furiously!</B></span>")
+				playsound(src, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+					BORG.compborg_lose_limb(BORG.part_head)
 		else
-			src.visible_message("<span class='alert'><B>[src]</B> pounds on [cyborg.name]'s head furiously!</span>")
-			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-			if (cyborg.part_head.ropart_take_damage(rand(20,40),0) == 1)
-				cyborg.compborg_lose_limb(cyborg.part_head)
-			if (prob(33)) playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
+			src.visible_message("<span class='alert'><B>[src] smashes [silicon] furiously!</B></span>")
+			playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+			random_brute_damage(silicon, 15, 0)
 
 	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
