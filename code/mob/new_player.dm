@@ -739,9 +739,8 @@ a.latejoin-card:hover {
 				traitormob.make_wrestler(1)
 
 			if (ROLE_GRINCH)
-				traitor.special_role = ROLE_GRINCH
-				objective_set_path = /datum/objective_set/grinch
-				traitormob.make_grinch()
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_HUNTER)
 				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
