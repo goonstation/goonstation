@@ -281,7 +281,8 @@
 
 /obj/item/electronics/frame/Exited(Obj, newloc)
 	. = ..()
-	if(Obj == deconstructed_thing && !QDELETED(Obj))
+	var/atom/movable/AM = Obj
+	if(AM == deconstructed_thing && !QDELETED(AM))
 		src.visible_message("<span class='notice'>[src] vanishes in a puff of logic!</span>", "<span class='notice'>You hear a mild poof.</span>", "frame_poof")
 		qdel(src)
 
