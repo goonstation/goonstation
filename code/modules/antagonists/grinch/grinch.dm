@@ -17,17 +17,12 @@
 		src.ability_holder.addAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-		src.owner.current.assign_gimmick_skull()
-
 	remove_equipment()
 		src.ability_holder.removeAbility(/datum/targetable/grinch/vandalism)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/poison)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/grinch_cloak)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/grinch)
-
-		SPAWN(2.5 SECONDS)
-			src.owner.current.assign_gimmick_skull()
 
 	assign_objectives()
 		new /datum/objective_set/grinch(src.owner, src)
