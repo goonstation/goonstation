@@ -346,7 +346,17 @@
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
 
 			if (!src.client && !src.ai_active)
-				if (find_player(src.last_ckey)?.client) // using vr goggles or something similar
+				var/using_vr_goggles = FALSE
+				var/mob = find_player(src.last_ckey)?.client?.mob
+
+				if (istype(mob, /mob/living/carbon/human/virtual))
+					using_vr_goggles = TRUE
+				else if (istype(mob, /mob/living/critter/robotic/scuttlebot)) // in case you mindswap into a scuttlebot
+					var/mob/living/critter/robotic/scuttlebot/scuttlebot = mob
+					if (scuttlebot.controller == src)
+						using_vr_goggles = TRUE
+
+				if (using_vr_goggles)
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
 				else
