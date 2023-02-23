@@ -200,6 +200,20 @@
 		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
 		/obj/item/ammo/bullets/bullet_9mm = 4)
 
+/obj/item/storage/engineering_pouch
+	name = "station repair pouch"
+	desc = "A small pouch that holds foam and red oxygen grenades for station repair."
+	icon_state = "ammopouch-engi"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	can_hold = list(
+		/obj/item/chem_grenade/metalfoam,
+		/obj/item/old_grenade/oxygen,
+		/obj/item/chem_grenade/firefighting
+	)
+
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
 	desc = "A pouch designed to hold EMP grenades."
