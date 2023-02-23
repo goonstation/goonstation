@@ -945,3 +945,66 @@
 /obj/item/gun/energy/taser_gun/power_pack
 	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
 	can_swap_cell = FALSE
+
+
+/datum/power_usage_viewer
+	var/mob/target
+	var/datum/machine_power_data/power_data
+
+/datum/power_usage_viewer/New(mob/target)
+	..()
+	src.target = target
+	power_data = detailed_power_data_last
+
+/datum/power_usage_viewer/disposing()
+	src.target = null
+	src.power_data = null
+	..()
+
+/datum/power_usage_viewer/ui_state(mob/user)
+	return tgui_admin_state
+
+/datum/power_usage_viewer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PowerDebug")
+		ui.open()
+
+/datum/power_usage_viewer/ui_static_data(mob/user)
+	. = list()
+	if(power_data)
+		.["areaData"] = list()
+		for(var/area/A in power_data.areas)
+			var/list/machine_data = list()
+			for(var/obj/machinery/M in power_data.areas[A])
+				machine_data[ref(M)] += list(
+					"name" = M.name,
+					"power_usage" = round(M.power_usage),
+					"data" = power_data.machines[M]
+				)
+			.["areaData"][A.type] += list(
+				"name" = A.name,
+				"total" = round(A.area_apc?.lastused_total),
+				"equip" = round(A.area_apc?.lastused_equip),
+				"light" = round(A.area_apc?.lastused_light),
+				"environ" = round(A.area_apc?.lastused_environ),
+				"machines" = machine_data
+			)
+
+/datum/power_usage_viewer/ui_data()
+	var/list/data = list()
+
+	return data
+
+/datum/power_usage_viewer/ui_act(action, list/params, datum/tgui/ui)
+	USR_ADMIN_ONLY
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("jmp")
+			var/obj/machinery/M = locate(params["ref"])
+			if(istype(M) && target?.client?.holder)
+				target.client.jumptoturf(get_turf(M))
+
