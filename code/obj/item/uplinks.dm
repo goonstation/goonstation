@@ -900,6 +900,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		delivery = claim.delivery
 		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
+
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
+		if (istype(antag_role))
+			antag_role.stolen_items.Add(bounty.item)
+
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
@@ -922,8 +927,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!istype(delivery,/obj/item/parts))
 			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 		qdel(delivery)
-		if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-			user.mind.spy_stolen_items += bounty.name
 
 		if (req_bounties() > 1)
 			bounty_tally += 1

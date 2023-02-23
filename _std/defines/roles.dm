@@ -14,6 +14,7 @@
 #define ROLE_ARCFIEND "arcfiend"
 #define ROLE_FLOCKMIND "flockmind"
 #define ROLE_FLOCKTRACE "flocktrace"
+#define ROLE_SALVAGER "salvager"
 #define ROLE_MISC "misc"
 
 // special antagonist roles
@@ -31,7 +32,6 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
-#define ROLE_SALVAGER "salvager"
 #define ROLE_ZOMBIE "zombie"
 
 // gimmicks

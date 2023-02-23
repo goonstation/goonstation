@@ -1755,10 +1755,10 @@ datum
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
-		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
-			id = "sarin"
-			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
+		harmful/saxitoxin // formerly: sarin
+			name = "saxitoxin"
+			id = "saxitoxin"
+			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255

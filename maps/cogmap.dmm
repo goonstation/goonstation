@@ -26628,7 +26628,6 @@
 /obj/submachine/cargopad{
 	name = "Pod Bay Pad"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvF" = (
@@ -33299,7 +33298,6 @@
 /obj/submachine/cargopad{
 	name = "Mechanical Workshop Pad"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bOT" = (
@@ -39237,7 +39235,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/bluewhite,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area/station/medical/medbay/lobby)
 "cex" = (
 /obj/machinery/camera{
@@ -39252,7 +39252,9 @@
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area/station/medical/medbay/lobby)
 "cey" = (
 /obj/shrub{
@@ -39261,7 +39263,7 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/bluewhite/corner{
-	dir = 4
+	dir = 1
 	},
 /area/station/medical/medbay/lobby)
 "cez" = (

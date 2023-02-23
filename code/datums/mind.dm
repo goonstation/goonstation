@@ -34,10 +34,7 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/purchased_traitor_items = list()
-	var/list/traitor_crate_items = list()
 	var/list/blob_absorb_victims = list()
-	var/list/spy_stolen_items = list()
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
 
@@ -232,9 +229,12 @@ datum/mind
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
+				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
+				if (QDELETED(new_datum))
+					return FALSE
+				src.antagonists.Add(new_datum)
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return !isnull(src.get_antagonist(role_id))
+				return TRUE
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.

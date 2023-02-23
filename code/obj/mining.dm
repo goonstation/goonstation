@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
