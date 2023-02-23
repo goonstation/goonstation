@@ -1299,7 +1299,7 @@
 		if (istype(gloves, /obj/item/clothing/gloves/boxing))
 			sims.affectMotive("fun", 2.5)
 
-//return 1 on successful dodge or parry, 0 on fail
+/// return 1 on successful dodge or parry, 0 on fail
 /mob/proc/parry_or_dodge(mob/M, obj/item/W)
 	return 0
 
