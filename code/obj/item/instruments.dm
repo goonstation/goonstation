@@ -34,11 +34,19 @@
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
+	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+
+	/// Default keybinds, ranging from c2 to c7.
+	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
+	/// String representing the keybinds used in keyboard mode
+	var/note_keys_string = ""
+	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
+	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 
 	New()
 		..()
@@ -60,6 +68,16 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+
+		if (src.use_new_interface)
+			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
+			src.note_keys_string = src.generate_keybinds(src.notes)
+			if(!src.note_keys_string)
+				src.note_keys_string = src.default_keys_string
+			src.sounds_instrument = list()
+			for (var/i in 1 to length(src.notes))
+				src.note = src.notes[i]
+				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
 
 	proc/play_note(var/note, var/mob/user)
 		if (note != clamp(note, 1, length(sounds_instrument)))
@@ -98,8 +116,8 @@
 		return
 
 	// Creates a list of notes between two notes, for example
-	// note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
-	proc/note_range(var/fromNote, var/toNote)
+	// generate_note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
+	proc/generate_note_range(var/fromNote, var/toNote)
 		var/list/notes = list()
 
 		// Removes the octave number, for example "c4" becomes "c"
@@ -120,6 +138,31 @@
 				currentOctave++
 		return notes
 
+	/// Creates a string that is converted into the instrument keybinds for the interface using the list of notes an instrument has.
+	proc/generate_keybinds(var/list/note_range)
+		var/list/default_range = src.generate_note_range("c2", "c7")
+		var/list/split_default_key_string
+		var/start
+		var/end
+
+		// Split the default key string into a list delimited after each character.
+		for(var/i in 1 to length(src.default_keys_string))
+			split_default_key_string += list(copytext(src.default_keys_string, i, (i + 1)))
+
+		// Find character position of first keybind.
+		for(var/i in 1 to length(default_range))
+			if(default_range[i] == note_range[1])
+				start = i
+				end = length(note_range) + (start - 1)
+				break
+
+		if(!start || !end)
+			return
+
+		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
+		for(var/i in start to end)
+			. += split_default_key_string[i]
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui && use_new_interface)
@@ -133,6 +176,7 @@
 			"volume" = src.volume,
 			"transpose" = src.transpose,
 			"keybindToggle" = src.keyboard_toggle,
+			"noteKeysString" = src.note_keys_string,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -140,6 +184,9 @@
 		if(.)
 			return
 		switch(action)
+			if("edit_keybinds")
+				src.note_keys_string = params["note_keys_order"]
+				. = TRUE
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
@@ -226,20 +273,12 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
+	note_range = list("c4", "c7")
+	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 	use_new_interface = TRUE
-
-	New()
-		notes = note_range("c4", "c7")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
-
-		..()
-
 
 /* -------------------- Grand Piano -------------------- */
 
@@ -289,6 +328,8 @@
 	icon_state = "sax"
 	item_state = "sax"
 	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
+	note_range = list("g3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/saxophone/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -297,11 +338,6 @@
 	key_offset = 8
 
 	New()
-		notes = note_range("g3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/saxophone/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -572,6 +608,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/trumpet/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -580,11 +618,6 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	key_offset = 5
 
 	New()
-		notes = note_range("e3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -653,17 +686,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	item_state = "fiddle"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
 	sounds_instrument = list()
+	note_range = list("a3", "g6")
+	instrument_sound_directory = "sound/musical_instruments/fiddle/notes/"
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 	use_new_interface = TRUE
-
-	New()
-		notes = note_range("a3", "g6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/fiddle/notes/[note].ogg"
-		..()
 
 /obj/item/instrument/fiddle/satanic
 	desc_sound = list("devilish", "hellish", "satanic", "enviable", "sinful", "grumpy", "lazy", "lustful", "greedy")
@@ -761,23 +788,14 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	item_state = "banjo"
 	two_handed = 1
 	force = 6
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/banjo/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
-
-	New()
-		notes = note_range("e3", "c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
-		..()
-
-
-
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

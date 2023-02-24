@@ -32,6 +32,8 @@
 	var/radiationLevel = 0
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
+	/// gas that has been processed, primarily used for atmos analyser
+	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
 
@@ -57,10 +59,14 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
+
+		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
+		for(var/turf/simulated/floor/F in src.locs)
+			F.explosion_immune = TRUE
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
@@ -71,6 +77,8 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("reactor_light")
+		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
+			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
 	update_icon()
@@ -115,7 +123,7 @@
 			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
-				old_grid.layer = old_grid.layer+0.1
+				old_grid.layer -= 0.1
 				src.UpdateOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)
@@ -147,7 +155,7 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		var/datum/gas_mixture/gas_output = air2
+		air_contents = air2
 		var/total_gas_volume = 0
 
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -158,7 +166,7 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) gas_output.merge(gas)
+					if(gas) air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
@@ -181,10 +189,10 @@
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			gas_output.merge(gas)
+			air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		gas_output.merge(gas_input)
+		air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
@@ -221,6 +229,7 @@
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
@@ -271,14 +280,14 @@
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads*2, 100), TRUE, FALSE, 5)
-		rads -= 10
+		src.AddComponent(/datum/component/radioactive, min(rads*3, 100), TRUE, FALSE, 5)
+		rads -= 5
 
 		if(rads <= 0)
 			return
 
-		for(var/i = min(round(rads/2),50),i>0,i--)
-			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*2,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
+			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
 		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
@@ -496,8 +505,7 @@
 						throwcomp.throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 					else
 						qdel(src.component_grid[x][y])
-						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris, epicentre)
-						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 		if(severity <= 1)
@@ -617,7 +625,7 @@
 	window_pass = FALSE
 	silentshot = TRUE
 
-	New(power)
+	New(power=50)
 		..()
 		src.power = power
 		src.ks_ratio = 1
@@ -637,7 +645,7 @@
 			if(hit.material && prob(hit.material.getProperty("hard")*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
-				reflected.power = O.power
+				reflected?.power = O.power
 				return FALSE
 
 			//then fission

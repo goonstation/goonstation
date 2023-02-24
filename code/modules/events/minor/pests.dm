@@ -27,7 +27,7 @@
 					LAGCHECK(LAG_LOW)
 			if (4)
 				while (spawnamount > 0)
-					new /obj/critter/spacescorpion(pestlandmark)
+					new /mob/living/critter/small_animal/scorpion(pestlandmark)
 					spawnamount -= 3
 					LAGCHECK(LAG_LOW)
 			if (5)

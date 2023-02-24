@@ -177,6 +177,9 @@
 	//moved from flock_structure_ghost for interfering with ability targeting
 	else if (istype(target, /obj/flock_structure/ghost))
 		var/obj/flock_structure/ghost/tealprint = target
+		var/typeinfo/obj/flock_structure/info = get_type_typeinfo(tealprint.building)
+		if (!info.cancellable)
+			return
 		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 			tealprint.cancelBuild()
 		return
