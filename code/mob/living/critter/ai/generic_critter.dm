@@ -252,7 +252,7 @@
 	if(src.persistence == RETALIATE_UNTIL_DEAD && isdead(T)) //attack until dead, and the target is dead
 		return TRUE
 	var/datum/aiTask/sequence/goalbased/retaliate/parent_task = holder.current_task
-	if(src.persistence > 0 && ((world.time - parent_task.start_time) > src.persistence)) //otherwise, has the time run out?
+	if(src.persistence > 0 && ((TIME - parent_task.start_time) > src.persistence)) //otherwise, has the time run out?
 		return TRUE
 	return FALSE
 
