@@ -731,6 +731,7 @@ datum
 			fluid_g = 220
 			fluid_b = 255
 			transparency = 255
+			depletion_rate = 1
 			value = 8 // 2c + 3c + 1c + 1c + 1c
 			threshold = THRESHOLD_INIT
 			var/list/flushed_reagents = list("LSD","lsd_bee","psilocybin","crank","bathsalts","THC","space_drugs","catdrugs","methamphetamine","epinephrine","synaptizine")
