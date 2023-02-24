@@ -2,7 +2,7 @@
 // the opportunity to do some clean-up as well (Convair880).
 
 //////////////////////////////////////////// Setup //////////////////////////////////////////////////
-
+// Remove when omnitraitors are datumised.
 /mob/proc/make_grinch()
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))

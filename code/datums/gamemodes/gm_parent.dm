@@ -317,9 +317,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_GRINCH)
-			objective_set_path = /datum/objective_set/grinch
-			boutput(antag.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
-			antag.current.make_grinch()
+			antag.add_antagonist(ROLE_GRINCH)
+			do_objectives = FALSE
 
 		if (ROLE_BLOB)
 			objective_set_path = /datum/objective_set/blob

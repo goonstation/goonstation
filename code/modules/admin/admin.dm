@@ -4770,9 +4770,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GRINCH)
-				M.mind.special_role = ROLE_GRINCH
-				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
