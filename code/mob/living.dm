@@ -2116,6 +2116,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				return FALSE
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
+/mob/living/proc/check_for_intent_trigger()
+	if(src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
+		src.equipped().intent_switch_trigger(src)
+
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
 	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
 		return

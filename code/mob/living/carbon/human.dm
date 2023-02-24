@@ -3305,10 +3305,6 @@
 				else if (istype(T,/turf/space/fluid))
 					. += 3
 
-/mob/living/carbon/human/proc/check_for_intent_trigger()
-	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
-		src.equipped().intent_switch_trigger(src)
-
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 
