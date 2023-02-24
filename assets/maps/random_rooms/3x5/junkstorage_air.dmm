@@ -18,7 +18,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "v" = (
-/obj/machinery/atmospherics/valve/vertical{
+/obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
