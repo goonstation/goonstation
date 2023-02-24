@@ -17310,7 +17310,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -33358,7 +33360,9 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/bluewhite{
@@ -38641,7 +38645,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/northwest,
+/obj/machinery/atmospherics/simple{
+	dir = 9
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "qrD" = (
@@ -39585,7 +39591,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "qKt" = (
