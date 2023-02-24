@@ -109,7 +109,9 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "jJ" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "mm" = (
@@ -357,7 +359,9 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "xn" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "xv" = (

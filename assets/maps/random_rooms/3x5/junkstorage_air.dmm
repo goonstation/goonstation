@@ -7,11 +7,15 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "g" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "t" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
