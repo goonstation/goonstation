@@ -9,7 +9,7 @@
 "aj" = (
 /obj/lattice{
 	dir = 9;
-	icon_state = "lattice-dir"
+	""icon_state = "lattice-dir"
 	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -785,7 +785,7 @@
 "Fr" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_east"
@@ -1084,7 +1084,7 @@
 /area/prefab/discount_dans_asteroid)
 "PC" = (
 /obj/machinery/r_door_control{
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
