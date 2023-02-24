@@ -67242,8 +67242,10 @@
 /area/centcom/offices/rodney)
 "eip" = (
 /obj/effects/precipitation/snow/grey/tile,
-/obj/tree/snow_random{
-	pixel_x = -21
+/obj/tree{
+	icon_state = "snowtree";
+	pixel_y = -1;
+	pixel_x = -18
 	},
 /turf/unsimulated/floor/snowcalm,
 /area/centcom/offices{
@@ -78036,15 +78038,6 @@
 	icon_state = "shore-43"
 	},
 /area/titlescreen)
-"wLG" = (
-/obj/burning_barrel{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/turf/unsimulated/floor/snowcalm,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "wMi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-26"
@@ -153064,7 +153057,7 @@ aES
 wel
 tfB
 eip
-wLG
+fBu
 tij
 vBO
 tlW
