@@ -253,7 +253,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","sarin")
+				"toxic_slurry","histamine","saxitoxin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids

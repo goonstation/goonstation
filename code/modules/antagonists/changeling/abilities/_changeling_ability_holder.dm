@@ -29,10 +29,10 @@
 	C.addAbility(/datum/targetable/changeling/sting/dna)
 	C.addAbility(/datum/targetable/changeling/transform)
 	C.addAbility(/datum/targetable/changeling/morph_arm)
-	C.addAbility(/datum/targetable/changeling/handspider)
-	C.addAbility(/datum/targetable/changeling/eyespider)
-	C.addAbility(/datum/targetable/changeling/legworm)
-	C.addAbility(/datum/targetable/changeling/buttcrab)
+	C.addAbility(/datum/targetable/changeling/critter/handspider)
+	C.addAbility(/datum/targetable/changeling/critter/eyespider)
+	C.addAbility(/datum/targetable/changeling/critter/legworm)
+	C.addAbility(/datum/targetable/changeling/critter/buttcrab)
 	C.addAbility(/datum/targetable/changeling/hivesay)
 	C.addAbility(/datum/targetable/changeling/boot)
 	C.addAbility(/datum/targetable/changeling/give_control)
@@ -141,6 +141,11 @@
 	//Insert a mob into the hivemind by creating a hivemind_observer for them and transferring Mind
 	proc/insert_into_hivemind(var/mob/victim, var/restore_name=0)
 		var/mob/dead/target_observer/hivemind_observer/obs
+		//since getting absorbed into the hivemind yoinks your mind away before calling death, we need to do this here
+		if (victim.mind)
+			for (var/datum/antagonist/antag in victim.mind.antagonists)
+				if (istype(antag, /datum/antagonist/changeling_critter))
+					victim.mind.remove_antagonist(antag.id)
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//Just inserting a random chumpler (regular human)
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

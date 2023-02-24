@@ -688,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 

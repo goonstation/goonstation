@@ -19,7 +19,9 @@ Help and support is *not offered whatsoever* if you skip portions of the guide.
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
 
-Visual Studio Code is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VS Code useful.
+#### ***No, Visual Studio is not the same thing as Visual Studio Code - the icon should be blue and the UI should look like below. Only VSCode will work and be supported.***
+
+Visual Studio Code (VSCode/VSC) is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VSCode useful.
 
 Visit https://code.visualstudio.com/ to download the appropriate installation for your operating system. Then, run the installer.
 
@@ -97,12 +99,13 @@ Now, let's connect the main goonstation repository to your client.
 
 We need to add the main Goonstation repository as a remote now. :satellite:
 
-It is likely that when you cloned your github repository, this upstream remote was already set up for you. If that's the case, you can skip adding the remote, and move straight to setting your local master to track the master branch.
+It is likely that when you cloned your github repository, this upstream remote was already set up for you. If that's the case, you can skip **adding the remote**, and move straight to setting your local master to track the master branch.
 
-If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+**Adding the remote:** If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
-It's useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
+It's also useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this, press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
 ```
+git fetch upstream
 git checkout master
 git branch -u upstream/master
 ```

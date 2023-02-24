@@ -398,9 +398,9 @@ client/proc/toggle_ghost_respawns()
 	if(isobserver(mob))
 		setalive(mob)
 
-	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
-	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]", "admin")
-	message_admins("[key_name(usr)] has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
+	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
 
 /client/proc/iddqd()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

@@ -54,6 +54,8 @@ TYPEINFO(/obj/item/injector_belt)
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -172,6 +174,8 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)

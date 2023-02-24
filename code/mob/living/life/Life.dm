@@ -110,6 +110,11 @@
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die
 	last_life_tick = TIME
+	restore_life_processes()
+
+/mob/living/full_heal()
+	. = ..()
+	restore_life_processes()
 
 /mob/living/disposing()
 	for (var/datum/lifeprocess/L in lifeprocesses)
@@ -122,7 +127,7 @@
 	var/list/heartbeatOverlays = list()
 	var/last_human_life_tick = 0
 
-/mob/living/critter/New()
+/mob/living/critter/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
@@ -142,7 +147,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
@@ -166,7 +171,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/cube/New()
+/mob/living/carbon/cube/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
@@ -179,12 +184,12 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/silicon/ai/New()
+/mob/living/silicon/ai/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/hivebot/New()
+/mob/living/silicon/hivebot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -193,7 +198,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/robot/New()
+/mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -205,7 +210,7 @@
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
-/mob/living/silicon/drone/New()
+/mob/living/silicon/drone/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
@@ -430,7 +435,7 @@
 		hud.update_charge()
 		hud.update_tools()
 
-/mob/living/seanceghost/Life(parent)
+/mob/living/intangible/seanceghost/Life(parent)
 	if (..(parent))
 		return 1
 	if (!src.abilityHolder)

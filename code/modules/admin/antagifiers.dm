@@ -73,9 +73,8 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-		M.make_wrestler(1)
+		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
 	name = "Ferocious Alien Skull"
@@ -185,7 +184,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
-			M.mind.add_antagonist(ROLE_WEREWOLF, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			M.mind.add_antagonist(ROLE_WEREWOLF, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 
 	wrestler
 		name = "WRESTL~1.EXE"
@@ -195,7 +194,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Time to step into the squared circle, son.</span>")
-			M.make_wrestler(1)
+			M.mind.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 
 	wizard
 		name = "WIZARD.EXE"

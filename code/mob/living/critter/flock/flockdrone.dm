@@ -800,18 +800,6 @@
 /mob/living/critter/flock/drone/get_tracked_examine_atoms()
 	return ..() + src.flock.structures
 
-/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
-	remove_lifeprocess(/datum/lifeprocess/blood)
-	remove_lifeprocess(/datum/lifeprocess/canmove)
-	remove_lifeprocess(/datum/lifeprocess/disability)
-	remove_lifeprocess(/datum/lifeprocess/fire)
-	remove_lifeprocess(/datum/lifeprocess/hud)
-	remove_lifeprocess(/datum/lifeprocess/mutations)
-	remove_lifeprocess(/datum/lifeprocess/organs)
-	remove_lifeprocess(/datum/lifeprocess/sight)
-	remove_lifeprocess(/datum/lifeprocess/skin)
-	remove_lifeprocess(/datum/lifeprocess/statusupdate)
-
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if (src.selected_by)
 		var/mob/living/intangible/flock/selector = src.selected_by
@@ -834,7 +822,6 @@
 		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
 	..()
 	src.icon_state = "drone-dead"
-	src.reduce_lifeprocess_on_death()
 	src.set_density(FALSE)
 	src.desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")

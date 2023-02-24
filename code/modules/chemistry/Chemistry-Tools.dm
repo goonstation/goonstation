@@ -546,11 +546,13 @@ proc/ui_describe_reagents(atom/A)
 		if(!IN_RANGE(AM, targetDoor, 1)) //not in range or AM is null
 			src.set_loc(get_turf(targetDoor))
 			src.reagents.reaction(get_turf(targetDoor))
+			src.reagents.clear_reagents()
 			src.visible_message("<span class='alert'>[src] falls from \the [targetDoor][splash? ", splashing its contents on the floor" : ""].</span>")
 		else //we're in range, splash the AM, splash the floor
 			logTheThing(LOG_COMBAT, AM, "Victim of bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
 			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
 			src.reagents.reaction(get_turf(targetDoor)) //half on the floor
+			src.reagents.clear_reagents()
 			if(ishuman(AM))
 				//the bucket lands on your head for maximum comedy
 				var/mob/living/carbon/human/H = AM
