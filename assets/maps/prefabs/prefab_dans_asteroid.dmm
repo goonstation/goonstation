@@ -875,7 +875,9 @@
 	},
 /area/prefab/discount_dans_asteroid)
 "JH" = (
-/obj/machinery/atmospherics/pipe/tank/air/north,
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 1
+	},
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Kl" = (

@@ -765,6 +765,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/syndicate_teleporter)
+"alW" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "amf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -8848,6 +8860,17 @@
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"dDm" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/medical/medbay)
 "dDs" = (
 /obj/disposalpipe/segment,
 /obj/table/auto,
@@ -8860,6 +8883,22 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"dDw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "dDK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11471,25 +11510,6 @@
 "eKF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
-"eKV" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/unary/cold_sink/freezer/west,
-/turf/simulated/floor/bluewhite{
-	dir = 5
-	},
-/area/station/medical/medbay)
 "eKX" = (
 /obj/decal/cleanable/blood,
 /obj/machinery/atmospherics/unary/outlet_injector,
@@ -17302,16 +17322,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"hkw" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "hkE" = (
 /obj/fitness/weightlifter,
 /obj/disposalpipe/segment/brig,
@@ -17402,6 +17412,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"hni" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/simple{
+	dir = 9
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "hnr" = (
 /obj/decal/poster/wallsign/stencil/left/r,
 /obj/decal/poster/wallsign/stencil/right/y,
@@ -24533,6 +24555,10 @@
 "koq" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/utility)
+"kos" = (
+/mob/living/critter/small_animal/dog/blair,
+/turf/simulated/floor/wood,
+/area/station/bridge/hos)
 "kou" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -33350,20 +33376,6 @@
 /obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"oaC" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "oaM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36972,15 +36984,6 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
-"pII" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "delivery2";
-	tag = ""
-	},
-/obj/machinery/atmospherics/unary/cryo_cell/north,
-/turf/simulated/floor/specialroom/gym,
-/area/station/medical/medbay)
 "pIL" = (
 /obj/stool/chair/yellow,
 /obj/disposalpipe/segment/horizontal,
@@ -38630,16 +38633,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-"qrs" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/northwest,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "qrD" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -39575,15 +39568,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_north)
-"qKg" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "qKt" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
@@ -40308,6 +40292,17 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/secoffquarters)
+"qZQ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/simple{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "qZZ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/horizontal,
@@ -45184,6 +45179,27 @@
 /obj/item/clothing/mask/owl_mask,
 /turf/simulated/grass,
 /area/station/garden/owlery)
+"sZB" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/station/medical/medbay)
 "sZR" = (
 /obj/cable{
 	d1 = 1;
@@ -54645,10 +54661,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/sand,
 /area/station/bridge)
-"xcv" = (
-/mob/living/critter/small_animal/dog/blair,
-/turf/simulated/floor/wood,
-/area/station/bridge/hos)
 "xcI" = (
 /obj/table/glass/auto,
 /obj/machinery/light_switch/east,
@@ -86972,7 +86984,7 @@ aVd
 aVd
 aVd
 rPH
-qKg
+qZQ
 gef
 gef
 tdg
@@ -87274,7 +87286,7 @@ ldV
 uQG
 sPi
 msh
-hkw
+alW
 gZP
 gZP
 gZP
@@ -89986,7 +89998,7 @@ ltz
 cNZ
 ljs
 uIQ
-pII
+dDm
 seX
 rEt
 nPx
@@ -90590,7 +90602,7 @@ eWY
 fab
 ljs
 iGz
-pII
+dDm
 hIW
 jgO
 rEU
@@ -91502,7 +91514,7 @@ xfg
 xfg
 xfg
 wnF
-qrs
+hni
 wgB
 irB
 oAH
@@ -92099,7 +92111,7 @@ azq
 ohv
 qsM
 ljs
-eKV
+sZB
 suv
 qkb
 hII
@@ -109929,7 +109941,7 @@ fAg
 fAg
 nQE
 htx
-oaC
+dDw
 fAg
 kqR
 kSN
@@ -110255,7 +110267,7 @@ dPi
 nZl
 aJe
 kFi
-xcv
+kos
 ruX
 aJe
 aVl
