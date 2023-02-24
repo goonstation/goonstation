@@ -262,7 +262,7 @@
 				A.eject = 0
 				A.UpdateIcon()
 
-			for_by_tcl(G, /obj/critter/dog/george)
+			for_by_tcl(G, /mob/living/critter/small_animal/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return

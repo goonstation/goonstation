@@ -349,6 +349,7 @@
 			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
 			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
 			if(!foiled)
+				logTheThing(LOG_COMBAT, user, "was instantly braindeath killed by [src] at [log_loc(src)].")
 				user.take_brain_damage(1000)
 			else
 				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")

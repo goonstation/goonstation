@@ -603,10 +603,22 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	can_lie = FALSE
+	ai_type = /datum/aiHolder/dog
+	is_npc = TRUE
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.
+	var/attack_damage = 3
+	///The item we run after if we are playing fetch
+	var/obj/item/fetch_item = null
+	///Who threw the item we are fetching?
+	var/mob/living/fetch_playmate = null
 	pull_w_class = W_CLASS_BULKY
+
+	New(loc)
+		. = ..()
+		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -619,7 +631,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter
+		HH.limb = new /datum/limb/small_critter/med
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -677,6 +689,45 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+	Life(datum/controller/process/mobs/parent)
+		if (..())
+			return TRUE
+
+		//Dogs bark sometimes
+		if (src.ai?.enabled && prob(5))
+			src.emote("scream", TRUE)
+
+	critter_attack(var/the_target)
+		if (istype(the_target, /mob))
+			var/mob/target = the_target
+			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
+			if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+				src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
+				pounce.handleCast(target)
+				return
+			src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+			playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1, -1, 1.3)
+			random_brute_damage(target, src.attack_damage, 1)
+
+	disposing()
+		. = ..()
+		UnregisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY)
+
+	proc/throw_response(target, obj/item/item, mob/thrower)
+		// Only ai dogs should play fetch
+		if (src == thrower || is_incapacitated(src) || !istype(item) || !src.ai?.enabled || length(src.ai.priority_tasks) > 0)
+			return
+		if(prob(30)) //sometimes dogs don't feel like playing fetch
+			return
+		var/obj/item/the_item = item
+		if (the_item.w_class >= W_CLASS_NORMAL)
+			return
+		src.fetch_item = item
+		src.fetch_playmate = thrower
+		src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch, list(src.ai, src.ai.default_task))
+		src.ai.interrupt()
+		src.visible_message("<span class='alert'>[src] barks and starts running after [item].</span>")
+		src.emote("scream")
 
 	pug
 		weak
@@ -821,17 +872,17 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 
 /* -------------------- Shiba -------------------- */
-
 /mob/living/critter/small_animal/dog/shiba
 	icon_state = "shiba"
 	icon_state_dead = "shiba-lying"
 	dogtype = "shiba"
 	var/randomize_shiba = 1
+	var/static/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 	New()
 		..()
 		if (src.randomize_shiba)
-			src.name = pick(shiba_names)
+			src.name = pick(src.shiba_names)
 			src.real_name = src.name
 
 	weak
@@ -858,6 +909,23 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	icon_state = "patrick"
 	icon_state_dead = "patrick-dead"
 	dogtype = "patrick"
+
+/* -------------------- Blair -------------------- */
+
+/mob/living/critter/small_animal/dog/blair
+	name = "Blair"
+	real_name = "Blair"
+	icon_state = "pug"
+	dogtype = "pug"
+
+	attack_hand(mob/user)
+		if (prob(5) && isalive(src) && ispug(user))
+			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+
+/mob/living/critter/small_animal/dog/george/orwell
+	name = "Orwell"
+	icon_state = "corgi"
+	dogtype = "corgi"
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
