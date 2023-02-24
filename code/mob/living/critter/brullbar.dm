@@ -168,8 +168,9 @@
 			return
 
 	can_critter_attack()
+		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		return can_act(src,TRUE) && !frenzy.disabled // so they can't attack you while frenzying
+		return can_act(src,TRUE) && !frenzy.disabled || !fadeout.disabled // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -185,17 +186,17 @@
 			var/mob/living/silicon/robot/BORG = silicon
 			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
 				src.visible_message("<span class='alert'><B>[src] grabs [BORG.name]'s head and wrenches it right off!</B></span>")
-				playsound(src, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
-				playsound(src, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				src.visible_message("<span class='alert'><B>[src] pounds on [BORG.name]'s head furiously!</B></span>")
-				playsound(src, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				BORG.part_head.ropart_take_damage(rand(20,40),0)
 		else
 			src.visible_message("<span class='alert'><B>[src] smashes [silicon] furiously!</B></span>")
-			playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 			random_brute_damage(silicon, 15, 0)
 
 	proc/go_invis()
