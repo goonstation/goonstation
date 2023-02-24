@@ -6,7 +6,9 @@
 /turf/simulated/floor/engine,
 /area/prefab/sequestered_cloner)
 "aG" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "bm" = (
@@ -564,7 +566,9 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "EE" = (
@@ -1009,7 +1013,7 @@
 /turf/simulated/floor/yellow,
 /area/prefab/sequestered_cloner)
 "WS" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "WX" = (

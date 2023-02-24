@@ -11485,7 +11485,9 @@
 	pixel_x = 10
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/unary/cold_sink/freezer/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -36978,7 +36980,9 @@
 	icon_state = "delivery2";
 	tag = ""
 	},
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay)
 "pIL" = (

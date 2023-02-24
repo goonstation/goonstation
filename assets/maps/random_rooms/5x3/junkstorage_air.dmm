@@ -31,7 +31,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "R" = (
-/obj/machinery/atmospherics/valve/vertical,
+/obj/machinery/atmospherics/valve,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
