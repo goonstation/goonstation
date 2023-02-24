@@ -1601,7 +1601,7 @@ datum
 						if (ishuman(M))
 							logTheThing(LOG_COMBAT, M, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
-						new /obj/critter/dog/george (Mturf)
+						new /mob/living/critter/small_animal/dog/george (Mturf)
 					return
 
 				..()
