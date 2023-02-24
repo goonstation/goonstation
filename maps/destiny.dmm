@@ -2282,7 +2282,7 @@
 	name = "Head of Personnel's Quarters"
 	})
 "aiU" = (
-/mob/living/critter/small_animal/dog/george/blair,
+/mob/living/critter/small_animal/dog/blair,
 /obj/machinery/firealarm{
 	dir = 4;
 	layer = 3.5;
