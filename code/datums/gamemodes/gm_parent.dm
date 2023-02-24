@@ -184,10 +184,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				if (traitorwin)
 					if (traitor.current)
 						traitor.current.unlock_medal("MISSION COMPLETE", 1)
-					if (traitor.special_role == ROLE_WIZARD && traitor.current)
-						traitor.current.unlock_medal("You're no Elminster!", 1)
-					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
-						traitor.current.unlock_medal("Cream of the Crop", 1)
 					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
 				else
 					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
