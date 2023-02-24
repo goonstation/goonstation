@@ -9,7 +9,7 @@
 "aj" = (
 /obj/lattice{
 	dir = 9;
-	""icon_state = "lattice-dir"
+	icon_state = "lattice-dir"
 	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
