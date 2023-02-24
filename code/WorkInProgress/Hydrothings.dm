@@ -309,7 +309,7 @@ obj/item/paper/hootagenhint
 	desc = "This pipe is kinda warm. Huh."
 	interesting = "Radiological decay detected."
 
-/obj/decal/fakeobjects/pipe/sarin
+/obj/decal/fakeobjects/pipe/sarin // will change to saxitoxin after updating owlery map file
 	desc = "This pipe seems totally normal."
 	interesting = "Trace amounts of hazardous nerve agent detected."
 

@@ -66914,7 +66914,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTN" = (
-/obj/critter/zombie/hogan,
+/obj/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -67240,6 +67240,17 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"eip" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/tree{
+	icon_state = "snowtree";
+	pixel_y = -1;
+	pixel_x = -18
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eiT" = (
 /obj/item/reagent_containers/vending/bag/larger{
 	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
@@ -67969,6 +67980,11 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"fBu" = (
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -69279,10 +69295,15 @@
 	},
 /area/iomoon/base)
 "hSM" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	id = "virvadoor"
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
 	},
-/turf/unsimulated/floor/plating,
+/obj/adventurepuzzle/triggerer/trigger{
+	id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "hSU" = (
 /turf/unsimulated/floor/void,
@@ -69391,41 +69412,20 @@
 	},
 /area/crunch)
 "iho" = (
-/obj/storage/secure/closet/fridge{
-	desc = "It looks like a fridge despite the fancy title written on the side. It's extremely scratched and dented all over.";
-	name = "Mark VI Extreme Conditions Cryogenic Storage Unit"
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
 	},
-/obj/item/storage/ntsc_pouch{
-	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
-	name = "stained tacticool pouch";
-	pixel_x = 5;
-	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = -15
 	},
-/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
-	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
-	name = "mystical fun guy";
-	pixel_x = -4;
-	pixel_y = -3
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
 	},
-/obj/item/clothing/mask/mime{
-	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
-	name = "chewed-up mime mask";
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/clothing/under/scrub/purple{
-	name = "old medical scrubs";
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti,
-/obj/critter/domestic_bee/creepy{
-	name = "Virvatulbee"
-	},
-/obj/effects/precipitation/snow/grey/tile,
-/obj/map/light/dimred,
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
@@ -69745,8 +69745,8 @@
 	})
 "iFW" = (
 /obj/admin_plaque{
-	desc = "DO NOT LET IT OUT";
-	name = "The Secure Vault";
+	desc = "<< sound not welcome";
+	name = "Virvatuli's Studio";
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/grey/side{
@@ -70184,6 +70184,18 @@
 /obj/machinery/cashreg,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"jvd" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/decoration/syndcorpse10{
+	desc = "... but where is the rest?";
+	name = "pair of legs";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "jvG" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/machinery/light,
@@ -70505,13 +70517,20 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "kcz" = (
-/obj/item/parts/human_parts/arm/left{
-	dir = 4
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
 	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
+/obj/table/clothred/auto{
+	desc = "The tablecloth definitely isn't there to hide anything.";
+	name = "cool table"
 	},
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/item/decoration/virvase{
+	anchored = 1;
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
@@ -71016,6 +71035,13 @@
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"lfV" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/stone/snow/random,
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lgD" = (
 /obj/item/paper/book/from_file/the_trial{
 	pixel_x = -8;
@@ -72457,7 +72483,7 @@
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
 "nBd" = (
-/turf/unsimulated/floor/auto/snow/rough,
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "nBO" = (
 /obj/stool/chair/couch{
@@ -72715,11 +72741,13 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/se,
 /area/centcom/offices/rodney)
 "nRm" = (
-/obj/effects/precipitation/snow/grey/tile,
-/obj/decal/cleanable/blood{
-	icon_state = "smear1"
+/obj/critter/domestic_bee/creepy{
+	name = "Virvatulbee"
 	},
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "nRU" = (
 /obj/table/glass/auto,
@@ -75857,6 +75885,12 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
+"tfB" = (
+/obj/effects/precipitation/snow/grey/tile,
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "tib" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -75864,15 +75898,9 @@
 /turf/unsimulated/floor/caution/north,
 /area/drone/office)
 "tij" = (
-/obj/machinery/door_control{
-	desc = "A button set into the wall. You probably shouldn't press this.";
-	id = "virvadoor";
-	name = "curious button";
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/grey/side{
-	dir = 1
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -75919,15 +75947,7 @@
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
 "tlW" = (
-/obj/item/organ/eye/left{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/effects/precipitation/snow/grey/tile,
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/turf/unsimulated/floor/auto/snow/rough,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "tma" = (
 /obj/storage/crate/bin{
@@ -76576,14 +76596,22 @@
 	},
 /area/titlescreen)
 "uyE" = (
-/obj/item/organ/spleen{
-	pixel_y = -4
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = 3;
+	pixel_y = 10
 	},
-/obj/effects/precipitation/snow/grey/tile,
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
+/obj/item/clothing/ears/earmuffs{
+	anchored = 1;
+	desc = "Overpriced, but damn do they sound good.";
+	icon_state = "radio";
+	name = "EarbleedDynamic 5p355 Studio Headphones";
+	pixel_x = -11;
+	pixel_y = 4
 	},
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
 "uzz" = (
 /obj/table/nanotrasen/auto,
@@ -76677,15 +76705,14 @@
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "uFm" = (
-/obj/dialogueobj/securitycorpse7{
-	mouse_opacity = 0
+/obj/shrub/snow/random{
+	pixel_x = -6;
+	pixel_y = 10
 	},
-/obj/effects/precipitation/snow/grey/tile,
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor2"
-	},
-/turf/unsimulated/floor/auto/snow/rough,
-/area/centcom/offices/virvatuli)
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uFz" = (
 /obj/lattice{
 	dir = 5;
@@ -76952,12 +76979,51 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "vdP" = (
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
-	name = "reminder"
+/obj/item/device/light/glowstick/green_on{
+	pixel_y = -6
 	},
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/storage/secure/closet/fridge{
+	name = "incredible closetfridge"
+	},
+/obj/item/storage/ntsc_pouch{
+	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
+	name = "stained tacticool pouch";
+	pixel_x = 5;
+	pixel_y = -5;
+	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	desc = "Incredibly stinky.";
+	name = "foul-smelling mystery meat";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
+	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
+	name = "mystical fun guy";
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/mime{
+	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
+	name = "chewed-up mime mask";
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/clothing/under/scrub/purple{
+	name = "old medical scrubs";
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/security_badge{
+	badge_owner_job = "Head of Security";
+	badge_owner_name = "Elika Zamani";
+	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
+	name = "scratched security badge";
+	pixel_x = 9;
+	pixel_y = -12
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "veg" = (
 /obj/table/wood/auto/desk,
@@ -77262,6 +77328,30 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"vzj" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/paper/book/from_file/DNDrulebook{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/paper/book/from_file/pocketguide/medical{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
+/area/centcom/offices/virvatuli)
 "vAW" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77274,8 +77364,18 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "vBO" = (
-/obj/effects/precipitation/snow/grey/tile,
-/turf/unsimulated/floor/auto/snow/rough,
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
@@ -78381,6 +78481,13 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
+"xya" = (
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "xyS" = (
 /obj/item/reagent_containers/food/snacks/breadloaf{
 	pixel_y = 12;
@@ -152947,14 +153054,14 @@ aES
 aES
 ruY
 aES
-aES
-aES
-aES
-aES
 wel
+tfB
+eip
+fBu
+tij
 vBO
 tlW
-vBO
+xya
 kcz
 wel
 iFW
@@ -153249,14 +153356,14 @@ aES
 aES
 aES
 aES
-aES
-aES
-caF
-aES
 wel
+tfB
+jvd
+fBu
+tij
 iho
 nRm
-uFm
+nBd
 nBd
 hSM
 sJH
@@ -153551,17 +153658,17 @@ aES
 aES
 kpg
 aES
-aES
-aES
-aES
-aES
 wel
+lfV
+tfB
+uFm
+tij
 uyE
-vBO
-vBO
+vzj
+nBd
 vdP
 wel
-tij
+sJH
 vij
 wel
 dxQ
@@ -153853,10 +153960,10 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
+wel
+wel
+wel
+wel
 wel
 wel
 wel

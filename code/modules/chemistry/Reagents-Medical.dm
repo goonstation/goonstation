@@ -1298,7 +1298,7 @@ datum
 			var/total_misstep = 0
 			value = 18 // 5 4 5 3 1
 			threshold = THRESHOLD_INIT
-			var/list/flushed_reagents = list("sarin")
+			var/list/flushed_reagents = list("saxitoxin")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))

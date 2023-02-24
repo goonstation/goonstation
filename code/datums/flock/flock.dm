@@ -110,11 +110,10 @@ var/flock_signal_unleashed = FALSE
 				F.release_control()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
-				var/turf/T = get_turf(origin)
-				if(T.z != Z_LEVEL_STATION)
+				if(!src.z_level_check(origin))
 					boutput(user, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
 				else
-					user.set_loc(T)
+					user.set_loc(get_turf(origin))
 		if("rally")
 			var/mob/living/critter/flock/C = locate(params["origin"])
 			if(C?.flock == src) // not sure when it'd apply but in case

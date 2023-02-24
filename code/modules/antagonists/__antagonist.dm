@@ -20,6 +20,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Whether the addition or removal of this antagonist role is announced to the player.
+	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
@@ -57,13 +59,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear = TRUE, silent)
+	proc/remove_self(take_gear = TRUE)
 		if (take_gear)
 			src.remove_equipment()
 
 		src.remove_objectives()
 
-		if (!silent)
+		if (!src.silent && !src.pseudo)
 			src.announce_removal()
 			src.announce_objectives()
 
@@ -77,6 +79,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		SHOULD_NOT_OVERRIDE(TRUE)
 
 		src.assigned_by = source
+		src.silent = silent
 
 		// Late setup has special logic, and is used for jobs like latejoining traitors that lack uplinks if given their equipment before their job.
 		// It will pause the setup proc for up to 60 seconds by sleeping every second, then checking if the owner's assigned role exists.
@@ -100,13 +103,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
-		if (!silent)
+		if (!src.silent)
 			src.announce()
 			src.do_popup()
 
 		if (do_objectives)
 			src.assign_objectives()
-			if (!silent)
+			if (!src.silent)
 				src.announce_objectives()
 
 		if (do_relocate)
@@ -199,8 +202,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (!isnull(success_medal) && log_data)
-				owner.current.unlock_medal(success_medal, TRUE)
+			if (log_data)
+				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
+				if (!isnull(success_medal))
+					owner.current.unlock_medal(success_medal, TRUE)
 		else
 			. += "<span class='alert'><b>\The [src.display_name] has failed!</b></span>"
 

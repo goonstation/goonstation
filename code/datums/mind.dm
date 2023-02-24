@@ -241,7 +241,7 @@ datum/mind
 	proc/remove_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
-				A.remove_self(TRUE, FALSE)
+				A.remove_self(TRUE)
 				src.antagonists.Remove(A)
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
@@ -253,7 +253,7 @@ datum/mind
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
-			A.remove_self(TRUE, FALSE)
+			A.remove_self(TRUE)
 			src.antagonists.Remove(A)
 			qdel(A)
 		src.special_role = null
