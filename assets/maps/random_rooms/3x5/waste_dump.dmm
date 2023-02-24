@@ -7,7 +7,8 @@
 /area/dmm_suite/clear_area)
 "i" = (
 /obj/decal/cleanable/machine_debris/radioactive{
-	pixel_x = -21
+	pixel_x = -21;
+	layer = 3.1
 	},
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
