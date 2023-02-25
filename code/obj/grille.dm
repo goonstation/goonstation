@@ -73,7 +73,7 @@
 		corroded
 			icon_state = "grille-corroded"
 		melted
-			icon_state = "grille-corroded"
+			icon_state = "grille-melted"
 	catwalk
 		name = "catwalk surface"
 		icon = 'icons/obj/catwalk.dmi'
