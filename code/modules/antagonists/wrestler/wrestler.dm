@@ -17,7 +17,12 @@
 			APPLY_ATOM_PROPERTY(src.owner.current, PROP_MOB_PASSIVE_WRESTLE, "wrestledoodle")
 
 		if (fake_equipment)
-			var/datum/abilityHolder/wrestler/A = src.owner.current.get_ability_holder(/datum/abilityHolder/wrestler/fake)
+			var/datum/abilityHolder/A
+			if (ismobcritter(src.owner.current) && !isnull(src.owner.current.abilityHolder))
+				A = src.owner.current.abilityHolder
+			else
+				A = src.owner.current.get_ability_holder(/datum/abilityHolder/wrestler/fake)
+
 			if (A)
 				src.ability_holder = A
 			else
@@ -30,7 +35,12 @@
 			src.ability_holder.addAbility(/datum/targetable/wrestler/slam/fake)
 
 		else
-			var/datum/abilityHolder/wrestler/A = src.owner.current.get_ability_holder(/datum/abilityHolder/wrestler)
+			var/datum/abilityHolder/A
+			if (ismobcritter(src.owner.current) && !isnull(src.owner.current.abilityHolder))
+				A = src.owner.current.abilityHolder
+			else
+				A = src.owner.current.get_ability_holder(/datum/abilityHolder/wrestler)
+
 			if (A)
 				src.ability_holder = A
 			else
