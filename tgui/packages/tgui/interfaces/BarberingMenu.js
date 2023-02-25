@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @copyright 2023 Caio029 (https://github.com/caiofrancisco)
+ * @license MIT
+ */
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ByondUi, Icon, Image, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
