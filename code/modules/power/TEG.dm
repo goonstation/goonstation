@@ -73,7 +73,7 @@
 	var/variant_b_active = FALSE
 	var/warning_active = FALSE
 
-	anchored = 1
+	anchored = 2
 	density = 1
 
 	var/datum/pump_ui/ui
@@ -575,7 +575,7 @@ datum/pump_ui/circulator_ui
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 1
+	anchored = 2
 	density = 1
 	//var/lightsbusted = 0
 

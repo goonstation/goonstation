@@ -160,16 +160,16 @@ export const NuclearReactor = (props, context) => {
             <Flex.Item>
               <Box>Control Rod Insertion:</Box>
               <RoundGauge
-                minValue={-100}
-                maxValue={0}
+                minValue={0}
+                maxValue={100}
                 size={5}
-                value={-actualControlRodLevel}
-                format={value => round(-value, 1)+"%"}
-                alertAfter={-5}
+                value={actualControlRodLevel}
+                format={value => round(value, 1)+"%"}
+                alertBefore={20}
                 ranges={{
-                  "good": [-100, -30],
-                  "average": [-30, -10],
-                  "bad": [-10, 0],
+                  "bad": [0, 20],
+                  "average": [20, 80],
+                  "good": [80, 100],
                 }} />
             </Flex.Item>
             <Flex.Item>

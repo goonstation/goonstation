@@ -684,7 +684,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	job = list("Engineer")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
@@ -1134,9 +1134,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A special hacked hypospray, capable of holding any chemical!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
-/datum/syndicate_buylist/surplus/sarin_grenade
-	name = "Sarin Grenade"
-	item = /obj/item/chem_grenade/sarin
+/datum/syndicate_buylist/surplus/saxitoxin_grenade
+	name = "Saxitoxin Grenade"
+	item = /obj/item/chem_grenade/saxitoxin
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP

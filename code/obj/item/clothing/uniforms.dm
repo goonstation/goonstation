@@ -214,7 +214,7 @@
 
 
 	nb
-		name = "nb pride jumpsuit"
+		name = "\improper NB pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the non-binary pride flag."
 		icon_state ="nb"
 		item_state = "nb"
