@@ -564,7 +564,7 @@ Code:
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
-			ref = locate(type) in machine_registry[MACHINES_POWER]
+			ref = locate(type) in machine_registry[MACHINES_POWER || MACHINES_FISSION]
 			if(ref?.z != 1) ref = null
 		. = ref
 
@@ -586,7 +586,6 @@ Code:
 		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
-
 
 		. = src.return_text_header()
 
