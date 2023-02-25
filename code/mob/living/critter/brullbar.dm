@@ -98,6 +98,8 @@
 		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 		if (src.is_king) // kings are built like tanks
 			src.add_stam_mod_max("brullbar", 100)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "brullbar", 20)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "brullbar", 20)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "brullbar", 50)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 50)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "brullbar", 10)
