@@ -559,6 +559,8 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
+	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuclear_reactor
+	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -582,6 +584,11 @@ Code:
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
+		//NUKE
+		nuclear_reactor = find_machinery(nuclear_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
+		turbine = find_machinery(turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
+		// needs: temp, radiation level, control rod level
+		// possibly turbine rpm and stator load also
 		. = src.return_text_header()
 
 		if (generator)
@@ -644,6 +651,20 @@ Code:
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
 
+		if (turbine)
+			engine_found = TRUE
+			. += "<BR><h4>Turbine Status</h4>"
+			. += "Output : [engineering_notation(turbine.lastgen)]W<BR>"
+			. += "RPM : [engineering_notation(turbine.RPM)]RPM<BR>"
+			. += "Stator Load: [engineering_notation(turbine.stator_load)]W/RPM<BR>"
+			. += "Turbine contents temperature : [turbine.air_contents?.temperature]K<BR>"
+			. += "<BR>"
+		if(nuclear_reactor)
+			. += "<BR><h4>Reactor Status</h4>"
+			. += "Radiation Level: [engineering_notation(nuclear_reactor.radiationLevel)]<BR>"
+			. += "Reactor temperature: [nuclear_reactor.temperature]K<BR>"
+			// no idea how i would show control rods lol
+			. += "<BR>"
 		if(!engine_found)
 			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
