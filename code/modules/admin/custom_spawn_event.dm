@@ -5,7 +5,7 @@
 	///If true, only a single ghost will be spawned and placed directly into the mob
 	var/spawn_directly = FALSE
 	///A custom location to spawn the mobs (can also be a landmark string or list of landmarks)
-	var/turf/spawn_loc = LANDMARK_PESTSTART
+	var/turf/spawn_loc = LANDMARK_LATEJOIN
 	///How long does the popup stay up for?
 	var/ghost_confirmation_delay = 30 SECONDS
 	///How many copies of thing_to_spawn do we want?
@@ -70,26 +70,29 @@
 
 		for (var/datum/mind/mind in candidates)
 			var/mob/new_mob = src.get_mob_instance()
+
 			new_mob.ai?.die()
+			if (ishuman(new_mob))
+				var/mob/living/carbon/human/human = new_mob
+				human.ai_set_active(FALSE)
+
 			mind.transfer_to(new_mob)
+
 			if (src.antag_role == "antagonist") //no datum, but we still want them to be a generic antag
 				antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
 			else if (src.antag_role)
 				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+				if (!mind.get_antagonist(src.antag_role)) //incompatible antag type, fall back to generic antag
+					antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
 			else
 				remove_antag(new_mob, usr, TRUE, TRUE)
 				mind = new_mob.mind
+
 			if (length(src.objective_text))
 				if (src.antag_role)
 					new /datum/objective/regular(src.objective_text, mind, mind.get_antagonist(src.antag_role))
 				else
 					new /datum/objective/crew/custom(src.objective_text, mind)
-
-/datum/spawn_event/fire_ele
-	thing_to_spawn = /mob/living/critter/fire_elemental
-	spawn_loc = list(LANDMARK_PESTSTART, LANDMARK_MONKEY, LANDMARK_BLOBSTART, LANDMARK_KUDZUSTART)
-	amount_to_spawn = 3
-	antag_role = TRUE
 
 /datum/spawn_event_editor
 	var/datum/spawn_event/spawn_event = new()

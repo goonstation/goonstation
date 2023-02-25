@@ -61,6 +61,7 @@ export const SpawnEvent = (props, context) => {
               {antag_role && (
                 <Button color="red" onClick={() => act("clear_antag")}>x</Button>
               )}
+              <Button circular icon="circle-exclamation" tooltip="Most antagonists are only compatible with human mobs." />
             </LabeledList.Item>
             <LabeledList.Item label="Objective text">
               <TextArea
