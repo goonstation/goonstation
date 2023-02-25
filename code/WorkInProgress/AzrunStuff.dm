@@ -946,7 +946,7 @@
 	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
 	can_swap_cell = FALSE
 
-
+#ifdef MACHINE_PROCESSING_DEBUG
 /datum/power_usage_viewer
 	var/mob/target
 	var/datum/machine_power_data/power_data
@@ -1007,4 +1007,5 @@
 			var/obj/machinery/M = locate(params["ref"])
 			if(istype(M) && target?.client?.holder)
 				target.client.jumptoturf(get_turf(M))
+#endif
 
