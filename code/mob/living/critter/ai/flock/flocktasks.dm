@@ -651,7 +651,7 @@ stare
 				return
 			else
 				// we've opened a HUD, do a fake HUD click
-				container_target.hud.relay_click("boxes", F, dummy_params)
+				container_target.storage.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					F.drop_item()
 					return
