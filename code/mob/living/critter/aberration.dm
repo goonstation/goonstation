@@ -5,6 +5,7 @@
 		terms, a goddamned science ghost."}
 	icon_state = "aberration"
 	density = TRUE
+	anchored = 1
 
 	hand_count = 1
 
