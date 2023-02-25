@@ -7,42 +7,15 @@
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	// Medbay and kitchen freezers start at correct temperature to avoid pointless busywork.
 	cryo
 		name = "freezer (cryo cell)"
 		current_temperature = 73.15
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	kitchen
 		name = "freezer (kitchen)"
 		current_temperature = 150
 		on = 1
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	New()
 		..()
