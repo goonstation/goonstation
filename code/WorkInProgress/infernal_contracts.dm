@@ -582,7 +582,7 @@ obj/item/contract/wrestle
 			return 0
 		SPAWN(1 DECI SECOND)
 			sleep(0.1 SECONDS)
-			user.make_wrestler(1)
+			user.mind?.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 			user.traitHolder.addTrait("addict") //HEH
 			user.traitHolder.addTrait("clutz")
 			user.traitHolder.addTrait("leftfeet")
