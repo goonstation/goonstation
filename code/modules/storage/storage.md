@@ -8,7 +8,7 @@ Atom level procs, for things like attacking a storage with an item, close to the
 
 ## Looking to add storage to an atom?
 For the simplest case, just call `src.create_storage(/datum/storage)` as below:
-```js
+```cs
 /obj/item/basket
 	name = "basket"
 	desc = "A simple basket for holding items."
@@ -31,7 +31,7 @@ A new storage datum type should be created when a type is needed that rewrites h
 
 ## Examples
 One cool case of storage datums is giving storage to clothing items. An example is below:
-```js
+```cs
 /obj/item/clothing/suit/space/emerg/pocketed
 	name = "emergency suit"
 	desc = "A standard emergency suit, with some pockets on the front."
