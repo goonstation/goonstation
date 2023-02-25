@@ -249,7 +249,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "aV" = (
@@ -257,7 +259,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/decal/cleanable/water{
 	desc = "An old puddle of cryo fluid.";
@@ -296,7 +300,7 @@
 	icon_state = "conduit";
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
@@ -316,7 +320,7 @@
 	icon_state = "conduit";
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "bc" = (
@@ -331,7 +335,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/noGenerate)
 "be" = (
@@ -339,7 +345,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bf" = (
@@ -365,7 +373,7 @@
 	icon_state = "conduit";
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
@@ -378,7 +386,7 @@
 	icon_state = "conduit";
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bj" = (
@@ -419,7 +427,7 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/screwdriver,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bp" = (
@@ -427,7 +435,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/item/cable_coil,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
@@ -457,7 +465,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
@@ -466,7 +474,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bw" = (
@@ -479,7 +487,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "by" = (

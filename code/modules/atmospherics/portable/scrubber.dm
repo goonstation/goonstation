@@ -148,6 +148,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
+	if (src.holding)
+		SEND_SIGNAL(src.holding.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PortableScrubber", name)

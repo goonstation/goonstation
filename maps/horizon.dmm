@@ -8765,7 +8765,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quartersB)
 "axH" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "axI" = (

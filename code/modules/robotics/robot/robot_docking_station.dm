@@ -1,3 +1,7 @@
+/// Amount of 'free' power that docking stations give. For each 1 unit of APC cell power, cyborgs will recharge this many units of cyborg cell power.
+/// Band-aid.
+#define MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER 3
+
 TYPEINFO(/obj/machinery/recharge_station)
 	mats = 10
 
@@ -260,7 +264,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 				return
 			else
 				var/added_charge = src.chargerate * mult
-				R.cell.charge += added_charge
+				R.cell.charge += added_charge * MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER
 				src.use_power(added_charge / CELLRATE)
 				return
 
@@ -1026,3 +1030,5 @@ TYPEINFO(/obj/machinery/recharge_station)
 					if (cell_to_eject.loc == src)
 						user.put_in_hand_or_eject(cell_to_eject)
 			. = TRUE
+
+#undef MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER

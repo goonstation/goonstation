@@ -23,15 +23,6 @@
 	var/reagent_scan_active = 0
 	var/obj/item/robodefibrillator/defib
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	New()
 		..()
 		light = new /datum/light/point

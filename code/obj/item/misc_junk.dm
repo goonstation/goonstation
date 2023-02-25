@@ -50,6 +50,8 @@
 			last_laugh = world.time
 
 	process()
+		if (src.anchored)
+			return
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
