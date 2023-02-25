@@ -1147,9 +1147,9 @@ datum
 			depletion_rate = 0.2
 			penetrates_skin = 1
 			var/counter = 1
-			var/oxy_damage_target = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				var/oxy_damage_target = 0
 				if (!M) M = holder.my_atom
 				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
                                                                                         //the target goes up with time
