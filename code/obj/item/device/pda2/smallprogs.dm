@@ -587,8 +587,7 @@ Code:
 		//NUKE
 		nuclear_reactor = find_machinery(nuclear_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		turbine = find_machinery(turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
-		// needs: temp, radiation level, control rod level
-		// possibly turbine rpm and stator load also
+
 		. = src.return_text_header()
 
 		if (generator)
