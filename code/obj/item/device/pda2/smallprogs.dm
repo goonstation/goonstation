@@ -559,8 +559,6 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuclear_reactor
-	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -584,9 +582,6 @@ Code:
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
-		//NUKE
-		nuclear_reactor = find_machinery(nuclear_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
-		turbine = find_machinery(turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
 
 		. = src.return_text_header()
 
@@ -649,19 +644,23 @@ Code:
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
-
-		if (turbine)
+		// NUKE ENGINE STUFF HERE
+		if (length(by_type[/obj/machinery/power/nuclear/turbine_control]))
 			engine_found = TRUE
+			var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
+			nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
 			. += "<BR><h4>Turbine Status</h4>"
-			. += "Output : [engineering_notation(turbine.lastgen)]W<BR>"
-			. += "RPM : [engineering_notation(turbine.RPM)]RPM<BR>"
-			. += "Stator Load: [engineering_notation(turbine.stator_load)]W/RPM<BR>"
-			. += "Turbine contents temperature : [turbine.air_contents?.temperature]K<BR>"
+			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
+			. += "RPM : [engineering_notation(nuke_turbine.RPM)]RPM<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]W/RPM<BR>"
+			. += "Turbine contents temperature : [nuke_turbine.air_contents?.temperature]K<BR>"
 			. += "<BR>"
-		if(nuclear_reactor)
+		if(length(by_type[/obj/machinery/power/nuclear/reactor_control]))
+			var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
+			nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 			. += "<BR><h4>Reactor Status</h4>"
-			. += "Radiation Level: [engineering_notation(nuclear_reactor.radiationLevel)]<BR>"
-			. += "Reactor temperature: [nuclear_reactor.temperature]K<BR>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
+			. += "Reactor temperature: [nuke_reactor.temperature]K<BR>"
 			// no idea how i would show control rods lol
 			. += "<BR>"
 		if(!engine_found)
