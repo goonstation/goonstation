@@ -559,6 +559,8 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
+	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
+	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -579,6 +581,9 @@ Code:
 		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//NUKE
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
@@ -645,10 +650,8 @@ Code:
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
 		// NUKE ENGINE STUFF HERE
-		if (length(by_type[/obj/machinery/power/nuclear/turbine_control]))
+		if (nuke_turbine)
 			engine_found = TRUE
-			var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
-			nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
 			. += "<BR><h4>Turbine Status</h4>"
 			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
 			. += "RPM : [engineering_notation(nuke_turbine.RPM)]RPM<BR>"
@@ -656,8 +659,6 @@ Code:
 			. += "Turbine contents temperature : [nuke_turbine.air_contents?.temperature]K<BR>"
 			. += "<BR>"
 		if(length(by_type[/obj/machinery/power/nuclear/reactor_control]))
-			var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
-			nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature]K<BR>"
