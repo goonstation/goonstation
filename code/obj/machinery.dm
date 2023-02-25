@@ -292,15 +292,8 @@
 		return
 
 #ifdef MACHINE_PROCESSING_DEBUG
-	var/list/machines = detailed_machine_power[A]
-	if(!machines)
-		detailed_machine_power[A] = list()
-		machines = detailed_machine_power[A]
-	var/list/machine = machines[src]
-	if(!machine)
-		machines[src] = list()
-		machine = machines[src]
-	machine += -amount
+	if(!detailed_power_data) detailed_power_data = new
+	detailed_power_data.log_machine(src, -amount)
 #endif
 
 	A.use_power(amount, chan)
