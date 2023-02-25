@@ -45,17 +45,23 @@
 			var/datum/job/job = src.thing_to_spawn
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
 			SPAWN(0)
-				M.JobEquipSpawned(job.name)
+				M.JobEquipSpawned(initial(job.name))
 			return M
 
 	proc/do_spawn()
 		if (src.spawn_directly)
 			src.amount_to_spawn = 1
 		var/mob_name = src.get_mob_name()
+		var/antag_name = ""
+		if (src.antag_role)
+			for (var/datum/antagonist/antag as anything in concrete_typesof(/datum/antagonist))
+				if (initial(antag.id) == src.antag_role)
+					antag_name = initial(antag.display_name)
+					break
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as [src.amount_to_spawn > 1 ? "part of a group of" : "a"] [mob_name][src.amount_to_spawn > 1 ? "s" : ""]?")
-		text_messages.Add("You are eligible to be respawned as a [mob_name]. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as [src.amount_to_spawn > 1 ? "part of a group of" : "a"] [antag_name] [mob_name][src.amount_to_spawn > 1 ? "s" : ""]?")
+		text_messages.Add("You are eligible to be respawned as a [antag_name] [mob_name]. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of respawns. Please wait...")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
@@ -64,8 +70,9 @@
 
 		for (var/datum/mind/mind in candidates)
 			var/mob/new_mob = src.get_mob_instance()
+			new_mob.ai?.die()
 			mind.transfer_to(new_mob)
-			if (src.antag_role == TRUE) //no datum, but we still want them to be a generic antag
+			if (src.antag_role == "antagonist") //no datum, but we still want them to be a generic antag
 				antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
 			else if (src.antag_role)
 				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
@@ -149,6 +156,17 @@
 				src.spawn_event.ghost_confirmation_delay = params["spawn_delay"] //no validation, admins may href exploit if they wish
 			if ("set_amount")
 				src.spawn_event.amount_to_spawn = params["amount"]
+			if ("select_antag")
+				var/antag_ids = list("antagonist")
+				for (var/datum/antagonist/antag as anything in concrete_typesof(/datum/antagonist))
+					antag_ids |= initial(antag.id)
+				src.spawn_event.antag_role = tgui_input_list(ui.user, "Select antagonist role", "Select role", antag_ids)
+			if ("clear_antag")
+				src.spawn_event.antag_role = null
+			if ("set_spawn_directly")
+				src.spawn_event.spawn_directly = params["spawn_directly"]
+			if ("set_objective_text")
+				src.spawn_event.objective_text = params["objective_text"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
 					src.spawn_event.do_spawn()
@@ -156,7 +174,7 @@
 
 /client/proc/cmd_custom_spawn_event()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Custom Spawn Event"
+	set name = "Custom Ghost Spawn"
 	set desc = "Set up a custom player spawn event."
 	ADMIN_ONLY
 
