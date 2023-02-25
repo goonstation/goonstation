@@ -805,6 +805,14 @@
 
 // Athletic Gear
 
+TYPEINFO(/obj/item/clothing/under/shorts)
+   random_subtypes = list(/obj/item/clothing/under/shorts,
+	 												/obj/item/clothing/under/shorts/red,
+													/obj/item/clothing/under/shorts/green,
+													/obj/item/clothing/under/shorts/blue,
+													/obj/item/clothing/under/shorts/purple,
+													/obj/item/clothing/under/shorts/black)
+
 /obj/item/clothing/under/shorts
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
@@ -814,55 +822,59 @@
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
 
-	red
-		icon_state = "shortsR"
-		item_state = "shortsR"
+/obj/item/clothing/under/shorts/red
+	icon_state = "shortsR"
+	item_state = "shortsR"
 
-	green
-		icon_state = "shortsG"
-		item_state = "shortsG"
+/obj/item/clothing/under/shorts/green
+	icon_state = "shortsG"
+	item_state = "shortsG"
 
-	blue
-		icon_state = "shortsBl"
-		item_state = "shortsBl"
+/obj/item/clothing/under/shorts/blue
+	icon_state = "shortsBl"
+	item_state = "shortsBl"
 
-	purple
-		icon_state = "shortsP"
-		item_state = "shortsP"
+/obj/item/clothing/under/shorts/purple
+	icon_state = "shortsP"
+	item_state = "shortsP"
 
-	black
-		icon_state = "shortsB"
-		item_state = "shortsB"
+/obj/item/clothing/under/shorts/black
+	icon_state = "shortsB"
+	item_state = "shortsB"
 
-	psyche
-		name = "psychedelic shorts"
-		desc = "Only wear these if you don't mind people staring at your crotch."
-		icon_state = "shortsPs"
-		item_state = "shortsPs"
+/obj/item/clothing/under/shorts/psyche
+	name = "psychedelic shorts"
+	desc = "Only wear these if you don't mind people staring at your crotch."
+	icon_state = "shortsPs"
+	item_state = "shortsPs"
 
-	luchador
-		name = "luchador shorts"
-		desc = "Taken from that strange uncle's trophy cabinet."
-		icon_state = "lucha1"
-		item_state = "lucha1"
+TYPEINFO(/obj/item/clothing/under/shorts/luchador)
+   random_subtypes = list(/obj/item/clothing/under/shorts/luchador,
+	 												/obj/item/clothing/under/shorts/luchador/red,
+													/obj/item/clothing/under/shorts/luchador/green)
+/obj/item/clothing/under/shorts/luchador
+	name = "luchador shorts"
+	desc = "Taken from that strange uncle's trophy cabinet."
+	icon_state = "lucha1"
+	item_state = "lucha1"
 
-		green
-			icon_state = "lucha2"
-			item_state = "lucha2"
-		red
-			icon_state = "lucha3"
-			item_state = "lucha3"
+/obj/item/clothing/under/shorts/luchador/green
+	icon_state = "lucha2"
+	item_state = "lucha2"
+/obj/item/clothing/under/shorts/luchador/red
+	icon_state = "lucha3"
+	item_state = "lucha3"
 
-	trashsinglet
-		name = "trash bag singlet"
-		desc = "It's time for the trashman to eat garbage and smash opponents!"
-		icon_state = "literaltrash"
-		item_state = "literaltrash"
+/obj/item/clothing/under/shorts/trashsinglet
+	name = "trash bag singlet"
+	desc = "It's time for the trashman to eat garbage and smash opponents!"
+	icon_state = "literaltrash"
+	item_state = "literaltrash"
 
-	random
-		New()
-			..()
-			src.color = random_saturated_hex_color(1)
+/obj/item/clothing/under/shorts/random
+	New()
+		..()
+		src.color = random_saturated_hex_color(1)
 
 /obj/item/clothing/under/jersey
 	name = "white basketball jersey"

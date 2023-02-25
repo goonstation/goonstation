@@ -233,6 +233,7 @@ var/list/list/by_cat = list()
 
 /typeinfo/atom
 	parent_type = /typeinfo/datum
+	var/random_subtypes = null
 
 /typeinfo/turf
 	parent_type = /typeinfo/atom
@@ -466,3 +467,11 @@ proc/istypes(datum/dat, list/types)
 		if(istype(dat, type))
 			return TRUE
 	return FALSE
+
+/proc/get_random_atom(atom_type, return_instance = FALSE, return_instance_newargs = null)
+  var/typeinfo/atom/info = get_type_typeinfo(atom_type)
+  var/atom/chosen_type = pick(info.random_subtypes)
+  if (!return_instance)
+    return chosen_type
+  else
+    return new chosen_type(return_instance_newargs)
