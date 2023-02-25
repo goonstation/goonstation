@@ -732,6 +732,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	spy
 		purchase_flags = UPLINK_SPY
 
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
+
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
 	use_default_GUI = 1
@@ -778,6 +781,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	spy
 		purchase_flags = UPLINK_SPY
+
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
 
 ///Datum used to combine the bounty being claimed with the item being delivered
 /datum/bounty_claim

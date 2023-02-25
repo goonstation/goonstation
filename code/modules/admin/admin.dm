@@ -4802,16 +4802,7 @@ var/global/noir = 0
 				M.verbs += /client/proc/set_gang_base
 				tgui_alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
 			if(ROLE_OMNITRAITOR)
-				M.mind.special_role = ROLE_OMNITRAITOR
-				M.verbs += /client/proc/gearspawn_traitor
-				M.verbs += /client/proc/gearspawn_wizard
-				M.make_changeling()
-				M.make_vampire()
-				M.make_werewolf()
-				M.make_wrestler(1)
-				M.make_grinch()
-				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				M.show_antag_popup("traitoromni")
+				M.mind.add_antagonist(ROLE_OMNITRAITOR, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return

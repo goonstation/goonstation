@@ -128,7 +128,7 @@
 			if ("traitorhard")
 				window_title = "Hardmode Traitor Tips"
 				filename = "html/traitorTips/traitorhardTips.html"
-			if ("traitoromni")
+			if ("omnitraitor")
 				window_title = "Omni-Traitor Tips"
 				filename = "html/traitorTips/omniTips.html"
 			if ("traitorgeneric")

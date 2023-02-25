@@ -107,16 +107,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_OMNITRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.verbs += /client/proc/gearspawn_wizard
-		M.make_changeling()
-		M.make_vampire()
-		M.make_werewolf()
-		M.make_wrestler(1)
-		M.make_grinch()
-		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		M.show_antag_popup("traitoromni")
+		M.mind.add_antagonist(ROLE_OMNITRAITOR)
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
