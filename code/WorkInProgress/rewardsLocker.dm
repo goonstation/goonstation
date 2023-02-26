@@ -865,7 +865,7 @@
 				M.item_state = "detective_kim"
 				M.name = "Aerostatic Pilot Jacket"
 				M.real_name = "Aerostatic pilot jacket"
-				M.desc = "You feel centered while weawing this... Maybe you could put something in the pockets? (Base Item: [prev])"
+				M.desc = "You feel centered while wearing this... Maybe you could put something in the pockets? (Base Item: [prev])"
 				H.set_clothing_icon_dirty()
 				return 1
 
