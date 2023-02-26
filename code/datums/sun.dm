@@ -2,8 +2,9 @@
 #define ECLIPSE_PENUMBRA 1 // partial eclipse
 #define ECLIPSE_ANTUMBRA 2 // annular eclipse
 #define ECLIPSE_UMBRA 3 // total eclipse
-#define ECLIPSE_TERRESTRIAL 4 // not actually eclipsing truly, but partial blockage by clouds/water
-#define ECLIPSE_PLANETRAY 5 // night time lol. The planet you're on is eclipsing you.
+#define ECLIPSE_TERRESTRIAL 4 // not actually eclipsing truly, but partial blockage by clouds/water. aka daytime
+#define ECLIPSE_PLANETARY 5 // night time lol. The planet you're on is eclipsing you.
+#define ECLIPSE_ERROR 6 // admin nonsense
 /datum/sun
 	var/angle
 	var/dx
@@ -14,12 +15,14 @@
 	var/star = "Typhon" // Is it around Shidd, Fugg, or Typhon?
 	var/stationloc = null // where is it exactly?
 	var/eclipse_rate = null // does a planet or moon eclipse it? if no, null. If it does, how often?
-	var/eclipse_time = 20 // How long, in seconds, is the eclipse? 20 is just a default fallback value
+	var/eclipse_time = 0 // How long, in seconds, is the eclipse? 0 is just a default fallback value
 	var/eclipse_status = ECLIPSE_FALSE
-	var/visiblity = 1 //if 0, no light gets through, if 1, all light.
+	var/list/eclipse_order = list(ECLIPSE_FALSE) // what kind of eclipse defines get used in what cycle?
+	var/visibility = 1 //if 0, no light gets through, if 1, all light.
 	// ECLIPSE_UMBRA sets this to 0, ECLIPSE_FALSE sets this to 1, the others use scales.
+	var/photovoltaic_efficiency = 1 // 1 means 100% efficiency. Can be lower or higher depending on proximity to star.
 
-/datum/sun/identity_check()
+/datum/sun/proc/identity_check()
 	// this isn't just New(), so that if admin nonsense teleports the whole station, this can be called
 	// here're the default settings that can get overridden
 	rate = rand(75,125)/50 // 75% - 125% of 'standard' rotation
@@ -27,40 +30,76 @@
 		rate = -rate
 	switch (stationloc)
 		if ("void")
-			// for admin nonsense generally
+			// for admin nonsense generally, also shuttle transit
 			star = "unknown"
-			visiblity = 0
+			eclipse_status = ECLIPSE_ERROR
+			eclipse_status = list(ECLIPSE_ERROR)
+			visibility = 0
+			photovoltaic_efficiency = 0
 			rate = 0
 			angle = 0
 		if ("13")
 			/* Space Station 13, i.e. in L2 lagrange point around Rota Fortuna.
-			If the station truly sat at the L2 point, Typhon would be permanently eclipsed.
-			Most irl Lagrange placed satellites however take a lissajous orbit around the penumbra,
-			putting them in permanent sunlight with no eclipsing. If canonically there are multiple NT-13
-			stations sitting around Rota Fortuna, they'd have to do this in a sort of coordinated set of orbits.
-			The movement of the sun would also be based on, uh, the year length.
-			So the lore reason for the solars turning is that the whole map is, and that NT failed to calibrate it proper.
+			If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a
+			lissajous orbit around the umbra, making the lore reason for the solars turning is that the whole map is spinning.
 			*/
 			if (prob(50))
-				rate = -rate
-			// same as the default preexisting for now, no changes so far
+				eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA, pick(ECLIPSE_PENUMBRA, ECLIPSE_UMBRA, ECLIPSE_ANTUMBRA), ECLIPSE_PENUMBRA)
+				eclipse_rate = rand(100, 300) SECONDS
+				eclipse_time = rand(10, 300) SECONDS
+			// pretty much the same as regular but with 50% chance of random eclipsing
+		if ("solaris")
+			star = "Shidd"
+			rate = 0
+			angle = dir2angle(SOUTH)
+			photovoltaic_efficiency = 500 // solars work really well for a bit then explode lol
 		if ("travel")
 			// for ship maps, deep space. Uses a randomer randomiser
+			photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
 			star = pick("Typhon", "Fugg", "Shidd")
 			rate = rand(70,160)/50 // more range than the default
 			if(prob(50))
 				rate = -rate
-			if (prob(50)) // 50 50 chance of it going into umbra every so often
-				eclipse_rate = rand(100, 300)
-				eclipse_time = rand(10, 300)
-			return
+			if (prob(50)) // 50 50 chance of it going into shadow every so often
+				eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA, pick(ECLIPSE_PENUMBRA, ECLIPSE_UMBRA, ECLIPSE_ANTUMBRA), ECLIPSE_PENUMBRA)
+				eclipse_rate = rand(100, 300) SECONDS
+				eclipse_time = rand(10, 300) SECONDS
 		if ("abzu")
 			//oshan and technically also manta
 			star = "Fugg"
-			eclipse_status = ECLIPSE_TERRESTRIAL
+			visibility = 0.35 // time.dm shows alpha value 65% at noon, so
+			eclipse_time = 6 HOURS
+			eclipse_rate = 12 HOURS
+			eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			if (BUILD_TIME_HOUR < 3 || BUILD_TIME_HOUR > 9 && BUILD_TIME_HOUR < 15 || BUILD_TIME_HOUR > 18)
+				// oshan works off a 12 hour cycle, not 24
+				eclipse_status = ECLIPSE_PLANETARY
+				visibility = 0
+			else
+				eclipse_status = ECLIPSE_TERRESTRIAL
+				visibility = rand(80,100) // assuming cloud covers up to 20% of light
 		if ("magus")
-			//nadir
+			//nadir. We're going to assume it's tidally locked with typhon seeing as its light level doesn't change. Permanent day.
 			eclipse_status = ECLIPSE_TERRESTRIAL
+			eclipse_order = list(ECLIPSE_TERRESTRIAL)
+			rate = 0
+			angle = rand(0, 360)
+			visibility = 0.06 // seeing as the lighting is 0 0 50, it's about 6% surface lighting
+			photovoltaic_efficiency = 1.5 // magus is quite close to typhon
+		if ("earth")
+			//centcomm mainly
+			star = "the sun"
+			eclipse_time = 12 HOURS
+			eclipse_rate = 24 HOURS
+			eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			if (BUILD_TIME_HOUR < 6 || BUILD_TIME_HOUR >= 18)
+				eclipse_status = ECLIPSE_PLANETARY
+				visibility = 0
+			else
+				eclipse_status = ECLIPSE_TERRESTRIAL
+				visibility = rand(80,100) // assuming cloud covers up to 20% of light
+
+
 
 /datum/sun/New()
 	..()
@@ -157,4 +196,5 @@
 #undef ECLIPSE_ANTUMBRA
 #undef ECLIPSE_UMBRA
 #undef ECLIPSE_TERRESTRIAL
-#undef ECLIPSE_PLANETRAY
+#undef ECLIPSE_PLANETARY
+#undef ECLIPSE_ERROR
