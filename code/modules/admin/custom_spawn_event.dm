@@ -74,6 +74,8 @@
 			if (ishuman(new_mob))
 				var/mob/living/carbon/human/human = new_mob
 				human.is_npc = FALSE
+				human.ai_set_active(FALSE)
+				human.abilityHolder.removeAbility(/datum/targetable/ai_toggle)
 
 			mind.transfer_to(new_mob)
 
