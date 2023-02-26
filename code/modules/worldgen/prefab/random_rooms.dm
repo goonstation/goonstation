@@ -74,4 +74,4 @@ proc/buildRandomRooms()
 
 	size7x5
 		size = "7x5"
-		icon = 'icons/effects/mapeditor/5x3tiles.dmi'
+		icon = 'icons/effects/mapeditor/7x5tiles.dmi'

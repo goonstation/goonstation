@@ -10,7 +10,7 @@
 /area/space)
 "I" = (
 /obj/storage/crate/trench_loot/escape,
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/space)
 
 (1,1,1) = {"

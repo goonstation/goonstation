@@ -10,7 +10,7 @@
 /area/space)
 "G" = (
 /obj/landmark/artifact/random_room,
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/space)
 
 (1,1,1) = {"

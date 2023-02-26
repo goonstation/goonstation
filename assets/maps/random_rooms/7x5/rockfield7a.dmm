@@ -16,7 +16,7 @@
 	icon_state = "gib3"
 	},
 /obj/beacon_deployer,
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/space)
 "y" = (
 /obj/decal/cleanable/machine_debris,

@@ -4,7 +4,7 @@
 /area/space)
 "k" = (
 /obj/landmark/artifact/random_room,
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/space)
 "u" = (
 /turf/unsimulated/wall/trench,
