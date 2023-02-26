@@ -58,7 +58,7 @@
 		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,
 		"Town Guard" = /obj/critter/townguard,
-		"Transposed Particle Field" = /obj/critter/aberration,
+		"Transposed Particle Field" = /mob/living/critter/aberration,
 		"Transposed Scientist" = /obj/critter/crunched,
 		"Weird Thing" = /obj/critter/ancient_thing,
 		"Brullbar" = /mob/living/critter/brullbar,

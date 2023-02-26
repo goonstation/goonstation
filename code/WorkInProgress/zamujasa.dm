@@ -1023,6 +1023,11 @@
 					..()
 					maptext_y += 21
 
+				more_accurate
+					get_value()
+						. = (TIME - round_start_time)
+
+
 				offset
 					New()
 						..()
