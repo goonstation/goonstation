@@ -360,7 +360,7 @@
 	name = "Spirit Siege"
 	warning_text = "We are under siege from a dimensional fissure!"
 	attacker_types = list(/obj/critter/spirit)
-	bosses = list(/obj/critter/aberration)
+	bosses = list(/mob/living/critter/aberration)
 	method = METHOD_SPAWN
 	original_size = 15
 	original_bosses = 1

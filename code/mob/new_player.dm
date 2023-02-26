@@ -889,7 +889,7 @@ a.latejoin-card:hover {
 			if(observer?.client)
 				observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(src.ckey)
+			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
 			qdel(src)
 

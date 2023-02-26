@@ -289,7 +289,7 @@
 
 		harmless_smoke_puff(src.loc)
 
-		new /obj/critter/aberration(src.loc)
+		new /mob/living/critter/aberration(src.loc)
 		new /obj/item/clothing/suit/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
