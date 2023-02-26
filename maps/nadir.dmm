@@ -4638,6 +4638,13 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"bZP" = (
+/obj/stool/bench/red/auto,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/exit)
 "caa" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -21305,16 +21312,13 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "jmx" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/submachine/ATM{
+	pixel_y = 32
+	},
+/obj/stool,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "jmJ" = (
@@ -30257,6 +30261,9 @@
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 6
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -31390,6 +31397,12 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
+"nBE" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "nBV" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -36269,8 +36282,8 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/bent/east,
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/submachine/ATM{
+	pixel_y = 32
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
@@ -42647,7 +42660,6 @@
 	dir = 4;
 	name = "mobile camera - research 1"
 	},
-/obj/machinery/plantpot,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -46280,6 +46292,12 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
+"uwo" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "uwF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53477,6 +53495,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge/captain)
 "xUk" = (
@@ -53822,6 +53841,9 @@
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
@@ -110438,7 +110460,7 @@ uNU
 uNU
 uNU
 uNU
-uNU
+uwo
 kti
 kti
 hlf
@@ -110740,7 +110762,7 @@ uNU
 uNU
 uNU
 uNU
-uNU
+nBE
 kti
 tgS
 asG
@@ -114084,7 +114106,7 @@ dJr
 dTD
 jEm
 reh
-udE
+bZP
 aPe
 rgP
 pnk
