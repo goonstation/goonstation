@@ -184,13 +184,3 @@
 			O.remove_suffixes("\[[src.artifactType]\]")
 			O.UpdateName()
 
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
-				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0 || \
-				over_object == usr || !istype(over_object, /atom/movable))
-			return ..()
-		var/atom/movable/target = over_object
-		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
-		src.stick_to(target, text2num(params["icon-x"]) - 16, text2num(params["icon-y"]) - 16, usr)
