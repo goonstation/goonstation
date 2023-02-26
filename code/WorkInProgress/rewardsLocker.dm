@@ -873,7 +873,7 @@
 				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing your jacket, detective.</span>")
 				return
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing the detectives jacket.</span>")
+			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a detective's jacket.</span>")
 		return
 
 /datum/achievementReward/inspectorscloths
