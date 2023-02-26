@@ -850,6 +850,32 @@
 		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
 		return
 
+/datum/achievementReward/Aerostaticjacket
+	title = "(Skin) Aerostatic Pilot Jacket"
+	desc = "Turns your detectives coat into a orange pilot jacket"
+	required_medal = "Deep Freeze"
+
+	rewardActivate(var/mob/activator)
+		var/mob/living/carbon/human/H = activator
+		if (H.wear_suit)
+			var/obj/item/clothing/suit/det_suit/M = H.wear_suit
+			if (istype(M))
+				var/prev = M.name
+				M.icon_state = "detective_kim"
+				M.item_state = "detective_kim"
+				M.name = "Aerostatic Pilot Jacket"
+				M.real_name = "Aerostatic pilot jacket"
+				M.desc = "You feel centered while weawing this... Maybe you could put something in the pockets? (Base Item: [prev])"
+				H.set_clothing_icon_dirty()
+				return 1
+
+			if(H.mind.assigned_role == "Detective")
+				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing your jacket, detective.</span>")
+				return
+
+			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing the detectives jacket.</span>")
+		return
+
 /datum/achievementReward/inspectorscloths
 	title = "(Skin set) Inspector's Clothes"
 	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
