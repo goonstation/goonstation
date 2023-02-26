@@ -5,12 +5,11 @@
 "l" = (
 /turf/space/fluid/acid,
 /area/space)
-"L" = (
+"s" = (
 /obj/item/raw_material/miracle{
-	pixel_y = -6;
-	pixel_x = -7
+	pixel_y = 21
 	},
-/turf/unsimulated/wall/trench/side,
+/turf/space/fluid/acid,
 /area/space)
 "Y" = (
 /turf/unsimulated/wall/trench/side,
@@ -39,8 +38,8 @@ l
 "}
 (4,1,1) = {"
 a
-L
-l
+Y
+s
 l
 l
 "}

@@ -5,21 +5,20 @@
 "j" = (
 /turf/space/fluid/acid,
 /area/space)
-"z" = (
+"m" = (
 /obj/item/raw_material/cobryl{
-	pixel_y = -5;
-	pixel_x = -3
+	pixel_y = 22;
+	pixel_x = -4
 	},
-/turf/unsimulated/wall/trench/side,
+/turf/space/fluid/acid,
+/area/space)
+"G" = (
+/obj/item/raw_material/cobryl{
+	pixel_y = 22
+	},
+/turf/space/fluid/acid,
 /area/space)
 "T" = (
-/turf/unsimulated/wall/trench/side,
-/area/space)
-"V" = (
-/obj/item/raw_material/cobryl{
-	pixel_y = 3;
-	pixel_x = -3
-	},
 /turf/unsimulated/wall/trench/side,
 /area/space)
 
@@ -34,7 +33,7 @@ j
 a
 a
 T
-j
+m
 j
 "}
 (3,1,1) = {"
@@ -46,14 +45,14 @@ j
 "}
 (4,1,1) = {"
 a
-z
-j
+T
+G
 a
 T
 "}
 (5,1,1) = {"
 a
-V
+T
 j
 j
 j
