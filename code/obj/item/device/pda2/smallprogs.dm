@@ -652,13 +652,14 @@ Code:
 		if(nuke_reactor)
 			engine_found = TRUE
 			var/rodlevel = null
-			for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/x=1 to length(nuke_reactor.component_grid))
 				if (!isnull(rodlevel))
 					return
-				for(var/y=1 to REACTOR_GRID_HEIGHT)
-					if(src.component_grid[x][y])
-						if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
-							rodlevel = src.component_grid[x][y].configured_insertion_level
+				for(var/y=1 to length(nuke_reactor.component_grid[1]))
+					if(nuke_reactor.component_grid[x][y])
+						if(istype(nuke_reactor.component_grid[x][y],/obj/item/reactor_component/control_rod))
+							var/obj/item/reactor_component/control_rod/CR = nuke_reactor.component_grid[x][y]
+							rodlevel = CR.configured_insertion_level
 							return
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
