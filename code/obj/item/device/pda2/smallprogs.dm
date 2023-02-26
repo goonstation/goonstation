@@ -651,6 +651,7 @@ Code:
 		// NUKE ENGINE STUFF HERE
 		if(nuke_reactor)
 			engine_found = TRUE
+			/*
 			var/rodlevel = null
 			for(var/x=1 to length(nuke_reactor.component_grid))
 				if (!isnull(rodlevel))
@@ -661,10 +662,11 @@ Code:
 							var/obj/item/reactor_component/control_rod/CR = nuke_reactor.component_grid[x][y]
 							rodlevel = CR.configured_insertion_level
 							return
+			for some unfathomable reason this broke the whole damn thing */
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
-			. += "Control rod insertion: [rodlevel * 100]%"
+			// . += "Control rod insertion: [rodlevel * 100]%"
 			. += "<BR>"
 		if (nuke_turbine)
 			engine_found = TRUE
