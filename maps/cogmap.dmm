@@ -27015,10 +27015,7 @@
 "bwG" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/window/reinforced{
-	dir = 1
+	pixel_y = -22
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -27026,27 +27023,12 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/window/northleft{
-	req_access_txt = null
-	},
-/obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwI" = (
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = null
-	},
-/obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwJ" = (
@@ -28305,12 +28287,12 @@
 /area/station/crew_quarters/market)
 "bAu" = (
 /obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/power/apc/autoname_south,
-/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/neutral/side,
 /area/station/turret_protected/ai_upload_foyer)
 "bAv" = (
@@ -59833,14 +59815,17 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rae" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/ai_status_display{
-	pixel_y = 28
+/obj/machinery/turretid{
+	pixel_y = 24;
+	turretArea = /area/station/turret_protected/ai_upload
+	},
+/obj/access_spawn/heads,
+/obj/machinery/light{
+	dir = 4;
+	tag = ""
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 5
@@ -107819,7 +107804,7 @@ buf
 buT
 bvT
 bwI
-bxx
+buc
 rae
 bzC
 bAw
