@@ -14,27 +14,9 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	security
 		name = "Air Vent (Security)"
 		frequency = 1274
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	toxlab_chamber_to_tank
 		name = "Toxlab Chamber Siphon"
@@ -44,39 +26,12 @@
 		internal_pressure_bound = 4000
 		pressure_checks = 2
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	high_volume
 		name = "High-Volume Air Vent"
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 		security
 			name = "High-Volume Air Vent (Security)"
 			frequency = 1274
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		New()
 			..()

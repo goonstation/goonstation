@@ -784,7 +784,8 @@ var/flock_signal_unleashed = FALSE
 // Z LEVEL CHECK
 
 /datum/flock/proc/z_level_check(var/atom/A)
-	if (src.flockmind.tutorial || A.z == Z_LEVEL_STATION)
+	var/turf/T = get_turf(A)
+	if (src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 

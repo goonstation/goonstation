@@ -19,7 +19,9 @@ Help and support is *not offered whatsoever* if you skip portions of the guide.
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
 
-Visual Studio Code is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VS Code useful.
+#### ***No, Visual Studio is not the same thing as Visual Studio Code - the icon should be blue and the UI should look like below. Only VSCode will work and be supported.***
+
+Visual Studio Code (VSCode/VSC) is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VSCode useful.
 
 Visit https://code.visualstudio.com/ to download the appropriate installation for your operating system. Then, run the installer.
 

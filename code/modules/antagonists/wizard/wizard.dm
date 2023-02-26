@@ -1,6 +1,7 @@
 /datum/antagonist/wizard
 	id = ROLE_WIZARD
 	display_name = "wizard"
+	success_medal = "You're no Elminster!"
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder

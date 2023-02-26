@@ -2413,6 +2413,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Bathroom"
 	icon_state = "showers"
 
+	extra1
+		name = "Restroom #1"
+
+	extra2
+		name = "Restroom #2"
+
 /area/station/crew_quarters/jazz
 	name = "Jazz Lounge"
 	icon_state = "purple"
@@ -3487,6 +3493,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Salvager Vessel Magpie"
 	icon_state = "red"
 	sanctuary = 1
+
+/area/salvager/space
+	icon_state = "purple"
 
 /area/salvager/lower
 	icon_state = "orange"

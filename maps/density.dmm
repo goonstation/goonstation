@@ -3262,7 +3262,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hs" = (
