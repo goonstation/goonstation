@@ -41,9 +41,7 @@
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
 	..()
-	var/datum/abilityHolder/composite/composite = new(src)
-	abilityHolder = composite
-	composite.addHolder(/datum/abilityHolder/critter/flockdrone)
+	src.add_ability_holder(/datum/abilityHolder/critter/flockdrone)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
