@@ -662,12 +662,13 @@ Code:
 							var/obj/item/reactor_component/control_rod/CR = nuke_reactor.component_grid[x][y]
 							rodlevel = CR.configured_insertion_level
 							return
-			for some unfathomable reason this broke the whole damn thing */
+			for some unfathomable reason this broke the whole damn thing, someone else can give it a crack if they like. */
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
 			// . += "Control rod insertion: [rodlevel * 100]%"
-			. += "<BR>"
+			if (isnull(nuke_turbine))
+				. += "<B>Error!</B> No turbine detected!<BR>"
 		if (nuke_turbine)
 			engine_found = TRUE
 			. += "<BR><h4>Turbine Status</h4>"
@@ -675,6 +676,9 @@ Code:
 			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
 			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]N<BR>"
 			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
+			if (isnull(nuke_reactor))
+				. += "<B>Error!</B> No reactor detected!<BR>"
+			. += "<BR>"
 		if(!engine_found)
 			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
