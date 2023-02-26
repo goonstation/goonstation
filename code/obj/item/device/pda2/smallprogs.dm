@@ -657,7 +657,7 @@ Code:
 			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]W/RPM<BR>"
 			. += "Turbine contents temperature : [nuke_turbine.air_contents?.temperature]K<BR>"
 			. += "<BR>"
-		if(length(by_type[/obj/machinery/power/nuclear/reactor_control]))
+		if(nuke_reactor)
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature]K<BR>"
