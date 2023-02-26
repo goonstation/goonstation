@@ -217,6 +217,8 @@
 			T.launch()
 		return
 
+ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
+
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
