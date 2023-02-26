@@ -86,8 +86,7 @@
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
 				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
 				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0 ||  \
-				!istype(over_object, /atom/movable))
+				BOUNDS_DIST(usr, src) > 0)
 			return ..()
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
