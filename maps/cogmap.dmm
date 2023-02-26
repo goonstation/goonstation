@@ -26414,19 +26414,11 @@
 	},
 /area/station/crew_quarters/market)
 "buR" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform{
-	pixel_x = 3;
-	pixel_y = -2
-	},
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/obj/item/aiModule/notHuman{
-	pixel_x = -1;
-	pixel_y = 8
-	},
+/obj/machinery/turret,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "buS" = (
@@ -26444,15 +26436,18 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/machinery/turret,
 /obj/decal/stripe_caution,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "buV" = (
 /obj/stool,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -26762,15 +26757,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "bvU" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -27024,14 +27013,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside)
 "bwG" = (
-/obj/machinery/door/window/northleft{
-	req_access_txt = null
-	},
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/access_spawn/ai_upload,
+/obj/window/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwH" = (
@@ -27044,6 +27032,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/window/northleft{
+	req_access_txt = null
+	},
+/obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwI" = (
@@ -39922,8 +39914,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/light,
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "cgx" = (
@@ -46412,6 +46406,14 @@
 /area/station/storage/tech)
 "cyC" = (
 /obj/table/reinforced/auto,
+/obj/item/aiModule/notHuman{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/aiModule/freeform{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "cyF" = (
@@ -61002,18 +61004,13 @@
 /area/station/medical/medbay/surgery)
 "srJ" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "ssI" = (
