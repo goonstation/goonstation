@@ -18,7 +18,7 @@
 	if(!gas_cross(west) || !istype(west))
 		west = null
 
-	var/new_group_possible = 0
+	var/new_group_possible = FALSE
 
 	var/north_votes = 0
 	var/south_votes = 0
@@ -40,7 +40,7 @@
 				north_votes++
 				west = null
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(south)
 		if(south.parent)
@@ -54,7 +54,7 @@
 				south_votes++
 				west = null
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(east)
 		if(east.parent)
@@ -64,9 +64,7 @@
 				east_votes++
 				west = null
 		else
-			new_group_possible = 1
-
-//	boutput(world, "[north_votes], [south_votes], [east_votes]")
+			new_group_possible = TRUE
 
 	if(west)
 		if(west.parent)
@@ -76,10 +74,10 @@
 			parent = west.parent
 
 			air_master.tiles_to_update += west.parent.members
-			return 1
+			return TRUE
 
 		else
-			new_group_possible = 1
+			new_group_possible = TRUE
 
 	if(north_votes && (north_votes >= south_votes) && (north_votes >= east_votes))
 		if(north.parent.group_processing)
@@ -88,7 +86,7 @@
 		parent = north.parent
 
 		air_master.tiles_to_update += north.parent.members
-		return 1
+		return TRUE
 
 
 	if(south_votes  && (south_votes >= east_votes))
@@ -98,7 +96,7 @@
 		parent = south.parent
 
 		air_master.tiles_to_update += south.parent.members
-		return 1
+		return TRUE
 
 	if(east_votes)
 		if(east.parent.group_processing)
@@ -107,12 +105,12 @@
 		parent = east.parent
 
 		air_master.tiles_to_update += east.parent.members
-		return 1
+		return TRUE
 
 	if(new_group_possible)
 		air_master.assemble_group_turf(src)
-		return 1
+		return TRUE
 
 	else
 		air_master.active_singletons += src
-		return 1
+		return TRUE
