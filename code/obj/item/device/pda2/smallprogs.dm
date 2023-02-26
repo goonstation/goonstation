@@ -674,7 +674,7 @@ Code:
 			. += "<BR><h4>Turbine Status</h4>"
 			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
 			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
-			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]N<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]J/RPM<BR>"
 			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
 			if (isnull(nuke_reactor))
 				. += "<B>Error!</B> No reactor detected!<BR>"
