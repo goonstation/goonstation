@@ -211,6 +211,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
+	round_start_time = TIME	// this will not be accurate after 24 hours
 
 	SPAWN(0)
 		ircbot.event("roundstart")

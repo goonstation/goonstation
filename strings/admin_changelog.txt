@@ -1,3 +1,7 @@
+(t)thu feb 23 23
+(u)Zamujasa
+(*)New proc, /mob/proc/badminize. Gives you a bunch of really dumb and extremely OP genes and abilities.
+(*)Slightly rearranged an admin area for more Crime Potential.
 (t)mon feb 17 23
 (u)Sovexe
 (*)You can now view ban data from other servers ingame. There is a new "CentCom" link in the player options panel. Clicking it will launch the CentCom Viewer panel that lists out all known server and job bans associated with the target player.

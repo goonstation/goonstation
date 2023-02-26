@@ -255,8 +255,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.go_out()
 			return
 
-		if (isrobot(src.occupant))
-			var/mob/living/silicon/robot/R = src.occupant
+		if (issilicon(src.occupant))
+			var/mob/living/silicon/R = src.occupant
 			if (!R.cell)
 				return
 			else if (R.cell.charge * mult >= R.cell.maxcharge)
@@ -264,22 +264,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 				return
 			else
 				var/added_charge = src.chargerate * mult
-				R.cell.charge += added_charge * MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER
-				src.use_power(added_charge / CELLRATE)
-				return
-
-		else if (isshell(src.occupant))
-			var/mob/living/silicon/hivebot/H = src.occupant
-
-			if (!H.cell)
-				return
-			else if (H.cell.charge * mult >= H.cell.maxcharge)
-				H.cell.charge = H.cell.maxcharge
-				return
-			else
-				var/added_charge = src.chargerate * mult
-				H.cell.charge += added_charge
-				src.use_power(added_charge / CELLRATE)
+				R.cell.charge += added_charge
+				src.use_power(added_charge / CELLRATE / MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER)
 				return
 
 		else if (ishuman(occupant) && src.conversion_chamber)

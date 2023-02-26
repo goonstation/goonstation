@@ -1,3 +1,15 @@
+(t)sun feb 26 23
+(u)LeahTheTech
+(+)Flock compute node compute provided reduced from 50 -> 30.
+(u)Zamujasa
+(+)New clock/stopwatch mechanics component.
+(+)Counter and clock components have new icons.
+(+)Letter display components can be right-aligned; use negative letter indexes (e.g. -3, -2, -1).
+(t)thu feb 23 23
+(u)Bartimeus973
+(p)13121
+(e)🗺🔒📦📡|A-Mapping, A-Secret, A-Game-Objects, A-AI
+(*)Dogs are now mobs. They have been taught to play fetch!
 (t)wed feb 22 23
 (u)LeahTheTech
 (*)Added mirabilis.
