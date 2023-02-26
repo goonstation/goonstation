@@ -69,7 +69,7 @@
 
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
-		return 0
+		return FALSE
 
 	sample_member = pick(members)
 	if (sample_member:air)
@@ -78,7 +78,7 @@
 		air.copy_from(sample_air)
 		air.group_multiplier = length(members)
 
-	return 1
+	return TRUE
 
 //Copy group air information to individual tile air
 //Used right before turning off group processing
@@ -103,19 +103,19 @@
 
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
-		return 0
+		return FALSE
 
 	var/turf/simulated/sample = pick(members)
 	for(var/turf/simulated/member as anything in members)
 		if(member.active_hotspot)
-			return 0
+			return FALSE
 		if(member.air && member.air.compare(sample.air))
 			continue
 		else
-			return 0
+			return FALSE
 
 	resume_group_processing()
-	return 1
+	return TRUE
 
 
 /datum/air_group/proc/process_group(var/datum/controller/process/parent_controller)
@@ -350,11 +350,11 @@
 // If group processing is off, and the air group is bordered by a space tile,
 // execute a fast evacuation of the air in the group.
 // If the average pressure in the group is < 5kpa, the group will be zeroed
-// returns: 1 if the group is zeroed, 0 if not
+// returns: TRUE if the group is zeroed, FALSE if not
 /datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
 	var/minDist
 	var/turf/space/sample
-	. = 0
+	. = FALSE
 	sample = air_master.space_sample
 
 	if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
@@ -382,7 +382,7 @@
 
 		// Don't space hotspots, it breaks them
 		if(member.active_hotspot)
-			return 0
+			return FALSE
 
 		if (member.air && !isnull(minDist))
 			var/datum/gas_mixture/member_air = member.air
@@ -400,11 +400,11 @@
 	if (map_currently_underwater)
 		if (totalPressure / members.len < 65)
 			space_group()
-			return 1
+			return TRUE
 	else
 		if (totalPressure / members.len < 5)
 			space_group()
-			return 1
+			return TRUE
 
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member as anything in members)
