@@ -3117,7 +3117,7 @@
 /obj/item/mechanics/counter
 	name = "Counting Component"
 	desc = "Count things! Adds (change) to the current value and outputs it when triggered. You can change the amount to change by, the starting value, and reset it as well."
-	icon_state = "comp_arith"
+	icon_state = "comp_counter"
 	var/startingValue = 0
 	var/currentValue = 0
 	var/change = 1
@@ -3126,9 +3126,9 @@
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br><span class='notice'>Current value: [currentValue] | Changes by [(change >= 0 ? "+" : "-")][change] | Starting value: [startingValue]</span>"
 	secure()
-		icon_state = "comp_arith1"
+		icon_state = "comp_counter1"
 	loosen()
-		icon_state = "comp_arith"
+		icon_state = "comp_counter"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
@@ -3202,7 +3202,7 @@
 /obj/item/mechanics/clock
 	name = "Clock Component"
 	desc = "Clock! Tells you the current time. Also usable as a stopwatch."
-	icon_state = "comp_arith"
+	icon_state = "comp_clock"
 	var/startTime = 0
 	var/divisor = 1 SECOND
 
@@ -3211,9 +3211,9 @@
 		. += "<br><span class='notice'>Current stored time: [startTime] | Current time: [round(TIME)] | Time units: [divisor / 10] seconds</span>"
 
 	secure()
-		icon_state = "comp_arith1"
+		icon_state = "comp_clock1"
 	loosen()
-		icon_state = "comp_arith"
+		icon_state = "comp_clock"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", .proc/sendTime)
