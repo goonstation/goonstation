@@ -7,6 +7,7 @@ export const SpawnEvent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     thing_to_spawn,
+    thing_name,
     spawn_directly,
     spawn_loc,
     ghost_confirmation_delay,
@@ -15,6 +16,7 @@ export const SpawnEvent = (props, context) => {
     objective_text,
     spawn_type,
     loc_type,
+    incompatible_antag,
   } = data;
   return (
     <Window
@@ -25,9 +27,27 @@ export const SpawnEvent = (props, context) => {
         <Section>
           <LabeledList>
             <LabeledList.Item label="Thing to spawn">
-              <Button selected={thing_to_spawn && (spawn_type === "mob_ref")} onClick={() => act("select_mob")}>{(spawn_type === "mob_ref") ? thing_to_spawn : "Mob ref"}</Button>
-              <Button selected={thing_to_spawn && (spawn_type === "mob_type")} onClick={() => act("select_mob_type")}>{(spawn_type === "mob_type") ? thing_to_spawn : "Mob type"}</Button>
-              <Button selected={thing_to_spawn && (spawn_type === "job_type")} onClick={() => act("select_job_type")}>{(spawn_type === "job_type") ? thing_to_spawn : "Job type"}</Button>
+              <Button
+                selected={thing_name && (spawn_type === "mob_ref")}
+                onClick={() => act("select_mob")}
+                tooltip={(spawn_type === "mob_ref") && thing_name ? thing_to_spawn : ""}
+              >
+                {(spawn_type === "mob_ref") ? thing_name : "Mob ref"}
+              </Button>
+              <Button
+                selected={thing_name && (spawn_type === "mob_type")}
+                onClick={() => act("select_mob_type")}
+                tooltip={(spawn_type === "mob_type") && thing_name ? thing_to_spawn : ""}
+              >
+                {(spawn_type === "mob_type") ? thing_name : "Mob type"}
+              </Button>
+              <Button
+                selected={thing_name && (spawn_type === "job_type")}
+                onClick={() => act("select_job_type")}
+                tooltip={(spawn_type === "job_type") && thing_name ? thing_to_spawn : ""}
+              >
+                {(spawn_type === "job_type") ? thing_name : "Job type"}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Accept delay">
               <NumberInput
@@ -42,7 +62,7 @@ export const SpawnEvent = (props, context) => {
                 minValue={1}
                 maxValue={100}
                 onDrag={(e, amount) => act('set_amount', { amount })} />
-              {amount_to_spawn === 1 && spawn_type === "mob_ref" && thing_to_spawn && (
+              {amount_to_spawn === 1 && spawn_type === "mob_ref" && thing_name && (
                 <ButtonCheckbox
                   checked={spawn_directly}
                   onClick={() => act("set_spawn_directly", { spawn_directly: !spawn_directly })}
@@ -53,15 +73,17 @@ export const SpawnEvent = (props, context) => {
               )}
             </LabeledList.Item>
             <LabeledList.Item label="Spawn location">
-              <Button selected={spawn_loc && (loc_type === "turf_ref")} onClick={() => act("select_turf")}>{(loc_type === "turf_ref") ? spawn_loc : "Turf ref"}</Button>
-              <Button selected={spawn_loc && (loc_type === "landmark")} onClick={() => act("select_landmark")}>{(loc_type === "landmark") ? spawn_loc : "Landmark"}</Button>
+              <Button disabled={spawn_directly} selected={spawn_loc && (loc_type === "turf_ref")} onClick={() => act("select_turf")}>{(loc_type === "turf_ref") ? spawn_loc : "Turf ref"}</Button>
+              <Button disabled={spawn_directly} selected={spawn_loc && (loc_type === "landmark")} onClick={() => act("select_landmark")}>{(loc_type === "landmark") ? spawn_loc : "Landmark"}</Button>
             </LabeledList.Item>
             <LabeledList.Item label="Antagonist status">
               <Button selected={antag_role} onClick={() => act("select_antag")}>{antag_role || "Antag role"}</Button>
               {antag_role && (
                 <Button color="red" onClick={() => act("clear_antag")}>x</Button>
               )}
-              <Button circular icon="circle-exclamation" tooltip="Most antagonists are only compatible with human mobs." />
+              {!!incompatible_antag && (
+                <Button circular icon="circle-exclamation" tooltip="Most antagonists are only compatible with human mobs, this may not work." />
+              )}
             </LabeledList.Item>
             <LabeledList.Item label="Objective text">
               <TextArea

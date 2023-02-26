@@ -1,5 +1,3 @@
-
-
 /datum/spawn_event
 	var/thing_to_spawn = null
 	///If true, only a single ghost will be spawned and placed directly into the mob
@@ -118,9 +116,14 @@
 		else if (src.spawn_event.spawn_loc)
 			loc_type = "landmark"
 
-		//lol sure
+		var/is_a_mob = ispath(src.spawn_event.thing_to_spawn, /mob) || ismob(src.spawn_event.thing_to_spawn)
+		var/is_a_human = ispath(src.spawn_event.thing_to_spawn, /mob/living/carbon/human) || ishuman(src.spawn_event.thing_to_spawn)
+		//we want to display a warning if someone tries to apply an antag role to a non-human mob
+		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
+
 		return list(
-			"thing_to_spawn" = src.spawn_event.get_mob_name(),
+			"thing_to_spawn" = ispath(src.spawn_event.thing_to_spawn) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
+			"thing_name" = src.spawn_event.get_mob_name(),
 			"spawn_directly" = src.spawn_event.spawn_directly,
 			"spawn_loc" = src.spawn_event.spawn_loc,
 			"ghost_confirmation_delay" = src.spawn_event.ghost_confirmation_delay,
@@ -129,6 +132,7 @@
 			"objective_text" = src.spawn_event.objective_text,
 			"spawn_type" = spawn_type,
 			"loc_type" = loc_type,
+			"incompatible_antag" = potentially_incompatible,
 		)
 
 	ui_static_data(mob/user)
@@ -146,15 +150,15 @@
 				if (istype(selected))
 					src.spawn_event.thing_to_spawn = selected
 				else
-					boutput(ui.user, "That's not a mob dingus.")
+					boutput(ui.user, "That's not a mob, dingus.")
 			if ("select_mob_type")
-				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select mob type", "Select type", concrete_typesof(/mob/living))
+				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select mob type", "Select type", concrete_typesof(/mob/living)) || src.spawn_event.thing_to_spawn
 			if ("select_job_type")
-				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", concrete_typesof(/datum/job))
+				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", concrete_typesof(/datum/job)) || src.spawn_event.thing_to_spawn
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
-				src.spawn_event.spawn_loc = tgui_input_list(ui.user, "Select landmark", "Select", landmarks)
+				src.spawn_event.spawn_loc = tgui_input_list(ui.user, "Select landmark", "Select", landmarks) || src.spawn_event.spawn_loc
 			if ("set_spawn_delay")
 				src.spawn_event.ghost_confirmation_delay = params["spawn_delay"] //no validation, admins may href exploit if they wish
 			if ("set_amount")
