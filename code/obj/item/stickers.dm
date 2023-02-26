@@ -82,15 +82,16 @@
 		if((temperature > T0C+120) && active)
 			qdel(src)
 
-	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params) //Let's you stick using drag click
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params) //Let's you stick using drag click
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
 				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
 				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0)
+				BOUNDS_DIST(usr, src) > 0 ||  \
+				!istype(over_object, /atom/movable))
 			return ..()
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
-		src.stick_to()
+		src.stick_to(target, text2num(params["icon-x"]) - 16, text2num(params["icon-y"]) - 16, usr)
 
 	//Coded this for acetone, but then I realized that it would let people check if they were stuck with a spysticker or not.
 	//Going to leave this here just in case, but it's not used for anything right now.
