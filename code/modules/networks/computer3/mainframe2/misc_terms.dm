@@ -2755,7 +2755,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
+		if (istype(AM, /obj/beam) || istype(AM, /mob/living/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
 		SPAWN( 0 )
 			src.hit(AM)
@@ -3266,7 +3266,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+		if (istype(AM, /obj/beam) || istype(AM, /mob/living/critter/aberration))
 			return
 		SPAWN( 0 )
 			src.hit(AM)
