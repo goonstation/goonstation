@@ -193,4 +193,4 @@
 			return ..()
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
-		src.stick_to(target, src.pixel_x, src.pixel_y, usr)
+		src.stick_to(target, text2num(params["icon-x"]) - 16, text2num(params["icon-y"]) - 16, usr)
