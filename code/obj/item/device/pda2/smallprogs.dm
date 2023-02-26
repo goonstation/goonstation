@@ -564,7 +564,7 @@ Code:
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
-			ref = locate(type) in machine_registry[MACHINES_POWER || MACHINES_FISSION]
+			ref = locate(type) in machine_registry[MACHINES_POWER] + machine_registry[MACHINES_FISSION]
 			if(ref?.z != 1) ref = null
 		. = ref
 
