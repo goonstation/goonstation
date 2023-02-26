@@ -96,9 +96,9 @@ var/global/total_gas_mixtures = 0
 		space_sample = locate(/turf/space)
 	return space_sample
 
+/// Call this at the start to setup air groups geometry.
+/// Warning: Very processor intensive but only must be done once per round.
 /datum/controller/air_system/proc/setup(datum/controller/process/air_system/controller)
-	//Call this at the start to setup air groups geometry
-	//Warning: Very processor intensive but only must be done once per round
 	parent_controller = controller
 
 	#if SKIP_FEA_SETUP == 1
@@ -119,7 +119,7 @@ var/global/total_gas_mixtures = 0
 
 /// Call this to try to construct a group starting from base and merging with neighboring unparented tiles.
 /// Expands the group until all valid borders explored.
-/datum/controller/air_system/assemble_group_turf(turf/simulated/base)
+/datum/controller/air_system/proc/assemble_group_turf(turf/simulated/base)
 	set waitfor = 0
 	var/list/turf/simulated/members = list(base) // Confirmed group members
 	var/list/turf/simulated/possible_members = list(base) // Possible places for group expansion
