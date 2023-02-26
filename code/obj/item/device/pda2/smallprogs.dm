@@ -649,20 +649,29 @@ Code:
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
 		// NUKE ENGINE STUFF HERE
+		if(nuke_reactor)
+			engine_found = TRUE
+			var/rodlevel = null
+			for(var/x=1 to REACTOR_GRID_WIDTH)
+				if (!isnull(rodlevel))
+					return
+				for(var/y=1 to REACTOR_GRID_HEIGHT)
+					if(src.component_grid[x][y])
+						if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
+							rodlevel = src.component_grid[x][y].configured_insertion_level
+							return
+			. += "<BR><h4>Reactor Status</h4>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
+			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
+			. += "Control rod insertion: [rodlevel * 100]%"
+			. += "<BR>"
 		if (nuke_turbine)
 			engine_found = TRUE
 			. += "<BR><h4>Turbine Status</h4>"
 			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
-			. += "RPM : [engineering_notation(nuke_turbine.RPM)]RPM<BR>"
-			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]W/RPM<BR>"
-			. += "Turbine contents temperature : [nuke_turbine.air_contents?.temperature]K<BR>"
-			. += "<BR>"
-		if(nuke_reactor)
-			. += "<BR><h4>Reactor Status</h4>"
-			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
-			. += "Reactor temperature: [nuke_reactor.temperature]K<BR>"
-			// no idea how i would show control rods lol
-			. += "<BR>"
+			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]N<BR>"
+			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
 		if(!engine_found)
 			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
