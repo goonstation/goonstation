@@ -2,66 +2,63 @@
 "a" = (
 /turf/unsimulated/wall/trench,
 /area/space)
-"l" = (
+"f" = (
 /turf/space/fluid/acid,
 /area/space)
-"L" = (
-/obj/item/raw_material/miracle{
-	pixel_y = -6;
-	pixel_x = -7
-	},
+"m" = (
 /turf/unsimulated/wall/trench/side,
 /area/space)
-"Y" = (
-/turf/unsimulated/wall/trench/side,
+"G" = (
+/obj/landmark/artifact/random_room,
+/turf/space/fluid/acid,
 /area/space)
 
 (1,1,1) = {"
-l
-l
-l
+f
 a
-Y
+a
+m
+f
 "}
 (2,1,1) = {"
-a
-Y
-l
-l
-l
+f
+f
+f
+f
+f
 "}
 (3,1,1) = {"
+f
+f
+f
 a
-a
-Y
-l
-l
+m
 "}
 (4,1,1) = {"
 a
-L
-l
-l
-l
+m
+f
+a
+m
 "}
 (5,1,1) = {"
-l
-l
-l
 a
-Y
+m
+f
+f
+f
 "}
 (6,1,1) = {"
-l
 a
+m
+f
 a
-a
-Y
+m
 "}
 (7,1,1) = {"
+f
 a
 a
-a
-Y
-l
+m
+G
 "}

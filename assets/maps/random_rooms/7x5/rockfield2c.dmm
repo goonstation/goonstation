@@ -5,13 +5,6 @@
 "s" = (
 /turf/space/fluid/acid,
 /area/space)
-"G" = (
-/obj/item/raw_material/miracle{
-	pixel_y = -7;
-	pixel_x = -2
-	},
-/turf/space/fluid/acid,
-/area/space)
 "V" = (
 /turf/unsimulated/wall/trench/side,
 /area/space)
@@ -59,7 +52,7 @@ s
 s
 "}
 (7,1,1) = {"
-G
+s
 a
 a
 V

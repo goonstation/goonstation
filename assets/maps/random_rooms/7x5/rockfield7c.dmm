@@ -1,67 +1,64 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/unsimulated/wall/trench,
+/turf/unsimulated/wall/trench/side,
 /area/space)
-"l" = (
+"z" = (
 /turf/space/fluid/acid,
 /area/space)
-"L" = (
-/obj/item/raw_material/miracle{
-	pixel_y = -6;
-	pixel_x = -7
-	},
-/turf/unsimulated/wall/trench/side,
+"M" = (
+/obj/landmark/artifact/random_room,
+/turf/space/fluid/acid,
 /area/space)
-"Y" = (
-/turf/unsimulated/wall/trench/side,
+"V" = (
+/turf/unsimulated/wall/trench,
 /area/space)
 
 (1,1,1) = {"
-l
-l
-l
+z
+V
 a
-Y
+M
+z
 "}
 (2,1,1) = {"
+V
+V
+V
+V
 a
-Y
-l
-l
-l
 "}
 (3,1,1) = {"
+V
 a
-a
-Y
-l
-l
+z
+z
+z
 "}
 (4,1,1) = {"
+z
+z
+z
+V
 a
-L
-l
-l
-l
 "}
 (5,1,1) = {"
-l
-l
-l
+V
 a
-Y
+z
+z
+z
 "}
 (6,1,1) = {"
-l
+V
+V
+V
+V
 a
-a
-a
-Y
 "}
 (7,1,1) = {"
+V
+V
 a
-a
-a
-Y
-l
+z
+z
 "}
