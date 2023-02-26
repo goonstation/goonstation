@@ -106,11 +106,6 @@
 				src.eclipse_cycle_length = rand(100, 300) SECONDS
 				src.eclipse_time = rand(10, 300) SECONDS
 			// pretty much the same as regular but with 50% chance of random eclipsing
-		if ("solaris")
-			src.star = "Shidd"
-			src.rate = 0
-			src.angle = dir2angle(SOUTH)
-			src.photovoltaic_efficiency = 500 // solars work really well for a bit then explode lol
 		if ("travel")
 			// for ship maps, deep space. Uses a randomer randomiser
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
