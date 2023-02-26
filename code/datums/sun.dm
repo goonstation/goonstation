@@ -199,6 +199,9 @@
 					src.eclipse_counter = 0
 				else
 					src.visibility += ((1 - src.max_shadow) / src.penumbra_time)
+			if (ECLIPSE_PARTIAL)
+				// not the same as annular eclipses. Think of light curves. This one has no flat peak.
+				src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 			if (ECLIPSE_UMBRA)
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
