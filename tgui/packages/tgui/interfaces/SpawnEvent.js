@@ -22,7 +22,7 @@ export const SpawnEvent = (props, context) => {
     <Window
       title="Ghost Spawn Editor"
       width={500}
-      height={600}>
+      height={300}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -82,7 +82,7 @@ export const SpawnEvent = (props, context) => {
                 <Button color="red" onClick={() => act("clear_antag")}>x</Button>
               )}
               {!!incompatible_antag && (
-                <Button circular icon="circle-exclamation" tooltip="Most antagonists are only compatible with human mobs, this may not work." />
+                <Button color="yellow" circular icon="circle-exclamation" tooltip="Some antagonists are only compatible with human mobs, this may not work properly." />
               )}
             </LabeledList.Item>
             <LabeledList.Item label="Objective text">

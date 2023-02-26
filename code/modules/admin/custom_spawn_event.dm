@@ -1,8 +1,9 @@
+//this is for the admin Custom Ghost Spawn verb, which has nothing to do with the random event system because it sucks
 /datum/spawn_event
 	var/thing_to_spawn = null
 	///If true, only a single ghost will be spawned and placed directly into the mob
 	var/spawn_directly = FALSE
-	///A custom location to spawn the mobs (can also be a landmark string or list of landmarks)
+	///A custom location to spawn the mobs (can also be a landmark string)
 	var/turf/spawn_loc = LANDMARK_LATEJOIN
 	///How long does the popup stay up for?
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -16,8 +17,6 @@
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
 			return src.spawn_loc
-		else if (islist(src.spawn_loc))
-			return pick_landmark(pick(src.spawn_loc)) //pick pick pick
 		return pick_landmark(src.spawn_loc)
 
 	proc/get_mob_name()
@@ -31,17 +30,19 @@
 			var/datum/job/job = src.thing_to_spawn
 			return initial(job.name)
 
-	proc/get_mob_instance()
+	proc/get_mob_instance(gender)
 		if (ismob(src.thing_to_spawn))
 			if (src.spawn_directly)
 				return src.thing_to_spawn
 			else
 				return semi_deep_copy(src.thing_to_spawn, src.get_spawn_loc())
+
 		if (ispath(src.thing_to_spawn, /mob))
 			return new src.thing_to_spawn(src.get_spawn_loc())
 		if (ispath(src.thing_to_spawn, /datum/job))
 			var/datum/job/job = src.thing_to_spawn
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
+			M.initializeBioholder(gender) //try to preserve gender if we can
 			SPAWN(0)
 				M.JobEquipSpawned(initial(job.name))
 			return M
@@ -67,12 +68,12 @@
 		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE)
 
 		for (var/datum/mind/mind in candidates)
-			var/mob/new_mob = src.get_mob_instance()
+			var/mob/new_mob = src.get_mob_instance(mind.current?.client?.preferences?.gender)
 
 			new_mob.ai?.die()
 			if (ishuman(new_mob))
 				var/mob/living/carbon/human/human = new_mob
-				human.ai_set_active(FALSE)
+				human.is_npc = FALSE
 
 			mind.transfer_to(new_mob)
 
@@ -91,6 +92,8 @@
 					new /datum/objective/regular(src.objective_text, mind, mind.get_antagonist(src.antag_role))
 				else
 					new /datum/objective/crew/custom(src.objective_text, mind)
+				SPAWN(0)
+					tgui_alert(new_mob, "Your objective is: [src.objective_text]", "Objective", list("Ok"))
 
 /datum/spawn_event_editor
 	var/datum/spawn_event/spawn_event = new()
