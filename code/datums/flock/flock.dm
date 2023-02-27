@@ -653,7 +653,7 @@ var/flock_signal_unleashed = FALSE
 	src.used_compute = 0
 	for (var/turf/simulated/floor/feather/feathertile as anything in src.all_owned_tiles)
 		feathertile.flock = null
-	all_owned_tiles = null
+	all_owned_tiles = list()
 	if (!real)
 		src.load_structures()
 		return
