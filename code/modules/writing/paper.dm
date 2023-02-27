@@ -648,7 +648,7 @@
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
 
 /obj/item/paper_bin/artifact_paper/robot
-	name = "semi-automatice artifact analysis bin"
+	name = "semi-automatic artifact analysis bin"
 	flags = ATTACK_SELF_DELAY // Keeps robos from spamming paper
 	click_delay = 1 SECONDS // ^^
 
