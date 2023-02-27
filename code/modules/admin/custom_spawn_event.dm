@@ -13,6 +13,8 @@
 	var/antag_role = null
 	///Custom objective text to display to players on spawn
 	var/objective_text = ""
+	///Should antag datums give their default equipment (replaces whatever is currently equipped in those slots)
+	var/equip_antag = TRUE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -82,7 +84,7 @@
 			if (src.antag_role == "antagonist") //no datum, but we still want them to be a generic antag
 				antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
 			else if (src.antag_role)
-				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
+				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
 				if (!mind.get_antagonist(src.antag_role)) //incompatible antag type, fall back to generic antag
 					antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
 			else
@@ -138,6 +140,7 @@
 			"spawn_type" = spawn_type,
 			"loc_type" = loc_type,
 			"incompatible_antag" = potentially_incompatible,
+			"equip_antag" = src.spawn_event.equip_antag,
 		)
 
 	ui_static_data(mob/user)
@@ -175,6 +178,8 @@
 				src.spawn_event.antag_role = tgui_input_list(ui.user, "Select antagonist role", "Select role", antag_ids)
 			if ("clear_antag")
 				src.spawn_event.antag_role = null
+			if ("set_equip")
+				src.spawn_event.equip_antag = params["equip_antag"]
 			if ("set_spawn_directly")
 				src.spawn_event.spawn_directly = params["spawn_directly"]
 			if ("set_objective_text")
