@@ -1,10 +1,10 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Icon, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 interface CrewCreditsData {
-  groups: GroupBlockProps[]
+  groups: GroupBlockProps[];
 }
 
 export const CrewCredits = (props, context) => {
@@ -12,58 +12,59 @@ export const CrewCredits = (props, context) => {
   return (
     <Window title="Crew Credits" width={600} height={600}>
       <Window.Content scrollable>
-        {data.groups?.map((group, index) =>
-          ((data.groups[index].crew.length > 0) && <GroupBlock key={index} group={group.group} crew={group.crew} />)
+        {data.groups?.map(
+          (group, index) =>
+            data.groups[index].crew.length > 0 && <GroupBlock key={index} group={group.group} crew={group.crew} />
         )}
       </Window.Content>
-    </Window>);
+    </Window>
+  );
 };
 
 interface GroupBlockProps {
-  group: string,
-  crew: CrewMemberProps[]
+  group: string;
+  crew: CrewMemberProps[];
 }
 
-const GroupBlock = (props:GroupBlockProps) => {
+const GroupBlock = (props: GroupBlockProps) => {
   const { group: group_title, crew } = props;
-  const dep_heads = crew?.filter(member => member.head);
+
+  const heads = crew?.filter((member) => member.head);
+  const non_heads = crew?.filter((member) => !member.head);
 
   return (
     <Section title={group_title}>
       <Stack fill vertical>
-        {dep_heads?.map((member, index) =>
-          (
-            <CrewMember
-              key={"head" + index}
-              real_name={member.real_name}
-              dead={member.dead}
-              player={member.player}
-              role={member.role}
-              head />
-          )
-        )}
-        {crew?.map((member, index) =>
-          (
-            !member.head && <CrewMember
-              key={index}
-              real_name={member.real_name}
-              dead={member.dead}
-              player={member.player}
-              role={member.role} />
-          )
-        )}
+        {heads?.map((member, index) => (
+          <CrewMember
+            key={'head' + index}
+            real_name={member.real_name}
+            dead={member.dead}
+            player={member.player}
+            role={member.role}
+            head
+          />
+        ))}
+        {non_heads?.map((member, index) => (
+          <CrewMember
+            key={index}
+            real_name={member.real_name}
+            dead={member.dead}
+            player={member.player}
+            role={member.role}
+          />
+        ))}
       </Stack>
     </Section>
   );
-
 };
 
 interface CrewMemberProps {
-  real_name: string,
-  dead: BooleanLike,
-  player: string,
-  role: string,
-  head?: BooleanLike,
+  real_name: string;
+  dead: BooleanLike;
+  player: string;
+  role: string;
+  head?: BooleanLike;
 }
 
 const CrewMember = (props: CrewMemberProps) => {
@@ -72,7 +73,9 @@ const CrewMember = (props: CrewMemberProps) => {
     <Stack.Item>
       <Stack fill bold={head} justify="space-between">
         <Stack.Item maxWidth="30%">{role}</Stack.Item>
-        <Stack.Item grow textAlign="right">{!!dead && <Icon name="skull" />} {real_name} (played by {player})</Stack.Item>
+        <Stack.Item grow textAlign="right">
+          {!!dead && <Icon name="skull" />} {real_name} (played by {player})
+        </Stack.Item>
       </Stack>
     </Stack.Item>
   );
