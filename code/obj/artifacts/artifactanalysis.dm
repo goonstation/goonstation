@@ -183,4 +183,3 @@
 			var/obj/O = src.attached
 			O.remove_suffixes("\[[src.artifactType]\]")
 			O.UpdateName()
-
