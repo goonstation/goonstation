@@ -501,5 +501,3 @@
 		var/atom/movable/target = A
 		target.delivery_destination = destination
 		. = ..()
-
-
