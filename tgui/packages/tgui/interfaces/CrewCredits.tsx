@@ -11,7 +11,7 @@ interface CrewCreditsData {
 export const CrewCredits = (props, context) => {
   const { data } = useBackend<CrewCreditsData>(context);
   return (
-    <Window title="Crew Credits" width={600} height={600} theme={data["darkMode"] ? "neutral" : "paper"}>
+    <Window title="Crew Credits" width={600} height={600}>
       <Window.Content scrollable>
         {data.groups?.map((group, index) =>
           (!!(data.groups[index].crew.length > 0) && <GroupBlock key={index} group={group.group} crew={group.crew} />)
