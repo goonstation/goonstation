@@ -59,7 +59,7 @@ var/global/crew_creds = null
 
 	if(!M.assigned_role) return
 
-	if (M.assigned_role in list("Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
+	if (M.assigned_role in list("Captain", "Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
 		is_head = TRUE
 
 	. +=list(list(
