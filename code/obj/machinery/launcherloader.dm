@@ -497,14 +497,9 @@
 
 		return
 
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
-				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0 || \
-				over_object == usr || !istype(over_object, /atom/movable))
-			return ..()
-		var/atom/movable/target = over_object
-		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
+	stick_to(atom/A, pox, poy, user)
+		var/atom/movable/target = A
 		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y, usr)
+		. = ..()
+
+
