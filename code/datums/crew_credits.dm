@@ -52,7 +52,7 @@ var/global/crew_creds = null
 
 /// Generates the crew member data bundle for TGUI use
 /datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M)
-	var/is_head = false
+	var/is_head = FALSE
 	if(M.special_role)
 		if(!M.current) return
 
@@ -68,7 +68,7 @@ var/global/crew_creds = null
 	if(!M.assigned_role) return
 
 	if (M.assigned_role in list("Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
-		is_head = true
+		is_head = TRUE
 
 	. +=list(list(
 		"real_name" = M.current.real_name,
