@@ -1200,8 +1200,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(!area.requires_power)
 			return
 	else
-		qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
+		qdel(src)
 
 
 	/*
@@ -1266,22 +1266,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		// current status: cell has had this update's power drawn
 
+		if(excess > 0 || perapc > lastused_total)
+			// if there is excess power (i.e. more than enough for all apcs?)
+			// OR the amount of power per APC is more than we needed,
+			// refund the cell all that we used, and apply that load to the net instead
 			cell.give(cellused)
 			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
 
+			// current status: cell has been fully refunded, power taken from grid
+			// don't pop a power popup here -- we will do it in charging later
 
-		else		// no excess, and not enough per-apc
+		else
+			// no excess AND the perapc allotment is less than what we need, total
 
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
+			if( (cell.charge/CELLRATE+perapc) >= lastused_total)
+				// do we have enough power in the cell + apc allotment to run?
 
+				// with the above "drain the apc immediately"
+				// cell charge = (per apc + charge) - drain
 				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+				// then take the entire allotment from the grid
+				add_load(perapc)
+				// and turn off charging
 				charging = 0
 
-			else	// not enough power available to run the last tick!
+				// status: per-apc allotment is empty and we recharged the cell
+				// we can pop a power usage change here: the total we couldn't recharge
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = -(lastused_total - perapc), channel = -1)
+
+			else
+				// not enough power available to run the last tick!
+				// we are 100% out of power.
 				charging = 0
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
@@ -1301,6 +1319,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				add_load(ch) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = ch / CELLRATE, channel = -1)
+
 			else
 				charging = 0		// stop charging
 				chargecount = 0
@@ -1313,6 +1334,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			charging = 0 // we lost power somehow; move to failure mode
 
 		if(chargemode)
+			// require that we have sufficient power for 10 cycles before we start actually charging
+			// TODO: consider not doing this and just trickle charging?
 			if(!charging)
 				if(excess > cell.maxcharge*CHARGELEVEL)
 					chargecount++

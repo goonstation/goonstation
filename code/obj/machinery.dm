@@ -98,9 +98,14 @@
 			if (!(status & NOPOWER) && wire_powered)
 				use_power(src.power_usage, src.power_channel)
 				power_credit = power_usage
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
+
 				return
 		if (!(status & NOPOWER))
 			use_power(src.power_usage * mult, src.power_channel)
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
@@ -273,6 +278,9 @@
 	// increment the power usage stats for an area
 	if (!src.loc)
 		return
+
+	if (zamus_dumb_power_popups)
+		new /obj/maptext_junk/power(get_turf(src), change = -amount, channel = chan)
 
 	if (machines_may_use_wired_power && wire_powered)
 		if (power_credit >= amount)
