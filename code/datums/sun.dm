@@ -120,15 +120,22 @@
 				src.eclipse_cycle_length = rand(100, 300) SECONDS
 				src.eclipse_time = rand(10, 300) SECONDS
 		if ("magus")
-			//nadir. We're going to assume it's tidally locked with typhon seeing as its light level doesn't change. Permanent day.
-			src.star = "Typhon"
+			//nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from Shidd or Fugg.
+			#if (BUILD_TIME_HOUR <=3)
+			src.star = "Fugg"
+			#else
+			src.star = "Shidd"
+			#endif
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
-			src.eclipse_order = list(ECLIPSE_TERRESTRIAL)
+			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
-			src.angle = rand(0, 360)
-			src.visibility = 0.06 // seeing as the lighting is rgb(0,0,50), it's about 6% surface lighting
-			src.photovoltaic_efficiency = 1.5 // magus is quite close to typhon
-			// you get 6% of 150% strength sunlight, is the takeaway
+			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			src.visibility = 0.166 // the max sunlight is from fugg, shidd is like, less bright.
+			if (src.star == "Shidd") // the stars have different strengths, see. Based on the RGB.
+				src.photovoltaic_efficiency = 0.6
+			else
+				src.photovoltaic_efficiency = 1
+			// you get 6% of 60% strength sunlight overall
 		if ("abzu")
 			//oshan and technically also manta
 			src.star = "Fugg"
@@ -143,7 +150,7 @@
 				src.visibility = 0
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = rand(80,100) // assuming cloud covers up to 20% of light
+				src.visibility = rand(80,100)/100 // assuming cloud covers up to 20% of light
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
 		if ("earth")
 			//centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
