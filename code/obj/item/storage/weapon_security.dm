@@ -126,19 +126,19 @@
 /obj/item/storage/box/emp_kit
 	name = "\improper EMP grenade box"
 	desc = "A box with 5 EMP grenades."
-	icon_state = "flashbang"
+	icon_state = "emp"
 	spawn_contents = list(/obj/item/old_grenade/emp = 5)
 
 /obj/item/storage/box/stinger_kit
 	name = "stinger grenade box"
 	desc = "<FONT color=red><B>WARNING: Do not use without reading these preautions!</B></FONT><br><B>These devices are extremely dangerous and can cause limbs to experience severe damage!</B><br>Excercise extreme care when detonating in closed spaces.<br>&emsp;Make an attempt to not to detonate closer than 2 meters of the intended target. It is imperative<br>&emsp;that the targets visit a medical professional after usage. <B>EXERCISE CAUTION REGARDLESS OF CIRCUMSTANCES</B><br>Operating Directions:<br>&emsp;1. Pull detonnation pin. <B>ONCE THE PIN IS PULLED THE GRENADE CAN NOT BE DISARMED!</B><br>&emsp;2. Throw grenade. <br>&emsp;3. The grenade will detonate 3 seconds after being primed. <br><B>Never prime another grenade until after the first is detonated</B><br>Default 3 second wait till from prime to detonation. This can be switched with a screwdriver to 6 seconds.<br>Copyright of Nanotrasen Industries- Military Armnaments Division"
-	icon_state = "flashbang"
+	icon_state = "stinger"
 	spawn_contents = list(/obj/item/old_grenade/stinger = 7)
 
 /obj/item/storage/box/tactical_kit // cogwerks - tactical as heck
 	name = "tactical grenade box"
 	desc = "A box of assorted special-ops grenades."
-	icon_state = "flashbang"
+	icon_state = "tactical"
 	spawn_contents = list(/obj/item/chem_grenade/incendiary = 2,\
 	/obj/item/chem_grenade/shock,\
 	/obj/item/old_grenade/smoke = 1,\
@@ -148,7 +148,7 @@
 
 /obj/item/storage/box/f_grenade_kit
 	name = "cleaner grenade box"
-	icon_state = "flashbang"
+	icon_state = "cleaner"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
 
 /obj/item/storage/box/grenade_fuses
@@ -159,27 +159,20 @@
 
 /obj/item/storage/box/grenade_starter_kit
 	name = "grenade starter kit"
-	icon_state = "flashbang"
+	icon_state = "starter-kit"
 	desc = "Contains grenade cases and fuses for creating grenades."
 	spawn_contents = list(/obj/item/grenade_fuse = 3,\
 	/obj/item/chem_grenade = 3)
 
-/obj/item/storage/box/sonic_grenade_kit
-	name = "sonic grenade kit"
-	icon_state = "flashbang"
-	desc = "Contains five (5) sonic grenades, and a set of earplugs. Wear the earplugs before arming the grenades."
-	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
-	/obj/item/clothing/ears/earmuffs/earplugs)
-
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
-	icon_state = "flashbang"
+	icon_state = "banana"
 	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
 	name = "luminol grenade box"
-	icon_state = "flashbang"
+	icon_state = "luminol"
 	desc = "A box of specialized grenades that release a special smoke compound that reveals bloodstains."
 	spawn_contents = list(/obj/item/chem_grenade/luminol = 3)
 
@@ -187,7 +180,7 @@
 /obj/item/storage/box/QM_grenadekit_security
 	name = "security-issue grenade box"
 	desc = "A box of standard-issue grenades for NT security personnel."
-	icon_state = "flashbang"
+	icon_state = "security-issue"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 2,\
 	/obj/item/old_grenade/smoke = 2,\
 	/obj/item/chem_grenade/flashbang,\
@@ -198,7 +191,7 @@
 /obj/item/storage/box/QM_grenadekit_experimentalweapons
 	name = "experimental grenade box"
 	desc = "A box of experimental grenades."
-	icon_state = "flashbang"
+	icon_state = "experimental"
 	spawn_contents = list(/obj/item/chem_grenade/very_incendiary,\
 	/obj/item/chem_grenade/incendiary = 3,\
 	/obj/item/chem_grenade/cryo = 3)
@@ -207,19 +200,19 @@
 /obj/item/storage/box/wasp_grenade_kit
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
-	icon_state = "flashbang"
+	icon_state = "wasp"
 	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
 
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"
 	desc = "A box of crowd dispersal grenades"
-	icon_state = "flashbang"
+	icon_state = "capsaicin"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
 
 /obj/item/storage/box/stun_landmines
 	name = "non-lethal landmine box"
 	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
-	icon_state = "flashbang"
+	icon_state = "landmine"
 	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
 
 /* -------------------- Traitor Gear -------------------- */
@@ -381,10 +374,3 @@
 	/obj/item/ammo/bullets/bullet_22,\
 	/obj/item/card/id/syndicate,\
 	/obj/item/device/spy_implanter)
-
-// Boxes for Nuke Ops Class Crates
-
-/obj/item/storage/box/demo_grenade_kit
-	name = "demolition grenade box"
-	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
