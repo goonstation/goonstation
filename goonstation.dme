@@ -575,6 +575,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\bomb_monitor.dm"
 #include "code\modules\admin\centcomviewer.dm"
 #include "code\modules\admin\create.dm"
+#include "code\modules\admin\custom_spawn_event.dm"
 #include "code\modules\admin\data_input.dm"
 #include "code\modules\admin\deadsay.dm"
 #include "code\modules\admin\debug.dm"

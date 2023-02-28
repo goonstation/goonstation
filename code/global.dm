@@ -254,7 +254,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"
@@ -305,6 +305,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 

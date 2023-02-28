@@ -12,6 +12,6 @@ jobs:
         with:
           CONFLICT_LABEL_NAME: "S-Merge-Conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAX_RETRIES: 12
-          WAIT_MS: 8008
+          MAX_RETRIES: 8
+          WAIT_MS: 10000
           conflict_comment: ''

@@ -307,6 +307,7 @@ TYPEINFO(/obj/machinery/chem_master)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	flags = NOSPLASH
+	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/beaker_cache = null
@@ -550,7 +551,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(isnull(name) || !length(name) || name == " ")
 			name = null
 			if(src.beaker)
-				name = src.beaker.reagents.get_master_reagent_name()				
+				name = src.beaker.reagents.get_master_reagent_name()
 		return name
 
 	ui_data(mob/user)

@@ -104,6 +104,41 @@
 			qdel(src)
 
 
+/obj/maptext_junk/power
+	name = "power popup"
+	maptext_y = 16
+	maptext_x = -32
+	maptext_width = 96
+	anchored = 2
+
+	New(var/change = 0, var/channel = 0)
+		..()
+		if (abs(change) < 0.5)
+			qdel(src)
+			return
+		var/channel_text = "??"
+		var/hcol = (change > 0) ? "#88ff88" : "#ffff00"
+		switch (channel)
+			if (-1)
+				channel_text = "APC"
+				hcol = (change > 0) ? "#00ff00" : "#ff6666"
+			if (EQUIP)
+				channel_text = "Eq"
+			if (LIGHT)
+				channel_text = "Li"
+			if (ENVIRON)
+				channel_text = "En"
+
+		maptext = "<span class='pixel c ol'>[channel_text] <span style='color: [hcol];'>[change > 0 ? "+" : ""][round(change)]</span></span>"
+
+		animate(src, maptext_y = 36, time = 8, easing = EASE_OUT | QUAD_EASING)
+		animate(time = 18)
+		animate(alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
+
+		SPAWN(5 SECONDS)
+			qdel(src)
+
+
 /obj/maptext_junk/speech
 	name = "spoken chat"
 	maptext_x = -64
