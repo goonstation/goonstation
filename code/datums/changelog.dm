@@ -40,12 +40,10 @@ so you'll want your single-digit days to have 0s in front
 	var/json = json_decode(file_text)
 
 	var/body = json["body"]
+	//body = splittext(body, "\n")
 
-	var/static/regex/changelog_regex = regex(@"```changelog(.*)```")
-	var/static/regex/author_regex = regex(@"\(u\)\s*(.*?):?$")
-
-	if (!changelog_regex.Find(body))
-		return null
+	var/static/regex/changelog_regex = regex(@"```changelog(.*)```", "m")
+	var/static/regex/author_regex = regex(@"\(u\)\s*(.*?):?$", "m")
 
 	if (author_regex.Find(body))
 		. += "(u)[author_regex.group[1]]"
@@ -55,7 +53,10 @@ so you'll want your single-digit days to have 0s in front
 	. += "(p)[json["number"]]"
 	. += "(e)🧪|Testmerge"
 
-	. += splittext(changelog_regex.group[1], "\n")
+	if (!changelog_regex.Find(body)) // At least put the PR title, if no direct changelog TODO maybe disable this?
+		. += "(+)[json["title"]]"
+	else
+		. += splittext(changelog_regex.group[1], "\n")
 
 /proc/changelog_parse(changes, title, testmerge_changes)
 	var/list/html = list()
@@ -76,7 +77,7 @@ so you'll want your single-digit days to have 0s in front
 
 		var/tmerge_lines_left = 0
 		if (testmerge_changes)  // sorry for ruining this code -Ze
-			tmerge_lines_left = length(testmerge_changes) + 1
+			tmerge_lines_left = length(testmerge_changes) + 1 // + index
 			lines.Insert(1, testmerge_changes) // insert testmerge changes at top of changelog
 
 		for(var/line in lines)
@@ -86,7 +87,7 @@ so you'll want your single-digit days to have 0s in front
 			if (copytext(line, 1, 2) == "#")
 				continue
 
-			tmerge_lines_left--
+			tmerge_lines_left-- // fight me
 
 			switch(copytext(line, 1, 4))
 				if("(p)")
@@ -97,8 +98,8 @@ so you'll want your single-digit days to have 0s in front
 					if (copytext(line, 4, 13) == "Testmerge") // special case, we don't care about dates
 						html += "<li class=\"date testmerge\">Current Testmerged PRs</li>"
 						continue
-					if (length(collapsible_html))
-						html += "<li class=\"collapse-button\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+					if (length(collapsible_html)) // test -1 below because the prior changes would've eaten it
+						html += "<li class=\"collapse-button[tmerge_lines_left > -1 ? " testmerge" : ""]\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 						collapsible_html.Cut()
 						author = null
 						added_collapsible_author = 0
