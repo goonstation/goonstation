@@ -3025,11 +3025,12 @@
 	icon_state = "comp_arith"
 	var/A = 1
 	var/B = 1
+	var/autoEval = TRUE
 
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3042,6 +3043,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",.proc/setAManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",.proc/toggleAutoEval)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3064,18 +3066,28 @@
 		tooltip_rebuild = 1
 		return 1
 
+	proc/toggleAutoEval(obj/item/W as obj, mob/user as mob)
+		src.autoEval = !src.autoEval
+		boutput(user, "<span class='notice'>Auto-Evaluate mode <b>[src.autoEval ? "ON" : "OFF"]</b>.</span>")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/evaluate()
 		switch(mode)
 			if("add")
@@ -3437,7 +3449,9 @@
 	New()
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", .proc/setLetterIndex)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", .proc/fire)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed; negative numbers start from the end)", "Letter Index", letter_index) as num
@@ -3448,6 +3462,47 @@
 		letter_index = input
 		tooltip_rebuild = TRUE
 		. = TRUE
+
+	proc/setColorManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Which color?", "Letter Display Component") in list("Blue", "Green", "Red", "Gray", "*CANCEL*")
+		if (!in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+		if (letter_index == 0)
+			return FALSE
+		switch(input)
+			if ("Blue")
+				src.actualSetColor("blue")
+			if ("Green")
+				src.actualSetColor("green")
+			if ("Red")
+				src.actualSetColor("red")
+			if ("Gray")
+				src.actualSetColor("gray")
+
+		. = TRUE
+
+	proc/actualSetColor(var/color_name)
+		// letter display components are blue and light blue with a gray border
+		// these color matrixes switch blue for the target color,
+		// or in the case of grayscale, turn everything off and use blue alone
+		switch(color_name)
+			if ("blue")
+				src.color = null
+			if ("green")
+				src.color = list(list(1, 0, 0, 0), list(0, 0, 1, 0), list(0, 1, 0, 0))
+			if ("red")
+				src.color = list(list(0, 0, 1, 0), list(0, 1, 0, 0), list(1, 0, 0, 0))
+			if ("gray")
+				src.color = list(list(0, 0, 0, 0), list(0, 0, 0, 0), list(1, 1, 1, 0))
+
+
+
+
+	proc/setColor(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		src.actualSetColor(signal)
+
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
