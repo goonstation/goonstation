@@ -1,3 +1,6 @@
+(t)mon feb 27 23
+(u)Zamujasa
+(*)Toggle-Power-Debug, will show maptext over (most) things that draw power.
 (t)sun feb 26 23
 (u)LeahTheTech
 (*)New verb "Custom Ghost Spawn", which allows you to set up a custom spawn event to respawn ghost players as a particular type of mob, job or spawn them directly into an existing mob. Has a bunch of other configurable settings such as antag role, spawn location and custom objective text.

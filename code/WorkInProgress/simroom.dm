@@ -5,7 +5,7 @@
 	icon_state = "mastercomp"
 	anchored = 1
 	density = 1
-	power_usage = 3000
+	power_usage = 100
 	var/active = 1
 	var/id = 1
 	var/vspace_id = 1

@@ -17,12 +17,13 @@ export const SpawnEvent = (props, context) => {
     spawn_type,
     loc_type,
     incompatible_antag,
+    equip_antag,
   } = data;
   return (
     <Window
       title="Ghost Spawn Editor"
       width={500}
-      height={300}>
+      height={330}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -79,7 +80,16 @@ export const SpawnEvent = (props, context) => {
             <LabeledList.Item label="Antagonist status">
               <Button selected={antag_role} onClick={() => act("select_antag")}>{antag_role || "Antag role"}</Button>
               {antag_role && (
-                <Button color="red" onClick={() => act("clear_antag")}>x</Button>
+                <>
+                  <Button color="red" onClick={() => act("clear_antag")}>x</Button>
+                  <ButtonCheckbox
+                    checked={equip_antag}
+                    tooltip="Give antag default equipment and abilities? Will overwrite anything already equipped in those slots."
+                    onClick={() => act("set_equip", { equip_antag: !equip_antag })}
+                  >
+                    Equip antags
+                  </ButtonCheckbox>
+                </>
               )}
               {!!incompatible_antag && (
                 <Button color="yellow" circular icon="circle-exclamation" tooltip="Some antagonists are only compatible with human mobs, this may not work properly." />
