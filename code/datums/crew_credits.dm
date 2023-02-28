@@ -1,7 +1,7 @@
 var/global/crew_creds = null
 
 /// Debug option for filling out the end-game crew credits roster with fake names
-#define CREDITS_DEBUGGING
+//#define CREDITS_DEBUGGING
 
 /datum/crewCredits
 
@@ -263,7 +263,7 @@ var/global/crew_creds = null
 				"crew" = civilian,
 			),
 			list(
-				"group" = "Silicons"),
+				"group" = "Silicons",
 				"crew" = silicon,
 			),
 			list(
