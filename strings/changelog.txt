@@ -5,6 +5,7 @@
 (+)New clock/stopwatch mechanics component.
 (+)Counter and clock components have new icons.
 (+)Letter display components can be right-aligned; use negative letter indexes (e.g. -3, -2, -1).
+(+)Health scanners (the ones on the floor) can be connected to MechComp and will send scanner information.
 (t)thu feb 23 23
 (u)Bartimeus973
 (p)13121

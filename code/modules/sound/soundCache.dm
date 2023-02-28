@@ -791,6 +791,7 @@ var/global/list/soundCache = list(
  	"sound/misc/boing/5.ogg" = 'sound/misc/boing/5.ogg',\
  	"sound/misc/boing/6.ogg" = 'sound/misc/boing/6.ogg',\
  	"sound/misc/Boxingbell.ogg" = 'sound/misc/Boxingbell.ogg',\
+ 	"sound/misc/bubble_pop.ogg" = 'sound/misc/bubble_pop.ogg',\
  	"sound/misc/bugchitter.ogg" = 'sound/misc/bugchitter.ogg',\
  	"sound/misc/cashregister.ogg" = 'sound/misc/cashregister.ogg',\
  	"sound/misc/chair/glass/scoot1.ogg" = 'sound/misc/chair/glass/scoot1.ogg',\

@@ -4,6 +4,7 @@
 
 	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	shuttle_available_threshold = 20 MINUTES
+	antag_token_support = TRUE
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()

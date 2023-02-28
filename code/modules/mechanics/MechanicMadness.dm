@@ -3131,14 +3131,14 @@
 		icon_state = "comp_counter"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Current Value",.proc/setCurrentValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
 
 	proc/setStartingValueManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set starting value to what?", "Starting value", startingValue) as num
@@ -3463,6 +3463,10 @@
 		switch(letter)
 			if (" ") src.setDisplayState(" ", "comp_screen_blank")
 			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
+			if ("-") src.setDisplayState("!", "comp_screen_dash")
+			if (".") src.setDisplayState("!", "comp_screen_period")
+			if ("*") src.setDisplayState("*", "comp_screen_asterisk")
+			if ("%") src.setDisplayState("*", "comp_screen_percent")
 			else
 				var/ascii = text2ascii(letter)
 				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z")) || (ascii >= text2ascii("0") && ascii <= text2ascii("9")))

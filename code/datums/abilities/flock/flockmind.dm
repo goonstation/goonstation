@@ -83,7 +83,7 @@
 				return flock_owner.tutorial.PerformSilentAction(id, context)
 			else
 				return flock_owner.tutorial.PerformAction(id, context)
-	else //we are a flocktrace
+	else if (istype(flock_owner, /mob/living/intangible/flock/trace)) //we are a flocktrace
 		if (flock_owner.flock.flockmind.tutorial) //flocktraces can only watch
 			return FALSE
 	return TRUE

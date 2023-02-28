@@ -216,6 +216,7 @@
 					src.visibility = 1 - max_shadow
 			// if (ECLIPSE_PLANETARY)
 			// planetary rotation isnt done at runtime so we dont need this
+
 	// now calculate and cache the (dx,dy) increments for line drawing
 	var/s = sin(angle)
 	var/c = cos(angle)

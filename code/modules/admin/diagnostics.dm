@@ -167,7 +167,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
 			for(var/datum/gas/trace_gas as anything in GM.trace_gases)
@@ -501,6 +501,7 @@ proc/debug_map_apc_count(delim,zlim)
 						else
 							O2_color = "#ff0000"
 
+					T_color = "#ffffff"
 					switch (TO_CELSIUS(air.temperature))
 						if (100 to INFINITY)
 							T_color = "#ff0000"
@@ -517,7 +518,6 @@ proc/debug_map_apc_count(delim,zlim)
 						if (-INFINITY to -40)
 							T_color = "#0000ff"
 
-					T_color = "#ffffff"
 
 					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
 					img.app.overlays = null

@@ -306,6 +306,10 @@ var/global
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
 
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
+
 	datum/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
