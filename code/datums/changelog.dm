@@ -45,7 +45,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 	if (!text)
 		logDiary("Failed to load changelog.")
 	else
-		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [copytext(vcs_revision, 1, 8)]</li>" //truncate to 7 long
+		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [copytext(ORIGIN_REVISION, 1, 8)]</li>" //truncate to 7 long
 
 		var/list/collapsible_html = list()
 		var/added_collapsible_author = 0

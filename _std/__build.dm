@@ -162,13 +162,14 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CHECK_MORE_RUNTIMES
 #endif
 
-var/global/vcs_revision = "1"
-var/global/vcs_author = "bob"
-
+/// The literal current commit hash the server is running off of
 #define VCS_REVISION "1"
+/// The literal current author of the commit the server is runing off of
 #define VCS_AUTHOR "bob"
-#define ORIGIN_REVISION "2"
-#define ORIGIN_AUTHOR "alice"
+/// The latest commit on the origin at the time of the server build, for display
+#define ORIGIN_REVISION "1"
+/// The latest commit author on the origin at the time of the server build, for display
+#define ORIGIN_AUTHOR "bob"
 
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
