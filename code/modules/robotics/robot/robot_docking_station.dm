@@ -259,11 +259,11 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/mob/living/silicon/R = src.occupant
 			if (!R.cell)
 				return
-			else if (R.cell.charge * mult >= R.cell.maxcharge)
+			else if (R.cell.charge >= R.cell.maxcharge)
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				var/added_charge = src.chargerate * mult
+				var/added_charge = clamp(src.chargerate * mult, 0, R.cell.maxcharge-R.cell.charge)
 				R.cell.charge += added_charge
 				src.use_power(added_charge / CELLRATE / MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER)
 				return
