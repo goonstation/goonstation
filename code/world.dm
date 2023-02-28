@@ -1566,9 +1566,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("rev")
 				var/ircmsg[] = new()
 				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
-				#if VCS_REVISION != ORIGIN_REVISION
-				message_to_send += " + testmerges"
-				#endif
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
 				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
