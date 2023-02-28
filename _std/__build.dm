@@ -174,7 +174,7 @@ o+`        `-` ``..-:yooos-..----------..`
 /// The latest commit author on the origin at the time of the server build, for display
 #define ORIGIN_AUTHOR "bob"
 // This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
-// #define TESTMERGE_PRS list(123, 456)"
+// #define TESTMERGE_PRS list(123, 456)
 
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
