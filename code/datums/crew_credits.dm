@@ -62,7 +62,7 @@ var/global/crew_creds = null
 	if (M.assigned_role in list("Captain", "Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
 		is_head = TRUE
 
-	. +=list(list(
+	. += list(list(
 		"real_name" = M.current.real_name,
 		"dead" = isdead(M.current),
 		"player" = M.displayed_key,
@@ -224,7 +224,7 @@ var/global/crew_creds = null
 	while(length(other) < 8)
 		other += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),
-			role=pick("Tourist", "Musician", "Union Rep", "Board Member", "Regional Director", "Inspector", "Governor", "Diplomat" )
+			role=pick("Tourist", "Musician", "Union Rep", "Board Member", "Regional Director", "Inspector", "Governor", "Diplomat")
 		)
 
 	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done adding fake crew. info: A [length(antagonist)] C [length(captain)] S [length(security)] M [length(medical)] R [length(science)] E [length(engineering)] Cv [length(civilian)] Si [length(silicon)] X [length(other)]")
@@ -263,7 +263,7 @@ var/global/crew_creds = null
 				"crew" = civilian,
 			),
 			list(
-				"group" = "Silicon" + (length(silicon)==1 ? "": "s"),
+				"group" = "Silicons"),
 				"crew" = silicon,
 			),
 			list(
