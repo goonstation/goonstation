@@ -42,7 +42,7 @@
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
-#if defined(MAP_OVERRIDE_CONSTRUCTION)
+#ifdef MAP_OVERRIDE_CONSTRUCTION
 	src.stationloc = "travel"
 #elif defined(MAP_OVERRIDE_DESTINY)
 	src.stationloc = "travel"
@@ -175,47 +175,6 @@
 	if (src.counter < 20) // 60 seconds, roughly - about a 5deg change (note, this is now approx 2 seconds instead)
 		return
 	src.counter = 0
-	src.angle = ((src.rate * world.realtime/100)%360 + 360)%360
-	/* used to give about a 60 minute rotation time.
-	Now around 30 - 40 min, depending on rate. An array on one side would sometimes generate zero or close to zero electricity for up to 30 min
-	of a typical round (~60 min), making solars not so useful.*/
-#ifdef ECLIPSE_ERROR
-	src.eclipse_order = list(ECLIPSE_ERROR)
-	src.eclipse_cycle_on = FALSE
-	src.visibility = 0
-	src.photovoltaic_efficiency = 0
-	src.rate = 0
-	src.angle = 0
-#endif
-	if (src.eclipse_cycle_on)
-		src.eclipse_counter ++
-		switch (src.eclipse_status)
-			if (ECLIPSE_FALSE)
-				if (src.eclipse_counter >= src.down_time)
-					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-				else
-					src.visibility = 1
-			if (ECLIPSE_PENUMBRA_WAXING)
-				if (src.eclipse_counter >= (src.down_time + src.penumbra_time))
-					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-				else
-					src.visibility -= ((1 - src.max_shadow) / src.penumbra_time)
-			if (ECLIPSE_PENUMBRA_WANING)
-				if (src.eclipse_counter >= src.eclipse_cycle_length)
-					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-					src.eclipse_counter = 0
-				else
-					src.visibility += ((1 - src.max_shadow) / src.penumbra_time)
-			if (ECLIPSE_PARTIAL)
-				// not the same as annular eclipses. Think of light curves. This one has no flat peak.
-				src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-			if (ECLIPSE_UMBRA)
-				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
-					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-				else
-					src.visibility = 1 - max_shadow
-			// if (ECLIPSE_PLANETARY)
-			// planetary rotation isnt done at runtime so we dont need this
 
 	// now calculate and cache the (dx,dy) increments for line drawing
 	var/s = sin(angle)
