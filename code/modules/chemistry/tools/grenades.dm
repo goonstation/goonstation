@@ -480,12 +480,12 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 		beakers += B1
 		beakers += B2
 
-/obj/item/chem_grenade/sarin
-	name = "sarin gas grenade"
+/obj/item/chem_grenade/saxitoxin
+	name = "STX grenade"
 	desc = "A smoke grenade containing an extremely lethal nerve agent. Use of this mixture constitutes a war crime, so... try not to leave any witnesses."
 	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "sarin"
-	icon_state_armed = "sarin1"
+	icon_state = "saxitoxin"
+	icon_state_armed = "saxitoxin1"
 	stage = 2
 
 	New()
@@ -493,7 +493,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 		B1.reagents.maximum_volume=100 //dumb hack, but it works
-		B1.reagents.add_reagent("sarin", 75)
+		B1.reagents.add_reagent("saxitoxin", 75)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)

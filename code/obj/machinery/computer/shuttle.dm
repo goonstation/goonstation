@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			Console.active = TRUE
 			if (src.transit_delay)
 				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+				playsound(Console.loc, 'sound/machines/transport_move.ogg', 75, 0)
 	return (currentlocation && end_location)
 
 /obj/machinery/computer/transit_shuttle/proc/call_shuttle(area/end_location)

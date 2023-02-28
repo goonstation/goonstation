@@ -137,6 +137,13 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 
 ///// SHIP-SCALE WEAPONRY. BEEOO BEEOO HIT THE DECK /////
 
+ADMIN_INTERACT_PROCS(/obj/machinery/shuttle/weapon, proc/fire)
+
+ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
+/obj/machinery/shuttle/weapon
+	proc/fire()
+		return
+
 /obj/machinery/shuttle/weapon/howitzer_plasma
 	icon = 'icons/misc/64x32.dmi'
 	icon_state = "howitzer-idle"
@@ -152,7 +159,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 	var/current_projectile = new/datum/projectile/special/howitzer
 
 
-	proc/fire()
+	fire()
 		flick(src.icon_firing, src)
 		src.visible_message("<span class='alert'>[src] is charging up!</span>")
 		playsound(src.loc, sound_firing, 70, 1)
@@ -173,7 +180,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 	var/icon_firing = "howitzerL-firing"
 	var/current_projectile = new/datum/projectile/bullet/howitzer
 
-	proc/fire()
+	fire()
 		flick(src.icon_firing, src)
 		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
 		sleep(0.25 SECONDS)

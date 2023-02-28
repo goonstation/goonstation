@@ -46,8 +46,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/process()
 	if (spy_market)
 		spy_market.process()
+	#ifndef NO_SHUTTLE_CALLS
 	if (shuttle_available && shuttle_auto_call_time)
 		process_auto_shuttle_call()
+	#endif
 
 /datum/game_mode/proc/process_auto_shuttle_call()
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)
@@ -139,23 +141,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
 
-				if (traitor.special_role == ROLE_SPY_THIEF)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
-					if (purchases)
-						var/stolen_detail = "Items Thieved: "
-						for (var/i in traitor.spy_stolen_items)
-							stolen_detail += "[i], "
-						var/rewarded_detail = "They Were Rewarded: "
-						for (var/i in traitor.purchased_traitor_items)
-							rewarded_detail += "[bicon(i:item)] [i:name], "
-						rewarded_detail = copytext(rewarded_detail, 1, -2)
-						stuff_to_output += stolen_detail
-						stuff_to_output += rewarded_detail
-						if (stolen >= 7)
-							traitor.current?.unlock_medal("Professional thief", TRUE)
-
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
@@ -199,10 +184,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				if (traitorwin)
 					if (traitor.current)
 						traitor.current.unlock_medal("MISSION COMPLETE", 1)
-					if (traitor.special_role == ROLE_WIZARD && traitor.current)
-						traitor.current.unlock_medal("You're no Elminster!", 1)
-					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
-						traitor.current.unlock_medal("Cream of the Crop", 1)
 					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
 				else
 					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
@@ -336,9 +317,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			do_objectives = FALSE
 
 		if (ROLE_GRINCH)
-			objective_set_path = /datum/objective_set/grinch
-			boutput(antag.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
-			antag.current.make_grinch()
+			antag.add_antagonist(ROLE_GRINCH)
+			do_objectives = FALSE
 
 		if (ROLE_BLOB)
 			objective_set_path = /datum/objective_set/blob
@@ -356,9 +336,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			bestow_objective(antag, /datum/objective/specialist/flock)
 			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
-			objective_set_path = /datum/objective_set/spy_theft
-			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
-				equip_spy_theft(antag.current)
+			antag.add_antagonist(ROLE_SPY_THIEF)
+			do_objectives = FALSE
 
 			if (!src.spy_market)
 				src.spy_market = new /datum/game_mode/spy_theft
@@ -367,8 +346,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 				src.spy_market.update_bounty_readouts()
 
 		if (ROLE_WEREWOLF)
-			objective_set_path = /datum/objective_set/werewolf
-			antag.current.make_werewolf()
+			antag.add_antagonist(ROLE_WEREWOLF)
+			do_objectives = FALSE
 
 		if (ROLE_ARCFIEND)
 			antag.add_antagonist(ROLE_ARCFIEND)
@@ -393,7 +372,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", "flock", ROLE_CHANGELING)
 	for(var/i = 1 to pick(2, 3))
 		possible_modes.Remove(pick(possible_modes))
 
