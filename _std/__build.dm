@@ -35,6 +35,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 
 //#define STOP_DISTRACTING_ME //All of the below
 

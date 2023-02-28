@@ -1850,8 +1850,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
-			sleep(30 SECONDS)
+		sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
