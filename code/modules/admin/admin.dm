@@ -3597,6 +3597,14 @@ var/global/noir = 0
 						src.owner:debug_variables("GLOB")
 					if("globalprocs")
 						src.owner:show_proc_list(null)
+					if("testmerges")
+					#if defined(TESTMERGE_PRS)
+						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
+						var/file_text = file2text("testmerges/[pr_num].json")
+						src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+					#else
+						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
+					#endif
 			else
 				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
@@ -4382,7 +4390,8 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=testmerges'>Testmerges</A>
 				"}
 
 		dat += "</div>"
