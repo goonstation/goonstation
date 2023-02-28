@@ -797,15 +797,15 @@
 				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.current)
 			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
+			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
 			lucky_dude.transfer_to(P)
 			antagify(lucky_dude.current, null, 1)
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
-			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
 			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 			boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 			boutput(P, "Don't venture too far from your portal or your master!")
@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				SPAWN(3 MINUTES)
 					make_summon(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		if (lucky_dude.current)
@@ -1773,7 +1773,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			antagify(lucky_dude.current, null, 1)
 			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
 			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-			logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
+			log_respawn_event(lucky_dude, "harbinger summon", src.holder.owner)
 			boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
 			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
 		qdel(marker)
@@ -1851,7 +1851,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				SPAWN(3 MINUTES)
 					make_plague_rat(W, T, tries++)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		var/datum/mind/lucky_dude = candidates[1]
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
 		if (lucky_dude.current)
@@ -1860,7 +1860,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			antagify(lucky_dude.current, null, 1)
 			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
 			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-			logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
+			log_respawn_event(lucky_dude, "plague rat", src.holder.owner)
 			boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
 			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</b></span>")
 		qdel(marker)

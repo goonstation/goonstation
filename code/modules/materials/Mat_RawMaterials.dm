@@ -350,7 +350,7 @@
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
-	icon_state = "brullbarhide-fabric"
+	icon_state = "fabric"
 	setup_material()
 		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = FALSE, setname = FALSE)
 		..()

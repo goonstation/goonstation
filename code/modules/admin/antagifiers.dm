@@ -73,9 +73,8 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-		M.make_wrestler(1)
+		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
 	name = "Ferocious Alien Skull"
@@ -97,9 +96,8 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WEREWOLF
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.make_werewolf()
+		M.mind.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -185,8 +183,8 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_werewolf()
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
+			M.mind.add_antagonist(ROLE_WEREWOLF, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 
 	wrestler
 		name = "WRESTL~1.EXE"
@@ -196,7 +194,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Time to step into the squared circle, son.</span>")
-			M.make_wrestler(1)
+			M.mind.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 
 	wizard
 		name = "WIZARD.EXE"

@@ -13,7 +13,7 @@
 #ifdef RP_MODE
 	var/const/pop_divisor = 10
 #else
-	var/const/pop_divisor = 6
+	var/const/pop_divisor = 7
 #endif
 
 
@@ -31,7 +31,7 @@
 		if(player.ready)
 			num_players++
 
-	var/randomizer = rand(12)
+	var/randomizer = rand(7)
 	var/num_traitors = 1
 	var/num_wraiths = 0
 	var/token_wraith = 0

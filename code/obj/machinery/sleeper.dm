@@ -77,31 +77,37 @@ TYPEINFO(/obj/machinery/sleep_console)
 			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	process()
-		if (!src)
+		if (src.status & (NOPOWER | BROKEN))
 			return
-		if (src.status & (NOPOWER|BROKEN))
-			return
+
 		if (!src.our_sleeper)
 			src.time = 0
 			src.timing = 0
 			src.time_started = 0
 			src.updateDialog()
 			return
+
+		// non-anchored sleeper assumed to be portable, don't want to eject
+		// in case someone is using it for body transport
+		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
+			src.our_sleeper.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
+			src.time = 0
+			src.timing = 0
+			src.time_started = 0
+			src.our_sleeper.go_out()
+			src.updateDialog()
+			return
+
 		if (src.timing)
 			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
 						var/mob/living/carbon/human/O = occupant
-						if (isdead(O))
-							src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No further life signs detected from occupant.\"")
-							playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-							src.timing = 0
-							src.time_started = 0
-						else
-							if (O.sleeping != 5)
-								O.sleeping = 5
-							src.our_sleeper.alter_health(O)
+						if (O.sleeping != 5)
+							O.sleeping = 5
+						src.our_sleeper.alter_health(O)
 				else
 					src.timing = 0
 					src.time_started = 0
@@ -110,6 +116,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 				src.time = 0
 				src.timing = 0
 				src.time_started = 0
+
+
 
 			src.updateDialog()
 

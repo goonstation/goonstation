@@ -279,15 +279,22 @@
 		src.remove_dialog(usr)
 	return
 
+/obj/item/electronics/frame/Exited(Obj, newloc)
+	. = ..()
+	var/atom/movable/AM = Obj
+	if(AM == deconstructed_thing && !QDELETED(AM))
+		src.visible_message("<span class='notice'>[src] vanishes in a puff of logic!</span>", "<span class='notice'>You hear a mild poof.</span>", "frame_poof")
+		qdel(src)
+
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
 	if (deconstructed_thing)
 		O = deconstructed_thing
+		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
-		deconstructed_thing = null
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)

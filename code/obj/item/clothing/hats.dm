@@ -680,7 +680,7 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		src.name = "[pick("fancy", "suave", "manly", "sexerific", "sextacular", "intellectual", "majestic", "euphoric")] fedora"
+		src.name = "[pick("fancy", "suave", "manly", "sectacular", "intellectual", "majestic", "euphoric")] fedora"
 
 /obj/item/clothing/head/cowboy
 	name = "cowboy hat"

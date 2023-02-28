@@ -41,6 +41,7 @@ datum/preferences
 	var/be_blob = 0
 	var/be_conspirator = 0
 	var/be_flock = 0
+	var/be_salvager = 0
 	var/be_misc = 0
 
 	var/be_random_name = 0
@@ -71,7 +72,7 @@ datum/preferences
 
 	var/datum/appearanceHolder/AH = new
 
-	var/datum/character_preview/preview = null
+	var/datum/movable_preview/character/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -657,7 +658,7 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 			if ("update-specialStyle")
-				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/mob/living/carbon/human/H = src.preview.preview_thing
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
 				if (!typeinfo || !typeinfo.special_styles)
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
@@ -1073,7 +1074,7 @@ datum/preferences
 		// bald trait preview stuff
 		if (!src.preview)
 			return
-		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)
@@ -1416,6 +1417,7 @@ datum/preferences
 			src.be_werewolf = FALSE
 			src.be_vampire = FALSE
 			src.be_arcfiend = FALSE
+			src.be_salvager = FALSE
 			src.be_wraith = FALSE
 			src.be_blob = FALSE
 			src.be_conspirator = FALSE
@@ -1438,6 +1440,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_salvager=1" class="[src.be_salvager ? "yup" : "nope"]">[crap_checkbox(src.be_salvager)] Salvager</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1677,6 +1680,11 @@ datum/preferences
 
 		if (link_tags["b_arcfiend"])
 			src.be_arcfiend = !( src.be_arcfiend)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_salvager"])
+			src.be_salvager = !( src.be_salvager)
 			src.SetChoices(user)
 			return
 
