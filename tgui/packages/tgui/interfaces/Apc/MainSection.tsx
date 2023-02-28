@@ -101,8 +101,8 @@ export const MainSection = (_props, context) => {
         <CellDisplay />
         <ExternalPowerListItem mainStatus={main_status} />
         {isLocalAccess && (
-          <LabeledList.Item label="Host Connection" textAlign="right">
-            <Box color={host_id ? 'green' : 'red'}>{host_id ? 'OK' : 'NONE'}</Box>
+          <LabeledList.Item label="Host Connection" color={host_id ? 'green' : 'red'} textAlign="right">
+            {host_id ? 'OK' : 'NONE'}
           </LabeledList.Item>
         )}
       </LabeledList>
