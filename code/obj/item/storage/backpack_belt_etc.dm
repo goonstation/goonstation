@@ -689,6 +689,17 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/virtual
+	name = "virtual utility belt"
+	desc = "Are these tools DLC?"
+	spawn_contents = list(/obj/item/crowbar/vr,
+	/obj/item/weldingtool/vr,
+	/obj/item/wirecutters/vr,
+	/obj/item/screwdriver/vr,
+	/obj/item/wrench/vr,
+	/obj/item/device/multitool,
+	/obj/item/deconstructor)
+
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
 	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
@@ -956,14 +967,20 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
+	var/has_added_antagonist_role = FALSE // Whether the belt has added an antagonist role to the owner.
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0, fake)
+		if (user.mind?.add_antagonist(ROLE_WRESTLER, do_equip = FALSE, respect_mutual_exclusives = FALSE, do_pseudo = TRUE))
+			var/datum/antagonist/wrestler/antag_role = user.mind?.get_antagonist(ROLE_WRESTLER)
+			antag_role.give_equipment(src.fake)
+			src.has_added_antagonist_role = TRUE
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1, fake)
+		if (src.has_added_antagonist_role)
+			user.mind?.remove_antagonist(ROLE_WRESTLER)
+			src.has_added_antagonist_role = FALSE
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"

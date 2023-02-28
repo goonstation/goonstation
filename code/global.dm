@@ -5,8 +5,9 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
-var/global/list/detailed_machine_power = list()
-var/global/list/detailed_machine_power_prev = list()
+var/global/detailed_machine_power_log_zlevels = (1 << Z_LEVEL_STATION)
+var/global/datum/machine_power_data/detailed_power_data
+var/global/datum/machine_power_data/detailed_power_data_last
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -55,6 +56,7 @@ var/global
 	list/muted_keys = list()
 
 	server_start_time = 0
+	round_start_time = 0
 	round_time_check = 0			// set to world.timeofday when round starts, then used to calculate round time
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
@@ -303,6 +305,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 

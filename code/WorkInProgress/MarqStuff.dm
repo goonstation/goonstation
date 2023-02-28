@@ -253,7 +253,7 @@
 
 	onStart()
 		..()
-		playsound(owner, 'sound/effects/bow_aim.ogg', 75, 1)
+		playsound(owner, 'sound/effects/bow_pull.ogg', 80, 1)
 		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
@@ -567,7 +567,7 @@
 	damage = 17
 	dissipation_delay = 12
 	dissipation_rate = 5
-	shot_sound = 'sound/effects/bow_fire.ogg'
+	shot_sound = 'sound/effects/bow_release.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
@@ -725,6 +725,7 @@
 				loadFromQuiver(user)
 				if(loaded)
 					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+					playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)
 				return
 			if(reach)
 				return
@@ -764,3 +765,4 @@
 			user.u_equip(I)
 			loaded = I
 			I.set_loc(src)
+			playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)

@@ -61,7 +61,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		/datum/manufacture/interdictor_board_zephyr,
 		/datum/manufacture/interdictor_board_devera,
 		/datum/manufacture/interdictor_rod_lambda,
-		/datum/manufacture/interdictor_rod_sigma)
+		/datum/manufacture/interdictor_rod_sigma,
+		/datum/manufacture/interdictor_rod_epsilon,
+		/datum/manufacture/interdictor_rod_phi)
 
 	cleaner_grenade //Let's janitors create more grenades after running out.
 		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
