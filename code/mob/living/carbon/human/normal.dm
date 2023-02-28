@@ -1,7 +1,9 @@
 /mob/living/carbon/human/normal
-	initializeBioholder()
+	initializeBioholder(gender)
+		if (gender)
+			src.gender = gender
 		. = ..()
-		randomize_look(src, 1, 1, 1, 1, 1, 1, src)
+		randomize_look(src, !gender, 1, 1, 1, 1, 1, src)
 		src.gender = src.bioHolder?.mobAppearance?.gender
 		src.update_colorful_parts()
 		set_clothing_icon_dirty()
