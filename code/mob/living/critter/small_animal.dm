@@ -2938,7 +2938,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/vomit)
 		abilityHolder.updateButtons()
@@ -3003,7 +3002,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/blood_bite)
 		abilityHolder.updateButtons()
