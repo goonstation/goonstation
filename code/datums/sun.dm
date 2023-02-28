@@ -214,8 +214,7 @@
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 				else
 					src.visibility = 1 - max_shadow
-			// if (ECLIPSE_PLANETARY)
-			// planetary rotation isnt done at runtime so we dont need this
+			// if (ECLIPSE_PLANETARY) planetary rotation isnt done at runtime so we dont need this
 
 	// now calculate and cache the (dx,dy) increments for line drawing
 	var/s = sin(angle)
