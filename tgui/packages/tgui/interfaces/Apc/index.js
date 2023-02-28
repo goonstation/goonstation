@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author 56Kyle (https://github.com/56Kyle)
+ * @license MIT
+ */
+
 import { Window } from '../../layouts';
 import { useBackend } from "../../backend";
 

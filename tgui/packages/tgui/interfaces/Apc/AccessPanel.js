@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author 56Kyle (https://github.com/56Kyle)
+ * @license MIT
+ */
+
 import { useBackend } from "../../backend";
 
 import {
