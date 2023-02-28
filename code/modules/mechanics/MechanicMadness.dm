@@ -3025,11 +3025,12 @@
 	icon_state = "comp_arith"
 	var/A = 1
 	var/B = 1
+	var/autoEval = TRUE
 
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3042,6 +3043,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",.proc/setAManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",.proc/toggleAutoEval)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3064,18 +3066,28 @@
 		tooltip_rebuild = 1
 		return 1
 
+	proc/toggleAutoEval(obj/item/W as obj, mob/user as mob)
+		src.autoEval = !src.autoEval
+		boutput(user, "<span class='notice'>Auto-Evaluate mode <b>[src.autoEval ? "ON" : "OFF"]</b>.</span>")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/evaluate()
 		switch(mode)
 			if("add")
