@@ -33,6 +33,7 @@ so you'll want your single-digit days to have 0s in front
 */
 
 /// Gets the changelog for a given testmerge PR number and returns relevant information for changelog_parse
+/// Returns null if no correctly formatted changelog was found in the body of the PR
 /datum/changelog/proc/get_testmerge_changelog(pr_num)
 	. = list()
 
@@ -41,25 +42,21 @@ so you'll want your single-digit days to have 0s in front
 
 	var/body = json["body"]
 
-	var/static/regex/author_regex = regex(@"\(u\)\s*(.*?):?$", "m")
+	var/static/regex/changelog_regex = regex(@"```changelog\n(\(u\)\s*.*?):?$\n([\s\S\n]*)(\n)```", "m") // good luck lol
+	var/static/regex/i_hate_windows = regex(@"\r", "g") // The year is 2053. BYOND still does not know \r exists.
+	body = replacetext(body, i_hate_windows, "")
 
-	if (author_regex.Find(body))
-		. += "(u)[author_regex.group[1]]"
+	if (!changelog_regex.Find(body)) // no changelog
+		return null
+
+	if (changelog_regex.group[1]) // author
+		. += changelog_regex.group[1]
 	else
-		. += "(u)[json["user"]["login"]]"
+		. += "(u)[json["user"]["login"]]" // no changelog author specified???
 
 	. += "(p)[json["number"]]"
 	. += "(e)🧪|Testmerge"
-
-	var/static/regex/newline_destroyer = regex(@"\r?\n", "g")
-	body = replacetext(body, newline_destroyer, "\n")
-
-	var/static/regex/changelog_regex = regex(@"```changelog(.*)```", "m")
-
-	if (!changelog_regex.Find(body)) // At least put the PR title, if no direct changelog TODO maybe disable this?
-		. += "(+)[json["title"]]"
-	else
-		. += splittext(changelog_regex.group[1], "\n")
+	. += splittext(changelog_regex.group[2], "\n") // actual changelog (*) changes
 
 /proc/changelog_parse(changes, title, testmerge_changes)
 	var/list/html = list()
@@ -243,7 +240,9 @@ so you'll want your single-digit days to have 0s in front
 	src.testmerge_changes = list("(t)Testmerge")
 
 	for (var/pr_num in TESTMERGE_PRS) // list(123, 456)
-		src.testmerge_changes += src.get_testmerge_changelog(pr_num)
+		var/log = src.get_testmerge_changelog(pr_num)
+		if (log)
+			src.testmerge_changes += log
 #endif
 
 	html = {"
