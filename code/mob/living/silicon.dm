@@ -34,6 +34,22 @@
 
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
 
+	var/speech_accent_proc = null
+	var/list/sillicon_accents = list(
+		"No Accent" = null, \
+		"Drunk" = /proc/say_drunk, \
+		"Nervous" = /proc/stutter, \
+		"Smile" = /proc/smilify, \
+		"Reverse" = /proc/reverse_text, \
+		"Furious" = /proc/say_furious, \
+		"Chav" = /proc/chavify, \
+		"Tyke" = /proc/yorkify, \
+		"Elvis" = /proc/elvisfy, \
+		"Scoob" = /proc/scoobify, \
+		"Finnish" = /proc/finnishify, \
+		"French" = /proc/tabarnak, \
+		"Scottish" = /proc/scotify, \
+		"Swedish" = /proc/borkborkbork)
 
 	//voice_type = "robo"
 
@@ -234,10 +250,16 @@
 		if (copytext(lowertext(message), 1, 3) == ":s")
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			if (src.speech_accent_proc)
+				message = call(src.speech_accent_proc)(message)
 			src.robot_talk(message)
 		else
+			if (src.speech_accent_proc)
+				message = call(src.speech_accent_proc)(message)
 			return ..(message)
 	else
+		if (src.speech_accent_proc)
+			message = call(src.speech_accent_proc)(message)
 		return ..(message)
 
 /mob/living/silicon/say_decorate(message)
@@ -651,6 +673,17 @@ var/global/list/module_editors = list()
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
 	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/proc/set_sillicon_accent(var/accent)
+	if (isnull(accent))
+		return
+	
+	if (isnull(src.sillicon_accents))
+		src.speech_accent_proc = null // to be safe
+		return
+	
+	var/accent_proc = src.sillicon_accents[accent]
+	src.speech_accent_proc = accent_proc
 
 /mob/living/silicon/Exited(Obj, newloc)
 	. = ..()

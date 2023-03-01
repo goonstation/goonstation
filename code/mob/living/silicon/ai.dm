@@ -1712,6 +1712,16 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	if (camnets.len && camnets[network])
 		switchCamera(pick(camnets[network]))
 
+/mob/living/silicon/ai/verb/change_accent()
+	set category = "AI Commands"
+	set name = "Change accent"
+
+	if (isnull(sillicon_accents))
+		return
+
+	var/speech_accent = tgui_input_list(src, "Select an accent", "Robot accent", list_keys(sillicon_accents))
+	src.set_sillicon_accent(speech_accent)
+
 /mob/living/silicon/ai/verb/deploy_to()
 	set category = "AI Commands"
 	set name = "Deploy to Shell"

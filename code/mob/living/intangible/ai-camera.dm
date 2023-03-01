@@ -362,6 +362,16 @@
 		if (mainframe)
 			mainframe.ai_colorchange()
 
+	verb/change_accent()
+		set category = "AI Commands"
+		set name = "Change accent"
+
+		if (isnull(mainframe) || isnull(mainframe.sillicon_accents))
+			return
+
+		var/speech_accent = tgui_input_list(src, "Select an accent", "Robot accent", list_keys(mainframe.sillicon_accents))
+		mainframe.set_sillicon_accent(speech_accent)
+
 	verb/reset_apcs()
 		set category = "AI Commands"
 		set name = "Reset All APCs"

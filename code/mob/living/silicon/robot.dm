@@ -2250,6 +2250,16 @@
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
+	verb/change_accent()
+		set category = "Robot Commands"
+		set name = "Change accent"
+
+		if (isnull(sillicon_accents))
+			return
+
+		var/speech_accent = tgui_input_list(src, "Select an accent", "Robot accent", list_keys(sillicon_accents))
+		src.set_sillicon_accent(speech_accent)
+
 	verb/change_voice_pitch()
 		set category = "Robot Commands"
 		set name = "Change vocal pitch"
