@@ -501,49 +501,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
-			var/mob/living/silicon/S = user
-			var/obj/item/robojumper/jumper = W
-			var/obj/item/cell/donor_cell = null
-			var/obj/item/cell/recipient_cell = null
-			if (jumper.positive)
-				donor_cell = S.cell
-				recipient_cell = src.cell
-			else
-				donor_cell = src.cell
-				recipient_cell = S.cell
-
-			if (isnull(donor_cell))
-				boutput(user, "<span class='alert'>You have no cell installed!</span>")
-				return
-			else if (isnull(recipient_cell))
-				boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
-				return
-
-			var/overspill = 250 - recipient_cell.charge
-			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your cell"] is already fully charged.</span>")
-			else if (donor_cell.charge <= 250)
-				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[src] doesn't"] have enough power to transfer!</span>")
-			else if (overspill >= 250)
-				donor_cell.charge -= overspill
-				recipient_cell.charge += overspill
-				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
-				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [src] [log_loc(src)]")
-			else
-				donor_cell.charge -= 250
-				recipient_cell.charge += 250
-				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-					logTheThing(LOG_STATION, user, "drains [250] power from the APC [src] [log_loc(src)]")
-			charging = chargemode
-
+			return
 		else return src.Attackhand(user)
-
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
