@@ -95,13 +95,17 @@
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = tgui_alert(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball"))
+		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball", "Cigarette packet"))
 		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			user.put_in_hand_or_drop(H)
+		else if (fold == "Cigarette packet")
+			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
+			var/obj/item/cigpacket/paperpack/H = new()
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
@@ -642,6 +646,11 @@
 	for(var/obj/item/paper/P in src)
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
+
+/obj/item/paper_bin/artifact_paper/robot
+	name = "semi-automatic artifact analysis bin"
+	flags = ATTACK_SELF_DELAY // Keeps robos from spamming paper
+	click_delay = 1 SECONDS // ^^
 
 /obj/item/paper_bin/robot
 	name = "semi-automatic paper bin"

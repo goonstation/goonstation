@@ -545,6 +545,8 @@
 
 	New()
 		..()
+		if (!cigtype)
+			return
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
 
@@ -569,6 +571,13 @@
 	cigtype = /obj/item/clothing/mask/cigarette/propuffs
 	icon_state = "cigpacket-r"
 	package_style = "cigpacket-r"
+
+/obj/item/cigpacket/paperpack
+	name = "paper cigarette packet"
+	desc = "A flavor surprise in each cigarette, lovingly wrapped in the finest papers."
+	cigtype = null
+	icon_state = "cigpacket-wo"
+	package_style = "cigpacket-w"
 
 /obj/item/cigpacket/random
 	name = "odd cigarette packet"

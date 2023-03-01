@@ -1901,8 +1901,8 @@ TYPEINFO(/obj/machinery/hydro_mister)
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "fogmachine0"
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "hydro_mister0"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = 0
@@ -1960,18 +1960,20 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		if(!src.active)
 			src.active = 1
 			src.mode = 0
+			src.icon_state = "hydro_mister1"
 			user.visible_message("<b>[user]</b> switches [src.name] on to low power mode.")
 			src.visible_message("\The [src] starts to hum, emitting a fine mist.")
 		else
 			if(!src.mode)
 				src.mode = 1
+				src.icon_state = "hydro_mister2"
 				user.visible_message("<b>[user]</b> switches [src.name] to high power mode.")
 				src.visible_message("\The [src] starts to <em>really</em> emit a fine mist!")
 			else
 				src.active = 0
 				src.mode = 0
+				src.icon_state = "hydro_mister0"
 				user.visible_message("<b>[user]</b> switches [src.name] off.")
 				src.visible_message("\The [src] goes quiet.")
 
-		src.icon_state = "fogmachine[src.active]"
 		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)

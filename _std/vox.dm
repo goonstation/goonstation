@@ -1241,7 +1241,6 @@ proc/init_vox()
 "hobbits" = new/datum/VOXsound("hobbits", "sound/vox/hobbits.ogg", NOUN),
 "hodor" = new/datum/VOXsound("hodor", "sound/vox/hodor.ogg", NOUN | INTERJECTION | FX),
 "hofp" = new/datum/VOXsound("hofp", "sound/vox/hofp.ogg", INTERJECTION),
-"hogan" = new/datum/VOXsound("hogan", "sound/vox/hogan.ogg", NOUN),
 "hohohoho" = new/datum/VOXsound("hohohoho", "sound/vox/hohohoho.ogg", FX | INTERJECTION),
 "hold" = new/datum/VOXsound("hold", "sound/vox/hold.ogg", NOUN | VERB),
 "hole" = new/datum/VOXsound("hole", "sound/vox/hole.ogg", NOUN ),
