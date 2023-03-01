@@ -1,5 +1,9 @@
 
 (t)wed mar 01 23
+(u)Tyrant
+(p)13220
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir now has a solar cycle, like Oshan does.
 (u)Wisemonster
 (p)13167
 (e)💅🤖🔬|C-QoL, A-Silicons, A-Science
