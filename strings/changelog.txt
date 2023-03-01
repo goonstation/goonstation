@@ -1,5 +1,10 @@
 
 (t)wed mar 01 23
+(u)Wisemonster
+(p)13167
+(e)💅🤖🔬|C-QoL, A-Silicons, A-Science
+(*)The chemistry cyborg module has been refitted to the research module
+(+)The chemistry (now research) module now comes with a pen, artifact analysis from bin, and gps.
 (u)Soleilan
 (p)13165
 (e)🪲🗺|C-Bug, A-Mapping
