@@ -3026,11 +3026,12 @@
 	var/A = 1
 	var/B = 1
 	var/autoEval = TRUE
+	var/roundResults = FALSE
 
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoRound: [roundResults ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3069,6 +3070,12 @@
 	proc/toggleAutoEval(obj/item/W as obj, mob/user as mob)
 		src.autoEval = !src.autoEval
 		boutput(user, "<span class='notice'>Auto-Evaluate mode <b>[src.autoEval ? "ON" : "OFF"]</b>.</span>")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/toggleRounding(obj/item/W as obj, mob/user as mob)
+		src.roundResults = !src.roundResults
+		boutput(user, "<span class='notice'>Results will <b>[src.autoEval ? "be" : "not be"] rounded</b>.</span>")
 		tooltip_rebuild = 1
 		return 1
 
@@ -3121,8 +3128,9 @@
 				. = A != B
 			else
 				return
-		if(. == .)
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+		if (src.roundResults && .)
+			. = round(.)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 
 
