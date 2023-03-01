@@ -766,7 +766,21 @@ ABSTRACT_TYPE(/mob/living/critter)
 			drop_equipment()
 		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
+		reduce_lifeprocess_on_death()
 		return ..(gibbed)
+
+	proc/reduce_lifeprocess_on_death() //quit doing stuff when you're dead
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/canmove)
+		remove_lifeprocess(/datum/lifeprocess/disability)
+		remove_lifeprocess(/datum/lifeprocess/fire)
+		remove_lifeprocess(/datum/lifeprocess/hud)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/organs)
+		remove_lifeprocess(/datum/lifeprocess/sight)
+		remove_lifeprocess(/datum/lifeprocess/skin)
+		remove_lifeprocess(/datum/lifeprocess/statusupdate)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	proc/get_health_holder(var/assoc)
 		if (assoc in healthlist)
@@ -1229,14 +1243,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
 		. = list()
-		for (var/mob/living/carbon/human/H in view(range, src))
+		for (var/mob/living/carbon/human/H in view(range, get_turf(src)))
 			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 				. += H
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, get_turf(src)))
 			. += S
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask

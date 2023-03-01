@@ -101,7 +101,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -900,6 +900,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		delivery = claim.delivery
 		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
+
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
+		if (istype(antag_role))
+			antag_role.stolen_items.Add(bounty.item)
+
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
@@ -922,8 +927,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!istype(delivery,/obj/item/parts))
 			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 		qdel(delivery)
-		if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-			user.mind.spy_stolen_items += bounty.name
 
 		if (req_bounties() > 1)
 			bounty_tally += 1
@@ -1233,10 +1236,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 							B.run_on_spawn(A, usr, FALSE, src)
 							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
+							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
 							. = TRUE
 							break
 
@@ -1291,7 +1294,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			if (user.abilityHolder.getAbility(assoc_spell))
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			if (antag_role.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
@@ -1301,8 +1305,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			user.abilityHolder.addAbility(src.assoc_spell)
-			user.abilityHolder.updateButtons()
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			antag_role.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))

@@ -785,7 +785,7 @@
 			qdel(target)
 			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
 			for(var/mob/M in AIviewers(5, target))
-				boutput(M, "<span class='alert'>\the [I] melts.</span>")
+				boutput(M, "<span class='alert'>\The [I] melts.</span>")
 			qdel(I)
 			return
 

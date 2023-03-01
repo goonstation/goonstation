@@ -19,6 +19,9 @@
 		if (AI.deployed_to_eyecam)
 			M = AI.eyecam
 
+	var/mentor = M.client?.player?.mentor
+	var/hos = (M.ckey in NT)
+
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
@@ -75,6 +78,14 @@
 			color: #f55;
 		}
 
+		.mentor {
+			color: #a24cff;
+		}
+
+		.hos {
+			color: #2237AD;
+		}
+
 		#topBar {
 			position: fixed;
 			padding: 0.2em 0.5em;
@@ -95,11 +106,14 @@
 	//Antag roles (yes i said antag jeez shut up about it already)
 	var/antag
 	if (M.mind)
-		var/antag_len = length(M.mind.antagonists)
+		var/antag_len = 0
+		for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
+			if (this_antag.pseudo)
+				continue
+			antag_len++
+			antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
 		if (antag_len)
-			antag = "<b>[antag_len] antagonist role\s present.</b><br>"
-			for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
-				antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
+			antag = "<b>[antag_len] antagonist role\s present.</b><br>" + antag //this goes at the start
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 		else if (M.mind.special_role != null)
@@ -123,7 +137,7 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[html_key_string]</tt>)
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""]
 </div>
 
 <div id="mobInfo">
@@ -194,6 +208,11 @@
 						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removetrait")]'>Remove</a>
 				 	</div>
+					<div class='l'>Objectives</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "manageobjectives")]'>Manage</a> &bull;
+						<a href='[playeropt_link(M, "addobjective")]'>Add</a>
+				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
@@ -221,7 +240,8 @@
 						<a href='[playeropt_link(M, "cluwnegib")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
-						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
+						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
@@ -304,7 +324,8 @@
 						<a href='[playeropt_link(M, "sharkban")]'>Ban w/shark</a> &bull;
 						<a href='[playeropt_link(M, "jobbanpanel")]'>Job Bans</a> &bull;
 						<a href='[playeropt_link(M, "banooc")]'>OOC [oocban_isbanned(M) ? "Unban" : "Ban"]</a> &bull;
-						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a>
+						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a> &bull;
+						<a href='[playeropt_link(M, "centcombans")]'>CentCom</a>
 					</div>
 					<div class='l'>
 						Persistent

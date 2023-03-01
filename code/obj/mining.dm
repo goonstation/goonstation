@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -1315,7 +1315,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/new_color = src.stone_color
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(src.replace_type)
+		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
@@ -1375,6 +1375,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
+	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP

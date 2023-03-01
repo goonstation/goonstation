@@ -286,7 +286,7 @@
 		missing_image.plane = PLANE_FLOOR
 		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
 		missing_image.alpha = 180
-		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 
 		var/turf/simulated/T = get_turf(src)
 		if (!T.disposal_image)
@@ -316,7 +316,7 @@
 			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
+			F.icon_state = "plating"
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
@@ -1042,11 +1042,10 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		src.reagents.add_reagent("silicate",10)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
-		START_TRACKING
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
 
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
@@ -1141,6 +1140,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
+				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -1921,7 +1921,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
-
+ABSTRACT_TYPE(/obj/disposalpipespawner)
 /obj/disposalpipespawner
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"

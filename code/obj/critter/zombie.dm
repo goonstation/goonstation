@@ -227,7 +227,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN(2 SECONDS) 
+						SPAWN(2 SECONDS)
 							playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
@@ -296,10 +296,10 @@
 		qdel (src)
 
 //It's like the jam mansion is back!
-/obj/critter/zombie/hogan
-	name = "Zombie Hogan"
-	desc = "Hulkamania is shambling wiilllldd in space!"
-	icon_state = "hoganzombie"
+/obj/critter/zombie/wrestler
+	name = "Zombie Wrestler"
+	desc = "This zombie is hulked out! Watch out for the piledriver!"
+	icon_state = "wrestlerzombie"
 	health = 25
 	firevuln = 0.15
 	hulk = 1

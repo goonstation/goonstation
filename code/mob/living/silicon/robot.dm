@@ -18,7 +18,7 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	health = 300
-	emaggable = 1
+	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
@@ -969,6 +969,9 @@
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
+		if (!src.emaggable)
+			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
+			return FALSE
 
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
@@ -1269,7 +1272,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
@@ -2486,7 +2489,8 @@
 				// Nimbus-class interdictor: wirelessly charge cyborgs
 				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
+						if (IX.expend_interdict(round(ROBOT_BATTERY_WIRELESS_CHARGERATE*1.7),src,TRUE,ITDR_NIMBUS))
+							//multiplier to charge rate is an efficiency penalty due to over-the-air charging
 							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
 							break
 

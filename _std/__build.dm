@@ -46,6 +46,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define LOW_SECURITY // Deletes turrets
 //#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
+//#define NO_RANDOM_EVENTS // Don't spawn random events
+//#define NO_SHUTTLE_CALLS // Don't autocall the shuttle
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 
@@ -153,6 +155,8 @@ o+`        `-` ``..-:yooos-..----------..`
 #define LOW_SECURITY
 #define NO_CRITTERS
 #define NO_RANDOM_ROOMS
+#define NO_RANDOM_EVENTS
+#define NO_SHUTTLE_CALLS
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #endif

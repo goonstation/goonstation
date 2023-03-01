@@ -212,12 +212,14 @@ datum
 			var/largest_volume = 0
 
 			for(var/reagent_id in reagent_list)
-				if(reagent_id == "smokepowder") continue
+				if(reagent_id == "smokepowder")
+					continue
 				var/datum/reagent/current = reagent_list[reagent_id]
 				if(current.volume > largest_volume)
 					largest_name = current.name
 					largest_volume = current.volume
-
+			if (largest_name == "mirabilis")
+				largest_name = " "
 			return largest_name
 
 
@@ -927,6 +929,7 @@ datum
 						. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 						return
 
+				SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
 				. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
@@ -1064,18 +1067,17 @@ datum
 							continue
 						reag_list += ", [current_reagent.name]"
 					reag_list = copytext(reag_list, 3)
-					. = "Tastes like there might be some [reag_list] in this."
-				else
-					var/tastes = src.get_prevalent_tastes(3)
-					switch (length(tastes))
-						if (0)
-							. = "Tastes pretty bland."
-						if (1)
-							. = "Tastes kind of [tastes[1]]."
-						if (2)
-							. = "Tastes kind of [tastes[1]] and [tastes[2]]."
-						else
-							. = "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
+					. = "Tastes like there might be some [reag_list] in this. "
+				var/tastes = src.get_prevalent_tastes(3)
+				switch (length(tastes))
+					if (0)
+						. += "Tastes pretty bland."
+					if (1)
+						. += "Tastes kind of [tastes[1]]."
+					if (2)
+						. += "Tastes kind of [tastes[1]] and [tastes[2]]."
+					else
+						. += "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()

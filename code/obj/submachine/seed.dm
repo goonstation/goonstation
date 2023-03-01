@@ -112,6 +112,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.mode == "overview" && src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "Plantmaster")
@@ -687,7 +689,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
-	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
+	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
 
 	New()
 		..()
@@ -705,6 +707,8 @@ TYPEINFO(/obj/submachine/chem_extractor)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
+		if (src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ReagentExtractor", src.name)

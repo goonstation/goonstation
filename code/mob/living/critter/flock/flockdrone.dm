@@ -36,6 +36,7 @@
 
 	var/ai_paused = FALSE
 	var/wander_count = 0
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = null
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
@@ -88,6 +89,10 @@
 		L.shock(src, 5000)
 		qdel(grab) //in case they don't fall over from our shock
 
+/mob/living/critter/flock/drone/gib()
+	qdel(src.cell)
+	..()
+
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
 		if (controller)
@@ -99,6 +104,8 @@
 		AH.drone_controller.cast(src)
 	src.selected_by = null
 	src.remove_simple_light("drone_light")
+	qdel(src.cell)
+	src.cell = null
 	..()
 
 /mob/living/critter/flock/drone/describe_state()
@@ -186,6 +193,10 @@
 		if (flocktrace.dying)
 			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 			src.updateOverlaysClient(src.client)
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -240,6 +251,8 @@
 		controller = null
 		src.update_health_icon()
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
+		var/datum/component/tracker_hud/flock/tracker = src.GetComponent(/datum/component/tracker_hud/flock)
+		tracker?.RemoveComponent()
 	if(!src.flock)
 		src.dormantize()
 
@@ -787,18 +800,6 @@
 /mob/living/critter/flock/drone/get_tracked_examine_atoms()
 	return ..() + src.flock.structures
 
-/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
-	remove_lifeprocess(/datum/lifeprocess/blood)
-	remove_lifeprocess(/datum/lifeprocess/canmove)
-	remove_lifeprocess(/datum/lifeprocess/disability)
-	remove_lifeprocess(/datum/lifeprocess/fire)
-	remove_lifeprocess(/datum/lifeprocess/hud)
-	remove_lifeprocess(/datum/lifeprocess/mutations)
-	remove_lifeprocess(/datum/lifeprocess/organs)
-	remove_lifeprocess(/datum/lifeprocess/sight)
-	remove_lifeprocess(/datum/lifeprocess/skin)
-	remove_lifeprocess(/datum/lifeprocess/statusupdate)
-
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if (src.selected_by)
 		var/mob/living/intangible/flock/selector = src.selected_by
@@ -821,7 +822,6 @@
 		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
 	..()
 	src.icon_state = "drone-dead"
-	src.reduce_lifeprocess_on_death()
 	src.set_density(FALSE)
 	src.desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")
@@ -960,6 +960,9 @@
 		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
 	else
 		src.ai = new /datum/aiHolder/flock/drone(src)
+
+/mob/living/critter/flock/drone/emp_act()
+	SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cell.max_charge/2)
 
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
@@ -1201,6 +1204,10 @@
 /datum/limb/gun/flock_stunner/New()
 	..()
 	src.cell.set_loc(src.holder.holder)
+	var/mob/living/critter/flock/drone/drone = src.holder.holder
+	if (istype(drone))
+		drone.cell = src.cell
+	src.holder.holder.contents |= cell
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()

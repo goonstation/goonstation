@@ -387,6 +387,21 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
+/client/proc/cmd_admin_toggle_ghost_interaction()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Interaction"
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	src.holder.ghost_interaction = !src.holder.ghost_interaction
+	boutput(usr, "<span class='notice'><b>Your ghost interaction mode is now [src.holder.ghost_interaction ? "ON" : "OFF"]</b></span>")
+	if(isobserver(mob))
+		setalive(mob)
+
+	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
+
 /client/proc/iddqd()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "iddqd"
@@ -437,12 +452,12 @@ client/proc/toggle_ghost_respawns()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
 	ADMIN_ONLY
-	if(!src.holder.animtoggle)
-		src.holder.animtoggle = 1
-		boutput(src, "Atom interaction options toggled on.")
-	else
-		src.holder.animtoggle = 0
+	if(!src.holder.disable_atom_verbs)
+		src.holder.disable_atom_verbs = 1
 		boutput(src, "Atom interaction options toggled off.")
+	else
+		src.holder.disable_atom_verbs = 0
+		boutput(src, "Atom interaction options toggled on.")
 
 /client/proc/toggle_view_range()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

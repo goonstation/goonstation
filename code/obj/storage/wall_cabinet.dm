@@ -225,7 +225,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack/clothes1
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
-	/obj/item/clothing/under/misc/syndicate = 1,
+	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
@@ -264,7 +264,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
-	/obj/item/clothing/under/gimmick/hunter = 1,
+	/obj/item/clothing/under/misc/mobster = 1,
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 

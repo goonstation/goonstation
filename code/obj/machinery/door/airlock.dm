@@ -1,6 +1,10 @@
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
 
+// power usage defines
+#define OPEN_CLOSE_POWER_USAGE 50
+#define LINKED_FORCEFIELD_POWER_USAGE 100
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -20,6 +24,7 @@
 	shock - has a chance of electrocuting its target.
 */
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bolt, proc/shock_temp, proc/shock_perm, proc/shock_restore)
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
@@ -37,8 +42,8 @@
 		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
 		src.secondsElectrified = 30
-		logTheThing(LOG_COMBAT, user, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		logTheThing(LOG_COMBAT, user || usr, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		message_admins("[key_name(user || usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 		SPAWN(1 SECOND)
 			while (src.secondsElectrified>0)
 				src.secondsElectrified-=1
@@ -58,7 +63,7 @@
 		src.UpdateIcon()
 		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 	else
-		logTheThing(LOG_STATION, user, "[user] has bolted a door at [log_loc(src)].")
+		logTheThing(LOG_STATION, user || usr, "[user || usr] has bolted a door at [log_loc(src)].")
 		src.locked = 1
 		src.UpdateIcon()
 		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
@@ -77,8 +82,8 @@
 	else if (src.secondsElectrified!=0)
 		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
-		logTheThing(LOG_COMBAT, user, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
-		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		logTheThing(LOG_COMBAT, user || usr, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		message_admins("[key_name(user || usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		src.secondsElectrified = -1
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
@@ -90,8 +95,8 @@
 		boutput(user, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
-		logTheThing(LOG_COMBAT, user, "de-electrified airlock ([src]) at [log_loc(src)].")
-		message_admins("[key_name(user)] de-electrified airlock ([src]) at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user || usr, "de-electrified airlock ([src]) at [log_loc(src)].")
+		message_admins("[key_name(user || usr)] de-electrified airlock ([src]) at [log_loc(src)].")
 
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
@@ -636,10 +641,10 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	layer = EFFECTS_LAYER_UNDER_1
 	. = ..()
 
-/obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(mob/user)
+/obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(atom/movable/AM)
 	if (src.density)
 		src.autoclose = TRUE
-	..(user)
+	..()
 
 /obj/machinery/door/airlock/pyro/glass/windoor/attack_hand(mob/user)
 	if (src.density)
@@ -1664,9 +1669,9 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/open()
 	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
-	src.use_power(50)
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
-		src.use_power(100)
+		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
 	if (narrator_mode)
@@ -1682,11 +1687,13 @@ About the new airlock wires panel:
 	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		if (src.linked_forcefield)
 			src.linked_forcefield.setactive(0)
+			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 		return
 	if (src.welded || src.locked || src.operating)
 		return
-	src.use_power(50)
-
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
+	if (src.linked_forcefield)
+		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
@@ -2157,3 +2164,5 @@ TYPEINFO(/obj/machinery/door/airlock)
 						. = TRUE
 
 #undef NET_ACCESS_OPTIONS
+#undef LINKED_FORCEFIELD_POWER_USAGE
+#undef OPEN_CLOSE_POWER_USAGE

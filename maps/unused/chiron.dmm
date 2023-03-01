@@ -12229,7 +12229,7 @@
 /area/station/hallway/primary/east)
 "axA" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/brig{
@@ -21743,7 +21743,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aRm" = (
