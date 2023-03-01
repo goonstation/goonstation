@@ -3600,8 +3600,9 @@ var/global/noir = 0
 					if("testmerges")
 					#if defined(TESTMERGE_PRS)
 						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
-						var/file_text = file2text("testmerges/[pr_num].json")
-						src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+						if(pr_num)
+							var/file_text = file2text("testmerges/[pr_num].json")
+							src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
 					#else
 						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
 					#endif
