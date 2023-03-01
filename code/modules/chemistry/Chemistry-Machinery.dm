@@ -34,12 +34,13 @@ TYPEINFO(/obj/machinery/chem_heater)
 		..()
 		output_target = src.loc
 
-	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
+	attackby(var/obj/item/reagent_containers/B, var/mob/user)
 
-		if(istype(B, /obj/item/reagent_containers/glass))
+		if (istype(B, /obj/item/reagent_containers/glass) || \
+			istype(B, /obj/item/reagent_containers/food/drinks/drinkingglass))
 			tryInsert(B, user)
 
-	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
+	proc/tryInsert(obj/item/reagent_containers/B, var/mob/user)
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -110,7 +111,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 	ui_data(mob/user)
 		. = list()
-		var/obj/item/reagent_containers/glass/container = src.beaker
+		var/obj/item/reagent_containers/container = src.beaker
 		// Container data
 		var/list/containerData
 		if(container)
@@ -147,7 +148,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 		. = ..()
 		if(.)
 			return
-		var/obj/item/reagent_containers/glass/container = src.beaker
+		var/obj/item/reagent_containers/container = src.beaker
 		switch(action)
 			if("eject")
 				if(!container)
@@ -168,7 +169,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 			if("insert")
 				if (container)
 					return
-				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
+				var/obj/item/reagent_containers/inserting = usr.equipped()
 				if(istype(inserting))
 					tryInsert(inserting, usr)
 			if("adjustTemp")
