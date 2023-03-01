@@ -3026,12 +3026,12 @@
 	var/A = 1
 	var/B = 1
 	var/autoEval = TRUE
-	var/roundResults = FALSE
+	var/floorResults = FALSE
 
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoRound: [roundResults ? "ON" : "OFF"]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoFloor: [floorResults ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3045,6 +3045,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",.proc/toggleAutoEval)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Floor",.proc/toggleAutoFloor)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3073,9 +3074,9 @@
 		tooltip_rebuild = 1
 		return 1
 
-	proc/toggleRounding(obj/item/W as obj, mob/user as mob)
-		src.roundResults = !src.roundResults
-		boutput(user, "<span class='notice'>Results will <b>[src.autoEval ? "be" : "not be"] rounded</b>.</span>")
+	proc/toggleAutoFloor(obj/item/W as obj, mob/user as mob)
+		src.floorResults = !src.floorResults
+		boutput(user, "<span class='notice'>Results will <b>[src.autoEval ? "be" : "not be"] floor()ed</b>.</span>")
 		tooltip_rebuild = 1
 		return 1
 
@@ -3128,7 +3129,7 @@
 				. = A != B
 			else
 				return
-		if (src.roundResults && .)
+		if (src.floorResults && .)
 			. = round(.)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
