@@ -5123,7 +5123,7 @@
 /area/station/ai_monitored/armory)
 "aqW" = (
 /obj/grille/steel,
-/turf/simulated/floor/engine/vacuum,
+/turf/space,
 /area/station/engine/combustion_chamber)
 "aqY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
