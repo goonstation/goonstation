@@ -171,7 +171,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 600
 	health_max = 600
 
-	var/ai_no_access = 0 //This is the dumbest var.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.

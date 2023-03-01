@@ -59,6 +59,9 @@
 /datum/movement_modifier/reagent/juggernaut
 	health_deficiency_adjustment = -65
 
+/datum/movement_modifier/pain_immune
+	health_deficiency_adjustment = -10000
+
 /datum/movement_modifier/reagent/morphine
 	health_deficiency_adjustment = -60
 
