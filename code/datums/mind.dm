@@ -247,6 +247,7 @@ datum/mind
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 

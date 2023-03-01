@@ -346,7 +346,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			ticker.minds += src.occupant.mind
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
