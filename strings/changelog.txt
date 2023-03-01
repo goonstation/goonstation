@@ -1,4 +1,23 @@
 
+(t)tue feb 28 23
+(u)Mora
+(p)13201
+(e)🆕🎨🏅🎩|C-Feature, C-Sprites, A-Medal, A-Clothing
+(+)Adds a certain Aerostatic Pilot jacket as a medal reward.
+(t)mon feb 27 23
+(u)Azrun
+(+)Power use adjustments for: Printers, Scanners CheMaster, and morgue tray? ⚡
+(u)Zamujasa
+(+)MechComp letter display components have a "color" option (and signal). Available colors: red, blue, green, gray. The power of color matrixes.
+(+)MechComp arithmetic components have a toggle to automatically evaluate when their inputs change.
+(t)sun feb 26 23
+(u)LeahTheTech
+(+)Flock compute node compute provided reduced from 50 -> 30.
+(u)Zamujasa
+(+)New clock/stopwatch mechanics component.
+(+)Counter and clock components have new icons.
+(+)Letter display components can be right-aligned; use negative letter indexes (e.g. -3, -2, -1).
+(+)Health scanners (the ones on the floor) can be connected to MechComp and will send scanner information.
 (t)thu feb 23 23
 (u)Bartimeus973
 (p)13121

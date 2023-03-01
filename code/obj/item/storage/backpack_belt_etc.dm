@@ -689,6 +689,17 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/virtual
+	name = "virtual utility belt"
+	desc = "Are these tools DLC?"
+	spawn_contents = list(/obj/item/crowbar/vr,
+	/obj/item/weldingtool/vr,
+	/obj/item/wirecutters/vr,
+	/obj/item/screwdriver/vr,
+	/obj/item/wrench/vr,
+	/obj/item/device/multitool,
+	/obj/item/deconstructor)
+
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
 	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)

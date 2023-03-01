@@ -988,27 +988,11 @@ proc/display_camera_paths()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
 
-	var/output = ""
-	var/apc_data = ""
+	if(holder)
+		var/datum/power_usage_viewer/E = new(src.mob)
+		E.ui_interact(mob)
 
-	for(var/area/A as() in detailed_machine_power_prev)
-		if(A.area_apc)
-			apc_data = "<B>[A.area_apc.lastused_total]</B>      EQP:[A.area_apc.lastused_equip] LGT:[A.area_apc.lastused_light] ENV:[A.area_apc.lastused_environ]"
-			for(var/obj/machinery/AM as() in A.machines)
-				if(AM.power_usage)
-					if(!detailed_machine_power_prev[A][AM]) detailed_machine_power_prev[A][AM] = list()
-					detailed_machine_power_prev[A][AM] += "([-AM.power_usage])"
-		else
-			apc_data = "<i>NO APC</i>"
-		output += "<B><a href='byond://?src=\ref[src];Vars=\ref[A]'>[A]</a></B> [apc_data]<BR/>"
-		for(var/M in detailed_machine_power_prev[A])
-			output += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[M]'>[M]</a> (<a href='byond://?src=\ref[src];JumpToThing=\ref[M]'>JMP</a>) :"
-			for(var/P in detailed_machine_power_prev[A][M])
-				output += "[P] "
-			output += "<BR/>"
-		output += "<BR/>"
-	src.Browse(output, "window=power_data;size=600x500")
-
+	return
 #endif
 
 #ifdef QUEUE_STAT_DEBUG

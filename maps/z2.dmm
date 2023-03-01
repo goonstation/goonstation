@@ -33086,7 +33086,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bYC" = (
-/obj/critter/aberration,
+/mob/living/critter/aberration,
 /turf/unsimulated/floor/plating/damaged3,
 /area/crunch)
 "bYD" = (
