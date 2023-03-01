@@ -3129,9 +3129,14 @@
 				. = A != B
 			else
 				return
-		if (src.floorResults && .)
-			. = round(.)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+		// to any curious developers wondering what this "boob operator" is,
+		// it's apparently a way to check for NaN (not-a-number) values
+		// (NaN is never equal to anything, even itself)
+		if (. == .)
+			if (src.floorResults && .)
+				. = round(.)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 
 
