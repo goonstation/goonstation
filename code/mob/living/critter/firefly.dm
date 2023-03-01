@@ -109,7 +109,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /mob/living/critter/small_animal/firefly/pyre
@@ -159,7 +158,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_pyre
@@ -227,7 +225,6 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_lightning
@@ -309,7 +306,6 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 	Move(NewLoc, direct)

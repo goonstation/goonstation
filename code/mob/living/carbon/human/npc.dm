@@ -31,7 +31,8 @@
 		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN(2 SECONDS)
-			ai_init()
+			if (src.is_npc)
+				ai_init()
 
 /mob/living/carbon/human/npc/mutantrace
 	var/spawn_mutantrace

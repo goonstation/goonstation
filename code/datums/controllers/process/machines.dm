@@ -74,9 +74,9 @@
 	#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(PN, world.time - t)
 
-				if(length(detailed_machine_power))
-					detailed_machine_power_prev = detailed_machine_power
-					detailed_machine_power = list()
+				if(length(detailed_power_data.areas))
+					detailed_power_data_last = detailed_power_data
+					detailed_power_data = new
 	#endif
 				if (!(c++ % 100))
 					scheck()
@@ -118,5 +118,29 @@ proc/register_machine_time(var/datum/machine, var/time)
 	mtl[1] += time
 	mtl[2]++
 
+/datum/machine_power_data
+	var/list/area/areas
+	var/list/obj/machinery/machines
 
-#endif
+	New()
+		. = ..()
+		areas = list()
+		machines = list()
+
+	proc/add_machinery(machine)
+		var/area/A = get_area(machine)
+		if(isnull(areas[A]))
+			areas[A] = list()
+		areas[A] += machine
+		machines[machine] = 0
+
+	proc/log_machine(obj/machinery/machine, amount)
+		if(detailed_machine_power_log_zlevels & (1<<machine.z))
+			if(isnull(machines[machine]))
+				add_machinery(machine)
+			machines[machine]+=amount
+
+#endif MACHINE_PROCESSING_DEBUG
+
+
+
