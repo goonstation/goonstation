@@ -9,9 +9,11 @@
 	var/labels = list()
 	for (var/label in form.data["tags"])
 		labels += "\[[label]\]"
+#ifdef TESTMERGE_PRS
 	var/testmerges = list()
 	for (var/testmerge in TESTMERGE_PRS)
 		testmerges += "#" + testmerge // so they're clickable on GH
+#endif
 	var/desc = {"
 ### Labels
 
