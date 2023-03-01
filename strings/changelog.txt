@@ -1,3 +1,9 @@
+
+(t)tue feb 28 23
+(u)Mora
+(p)13201
+(e)🆕🎨🏅🎩|C-Feature, C-Sprites, A-Medal, A-Clothing
+(+)Adds a certain Aerostatic Pilot jacket as a medal reward.
 (t)mon feb 27 23
 (u)Azrun
 (+)Power use adjustments for: Printers, Scanners CheMaster, and morgue tray? ⚡
