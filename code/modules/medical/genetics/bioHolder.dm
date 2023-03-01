@@ -655,7 +655,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 
 		if(HasEffect(idToAdd))
@@ -683,6 +683,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.can_reclaim = 0
 				newEffect.degrade_to = null
 				newEffect.can_copy = 0
+
+			if(safety && istype(newEffect, /datum/bioEffect/power))
+				// Only powers have safety ("synced" i.e. safe for user)
+				var/datum/bioEffect/power/TEMP = newEffect
+				TEMP.safety = safety
 
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner

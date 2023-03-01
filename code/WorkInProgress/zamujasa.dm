@@ -104,6 +104,41 @@
 			qdel(src)
 
 
+/obj/maptext_junk/power
+	name = "power popup"
+	maptext_y = 16
+	maptext_x = -32
+	maptext_width = 96
+	anchored = 2
+
+	New(var/change = 0, var/channel = 0)
+		..()
+		if (abs(change) < 0.5)
+			qdel(src)
+			return
+		var/channel_text = "??"
+		var/hcol = (change > 0) ? "#88ff88" : "#ffff00"
+		switch (channel)
+			if (-1)
+				channel_text = "APC"
+				hcol = (change > 0) ? "#00ff00" : "#ff6666"
+			if (EQUIP)
+				channel_text = "Eq"
+			if (LIGHT)
+				channel_text = "Li"
+			if (ENVIRON)
+				channel_text = "En"
+
+		maptext = "<span class='pixel c ol'>[channel_text] <span style='color: [hcol];'>[change > 0 ? "+" : ""][round(change)]</span></span>"
+
+		animate(src, maptext_y = 36, time = 8, easing = EASE_OUT | QUAD_EASING)
+		animate(time = 18)
+		animate(alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
+
+		SPAWN(5 SECONDS)
+			qdel(src)
+
+
 /obj/maptext_junk/speech
 	name = "spoken chat"
 	maptext_x = -64
@@ -1023,6 +1058,11 @@
 					..()
 					maptext_y += 21
 
+				more_accurate
+					get_value()
+						. = (TIME - round_start_time)
+
+
 				offset
 					New()
 						..()
@@ -1334,6 +1374,57 @@
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
+
+		the_literal_server
+			var/obj/decal/fakeobjects/the_server = null
+			var/is_smoking = 0
+
+			New()
+				..()
+				src.maptext_y += 35	// appear *over* the fake server.
+
+				the_server = new(get_turf(src))
+				the_server.name = "server rack"
+				the_server.desc = "This looks kinda important.  You can barely hear farting and honking coming from a speaker inside.  Weird."
+				the_server.icon = 'icons/obj/networked.dmi'
+				the_server.icon_state = "server"
+				the_server.anchored = 1
+				the_server.density = 1
+				the_server.vis_contents += src
+				src.set_loc(the_server)
+
+				if (world.name)
+					the_server.name = world.name
+
+			get_value()
+				if (src.the_server)
+					switch (world.tick_lag)
+						if (0 to 0.4)
+							the_server.icon_state = "server0"
+						if (0.4 to 0.6)
+							the_server.icon_state = "server"
+						if (0.6 to 0.8)
+							the_server.icon_state = "server2"
+						if (0.8 to INFINITY)
+							the_server.icon_state = "serverf"
+
+					if (world.tick_lag > 1.0 && !src.is_smoking)
+						// starts smoking over 1.0, not at it
+						src.update_smoking(1)
+					else if (world.tick_lag <= 1.0 && src.is_smoking)
+						src.update_smoking(0)
+
+				. = ..()
+
+			proc/update_smoking(var/should_be_smoking)
+				if (should_be_smoking && !src.is_smoking)
+					src.is_smoking = 1
+					src.UpdateParticles(new/particles/barrel_embers, "embers")
+					src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+
+				else if (!should_be_smoking && src.is_smoking)
+					src.is_smoking = 0
+					src.ClearAllParticles()
 
 
 /obj/overlay/zamujasa/football_wave_timer

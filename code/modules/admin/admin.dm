@@ -3597,6 +3597,15 @@ var/global/noir = 0
 						src.owner:debug_variables("GLOB")
 					if("globalprocs")
 						src.owner:show_proc_list(null)
+					if("testmerges")
+					#if defined(TESTMERGE_PRS)
+						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
+						if(pr_num)
+							var/file_text = file2text("testmerges/[pr_num].json")
+							src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+					#else
+						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
+					#endif
 			else
 				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
@@ -4382,7 +4391,8 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=testmerges'>Testmerges</A>
 				"}
 
 		dat += "</div>"
@@ -4764,16 +4774,14 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WRESTLER)
-				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-				M.make_wrestler(1)
+				M.mind.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WEREWOLF)
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GRINCH)
-				M.mind.special_role = ROLE_GRINCH
-				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()

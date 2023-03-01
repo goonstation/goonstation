@@ -3025,11 +3025,13 @@
 	icon_state = "comp_arith"
 	var/A = 1
 	var/B = 1
+	var/autoEval = TRUE
+	var/floorResults = FALSE
 
 	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoFloor: [floorResults ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3042,6 +3044,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",.proc/setAManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",.proc/toggleAutoEval)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Floor",.proc/toggleAutoFloor)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3064,18 +3068,34 @@
 		tooltip_rebuild = 1
 		return 1
 
+	proc/toggleAutoEval(obj/item/W as obj, mob/user as mob)
+		src.autoEval = !src.autoEval
+		boutput(user, "<span class='notice'>Auto-Evaluate mode <b>[src.autoEval ? "ON" : "OFF"]</b>.</span>")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/toggleAutoFloor(obj/item/W as obj, mob/user as mob)
+		src.floorResults = !src.floorResults
+		boutput(user, "<span class='notice'>Results will <b>[src.autoEval ? "be" : "not be"] floor()ed</b>.</span>")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if (!isnull(text2num_safe(input.signal)))
 			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
+			if (autoEval)
+				src.evaluate()
 	proc/evaluate()
 		switch(mode)
 			if("add")
@@ -3109,7 +3129,13 @@
 				. = A != B
 			else
 				return
-		if(. == .)
+
+		// to any curious developers wondering what this "boob operator" is,
+		// it's apparently a way to check for NaN (not-a-number) values
+		// (NaN is never equal to anything, even itself)
+		if (. == .)
+			if (src.floorResults && .)
+				. = round(.)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 
@@ -3117,29 +3143,28 @@
 /obj/item/mechanics/counter
 	name = "Counting Component"
 	desc = "Count things! Adds (change) to the current value and outputs it when triggered. You can change the amount to change by, the starting value, and reset it as well."
-	icon_state = "comp_arith"
+	icon_state = "comp_counter"
 	var/startingValue = 0
 	var/currentValue = 0
 	var/change = 1
 
-	var/mode = "rng"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br><span class='notice'>Current value: [currentValue] | Changes by [(change >= 0 ? "+" : "-")][change] | Starting value: [startingValue]</span>"
 	secure()
-		icon_state = "comp_arith1"
+		icon_state = "comp_counter1"
 	loosen()
-		icon_state = "comp_arith"
+		icon_state = "comp_counter"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Current Value",.proc/setCurrentValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
 
 	proc/setStartingValueManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set starting value to what?", "Starting value", startingValue) as num
@@ -3199,6 +3224,71 @@
 		. = currentValue
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+
+/obj/item/mechanics/clock
+	name = "Clock Component"
+	desc = "Clock! Tells you the current time. Also usable as a stopwatch."
+	icon_state = "comp_clock"
+	var/startTime = 0
+	var/divisor = 1 SECOND
+
+	get_desc()
+		. = ..() // Please don't remove this again, thanks.
+		. += "<br><span class='notice'>Current stored time: [startTime] | Current time: [round(TIME)] | Time units: [divisor / 10] seconds</span>"
+
+	secure()
+		icon_state = "comp_clock1"
+	loosen()
+		icon_state = "comp_clock"
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", .proc/sendTime)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Stopwatch", .proc/startStopwatch)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time", .proc/sendStopwatchTime)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time And Reset", .proc/sendStopwatchTimeAndReset)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Units",.proc/setTimeUnits)
+
+	proc/sendTime()
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		. = round((TIME - round_start_time) / src.divisor)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/startStopwatch()
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		startTime = round(TIME)
+		. = 0
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/sendStopwatchTime()
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		. = round((TIME - src.startTime) / src.divisor)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/sendStopwatchTimeAndReset()
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		. = round((TIME - src.startTime) / src.divisor)
+		src.startTime = round(TIME)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+	proc/setTimeUnits(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Set units", "Clock Component") in list("Deciseconds", "Seconds", "Minutes", "Hours", "*CANCEL*")
+		if(!in_interact_range(src, user) || user.stat || isnull(input))
+			return 0
+		switch (input)
+			if ("Deciseconds")
+				src.divisor = 1
+			if ("Seconds")
+				src.divisor = 1 SECOND
+			if ("Minutes")
+				src.divisor = 1 MINUTE
+			if ("Hours")
+				src.divisor = 1 HOUR
+		tooltip_rebuild = 1
+		return 1
 
 /obj/item/mechanics/association
 	name = "Association Component"
@@ -3373,22 +3463,65 @@
 	New()
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", .proc/setLetterIndex)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", .proc/fire)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
-		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
+		var/input = input("Which letter from the input string to take? (1-indexed; negative numbers start from the end)", "Letter Index", letter_index) as num
 		if (!in_interact_range(src, user) || user.stat || isnull(input))
 			return FALSE
-		if (letter_index < 1)
+		if (letter_index == 0)
 			return FALSE
 		letter_index = input
 		tooltip_rebuild = TRUE
 		. = TRUE
 
+	proc/setColorManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Which color?", "Letter Display Component") in list("Blue", "Green", "Red", "Gray", "*CANCEL*")
+		if (!in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+		if (letter_index == 0)
+			return FALSE
+		switch(input)
+			if ("Blue")
+				src.actualSetColor("blue")
+			if ("Green")
+				src.actualSetColor("green")
+			if ("Red")
+				src.actualSetColor("red")
+			if ("Gray")
+				src.actualSetColor("gray")
+
+		. = TRUE
+
+	proc/actualSetColor(var/color_name)
+		// letter display components are blue and light blue with a gray border
+		// these color matrixes switch blue for the target color,
+		// or in the case of grayscale, turn everything off and use blue alone
+		switch(color_name)
+			if ("blue")
+				src.color = null
+			if ("green")
+				src.color = list(list(1, 0, 0, 0), list(0, 0, 1, 0), list(0, 1, 0, 0))
+			if ("red")
+				src.color = list(list(0, 0, 1, 0), list(0, 1, 0, 0), list(1, 0, 0, 0))
+			if ("gray")
+				src.color = list(list(0, 0, 0, 0), list(0, 0, 0, 0), list(1, 1, 1, 0))
+
+
+
+
+	proc/setColor(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		src.actualSetColor(signal)
+
+
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
 		var/signal = input.signal
-		if (length(signal) < src.letter_index)
+		if (length(signal) < abs(src.letter_index))
 			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
 			return
 		var/letter = copytext(signal, src.letter_index, src.letter_index + 1)
@@ -3399,6 +3532,10 @@
 		switch(letter)
 			if (" ") src.setDisplayState(" ", "comp_screen_blank")
 			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
+			if ("-") src.setDisplayState("!", "comp_screen_dash")
+			if (".") src.setDisplayState("!", "comp_screen_period")
+			if ("*") src.setDisplayState("*", "comp_screen_asterisk")
+			if ("%") src.setDisplayState("*", "comp_screen_percent")
 			else
 				var/ascii = text2ascii(letter)
 				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z")) || (ascii >= text2ascii("0") && ascii <= text2ascii("9")))

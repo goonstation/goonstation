@@ -896,6 +896,9 @@
 		handleCast(atom/target, params)
 			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
+#ifdef NO_COOLDOWNS
+			result = TRUE
+#endif
 			if (result && result != 999)
 				last_cast = 0 // reset cooldown
 			else if (result != 999)
@@ -910,8 +913,10 @@
 
 		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 		onAttach(var/datum/abilityHolder/H)
+#ifndef NO_COOLDOWNS
 			if (src.start_on_cooldown)
 				doCooldown()
+#endif
 			return
 
 		// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
