@@ -43,6 +43,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleAI,
 		/datum/admins/proc/delay_start,
 		/datum/admins/proc/delay_end,
+		/datum/admins/proc/togglepowerdebug,
 
 		/client/proc/cmd_admin_subtle_message,
 		/client/proc/cmd_admin_alert,
@@ -366,6 +367,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
+		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_radio_maptext,
 

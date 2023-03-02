@@ -107,16 +107,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_OMNITRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.verbs += /client/proc/gearspawn_wizard
-		M.make_changeling()
-		M.make_vampire()
-		M.make_werewolf()
-		M.make_wrestler(1)
-		M.make_grinch()
-		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		M.show_antag_popup("traitoromni")
+		M.mind.add_antagonist(ROLE_OMNITRAITOR)
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
@@ -184,7 +175,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
-			M.mind.add_antagonist(ROLE_WEREWOLF, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
+			M.mind.add_antagonist(ROLE_WEREWOLF, do_vr = TRUE)
 
 	wrestler
 		name = "WRESTL~1.EXE"
@@ -194,7 +185,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Time to step into the squared circle, son.</span>")
-			M.mind.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
+			M.mind.add_antagonist(ROLE_WRESTLER, do_vr = TRUE)
 
 	wizard
 		name = "WIZARD.EXE"
@@ -204,9 +195,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
-			M.mind?.add_antagonist(ROLE_WIZARD, do_equip = FALSE, do_relocate = FALSE, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
-			var/datum/antagonist/wizard/antag_role = M.mind?.get_antagonist(ROLE_WIZARD)
-			antag_role.give_equipment(TRUE)
+			M.mind?.add_antagonist(ROLE_WIZARD, do_vr = TRUE)
 
 	nuclear
 		name = "NUKE_TKN.EXE"
@@ -227,5 +216,4 @@
 
 		makeAntag(mob/living/carbon/human/M)
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
-			// No need to specify other arguments here; pseudo does most of this on its own
-			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_vr = TRUE)

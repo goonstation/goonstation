@@ -54,6 +54,8 @@
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+
 	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
 	else
@@ -69,7 +71,6 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
 	if(src.ai_paused) //wake up when grabbed
@@ -305,6 +306,7 @@
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
+	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 
 	if (!src.flock)
 		..()
@@ -333,7 +335,6 @@
 	src.is_npc = TRUE // to ensure right flock_speak message
 	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
 	src.is_npc = FALSE // turns off ai
-	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 	..()
 
 /mob/living/critter/flock/drone/proc/move_controller_to_station()
@@ -565,8 +566,9 @@
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
 	if (!src.dormant && !src.flock?.z_level_check(src) && src.z != Z_LEVEL_NULL)
-		src.dormantize()
-		return
+		if (src.flock || !src.client)
+			src.dormantize()
+			return
 	if (src.dormant)
 		return
 	if(src.ai_paused)
@@ -619,7 +621,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
+	src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
 	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
@@ -1027,7 +1029,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
@@ -1161,9 +1163,6 @@
 	if(!(isliving(target) || iscritter(target)))
 		return
 	if(isintangible(target))
-		return
-	if (!user.flock)
-		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
 		return
 	// IMPRISON TARGET
 	if(isflockmob(target))

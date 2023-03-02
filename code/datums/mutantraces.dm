@@ -6,6 +6,7 @@
 /// mutant races: cheap way to add new "types" of mobs
 TYPEINFO(/datum/mutantrace)
 	var/list/special_styles // special styles which currently change the icon (sprite sheet)
+ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
