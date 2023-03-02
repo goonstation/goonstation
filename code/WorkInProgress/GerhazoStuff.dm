@@ -989,6 +989,7 @@
 		last_location_x = src.loc.x
 		last_location_y = src.loc.y
 		add_stam_mod_max("AAAAAA", 999999)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/pain_immune, src.type)
 		src.maptext_height = 32
 		src.maptext_width = 96
 		src.maptext_x = 36
@@ -1075,11 +1076,11 @@
 
 		steps++
 		if(momentum > machrun_animation_min_momentum)
-			if(steps >= 5)
-				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 55)
+			if(steps >= 6)
+				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 45)
 				steps = 0
 		else
-			if(steps >= 2)
+			if(steps >= 3)
 				playsound(src.loc, '+secret/sound/misc/peppino_step.ogg', 75)
 				steps = 0
 
