@@ -9,21 +9,21 @@
 	can_use_in_container = 1
 	interrupt_action_bars = 0
 	var/last_mimiced_name = ""
-	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_override and value refers to associated headset.icon_tooltip
-	"head" = "Head of Staff",
-    "sec" = "Security",
-    "eng" = "Engineer",
-    "sci" = "Scientist",
-    "med" = "Medical",
-    "qm" = "Quartermaster",
-    "civ" = "Civilian",
-    "cap" = "Captain",
-    "rd" = "Research Director",
-    "md" = "Medical Director",
-    "ce" = "Chief Engineer",
-    "hop" = "Head of Personnel",
-    "hos" = "Head of Security",
-    "clown" = "Clown")
+	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override
+		"Captain" = "cap",
+		"Head of Personnel" = "hop",
+		"Head of Security" = "hos",
+		"Head of Staff" = "head",
+		"Research Director" = "rd",
+		"Medical Director" = "md",
+		"Chief Engineer" = "ce",
+		"Security" = "sec",
+		"Scientist" = "sci",
+		"Medical" = "med",
+		"Engineer" = "eng",
+		"Quartermaster" = "qm",
+		"Civilian" = "civ",
+		"Clown" = "clown")
 
 	cast(atom/target)
 		if (..())
@@ -49,9 +49,9 @@
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
-				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in headset_icon_labels
-				if (radio_override)
-					var/radio_tooltip = headset_icon_labels[radio_override]
+				var/radio_tooltip = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in headset_icon_labels
+				if (radio_tooltip)
+					var/radio_override = headset_icon_labels[radio_tooltip]
 					headset.icon_override = radio_override
 					headset.icon_tooltip = radio_tooltip
 
