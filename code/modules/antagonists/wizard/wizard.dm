@@ -68,7 +68,7 @@
 		else
 			randomname = pick_string_autokey("names/wizard_male.txt")
 
-		if (!src.vr)
+		if (!src.vr && !src.pseudo)
 			SPAWN(0)
 				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname)
 				if(newname && newname != randomname)

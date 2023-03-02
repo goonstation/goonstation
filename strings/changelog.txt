@@ -1,5 +1,16 @@
 
+(t)thu mar 02 23
+(u)Wisemonster
+(p)13169
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The semi-automatic artifact analysis form bin has been swapped with a analysis form sticker box.
 (t)wed mar 01 23
+(u)Sord
+(+)You can no longer print gas masks from the science fabricator
+(u)Tyrant
+(p)13220
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir now has a solar cycle, like Oshan does.
 (u)Wisemonster
 (p)13167
 (e)💅🤖🔬|C-QoL, A-Silicons, A-Science
@@ -10,6 +21,10 @@
 (e)🪲🗺|C-Bug, A-Mapping
 (+)Atlas has received a Confiscated Items locker with its Contraband stickers!
 (+)Atlas QM and Medbay windows have received access requirements.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
+(+)MechComp payment components now output a signal containing the payment amount, total collected, and customer's name.
 (t)tue feb 28 23
 (u)Mora
 (p)13201
