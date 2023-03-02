@@ -13,6 +13,9 @@
 	var/dy
 	var/counter = 20 // to make the vars update during 1st call
 	var/rate
+
+	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
+	var/sun_area = null
 	/// Is it around Shidd, Fugg, or Typhon? Or the Sun?
 	var/star = "unknown"
 	/// where is z1 exactly?
