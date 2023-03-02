@@ -19,6 +19,7 @@
 (u)Zamujasa
 (e)🆕|C-Feature
 (*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
+(+)MechComp payment components now output a signal containing the payment amount, total collected, and customer's name.
 (t)tue feb 28 23
 (u)Mora
 (p)13201
