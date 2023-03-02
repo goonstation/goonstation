@@ -535,7 +535,7 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", .proc/emoney)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		// SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price",.proc/setPrice)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code",.proc/setCode)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String",.proc/setThank)
@@ -624,7 +624,7 @@
 				user.drop_item()
 				qdel(W)
 
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
 		return 0
@@ -3160,6 +3160,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Value", .proc/setCurrentValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
@@ -3204,12 +3205,21 @@
 			change = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/resetCounter(var/datum/mechanicsMessage/input)
+		// reset does not send the value
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		currentValue = startingValue
 		tooltip_rebuild = 1
 		. = currentValue
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+	proc/setCurrentValue(var/datum/mechanicsMessage/input)
+		// setCurrentValue sends the signal with the current value
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if (!isnull(text2num_safe(input.signal)))
+			currentValue = text2num_safe(input.signal)
+			tooltip_rebuild = 1
+			. = currentValue
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/doImmediateChange(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -3546,6 +3556,83 @@
 	proc/setDisplayState(var/new_letter as text, var/new_icon_state as text)
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
+
+
+/obj/item/mechanics/message_sign
+	name = "message sign component"
+	desc = "Can display up to three lines of text."
+	icon='icons/obj/large/96x32.dmi'
+	icon_state = "mechcomp_ledsign"
+	cabinet_banned = TRUE
+	two_handed = 1     // it's big
+	pixel_w = -32
+	var/display_text = null
+	var/display_color = "#dd9922"
+	maptext_width = 92
+	maptext_x = 2
+
+	get_desc()
+		. = ..()
+		. += "<br><span class='notice'>Current text: [src.display_text] | Color: [display_color]</span>"
+
+	secure()
+		src.display_text = ""
+		src.maptext = ""
+
+	loosen()
+		src.display_text = ""
+		src.maptext = ""
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set text", .proc/setTextManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set text", .proc/setText)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
+
+	proc/setColor(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		src.actualSetColor(signal)
+	proc/setColorManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Text color", "Color", src.display_color) as color | null
+		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+
+		src.actualSetColor(input)
+		tooltip_rebuild = TRUE
+		. = TRUE
+	proc/actualSetColor(var/color_input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if(length(color_input) == 7 && copytext(color_input, 1, 2) == "#")
+			display_color = color_input
+			tooltip_rebuild = 1
+			src.display()
+
+	proc/setText(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		if (length(signal) > MAX_MESSAGE_LEN)
+			return
+		src.display_text = html_encode(input.signal)
+		src.display()
+
+	proc/setTextManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Message Text", "Text", html_decode(src.display_text)) as text | null
+		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+
+		src.display_text = html_encode(input)
+		src.display()
+		tooltip_rebuild = TRUE
+		. = TRUE
+
+	proc/display()
+		src.maptext = "<span class='vm c pixel' style='font-size: 6px; color: [display_color];'>[display_text]</span>"
+
+
+
 
 /// allows cabinets to move around
 /obj/item/mechanics/movement
