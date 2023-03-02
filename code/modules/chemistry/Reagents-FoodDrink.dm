@@ -3071,7 +3071,7 @@ datum
 		fooddrink/msg
 			name = "monosodium glutamate"
 			id = "msg"
-			description = "Monosodium Glutamate is a sodium salt known chiefly for its use as a controversial flavor enhancer."
+			description = "Monosodium Glutamate is a sodium salt known chiefly for its use as a flavor enhancer."
 			fluid_r = 245
 			fluid_g = 245
 			fluid_b = 245
@@ -3087,16 +3087,6 @@ datum
 					return
 				if(method == INGEST)
 					boutput(M, "<span class='notice'>That tasted amazing!</span>")
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
-					if (prob(10))
-						M.take_toxin_damage(rand(2,4) * mult)
-					if (prob(7))
-						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatusMin("stunned", 4 SECONDS * mult)
-				..()
 
 		fooddrink/egg
 			name = "egg"
@@ -3151,15 +3141,12 @@ datum
 		fooddrink/enriched_msg //Hukhukhuk brings you another culinary war crime
 			name = "Enriched MSG"
 			id = "enriched_msg"
-			description = "This highly illegal substance was only rumored to exist; it is the most flavorful substance known. It is believed that it causes such euphoria that the body begins to heal its own wounds, however no living creature can resist having seconds."
+			description = "This highly illegal substance was only rumored to exist; it is the most flavorful substance known. It is believed that it causes such euphoria that the body begins to heal its own wounds."
 			reagent_state = SOLID
 			fluid_r = 255
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
-			addiction_prob = 100
-			addiction_min = 0
-			overdose = 25
 			viscosity = 0.2
 			taste = "heavenly"
 
@@ -3168,55 +3155,8 @@ datum
 				if (!volume_passed)
 					return ..()
 				if (method == INGEST)
-					var/datum/ailment/addiction/AD = M.addicted_to_reagent(src)
-					if (!AD)
-						boutput(M, "<B>THIS TASTES <font size='92'>~<font color='#FF0000'> A<font color='#FF9900'> M<font color='#FFff00'> A<font color='#00FF00'> Z<font color='#0000FF'> I<font color='#FF00FF'> N<font color='#660066'> G<font color='#000000'> ~ !</font></B>")
+					boutput(M, "<B>THIS TASTES <font size='92'>~<font color='#FF0000'> A<font color='#FF9900'> M<font color='#FFff00'> A<font color='#00FF00'> Z<font color='#0000FF'> I<font color='#FF00FF'> N<font color='#660066'> G<font color='#000000'> ~ !</font></B>")
 				..(M, method, volume_passed)
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(M.get_oxygen_deprivation())
-					M.take_oxygen_deprivation(-1 * mult)
-				if(M.get_toxin_damage())
-					M.take_toxin_damage(-1 * mult)
-				if(M:losebreath)
-					M:losebreath -= (1 * mult)
-				M:HealDamage("All", 3 * mult, 3 * mult)
-				M:UpdateDamageIcon()
-				..()
-				return
-
-			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				var/effect = ..(severity, M)
-				if (severity == 1) //lesser
-					M.stuttering += 1
-					if(effect <= 1)
-						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly starts salivating.</span>")
-						M.emote("drool")
-						M.change_misstep_chance(10 * mult)
-						M.setStatusMin("weakened", 2 SECONDS * mult)
-					else if(effect <= 3)
-						M.visible_message("<span class='alert'><b>[M.name]</b> begins to reminisce about food.</span>")
-						M.changeStatus("stunned", 2 SECONDS * mult)
-					else if(effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> pouts and sniffles a bit.</span>")
-					else if(effect <= 7)
-						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
-						M.make_jittery(30)
-				else if (severity == 2) // greater
-					if(effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> enters a food coma!</span>")
-						M.emote("faint")
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
-					else if(effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> wants more delicious food!</span>")
-						M.emote("scream")
-						M.setStatusMin("stunned", 5 SECONDS * mult)
-					else if(effect <= 8)
-						M.visible_message("<span class='alert'><b>[M.name]</b> appears extremely depressed.</span>")
-						M.emote("moan")
-						M.change_misstep_chance(25 * mult)
-						M.setStatusMin("weakened", 7 SECONDS * mult)
 
 		fooddrink/pepperoni //Hukhukhuk presents. pepperoni and acetone
 			name = "pepperoni"
