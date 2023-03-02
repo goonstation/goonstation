@@ -646,6 +646,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
+	status = REQ_PHYSICAL_ACCESS
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
@@ -671,13 +672,12 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	process()
 		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(get_turf(src.defib), get_turf(src)) > 0)
-				if (isliving(src.defib.loc))
-					put_back_defib(src.defib.loc)
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				put_back_defib(src.defib.loc)
 		..()
 
 	attack_hand(mob/living/user)
-		if (isAI(user) || isintangible(user) || isobserver(user)) return
+		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
 		user.lastattacked = src
 		..()
 		if(!defib || QDELETED(defib))
@@ -691,15 +691,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 		UpdateIcon()
 
-		//set move callback (when user moves, defib go back)
-		if (islist(user.move_laying))
-			user.move_laying += src
-		else
-			if (user.move_laying)
-				user.move_laying = list(user.move_laying, src.defib)
-			else
-				user.move_laying = list(src.defib)
-
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
@@ -707,13 +698,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)
-			M.drop_item(defib)
+			if (isliving(src.defib.loc))
+				M.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
 			src.defib.set_loc(src)
 			src.defib.parent = null
-		if (islist(M.move_laying))
-			M.move_laying -= src.defib
-		else
-			M.move_laying = null
 
 		playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 		UpdateIcon()
