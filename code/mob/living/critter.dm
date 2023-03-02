@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.ghostize()
 		qdel (src)
 
-	proc/remove_arm(var/mob/living/critter/M, var/left_or_right) // for removing the arms of brullbars and bears
+	proc/remove_arm(var/left_or_right) // for removing the arms of brullbars and bears
 		switch(left_or_right)
 			if("left")
 				if(!src.left_arm)

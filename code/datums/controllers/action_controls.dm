@@ -1633,7 +1633,7 @@ var/datum/action_controller/actions
 		..()
 		target?.butcherer = null
 		if(owner && target)
-			target.remove_arm(target, left_or_right)
+			target.remove_arm(left_or_right)
 			target.visible_message("<span class='alert'><B>[owner] cuts the [left_or_right] arm off of [target].</B></span>")
 
 /datum/action/bar/icon/rev_flash
