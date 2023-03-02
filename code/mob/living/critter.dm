@@ -347,21 +347,28 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.ghostize()
 		qdel (src)
 
-	proc/remove_arm(var/mob/living/critter/M, var/arm) // for removing the arms of brullbars and bears
-		if(!arm)
-			return
-		if(arm == "left")
-			var/datum/handHolder/HH = hands[1]
-			qdel(HH)
-			new M.left_arm(M.loc)
-			M.update_dead_icon()
-			return
-		if(arm == "right")
-			var/datum/handHolder/HH = hands[2]
-			qdel(HH)
-			new M.right_arm(M.loc)
-			M.update_dead_icon()
-			return
+	proc/remove_arm(var/mob/living/critter/M, var/left_or_right) // for removing the arms of brullbars and bears
+		switch(left_or_right)
+			if("left")
+				if(!src.left_arm)
+					return
+				var/datum/handHolder/HH = hands[1]
+				if(!HH)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.left_arm(src.loc)
+				src.update_dead_icon()
+				return
+			if("right")
+				if(!src.right_arm)
+					return
+				var/datum/handHolder/HH = hands[2]
+				if(!HH)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.right_arm(src.loc)
+				src.update_dead_icon()
+				return
 
 	proc/update_dead_icon() // for brullbar and bear missing arm sprites
 		return
