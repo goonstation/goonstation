@@ -14,7 +14,7 @@ export const CrewCredits = (props, context) => {
       <Window.Content scrollable>
         {data.groups?.map(
           (group, index) =>
-            data.groups[index].crew.length > 0 && <GroupBlock key={index} group={group.group} crew={group.crew} />
+            data.groups[index].crew.length > 0 && <GroupBlock key={index} title={group.title} crew={group.crew} />
         )}
       </Window.Content>
     </Window>
@@ -22,12 +22,12 @@ export const CrewCredits = (props, context) => {
 };
 
 interface GroupBlockProps {
-  group: string;
+  title: string;
   crew: CrewMemberProps[];
 }
 
 const GroupBlock = (props: GroupBlockProps) => {
-  const { group: group_title, crew } = props;
+  const { title: group_title, crew } = props;
 
   const heads = crew?.filter((member) => member.head);
   const non_heads = crew?.filter((member) => !member.head);

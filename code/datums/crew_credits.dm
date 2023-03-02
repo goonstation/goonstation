@@ -235,39 +235,39 @@ var/global/crew_creds = null
 	crew_creds = list(
 		"groups" = list(
 			list(
-				"group" = "Antagonist" + (length(antagonist)==1 ? "" : "s"),
+				"title" = "Antagonists"),
 				"crew" = antagonist,
 			),
 			list(
-				"group" = "Captain" + (length(captain)==1 ? "" : "s"),
+				"title" = "Captain" + (length(captain)==1 ? "" : "s"),
 				"crew" = captain,
 			),
 			list(
-				"group" = "Security Department",
+				"title" = "Security Department",
 				"crew" = security,
 			),
 			list(
-				"group" = "Medical Department",
+				"title" = "Medical Department",
 				"crew" = medical,
 			),
 			list(
-				"group" = "Science Department",
+				"title" = "Science Department",
 				"crew" = science,
 			),
 			list(
-				"group" = "Engineering Department",
+				"title" = "Engineering Department",
 				"crew" = engineering,
 			),
 			list(
-				"group" = "Civilian Department",
+				"title" = "Civilian Department",
 				"crew" = civilian,
 			),
 			list(
-				"group" = "Silicons",
+				"title" = "Silicons",
 				"crew" = silicon,
 			),
 			list(
-				"group" = "Other",
+				"title" = "Other",
 				"crew" = other,
 			),
 		)
