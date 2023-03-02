@@ -16,6 +16,9 @@
 (e)🪲🗺|C-Bug, A-Mapping
 (+)Atlas has received a Confiscated Items locker with its Contraband stickers!
 (+)Atlas QM and Medbay windows have received access requirements.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
 (t)tue feb 28 23
 (u)Mora
 (p)13201
