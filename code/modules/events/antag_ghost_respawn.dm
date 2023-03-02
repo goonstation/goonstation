@@ -274,6 +274,7 @@
 				if ("Hunter")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
@@ -283,6 +284,7 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
