@@ -43369,6 +43369,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"jAk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
 "jAw" = (
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/cargobay)
@@ -107503,7 +107511,7 @@ cJr
 rTt
 bki
 xYT
-bzk
+jAk
 bzk
 rgh
 coJ
