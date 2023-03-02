@@ -29941,6 +29941,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/north)
 "hxM" = (
@@ -33035,6 +33040,11 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
@@ -52818,6 +52828,11 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
