@@ -235,7 +235,7 @@ var/global/crew_creds = null
 	crew_creds = list(
 		"groups" = list(
 			list(
-				"title" = "Antagonists"),
+				"title" = "Antagonists",
 				"crew" = antagonist,
 			),
 			list(
