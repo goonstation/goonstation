@@ -42,45 +42,45 @@
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
-#ifdef MAP_OVERRIDE_CONSTRUCTION
+	#ifdef MAP_OVERRIDE_CONSTRUCTION
 	src.stationloc = "travel"
-#elif defined(MAP_OVERRIDE_DESTINY)
+	#elif defined(MAP_OVERRIDE_DESTINY)
 	src.stationloc = "travel"
-#elif defined(MAP_OVERRIDE_CLARION)
+	#elif defined(MAP_OVERRIDE_CLARION)
 	src.stationloc = "travel"
-#elif defined(MAP_OVERRIDE_COGMAP)
+	#elif defined(MAP_OVERRIDE_COGMAP)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_COGMAP2)
+	#elif defined(MAP_OVERRIDE_COGMAP2)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_DONUT2)
+	#elif defined(MAP_OVERRIDE_DONUT2)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_DONUT3)
+	#elif defined(MAP_OVERRIDE_DONUT3)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_MUSHROOM)
+	#elif defined(MAP_OVERRIDE_MUSHROOM)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_TRUNKMAP)
+	#elif defined(MAP_OVERRIDE_TRUNKMAP)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_CHIRON)
+	#elif defined(MAP_OVERRIDE_CHIRON)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_PAMGOC)
+	#elif defined(MAP_OVERRIDE_PAMGOC)
 	src.stationloc = "13"
-#elif defined(MAP_OVERRIDE_OSHAN)
+	#elif defined(MAP_OVERRIDE_OSHAN)
 	src.stationloc = "abzu"
-#elif defined(MAP_OVERRIDE_NADIR)
+	#elif defined(MAP_OVERRIDE_NADIR)
 	src.stationloc = "magus"
-#elif defined(MAP_OVERRIDE_HORIZON)
+	#elif defined(MAP_OVERRIDE_HORIZON)
 	src.stationloc = "travel"
-#elif defined(MAP_OVERRIDE_ATLAS)
+	#elif defined(MAP_OVERRIDE_ATLAS)
 	src.stationloc = "travel"
-#elif defined(MAP_OVERRIDE_MANTA)
+	#elif defined(MAP_OVERRIDE_MANTA)
 	src.stationloc = "abzu"
-#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
+	#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
 	src.stationloc = "void"
-#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+	#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 	src.stationloc = "abzu"
-#else
+	#else
 	src.stationloc = "void"
-#endif
+	#endif
 	src.rate = rand(75,125)/50 // 75% - 125% of 'standard' rotation
 	if(prob(50))
 		src.rate = -src.rate
