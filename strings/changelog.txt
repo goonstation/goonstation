@@ -1,3 +1,35 @@
+
+(t)wed mar 01 23
+(u)Sord
+(+)You can no longer print gas masks from the science fabricator
+(u)Tyrant
+(p)13220
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir now has a solar cycle, like Oshan does.
+(u)Wisemonster
+(p)13167
+(e)💅🤖🔬|C-QoL, A-Silicons, A-Science
+(*)The chemistry cyborg module has been refitted to the research module
+(+)The chemistry (now research) module now comes with a pen, artifact analysis from bin, and gps.
+(u)Soleilan
+(p)13165
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Atlas has received a Confiscated Items locker with its Contraband stickers!
+(+)Atlas QM and Medbay windows have received access requirements.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
+(t)tue feb 28 23
+(u)Mora
+(p)13201
+(e)🆕🎨🏅🎩|C-Feature, C-Sprites, A-Medal, A-Clothing
+(+)Adds a certain Aerostatic Pilot jacket as a medal reward.
+(t)mon feb 27 23
+(u)Azrun
+(+)Power use adjustments for: Printers, Scanners CheMaster, and morgue tray? ⚡
+(u)Zamujasa
+(+)MechComp letter display components have a "color" option (and signal). Available colors: red, blue, green, gray. The power of color matrixes.
+(+)MechComp arithmetic components have a toggle to automatically evaluate when their inputs change.
 (t)sun feb 26 23
 (u)LeahTheTech
 (+)Flock compute node compute provided reduced from 50 -> 30.
