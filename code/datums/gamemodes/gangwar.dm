@@ -501,6 +501,7 @@
 	var/obj/item/clothing/item2 = null
 	var/area/base = null
 	var/list/members = list()
+	var/list/tags = list()
 	var/list/gear_cooldown = list()
 	var/datum/mind/leader = null
 	var/obj/ganglocker/locker = null
@@ -555,6 +556,17 @@
 
 		return count
 
+	proc/make_tag(turf/T)
+		var/obj/decal/cleanable/gangtag/tag = make_cleanable(/obj/decal/cleanable/gangtag, T)
+		tag.icon_state = "gangtag[src.gang_tag]"
+		tag.name = "[src.gang_name] tag"
+		tag.owners = src
+		src.tags |= tag
+		tag.delete_same_tags()
+		T.tagged = TRUE
+		var/area/area = T.loc
+		area.gang_owners = src
+
 // Deprecated by /datum/targetable/gang/set_gang_base
 /client/proc/set_gang_base()
 	set category = "Gang"
@@ -586,12 +598,9 @@
 	area.gang_base = 1
 
 	for(var/obj/decal/cleanable/gangtag/G in area)
-		if(G.owners == usr.mind.gang) continue
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,G.loc)
-		T.icon_state = "gangtag[usr.mind.gang.gang_tag]"
-		T.name = "[usr.mind.gang.gang_name] tag"
-		T.owners = usr.mind.gang
-		T.delete_same_tags()
+		if(G.owners == usr.mind.gang)
+			continue
+		usr.mind.gang.make_tag(get_turf(G))
 		break
 
 	var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
@@ -653,12 +662,17 @@
 			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
 			if (user.GetComponent(/datum/component/tracker_hud))
 				return
-			for (var/turf/T in getarea)
-				if (T.tagged)
-					user.AddComponent(/datum/component/tracker_hud/gang, T)
-					SPAWN(3 SECONDS)
-						var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
-						component.RemoveComponent()
+			var/datum/game_mode/gang/mode = ticker.mode
+			if (!istype(mode))
+				return
+			for (var/datum/gang/gang in mode.gangs)
+				for (var/obj/decal/cleanable/gangtag/tag in gang.tags)
+					if (get_area(tag) == getarea)
+						user.AddComponent(/datum/component/tracker_hud/gang, get_turf(tag))
+						SPAWN(3 SECONDS)
+							var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
+							component.RemoveComponent()
+						return
 			return
 		if(getarea.being_captured)
 			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
@@ -743,13 +757,7 @@
 		S.in_use = 0
 		target_area.being_captured = 0
 
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,target_turf)
-		T.icon_state = "gangtag[M.mind.gang.gang_tag]"
-		T.name = "[M.mind.gang.gang_name] tag"
-		T.owners = M.mind.gang
-		T.delete_same_tags()
-		target_turf.tagged = 1
-		target_area.gang_owners = M.mind.gang
+		M.mind.gang.make_tag(target_turf)
 		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
 /obj/ganglocker

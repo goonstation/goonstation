@@ -168,12 +168,9 @@
 		area.gang_base = 1
 
 		for(var/obj/decal/cleanable/gangtag/G in area)
-			if(G.owners == M.mind.gang) continue
-			var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,G.loc)
-			T.icon_state = "gangtag[M.mind.gang.gang_tag]"
-			T.name = "[M.mind.gang.gang_name] tag"
-			T.owners = M.mind.gang
-			T.delete_same_tags()
+			if(G.owners == M.mind.gang)
+				continue
+			M.mind.gang.make_tag(get_turf(G))
 			break
 
 		var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
