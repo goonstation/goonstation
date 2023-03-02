@@ -4,6 +4,7 @@
 	desc = "Oh god."
 	density = 1
 	icon_state = "brullbar"
+	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
 	can_throw = 1
@@ -226,6 +227,7 @@
 	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
+	icon_state_dead = "brullbarking"
 	skinresult = /obj/item/material_piece/cloth/kingbrullbarhide
 	max_skins = 5
 	health_brute = 250
