@@ -2507,7 +2507,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/patient_gown,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
-		/datum/manufacture/gasmask,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/shoes_white,
 		/datum/manufacture/audiotape,
