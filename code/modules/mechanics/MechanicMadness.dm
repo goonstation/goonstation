@@ -3160,6 +3160,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Value", .proc/setCurrentValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
@@ -3204,12 +3205,21 @@
 			change = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/resetCounter(var/datum/mechanicsMessage/input)
+		// reset does not send the value
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		currentValue = startingValue
 		tooltip_rebuild = 1
 		. = currentValue
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+	proc/setCurrentValue(var/datum/mechanicsMessage/input)
+		// setCurrentValue sends the signal with the current value
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if (!isnull(text2num_safe(input.signal)))
+			currentValue = text2num_safe(input.signal)
+			tooltip_rebuild = 1
+			. = currentValue
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/doImmediateChange(var/datum/mechanicsMessage/input)
 		if(level == 2) return
