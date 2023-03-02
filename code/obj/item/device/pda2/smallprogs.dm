@@ -589,6 +589,7 @@ Code:
 
 		. = src.return_text_header()
 
+		//TEG
 		if (generator)
 			engine_found = TRUE
 			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
@@ -607,6 +608,7 @@ Code:
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
+		// SINGULO
 		if(length(by_type[/obj/machinery/power/collector_control]))
 			var/controler_index = 1
 			var/collector_index = 1
@@ -622,33 +624,7 @@ Code:
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
 					. += "<BR>"
 
-		if(length(by_type[/obj/machinery/power/catalytic_generator]))
-			var/generator_index = 1
-			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
-				if(C.z == 1)
-					engine_found = TRUE
-					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
-					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
-					if(C.anode_unit?.contained_rod)
-						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
-						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
-					else
-						. += "No Anode Rod Installed<BR>"
-					if(C.cathode_unit?.contained_rod)
-						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
-						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
-					else
-						. += "No Cathode Rod Installed<BR>"
-					. += "<BR>"
-
-		if(length(by_type[/obj/machinery/power/vent_capture]))
-			. += "<BR><h4>Vent Capture Unit Status</h4>"
-			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
-					engine_found = TRUE
-					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
-			. += "<BR>"
-		// NUKE ENGINE STUFF HERE
+		// NUKE
 		if(nuke_reactor)
 			engine_found = TRUE
 			/*
@@ -679,6 +655,38 @@ Code:
 			if (isnull(nuke_reactor))
 				. += "<B>Error!</B> No reactor detected!<BR>"
 			. += "<BR>"
+
+		//HOTSPOT
+		if(length(by_type[/obj/machinery/power/vent_capture]))
+			. += "<BR><h4>Vent Capture Unit Status</h4>"
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
+					engine_found = TRUE
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
+
+		// CATALYTICS
+		if(length(by_type[/obj/machinery/power/catalytic_generator]))
+			var/generator_index = 1
+			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
+				if(C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
+					if(C.anode_unit?.contained_rod)
+						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
+						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Anode Rod Installed<BR>"
+					if(C.cathode_unit?.contained_rod)
+						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
+						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Cathode Rod Installed<BR>"
+					. += "<BR>"
+
+		// todo: have some solar stats pop up
+
 		if(!engine_found)
 			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
