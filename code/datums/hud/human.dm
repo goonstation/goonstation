@@ -445,7 +445,6 @@
 					else
 						master.set_a_intent(INTENT_GRAB)
 						master.check_for_intent_trigger()
-				src.update_intent()
 
 			if ("mintent")
 				if (master.m_intent == "run")
