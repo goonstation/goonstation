@@ -59,6 +59,10 @@
 		src.loopStart()
 
 	onInterrupt(flag)
+		if(INTERRUPT_MOVE==flag && (BOUNDS_DIST(src.user, src.target) == 0))
+			state = ACTIONSTATE_RUNNING
+			interrupt_start = -1
+			return
 		P.spawning = 0
 		. = ..()
 
