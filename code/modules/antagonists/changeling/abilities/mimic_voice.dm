@@ -9,6 +9,22 @@
 	can_use_in_container = 1
 	interrupt_action_bars = 0
 	var/last_mimiced_name = ""
+	var/headset_icon_labels = list(
+	"head" = "Head of Staff",
+    "sec" = "Security",
+    "eng" = "Engineer",
+    "sci" = "Scientist",
+    "med" = "Medical",
+    "qm" = "Quartermaster",
+    "civ" = "Civilian",
+    "cap" = "Captain",
+    "rd" = "Research Director",
+    "md" = "Medical Director",
+    "ce" = "Chief Engineer",
+    "hop" = "Head of Personnel",
+    "hos" = "Head of Security",
+    "clown" = "Clown")
+
 	cast(atom/target)
 		if (..())
 			return 1
@@ -33,9 +49,11 @@
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
-				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
+				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in headset_icon_labels
 				if (radio_override)
+					var/radio_tooltip = headset_icon_labels[radio_override]
 					headset.icon_override = radio_override
+					headset.icon_tooltip = radio_tooltip
 
 		logTheThing(LOG_SAY, holder.owner, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
 		var/original_name = holder.owner.real_name
@@ -47,5 +65,6 @@
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override)
 				headset.icon_override = initial(headset.icon_override)
+				headset.icon_tooltip = initial(headset.icon_tooltip)
 
 		return 0
