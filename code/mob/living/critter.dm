@@ -353,7 +353,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				if(!src.left_arm)
 					return
 				var/datum/handHolder/HH = hands[1]
-				if(!HH)
+				if(!HH.limb)
 					return //in case two action bars are running at the same time, don't duplicate arms
 				qdel(HH)
 				new src.left_arm(src.loc)
@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				if(!src.right_arm)
 					return
 				var/datum/handHolder/HH = hands[2]
-				if(!HH)
+				if(!HH.limb)
 					return //in case two action bars are running at the same time, don't duplicate arms
 				qdel(HH)
 				new src.right_arm(src.loc)
