@@ -175,8 +175,28 @@
 		for (var/V in names)
 			body += debug_variable(V, D.vars[V], D, 0)
 		//body += debug_variable_link(V, D, (istype(D.vars[V], /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
-
 	body += "</tbody></table>"
+
+	var/list/datum/component/components = list()
+	for (var/component_type in D.datum_components)
+		components |= D.datum_components[component_type]
+	for (var/datum/component/component in components)
+		body += {"
+		<hr>
+		<b>[component.type]</b>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th style="min-width:150px">Var</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+		"}
+		for (var/V in component.vars)
+			body += debug_variable(V, component.vars[V], component, 0, to_refresh = D)
+		body += "</tbody></table>"
 
 	var/list/html = list({"
 <html>
@@ -269,23 +289,23 @@
 	return
 
 
-/client/proc/debug_variable_link(V, D, proccable)
+/client/proc/debug_variable_link(V, D, proccable, datum/to_refresh)
 	var/proctext = ""
 	if (proccable)
 		proctext = "&middot; <a href='byond://?src=\ref[src];Vars=\ref[D];procCall=[V]' title='Call Proc'>P</a>"
 	if (D != "GLOB")
 		return {"
 		<div class='opts'>
-			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V]'>Edit</a> &middot;
-			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEditAll=[V]' title='Edit All'>A</a> &middot;
-			<a href='byond://?src=\ref[src];Vars=\ref[D];setAll=[V]' title='Set All'>S</a>
+			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V];datumToRefresh=\ref[to_refresh]'>Edit</a> &middot;
+			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEditAll=[V];datumToRefresh=\ref[to_refresh]' title='Edit All'>A</a> &middot;
+			<a href='byond://?src=\ref[src];Vars=\ref[D];setAll=[V];datumToRefresh=\ref[to_refresh]' title='Set All'>S</a>
 			[proctext]
 		</div>
 		"}
 	else
 		return {"
 		<div class='opts'>
-			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V]'>Edit</a> &middot;
+			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V];datumToRefresh=\ref[to_refresh]'>Edit</a> &middot;
 		</div>
 		"}
 	//Really, move this out to a .css file or something, too lazy and don't know how offhand
@@ -343,12 +363,12 @@
 		}
 </style>"}
 
-/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=150)
+/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=150, datum/to_refresh)
 	var/html = ""
 	html += "<tr>"
 	if (level == 0)
 		html += "<td class='nowrap'>"
-		html += debug_variable_link(name, fullvar, 1)
+		html += debug_variable_link(name, fullvar, 1, to_refresh)
 		html += "</td>"
 
 	html += "<th>"
@@ -724,9 +744,9 @@
 	if (href_list["Vars"])
 		USR_ADMIN_ONLY
 		if (href_list["varToEdit"])
-			modify_variable(locate(href_list["Vars"]), href_list["varToEdit"])
+			modify_variable(locate(href_list["Vars"]), href_list["varToEdit"], to_refresh = locate(href_list?["datumToRefresh"]))
 		else if (href_list["varToEditAll"])
-			modify_variable(locate(href_list["Vars"]), href_list["varToEditAll"], 1)
+			modify_variable(locate(href_list["Vars"]), href_list["varToEditAll"], 1, to_refresh = locate(href_list?["datumToRefresh"]))
 		else if (href_list["setAll"])
 			set_all(locate(href_list["Vars"]), href_list["setAll"])
 		else if (href_list["procCall"])
@@ -761,7 +781,8 @@
 			x.vars[variable] = var_value
 			LAGCHECK(LAG_LOW)
 
-/client/proc/modify_variable(datum/D, variable, set_global = 0)
+///to_refresh is the "parent" datum to refresh the UI for (for components)
+/client/proc/modify_variable(datum/D, variable, set_global = 0, datum/to_refresh = null)
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
 	#ifdef I_AM_HACKERMAN
@@ -886,7 +907,7 @@
 		if (istype(D, /datum))
 			D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)
-		src.debug_variables(D)
+		src.debug_variables(istype(to_refresh, /datum) ? to_refresh : D)
 
 /mob/proc/Delete(atom/A in view())
 	set category = "Debug"
