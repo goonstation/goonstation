@@ -15,7 +15,7 @@
 	var/rate
 
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
-	var/sun_area = null
+	var/area/sun_area = null
 	/// Is it around Shidd, Fugg, or Typhon? Or the Sun?
 	var/star = "unknown"
 	/// where is z1 exactly?
@@ -45,45 +45,22 @@
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
-	#ifdef MAP_OVERRIDE_CONSTRUCTION
-	src.stationloc = "travel"
-	#elif defined(MAP_OVERRIDE_DESTINY)
-	src.stationloc = "travel"
-	#elif defined(MAP_OVERRIDE_CLARION)
-	src.stationloc = "travel"
-	#elif defined(MAP_OVERRIDE_COGMAP)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_COGMAP2)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_DONUT2)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_DONUT3)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_MUSHROOM)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_TRUNKMAP)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_CHIRON)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_PAMGOC)
-	src.stationloc = "13"
-	#elif defined(MAP_OVERRIDE_OSHAN)
-	src.stationloc = "abzu"
-	#elif defined(MAP_OVERRIDE_NADIR)
-	src.stationloc = "magus"
-	#elif defined(MAP_OVERRIDE_HORIZON)
-	src.stationloc = "travel"
-	#elif defined(MAP_OVERRIDE_ATLAS)
-	src.stationloc = "travel"
-	#elif defined(MAP_OVERRIDE_MANTA)
-	src.stationloc = "abzu"
-	#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
-	src.stationloc = "void"
-	#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
-	src.stationloc = "abzu"
-	#else
-	src.stationloc = "void"
-	#endif
+	if (isnull(src.sun_area))
+		#ifdef MAP_OVERRIDE_CONSTRUCTION
+		src.stationloc = "void"
+		#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
+		src.stationloc = "void"
+		#elif defined(MAP_OVERRIDE_DESTINY || MAP_OVERRIDE_CLARION || MAP_OVERRIDE_HORIZON || MAP_OVERRIDE_ATLAS)
+		src.stationloc = "travel"
+		#elif defined(MAP_OVERRIDE_COGMAP || MAP_OVERRIDE_COGMAP2 || MAP_OVERRIDE_DONUT2 || MAP_OVERRIDE_DONUT3)
+		src.stationloc = "13"
+		#elif defined(MAP_OVERRIDE_NADIR)
+		src.stationloc = "magus"
+		#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING || MAP_OVERRIDE_MANTA || MAP_OVERRIDE_OSHAN)
+		src.stationloc = "abzu"
+		#else
+		src.stationloc = "void"
+		#endif
 	src.rate = rand(75,125)/50 // 75% - 125% of 'standard' rotation
 	if(prob(50))
 		src.rate = -src.rate
@@ -170,7 +147,6 @@
 
 /datum/sun/New()
 	..()
-	identity_check()
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()

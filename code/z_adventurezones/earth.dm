@@ -47,6 +47,11 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "nothing_earth"
 	//force_fullbright = 1
 	ambient_light = CENTCOM_LIGHT
+/area/centcom/outside/New()
+	EarthSun = new /datum/sun
+	EarthSun.sun_area = src
+	EarthSun.station_loc = "earth"
+	EarthSun.identity_check()
 
 /area/centcom/gallery
 	name = "NT Art Gallery"

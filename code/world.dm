@@ -436,7 +436,7 @@ var/f_color_selector_handler/F_Color_Selector
 		delete_queue = new /datum/dynamicQueue(100)
 
 	sun = new /datum/sun()
-
+	sun.identity_check()
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
