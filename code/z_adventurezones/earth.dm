@@ -48,9 +48,11 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	//force_fullbright = 1
 	ambient_light = CENTCOM_LIGHT
 /area/centcom/outside/New()
-	EarthSun = new /datum/sun
+	. = ..()
+	areas_with_local_suns += /area/centcom/outside
+	var/datum/sun/EarthSun = new
 	EarthSun.sun_area = src
-	EarthSun.station_loc = "earth"
+	EarthSun.stationloc = "earth"
 	EarthSun.identity_check()
 
 /area/centcom/gallery

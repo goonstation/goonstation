@@ -7,6 +7,9 @@
 #define ECLIPSE_TERRESTRIAL 6 // not actually eclipsing truly, but partial blockage by clouds/water. aka daytime
 #define ECLIPSE_PLANETARY 7 // night time lol. The planet you're on is eclipsing you.
 #define ECLIPSE_ERROR 8 // admin nonsense
+
+/// which areas should the 'global' sun ignore
+var/global/list/areas_with_local_suns = new
 /datum/sun
 	var/angle
 	var/dx
@@ -46,20 +49,31 @@
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
 	if (isnull(src.sun_area))
-		#ifdef MAP_OVERRIDE_CONSTRUCTION
 		src.stationloc = "void"
-		#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
-		src.stationloc = "void"
-		#elif defined(MAP_OVERRIDE_DESTINY || MAP_OVERRIDE_CLARION || MAP_OVERRIDE_HORIZON || MAP_OVERRIDE_ATLAS)
+		#if defined(MAP_OVERRIDE_DESTINY)
 		src.stationloc = "travel"
-		#elif defined(MAP_OVERRIDE_COGMAP || MAP_OVERRIDE_COGMAP2 || MAP_OVERRIDE_DONUT2 || MAP_OVERRIDE_DONUT3)
+		#elif defined(MAP_OVERRIDE_CLARION)
+		src.stationloc = "travel"
+		#elif defined(MAP_OVERRIDE_ATLAS)
+		src.stationloc = "travel"
+		#elif defined(MAP_OVERRIDE_COGMAP)
 		src.stationloc = "13"
+		#elif defined(MAP_OVERRIDE_COGMAP2)
+		src.stationloc = "13"
+		#elif defined(MAP_OVERRIDE_DONUT2)
+		src.stationloc = "13"
+		#elif defined(MAP_OVERRIDE_DONUT3)
+		src.stationloc = "13"
+		#elif defined(MAP_OVERRIDE_PAMGOC)
+		src.stationloc = "13"
+		#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+		src.stationloc = "abzu"
+		#elif defined(MAP_OVERRIDE_MANTA)
+		src.stationloc = "abzu"
+		#elif defined(MAP_OVERRIDE_OSHAN)
+		src.stationloc = "abzu"
 		#elif defined(MAP_OVERRIDE_NADIR)
 		src.stationloc = "magus"
-		#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING || MAP_OVERRIDE_MANTA || MAP_OVERRIDE_OSHAN)
-		src.stationloc = "abzu"
-		#else
-		src.stationloc = "void"
 		#endif
 	src.rate = rand(75,125)/50 // 75% - 125% of 'standard' rotation
 	if(prob(50))
@@ -102,15 +116,15 @@
 		if ("magus")
 			//nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from Shidd or Fugg.
 			#if (BUILD_TIME_HOUR <=3)
-			src.star = "Fugg"
-			#else
 			src.star = "Shidd"
+			#else
+			src.star = "Fugg"
 			#endif
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
-			src.visibility = 0.166 // the max sunlight is from fugg, shidd is like, less bright.
+			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
 			if (src.star == "Shidd") // the stars have different strengths, see. Based on the RGB.
 				src.photovoltaic_efficiency = 0.6
 			else
@@ -207,10 +221,34 @@
 	else
 		src.dx = s / abs(s)
 		src.dy = c / abs(s)
-	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
-		T.set_angle(angle)
-	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
-		occlusion(S)
+	// this bit got wayy more complicated, thanks silly brain inventing multiple suns
+	var/earlybreak = FALSE
+	if (isnull(src.sun_area)) // for all solars unaffected by new sun
+		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+			if (earlybreak)
+				break
+			for (var/ignorable_area in areas_with_local_suns)
+				if (get_area(T) == ignorable_area)
+					earlybreak = TRUE
+					break
+			T.set_angle(angle)
+		earlybreak = FALSE
+		for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
+			if (earlybreak)
+				break
+			for (var/ignorable_area in areas_with_local_suns)
+				if (get_area(S) == ignorable_area)
+					earlybreak = TRUE
+					break
+			occlusion(S)
+	else // for stuff affected by what im going to dub local suns
+		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+			if (get_area(T) == src.sun_area)
+				T.set_angle(angle)
+		for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
+			if (get_area(S) == src.sun_area)
+				occlusion(S)
+
 
 // for a solar panel, trace towards sun to see if we're in shadow
 /datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
