@@ -3723,9 +3723,15 @@
 	icon_state = "mechcomp_ledsign"
 	cabinet_banned = TRUE
 	two_handed = 1     // it's big
+	w_class = W_CLASS_BULKY // too big to fit in a bag
 	pixel_w = -32
 	var/display_text = null
 	var/display_color = "#dd9922"
+	var/display_vertical = "vm"
+	var/display_horizontal = "c"
+	var/display_font = "pixel"
+	var/display_font_size = 6
+
 	maptext_width = 92
 	maptext_x = 2
 
@@ -3745,6 +3751,8 @@
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set text", .proc/setTextManually)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set alignment", .proc/setAlignmentManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set font", .proc/setFontManually)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set text", .proc/setText)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
 
@@ -3786,8 +3794,58 @@
 		tooltip_rebuild = TRUE
 		. = TRUE
 
+
+	proc/setAlignmentManually(obj/item/W as obj, mob/user as mob)
+		var/vertical = input(user, "Vertical Alignment?", "Message Sign Component", "middle") in list("top", "middle", "bottom") | null
+		// these ones do not bail if you pick "no" since it will just not do anything
+		if (!in_interact_range(src, user) || user.stat)
+			return FALSE
+		var/horizontal = input(user, "Horizontal Alignment?", "Message Sign Component", "center") in list("left", "center", "right") | null
+		if (!in_interact_range(src, user) || user.stat)
+			return FALSE
+
+		switch (vertical)
+			if ("top")
+				display_vertical = "vt"
+			if ("middle")
+				display_vertical = "vm"
+			if ("bottom")
+				display_vertical = "vb"
+
+		switch (horizontal)
+			if ("left")
+				display_horizontal = "l"
+			if ("center")
+				display_horizontal = "c"
+			if ("right")
+				display_horizontal = "r"
+
+		src.display()
+
+	proc/setFontManually(obj/item/W as obj, mob/user as mob)
+		var/font = input(user, "Which font?", "Message Sign Component", display_font) in list("pixel", "vga", "xfont") | null
+		if (!in_interact_range(src, user) || user.stat || isnull(font))
+			return FALSE
+
+		display_font = font
+
+		if (font == "pixel")
+			var/size = input(user, "What font size? (5-8)", "Message Sign Component", (display_font_size ? display_font_size : 6)) as num | null
+			display_font_size = 6
+			var/size_safe = text2num_safe(size)
+			if (!in_interact_range(src, user) || user.stat || isnull(font))
+				src.display()
+				return FALSE
+			if (!isnull(size_safe) && size_safe >= 5 && size_safe <= 8)
+				display_font_size = size_safe
+		else
+			display_font_size = null
+
+		src.display()
+
+
 	proc/display()
-		src.maptext = "<span class='vm c pixel' style='font-size: 6px; color: [display_color];'>[display_text]</span>"
+		src.maptext = "<span class='[display_horizontal] [display_vertical] [display_font]' style='[display_font_size ? "font-size: [display_font_size]px; " : ""]color: [display_color];'>[display_text]</span>"
 
 
 
