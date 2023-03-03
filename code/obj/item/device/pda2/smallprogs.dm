@@ -629,7 +629,7 @@ Code:
 			engine_found = TRUE
 			// for some unfathomable reason trying to detect reactor rod insertion broke the whole damn thing. Todo for a better coder i guess
 			. += "<BR><h4>Reactor Status</h4>"
-			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)] clicks<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
 			// . += "Control rod insertion: [rodlevel * 100]%"
 			if (isnull(nuke_turbine))
