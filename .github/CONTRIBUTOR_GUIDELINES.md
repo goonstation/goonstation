@@ -15,7 +15,7 @@ Essentially, this is more of a FAQ section.
 The Goonstation codebase maintainers/developers are a part of the general admin team for the Goonstation servers. They are The People Who Decide What Goes In The Game. You can identify these people on the discord by their red/amaranth name.
 On GitHub, they'll also show up as a member of the Goonstation organization: ![](https://i.imgur.com/xcWNk5p.png).
 
-Please do not unnecessarily ping us directly unless someone explicitly says it's ok. If you have a question for developers, you can generally reach us (or perhaps a fellow contributor can answer your question) in the #imXYZ channels, like #imcoder.
+Please do not unnecessarily ping us directly unless someone explicitly says it's ok. If you have a question for developers, you can generally reach us (or perhaps a fellow contributor can answer your question) in the #imXYZ discord channels, like #imcoder.
 
 ### PRs
 
