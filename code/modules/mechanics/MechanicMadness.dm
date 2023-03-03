@@ -3300,6 +3300,148 @@
 		tooltip_rebuild = 1
 		return 1
 
+/obj/item/mechanics/interval_timer
+	name = "Automatic Signaller Component"
+	desc = "Outputs a signal on regular, configurable intervals."
+	icon_state = "comp_clock"
+
+	// Options for the length of time...
+	var/intervalLength = 1 SECOND
+	var/minimumInterval = 0.5 SECONDS
+	var/maximumInterval = 60 SECONDS
+
+	// how many times we should send it before shutting off (-1 = infinite)
+	var/repeatCount = -1
+	var/repeatCountLeft = -1
+
+	// if we are active, and if we should be active
+	// if these values do not match, reject activate/deactivate toggles until they do
+	var/isActive = FALSE
+	var/wantActive = FALSE
+
+
+	get_desc()
+		. = ..() // Please don't remove this again, thanks.
+		. += "<br><span class='notice'>Current interval length: [intervalLength / 10] sec.</span>"
+
+	secure()
+		icon_state = "comp_clock1"
+	loosen()
+		// when someone detaches this we want it to stop.
+		icon_state = "comp_clock"
+		wantActive = FALSE
+	// if we're leaving then yeah stop this shit, just in case
+	disposing()
+		..()
+		wantActive = FALSE
+		repeatCount = 0
+		return
+
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Start",.proc/setActiveManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Stop",.proc/setInactiveManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Interval Length",.proc/setIntervalLengthManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Repeat Count",.proc/setRepeatCountManually)
+
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",.proc/setActive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",.proc/setInactive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",.proc/setIntervalLength)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",.proc/setRepeatCount)
+
+	// no relation to the flock : )
+	proc/startRepeatingTheSignal()
+		if(level == 2) return
+
+		// Do not start if we have already started
+		if (isActive) return
+		// Do not start if we have no signals to send
+		if (repeatCount == 0) return
+
+		// if we're here, we want this to start, so start it
+		wantActive = TRUE
+		repeatCountLeft = repeatCount
+		SPAWN(-1)
+			isActive = TRUE
+			// we set ourselves as active, and then check every time that
+			// 1. we exist
+			// 2. we are still active (should always be the case)
+			// 3. we still *want* to be active
+			// 4. we have some signals left to send (not > 0, because -1 is infinite)
+			while (src && isActive && wantActive && repeatCountLeft != 0)
+				// decrement repeat counter
+				if (repeatCountLeft > 0) repeatCountLeft--
+
+				LIGHT_UP_HOUSING
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+				animate_flash_color_fill(src,"#00FF00",1, 2)
+				sleep(intervalLength)
+
+			// if/when we break out of the loop, we're done forever
+			// no more active
+			isActive = FALSE
+
+
+	// Very basic calls because most of the logic is shared
+	// and this does not output signals on start/stop
+	proc/setActive()
+		startRepeatingTheSignal()
+
+	proc/setInactive()
+		wantActive = FALSE
+
+	proc/setActiveManually(obj/item/W as obj, mob/user as mob)
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		startRepeatingTheSignal()
+		return 1
+
+	proc/setInactiveManually(obj/item/W as obj, mob/user as mob)
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		wantActive = FALSE
+		return 1
+
+	proc/setIntervalLengthManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Time between signals? (in deciseconds (0.1s))", "Interval Component", intervalLength) as num | null
+		if(!in_interact_range(src, user) || user.stat || isnull(input) || !isnum_safe(input))
+			return 0
+
+		if (input > maximumInterval || input < minimumInterval)
+			return 0
+		intervalLength = input
+
+		tooltip_rebuild = 1
+		return 1
+
+	proc/setRepeatCountManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Number of signals to send? (-1 for infinite)", "Interval Component", repeatCount) as num | null
+		if(!in_interact_range(src, user) || user.stat || isnull(input) || !isnum_safe(input))
+			return 0
+
+		if (input == 0)
+			return 0
+		repeatCount = input
+		return 1
+
+	proc/setIntervalLength(var/datum/mechanicsMessage/input)
+		var/input_num = text2num_safe(input.signal)
+		if (!isnull(input_num))
+			if (input_num > maximumInterval || input_num < minimumInterval)
+				return
+			intervalLength = input_num
+			tooltip_rebuild = 1
+
+	proc/setRepeatCount(var/datum/mechanicsMessage/input)
+		var/input_num = text2num_safe(input.signal)
+		if (!isnull(input_num))
+			// I don't care about checking for values below -1 here,
+			// because anything below 0 is effectively infinite
+			repeatCount = input_num
+
+
 /obj/item/mechanics/association
 	name = "Association Component"
 	desc = ""
