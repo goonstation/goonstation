@@ -1,3 +1,6 @@
+(t)fri mar 3 23
+(u)LeahTheTech
+(*)Components now display their vars at the bottom of the parent's varedit page for easy and fast component varediting.
 (t)mon feb 27 23
 (u)Zamujasa
 (*)Toggle-Power-Debug, will show maptext over (most) things that draw power.
