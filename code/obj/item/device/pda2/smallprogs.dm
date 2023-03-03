@@ -627,18 +627,7 @@ Code:
 		// NUKE
 		if(nuke_reactor)
 			engine_found = TRUE
-			/*
-			var/rodlevel = null
-			for(var/x=1 to length(nuke_reactor.component_grid))
-				if (!isnull(rodlevel))
-					return
-				for(var/y=1 to length(nuke_reactor.component_grid[1]))
-					if(nuke_reactor.component_grid[x][y])
-						if(istype(nuke_reactor.component_grid[x][y],/obj/item/reactor_component/control_rod))
-							var/obj/item/reactor_component/control_rod/CR = nuke_reactor.component_grid[x][y]
-							rodlevel = CR.configured_insertion_level
-							return
-			for some unfathomable reason this broke the whole damn thing, someone else can give it a crack if they like. */
+			// for some unfathomable reason trying to detect reactor rod insertion broke the whole damn thing. Todo for a better coder i guess
 			. += "<BR><h4>Reactor Status</h4>"
 			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
