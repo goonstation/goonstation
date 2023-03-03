@@ -640,7 +640,7 @@ Code:
 							return
 			for some unfathomable reason this broke the whole damn thing, someone else can give it a crack if they like. */
 			. += "<BR><h4>Reactor Status</h4>"
-			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)]<BR>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)] clicks<BR>"
 			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
 			// . += "Control rod insertion: [rodlevel * 100]%"
 			if (isnull(nuke_turbine))
