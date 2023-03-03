@@ -2629,6 +2629,7 @@
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
+	var/spooky = FALSE
 
 	New()
 		..()
@@ -2648,6 +2649,14 @@
 			return 1
 		return ..(user)
 
+	Click(location,control,params)
+		..()
+		if (!spooky)
+			return
+		var/lpm = params2list(params)
+		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+			src.attack_hand(usr)
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
@@ -2664,6 +2673,13 @@
 	update_icon()
 		icon_state = icon_up
 		return
+
+	// 👻
+	onMaterialChanged()
+		. = ..()
+		if(isnull(src.material))
+			return
+		spooky = (src.material.mat_id == "soulsteel")
 
 /obj/item/mechanics/trigger/buttonPanel
 	name = "Button Panel"
