@@ -183,7 +183,8 @@
 	for (var/datum/component/component in components)
 		body += {"
 		<hr>
-		<b>[component.type]</b>
+		<b><a href='byond://?src=\ref[src];Vars=\ref[component]'>[component.type]</a></b>
+		<br>
 		<table>
 			<thead>
 				<tr>
