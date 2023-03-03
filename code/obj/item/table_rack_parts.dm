@@ -142,6 +142,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_name = "wooden table"
 	mat_appearances_to_ignore = list("wood")
 
+	constructed //no "wood wood table"
+		name = "table parts"
+		furniture_name = "table"
+		furniture_type = /obj/table/wood/constructed
+
 /obj/item/furniture_parts/table/wood/round
 	name = "round wood table parts"
 	desc = "A collection of parts that can be used to make a round wooden table."

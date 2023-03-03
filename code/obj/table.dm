@@ -462,6 +462,8 @@ TYPEINFO_NEW(/obj/table/wood)
 
 	auto
 		auto = 1
+	constructed //no "wood wood table"
+		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
