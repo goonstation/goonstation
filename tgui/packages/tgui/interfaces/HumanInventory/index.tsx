@@ -3,19 +3,25 @@ import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { HumanInventoryData, HumanInventorySlot } from './types';
 
-const SLOT_NAMES = {
+const HEAD_SLOTS = {
   'slot_head': 'Head',
   'slot_wear_mask': 'Mask',
   'slot_glasses': 'Eyes',
   'slot_ears': 'Ears',
-  'slot_l_hand': 'Left Hand',
-  'slot_r_hand': 'Right Hand',
+};
+
+const BODY_SLOTS = {
+  'slot_wear_suit': 'Outer Suit',
+  'slot_w_uniform': 'Uniform',
   'slot_gloves': 'Gloves',
   'slot_shoes': 'Shoes',
-  'slot_belt': 'Belt',
-  'slot_w_uniform': 'Uniform',
-  'slot_wear_suit': 'Outer Suit',
+};
+
+const MISC_SLOTS = {
+  'slot_l_hand': 'Left Hand',
+  'slot_r_hand': 'Right Hand',
   'slot_back': 'Back',
+  'slot_belt': 'Belt',
   'slot_wear_id': 'ID',
   'slot_l_store': 'Left Pocket',
   'slot_r_store': 'Right Pocket',
@@ -25,13 +31,35 @@ export const HumanInventory = (_props, context) => {
   const { data, act } = useBackend<HumanInventoryData>(context);
 
   return (
-    <Window width={300} height={490} title={data.name}>
+    <Window width={300} height={570} title={data.name}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item grow>
-            <Section scrollable fill>
+          <Stack.Item>
+            <Section title={"Head"}>
               <LabeledList>
-                {Object.entries(SLOT_NAMES).map(([slotId, name]) => {
+                {Object.entries(HEAD_SLOTS).map(([slotId, name]) => {
+                  const slot = data.slots.find((s) => s.id === slotId);
+
+                  return <Slot key={slotId} name={name} slot={slot} />;
+                })}
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title={"Body"}>
+              <LabeledList>
+                {Object.entries(BODY_SLOTS).map(([slotId, name]) => {
+                  const slot = data.slots.find((s) => s.id === slotId);
+
+                  return <Slot key={slotId} name={name} slot={slot} />;
+                })}
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title={"Misc"}>
+              <LabeledList>
+                {Object.entries(MISC_SLOTS).map(([slotId, name]) => {
                   const slot = data.slots.find((s) => s.id === slotId);
 
                   return <Slot key={slotId} name={name} slot={slot} />;
