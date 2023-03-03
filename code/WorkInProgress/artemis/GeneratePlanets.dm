@@ -139,12 +139,13 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				LAGCHECK(LAG_LOW)
 
 			for(var/i in 1 to seed_density/2)
-				var/turf/target_center = pick(mountains)
-				var/list/turf/ast_list = list()
-				for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(2,9)]x[rand(2,9)]"))
-					ast_list |= AST
-				Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
-				Turfspawn_Asteroid_SeedEvents(mountains)
+				if(length(mountains))
+					var/turf/target_center = pick(mountains)
+					var/list/turf/ast_list = list()
+					for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(2,9)]x[rand(2,9)]"))
+						ast_list |= AST
+					Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
+					Turfspawn_Asteroid_SeedEvents(mountains)
 
 	//Allow folks to like uh, get here?
 	if(use_lrt)

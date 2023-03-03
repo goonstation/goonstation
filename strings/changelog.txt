@@ -1,4 +1,67 @@
 
+(t)fri mar 03 23
+(u)Bartimeus973 & Amylizzle
+(p)13123
+(e)🆕📡|C-Feature, A-AI
+(*)Attacking mobs with an ai will now cause them to fight back.
+(u)Amylizzle
+(p)13240
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fuel rods in the nuclear reactor will decay faster if they are hit by more neutrons.
+(u)LeahTheTech
+(*)The clown car can now be loaded with banana peels and drop them on a 4 second cooldown. Honk.
+(t)thu mar 02 23
+(u)Zamujasa
+(*)New MechComp component: the Automatic Signaller Component. It sends a signal on a configurable interval, a configurable number of times (including infinite).
+(*)MechComp buttons have a fun new feature when mixed with a certain material.
+(*)New MechComp component: pixel display component. Give it an x, y, and color, and you can draw on it.
+(+)MechComp Message Signs have a few more styles avaialble (use a multitool).
+(+)MechComp Relay component cooldown adjusted.
+(+)MechComp Association component has a "send as signal" option for building signals.
+(u)Wisemonster
+(p)13169
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The semi-automatic artifact analysis form bin has been swapped with a analysis form sticker box.
+(t)wed mar 01 23
+(u)Sord
+(+)You can no longer print gas masks from the science fabricator
+(u)Tyrant
+(p)13220
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir now has a solar cycle, like Oshan does.
+(u)Wisemonster
+(p)13167
+(e)💅🤖🔬|C-QoL, A-Silicons, A-Science
+(*)The chemistry cyborg module has been refitted to the research module
+(+)The chemistry (now research) module now comes with a pen, artifact analysis from bin, and gps.
+(u)Soleilan
+(p)13165
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Atlas has received a Confiscated Items locker with its Contraband stickers!
+(+)Atlas QM and Medbay windows have received access requirements.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
+(+)MechComp payment components now output a signal containing the payment amount, total collected, and customer's name.
+(t)tue feb 28 23
+(u)Mora
+(p)13201
+(e)🆕🎨🏅🎩|C-Feature, C-Sprites, A-Medal, A-Clothing
+(+)Adds a certain Aerostatic Pilot jacket as a medal reward.
+(t)mon feb 27 23
+(u)Azrun
+(+)Power use adjustments for: Printers, Scanners CheMaster, and morgue tray? ⚡
+(u)Zamujasa
+(+)MechComp letter display components have a "color" option (and signal). Available colors: red, blue, green, gray. The power of color matrixes.
+(+)MechComp arithmetic components have a toggle to automatically evaluate when their inputs change.
+(t)sun feb 26 23
+(u)LeahTheTech
+(+)Flock compute node compute provided reduced from 50 -> 30.
+(u)Zamujasa
+(+)New clock/stopwatch mechanics component.
+(+)Counter and clock components have new icons.
+(+)Letter display components can be right-aligned; use negative letter indexes (e.g. -3, -2, -1).
+(+)Health scanners (the ones on the floor) can be connected to MechComp and will send scanner information.
 (t)thu feb 23 23
 (u)Bartimeus973
 (p)13121

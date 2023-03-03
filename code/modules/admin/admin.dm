@@ -3597,6 +3597,15 @@ var/global/noir = 0
 						src.owner:debug_variables("GLOB")
 					if("globalprocs")
 						src.owner:show_proc_list(null)
+					if("testmerges")
+					#if defined(TESTMERGE_PRS)
+						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
+						if(pr_num)
+							var/file_text = file2text("testmerges/[pr_num].json")
+							src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+					#else
+						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
+					#endif
 			else
 				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
@@ -4382,7 +4391,8 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=testmerges'>Testmerges</A>
 				"}
 
 		dat += "</div>"
@@ -4802,16 +4812,7 @@ var/global/noir = 0
 				M.verbs += /client/proc/set_gang_base
 				tgui_alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
 			if(ROLE_OMNITRAITOR)
-				M.mind.special_role = ROLE_OMNITRAITOR
-				M.verbs += /client/proc/gearspawn_traitor
-				M.verbs += /client/proc/gearspawn_wizard
-				M.make_changeling()
-				M.make_vampire()
-				M.make_werewolf()
-				M.make_wrestler(1)
-				M.make_grinch()
-				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				M.show_antag_popup("traitoromni")
+				M.mind.add_antagonist(ROLE_OMNITRAITOR, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return

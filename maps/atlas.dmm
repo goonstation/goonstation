@@ -2092,6 +2092,8 @@
 /area/station/crewquarters/cryotron)
 "agC" = (
 /obj/machinery/light_switch/auto,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -2529,8 +2531,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_y = 21
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -2669,6 +2670,7 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "aiz" = (
@@ -5121,7 +5123,7 @@
 /area/station/ai_monitored/armory)
 "aqW" = (
 /obj/grille/steel,
-/turf/simulated/floor/engine/vacuum,
+/turf/space,
 /area/station/engine/combustion_chamber)
 "aqY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -8215,6 +8217,7 @@
 	tag = ""
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "azV" = (
@@ -8222,6 +8225,7 @@
 /obj/health_scanner/wall,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "azX" = (
@@ -18267,6 +18271,7 @@
 	pixel_x = -12;
 	pixel_y = 4
 	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lHo" = (
