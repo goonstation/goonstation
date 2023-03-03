@@ -4027,7 +4027,6 @@
 		var/dot_x = text2num(params["x"])
 		var/dot_y = text2num(params["y"])
 		var/dot_color = params["color"]
-		boutput(world, "pixel draw: [dot_x], [dot_y], [dot_color]")
 		if (!isnull(dot_x) && !isnull(dot_y) && !isnull(dot_color))
 			drawPixelActual(dot_x, dot_y, dot_color)
 
