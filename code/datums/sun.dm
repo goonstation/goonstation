@@ -48,7 +48,7 @@ var/global/list/areas_with_local_suns = new
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
-	if (isnull(src.sun_area))
+	if (isnull(src.sun_area)) // global sun only
 		src.stationloc = "void"
 		#if defined(MAP_OVERRIDE_DESTINY)
 		src.stationloc = "travel"
@@ -75,9 +75,6 @@ var/global/list/areas_with_local_suns = new
 		#elif defined(MAP_OVERRIDE_NADIR)
 		src.stationloc = "magus"
 		#endif
-	src.rate = rand(75,125)/50 // 75% - 125% of 'standard' rotation
-	if(prob(50))
-		src.rate = -src.rate
 	switch (src.stationloc)
 		if ("void")
 			// for admin nonsense generally, also shuttle transit. Where no stars apply.
