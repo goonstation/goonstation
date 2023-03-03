@@ -1698,6 +1698,7 @@
 	name = "Relay Component"
 	desc = ""
 	icon_state = "comp_relay"
+	cooldown_time = 0.4 SECONDS
 	var/changesig = 0
 
 	get_desc()
@@ -3471,6 +3472,7 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", .proc/addItems)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", .proc/removeItem)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", .proc/sendValue)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send associations as signal", .proc/sendMapAsSignal)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", .proc/setMode)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", .proc/addItemManual)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", .proc/removeItemManual)
@@ -3541,6 +3543,13 @@
 		LIGHT_UP_HOUSING
 		if (isnull(map[input.signal])) return
 		input.signal = map[input.signal]
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+
+	proc/sendMapAsSignal(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		input.signal = list2params(src.map)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
@@ -3965,6 +3974,96 @@
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_move"
+
+
+
+
+/obj/item/mechanics/screen_canvas
+	name = "Pixel Display Component"
+	desc = "Totally not a canvas hastily stuffed into a screen, somehow."
+
+	icon_state = "comp_screen"
+
+	// largely cribbed from /obj/item/canvas, but with the interactive parts removed.
+
+	var/icon/base = null
+	var/icon/art = null
+	var/canvas_width = 26
+	var/canvas_height = 26
+	var/bottom = 4
+	var/left = 4
+
+	pixel_point = TRUE
+
+	New()
+		..()
+
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "draw pixel", .proc/drawPixel)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset canvas", .proc/resetCanvas)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset canvas", .proc/resetCanvas)
+
+		init_canvas()
+
+		// left = round((bound_width - canvas_width) / 2)
+		// bottom = round((bound_height - canvas_height) / 2)
+
+	proc/init_canvas()
+		// these are subtly different from the canvas ones because they are not canvases.
+		base = icon(src.icon, icon_state = "canvas_[canvas_width]x[canvas_height]")
+		art = icon(src.icon, icon_state = "canvas_[canvas_width]x[canvas_height]_black")
+
+		underlays += base
+		icon = art
+
+	proc/resetCanvas()
+		var/new_color = "#000000"
+		art.DrawBox(new_color, left, bottom, left + canvas_width, bottom + canvas_height)
+		icon = art
+		logTheThing(LOG_STATION, null, "[src] reset to color: [log_loc(src)]: canvas{\ref[src], -1, -1, [new_color]}")
+
+	proc/drawPixel(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		var/list/params = params2list(input.signal)
+		var/dot_x = text2num(params["x"])
+		var/dot_y = text2num(params["y"])
+		var/dot_color = params["color"]
+		boutput(world, "pixel draw: [dot_x], [dot_y], [dot_color]")
+		if (!isnull(dot_x) && !isnull(dot_y) && !isnull(dot_color))
+			drawPixelActual(dot_x, dot_y, dot_color)
+
+
+	proc/drawPixelActual(dot_x, dot_y, dot_color)
+		var/x = dot_x
+		var/y = dot_y
+
+		if (x < 0 || y < 0 || x >= canvas_width || y > canvas_height)
+			// you cannot embezzle pixels off the bezel, sorry.
+			// you thought this would be the same comment as canvas.dm?
+			// wrong. and so is drawing off the canvas.
+			return
+
+		// color should be an actual color
+		// byond: iscolor() pls
+		if (length(dot_color) != 7 || copytext(dot_color, 1, 2) != "#")
+			return
+
+		// unlike the canvas, which operates on absolute-to-icon coordinates,
+		// this one operates on realtive ones (e.g. 0,0 is the bottom of the drawable area,
+		// not the icon itself)
+		x += left
+		y += bottom
+
+		art.DrawBox(dot_color, x, y)
+		icon = art
+
+		// tracks how many things someone's drawn on it.
+		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
+		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
+
+
+
+
+
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

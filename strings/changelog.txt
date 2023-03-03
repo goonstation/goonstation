@@ -3,7 +3,10 @@
 (u)Zamujasa
 (*)New MechComp component: the Automatic Signaller Component. It sends a signal on a configurable interval, a configurable number of times (including infinite).
 (*)MechComp buttons have a fun new feature when mixed with a certain material.
+(*)New MechComp component: pixel display component. Give it an x, y, and color, and you can draw on it.
 (+)MechComp Message Signs have a few more styles avaialble (use a multitool).
+(+)MechComp Relay component cooldown adjusted.
+(+)MechComp Association component has a "send as signal" option for building signals.
 (u)Wisemonster
 (p)13169
 (e)💅📦|C-QoL, A-Game-Objects
