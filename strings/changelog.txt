@@ -1,4 +1,9 @@
+
 (t)fri mar 03 23
+(u)Bartimeus973 & Amylizzle
+(p)13123
+(e)🆕📡|C-Feature, A-AI
+(*)Attacking mobs with an ai will now cause them to fight back.
 (u)Amylizzle
 (p)13240
 (e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
