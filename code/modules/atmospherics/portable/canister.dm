@@ -82,8 +82,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			return
 		src.valve_open = TRUE
 		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
-		user.add_filter("canister pop", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0))
-		animate(user.get_filter("canister pop"), size=20, time=POP_ANIMATE_TIME, easing=SINE_EASING)
+		user.add_filter("canister pop", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0, y=8))
+		animate(user.get_filter("canister pop"), size=50, time=POP_ANIMATE_TIME, easing=SINE_EASING)
 
 		SPAWN(POP_ANIMATE_TIME)
 			user.gib()
