@@ -94,7 +94,7 @@
 
 		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(george, /obj/critter/dog/george)
+				for_by_tcl(george, /mob/living/critter/small_animal/dog/george)
 					if (IN_RANGE(george, T, 6) && prob(60))
 						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
@@ -273,7 +273,7 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
-	note_range = list("c4", "c7")
+	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS

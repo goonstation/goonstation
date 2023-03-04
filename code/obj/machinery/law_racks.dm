@@ -9,6 +9,7 @@
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
 	_max_health = 120
+	power_usage = 1000 // + 100 per law
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
@@ -590,7 +591,7 @@
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
-
+		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
@@ -636,7 +637,7 @@
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
@@ -645,7 +646,7 @@
 		if(isnull(src.law_circuits[slotNum]))
 			return FALSE
 		//add circuit to hand
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
@@ -720,6 +721,7 @@
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
 			UpdateIcon()
+			src.calculate_power_usage()
 			return TRUE
 
 	/**
@@ -740,6 +742,7 @@
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE
 		tgui_process.update_uis(src)
+		src.calculate_power_usage()
 		UpdateIcon()
 
 	/// Deletes all laws. Does not call UpdateLaws()
@@ -772,6 +775,12 @@
 			else
 				src.visible_message("<span class='alert'><b>The [src] makes a brief fizzing noise!</b></span>")
 			return TRUE
+
+	proc/calculate_power_usage()
+		src.power_usage = 1000
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				src.power_usage += 100
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

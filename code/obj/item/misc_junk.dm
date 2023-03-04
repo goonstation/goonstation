@@ -50,6 +50,8 @@
 			last_laugh = world.time
 
 	process()
+		if (src.anchored)
+			return
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
@@ -627,3 +629,17 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		current_loc.assume_air(leak_gas)
 		qdel(src)
 
+/obj/tombstone/nuclear_warning
+	name = "inscribed stone"
+	desc = {"A stone block, inscribed with a message. It says:<br>
+	This place is a message... and part of a system of messages... pay attention to it!<br>
+    Sending this message was important to us. We considered ourselves to be a powerful culture.<br>
+    This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.<br>
+    What is here was dangerous and repulsive to us. This message is a warning about danger.<br>
+    The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.<br>
+    The danger is still present, in your time, as it was in ours.<br>
+    The danger is to the body, and it can kill.<br>
+    The form of the danger is an emanation of energy.<br>
+    The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
+	<br>
+	...spooky!"}

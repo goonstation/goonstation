@@ -9491,12 +9491,14 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
-/obj/item/clipboard,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
 	},
 /obj/firedoor_spawn,
+/obj/machinery/phone{
+	pixel_y = -6
+	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -14082,10 +14084,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"aWV" = (
-/obj/machinery/phone/wall,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay)
 "aWW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15962,7 +15960,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "bcr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"
@@ -17492,6 +17490,9 @@
 "big" = (
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -24813,6 +24814,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -29222,9 +29226,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "fpK" = (
-/obj/window/cubicle{
-	dir = 2
-	},
 /obj/machinery/shower{
 	dir = 4;
 	icon_state = "showerhead";
@@ -31529,9 +31530,6 @@
 "hsm" = (
 /obj/stool/bar,
 /obj/machinery/bot/guardbot/gunner,
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -39483,9 +39481,6 @@
 	icon_state = "showerhead";
 	pixel_y = 2
 	},
-/obj/window/cubicle{
-	dir = 1
-	},
 /obj/machinery/drainage,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -40883,7 +40878,6 @@
 "pfp" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "Its hinges have a bunch of split wire ends sticking out...";
 	dir = 4;
 	name = "busted airlock";
@@ -68805,7 +68799,7 @@ sOb
 eNI
 aVo
 aXq
-aWV
+aUH
 aXB
 aYs
 aZg

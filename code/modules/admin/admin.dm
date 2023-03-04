@@ -512,6 +512,13 @@ var/global/noir = 0
 
 			return
 
+		if("centcombans")
+			var/mob/target = locate(href_list["target"])
+			if (isnull(centcomviewer))
+				centcomviewer = new
+			centcomviewer.target_key = target.key
+			centcomviewer.ui_interact(usr.client.mob)
+
 		/////////////////////////////////////ban stuff
 		if ("addban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
@@ -1963,44 +1970,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a wraith?", "Make Wraith", list("Yes", "No")) == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.ckey = M.ckey
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				if (mind.objectives)
-					mind.objectives.len = 0
-				else
-					mind.objectives = list()
-				switch (tgui_alert(usr,"Objectives?", "Objectives", list("Custom", "Random", "None")))
-					if ("Custom")
-						var/WO = null
-						do
-							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
-							if (WO)
-								new WO(null, mind)
-						while (WO != null)
-					if ("Random")
-						generate_wraith_objectives(mind)
-				var/mob/living/intangible/wraith/Wr = M.wraithize()
-				if (!Wr)
-					if (!iswraith(mind.current))
-						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
-						return
-					else
-						Wr = mind.current
-				if (mind.objectives.len)
-					boutput(Wr, "<b>Your objectives:</b>")
-					var/obj_count = 1
-					for (var/datum/objective/objective in mind.objectives)
-						boutput(Wr, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-						obj_count++
-				mind.special_role = ROLE_WRAITH
-				ticker.mode.Agimmicks += mind
-				Wr.antagonist_overlay_refresh(1, 0)
+				M.mind?.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ADMIN)
 
 		if ("makeblob")
 			if( src.level < LEVEL_PA )
@@ -3568,6 +3538,15 @@ var/global/noir = 0
 						src.owner:debug_variables("GLOB")
 					if("globalprocs")
 						src.owner:show_proc_list(null)
+					if("testmerges")
+					#if defined(TESTMERGE_PRS)
+						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
+						if(pr_num)
+							var/file_text = file2text("testmerges/[pr_num].json")
+							src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+					#else
+						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
+					#endif
 			else
 				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
@@ -4353,7 +4332,8 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=testmerges'>Testmerges</A>
 				"}
 
 		dat += "</div>"
@@ -4735,16 +4715,14 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WRESTLER)
-				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-				M.make_wrestler(1)
+				M.mind.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WEREWOLF)
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GRINCH)
-				M.mind.special_role = ROLE_GRINCH
-				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
@@ -4775,25 +4753,12 @@ var/global/noir = 0
 				M.verbs += /client/proc/set_gang_base
 				tgui_alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
 			if(ROLE_OMNITRAITOR)
-				M.mind.special_role = ROLE_OMNITRAITOR
-				M.verbs += /client/proc/gearspawn_traitor
-				M.verbs += /client/proc/gearspawn_wizard
-				M.make_changeling()
-				M.make_vampire()
-				M.make_werewolf()
-				M.make_wrestler(1)
-				M.make_grinch()
-				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				M.show_antag_popup("traitoromni")
+				M.mind.add_antagonist(ROLE_OMNITRAITOR, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
-				M.show_text("<h1><font color=red><B>You have defected to a Spy Thief!</B></font></h1>", "red")
-				M.mind.special_role = ROLE_SPY_THIEF
-				var/mob/living/carbon/human/tmob = M
-				var/objective_set_path = /datum/objective_set/spy_theft
-				new objective_set_path(M.mind)
-				equip_spy_theft(tmob)
+				M.show_text("<h1><font color=red><B>You have defected to become a Spy Thief!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_NUKEOP)
 				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
 				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)

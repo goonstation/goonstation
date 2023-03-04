@@ -2413,6 +2413,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Bathroom"
 	icon_state = "showers"
 
+	extra1
+		name = "Restroom #1"
+
+	extra2
+		name = "Restroom #2"
+
 /area/station/crew_quarters/jazz
 	name = "Jazz Lounge"
 	icon_state = "purple"
@@ -2719,13 +2725,6 @@ TYPEINFO(/area/station/engine/substation)
 	sound_environment = 3
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
-
-/area/syndicate_teleporter
-	name = "Syndicate Teleporter"
-	icon_state = "teleporter"
-	requires_power = 0
-	teleport_blocked = 1
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
@@ -3484,11 +3483,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	luminosity = 1
 
+/area/listeningpost/syndicate_teleporter
+	name = "Syndicate Teleporter"
+	icon_state = "teleporter"
+	requires_power = 0
+
 // Salvager Spawn
 /area/salvager
 	name = "Salvager Vessel Magpie"
 	icon_state = "red"
 	sanctuary = 1
+
+/area/salvager/space
+	icon_state = "purple"
 
 /area/salvager/lower
 	icon_state = "orange"
@@ -4822,7 +4829,7 @@ area/station/crewquarters/cryotron
 	sound_environment = 3
 	workplace = 1
 
-/area/syndicate_teleporter
+/area/listeningpost/syndicate_teleporter
 	name = "Syndicate Teleporter"
 	icon_state = "teleporter"
 	requires_power = 0

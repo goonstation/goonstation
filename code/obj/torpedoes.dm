@@ -59,7 +59,7 @@
 	explode()
 		var/datum/reagents/R = new /datum/reagents(50)
 		R.my_atom = get_turf(src)
-		R.add_reagent("sarin", 50)
+		R.add_reagent("saxitoxin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
 		SPAWN(30 SECONDS) qdel(R)
@@ -216,6 +216,8 @@
 		for(var/obj/machinery/torpedo_tube/T in cachedTubes)
 			T.launch()
 		return
+
+ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
@@ -607,6 +609,7 @@
 	var/icon/northsouth = null
 	var/icon/eastwest = null
 	var/launched = 0
+	var/turf/target_turf
 
 	var/icon_state_on_tray = "missileintray"
 	var/icon_state_off_tray = "missilenotray"
@@ -649,6 +652,10 @@
 			pixel_x = -16
 			pixel_y = 0
 			layer = 3
+#ifndef UNDERWATER_MAP
+		if(fired)
+			UpdateOverlays(SafeGetOverlayImage("space",src.icon,"torped_space"),"space")
+#endif
 		return
 
 	set_loc(var/newloc as turf|mob|obj in world)
@@ -657,6 +664,7 @@
 		changeIcon()
 
 	proc/launch(var/atom/target)
+		target_turf = get_turf(target)
 		if(launched) return
 		else launched = 1
 		var/flying = 1
@@ -665,9 +673,9 @@
 		var/aboutToBlow = 0
 		var/steps = 0
 		while(flying)
-			if(target && target == src.loc) target = null
+			if(target_turf && target_turf == src.loc) target_turf = null
 			var/turf/nextStep = null
-			if(target != null && target.z == src.z) nextStep = get_step_towards(src,target)
+			if(target_turf?.z == src.z) nextStep = get_step_towards(src,target_turf)
 			else nextStep = get_step(src, lockdir ? lockdir : dir)
 
 			if(!nextStep || (nextStep.x == 0 && nextStep.y == 0 && nextStep.z == 0))

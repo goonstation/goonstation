@@ -83,7 +83,7 @@
 				return flock_owner.tutorial.PerformSilentAction(id, context)
 			else
 				return flock_owner.tutorial.PerformAction(id, context)
-	else //we are a flocktrace
+	else if (istype(flock_owner, /mob/living/intangible/flock/trace)) //we are a flocktrace
 		if (flock_owner.flock.flockmind.tutorial) //flocktraces can only watch
 			return FALSE
 	return TRUE
@@ -373,7 +373,7 @@
 	name = "Radio Stun Burst"
 	desc = "Overwhelm the radio headsets of everyone within 3m of your target. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
-	cooldown = 30 SECONDS
+	cooldown = 20 SECONDS
 	targeted = TRUE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)

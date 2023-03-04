@@ -659,6 +659,7 @@
 	proc/sunrise()
 		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -897,3 +898,181 @@
 				qdel(frame)
 
 			. = TRUE
+
+/obj/item/power_pack
+	name = "battery pack"
+	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
+	icon = 'icons/obj/items/tank.dmi'
+	icon_state = "plasma"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
+	color = "#0000ff"
+	inventory_counter_enabled = 1
+
+	New()
+		. = ..()
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{max_charge = 300; recharge_rate = 10}
+		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=300, swappable=FALSE)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (src.inventory_counter)
+			src.inventory_counter.show_count()
+
+/obj/item/power_pack/test
+	New()
+		. = ..()
+		new /obj/item/baton/power_pack(src.loc)
+		new /obj/item/gun/energy/taser_gun/power_pack(src.loc)
+
+/obj/item/ammo/power_cell/redirect/power_pack
+	desc = "A passthrough power cell that has cables to hook directly into a power pack."
+	target_type = /obj/item/power_pack
+
+/obj/item/baton/power_pack
+	desc = "A standard baton with a long cable to hook into a power pack."
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE
+
+/obj/item/gun/energy/taser_gun/power_pack
+	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
+	can_swap_cell = FALSE
+
+/obj/effect/station_projectile_relocator
+	var/datum/projectile/current_projectile = new/datum/projectile/bullet/howitzer
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/obj/projectile/P = AM
+		if(istype(P) && istype(P.proj_data, current_projectile))
+			var/spread = 15
+			var/turf/T = get_random_station_turf()
+			var/rate = 10
+			var/angle = ((rate*world.timeofday/100)%360 + 360)%360
+			var/dir = angle_to_dir(angle)
+
+			var/source_x = clamp(round(200*sin(angle)+150),2, world.maxx-2)
+			var/source_y = clamp(round(200*cos(angle)+150),2, world.maxy-2)
+			var/turf/turf_source = locate(source_x, source_y, Z_LEVEL_STATION)
+			if(!ON_COOLDOWN(src, "warning", 20 SECONDS))
+				command_alert("One or more high velocity masses are headed towards the station from the [dir2text(dir)].  Brace for possible impact.", "Warning: Prepare for impact.")
+
+			message_admins("Projectile sent to station! From [log_loc(turf_source)] pointed at [log_loc(T)] with [angle]° [spread] spread.")
+			shoot_projectile_ST_pixel_spread(turf_source, current_projectile, T, 0, 0 , spread)
+			qdel(P)
+
+/obj/effect/station_torpedo_relocator
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if(ismob(AM) || istype(AM, /obj/storage/closet) || istype(AM, /obj/torpedo))
+			var/spread = 5
+			var/turf/station_turf = get_random_station_turf()
+			var/rate = 10
+			var/angle = ((rate*world.timeofday/100)%360 + 360)%360
+			var/dir = angle_to_dir(angle)
+
+			var/source_x = clamp(round(200*sin(angle)+150),2, world.maxx-2)
+			var/source_y = clamp(round(200*cos(angle)+150),2, world.maxy-2)
+			var/turf/turf_source = locate(source_x, source_y, Z_LEVEL_STATION)
+
+			var/fire_angle = arctan(station_turf.y - turf_source.y, station_turf.x - turf_source.x)
+			fire_angle = (fire_angle+rand(-spread+spread)+360)%360
+			var/target_x = clamp(round(425*sin(fire_angle)+source_x),2, world.maxx-1) //425 for edge length to (300,300) from origin
+			var/target_y = clamp(round(425*cos(fire_angle)+source_y),2, world.maxy-1)
+			var/turf/turf_target = locate(target_x, target_y, Z_LEVEL_STATION)
+
+			message_admins("[AM] sent to station! From [log_loc(turf_source)] [angle]° pointed at [log_loc(turf_target)] [fire_angle]°.")
+
+			if(istype(AM, /obj/torpedo) && !ON_COOLDOWN(src, "warning", 20 SECONDS))
+				command_alert("Unidentified missile detected from the [dir2text(dir)].  Brace for possible impact.", "Warning: Prepare for impact.")
+
+			if(ismob(AM) || istype(AM, /obj/storage/closet))
+				AM.throwing = FALSE
+				AM.set_loc(turf_source)
+				var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+				if(length(existing_throws))
+					for(var/list/datum/thrown_thing/throw_data in existing_throws)
+						global.throwing_controller.thrown -= throw_data
+						qdel(throw_data)
+				AM.throw_at(turf_target, 600, 2, thrown_from=turf_source)
+			else if(istype(AM, /obj/torpedo))
+				var/obj/torpedo/T = AM
+				var/torpedo_dir = target_y > source_y ? NORTH : SOUTH  //angle_to_dir(fire_angle)
+				T.target_turf = turf_target
+				T.set_loc(turf_source)
+				T.set_dir(torpedo_dir)
+				T.lockdir = torpedo_dir
+
+#ifdef MACHINE_PROCESSING_DEBUG
+/datum/power_usage_viewer
+	var/mob/target
+	var/datum/machine_power_data/power_data
+
+/datum/power_usage_viewer/New(mob/target)
+	..()
+	src.target = target
+	power_data = detailed_power_data_last
+
+/datum/power_usage_viewer/disposing()
+	src.target = null
+	src.power_data = null
+	..()
+
+/datum/power_usage_viewer/ui_state(mob/user)
+	return tgui_admin_state
+
+/datum/power_usage_viewer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PowerDebug")
+		ui.open()
+
+/datum/power_usage_viewer/ui_static_data(mob/user)
+	. = list()
+	if(power_data)
+		.["areaData"] = list()
+		for(var/area/A in power_data.areas)
+			var/list/machine_data = list()
+			for(var/obj/machinery/M in power_data.areas[A])
+				machine_data[ref(M)] += list(
+					"name" = M.name,
+					"power_usage" = round(M.power_usage),
+					"data" = power_data.machines[M]
+				)
+			.["areaData"][A.type] += list(
+				"name" = A.name,
+				"total" = round(A.area_apc?.lastused_total),
+				"equip" = round(A.area_apc?.lastused_equip),
+				"light" = round(A.area_apc?.lastused_light),
+				"environ" = round(A.area_apc?.lastused_environ),
+				"machines" = machine_data
+			)
+
+/datum/power_usage_viewer/ui_data()
+	var/list/data = list()
+
+	return data
+
+/datum/power_usage_viewer/ui_act(action, list/params, datum/tgui/ui)
+	USR_ADMIN_ONLY
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("jmp")
+			var/obj/machinery/M = locate(params["ref"])
+			if(istype(M) && target?.client?.holder)
+				target.client.jumptoturf(get_turf(M))
+#endif
+

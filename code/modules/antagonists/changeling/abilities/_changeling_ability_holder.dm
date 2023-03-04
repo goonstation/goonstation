@@ -1,47 +1,3 @@
-// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
-/mob/proc/make_changeling()
-	var/datum/abilityHolder/changeling/O = src.get_ability_holder(/datum/abilityHolder/changeling)
-	if (O)
-		return
-	var/mob/living/L = src
-	if(istype(L))
-		L.blood_id = "bloodc"
-
-	if (src.mind && !ischangeling(src) && (src.mind.special_role != ROLE_OMNITRAITOR))
-		src.show_antag_popup("changeling")
-
-	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)
-	C.addAbility(/datum/targetable/changeling/abomination)
-	C.addAbility(/datum/targetable/changeling/absorb)
-	C.addAbility(/datum/targetable/changeling/devour)
-	C.addAbility(/datum/targetable/changeling/mimic_voice)
-	C.addAbility(/datum/targetable/changeling/monkey)
-	C.addAbility(/datum/targetable/changeling/regeneration)
-	C.addAbility(/datum/targetable/changeling/scream)
-	C.addAbility(/datum/targetable/changeling/spit)
-	C.addAbility(/datum/targetable/changeling/stasis)
-#ifdef RP_MODE
-	C.addAbility(/datum/targetable/changeling/sting/capulettium)
-#else
-	C.addAbility(/datum/targetable/changeling/sting/neurotoxin)
-#endif
-	C.addAbility(/datum/targetable/changeling/sting/lsd)
-	C.addAbility(/datum/targetable/changeling/sting/dna)
-	C.addAbility(/datum/targetable/changeling/transform)
-	C.addAbility(/datum/targetable/changeling/morph_arm)
-	C.addAbility(/datum/targetable/changeling/handspider)
-	C.addAbility(/datum/targetable/changeling/eyespider)
-	C.addAbility(/datum/targetable/changeling/legworm)
-	C.addAbility(/datum/targetable/changeling/buttcrab)
-	C.addAbility(/datum/targetable/changeling/hivesay)
-	C.addAbility(/datum/targetable/changeling/boot)
-	C.addAbility(/datum/targetable/changeling/give_control)
-
-	SPAWN(2.5 SECONDS) // Don't remove.
-		if (src) src.assign_gimmick_skull()
-
-	return
-
 /atom/movable/screen/ability/topBar/changeling
 	clicked(params)
 		var/datum/targetable/changeling/spell = owner
@@ -141,6 +97,11 @@
 	//Insert a mob into the hivemind by creating a hivemind_observer for them and transferring Mind
 	proc/insert_into_hivemind(var/mob/victim, var/restore_name=0)
 		var/mob/dead/target_observer/hivemind_observer/obs
+		//since getting absorbed into the hivemind yoinks your mind away before calling death, we need to do this here
+		if (victim.mind)
+			for (var/datum/antagonist/antag in victim.mind.antagonists)
+				if (istype(antag, /datum/antagonist/changeling_critter))
+					victim.mind.remove_antagonist(antag.id)
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//Just inserting a random chumpler (regular human)
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
