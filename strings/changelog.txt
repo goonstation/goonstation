@@ -1,5 +1,7 @@
 
 (t)sat mar 04 23
+(u)Sord
+(+)Added Research Apparel job clothing vendors to all maps
 (u)Kubius
 (p)13203
 (e)🆕🗺|C-Feature, A-Mapping
