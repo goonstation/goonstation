@@ -40875,7 +40875,6 @@
 "pfp" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "Its hinges have a bunch of split wire ends sticking out...";
 	dir = 4;
 	name = "busted airlock";

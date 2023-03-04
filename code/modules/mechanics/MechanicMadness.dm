@@ -535,7 +535,7 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", .proc/emoney)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		// SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price",.proc/setPrice)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code",.proc/setCode)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String",.proc/setThank)
@@ -624,7 +624,7 @@
 				user.drop_item()
 				qdel(W)
 
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
 		return 0
@@ -1698,6 +1698,7 @@
 	name = "Relay Component"
 	desc = ""
 	icon_state = "comp_relay"
+	cooldown_time = 0.4 SECONDS
 	var/changesig = 0
 
 	get_desc()
@@ -2629,6 +2630,7 @@
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
 	density = 1
+	var/spooky = FALSE
 
 	New()
 		..()
@@ -2648,6 +2650,14 @@
 			return 1
 		return ..(user)
 
+	Click(location,control,params)
+		..()
+		if (!spooky)
+			return
+		var/lpm = params2list(params)
+		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+			src.attack_hand(usr)
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
@@ -2664,6 +2674,13 @@
 	update_icon()
 		icon_state = icon_up
 		return
+
+	// 👻
+	onMaterialChanged()
+		. = ..()
+		if(isnull(src.material))
+			return
+		spooky = (src.material.mat_id == "soulsteel")
 
 /obj/item/mechanics/trigger/buttonPanel
 	name = "Button Panel"
@@ -3160,6 +3177,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Value", .proc/setCurrentValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
@@ -3204,12 +3222,21 @@
 			change = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/resetCounter(var/datum/mechanicsMessage/input)
+		// reset does not send the value
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		currentValue = startingValue
 		tooltip_rebuild = 1
 		. = currentValue
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+	proc/setCurrentValue(var/datum/mechanicsMessage/input)
+		// setCurrentValue sends the signal with the current value
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if (!isnull(text2num_safe(input.signal)))
+			currentValue = text2num_safe(input.signal)
+			tooltip_rebuild = 1
+			. = currentValue
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
 	proc/doImmediateChange(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -3290,6 +3317,148 @@
 		tooltip_rebuild = 1
 		return 1
 
+/obj/item/mechanics/interval_timer
+	name = "Automatic Signaller Component"
+	desc = "Outputs a signal on regular, configurable intervals."
+	icon_state = "comp_clock"
+
+	// Options for the length of time...
+	var/intervalLength = 1 SECOND
+	var/minimumInterval = 0.5 SECONDS
+	var/maximumInterval = 60 SECONDS
+
+	// how many times we should send it before shutting off (-1 = infinite)
+	var/repeatCount = -1
+	var/repeatCountLeft = -1
+
+	// if we are active, and if we should be active
+	// if these values do not match, reject activate/deactivate toggles until they do
+	var/isActive = FALSE
+	var/wantActive = FALSE
+
+
+	get_desc()
+		. = ..() // Please don't remove this again, thanks.
+		. += "<br><span class='notice'>Current interval length: [intervalLength / 10] sec.</span>"
+
+	secure()
+		icon_state = "comp_clock1"
+	loosen()
+		// when someone detaches this we want it to stop.
+		icon_state = "comp_clock"
+		wantActive = FALSE
+	// if we're leaving then yeah stop this shit, just in case
+	disposing()
+		..()
+		wantActive = FALSE
+		repeatCount = 0
+		return
+
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Start",.proc/setActiveManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Stop",.proc/setInactiveManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Interval Length",.proc/setIntervalLengthManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Repeat Count",.proc/setRepeatCountManually)
+
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",.proc/setActive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",.proc/setInactive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",.proc/setIntervalLength)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",.proc/setRepeatCount)
+
+	// no relation to the flock : )
+	proc/startRepeatingTheSignal()
+		if(level == 2) return
+
+		// Do not start if we have already started
+		if (isActive) return
+		// Do not start if we have no signals to send
+		if (repeatCount == 0) return
+
+		// if we're here, we want this to start, so start it
+		wantActive = TRUE
+		repeatCountLeft = repeatCount
+		SPAWN(-1)
+			isActive = TRUE
+			// we set ourselves as active, and then check every time that
+			// 1. we exist
+			// 2. we are still active (should always be the case)
+			// 3. we still *want* to be active
+			// 4. we have some signals left to send (not > 0, because -1 is infinite)
+			while (src && isActive && wantActive && repeatCountLeft != 0)
+				// decrement repeat counter
+				if (repeatCountLeft > 0) repeatCountLeft--
+
+				LIGHT_UP_HOUSING
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+				animate_flash_color_fill(src,"#00FF00",1, 2)
+				sleep(intervalLength)
+
+			// if/when we break out of the loop, we're done forever
+			// no more active
+			isActive = FALSE
+
+
+	// Very basic calls because most of the logic is shared
+	// and this does not output signals on start/stop
+	proc/setActive()
+		startRepeatingTheSignal()
+
+	proc/setInactive()
+		wantActive = FALSE
+
+	proc/setActiveManually(obj/item/W as obj, mob/user as mob)
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		startRepeatingTheSignal()
+		return 1
+
+	proc/setInactiveManually(obj/item/W as obj, mob/user as mob)
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		wantActive = FALSE
+		return 1
+
+	proc/setIntervalLengthManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Time between signals? (in deciseconds (0.1s))", "Interval Component", intervalLength) as num | null
+		if(!in_interact_range(src, user) || user.stat || isnull(input) || !isnum_safe(input))
+			return 0
+
+		if (input > maximumInterval || input < minimumInterval)
+			return 0
+		intervalLength = input
+
+		tooltip_rebuild = 1
+		return 1
+
+	proc/setRepeatCountManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Number of signals to send? (-1 for infinite)", "Interval Component", repeatCount) as num | null
+		if(!in_interact_range(src, user) || user.stat || isnull(input) || !isnum_safe(input))
+			return 0
+
+		if (input == 0)
+			return 0
+		repeatCount = input
+		return 1
+
+	proc/setIntervalLength(var/datum/mechanicsMessage/input)
+		var/input_num = text2num_safe(input.signal)
+		if (!isnull(input_num))
+			if (input_num > maximumInterval || input_num < minimumInterval)
+				return
+			intervalLength = input_num
+			tooltip_rebuild = 1
+
+	proc/setRepeatCount(var/datum/mechanicsMessage/input)
+		var/input_num = text2num_safe(input.signal)
+		if (!isnull(input_num))
+			// I don't care about checking for values below -1 here,
+			// because anything below 0 is effectively infinite
+			repeatCount = input_num
+
+
 /obj/item/mechanics/association
 	name = "Association Component"
 	desc = ""
@@ -3303,6 +3472,7 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", .proc/addItems)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", .proc/removeItem)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", .proc/sendValue)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send associations as signal", .proc/sendMapAsSignal)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", .proc/setMode)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", .proc/addItemManual)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", .proc/removeItemManual)
@@ -3373,6 +3543,13 @@
 		LIGHT_UP_HOUSING
 		if (isnull(map[input.signal])) return
 		input.signal = map[input.signal]
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+
+	proc/sendMapAsSignal(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		input.signal = list2params(src.map)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
@@ -3547,6 +3724,141 @@
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
 
+
+/obj/item/mechanics/message_sign
+	name = "message sign component"
+	desc = "Can display up to three lines of text."
+	icon='icons/obj/large/96x32.dmi'
+	icon_state = "mechcomp_ledsign"
+	cabinet_banned = TRUE
+	two_handed = 1     // it's big
+	w_class = W_CLASS_BULKY // too big to fit in a bag
+	pixel_w = -32
+	var/display_text = null
+	var/display_color = "#dd9922"
+	var/display_vertical = "vm"
+	var/display_horizontal = "c"
+	var/display_font = "pixel"
+	var/display_font_size = 6
+
+	maptext_width = 92
+	maptext_x = 2
+
+	get_desc()
+		. = ..()
+		. += "<br><span class='notice'>Current text: [src.display_text] | Color: [display_color]</span>"
+
+	secure()
+		src.display_text = ""
+		src.maptext = ""
+
+	loosen()
+		src.display_text = ""
+		src.maptext = ""
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set text", .proc/setTextManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set alignment", .proc/setAlignmentManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set font", .proc/setFontManually)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set text", .proc/setText)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
+
+	proc/setColor(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		src.actualSetColor(signal)
+	proc/setColorManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Text color", "Color", src.display_color) as color | null
+		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+
+		src.actualSetColor(input)
+		tooltip_rebuild = TRUE
+		. = TRUE
+	proc/actualSetColor(var/color_input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		if(length(color_input) == 7 && copytext(color_input, 1, 2) == "#")
+			display_color = color_input
+			tooltip_rebuild = 1
+			src.display()
+
+	proc/setText(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		if (length(signal) > MAX_MESSAGE_LEN)
+			return
+		src.display_text = html_encode(input.signal)
+		src.display()
+
+	proc/setTextManually(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Message Text", "Text", html_decode(src.display_text)) as text | null
+		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+
+		src.display_text = html_encode(input)
+		src.display()
+		tooltip_rebuild = TRUE
+		. = TRUE
+
+
+	proc/setAlignmentManually(obj/item/W as obj, mob/user as mob)
+		var/vertical = input(user, "Vertical Alignment?", "Message Sign Component", "middle") in list("top", "middle", "bottom") | null
+		// these ones do not bail if you pick "no" since it will just not do anything
+		if (!in_interact_range(src, user) || user.stat)
+			return FALSE
+		var/horizontal = input(user, "Horizontal Alignment?", "Message Sign Component", "center") in list("left", "center", "right") | null
+		if (!in_interact_range(src, user) || user.stat)
+			return FALSE
+
+		switch (vertical)
+			if ("top")
+				display_vertical = "vt"
+			if ("middle")
+				display_vertical = "vm"
+			if ("bottom")
+				display_vertical = "vb"
+
+		switch (horizontal)
+			if ("left")
+				display_horizontal = "l"
+			if ("center")
+				display_horizontal = "c"
+			if ("right")
+				display_horizontal = "r"
+
+		src.display()
+
+	proc/setFontManually(obj/item/W as obj, mob/user as mob)
+		var/font = input(user, "Which font?", "Message Sign Component", display_font) in list("pixel", "vga", "xfont") | null
+		if (!in_interact_range(src, user) || user.stat || isnull(font))
+			return FALSE
+
+		display_font = font
+
+		if (font == "pixel")
+			var/size = input(user, "What font size? (5-8)", "Message Sign Component", (display_font_size ? display_font_size : 6)) as num | null
+			display_font_size = 6
+			var/size_safe = text2num_safe(size)
+			if (!in_interact_range(src, user) || user.stat || isnull(font))
+				src.display()
+				return FALSE
+			if (!isnull(size_safe) && size_safe >= 5 && size_safe <= 8)
+				display_font_size = size_safe
+		else
+			display_font_size = null
+
+		src.display()
+
+
+	proc/display()
+		src.maptext = "<span class='[display_horizontal] [display_vertical] [display_font]' style='[display_font_size ? "font-size: [display_font_size]px; " : ""]color: [display_color];'>[display_text]</span>"
+
+
+
+
 /// allows cabinets to move around
 /obj/item/mechanics/movement
 	name = "Movement Component"
@@ -3662,6 +3974,95 @@
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_move"
+
+
+
+
+/obj/item/mechanics/screen_canvas
+	name = "Pixel Display Component"
+	desc = "Totally not a canvas hastily stuffed into a screen, somehow."
+
+	icon_state = "comp_screen"
+
+	// largely cribbed from /obj/item/canvas, but with the interactive parts removed.
+
+	var/icon/base = null
+	var/icon/art = null
+	var/canvas_width = 26
+	var/canvas_height = 26
+	var/bottom = 4
+	var/left = 4
+
+	pixel_point = TRUE
+
+	New()
+		..()
+
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "draw pixel", .proc/drawPixel)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset canvas", .proc/resetCanvas)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset canvas", .proc/resetCanvas)
+
+		init_canvas()
+
+		// left = round((bound_width - canvas_width) / 2)
+		// bottom = round((bound_height - canvas_height) / 2)
+
+	proc/init_canvas()
+		// these are subtly different from the canvas ones because they are not canvases.
+		base = icon(src.icon, icon_state = "canvas_[canvas_width]x[canvas_height]")
+		art = icon(src.icon, icon_state = "canvas_[canvas_width]x[canvas_height]_black")
+
+		underlays += base
+		icon = art
+
+	proc/resetCanvas()
+		var/new_color = "#000000"
+		art.DrawBox(new_color, left, bottom, left + canvas_width, bottom + canvas_height)
+		icon = art
+		logTheThing(LOG_STATION, null, "[src] reset to color: [log_loc(src)]: canvas{\ref[src], -1, -1, [new_color]}")
+
+	proc/drawPixel(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		var/list/params = params2list(input.signal)
+		var/dot_x = text2num(params["x"])
+		var/dot_y = text2num(params["y"])
+		var/dot_color = params["color"]
+		if (!isnull(dot_x) && !isnull(dot_y) && !isnull(dot_color))
+			drawPixelActual(dot_x, dot_y, dot_color)
+
+
+	proc/drawPixelActual(dot_x, dot_y, dot_color)
+		var/x = dot_x
+		var/y = dot_y
+
+		if (x < 0 || y < 0 || x >= canvas_width || y > canvas_height)
+			// you cannot embezzle pixels off the bezel, sorry.
+			// you thought this would be the same comment as canvas.dm?
+			// wrong. and so is drawing off the canvas.
+			return
+
+		// color should be an actual color
+		// byond: iscolor() pls
+		if (length(dot_color) != 7 || copytext(dot_color, 1, 2) != "#")
+			return
+
+		// unlike the canvas, which operates on absolute-to-icon coordinates,
+		// this one operates on realtive ones (e.g. 0,0 is the bottom of the drawable area,
+		// not the icon itself)
+		x += left
+		y += bottom
+
+		art.DrawBox(dot_color, x, y)
+		icon = art
+
+		// tracks how many things someone's drawn on it.
+		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
+		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
+
+
+
+
+
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

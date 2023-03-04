@@ -973,9 +973,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 	var/moving = 0
 	rider_visible = 0
 	is_syndicate = 1
-	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/stopthebus/clowncar)
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
+	var/peel_count = 0
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
@@ -1040,8 +1041,16 @@ TYPEINFO(/obj/vehicle/clowncar)
 		else
 			boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
 
-/obj/vehicle/clowncar/MouseDrop_T(mob/living/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
+/obj/vehicle/clowncar/MouseDrop_T(atom/target, mob/user)
+	if (!target || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
+		return
+
+	if (istype(target, /obj/item/bananapeel))
+		src.add_peel(target, user)
+		return
+
+	var/mob/living/mob_target = target
+	if (!istype(mob_target) || mob_target.buckled)
 		return
 
 	var/msg
@@ -1058,20 +1067,20 @@ TYPEINFO(/obj/vehicle/clowncar)
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
-	if(target == user && !user.stat)	// if drop self, then climbed in
+	if(mob_target == user && !user.stat)	// if drop self, then climbed in
 		if(rider)
 			return
-		target.set_loc(src)
-		rider = target
+		mob_target.set_loc(src)
+		rider = mob_target
 		handle_button_addition()
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
 		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
-	else if(target != user && !user.restrained() && is_incapacitated(target))
-		target.set_loc(src)
-		src.log_me(user, target, "pax_enter", 1)
-		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
-		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
+	else if(mob_target != user && !user.restrained() && is_incapacitated(mob_target))
+		mob_target.set_loc(src)
+		src.log_me(user, mob_target, "pax_enter", 1)
+		msg = "[user.name] stuffs [mob_target.name] into the back of the [src]!"
+		boutput(user, "<span class='notice'>You stuff [mob_target.name] into the back of the [src]!</span>")
 	else
 		return
 	for (var/mob/C in AIviewers(src))
@@ -1224,6 +1233,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
+	if (istype(I, /obj/item/bananapeel))
+		user.drop_item(I)
+		src.add_peel(I)
+		return
+
 	var/obj/item/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
@@ -1241,8 +1255,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 	..()
 	return
 
+/obj/vehicle/clowncar/proc/add_peel(obj/item/bananapeel/peel, mob/user)
+	src.peel_count++
+	qdel(peel)
+	boutput(user, "<span class='notice'>You stuff the banana peel into the [src]'s peel hopper. It now contains [src.peel_count] peel[src.peel_count > 1 ? "s" : ""].")
+
 // Could be useful, I guess (Convair880).
-obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", var/forced_in = 0)
+/obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", var/forced_in = 0)
 	if (!src || action == "")
 		return
 
@@ -1610,6 +1629,27 @@ TYPEINFO(/obj/vehicle/adminbus)
 	clowncar
 		name = "Stop The Car"
 		mydelay = 2 SECONDS
+
+/obj/ability_button/drop_peel
+	name = "Drop a banana peel"
+	icon = 'icons/misc/abilities.dmi'
+	icon_state = "peel"
+	cooldown = 4 SECONDS
+
+	Click(location, control, params)
+		. = ..()
+		if (!istype(src.the_mob?.loc, /obj/vehicle/clowncar))
+			return
+		var/obj/vehicle/clowncar/car = src.the_mob.loc
+		if (car.peel_count <= 0)
+			boutput(src.the_mob, "<span class='alert'>No peels left!</span>")
+			return
+		if (ON_COOLDOWN(car, "peel_drop", src.cooldown))
+			boutput(the_mob, "<span class='alert'>The peel dispenser is still on cooldown for [GET_COOLDOWN(car, "peel_drop") / 10]s!</span>")
+			return
+		playsound(car, 'sound/machines/click.ogg')
+		new /obj/item/bananapeel(get_turf(car))
+		car.peel_count--
 
 /obj/ability_button/togglespook
 	name = "Toggle Spook"
