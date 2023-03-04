@@ -55,6 +55,8 @@
 		if (slot == item)
 			if (src.head && src.head.obstructs & C_MASK)
 				return src.head
+			else if (src.wear_suit && src.wear_suit.obstructs & C_MASK)
+				return src.wear_suit
 			else
 				return src.wear_mask
 	return src.wear_suit
