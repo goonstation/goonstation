@@ -3116,7 +3116,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 /obj/machinery/vending/jobclothing/research
 	name = "Research Apparel"
-	desc = "A vending machine that vends Researc clothing."
+	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
 	icon_panel = "snack-panel"
 	icon_off = "sciclothing-off"
