@@ -25214,7 +25214,7 @@
 	},
 /area/station/science/lobby)
 "bKs" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -49897,7 +49897,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
 "ptX" = (
-/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "pur" = (
