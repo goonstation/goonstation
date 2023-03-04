@@ -25,28 +25,6 @@
 
 	return
 
-// Remove when omnitraitors are datumised.
-/client/proc/gearspawn_wizard()
-	set category = "Commands"
-	set name = "Call Wizards"
-	set desc="Teleports useful items to your location."
-
-	if (usr.stat || !isliving(usr) || isintangible(usr))
-		usr.show_text("You can't use this command right now.", "red")
-		return
-
-	if (!ishuman(usr))
-		boutput(usr, "<span class='alert'>You must be a human to use this!</span>")
-		return
-
-	var/mob/living/carbon/human/H = usr
-
-	equip_wizard(H, 1)
-
-	usr.verbs -= /client/proc/gearspawn_wizard
-
-	return
-
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
@@ -212,6 +190,7 @@ var/list/roles_to_prefs = list(
 	ROLE_CONSPIRATOR = "be_conspirator",
 	ROLE_ARCFIEND = "be_arcfiend",
 	ROLE_FLOCKMIND = "be_flock",
+	ROLE_SALVAGER = "be_salvager",
 	ROLE_MISC = "be_misc"
 	)
 

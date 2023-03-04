@@ -206,8 +206,8 @@ CONTAINS:
 		var/hisher = his_or_her(user)
 		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
-		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
+		playsound(user.loc, 'sound/effects/espoon_suicide.ogg', 50, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

@@ -21701,7 +21701,6 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "It's busted!";
 	locked = 1;
 	name = "malfunctioning airlock";
@@ -54053,7 +54052,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},

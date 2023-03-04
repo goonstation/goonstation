@@ -13603,7 +13603,6 @@
 /area/zeta/security)
 "Fa" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
@@ -13902,7 +13901,6 @@
 /area/zeta/security)
 "Fy" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"

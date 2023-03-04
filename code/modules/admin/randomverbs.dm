@@ -828,7 +828,7 @@
 
 		else if (href_list["mutantrace"])
 			if (usr.client.holder.level >= LEVEL_ADMIN)
-				var/new_race = input(usr, "Please select mutant race", "Polymorph Menu") as null|anything in (childrentypesof(/datum/mutantrace) + "Remove")
+				var/new_race = tgui_input_list(usr, "Please select mutant race", "Polymorph Menu", concrete_typesof(/datum/mutantrace) + "Remove")
 
 				if (ispath(new_race, /datum/mutantrace))
 					src.mutantrace = new new_race
@@ -1271,7 +1271,7 @@
 		return
 		//target = input(usr, "Target", "Target") as mob in world
 
-	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE))
+	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE, admin = TRUE))
 	return
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)

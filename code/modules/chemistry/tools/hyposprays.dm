@@ -65,6 +65,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 		tgui_process.update_uis(src)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		SEND_SIGNAL(src.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "Hypospray", "Hypospray")

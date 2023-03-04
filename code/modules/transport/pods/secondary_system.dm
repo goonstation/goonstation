@@ -786,6 +786,47 @@
 			boutput(usr, "Code reset.  Please type new code and press enter.")
 			show_lock_panel(usr)
 
+/obj/item/shipcomponent/secondary_system/lock/bioscan
+	name = "Biometric Hatch Locking Unit"
+	desc = "A basic hatch locking mechanism with a biometric scan."
+	system = "Lock"
+	f_active = 1
+	power_used = 0
+	icon_state = "lock"
+	code = ""
+	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/bdna = null
+
+	show_lock_panel(mob/living/user)
+		if (isliving(user))
+			if (isnull(bdna))
+				boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes you as its key!</span>")
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+				bdna = user?.bioHolder?.Uid
+				ship.locked = 0
+			else if ((bdna == user.bioHolder?.Uid) || (bdna == user.blood_DNA) )
+				ship.locked = !ship.locked
+				boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+			else
+				var/valid_dna_source = null
+				if(ishuman(user))
+					var/obj/item/parts/human_parts/limb
+					var/mob/living/carbon/human/H = user
+					limb = H.l_hand
+					if(limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+					limb = H.r_hand
+					if(!valid_dna_source && limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+
+				if(valid_dna_source)
+					if(user.loc == src.ship)
+						boutput(user, "<span class='alert'>You press [valid_dna_source] against \the [src] for a moment.</span>")
+					else
+						src.ship.visible_message("[user] holds [valid_dna_source] against the [src.ship] for a moment.")
+					ship.locked = !ship.locked
+					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+
 /obj/item/shipcomponent/secondary_system/crash
 	name = "Syndicate Explosive Entry Device"
 	desc = "The SEED that when explosively planted in a space station, lets you grow into the best death blossom you can be."

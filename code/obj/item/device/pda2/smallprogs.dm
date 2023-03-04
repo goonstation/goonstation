@@ -559,10 +559,12 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
+	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
+	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
-			ref = locate(type) in machine_registry[MACHINES_POWER]
+			ref = locate(type) in (machine_registry[MACHINES_POWER] + machine_registry[MACHINES_FISSION])
 			if(ref?.z != 1) ref = null
 		. = ref
 
@@ -579,14 +581,18 @@ Code:
 		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//NUKE
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
 		. = src.return_text_header()
-
+		. += "<BR>"
+		//TEG
 		if (generator)
 			engine_found = TRUE
-			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "<h4>Thermo-Electric Generator Status</h4>"
 			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
 			. += "<BR>"
 
@@ -602,6 +608,7 @@ Code:
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
+		// SINGULO
 		if(length(by_type[/obj/machinery/power/collector_control]))
 			var/controler_index = 1
 			var/collector_index = 1
@@ -609,7 +616,7 @@ Code:
 				collector_index = 1
 				if(C?.active && C.z == 1)
 					engine_found = TRUE
-					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "<h4>Radiation Collector [controler_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
 					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
@@ -617,12 +624,43 @@ Code:
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
 					. += "<BR>"
 
+		// NUKE
+		if(nuke_reactor)
+			engine_found = TRUE
+			// for some unfathomable reason trying to detect reactor rod insertion broke the whole damn thing. Todo for a better coder i guess
+			. += "<BR><h4>Reactor Status</h4>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)] clicks<BR>"
+			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
+			// . += "Control rod insertion: [rodlevel * 100]%"
+			if (isnull(nuke_turbine))
+				. += "<B>Error!</B> No turbine detected!<BR>"
+		if (nuke_turbine)
+			engine_found = TRUE
+			. += "<h4>Turbine Status</h4>"
+			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
+			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]J/RPM<BR>"
+			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
+			if (isnull(nuke_reactor))
+				. += "<B>Error!</B> No reactor detected!<BR>"
+			. += "<BR>"
+
+		//HOTSPOT
+		if(length(by_type[/obj/machinery/power/vent_capture]))
+			. += "<h4>Vent Capture Unit Status</h4>"
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
+					engine_found = TRUE
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
+		. += "<HR>"
+		// CATALYTICS
 		if(length(by_type[/obj/machinery/power/catalytic_generator]))
 			var/generator_index = 1
 			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
 				if(C.z == 1)
 					engine_found = TRUE
-					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "<h4>Catalytic Generator [generator_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
 					if(C.anode_unit?.contained_rod)
 						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
@@ -636,16 +674,10 @@ Code:
 						. += "No Cathode Rod Installed<BR>"
 					. += "<BR>"
 
-		if(length(by_type[/obj/machinery/power/vent_capture]))
-			. += "<BR><h4>Vent Capture Unit Status</h4>"
-			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
-					engine_found = TRUE
-					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
-			. += "<BR>"
+		// todo: have some solar stats pop up, like angle and rate and whatnot. Once #13206 is in this'll have more info
 
 		if(!engine_found)
-			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
+			. += "<B>Error!</B> No power source detected!<BR><BR>"
 
 		. += "<HR>"
 		if(laser)
