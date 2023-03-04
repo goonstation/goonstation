@@ -30,6 +30,8 @@ var/global/list/areas_with_local_suns = new
 	var/name = "unknown"
 	/// where does this apply exactly?
 	var/stationloc = null
+
+	// these time vars below theoretically use time units like SECOND and MINUTE, so 1 = 1/10 of a second
 	/// How often do eclipses happen? It's the length of the whole cycle, so it needs to be = to eclipse_time + penumbra_time + downtime
 	var/eclipse_cycle_length = 0
 	/// a counter for cycling through the eclipse
@@ -40,13 +42,14 @@ var/global/list/areas_with_local_suns = new
 	var/eclipse_time = 0
 	/// How much time is spent not in eclipse?
 	var/down_time = 0
+
 	/// If we have an annular eclipse (eclipse status = ECLIPSE_UMBRA), what's the minimum star visibility? Percentage where 1=100%. This being below 1 makes the peak annular.
 	var/eclipse_magnitude = 1
 	/// which stage of the eclipse are we in?
 	var/eclipse_status = ECLIPSE_FALSE
 	/// do we calculate the eclipse cycle? False for stuff like earth/abzu's rotation (or just no eclipse), since that's calculated at build
 	var/eclipse_cycle_on = FALSE
-	/// what kind of eclipses happen in the cycle?
+	/// what kind of eclipses happen in the cycle? Saves the order of eclipse events so we can go to the next easily
 	var/list/eclipse_order = list(ECLIPSE_FALSE)
 	/// what percentage of light reaches us? 1 is 100%, 0 is 0%. Changes as the eclipse does. Cloud cover changes this too i guess. Max is 1
 	var/visibility = 1
@@ -169,8 +172,8 @@ var/global/list/areas_with_local_suns = new
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
-	src.counter++ // this should be every game tick, 1/10th of a second
-	if (src.counter < 20) // 60 seconds, roughly - about a 5deg change (note, this is now approx 2 seconds instead)
+	src.counter++ // this 'should' be every game tick, 1/10th of a second
+	if (src.counter < 2 SECONDS)
 		return
 	src.counter = 0
 	src.angle = ((src.rate * world.realtime/100)%360 + 360)%360
@@ -191,6 +194,7 @@ var/global/list/areas_with_local_suns = new
 			if (ECLIPSE_FALSE)
 				if (src.eclipse_counter >= src.down_time)
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
+					command_alert("An eclipse is occurring to the [station_or_ship()]. The eclipse is predicted to last for [time_to_text(src.eclipse_cycle_length-src.down_time)], and the output of solar panels will gradually reduce to a minimum of [(1 - src.eclipse_magnitude)*100]% output." , "Solar Eclipse", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility = 1
 			if (ECLIPSE_PENUMBRA_WAXING)
@@ -210,6 +214,7 @@ var/global/list/areas_with_local_suns = new
 			if (ECLIPSE_UMBRA)
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
+					command_alert("The Solar Eclipse is now ending. The next one is predicted to be in [time_to_text(src.down_time)].", "Eclipse Ended", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility = 1 - src.eclipse_magnitude
 			// if (ECLIPSE_PLANETARY) planetary rotation isnt done at runtime so we dont need this
