@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	/// kick out the rider
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = TRUE)
 		if(src.rider)
-			MOVE_OUT_TO_TURF_SAFE(src.rider)
+			MOVE_OUT_TO_TURF_SAFE(src.rider, src)
 			ClearSpecificOverlays("rider")
 			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
@@ -157,8 +157,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	/// remove the ability buttons from the rider
 	proc/handle_button_removal()
-		for(var/obj/ability_button/B in src.ability_buttons)
-			src.rider.client?.screen -= B
+		if (src.rider?.client)
+			for(var/obj/ability_button/B in src.ability_buttons)
+				src.rider.client.screen -= B
 
 	/// add the ability buttons to the rider
 	proc/handle_button_addition()
@@ -275,7 +276,7 @@ TYPEINFO(/obj/vehicle/segway)
 	layer = MOB_LAYER + 1
 	health = 30
 	health_max = 30
-	var/weeoo_cycles_remaining = 0 //! Number of light cycles currently left to perform
+	var/weewoo_cycles_remaining = 0 //! Number of light cycles currently left to perform
 	var/initial_weewoo_cycles = 10 //! Number of times our lights cycle with each press of the siren button
 	soundproofing = FALSE
 	can_eject_items = TRUE
@@ -388,13 +389,13 @@ TYPEINFO(/obj/vehicle/segway)
 		if(other_segway.rider)
 			other_segway.in_bump = TRUE
 			src.rider.tri_message(other_segway.rider, "<span class='alert'><b>[src.rider] and [other_segway.rider] crash into each other!</b></span>",
-													  "<span class='alert'><b>You crash into [src.rider]'s [other_segway.name]!</b></span>",
+													  "<span class='alert'><b>You crash into [other_segway.rider]'s [other_segway.name]!</b></span>",
 													  "<span class='alert'><b>[src.rider] crashes into your [other_segway.name]!</b></span>")
 
 			eject_rider(2)
 			other_segway.eject_rider(crashed=TRUE)
 			src.log_me(src.rider, other_segway.rider, "impact")
-			SG.in_bump = FALSE
+			other_segway.in_bump = FALSE
 	in_bump = FALSE
 
 /obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
@@ -2264,7 +2265,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	eject_rider()
 	return
 
-/obj/vehicle/forklift/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/forklift/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	if (!src.rider)
 		return
 
