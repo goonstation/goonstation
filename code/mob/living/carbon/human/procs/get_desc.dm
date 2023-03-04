@@ -350,7 +350,9 @@
 				var/mob = find_player(src.last_ckey)?.client?.mob
 
 				if (istype(mob, /mob/living/carbon/human/virtual))
-					using_vr_goggles = TRUE
+					var/mob/living/carbon/human/virtual/vr_person = mob
+					if (!vr_person.isghost)
+						using_vr_goggles = TRUE
 				else if (istype(mob, /mob/living/critter/robotic/scuttlebot))
 					var/mob/living/critter/robotic/scuttlebot/scuttlebot = mob
 					if (scuttlebot.controller == src) // in case you mindswap into a scuttlebot
