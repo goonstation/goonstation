@@ -98,7 +98,7 @@
 
 	makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.mind.add_antagonist(ROLE_WEREWOLF)
+		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -133,12 +133,12 @@
 	name = "Viscous Puddle"
 	desc = "This does not look refreshing."
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "nucleus"
+	icon_state = "0"
 	color = "#44FF44"
 	attachedObjective = "GET FAT"
 
 	makeAntag(mob/M as mob)
-		M.make_blob()
+		M.mind?.add_antagonist(ROLE_BLOB)
 
 
 

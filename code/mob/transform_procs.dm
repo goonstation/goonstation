@@ -309,8 +309,8 @@
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
 		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
-
-		return make_blob()
+		src.mind.add_antagonist(ROLE_BLOB)
+		return
 	return 0
 
 /mob/proc/slasherize()

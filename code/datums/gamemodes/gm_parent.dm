@@ -112,12 +112,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_WEREWOLF)
-					// Werewolves may not have the feed objective, so we don't want to make this output universal.
-					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
-						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
-							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
-
 				if (traitor.special_role == ROLE_SLASHER)
 					var/foundmachete = FALSE
 					for_by_tcl(M, /obj/item/slasher_machete)
@@ -128,18 +122,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 							break
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
-
-				if (traitor.special_role == ROLE_BLOB)
-					var/victims = length(traitor.blob_absorb_victims)
-					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
-					if (victims)
-						var/absorbed_announce = "They absorbed: "
-						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
-							if(!AV || !AV.last_client || !AV.last_client.key)
-								absorbed_announce += "[AV:real_name](NPC), "
-							else
-								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
-						stuff_to_output += absorbed_announce
 
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
@@ -343,16 +325,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			antag.current.make_grinch()
 
 		if (ROLE_BLOB)
-			objective_set_path = /datum/objective_set/blob
-			SPAWN(0)
-				var/newname = input(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
-
-				if (newname)
-					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname) + " the Blob"
-					antag.current.real_name = newname
-					antag.current.name = newname
+			antag.add_antagonist(ROLE_BLOB)
+			do_objectives = FALSE
 
 		if (ROLE_FLOCKMIND)
 			bestow_objective(antag, /datum/objective/specialist/flock)
