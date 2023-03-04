@@ -2021,7 +2021,7 @@
 /area/station/crew_quarters/kitchen)
 "eI" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -3262,7 +3262,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hs" = (

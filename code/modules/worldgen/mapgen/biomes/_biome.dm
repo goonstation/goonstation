@@ -23,7 +23,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 			new fauna(gen_turf)
 
 	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
-	if(gen_turf.z == Z_LEVEL_STATION && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
+	if((gen_turf.z == Z_LEVEL_STATION || isgenplanet(gen_turf)) && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
 		gen_turf.AddComponent(/datum/component/buildable_turf)
 
 		for(var/bad_area in blacklist_flora_gen)
@@ -48,7 +48,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/spacescorpion=15, /obj/critter/spacerattlesnake=1, /mob/living/critter/small_animal/armadillo/ai_controlled=1, /obj/critter/wasp=5)
+	fauna_types = list(/mob/living/critter/small_animal/scorpion=15, /obj/critter/spacerattlesnake=1, /mob/living/critter/small_animal/armadillo/ai_controlled=1, /obj/critter/wasp=5)
 	fauna_density = 0.2
 
 /datum/biome/desert/rough

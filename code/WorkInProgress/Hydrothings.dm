@@ -309,7 +309,7 @@ obj/item/paper/hootagenhint
 	desc = "This pipe is kinda warm. Huh."
 	interesting = "Radiological decay detected."
 
-/obj/decal/fakeobjects/pipe/sarin
+/obj/decal/fakeobjects/pipe/sarin // will change to saxitoxin after updating owlery map file
 	desc = "This pipe seems totally normal."
 	interesting = "Trace amounts of hazardous nerve agent detected."
 
@@ -360,7 +360,7 @@ obj/item/gnomechompski/elf
 	desc = "Wait this isn't a gnome..."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnelf"
-	item_state = "gnelf"
+	item_state = "gnome"
 
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"

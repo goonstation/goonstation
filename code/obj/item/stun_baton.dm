@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun.lastattacker = user
 			dude_to_stun.lastattackertime = world.time
 
-		return
+		return TRUE
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -279,7 +279,7 @@ TYPEINFO(/obj/item/baton)
 					if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
-					if (M.do_dodge(user, src))
+					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
 						return
 					src.do_stun(user, M, "stun", 2)
 
@@ -419,7 +419,6 @@ TYPEINFO(/obj/item/baton/ntso)
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
-	item_function_flags = 0
 
 	item_special_path = /datum/item_special/spark/ntso
 
@@ -483,6 +482,10 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.UpdateIcon()
 		user.update_inhands()
 
+	do_stun(mob/user, mob/victim, type, stun_who)
+		. = ..()
+		if (.) //successfully stunned someone
+			ON_COOLDOWN(src, "ranged_stun", max(src.click_delay, user.click_delay, COMBAT_CLICK_DELAY))
 
 	update_icon()
 
@@ -490,18 +493,18 @@ TYPEINFO(/obj/item/baton/ntso)
 			return
 		switch (src.state)
 			if (EXTENDO_BATON_CLOSED_AND_OFF)
-				src.set_icon_state(src.icon_off)
-				src.item_state = src.item_off
+				src.set_icon_state("[src.icon_off][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_ON)
-				src.set_icon_state(src.icon_on)
-				src.item_state = src.item_on
+				src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
 			if (EXTENDO_BATON_OPEN_AND_OFF)
-				src.set_icon_state(src.icon_off_open)
-				src.item_state = src.item_off_open
+				src.set_icon_state("[src.icon_off_open][src.flipped ? "-f" : ""]")
+				src.item_state = "[src.item_off_open][src.flipped ? "-f" : ""]"
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))
-			if (src.state == EXTENDO_BATON_OPEN_AND_ON && src.can_stun())
+			if (src.state == EXTENDO_BATON_OPEN_AND_ON && src.can_stun() && !GET_COOLDOWN(src, "ranged_stun"))
 				src.do_stun(usr, A, "stun")
 				return
 		..()

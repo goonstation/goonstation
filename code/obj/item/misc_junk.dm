@@ -36,12 +36,12 @@
 	New()
 		..()
 		processing_items.Add(src)
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		BLOCK_SETUP(BLOCK_TANK)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
@@ -50,6 +50,8 @@
 			last_laugh = world.time
 
 	process()
+		if (src.anchored)
+			return
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
@@ -607,3 +609,37 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		user.put_in_hand_or_drop(g)
 		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
 		qdel(src)
+
+/obj/item/nuclear_waste
+	name = "radioactive waste"
+	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
+	icon = 'icons/misc/reactorcomponents.dmi'
+	icon_state = "waste"
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("slag"), FALSE, FALSE, TRUE)
+		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
+
+	ex_act(severity) //blowing up nuclear waste is always a good idea
+		var/turf/current_loc = get_turf(src)
+		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
+		leak_gas.vacuum()
+		leak_gas.radgas += 100
+		current_loc.assume_air(leak_gas)
+		qdel(src)
+
+/obj/tombstone/nuclear_warning
+	name = "inscribed stone"
+	desc = {"A stone block, inscribed with a message. It says:<br>
+	This place is a message... and part of a system of messages... pay attention to it!<br>
+    Sending this message was important to us. We considered ourselves to be a powerful culture.<br>
+    This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.<br>
+    What is here was dangerous and repulsive to us. This message is a warning about danger.<br>
+    The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.<br>
+    The danger is still present, in your time, as it was in ours.<br>
+    The danger is to the body, and it can kill.<br>
+    The form of the danger is an emanation of energy.<br>
+    The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
+	<br>
+	...spooky!"}

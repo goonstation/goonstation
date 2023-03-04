@@ -198,16 +198,16 @@ datum
 			transparency = 50
 			var/damage_counter = 0
 
-			on_mob_life(var/mob/M, var/mult = 1)
-
-				if (!M) M = holder.my_atom
-				damage_counter += rand(2,4) * mult // RNG rolls moved to accumulation proc for consistency
-
+			on_mob_life(mob/M, mult = 1)
+				if (!M)
+					M = holder.my_atom
+				damage_counter += rand(2, 4) * mult * min(1, volume)
 				..()
 
-			on_mob_life_complete(var/mob/living/M)
+			on_mob_life_complete(mob/living/M)
 				if(M)
-					M.take_toxin_damage(damage_counter + (rand(2,3)))
+					M.take_toxin_damage(damage_counter)
+					logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
 
 
 		harmful/chemilin
@@ -1527,7 +1527,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
-					M.bioHolder.RandomEffect("bad")
+					if(ishuman(M))
+						M.bioHolder.RandomEffect("bad")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1535,7 +1536,7 @@ datum
 				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
-				if (probmult(mutChance))
+				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
 				..()
 				return
@@ -1563,7 +1564,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
-					M.bioHolder.RandomEffect("bad")
+					if(ishuman(M))
+						M.bioHolder.RandomEffect("bad")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1572,9 +1574,9 @@ datum
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
-				if (probmult(mutChance))
+				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
-				if (probmult(3))
+				if (probmult(3) && ishuman(M))
 					M.bioHolder.RandomEffect("good")
 				..()
 				return
@@ -1753,10 +1755,10 @@ datum
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
-		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
-			id = "sarin"
-			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
+		harmful/saxitoxin // formerly: sarin
+			name = "saxitoxin"
+			id = "saxitoxin"
+			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255

@@ -58,6 +58,7 @@ var/global/mob/twitch_mob = 0
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
 	var/path = "data/intra_round.sav"
@@ -481,7 +482,8 @@ var/f_color_selector_handler/F_Color_Selector
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
-		"[R_FREQ_DEFAULT]" = "General"
+		"[R_FREQ_DEFAULT]" = "General",
+		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
 		)
 
 	UPDATE_TITLE_STATUS("Starting processes")
@@ -532,6 +534,7 @@ var/f_color_selector_handler/F_Color_Selector
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
+	build_valid_game_modes()
 	build_chem_structure()
 	build_reagent_cache()
 	build_supply_pack_cache()
@@ -568,6 +571,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
 	initialize_gallery_manager()
+	initialize_mail_system()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")
@@ -1561,7 +1565,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("rev")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[vcs_revision] by [vcs_author]"
+				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
+				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
 			if ("version")

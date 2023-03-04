@@ -83,7 +83,7 @@
 				return flock_owner.tutorial.PerformSilentAction(id, context)
 			else
 				return flock_owner.tutorial.PerformAction(id, context)
-	else //we are a flocktrace
+	else if (istype(flock_owner, /mob/living/intangible/flock/trace)) //we are a flocktrace
 		if (flock_owner.flock.flockmind.tutorial) //flocktraces can only watch
 			return FALSE
 	return TRUE
@@ -371,10 +371,10 @@
 
 /datum/targetable/flockmindAbility/radioStun
 	name = "Radio Stun Burst"
-	desc = "Overwhelm the radio headsets of everyone nearby. Will not work on broken or non-existent headsets."
+	desc = "Overwhelm the radio headsets of everyone within 3m of your target. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
 	cooldown = 20 SECONDS
-	targeted = FALSE
+	targeted = TRUE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
 	if(..())
@@ -382,7 +382,7 @@
 	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN))
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
+	for(var/mob/living/M in range(3, get_turf(target)))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
@@ -494,6 +494,8 @@
 
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
+	if (!length(F.flock.unlockableStructures))
+		logTheThing(LOG_DEBUG, src.holder, "Flockmind place tealprint ability triggered with empty unlocked structures list. THIS SHOULD NOT HAPPEN.")
 	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
 		if(ufs.check_unlocked())
 			friendlyNames[ufs.friendly_name] = ufs
@@ -504,6 +506,7 @@
 	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create", "Tealprint selection", friendlyNames)
 
 	if (!structurewanted)
+		boutput(holder.get_controlling_mob(), "<span class='alert'>No tealprint selected.</span>")
 		return TRUE
 	var/datum/unlockable_flock_structure/ufs = friendlyNames[structurewanted]
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
@@ -592,13 +595,21 @@
 	icon = null
 	var/mob/living/critter/flock/drone/drone = null
 
-/datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+/datum/targetable/flockmindAbility/droneControl/cast(atom/target, update_cursor = TRUE)
 	//remove the selected outline component
 	var/datum/component/flock_ping/selected/ping = drone.GetComponent(/datum/component/flock_ping/selected)
 	ping.RemoveComponent()
 	qdel(ping)
 
 	if (target == src.drone)
+		// ability is selected manually so it needs to be removed manually
+		var/mob/living/intangible/flock/selector = holder.owner
+		selector.targeting_ability = null
+		if (update_cursor) // if there's a need, it may reset without this
+			selector.update_cursor()
+
+		src.drone.selected_by = null
+		src.drone = null
 		return
 	//by default we try to convert the target
 	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
@@ -632,3 +643,11 @@
 	if(drone.ai_paused)
 		drone.wake_from_ai_pause()
 	drone.ai.interrupt()
+
+	var/mob/living/intangible/flock/selector = holder.owner
+	selector.targeting_ability = null
+	if (update_cursor)
+		selector.update_cursor()
+
+	src.drone.selected_by = null
+	src.drone = null

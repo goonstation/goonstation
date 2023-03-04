@@ -5,8 +5,9 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
-var/global/list/detailed_machine_power = list()
-var/global/list/detailed_machine_power_prev = list()
+var/global/detailed_machine_power_log_zlevels = (1 << Z_LEVEL_STATION)
+var/global/datum/machine_power_data/detailed_power_data
+var/global/datum/machine_power_data/detailed_power_data_last
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -55,6 +56,7 @@ var/global
 	list/muted_keys = list()
 
 	server_start_time = 0
+	round_start_time = 0
 	round_time_check = 0			// set to world.timeofday when round starts, then used to calculate round time
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
@@ -87,6 +89,9 @@ var/global
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = 0
+
+	/// Contains objects in ID-based switched object groups, such as blinds and their switches
+	list/switched_objs = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -252,9 +257,10 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
 
 	master_mode = "traitor"
+	next_round_mode = "traitor"
 
 	host = null
 	game_start_delayed = 0
@@ -302,6 +308,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 
@@ -389,6 +399,7 @@ var/global
 
 	// Zam note: this is horrible
 	forced_desussification = 0
+	forced_desussification_worse = 0
 
 	disable_next_click = 0
 
@@ -432,6 +443,7 @@ var/global
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
 	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
@@ -444,6 +456,9 @@ var/global
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
+	antag_pirate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate")
+	antag_pirate_first_mate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_first_mate")
+	antag_pirate_captain = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_captain")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -499,14 +514,7 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","extended",
-		"nuclear","blob","wizard","revolution", "revolution_extended","spy","gang","disaster",
-		"changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
-#if defined(MAP_OVERRIDE_POD_WARS)
-		,"pod_wars"
-#endif
-	)
+	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 
@@ -517,11 +525,14 @@ var/global
 	/// used when creating new z-levels
 	dont_init_space = FALSE
 
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	list/valid_icon_states = list()
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
 		I.render_target = key
-		I.appearance_flags = KEEP_APART
+		I.appearance_flags = KEEP_APART | PIXEL_SCALE
 		I.loc = renderSourceHolder
 		globalRenderSources[key] = I
 		return I

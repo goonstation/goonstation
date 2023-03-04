@@ -95,9 +95,19 @@ var/global/cloning_with_records = TRUE
 	return
 
 /obj/machinery/computer/cloning/proc/records_scan()
+	// check if we're busy cloning
+	var/all_cloning = TRUE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (!P.attempting)
+			// at least one free pod
+			all_cloning = FALSE
+	if (all_cloning)
+		icon_state = "dnap"
+		return TRUE
+	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
-		if (!selected || (selected.mind && selected.mind.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
@@ -286,9 +296,6 @@ var/global/cloning_with_records = TRUE
 	R["defects"] = subject.cloner_defects.copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -356,7 +363,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.dnr)
+	if (selected.mind && selected.mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
@@ -408,7 +415,11 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+		if(istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				return null
+		if(iswraith(M))
 			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M

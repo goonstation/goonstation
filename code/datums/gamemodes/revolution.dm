@@ -7,12 +7,19 @@
 // If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
-/datum/game_mode/revolution
-	name = "revolution"
-	config_tag = "revolution"
-	shuttle_available = 0
+//uncomment to disable safety checks and win conditions to allow for local testing
+// #define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
 
+#ifdef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+#warn Revolution debug mode enabled. IF YOU COMMIT THIS TO LIVE EVERYTHING WILL BREAK AND YOUR KNEECAPS WILL BE FORFEIT!!1
+#endif
+/datum/game_mode/revolution
+	name = "Revolution"
+	config_tag = "revolution"
+	shuttle_available = SHUTTLE_AVAILABLE_DISABLED
+	regular = FALSE
 	antag_token_support = TRUE
+
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
@@ -31,8 +38,9 @@
 	escape_possible = 0
 
 /datum/game_mode/revolution/extended //Does not end prematurely
-	name = "extended revolution"
+	name = "Revolution (no time limit)"
 	config_tag = "revolution_extended"
+	regular = FALSE
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")
@@ -81,12 +89,13 @@
 /datum/game_mode/revolution/post_setup()
 
 	var/list/heads = get_living_heads()
-
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 	if(!head_revolutionaries || !heads)
 		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
+#endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
@@ -138,37 +147,7 @@
 	return
 
 /datum/game_mode/revolution/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(head_revolutionaries))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.head_revolutionaries)
 /datum/game_mode/revolution/proc/send_tracker()
 	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = "Watchful Eye Sensor Array Update")
 	command_alert("Relevant biometric signatures of Command have been identified. To aid with the ongoing revolution, station command can now be tracked through the transmitted PDA program.", "Unregistered Signal Insertion", alert_origin = "Egeria Providence Array Broadcast")
@@ -181,6 +160,7 @@
 	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
 
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
@@ -189,6 +169,7 @@
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
+#endif
 
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())

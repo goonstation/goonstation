@@ -5,6 +5,7 @@
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
+	var/harvest_cap = null //if truthy, override the global harvest cap. Set this above the default at your own risk
 	var/special_proc_override = FALSE
 	// If 0, just use the base plant's settings
 	// If 1, use the mutation's special_proc instead
@@ -73,6 +74,7 @@
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	harvest_cap = 3
 
 // Corn Mutations
 
@@ -186,7 +188,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
+		var/thud_prob = clamp(DNA?.get_effective_value("endurance") / 2, 0, 100)
 
 		if (prob(thud_prob))
 			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
@@ -306,9 +308,9 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = clamp(100, 0, DNA.potency)
+		var/fart_prob = clamp(100, 0, DNA?.get_effective_value("potency"))
 
-		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
+		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
 			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
@@ -347,6 +349,7 @@
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
 	mutation_sfx = 'sound/voice/virtual_gassy.ogg'
+	harvest_cap = 1
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
@@ -496,7 +499,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(10))
 			var/list/nerds = list()
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
@@ -605,7 +608,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
@@ -703,7 +706,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
 			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
@@ -713,7 +716,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
@@ -784,8 +787,37 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
 
+// Flower mutations
+
 /datum/plantmutation/rose/holorose
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = TRUE
 	crop = /obj/item/plant/flower/rose/holorose
+
+/datum/plantmutation/hydrangea
+	var/flower_color
+
+/datum/plantmutation/hydrangea/pink
+	name = "Pink Hydrangea"
+	name_prefix = "Pink "
+	flower_color = "pink"
+	crop = /obj/item/clothing/head/flower/hydrangea/pink
+	PTrange = list(10,30)
+	chance = 25
+
+/datum/plantmutation/hydrangea/blue
+	name = "Blue Hydrangea"
+	name_prefix = "Blue "
+	flower_color = "blue"
+	crop = /obj/item/clothing/head/flower/hydrangea/blue
+	PTrange = list(30,50)
+	chance = 25
+
+/datum/plantmutation/hydrangea/purple
+	name = "Purple Hydrangea"
+	name_prefix = "Purple "
+	flower_color = "purple"
+	crop = /obj/item/clothing/head/flower/hydrangea/purple
+	PTrange = list(50,null)
+	chance = 25

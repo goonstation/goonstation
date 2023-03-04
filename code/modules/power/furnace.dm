@@ -12,7 +12,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	var/fuel = 0
 	var/last_fuel_state = 0
 	var/maxfuel = 1000
-	var/genrate = 5000
+	var/genrate = 20000
 	var/stoked = 0 // engine ungrump
 	custom_suicide = 1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -193,7 +193,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
-					F.update_stack_appearance()
+					F.UpdateStackAppearance()
 		return amtload
 
 	// this is run after it's checked a person isn't being loaded in with a grab

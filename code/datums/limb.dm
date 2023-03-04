@@ -12,6 +12,8 @@
 	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/can_pickup_item = TRUE
+	var/attack_strength_modifier = 1 // scale from 0 to 1 on how well this limb can attack/hit things with items
+	var/can_gun_grab = TRUE // if the limb can gun grab with a held gun
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -783,7 +785,7 @@
 			qdel(target)
 			I2.desc = "Looks like this was \an [I], melted by someone who was too much."
 			for(var/mob/M in AIviewers(5, target))
-				boutput(M, "<span class='alert'>\the [I] melts.</span>")
+				boutput(M, "<span class='alert'>\The [I] melts.</span>")
 			qdel(I)
 			return
 

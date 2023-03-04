@@ -180,6 +180,13 @@
 				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
+	sever(mob/user)
+		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
+			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
+				src.original_DNA = src.original_holder.bioHolder.Uid
+				src.original_fprints = src.original_holder.bioHolder.fingerprints
+		return ..()
+
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
 		. = ..()
 		if (.) // A successful attachment
@@ -1777,6 +1784,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
+	limb_type = /datum/limb/zombie
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

@@ -142,7 +142,7 @@
 
 	SPAWN(0)
 		src.get_static_image()
-		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
 
@@ -439,21 +439,6 @@
 		else
 			. = ..()
 
-//gross are we tg or something with all of these /s
-// i'd like to hear your suggestion for better searching for procs!!! - cirr
-/mob/living/Click(location,control,params)
-	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
-		var/mob/dead/observer/O = usr
-#ifdef HALLOWEEN
-		//when spooking, clicking on a mob doesn't put us in them.
-		var/datum/abilityHolder/ghost_observer/GH = O:abilityHolder
-		if (GH.spooking)
-			return ..()
-#endif
-		O.insert_observer(src)
-	else
-		. = ..()
-
 /mob/living/click(atom/target, params, location, control)
 	. = ..()
 	if (. == 100)
@@ -609,6 +594,9 @@
 	if (istype(target, /obj/decal/point))
 		return
 
+	if(!IN_RANGE(src, target, 12)) // don't point through cameras
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
@@ -698,7 +686,12 @@
 		if (phrase_log.is_sussy(message))
 			// var/turf/T = get_turf(src)
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
-			arcFlash(src, src, 5000)
+			arcFlash(src, src, forced_desussification)
+			if (issilicon(src))
+				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
+			if (forced_desussification_worse)
+				forced_desussification *= 1.1
+
 
 	if (reverse_mode) message = reverse_text(message)
 
@@ -1801,17 +1794,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
-//left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
-	if (src.ai)
-		src.ai.was_harmed(weapon,M)
-		if(src.is_hibernating)
-			if (src.registered_area)
-				src.registered_area.wake_critters(M)
-			else
-				src.wake_from_hibernation()
-	..()
-
 /mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))
@@ -2133,3 +2115,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
 	else if((actual_dose > 0) && (!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")
+
+/mob/living/get_hud()
+	return src.vision
+
+///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
+/mob/living/proc/restore_life_processes()

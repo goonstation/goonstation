@@ -54,7 +54,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 			if(highCpuCount <= 0 || force_stop)
 				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
 				var/fname = "[global.roundLog_date]_automatic_[profilerLogID++].json"
-				var/external_url = "https://logs.goonhub.com/main1/logs/profiling/[fname]"
+				var/external_url = "https://logs.goonhub.com/[config.server_id]/logs/profiling/[fname]"
 				var/fpath = "data/logs/profiling/[fname]"
 				rustg_file_write(output, fpath)
 				var/spike_time = (TIME - automatic_profiling_started) / (1 SECOND)

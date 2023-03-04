@@ -80,7 +80,8 @@ obj/item/ammo/bullets/flechette_mag
 	damage = 110
 	dissipation_delay = 2
 	dissipation_rate = 5
-	damage_type = D_KINETIC
+	damage_type = D_PIERCING // a bit of a misnomer, more like it crushes through armour
+	armor_ignored = 0.50
 	hit_type = DAMAGE_STAB
 	impact_image_state = "bhole"
 	hit_ground_chance = 25

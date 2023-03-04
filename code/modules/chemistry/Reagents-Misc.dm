@@ -546,9 +546,9 @@ datum
 									is_puritan = 1
 						if(H.traitHolder.hasTrait("puritan"))
 							is_puritan = 1
-						if (came_back_wrong || H.decomp_stage || G?.mind?.dnr || is_puritan) //Wire: added the dnr condition here
+						if (came_back_wrong || H.decomp_stage || G?.mind?.get_player()?.dnr || is_puritan) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
-							if (G?.mind?.dnr)
+							if (G?.mind?.get_player()?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
@@ -1601,7 +1601,7 @@ datum
 						if (ishuman(M))
 							logTheThing(LOG_COMBAT, M, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
-						new /obj/critter/dog/george (Mturf)
+						new /mob/living/critter/small_animal/dog/george (Mturf)
 					return
 
 				..()
@@ -2167,7 +2167,7 @@ datum
 							holder.add_reagent(id, conversion_rate)
 					else
 						// we ate them all, time to die
-						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
+						if(holder?.my_atom?.material?.mat_id in list("gnesis", "gnesisglass")) // gnesis material prevents coag. gnesis from evaporating
 							return
 
 						holder.remove_reagent(id, conversion_rate)
@@ -4185,6 +4185,23 @@ datum
 			id = "poor_concrete"
 			description = "A low quality blend of chemical agents, water, an aggregate and cement."
 			concrete_strength = 1
+
+		mirabilis
+			name = "mirabilis"
+			id = "mirabilis"
+			fluid_r = 71
+			fluid_g = 159
+			fluid_b = 188
+
+			on_add()
+				src.RegisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED, .proc/analyzed)
+
+			on_remove()
+				src.UnregisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED)
+
+			proc/analyzed(source, mob/user)
+				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
+					src.holder.trans_to(user, max(1, src.volume))
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

@@ -1,7 +1,8 @@
 #define CASH_DIVISOR 200
 /datum/game_mode/gang
-	name = "gang"
+	name = "Gang War (Beta)"
 	config_tag = "gang"
+	regular = FALSE
 
 	antag_token_support = TRUE
 	var/list/leaders = list()
@@ -38,8 +39,8 @@
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
-	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
-	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
+	var/obj/item/device/radio/headset/gang/announcer_radio
+	var/datum/generic_radio_source/announcer_source
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
 	var/shuttle_called = FALSE
@@ -51,6 +52,9 @@
 	boutput(world, "<B>Gang members are antagonists and can kill or be killed!</B>")
 
 /datum/game_mode/gang/pre_setup()
+	announcer_radio = new /obj/item/device/radio/headset/gang()
+	announcer_source = new /datum/generic_radio_source()
+
 	var/num_players = 0
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -128,25 +132,7 @@
 		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
 
 /datum/game_mode/gang/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list("revolution", "wizard", "nuke", "traitor", "changeling")
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(leaders))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.leaders)
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
 	// leader.verbs += /client/proc/set_gang_base
 	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)

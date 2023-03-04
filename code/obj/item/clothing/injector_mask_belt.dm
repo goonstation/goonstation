@@ -54,6 +54,8 @@ TYPEINFO(/obj/item/injector_belt)
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -75,6 +77,9 @@ TYPEINFO(/obj/item/injector_belt)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -169,6 +174,8 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -190,6 +197,9 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
