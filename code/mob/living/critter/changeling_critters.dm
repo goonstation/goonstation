@@ -149,7 +149,7 @@
 
 	New(loc, obj/item/bodypart)
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/handspider)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/dna_gnaw)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
@@ -349,7 +349,7 @@
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/eyespider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/eyespider)
 		// TODO: ACTUAL ABILITIES
 		abilityHolder.addAbility(/datum/targetable/critter/mark)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)

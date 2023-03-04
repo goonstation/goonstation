@@ -732,9 +732,8 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
-				traitor.special_role = ROLE_WRAITH
-				traitormob.make_wraith()
-				generate_wraith_objectives(traitor)
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
@@ -889,7 +888,7 @@ a.latejoin-card:hover {
 			if(observer?.client)
 				observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(src.ckey)
+			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
 			qdel(src)
 

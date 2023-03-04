@@ -21701,7 +21701,6 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "It's busted!";
 	locked = 1;
 	name = "malfunctioning airlock";

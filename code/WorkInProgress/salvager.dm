@@ -293,6 +293,35 @@
 /obj/item/device/radio/headset/salvager
 	protected_radio = 1 // Ops can spawn with the deaf trait.
 
+/obj/salvager_putt_spawner
+	name = "syndiputt spawner"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "syndi_mini_spawn"
+	New()
+		..()
+#ifdef UNDERWATER_MAP
+		new/obj/machinery/vehicle/tank/minisub/salvsub(src.loc)
+#else
+		new/obj/machinery/vehicle/miniputt/armed/salvager(src.loc)
+#endif
+		qdel(src)
+
+/obj/machinery/vehicle/tank/minisub/salvsub
+	body_type = "minisub"
+	icon_state = "whitesub_body"
+	health = 150
+	maxhealth = 150
+	acid_damage_multiplier = 0
+	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
+	New()
+		..()
+		name = "salvager minisub"
+		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
+		Install(new /obj/item/shipcomponent/secondary_system/cargo(src))
+		Install(new /obj/item/shipcomponent/secondary_system/lock/bioscan(src))
+
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
 	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
@@ -326,7 +355,8 @@
 	desc = "Exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager)
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
