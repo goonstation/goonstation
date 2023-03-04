@@ -373,7 +373,7 @@
 	name = "Radio Stun Burst"
 	desc = "Overwhelm the radio headsets of everyone within 3m of your target. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
-	cooldown = 30 SECONDS
+	cooldown = 20 SECONDS
 	targeted = TRUE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)

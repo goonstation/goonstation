@@ -310,11 +310,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
-					var/mob/living/intangible/wraith/W = player.make_wraith()
-					if (W)
-						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, W, "<b>Late join</b>: assigned antagonist role: wraith.")
-						antagWeighter.record(role = ROLE_WRAITH, ckey = W.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
+					antagWeighter.record(role = ROLE_WRAITH, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()

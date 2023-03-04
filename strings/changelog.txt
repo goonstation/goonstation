@@ -1,5 +1,24 @@
 
+(t)sat mar 04 23
+(u)Kubius
+(p)13203
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
+(u)aloe & Virvatuli
+(+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
+(u)FlameArrow57
+(p)13263
+(e)🪲⚖|C-Bug, C-Balance
+(+)The E-Meter will now correctly measure Thetan levels.
 (t)fri mar 03 23
+(u)Hans
+(p)13137
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Made it so morphine's adverse effects only happen on overdose, reduced it's stamina regeneration debuff from 3 to 2.
+(u)Tyrant
+(p)13187
+(e)🪲🆕💡|C-Bug, C-Feature, A-Station-Systems
+(*)You can now check the status of the nuclear reactor and turbines in the PDA powerchecker app!
 (u)Bartimeus973 & Amylizzle
 (p)13123
 (e)🆕📡|C-Feature, A-AI
