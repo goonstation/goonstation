@@ -201,6 +201,8 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
+		if (control.tracker.targetstar) // change the solars power generation based on the eclipse and pv efficiency
+			sgen *= control.tracker.targetstar.visibility * control.tracker.targetstar.photovoltaic_efficiency
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.get_direct_powernet())

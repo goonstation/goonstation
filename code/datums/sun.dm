@@ -92,12 +92,12 @@ var/global/list/areas_with_local_suns = new
 			src.rate = 0
 			src.angle = 0
 		if ("13")
-			/* Space Station 13, i.e. in L2 lagrange point around Rota Fortuna.
+			/* Space Station 13, i.e. NT-13 in L2 lagrange point around Rota Fortuna.
 			If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a
 			lissajous orbit around the umbra, making the lore reason for the solars turning is that the whole map is spinning.
 			*/
 			src.name = "Typhon"
-			if (prob(50))
+			if (prob(50)) // this thing gives it a random eclipse
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
 				src.eclipse_magnitude = pick(1, rand(10,100)/100)
@@ -105,7 +105,7 @@ var/global/list/areas_with_local_suns = new
 				src.eclipse_time = rand(10, 300) SECONDS
 			// pretty much the same as regular but with 50% chance of random eclipsing
 		if ("travel")
-			// for ship maps, deep space. Uses a randomer randomiser
+			// for ship maps in deep space. Uses a randomer randomiser
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
 			if (src.name = "unknown")
 				src.name = pick("Typhon", "Fugg", "Shidd")
@@ -130,14 +130,14 @@ var/global/list/areas_with_local_suns = new
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
-			if (src.name == "Shidd") // the stars have different strengths, see. Based on the RGB.
+			if (src.name == "Fugg") // the stars have different strengths, see. Based on the RGB.
 				src.photovoltaic_efficiency = 0.6
 			else
 				src.photovoltaic_efficiency = 1
 			// you get 6% of 60% strength sunlight overall
 		if ("abzu")
 			//oshan and technically also manta
-			src.name = "Fugg"
+			src.name = "Shidd"
 			src.visibility = 0.35 // time.dm shows alpha value 65% at noon, so
 			src.eclipse_time = 6 HOURS
 			src.eclipse_cycle_length = 12 HOURS
