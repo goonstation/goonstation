@@ -928,6 +928,8 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
 	user.update_equipped_modifiers()
+	if (src.storage && !src.storage.opens_if_worn)
+		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
@@ -1092,7 +1094,7 @@
 			return 0
 		if (ishuman(user))
 			// storage items worn
-			if (src.storage)
+			if (src.storage?.opens_if_worn)
 				src.storage.storage_item_attack_hand(user)
 				return FALSE
 			var/mob/living/carbon/human/H = user
