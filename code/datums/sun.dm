@@ -104,8 +104,8 @@ var/global/list/areas_with_local_suns = new
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
 				src.eclipse_magnitude = pick(1, rand(10,100)/100)
-				src.eclipse_cycle_length = rand(100, 300) SECONDS
-				src.eclipse_time = rand(10, 300) SECONDS
+				src.eclipse_cycle_length = rand(20, 80) MINUTES
+				src.eclipse_time = rand(10 SECONDS, 5 MINUTES)
 			// pretty much the same as regular but with 50% chance of random eclipsing
 		if ("travel")
 			// for ship maps in deep space. Uses a randomer randomiser
@@ -189,7 +189,7 @@ var/global/list/areas_with_local_suns = new
 	src.angle = 0
 #endif
 	if (src.eclipse_cycle_on)
-		src.eclipse_counter ++
+		src.eclipse_counter ++ // this too should be every game tick
 		switch (src.eclipse_status)
 			if (ECLIPSE_FALSE)
 				if (src.eclipse_counter >= src.down_time)
