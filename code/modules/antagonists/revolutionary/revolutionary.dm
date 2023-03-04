@@ -38,11 +38,9 @@
 
 	announce_removal()
 		. = ..()
+		src.owner.current.visible_message("<span class='notice'><b>[src.owner.current] looks like they just remembered their real allegiance!</b></span>", "<span class='notice'><b>You remember your real allegiance!</b></span>")
 		src.owner.current.show_text("<h4><font color=blue>Protect the Heads of Staff and help them kill the leaders of the revolution.</font></h4>", "blue")
 		src.owner.current.show_antag_popup("derevved")
-
-		for (var/mob/living/M in view(src.owner.current))
-			M.show_text("<b>[src.owner.current] looks like they just remembered their real allegiance!</b>", "blue")
 
 	do_popup(override)
 		if (!override)
