@@ -69,8 +69,8 @@
 		src.transfer_stored_item(I, get_turf(src.linked_item))
 
 	for (var/mob/M as anything in src.hud.mobs)
-		if (M.s_active == src)
-			M.s_active = null
+		src.hide_hud(M)
+
 	qdel(src.hud)
 	src.hud = null
 
@@ -177,14 +177,10 @@
 						(src.linked_item == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 					return
 		// open storage
-		if (user.s_active)
-			user.detach_hud(user.s_active)
-			user.s_active = null
+		user.s_active?.master.hide_hud(user)
 		if (src.mousetrap_check(user))
 			return
-		user.s_active = src.hud
-		src.hud.update(user)
-		user.attach_hud(src.hud)
+		src.show_hud(user)
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
 		return
@@ -192,7 +188,7 @@
 		// make sure only the user can see the storage
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M != user)
-				M.detach_hud(hud)
+				src.hide_hud(M)
 		src.hud.update(user)
 
 /// storage item is mouse dropped onto something
@@ -210,14 +206,10 @@
 				user.put_in_hand_or_drop(src.linked_item)
 	// if mouse dropping storage item onto self, look inside
 	else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !user.stat && !isintangible(user))
-		if (user.s_active)
-			user.detach_hud(user.s_active)
-			user.s_active = null
+		user.s_active?.master.hide_hud(user)
 		if (src.mousetrap_check(user))
 			return
-		user.s_active = src.hud
-		hud.update(user)
-		user.attach_hud(src.hud)
+		src.show_hud(user)
 	// if mouse dropping onto a table or rack, attempt to dump contents onto it
 	else if (user.is_in_hands(src.linked_item))
 		var/turf/T = over_object
@@ -296,6 +288,18 @@
 				"<span class='alert'><B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B></span>")
 			M.triggered(user)
 			return TRUE
+
+/// show storage contents
+/datum/storage/proc/show_hud(mob/user)
+	user.s_active = src.hud
+	src.hud.update(user)
+	user.attach_hud(src.hud)
+
+/// hide storage
+/datum/storage/proc/hide_hud(mob/user)
+	if (user.s_active == src.hud)
+		user.s_active = null
+		user.detach_hud(src.hud)
 
 // ----------------- PUBLIC PROCS ----------------------
 
