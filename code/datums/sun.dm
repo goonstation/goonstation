@@ -1,12 +1,19 @@
-#define ECLIPSE_FALSE 0 // not eclipsing
-#define ECLIPSE_PENUMBRA_WAXING 1 // partial eclipse
-#define ECLIPSE_PENUMBRA_WANING 2 // partial eclipse 2
-// #define ECLIPSE_ANTUMBRA 3 // annular eclipse
-#define ECLIPSE_UMBRA 4 // total eclipse
-#define ECLIPSE_PARTIAL 5 // a 0 second long internal counter thing for if the 'peak' of the eclipse isnt total or annular
-#define ECLIPSE_TERRESTRIAL 6 // not actually eclipsing truly, but partial blockage by clouds/water. aka daytime
-#define ECLIPSE_PLANETARY 7 // night time lol. The planet you're on is eclipsing you.
-#define ECLIPSE_ERROR 8 // admin nonsense
+/// not eclipsing
+#define ECLIPSE_FALSE 0
+/// partial eclipse, leading into the peak
+#define ECLIPSE_PENUMBRA_WAXING 1
+// partial eclipse, leading out of the peak
+#define ECLIPSE_PENUMBRA_WANING 2
+/// total eclipse or annular. Which one it is is determined by eclipse_magnitude. Not the same as ECLIPSE_PARTIAL
+#define ECLIPSE_UMBRA 4
+/// a partial eclipse, with no peak. In code this means a peak of 0 seconds.
+#define ECLIPSE_PARTIAL 5
+/// daytime: like ECLIPSE_FALSE but on the ground.
+#define ECLIPSE_TERRESTRIAL 6
+/// night time lol. The planet you're on is eclipsing your view of the sun.
+#define ECLIPSE_PLANETARY 7
+/// for when the game doesn't know what's happening (e.g. admin nonsense)
+#define ECLIPSE_ERROR 8
 
 /// which areas should the 'global' sun ignore
 var/global/list/areas_with_local_suns = new
@@ -20,8 +27,8 @@ var/global/list/areas_with_local_suns = new
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
 	var/area/sun_area = null
 	/// Is it around Shidd, Fugg, or Typhon? Or the Sun?
-	var/star = "unknown"
-	/// where is z1 exactly?
+	var/name = "unknown"
+	/// where does this apply exactly?
 	var/stationloc = null
 	/// How often do eclipses happen? It's the length of the whole cycle, so it needs to be = to eclipse_time + penumbra_time + downtime
 	var/eclipse_cycle_length = 0
@@ -33,8 +40,8 @@ var/global/list/areas_with_local_suns = new
 	var/eclipse_time = 0
 	/// How much time is spent not in eclipse?
 	var/down_time = 0
-	/// If we have an annular eclipse, what's the minimum star visibility? Percentage where 1=100%. This being below 1 makes the peak annular.
-	var/max_shadow = 1
+	/// If we have an annular eclipse (eclipse status = ECLIPSE_UMBRA), what's the minimum star visibility? Percentage where 1=100%. This being below 1 makes the peak annular.
+	var/eclipse_magnitude = 1
 	/// which stage of the eclipse are we in?
 	var/eclipse_status = ECLIPSE_FALSE
 	/// do we calculate the eclipse cycle? False for stuff like earth/abzu's rotation (or just no eclipse), since that's calculated at build
@@ -89,47 +96,47 @@ var/global/list/areas_with_local_suns = new
 			If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a
 			lissajous orbit around the umbra, making the lore reason for the solars turning is that the whole map is spinning.
 			*/
-			src.star = "Typhon"
+			src.name = "Typhon"
 			if (prob(50))
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
-				src.max_shadow = pick(1, rand(10,100)/100)
+				src.eclipse_magnitude = pick(1, rand(10,100)/100)
 				src.eclipse_cycle_length = rand(100, 300) SECONDS
 				src.eclipse_time = rand(10, 300) SECONDS
 			// pretty much the same as regular but with 50% chance of random eclipsing
 		if ("travel")
 			// for ship maps, deep space. Uses a randomer randomiser
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
-			src.star = pick("Typhon", "Fugg", "Shidd")
+			src.name = pick("Typhon", "Fugg", "Shidd")
 			src.rate = rand(70,160)/50 // more range than the default
 			if(prob(50))
 				src.rate = -rate
 			if (prob(50)) // 50 50 chance of it going into shadow every so often
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
-				src.max_shadow = pick(1, rand(10,100)/100)
+				src.eclipse_magnitude = pick(1, rand(10,100)/100)
 				src.eclipse_cycle_length = rand(100, 300) SECONDS
 				src.eclipse_time = rand(10, 300) SECONDS
 		if ("magus")
 			//nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from Shidd or Fugg.
 			#if (BUILD_TIME_HOUR <=3)
-			src.star = "Shidd"
+			src.name = "Shidd"
 			#else
-			src.star = "Fugg"
+			src.name = "Fugg"
 			#endif
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
-			if (src.star == "Shidd") // the stars have different strengths, see. Based on the RGB.
+			if (src.name == "Shidd") // the stars have different strengths, see. Based on the RGB.
 				src.photovoltaic_efficiency = 0.6
 			else
 				src.photovoltaic_efficiency = 1
 			// you get 6% of 60% strength sunlight overall
 		if ("abzu")
 			//oshan and technically also manta
-			src.star = "Fugg"
+			src.name = "Fugg"
 			src.visibility = 0.35 // time.dm shows alpha value 65% at noon, so
 			src.eclipse_time = 6 HOURS
 			src.eclipse_cycle_length = 12 HOURS
@@ -145,7 +152,7 @@ var/global/list/areas_with_local_suns = new
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
 		if ("earth")
 			//centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
-			src.star = "\improper Sun"
+			src.name = "\improper Sun"
 			src.eclipse_time = 12 HOURS
 			src.eclipse_cycle_length = 24 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
@@ -189,13 +196,13 @@ var/global/list/areas_with_local_suns = new
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 				else
-					src.visibility -= ((1 - src.max_shadow) / src.penumbra_time)
+					src.visibility -= ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PENUMBRA_WANING)
 				if (src.eclipse_counter >= src.eclipse_cycle_length)
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 					src.eclipse_counter = 0
 				else
-					src.visibility += ((1 - src.max_shadow) / src.penumbra_time)
+					src.visibility += ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PARTIAL)
 				// not the same as annular eclipses. Think of light curves. This one has no flat peak.
 				src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
@@ -203,7 +210,7 @@ var/global/list/areas_with_local_suns = new
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 				else
-					src.visibility = 1 - max_shadow
+					src.visibility = 1 - src.eclipse_magnitude
 			// if (ECLIPSE_PLANETARY) planetary rotation isnt done at runtime so we dont need this
 
 	// now calculate and cache the (dx,dy) increments for line drawing
@@ -220,12 +227,15 @@ var/global/list/areas_with_local_suns = new
 		src.dy = c / abs(s)
 	// this bit got wayy more complicated, thanks silly brain inventing multiple suns
 	var/earlybreak = FALSE
-	if (isnull(src.sun_area)) // for all solars unaffected by new sun
+	if (isnull(src.sun_area)) // for when the sun is global
 		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+			if (!T.lockedon)
+				T.lockedon = TRUE
+				T.targetstar = src
 			if (earlybreak)
 				break
 			for (var/ignorable_area in areas_with_local_suns)
-				if (get_area(T) == ignorable_area)
+				if (get_area(T) == ignorable_area) // uses local star instead
 					earlybreak = TRUE
 					break
 			T.set_angle(angle)
@@ -238,10 +248,13 @@ var/global/list/areas_with_local_suns = new
 					earlybreak = TRUE
 					break
 			occlusion(S)
-	else // for stuff affected by what im going to dub local suns
+	else // for local suns
 		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+			if (!T.lockedon)
+				T.lockedon = TRUE
+				T.targetstar = src
 			if (get_area(T) == src.sun_area)
-				T.set_angle(angle)
+				T.set_angle(angle) // make sure you're actually in the area foo
 		for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
 			if (get_area(S) == src.sun_area)
 				occlusion(S)
@@ -291,12 +304,3 @@ var/global/list/areas_with_local_suns = new
 			return 225
 		else
 			return null
-
-#undef ECLIPSE_FALSE
-#undef ECLIPSE_PENUMBRA_WAXING
-#undef ECLIPSE_PENUMBRA_WANING
-#undef ECLIPSE_UMBRA
-#undef ECLIPSE_TERRESTRIAL
-#undef ECLIPSE_PLANETARY
-#undef ECLIPSE_ERROR
-#undef ECLIPSE_PARTIAL

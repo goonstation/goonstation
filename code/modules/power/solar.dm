@@ -23,6 +23,10 @@ TYPEINFO(/obj/machinery/power/tracker)
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
+	///the star that this tracker observes. Use this to pull info about the star datum.
+	var/datum/sun/targetstar
+	///an internal bool for the star to know whether the tracker knows its star yet
+	var/lockedon = FALSE
 
 	north
 		id = "north"
@@ -103,7 +107,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
-
 
 	north
 		id = "north"
@@ -354,10 +357,10 @@ TYPEINFO(/obj/machinery/power/solar)
 	src.add_dialog(user)
 
 	var/t = "<TT><B>XIANG|GIESEL Photo-Electric Generator Control</B><HR><PRE>"
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
-	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
+	t += "Generated power : [round(lastgen)] W<BR>"
+	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR>"
 
-	t += "<BR><HR><BR><BR>"
+	t += "<BR><HR><BR>"
 
 	t += "Tracking: "
 	switch(track)
@@ -368,9 +371,52 @@ TYPEINFO(/obj/machinery/power/solar)
 		if(2)
 			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
 
-
 	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]<BR><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
+
+	t += "<BR><HR><BR>"
+	if (!src.tracker)
+		t += "Error! No tracker data available.<BR>"
+	else
+		if (src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
+			t += "Catastrophic Error! No star detected! Readings Abnormal!<BR>"
+		else
+			t += "<B>Target: [src.tracker.targetstar.name]</B><BR>"
+			t += "<B>Relative Rotation rate:</B> [src.tracker.targetstar.rate] deg/h"
+			if (!src.tracker.targetstar.eclipse_cycle_on)
+				t += "No upcoming eclipses detected with current orbit/position."
+			else
+				var/timetostart = 0
+				var/timetoend = 0
+				var/currentstatus = "Error!"
+				timetostart = src.tracker.targetstar.down_time - src.tracker.targetstar.eclipse_counter
+				timetoend = src.tracker.targetstar.eclipse_cycle_length - src.tracker.targetstar.eclipse_counter
+				if (timetostart <= 0)
+					timetostart += src.tracker.targetstar.eclipse_cycle_length
+				switch (src.tracker.targetstar.eclipse_status)
+					if (ECLIPSE_FALSE)
+						currentstatus = "Not Eclipsing"
+					if (ECLIPSE_PENUMBRA_WAXING)
+						currentstatus = "Partial Eclipse"
+					if (ECLIPSE_PENUMBRA_WAXING)
+						currentstatus = "Partial Eclipse"
+					if (ECLIPSE_PARTIAL)
+						currentstatus = "Partial Eclipse"
+					if (ECLIPSE_UMBRA)
+						if (src.tracker.targetstar.eclipse_magnitude == 1)
+							currentstatus = "Total Eclipse"
+						else
+							currentstatus = "Annular Eclipse"
+					if (ECLIPSE_PLANETARY)
+						currentstatus = "Planetary Eclipse (night time)"
+					if (ECLIPSE_TERRESTRIAL)
+						currentstatus = "Not Eclipsing"
+				t += "<B>Time to eclipse:</B> [timetostart]"
+				t += "<B>Time to end of eclipse:</B> [timetoend]"
+				t += "<B>Length of eclipse:</B> [src.tracker.targetstar.eclipse_time]"
+				t += "<B>Length of peak eclipse"
+				t += "<B>Current eclipsing status:</B> [currentstatus]."
+
 	user.Browse(t, "window=solcon")
 	onclose(user, "solcon")
 	return
