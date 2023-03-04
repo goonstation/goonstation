@@ -43,6 +43,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleAI,
 		/datum/admins/proc/delay_start,
 		/datum/admins/proc/delay_end,
+		/datum/admins/proc/togglepowerdebug,
 
 		/client/proc/cmd_admin_subtle_message,
 		/client/proc/cmd_admin_alert,

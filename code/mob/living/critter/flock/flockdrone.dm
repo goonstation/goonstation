@@ -1164,9 +1164,6 @@
 		return
 	if(isintangible(target))
 		return
-	if (!user.flock)
-		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
-		return
 	// IMPRISON TARGET
 	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")

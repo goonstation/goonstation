@@ -90,6 +90,9 @@ var/global
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = 0
 
+	/// Contains objects in ID-based switched object groups, such as blinds and their switches
+	list/switched_objs = list()
+
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
 	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
@@ -254,7 +257,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"
@@ -305,6 +308,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 

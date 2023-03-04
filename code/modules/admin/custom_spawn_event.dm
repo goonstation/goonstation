@@ -69,7 +69,11 @@
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE)
 
-		for (var/datum/mind/mind in candidates)
+		for (var/i in 1 to src.amount_to_spawn)
+			if (!length(candidates))
+				break
+			var/datum/mind/mind = pick(candidates)
+			candidates -= mind
 			var/mob/new_mob = src.get_mob_instance(mind.current?.client?.preferences?.gender)
 
 			new_mob.ai?.die()
