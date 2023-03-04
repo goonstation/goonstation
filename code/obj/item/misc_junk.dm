@@ -220,7 +220,7 @@ TYPEINFO(/obj/item/disk)
 	attack(mob/M, mob/user, def_zone)
 		if (ismob(M))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [user == M ? 0 : rand(1,10)]")
+			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
