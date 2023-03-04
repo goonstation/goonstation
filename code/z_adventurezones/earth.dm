@@ -47,6 +47,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "nothing_earth"
 	//force_fullbright = 1
 	ambient_light = CENTCOM_LIGHT
+
 /area/centcom/outside/New()
 	. = ..()
 	areas_with_local_suns += /area/centcom/outside
