@@ -50,12 +50,12 @@
 			return TRUE
 
 /mob/living/carbon/human/proc/obstructed_by(var/slot)
-	var/list/headslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
-	for (var/obj/item as anything in headslots)
+	var/list/wearslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_SHOES)
+	for (var/obj/item as anything in wearslots)
 		if (slot == item)
-			if (src.head && src.head.obstructs & C_MASK)
+			if (src.head && src.head.obstructs & slot)
 				return src.head
-			else if (src.wear_suit && src.wear_suit.obstructs & C_MASK)
+			else if (src.wear_suit && src.wear_suit.obstructs & slot)
 				return src.wear_suit
 			else
 				return src.wear_mask
