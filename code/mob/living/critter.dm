@@ -1304,11 +1304,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		else
 			return ..()
 
-/mob/living/critter/set_a_intent()
-	..()
-	if(src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
-		src.equipped().intent_switch_trigger(src)
-
 /mob/living/critter/build_keybind_styles(client/C)
 	..()
 	C.apply_keybind("human")

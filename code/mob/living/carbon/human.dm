@@ -3265,11 +3265,6 @@
 	if (src.juggling())
 		src.drop_juggle()
 
-/mob/living/carbon/human/set_a_intent(intent)
-	..()
-	if(src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
-		src.equipped().intent_switch_trigger(src)
-
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
 	var/missing_legs = 0
