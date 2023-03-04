@@ -599,9 +599,10 @@ body
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
-				LAGCHECK(LAG_LOW)
-				qdel(door)
+			for (var/obj/machinery/door/door in by_type[/obj/machinery/door])
+				if (istype(door, /obj/machinery/door/airlock/pyro/maintenance) || istype(door, /obj/machinery/door/airlock/maintenance))
+					LAGCHECK(LAG_LOW)
+					qdel(door)
 			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
