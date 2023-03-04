@@ -1,5 +1,9 @@
 
 (t)sat mar 04 23
+(u)Kubius
+(p)13203
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
 (u)aloe & Virvatuli
 (+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
 (t)fri mar 03 23
