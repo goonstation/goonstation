@@ -379,7 +379,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		t += "Error! No tracker data available.<BR>"
 	else
 		if (src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
-			t += "Catastrophic Error! No star detected! Readings Abnormal!<BR>"
+			t += "Catastrophic Error! Stellar Data Corrupted<BR>"
 		else
 			t += "<B>Target: [src.tracker.targetstar.name]</B><BR>"
 			t += "<B>Relative Rotation rate:</B> [src.tracker.targetstar.rate] deg/h"
@@ -411,11 +411,11 @@ TYPEINFO(/obj/machinery/power/solar)
 						currentstatus = "Planetary Eclipse (night time)"
 					if (ECLIPSE_TERRESTRIAL)
 						currentstatus = "Not Eclipsing"
-				t += "<B>Time to eclipse:</B> [timetostart]"
-				t += "<B>Time to end of eclipse:</B> [timetoend]"
-				t += "<B>Length of eclipse:</B> [src.tracker.targetstar.eclipse_time]"
-				t += "<B>Length of peak eclipse"
-				t += "<B>Current eclipsing status:</B> [currentstatus]."
+				t += "<B>Time to eclipse:</B> [timetostart]<BR>"
+				t += "<B>Time to end of eclipse:</B> [timetoend]<BR>"
+				t += "<B>Length of eclipse:</B> [src.tracker.targetstar.eclipse_time]<BR>"
+				t += "<B>Length of peak eclipse<BR>"
+				t += "<B>Current eclipsing status:</B> [currentstatus].<BR>"
 
 	user.Browse(t, "window=solcon")
 	onclose(user, "solcon")

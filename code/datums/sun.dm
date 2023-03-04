@@ -107,7 +107,8 @@ var/global/list/areas_with_local_suns = new
 		if ("travel")
 			// for ship maps, deep space. Uses a randomer randomiser
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
-			src.name = pick("Typhon", "Fugg", "Shidd")
+			if (src.name = "unknown")
+				src.name = pick("Typhon", "Fugg", "Shidd")
 			src.rate = rand(70,160)/50 // more range than the default
 			if(prob(50))
 				src.rate = -rate
