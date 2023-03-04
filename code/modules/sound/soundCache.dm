@@ -174,6 +174,7 @@ var/global/list/soundCache = list(
  	"sound/effects/bubbles_short.ogg" = 'sound/effects/bubbles_short.ogg',\
  	"sound/effects/bubbles2.ogg" = 'sound/effects/bubbles2.ogg',\
  	"sound/effects/bubbles3.ogg" = 'sound/effects/bubbles3.ogg',\
+ 	"sound/effects/cani_suicide.ogg" = 'sound/effects/cani_suicide.ogg',\
  	"sound/effects/capture.ogg" = 'sound/effects/capture.ogg',\
  	"sound/effects/cargodoor.ogg" = 'sound/effects/cargodoor.ogg',\
  	"sound/effects/chair_step.ogg" = 'sound/effects/chair_step.ogg',\

@@ -56,6 +56,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
 			return
 		src.valve_open = TRUE
+		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
 		user.gib()
 
 	powered()
