@@ -313,7 +313,7 @@
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
 		B1.reagents.add_reagent("fluorosurfactant", 10)
-		B1.reagents.add_reagent("lube", 10)
+		B1.reagents.add_reagent("superlube", 10)
 
 		B2.reagents.add_reagent("pacid", 10) //The syndicate are sending the strong stuff now -Spy
 		B2.reagents.add_reagent("water", 10)
