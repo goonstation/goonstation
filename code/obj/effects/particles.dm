@@ -137,6 +137,11 @@
 	friction = generator("num", 0, 0, NORMAL_RAND)
 	drift = generator("box", list(-0.1,-0.1,0), list(0.1,0.1,0), UNIFORM_RAND)
 
+/particles/arcfiend/robojumper
+	spawning = 2
+	count = 10
+	position = generator("circle", -20, 20, NORMAL_RAND)
+
 /particles/stink_lines
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("line")
