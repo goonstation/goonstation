@@ -6,6 +6,10 @@
 (+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
 (u)aloe & Virvatuli
 (+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
+(u)FlameArrow57
+(p)13263
+(e)🪲⚖|C-Bug, C-Balance
+(+)The E-Meter will now correctly measure Thetan levels.
 (t)fri mar 03 23
 (u)Hans
 (p)13137
