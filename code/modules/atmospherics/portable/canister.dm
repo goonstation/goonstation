@@ -56,8 +56,39 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
 			return
 		src.valve_open = TRUE
-		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
 		user.gib()
+
+
+#define POP_ANIMATE_TIME 0.3 SECONDS // im a define FIEND. timed to roughly match the sound
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if(src.destroyed)
+			return
+		if (!src.user_can_suicide(user))
+			return FALSE
+		user.visible_message("<span class='alert'><b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b></span>")
+		if (src.det)
+			if (!src.det.part_fs.timing || src.det.defused)
+				boutput(user, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
+				return
+			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
+				src.visible_message("<span class='alert'>[user] opened the valve and triggered the detonation process.</span>")
+				src.custom_suicide = 0
+				src.det.detonate()
+			return
+		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
+			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
+			return
+		src.valve_open = TRUE
+		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
+		user.add_filter("canister pop", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0))
+		animate(user.get_filter("canister pop"), size=20, time=POP_ANIMATE_TIME, easing=SINE_EASING)
+
+		SPAWN(POP_ANIMATE_TIME)
+			user.gib()
+
+#undef POP_ANIMATE_TIME
 
 	powered()
 		return 1
