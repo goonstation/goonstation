@@ -395,6 +395,7 @@
 		for (var/datum/blob_upgrade/U in src.available_upgrades)
 			src.available_upgrades -= U
 			qdel(U)
+		src.update_buttons()
 
 	proc/remove_ability(var/ability_type)
 		if (!ispath(ability_type))

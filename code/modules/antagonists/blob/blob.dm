@@ -22,6 +22,15 @@
 				src.owner.current.name = newname
 				src.owner.current.UpdateName()
 
+	remove_equipment()
+		if (isblob(src.owner.current))
+			var/mob/living/intangible/blob_overmind/overmind = src.owner.current
+			overmind.remove_all_abilities()
+			overmind.remove_all_upgrades()
+
+		. = ..()
+
+
 	assign_objectives()
 		new /datum/objective_set/blob(src.owner, src)
 
