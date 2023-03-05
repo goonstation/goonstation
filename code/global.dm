@@ -375,6 +375,8 @@ var/global
 
 	datum/configuration/config = null
 	datum/sun/sun = null
+	datum/sun/z3sun = null
+	datum/sun/z5sun = null
 
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null

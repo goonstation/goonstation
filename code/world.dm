@@ -439,6 +439,14 @@ var/f_color_selector_handler/F_Color_Selector
 	sun = new /datum/sun()
 	sun.identity_check()
 
+	z3sun = new /datum/sun()
+	z5sun.stationloc = "debris"
+	z5sun.identity_check()
+
+	z5sun = new /datum/sun()
+	z5sun.stationloc = "mining"
+	z5sun.identity_check()
+
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
@@ -472,6 +480,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Mining setup...")
 	mining_controls.setup_mining_landmarks()
+
 
 	createRenderSourceHolder()
 

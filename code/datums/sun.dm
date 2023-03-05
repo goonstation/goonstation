@@ -24,6 +24,8 @@ var/global/list/areas_with_local_suns = new
 	var/counter = 20 // to make the vars update during 1st call
 	var/rate
 
+	//stuff gets complicated starting from here.
+	//jargon i use: global sun means for the whole z level, local sun means it overrides the global in an area.
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
 	var/area/sun_area = null
 	/// which z level does this star apply to? mainly for debris and mining fields
@@ -100,9 +102,9 @@ var/global/list/areas_with_local_suns = new
 			src.photovoltaic_efficiency = 0
 			src.rate = 0
 			src.angle = 0
-		if ("indoors") // for the trench and stuff
+		if ("trench")
 			src.name = "N/A"
-			src.desc = "Something appears to be obstructing the sun. A roof of some kind, perhaps?"
+			src.desc = "Something appears to be obstructing the sun."
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
