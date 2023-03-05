@@ -9,7 +9,7 @@
 			var/datum/game_mode/revolution/gamemode = ticker.mode
 			if (!(src.owner in gamemode.revolutionaries))
 				gamemode.revolutionaries += src.owner
-
+			gamemode.update_rev_icons_added(src.owner)
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(src.owner.current.loc)
