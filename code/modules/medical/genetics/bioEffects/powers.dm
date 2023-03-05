@@ -49,6 +49,12 @@
 			AB.owner = src.owner
 			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
 
+	//varedit support for cooldowns
+	onVarChanged(variable, oldval, newval)
+		if (variable == "cooldown" && istype(src.ability))
+			src.ability.cooldown = newval
+			src.ability.holder?.updateButtons()
+
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
 	desc = "Exert control over cold and ice."
