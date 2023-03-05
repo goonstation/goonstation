@@ -246,6 +246,7 @@ datum/mind
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
+					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
 				return TRUE
 		return FALSE
