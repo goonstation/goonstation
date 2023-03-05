@@ -13534,8 +13534,9 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "dTm" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/table/auto,
+/obj/random_item_spawner/tools,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "dTn" = (
@@ -37620,11 +37621,11 @@
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "lsH" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
 	},
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "lsK" = (
@@ -76859,6 +76860,12 @@
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"wYP" = (
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/table/auto,
+/obj/random_item_spawner/med_tool,
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "wZa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -122131,7 +122138,7 @@ ecx
 pVU
 iqP
 xJS
-dTm
+wYP
 lsH
 dTm
 xJS

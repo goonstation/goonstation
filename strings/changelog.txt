@@ -1,4 +1,52 @@
 
+(t)sat mar 04 23
+(u)Azrun
+(p)13238
+(e)🎨⚖🤖|C-Sprites, C-Balance, A-Silicons
+(+)Cyborg cell cables now use an actionbar when interacting with APCs.
+(u)Sord
+(+)Added Research Apparel job clothing vendors to all maps
+(u)Kubius
+(p)13203
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
+(u)aloe & Virvatuli
+(+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
+(u)FlameArrow57
+(p)13263
+(e)🪲⚖|C-Bug, C-Balance
+(+)The E-Meter will now correctly measure Thetan levels.
+(t)fri mar 03 23
+(u)Hans
+(p)13137
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Made it so morphine's adverse effects only happen on overdose, reduced it's stamina regeneration debuff from 3 to 2.
+(u)Tyrant
+(p)13187
+(e)🪲🆕💡|C-Bug, C-Feature, A-Station-Systems
+(*)You can now check the status of the nuclear reactor and turbines in the PDA powerchecker app!
+(u)Bartimeus973 & Amylizzle
+(p)13123
+(e)🆕📡|C-Feature, A-AI
+(*)Attacking mobs with an ai will now cause them to fight back.
+(u)Amylizzle
+(p)13240
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fuel rods in the nuclear reactor will decay faster if they are hit by more neutrons.
+(u)LeahTheTech
+(*)The clown car can now be loaded with banana peels and drop them on a 4 second cooldown. Honk.
+(t)thu mar 02 23
+(u)Zamujasa
+(*)New MechComp component: the Automatic Signaller Component. It sends a signal on a configurable interval, a configurable number of times (including infinite).
+(*)MechComp buttons have a fun new feature when mixed with a certain material.
+(*)New MechComp component: pixel display component. Give it an x, y, and color, and you can draw on it.
+(+)MechComp Message Signs have a few more styles avaialble (use a multitool).
+(+)MechComp Relay component cooldown adjusted.
+(+)MechComp Association component has a "send as signal" option for building signals.
+(u)Wisemonster
+(p)13169
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The semi-automatic artifact analysis form bin has been swapped with a analysis form sticker box.
 (t)wed mar 01 23
 (u)Sord
 (+)You can no longer print gas masks from the science fabricator

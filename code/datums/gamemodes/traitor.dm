@@ -77,7 +77,7 @@
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		if (traitor.special_role == ROLE_WRAITH) // agony.
-			generate_wraith_objectives(traitor)
+			traitor.add_antagonist(ROLE_WRAITH)
 		else
 			traitor.add_antagonist(ROLE_TRAITOR)
 	SPAWN(rand(waittime_l, waittime_h))

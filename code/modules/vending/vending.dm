@@ -1531,6 +1531,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/mc14500, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/interval_timer, 5)
 		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
@@ -1566,7 +1567,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/message_sign, 5)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/screen_canvas, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/message_sign, 10)
 /obj/machinery/vending/mechanics/attackby(obj/item/W, mob/user)
 	if(!istype(W,/obj/item/mechanics))
 		..()
@@ -3111,3 +3113,42 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)
+
+/obj/machinery/vending/jobclothing/research
+	name = "Research Apparel"
+	desc = "A vending machine that vends Research clothing."
+	icon_state = "sciclothing"
+	icon_panel = "snack-panel"
+	icon_off = "sciclothing-off"
+	icon_broken = "sciclothing-broken"
+	icon_fallen = "sciclothing-fallen"
+	pay = 1
+	acceptcard = 1
+	req_access = list(access_research)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist, 6)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/research, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/bio_suit, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/white, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/bio_hood, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/purple, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/basecap/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/goggles/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/research, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/toxins, 5, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/research, 3)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/research, 3)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)

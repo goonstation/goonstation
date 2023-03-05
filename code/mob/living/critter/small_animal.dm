@@ -129,6 +129,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 8
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -315,6 +318,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2 //hit back when you've been hit twice
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until they're knocked down
 	ai_type = /datum/aiHolder/cat
 	is_npc = TRUE
 	var/cattype = 1
@@ -592,6 +598,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
 	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	is_npc = TRUE
