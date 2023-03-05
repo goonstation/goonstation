@@ -236,7 +236,8 @@ var/global/list/areas_with_local_suns = new
 			if (ECLIPSE_FALSE)
 				if (src.eclipse_counter >= src.down_time)
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-					command_alert("An eclipse is occurring to the [station_or_ship()]. The eclipse is predicted to last for [time_to_text(src.eclipse_cycle_length-src.down_time)], and the output of solar panels will gradually reduce to a minimum of [(1 - src.eclipse_magnitude)*100]% output." , "Solar Eclipse", alert_origin = ALERT_WEATHER)
+					if (src.zlevel == 1 && isnull(src.sun_area))
+						command_alert("An eclipse is occurring to the [station_or_ship()]. The eclipse is predicted to last for [time_to_text(src.eclipse_cycle_length-src.down_time)], and the output of solar panels will gradually reduce to a minimum of [(1 - src.eclipse_magnitude)*100]% output." , "Solar Eclipse", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility = 1
 			if (ECLIPSE_PENUMBRA_WAXING)
@@ -256,7 +257,8 @@ var/global/list/areas_with_local_suns = new
 			if (ECLIPSE_UMBRA)
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
-					command_alert("The Solar Eclipse is now ending. The next one is predicted to be in [time_to_text(src.down_time)].", "Eclipse Ended", alert_origin = ALERT_WEATHER)
+					if (src.zlevel == 1 && isnull(src.sun_area))
+						command_alert("The Solar Eclipse is now ending. The next one is predicted to be in [time_to_text(src.down_time)].", "Eclipse Ended", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility = 1 - src.eclipse_magnitude
 			// if (ECLIPSE_PLANETARY) planetary rotation isnt done at runtime so we dont need this
