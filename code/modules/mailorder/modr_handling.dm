@@ -57,7 +57,7 @@
 //Adding the chute will not prevent purchase of the mail-order via QM secure crate;
 //merely add the option for a less secure but more convenient box-based delivery
 
-//Box for mail-based delivery
+/// Box for mail-based delivery
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
