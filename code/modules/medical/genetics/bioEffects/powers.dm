@@ -42,10 +42,12 @@
 			if (!AB)
 				return
 			ability = AB
+			AB.cooldown = src.cooldown
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
 			AB.owner = src.owner
+			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"

@@ -301,6 +301,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			return FALSE
 		return ..()
 
+	handleCast(atom/target, params)
+		if (src.linked_power) //paranoia check to keep them synched
+			src.cooldown = src.linked_power.cooldown
+		..()
+
 	cast(atom/target)
 		if (ismob(target))
 			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
