@@ -1,4 +1,7 @@
 
+(t)sun mar 05 23
+(u)aloe
+(+)Pugs can *woof. Other people can too, I guess. Sound by Virvatuli!
 (t)sat mar 04 23
 (u)aloe & Virvatuli
 (+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
