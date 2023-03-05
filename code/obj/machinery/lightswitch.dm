@@ -5,6 +5,7 @@
 TYPEINFO(/obj/machinery/light_switch)
 	mats = list("MET-1"=10,"CON-1"=15)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null

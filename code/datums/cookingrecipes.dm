@@ -1605,7 +1605,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1646,7 +1646,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1859,7 +1859,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
 	item3 = /obj/item/reagent_containers/food/drinks/milk
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/french_toast
 
 /datum/cookingrecipe/zongzi

@@ -285,7 +285,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.visible_message("<B>[src]</B> shuts down. Its internal storage is full.")
 
 		power_usage = total_draw
-		use_power(power_usage)
 		..()
 
 	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //DEBUG DEBUG DEBUG

@@ -17,7 +17,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			target = input(usr, "Select target", "Select target") as anything in world
 		if (target)
 			if (ismob(target))
-				p_image = target:build_flat_icon()
+				p_image = target:build_flat_icon(SOUTH)
 			else if (isobj(target) || isturf(target) || isarea(target))
 				p_image = getFlatIcon(target, SOUTH)
 			else

@@ -2011,7 +2011,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(get_turf(src))
+			new /mob/living/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
@@ -2461,7 +2461,18 @@
 /mob/proc/getAbility(var/abilityType)
 	return abilityHolder?.getAbility(abilityType)
 
+
 /mob/proc/full_heal()
+	SHOULD_CALL_PARENT(TRUE)
+	var/mob/ghost = find_ghost_by_key(src.last_ckey)
+	if(ghost)
+		ghost.mind.transfer_to(src)
+		if(isliving(src))
+			var/mob/living/L = src
+			L.is_npc = FALSE
+		if(isobserver(ghost))
+			qdel(ghost)
+
 	src.HealDamage("All", 100000, 100000)
 	src.delStatus("drowsy")
 	src.stuttering = 0
@@ -3098,7 +3109,7 @@
 		souladjust(1)
 	return 1
 
-/mob/proc/get_id()
+/mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
 	if(istype(src.equipped(), /obj/item/card/id))
 		return src.equipped()

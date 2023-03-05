@@ -52,12 +52,14 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
+			next_round_mode = master_mode
 			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
 	var/path = "data/intra_round.sav"
@@ -570,6 +572,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
 	initialize_gallery_manager()
+	initialize_mail_system()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")
@@ -1563,7 +1566,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("rev")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[vcs_revision] by [vcs_author]"
+				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
+				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
 			if ("version")

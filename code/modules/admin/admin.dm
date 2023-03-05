@@ -13,7 +13,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD:" : "ADMIN LOG:"]</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN<br>LOG"]</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -26,7 +26,7 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -36,11 +36,11 @@ var/global/noir = 0
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
+			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK<br>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -511,6 +511,13 @@ var/global/noir = 0
 			view_client_compid_list(usr, player)
 
 			return
+
+		if("centcombans")
+			var/mob/target = locate(href_list["target"])
+			if (isnull(centcomviewer))
+				centcomviewer = new
+			centcomviewer.target_key = target.key
+			centcomviewer.ui_interact(usr.client.mob)
 
 		/////////////////////////////////////ban stuff
 		if ("addban") //Add ban
@@ -1963,44 +1970,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a wraith?", "Make Wraith", list("Yes", "No")) == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.ckey = M.ckey
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				if (mind.objectives)
-					mind.objectives.len = 0
-				else
-					mind.objectives = list()
-				switch (tgui_alert(usr,"Objectives?", "Objectives", list("Custom", "Random", "None")))
-					if ("Custom")
-						var/WO = null
-						do
-							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
-							if (WO)
-								new WO(null, mind)
-						while (WO != null)
-					if ("Random")
-						generate_wraith_objectives(mind)
-				var/mob/living/intangible/wraith/Wr = M.wraithize()
-				if (!Wr)
-					if (!iswraith(mind.current))
-						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
-						return
-					else
-						Wr = mind.current
-				if (mind.objectives.len)
-					boutput(Wr, "<b>Your objectives:</b>")
-					var/obj_count = 1
-					for (var/datum/objective/objective in mind.objectives)
-						boutput(Wr, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-						obj_count++
-				mind.special_role = ROLE_WRAITH
-				ticker.mode.Agimmicks += mind
-				Wr.antagonist_overlay_refresh(1, 0)
+				M.mind?.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ADMIN)
 
 		if ("makeblob")
 			if( src.level < LEVEL_PA )
@@ -3590,6 +3560,15 @@ var/global/noir = 0
 						src.owner:debug_variables("GLOB")
 					if("globalprocs")
 						src.owner:show_proc_list(null)
+					if("testmerges")
+					#if defined(TESTMERGE_PRS)
+						var/pr_num = tgui_input_list(src.owner.mob, "Details:", "Testmerges", TESTMERGE_PRS)
+						if(pr_num)
+							var/file_text = file2text("testmerges/[pr_num].json")
+							src.owner.Browse("<html><body><div><pre>[file_text]</pre></div></body></html>", "window=testmerges;title=Testmerges;size=400x700")
+					#else
+						tgui_alert(src.owner.mob, "No current testmerges! None!", "No Testmerges")
+					#endif
 			else
 				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
@@ -4308,7 +4287,7 @@ var/global/noir = 0
 		if (current_state >= GAME_STATE_PLAYING)
 			dat += "Current Mode: [ticker.mode.name], Timer at [round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]<br>"
 			if (src.level >= LEVEL_MOD)
-				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A><br>"
+				dat += "<A href='?src=\ref[src];action=c_mode_panel'>Change Next Round's Game Mode</A> - Next: [next_round_mode]<br>"
 			if (emergency_shuttle.online)
 				dat += "<a href='?src=\ref[src];action=call_shuttle&type=2'><b>Shuttle Status:</b></a> <a href='?src=\ref[src];action=edit_shuttle_time'>[shuttletext]</a>"
 			else
@@ -4375,7 +4354,8 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=testmerges'>Testmerges</A>
 				"}
 
 		dat += "</div>"
@@ -4748,10 +4728,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WIZARD)
-				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-				M.show_antag_popup("adminwizard")
-				M.verbs += /client/proc/gearspawn_wizard
+				M.mind.add_antagonist(ROLE_WIZARD, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_VAMPIRE)
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_ADMIN)
@@ -4759,17 +4737,14 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WRESTLER)
-				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-				M.make_wrestler(1)
+				M.mind.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_WEREWOLF)
-				M.mind.special_role = ROLE_WEREWOLF
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-				M.make_werewolf()
+				M.mind.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GRINCH)
-				M.mind.special_role = ROLE_GRINCH
-				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
@@ -4800,25 +4775,12 @@ var/global/noir = 0
 				M.verbs += /client/proc/set_gang_base
 				tgui_alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
 			if(ROLE_OMNITRAITOR)
-				M.mind.special_role = ROLE_OMNITRAITOR
-				M.verbs += /client/proc/gearspawn_traitor
-				M.verbs += /client/proc/gearspawn_wizard
-				M.make_changeling()
-				M.make_vampire()
-				M.make_werewolf()
-				M.make_wrestler(1)
-				M.make_grinch()
-				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				M.show_antag_popup("traitoromni")
+				M.mind.add_antagonist(ROLE_OMNITRAITOR, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
-				M.show_text("<h1><font color=red><B>You have defected to a Spy Thief!</B></font></h1>", "red")
-				M.mind.special_role = ROLE_SPY_THIEF
-				var/mob/living/carbon/human/tmob = M
-				var/objective_set_path = /datum/objective_set/spy_theft
-				new objective_set_path(M.mind)
-				equip_spy_theft(tmob)
+				M.show_text("<h1><font color=red><B>You have defected to become a Spy Thief!</B></font></h1>", "red")
+				M.mind.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_NUKEOP)
 				M.show_text("<h1><font color=red><B>You have been chosen as a Nuclear Operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
 				M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
@@ -4893,17 +4855,26 @@ var/global/noir = 0
 
 	if(!length(matches))
 		return null
-
-	var/chosen
 	if(length(matches) == 1)
-		chosen = text2path(matches[1])
-	else
-		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
-		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
-		if(!chosen)
-			return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+		return text2path(matches[1])
 
-	. = chosen
+	var/prefix = get_longest_common_prefix(matches)
+	if(length(prefix))
+		if(prefix in matches)
+			var/last_slash = findlasttext(prefix, "/")
+			prefix = copytext(prefix, 1, last_slash + 1)
+		strip_prefix_from_list(matches, prefix)
+	else
+		prefix = null
+
+	var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
+	var/msg = "Select \a [base] type."
+	if(prefix)
+		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
+	if(!.)
+		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
+	. = text2path(prefix + .)
 
 /datum/admins/proc/spawn_atom(var/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

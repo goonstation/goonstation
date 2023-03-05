@@ -10,7 +10,7 @@
 
 	var/started = FALSE
 	///Pity respawn max
-	var/max_tries = 3
+	var/max_tries = 2
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
 
@@ -206,10 +206,10 @@
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
-	var/mob/picked = pick(candidates)
+	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing(LOG_ADMIN, picked.key, "respawned as a Flocktrace under [src.real_name].")
+	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
 
 	picked.make_flocktrace(get_turf(src), src.flock, free)
 

@@ -1,7 +1,7 @@
 //
 // Firealarm
 //
-
+ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -10,6 +10,7 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
+	power_channel = ENVIRON
 	var/alarm_frequency = FREQ_ALARM
 	var/detecting = 1
 	var/working = 1
@@ -119,9 +120,7 @@
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
-
-	use_power(power_usage, ENVIRON)
-
+	..()
 
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))

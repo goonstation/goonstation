@@ -1971,7 +1971,6 @@
 	dir = 9
 	},
 /obj/item/tile/steel,
-/turf/simulated/floor/plating/damaged3,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "aeY" = (
@@ -2065,7 +2064,6 @@
 /obj/item/clothing/suit,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
 /area/station/crew_quarters/barber_shop)
 "afn" = (
 /turf/simulated/floor/blueblack{
@@ -8834,7 +8832,6 @@
 "axb" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/space_heater,
-/turf/simulated/wall/auto/reinforced/supernorn,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/north)
 "axc" = (
@@ -12136,14 +12133,7 @@
 	name = "Old Barber Chair"
 	},
 /turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
 /area/station/crew_quarters/barber_shop)
-"aEw" = (
-/obj/decal/cleanable/dirt,
-/obj/storage/closet/emergency,
-/turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
-/area/station/maintenance/northwest)
 "aEx" = (
 /obj/item/storage/wall/medical,
 /turf/simulated/wall/auto/shuttle{
@@ -14423,7 +14413,6 @@
 	},
 /area/shuttle/arrival/station)
 "aKs" = (
-/turf/space,
 /turf/unsimulated/wall{
 	icon = 'icons/effects/160x160.dmi';
 	icon_state = "shuttlecock";
@@ -16560,7 +16549,6 @@
 "aPC" = (
 /obj/decal/cleanable/molten_item,
 /turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/northeast)
 "aPD" = (
 /obj/machinery/computer/tetris,
@@ -21713,7 +21701,6 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "It's busted!";
 	locked = 1;
 	name = "malfunctioning airlock";
@@ -22648,7 +22635,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/damaged3,
-/turf/simulated/floor/plating/damaged2,
 /area/station/engine/substation/west)
 "beA" = (
 /obj/grille/catwalk,
@@ -31029,7 +31015,7 @@
 /area/station/crew_quarters/heads)
 "byA" = (
 /obj/table/wood/auto,
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /obj/item/stamp/hop,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
@@ -36568,13 +36554,8 @@
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/turf/space,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/north)
-"bJL" = (
-/turf/space,
-/turf/space,
-/area/space)
 "bJM" = (
 /obj/shrub,
 /obj/landmark{
@@ -42742,7 +42723,6 @@
 /obj/item/reagent_containers/pill/crank,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/plating/damaged1,
-/turf/simulated/floor/plating/damaged2,
 /area/station/routing/depot)
 "bXh" = (
 /obj/stool/bed,
@@ -44376,7 +44356,6 @@
 	name = "grody blue chair"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/scorched,
 /turf/simulated/floor/plating/damaged2,
 /area/station/routing/depot)
 "cbj" = (
@@ -52209,14 +52188,10 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/station/science/lobby)
-"cvO" = (
-/obj/storage/secure/closet/research/uniform,
-/turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "cvP" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -54073,7 +54048,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -56932,7 +56907,6 @@
 /area/station/catwalk/south)
 "cGV" = (
 /obj/structure/girder,
-/turf/simulated/wall/auto/reinforced/supernorn,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/disposal)
 "cGW" = (
@@ -58191,7 +58165,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cKa" = (
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/damaged2,
 /area/station/quartermaster/office)
 "cKb" = (
@@ -58212,7 +58185,6 @@
 	pixel_x = -64;
 	pixel_y = -64
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "cKf" = (
@@ -58649,14 +58621,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
-"cLk" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "cLl" = (
 /obj/grille/steel,
 /turf/space,
@@ -66570,11 +66534,6 @@
 /obj/item/storage/box/stma_kit,
 /turf/simulated/floor/carpet,
 /area/station/medical/medbay/lobby)
-"ddM" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/plating/scorched,
-/turf/simulated/floor/plating/damaged2,
-/area/station/science/storage)
 "ddN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -67581,7 +67540,6 @@
 "dgA" = (
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/simulated/floor/plating/scorched,
-/turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/southeast)
 "dgB" = (
 /obj/machinery/power/apc{
@@ -70113,32 +70071,11 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/small_backup1)
-"dmC" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
-"dmD" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
 "dmE" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
-"dmF" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
-"dmG" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
 /area/space)
 "dmH" = (
 /obj/cable{
@@ -70166,11 +70103,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
-"dmL" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
-/area/space)
 "dmM" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -70301,12 +70233,6 @@
 	dir = 4
 	},
 /area/station/solar/small_backup1)
-"dmU" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/space)
 "dmV" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -70380,11 +70306,6 @@
 	name = "solar paneling"
 	},
 /area/listeningpost/solars)
-"dne" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/space)
 "dnf" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -70442,12 +70363,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"dnl" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
 "dnm" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -70476,12 +70391,6 @@
 /obj/machinery/power/tracker/east,
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/space)
-"dnp" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/auto/asteroid{
-	dir = 9
-	},
 /area/space)
 "dnq" = (
 /obj/securearea,
@@ -70513,17 +70422,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"dnu" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/space)
-"dnv" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/space)
 "dnw" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
@@ -70554,24 +70452,6 @@
 "dnA" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
-"dnB" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
-/area/space)
-"dnC" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/space)
-"dnD" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
 "dnE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70624,12 +70504,6 @@
 	dir = 5
 	},
 /area/listeningpost)
-"dnK" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
 "dnL" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -70866,7 +70740,7 @@
 /area/listeningpost)
 "dop" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -70921,7 +70795,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dow" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/swat,
@@ -70929,12 +70803,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dox" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doy" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
@@ -70959,13 +70833,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doC" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doD" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -70974,7 +70848,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "doE" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -71002,17 +70876,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
-"doI" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/space)
-"doJ" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
-/area/space)
+/area/listeningpost/syndicate_teleporter)
 "doK" = (
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -71592,7 +71456,6 @@
 	tag = ""
 	},
 /obj/machinery/computer/transit_shuttle/mining,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/southeast)
 "enQ" = (
@@ -72452,7 +72315,6 @@
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/turf/space,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/south)
 "hFn" = (
@@ -74633,14 +74495,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"ojW" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/space,
-/turf/simulated/floor/plating/airless,
-/area/space)
 "okO" = (
 /obj/machinery/conveyor/NS{
 	move_lag = 30;
@@ -75157,10 +75011,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
-"qwX" = (
-/turf/space,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/magnet)
 "qxl" = (
 /obj/machinery/conveyor/NS{
 	move_lag = 30;
@@ -76500,7 +76350,6 @@
 	pixel_y = -64
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "uUh" = (
 /obj/railing/orange/reinforced{
@@ -76510,13 +76359,6 @@
 	dir = 9
 	},
 /area/station/ranch)
-"uUB" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/space,
-/turf/space,
-/area/station/mining/magnet)
 "uVv" = (
 /obj/machinery/light/small/floor,
 /obj/decal/stripe_delivery,
@@ -102865,7 +102707,7 @@ cTw
 cUW
 cWe
 cXr
-ddM
+cZx
 cZx
 cOR
 dby
@@ -103751,7 +103593,7 @@ cpX
 crK
 cii
 cuy
-cvO
+cvP
 cta
 cyR
 cyQ
@@ -104053,7 +103895,7 @@ cpY
 crL
 ctc
 cuz
-cvP
+cAn
 cta
 cta
 cAk
@@ -108218,7 +108060,7 @@ aRh
 aSr
 aTC
 aKC
-aEw
+aRd
 aSE
 aYI
 bbI
@@ -108479,7 +108321,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -108619,7 +108461,7 @@ dgn
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -108781,7 +108623,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -108921,7 +108763,7 @@ dgo
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -109385,7 +109227,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -109525,7 +109367,7 @@ dgq
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -109687,7 +109529,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -109827,7 +109669,7 @@ dgq
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -109989,7 +109831,7 @@ buO
 aaF
 aaS
 aaS
-cLk
+aaS
 aaS
 aah
 ade
@@ -110129,7 +109971,7 @@ ddh
 ddh
 aah
 aaS
-cLk
+aaS
 aaS
 aaS
 aaF
@@ -139104,8 +138946,8 @@ cQi
 cKt
 cKv
 cKv
-qwX
-uUB
+dau
+ikQ
 dau
 dbs
 dbs
@@ -140629,7 +140471,7 @@ aah
 aah
 aaS
 aan
-ojW
+kTY
 aaA
 dhC
 aaI
@@ -154567,8 +154409,8 @@ aaa
 aaa
 aaa
 aaa
-dnu
-dmG
+aab
+aab
 aaa
 aaa
 aaa
@@ -154868,11 +154710,11 @@ aaa
 aaa
 aaa
 aaa
-dmC
 aab
-dnC
-dne
-dnC
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -155170,12 +155012,12 @@ aaa
 aaa
 aaa
 abB
-dnp
-dnv
-dnD
 aab
-dnC
-dmG
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -155475,10 +155317,10 @@ aam
 aan
 aan
 aan
-dnD
 aab
-dmG
-dmG
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -155777,12 +155619,12 @@ aaF
 aan
 aan
 aan
-dnK
 aab
 aab
-dmG
-dne
-dmG
+aab
+aab
+aab
+aab
 aaa
 aaa
 dhQ
@@ -156071,9 +155913,9 @@ aaa
 aaa
 aaa
 aaa
-dmC
-dmG
-dmG
+aab
+aab
+aab
 aaF
 aaF
 aan
@@ -156373,10 +156215,10 @@ aaa
 aaa
 aaa
 aaa
-dmC
 aab
-dmG
-dmG
+aab
+aab
+aab
 aaF
 aan
 aan
@@ -156386,8 +156228,8 @@ dnR
 dnZ
 doi
 dnA
-dmG
-dmG
+aab
+aab
 aaa
 aaa
 aaa
@@ -156675,11 +156517,11 @@ aaa
 aaa
 aaa
 aaa
-dmC
 aab
 aab
-dmU
-dne
+aab
+aab
+aab
 dnq
 dnw
 dnq
@@ -156689,8 +156531,8 @@ doa
 doj
 dnA
 aab
-dmG
-dmG
+aab
+aab
 aaa
 aaa
 aaa
@@ -156977,7 +156819,7 @@ aaa
 aag
 aaS
 aaS
-dmC
+aab
 aab
 dmJ
 dmJ
@@ -156992,8 +156834,8 @@ dok
 dnA
 dnA
 dnA
-dmG
-dmG
+aab
+aaa
 dhQ
 aaa
 aaa
@@ -157279,7 +157121,7 @@ aaa
 dlU
 dlU
 dlU
-dmD
+aab
 aab
 dmJ
 dmV
@@ -157883,7 +157725,7 @@ aaa
 dlU
 dlU
 dlU
-dmD
+aab
 aab
 dmJ
 dmX
@@ -157899,8 +157741,8 @@ dnF
 dnN
 dnA
 aab
-dmG
-dmG
+aab
+aab
 aaa
 aaa
 aaa
@@ -158185,7 +158027,7 @@ aaa
 aag
 aaB
 aaB
-dmC
+aab
 aab
 dmJ
 dmY
@@ -158202,8 +158044,8 @@ dnx
 dnA
 dnA
 dnA
-dnC
-dnC
+aab
+aab
 aaa
 aaa
 aaa
@@ -158487,7 +158329,7 @@ aaa
 aaa
 aaa
 aaa
-dmC
+aab
 aab
 dmJ
 dmZ
@@ -158505,7 +158347,7 @@ doy
 doE
 dnA
 aab
-doJ
+aab
 aaa
 aaa
 aaa
@@ -158789,8 +158631,8 @@ aaa
 aaa
 aaa
 aaa
-dmF
-dmF
+aab
+aab
 dmJ
 dna
 dnk
@@ -158807,7 +158649,7 @@ doz
 doF
 dnA
 aab
-doJ
+aab
 aaa
 aaa
 aaa
@@ -159092,7 +158934,7 @@ aaa
 aaa
 aaa
 aaa
-dmC
+aab
 dmJ
 dnb
 dmJ
@@ -159109,7 +158951,7 @@ doA
 doG
 dnA
 aab
-doJ
+aab
 aaa
 aaa
 aaa
@@ -159394,10 +159236,10 @@ aaa
 aaa
 aaa
 aaa
-dmF
-dmL
+aab
+aab
 dnb
-dmF
+aab
 aab
 dnA
 dnJ
@@ -159411,7 +159253,7 @@ doB
 dop
 dop
 aab
-doJ
+aab
 dhQ
 aaa
 aaa
@@ -159699,7 +159541,7 @@ aaa
 aaa
 dpb
 dnc
-dmF
+aab
 aab
 dnA
 dnA
@@ -159712,8 +159554,8 @@ dov
 dox
 dox
 dop
-doI
-doI
+aab
+aab
 aaa
 aaa
 aaa
@@ -160001,8 +159843,8 @@ aaa
 dmH
 dpc
 aaa
-dnl
-dnl
+aab
+aab
 aab
 aab
 aab
@@ -160014,7 +159856,7 @@ dow
 doC
 doH
 dop
-doI
+aab
 aaa
 aaa
 aaa
@@ -160304,13 +160146,13 @@ dmH
 dpc
 aaa
 aaa
-dnl
-dnB
-dnB
-dnB
-dnB
-dnB
-dnl
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 dop
 dox
 doD
@@ -160612,7 +160454,7 @@ aaa
 aaa
 aab
 aab
-dnl
+aab
 dop
 dop
 dop
