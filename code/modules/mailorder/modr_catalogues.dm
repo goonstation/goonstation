@@ -173,8 +173,9 @@
 						var/destination = "Send to QM"
 						if(length(landmarks?[LANDMARK_MAILORDER_SPAWN])) //pick a destination if mail insertion is supported by map
 							var/list/possible_mail_dests = list("Send to QM")
-							for_by_tcl(S, /obj/machinery/disposal/mail)
-								possible_mail_dests += S.mail_tag
+							for_by_tcl(chute, /obj/machinery/disposal/mail)
+								if(chute.z == Z_LEVEL_STATION)
+									possible_mail_dests += chute.mail_tag
 							destination = input(usr, "Pick destination chute, or Send to QM for secure crate-based delivery", src.name, null) as null|anything in possible_mail_dests
 						if(destination && isalive(usr))
 							var/final_bill = src.cartcost //da-na-na na, da-na-na na na
