@@ -374,6 +374,9 @@ var/global
 	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
+
+	///a list of all created stars to iterate through
+	list/starlist = list()
 	datum/sun/sun = null
 	datum/sun/z3sun = null
 	datum/sun/z5sun = null

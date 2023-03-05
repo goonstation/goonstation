@@ -14,8 +14,6 @@
 #define ECLIPSE_PLANETARY 7
 /// for when the game doesn't know what's happening (e.g. admin nonsense)
 #define ECLIPSE_ERROR 8
-///a list of all created stars to iterate through
-var/list/starlist = new list()
 
 /// which areas should the 'global' sun ignore
 var/global/list/areas_with_local_suns = new
@@ -63,6 +61,10 @@ var/global/list/areas_with_local_suns = new
 	var/visibility = 1
 	/// At 100% visibility, at what efficiency do the solars work? Based on inverse square of distance to star. Also a percentage, with 1 = 100%
 	var/photovoltaic_efficiency = 1
+
+/datum/sun/New()
+	. = ..()
+	global.starlist += src
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
