@@ -106,9 +106,9 @@ var/global/list/areas_with_local_suns = new
 				src.eclipse_magnitude = pick(1, rand(10,100)/100)
 				src.eclipse_cycle_length = rand(20, 80) MINUTES
 				src.eclipse_time = rand(10 SECONDS, 5 MINUTES)
-			// pretty much the same as regular but with 50% chance of random eclipsing
+			// is the default settings pre #13206, but with 50% chance of random eclipsing
 		if ("travel")
-			// for ship maps in deep space. Uses a randomer randomiser
+			// for ship maps (in deep space). Uses a randomer randomiser
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
 			if (src.name == "unknown")
 				src.name = pick("Typhon", "Fugg", "Shidd")
@@ -123,17 +123,17 @@ var/global/list/areas_with_local_suns = new
 				src.eclipse_time = rand(10, 300) SECONDS
 		if ("magus")
 			//nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from Shidd or Fugg.
-			#if (BUILD_TIME_HOUR <=3)
-			src.name = "Shidd"
+			#if (BUILD_TIME_HOUR <=3 || (BUILD_TIME_HOUR <= 11 && BUILD_TIME_HOUR >=8) || (BUILD_TIME_HOUR <= 19 && BUILD_TIME_HOUR >= 16))
+			src.name = "Shidd" // the nadir lighting is bluer
 			#else
-			src.name = "Fugg"
+			src.name = "Fugg" // the nadir lighting is redder/darker
 			#endif
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
-			if (src.name == "Fugg") // the stars have different strengths, see. Based on the RGB.
+			if (src.name == "Fugg") // the stars have different strengths, see. Based on the noon RGB values.
 				src.photovoltaic_efficiency = 0.6
 			else
 				src.photovoltaic_efficiency = 1
