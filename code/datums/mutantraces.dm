@@ -2324,7 +2324,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message("<span class='alert'>[src.mob] staggers.</span>")
-		src.mob.emote("scream")
+		src.mob.emote("woof")
 
 /datum/mutantrace/chicken
 	name = "Chicken"

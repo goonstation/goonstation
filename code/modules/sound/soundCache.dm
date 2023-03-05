@@ -1722,6 +1722,7 @@ var/global/list/soundCache = list(
  	"sound/voice/tommy_weird-chicken-noise.ogg" = 'sound/voice/tommy_weird-chicken-noise.ogg',\
  	"sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg" = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg',\
  	"sound/voice/uguu.ogg" = 'sound/voice/uguu.ogg',\
+ 	"sound/voice/urf.ogg" = 'sound/voice/urf.ogg',\
  	"sound/voice/virtual_gassy.ogg" = 'sound/voice/virtual_gassy.ogg',\
  	"sound/voice/virtual_scream.ogg" = 'sound/voice/virtual_scream.ogg',\
  	"sound/voice/virtual_snap.ogg" = 'sound/voice/virtual_snap.ogg',\
