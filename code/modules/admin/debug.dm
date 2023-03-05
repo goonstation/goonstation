@@ -590,7 +590,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear","Clothing Dummies")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -665,7 +665,15 @@ body
 				I = pick(concrete_typesof(/obj/item))
 				new I(get_turf(M))
 				sleep(1 SECONDS)
-
+		if ("Clothing Dummies")
+			for (var/i in 1 to 80)
+				var/human_type = pick(concrete_typesof(/mob/living/carbon/human/normal))
+				new human_type(pick_landmark(LANDMARK_PESTSTART))
+			while(TRUE)
+				var/mob/living/carbon/human/normal/human = pick(by_type[/mob/living/carbon/human])
+				human.update_clothing()
+				if (prob(40))
+					sleep(0.1 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

@@ -8084,7 +8084,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aui" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "auj" = (

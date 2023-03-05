@@ -3,8 +3,26 @@
 (u)aloe
 (+)Pugs can *woof. Other people can too, I guess. Sound by Virvatuli!
 (t)sat mar 04 23
+(u)Mordent
+(p)13224
+(e)🔎💅📄|C-Code-Quality, C-QoL, A-UI
+(+)APC UI improvements
+(u)Azrun
+(p)13238
+(e)🎨⚖🤖|C-Sprites, C-Balance, A-Silicons
+(+)Cyborg cell cables now use an actionbar when interacting with APCs.
+(u)Sord
+(+)Added Research Apparel job clothing vendors to all maps
+(u)Kubius
+(p)13203
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
 (u)aloe & Virvatuli
 (+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
+(u)FlameArrow57
+(p)13263
+(e)🪲⚖|C-Bug, C-Balance
+(+)The E-Meter will now correctly measure Thetan levels.
 (t)fri mar 03 23
 (u)Hans
 (p)13137

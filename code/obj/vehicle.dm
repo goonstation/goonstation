@@ -1635,7 +1635,6 @@ TYPEINFO(/obj/vehicle/adminbus)
 	name = "Drop a banana peel"
 	icon = 'icons/misc/abilities.dmi'
 	icon_state = "peel"
-	cooldown = 4 SECONDS
 
 	Click(location, control, params)
 		. = ..()
@@ -1645,10 +1644,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 		if (car.peel_count <= 0)
 			boutput(src.the_mob, "<span class='alert'>No peels left!</span>")
 			return
-		if (ON_COOLDOWN(car, "peel_drop", src.cooldown))
-			boutput(the_mob, "<span class='alert'>The peel dispenser is still on cooldown for [GET_COOLDOWN(car, "peel_drop") / 10]s!</span>")
-			return
-		playsound(car, 'sound/machines/click.ogg')
+		playsound(car, 'sound/machines/click.ogg', 50, 1)
 		new /obj/item/bananapeel(get_turf(car))
 		car.peel_count--
 
