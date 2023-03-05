@@ -366,6 +366,10 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
+
+			// Apply any roundstart mutators to late join if applicable
+			roundstart_events(character)
+
 			SPAWN(0)
 				qdel(src)
 			global.latespawning.unlock()
@@ -375,6 +379,11 @@ mob/new_player
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
+
+	proc/roundstart_events(mob/living/player)
+		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+			if(RE.include_latejoin && RE.is_crew_affected(player))
+				RE.apply_to_player(player)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
@@ -732,9 +741,8 @@ a.latejoin-card:hover {
 				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
-				traitor.special_role = ROLE_WRAITH
-				traitormob.make_wraith()
-				generate_wraith_objectives(traitor)
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR

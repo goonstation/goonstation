@@ -487,7 +487,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 	else
 		icon_state = "marsrover"
 
-/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	var/mob/rider = src.rider
 	..()
 	rider.pixel_y = 0

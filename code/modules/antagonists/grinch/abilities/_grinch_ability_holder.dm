@@ -1,42 +1,6 @@
 // Converted everything related to grinches from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
-// Remove when omnitraitors are datumised.
-/mob/proc/make_grinch()
-	if (ishuman(src) || ismobcritter(src))
-		if (ishuman(src))
-			var/datum/abilityHolder/grinch/A = src.get_ability_holder(/datum/abilityHolder/grinch)
-			if (A && istype(A))
-				return
-
-			var/datum/abilityHolder/grinch/G = src.add_ability_holder(/datum/abilityHolder/grinch)
-			G.addAbility(/datum/targetable/grinch/vandalism)
-			G.addAbility(/datum/targetable/grinch/poison)
-			G.addAbility(/datum/targetable/grinch/instakill)
-			G.addAbility(/datum/targetable/grinch/grinch_cloak)
-
-			SPAWN(2.5 SECONDS) // Don't remove.
-				if (src) src.assign_gimmick_skull()
-
-		else if (ismobcritter(src))
-			var/mob/living/critter/C = src
-
-			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
-				var/datum/abilityHolder/grinch/A2 = C.add_ability_holder(/datum/abilityHolder/grinch)
-				if (!A2 || !istype(A2, /datum/abilityHolder/))
-					return
-
-			C.abilityHolder.addAbility(/datum/targetable/grinch/vandalism)
-			C.abilityHolder.addAbility(/datum/targetable/grinch/poison)
-			C.abilityHolder.addAbility(/datum/targetable/grinch/instakill)
-			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
-
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			src.show_antag_popup("grinch")
-
-	else return
-
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
 /atom/movable/screen/ability/topBar/grinch

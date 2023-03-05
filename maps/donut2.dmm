@@ -17491,6 +17491,9 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -26797,10 +26800,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"dxq" = (
-/obj/storage/secure/closet/research/uniform,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/observatory)
 "dxC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -32287,7 +32286,7 @@
 /area/station/maintenance/south)
 "hZo" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "iam" = (
@@ -120676,7 +120675,7 @@ uUG
 oGb
 dlf
 hZo
-dxq
+ajD
 rYA
 ajA
 pyu

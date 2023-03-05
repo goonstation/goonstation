@@ -5123,7 +5123,7 @@
 /area/station/ai_monitored/armory)
 "aqW" = (
 /obj/grille/steel,
-/turf/simulated/floor/engine/vacuum,
+/turf/space,
 /area/station/engine/combustion_chamber)
 "aqY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -14511,7 +14511,6 @@
 	},
 /area/station/hangar/main)
 "aTr" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -14587,7 +14586,7 @@
 	},
 /area/station/hangar/main)
 "aTz" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /obj/cable{
 	icon_state = "2-8"
 	},

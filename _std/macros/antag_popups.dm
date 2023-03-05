@@ -17,7 +17,7 @@
 	<a href='?src=\ref[src];action=traitorradio'>Radio Uplink</a> |
 	<a href='?src=\ref[src];action=traitorpda'>PDA Uplink</a> |
 	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
-	<a href='?src=\ref[src];action=traitoromni'>Omnitraitor</a> |
+	<a href='?src=\ref[src];action=omnitraitor'>Omnitraitor</a> |
 	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
 	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
 </div>
@@ -128,7 +128,7 @@
 			if ("traitorhard")
 				window_title = "Hardmode Traitor Tips"
 				filename = "html/traitorTips/traitorhardTips.html"
-			if ("traitoromni")
+			if ("omnitraitor")
 				window_title = "Omni-Traitor Tips"
 				filename = "html/traitorTips/omniTips.html"
 			if ("traitorgeneric")
