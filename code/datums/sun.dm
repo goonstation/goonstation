@@ -26,6 +26,8 @@ var/global/list/areas_with_local_suns = new
 
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
 	var/area/sun_area = null
+	/// which z level does this star apply to? mainly for debris and mining fields
+	var/zlevel = 1
 	/// Is it around Shidd, Fugg, or Typhon? Or the Sun?
 	var/name = "unknown"
 	/// where does this apply exactly? Where are we?
@@ -60,7 +62,8 @@ var/global/list/areas_with_local_suns = new
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
-	if (isnull(src.sun_area)) // global sun only
+	if (src.stationloc == "mining" || src.stationloc == "debris")
+	else if (isnull(src.sun_area)) // global sun only
 		src.stationloc = "void"
 		#if defined(MAP_OVERRIDE_DESTINY)
 		src.stationloc = "travel"
@@ -100,8 +103,8 @@ var/global/list/areas_with_local_suns = new
 		if ("indoors") // for the trench and stuff
 			src.name = "N/A"
 			src.desc = "Something appears to be obstructing the sun. A roof of some kind, perhaps?"
-			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.eclipse_status = ECLIPSE_ERROR
+			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
 			src.rate = 0
 			src.angle = 0
@@ -112,6 +115,9 @@ var/global/list/areas_with_local_suns = new
 			*/
 			src.name = "Typhon"
 			src.desc = "Station is currently in a stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
+			src.rate = rand(75,125)/50 // 75% - 125% of standard rotation
+			if(prob(50))
+				src.rate = -src.rate
 			if (prob(50)) // this thing gives it a random eclipse
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
@@ -141,7 +147,7 @@ var/global/list/areas_with_local_suns = new
 			#else
 			src.name = "Fugg" // the nadir lighting is redder/darker
 			#endif
-			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. This side of Magus is currently being lit by [src.name]."
+			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. The site is currently being lit by [src.name]."
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
@@ -171,6 +177,7 @@ var/global/list/areas_with_local_suns = new
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
 		if ("earth")
 			//centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
+			src.zlevel = 2
 			src.name = "\improper Sun"
 			src.desc = "The sun illuminates the surface of the Earth, as it has done for millions of years."
 			src.eclipse_time = 12 HOURS
@@ -182,6 +189,25 @@ var/global/list/areas_with_local_suns = new
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
 				src.visibility = rand(80,100) // assuming cloud covers up to 20% of light
+		if ("debris") // the debris field is in the main rings district
+			src.name = "Typhon"
+			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
+			src.zlevel = 3
+			src.photovoltaic_efficiency = 2.5
+			src.rate = rand(75,125)/50
+			if(prob(50))
+				src.rate = -src.rate
+		if ("mining") // the mining level is canonically in the royal rings district, near magus
+			src.zlevel = 5
+			src.rate = 0
+			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			if (src.name == "unknown")
+				src.name = pick("Fugg", "Shidd")
+			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
+			if (src.name == "Fugg")
+				src.photovoltaic_efficiency = 0.3
+			else
+				src.photovoltaic_efficiency = 0.6
 
 /datum/sun/New()
 	..()
@@ -247,39 +273,45 @@ var/global/list/areas_with_local_suns = new
 	else
 		src.dx = s / abs(s)
 		src.dy = c / abs(s)
-	// this bit got wayy more complicated, thanks silly brain inventing multiple suns
-	var/earlybreak = FALSE
-	if (isnull(src.sun_area)) // for when the sun is global
-		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
-			if (!T.lockedon)
-				T.lockedon = TRUE
-				T.targetstar = src
-			if (earlybreak)
-				break
-			for (var/ignorable_area in areas_with_local_suns)
-				if (get_area(T) == ignorable_area) // uses local star instead
-					earlybreak = TRUE
+
+	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+		var/turf/dummy = get_turf(T)
+		if (dummy.z != src.zlevel) // are we on the right z
+			continue
+		if (!isnull(src.sun_area)) // local suns
+			if (get_area(dummy) != src.sun_area) // if local, are we in the right spot
+				continue
+		else // global sun (applies to whole z level)
+			var/ignoreme = FALSE
+			for (var/ignorable_area in areas_with_local_suns) // is this an area which should use local star
+				if (get_area(dummy) == ignorable_area)
+					ignoreme = TRUE
 					break
-			T.set_angle(angle)
-		earlybreak = FALSE
-		for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
-			if (earlybreak)
-				break
+			if (ignoreme)
+				ignoreme = FALSE
+				continue
+		if (!T.lockedon) // is targetstar set
+			T.lockedon = TRUE
+			T.targetstar = src
+		T.set_angle(angle)
+
+	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
+		var/turf/dummy = get_turf(S)
+		if (dummy.z != src.zlevel)
+			continue
+		if (!isnull(src.sun_area))
+			if (get_area(dummy) != src.sun_area)
+				continue
+		else
+			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns)
-				if (get_area(S) == ignorable_area)
-					earlybreak = TRUE
+				if (get_area(dummy) == ignorable_area)
+					ignoreme = TRUE
 					break
-			occlusion(S)
-	else // for local suns
-		for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
-			if (!T.lockedon)
-				T.lockedon = TRUE
-				T.targetstar = src
-			if (get_area(T) == src.sun_area)
-				T.set_angle(angle) // make sure you're actually in the area foo
-		for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
-			if (get_area(S) == src.sun_area)
-				occlusion(S)
+			if (ignoreme)
+				ignoreme = FALSE
+				continue
+		occlusion(S)
 
 
 // for a solar panel, trace towards sun to see if we're in shadow
