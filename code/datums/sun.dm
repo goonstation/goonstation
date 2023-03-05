@@ -68,8 +68,9 @@ var/global/list/areas_with_local_suns = new
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
+	var/oldloc = src.stationloc
 	if (src.stationloc == "mining" || src.stationloc == "debris")
-	else if (isnull(src.sun_area)) // global sun only
+	else if (isnull(src.sun_area)) // global sun only, locals use overrides
 		src.stationloc = "void"
 		#if defined(MAP_OVERRIDE_DESTINY)
 		src.stationloc = "travel"
@@ -96,6 +97,8 @@ var/global/list/areas_with_local_suns = new
 		#elif defined(MAP_OVERRIDE_NADIR)
 		src.stationloc = "magus"
 		#endif
+	if (src.oldloc == src.stationloc)
+		return
 	switch (src.stationloc)
 		if ("void")
 			// for admin nonsense generally, also shuttle transit. Where no stars apply.
