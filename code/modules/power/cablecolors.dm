@@ -15,11 +15,11 @@
 /obj/cable/_color/name = ""+#_color+" power cable";\
 /obj/cable/_color/color = _hexcolor;\
 /obj/cable/_color/insulator_default = ""+#_color+" rubber";\
-/datum/material/fabric/synthrubber/_color;\
-/datum/material/fabric/synthrubber/_color/mat_id = ""+#_color+" rubber";\
-/datum/material/fabric/synthrubber/_color/name = ""+#_color+" rubber";\
-/datum/material/fabric/synthrubber/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
-/datum/material/fabric/synthrubber/_color/color = _hexcolor;\
+/datum/material/rubber/synthrubber/_color;\
+/datum/material/rubber/synthrubber/_color/mat_id = ""+#_color+" rubber";\
+/datum/material/rubber/synthrubber/_color/name = ""+#_color+" rubber";\
+/datum/material/rubber/synthrubber/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
+/datum/material/rubber/synthrubber/_color/color = _hexcolor;\
 /obj/item/storage/box/cablesbox/_color;\
 /obj/item/storage/box/cablesbox/_color/name = ""+"electrical cables storage ("+#_color+")";\
 /obj/item/storage/box/cablesbox/_color/spawn_contents = list(/obj/item/cable_coil/_color = 7);\
