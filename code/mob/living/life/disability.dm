@@ -28,7 +28,7 @@
 				owner.change_vampire_blood(-5 * mult)
 			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
 				var/totaleclipsing
-				for (var/datum/sun/star in world.starlist) // total eclipses allow vamps to go on space turfs
+				for (var/datum/sun/star in global.starlist) // total eclipses allow vamps to go on space turfs
 					var/turf/dummy = get_turf(src)
 					if (star.eclipse_status != ECLIPSE_UMBRA || star.eclipse_magnitude != 1)
 						totaleclipsing = FALSE
