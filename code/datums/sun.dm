@@ -28,8 +28,10 @@ var/global/list/areas_with_local_suns = new
 	var/area/sun_area = null
 	/// Is it around Shidd, Fugg, or Typhon? Or the Sun?
 	var/name = "unknown"
-	/// where does this apply exactly?
+	/// where does this apply exactly? Where are we?
 	var/stationloc = null
+	/// flavour text for the tracker
+	var/desc
 
 	// these time vars below theoretically use time units like SECOND and MINUTE, so 1 = 1/10 of a second
 	/// How often do eclipses happen? It's the length of the whole cycle, so it needs to be = to eclipse_time + penumbra_time + downtime
@@ -88,10 +90,19 @@ var/global/list/areas_with_local_suns = new
 	switch (src.stationloc)
 		if ("void")
 			// for admin nonsense generally, also shuttle transit. Where no stars apply.
+			src.desc = "The stars have abandoned you."
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
 			src.photovoltaic_efficiency = 0
+			src.rate = 0
+			src.angle = 0
+		if ("indoors") // for the trench and stuff
+			src.name = "N/A"
+			src.desc = "Something appears to be obstructing the sun. A roof of some kind, perhaps?"
+			src.eclipse_order = list(ECLIPSE_ERROR)
+			src.eclipse_status = ECLIPSE_ERROR
+			src.visibility = 0
 			src.rate = 0
 			src.angle = 0
 		if ("13")
@@ -100,6 +111,7 @@ var/global/list/areas_with_local_suns = new
 			lissajous orbit around the umbra, making the lore reason for the solars turning is that the whole map is spinning.
 			*/
 			src.name = "Typhon"
+			src.desc = "Station is currently in a stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
 			if (prob(50)) // this thing gives it a random eclipse
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
@@ -112,6 +124,7 @@ var/global/list/areas_with_local_suns = new
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
 			if (src.name == "unknown")
 				src.name = pick("Typhon", "Fugg", "Shidd")
+			src.desc = "Ship is currently in deep space, with its main lighting coming from [src.name]."
 			src.rate = rand(70,160)/50 // more range than the default
 			if(prob(50))
 				src.rate = -rate
@@ -128,6 +141,7 @@ var/global/list/areas_with_local_suns = new
 			#else
 			src.name = "Fugg" // the nadir lighting is redder/darker
 			#endif
+			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. This side of Magus is currently being lit by [src.name]."
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.rate = 0
@@ -141,6 +155,7 @@ var/global/list/areas_with_local_suns = new
 		if ("abzu")
 			//oshan and technically also manta
 			src.name = "Shidd"
+			src.desc = "The Oshan Laboratory is located under the seas of Abzu, and is lit by the blue-white light of its star, Shidd."
 			src.visibility = 0.35 // time.dm shows alpha value 65% at noon, so
 			src.eclipse_time = 6 HOURS
 			src.eclipse_cycle_length = 12 HOURS
@@ -157,6 +172,7 @@ var/global/list/areas_with_local_suns = new
 		if ("earth")
 			//centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
 			src.name = "\improper Sun"
+			src.desc = "The sun illuminates the surface of the Earth, as it has done for millions of years."
 			src.eclipse_time = 12 HOURS
 			src.eclipse_cycle_length = 24 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
