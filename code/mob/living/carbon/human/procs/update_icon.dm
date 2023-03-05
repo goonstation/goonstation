@@ -15,34 +15,10 @@
 	var/hand_offset = 0
 	var/body_offset = 0
 
-	// mutantrace clothing overrides
-	var/list/uniform_overrides = null
-	var/list/id_overrides = null
-	var/list/gloves_overrides = null
-	var/list/shoe_overrides = null
-	var/list/suit_overrides = null
-	var/list/back_overrides = null
-	var/list/glasses_overrides = null
-	var/list/ears_overrides = null
-	var/list/mask_overrides = null
-	var/list/head_overrides = null
-	var/list/belt_overrides = null
-
 	if (src.mutantrace)
 		head_offset = src.mutantrace.head_offset
 		hand_offset = src.mutantrace.hand_offset
 		body_offset = src.mutantrace.body_offset
-		uniform_overrides = icon_states(src.mutantrace.clothing_icon_uniform, 1)
-		id_overrides = icon_states(src.mutantrace.clothing_icon_id, 1)
-		gloves_overrides = icon_states(src.mutantrace.clothing_icon_hands, 1)
-		shoe_overrides = icon_states(src.mutantrace.clothing_icon_feet, 1)
-		suit_overrides = icon_states(src.mutantrace.clothing_icon_overcoats, 1)
-		back_overrides = icon_states(src.mutantrace.clothing_icon_back, 1)
-		glasses_overrides = icon_states(src.mutantrace.clothing_icon_eyes, 1)
-		ears_overrides = icon_states(src.mutantrace.clothing_icon_ears, 1)
-		mask_overrides = icon_states(src.mutantrace.clothing_icon_mask, 1)
-		head_overrides = icon_states(src.mutantrace.clothing_icon_head, 1)
-		belt_overrides = icon_states(src.mutantrace.clothing_icon_belt, 1)
 
 	src.update_lying()
 
@@ -74,10 +50,10 @@
 	src.update_face()
 
 	// Uniform
-	src.update_uniform(uniform_overrides)
+	src.update_uniform()
 
 	// ID
-	src.update_id(id_overrides, head_offset)
+	src.update_id(head_offset)
 
 	// No blood overlay if we have gloves (e.g. bloody hands visible through clean gloves).
 	src.update_bloody_hands(hand_offset)
@@ -86,28 +62,28 @@
 	src.update_bloody_feet()
 
 	// Gloves
-	src.update_gloves(gloves_overrides, hand_offset)
+	src.update_gloves(hand_offset)
 
 	// Shoes
-	src.update_shoes(shoe_overrides)
+	src.update_shoes()
 
 	// Suit
-	src.update_suit(suit_overrides)
+	src.update_suit()
 
 	//tank transfer valve backpack's icon is handled in transfer_valve.dm
-	src.update_back(back_overrides, body_offset)
+	src.update_back(body_offset)
 
 	// Glasses
-	src.update_glasses(glasses_overrides, head_offset)
+	src.update_glasses(head_offset)
 	// Ears
-	src.update_ears(ears_overrides, head_offset)
+	src.update_ears(head_offset)
 
 	// Mask
-	src.update_mask(mask_overrides, head_offset)
+	src.update_mask(head_offset)
 	// Head
-	src.update_head(head_overrides, head_offset)
+	src.update_head(head_offset)
 	// Belt
-	src.update_belt(belt_overrides, body_offset)
+	src.update_belt(body_offset)
 
 	src.UpdateName()
 
@@ -130,15 +106,15 @@
 
 	clothing_dirty = 0
 
-/mob/living/carbon/human/proc/update_uniform(uniform_overrides)
+/mob/living/carbon/human/proc/update_uniform()
 	if (src.w_uniform)
 		var/image/suit_image
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
 		suit_image.filters = src.w_uniform.filters.Copy()
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
-		if ((islist(uniform_overrides)) && (wear_state in uniform_overrides))
-			suit_image.icon = src.mutantrace.clothing_icon_uniform
+		if (wear_state in src.mutantrace?.clothing_icon_states?["uniform"])
+			suit_image.icon = src.mutantrace.clothing_icons["uniform"]
 		else
 			suit_image.icon = src.w_uniform.wear_image_icon
 		suit_image.icon_state = wear_state
@@ -174,13 +150,13 @@
 		UpdateOverlays(null, "suit_image_blood")
 		UpdateOverlays(null, "material_suit")
 
-/mob/living/carbon/human/proc/update_id(id_overrides, head_offset)
+/mob/living/carbon/human/proc/update_id(head_offset)
 	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
 		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
 		var/no_offset = 0
-		if ((islist(id_overrides)) && (wear_state in id_overrides))
-			src.wear_id.wear_image.icon = src.mutantrace.clothing_icon_id
+		if (wear_state in src.mutantrace?.clothing_icon_states?["id"])
+			src.wear_id.wear_image.icon = src.mutantrace.clothing_icons["id"]
 			no_offset = 1
 		else
 			src.wear_id.wear_image.icon = src.wear_id.wear_image_icon
@@ -198,7 +174,7 @@
 	else
 		UpdateOverlays(null, "wear_id")
 
-/mob/living/carbon/human/proc/update_gloves(gloves_overrides, hand_offset)
+/mob/living/carbon/human/proc/update_gloves(hand_offset)
 	if (src.gloves)
 		wear_sanity_check(src.gloves)
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
@@ -207,8 +183,8 @@
 		src.gloves.wear_image.filters = src.gloves.filters.Copy()
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			if (islist(gloves_overrides) && ("left_[icon_name]" in gloves_overrides)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
-				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_hands
+			if ("left_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
@@ -221,8 +197,8 @@
 			UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			if (islist(gloves_overrides) && ("right_[icon_name]" in gloves_overrides)) //above but right glove
-				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_hands
+			if ("right_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
@@ -273,7 +249,7 @@
 	else
 		UpdateOverlays(null, "stunoverlay")
 
-/mob/living/carbon/human/proc/update_shoes(shoe_overrides)
+/mob/living/carbon/human/proc/update_shoes()
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
 		var/wear_state = src.shoes.wear_state || src.shoes.icon_state
@@ -285,8 +261,8 @@
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			if (islist(shoe_overrides) && ("left_[wear_state]" in shoe_overrides)) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
-				src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
+			if ("left_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"]) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
+				src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
 			else
 				src.shoes.wear_image.icon = src.shoes.wear_image_icon
 			src.shoes.wear_image.icon_state = "left_[wear_state]"
@@ -294,14 +270,14 @@
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				if (islist(shoe_overrides) && ("right_[wear_state]" in shoe_overrides)) //like above, but for right shoes
-					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
+				if ("right_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"]) //like above, but for right shoes
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				if (islist(shoe_overrides) && ("right_[wear_state]" in shoe_overrides))
-					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
+				if ("right_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"])
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
@@ -336,15 +312,15 @@
 		UpdateOverlays(null, "bloody_shoes_r")
 		UpdateOverlays(null, "wear_shoes")
 
-/mob/living/carbon/human/proc/update_suit(suit_overrides)
+/mob/living/carbon/human/proc/update_suit()
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
 		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy()
 
 		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
-		if (islist(suit_overrides) && (wear_state in suit_overrides))
-			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_overcoats
+		if (wear_state in src.mutantrace?.clothing_icon_states?["overcoats"])
+			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icons["overcoats"]
 		else
 			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
 		src.wear_suit.wear_image.icon_state = wear_state
@@ -399,13 +375,13 @@
 		src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
 		src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
-/mob/living/carbon/human/proc/update_back(back_overrides, body_offset)
+/mob/living/carbon/human/proc/update_back(body_offset)
 	if (src.back)
 		wear_sanity_check(src.back)
 		var/wear_state = src.back.wear_state || src.back.icon_state
 		var/no_offset = FALSE
-		if (islist(back_overrides) && (wear_state in back_overrides)) //checks if they are a mutantrace with special back sprites and then replaces them if they do
-			src.back.wear_image.icon = src.mutantrace.clothing_icon_back
+		if (wear_state in src.mutantrace?.clothing_icon_states?["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
+			src.back.wear_image.icon = src.mutantrace.clothing_icons["back"]
 			no_offset = TRUE
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
@@ -432,13 +408,13 @@
 		UpdateOverlays(null, "wear_back")
 		UpdateOverlays(null, "material_back")
 
-/mob/living/carbon/human/proc/update_glasses(glasses_overrides, head_offset)
+/mob/living/carbon/human/proc/update_glasses(head_offset)
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
 		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
 		var/no_offset = FALSE
-		if (islist(glasses_overrides) && (wear_state in glasses_overrides)) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
-			src.glasses.wear_image.icon = src.mutantrace.clothing_icon_eyes
+		if (wear_state in src.mutantrace?.clothing_icon_states?["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
+			src.glasses.wear_image.icon = src.mutantrace.clothing_icons["eyes"]
 			no_offset = TRUE
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
@@ -461,13 +437,13 @@
 		UpdateOverlays(null, "wear_glasses")
 		UpdateOverlays(null, "material_glasses")
 
-/mob/living/carbon/human/proc/update_ears(ears_overrides, head_offset)
+/mob/living/carbon/human/proc/update_ears(head_offset)
 	if (src.ears)
 		wear_sanity_check(src.ears)
 		var/no_offset = FALSE
 		var/wear_state = src.ears.wear_state || src.ears.icon_state
-		if (islist(ears_overrides) && (wear_state in ears_overrides)) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
-			src.ears.wear_image.icon = src.mutantrace.clothing_icon_ears
+		if (wear_state in src.mutantrace?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
+			src.ears.wear_image.icon = src.mutantrace.clothing_icons["ears"]
 			no_offset = TRUE
 		else
 			src.ears.wear_image.icon = src.ears.wear_image_icon
@@ -489,14 +465,14 @@
 		UpdateOverlays(null, "wear_ears")
 		UpdateOverlays(null, "material_ears")
 
-/mob/living/carbon/human/proc/update_mask(mask_overrides, head_offset)
+/mob/living/carbon/human/proc/update_mask(head_offset)
 	if (src.wear_mask)
 		wear_sanity_check(src.wear_mask)
 		var/no_offset = FALSE
 
 		var/wear_state = src.wear_mask.wear_state || src.wear_mask.icon_state
-		if (islist(mask_overrides) && (wear_state in mask_overrides))
-			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icon_mask
+		if (wear_state in src.mutantrace?.clothing_icon_states?["mask"])
+			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icons["mask"]
 			no_offset = TRUE
 		else
 			src.wear_mask.wear_image.icon = src.wear_mask.wear_image_icon
@@ -532,14 +508,14 @@
 		UpdateOverlays(null, "wear_mask_blood")
 		UpdateOverlays(null, "material_mask")
 
-/mob/living/carbon/human/proc/update_head(head_overrides, head_offset)
+/mob/living/carbon/human/proc/update_head(head_offset)
 	if (src.head)
 		wear_sanity_check(src.head)
 
 		var/no_offset = FALSE
 		var/wear_state = src.head.wear_state || src.head.icon_state
-		if (islist(head_overrides) && (wear_state in head_overrides))
-			src.head.wear_image.icon = src.mutantrace.clothing_icon_head
+		if (wear_state in src.mutantrace?.clothing_icon_states?["head"])
+			src.head.wear_image.icon = src.mutantrace.clothing_icons["head"]
 			no_offset = TRUE
 		else
 			src.head.wear_image.icon = src.head.wear_image_icon
@@ -574,14 +550,14 @@
 		UpdateOverlays(null, "wear_head_blood")
 		UpdateOverlays(null, "material_head")
 
-/mob/living/carbon/human/proc/update_belt(belt_overrides, body_offset)
+/mob/living/carbon/human/proc/update_belt(body_offset)
 	if (src.belt)
 		wear_sanity_check(src.belt)
 		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
 		var/no_offset = FALSE
 		//
-		if (islist(belt_overrides) && (wear_state in belt_overrides)) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
-			src.belt.wear_image.icon = src.mutantrace.clothing_icon_belt
+		if (wear_state in src.mutantrace?.clothing_icon_states?["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
+			src.belt.wear_image.icon = src.mutantrace.clothing_icons["belt"]
 			no_offset = TRUE
 		else
 			src.belt.wear_image.icon = src.belt.wear_image_icon
