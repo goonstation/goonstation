@@ -14,6 +14,8 @@
 #define ECLIPSE_PLANETARY 7
 /// for when the game doesn't know what's happening (e.g. admin nonsense)
 #define ECLIPSE_ERROR 8
+///a list of all created stars to iterate through
+var/list/starlist = new list()
 
 /// which areas should the 'global' sun ignore
 var/global/list/areas_with_local_suns = new

@@ -436,7 +436,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if(!delete_queue)
 		delete_queue = new /datum/dynamicQueue(100)
 
-	var/list/starlist
 	sun = new /datum/sun()
 	sun.identity_check()
 	sun += starlist

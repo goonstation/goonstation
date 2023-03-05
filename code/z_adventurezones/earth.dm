@@ -55,6 +55,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	EarthSun.sun_area = src
 	EarthSun.stationloc = "earth"
 	EarthSun.identity_check()
+	starlist += EarthSun
 
 /area/centcom/gallery
 	name = "NT Art Gallery"
