@@ -529,7 +529,55 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 
 		qdel(src)
 		return
+/obj/item/old_grenade/foam_dart
+	name = "Foam dart Grenade"
+	desc = "You can make great fights with these and foam dart guns."
+	icon_state = "foam-dart"
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
+	item_state = "fragnade"
+	is_syndicate = 0
+	sound_armed = 'sound/weapons/pindrop.ogg'
+	icon_state_armed = "foam-dart1"
+	var/custom_projectile_type = /datum/projectile/bullet/foamdart/biodegradable
+	var/pellets_to_fire = 25
 
+	prime()
+		var/turf/T = ..()
+		if (T)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			var/obj/overlay/O = new/obj/overlay(get_turf(T))
+			O.anchored = 1
+			O.name = "Explosion"
+			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
+			O.icon = 'icons/effects/64x64.dmi'
+			O.icon_state = "explo_fiery"
+			var/obj/item/old_grenade/stinger/frag/F = null
+			if (istype(src, /obj/item/old_grenade/stinger/frag))
+				F = src
+			if (F)
+				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
+				SPAWN(0)
+					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
+						for(var/i = 1 to 6)
+							F.smoke.start()
+							sleep(1 SECOND)
+			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+			if(src.custom_projectile_type)
+				PJ.spread_projectile_type = src.custom_projectile_type
+				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
+			PJ.pellets_to_fire = src.pellets_to_fire
+			var/targetx = src.y - rand(-5,5)
+			var/targety = src.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, src.z)
+			shoot_projectile_ST(src, PJ, newtarget)
+			SPAWN(0.5 SECONDS)
+				qdel(O)
+				qdel(src)
+		else
+			qdel(src)
+		return
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
