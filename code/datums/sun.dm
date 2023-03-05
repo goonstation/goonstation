@@ -97,7 +97,7 @@ var/global/list/areas_with_local_suns = new
 		#elif defined(MAP_OVERRIDE_NADIR)
 		src.stationloc = "magus"
 		#endif
-	if (src.oldloc == src.stationloc)
+	if (oldloc == src.stationloc)
 		return
 	switch (src.stationloc)
 		if ("void")
