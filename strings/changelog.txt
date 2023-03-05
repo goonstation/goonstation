@@ -1,5 +1,9 @@
 
 (t)sun mar 05 23
+(u)LeahTheTech
+(p)13280
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)The "Hide genetics abilities" button now hides/unhides all abilities instead.
 (u)aloe
 (+)Pugs can *woof. Other people can too, I guess. Sound by Virvatuli!
 (u)LeahTheTech
