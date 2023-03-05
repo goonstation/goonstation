@@ -38,16 +38,17 @@ var/global/list/areas_with_local_suns = new
 	var/desc
 
 	// these time vars below theoretically use time units like SECOND and MINUTE, so 1 = 1/10 of a second
-	/// How often do eclipses happen? It's the length of the whole cycle, so it needs to be = to eclipse_time + penumbra_time + downtime
-	var/eclipse_cycle_length = 0
+	// also, the penumbra and cycle length times don't actually get perma assigned, but it's for reference.
 	/// a counter for cycling through the eclipse
-	var/eclipse_counter = 20
-	/// How long does it take to transition from not eclipsing to eclipsing.
-	var/penumbra_time = 0
+	var/eclipse_counter = 1
 	/// How long is the peak of the eclipse? 0 is just a default fallback value
 	var/eclipse_time = 0
+	/// How long does it take to transition from not eclipsing to eclipsing. Generally src.eclipse_time * rand(15,30)
+	var/penumbra_time = src.eclipse_time * rand(15,30)
 	/// How much time is spent not in eclipse?
 	var/down_time = 0
+	/// How often do eclipses happen? It's the length of the whole cycle. Generally down_time + penumbra_time * 2 + eclipse_time
+	var/eclipse_cycle_length = down_time + penumbra_time * 2 + eclipse_time
 
 	/// At the peak, what's the minimum star visibility? Percentage where 1=100% (total eclipse). This being below 1 makes the peak annular.
 	var/eclipse_magnitude = 1
@@ -100,8 +101,11 @@ var/global/list/areas_with_local_suns = new
 	if (oldloc == src.stationloc)
 		return
 	switch (src.stationloc)
+		//generally go in order: name, desc,eclipse status and order, eclipse info, visibility, pv efficiency, rate, angle
+		//eclipse data in the order: cycle_on, magnitude, downtime, eclipse time, penumbra time,cyclelength, counter
 		if ("void")
 			// for admin nonsense generally, also shuttle transit. Where no stars apply.
+			src.name = "unknown"
 			src.desc = "The stars have abandoned you."
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
@@ -115,6 +119,7 @@ var/global/list/areas_with_local_suns = new
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
+			src.photovoltaic_efficiency = 0
 			src.rate = 0
 			src.angle = 0
 		if ("13")
@@ -124,31 +129,47 @@ var/global/list/areas_with_local_suns = new
 			*/
 			src.name = "Typhon"
 			src.desc = "Station is currently in a stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
-			src.rate = rand(75,125)/50 // 75% - 125% of standard rotation
-			if(prob(50))
-				src.rate = -src.rate
 			if (prob(50)) // this thing gives it a random eclipse
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
-				src.eclipse_magnitude = pick(1, rand(10,100)/100)
-				src.eclipse_cycle_length = rand(20, 80) MINUTES
+				src.eclipse_magnitude = pick(1, rand(1,99)/100)
+				src.down_time = rand(20 MINUTES, 60 MINUTES)
 				src.eclipse_time = rand(10 SECONDS, 5 MINUTES)
+				src.penumbra_time = src.eclipse_time * rand(15,30)
+				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
+				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
+			else
+				src.eclipse_status = ECLIPSE_FALSE
+				src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
+			src.photovoltaic_efficiency = 1
+			src.rate = rand(75,125)/50 // 75% - 125% of standard rotation
+			if(prob(50))
+				src.rate = -src.rate
+			src.angle = rand(1,359)
 			// is the default settings pre #13206, but with 50% chance of random eclipsing
 		if ("travel")
 			// for ship maps (in deep space). Uses a randomer randomiser
-			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
-			if (src.name == "unknown")
-				src.name = pick("Typhon", "Fugg", "Shidd")
+			src.name = pick("Typhon", "Fugg", "Shidd")
 			src.desc = "Ship is currently in deep space, with its main lighting coming from [src.name]."
-			src.rate = rand(70,160)/50 // more range than the default
-			if(prob(50))
-				src.rate = -rate
 			if (prob(50)) // 50 50 chance of it going into shadow every so often
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
 				src.eclipse_magnitude = pick(1, rand(10,100)/100)
-				src.eclipse_cycle_length = rand(100, 300) SECONDS
-				src.eclipse_time = rand(10, 300) SECONDS
+				src.down_time = rand(25 MINUTES, 120 MINUTES)
+				src.eclipse_time = rand(5 SECONDS, 8 MINUTES)
+				src.penumbra_time = src.eclipse_time * rand(15,30)
+				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
+				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
+			else
+				src.eclipse_status = ECLIPSE_FALSE
+				src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
+			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
+			src.rate = rand(70,160)/50 // more range than the default
+			if(prob(50))
+				src.rate = -rate
+			src.angle = rand(1,359)
 		if ("magus")
 			//nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from Shidd or Fugg.
 			#if (BUILD_TIME_HOUR <=3 || (BUILD_TIME_HOUR <= 11 && BUILD_TIME_HOUR >=8) || (BUILD_TIME_HOUR <= 19 && BUILD_TIME_HOUR >= 16))
@@ -159,36 +180,41 @@ var/global/list/areas_with_local_suns = new
 			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. The site is currently being lit by [src.name]."
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
-			src.rate = 0
-			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			src.down_time = 8 HOURS
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
 			if (src.name == "Fugg") // the stars have different strengths, see. Based on the noon RGB values.
 				src.photovoltaic_efficiency = 0.6
 			else
 				src.photovoltaic_efficiency = 1
+			src.rate = 0
+			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 			// you get 6% of 60% strength sunlight overall
 		if ("abzu")
 			//oshan and technically also manta
 			src.name = "Shidd"
 			src.desc = "The Oshan Laboratory is located under the seas of Abzu, and is lit by the blue-white light of its star, Shidd."
-			src.visibility = 0.35 // time.dm shows alpha value 65% at noon, so
 			src.eclipse_time = 6 HOURS
+			src.down_time = 6 HOURS
 			src.eclipse_cycle_length = 12 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			// note how the eclipse has details for computers and stuff but won't ever actually happen at runtime.
+			src.photovoltaic_efficiency = 1.5 //it be pretty close to its star ngl
+			// note how there is data on when Shidd rises/sets, but won't ever actually happen at runtime.
 			if (BUILD_TIME_HOUR < 3 || BUILD_TIME_HOUR > 9 && BUILD_TIME_HOUR < 15 || BUILD_TIME_HOUR > 18)
 				// oshan works off a 12 hour cycle, not 24
 				src.eclipse_status = ECLIPSE_PLANETARY
 				src.visibility = 0
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = rand(80,100)/100 // assuming cloud covers up to 20% of light
+				src.visibility = 0.35 // this is the noon rgb percentage of OCEAN_LIGHT / rgb 255 255 255
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
+			src.rate = 0
+			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 		if ("earth")
 			//centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
 			src.zlevel = 2
 			src.name = "\improper Sun"
 			src.desc = "The sun illuminates the surface of the Earth, as it has done for millions of years."
+			src.down_time = 12 HOURS
 			src.eclipse_time = 12 HOURS
 			src.eclipse_cycle_length = 24 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
@@ -198,6 +224,9 @@ var/global/list/areas_with_local_suns = new
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
 				src.visibility = rand(80,100) // assuming cloud covers up to 20% of light
+			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
+			src.rate = 0
+			src.angle = rand(1, 359)
 		if ("debris") // the debris field is in the main rings district
 			src.name = "Typhon"
 			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
