@@ -248,6 +248,7 @@ datum/mind
 					ticker.mode.traitors.Remove(src)
 					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
