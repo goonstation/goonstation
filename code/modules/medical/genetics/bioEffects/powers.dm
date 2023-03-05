@@ -13,7 +13,7 @@
 	var/using = 0
 	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
-	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
+	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
 		..()
@@ -22,30 +22,25 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.dispose()
 			ability.owner = null
+			qdel(ability)
 		src.ability = null
 		..()
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			check_ability_owner()
-			var/mob/living/carbon/human/H = owner
-			H.hud.update_ability_hotbar()
-		return
+		check_ability_owner()
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.hud)
-				H.hud.update_ability_hotbar()
-		return
+		if (src.ability)
+			src.ability.holder.removeAbilityInstance(src.ability)
 
 	proc/check_ability_owner()
 		if (ispath(ability_path))
-			var/datum/targetable/geneticsAbility/AB = new ability_path(src)
+			var/datum/targetable/geneticsAbility/AB = src.owner?.abilityHolder?.addAbility(src.ability_path)
+			if (!AB)
+				return
 			ability = AB
 			AB.linked_power = src
 			icon = AB.icon
