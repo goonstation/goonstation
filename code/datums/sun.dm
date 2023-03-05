@@ -47,7 +47,7 @@ var/global/list/areas_with_local_suns = new
 	/// How much time is spent not in eclipse?
 	var/down_time = 0
 
-	/// If we have an annular eclipse (eclipse status = ECLIPSE_UMBRA), what's the minimum star visibility? Percentage where 1=100%. This being below 1 makes the peak annular.
+	/// At the peak, what's the minimum star visibility? Percentage where 1=100% (total eclipse). This being below 1 makes the peak annular.
 	var/eclipse_magnitude = 1
 	/// which stage of the eclipse are we in?
 	var/eclipse_status = ECLIPSE_FALSE
@@ -311,11 +311,11 @@ var/global/list/areas_with_local_suns = new
 			if (ignoreme)
 				ignoreme = FALSE
 				continue
-		occlusion(S)
+		occlusion(S,src.visibility)
 
 
-// for a solar panel, trace towards sun to see if we're in shadow
-/datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
+/// for a solar panel, trace towards sun to see if we're in shadow
+/datum/sun/proc/occlusion(var/obj/machinery/power/solar/S, var/eclipse_blockage)
 
 	var/ax = S.x		// start at the solar panel
 	var/ay = S.y
@@ -338,6 +338,7 @@ var/global/list/areas_with_local_suns = new
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
+///turns a direction into an angle in degrees, with NORTH being 0 degrees, and EAST 90
 /proc/dir2angle(var/D)
 	switch(D)
 		if(NORTH)
