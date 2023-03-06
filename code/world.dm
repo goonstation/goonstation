@@ -437,15 +437,10 @@ var/f_color_selector_handler/F_Color_Selector
 		delete_queue = new /datum/dynamicQueue(100)
 
 	sun = new /datum/sun()
-	sun.identity_check()
 
-	z3sun = new /datum/sun()
-	z3sun.stationloc = "debris"
-	z3sun.identity_check()
+	z3sun = new /datum/sun("debris")
 
-	z5sun = new /datum/sun()
-	z5sun.stationloc = "mining"
-	z5sun.identity_check()
+	z5sun = new /datum/sun("mining")
 
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()

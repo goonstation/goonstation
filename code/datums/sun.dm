@@ -63,9 +63,12 @@ var/global/list/areas_with_local_suns = new
 	/// At 100% visibility, at what efficiency do the solars work? Based on inverse square of distance to star. Also a percentage, with 1 = 100%
 	var/photovoltaic_efficiency = 1
 
-/datum/sun/New()
+/datum/sun/New(var/location)
 	. = ..()
+	if (!isnull(location))
+		src.stationloc = location
 	global.starlist += src
+	src.identity_check()
 
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
