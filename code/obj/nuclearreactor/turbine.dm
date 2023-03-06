@@ -19,7 +19,7 @@
 	bound_y = -32
 	dir = EAST
 	custom_suicide = TRUE
-
+	machine_registry_idx = MACHINES_FISSION
 	/// Reference to the power terminal we use to dump power onto the net
 	var/obj/machinery/power/terminal/terminal = null
 	/// ID of this object on the pnet

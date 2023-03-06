@@ -9,6 +9,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	icon = 'icons/obj/machines/photocopier.dmi'
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
+	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
@@ -186,6 +187,7 @@ TYPEINFO(/obj/machinery/photocopier)
 						flick("print", src)
 						sleep(1.8 SECONDS)
 						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
+						use_power(5)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0

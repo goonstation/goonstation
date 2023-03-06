@@ -28,13 +28,15 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-//////////// OPTIONS TO GO FAST
+//------------ OPTIONS TO GO FAST ------------//
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
-//////////// CONVENIENCE OPTIONS FOR TESTING ETC
+//////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
+
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -53,7 +55,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
-//////////// PROFILING OPTIONS
+//------------- PROFILING OPTIONS -------------//
 
 //#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
@@ -61,7 +63,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
 //#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
 
-//////////// DEBUGGING TOGGLES
+//------------- DEBUGGING TOGGLES -------------//
 
 // Delete queue debug toggle
 // This is expensive. don't turn it on on the server unless you want things to be bad and slow
@@ -101,7 +103,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
 
-//////////// MAP OVERRIDES
+//------------- MAP OVERRIDES -------------//
 
 //#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
 //#define MAP_OVERRIDE_DESTINY			// Destiny/RP
@@ -128,15 +130,15 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
-// #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
+//#define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT      // Misc. event maps
 
-//////////// Unit Test Framework
+//------------ Unit Test Framework ------------//
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
 
-//////////// HOLIDAYS AND OTHER SUCH TOGGLES
+//------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
@@ -162,13 +164,18 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CHECK_MORE_RUNTIMES
 #endif
 
-var/global/vcs_revision = "1"
-var/global/vcs_author = "bob"
+//----- Testmerge & Revision Information -----//
 
+/// The literal current commit hash the server is running off of
 #define VCS_REVISION "1"
+/// The literal current author of the commit the server is runing off of
 #define VCS_AUTHOR "bob"
-#define ORIGIN_REVISION "2"
-#define ORIGIN_AUTHOR "alice"
+/// The latest commit on the origin at the time of the server build, for display
+#define ORIGIN_REVISION "1"
+/// The latest commit author on the origin at the time of the server build, for display
+#define ORIGIN_AUTHOR "bob"
+// This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
+// #define TESTMERGE_PRS list(123, 456)
 
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST

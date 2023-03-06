@@ -52,13 +52,18 @@ var/datum/action_controller/actions
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
+					if(OA.interrupt_start != -1)
+						OA.interrupt_time += TIME - OA.interrupt_start
+						OA.interrupt_start = -1
 					OA.onResume(A)
+					OA.onUpdate()
 					qdel(A)
 					return OA
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
 		A.onStart()
+		A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
@@ -71,7 +76,7 @@ var/datum/action_controller/actions
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
-				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
+				if( ((A.duration >= 0 && A.time_spent() >= A.duration) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
 					A.promise?.fulfill(A)
@@ -99,9 +104,19 @@ var/datum/action_controller/actions
 	var/id = "base" //! Unique ID for this action. For when you want to remove actions by ID on a person.
 	var/resumable = TRUE
 	var/datum/promise/promise //! Promise that will be fulfilled when the action is finished or deleted. Finished = fulfilled with the action, deleted = fulfilled with null.
+	var/interrupt_time = 0 //! How long the action spent interrupted. Used to calculate the remaining time when resuming.
+	var/interrupt_start = -1 //! When the action was interrupted. Used to calculate interrupt_time
+
+	proc/time_spent()
+		if(interrupt_start == -1)
+			return TIME - started - interrupt_time
+		else
+			return interrupt_start - started - interrupt_time
 
 	proc/interrupt(var/flag) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
+			if(state != ACTIONSTATE_INTERRUPTED)
+				interrupt_start = TIME
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
@@ -289,7 +304,7 @@ var/datum/action_controller/actions
 	updateBar(var/animate = 1)
 		if (duration <= 0 || isnull(bar))
 			return
-		var/done = TIME - started
+		var/done = src.time_spent()
 		// inflate it a little to stop it from hitting 100% "too early"
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
@@ -474,7 +489,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -488,8 +506,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -512,9 +528,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
@@ -575,7 +592,10 @@ var/datum/action_controller/actions
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -610,8 +630,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
@@ -845,7 +867,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -859,8 +884,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -883,8 +906,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
@@ -1384,9 +1409,10 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 

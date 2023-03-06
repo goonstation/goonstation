@@ -221,7 +221,7 @@
 	in_bump = 0
 	return
 
-/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	if (!src.rider)
 		return
 

@@ -84,6 +84,8 @@
 		if(delay_finalization && add_lrt)
 
 			var/list/turf/turfs = GeneratePlanetChunk(src.width, src.height, prefabs_to_place=src.prefabs, generator=src.generator, color=src.color, name=planet_name, use_lrt=FALSE, seed_ore=src.seed_ore, mapgen_flags=flags)
+			if(!length(turfs))
+				message_admins("Planet Generation Failed!")
 
 			tgui_alert(usr, "Continue when you are complete...","Ready?!?",list("Continue"))
 
