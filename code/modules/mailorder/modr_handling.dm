@@ -1,4 +1,4 @@
-//mail order manifest: sent to quartermasters to sign off on the goods being imported
+///Mail order manifest datum: sent to quartermasters to sign off on the goods being imported
 /datum/mailorder_manifest
 	var/list/stock = list() //things to instantiate in the order
 	var/stock_frontend = "" //list of contents to show in the console
@@ -57,7 +57,7 @@
 //Adding the chute will not prevent purchase of the mail-order via QM secure crate;
 //merely add the option for a less secure but more convenient box-based delivery
 
-/// Box for mail-based delivery
+///Box for mail-based delivery
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
@@ -74,7 +74,7 @@
 			src.set_loc(get_turf(yeetbegin))
 			src.throw_at(yeetend, 100, 1)
 
-//Box for QM-based delivery
+///Box for QM-based delivery
 /obj/storage/secure/crate/mailorder
 	name = "mail-order crate"
 	desc = "A crate that holds mail-ordered items."
@@ -85,7 +85,7 @@
 			src.name = "\improper [src.registered]'s mail-order crate"
 			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]'s ID card."
 
-//Auto chute that accepts boxes for mail-based delivery, and nothing else
+///Auto chute that accepts boxes for mail-based delivery (routing them based on the box's mail tag), and nothing else
 /obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
 	desc = "A large chute that only accepts specially designed mail-order boxes."
