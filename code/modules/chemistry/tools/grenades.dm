@@ -313,7 +313,7 @@
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
 		B1.reagents.add_reagent("fluorosurfactant", 10)
-		B1.reagents.add_reagent("lube", 10)
+		B1.reagents.add_reagent("superlube", 10)
 
 		B2.reagents.add_reagent("pacid", 10) //The syndicate are sending the strong stuff now -Spy
 		B2.reagents.add_reagent("water", 10)
@@ -358,38 +358,35 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 
 	revolution //convertssss
 		explode()
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/min_dispersal = src.reagents.get_dispersal()
-				for (var/mob/M in range(max(min_dispersal,6), get_turf(src.loc)))
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/safety = 0
-						if (H.eyes_protected_from_light() && H.ears_protected_from_sound())
-							safety = 1
+			var/min_dispersal = src.reagents.get_dispersal()
+			for (var/mob/M in range(max(min_dispersal,6), get_turf(src.loc)))
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					var/safety = 0
+					if (H.eyes_protected_from_light() && H.ears_protected_from_sound())
+						safety = 1
 
-						if (safety == 0)
-							var/can_convert = 1
-							var/list/U = R.get_unconvertables()
-							if (!H.client || !H.mind)
-								can_convert = 0
-							else if (H.mind in U)
-								can_convert = 0
-							else if (H.mind in R.head_revolutionaries)
-								can_convert = 0
-							else
-								can_convert = 1
+					if (safety == 0)
+						var/can_convert = 1
+						if (!H.client || !H.mind)
+							can_convert = 0
+						else if (!H.can_be_converted_to_the_revolution())
+							can_convert = 0
+						else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+							can_convert = 0
+						else
+							can_convert = 1
 
-							for (var/obj/item/implant/counterrev/found_imp in H.implant)
-								found_imp.on_remove(H)
-								H.implant.Remove(found_imp)
-								qdel(found_imp)
+						for (var/obj/item/implant/counterrev/found_imp in H.implant)
+							found_imp.on_remove(H)
+							H.implant.Remove(found_imp)
+							qdel(found_imp)
 
-								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-								H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
+							playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
+							H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
-							if (can_convert && !(H.mind in R.revolutionaries))
-								R.add_revolutionary(H.mind)
+						if (can_convert && !(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
+							H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
 
 			..()
 

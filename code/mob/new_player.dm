@@ -272,7 +272,9 @@ mob/new_player
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+			return
 		global.latespawning.lock()
 
 		if (JOB && (force || IsJobAvailable(JOB)))
@@ -366,6 +368,10 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
+
+			// Apply any roundstart mutators to late join if applicable
+			roundstart_events(character)
+
 			SPAWN(0)
 				qdel(src)
 			global.latespawning.unlock()
@@ -375,6 +381,11 @@ mob/new_player
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
+
+	proc/roundstart_events(mob/living/player)
+		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+			if(RE.include_latejoin && RE.is_crew_affected(player))
+				RE.apply_to_player(player)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
@@ -640,6 +651,8 @@ a.latejoin-card:hover {
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
+
+		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
 		close_spawn_windows()
 
