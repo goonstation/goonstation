@@ -201,7 +201,7 @@
 		return heads
 
 
-/datum/game_mode/proc/get_all_heads()
+/datum/game_mode/revolution/proc/get_all_heads()
 	var/list/heads = list()
 
 	for(var/mob/player in mobs)
