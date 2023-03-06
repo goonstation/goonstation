@@ -53,6 +53,7 @@
 
 #define DELIVERED_TO_MAIL 1
 #define DELIVERED_TO_QM 2
+
 #define MODE_LIST 0
 #define MODE_CART 1
 
