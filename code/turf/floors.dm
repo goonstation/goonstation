@@ -1949,8 +1949,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!src.intact)
 			if (C.amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-
-				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+				var/obj/item/rods/used_item = C
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, list(used_item), C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			else
 				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else
