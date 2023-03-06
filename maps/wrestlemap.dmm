@@ -12779,7 +12779,7 @@
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/quarters_south)
 "fpg" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},

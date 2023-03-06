@@ -1203,7 +1203,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		// final check to guarantee the icon shows up for everyone
 		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((borg.mind in ticker.mode:revolutionaries) || (borg.mind in ticker.mode:head_revolutionaries))
+			if ((borg.mind?.get_antagonist(ROLE_REVOLUTIONARY)) || (borg.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		borg.update_appearance()
 

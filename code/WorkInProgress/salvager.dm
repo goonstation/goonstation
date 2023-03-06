@@ -2,7 +2,7 @@
 
 /obj/item/salvager
 	name = "salvage reclaimer"
-	desc = "A strange hodgepodge of industrial equipment used to break part equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
+	desc = "A strange hodgepodge of industrial equipment used to break apart equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif

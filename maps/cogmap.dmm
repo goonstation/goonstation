@@ -36350,7 +36350,7 @@
 	},
 /area/station/science/lobby)
 "bWC" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bWD" = (
@@ -37277,13 +37277,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/device/radio/headset/research{
-	pixel_x = -1
-	},
-/obj/item/device/radio/headset/research{
-	pixel_x = -5;
-	pixel_y = 7
-	},
+/obj/item/pen,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bZh" = (
@@ -61132,6 +61126,11 @@
 "sAI" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
+"sAW" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_tool,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "sBr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -99092,7 +99091,7 @@ bRd
 bWx
 bUa
 hVP
-bWC
+sAW
 bWC
 bZg
 cax

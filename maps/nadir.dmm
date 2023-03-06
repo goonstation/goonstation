@@ -5370,7 +5370,7 @@
 /turf/simulated/shuttle/wall/flock,
 /area/space)
 "crg" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
