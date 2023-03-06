@@ -6,6 +6,8 @@
 
 	var/topBarRendered = 1
 	var/rendered = 1
+	///Is this holder temporarily hidden
+	var/hidden = FALSE
 	var/datum/targetable/shiftPower = null
 	var/datum/targetable/ctrlPower = null
 	var/datum/targetable/altPower = null
@@ -91,12 +93,6 @@
 				A.update_cooldown_cost()
 				num++
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			for(var/atom/movable/screen/ability/topBar/genetics/G in H.hud.objects)
-				G.update_cooldown_cost()
-				num++
-
 		return num
 
 
@@ -111,7 +107,7 @@
 		y_occupied = 0
 		any_abilities_displayed = 0
 
-		if (src.topBarRendered && src.rendered)
+		if (src.topBarRendered && src.rendered && !src.hidden)
 
 			if (!called_by_owner)
 				for(var/atom/movable/screen/ability/A in src.hud.objects)
@@ -908,8 +904,8 @@
 				localholder.updateButtons()
 
 		cast(atom/target)
-			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
-			return
+			if(interrupt_action_bars)
+				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
 		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 		onAttach(var/datum/abilityHolder/H)
@@ -1177,17 +1173,18 @@
 	updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
 		if (src.topBarRendered && src.rendered && src.hud)
 			for(var/atom/movable/screen/ability/A in src.hud.objects)
-				src.hud.objects -= A
+				src.hud.remove_object(A)
 
 		x_occupied = 1
 		y_occupied = 0
 		any_abilities_displayed = 0
-		for (var/datum/abilityHolder/H in holders)
-			if (H.topBarRendered || H.rendered)
-				H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
-				x_occupied = H.x_occupied
-				y_occupied = H.y_occupied
-				any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
+		if (!src.hidden)
+			for (var/datum/abilityHolder/H in holders)
+				if (H.topBarRendered || H.rendered)
+					H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
+					x_occupied = H.x_occupied
+					y_occupied = H.y_occupied
+					any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
 
 
 		if (src.topBarRendered)
