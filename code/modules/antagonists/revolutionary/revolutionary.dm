@@ -49,4 +49,19 @@
 		..(override)
 
 	check_success()
-		return FALSE
+		var/list/heads_of_staff = ticker?.mode.get_all_heads()
+
+		for(var/datum/mind/head_mind in heads_of_staff)
+			if(head_mind?.current && !isdead(head_mind.current))
+				if(issilicon(head_mind.current) || isghostcritter(head_mind.current) || isVRghost(head_mind.current))
+					continue
+
+				if(istype(head_mind.current.loc, /obj/cryotron))
+					continue
+
+				var/turf/T = get_turf(head_mind.current)
+				if(T.z != 1)
+					continue
+
+				return FALSE
+		return TRUE
