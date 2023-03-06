@@ -1959,9 +1959,11 @@ obj/item/whetstone
 
 	var/mode = OFFENSIVE_MODE
 	var/attached = FALSE
+	var/image/shield = null
 
 	New()
 		..()
+		shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
 	update_icon()
@@ -2028,6 +2030,7 @@ obj/item/whetstone
 		setProperty("disorient_resist", 0)
 		src.setItemSpecial(/datum/item_special/simple)
 		can_disarm = FALSE
+		user.overlays -= shield
 	else if(src.mode == DEFENSIVE_MODE)
 		hit_type = DAMAGE_BLUNT
 		force = 5
@@ -2042,6 +2045,7 @@ obj/item/whetstone
 		setProperty("disorient_resist", 40)
 		src.setItemSpecial(/datum/item_special/simple)
 		can_disarm = TRUE
+		user.overlays += shield
 	else // Offensive mode
 		hit_type = DAMAGE_BURN
 		force = 30
@@ -2056,6 +2060,7 @@ obj/item/whetstone
 		setProperty("disorient_resist", 0)
 		src.setItemSpecial(/datum/item_special/rangestab)
 		can_disarm = FALSE
+		user.overlays -= shield
 	user.update_equipped_modifiers()
 
 #undef OFFENSIVE_MODE
