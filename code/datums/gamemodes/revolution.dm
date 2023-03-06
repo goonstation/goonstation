@@ -190,7 +190,7 @@
 	var/list/heads = list()
 
 	for(var/mob/living/carbon/human/player in mobs)
-		if(player.mind)
+		if(player.mind && !isdead(player))
 			var/role = player.mind.assigned_role
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
 				heads += player.mind
