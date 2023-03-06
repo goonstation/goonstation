@@ -382,10 +382,14 @@ var/global
 
 	// suns for z1,debris field and mining level
 	datum/sun/sun = null
+	datum/sun/z2sun = null
 	datum/sun/z3sun = null
 	datum/sun/z5sun = null
 
+	///centcomm's sun
 	datum/sun/EarthSun = null
+	///the sun used for wormhole transit and other nonsense. z2's global sun if you will
+	datum/sun/VoidSun = null
 
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null

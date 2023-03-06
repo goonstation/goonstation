@@ -58,8 +58,10 @@
 	var/list/eclipse_order = list(ECLIPSE_FALSE)
 	/// what percentage of light reaches us? 1 is 100%, 0 is 0%. Changes as the eclipse does. Cloud cover changes this too i guess. Max is 1
 	var/visibility = 1
-	/// At 100% visibility, at what efficiency do the solars work? Based on inverse square of distance to star. Also a percentage, with 1 = 100%
+	/// At 100% visibility, at what efficiency do the solars work? Based on inverse square of distance to star, where 1 is the level at rota fortuna.
 	var/photovoltaic_efficiency = 1
+	// bonus note, photovoltaic_efficiency on earth is 15.7 since typhon is dimmer than the sun and rota fortuna is further.
+	// the spess solars are just mega efficient basically.
 
 /// creates a new star based on (optional) stationloc provided and an assigned area for locals
 /datum/sun/New(var/location, var/area/assigned_area)
@@ -102,16 +104,31 @@
 	#elif defined(MAP_OVERRIDE_NADIR)
 	src.stationloc = "magus"
 	#endif
-/// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
+/// This can be called to set the sun's data based on its assigned stationloc
 /datum/sun/proc/identity_check()
+	// the sun datums for magus, abzu, and earth don't have a use at present, since those places don't have solars.
+	// but they are supposedly constructible so we need to have that data anyway.
+	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas.
 	var/oldloc = src.stationloc
 	if (oldloc == src.stationloc) return
 	switch (src.stationloc)
 		//generally go in order: name, desc,eclipse status and order, eclipse info, visibility, pv efficiency, rate, angle
 		//eclipse data in the order: cycle_on, magnitude, downtime, eclipse time, penumbra time,cyclelength, counter
-		if ("void") // for admin nonsense generally, also shuttle transit. Where no stars apply.
+		if ("void") // for admin nonsense generally. Where no stars apply.
 			src.name = "unknown"
 			src.desc = "The stars have abandoned you."
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_status = ECLIPSE_ERROR
+			src.eclipse_order = list(ECLIPSE_ERROR)
+			src.visibility = 0
+			src.photovoltaic_efficiency = 0
+			src.rate = 0
+			src.angle = 0
+		if ("adventure_void") // z2's global sun. Useful for wormholes n stuff
+			src.zlevel = 2
+			src.name = "unknown"
+			src.desc = "Error!"
+			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
@@ -122,6 +139,7 @@
 			src.zlevel = 5
 			src.name = "N/A"
 			src.desc = "No sunlight reaches the depths of the trench."
+			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
@@ -132,6 +150,7 @@
 			src.zlevel = 3
 			src.name = "Typhon"
 			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
+			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
@@ -143,13 +162,14 @@
 			src.zlevel = 5
 			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
 			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
+			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
 			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.3
 			else src.photovoltaic_efficiency = 0.6
 			src.rate = 0
-			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			src.angle = rand(1, 359)
 		if ("NT-13") // for most 'fixed' space stations. Space Station 13 in L2 lagrange point around Rota Fortuna in the mundus gap district.
 			/* If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a lissajous orbit around the
 			umbra, making the lore reason for the solars turning is that the whole map is spinning.
@@ -168,6 +188,7 @@
 				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
 				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			else
+				src.eclipse_cycle_on = FALSE
 				src.eclipse_status = ECLIPSE_FALSE
 				src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
@@ -190,6 +211,7 @@
 				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
 				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			else
+				src.eclipse_cycle_on = FALSE
 				src.eclipse_status = ECLIPSE_FALSE
 				src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
@@ -205,6 +227,7 @@
 			src.name = "Fugg" // the nadir lighting is redder/darker
 			#endif
 			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. The site is currently being lit by [src.name]."
+			src.eclipse_cycle_on = FALSE // doesn't proceed at runtime
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.down_time = 8 HOURS
@@ -213,16 +236,18 @@
 			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.6
 			else src.photovoltaic_efficiency = 1
 			src.rate = 0
-			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			src.angle = pick(90, 270)
 			// you get 6% of 60% strength sunlight overall
 		if ("abzu") //oshan and technically also manta
 			src.name = "Shidd"
 			src.desc = "The Oshan Laboratory is located under the seas of Abzu, and is lit by the blue-white light of its star, Shidd."
 			src.eclipse_time = 6 HOURS
 			src.down_time = 6 HOURS
+			src.eclipse_cycle_on = FALSE
 			src.eclipse_cycle_length = 12 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			src.photovoltaic_efficiency = 1.5 //it be pretty close to its star ngl
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 10 //it be pretty close to its star ngl
 			// note how there is data on when Shidd rises/sets, but won't ever actually happen at runtime.
 			if (BUILD_TIME_HOUR < 3 || BUILD_TIME_HOUR > 9 && BUILD_TIME_HOUR < 15 || BUILD_TIME_HOUR > 18)
 				// oshan works off a 12 hour cycle, not 24
@@ -233,11 +258,12 @@
 				src.visibility = 0.35 // this is the noon rgb percentage of OCEAN_LIGHT / rgb 255 255 255
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
 			src.rate = 0
-			src.angle = 180 + (rand(90, 180) * pick(1, -1))
+			src.angle = pick(90, 270)
 		if ("earth") //centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
 			src.zlevel = 2
 			src.name = "\improper Sun"
 			src.desc = "The sun illuminates the surface of the Earth, as it has done for millions of years."
+			src.eclipse_cycle_on = FALSE
 			src.down_time = 12 HOURS
 			src.eclipse_time = 12 HOURS
 			src.eclipse_cycle_length = 24 HOURS
@@ -248,9 +274,52 @@
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
 				src.visibility = 1
+			src.eclipse_magnitude = 1
 			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
 			src.rate = 0
-			src.angle = rand(1, 359)
+			src.angle = pick(90, 270)
+		if ("io") // lava moon
+			// interesting stuff to consider for lava moon
+			// io is pretty much tidally locked with jupiter, so lighting changes are genuine eclipses.
+			// its main heat is from geological processes though, not the sun.
+			// so it doesn't matter that much
+			src.zlevel = 2
+			src.name = "\improper Sun"
+			src.desc = "The sun faintly illuminates Io, the scorched innermost moon of Jupiter."
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_cycle_length = 1.77 DAYS
+			src.eclipse_time = 2.3 HOURS // figures based on irl measurements
+			src.down_time = 1.67 DAYS
+			src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_UMBRA)
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 2.5
+			src.rate = 0
+			src.angle = pick(90, 270)
+		if ("senex") // ice moon
+			src.zlevel = 2
+			if (src.name = "unknown") src.name = pick("Fugg", "Shidd")
+			src.desc = "Orbiting Flaminica, Senex's icy moon recieves only faint light from the binary stars."
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_counter = 0
+			src.eclipse_status = ECLIPSE_FALSE // always start in daytime
+			src.visibility = 1
+			src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_UMBRA)
+			src.eclipse_time = 24 WEEKS // making it turn very slowly because otherwise it'd be annoying
+			src.down_time = 24 WEEKS
+			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.01
+			else src.photovoltaic_efficiency = 0.03
+			src.rate = 0
+			src.angle = pick(90, 270)
+		if ("solarium")
+			src.zlevel = 2
+			src.name = "\improper sun"
+			src.desc = "You're a little bit toasty there, don't you think? The sun looks pretty hot from this close."
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
+			src.photovoltaic_efficiency = 9000
+			src.rate = 0
+			src.angle = 90 // we can literally see it on the map
 
 /datum/sun/New()
 	..()

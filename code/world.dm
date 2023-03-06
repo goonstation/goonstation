@@ -438,6 +438,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	sun = new /datum/sun()
 
+	z2sun = new /datum/sun("adventure_void")
 	#ifdef UNDERWATER_MAP
 	z5sun = new /datum/sun("trench")
 	#else
@@ -446,6 +447,7 @@ var/f_color_selector_handler/F_Color_Selector
 	#endif
 
 	EarthSun = new /datum/sun("earth", /area/centcom/outside)
+	VoidSun = new /datum/sun("adventure_void")
 
 
 	Z_LOG_DEBUG("World/Init", "Vox init")
