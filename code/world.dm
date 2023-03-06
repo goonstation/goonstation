@@ -437,7 +437,6 @@ var/f_color_selector_handler/F_Color_Selector
 		delete_queue = new /datum/dynamicQueue(100)
 
 	sun = new /datum/sun()
-
 	z2sun = new /datum/sun("adventure_void")
 	#ifdef UNDERWATER_MAP
 	z5sun = new /datum/sun("trench")
@@ -445,9 +444,6 @@ var/f_color_selector_handler/F_Color_Selector
 	z3sun = new /datum/sun("debris")
 	z5sun = new /datum/sun("mining")
 	#endif
-
-	EarthSun = new /datum/sun("earth", /area/centcom/outside)
-	VoidSun = new /datum/sun("adventure_void")
 
 
 	Z_LOG_DEBUG("World/Init", "Vox init")

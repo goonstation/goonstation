@@ -106,14 +106,14 @@
 	#endif
 /// This can be called to set the sun's data based on its assigned stationloc
 /datum/sun/proc/identity_check()
-	// the sun datums for magus, abzu, and earth don't have a use at present, since those places don't have solars.
+	// the sun datums most places don't have a use at present, since those places don't have solars.
 	// but they are supposedly constructible so we need to have that data anyway.
-	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas.
+	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas,
+	// and create then suns for those in code/world.dm and code/global.dm
 	var/oldloc = src.stationloc
 	if (oldloc == src.stationloc) return
 	switch (src.stationloc)
-		//generally go in order: name, desc,eclipse status and order, eclipse info, visibility, pv efficiency, rate, angle
-		//eclipse data in the order: cycle_on, magnitude, downtime, eclipse time, penumbra time,cyclelength, counter
+		// 'error' suns
 		if ("void") // for admin nonsense generally. Where no stars apply.
 			src.name = "unknown"
 			src.desc = "The stars have abandoned you."
@@ -135,6 +135,7 @@
 			src.photovoltaic_efficiency = 0
 			src.rate = 0
 			src.angle = 0
+		// global suns for various z levels
 		if ("trench") // the mining level for nadir and oshan
 			src.zlevel = 5
 			src.name = "N/A"
@@ -259,6 +260,7 @@
 			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
 			src.rate = 0
 			src.angle = pick(90, 270)
+		// local suns for z2 areas
 		if ("earth") //centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
 			src.zlevel = 2
 			src.name = "\improper Sun"
@@ -295,9 +297,9 @@
 			src.photovoltaic_efficiency = 2.5
 			src.rate = 0
 			src.angle = pick(90, 270)
-		if ("senex") // ice moon
+		if ("senex") // ice moon, theta outpost
 			src.zlevel = 2
-			if (src.name = "unknown") src.name = pick("Fugg", "Shidd")
+			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
 			src.desc = "Orbiting Flaminica, Senex's icy moon recieves only faint light from the binary stars."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_counter = 0
@@ -310,7 +312,7 @@
 			else src.photovoltaic_efficiency = 0.03
 			src.rate = 0
 			src.angle = pick(90, 270)
-		if ("solarium")
+		if ("solarium") // solarium
 			src.zlevel = 2
 			src.name = "\improper sun"
 			src.desc = "You're a little bit toasty there, don't you think? The sun looks pretty hot from this close."
