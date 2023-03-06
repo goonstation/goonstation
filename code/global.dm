@@ -385,6 +385,8 @@ var/global
 	datum/sun/z3sun = null
 	datum/sun/z5sun = null
 
+	datum/sun/EarthSun = null
+
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null
 

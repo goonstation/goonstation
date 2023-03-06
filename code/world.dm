@@ -445,6 +445,9 @@ var/f_color_selector_handler/F_Color_Selector
 	z5sun = new /datum/sun("mining")
 	#endif
 
+	EarthSun = new /datum/sun("earth", /area/centcom/outside)
+
+
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
