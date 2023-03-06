@@ -377,6 +377,10 @@ var/global
 
 	///a list of all created stars to iterate through
 	list/starlist = list()
+	///a list of areas for global suns to ignore
+	list/areas_with_local_suns = list()
+
+	// suns for z1,debris field and mining level
 	datum/sun/sun = null
 	datum/sun/z3sun = null
 	datum/sun/z5sun = null

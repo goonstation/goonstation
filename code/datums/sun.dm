@@ -15,8 +15,6 @@
 /// for when the game doesn't know what's happening (e.g. admin nonsense)
 #define ECLIPSE_ERROR 8
 
-/// which areas should the 'global' sun ignore
-var/global/list/areas_with_local_suns = new
 /datum/sun
 	var/angle
 	var/dx
@@ -63,46 +61,49 @@ var/global/list/areas_with_local_suns = new
 	/// At 100% visibility, at what efficiency do the solars work? Based on inverse square of distance to star. Also a percentage, with 1 = 100%
 	var/photovoltaic_efficiency = 1
 
-/datum/sun/New(var/location)
+/// creates a new star based on (optional) stationloc provided and an assigned area for locals
+/datum/sun/New(var/location, var/area/assigned_area)
 	. = ..()
+	global.starlist += src
 	if (!isnull(location))
 		src.stationloc = location
-	global.starlist += src
+		if (!isnull(assigned_area)) src.sun_area = assigned_area
+		else src.check_z1_global_sun()
+	else src.check_z1_global_sun()
 	src.identity_check()
 
+/// checks where the z level is, for global suns
+/datum/sun/proc/check_z1_global_sun()
+	src.stationloc = "void"
+	#if defined(MAP_OVERRIDE_DESTINY)
+	src.stationloc = "travel"
+	#elif defined(MAP_OVERRIDE_CLARION)
+	src.stationloc = "travel"
+	#elif defined(MAP_OVERRIDE_ATLAS)
+	src.stationloc = "travel"
+	#elif defined(MAP_OVERRIDE_COGMAP)
+	src.stationloc = "13"
+	#elif defined(MAP_OVERRIDE_COGMAP2)
+	src.stationloc = "13"
+	#elif defined(MAP_OVERRIDE_DONUT2)
+	src.stationloc = "13"
+	#elif defined(MAP_OVERRIDE_DONUT3)
+	src.stationloc = "13"
+	#elif defined(MAP_OVERRIDE_PAMGOC)
+	src.stationloc = "13"
+	#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+	src.stationloc = "abzu"
+	#elif defined(MAP_OVERRIDE_MANTA)
+	src.stationloc = "abzu"
+	#elif defined(MAP_OVERRIDE_OSHAN)
+	src.stationloc = "abzu"
+	#elif defined(MAP_OVERRIDE_NADIR)
+	src.stationloc = "magus"
+	#endif
 /// This can be called if the station is teleported, as well as at build, hence it being a separate proc.
 /datum/sun/proc/identity_check()
 	var/oldloc = src.stationloc
-	if (src.stationloc == "mining" || src.stationloc == "debris")
-	else if (isnull(src.sun_area)) // global sun only, locals use overrides
-		src.stationloc = "void"
-		#if defined(MAP_OVERRIDE_DESTINY)
-		src.stationloc = "travel"
-		#elif defined(MAP_OVERRIDE_CLARION)
-		src.stationloc = "travel"
-		#elif defined(MAP_OVERRIDE_ATLAS)
-		src.stationloc = "travel"
-		#elif defined(MAP_OVERRIDE_COGMAP)
-		src.stationloc = "13"
-		#elif defined(MAP_OVERRIDE_COGMAP2)
-		src.stationloc = "13"
-		#elif defined(MAP_OVERRIDE_DONUT2)
-		src.stationloc = "13"
-		#elif defined(MAP_OVERRIDE_DONUT3)
-		src.stationloc = "13"
-		#elif defined(MAP_OVERRIDE_PAMGOC)
-		src.stationloc = "13"
-		#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
-		src.stationloc = "abzu"
-		#elif defined(MAP_OVERRIDE_MANTA)
-		src.stationloc = "abzu"
-		#elif defined(MAP_OVERRIDE_OSHAN)
-		src.stationloc = "abzu"
-		#elif defined(MAP_OVERRIDE_NADIR)
-		src.stationloc = "magus"
-		#endif
-	if (oldloc == src.stationloc)
-		return
+	if (oldloc == src.stationloc) return
 	switch (src.stationloc)
 		//generally go in order: name, desc,eclipse status and order, eclipse info, visibility, pv efficiency, rate, angle
 		//eclipse data in the order: cycle_on, magnitude, downtime, eclipse time, penumbra time,cyclelength, counter
@@ -117,8 +118,9 @@ var/global/list/areas_with_local_suns = new
 			src.rate = 0
 			src.angle = 0
 		if ("trench")
+			src.zlevel = 5
 			src.name = "N/A"
-			src.desc = "Something appears to be obstructing the sun."
+			src.desc = "No sunlight reaches the depths of the trench."
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
 			src.visibility = 0
@@ -189,10 +191,9 @@ var/global/list/areas_with_local_suns = new
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.down_time = 8 HOURS
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
-			if (src.name == "Fugg") // the stars have different strengths, see. Based on the noon RGB values.
-				src.photovoltaic_efficiency = 0.6
-			else
-				src.photovoltaic_efficiency = 1
+			// the stars have different strengths, see. Based on the noon RGB values.
+			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.6
+			else src.photovoltaic_efficiency = 1
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
 			// you get 6% of 60% strength sunlight overall
@@ -238,25 +239,24 @@ var/global/list/areas_with_local_suns = new
 			src.zlevel = 3
 			src.name = "Typhon"
 			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
-
-			src.visibility
+			src.eclipse_status = ECLIPSE_FALSE
+			src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
 			src.photovoltaic_efficiency = 2.5
 			src.rate = rand(75,125)/50
-			if(prob(50))
-				src.rate = -src.rate
+			if(prob(50)) src.rate = -src.rate
 			src.angle = rand(1, 359)
 		if ("mining") // the mining level is canonically in the royal rings district, near magus
 			src.zlevel = 5
+			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
+			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
+			src.eclipse_status = ECLIPSE_FALSE
+			src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
+			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.3
+			else src.photovoltaic_efficiency = 0.6
 			src.rate = 0
 			src.angle = 180 + (rand(90, 180) * pick(1, -1))
-			if (src.name == "unknown")
-				src.name = pick("Fugg", "Shidd")
-			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
-			if (src.name == "Fugg")
-				src.photovoltaic_efficiency = 0.3
-			else
-				src.photovoltaic_efficiency = 0.6
-
 /datum/sun/New()
 	..()
 

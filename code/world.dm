@@ -438,9 +438,12 @@ var/f_color_selector_handler/F_Color_Selector
 
 	sun = new /datum/sun()
 
+	#ifdef UNDERWATER_MAP
+	z5sun = new /datum/sun("trench")
+	#else
 	z3sun = new /datum/sun("debris")
-
 	z5sun = new /datum/sun("mining")
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()

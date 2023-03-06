@@ -51,10 +51,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/centcom/outside/New()
 	. = ..()
 	areas_with_local_suns += /area/centcom/outside
-	var/datum/sun/EarthSun = new
-	EarthSun.sun_area = src
-	EarthSun.stationloc = "earth"
-	EarthSun.identity_check()
+	var/datum/sun/EarthSun = new /datum/sun("earth", src)
 
 /area/centcom/gallery
 	name = "NT Art Gallery"
