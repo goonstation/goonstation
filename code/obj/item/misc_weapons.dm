@@ -1926,3 +1926,137 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+
+#define OFFENSIVE_MODE 1
+#define DEFENSIVE_MODE 2
+
+/obj/item/armblade
+	name = "Visicar Armblade"
+	desc = "An experimental mining device modified by the syndicate for their infiltrators."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	var/base_state = "arm_blade"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hit_type = DAMAGE_BLUNT
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 5
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	stamina_damage = 25
+	stamina_cost = 5
+	stamina_crit_chance = 10
+	is_syndicate = TRUE
+	contraband = 6
+	w_class = W_CLASS_NORMAL
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+	can_disarm = FALSE
+	uses_multiple_icon_states = 1
+
+	var/mode = OFFENSIVE_MODE
+	var/attached = FALSE
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/simple)
+
+	update_icon()
+		set_icon_state("[src.base_state][src.mode == OFFENSIVE_MODE && attached ? "_on" : null ]")
+		src.item_state = "[src.base_state][src.mode == OFFENSIVE_MODE && attached ? "-A" : "-D"]"
+
+/obj/item/armblade/attack_self(mob/user as mob)
+	if(!attached)
+		boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
+		return
+	switch(src.mode)
+		if(DEFENSIVE_MODE)
+			boutput(user, "<span class='alert'>[src] is now set for offence!</span>")
+			src.mode = OFFENSIVE_MODE
+		if(OFFENSIVE_MODE)
+			boutput(user, "<span class='alert'>[src] is now set for defence!</span>")
+			src.mode = DEFENSIVE_MODE
+	src.UpdateIcon()
+	user.update_inhands()
+	setup_props(user)
+	tooltip_rebuild = TRUE
+	..()
+
+/obj/item/armblade/attack(var/mob/target, var/mob/user, def_zone)
+	if(attached && src.mode == OFFENSIVE_MODE)
+		target.changeStatus("burning", 10 SECONDS)
+	else if(attached)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
+	..()
+
+/obj/item/armblade/abilities = list(/obj/ability_button/armblade_toggle)
+
+/obj/item/armblade/proc/attach_unattach(var/mob/living/carbon/human/H)
+	if(!attached)
+		boutput(H, "<span class='alert'>The [src] is now attached firmly to your arm.</span>")
+		attached = TRUE
+		cant_self_remove = TRUE
+		cant_drop = TRUE
+		cant_other_remove = TRUE
+	else
+		boutput(H, "<span class='alert'>The [src] is no longer firmly attached to your arm.</span>")
+		attached = FALSE
+		cant_self_remove = FALSE
+		cant_drop = FALSE
+		cant_other_remove = FALSE
+	setup_props(H)
+	H.set_body_icon_dirty()
+	src.UpdateIcon()
+	H.update_inhands()
+
+/obj/item/armblade/proc/setup_props(var/mob/user)
+	if(!attached)
+		item_state = initial(icon_state)
+		hit_type = initial(hit_type)
+		force = initial(force)
+		throwforce = initial(throwforce)
+		stamina_damage = initial(stamina_damage)
+		stamina_cost = initial(stamina_cost)
+		stamina_crit_chance = initial(stamina_crit_chance)
+		hitsound = initial(hitsound)
+		setProperty("meleeprot_all", 0)
+		setProperty("rangedprot", 0)
+		setProperty("movespeed", 0)
+		setProperty("disorient_resist", 0)
+		src.setItemSpecial(/datum/item_special/simple)
+		can_disarm = FALSE
+	else if(src.mode == DEFENSIVE_MODE)
+		hit_type = DAMAGE_BLUNT
+		force = 5
+		throwforce = 5
+		stamina_damage = 40
+		stamina_cost = 15
+		stamina_crit_chance = 30
+		hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
+		setProperty("meleeprot_all", 6)
+		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.3)
+		setProperty("disorient_resist", 40)
+		src.setItemSpecial(/datum/item_special/simple)
+		can_disarm = TRUE
+	else // Offensive mode
+		hit_type = DAMAGE_BURN
+		force = 30
+		throwforce = 20
+		stamina_damage = 25
+		stamina_cost = 20
+		stamina_crit_chance = 10
+		hitsound = 'sound/weapons/hadar_impact.ogg'
+		setProperty("meleeprot_all", 0)
+		setProperty("rangedprot", 0)
+		setProperty("movespeed", 0)
+		setProperty("disorient_resist", 0)
+		src.setItemSpecial(/datum/item_special/rangestab)
+		can_disarm = FALSE
+	user.update_equipped_modifiers()
+
+#undef OFFENSIVE_MODE
+#undef DEFENSIVE_MODE
