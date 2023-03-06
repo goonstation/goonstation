@@ -105,42 +105,9 @@
 		if(istype(I,/obj/item/storage/box/mailorder))
 			..()
 
-
-	flush()
-
-		flushing = 1
-
-		closeup()
-		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
-																// travels through the pipes.
-
+	route_contents()
 		for(var/atom/movable/AM in src)
 			if(istype(AM,/obj/item/storage/box/mailorder))
 				var/obj/item/storage/box/mailorder/mobox = AM
 				if(mobox.mail_dest)
-					src.destination_tag = mobox.mail_dest
-
-		H.init(src)	// copy the contents of disposer to holder
-
-		if (!isnull(src.destination_tag))
-			H.mail_tag = src.destination_tag
-			src.destination_tag = null // dictated by package, not chute
-
-		air_contents.zero() // empty gas
-
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
-
-
-		H.start(src) // start the holder processing movement
-		flushing = 0
-		// now reset disposal state
-		flush = 0
-
-
-
-		if(mode == 2)	// if was ready,
-			mode = 1	// switch to charging
-		update()
-		return
+					return mobox.mail_dest

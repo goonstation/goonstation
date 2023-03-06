@@ -268,7 +268,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		closeup()
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
-		H.mail_tag = src.mail_tag // apply mail_tag
+		var/special_destination = src.route_contents()
+		if(special_destination)
+			H.mail_tag = special_destination // overridden application of mail_tag
+		else
+			H.mail_tag = src.mail_tag // standard application of mail_tag
 
 		H.init(src)	// copy the contents of disposer to holder
 
@@ -289,6 +293,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		if(mode == 2)	// if was ready,
 			mode = 1	// switch to charging
 		update()
+		return
+
+	// proc stub for special routing of contents
+	proc/route_contents()
 		return
 
 	// called when area power changes
