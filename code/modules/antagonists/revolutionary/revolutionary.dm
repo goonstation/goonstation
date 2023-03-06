@@ -47,3 +47,19 @@
 			override = "revved"
 
 		..(override)
+
+	check_success()
+		var/list/heads_of_staff = ticker?.mode?.get_living_heads()
+
+		for(var/datum/mind/head_mind in heads_of_staff)
+			if(head_mind?.current && !isdead(head_mind.current))
+				if(istype(head_mind.current.loc, /obj/cryotron))
+					continue
+
+				var/turf/T = get_turf(head_mind.current)
+				if(T.z != Z_LEVEL_STATION)
+					continue
+
+				return FALSE
+
+		return TRUE

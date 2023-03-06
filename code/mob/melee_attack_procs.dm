@@ -1011,7 +1011,7 @@
 
 			if (damage > 1)
 				if (isrevolutionary(owner))	//attacker is rev, all heads who see the attack get mutiny buff
-					for (var/datum/mind/M in ticker?.mode.get_living_heads())
+					for (var/datum/mind/M in ticker?.mode?.get_living_heads())
 						if (M.current)
 							if (GET_DIST(owner,M.current) <= 7)
 								if (owner in viewers(7,M.current))
