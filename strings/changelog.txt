@@ -1,5 +1,9 @@
 
 (t)sun mar 05 23
+(u)Kubius
+(p)13259
+(e)🪲🌠|C-Bug, A-Events
+(+)Fixed some requisition handling goofs that could cause orders to fail, most notable in the handling of steel sheets for an aid contract.
 (u)LeahTheTech
 (p)13280
 (e)🔎⚙|C-Code-Quality, A-Internal
