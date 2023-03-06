@@ -44,11 +44,11 @@ var/global/list/areas_with_local_suns = new
 	/// How long is the peak of the eclipse? 0 is just a default fallback value
 	var/eclipse_time = 0
 	/// How long does it take to transition from not eclipsing to eclipsing. Generally src.eclipse_time * rand(15,30)
-	var/penumbra_time = src.eclipse_time * rand(15,30)
+	var/penumbra_time = 0
 	/// How much time is spent not in eclipse?
 	var/down_time = 0
 	/// How often do eclipses happen? It's the length of the whole cycle. Generally down_time + penumbra_time * 2 + eclipse_time
-	var/eclipse_cycle_length = down_time + penumbra_time * 2 + eclipse_time
+	var/eclipse_cycle_length = 0
 
 	/// At the peak, what's the minimum star visibility? Percentage where 1=100% (total eclipse). This being below 1 makes the peak annular.
 	var/eclipse_magnitude = 1
