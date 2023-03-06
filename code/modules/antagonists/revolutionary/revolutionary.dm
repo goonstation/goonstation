@@ -60,7 +60,7 @@
 					continue
 
 				var/turf/T = get_turf(head_mind.current)
-				if(T.z != 1)
+				if(T.z != Z_LEVEL_STATION)
 					continue
 
 				return FALSE
