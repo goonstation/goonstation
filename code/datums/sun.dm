@@ -124,8 +124,12 @@ var/global/list/areas_with_local_suns = new
 			src.angle = 0
 		if ("13")
 			/* Space Station 13, i.e. NT-13 in L2 lagrange point around Rota Fortuna.
+			Rota Fortuna itself is in the mundus gap district.
 			If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a
 			lissajous orbit around the umbra, making the lore reason for the solars turning is that the whole map is spinning.
+			A problem arises from the fact that NT-14, typhon, shidd, fugg and all the mundus gap planets and moons are all visible as decals
+			on cogmap 1. The solars should therefore point at the decals, but they don't.
+			Scope creep says to ignore that for now.
 			*/
 			src.name = "Typhon"
 			src.desc = "Station is currently in a stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
@@ -223,18 +227,21 @@ var/global/list/areas_with_local_suns = new
 				src.visibility = 0
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = rand(80,100) // assuming cloud covers up to 20% of light
+				src.visibility = 1
 			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
 			src.rate = 0
 			src.angle = rand(1, 359)
 		if ("debris") // the debris field is in the main rings district
+			src.zlevel = 3
 			src.name = "Typhon"
 			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
-			src.zlevel = 3
+
+			src.visibility
 			src.photovoltaic_efficiency = 2.5
 			src.rate = rand(75,125)/50
 			if(prob(50))
 				src.rate = -src.rate
+			src.angle = rand(1, 359)
 		if ("mining") // the mining level is canonically in the royal rings district, near magus
 			src.zlevel = 5
 			src.rate = 0
