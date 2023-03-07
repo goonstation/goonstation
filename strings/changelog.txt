@@ -1,7 +1,22 @@
 
+(t)mon mar 06 23
+(u)Wisemonster
+(p)13133
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)The minimum number of traitors needed for a wraith to replace a traitor in the traitor gamemode has been increased to 4 (up from 3)
 (t)sun mar 05 23
+(u)Kubius
+(p)13259
+(e)🪲🌠|C-Bug, A-Events
+(+)Fixed some requisition handling goofs that could cause orders to fail, most notable in the handling of steel sheets for an aid contract.
+(u)LeahTheTech
+(p)13280
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)The "Hide genetics abilities" button now hides/unhides all abilities instead.
 (u)aloe
 (+)Pugs can *woof. Other people can too, I guess. Sound by Virvatuli!
+(u)LeahTheTech
+(+)Flockminds and traces now get the tracker pointing to where to the relay will realize before it does.
 (t)sat mar 04 23
 (u)Mordent
 (p)13224

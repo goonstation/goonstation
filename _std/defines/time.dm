@@ -16,7 +16,7 @@
 	// shidd and fugg are on opposite sides of the sky, so as one sets, the other rises.
 	// #define OCEAN_LIGHT  rgb(0,0,50)
 	#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 8 == 0) || (BUILD_TIME_HOUR - 16 == 0)
-		#define OCEAN_LIGHT  rgb(0.10 * 128, 0.10 * 170, 1.00 *  75, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.10 * 128, 0.10 * 128, 1.00 *  75, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 8 == 1) || (BUILD_TIME_HOUR - 16 == 1)
 		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 8 == 2) || (BUILD_TIME_HOUR - 16 == 2)

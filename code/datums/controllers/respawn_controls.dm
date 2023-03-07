@@ -188,6 +188,9 @@ var/datum/respawn_controls/respawn_controller
 		logTheThing(LOG_DEBUG, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].")
 		logTheThing(LOG_DIARY, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].", "game")
 
+		//try to break all links with the previous body so we don't get pulled back by changeling absorb, cloning etc.
+		usr.mind = null
+
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
 		M.is_respawned_player = 1
