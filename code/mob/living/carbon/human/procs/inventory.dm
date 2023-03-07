@@ -49,8 +49,8 @@
 		return TRUE
 
 /mob/living/carbon/human/proc/obstructed_by(var/slot)
-	var/list/wearslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
-	if(slot in wearslots)
+	var/list/headslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
+	if(slot in headslots)
 		if (src.head && src.head.obstructs & C_MASK) // if a head item is covering the mask its probably covering the entire head
 			return src.head
 		else if (src.wear_suit && src.wear_suit.obstructs & (C_MASK | C_GLASSES | C_EARS)) // for bedsheets, rando cloak, ect. they are the only wear_suit items to cover heads.
