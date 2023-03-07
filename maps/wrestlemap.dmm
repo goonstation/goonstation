@@ -10972,7 +10972,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eyf" = (
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "eyq" = (
 /obj/table/wood/round/auto,
@@ -22640,7 +22640,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "jyH" = (
 /obj/item/device/radio/beacon,
@@ -25824,7 +25824,7 @@
 /turf/space,
 /area/space)
 "kTr" = (
-/turf/simulated/floor/carpet/green/fancy/edge/se,
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/captain)
 "kTu" = (
 /obj/machinery/recharge_station,
@@ -27273,7 +27273,7 @@
 	name = "Captain"
 	},
 /obj/disposalpipe/trunk/mail,
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "lAX" = (
 /obj/stool/chair/moveable,
@@ -50695,7 +50695,7 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "vth" = (
 /obj/machinery/atmospherics/pipe/simple{
