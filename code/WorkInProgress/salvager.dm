@@ -84,6 +84,10 @@
 				boutput(user, "<span class='alert'>[O] cannot be deconstructed.</span>")
 				return
 
+			if (istext(decon_complexity))
+				boutput(user, "<span class='alert'>[decon_complexity]</span>")
+				return
+
 			if(locate(/mob/living) in O)
 				boutput(user, "<span class='alert'>You cannot deconstruct [O] while someone is inside it!</span>")
 				return

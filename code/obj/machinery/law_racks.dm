@@ -55,6 +55,12 @@
 		UpdateIcon()
 		. = ..()
 
+	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				return "[src] cannot be deconstructed while it still has law modules inside!"
+		return ..()
+
 	was_deconstructed_to_frame(mob/user)
 		logTheThing(LOG_STATION, user, "<b>deconstructed</b> rack [constructName(src)]")
 		ticker?.ai_law_rack_manager.unregister_rack(src)

@@ -963,6 +963,9 @@
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
+		if (istext(decon_complexity))
+			boutput(user, "<span class='alert'>[decon_complexity]</span>")
+			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
 			return
