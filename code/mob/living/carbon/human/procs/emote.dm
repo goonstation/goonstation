@@ -2315,7 +2315,7 @@
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
 			if ("woof")
-				if (!ispug(src)) // not accounting for critter dogs since they have their own bark handling
+				if (!ispug(src) && !iswerewolf(src) ) // not accounting for critter dogs since they have their own bark handling
 					src.say("Woof.")
 					return
 				else
