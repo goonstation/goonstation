@@ -108,7 +108,7 @@
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] [log_loc(apc)]")
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 			else
 				donor_cell.charge -= jumper.charge_amount
 				recipient_cell.charge += jumper.charge_amount
@@ -116,7 +116,7 @@
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
-					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] [log_loc(apc)]")
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 				restart = TRUE
 			apc.charging = apc.chargemode
 

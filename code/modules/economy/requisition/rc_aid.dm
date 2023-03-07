@@ -54,7 +54,8 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
-	typepath = /obj/item/sheet/steel
+	typepath = /obj/item/sheet
+	mat_id = "steel"
 	feemod = 30
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
@@ -326,9 +327,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 		switch(tilter)
 			if("food","rations")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/literallyanyfood,rand(30,48))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/food/any,rand(30,48))
 			if("food and water")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/literallyanyfood,rand(24,40))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/food/any,rand(24,40))
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,rand(18,36)*10)
 			if("furnace fuel")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(24,36))
