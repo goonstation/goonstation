@@ -30,7 +30,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't detonate() the grenade
 	contraband = 2
 	overlays = null
-	state = 0
+	armed = FALSE
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null

@@ -12,7 +12,7 @@
 	w_class = W_CLASS_SMALL
 	force = 2
 	var/stage = 0
-	var/state = 0
+	var/armed = 0
 	var/icon_state_armed = "grenade-chem-armed"
 	var/list/beakers = new/list()
 	var/image/fluid_image1 //its 01:34 and im tired im sorry for this
@@ -124,7 +124,7 @@
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state)
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.armed)
 			return
 		var/area/a = get_area(target)
 		if(a.sanctuary) return
@@ -153,7 +153,7 @@
 		return ..()
 
 	proc/arm(mob/user as mob)
-		if (src.state || src.stage != 2)
+		if (src.armed || src.stage != 2)
 			return 1
 		var/area/A = get_area(src)
 		if(A.sanctuary)
@@ -170,7 +170,7 @@
 			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
-		src.state = 1
+		src.armed = TRUE
 		src.icon_state = icon_state_armed
 		playsound(src, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 		SPAWN(3 SECONDS)
@@ -188,7 +188,7 @@
 
 		if (!has_reagents)
 			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
-			state = 0
+			src.armed = FALSE
 			return
 
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
