@@ -1,4 +1,9 @@
 
+(t)tue mar 07 23
+(u)FlameArrow57
+(p)13162
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Players using VR goggles or a scuttlebot controller will now have an examine text saying their mind is "elsewhere."
 (t)mon mar 06 23
 (u)Wisemonster
 (p)13133
