@@ -12,7 +12,7 @@ PIPE BOMBS + CONSTRUCTION
 TYPEINFO(/obj/item/old_grenade)
 	mats = 6
 
-ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
@@ -30,7 +30,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
-	is_syndicate = 0
+	is_syndicate = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -54,7 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
@@ -79,7 +79,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				SPAWN(src.det_time)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
@@ -104,7 +104,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/prime)
 		else
 			src.icon_state = initial(src.icon_state)
 
-	proc/prime(mob/user) // Most grenades require a turf reference.
+	proc/detonate(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
 			return null
@@ -124,13 +124,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
 	var/amount_to_spawn = 5
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
@@ -176,14 +176,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
 	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
 	var/count = 7
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -225,7 +225,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime()
+					if (src) detonate()
 					return
 			else
 				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
@@ -234,11 +234,11 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) detonate()
 					return
 		return
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
@@ -267,7 +267,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -287,7 +287,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime()
+					if (src) detonate()
 					return
 			else
 				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
@@ -296,11 +296,11 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) detonate()
 					return
 		return
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
@@ -333,7 +333,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 2 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
@@ -344,7 +344,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		src.smoke.attach(src)
 		src.smoke.set_up(10, 0, src.loc)
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			var/obj/item/old_grenade/smoke/mustard/M = null
@@ -406,13 +406,13 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = 0
+	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
@@ -471,10 +471,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = 0
+	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			explosion_new(src, T, 5.0, 2)
@@ -500,11 +500,11 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
@@ -541,11 +541,11 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
@@ -588,7 +588,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
 
-	prime()
+	detonate()
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
@@ -654,11 +654,11 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			for (var/mob/living/carbon/human/M in range(5, T))
@@ -691,7 +691,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
 	state = 0
-	not_in_mousetraps = 1
+	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
 
