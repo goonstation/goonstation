@@ -1,5 +1,7 @@
 
 (t)tue mar 07 23
+(u)Sord
+(*)You may now buy a single use law rack manudrive from QM. Crate is locked to Head access.
 (u)FlameArrow57
 (p)13162
 (e)💅🔨|C-QoL, A-Player-Actions
