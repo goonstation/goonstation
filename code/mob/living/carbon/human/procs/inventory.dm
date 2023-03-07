@@ -53,7 +53,7 @@
 	if(slot in wearslots)
 		if (src.head && src.head.obstructs & C_MASK) // if a head item is covering the mask its probably covering the entire head
 			return src.head
-		else if (src.wear_suit && src.wear_suit.obstructs & (C_MASK | C_GLASSES | C_EARS)) // for bedsheets, rando cloak, ect
+		else if (src.wear_suit && src.wear_suit.obstructs & (C_MASK | C_GLASSES | C_EARS)) // for bedsheets, rando cloak, ect. they are the only wear_suit items to cover heads.
 			return src.wear_suit
 		else
 			return src.wear_mask
