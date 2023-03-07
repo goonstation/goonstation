@@ -1163,8 +1163,8 @@ datum
 							M.emote(pick("cough", "choke", "gasp"))
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 15 * mult))
 					if (25 to INFINITY)
-						counter += 2 * mult                 //speeds up proggression upon reaching 25 cycles
-						if(counter > 85)                   //another speed up upon reaching 85 cycles
+						counter += 1 * mult                 //speeds up proggression upon reaching 25 cycles
+						if(counter > 85)                    //another speed up upon reaching 85 cycles
 							counter += 2 * mult
 						M.change_eye_blurry(5, 5)
 						if(oxy_damage_target < 0)           //if something else suffocates you, it will make you suffocate faster
