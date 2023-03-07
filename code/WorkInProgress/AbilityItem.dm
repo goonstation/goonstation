@@ -963,7 +963,7 @@
 
 	execute_ability()
 		if(!the_item || !the_mob || !ishuman(the_mob)) return
-		var/mob/living/carbon/human/H = the_mob
+		var/mob/living/carbon/human/H = usr
 		boutput(H, "<span class='alert'>You need to hold still...</span>")
 		SETUP_GENERIC_ACTIONBAR(H, the_item, 5 SECONDS, /obj/item/armblade/proc/attach_unattach, H, the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		..()
