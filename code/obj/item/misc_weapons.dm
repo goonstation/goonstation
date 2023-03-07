@@ -1969,11 +1969,12 @@ obj/item/whetstone
 	update_icon()
 		set_icon_state("[src.base_state][src.mode == OFFENSIVE_MODE && attached ? "_on" : null ]")
 		src.item_state = "[src.base_state][src.mode == OFFENSIVE_MODE && attached ? "-A" : "-D"]"
+		..()
 
 /obj/item/armblade/attack_self(mob/user as mob)
 	if(!attached)
 		boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
-		return
+		return ..()
 	switch(src.mode)
 		if(DEFENSIVE_MODE)
 			boutput(user, "<span class='alert'>[src] is now set for offence!</span>")
@@ -1981,10 +1982,7 @@ obj/item/whetstone
 		if(OFFENSIVE_MODE)
 			boutput(user, "<span class='alert'>[src] is now set for defence!</span>")
 			src.mode = DEFENSIVE_MODE
-	src.UpdateIcon()
-	user.update_inhands()
 	setup_props(user)
-	tooltip_rebuild = TRUE
 	..()
 
 /obj/item/armblade/attack(var/mob/target, var/mob/user, def_zone)
@@ -2010,9 +2008,6 @@ obj/item/whetstone
 		cant_drop = FALSE
 		cant_other_remove = FALSE
 	setup_props(H)
-	H.set_body_icon_dirty()
-	src.UpdateIcon()
-	H.update_inhands()
 
 /obj/item/armblade/proc/setup_props(var/mob/user)
 	if(!attached)
@@ -2061,7 +2056,10 @@ obj/item/whetstone
 		src.setItemSpecial(/datum/item_special/rangestab)
 		can_disarm = FALSE
 		user.overlays -= shield
+	src.UpdateIcon()
 	user.update_equipped_modifiers()
+	user.update_inhands()
+	tooltip_rebuild = TRUE
 
 #undef OFFENSIVE_MODE
 #undef DEFENSIVE_MODE
