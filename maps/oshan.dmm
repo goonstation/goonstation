@@ -15305,21 +15305,6 @@
 	dir = 10
 	},
 /area/station/maintenance/inner/central)
-"aNa" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 9
-	},
-/area/listeningpost)
-"aNb" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4
-	},
-/area/listeningpost)
-"aNc" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost)
 "aNd" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light_switch/auto,
@@ -15327,19 +15312,6 @@
 	dir = 9
 	},
 /area/station/hallway/primary/east)
-"aNe" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost)
-"aNf" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 5
-	},
-/area/listeningpost)
 "aNg" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -15353,11 +15325,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aNi" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1
-	},
-/area/listeningpost)
 "aNj" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -15368,9 +15335,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost)
-"aNl" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray,
 /area/listeningpost)
 "aNm" = (
 /obj/machinery/power/smes{
@@ -15400,9 +15364,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 10
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "aNq" = (
 /obj/disposalpipe/segment/mail,
@@ -15410,12 +15372,6 @@
 	dir = 5
 	},
 /area/station/hallway/primary/east)
-"aNr" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1;
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost)
 "aNs" = (
 /turf/simulated/floor,
 /area/station/hangar/catering{
@@ -15530,17 +15486,6 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"aNL" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 8;
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost)
-"aNM" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	icon_state = "leadcap_gray"
-	},
-/area/listeningpost)
 "aNN" = (
 /obj/cable,
 /obj/machinery/power/furnace{
@@ -15652,12 +15597,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"aOe" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost)
 "aOf" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -15669,10 +15608,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aOg" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadcap_gray"
-	},
+/obj/securearea,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "aOh" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
@@ -15681,12 +15618,6 @@
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
-	},
-/area/listeningpost)
-"aOi" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 8;
-	icon_state = "leadcap_gray"
 	},
 /area/listeningpost)
 "aOj" = (
@@ -15991,12 +15922,6 @@
 	},
 /turf/simulated/floor,
 /area/listeningpost)
-"aPe" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1;
-	icon_state = "leadcap_gray"
-	},
-/area/listeningpost)
 "aPf" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -16034,9 +15959,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aPm" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 10
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "aPn" = (
 /obj/disposalpipe/segment{
@@ -16046,8 +15969,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "aPo" = (
-/obj/submachine/ATM{
-	pixel_x = -32
+/obj/table/wood/auto,
+/obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -16072,7 +15998,8 @@
 	pixel_y = -4
 	},
 /obj/item/pinpointer{
-	pixel_y = 4
+	pixel_y = 7;
+	pixel_x = 3
 	},
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/black,
@@ -16170,13 +16097,10 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain{
 	pixel_x = 3;
-	pixel_y = 3
+	pixel_y = 1
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	frequency = 1489;
-	name = "Brig Intercom"
+/obj/item/device/radio/intercom/brig{
+	dir = 8
 	},
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/black,
@@ -16500,6 +16424,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 8
 	},
+/obj/marker/supplymarker,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -17100,11 +17025,6 @@
 	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost)
-"aSk" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 6
-	},
 /area/listeningpost)
 "aSl" = (
 /obj/machinery/light/incandescent/warm,
@@ -42140,6 +42060,14 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"dBM" = (
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "dBP" = (
 /obj/item/clothing/under/misc/mime/alt,
 /turf/simulated/floor/plating/random,
@@ -42325,10 +42253,8 @@
 /area/station/hydroponics/bay)
 "ehY" = (
 /obj/machinery/cell_charger,
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /obj/table/glass/reinforced/auto,
 /obj/item/paper/telecrystal_update,
@@ -43209,6 +43135,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"iwp" = (
+/obj/submachine/ATM{
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "iwt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45446,6 +45380,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery/storage)
+"tDL" = (
+/obj/table/wood/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor,
+/area/listeningpost)
 "tDZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45905,6 +45844,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"wbZ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/space/fluid,
+/area/space)
 "wdN" = (
 /turf/simulated/shuttle/wall/flock,
 /area/space)
@@ -50626,11 +50571,11 @@ aqn
 aqn
 aqn
 aqn
-aNa
-aNl
-aNl
-aNl
-aNl
+aPm
+aPm
+aPm
+aPm
+aPm
 aPm
 aqn
 aqn
@@ -50928,15 +50873,15 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNX
 aOk
 aOI
 aOZ
-aNc
-aNl
-aNl
-aNl
+aPm
+aPm
+aPm
+aPm
 aPm
 aqn
 aqn
@@ -51230,16 +51175,16 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aRR
 aRR
 aRR
 aRR
-aNb
+aPm
 aPu
 aPH
 aQv
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -51532,16 +51477,16 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aOa
 aRR
 aRR
 aPc
-aNb
+aPm
 aPv
 aPJ
 aQw
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -51834,16 +51779,16 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aOb
 aOm
 aRR
-aRR
-aNb
+tDL
+aPm
 aPx
 aPK
 aQx
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -52133,19 +52078,19 @@ aqn
 aqn
 aqn
 aqn
-aNa
-aNi
-aNi
-aNL
-aOe
-aNM
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
 aOK
-aPe
-aNL
-aNM
+aPm
+aPm
+aPm
 aPL
-aPe
-aNr
+aPm
+aPm
 aqn
 aqn
 aqn
@@ -52435,19 +52380,19 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNj
 aNt
 aNj
-aOg
+aPm
 aOt
 aOM
-aOM
+dBM
 aPo
 aOM
 aPO
 aQy
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -52737,7 +52682,7 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNj
 aNy
 aNj
@@ -52749,7 +52694,7 @@ aOQ
 aOQ
 aQi
 aQL
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -53039,19 +52984,19 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNk
 aNz
 aNj
-aOi
+aPm
 aOx
 aOT
 aPg
 aOT
 aOT
+iwp
 aOT
-aOT
-aNb
+aPm
 aqn
 aqn
 aqn
@@ -53341,19 +53286,19 @@ aqn
 aqn
 aqn
 aqn
-aNc
-aNl
-aNl
-aNM
-aNb
-aNl
-aNM
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
 aPh
 aPp
-aPe
-aNl
-aOe
-aNr
+aPm
+aPm
+aPm
+aPm
 aqn
 aqn
 aqn
@@ -53643,20 +53588,20 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNm
 aNB
 aNN
-aNb
+aPm
 aOA
 aOU
 aOW
 aOU
 aPz
 aQj
-aNc
-aNL
-aNl
+aPm
+aPm
+aPm
 aPm
 aqn
 aqn
@@ -53945,18 +53890,18 @@ aqn
 aqm
 aqm
 aqm
-aNb
+aPm
 aNo
 aNC
 aNO
-aOg
+aPm
 aOB
 aOU
 aOW
 aOU
 aOU
 aOU
-aOg
+aPm
 aah
 aQM
 aOg
@@ -54247,7 +54192,7 @@ aqn
 aqm
 aup
 aMW
-aNe
+aNp
 aNp
 aNE
 aNP
@@ -54549,22 +54494,22 @@ aqn
 aqm
 aqm
 aqm
-aNf
-aNr
+aPm
+aPm
 aNF
 aNQ
-aOi
+aPm
 aOD
 aOW
 aPk
 aPr
 aPF
 aQr
-aOi
+aPm
 aSn
 aQN
-aOi
-aqn
+aOg
+wbZ
 aqn
 aqn
 aqn
@@ -54852,20 +54797,20 @@ aqn
 aqn
 aqn
 aqn
-aNb
+aPm
 aNH
 aNS
-aNb
+aPm
 aOE
 aOY
 aPk
 ehY
 aPG
 aQs
-aNc
-aNl
-aNl
-aSk
+aPm
+aPm
+aPm
+aPm
 aqn
 aqn
 aqn
@@ -55154,17 +55099,17 @@ aqn
 aqn
 aqn
 aqn
-aNf
-aNl
-aNl
-aNL
-aNl
-aNl
-aNl
-aNl
-aNl
-aNl
-aSk
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
+aPm
 aqn
 aqn
 aqn
