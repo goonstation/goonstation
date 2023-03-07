@@ -45,18 +45,17 @@
 
 ///Check the inventory slot against the list of obstructed slots
 /mob/living/carbon/human/proc/check_obstructed(var/id)
-	for (var/obj/slot as anything in get_obstructed_Slots())
-		if(id == slot)
-			return TRUE
+	if(id in get_obstructed_Slots())
+		return TRUE
 
 /mob/living/carbon/human/proc/obstructed_by(var/slot)
-	var/list/wearslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_SHOES)
-	for (var/obj/item as anything in wearslots)
-		if (slot == item)
-			if (src.head && src.head.obstructs & slot)
-				return src.head
-			else if (src.wear_suit && src.wear_suit.obstructs & slot)
-				return src.wear_suit
-			else
-				return src.wear_mask
-	return src.wear_suit
+	var/list/wearslots = list(SLOT_EARS, SLOT_GLASSES, SLOT_WEAR_MASK)
+	if(slot in wearslots)
+		if (src.head && src.head.obstructs & C_MASK) // if a head item is covering the mask its probably covering the entire head
+			return src.head
+		else if (src.wear_suit && src.wear_suit.obstructs & (C_MASK | C_GLASSES | C_EARS)) // for bedsheets, rando cloak, ect
+			return src.wear_suit
+		else
+			return src.wear_mask
+	else
+		return src.wear_suit // body slots blocked by body item
