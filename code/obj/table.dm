@@ -1010,6 +1010,8 @@ TYPEINFO_NEW(/obj/table/glass)
 			return ..()
 
 	harm_slam(mob/user, mob/victim)
+		if(src.glass_broken != GLASS_INTACT)
+			return ..()
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")

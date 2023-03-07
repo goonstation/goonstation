@@ -1794,17 +1794,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
-//left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
-	if (src.ai)
-		src.ai.was_harmed(weapon,M)
-		if(src.is_hibernating)
-			if (src.registered_area)
-				src.registered_area.wake_critters(M)
-			else
-				src.wake_from_hibernation()
-	..()
-
 /mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))

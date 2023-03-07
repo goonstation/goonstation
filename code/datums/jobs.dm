@@ -2252,18 +2252,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	var/leader = FALSE
 	add_to_manifest = FALSE
 
-
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		if (!M)
+		if (!M?.mind)
 			return
 
 		if (src.leader)
 			M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 		else
 			M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-
-		return
 
 /datum/job/special/syndicate_operative/leader
 	name = "Syndicate Operative Commander"

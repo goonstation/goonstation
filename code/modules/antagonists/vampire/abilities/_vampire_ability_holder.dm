@@ -1,62 +1,6 @@
 // Converted everything related to vampires from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
-
-// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
-/mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
-	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
-	if (vampholder && istype(vampholder))
-		return
-
-	if (ishuman(src) || ismobcritter(src))
-		if (ishuman(src))
-			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
-
-			if(shitty) // Infernal vampire.
-				V.addAbility(/datum/targetable/vampire/blood_tracking)
-			else
-				V.addAbility(/datum/targetable/vampire/vampire_bite)
-				V.addAbility(/datum/targetable/vampire/blood_steal)
-				V.addAbility(/datum/targetable/vampire/blood_tracking)
-				V.addAbility(/datum/targetable/vampire/cancel_stuns)
-				V.addAbility(/datum/targetable/vampire/glare)
-				V.addAbility(/datum/targetable/vampire/hypnotize)
-
-			SPAWN(2.5 SECONDS) // Don't remove.
-				if (src) src.assign_gimmick_skull()
-
-		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
-			var/mob/living/critter/C = src
-
-			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
-				var/datum/abilityHolder/vampire/A2 = C.add_ability_holder(/datum/abilityHolder/vampire)
-				if (!A2 || !istype(A2, /datum/abilityHolder/))
-					return
-
-			if(shitty) // Infernal vampire.
-				C.abilityHolder.addAbility(/datum/targetable/vampire/blood_tracking)
-			else
-				C.abilityHolder.addAbility(/datum/targetable/vampire/cancel_stuns)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/glare)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/hypnotize)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/plague_touch)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/phaseshift_vampire)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/call_bats)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/vampire_scream)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/enthrall)
-
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			if(shitty)
-				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
-
-			src.show_antag_popup("vampire")
-
-		if(shitty || nonantag)
-			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
-
-	else return
-
 ////////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////
 
 // Just a little helper or two since vampire parameters aren't tracked by mob vars anymore.

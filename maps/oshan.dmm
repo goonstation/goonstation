@@ -8084,7 +8084,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aui" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "auj" = (
@@ -9125,6 +9125,10 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/machinery/turretid{
+	pixel_y = 24;
+	turretArea = /area/station/turret_protected/Zeta
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "awJ" = (
@@ -9566,14 +9570,6 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/greenish,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/machinery/turretid/computer{
-	dir = 8
-	},
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -11753,7 +11749,6 @@
 /area/station/science/teleporter)
 "aDB" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/item/shipcomponent/secondary_system/cargo,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aDC" = (
@@ -13757,7 +13752,11 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -17538,14 +17537,14 @@
 	name = "Net Cafe"
 	})
 "aTh" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/turretid{
-	pixel_x = 24
+	pixel_x = 24;
+	turretArea = /area/station/turret_protected/ai_upload
 	},
 /turf/simulated/floor/wood/two,
-/area/station/turret_protected/ai_upload)
+/area/station/crew_quarters/info{
+	name = "Net Cafe"
+	})
 "aTi" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grime,
@@ -28719,6 +28718,7 @@
 	tag = ""
 	},
 /obj/random_item_spawner/ai_experimental,
+/obj/cable,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAT" = (
@@ -30121,9 +30121,6 @@
 	})
 "bEz" = (
 /obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/beacon,
@@ -30136,9 +30133,6 @@
 	name = "Net Cafe"
 	})
 "bEA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -42526,6 +42520,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"fiN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "fkH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43098,6 +43098,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
+"hJn" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/turret_protected/ai_upload)
 "hKM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -44536,6 +44543,13 @@
 "oIU" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
+"oLv" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "oOi" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -44922,6 +44936,16 @@
 /obj/item/bananapeel,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"qsG" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/turret_protected/ai_upload)
 "qsK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46176,6 +46200,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"xAy" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/turret_protected/ai_upload)
 "xBw" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side{
@@ -46298,6 +46329,19 @@
 /obj/item/shipcomponent/pod_lights/police_siren,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"yhj" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating/random,
+/area/station/turret_protected/ai_upload)
 "yhP" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -86376,8 +86420,8 @@ cke
 cke
 cku
 cki
-aqn
-aqn
+bzx
+bzx
 bAO
 bBZ
 bDn
@@ -86678,7 +86722,7 @@ ckf
 aUp
 cjV
 cki
-aqn
+xAy
 bzx
 bzx
 bzx
@@ -86980,7 +87024,7 @@ aqn
 ckk
 cjV
 cki
-aqn
+qsG
 bzx
 bAP
 wWU
@@ -87282,7 +87326,7 @@ wXx
 rrc
 tWl
 cFM
-chg
+qsG
 bzx
 bAQ
 bCb
@@ -87584,7 +87628,7 @@ aqn
 ckk
 cjV
 cki
-aqn
+qsG
 bzx
 fdL
 bCb
@@ -87886,8 +87930,8 @@ aqn
 ckk
 cjV
 cki
-aqn
-bzx
+yhj
+fiN
 bAS
 aTd
 bDr
@@ -88188,7 +88232,7 @@ aqn
 ckk
 cjV
 cki
-aqn
+hJn
 bzx
 bzx
 bzx
@@ -102929,7 +102973,7 @@ asL
 atV
 aIh
 awy
-axH
+oLv
 apb
 azQ
 aAY
