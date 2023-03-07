@@ -4,6 +4,8 @@
 (p)13162
 (e)💅🔨|C-QoL, A-Player-Actions
 (+)Players using VR goggles or a scuttlebot controller will now have an examine text saying their mind is "elsewhere."
+(u)LeahTheTech
+(+)Having CBD in your bloodstream will now negate the effects of the "nervous" trait.
 (t)mon mar 06 23
 (u)Wisemonster
 (p)13133
