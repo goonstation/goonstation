@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	crop_prefix = "glowing "
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "Oweedleaf"
-	brew_result = list("THC", "LSD", "suicider", "space_drugs", "mercury", "lithium", "atropine", "neurotoxin", "methamphetamine",\
+	brew_result = list("THC", "LSD", "suicider", "space_drugs", "mercury", "lithium", "atropine", "neurodepressant", "methamphetamine",\
 	"capsaicin", "psilocybin", "hairgrownium", "ectoplasm", "bathsalts", "itching", "crank", "krokodil", "catdrugs", "histamine")
 
 /obj/item/plant/herb/cannabis/omega/spawnable
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		reagents.add_reagent("mercury", 40)
 		reagents.add_reagent("lithium", 40)
 		reagents.add_reagent("atropine", 40)
-		reagents.add_reagent("neurotoxin", 40)
+		reagents.add_reagent("neurodepressant", 40)
 		reagents.add_reagent("methamphetamine", 40)
 		reagents.add_reagent("THC", 40)
 		reagents.add_reagent("capsaicin", 40)
