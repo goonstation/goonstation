@@ -1151,18 +1151,19 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				var/oxy_damage_target = 0
 				if (!M) M = holder.my_atom
-				oxy_damage_target = (2 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
+				oxy_damage_target = (1 * (counter - 10)) - M.get_oxygen_deprivation() //tries to keep your oxygen damage at the target
                                                                                         //the target goes up with time
 				if(M.reagents?.has_reagent("perfluorodecalin")) //perf slows down the proggression
 					counter+= (0.75 * mult)
 				else
 					counter+= (1 * mult)
 				switch(counter)
-					if (12 to 22)
+					if (15 to 25)
 						if(probmult(8))
 							M.emote(pick("cough", "choke", "gasp"))
 						M.take_oxygen_deprivation(clamp(oxy_damage_target, 0, 15 * mult))
-					if (22 to INFINITY)
+					if (25 to INFINITY)
+						counter += 1.5 * mult               //speeds up proggression upon reaching 25 cycles
 						M.change_eye_blurry(5, 5)
 						if(oxy_damage_target < 0)           //if something else suffocates you, it will make you suffocate faster
 							counter -= oxy_damage_target
