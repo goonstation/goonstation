@@ -222,20 +222,19 @@
 				src.rate = -rate
 			src.angle = rand(1,359)
 		if ("magus") //nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from the binary.
-			#if (BUILD_TIME_HOUR <=3 || (BUILD_TIME_HOUR <= 11 && BUILD_TIME_HOUR >=8) || (BUILD_TIME_HOUR <= 19 && BUILD_TIME_HOUR >= 16))
-			src.name = "Shidd" // the nadir lighting is bluer
-			#else
-			src.name = "Fugg" // the nadir lighting is redder/darker
-			#endif
+			if ((BUILD_TIME_HOUR % 8) <= 3)
+				src.name = "Shidd" // the nadir lighting is bluer
+				src.photovoltaic_efficiency = 1
+			else
+				src.name = "Fugg" // the nadir lighting is redder/darker
+				src.photovoltaic_efficiency = 0.6
 			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. The site is currently being lit by [src.name]."
 			src.eclipse_cycle_on = FALSE // doesn't proceed at runtime
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
 			src.down_time = 8 HOURS
+			src.eclipse_counter = (BUILD_TIME_HOUR % 8) HOURS
 			src.visibility = 0.166 // the max sunlight is from shidd, the blue one.
-			// the stars have different strengths, see. Based on the noon RGB values.
-			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.6
-			else src.photovoltaic_efficiency = 1
 			src.rate = 0
 			src.angle = pick(90, 270)
 			// you get 6% of 60% strength sunlight overall
@@ -248,16 +247,17 @@
 			src.eclipse_cycle_length = 12 HOURS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
 			src.eclipse_magnitude = 1
-			src.photovoltaic_efficiency = 10 //it be pretty close to its star ngl
 			// note how there is data on when Shidd rises/sets, but won't ever actually happen at runtime.
-			if (BUILD_TIME_HOUR < 3 || BUILD_TIME_HOUR > 9 && BUILD_TIME_HOUR < 15 || BUILD_TIME_HOUR > 18)
+			if (((BUILD_TIME_HOUR + 3) % 12) < 6)
 				// oshan works off a 12 hour cycle, not 24
 				src.eclipse_status = ECLIPSE_PLANETARY
 				src.visibility = 0
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
 				src.visibility = 0.35 // this is the noon rgb percentage of OCEAN_LIGHT / rgb 255 255 255
-			// oshan is either in day or night. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
+			// oshan is either in day or night during a round. 'eclipses' i.e. sunrises/sunsets don't happen at runtime.
+			src.eclipse_counter = ((BUILD_TIME_HOUR + 3) % 12) HOURS
+			src.photovoltaic_efficiency = 10 //it be pretty close to its star ngl
 			src.rate = 0
 			src.angle = pick(90, 270)
 		// local suns for z2 areas
@@ -276,6 +276,7 @@
 			else
 				src.eclipse_status = ECLIPSE_TERRESTRIAL
 				src.visibility = 1
+			src.eclipse_counter = BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
 			src.eclipse_magnitude = 1
 			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
 			src.rate = 0
@@ -293,6 +294,7 @@
 			src.eclipse_time = 2.3 HOURS // figures based on irl measurements
 			src.down_time = 1.67 DAYS
 			src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_UMBRA)
+			src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			src.eclipse_magnitude = 1
 			src.photovoltaic_efficiency = 2.5
 			src.rate = 0
@@ -308,6 +310,7 @@
 			src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_UMBRA)
 			src.eclipse_time = 24 WEEKS // making it turn very slowly because otherwise it'd be annoying
 			src.down_time = 24 WEEKS
+			src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			if (src.name == "Fugg") src.photovoltaic_efficiency = 0.01
 			else src.photovoltaic_efficiency = 0.03
 			src.rate = 0
