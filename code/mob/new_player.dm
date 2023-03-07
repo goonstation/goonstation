@@ -272,7 +272,9 @@ mob/new_player
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+			return
 		global.latespawning.lock()
 
 		if (JOB && (force || IsJobAvailable(JOB)))
@@ -366,6 +368,10 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
+
+			// Apply any roundstart mutators to late join if applicable
+			roundstart_events(character)
+
 			SPAWN(0)
 				qdel(src)
 			global.latespawning.unlock()
@@ -375,6 +381,11 @@ mob/new_player
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
+
+	proc/roundstart_events(mob/living/player)
+		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+			if(RE.include_latejoin && RE.is_crew_affected(player))
+				RE.apply_to_player(player)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
@@ -641,6 +652,8 @@ a.latejoin-card:hover {
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 
+		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+
 		close_spawn_windows()
 
 		if(ishuman(new_character))
@@ -693,12 +706,6 @@ a.latejoin-card:hover {
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
 
-#ifdef SECRETS_ENABLED
-		if(new_character.ckey == "cursedkatey")
-			new_character.curse_katey()
-			return
-#endif
-
 		return new_character
 
 	Move()
@@ -729,28 +736,17 @@ a.latejoin-card:hover {
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
 				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				do_objectives = FALSE
 
-			if (ROLE_WRESTLER)
-				traitor.special_role = ROLE_WRESTLER
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-				traitormob.make_wrestler(1)
-
 			if (ROLE_GRINCH)
-				traitor.special_role = ROLE_GRINCH
-				objective_set_path = /datum/objective_set/grinch
-				traitormob.make_grinch()
-
-			if (ROLE_HUNTER)
-				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				do_objectives = FALSE
 
 			if (ROLE_WRAITH)
-				traitor.special_role = ROLE_WRAITH
-				traitormob.make_wraith()
-				generate_wraith_objectives(traitor)
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
@@ -905,7 +901,7 @@ a.latejoin-card:hover {
 			if(observer?.client)
 				observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(src.ckey)
+			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
 			qdel(src)
 

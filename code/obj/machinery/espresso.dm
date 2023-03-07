@@ -28,6 +28,8 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		src.update()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		for(var/obj/item/reagent_containers/container in src.contents)
+			SEND_SIGNAL(container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "EspressoMachine")

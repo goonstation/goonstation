@@ -1,12 +1,12 @@
-// To add a rev to the list of revolutionaries, make sure it's rev (with if(istype(ticker.mode, /datum/game_mode/revolution))),
-// then call ticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
-// nothing else needs to be done, as that proc will check if they are a valid target.
-// Just make sure the converter is a head before you call it!
-// To remove a rev (from brainwashing or w/e), call ticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
-// this will also check they're not a head, so it can just be called freely
 // If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
+//uncomment to disable safety checks and win conditions to allow for local testing
+//#define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
+
+#ifdef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+#warn Revolution debug mode enabled. IF YOU COMMIT THIS TO LIVE EVERYTHING WILL BREAK AND YOUR KNEECAPS WILL BE FORFEIT!!1
+#endif
 /datum/game_mode/revolution
 	name = "Revolution"
 	config_tag = "revolution"
@@ -42,7 +42,7 @@
 
 /datum/game_mode/revolution/pre_setup()
 
-	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
+	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REVOLUTIONARY, 1)
 	var/num_players = 0
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -72,75 +72,35 @@
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
+	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REVOLUTIONARY, amount = rev_number, recordChosen = 1)
 	head_revolutionaries |= chosen_revolutionaries
 	for (var/datum/mind/rev in head_revolutionaries)
-		rev.special_role = ROLE_HEAD_REV
+		rev.special_role = ROLE_HEAD_REVOLUTIONARY
 		revs_possible.Remove(rev)
 
 	return 1
 
 /datum/game_mode/revolution/post_setup()
-
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 	var/list/heads = get_living_heads()
-
 	if(!head_revolutionaries || !heads)
 		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
+#endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/regular/assassinate/rev_obj = new(null, rev_mind)
-			rev_obj.find_target_by_role(head_mind.assigned_role)
-
-		equip_revolutionary(rev_mind.current)
-		rev_mind.current.show_antag_popup("revhead")
-		update_rev_icons_added(rev_mind)
-
-	for(var/datum/mind/rev_mind in head_revolutionaries)
-		var/obj_count = 1
-		boutput(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
-		for(var/datum/objective/objective in rev_mind.objectives)
-			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 	SPAWN(rand(TrackerTime_min, TrackerTime_max))
 		send_tracker()
 
-/datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
-	equip_traitor(rev_mob)
-
-	//var/the_slot = ""
-
-	/*
-	if (!rev_mob.w_uniform)
-		var/obj/F = new /obj/item/device/flash/revolution(get_turf(rev_mob))
-		rev_mob.put_in_hand_or_drop(F)
-		the_slot = "hand"
-	else
-		if (!rev_mob.r_store)
-			rev_mob.equip_if_possible(new /obj/item/device/flash/revolution(rev_mob), rev_mob.slot_r_store)
-			the_slot = "right pocket"
-		else if (!rev_mob.l_store)
-			rev_mob.equip_if_possible(new /obj/item/device/flash/revolution(rev_mob), rev_mob.slot_l_store)
-			the_slot = "left pocket"
-		else if (istype(rev_mob.back, /obj/item/storage/) && rev_mob.back.contents.len < 7)
-			rev_mob.equip_if_possible(new /obj/item/device/flash/revolution(rev_mob), rev_mob.slot_in_backpack)
-			the_slot = "backpack"
-		else
-			var/obj/F2 = new /obj/item/device/flash/revolution(get_turf(rev_mob))
-			rev_mob.put_in_hand_or_drop(F2)
-			the_slot = "hand"
-	*/
-	rev_mob.show_text("You can use any <b>flash</b> or order items on your Uplink to convert others to the cause!", "blue")
-	return
-
 /datum/game_mode/revolution/send_intercept()
 	..(src.head_revolutionaries)
+
 /datum/game_mode/revolution/proc/send_tracker()
 	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = "Watchful Eye Sensor Array Update")
 	command_alert("Relevant biometric signatures of Command have been identified. To aid with the ongoing revolution, station command can now be tracked through the transmitted PDA program.", "Unregistered Signal Insertion", alert_origin = "Egeria Providence Array Broadcast")
@@ -153,6 +113,7 @@
 	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
 
+#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
@@ -161,6 +122,7 @@
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
+#endif
 
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())
@@ -187,47 +149,6 @@
 	for(var/mob/living/carbon/M in mobs)
 		M.gib()
 	endthisshit = 1
-
-/datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
-	.= 0
-	if (!rev_mind?.current || (rev_mind.current && !rev_mind.current.client))
-		return 0
-
-	var/list/uncons = src.get_unconvertables()
-	if (!(rev_mind in src.revolutionaries) && !(rev_mind in src.head_revolutionaries) && !(rev_mind in uncons))
-		rev_mind.current.show_antag_popup("revved")
-		rev_mind.current.show_text("<h2><font color=red>You are now a revolutionary! Kill the heads of staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = rev leader, red = regular member).</font></h2>")
-
-		src.revolutionaries += rev_mind
-		src.update_rev_icons_added(rev_mind)
-		logTheThing(LOG_COMBAT, rev_mind.current, "was made a member of the revolution.")
-		. = 1
-
-		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
-		E.color = "#FF5555"
-		E.setup(rev_mind.current.loc)
-
-/datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
-	.= 0
-	if (!rev_mind?.current)
-		return 0
-
-	if (rev_mind in revolutionaries)
-		rev_mind.current.show_antag_popup("derevved")
-		rev_mind.current.show_text("<h2><font color=blue>You are no longer a revolutionary! Protect the heads of staff and help them kill the leaders of the revolution.</font></h2>", "blue")
-
-		src.revolutionaries -= rev_mind
-		src.update_rev_icons_removed(rev_mind)
-		logTheThing(LOG_COMBAT, rev_mind.current, "is no longer a member of the revolution.")
-
-		for (var/mob/living/M in view(rev_mind.current))
-			M.show_text("<b>[rev_mind.current] looks like they just remembered their real allegiance!</b>", "blue")
-
-		.= 1
-
-		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
-		E.color = "#5555FF"
-		E.setup(rev_mind.current.loc)
 
 /datum/game_mode/revolution/proc/update_all_rev_icons()
 	var/list/update_me = list()
@@ -265,11 +186,11 @@
 
 	return
 
-/datum/game_mode/revolution/proc/get_living_heads()
+/datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
 
 	for(var/mob/living/carbon/human/player in mobs)
-		if(player.mind)
+		if(player.mind && !isdead(player))
 			var/role = player.mind.assigned_role
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
 				heads += player.mind
@@ -290,32 +211,6 @@
 				heads += player.mind
 
 	return heads
-
-/datum/game_mode/revolution/proc/get_unconvertables()
-	var/list/ucs = list()
-
-	for(var/mob/living/silicon/robot/player in mobs)
-		if(player.mind)
-			var/rol = player.mind.assigned_role
-			if(rol in list("Cyborg"))
-				ucs += player.mind
-
-	for(var/mob/living/critter/small_animal/player in mobs)
-		if(player.mind)
-			if (player.ghost_spawned)
-				ucs += player.mind
-
-	for(var/mob/living/carbon/human/player in mobs)
-		if(player.mind)
-			if (locate(/obj/item/implant/counterrev) in player.implant)
-				ucs += player.mind
-			else
-				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Consultant","Communications Officer"))
-					ucs += player.mind
-	//for(var/mob/living/carbon/human/player in mobs)
-
-	return ucs
 
 /datum/game_mode/revolution/proc/check_rev_victory()
 	var/list/head_check = get_all_heads()
@@ -493,52 +388,3 @@
 		for(var/datum/mind/rev_mind as anything in head_revolutionaries)
 			if(rev_mind.current && !isdead(rev_mind.current))
 				rev_mind.current.unlock_medal("This station is ours!", TRUE)
-
-
-
-/obj/item/revolutionary_sign
-	name = "revolutionary sign"
-	desc = "A sign bearing revolutionary propaganda. Good for picketing."
-
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
-	item_state = "revsign"
-
-	w_class = W_CLASS_BULKY
-	throwforce = 8
-	flags = FPRINT | TABLEPASS | CONDUCT
-	c_flags = EQUIPPED_WHILE_HELD
-	force = 7
-	stamina_damage = 30
-	stamina_cost = 15
-	stamina_crit_chance = 10
-	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_SETUP(BLOCK_LARGE)
-		processing_items.Add(src)
-
-	disposing()
-		..()
-		processing_items.Remove(src)
-
-	process()
-		..()
-		if (ismob(src.loc))
-			var/mob/owner = src.loc
-			if (owner.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-				var/datum/game_mode/revolution/R = ticker.mode
-
-				if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
-					var/found = 0
-					for (var/datum/mind/M in R.head_revolutionaries)
-						if (M.current && ishuman(M.current))
-							if (GET_DIST(owner,M.current) <= 5)
-								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
-									found = 1
-									break
-					if (found)
-						owner.changeStatus("revspirit", 20 SECONDS)

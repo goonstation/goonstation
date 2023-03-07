@@ -25214,7 +25214,7 @@
 	},
 /area/station/science/lobby)
 "bKs" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -43369,6 +43369,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"jAk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
 "jAw" = (
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/cargobay)
@@ -49889,7 +49897,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
 "ptX" = (
-/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "pur" = (
@@ -107503,7 +107510,7 @@ cJr
 rTt
 bki
 xYT
-bzk
+jAk
 bzk
 rgh
 coJ

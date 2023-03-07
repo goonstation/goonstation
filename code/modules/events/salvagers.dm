@@ -1,8 +1,10 @@
 /datum/random_event/major/antag/salvagers
 	name = "Salvagers"
 	required_elapsed_round_time = 12.8 MINUTES
+	wont_occur_past_this_time = 35 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
+	weight = 20
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -16,6 +18,19 @@
 	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
+
+		if(ticker?.mode)
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				return 0
+
+			if(istype(ticker.mode, /datum/game_mode/revolution))
+				return 0
+
+			if (istype(ticker.mode, /datum/game_mode/nuclear))
+				return 0
+
+			if (istype(ticker.mode, /datum/game_mode/flock))
+				wont_occur_past_this_time = 25 MINUTES
 
 		if(length(eligible_dead_player_list(allow_dead_antags = TRUE)) < minimum_count)
 			return 0
@@ -64,8 +79,8 @@
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a random event antagonist? Your name will be added to the list of eligible candidates and may be selected at random by the game.") // Don't disclose which type it is. You know, metagaming.
-		text_messages.Add("You are eligible to be respawned as a random event antagonist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as a salvager? Your name will be added to the list of eligible candidates and may be selected at random by the game.")
+		text_messages.Add("You are eligible to be respawned as a salvager. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).

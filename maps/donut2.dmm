@@ -15960,7 +15960,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "bcr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"
@@ -17490,6 +17490,9 @@
 "big" = (
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -26797,10 +26800,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"dxq" = (
-/obj/storage/secure/closet/research/uniform,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/observatory)
 "dxC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -29223,9 +29222,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "fpK" = (
-/obj/window/cubicle{
-	dir = 2
-	},
 /obj/machinery/shower{
 	dir = 4;
 	icon_state = "showerhead";
@@ -32290,7 +32286,7 @@
 /area/station/maintenance/south)
 "hZo" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "iam" = (
@@ -39481,9 +39477,6 @@
 	icon_state = "showerhead";
 	pixel_y = 2
 	},
-/obj/window/cubicle{
-	dir = 1
-	},
 /obj/machinery/drainage,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -40881,7 +40874,6 @@
 "pfp" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "Its hinges have a bunch of split wire ends sticking out...";
 	dir = 4;
 	name = "busted airlock";
@@ -120683,7 +120675,7 @@ uUG
 oGb
 dlf
 hZo
-dxq
+ajD
 rYA
 ajA
 pyu

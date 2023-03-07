@@ -244,6 +244,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemDispenser", src.name)

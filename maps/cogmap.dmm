@@ -17422,7 +17422,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"
@@ -27900,7 +27900,6 @@
 "bzu" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	pixel_y = 32;
 	starts_established = 1
 	},
@@ -27914,7 +27913,6 @@
 "bzy" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	pixel_y = 32
 	},
 /obj/decal/stripe_caution,
@@ -28621,7 +28619,6 @@
 "bBp" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32;
 	starts_established = 1
@@ -30919,7 +30916,6 @@
 "bIY" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32
 	},
@@ -36354,7 +36350,7 @@
 	},
 /area/station/science/lobby)
 "bWC" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bWD" = (
@@ -37281,13 +37277,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/device/radio/headset/research{
-	pixel_x = -1
-	},
-/obj/item/device/radio/headset/research{
-	pixel_x = -5;
-	pixel_y = 7
-	},
+/obj/item/pen,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bZh" = (
@@ -47981,13 +47971,16 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cPW" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "cRc" = (
@@ -48661,6 +48654,9 @@
 	name = "Medical Hangar Door Control";
 	pixel_x = -24
 	},
+/obj/machinery/light_switch/west{
+	pixel_y = -10
+	},
 /turf/simulated/floor/white,
 /area/station/hangar/medical)
 "dGl" = (
@@ -49166,10 +49162,10 @@
 	name = "Catering Hangar"
 	})
 "eir" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "eiP" = (
@@ -53098,10 +53094,13 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "iPK" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "iPM" = (
@@ -54892,6 +54891,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "ljM" = (
@@ -55802,10 +55802,10 @@
 	},
 /area/station/hydroponics/bay)
 "muh" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "muz" = (
@@ -61126,6 +61126,11 @@
 "sAI" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
+"sAW" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_tool,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "sBr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63302,9 +63307,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
-	icon_state = "camera";
 	name = "autoname - SS13";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/simulated/floor/bluewhite{
@@ -64905,10 +64908,11 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wKl" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
+/obj/cable,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "wNC" = (
@@ -99087,7 +99091,7 @@ bRd
 bWx
 bUa
 hVP
-bWC
+sAW
 bWC
 bZg
 cax

@@ -52,6 +52,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
+			next_round_mode = master_mode
 			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
@@ -1565,7 +1566,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("rev")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[vcs_revision] by [vcs_author]"
+				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
+				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
 			if ("version")

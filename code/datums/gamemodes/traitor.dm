@@ -39,7 +39,7 @@
 	if(traitor_scaling)
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
-	if(num_traitors > 2 && prob(10))
+	if(num_traitors >= 4 && prob(10))
 		num_traitors -= 1
 		num_wraiths = 1
 
@@ -77,7 +77,7 @@
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		if (traitor.special_role == ROLE_WRAITH) // agony.
-			generate_wraith_objectives(traitor)
+			traitor.add_antagonist(ROLE_WRAITH)
 		else
 			traitor.add_antagonist(ROLE_TRAITOR)
 	SPAWN(rand(waittime_l, waittime_h))

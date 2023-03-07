@@ -221,8 +221,8 @@
 
 		playsound(src, horn_note, 50, 0)
 		for(var/atom/A in range(user, 5))
-			if(istype(A, /obj/critter/dog/george))
-				var/obj/critter/dog/george/G = A
+			if(istype(A, /mob/living/critter/small_animal/dog/george))
+				var/mob/living/critter/small_animal/dog/george/G = A
 				if(prob(60))
 					G.howl()
 			if(ishuman(A))
