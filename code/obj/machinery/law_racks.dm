@@ -207,13 +207,13 @@
 		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1)
-				changeHealth(rand(-105,-90),"explosion severity [severity]")
+				changeHealth(rand(-90,-70),"explosion severity [severity]")
 				return
 			if(2)
-				changeHealth(rand(-80,-50),"explosion severity [severity]")
+				changeHealth(rand(-60,-40),"explosion severity [severity]")
 				return
 			if(3)
-				changeHealth(rand(-30,-10),"explosion severity [severity]")
+				changeHealth(rand(-20,-10),"explosion severity [severity]")
 				return
 
 	bullet_act(obj/projectile/P)

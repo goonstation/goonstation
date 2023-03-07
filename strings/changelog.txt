@@ -8,6 +8,7 @@
 (+)Players using VR goggles or a scuttlebot controller will now have an examine text saying their mind is "elsewhere."
 (u)LeahTheTech
 (+)Having CBD in your bloodstream will now negate the effects of the "nervous" trait.
+(+)The AI law rack is now more resistant to explosions, notably being able to survive one breaching charge.
 (t)mon mar 06 23
 (u)Wisemonster
 (p)13133
