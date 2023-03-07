@@ -388,7 +388,6 @@ TYPEINFO(/obj/machinery/processor)
 					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
 					var/newtype = getProcessedMaterialForm(merged)
 					var/apply_material = 1
-					var/output_item = 0
 
 					if(RE)
 						if(!RE.result_id && !RE.result_item)
@@ -396,7 +395,6 @@ TYPEINFO(/obj/machinery/processor)
 						else if(RE.result_item)
 							newtype = RE.result_item
 							apply_material = 0
-							output_item = 1
 						else if(RE.result_id)
 							merged = getMaterial(RE.result_id)
 
@@ -408,7 +406,7 @@ TYPEINFO(/obj/machinery/processor)
 					piece.change_stack_amount(amt - piece.amount)
 					FP.change_stack_amount(-amt)
 					SP.change_stack_amount(-amt)
-					if(!output_item)
+					if(istype(piece, /obj/item/material_piece))
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))

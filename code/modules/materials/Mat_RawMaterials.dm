@@ -374,7 +374,7 @@
 /obj/item/material_piece/cloth/hauntium
 	name = "hauntium fabric"
 	desc = "This cloth seems almost alive."
-	icon_state = "dyneema-fabric"
+	icon_state = "fabric"
 
 	setup_material()
 		src.setMaterial(getMaterial("hauntium"), appearance = TRUE, setname = FALSE)
