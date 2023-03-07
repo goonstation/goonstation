@@ -42,7 +42,6 @@
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
-	var/show_genetics_abilities = TRUE
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -496,14 +495,14 @@
 				//src.update_sprinting()
 
 			if ("ability")
-				if(show_genetics_abilities)
-					show_genetics_abilities = FALSE
-					boutput(master, "No longer showing genetic abilities.")
+				if(!master.abilityHolder.hidden)
+					master.abilityHolder.hidden = TRUE
+					boutput(master, "No longer showing abilities.")
 				else
-					show_genetics_abilities = TRUE
-					boutput(master, "Now showing genetic abilities.")
+					master.abilityHolder.hidden = FALSE
+					boutput(master, "Now showing abilities.")
 
-				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][show_genetics_abilities]"
+				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][!master.abilityHolder.hidden]"
 				update_ability_hotbar()
 
 			if ("health")
@@ -855,9 +854,6 @@
 		if(isdead(master))
 			return
 
-		// remove genetics buttons
-		for(var/atom/movable/screen/ability/topBar/genetics/G in src.objects)
-			remove_object(G)
 		for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 			master.client.screen -= PO
 		for(var/obj/ability_button/B in master.client.screen)
@@ -878,22 +874,6 @@
 			if(pos_x > 15)
 				pos_x = 1
 				pos_y++
-
-		// if toggled off, do not show genetics abilities
-		if (show_genetics_abilities)
-			var/datum/bioEffect/power/P
-			for(var/ID in master.bioHolder.effects)
-				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
-					continue
-				var/datum/targetable/geneticsAbility/POWER = P.ability
-				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object
-				BUTTON.update_on_hud(pos_x,pos_y)
-
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
 
 		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
 			var/obj/vehicle/V = master.loc
