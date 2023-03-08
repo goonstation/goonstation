@@ -1,5 +1,9 @@
 
 (t)wed mar 08 23
+(u)Wisemonster
+(p)13204
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cog1's Upload Chamber has been remodeled to be a bit more secure.
 (u)Amylizzle
 (p)13322
 (e)🪲📡|C-Bug, A-AI
