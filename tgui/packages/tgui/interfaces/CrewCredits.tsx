@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
