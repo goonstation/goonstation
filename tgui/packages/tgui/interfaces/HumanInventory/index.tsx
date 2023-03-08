@@ -31,7 +31,7 @@ export const HumanInventory = (_props, context) => {
   const { data, act } = useBackend<HumanInventoryData>(context);
 
   return (
-    <Window width={340} height={570} title={data.name}>
+    <Window width={400} height={570} title={data.name}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -86,16 +86,6 @@ const Slot = (props: SlotProps, context) => {
   const { slot, name } = props;
   const { id, item, obstructed } = slot;
 
-  let getItemName = function getItemName(obstructed, item) {
-    if (obstructed) {
-      return 'Obstructed';
-    }
-    if (!item) {
-      return 'Nothing';
-    }
-    return item;
-  };
-
   return (
     <LabeledList.Item label={name}>
       <Button color={obstructed || !item ? 'transparent' : undefined} fluid onClick={() => act('access-slot', { slot })}>
@@ -105,5 +95,12 @@ const Slot = (props: SlotProps, context) => {
   );
 };
 
-
-
+let getItemName = function getItemName(obstructed, item) {
+  if (obstructed) {
+    return 'Obstructed';
+  }
+  if (!item) {
+    return 'Nothing';
+  }
+  return item;
+};
