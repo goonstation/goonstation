@@ -3797,15 +3797,15 @@
 		var/signal = input.signal
 		if (length(signal) > MAX_MESSAGE_LEN)
 			return
-		src.display_text = html_encode(input.signal)
+		src.display_text = replacetext(html_encode(input.signal), "|n", "<br>")
 		src.display()
 
 	proc/setTextManually(obj/item/W as obj, mob/user as mob)
-		var/input = input(user, "Message Text", "Text", html_decode(src.display_text)) as text | null
+		var/input = input(user, "Message Text", "Text", replacetext(html_decode(src.display_text), "<br>", "|n")) as text | null
 		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
 			return FALSE
 
-		src.display_text = html_encode(input)
+		src.display_text = replacetext(html_encode(input), "|n", "<br>")
 		src.display()
 		tooltip_rebuild = TRUE
 		. = TRUE
