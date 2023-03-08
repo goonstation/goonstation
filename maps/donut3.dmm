@@ -67386,6 +67386,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
