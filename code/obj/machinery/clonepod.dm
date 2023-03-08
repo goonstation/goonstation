@@ -399,6 +399,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!is_puritan)
 			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
+#ifdef CLONING_IS_INSTANT
+		src.occupant.full_heal()
+#endif
 		return 1
 
 
