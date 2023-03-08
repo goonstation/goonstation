@@ -1355,7 +1355,7 @@ var/datum/action_controller/actions
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
 	/// what the target of the action is, if any
-	var/target = null
+	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
 	/// what is the maximum range target and owner can be apart? need to modify before starting the action.

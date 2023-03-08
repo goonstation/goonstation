@@ -1,4 +1,28 @@
 
+(t)wed mar 08 23
+(u)Wisemonster
+(p)13204
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cog1's Upload Chamber has been remodeled to be a bit more secure.
+(u)Amylizzle
+(p)13322
+(e)🪲📡|C-Bug, A-AI
+(+)MobAI is now better at chasing you.
+(t)tue mar 07 23
+(u)Zamujasa
+(+)Selection component has a "send + next" signal to compliment the "next + send" one.
+(+)Message Sign component will now interpret "|n" as a newline (similar to most consoles).
+(+)Pixel Display components now accept optional x2 and y2 parameters to draw rectangles.
+(u)Sord
+(*)You may now buy a single use law rack manudrive from QM. Crate is locked to Head access.
+(u)FlameArrow57
+(p)13162
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Players using VR goggles or a scuttlebot controller will now have an examine text saying their mind is "elsewhere."
+(u)LeahTheTech
+(+)Having CBD in your bloodstream will now negate the effects of the "nervous" trait.
+(*)The AI law rack can no longer be deconstructed while it still has laws inside.
+(+)The AI law rack is now more resistant to explosions, notably being able to survive one breaching charge.
 (t)mon mar 06 23
 (u)Wisemonster
 (p)13133

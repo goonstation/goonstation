@@ -1982,29 +1982,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a blob?", "Make Blob", list("Yes", "No")) == "Yes")
-				var/mob/B = M.blobize()
-				if (B)
-					if (B.mind)
-						B.mind.special_role = ROLE_BLOB
-						ticker.mode.bestow_objective(B,/datum/objective/specialist/blob)
-						//Bl.owner = B.mind
-						//B.mind.objectives = list(Bl)
-
-						var/i = 1
-						for (var/datum/objective/Obj in B.mind.objectives)
-							boutput(B, "<b>Objective #[i]</b>: [Obj.explanation_text]")
-							i++
-						ticker.mode.Agimmicks += B.mind
-						B.antagonist_overlay_refresh(1, 0)
-
-						SPAWN(0)
-							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
-
-							if (newname)
-								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-								newname = strip_html(newname) + " the Blob"
-								B.real_name = newname
-								B.name = newname
+				M.mind?.add_antagonist(ROLE_BLOB, source = ANTAGONIST_SOURCE_ADMIN)
 
 		if ("makemacho")
 			if( src.level < LEVEL_PA )
@@ -2662,57 +2640,53 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 
 					if("transform_one")
-						var/who = input("Transform who?","Transform") as null|mob in world
+						var/list/targets = list()
+						for (var/client/C in clients)
+							if (!C?.mob)
+								continue
+							if (ishuman(C.mob))
+								targets += C.mob
+							LAGCHECK(LAG_LOW)
+						sortList(targets, /proc/cmp_text_asc)
+						var/who = tgui_input_list(usr, "Please, select a target!", "Transform", targets)
 						if (!who)
 							return
 						if (!ishuman(who))
 							tgui_alert(usr,"This secret can only be used on human mobs.")
 							return
 						var/mob/living/carbon/human/H = who
-						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
-						if (!which)
+						var/datum/mutantrace/new_race = tgui_input_list(usr, "Please select mutant race", "Transform Menu", concrete_typesof(/datum/mutantrace) + "Cyborg")
+						if (!ispath(new_race, /datum/mutantrace) && new_race != "Cyborg")
+							boutput(usr, "Error: Invalid mutant race")
 							return
-						switch(which)
-							if("Monkey") H.monkeyize()
-							if("Cyborg") H.Robotize_MK2()
-							if("Lizardman")
-								H.set_mutantrace(/datum/mutantrace/lizard)
-							if("Squidman")
-								H.set_mutantrace(/datum/mutantrace/ithillid)
-							if("Martian")
-								H.set_mutantrace(/datum/mutantrace/martian)
-							if("Skeleton")
-								H.set_mutantrace(/datum/mutantrace/skeleton)
-							if("Flashman")
-								H.set_mutantrace(/datum/mutantrace/flashy)
-							if ("Cow")
-								H.set_mutantrace(/datum/mutantrace/cow)
-						message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
-						logTheThing(LOG_ADMIN, usr, "transformed [H.real_name] into a [which].")
-						logTheThing(LOG_DIARY, usr, "transformed [H.real_name] into a [which].", "admin")
+						if(new_race == "Cyborg")
+							H.Robotize_MK2()
+						else
+							H.mutantrace = new new_race
+							H.set_mutantrace(new_race)
+						message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [new_race].</span>")
+						logTheThing(LOG_ADMIN, usr, "transformed [H.real_name] into a [new_race].")
+						logTheThing(LOG_DIARY, usr, "transformed [H.real_name] into a [new_race].", "admin")
 
 					if("transform_all")
-						var/which = input("Transform everyone into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
-						for(var/mob/living/carbon/human/H in mobs)
-							switch(which)
-								if("Monkey") H.monkeyize()
-								if("Cyborg") H.Robotize_MK2()
-								if("Lizardman")
-									H.set_mutantrace(/datum/mutantrace/lizard)
-								if("Squidman")
-									H.set_mutantrace(/datum/mutantrace/ithillid)
-								if("Martian")
-									H.set_mutantrace(/datum/mutantrace/martian)
-								if("Skeleton")
-									H.set_mutantrace(/datum/mutantrace/skeleton)
-								if("Flashman")
-									H.set_mutantrace(/datum/mutantrace/flashy)
-								if("Cow")
-									H.set_mutantrace(/datum/mutantrace/cow)
+						var/datum/mutantrace/new_race = tgui_input_list(usr, "Please select mutant race", "Transform Menu", concrete_typesof(/datum/mutantrace) + "Cyborg")
+						if (!ispath(new_race, /datum/mutantrace) && new_race != "Cyborg")
+							boutput(usr, "Error: Invalid mutant race")
+							return
+						for (var/client/C in clients)
+							if (!C?.mob)
+								continue
+							if (ishuman(C.mob))
+								var/mob/living/carbon/human/H = C.mob
+								if(new_race == "Cyborg")
+									H.Robotize_MK2()
+								else
+									H.mutantrace = new new_race
+									H.set_mutantrace(new_race)
 							LAGCHECK(LAG_LOW)
-						message_admins("<span class='internal'>[key_name(usr)] transformed everyone into a [which].</span>")
-						logTheThing(LOG_ADMIN, usr, "transformed everyone into a [which].")
-						logTheThing(LOG_DIARY, usr, "transformed everyone into a [which].", "admin")
+						message_admins("<span class='internal'>[key_name(usr)] transformed everyone into a [new_race].</span>")
+						logTheThing(LOG_ADMIN, usr, "transformed everyone into a [new_race].")
+						logTheThing(LOG_DIARY, usr, "transformed everyone into a [new_race].", "admin")
 					if("prisonwarp")
 						if(!ticker)
 							tgui_alert(usr,"The game hasn't started yet!")

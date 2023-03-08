@@ -398,6 +398,9 @@
 		return 0
 
 	proc/remove_unlocks()
+		for (var/datum/targetable/geneticsAbility/ability in src.abilities)
+			if (!ability.linked_power)
+				src.removeAbilityInstance(ability)
 		return 0
 
 	proc/set_loc_callback(var/newloc)
