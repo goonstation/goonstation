@@ -98,7 +98,7 @@ const Slot = (props: SlotProps, context) => {
 
   return (
     <LabeledList.Item label={name}>
-      <Button color={!obstructed && item ? 'default' : 'transparent'} fluid onClick={() => act('access-slot', { slot })}>
+      <Button color={obstructed || !item ? 'transparent' : undefined} fluid onClick={() => act('access-slot', { slot })}>
         {getItemName(obstructed, item)}
       </Button>
     </LabeledList.Item>
