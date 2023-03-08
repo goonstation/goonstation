@@ -453,6 +453,7 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
+		if(hit.density == 0) return //no duplicating darts
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
 
