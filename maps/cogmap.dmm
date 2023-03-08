@@ -29815,34 +29815,12 @@
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "bFk" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
-"bFl" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/quartermaster/office)
-"bFn" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "bFo" = (
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -30085,7 +30063,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGl" = (
@@ -31062,9 +31043,6 @@
 /area/station/storage/warehouse)
 "bJH" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/recharger{
 	pixel_x = -5;
 	pixel_y = 2
@@ -31078,6 +31056,10 @@
 	pixel_y = -1
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bJI" = (
@@ -32187,7 +32169,7 @@
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -52744,6 +52726,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"icO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "idr" = (
 /obj/xmastree/ephemeral,
 /turf/simulated/floor/orangeblack/side,
@@ -52913,6 +52905,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/security/detectives_office)
+"inF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "iod" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -54124,6 +54125,9 @@
 	},
 /obj/access_spawn/cargo,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jUM" = (
@@ -62974,13 +62978,10 @@
 	name = "Safety Shutters";
 	pixel_y = 24
 	},
+/obj/machinery/manufacturer/qm,
 /obj/machinery/light{
 	dir = 8;
-	tag = ""
-	},
-/obj/machinery/manufacturer/qm,
-/obj/disposalpipe/segment/mail{
-	dir = 4
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -65639,6 +65640,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "wZt" = (
@@ -66638,13 +66643,6 @@
 /area/listeningpost)
 "xZJ" = (
 /obj/storage/secure/closet/engineering/mechanic,
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "xZQ" = (
@@ -121695,7 +121693,7 @@ uhZ
 bDO
 bEG
 bFk
-bGc
+icO
 bGR
 rTp
 bIG
@@ -121996,7 +121994,7 @@ bAS
 bCK
 bDP
 bAW
-bFl
+bAW
 jUC
 bAW
 qqT
@@ -122299,7 +122297,7 @@ bAW
 bAW
 bAW
 ugF
-bMz
+inF
 fof
 ltz
 bGV
@@ -122600,7 +122598,7 @@ eSu
 lBu
 xpW
 lBu
-bFn
+bFp
 bGf
 bGT
 bHK
