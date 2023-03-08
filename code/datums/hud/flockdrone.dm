@@ -9,7 +9,7 @@
 		..(M)
 		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER+1, tooltipTheme = "flock")
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
-		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "SOUTH,EAST-1", HUD_LAYER+1, tooltipTheme = "flock")
+		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER+1, tooltipTheme = "flock")
 		eggButton.desc = "Lay egg is true! Starts at [FLOCK_LAY_EGG_COST] and scales with number of drones."
 
 	relay_click(id, mob/user, list/params)
