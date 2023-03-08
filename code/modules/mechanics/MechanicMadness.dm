@@ -4038,8 +4038,8 @@
 		var/list/params = params2list(input.signal)
 		var/dot_x = text2num(params["x"])
 		var/dot_y = text2num(params["y"])
-		var/dot_x2 = text2num(params["x"])
-		var/dot_y2 = text2num(params["y"])
+		var/dot_x2 = text2num(params["x2"])
+		var/dot_y2 = text2num(params["y2"])
 		var/dot_color = params["color"]
 		if (!isnull(dot_x) && !isnull(dot_y) && !isnull(dot_color))
 			// note that we don't care if dot_x2 and dot_y2 are null.
