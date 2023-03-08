@@ -489,7 +489,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -503,8 +506,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -591,7 +592,10 @@ var/datum/action_controller/actions
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -863,7 +867,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -877,8 +884,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -1350,7 +1355,7 @@ var/datum/action_controller/actions
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
 	/// what the target of the action is, if any
-	var/target = null
+	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
 	/// what is the maximum range target and owner can be apart? need to modify before starting the action.

@@ -173,7 +173,7 @@
 			if ("nukeop-gunbot")
 				window_title = "Nuclear Gun-Bot Basics"
 				filename = "html/traitorTips/nukeopgunbotTips.html"
-			if ("revhead")
+			if (ROLE_HEAD_REVOLUTIONARY)
 				window_title = "Revolutionary Head Goals"
 				filename = "html/traitorTips/revTips.html"
 			if ("revved")

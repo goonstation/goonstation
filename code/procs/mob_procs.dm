@@ -771,13 +771,9 @@
 	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
 	else
-		if (istype(ticker.mode, /datum/game_mode/revolution))
-			var/datum/game_mode/revolution/R = ticker.mode
-			var/list/datum/mind/HR = R.head_revolutionaries
-			var/list/datum/mind/RR = R.revolutionaries
-			if (src.mind in (HR + RR))
-				see_revs = 1
-			if (src.mind in HR)
+		if (isrevolutionary(src))
+			see_revs = 1
+			if (src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				see_heads = 1
 		else if (istype(ticker.mode, /datum/game_mode/spy))
 			var/datum/game_mode/spy/S = ticker.mode
@@ -868,6 +864,14 @@
 					if (see_everything || see_traitors)
 						var/I = image(antag_traitor, loc = M.current)
 						can_see.Add(I)
+				if (ROLE_HEAD_REVOLUTIONARY)
+					if (see_everything || see_revs)
+						var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+						can_see.Add(I)
+				if (ROLE_REVOLUTIONARY)
+					if (see_everything || see_revs)
+						var/I = image(antag_rev, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+						can_see.Add(I)
 				if (ROLE_NUKEOP_COMMANDER)
 					if (see_everything || see_nukeops)
 						var/I = image(antag_syndicate_comm, loc = M.current)
@@ -955,30 +959,12 @@
 						var/I = image(antag_generic, loc = M.current) // Default to this.
 						can_see.Add(I)
 
-	// Antagonists who generally only appear in certain game modes.
-	if (istype(ticker.mode, /datum/game_mode/revolution))
-		var/datum/game_mode/revolution/R = ticker.mode
-		var/list/datum/mind/HR = R.head_revolutionaries
-		var/list/datum/mind/RR = R.revolutionaries
-		var/list/datum/mind/heads = R.get_all_heads()
-
-		if (see_revs || see_everything)
-			for (var/datum/mind/M in HR)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1)) //secHuds are on EFFECTS_LAYER_UNDER_4
-					can_see.Add(I)
-			for (var/datum/mind/M in RR)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_rev, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
-					can_see.Add(I)
-
-		if (see_heads || see_everything)
-			for (var/datum/mind/M in heads)
-				if (M.current)
-					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
-					can_see.Add(I)
+	var/datum/antagonist/head_revolutionary/antag_role = src.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+	if (antag_role)
+		for (var/datum/mind/head_mind in antag_role.heads_of_staff)
+			if (head_mind.current)
+				var/I = image(antag_head, loc = head_mind.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+				can_see.Add(I)
 
 	else if (istype(ticker.mode, /datum/game_mode/spy))
 		var/datum/game_mode/spy/S = ticker.mode

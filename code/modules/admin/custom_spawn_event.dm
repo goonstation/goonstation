@@ -75,6 +75,10 @@
 			var/datum/mind/mind = pick(candidates)
 			candidates -= mind
 			var/mob/new_mob = src.get_mob_instance(mind.current?.client?.preferences?.gender)
+			//clean up some references, may help with random client crashes?
+			new_mob.ckey = null
+			new_mob.client = null
+			new_mob.mind = null
 
 			new_mob.ai?.die()
 			if (ishuman(new_mob))

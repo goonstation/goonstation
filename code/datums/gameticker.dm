@@ -315,11 +315,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
-					var/mob/living/intangible/blob_overmind/B = player.make_blob()
-					if (B)
-						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, B, "<b>Late join</b>: assigned antagonist role: blob.")
-						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
+					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()

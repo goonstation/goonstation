@@ -37,7 +37,7 @@
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
 			M.can_be_adjacent_to_target = src.can_be_adjacent_to_target
-			M.move_target = get_turf(holder.target)
+			M.move_target = holder.target
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK

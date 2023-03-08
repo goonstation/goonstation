@@ -2,7 +2,7 @@
 
 /obj/item/salvager
 	name = "salvage reclaimer"
-	desc = "A strange hodgepodge of industrial equipment used to break part equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
+	desc = "A strange hodgepodge of industrial equipment used to break apart equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
@@ -48,13 +48,16 @@
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 			return
-
-		if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
-			. = 25 SECONDS
 		else if (istype(A, /turf/simulated/wall))
-			if (istype(A, /turf/simulated/wall/auto/shuttle))
-				return
 			. = 20 SECONDS
+			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
+				. += 5 SECONDS
+			else if (istype(A, /turf/simulated/wall/auto/shuttle))
+				return
+
+			var/turf/simulated/wall/W = A
+			. *= max(W.health/initial(W.health),0.1)
+
 		else if (istype(A, /turf/simulated/floor))
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
@@ -84,6 +87,15 @@
 				boutput(user, "<span class='alert'>[O] cannot be deconstructed.</span>")
 				return
 
+			if (istext(decon_complexity))
+				boutput(user, "<span class='alert'>[decon_complexity]</span>")
+				// if(istype(A,/obj/machinery/lawrack))
+				// 	var/obj/machinery/lawrack/LR = A
+				// 	. = (LR._health/2) SECONDS
+				// 	decon_complexity = 0
+				// else
+				return
+
 			if(locate(/mob/living) in O)
 				boutput(user, "<span class='alert'>You cannot deconstruct [O] while someone is inside it!</span>")
 				return
@@ -92,7 +104,7 @@
 				boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [O] in this area.</span>")
 				return
 
-			. = 5 SECONDS
+			. += 5 SECONDS
 			. += decon_complexity * 3 SECONDS
 			boutput(user, "You start to destructively deconstruct [A].")
 
@@ -100,6 +112,7 @@
 			. = round(. * 0.75)
 
 		if(.)
+			. = max(., 2 SECONDS)
 #ifdef SECRETS_ENABLED
 			icon_state = "salvager-on"
 			item_state = "salvager-on"
@@ -234,11 +247,20 @@
 			return TRUE
 
 /datum/action/bar/private/welding/salvage
+
 	onUpdate()
+		if(QDELETED(target))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		..()
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.health -= 5
+			if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
+				W.health -= 5
+		// else if(istype(target, /obj/machinery/lawrack))
+		// 	var/obj/machinery/lawrack/LR = target
+		// 	LR.changeHealth(-1.5, owner)
 
 		var/obj/item/salvager/S = src.call_proc_on
 		if(istype(S))

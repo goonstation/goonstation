@@ -62,9 +62,6 @@ TYPEINFO(/obj/flock_structure/relay)
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
-	src.flock.flockmind.AddComponent(/datum/component/tracker_hud/flock, src)
-	for (var/mob/living/intangible/flock/trace/trace in src.flock.traces)
-		trace.AddComponent(/datum/component/tracker_hud/flock, src)
 	play_sound()
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
