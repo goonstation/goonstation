@@ -3627,7 +3627,7 @@ var/global/noir = 0
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
 								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-								for(var/datum/mind/N in ticker.mode:get_living_heads())
+								for(var/datum/mind/N in ticker.mode:get_all_heads())
 									var/mob/M = N.current
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -5425,6 +5425,7 @@ var/global/noir = 0
 	if (M.mind)
 		M.mind.damned = 0
 		M.mind.transfer_to(newM)
+	M.mind = null
 	newM.Login()
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 	qdel(M)

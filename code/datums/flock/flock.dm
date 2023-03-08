@@ -744,6 +744,11 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
+	if (src.total_compute() > 300)
+		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				continue
+			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
 	if (!src.relay_in_progress && !src.relay_finished)
 		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
 			src.relay_in_progress = TRUE
