@@ -1956,6 +1956,60 @@ datum
 						fireflash(location, 0)
 				return
 
+		explosion_potice // get in
+			name = "Potice Explosion"
+			id = "explosion_potice"
+			required_reagents = list("ice" = 1, "potassium" = 1)
+			instant = 1
+			mix_phrase = "The potassium explodes out of pure hatred for ice!"
+			hidden = TRUE
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
+					return
+				holder.last_basic_explosion = ticker.round_elapsed_ticks
+				var/atom/my_atom = holder.my_atom
+
+				var/turf/location = 0
+				if (my_atom)
+					location = get_turf(my_atom)
+					explosion(my_atom, location, -1,-1,0,1)
+					fireflash(location, 0)
+				else
+					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
+					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
+						location = pick(holder.covered_cache)
+						holder.covered_cache -= location
+						explosion_new(my_atom, location, 2.25/amt)
+						fireflash(location, 0)
+				return
+
+		explosion_barice // get in
+			name = "Barice Explosion"
+			id = "explosion_barice"
+			required_reagents = list("ice" = 1, "barium" = 1)
+			instant = 1
+			mix_phrase = "The barium explodes out of pure hatred for ice!"
+			hidden = TRUE
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
+					return
+				holder.last_basic_explosion = ticker.round_elapsed_ticks
+				var/atom/my_atom = holder.my_atom
+
+				var/turf/location = 0
+				if (my_atom)
+					location = get_turf(my_atom)
+					explosion(my_atom, location, -1,-1,0,1)
+					fireflash(location, 0)
+				else
+					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
+					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
+						location = pick(holder.covered_cache)
+						holder.covered_cache -= location
+						explosion_new(my_atom, location, 2.25/amt)
+						fireflash(location, 0)
+				return
+
 		explosion_barium // get in
 			name = "Barium Explosion"
 			id = "explosion_barium"
