@@ -648,8 +648,7 @@
 		var/mob/living/carbon/human/H = target
 
 		var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
-		if (antag_role)
-			antag_role.absorbed_victims += H
+		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2
