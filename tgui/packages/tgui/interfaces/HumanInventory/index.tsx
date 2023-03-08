@@ -35,33 +35,30 @@ export const HumanInventory = (_props, context) => {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <Section title={"Head"}>
+            <Section title="Head">
               <LabeledList>
                 {Object.entries(HEAD_SLOTS).map(([slotId, name]) => {
                   const slot = data.slots.find((s) => s.id === slotId);
-
                   return <Slot key={slotId} name={name} slot={slot} />;
                 })}
               </LabeledList>
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title={"Body"}>
+            <Section title="Body">
               <LabeledList>
                 {Object.entries(BODY_SLOTS).map(([slotId, name]) => {
                   const slot = data.slots.find((s) => s.id === slotId);
-
                   return <Slot key={slotId} name={name} slot={slot} />;
                 })}
               </LabeledList>
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title={"Misc"}>
+            <Section title="Misc">
               <LabeledList>
                 {Object.entries(MISC_SLOTS).map(([slotId, name]) => {
                   const slot = data.slots.find((s) => s.id === slotId);
-
                   return <Slot key={slotId} name={name} slot={slot} />;
                 })}
               </LabeledList>
