@@ -1977,6 +1977,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", .proc/next)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous", .proc/previous)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", .proc/nextplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send + next", .proc/plusnext)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", .proc/previousplus)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", .proc/sendCurrent)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", .proc/popitem)
@@ -2155,6 +2156,12 @@
 		if(level == 2) return
 		if(next(input))
 			sendCurrent(input)
+		return
+
+	proc/plusnext(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		sendCurrent(input)
+		next(input)
 		return
 
 	proc/previous(var/datum/mechanicsMessage/input)
