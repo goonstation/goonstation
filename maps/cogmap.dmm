@@ -52253,7 +52253,7 @@
 /obj/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload_foyer)
+/area/station/turret_protected/ai_upload)
 "hAi" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -107807,7 +107807,7 @@ buf
 buT
 bvT
 bwI
-buc
+bxx
 rae
 bzC
 bAw
