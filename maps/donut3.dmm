@@ -38470,6 +38470,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"lEC" = (
+/mob/living/critter/small_animal/mouse/remy,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "lEJ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -125054,7 +125058,7 @@ rTC
 pzp
 uHu
 pzp
-pzp
+lEC
 pzp
 gtq
 vGZ
