@@ -1,5 +1,9 @@
 
 (t)wed mar 08 23
+(u)glowbold
+(p)13217
+(e)💅📄|C-QoL, A-UI
+(+)Crew credits now use TGUI - make sure to report any bugs!
 (u)Wisemonster
 (p)13204
 (e)🗺⚖|A-Mapping, C-Balance
