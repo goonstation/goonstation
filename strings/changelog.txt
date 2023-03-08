@@ -2,7 +2,8 @@
 (t)tue mar 07 23
 (u)Zamujasa
 (+)Selection component has a "send + next" signal to compliment the "next + send" one.
-(+)Message Sign component will now interpret "|n" as a newline (similar to most consoles)
+(+)Message Sign component will now interpret "|n" as a newline (similar to most consoles).
+(+)Pixel Display components now accept optional x2 and y2 parameters to draw rectangles.
 (u)Sord
 (*)You may now buy a single use law rack manudrive from QM. Crate is locked to Head access.
 (u)FlameArrow57

@@ -4000,6 +4000,11 @@
 	var/bottom = 4
 	var/left = 4
 
+	// are we updating the icon currently?
+	// basically: don't icon = art more than once per tick-ish
+	// see update logic below for more details
+	var/tmp/updating = FALSE
+
 	pixel_point = TRUE
 
 	New()
@@ -4033,20 +4038,35 @@
 		var/list/params = params2list(input.signal)
 		var/dot_x = text2num(params["x"])
 		var/dot_y = text2num(params["y"])
+		var/dot_x2 = text2num(params["x"])
+		var/dot_y2 = text2num(params["y"])
 		var/dot_color = params["color"]
 		if (!isnull(dot_x) && !isnull(dot_y) && !isnull(dot_color))
-			drawPixelActual(dot_x, dot_y, dot_color)
+			// note that we don't care if dot_x2 and dot_y2 are null.
+			// technically we don't care about anything but y/k whatever
+			drawPixelActual(dot_x, dot_y, dot_x2, dot_y2, dot_color)
 
 
-	proc/drawPixelActual(dot_x, dot_y, dot_color)
+	proc/drawPixelActual(dot_x, dot_y, dot_x2, dot_y2, dot_color)
 		var/x = dot_x
 		var/y = dot_y
+		// these are updated later if dot_x2 and dot_y2 are valid
+		var/x2 = x
+		var/y2 = y
 
 		if (x < 0 || y < 0 || x >= canvas_width || y > canvas_height)
 			// you cannot embezzle pixels off the bezel, sorry.
 			// you thought this would be the same comment as canvas.dm?
 			// wrong. and so is drawing off the canvas.
 			return
+
+		// in this case, we check if they *are* in range
+		// rather than checking if they *are not*
+		// because if it's out of bounds we just don't copy it
+		if (dot_x2 && dot_x2 >= 0 && dot_x2 < canvas_width)
+			x2 = dot_x2
+		if (dot_y2 && dot_y2 >= 0 && dot_y2 < canvas_height)
+			y2 = dot_y2
 
 		// color should be an actual color
 		// byond: iscolor() pls
@@ -4058,14 +4078,31 @@
 		// not the icon itself)
 		x += left
 		y += bottom
+		x2 += left
+		y2 += bottom
 
-		art.DrawBox(dot_color, x, y)
-		icon = art
+		art.DrawBox(dot_color, x, y, x2, y2)
+		if (!src.updating)
+			// this should hopefully limit the icon sending code to just once per tick,
+			// rather than whenever you send a signal, which can be multiple times/tick
+			// the idea is to update it immediately once, then say "no more for now"
+			// the next tick it updates the icon and turns off the flag again
+			// this might allow for doubling (e.g. twice per 1/10) but that's
+			// better than like, 25 times lol
+
+			// immediately stop any other running one from doing this
+			src.updating = TRUE
+			// you get one for free now, for immediate updates
+			src.icon = src.art
+
+			SPAWN(1)
+				// then a bit later, update again and unset the flag
+				src.icon = src.art
+				src.updating = FALSE
 
 		// tracks how many things someone's drawn on it.
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
-		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
-
+		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
 
 
 
