@@ -301,7 +301,7 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer)
+		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
 			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
@@ -370,7 +370,7 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer)
+		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 

@@ -55,7 +55,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		var/datum/mind/mind = use_mob.mind
 		if (!mind)
-			CRASH("changeling critter created from mob with no mind")
+			logTheThing(LOG_DEBUG, holder.owner, "tries to spawn a changeling critter from a mob with no mind. THIS SHOULD NEVER HAPPEN AND MAY BREAK THINGS.")
+			return TRUE
 		mind.add_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, do_equip = FALSE)
 		var/datum/antagonist/changeling_critter/antag = mind.get_antagonist(src.antag_role)
 		antag.give_equipment(bodypart, src.holder)
