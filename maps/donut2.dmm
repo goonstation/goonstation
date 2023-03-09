@@ -19804,7 +19804,7 @@
 /obj/landmark/gps_waypoint,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	location = "Engineering"
+	location = "Mechanics"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
@@ -25659,6 +25659,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "euw" = (
@@ -34203,7 +34204,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	location = "Medbay"
+	location = "Hydroponics"
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -40095,7 +40096,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	location = "Hydroponics"
+	location = "Medbay"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -44472,6 +44473,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/floor,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow,
 /area/station/engine/monitoring)
 "rRk" = (
@@ -47355,6 +47357,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/substation/north)
 "tOK" = (
@@ -49466,6 +49469,12 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"vuG" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
 "vuQ" = (
 /obj/machinery/computer/power_monitor/smes{
 	name = "Engine Monitoring Computer";
@@ -50168,6 +50177,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "vVR" = (
@@ -51050,6 +51060,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -52622,6 +52633,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"xRk" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "xRw" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /obj/machinery/sparker{
@@ -52910,13 +52925,13 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ybv" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Mechanics"
-	},
 /obj/machinery/light/incandescent,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Engineering"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -81542,7 +81557,7 @@ lWK
 qZe
 lxJ
 sPr
-sPr
+vuG
 sPr
 mQQ
 qVt
@@ -83354,7 +83369,7 @@ tug
 fXu
 wue
 wIG
-wIG
+xRk
 wIG
 gfh
 fXu
