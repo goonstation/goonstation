@@ -16,20 +16,20 @@
 	// shidd and fugg are on opposite sides of the sky, so as one sets, the other rises.
 	// #define OCEAN_LIGHT  rgb(0,0,50)
 	#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 8 == 0) || (BUILD_TIME_HOUR - 16 == 0)
-		#define OCEAN_LIGHT  rgb(0.10 * 128, 0.10 * 170, 1.00 *  75, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 12 == 1) || (BUILD_TIME_HOUR - 16 == 1)
-		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 12 == 2) || (BUILD_TIME_HOUR - 16 == 2)
-		#define OCEAN_LIGHT  rgb(0.10 *   0, 0.10 * 255, 1.00 * 100, 0.65 * 255) // noon (fugg) rgb(0,26,100), quite bluey
-	#elif (BUILD_TIME_HOUR == 3) || (BUILD_TIME_HOUR - 12 == 3) || (BUILD_TIME_HOUR - 16 == 3)
-		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 4) || (BUILD_TIME_HOUR - 12 == 4) || (BUILD_TIME_HOUR - 16 == 4)
 		#define OCEAN_LIGHT  rgb(0.10 * 128, 0.10 * 128, 1.00 *  75, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 5) || (BUILD_TIME_HOUR - 12 == 5) || (BUILD_TIME_HOUR - 16 == 5)
+	#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 8 == 1) || (BUILD_TIME_HOUR - 16 == 1)
+		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
+	#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 8 == 2) || (BUILD_TIME_HOUR - 16 == 2)
+		#define OCEAN_LIGHT  rgb(0.10 *   0, 0.10 * 255, 1.00 * 100, 0.65 * 255) // noon (fugg) rgb(0,26,100), quite bluey
+	#elif (BUILD_TIME_HOUR == 3) || (BUILD_TIME_HOUR - 8 == 3) || (BUILD_TIME_HOUR - 16 == 3)
+		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
+	#elif (BUILD_TIME_HOUR == 4) || (BUILD_TIME_HOUR - 8 == 4) || (BUILD_TIME_HOUR - 16 == 4)
+		#define OCEAN_LIGHT  rgb(0.10 * 128, 0.10 * 128, 1.00 *  75, 0.65 * 255)
+	#elif (BUILD_TIME_HOUR == 5) || (BUILD_TIME_HOUR - 8 == 5) || (BUILD_TIME_HOUR - 16 == 5)
 		#define OCEAN_LIGHT  rgb(0.10 * 191, 0.10 *  64, 1.00 *  62, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 12 == 6) || (BUILD_TIME_HOUR - 16 == 6)
+	#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 8 == 6) || (BUILD_TIME_HOUR - 16 == 6)
 		#define OCEAN_LIGHT  rgb(0.10 * 255, 0.10 *   0, 1.00 *  50, 0.65 * 255) // noon (shidd) rgb(26,0,50), some red tones, more purple
-	#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 12 == 7) || (BUILD_TIME_HOUR - 16 == 7)
+	#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 8 == 7) || (BUILD_TIME_HOUR - 16 == 7)
 		#define OCEAN_LIGHT  rgb(0.10 * 191, 0.10 *  64, 1.00 *  62, 0.65 * 255)
 	#endif
 #else // oshan (and manta too technically)

@@ -718,41 +718,8 @@
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
 		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		return make_wraith()
-	return null
-
-/mob/proc/make_wraith()
-	if (src.mind || src.client)
-		var/mob/living/intangible/wraith/W = new/mob/living/intangible/wraith(src)
-
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || ((isghostrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (OS)
-				W.set_loc(OS)
-			else
-				W.z = 1
-		else
-			W.set_loc(T)
-
-		if (src.mind)
-			src.mind.transfer_to(W)
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-			ticker.minds += W.mind
-		qdel(src)
-
-		//W.addAllAbilities()
-		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")
-		boutput(W, "Your astral powers enable you to survive one banishment. Beware of salt.")
-		boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-		return W
+		src.mind.add_antagonist(ROLE_WRAITH)
+		return
 	return null
 
 /proc/visibleBodies(var/mob/M)

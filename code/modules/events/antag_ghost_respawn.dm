@@ -208,22 +208,13 @@
 			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
-					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
-					if (B && istype(B))
-						M3 = B
-						role = ROLE_BLOB
-						objective_path = /datum/objective_set/blob
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-
-						SPAWN(0)
-							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
-							if (B && newname)
-								phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-								newname = strip_html(newname) + " the Blob"
-								B.real_name = newname
-								B.name = newname
-
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_BLOB
+						M3 = mind.current
 					else
 						failed = 1
 
@@ -241,12 +232,13 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/living/intangible/wraith/W = M3.make_wraith()
-					if (W && istype(W))
-						M3 = W
-						role = ROLE_WRAITH
-						generate_wraith_objectives(lucky_dude)
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_WRAITH
+						M3 = mind.current
 					else
 						failed = 1
 

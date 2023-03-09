@@ -1,4 +1,107 @@
 
+(t)thu mar 09 23
+(u)Amylizzle
+(p)13333
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Cockroaches are now very resistant to radiation.
+(t)wed mar 08 23
+(u)glowbold
+(p)13217
+(e)💅📄|C-QoL, A-UI
+(+)Crew credits now use TGUI - make sure to report any bugs!
+(u)Wisemonster
+(p)13204
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cog1's Upload Chamber has been remodeled to be a bit more secure.
+(u)Amylizzle
+(p)13322
+(e)🪲📡|C-Bug, A-AI
+(+)MobAI is now better at chasing you.
+(t)tue mar 07 23
+(u)Zamujasa
+(+)Selection component has a "send + next" signal to compliment the "next + send" one.
+(+)Message Sign component will now interpret "|n" as a newline (similar to most consoles).
+(+)Pixel Display components now accept optional x2 and y2 parameters to draw rectangles.
+(u)Sord
+(*)You may now buy a single use law rack manudrive from QM. Crate is locked to Head access.
+(u)FlameArrow57
+(p)13162
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Players using VR goggles or a scuttlebot controller will now have an examine text saying their mind is "elsewhere."
+(u)LeahTheTech
+(+)Having CBD in your bloodstream will now negate the effects of the "nervous" trait.
+(*)The AI law rack can no longer be deconstructed while it still has laws inside.
+(+)The AI law rack is now more resistant to explosions, notably being able to survive one breaching charge.
+(t)mon mar 06 23
+(u)Wisemonster
+(p)13133
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)The minimum number of traitors needed for a wraith to replace a traitor in the traitor gamemode has been increased to 4 (up from 3)
+(t)sun mar 05 23
+(u)Kubius
+(p)13259
+(e)🪲🌠|C-Bug, A-Events
+(+)Fixed some requisition handling goofs that could cause orders to fail, most notable in the handling of steel sheets for an aid contract.
+(u)LeahTheTech
+(p)13280
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)The "Hide genetics abilities" button now hides/unhides all abilities instead.
+(u)aloe
+(+)Pugs can *woof. Other people can too, I guess. Sound by Virvatuli!
+(u)LeahTheTech
+(+)Flockminds and traces now get the tracker pointing to where to the relay will realize before it does.
+(t)sat mar 04 23
+(u)Mordent
+(p)13224
+(e)🔎💅📄|C-Code-Quality, C-QoL, A-UI
+(+)APC UI improvements
+(u)Azrun
+(p)13238
+(e)🎨⚖🤖|C-Sprites, C-Balance, A-Silicons
+(+)Cyborg cell cables now use an actionbar when interacting with APCs.
+(u)Sord
+(+)Added Research Apparel job clothing vendors to all maps
+(u)Kubius
+(p)13203
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The southern reaches of Nadir's pit are now ready to explore, at your risk.
+(u)aloe & Virvatuli
+(+)Gas canister (the big kind) suicides have been given improved sound and effects. Audio by virva, animation by aloe.
+(u)FlameArrow57
+(p)13263
+(e)🪲⚖|C-Bug, C-Balance
+(+)The E-Meter will now correctly measure Thetan levels.
+(t)fri mar 03 23
+(u)Hans
+(p)13137
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Made it so morphine's adverse effects only happen on overdose, reduced it's stamina regeneration debuff from 3 to 2.
+(u)Tyrant
+(p)13187
+(e)🪲🆕💡|C-Bug, C-Feature, A-Station-Systems
+(*)You can now check the status of the nuclear reactor and turbines in the PDA powerchecker app!
+(u)Bartimeus973 & Amylizzle
+(p)13123
+(e)🆕📡|C-Feature, A-AI
+(*)Attacking mobs with an ai will now cause them to fight back.
+(u)Amylizzle
+(p)13240
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fuel rods in the nuclear reactor will decay faster if they are hit by more neutrons.
+(u)LeahTheTech
+(*)The clown car can now be loaded with banana peels and drop them on a 4 second cooldown. Honk.
+(t)thu mar 02 23
+(u)Zamujasa
+(*)New MechComp component: the Automatic Signaller Component. It sends a signal on a configurable interval, a configurable number of times (including infinite).
+(*)MechComp buttons have a fun new feature when mixed with a certain material.
+(*)New MechComp component: pixel display component. Give it an x, y, and color, and you can draw on it.
+(+)MechComp Message Signs have a few more styles avaialble (use a multitool).
+(+)MechComp Relay component cooldown adjusted.
+(+)MechComp Association component has a "send as signal" option for building signals.
+(u)Wisemonster
+(p)13169
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The semi-automatic artifact analysis form bin has been swapped with a analysis form sticker box.
 (t)wed mar 01 23
 (u)Sord
 (+)You can no longer print gas masks from the science fabricator
@@ -16,6 +119,10 @@
 (e)🪲🗺|C-Bug, A-Mapping
 (+)Atlas has received a Confiscated Items locker with its Contraband stickers!
 (+)Atlas QM and Medbay windows have received access requirements.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)A new Message Sign MechComp component for displaying text, as an alternative to massive letter display arrays or sound synths.
+(+)MechComp payment components now output a signal containing the payment amount, total collected, and customer's name.
 (t)tue feb 28 23
 (u)Mora
 (p)13201

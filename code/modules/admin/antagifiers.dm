@@ -19,8 +19,8 @@
 			return
 		*/
 		if (M?.mind && !M.mind.special_role)
-			makeAntag(M)
 			new /datum/objective(attachedObjective, M.mind)
+			makeAntag(M)
 			uses--
 			if (uses == 0)
 				qdel(src)
@@ -97,7 +97,7 @@
 
 	makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.mind.add_antagonist(ROLE_WEREWOLF)
+		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -107,16 +107,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_OMNITRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.verbs += /client/proc/gearspawn_wizard
-		M.make_changeling()
-		M.make_vampire()
-		M.make_werewolf()
-		M.make_wrestler(1)
-		M.make_grinch()
-		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		M.show_antag_popup("traitoromni")
+		M.mind.add_antagonist(ROLE_OMNITRAITOR)
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
@@ -126,18 +117,18 @@
 	attachedObjective = "Make them suffer."
 
 	makeAntag(mob/M as mob)
-		M.make_wraith()
+		M.mind?.add_antagonist(ROLE_WRAITH)
 
 /obj/traitorifier/blob
 	name = "Viscous Puddle"
 	desc = "This does not look refreshing."
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "nucleus"
+	icon_state = "0"
 	color = "#44FF44"
 	attachedObjective = "GET FAT"
 
 	makeAntag(mob/M as mob)
-		M.make_blob()
+		M.mind?.add_antagonist(ROLE_BLOB)
 
 
 

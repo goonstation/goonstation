@@ -49,7 +49,6 @@
 
 /obj/item/storage/toilet/goldentoilet/azrun
 	name = "thinking throne"
-	icon_state = "goldentoilet"
 	desc = "A wonderful place to send bad ideas...  Clogged more often than not."
 	dir = NORTH
 
