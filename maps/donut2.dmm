@@ -17612,17 +17612,19 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "biz" = (
-/obj/machinery/computer/robotics,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"biA" = (
-/mob/living/silicon/hivebot/eyebot,
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_y = 10
+	},
+/obj/item/aiModule/emergency,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "biC" = (
-/obj/machinery/sim/transmitter{
-	network = "prison"
+/obj/table/auto,
+/obj/item/aiModule/notHuman{
+	pixel_y = 10
 	},
+/obj/item/aiModule/oneHuman,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -18046,44 +18048,11 @@
 	dir = 4
 	},
 /area/station/engine/inner)
-"bkp" = (
-/obj/machinery/turret{
-	dir = 1;
-	icon_state = "grey_target_prism"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
 "bkq" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai_upload)
-"bkr" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai_upload)
-"bks" = (
-/obj/machinery/turret,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "bku" = (
 /obj/machinery/disposal,
@@ -25135,6 +25104,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/sim/transmitter{
+	network = "prison"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bZk" = (
@@ -26753,14 +26725,10 @@
 /area/shuttle/arrival/station)
 "duU" = (
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/lawrack,
-/obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "dvb" = (
 /obj/storage/closet/wardrobe/white,
@@ -43033,12 +43001,12 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "qRj" = (
-/obj/table/auto,
-/obj/item/aiModule/notHuman{
-	pixel_y = 10
+/obj/machinery/turret{
+	dir = 1;
+	icon_state = "grey_target_prism"
 	},
-/obj/item/aiModule/oneHuman,
-/turf/simulated/floor/circuit,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "qRG" = (
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
@@ -43692,14 +43660,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"rwr" = (
-/obj/item/storage/wall{
-	name = "bath cabinet";
-	pixel_y = 32;
-	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
-	},
-/turf/space,
-/area/space)
 "rwt" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -44072,15 +44032,15 @@
 	},
 /area/station/crew_quarters/stockex)
 "rNi" = (
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_y = 10
-	},
-/obj/item/aiModule/emergency,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/turret{
+	dir = 1;
+	icon_state = "grey_target_prism"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "rNn" = (
 /obj/juggleplaque,
@@ -46410,6 +46370,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"tvI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/access_spawn/ai_upload,
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "tvX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50997,6 +50966,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"xun" = (
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "xuw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -51288,6 +51263,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/lawrack,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
 "xIe" = (
@@ -84822,10 +84799,10 @@ cMe
 ohG
 biz
 jxq
-rWZ
-rNi
-bkp
 bjw
+rNi
+jxq
+xun
 ohG
 ohG
 ohG
@@ -85122,11 +85099,11 @@ aaa
 aaa
 tbS
 ohG
-biA
+rWZ
 bjw
 epp
 bkq
-bkq
+epp
 bjw
 sLB
 bjw
@@ -85428,11 +85405,11 @@ duU
 blw
 blw
 xIa
-bkr
+blw
 fUr
 blw
 blw
-bqa
+tvI
 nVU
 bps
 bqa
@@ -85726,11 +85703,11 @@ aaa
 aaa
 tbS
 ohG
-biA
+xCz
 bjw
 epp
 epp
-bkq
+epp
 vmy
 bjw
 bna
@@ -86030,9 +86007,9 @@ kMK
 ohG
 biC
 byg
-xCz
+bjw
 qRj
-bks
+jxq
 bYJ
 ohG
 ohG
@@ -89638,7 +89615,7 @@ aXP
 aYE
 aXP
 aaa
-rwr
+aaa
 acK
 aOL
 azU
