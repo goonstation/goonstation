@@ -200,7 +200,7 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/, /*"virtual key",*/ "golden key", "bee key", "iron key", /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/ /*"virtual key",*/ "golden key", /*"bee key"*/ "iron key", "iridium key", "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
