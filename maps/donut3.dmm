@@ -78081,10 +78081,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"xpC" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/locker)
 "xpU" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -111499,7 +111495,7 @@ waP
 kob
 cXT
 fZm
-xpC
+cXT
 tUf
 gKJ
 trf
