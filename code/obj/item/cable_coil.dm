@@ -236,9 +236,9 @@ obj/item/cable_coil/dropped(mob/user)
 	if (issnippingtool(W) && src.amount > 1)
 		var/obj/item/cable_coil/A = split_stack(round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num))
 		if (istype(A))
-			if (GET_DIST(user, src) > 1)
+			if (!in_interact_range(src, user))
 				boutput(user, "You're too far away from the cable that you're trying to cut from!")
-				qdel(A)
+				src.stack_item(A) //refund
 				return
 			A.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
 			boutput(user, "You cut a piece off the [base_name].")
