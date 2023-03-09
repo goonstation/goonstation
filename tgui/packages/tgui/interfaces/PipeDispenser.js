@@ -23,7 +23,7 @@ export const PipeDispenser = (props, context) => {
   return (
     <Window
       title={windowName}
-      width="310"
+      width="325"
       height={mobile ? 365 : 270}>
       <Window.Content scrollable>
         <Section>
@@ -67,12 +67,7 @@ export const DisposalPipeRow = (props, context) => {
             />
           </Box>
         </Stack.Item>)}
-      <Stack.Item
-        grow style={{
-          "display": "flex",
-          "justify-content": "center",
-          "flex-direction": "column",
-        }}>
+      <Stack.Item grow>
         {disposalpipe.disposaltype}
       </Stack.Item>
       <Stack.Item
