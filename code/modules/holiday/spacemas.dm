@@ -100,7 +100,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else
 			L.set_loc(WSLoc)
 
+		var/mob/current_mob
+		if (M.current)
+			current_mob = M.current
 		M.transfer_to(L)
+		if (current_mob)
+			qdel(current_mob)
+
 		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
@@ -118,7 +124,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		L.set_loc(ASLoc)
+
+		var/mob/current_mob
+		if (M.current)
+			current_mob = M.current
 		M.transfer_to(L)
+		if (current_mob)
+			qdel(current_mob)
+
 		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")

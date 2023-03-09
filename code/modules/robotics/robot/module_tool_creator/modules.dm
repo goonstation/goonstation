@@ -40,7 +40,7 @@
 	definitions = list(
 		/obj/item/hand_labeler,
 		/obj/item/pen,
-		/obj/item/paper_bin/artifact_paper/robot,
+		/obj/item/item_box/assorted/stickers/robot/research,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,

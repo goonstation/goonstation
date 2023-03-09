@@ -651,7 +651,7 @@ var/flock_signal_unleashed = FALSE
 	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	for (var/turf/simulated/floor/feather/feathertile as anything in src.all_owned_tiles)
+	for (var/turf/simulated/floor/feather/feathertile in src.all_owned_tiles)
 		feathertile.flock = null
 	all_owned_tiles = list()
 	if (!real)
@@ -744,6 +744,11 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
+	if (src.total_compute() > 300)
+		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				continue
+			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
 	if (!src.relay_in_progress && !src.relay_finished)
 		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
 			src.relay_in_progress = TRUE

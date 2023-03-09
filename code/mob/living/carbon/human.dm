@@ -753,10 +753,8 @@
 		if (src.hasStatus("handcuffed"))
 			src.unlock_medal("Fell down the stairs", 1)
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			var/datum/game_mode/revolution/R = ticker.mode
-			if (src.mind && (src.mind in R.revolutionaries)) // maybe add a check to see if they've been de-revved?
-				src.unlock_medal("Expendable", 1)
+		if (src.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			src.unlock_medal("Expendable", 1)
 
 		if (src.getStatusDuration("burning") > 400)
 			src.unlock_medal("Black and Blue", 1)
@@ -917,16 +915,12 @@
 	switch (name)
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
-			check_for_intent_trigger()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
-			check_for_intent_trigger()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
-			check_for_intent_trigger()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM)
-			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -3265,7 +3259,6 @@
 	if (src.juggling())
 		src.drop_juggle()
 
-
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
 	var/missing_legs = 0
@@ -3300,10 +3293,6 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
-
-/mob/living/carbon/human/proc/check_for_intent_trigger()
-	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
-		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()

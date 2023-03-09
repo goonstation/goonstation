@@ -36,9 +36,6 @@
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		if (controller)
-			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
-
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
 			src.max_health = 25 * src.possessed_item.w_class

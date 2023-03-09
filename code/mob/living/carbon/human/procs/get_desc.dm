@@ -346,7 +346,23 @@
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
 
 			if (!src.client && !src.ai_active)
-				. += "<br>[src.name] seems to be staring blankly into space."
+				var/using_vr_goggles = FALSE
+				var/mob = find_player(src.last_ckey)?.client?.mob
+
+				if (istype(mob, /mob/living/carbon/human/virtual))
+					var/mob/living/carbon/human/virtual/vr_person = mob
+					if (!vr_person.isghost) // rare but can happen if you leave your body while alive, and then decide to go into vr as a ghost
+						using_vr_goggles = TRUE
+				else if (istype(mob, /mob/living/critter/robotic/scuttlebot))
+					var/mob/living/critter/robotic/scuttlebot/scuttlebot = mob
+					if (scuttlebot.controller == src) // in case you mindswap into a scuttlebot
+						using_vr_goggles = TRUE
+
+				if (using_vr_goggles)
+					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
+				else
+					. += "<br>[src.name] seems to be staring blankly into space."
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)

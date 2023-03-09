@@ -99,18 +99,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// If our mutant has a female variant that has different organs, these will be used instead
 	var/list/mutant_organs_f = null
 
-	// icon definitions for mutantrace clothing variants. one icon file per slot.
-	var/clothing_icon_uniform = null
-	var/clothing_icon_id = null
-	var/clothing_icon_hands = null
-	var/clothing_icon_feet = null
-	var/clothing_icon_overcoats = null
-	var/clothing_icon_back = null
-	var/clothing_icon_eyes = null
-	var/clothing_icon_ears = null
-	var/clothing_icon_mask = null
-	var/clothing_icon_head = null
-	var/clothing_icon_belt = null
+	/// icon definitions for mutantrace clothing variants. one icon file per slot.
+	var/clothing_icons = list()
+	/// list of the icon states for each icon file, put here because for some ungodly reason `icon_states()` can take 200ms randomly
+	var/clothing_icon_states = list()
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -227,6 +219,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/self_click_fluff //used when clicking self on help intent
 
+	///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
+	proc/load_clothing_icons()
+		SHOULD_CALL_PARENT(TRUE)
+		for (var/category in src.clothing_icons)
+			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
+
 	proc/say_filter(var/message)
 		return message
 
@@ -260,6 +258,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
+			src.load_clothing_icons()
 			if (movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 			if (!needs_oxy)
@@ -843,13 +842,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
-	clothing_icon_overcoats = 'icons/mob/lizard/overcoats.dmi'
-	clothing_icon_eyes = 'icons/mob/lizard/eyes.dmi'
-	clothing_icon_mask = 'icons/mob/lizard/mask.dmi'
-	clothing_icon_head = 'icons/mob/lizard/head.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
+
+	load_clothing_icons()
+		clothing_icons["overcoats"] = 'icons/mob/lizard/overcoats.dmi'
+		clothing_icons["eyes"] = 'icons/mob/lizard/eyes.dmi'
+		clothing_icons["mask"] = 'icons/mob/lizard/mask.dmi'
+		clothing_icons["head"] = 'icons/mob/lizard/head.dmi'
+		..()
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -1339,8 +1341,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
-	clothing_icon_back = 'icons/mob/werewolf/back.dmi'
-	clothing_icon_mask = 'icons/mob/werewolf/mask.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
@@ -1349,6 +1349,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	head_offset = 5
 	hand_offset = 3
 	arm_offset = 3
+
+	load_clothing_icons()
+		clothing_icons["back"] = 'icons/mob/werewolf/back.dmi'
+		clothing_icons["mask"] = 'icons/mob/werewolf/mask.dmi'
+		..()
 
 	New()
 		..()
@@ -1523,17 +1528,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_language = "monkey"
 	override_attack = FALSE
 	understood_languages = list("english")
-	clothing_icon_uniform = 'icons/mob/monkey/jumpsuits.dmi'
-	clothing_icon_id = 'icons/mob/monkey/card.dmi'
-	clothing_icon_hands = 'icons/mob/monkey/hands.dmi'
-	clothing_icon_feet = 'icons/mob/monkey/feet.dmi'
-	clothing_icon_overcoats = 'icons/mob/monkey/overcoats.dmi'
-	clothing_icon_back = 'icons/mob/monkey/back.dmi'
-	clothing_icon_eyes = 'icons/mob/monkey/eyes.dmi'
-	clothing_icon_ears = 'icons/mob/monkey/ears.dmi'
-	clothing_icon_mask = 'icons/mob/monkey/mask.dmi'
-	clothing_icon_head = 'icons/mob/monkey/head.dmi'
-	clothing_icon_belt = 'icons/mob/monkey/belt.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1544,6 +1538,20 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
+
+	load_clothing_icons()
+		src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
+		src.clothing_icons["id"] = 'icons/mob/monkey/card.dmi'
+		src.clothing_icons["hands"] = 'icons/mob/monkey/hands.dmi'
+		src.clothing_icons["feet"] = 'icons/mob/monkey/feet.dmi'
+		src.clothing_icons["overcoats"] = 'icons/mob/monkey/overcoats.dmi'
+		src.clothing_icons["back"] = 'icons/mob/monkey/back.dmi'
+		src.clothing_icons["eyes"] = 'icons/mob/monkey/eyes.dmi'
+		src.clothing_icons["ears"] = 'icons/mob/monkey/ears.dmi'
+		src.clothing_icons["mask"] = 'icons/mob/monkey/mask.dmi'
+		src.clothing_icons["head"] = 'icons/mob/monkey/head.dmi'
+		src.clothing_icons["belt"] = 'icons/mob/monkey/belt.dmi'
+		..()
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -2316,7 +2324,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message("<span class='alert'>[src.mob] staggers.</span>")
-		src.mob.emote("scream")
+		src.mob.emote("woof")
 
 /datum/mutantrace/chicken
 	name = "Chicken"

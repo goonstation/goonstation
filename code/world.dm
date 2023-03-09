@@ -52,6 +52,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
+			next_round_mode = master_mode
 			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
