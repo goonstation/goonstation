@@ -638,11 +638,11 @@
 		if (!T)
 			return FALSE
 		if (T.density)
-			return TRUE
+			return FALSE
 		for (var/atom/A as anything in T)
 			if (A.density && !ismob(A))
-				return TRUE
-		return FALSE
+				return FALSE
+		return TRUE
 
 //////////////
 // Subtypes
