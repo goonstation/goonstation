@@ -51258,13 +51258,14 @@
 /area/station/science/lab)
 "xIa" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-8"
 	},
-/obj/machinery/lawrack,
 /obj/decal/stripe_delivery,
+/obj/cable,
+/obj/machinery/lawrack,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
 "xIe" = (
