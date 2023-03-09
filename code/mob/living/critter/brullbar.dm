@@ -173,7 +173,7 @@
 	can_critter_attack()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
-		return can_act(src,TRUE) && !frenzy.disabled || !fadeout.disabled // so they can't attack you while frenzying or while invisible (kinda)
+		return can_act(src,TRUE) && (!frenzy.disabled || !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
