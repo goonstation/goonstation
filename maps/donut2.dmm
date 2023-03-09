@@ -34273,11 +34273,15 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/lattice{
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 2;
-	icon_state = "lattice-dir"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
-/turf/space,
+/obj/access_spawn/engineering_control,
+/turf/simulated/floor,
 /area/station/engine/singcore{
 	do_not_irradiate = 1
 	})
@@ -35124,6 +35128,9 @@
 	pixel_y = 18;
 	pixel_x = -6;
 	initial_reagents = list("coffee"=50)
+	},
+/obj/item/wrench/gold{
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
@@ -37104,9 +37111,6 @@
 	pixel_y = 12;
 	pixel_x = -4
 	},
-/obj/item/wrench/gold{
-	pixel_y = -25
-	},
 /obj/item/rocko{
 	pixel_x = 6;
 	pixel_y = 0
@@ -37425,8 +37429,7 @@
 /area/ghostdrone_factory)
 "mRP" = (
 /obj/item/device/radio/intercom/engineering{
-	dir = 4;
-	pixel_y = 4
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -39984,8 +39987,6 @@
 /area/station/maintenance/inner/central)
 "oGU" = (
 /obj/storage/secure/closet/command/chief_engineer,
-/obj/item/electronics/scanner,
-/obj/item/cargotele,
 /obj/blind_switch/area/south{
 	pixel_y = 0;
 	pixel_x = -24;
@@ -41173,8 +41174,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/intercom/engineering{
-	dir = 4;
-	pixel_y = 4
+	dir = 4
 	},
 /turf/simulated/floor/yellow/corner{
 	dir = 4
@@ -44204,8 +44204,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/engineering{
-	dir = 4;
-	pixel_y = 4
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -50408,10 +50407,6 @@
 	network = "SS13";
 	tag = ""
 	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 4;
-	pixel_y = 4
-	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/singcore{
 	do_not_irradiate = 1
@@ -52308,15 +52303,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/access_spawn/engineering_control,
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 2;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/engine/monitoring)
 "xFq" = (
 /obj/disposalpipe/segment,
