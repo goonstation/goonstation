@@ -21464,10 +21464,14 @@
 	},
 /area/station/hangar/sec)
 "byg" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload";
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 12;
+	tag = ""
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -33923,7 +33927,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "jxq" = (
-/obj/machinery/light/incandescent,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -12;
+	tag = ""
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "jxv" = (
@@ -37461,6 +37469,14 @@
 	},
 /turf/space,
 /area/space)
+"mAY" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 12;
+	tag = ""
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "mBe" = (
 /obj/item/mine/stun/armed,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
@@ -86010,7 +86026,7 @@ biC
 byg
 bjw
 qRj
-jxq
+mAY
 bYJ
 ohG
 ohG
