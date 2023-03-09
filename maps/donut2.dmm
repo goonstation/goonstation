@@ -18170,6 +18170,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -28110,7 +28111,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ezM" = (
-/obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -29419,6 +29419,7 @@
 	req_access = null
 	},
 /obj/access_spawn/hos,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -47306,6 +47307,9 @@
 	intact = 0
 	},
 /area/station/solar/zeta)
+"ukA" = (
+/turf/simulated/wall/false_wall,
+/area/station/security/brig)
 "ukC" = (
 /obj/table/wood/auto,
 /obj/item/plate,
@@ -95683,7 +95687,7 @@ qTR
 cUs
 bgL
 bns
-bns
+ukA
 bns
 bns
 kcf
