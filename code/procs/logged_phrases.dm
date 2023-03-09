@@ -146,22 +146,24 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null)
+		if (!user)
+			user = usr
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(user)] [category]: \"[phrase]\"</span>")
 		#ifdef RP_MODE
 		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(user)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
 			var/ircmsg[] = new()
-			ircmsg["key"] = usr.key
-			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["key"] = user.key
+			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			SPAWN(0)
 				ircbot.export("admin", ircmsg)
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(user)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)
 			if(no_duplicates)
