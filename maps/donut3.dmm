@@ -9392,7 +9392,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/bridge/captain)
 "cEV" = (
 /obj/cable{
@@ -14578,8 +14578,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 8
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "elE" = (
@@ -15022,7 +15023,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2"
+	},
 /area/station/bridge/captain)
 "euw" = (
 /obj/railing/orange,
@@ -17953,8 +17956,9 @@
 /obj/railing/orange{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 4
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "foY" = (
@@ -18323,8 +18327,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 1
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "fux" = (
@@ -25248,8 +25253,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "hyO" = (
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 8
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "hyP" = (
@@ -25658,7 +25664,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/bridge/captain)
 "hGS" = (
 /obj/machinery/disposal/small,
@@ -31113,8 +31119,9 @@
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 5
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "jtC" = (
@@ -32129,8 +32136,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 1
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "jHF" = (
@@ -32965,8 +32973,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 8
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "jTV" = (
@@ -37639,8 +37648,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 10
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "ltc" = (
@@ -41597,7 +41607,7 @@
 /obj/item/tank/jetpack,
 /obj/item/clothing/suit/space/captain,
 /obj/item/clothing/head/helmet/space/captain,
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/bridge/captain)
 "mDD" = (
 /obj/decal/tile_edge/line/yellow{
@@ -44624,9 +44634,7 @@
 /mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/bridge/captain)
 "nxW" = (
 /obj/cable{
@@ -44731,8 +44739,9 @@
 	pixel_x = -8;
 	pixel_y = -2
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 4
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "nzB" = (
@@ -46950,8 +46959,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 6
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "olM" = (
@@ -70286,7 +70296,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2"
+	},
 /area/station/bridge/captain)
 "vhh" = (
 /obj/cable{
@@ -70431,8 +70443,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 8
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "vkt" = (
@@ -71129,8 +71142,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 4
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "vtO" = (
@@ -72719,8 +72733,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 6
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "vRz" = (
@@ -75488,8 +75503,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 10
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "wHp" = (
@@ -75673,8 +75689,9 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "wJP" = (
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 4
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "wJS" = (
@@ -78812,8 +78829,9 @@
 	pixel_x = -24;
 	pixel_y = -1
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 9
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "xBr" = (
@@ -80160,8 +80178,9 @@
 /obj/item/card/id/captains_spare{
 	pixel_x = -13
 	},
-/turf/simulated/floor/carpet/green/fancy/innercorner{
-	dir = 9
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue3"
 	},
 /area/station/bridge/captain)
 "xTJ" = (
@@ -81332,8 +81351,9 @@
 /obj/machinery/light_switch{
 	pixel_y = 29
 	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 5
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
 "ykH" = (
