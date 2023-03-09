@@ -1,6 +1,8 @@
 /**
- * Copyright (c) 2023 @Laboredih123
- * SPDX-License-Identifier: MIT
+ * @file
+ * @copyright 2023
+ * @author Laboredih123 (https://github.com/Laboredih123)
+ * @license MIT
  */
 
 import { useBackend, useLocalState } from '../backend';
