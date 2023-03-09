@@ -370,7 +370,7 @@
 						A.open()
 
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
+				if (src.density && !src.can_enter_turf(NewLoc))
 					return
 
 			else
@@ -391,20 +391,20 @@
 				var/horiz = FALSE
 				var/vert = FALSE
 
-				if (!src.density || vertical.Enter(src))
+				if (!src.density || src.can_enter_turf(vertical))
 					vert = TRUE
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || src.can_enter_turf(vertical))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.Enter(src))
+				if (!src.density || src.can_enter_turf(horizontal))
 					horiz = TRUE
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
+					if (!src.density || src.can_enter_turf(horizontal))
 						blocked = FALSE
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = TRUE
@@ -633,6 +633,16 @@
 			R.wraithPossess(src)
 			return 0
 		return 1
+
+	proc/can_enter_turf(turf/T)
+		if (!T)
+			return FALSE
+		if (T.density)
+			return TRUE
+		for (var/atom/A as anything in T)
+			if (A.density && !ismob(A))
+				return TRUE
+		return FALSE
 
 //////////////
 // Subtypes
