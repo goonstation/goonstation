@@ -762,7 +762,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/chui/window/crew_credits/creds = new
+		var/datum/crewCredits/creds = new
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
@@ -773,7 +773,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (E.client.preferences.view_score)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
-					creds.Subscribe(E.client)
+					creds.ui_interact(E)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
 

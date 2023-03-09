@@ -1661,6 +1661,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/roach
 	is_npc = TRUE
 
+	New()
+		.=..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+
 	setup_healths()
 		. = ..()
 		qdel(src.healthlist["toxin"])

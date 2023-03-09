@@ -1,5 +1,14 @@
 
+(t)thu mar 09 23
+(u)Amylizzle
+(p)13333
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Cockroaches are now very resistant to radiation.
 (t)wed mar 08 23
+(u)glowbold
+(p)13217
+(e)💅📄|C-QoL, A-UI
+(+)Crew credits now use TGUI - make sure to report any bugs!
 (u)Wisemonster
 (p)13204
 (e)🗺⚖|A-Mapping, C-Balance

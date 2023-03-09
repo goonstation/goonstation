@@ -3801,6 +3801,9 @@
 		src.display()
 
 	proc/setTextManually(obj/item/W as obj, mob/user as mob)
+		if (isghostdrone(user))
+			boutput(user, "You're a ghostdrone, so you probably shouldn't be doing this.")
+			return FALSE
 		var/input = input(user, "Message Text", "Text", replacetext(html_decode(src.display_text), "<br>", "|n")) as text | null
 		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
 			return FALSE
