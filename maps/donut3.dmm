@@ -11943,15 +11943,6 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/hangar/sec)
-"dup" = (
-/obj/machinery/turret{
-	dir = 6
-	},
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "duy" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -27616,7 +27607,7 @@
 /area/station/security/detectives_office)
 "ink" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 6;
+	dir = 4;
 	icon_state = "line1"
 	},
 /obj/item/device/radio/intercom/AI,
@@ -34845,6 +34836,13 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
+"kyn" = (
+/obj/machinery/turret{
+	dir = 6
+	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/circuit/vintage,
+/area/station/turret_protected/ai_upload)
 "kyu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39572,10 +39570,6 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "lUl" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "lUm" = (
@@ -39943,12 +39937,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "maE" = (
-/obj/decal/tile_edge/line/blue{
-	dir = 10;
-	icon_state = "line1"
-	},
 /obj/machinery/status_display{
 	pixel_y = 30
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -65197,6 +65191,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"tGS" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai_upload)
 "tHb" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -67909,6 +67910,13 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/AIsat)
+"uzV" = (
+/obj/machinery/turret{
+	dir = 6
+	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/circuit/red,
+/area/station/turret_protected/ai_upload)
 "uAb" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -71004,15 +71012,6 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
-"vsn" = (
-/obj/machinery/turret{
-	dir = 10
-	},
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "vsK" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
@@ -78065,6 +78064,10 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
+"xpC" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/locker)
 "xpU" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -111476,7 +111479,7 @@ waP
 kob
 cXT
 fZm
-cXT
+xpC
 tUf
 gKJ
 trf
@@ -112688,8 +112691,8 @@ bsT
 mHL
 cNV
 hAh
-dup
 aGR
+uzV
 kcx
 lOJ
 lOJ
@@ -113293,7 +113296,7 @@ mHL
 rdj
 hAh
 lUl
-pXA
+tGS
 pXA
 pXA
 bCP
@@ -113896,8 +113899,8 @@ hjb
 mHL
 cNV
 hAh
-vsn
 saY
+kyn
 eyn
 idA
 lON
