@@ -81,7 +81,7 @@
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
-	if(!move_target)
+	if(QDELETED(src.move_target))
 		fails++
 		return
 	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= can_be_adjacent_to_target)
