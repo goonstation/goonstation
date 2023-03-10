@@ -1425,6 +1425,41 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 
 		return
 
+
+/obj/item/tool/janktanktwo
+	name = "JankTank II"
+	desc = "A secret cocktail of drugs & spices able to revive even the most horribly maimed gang member."
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "dna_scrambler_2"
+	amount = 1
+	throwforce = 1
+	force = 1
+	w_class = W_CLASS_TINY
+	var/gang_only= FALSE
+
+	attack(mob/O, mob/user)
+		if (istype(O, /mob/living/carbon/human))
+			if (amount == 0)
+				boutput(user, "<span class='alert'>The [src.name] is empty! </span>")
+				return
+			boutput(user, "<span class='alert'>attempt</span>")
+			var/mob/living/carbon/human/H = O
+			if (H.decomp_stage)
+				boutput(user, "<span class='alert'>It's too late, they're rotten.</span>")
+				return
+			if (isdead(H)) //TODO: and H.Mind.Gang
+				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
+
+
+	proc/inject(mob/user, mob/O )
+		if (istype(O, /mob/living/carbon/human))
+			update_icon()
+			//cute implant
+			var/mob/living/carbon/human/H = O
+			qdel(src)
+			var/obj/item/implant/imp= new/obj/item/implant/projectile/body_visible/janktanktwo
+			imp.implanted(H, user)
+
 /obj/item/tool/quickhack
 	name = "QuickHack"
 	desc = "A highly illegal, disposable device can fake an AI's 'open' signal to a door a few times."

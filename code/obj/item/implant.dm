@@ -943,6 +943,83 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
 
+		janktanktwo
+			name = "spent JankTank II"
+			pull_out_name = "syringe"
+			desc = "A large syringe ripped straight out of some poor, presumably dead gangbanger! What a waste."
+			icon = 'icons/obj/syringe.dmi'
+			icon_state = "dna_scrambler_2"
+			var/full = TRUE
+
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_1", layer = MOB_EFFECT_LAYER)
+
+			implanted(mob/M, mob/I)
+				..()
+				if (!full)
+					return
+				SPAWN(4.5 SECONDS)
+					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
+				SPAWN(5 SECONDS)
+					if (!ishuman(M))
+						return
+					full = FALSE
+					icon_state = "dna_scrambler_3"
+					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
+					if (!src.owner)
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, gross.</span>")
+						return
+					var/mob/living/carbon/human/H = M
+
+					//heal basic damage
+					H.take_oxygen_deprivation(-INFINITY)
+					H.take_brain_damage(-H.get_brain_damage())
+					var/damage = H.max_health - H.health
+					var/desired = H.max_health * (1-JANKTANK2_DESIRED_HEALTH_PCT)
+					var/multi = 0
+					if (damage > 0)
+						multi = max(0,1-(desired/damage)) //what to multiply all damage by to get to desired HP,
+					H.blood_volume = max(min(H.blood_volume,550),480)
+					H.HealDamage("All", H.get_brute_damage()*multi, H.get_burn_damage()*multi, H.get_toxin_damage()*multi)
+
+					//fix poisons
+					H.visible_message("<span class='alert'>[H] shudders to life!</span>")
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 0)
+					playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
+					H.reagents.reaction(H.loc,TOUCH, H.reagents.total_volume)
+					H.vomit()
+					H.reagents.clear_reagents()
+
+					//un-kill organs
+					for (var/organ_slot in H.organHolder.organ_list)
+						var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
+						if(istype(O))
+							O.unbreakme()
+					if (H.organHolder) //would be nice to make these heal to desired_health_pct but requires new organHolder functionality...
+						H.organHolder.heal_organs(1000,1000,1000, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
+					H.remove_ailments()
+
+					setalive(H)
+					H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+					H.reagents.add_reagent("synaptizine", 5)
+					H.reagents.add_reagent("ephedrine", 5)
+					H.reagents.add_reagent("salbutamol", 10) //don't die immediately in space
+					H.reagents.add_reagent("space_drugs", 5) //heh
+					H.make_jittery(200)
+					H.delStatus("resting")
+					H.hud.update_resting()
+					H.delStatus("stunned")
+					H.delStatus("weakened")
+					H.force_laydown_standup()
+					#ifdef USE_STAMINA_DISORIENT
+					H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
+					#endif
+
+
+
+
+
 	blowdart
 		name = "blowdart"
 		desc = "a sharp little dart with a little poison reservoir."

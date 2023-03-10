@@ -1207,6 +1207,11 @@ var/datum/action_controller/actions
 		target = Target
 		hack = Hack
 		..()
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, maximum_range) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onStart()
 		if (!src.owner)
@@ -1222,7 +1227,48 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 		if (src.target && !IN_RANGE(owner, target, maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		hack.force_open(owner, target)
+		else
+			hack.force_open(owner, target)
+
+
+
+/datum/action/bar/icon/janktanktwo
+	duration = 1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "dna_scrambler_3"
+	id = "janktanktwo"
+	var/mob/living/carbon/human/target
+	var/obj/item/tool/janktanktwo/injector
+
+	New(Owner, Target, Injector)
+		owner = Owner
+		target = Target
+		injector = Injector
+		..()
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You prepare the [injector.name], aiming right for [target]'s heart!</span>")
+		..()
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, 1) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			playsound(target.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 0)
+			injector.inject(owner, target)
 
 
 
