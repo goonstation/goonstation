@@ -150,7 +150,9 @@
 		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
 			winset(src, "mainwindow.input", "text=\"\"")									// clear the player's input bar to register death / unconsciousness
 			var/grunt = pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK")				// pick a grunt to append
-			src.say(copytext(enteredtext,6,0) + "--" + grunt, ignore_stamina_winded = 1)	// say the thing they were typing and grunt
+			var/message = copytext(enteredtext,6,0) + "--" + grunt
+			logTheThing(LOG_SAY, src, "lastgasp SAY: [html_encode(message)] [log_loc(src)]")
+			src.say(message, ignore_stamina_winded = 1)	// say the thing they were typing and grunt
 
 
 

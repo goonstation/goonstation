@@ -1734,7 +1734,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 
 /obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
-	if(src.state != 3)
+	if(src.state != WELDED)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")
 		return
 	if (user.stat || user.restrained() || user.lying)

@@ -188,11 +188,15 @@ var/datum/respawn_controls/respawn_controller
 		logTheThing(LOG_DEBUG, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].")
 		logTheThing(LOG_DIARY, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].", "game")
 
+		//try to break all links with the previous body so we don't get pulled back by changeling absorb, cloning etc.
+		usr.mind = null
+
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
 		M.is_respawned_player = 1
 		M.key = the_client.key
 		M.Login()
+		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.mind.purchased_bank_item = null
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)

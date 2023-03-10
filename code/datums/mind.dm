@@ -34,7 +34,6 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/blob_absorb_victims = list()
 
 	var/list/intrinsic_verbs = list()
 
@@ -260,7 +259,9 @@ datum/mind
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
+					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 

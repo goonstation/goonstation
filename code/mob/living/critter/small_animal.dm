@@ -129,6 +129,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 8
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -315,6 +318,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2 //hit back when you've been hit twice
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until they're knocked down
 	ai_type = /datum/aiHolder/cat
 	is_npc = TRUE
 	var/cattype = 1
@@ -592,6 +598,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
 	can_lie = FALSE
 	ai_type = /datum/aiHolder/dog
 	is_npc = TRUE
@@ -683,7 +692,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return TRUE
 
 		//Dogs bark sometimes
-		if (src.ai?.enabled && prob(5))
+		if (src.ai?.enabled && prob(1))
 			src.emote("scream", TRUE)
 
 	critter_attack(var/the_target)
@@ -800,7 +809,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		switch (act)
 			if ("scream","bark","howl")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE) // FUCK hearing a dog howling like it's dying at that volume as a near constant
 					return "<span class='emote'><b>[src]</b> [pick("barks","howls")]!</span>"
 		return ..()
 
@@ -857,7 +866,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	proc/howl()
 		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 0) // FUCK hearing a dog howling like it's dying at that volume as a near constant
 
 
 /* -------------------- Shiba -------------------- */
@@ -1651,6 +1660,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 	ai_type = /datum/aiHolder/roach
 	is_npc = TRUE
+
+	New()
+		.=..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 
 	setup_healths()
 		. = ..()
