@@ -1204,7 +1204,7 @@
 		if (!IN_RANGE(user, V, 6))
 			continue
 		if (prob(8) && user)
-			if (M != V)
+			if (M != V && !V.reagents?.has_reagent("CBD"))
 				V.emote("scream")
 				V.changeStatus("stunned", 3 SECONDS)
 

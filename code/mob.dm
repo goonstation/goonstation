@@ -865,6 +865,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
 		return
 	src.a_intent = intent
+	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
+		src.equipped().intent_switch_trigger(src)
 
 // medals
 /mob/proc/revoke_medal(title, debug)

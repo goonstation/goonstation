@@ -8412,7 +8412,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet/blue/fancy/narrow/north,
+/turf/simulated/floor/carpet/green/fancy/narrow/north,
 /area/station/bridge/hos)
 "dvd" = (
 /obj/machinery/light/small/cool,
@@ -9585,7 +9585,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/hos)
 "dTJ" = (
 /obj/machinery/disposal,
@@ -10972,7 +10972,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eyf" = (
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "eyq" = (
 /obj/table/wood/round/auto,
@@ -11627,7 +11627,7 @@
 /area/station/crew_quarters/fitness)
 "eOP" = (
 /obj/storage/secure/closet/command/hop,
-/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge/hos)
 "ePC" = (
 /obj/table/glass/auto,
@@ -16024,7 +16024,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/hos)
 "gKC" = (
 /obj/submachine/ATM/atm_alt{
@@ -22640,7 +22640,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "jyH" = (
 /obj/item/device/radio/beacon,
@@ -25824,7 +25824,7 @@
 /turf/space,
 /area/space)
 "kTr" = (
-/turf/simulated/floor/carpet/green/fancy/edge/se,
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/captain)
 "kTu" = (
 /obj/machinery/recharge_station,
@@ -26240,7 +26240,7 @@
 	pixel_x = -10
 	},
 /obj/storage/closet/office,
-/turf/simulated/floor/carpet/blue/fancy/narrow/south,
+/turf/simulated/floor/carpet/green/fancy/narrow/south,
 /area/station/bridge/hos)
 "ldp" = (
 /obj/cable{
@@ -27273,7 +27273,7 @@
 	name = "Captain"
 	},
 /obj/disposalpipe/trunk/mail,
-/turf/simulated/floor/carpet/green/fancy/edge/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/captain)
 "lAX" = (
 /obj/stool/chair/moveable,
@@ -39268,7 +39268,7 @@
 /obj/decoration/clock{
 	pixel_y = 30
 	},
-/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/bridge/hos)
 "qEZ" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
@@ -47867,7 +47867,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /obj/item/item_box/postit,
-/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/bridge/hos)
 "ujW" = (
 /obj/machinery/disposal_pipedispenser,
@@ -50695,7 +50695,7 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "vth" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -53192,7 +53192,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge/hos)
 "wxp" = (
 /obj/table/glass/auto,
@@ -57234,9 +57234,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/neutral/side{
-	dir = 10
-	},
+/turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "ygI" = (
 /obj/disposalpipe/junction/right,

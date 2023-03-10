@@ -913,19 +913,15 @@
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -3263,7 +3259,6 @@
 	if (src.juggling())
 		src.drop_juggle()
 
-
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
 	var/missing_legs = 0
@@ -3298,10 +3293,6 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
-
-/mob/living/carbon/human/proc/check_for_intent_trigger()
-	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
-		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
