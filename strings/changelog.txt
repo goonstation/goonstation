@@ -1,5 +1,8 @@
 
 (t)thu mar 09 23
+(u)Virvatuli
+(e)🔊🤖|C-Sound, A-Silicons
+(*)Cyborgs now have unique talking sounds! And yes, they work with the voice pitch robot command.
 (u)Amylizzle
 (p)13333
 (e)🪲📦|C-Bug, A-Game-Objects

@@ -16,6 +16,7 @@
 	name = "Cyborg"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
+	voice_type = "cyborg"
 	icon_state = "robot"
 	health = 300
 	emaggable = TRUE
