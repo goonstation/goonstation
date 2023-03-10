@@ -12,5 +12,8 @@
 #define CLIENT_IMAGE_GROUP_GANGS "client_image_group_gang"
 
 #define GANG_TAG_SCAN_RATE 10 //delay between each scan for gang tags, in deciseconds
-#define GANG_TAG_SCORE_INTERVAL 30 //how often gang tags score (and allow the same person to 'see' it again), in seconds
-#define GANG_TAG_POINTS_PER_VIEWER 1 //How many points a tag gives for each person that's seen it in a minute
+#define GANG_TAG_SCORE_INTERVAL 60 //how often gang tags score (and allow the same person to 'see' it again), in seconds
+#define GANG_TAG_POINTS_PER_VIEWER 5 //How many points a tag gives for each person that's seen it in a minute
+
+
+#define JANKTANK2_DESIRED_HEALTH_PCT 0.15
