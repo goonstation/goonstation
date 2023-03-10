@@ -224,6 +224,8 @@
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
+	/// last time this mob got dosed with radiation
+	var/last_radiation_dose_time = 0
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
@@ -3229,6 +3231,7 @@
 	if(Sv > 0)
 		if(isdead(src))
 			return //no rads for the dead
+		src.last_radiation_dose_time = TIME
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
