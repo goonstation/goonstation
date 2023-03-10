@@ -1,3 +1,7 @@
+/// Amount of 'free' power that docking stations give. For each 1 unit of APC cell power, cyborgs will recharge this many units of cyborg cell power.
+/// Band-aid.
+#define MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER 3
+
 TYPEINFO(/obj/machinery/recharge_station)
 	mats = 10
 
@@ -48,9 +52,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 	if (src.occupant)
 		src.process_occupant(mult)
-
-	use_power(power_usage)
-	return TRUE
+	return 1
 
 /obj/machinery/recharge_station/allow_drop()
 	return FALSE
@@ -253,29 +255,17 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.go_out()
 			return
 
-		if (isrobot(src.occupant))
-			var/mob/living/silicon/robot/R = src.occupant
+		if (issilicon(src.occupant))
+			var/mob/living/silicon/R = src.occupant
 			if (!R.cell)
 				return
-			else if (R.cell.charge * mult >= R.cell.maxcharge)
+			else if (R.cell.charge >= R.cell.maxcharge)
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				R.cell.charge += src.chargerate * mult
-				src.use_power(50)
-				return
-
-		else if (isshell(src.occupant))
-			var/mob/living/silicon/hivebot/H = src.occupant
-
-			if (!H.cell)
-				return
-			else if (H.cell.charge * mult >= H.cell.maxcharge)
-				H.cell.charge = H.cell.maxcharge
-				return
-			else
-				H.cell.charge += src.chargerate * mult
-				src.use_power(50)
+				var/added_charge = clamp(src.chargerate * mult, 0, R.cell.maxcharge-R.cell.charge)
+				R.cell.charge += added_charge
+				src.use_power(added_charge / CELLRATE / MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER)
 				return
 
 		else if (ishuman(occupant) && src.conversion_chamber)
@@ -1026,3 +1016,5 @@ TYPEINFO(/obj/machinery/recharge_station)
 					if (cell_to_eject.loc == src)
 						user.put_in_hand_or_eject(cell_to_eject)
 			. = TRUE
+
+#undef MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER

@@ -265,10 +265,9 @@ TYPEINFO(/obj/machinery/clonepod)
 			defects = new /datum/cloner_defect_holder
 
 		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
-		// TODO refactor to just do this in the clonepod proc (this one right here)
 		defects.apply_to_on_move(src.occupant)
 
-		if (!src.clonehack) // syndies get good clones
+		if (!src.clonehack && !src.perfect_clone) // syndies and pod wars people get good clones
 			/* Apply clone defects, number picked from a uniform distribution on
 			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
 			 * (Clone generation is the number of times a person has been cloned)
@@ -347,7 +346,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			ticker.minds += src.occupant.mind
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
@@ -372,16 +371,17 @@ TYPEINFO(/obj/machinery/clonepod)
 				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
-		// Remove zombie antag status as zombie race is removed on cloning
-		var/mob/M = src.occupant
-		if (!M?.mind)
-			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
-		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
-			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
-			if (success)
-				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
-			else
-				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+		if (!src.occupant?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
+		else
+			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
+				if (!antag.remove_on_clone)
+					continue
+				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				if (success)
+					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
+				else
+					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [src.occupant] with return code [success].")
 
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
@@ -399,6 +399,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!is_puritan)
 			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
+#ifdef CLONING_IS_INSTANT
+		src.occupant.full_heal()
+#endif
 		return 1
 
 
@@ -1167,6 +1170,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.process_timer > 0)
+			return 0
+		if (src.occupant)
+			boutput(user, "<span class='alert'>[src] is full, you can't climb inside!</span>")
 			return 0
 
 		src.visible_message("<span class='alert'><b>[user] climbs into [src] and turns it on!</b></span>")

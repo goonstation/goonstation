@@ -242,7 +242,7 @@
 	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
 
 	if(cyborg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-		if ((cyborg.mind in ticker.mode:revolutionaries) || (cyborg.mind in ticker.mode:head_revolutionaries))
+		if ((cyborg.mind.get_antagonist(ROLE_REVOLUTIONARY)) || (cyborg.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
 			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 	if(gory)
@@ -309,8 +309,8 @@
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
 		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
-
-		return make_blob()
+		src.mind.add_antagonist(ROLE_BLOB)
+		return
 	return 0
 
 /mob/proc/slasherize()
@@ -889,7 +889,7 @@ var/respawn_arena_enabled = 0
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind
-
+		ticker.mode.Agimmicks |= O.mind
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
 		qdel(src)

@@ -680,7 +680,7 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		src.name = "[pick("fancy", "suave", "manly", "sexerific", "sextacular", "intellectual", "majestic", "euphoric")] fedora"
+		src.name = "[pick("fancy", "suave", "manly", "sectacular", "intellectual", "majestic", "euphoric")] fedora"
 
 /obj/item/clothing/head/cowboy
 	name = "cowboy hat"
@@ -1829,6 +1829,18 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "Heroic!"
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+
+/obj/item/clothing/head/pirate_captain
+	name = "pirate captain's hat"
+	desc = "A traditional pirate tricorne, adorned with a crimson feather, just to tell everyone who's boss."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+
+/obj/item/clothing/head/pirate_first_mate
+	name = "pirate first mate's hat"
+	desc = "Who needs a fancy red feather to show authority?"
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
 
 //Lesbian Hat
 

@@ -655,7 +655,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 
 		if(HasEffect(idToAdd))
@@ -684,17 +684,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.degrade_to = null
 				newEffect.can_copy = 0
 
+			if(safety && istype(newEffect, /datum/bioEffect/power))
+				// Only powers have safety ("synced" i.e. safe for user)
+				var/datum/bioEffect/power/TEMP = newEffect
+				TEMP.safety = safety
+
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
 			if(owner)
 				newEffect.OnAdd()
+
 			if (do_stability)
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
+
+				src.genetic_stability -= newEffect.stability_loss
+				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
@@ -732,12 +739,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 		BE.OnAdd()
 
 		if (do_stability)
-			src.genetic_stability -= BE.stability_loss
-			src.genetic_stability = max(0,src.genetic_stability)
-
-			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
 				BE.timeLeft = rand(20, 60)
 				BE.degrade_after = TRUE
+
+			src.genetic_stability -= BE.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
 
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
@@ -784,7 +791,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 
@@ -797,7 +804,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 

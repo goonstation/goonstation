@@ -7,7 +7,7 @@
 	health = 60
 	uses_health_icon = FALSE
 	icon_state = "compute"
-	compute = 50
+	compute = 30
 	show_in_tutorial = TRUE
 	var/static/display_count = 9
 	var/glow_color = "#7BFFFFa2"

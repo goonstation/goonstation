@@ -176,8 +176,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
 		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
 
-		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-		implant.implanted(src, src)
+		new /obj/item/implant/access/infinite/shittybill(src)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)

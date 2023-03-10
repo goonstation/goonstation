@@ -8,7 +8,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1
@@ -22,7 +22,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1

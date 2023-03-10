@@ -83,8 +83,6 @@
 	if (!istype(leader))
 		return
 
-	//equip_traitor(leader) <- Quad mindhacks and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
-
 	var/the_slot = null
 	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
 		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
@@ -236,14 +234,6 @@
 
 			var/obj/item/implant/spy_implant/new_imp = new
 			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.implant.Add(new_imp)
-
-			new_imp.set_loc(M)
-			new_imp.implanted = 1
-			new_imp.owner = M
 			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
 			new_imp.implanted(M, user, override)
 

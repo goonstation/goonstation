@@ -8765,7 +8765,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quartersB)
 "axH" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "axI" = (
@@ -49917,7 +49917,7 @@
 /area/space)
 "cuy" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuz" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -49959,7 +49959,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuE" = (
 /obj/machinery/light/small{
 	brightness = 1.5;
@@ -49968,7 +49968,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuF" = (
 /obj/cable{
 	d2 = 2;
@@ -49979,7 +49979,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuG" = (
 /obj/cable{
 	d1 = 1;
@@ -50005,13 +50005,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuL" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuM" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -50024,7 +50024,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuN" = (
 /obj/cable{
 	d1 = 4;
@@ -50032,7 +50032,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cuO" = (
 /obj/machinery/vending/standard,
 /obj/cable{
@@ -50114,7 +50114,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cvc" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
@@ -50182,7 +50182,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "cvn" = (
 /obj/machinery/vending/floppy{
 	profit = 0

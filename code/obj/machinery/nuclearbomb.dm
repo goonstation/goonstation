@@ -1,3 +1,5 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
+
 /obj/machinery/nuclearbomb
 	name = "nuclear bomb"
 	desc = "An extremely powerful bomb capable of levelling the whole station."
@@ -8,7 +10,7 @@
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	_health = 150
 	_max_health = 150
-	var/armed = 0
+	var/armed = FALSE
 	var/det_time = 0
 	var/timer_default = 10 MINUTES
 	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
@@ -158,25 +160,32 @@
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")
 		else
-			src.armed = TRUE
-			src.anchored = TRUE
-			if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
-				src.change_status_display()
-			if (!src.image_light)
-				src.image_light = image(src.icon, "nblightc")
-				src.UpdateOverlays(src.image_light, "light")
-			else
-				src.image_light.icon_state = "nblightc"
-				src.UpdateOverlays(src.image_light, "light")
-			src.det_time = TIME + src.timer_default
-			src.add_simple_light("nuke", list(255, 127, 127, 127))
-			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
-				playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
-			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
-			gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
+			src.arm(user)
 
 		#undef NUKE_AREA_CHECK
+
+	proc/arm(mob/user)
+		if (src.armed)
+			return
+		src.armed = TRUE
+		src.anchored = TRUE
+		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
+			src.change_status_display()
+		if (!src.image_light)
+			src.image_light = image(src.icon, "nblightc")
+			src.UpdateOverlays(src.image_light, "light")
+		else
+			src.image_light.icon_state = "nblightc"
+			src.UpdateOverlays(src.image_light, "light")
+		src.det_time = TIME + src.timer_default
+		src.add_simple_light("nuke", list(255, 127, 127, 127))
+		command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
+		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
+			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
+		var/datum/game_mode/nuclear/gamemode = ticker?.mode
+		ENSURE_TYPE(gamemode)
+		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -188,7 +197,7 @@
 				if (src.disk && istype(src.disk))
 					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
 					return
-				if (src.armed == 0)
+				if (!src.armed)
 					boutput(user, "<span class='alert'>The [src.name] isn't armed yet.</span>")
 					return
 

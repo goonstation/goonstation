@@ -6,6 +6,7 @@ datum/mind
 	var/mob/virtual
 
 	var/memory
+	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
@@ -33,15 +34,8 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/purchased_traitor_items = list()
-	var/list/traitor_crate_items = list()
-	var/list/blob_absorb_victims = list()
-	var/list/spy_stolen_items = list()
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
-
-	//Ability holders.
-	var/datum/abilityHolder/changeling/is_changeling = 0
 
 	var/list/intrinsic_verbs = list()
 
@@ -62,13 +56,7 @@ datum/mind
 	var/karma = 0 //fuck
 	var/const/karma_min = -420
 	var/const/karma_max = 69
-	var/damned = 0 // If 1, they go to hell when are die
-
-	// Capture when they die. Used in the round-end credits
-	//var/icon/death_icon = null
-
-	//avoid some otherwise frequent istype checks
-	var/stealth_objective = 0
+	var/damned = 0 //! If 1, they go to hell when are die
 
 	var/show_respawn_prompts = TRUE
 
@@ -118,10 +106,6 @@ datum/mind
 			current.addOverlaysClient(current.client)
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")
-
-
-		//if (is_changeling)
-		//	new_character.make_changeling()
 
 		for (var/intrinsic_verb in intrinsic_verbs)
 			Z_LOG_DEBUG("Mind/TransferTo", "Adding [intrinsic_verb]")
@@ -182,9 +166,17 @@ datum/mind
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
 
+	proc/remove_dynamic_memories_by_type(dynamic_memory_type)
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			if (dynamic_memory.type == dynamic_memory_type)
+				src.dynamic_memories -= dynamic_memory
+
 	proc/show_memory(mob/recipient)
 		var/output = "<B>[current.real_name]'s Memory</B><HR>"
 		output += memory
+
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			output += dynamic_memory.memory_text
 
 		if (objectives.len>0)
 			output += "<HR><B>Objectives:</B><br>"
@@ -224,40 +216,45 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
-		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
+		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
 				if (A.mutually_exclusive)
 					return FALSE
 		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist
-		if (!isnull(src.get_antagonist(role_id)))
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
 			return FALSE
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
+				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
+				if (QDELETED(new_datum))
+					return FALSE
+				src.antagonists.Add(new_datum)
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return !isnull(src.get_antagonist(role_id))
+				return TRUE
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
 	proc/remove_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
-				A.remove_self(TRUE, FALSE)
+				A.remove_self(TRUE)
 				src.antagonists.Remove(A)
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
+					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
-			A.remove_self(TRUE, FALSE)
+			A.remove_self(TRUE)
 			src.antagonists.Remove(A)
 			qdel(A)
 		src.special_role = null

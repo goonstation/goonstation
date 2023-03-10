@@ -133,8 +133,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
-	// technically not disposing but it really should be here for feature parity
-	SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
+	clients -= src
+
+	try
+		// technically not disposing but it really should be here for feature parity
+		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
+	catch(var/exception/E)
+		logTheThing("debug", src, "caught [E] in /client/Del() signal stuff.")
 
 	src.mob?.move_dir = 0
 
@@ -146,12 +151,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	*/
 	logTheThing(LOG_ADMIN, src, " has disconnected.")
 
-	src.images.Cut() //Probably not needed but eh.
+	src.images?.Cut() //Probably not needed but eh.
 
 	if (src.mob)
 		src.mob.remove_dialogs()
 
-	clients -= src
 	if(src.holder)
 		onlineAdmins.Remove(src)
 		src.holder.dispose()
@@ -360,6 +364,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if (data["error"])
 					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
 					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
+					fallback_scan()
 
 				// Successful Goonhub API query
 				else
@@ -379,6 +384,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							global.vpn_ip_checks["[src.address]"] = FALSE
 							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
 							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+							fallback_scan()
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
@@ -392,6 +398,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			catch(var/exception/e)
 				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
 				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
+				fallback_scan()
 #endif
 
 	//admins and mentors can enter a server through player caps.
@@ -1648,6 +1655,8 @@ if([removeOnFinish])
 
 #ifndef SECRETS_ENABLED
 /client/proc/postscan(list/data)
+	return
+/client/proc/fallback_scan()
 	return
 #endif
 

@@ -232,9 +232,6 @@
 		if (isnum(microbombs_4_everyone))
 			var/obj/item/implant/revenge/microbomb/MB = new (src)
 			MB.power = microbombs_4_everyone
-			MB.implanted = TRUE
-			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -756,10 +753,8 @@
 		if (src.hasStatus("handcuffed"))
 			src.unlock_medal("Fell down the stairs", 1)
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			var/datum/game_mode/revolution/R = ticker.mode
-			if (src.mind && (src.mind in R.revolutionaries)) // maybe add a check to see if they've been de-revved?
-				src.unlock_medal("Expendable", 1)
+		if (src.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			src.unlock_medal("Expendable", 1)
 
 		if (src.getStatusDuration("burning") > 400)
 			src.unlock_medal("Black and Blue", 1)
@@ -900,14 +895,8 @@
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
 		stat(null, " ")
-		if (src.mind && src.mind.stealth_objective)
-			if (src.mind.objectives && istype(src.mind.objectives, /list))
-				for (var/datum/objective/O in src.mind.objectives)
-					if (istype(O, /datum/objective/specialist/stealth))
-						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
 		/*
-
 		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
 
 		if (src.internal)
@@ -924,19 +913,15 @@
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM)
 			hud.update_intent()
-			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -3251,9 +3236,9 @@
 		abilityHolder.set_loc_callback(newloc)
 	..()
 
-/mob/living/carbon/human/get_id()
+/mob/living/carbon/human/get_id(not_worn = FALSE)
 	. = ..()
-	if(.)
+	if(. || not_worn)
 		return
 	if(istype(src.wear_id, /obj/item/card/id))
 		return src.wear_id
@@ -3277,7 +3262,6 @@
 	src.hand = h
 	if (src.juggling())
 		src.drop_juggle()
-
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
@@ -3313,10 +3297,6 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
-
-/mob/living/carbon/human/proc/check_for_intent_trigger()
-	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
-		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()

@@ -65,8 +65,11 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
-
+			#ifdef MAP_OVERRIDE_NADIR
+			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#else
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#endif
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
@@ -141,7 +144,7 @@
 			var/datum/mind/lucky_dude = null
 
 			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-				lucky_dude = pick(candidates)
+				lucky_dude = candidates[1]
 				attempts++
 				/*
 				// Latejoin antagonists ignore antag prefs and so should this
@@ -202,25 +205,16 @@
 			var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			var/failed = 0
-
+			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
-					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
-					if (B && istype(B))
-						M3 = B
-						role = ROLE_BLOB
-						objective_path = /datum/objective_set/blob
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-
-						SPAWN(0)
-							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
-							if (B && newname)
-								phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-								newname = strip_html(newname) + " the Blob"
-								B.real_name = newname
-								B.name = newname
-
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_BLOB
+						M3 = mind.current
 					else
 						failed = 1
 
@@ -238,50 +232,43 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/living/intangible/wraith/W = M3.make_wraith()
-					if (W && istype(W))
-						M3 = W
-						role = ROLE_WRAITH
-						generate_wraith_objectives(lucky_dude)
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_WRAITH
+						M3 = mind.current
 					else
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/carbon/human/R = M3.humanize()
-					if (R && istype(R))
-						M3 = R
-						R.unequip_all(1)
-						equip_wizard(R, 1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
 						send_to = 2
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						SPAWN(0)
-							if (R.gender && R.gender == "female")
-								R.real_name = pick_string_autokey("names/wizard_female.txt")
-							else
-								R.real_name = pick_string_autokey("names/wizard_male.txt")
-							R.choose_name(3, "wizard")
-
 					else
 						failed = 1
 
 				if ("Werewolf")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_werewolf()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WEREWOLF
-						objective_path = /datum/objective_set/werewolf
 					else
 						failed = 1
 
 				if ("Hunter")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
 					else
 						failed = 1
@@ -289,57 +276,56 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
 					else
 						failed = 1
 
 				if ("Wrestler")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_wrestler(1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						var/antag_type = src.antagonist_type
+						var/antagonist_role = src.antagonist_type
 						SPAWN(0)
-							R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
+							M3.choose_name(3, antagonist_role, M3.real_name + " the " + antagonist_role)
 					else
 						failed = 1
 
 				if ("Wrestler_Doodle")
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
-					if (C && istype(C))
+					if (istype(C))
 						M3 = C
-						C.make_wrestler(1)
+						C.mind?.wipe_antagonists()
+						C.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						var/antag_type = src.antagonist_type
+						var/antagonist_role = src.antagonist_type
 						SPAWN(0)
-							C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
+							C.choose_name(3, antagonist_role, C.real_name + " the " + antagonist_role)
 					else
 						failed = 1
 
 				if ("Vampire")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_vampire()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_VAMPIRE
-						objective_path = /datum/objective_set/vampire
 					else
 						failed = 1
 
 				if ("Changeling")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_changeling()
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
 					else
 						failed = 1
 
@@ -347,9 +333,7 @@
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/changeling/headspider)
 					if (C && istype(C))
 						M3 = C
-						C.make_changeling()
-						role = ROLE_CHANGELING
-						objective_path = /datum/objective_set/changeling
+						C.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						C.remove_ability_holder(/datum/abilityHolder/changeling/)
 					else
 						failed = 1
@@ -357,8 +341,9 @@
 				if ("Arcfiend")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
-						L.mind?.add_antagonist(ROLE_ARCFIEND)
+						L.mind?.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_ARCFIEND
 					else
 						failed = 1
@@ -421,7 +406,6 @@
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-			logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.cleanup()
 		return
 

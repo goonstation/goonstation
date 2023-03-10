@@ -16,7 +16,7 @@
 	desc = "A conveyor belt."
 	pass_unstable = TRUE
 	anchored = 1
-	power_usage = 100
+	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
@@ -247,7 +247,7 @@
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return
-	use_power(power_usage)
+	..()
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -281,9 +281,11 @@
 	if(!operable)
 		operating = OP_OFF
 	if(!operating || (status & NOPOWER))
+		power_usage = 0
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
 	else
+		power_usage = 100
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 
@@ -666,6 +668,7 @@
 
 
 
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 /// the conveyor control switch
 /obj/machinery/conveyor_switch

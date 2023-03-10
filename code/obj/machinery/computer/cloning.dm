@@ -5,7 +5,7 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 var/global/cloning_with_records = TRUE
-
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -296,9 +296,6 @@ var/global/cloning_with_records = TRUE
 	R["defects"] = subject.cloner_defects.copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -320,6 +317,16 @@ var/global/cloning_with_records = TRUE
 			selected_record = R
 			break
 	return selected_record
+
+/obj/machinery/computer/cloning/proc/scan_someone()
+	src.scan_mob(src.scanner?.occupant)
+
+/obj/machinery/computer/cloning/proc/clone_someone()
+	for (var/datum/db_record/record in src.records)
+		var/mob/ghost = find_ghost_by_key(record["ckey"])
+		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+			src.clone_record(record)
+			return
 
 /obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))

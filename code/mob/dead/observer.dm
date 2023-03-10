@@ -6,17 +6,17 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
-	density = 0
-	canmove = 1
-	blinded = 0
+	density = FALSE
+	canmove = TRUE
+	blinded = FALSE
 	anchored = 1	//  don't get pushed around
-	var/observe_round = 0
-	var/health_shown = 0
-	var/arrest_shown = 0
-	var/delete_on_logout = 1
-	var/delete_on_logout_reset = 1
+	var/observe_round = FALSE
+	var/health_shown = FALSE
+	var/arrest_shown = FALSE
+	var/delete_on_logout = TRUE
+	var/delete_on_logout_reset = TRUE
 	var/obj/item/clothing/head/wig/wig = null
-	var/in_point_mode = 0
+	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
 
@@ -57,14 +57,16 @@
 			src.set_cursor('icons/cursors/examine.dmi')
 
 /mob/dead/observer/click(atom/target, params, location, control)
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
-		return
-	if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
-		src.insert_observer(target)
-		return
+	// If we have an ability active, skip all this and go straight to parent call.
+	if (!src.targeting_ability)
+		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (src.in_point_mode)
+				src.toggle_point_mode()
+			return
+		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+			src.insert_observer(target)
+			return
 	return ..()
 
 /mob/dead/observer/Login()
@@ -541,7 +543,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse || corpse.disposed)
+	if(QDELETED(corpse) || corpse.loc == null)
 		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
@@ -693,7 +695,7 @@
 
 
 /mob/dead/observer/verb/observe_object()
-	set name = "Observe Objects"
+	set name = "Observe Object"
 	set category = "Ghost"
 
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]

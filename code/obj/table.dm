@@ -267,7 +267,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status) // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -301,7 +301,7 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer)
+		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
 			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
@@ -370,7 +370,7 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer)
+		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 
@@ -679,7 +679,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1))
+		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -688,7 +688,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 				return
 			else
 				return ..()
-		else if (iswrenchingtool(W))
+		else if (iswrenchingtool(W) && user.a_intent == "harm")
 			if (src.status == 1)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
@@ -1010,6 +1010,8 @@ TYPEINFO_NEW(/obj/table/glass)
 			return ..()
 
 	harm_slam(mob/user, mob/victim)
+		if(src.glass_broken != GLASS_INTACT)
+			return ..()
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")

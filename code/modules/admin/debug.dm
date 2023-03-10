@@ -384,24 +384,6 @@ var/global/debug_messages = 0
 	else
 		alert("This only works on human mobs.")
 
-/* Just use the set traitor dialog thing
-/client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set name = "Make Changeling"
-	set popup_menu = 0
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(ishuman(M) && M.mind != null)
-		logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a changeling.")
-		logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a changeling.", "admin")
-		SPAWN(1 SECOND)
-			M.mind.absorbed_dna[M.bioHolder] = M.real_name
-			M.make_changeling()
-	else
-		alert("Invalid mob")
-*/
-
 /client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
@@ -608,7 +590,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear","Clothing Dummies")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -617,9 +599,10 @@ body
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
-				LAGCHECK(LAG_LOW)
-				qdel(door)
+			for (var/obj/machinery/door/door in by_type[/obj/machinery/door])
+				if (istype(door, /obj/machinery/door/airlock/pyro/maintenance) || istype(door, /obj/machinery/door/airlock/maintenance))
+					LAGCHECK(LAG_LOW)
+					qdel(door)
 			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
@@ -663,8 +646,7 @@ body
 					location = pick(job_start_locations[job])
 				var/mob/living/carbon/human/npc/monkey/M = new /mob/living/carbon/human/npc/monkey(location)
 				if(prob(10))
-					var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(M)
-					implant.implanted(M, M)
+					new /obj/item/implant/access/infinite/shittybill(M)
 				M.ai_offhand_pickup_chance = rand(20,80)
 				M.ai_poke_thing_chance = rand(20,50)
 		if ("Monkey Chemistry")
@@ -683,7 +665,15 @@ body
 				I = pick(concrete_typesof(/obj/item))
 				new I(get_turf(M))
 				sleep(1 SECONDS)
-
+		if ("Clothing Dummies")
+			for (var/i in 1 to 80)
+				var/human_type = pick(concrete_typesof(/mob/living/carbon/human/normal))
+				new human_type(pick_landmark(LANDMARK_PESTSTART))
+			while(TRUE)
+				var/mob/living/carbon/human/normal/human = pick(by_type[/mob/living/carbon/human])
+				human.update_clothing()
+				if (prob(40))
+					sleep(0.1 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -1007,27 +997,11 @@ proc/display_camera_paths()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
 
-	var/output = ""
-	var/apc_data = ""
+	if(holder)
+		var/datum/power_usage_viewer/E = new(src.mob)
+		E.ui_interact(mob)
 
-	for(var/area/A as() in detailed_machine_power_prev)
-		if(A.area_apc)
-			apc_data = "<B>[A.area_apc.lastused_total]</B>      EQP:[A.area_apc.lastused_equip] LGT:[A.area_apc.lastused_light] ENV:[A.area_apc.lastused_environ]"
-			for(var/obj/machinery/AM as() in A.machines)
-				if(AM.power_usage)
-					if(!detailed_machine_power_prev[A][AM]) detailed_machine_power_prev[A][AM] = list()
-					detailed_machine_power_prev[A][AM] += "([-AM.power_usage])"
-		else
-			apc_data = "<i>NO APC</i>"
-		output += "<B><a href='byond://?src=\ref[src];Vars=\ref[A]'>[A]</a></B> [apc_data]<BR/>"
-		for(var/M in detailed_machine_power_prev[A])
-			output += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[M]'>[M]</a> (<a href='byond://?src=\ref[src];JumpToThing=\ref[M]'>JMP</a>) :"
-			for(var/P in detailed_machine_power_prev[A][M])
-				output += "[P] "
-			output += "<BR/>"
-		output += "<BR/>"
-	src.Browse(output, "window=power_data;size=600x500")
-
+	return
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -1183,17 +1157,6 @@ var/datum/flock/testflock
 		logTheThing(LOG_DIARY, usr, "cleared the string cache, clearing [length] existing list(s).", "admin")
 		boutput(src, "String cache invalidated. [length] list(s) cleared.")
 
-/client/proc/edit_color_matrix()
-	set name = "Edit Color Matrix"
-	set desc = "A little more control over the VFX"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-
-	if(!istype(thething))
-		thething = new
-	thething.edit(src)
-
-
 /client/proc/temporary_deadmin_self()
 	set name = "Temp. Deadmin Self"
 	set desc = "Deadmin you're own self. Temporarily."
@@ -1210,52 +1173,6 @@ var/datum/flock/testflock
 		SPAWN(seconds * 10)
 			src.init_admin()
 			boutput(src, "<B><I>Your adminnery has returned.</I></B>")
-
-
-/var/datum/debugthing/thething
-
-/datum/debugthing
-
-	proc/edit(var/client/user)
-		var/editor = grabResource("html/admin/color_matrix.html")
-		user.Browse(editor, "window=colormatrix;can_close=1")
-		SPAWN(1 SECOND)
-			callJsFunc(usr, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
-
-	Topic(href, href_list)
-		if(!islist(usr.client.color))
-			usr.client.set_color()
-
-		// as somepotato pointed out this form is very insecure, so let's do some serverside verification that we got what we wanted
-		var/sanitised = sanitize(strip_html(href_list["matrix"]))
-		var/list/matrixStrings = splittext(sanitised, ",")
-		// we are expecting 20 strings, so abort if we don't have that many
-		if(matrixStrings.len != 20)
-			return
-
-		var/list/matrix = list()
-		for(var/i=1, i<=matrixStrings.len, i++)
-			var/num = text2num(matrixStrings[i])
-			if(isnum(num))
-				matrix += num
-		if(href_list["everyone"] == "y")
-
-			if(href_list["animate"] == "y")
-				for(var/client/c)
-					c.animate_color(matrix)
-			else
-				for(var/client/c)
-					c.set_color(matrix)
-		else
-			if(href_list["animate"] == "y")
-				usr.client.animate_color(matrix)
-			else
-				usr.client.set_color(matrix)
-
-	proc/callJsFunc(var/client, var/funcName, var/list/params)
-		var/paramsJS = list2params(params)
-		client << output(paramsJS,"colormatrix.browser:[funcName]")
-		return
 
 #ifdef ENABLE_SPAWN_DEBUG
 /client/proc/spawn_dbg()
@@ -1382,6 +1299,33 @@ var/datum/flock/testflock
 			;
 		while(world.time == last_tick)
 			sleep(0.001)
+
+/client/proc/list_adminteract_buttons()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/list/lines = list("<html><head><title>Admin Interact Buttons</title></head><body>")
+	for(var/type in typesof(/typeinfo/atom))
+		var/typeinfo/atom/typeinfo = get_singleton(type)
+		var/list/procpath/proc_paths = typeinfo.admin_procs
+		var/typeinfo/atom/parent_typeinfo = get_singleton(type2parent(typeinfo))
+		if(istype(parent_typeinfo))
+			proc_paths = proc_paths - parent_typeinfo.admin_procs // remove inherited procs
+			// also note that we do NOT want -= here because that would edit the list in the typeinfo
+		if(length(proc_paths))
+			var/name = copytext("[typeinfo]", 10)
+			lines += "<b>[name]</b><ul>"
+			for(var/procpath/proc_path as anything in proc_paths)
+				var/proc_name = proc_path.name
+				if (!proc_name)
+					var/split_list = splittext("[proc_path]", "/")
+					proc_name = split_list[length(split_list)]
+				lines += "<li>[proc_name]</li>"
+			lines += "</ul>"
+
+	lines += "</body></html>"
+	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
 
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE
