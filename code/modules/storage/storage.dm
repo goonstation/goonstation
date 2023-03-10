@@ -168,7 +168,7 @@
 	if (!src.sneaky)
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
 	// check if its in your inventory
-	if (src.linked_item.loc == user && (src.opens_if_worn || src.linked_item == user.l_hand || src.linked_item == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
+	if (src.linked_item.loc == user && (src.opens_if_worn || (src.linked_item in user.equipped_list(FALSE)) || IS_LIVING_OBJECT_USING_SELF(user)))
 		// check if storage is attached as an arm
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
