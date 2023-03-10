@@ -2238,7 +2238,6 @@
 	},
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -4697,7 +4696,6 @@
 "aiG" = (
 /obj/machinery/door/airlock/pyro/external{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -18607,7 +18605,7 @@
 /turf/unsimulated/floor/white,
 /area/crunch)
 "aIG" = (
-/obj/critter/aberration{
+/mob/living/critter/aberration{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -57078,7 +57076,6 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -74975,7 +74972,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "cJv" = (
-/obj/critter/zombie/hogan{
+/obj/critter/zombie/wrestler{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -76698,7 +76695,6 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

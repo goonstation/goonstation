@@ -42233,7 +42233,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /obj/item/spacecash/bag,
 /obj/item/spacecash/fifty,
 /obj/rack,
@@ -44579,7 +44579,7 @@
 /area/listeningpost)
 "bCm" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCn" = (
 /obj/securearea{
 	bound_height = 64;
@@ -44593,7 +44593,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCo" = (
 /obj/cable{
 	d1 = 4;
@@ -44615,7 +44615,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCp" = (
 /obj/cable{
 	d1 = 4;
@@ -44625,7 +44625,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCq" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
@@ -44657,12 +44657,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCt" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCu" = (
 /obj/cable{
 	d1 = 4;
@@ -44682,7 +44682,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCv" = (
 /obj/cable{
 	d1 = 4;
@@ -44690,7 +44690,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	bound_height = 64;
@@ -44706,7 +44706,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCx" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
@@ -44754,10 +44754,10 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCC" = (
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCD" = (
 /obj/cable{
 	d2 = 8;
@@ -44780,7 +44780,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCE" = (
 /obj/cable{
 	d2 = 8;
@@ -44794,7 +44794,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCF" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -44814,13 +44814,13 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCG" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCH" = (
 /obj/cable{
 	d2 = 8;
@@ -44830,7 +44830,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCI" = (
 /obj/cable{
 	d2 = 8;
@@ -44840,7 +44840,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCJ" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -44849,14 +44849,14 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCK" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -44907,7 +44907,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	bound_height = 64;
@@ -44921,7 +44921,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	bound_height = 64;
@@ -44937,7 +44937,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -44945,7 +44945,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "bCS" = (
 /obj/cable{
 	icon_state = "0-1"

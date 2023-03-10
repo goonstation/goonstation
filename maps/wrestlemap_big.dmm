@@ -371,7 +371,7 @@
 /area/listeningpost)
 "aaP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aaQ" = (
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/item/clothing/suit/space/syndicate,
@@ -544,14 +544,14 @@
 /area/listeningpost)
 "abi" = (
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abj" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 8;
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abk" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -642,12 +642,12 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abt" = (
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abu" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -667,7 +667,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abv" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -675,7 +675,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abw" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -694,13 +694,13 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abx" = (
 /obj/decal/boxingropeenter{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aby" = (
 /obj/item/paper/printout/emerg1,
 /obj/item/paper_bin,
@@ -807,13 +807,13 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abI" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -832,7 +832,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -840,7 +840,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abL" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -916,7 +916,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abM" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -925,7 +925,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -944,7 +944,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abO" = (
 /obj/cable{
 	d2 = 2;
@@ -956,14 +956,14 @@
 	},
 /obj/decal/boxingrope,
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abP" = (
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abQ" = (
 /obj/cable{
 	d2 = 8;
@@ -1021,7 +1021,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abV" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -1033,7 +1033,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abW" = (
 /obj/cable{
 	d2 = 2;
@@ -1041,7 +1041,7 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "abX" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -1131,7 +1131,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "ach" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	bound_height = 64;
@@ -1147,7 +1147,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aci" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	bound_height = 64;
@@ -1163,7 +1163,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "acj" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -1186,7 +1186,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "acm" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -1194,13 +1194,13 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "acn" = (
 /obj/decal/boxingropeenter{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aco" = (
 /obj/decal/glow{
 	brightness = 3;
@@ -1301,7 +1301,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "acy" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -16622,7 +16622,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aDD" = (
@@ -17656,7 +17658,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aFO" = (
@@ -28543,7 +28547,9 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay)
 "aZo" = (
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay)
 "aZp" = (
@@ -34019,7 +34025,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/northwest,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "biR" = (
@@ -34420,7 +34428,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/northwest,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bjA" = (
@@ -36337,7 +36347,9 @@
 	},
 /area/station/medical/medbay)
 "bmV" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
 /obj/machinery/camera{
 	bound_height = 64;
 	bound_width = 64;
@@ -36356,7 +36368,9 @@
 	},
 /area/station/medical/medbay)
 "bmW" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/bluewhite{
 	dir = 5
@@ -98411,7 +98425,9 @@
 "dtx" = (
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
 	dir = 8
@@ -98423,7 +98439,9 @@
 /area/station/medical/medbooth)
 "dty" = (
 /obj/access_spawn/medical,
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
 	dir = 8
@@ -98807,7 +98825,9 @@
 	})
 "dut" = (
 /obj/access_spawn/medical,
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -99068,7 +99088,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "duU" = (
-/obj/critter/dog/george/blair{
+/mob/living/critter/small_animal/dog/blair{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

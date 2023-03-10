@@ -1415,7 +1415,6 @@
 "acU" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -56184,7 +56183,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "cbz" = (
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

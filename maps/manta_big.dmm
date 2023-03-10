@@ -60475,7 +60475,7 @@
 	},
 /area/station/hos)
 "cfq" = (
-/obj/critter/dog/george/blair{
+/mob/living/critter/small_animal/dog/blair{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -66411,7 +66411,7 @@
 /area/station/hos/quarter)
 "cpn" = (
 /obj/item/device/gps,
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)

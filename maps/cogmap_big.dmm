@@ -86136,7 +86136,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

@@ -19660,7 +19660,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -53851,7 +53851,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/critter/dog/george/blair{
+/mob/living/critter/small_animal/dog/blair{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -53929,7 +53929,7 @@
 	},
 /area/station/bridge/hos)
 "caE" = (
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "caF" = (

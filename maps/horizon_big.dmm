@@ -18813,7 +18813,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quartersB)
 "aIV" = (
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -129842,7 +129842,7 @@
 /area/listeningpost/power)
 "epO" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "epP" = (
 /obj/lattice{
 	bound_height = 64;
@@ -130124,13 +130124,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "eqA" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "eqB" = (
 /obj/grille/catwalk{
 	bound_height = 64;
@@ -130753,7 +130753,7 @@
 	transform = list(2,0,16,0,2,16)
 	},
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "erI" = (
 /obj/access_spawn/syndie_shuttle,
 /obj/cable{
@@ -130762,7 +130762,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "erJ" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -130770,7 +130770,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "erK" = (
 /obj/submachine/syndicate_teleporter{
 	bound_height = 64;
@@ -130784,7 +130784,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "erL" = (
 /obj/machinery/light/small{
 	brightness = 1.5;
@@ -130793,7 +130793,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "erM" = (
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_east"
@@ -130934,7 +130934,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esb" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -130945,7 +130945,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esc" = (
 /obj/item/storage/box/biohazard_bags,
 /turf/simulated/floor/shuttlebay{
@@ -131087,7 +131087,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esp" = (
 /obj/cable{
 	d2 = 2;
@@ -131101,7 +131101,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esq" = (
 /obj/cable{
 	d2 = 2;
@@ -131111,7 +131111,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esr" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	bound_height = 64;
@@ -131192,7 +131192,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esy" = (
 /obj/cable{
 	d1 = 2;
@@ -131205,7 +131205,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esz" = (
 /obj/cable{
 	d2 = 2;
@@ -131216,7 +131216,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esA" = (
 /obj/lattice{
 	bound_height = 64;
@@ -131328,7 +131328,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "esK" = (
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/carpet/blue/standard/edge/sw,

@@ -61371,7 +61371,7 @@
 	dir = 8
 	},
 /obj/item/device/gps,
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /obj/machinery/disposal/mail/small{
 	bound_height = 64;
 	bound_width = 64;
@@ -61399,7 +61399,7 @@
 	dir = 8
 	},
 /obj/item/device/gps,
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -61912,7 +61912,7 @@
 	})
 "bVD" = (
 /obj/item/device/gps,
-/obj/item/goldbar,
+/obj/item/stamped_bullion,
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -63794,7 +63794,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george/blair{
+/mob/living/critter/small_animal/dog/blair{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -66834,7 +66834,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "cdN" = (
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -103003,7 +103003,7 @@
 /area/listeningpost/power)
 "dnq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnr" = (
 /obj/machinery/door/airlock/syndicate{
 	bound_height = 64;
@@ -103019,12 +103019,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dns" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnt" = (
 /obj/machinery/vending/floppy{
 	bound_height = 64;
@@ -103079,7 +103079,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnA" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -103122,7 +103122,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnF" = (
 /obj/submachine/syndicate_teleporter{
 	bound_height = 64;
@@ -103136,14 +103136,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnG" = (
 /obj/item/clothing/mask/gas/swat,
 /obj/rack,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnH" = (
 /obj/cable{
 	icon_state = "0-1"
@@ -103269,7 +103269,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "dnP" = (
 /obj/cable{
 	dir = 0;

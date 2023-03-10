@@ -42949,7 +42949,7 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "bpM" = (
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
@@ -67870,7 +67870,7 @@
 	},
 /area/station/crew_quarters/heads)
 "cfg" = (
-/obj/critter/dog/george/blair{
+/mob/living/critter/small_animal/dog/blair{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;
