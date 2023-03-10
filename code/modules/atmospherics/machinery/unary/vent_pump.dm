@@ -5,7 +5,7 @@
 	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = 1
 	plane = PLANE_FLOOR
-	var/on = 1
+	var/on = TRUE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 	var/external_pressure_bound = ONE_ATMOSPHERE + 20
 	var/internal_pressure_bound = 0
@@ -14,27 +14,9 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	security
 		name = "Air Vent (Security)"
 		frequency = 1274
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	toxlab_chamber_to_tank
 		name = "Toxlab Chamber Siphon"
@@ -44,39 +26,12 @@
 		internal_pressure_bound = 4000
 		pressure_checks = 2
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	high_volume
 		name = "High-Volume Air Vent"
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 		security
 			name = "High-Volume Air Vent (Security)"
 			frequency = 1274
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		New()
 			..()
@@ -89,16 +44,8 @@
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
-		if(on&&node)
-			if(pump_direction)
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-			else
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
-
-		return
+		var/turf/T = get_turf(src)
+		src.hide(T.intact)
 
 	process()
 		..()
@@ -181,10 +128,10 @@
 
 		switch(signal.data["command"])
 			if("power_on")
-				on = 1
+				on = TRUE
 
 			if("power_off")
-				on = 0
+				on = FALSE
 
 			if("power_toggle")
 				on = !on
@@ -228,13 +175,12 @@
 				SPAWN(0.5 SECONDS) broadcast_status()
 
 
-	hide(var/i) //to make the little pipe section invisible, the icon changes.
+	hide(var/intact) //to make the little pipe section invisible, the icon changes.
 		if(on&&node)
 			if(pump_direction)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]out"
 			else
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]in"
 		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
-		return
+			icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]off"
+			on = FALSE

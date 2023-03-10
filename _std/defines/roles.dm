@@ -9,9 +9,13 @@
 #define ROLE_WEREWOLF "werewolf"
 #define ROLE_BLOB "blob"
 #define ROLE_WRAITH "wraith"
-#define ROLE_HEAD_REV "head_rev"
+#define ROLE_HEAD_REVOLUTIONARY "head_revolutionary"
+#define ROLE_REVOLUTIONARY "revolutionary"
 #define ROLE_CONSPIRATOR "conspirator"
 #define ROLE_ARCFIEND "arcfiend"
+#define ROLE_FLOCKMIND "flockmind"
+#define ROLE_FLOCKTRACE "flocktrace"
+#define ROLE_SALVAGER "salvager"
 #define ROLE_MISC "misc"
 
 // special antagonist roles
@@ -29,13 +33,10 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
-#define ROLE_SALVAGER "salvager"
 #define ROLE_ZOMBIE "zombie"
 
 // gimmicks
 #define ROLE_BATTLER "battler"
-#define ROLE_FLOCKMIND "flockmind"
-#define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"

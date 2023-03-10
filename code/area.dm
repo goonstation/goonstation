@@ -373,18 +373,25 @@ TYPEINFO(/area)
 	proc/calculate_structure_value()
 		var/value = 0
 		var/list/atom/our_contents = src.contents.Copy()
-		for (var/turf/simulated/wall/W in our_contents)
-			value++
-		for (var/turf/simulated/floor/F in our_contents)
-			if (F.broken || F.burnt)
-				continue
-			value++
-		for (var/obj/machinery/light/L in our_contents)
-			if (L.current_lamp.light_status != 0) //See LIGHT_OK
-				continue
-			value++
-		for (var/obj/window/W in our_contents)
-			value++
+
+		for (var/atom/A as anything in our_contents)
+			if (length(flocks))
+				if (isfeathertile(A) || istype(A, /obj/machinery/light/flock) || istype(A, /obj/window/auto/feather))
+					continue
+			if (istype(A, /turf/simulated/wall))
+				value++
+			else if (istype(A, /turf/simulated/floor))
+				var/turf/simulated/floor/F = A
+				if (F.broken || F.burnt)
+					continue
+				value++
+			else if (istype(A, /obj/machinery/light))
+				var/obj/machinery/light/L = A
+				if (L.current_lamp.light_status != 0) //See LIGHT_OK
+					continue
+				value++
+			else if (istype(A, /obj/window))
+				value++
 
 		return value
 
@@ -395,6 +402,8 @@ TYPEINFO(/area)
 		var/list/dirtyStuff = list(/obj/decal/cleanable,/obj/fluid)
 
 		for (var/turf/simulated/T in src.contents)
+			if (isfeathertile(T))
+				continue
 			dirty = 0
 			total_count++
 			for (var/thing in T.contents)
@@ -548,7 +557,7 @@ TYPEINFO(/area)
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
-			setdead(jerk)
+			jerk.death(TRUE)
 			// ghostize the mob first to punt them out of their body
 			// before removing the old body, so that we can boot the ghost out
 			var/mob/dead/dead_jerk = jerk.ghostize()
@@ -2404,6 +2413,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Bathroom"
 	icon_state = "showers"
 
+	extra1
+		name = "Restroom #1"
+
+	extra2
+		name = "Restroom #2"
+
 /area/station/crew_quarters/jazz
 	name = "Jazz Lounge"
 	icon_state = "purple"
@@ -2710,13 +2725,6 @@ TYPEINFO(/area/station/engine/substation)
 	sound_environment = 3
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
-
-/area/syndicate_teleporter
-	name = "Syndicate Teleporter"
-	icon_state = "teleporter"
-	requires_power = 0
-	teleport_blocked = 1
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
@@ -3475,11 +3483,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	luminosity = 1
 
+/area/listeningpost/syndicate_teleporter
+	name = "Syndicate Teleporter"
+	icon_state = "teleporter"
+	requires_power = 0
+
 // Salvager Spawn
 /area/salvager
 	name = "Salvager Vessel Magpie"
 	icon_state = "red"
 	sanctuary = 1
+
+/area/salvager/space
+	icon_state = "purple"
 
 /area/salvager/lower
 	icon_state = "orange"
@@ -4813,7 +4829,7 @@ area/station/crewquarters/cryotron
 	sound_environment = 3
 	workplace = 1
 
-/area/syndicate_teleporter
+/area/listeningpost/syndicate_teleporter
 	name = "Syndicate Teleporter"
 	icon_state = "teleporter"
 	requires_power = 0

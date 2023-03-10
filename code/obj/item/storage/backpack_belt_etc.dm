@@ -689,6 +689,17 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/virtual
+	name = "virtual utility belt"
+	desc = "Are these tools DLC?"
+	spawn_contents = list(/obj/item/crowbar/vr,
+	/obj/item/weldingtool/vr,
+	/obj/item/wirecutters/vr,
+	/obj/item/screwdriver/vr,
+	/obj/item/wrench/vr,
+	/obj/item/device/multitool,
+	/obj/item/deconstructor)
+
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
 	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
@@ -959,11 +970,13 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"

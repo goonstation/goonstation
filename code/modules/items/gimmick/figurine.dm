@@ -912,6 +912,26 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "ezracallison"
 		ckey = "comradeinput"
 
+	goosime
+		name = "\improper James Crowley"
+		icon_state = "jamescrowley"
+		ckey = "gooisme"
+
+	folty
+		name = "\improper Derrick Sholl"
+		icon_state = "derricksholl"
+		ckey = "folty"
+
+	evaevaevaeva
+		name = "\improper Alma Lowry"
+		icon_state = "almalowry"
+		ckey = "evaevaevaeva"
+
+	fredric_80100
+		name = "\improper Pearl Shess"
+		icon_state = "pearlshess"
+		ckey = "fredric_80100"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

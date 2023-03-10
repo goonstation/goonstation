@@ -111,7 +111,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend","salvager", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -163,7 +163,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #endif
-
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to black now")
 	var/list/animateclients = list()
 	for (var/client/C)
@@ -174,7 +174,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
-
+#endif
 	// Give said clients time to animate the fadeout before we do this...
 	sleep(0.5 SECONDS)
 
@@ -197,6 +197,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//Equip characters
 	equip_characters()
 
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to normal")
 	for (var/client/C in animateclients)
 		if (C)
@@ -207,10 +208,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			animate(C, color = "#000000", time = 0, flags = ANIMATION_END_NOW)
 			animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
 			animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
-
+#endif
 
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
+	round_start_time = TIME	// this will not be accurate after 24 hours
 
 	SPAWN(0)
 		ircbot.event("roundstart")
@@ -308,19 +310,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
-					var/mob/living/intangible/wraith/W = player.make_wraith()
-					if (W)
-						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, W, "<b>Late join</b>: assigned antagonist role: wraith.")
-						antagWeighter.record(role = ROLE_WRAITH, ckey = W.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
+					antagWeighter.record(role = ROLE_WRAITH, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
-					var/mob/living/intangible/blob_overmind/B = player.make_blob()
-					if (B)
-						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, B, "<b>Late join</b>: assigned antagonist role: blob.")
-						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
+					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
@@ -373,8 +369,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
-					SPAWN(0)
-						player.Equip_Rank(player.mind.assigned_role)
+					player.Equip_Rank(player.mind.assigned_role)
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
@@ -767,7 +762,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/chui/window/crew_credits/creds = new
+		var/datum/crewCredits/creds = new
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
@@ -778,7 +773,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (E.client.preferences.view_score)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
-					creds.Subscribe(E.client)
+					creds.ui_interact(E)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
 

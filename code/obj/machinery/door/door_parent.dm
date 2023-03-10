@@ -365,10 +365,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if(world.time-last_used <= 10)
 		return 0
 	src.add_fingerprint(AM)
-	if (!src.requiresID())
-		AM = null
 
-	if (src.allowed(AM))
+	if (!src.requiresID() || src.allowed(AM))
 		if (src.density)
 			last_used = world.time
 			src.bumper = AM

@@ -6,17 +6,17 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
-	density = 0
-	canmove = 1
-	blinded = 0
+	density = FALSE
+	canmove = TRUE
+	blinded = FALSE
 	anchored = 1	//  don't get pushed around
-	var/observe_round = 0
-	var/health_shown = 0
-	var/arrest_shown = 0
-	var/delete_on_logout = 1
-	var/delete_on_logout_reset = 1
+	var/observe_round = FALSE
+	var/health_shown = FALSE
+	var/arrest_shown = FALSE
+	var/delete_on_logout = TRUE
+	var/delete_on_logout_reset = TRUE
 	var/obj/item/clothing/head/wig/wig = null
-	var/in_point_mode = 0
+	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
 
@@ -543,7 +543,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse || corpse.disposed)
+	if(QDELETED(corpse) || corpse.loc == null)
 		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)

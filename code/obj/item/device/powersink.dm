@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 				anchored = 0
 				mode = POWERSINK_OFF
-				boutput(user, "You detach	the device from the cable.")
+				boutput(user, "You detach the device from the cable.")
 				for(var/mob/M in AIviewers(user))
 					if(M == user) continue
 					boutput(M, "[user] detaches the power sink from the cable.")

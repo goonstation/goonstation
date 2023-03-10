@@ -155,9 +155,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-#ifdef RP_MODE
-	rounds_needed_to_play = 20
-#endif
+	rounds_needed_to_play = 30
 
 	New()
 		..()
@@ -2254,18 +2252,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	var/leader = FALSE
 	add_to_manifest = FALSE
 
-
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		if (!M)
+		if (!M?.mind)
 			return
 
 		if (src.leader)
 			M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
 		else
 			M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-
-		return
 
 /datum/job/special/syndicate_operative/leader
 	name = "Syndicate Operative Commander"
