@@ -9,7 +9,7 @@
 	can_use_in_container = 1
 	interrupt_action_bars = 0
 	var/last_mimiced_name = ""
-	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override
+	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override, check headsets.dm
 		"Captain" = "cap",
 		"Head of Personnel" = "hop",
 		"Head of Security" = "hos",
@@ -17,12 +17,17 @@
 		"Research Director" = "rd",
 		"Medical Director" = "md",
 		"Chief Engineer" = "ce",
+		"Nanotrasen Security Consultant" = "nt",
 		"Security" = "sec",
+		"Detective" = "det",
 		"Scientist" = "sci",
 		"Medical" = "med",
 		"Engineer" = "eng",
 		"Quartermaster" = "qm",
+		"Miner" = "Min",
 		"Civilian" = "civ",
+		"Radio Show Host" = "rh",
+		"Mailman" = "mail",
 		"Clown" = "clown")
 
 	cast(atom/target)
