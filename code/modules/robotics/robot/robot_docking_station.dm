@@ -265,7 +265,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				var/added_charge = clamp(src.chargerate * mult, 0, R.cell.maxcharge-R.cell.charge)
 				R.cell.charge += added_charge
-				src.use_power(added_charge / CELLRATE / MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER)
+				src.use_power(chargerate)
 				return
 
 		else if (ishuman(occupant) && src.conversion_chamber)
