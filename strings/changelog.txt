@@ -1,4 +1,9 @@
 
+(t)sat mar 11 23
+(u)DrWolfy
+(p)13145
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added the T-Ray scanner to the general fabricator.
 (t)fri mar 10 23
 (u)Zamujasa
 (*)The thermo-electric generator, Oshan vent capture units, solar controller computers, and radiation collector controls now output a MechComp&trade; signal when they process, with "power" (e.g. 420690) and "powerfmt" (420.69kW) fields, as well as some others depending on the device. This brings them in line with the gas turbine.
