@@ -84,7 +84,6 @@
 			else
 				owncritter.set_a_intent(INTENT_HARM)
 
-			owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, M))
 
 			var/list/params = list()
@@ -213,7 +212,6 @@
 
 		owncritter.set_a_intent(INTENT_HARM)
 
-		owncritter.hud.update_intent()
 		owncritter.set_dir(get_dir(owncritter, holder.target))
 
 		var/list/params = list()
@@ -319,7 +317,6 @@
 					return ..() // try again next tick
 			if (dist <= 1)
 				owncritter.set_a_intent(INTENT_GRAB)
-				owncritter.hud.update_intent()
 				owncritter.set_dir(get_dir(owncritter, M))
 
 				var/list/params = list()
