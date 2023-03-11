@@ -1682,7 +1682,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\prox_sensor.dm"
 #include "code\obj\item\device\radio.dm"
 #include "code\obj\item\device\scanners.dm"
-#include "code\obj\item\device\shield.dm"
 #include "code\obj\item\device\studio_monitor.dm"
 #include "code\obj\item\device\timer.dm"
 #include "code\obj\item\device\transfer_valve.dm"

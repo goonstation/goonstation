@@ -173,13 +173,6 @@
 	var/reduction = 0
 	var/shielded = 0
 
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			exploprot += 0.3
-			shielded = 1
-			reduction += 1
-			break
-
 	if (src.spellshield)
 		reduction += 2
 		shielded = 1
@@ -233,9 +226,6 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 

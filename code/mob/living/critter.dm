@@ -1399,9 +1399,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 
