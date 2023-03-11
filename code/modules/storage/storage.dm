@@ -349,6 +349,8 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
+	// for storages that change icon with contents
+	src.linked_item.UpdateIcon()
 	// a mob put the item in
 	if (!istype(user))
 		return
@@ -376,6 +378,7 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
+	src.linked_item.UpdateIcon()
 	if (location?.storage && add_to_storage)
 		location.storage.add_contents(I, user)
 	else

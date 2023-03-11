@@ -22,6 +22,8 @@ This creates a very simple storage, with default parameters. More initialized va
 
 As for how storage interacts with an atom's item interaction procs, such as it's `attackby()` proc, those procs will run before any storage happens. Returning without calling the parent will prevent storage functionality, so make sure to return if you don't want something to be stored. Otherwise, you'll need to watch your code for any overridden procs to make sure nothing strange happens when storage of the item is expected.
 
+Storage datums will also try updating the atom's icon upon an item being removed from or added to the storage, so if you would like to have the atom's icon change with the number of items stored, all you will have to do is override `update_icon()`.
+
 ## When should a new storage datum type be created?
 A new storage datum type should be created when a type is needed that rewrites how adding and removing contents to a linked item works, or a significant change is needed that warrants a new type. Ex. See `/datum/storage/bible`.
 
