@@ -345,8 +345,12 @@
 			return
 
 		if (src.density)
-			for(var/obj/machinery/door/airlock/A in NewLoc)
-				A.open()
+			for (var/obj/machinery/door/door in NewLoc)
+				if (istype(door, /obj/machinery/door/poddoor))
+					continue
+				if (istype(door, /obj/machinery/door/feather) && !istype(door, /obj/machinery/door/feather/friendly))
+					continue
+				door.open()
 			return ..()
 
 		if (!src.density && !src.justdied)
