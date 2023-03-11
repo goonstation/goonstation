@@ -115,8 +115,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		var/line_shielded = FALSE
 		if(connected && active)
 			var/datum/powernet/net = src.connected_wire.get_powernet()
-			if(terminal.powernet.newload + amount <= terminal.powernet.avail)
-				terminal.powernet.newload += amount
+			if(net.newload + amount <= net.avail)
+				net.newload += amount
 				line_shielded = TRUE
 		if(!line_shielded && PCEL && active)
 			PCEL.use(src.power_usage)
