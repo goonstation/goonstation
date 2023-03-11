@@ -264,36 +264,61 @@ proc/broadcast_to_all_gangs(var/message)
 		gang.announcer_radio.set_secure_frequency("g", gang.gang_frequency)
 		gang.announcer_radio.talk_into(gang.announcer_source, messages, "g", gang.announcer_source.name, "english")
 /datum/gang
+	/// The maximum number of gang members per gang.
 	var/static/current_max_gang_members = 5
+	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
+	/// Gang names that are being used by other gangs.
 	var/static/list/used_names
+	/// Radio frequencies that are being used by other gangs.
 	var/static/list/used_frequencies
+	/// Jumpsuit items that are being used by other gangs as part of their gang uniform.
 	var/static/list/uniform_list
+	/// Mask or hat items that are being used by other gangs as part of their gang uniform.
 	var/static/list/headwear_list
 
-	var/obj/item/device/radio/headset/gang/announcer_radio
+	/// The radio source for the gang's announcer, who will announce various messages of importance over the gang's frequency.
 	var/datum/generic_radio_source/announcer_source
+	/// The radio headset that the gang's announcer will use.
+	var/obj/item/device/radio/headset/gang/announcer_radio
 
+	/// The chosen name of this gang.
 	var/gang_name = "Gang Name"
+	/// The randomly selected tag of this gang.
 	var/gang_tag = 0
+	/// The unique radio frequency that members of this gang will communicate over.
 	var/gang_frequency = 0
+	/// The chosen jumpsuit item of this gang.
 	var/obj/item/clothing/uniform = null
+	/// The chosen mask or hat item of this gang.
 	var/obj/item/clothing/headwear = null
+	/// The location of this gang's locker.
 	var/area/base = null
+	/// The various areas that this gang currently controls.
 	var/list/area/controlled_areas = list()
-	var/list/members = list()
-	var/list/gear_cooldown = list()
+	/// The mind of this gang's leader.
 	var/datum/mind/leader = null
+	/// The minds of gang members associated with this gang. Does not include the gang leader.
+	var/list/members = list()
+	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
+	var/list/gear_cooldown = list()
+	/// The gang locker of this gang.
 	var/obj/ganglocker/locker = null
-	var/spendable_points = 0						//The usable number of points that a gang has to spend with
-	var/theme = "misc"					//determines the type of items they can buy from lockers
+	/// The usable number of points that this gang has to spend with.
+	var/spendable_points = 0
+	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 
-	var/score_turf = 0					//points gained from owning turfs
-	var/score_cash = 0					//The total amount of cash a gang has deposited
-	var/score_gun = 0					//points gained from gun deposits
-	var/score_drug = 0					//points gained from drugs
-	var/score_event = 0					//points from hotzones
+	/// Points gained by this gang from owning areas.
+	var/score_turf = 0
+	/// The total quantity of cash that this gang has deposited.
+	var/score_cash = 0
+	/// Points gained by this gang from gun deposits.
+	var/score_gun = 0
+	/// Points gained by this gang from drug deposits.
+	var/score_drug = 0
+	/// Points gained by this gang from completing events.
+	var/score_event = 0
 
 	New()
 		. = ..()

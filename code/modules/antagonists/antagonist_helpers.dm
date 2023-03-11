@@ -12,12 +12,12 @@
 
 /// Returns a list of all gang datums.
 proc/get_all_gangs()
-	var/list/datum/gang/gangs = list()
+	. = list()
 
 	for (var/datum/antagonist/gang_leader/antag_datum in get_all_antagonists(ROLE_GANG_LEADER))
-		gangs += antag_datum.gang
+		. += antag_datum.gang
 
-	return gangs
+	return .
 
 /// Returns the gang datum of this mob, provided they has one. Otherwise returns false.
 /mob/proc/get_gang()

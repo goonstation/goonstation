@@ -21,7 +21,7 @@
 		for(var/datum/mind/M in src.gang.members)
 			M.current?.antagonist_overlay_refresh(TRUE, FALSE)
 
-	Del()
+	disposing()
 		src.gang.leader = null
 
 		. = ..()
