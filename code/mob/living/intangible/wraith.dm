@@ -354,7 +354,7 @@
 			return ..()
 
 		if (!src.density && !src.justdied)
-			for (var/obj/decal/cleanable/saltpile/A in NewLoc)
+			for (var/obj/decal/cleanable/saltpile/salt in NewLoc)
 				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
 				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
 				ability.doCooldown()
