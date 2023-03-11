@@ -341,117 +341,24 @@
 		return
 
 	Move(var/turf/NewLoc, direct)
-		if (loc)
-			if (!isturf(loc) && !density)
-				src.set_loc(get_turf(loc))
-		else
-			src.set_loc(locate(1,1,1))
+		if(NewLoc.x == world.maxx || NewLoc.y == world.maxy)
+			return
 
-		if(!canmove) return
+		if (src.density)
+			for(var/obj/machinery/door/airlock/A in NewLoc)
+				if(!A.welded && !A.locked && !A.operating && A.arePowerSystemsOn() && !A.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) && !(A.status & NOPOWER))
+					A.open()
+			return ..()
 
-		if(!isturf(src.loc)) src.set_loc(get_turf(src))
-
-		if (NewLoc)
-			if ((isghostrestrictedz(NewLoc.z) || ((NewLoc.z != Z_LEVEL_STATION) && (NewLoc.z != Z_LEVEL_ADVENTURE) && (NewLoc.z != 7))) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
-				OnMove()
-				return
-
-			var/mydir = get_dir(src, NewLoc)
-			var/salted = 0
-
-			if(src.density)
-				for(var/obj/machinery/door/airlock/A in NewLoc)
-					if(!A.welded && !A.locked && !A.operating && A.arePowerSystemsOn() && !A.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) && !(A.status & NOPOWER))
-						A.open()
-
-			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !src.can_enter_turf(NewLoc))
-					return
-
-			else
-				var/turf/vertical
-				var/turf/horizontal
-				var/blocked = 1
-				if (mydir & NORTH)
-					vertical = get_step(src, NORTH)
-				else
-					vertical = get_step(src, SOUTH)
-
-				if (mydir & WEST)
-					horizontal = get_step(src, WEST)
-				else
-					horizontal = get_step(src, EAST)
-
-				var/turf/oldloc = loc
-				var/horiz = FALSE
-				var/vert = FALSE
-
-				if (!src.density || src.can_enter_turf(vertical))
-					vert = TRUE
-					src.set_loc(vertical)
-					if (!src.density || src.can_enter_turf(vertical))
-						blocked = 0
-						for(var/obj/decal/cleanable/saltpile/A in vertical)
-							if (istype(A)) salted = TRUE
-							if (salted) break
-					src.set_loc(oldloc)
-
-				if (!src.density || src.can_enter_turf(horizontal))
-					horiz = TRUE
-					src.set_loc(horizontal)
-					if (!src.density || src.can_enter_turf(horizontal))
-						blocked = FALSE
-						for(var/obj/decal/cleanable/saltpile/A in horizontal)
-							if (istype(A)) salted = TRUE
-							if (salted) break
-					src.set_loc(oldloc)
-
-				if (blocked)
-					if (horiz)
-						Move(horizontal)
-						return
-					else if (vert)
-						Move(vertical)
-						return
-					return
-
-			for(var/obj/decal/cleanable/saltpile/A in NewLoc)
-				if (istype(A)) salted = TRUE
-				if (salted) break
-
-			src.set_dir(get_dir(loc, NewLoc))
-			if (src.density) // if we're corporeal we follow normal mob restrictions
-				..()
-			else // if we're in ghost mode we get to cheat
-				src.set_loc(NewLoc)
-			OnMove()
-
-			//if tile contains salt, wraith becomes corporeal
-			if (salted && !src.density && !src.justdied)
+		if (!src.density && !src.justdied)
+			for (var/obj/decal/cleanable/saltpile/A in NewLoc)
 				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
 				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
 				ability.doCooldown()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
+				break
 
-		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
-
-			return
-
-		//Z level boundary stuff
-		if((direct & NORTH) && src.y < world.maxy)
-			src.y++
-		if((direct & SOUTH) && src.y > 1)
-			src.y--
-		if((direct & EAST) && src.x < world.maxx)
-			src.x++
-		if((direct & WEST) && src.x > 1)
-			src.x--
-		OnMove()
+		return ..()
 
 	can_use_hands()
 		if (src.density) return 1
