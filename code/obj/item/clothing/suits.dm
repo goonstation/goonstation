@@ -806,7 +806,7 @@
 
 	proc/update_examine()
 		if(src.cape)
-			src.hides_from_examine = null
+			src.hides_from_examine = 0
 		else if(src.eyeholes)
 			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_EARS)
 		else
