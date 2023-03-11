@@ -1424,10 +1424,10 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
 
 	can_eat()
-		return 0
+		return FALSE
 
 	can_drink()
-		return 0
+		return FALSE
 
 	vomit()
 		return
