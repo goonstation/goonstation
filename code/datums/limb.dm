@@ -7,7 +7,8 @@
 
 /datum/limb
 	var/obj/item/parts/holder = null
-
+	///used for ON_COOLDOWN stuff
+	var/cooldowns
 	var/special_next = 0
 	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
@@ -58,6 +59,7 @@
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
@@ -70,6 +72,7 @@
 		else
 			user.disarm(target)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/grab(mob/living/target, var/mob/living/user)
 		if(target == user)
@@ -79,6 +82,7 @@
 			return
 		user.grab_other(target)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	//calls attack specials if we got em
 	//Ok look i know this isn't a true pixelaction() but it fits into the itemspecial call so i'm doin it
@@ -98,7 +102,7 @@
 			.= 0
 
 	proc/is_on_cooldown()
-		return 0
+		return GET_COOLDOWN(src, "limb_cooldown")
 
 	//alt version of disarm that shoves the target away from the user instead of trying to slap item out of hand
 	proc/shove(mob/living/target, var/mob/living/user)
@@ -405,6 +409,10 @@
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+
+
+
 
 /datum/limb/mouth/small // for cats/mice/etc
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
@@ -1431,6 +1439,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 		attack_particle(user,target)
 		if (src != target)
 			attack_twitch(src)
