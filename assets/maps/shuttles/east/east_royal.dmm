@@ -415,7 +415,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -513,7 +515,9 @@
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
 "mY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -962,10 +966,6 @@
 	dir = 1
 	},
 /area/centcom/outside)
-"wT" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom)
 "xh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -1099,7 +1099,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/centcom)
 "BD" = (
 /turf/unsimulated/floor/arrival,
@@ -1630,10 +1632,12 @@
 /area/shuttle/escape/centcom)
 "NK" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "NR" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -2358,7 +2362,7 @@ IK
 ZJ
 JY
 IV
-wT
+aQ
 vx
 nI
 Il
@@ -2371,7 +2375,7 @@ CK
 Bv
 nI
 vx
-wT
+aQ
 IV
 dC
 ZJ
@@ -2414,7 +2418,7 @@ XE
 XE
 BD
 IV
-wT
+aQ
 Ot
 nI
 oC
@@ -2427,7 +2431,7 @@ LP
 CF
 nI
 Ot
-wT
+aQ
 IV
 zo
 XE
@@ -2442,7 +2446,7 @@ iD
 iD
 BD
 IV
-wT
+aQ
 jx
 cd
 rl
@@ -2455,7 +2459,7 @@ cV
 cV
 DC
 jx
-wT
+aQ
 IV
 zo
 iD
@@ -2498,7 +2502,7 @@ aa
 rP
 sE
 IV
-wT
+aQ
 tC
 bD
 Rs
@@ -2511,7 +2515,7 @@ dF
 cY
 bD
 tC
-wT
+aQ
 IV
 Oo
 rP

@@ -5447,11 +5447,11 @@
 	name = "Locker Room"
 	})
 "aos" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/window/cubicle{
 	dir = 4;
 	opacity = 0
 	},
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -5606,11 +5606,11 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/storage/secure/closet/medical/uniforms,
 /obj/window/cubicle{
 	dir = 4;
 	opacity = 0
 	},
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -9076,7 +9076,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "azB" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -12053,7 +12053,6 @@
 	},
 /area/station/science/lobby)
 "aIS" = (
-/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -14186,7 +14185,7 @@
 	},
 /area/station/science/lobby)
 "aQj" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -16885,7 +16884,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/blair,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -40344,7 +40343,6 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/storage/secure/closet/research/uniform,
 /obj/cable{
 	icon_state = "2-8"
 	},

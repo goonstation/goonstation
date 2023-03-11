@@ -865,6 +865,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
 		return
 	src.a_intent = intent
+	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
+		src.equipped().intent_switch_trigger(src)
 
 // medals
 /mob/proc/revoke_medal(title, debug)
@@ -2011,7 +2013,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(get_turf(src))
+			new /mob/living/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
@@ -2461,7 +2463,9 @@
 /mob/proc/getAbility(var/abilityType)
 	return abilityHolder?.getAbility(abilityType)
 
+
 /mob/proc/full_heal()
+	SHOULD_CALL_PARENT(TRUE)
 	var/mob/ghost = find_ghost_by_key(src.last_ckey)
 	if(ghost)
 		ghost.mind.transfer_to(src)
