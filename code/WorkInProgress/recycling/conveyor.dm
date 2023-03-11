@@ -808,11 +808,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 			if(PN)
 				var/power_to_use = 0
 
-				power_to_use = min ( maxdrain, PN.avail )
+				var/free_power = PN.newload - PN.avail
+				power_to_use = min ( maxdrain, freepower )
 				speedup = (power_to_use/maxdrain) * speedup_max
 
-				if (PN.avail > maxdrain)
-					power_to_use = min ( maxdrain+bonusdrain, PN.avail )
+				if (free_power > maxdrain)
+					power_to_use = min ( maxdrain+bonusdrain, free_power )
 					speedup += (power_to_use / bonusdrain ) * speedup_bonus
 
 				PN.newload += power_to_use
