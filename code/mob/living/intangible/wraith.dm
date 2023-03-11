@@ -341,7 +341,7 @@
 		return
 
 	Move(var/turf/NewLoc, direct)
-		if(NewLoc.x == world.maxx || NewLoc.y == world.maxy)
+		if (NewLoc.x == world.maxx || NewLoc.y == world.maxy)
 			return
 
 		if (src.density)
