@@ -2636,7 +2636,7 @@
 	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
-	density = 1
+	density = 0
 	var/spooky = FALSE
 
 	New()
