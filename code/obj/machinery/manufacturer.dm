@@ -2231,6 +2231,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/multitool,
+		/datum/manufacture/t_scanner,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
 		/datum/manufacture/rods2,
