@@ -351,8 +351,10 @@
 			qdel(O)
 
 /obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal?.powernet)
-		terminal.powernet.newload += amount
+	if (terminal?.powernet)
+		if(terminal.powernet.newload + amount <= terminal.powernet.avail)
+			terminal.powernet.newload += amount
+			. = TRUE
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	//only call stop_firing() if output setting is hire than charge, and if we are actually firing

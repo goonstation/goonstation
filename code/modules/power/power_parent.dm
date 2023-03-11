@@ -51,7 +51,9 @@
 #endif
 
 /obj/machinery/power/proc/add_load(var/amount)
-	powernet?.newload += amount
+	if(powernet.newload + amount <= powernet.avail)
+		powernet.newload += amount
+		. = TRUE
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
@@ -364,10 +366,6 @@ var/makingpowernetssince = 0
 	avail = newavail
 	newavail = 0
 
-	viewload = 0.8*viewload + 0.2*load
-
-	viewload = round(viewload)
-
 	var/numapc = 0
 
 	if (!nodes)
@@ -377,13 +375,25 @@ var/makingpowernetssince = 0
 		if( istype( term.master, /obj/machinery/power/apc ) )
 			numapc++
 
+	netexcess = avail - load
+	var/recharge_sum = 0
+
 	if(numapc)
 		perapc = avail/numapc
-
-	netexcess = avail - load
+		apc_charge_share = netexcess/numapc
 
 	if(netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
+		for(var/obj/machinery/power/terminal/term in nodes)		// go to each APC in the network through its terminal
+			if( istype( term.master, /obj/machinery/power/apc ) )
+				var/obj/machinery/power/apc/netapc = term.master
+				var/expended = netapc.accept_excess()				// and give them first share of excess power,
+				if(expended) recharge_sum += expended				// letting the power computer know it's appreciated
+
+		for(var/obj/machinery/power/smes/S in nodes)			// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
 			SW.restore()				//Restore some of the power that was used.
+
+	viewload = 0.8*viewload + (0.2*load + 0.2*recharge_sum)
+
+	viewload = round(viewload)

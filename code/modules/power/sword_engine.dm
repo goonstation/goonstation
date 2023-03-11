@@ -205,8 +205,9 @@
 		if (charging)
 			if (excess >= 0)									//If there's power available, attempts to charge.
 				load = min(capacity-charge, chargelevel)		//Charges at set rate, limited to the spare capacity.
-				charge += load									//Increases the charge.
-				add_load(load)									//Adds the load to the terminal side network.
+				if(add_load(load))									//Attempt to add load to network...
+					charge += load								//and increase the charge if successful.
+
 			else												//If there is not enough capacity...
 				charging = 0									//...it stops charging.
 				chargecount  = 0
@@ -272,9 +273,10 @@
 
 
 /obj/machinery/power/sword_engine/add_load(var/amount)
-	if (terminal && terminal.powernet)
-		terminal.powernet.newload += amount
-
+	if (terminal?.powernet)
+		if(terminal.powernet.newload + amount <= terminal.powernet.avail)
+			terminal.powernet.newload += amount
+			. = TRUE
 
 /obj/machinery/power/sword_engine/ui_state(mob/user)
 	return tgui_default_state

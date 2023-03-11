@@ -60,6 +60,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
+	var/last_expend = 0 //! Keeps track of the last expenditure of cell power, so the recharge procedure can determine if it's reaching a net positive
 	var/main_status = 0
 	var/light_consumption = 0
 	var/equip_consumption = 0
@@ -1142,7 +1143,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(terminal?.powernet && !circuit_disabled)
-		terminal.powernet.newload += amount
+		if(terminal.powernet.newload + amount <= terminal.powernet.avail)
+			terminal.powernet.newload += amount
+			. = TRUE
 
 /obj/machinery/power/apc/avail()
 	if(terminal && !circuit_disabled)
@@ -1199,18 +1202,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/last_en = environ
 	var/last_ch = charging
 
-	var/excess = surplus()
-
 	if(!src.avail())
 		main_status = 0
-	else if(excess < 0)
+	else if(!(terminal?.powernet.apc_charge_share))
 		main_status = 1
 	else
 		main_status = 2
-
-	var/perapc = 0
-	if(terminal?.powernet)
-		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
 		SPAWN(0)
@@ -1221,47 +1218,45 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	if(cell && !shorted)
 
-		// draw power from cell as before
+		// draw power from cell
 
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
+		last_expend = cellused/CELLRATE
 
 		// current status: cell has had this update's power drawn
+		// next step: charge the load against available power
 
-		if(excess > 0 || perapc > lastused_total)
-			// if there is excess power (i.e. more than enough for all apcs?)
-			// OR the amount of power per APC is more than we needed,
-			// refund the cell all that we used, and apply that load to the net instead
+		// cells above 80% charge will leave half of their recharging to discretionary charging from netexcess
+		// this plays nicely with self-charging cells, and allows prioritization of cells that have a higher draw
+		if(cell.charge > (cell.maxcharge * 0.8))
+			cellused *= 0.5
+
+		// attempt to fully cover the cell demand
+		if(add_load(cellused/CELLRATE))
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			last_expend -= cellused/CELLRATE
 
-			// current status: cell has been fully refunded, power taken from grid
-			// don't pop a power popup here -- we will do it in charging later
-
+		// if this fails, charge however much is left, or fall over and die otherwise
 		else
-			// no excess AND the perapc allotment is less than what we need, total
-
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)
+			var/draw_portion = terminal?.powernet.avail - terminal?.powernet.newload
+			if(!add_load(draw_portion))
+				draw_portion = 0
+			if( (cell.charge/CELLRATE) + draw_portion >= lastused_total )
 				// do we have enough power in the cell + apc allotment to run?
 
-				// with the above "drain the apc immediately"
-				// cell charge = (per apc + charge) - drain
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				// then take the entire allotment from the grid
-				add_load(perapc)
-				// and turn off charging
-				charging = 0
+				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * draw_portion) //charge as much as we can
+				last_expend -= draw_portion
 
-				// status: per-apc allotment is empty and we recharged the cell
+				// status: core allotment is empty and we recharged the cell
 				// we can pop a power usage change here: the total we couldn't recharge
 				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = -(lastused_total - perapc), channel = -1)
+					new /obj/maptext_junk/power(get_turf(src), change = -(lastused_total - draw_portion), channel = -1)
 
 			else
 				// not enough power available to run the last tick!
 				// we are 100% out of power.
 				charging = 0
-				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
 				lighting = autoset(lighting, 0)
@@ -1270,50 +1265,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		// set channels depending on how much charge we have left
 		check_channel_thresholds()
 
-		// now trickle-charge the cell
-
-		if(chargemode && charging == 1 && operating)
-			if(excess > 0 || perapc > 0) // check to make sure we have a source of charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = ch / CELLRATE, channel = -1)
-
-			else
-				charging = 0		// stop charging
-				chargecount = 0
-
-		// show cell as fully charged if so
-
-		if(cell.charge >= cell.maxcharge)
-			charging = 2
-		else if (charging == 2)
-			charging = 0 // we lost power somehow; move to failure mode
-
-		if(chargemode)
-			// require that we have perapc power for a few cycles before we start actually charging
-			if(!charging)
-				if(perapc)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 3)
-
-					chargecount = 0
-					charging = 1
-
-		else // chargemode off
-			charging = 0
-			chargecount = 0
-
 	else // no cell, switch everything off
 
 		charging = 0
-		chargecount = 0
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
@@ -1325,6 +1279,34 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		UpdateIcon()
 		update()
 
+
+/obj/machinery/power/apc/proc/accept_excess()
+	var/last_ch = charging
+	if(cell && !shorted && chargemode)
+		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
+			var/influx = terminal?.powernet.apc_charge_share
+			// Maximum charge granted is equal to 1/X (where X is the number of APCs) times the powernet excess.
+			// This is capped by cell capacity, or the charge rate cap (whichever is lowest).
+			if(influx)
+				if(influx >= last_expend) //only outwardly indicate charging if you're turning a net positive on power
+					charging = 1
+				else
+					charging = 0
+				var/charge_to_add = min(influx*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
+				cell.give(charge_to_add) // actually recharge the cell
+				. = charge_to_add / CELLRATE
+
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
+		else
+			charging = 2	// stop charging and report full
+
+	else // chargemode off
+		charging = 0
+
+	if(last_ch != charging)
+		UpdateIcon()
+		update()
 
 // set channels depending on how much charge we have left
 /obj/machinery/power/apc/proc/check_channel_thresholds()
