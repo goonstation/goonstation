@@ -346,8 +346,7 @@
 
 		if (src.density)
 			for(var/obj/machinery/door/airlock/A in NewLoc)
-				if(!A.welded && !A.locked && !A.operating && A.arePowerSystemsOn() && !A.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) && !(A.status & NOPOWER))
-					A.open()
+				A.open()
 			return ..()
 
 		if (!src.density && !src.justdied)
