@@ -144,7 +144,7 @@
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && prob(20) && !is_incapacitated(target))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
-		if (!frenzy.disabled && frenzy.cooldowncheck() && (prob(40) || is_incapcitated(target)))
+		if (!frenzy.disabled && frenzy.cooldowncheck() && (prob(40) || is_incapacitated(target)))
 			frenzy.handleCast(target)
 		else if (issilicon(target))
 			fuck_up_silicons(target)
