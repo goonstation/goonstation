@@ -122,7 +122,7 @@
 		//Foreach goto(19)
 
 	if (src.status)
-		src.part1.armed = 0
+		src.part1.armed = FALSE
 		src.c_state(0)
 		if (src.force_dud == 1)
 			src.bomb_logs(usr, src, "proximity", 0, 1)
@@ -130,7 +130,7 @@
 		src.part3.ignite()
 	else
 		if (!src.status && src.force_dud == 0)
-			src.part1.armed = 0
+			src.part1.armed = FALSE
 			src.c_state(0)
 			src.part3.release()
 

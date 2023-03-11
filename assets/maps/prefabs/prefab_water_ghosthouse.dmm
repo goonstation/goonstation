@@ -304,7 +304,7 @@
 	},
 /area/prefab/ghost_house)
 "bh" = (
-/obj/critter/aberration,
+/mob/living/critter/aberration,
 /turf/unsimulated/floor/void,
 /area/prefab/ghost_house)
 "bi" = (
@@ -532,7 +532,7 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/critter/aberration,
+/mob/living/critter/aberration,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "bZ" = (

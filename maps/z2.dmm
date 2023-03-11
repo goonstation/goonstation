@@ -14229,7 +14229,6 @@
 "aUv" = (
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	dir = 4;
 	locked = 1;
 	name = "Upper Level Access";
@@ -15005,7 +15004,6 @@
 "aWz" = (
 /obj/machinery/door/airlock/pyro/external{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	dir = 4;
 	locked = 1;
 	secondsElectrified = -1
@@ -31369,7 +31367,6 @@
 "bSt" = (
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	dir = 4;
 	locked = 1;
 	name = "Lower Level Access";
@@ -33086,7 +33083,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bYC" = (
-/obj/critter/aberration,
+/mob/living/critter/aberration,
 /turf/unsimulated/floor/plating/damaged3,
 /area/crunch)
 "bYD" = (
@@ -35317,7 +35314,6 @@
 	},
 /obj/machinery/door/airlock/pyro/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	dir = 4;
 	locked = 1;
 	name = "Hazardous Materials Storage";
@@ -69535,6 +69531,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
+"irg" = (
+/obj/critter/meatslinky/alfredo{
+	health = 999999
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/wire)
 "irq" = (
 /obj/decoration/decorativeplant/plant6,
 /obj/railing/velvet,
@@ -153371,7 +153373,7 @@ vij
 wel
 dxP
 dxP
-dxP
+irg
 wel
 dxC
 dyn
