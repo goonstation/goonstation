@@ -541,16 +541,6 @@
 			return 0
 		return 1
 
-	proc/can_enter_turf(turf/T)
-		if (!T)
-			return FALSE
-		if (T.density)
-			return FALSE
-		for (var/atom/A as anything in T)
-			if (A.density && !ismob(A))
-				return FALSE
-		return TRUE
-
 //////////////
 // Subtypes
 //////////////
