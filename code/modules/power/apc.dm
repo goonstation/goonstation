@@ -1204,7 +1204,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	if(!src.avail())
 		main_status = 0
-	else if(!(terminal?.powernet.apc_charge_share))
+	else if(!(terminal?.powernet?.apc_charge_share))
 		main_status = 1
 	else
 		main_status = 2
@@ -1239,7 +1239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 		// if this fails, charge however much is left, or fall over and die otherwise
 		else
-			var/draw_portion = terminal?.powernet.avail - terminal?.powernet.newload
+			var/draw_portion = terminal?.powernet?.avail - terminal?.powernet?.newload
 			if(!add_load(draw_portion))
 				draw_portion = 0
 			if( (cell.charge/CELLRATE) + draw_portion >= lastused_total )
@@ -1284,7 +1284,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/last_ch = charging
 	if(cell && !shorted && chargemode)
 		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
-			var/influx = terminal?.powernet.apc_charge_share
+			var/influx = terminal?.powernet?.apc_charge_share
 			// Maximum charge granted is equal to 1/X (where X is the number of APCs) times the powernet excess.
 			// This is capped by cell capacity, or the charge rate cap (whichever is lowest).
 			if(influx)

@@ -252,7 +252,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 						yield_to_cell = src.intcap.maxcharge - src.intcap.charge
 						final_draw = yield_to_cell * 500
 					//double check that we have the power we're supposed to, then expend it
-					if(powernet.newload + amount <= powernet.avail)
+					if(powernet.newload + final_draw <= powernet.avail)
 						src.intcap.give(yield_to_cell)
 						powernet.newload += final_draw
 			else
