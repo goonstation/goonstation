@@ -79,7 +79,7 @@ TYPEINFO(/obj/machinery/cell_charger)
 		return
 
 	var/added = charging.give(src.chargerate * mult)
-	use_power(src.chargerate)
+	use_power(added)
 
 	src.UpdateIcon()
 
