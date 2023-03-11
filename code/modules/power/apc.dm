@@ -1273,7 +1273,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		// now trickle-charge the cell
 
 		if(chargemode && charging == 1 && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
+			if(excess > 0 || perapc > 0) // check to make sure we have a source of charge
 				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
 				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
 				add_load(ch) // Removes the power we're taking from the grid
@@ -1294,15 +1294,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			charging = 0 // we lost power somehow; move to failure mode
 
 		if(chargemode)
-			// require that we have sufficient power for 10 cycles before we start actually charging
-			// TODO: consider not doing this and just trickle charging?
+			// require that we have perapc power for a few cycles before we start actually charging
 			if(!charging)
-				if(excess > cell.maxcharge*CHARGELEVEL)
+				if(perapc)
 					chargecount++
 				else
 					chargecount = 0
 
-				if(chargecount == 10)
+				if(chargecount == 3)
 
 					chargecount = 0
 					charging = 1
