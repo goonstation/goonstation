@@ -144,7 +144,7 @@
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && prob(20) && !is_incapacitated(target))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
-		if (!frenzy.disabled && frenzy.cooldowncheck() && prob(40))
+		if (!frenzy.disabled && frenzy.cooldowncheck() && (prob(40) || is_incapcitated(target)))
 			frenzy.handleCast(target)
 		else if (issilicon(target))
 			fuck_up_silicons(target)
@@ -172,7 +172,7 @@
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		return can_act(src,TRUE) && (!frenzy.disabled || !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
-	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
+	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
 			var/mob/living/silicon/robot/BORG = silicon
 			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
