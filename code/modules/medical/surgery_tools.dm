@@ -626,7 +626,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
 
-
 	disposing()
 		parent = null
 		..()
@@ -658,6 +657,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (defib)
 			qdel(defib)
 			defib = null
+		..()
+
+	process()
+		handle_move(src.defib.loc)
 		..()
 
 	update_icon()
