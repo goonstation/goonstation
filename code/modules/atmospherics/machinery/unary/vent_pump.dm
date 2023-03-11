@@ -189,3 +189,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/security
 	name = "High-Volume Air Vent (Security)"
 	frequency = 1274
+
+#undef SIPHONING
+#undef RELEASING
+#undef BOUND_EXTERNAL
+#undef BOUND_INTERNAL
+#undef BOUND_BOTH
