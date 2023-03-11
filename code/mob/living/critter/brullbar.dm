@@ -18,6 +18,9 @@
 	health_brute_vuln = 0.6
 	health_burn = 50
 	health_burn_vuln = 1.3
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
@@ -26,7 +29,6 @@
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
-			retaliate()
 			return ..()
 		if (issawingtool(W))
 			var/datum/handHolder/HH
@@ -43,11 +45,6 @@
 					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
-
-	attack_hand(var/mob/user as mob)
-		if (user.a_intent != INTENT_HELP) // pets only or you get the claws, but you would get those anyway so...
-			retaliate(user)
-		..()
 
 	on_pet()
 		if (..())
@@ -174,15 +171,6 @@
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		return can_act(src,TRUE) && (!frenzy.disabled || !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
-
-	proc/retaliate(var/mob/living/attacker) // somewhat stolen from sawfly behaviour, no beating on a confused brullbar
-		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!istype(attacker, /mob/living/critter/brullbar) || (attacker.health < 0))
-			if (prob(50) && !tackle.disabled && tackle.cooldowncheck() && !isdead(src))
-				src.visible_message("<span class='alert'><b>[src] lunges at [attacker]!</b></span>")
-				playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 50, 1)
-				tackle.handleCast(attacker)
-				ai.interrupt()
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from orginal object critter behaviour scream
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
