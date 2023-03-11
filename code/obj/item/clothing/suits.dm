@@ -810,7 +810,7 @@
 		else if(src.eyeholes)
 			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_EARS)
 		else
-			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK)
+			src.hides_from_examine = initial(src.hides_from_examine)
 
 /obj/item/clothing/suit/bedsheet/red
 	icon_state = "bedsheet-red"
