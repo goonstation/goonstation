@@ -3,7 +3,7 @@
 /obj/item/cable_coil/_color/name = ""+#_color+" cable coil";\
 /obj/item/cable_coil/_color/base_name = ""+#_color+" cable coil";\
 /obj/item/cable_coil/_color/stack_type = /obj/item/cable_coil/_color;\
-/obj/item/cable_coil/_color/spawn_insulator_name = ""+#_color+"rubber";\
+/obj/item/cable_coil/_color/spawn_insulator_name = ""+#_color+" synthrubber";\
 /obj/item/cable_coil/_color/cable_obj_type = /obj/cable/_color;\
 /obj/item/cable_coil/_color/cut;\
 /obj/item/cable_coil/_color/cut/icon_state = "coil2";\
@@ -14,12 +14,12 @@
 /obj/cable/_color;\
 /obj/cable/_color/name = ""+#_color+" power cable";\
 /obj/cable/_color/color = _hexcolor;\
-/obj/cable/_color/insulator_default = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/_color;\
-/datum/material/fabric/synthrubber/_color/mat_id = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/_color/name = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
-/datum/material/fabric/synthrubber/_color/color = _hexcolor;\
+/obj/cable/_color/insulator_default = ""+#_color+" synthrubber";\
+/datum/material/rubber/synthrubber/_color;\
+/datum/material/rubber/synthrubber/_color/mat_id = ""+#_color+" synthrubber";\
+/datum/material/rubber/synthrubber/_color/name = ""+#_color+" synthrubber";\
+/datum/material/rubber/synthrubber/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
+/datum/material/rubber/synthrubber/_color/color = _hexcolor;\
 /obj/item/storage/box/cablesbox/_color;\
 /obj/item/storage/box/cablesbox/_color/name = ""+"electrical cables storage ("+#_color+")";\
 /obj/item/storage/box/cablesbox/_color/spawn_contents = list(/obj/item/cable_coil/_color = 7);\

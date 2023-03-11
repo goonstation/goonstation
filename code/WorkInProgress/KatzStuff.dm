@@ -167,3 +167,44 @@ TYPEINFO(/datum/component/mimic_item)
 		if (!gibbed)
 			ghostize()
 			qdel(src)
+
+// Code totally stolen from Zamu
+/obj/maptext_junk/countdown_timer
+	mouse_opacity = 0
+	anchored = 2
+	density = 0
+	opacity = 0
+	icon = null
+	plane = PLANE_HUD - 1
+	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+	maptext = ""
+	var/countdown_time = 60
+
+	two
+		countdown_time = 120
+	six
+		countdown_time = 300
+	ten
+		countdown_time = 600
+
+	New()
+		..()
+		src.pixel_y = 10
+		src.maptext_x = -20
+		src.maptext_width += 40
+		SPAWN(0)
+			countdown()
+
+	proc/countdown()
+		do
+			sleep(1 SECOND)
+			countdown_time--
+			switch (countdown_time)
+				if (60 to INFINITY)
+					maptext = "<span class='vb c ol ps2p'>[round(countdown_time / 60)]:[add_zero(num2text(countdown_time % 60), 2)]</span>"
+				if (10 to 60)
+					maptext = "<span class='vb c ol ps2p'>[round(countdown_time)]</span>"
+				else
+					maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(countdown_time)]</span>"
+
+		while (countdown_time > 0 && !src.qdeled)

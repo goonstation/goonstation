@@ -1684,7 +1684,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
-	power_usage = 200
+	power_usage = 50
 	machine_registry_idx = MACHINES_PRINTERS
 	var/print_id = null //Just like databanks.
 	var/temp_msg = "PRINTER OK" //Appears in the interface window.
@@ -2039,6 +2039,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				return 0
 
 			sheets_remaining--
+			use_power(200)
 
 			flick("printer-printing",src)
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
@@ -2168,7 +2169,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	setup_drive_size = 16
 	setup_drive_type = /obj/item/disk/data/bomb_tester
 	setup_accept_tapes = 0
-	power_usage = 200
+	power_usage = 50
 
 	New()
 		..()
@@ -2223,7 +2224,8 @@ TYPEINFO(/obj/machinery/networked/printer)
 			scanned_thing = W
 			power_change()
 			SPAWN(0)
-				scan_document()
+				if(!scan_document())
+					use_power(200)
 			src.updateUsrDialog()
 
 		else
@@ -2755,7 +2757,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
+		if (istype(AM, /obj/beam) || istype(AM, /mob/living/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
 		SPAWN( 0 )
 			src.hit(AM)
@@ -3266,7 +3268,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+		if (istype(AM, /obj/beam) || istype(AM, /mob/living/critter/aberration))
 			return
 		SPAWN( 0 )
 			src.hit(AM)

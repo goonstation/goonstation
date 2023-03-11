@@ -12,7 +12,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	var/fuel = 0
 	var/last_fuel_state = 0
 	var/maxfuel = 1000
-	var/genrate = 5000
+	var/genrate = 20000
 	var/stoked = 0 // engine ungrump
 	custom_suicide = 1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER

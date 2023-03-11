@@ -1009,34 +1009,28 @@
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
 
+			if (damage > 1)
+				if (isrevolutionary(owner))	//attacker is rev, all heads who see the attack get mutiny buff
+					for (var/datum/mind/M in ticker?.mode?.get_living_heads())
+						if (M.current)
+							if (GET_DIST(owner,M.current) <= 7)
+								if (owner in viewers(7,M.current))
+									M.current.changeStatus("mutiny", 10 SECONDS)
 
-			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-				var/datum/game_mode/revolution/R = ticker.mode
-
-				if (damage > 1)
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
-						for (var/datum/mind/M in R.get_living_heads())
-							if (M.current)
-								if (GET_DIST(owner,M.current) <= 7)
-									if (owner in viewers(7,M.current))
-										M.current.changeStatus("mutiny", 10 SECONDS)
-
-				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
-						if (R.add_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+			if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
+				var/mob/living/carbon/human/H = target
+				if (H.can_be_converted_to_the_revolution())
+					if (isrevolutionary(owner))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY))
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 					else
-						if (R.remove_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-									M.current.delStatus("derevving") //Make sure they lose this status upon completion
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+						if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
+							H.delStatus("derevving") //Make sure they lose this status upon completion
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 		clear(null)
 
 /datum/attackResults/disarm
@@ -1299,24 +1293,27 @@
 		if (istype(gloves, /obj/item/clothing/gloves/boxing))
 			sims.affectMotive("fun", 2.5)
 
-//return 1 on successful dodge or parry, 0 on fail
-/mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
-	.= 0
-	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
+/// return 1 on successful dodge or parry, 0 on fail
+/mob/proc/parry_or_dodge(mob/M, obj/item/W)
+	return 0
+
+/mob/living/parry_or_dodge(mob/M, obj/item/W)
+	if(!(M && src.stance == "defensive" && !src.stat))
+		return ..()
+	if(iswerewolf(src) && prob(60) || !iswerewolf(src) && prob(40))//dodge more likely, we're more agile than macho
 		src.set_dir(get_dir(src, M))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
-		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
 		else
-			src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			if (prob(50))
 				step_away(M, src, 15)
 			else
+				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
-		.= 1
+		return 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))

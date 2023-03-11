@@ -301,7 +301,7 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer)
+		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
 			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
@@ -370,7 +370,7 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer)
+		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 
@@ -1010,6 +1010,8 @@ TYPEINFO_NEW(/obj/table/glass)
 			return ..()
 
 	harm_slam(mob/user, mob/victim)
+		if(src.glass_broken != GLASS_INTACT)
+			return ..()
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")

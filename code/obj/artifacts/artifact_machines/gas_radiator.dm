@@ -67,10 +67,20 @@
 		gas_amount = rand(50 MOLES, 200 MOLES)
 
 		// text
-		if (gas_temp > 310 KELVIN)
-			temp_text = "hot"
-		else if (gas_temp < 310 KELVIN)
-			temp_text = "cold"
+		switch (gas_temp - T0C)
+			// Give a bit more of a hint as to the temperature
+			// values are fairly arbitrary
+			if (-INFINITY to -40)
+				temp_text = "very cold"
+			if (-40 to 10)
+				temp_text = "cold"
+			if (10 to 30) // roughly "around room tempeature"
+				temp_text = "mild"
+			if (30 to 60)
+				temp_text = "warm"
+			if (60 to INFINITY)
+				temp_text = "very hot"
+
 
 		src.activ_text = "begins to emit [temp_text] gas!"
 		src.deact_text = "stops emitting [temp_text] gas."
@@ -78,7 +88,7 @@
 	effect_activate(obj/O)
 		if(..())
 			return
-		ArtifactLogs(usr, null, O, "activated", "making it radiate [temp_text] [gas_type]", 1)
+		ArtifactLogs(usr, null, O, "activated", "making it radiate [temp_text] ([gas_temp - T0C]&deg;C) [gas_type]", 1)
 
 	effect_process(var/obj/O)
 		if (..())
