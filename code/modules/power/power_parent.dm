@@ -367,6 +367,7 @@ var/makingpowernetssince = 0
 	newavail = 0
 
 	var/numapc = 0
+	var/non_full_apcs = 0
 
 	if (!nodes)
 		nodes = list()
@@ -374,22 +375,26 @@ var/makingpowernetssince = 0
 	for(var/obj/machinery/power/terminal/term in nodes)
 		if( istype( term.master, /obj/machinery/power/apc ) )
 			numapc++
+			var/obj/machinery/power/apc/check_apc = term.master
+			if(check_apc.charging != 2)
+				non_full_apcs++
 
 	netexcess = avail - load
 	var/recharge_sum = 0
 
 	if(numapc)
 		perapc = avail/numapc
-		apc_charge_share = netexcess/numapc
+
+	apc_charge_share = netexcess / max(1,non_full_apcs)
 
 	if(netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/terminal/term in nodes)		// go to each APC in the network through its terminal
+		for(var/obj/machinery/power/terminal/term in nodes)					// go to each APC in the network through its terminal
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				var/obj/machinery/power/apc/netapc = term.master
-				var/expended = netapc.accept_excess()				// and give them first share of excess power,
+				var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of excess power,
 				if(expended)
-					netexcess -= expended							// subtracting it from netexcess
-					recharge_sum += expended						// and letting the power computer know it's appreciated
+					netexcess -= expended												// subtracting it from netexcess
+					recharge_sum += expended											// and letting the power computer know it's appreciated
 
 		for(var/obj/machinery/power/smes/S in nodes)			// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used

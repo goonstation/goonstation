@@ -1280,36 +1280,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		update()
 
 
-/obj/machinery/power/apc/proc/accept_excess()
+/obj/machinery/power/apc/proc/accept_excess(var/allocated_excess)
 	var/last_ch = charging
 	if(cell && !shorted && chargemode)
 		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
-			var/influx = terminal?.powernet?.apc_charge_share
-			// Maximum charge granted is equal to 1/X (where X is the number of APCs) times the powernet excess.
-			// This is capped by cell capacity, or the charge rate cap (whichever is lowest).
-			if(influx)
-				if(influx >= last_expend) //only outwardly indicate charging if you're turning a net positive on power
-					charging = 1
-				else
-					charging = 0
+			if(allocated_excess >= last_expend) //only outwardly indicate charging if you're turning a net positive on power
+				charging = 1
+			else
+				charging = 0
 
-				//cells above 80% charge defer half of their load as optional;
-				//this keeps that load from counting against charge rate cap
-				var/cap_offset = 0
-				if(cell.charge > (cell.maxcharge * 0.8))
-					cap_offset = last_expend
+			//cells above 80% charge defer half of their load as optional;
+			//this keeps that load from counting against charge rate cap
+			var/cap_offset = 0
+			if(cell.charge > (cell.maxcharge * 0.8))
+				cap_offset = last_expend*CELLRATE
 
-				//determine how much charge we can (or should) give the cell
-				var/charge_to_add = min(influx*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL) + cap_offset)
-				//then apply that charge
-				cell.give(charge_to_add)
+			//determine how much charge we can (or should) give the cell
+			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL) + cap_offset)
+			//then apply that charge
+			cell.give(charge_to_add)
 
-				if(cell.charge >= cell.maxcharge) charging = 2 // capped off for this tick? report fully charged
+			if(cell.charge >= cell.maxcharge) charging = 2 // capped off for this tick? report fully charged
 
-				. = charge_to_add / CELLRATE // return the amount of consumed power for subtraction from netexcess
+			. = charge_to_add / CELLRATE // return the amount of consumed power for subtraction from netexcess
 
-				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
 		else
 			charging = 2	// didn't need to charge but power is still good. report fully charged
 
