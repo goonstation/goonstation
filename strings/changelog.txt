@@ -1,4 +1,6 @@
-
+(t)sun mar 12 23
+(u)LeahTheTech
+(+)Added a custom suicide to bladed gloves.
 (t)sat mar 11 23
 (u)LeahTheTech
 (+)The flock relay now has visual feedback upon being damaged.
