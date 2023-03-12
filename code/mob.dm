@@ -96,6 +96,7 @@
 	var/charges = 0
 	var/urine = 0
 	var/nutrition = 100
+	var/eat_count = 0 // how much they have eaten recently
 	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
