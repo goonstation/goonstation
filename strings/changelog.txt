@@ -5,6 +5,9 @@
 (e)🗺⚖⚙|A-Mapping, C-Balance, A-Internal
 (+)Nadir's maximum rated occupancy has increased to 70.
 (u)Zamujasa
+(*)Hydroponics trays now output slightly more useful signals over the radio.
+(*)Hydroponics trays output their radio signals over MechComp as well.
+(*)Hydroponics trays have a new "scan plant" input that gives you the plant's stats and reagent levels.
 (+)Microphone component show-source now uses a more signal-y format, similarly to the radio scanner component.
 (u)LeahTheTech
 (+)Added a custom suicide to bladed gloves.
