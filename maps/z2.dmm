@@ -69480,6 +69480,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
+"irg" = (
+/obj/critter/meatslinky/alfredo{
+	health = 999999
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/wire)
 "irq" = (
 /obj/decoration/decorativeplant/plant6,
 /obj/railing/velvet,
@@ -153363,7 +153369,7 @@ vij
 wel
 dxP
 dxP
-dxP
+irg
 wel
 dxC
 dyn

@@ -2500,11 +2500,16 @@
 		var/message = msg[2]
 		if(lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message), no_fucking_autoparse = TRUE)
+		// previously used "no_fucking_autoparse = TRUE", but not sure why
+		// this ended up stripping even "normal" characters like comma, quotes
+		// and other stuff said in common messages; the radio scanner component
+		// doesn't do it either, so .. ????
+		message = strip_html(html_decode(message))
 		var/heardname = M.name
 		if(real_name)
 			heardname = real_name
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "[heardname] : [message]":"[message]")
+		// changed to be in typical signal format to match the radio one
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "name=[heardname]&message=[message]":"[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
@@ -2636,7 +2641,7 @@
 	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
-	density = 1
+	density = 0
 	var/spooky = FALSE
 
 	New()
