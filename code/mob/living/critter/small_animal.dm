@@ -1947,9 +1947,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return null
 
 	specific_emote_type(var/act)
-		switch (act)
-			if ("scream","hiss", "snip", "snap")
-				return 2
+		if(act in list("scream", "hiss", "snip", "snap"))
+			return 2
 		return ..()
 
 	critter_attack(var/mob/target)
