@@ -1,4 +1,6 @@
 (t)sun mar 12 23
+(u)Zamujasa
+(+)Microphone component show-source now uses a more signal-y format, similarly to the radio scanner component.
 (u)LeahTheTech
 (+)Added a custom suicide to bladed gloves.
 (t)sat mar 11 23
