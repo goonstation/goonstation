@@ -215,9 +215,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		. = ..()
 
 	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
-		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+2))
+		src.set_hand(2)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
 
 	can_critter_eat()
 		src.active_hand = 2 // mouth hand
@@ -247,8 +248,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			. += C
 
 	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		..()
 		if(prob(30) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!H.clothing_protects_from_chems())
