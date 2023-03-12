@@ -1296,7 +1296,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/can_critter_attack()
 		var/datum/handHolder/HH = get_active_hand()
 		if(HH?.limb)
-			return !HH.limb.is_on_cooldown() //if we have limb cooldowns, use that, otherwise use can_act()
+			return !HH.limb.is_on_cooldown() && can_act(src,TRUE) //if we have limb cooldowns, use that, otherwise use can_act()
 		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.

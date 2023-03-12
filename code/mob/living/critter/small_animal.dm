@@ -215,9 +215,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		. = ..()
 
 	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
-		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+2))
+		src.set_hand(2)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
 
 	can_critter_eat()
 		src.active_hand = 2 // mouth hand
@@ -247,8 +248,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			. += C
 
 	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		..()
 		if(prob(30) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!H.clothing_protects_from_chems())
@@ -515,8 +515,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!</span>")
 				SPAWN(0)
 					while (iteration <= attackCount && (get_dist(src, target) <= 1))
-						random_brute_damage(target, src.attack_damage + 2, 1)
-						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
+						src.set_hand(1) //claws
+						src.set_a_intent(INTENT_HARM)
+						src.hand_attack(target)
 						iteration++
 						sleep(0.3 SECONDS)
 			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
@@ -525,13 +526,13 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				pounce.handleCast(target)
 				return
 			if (prob(50))
-				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target]!</span>", "<span class='combat'>You pounce on [target]!</span>")
-				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-				random_brute_damage(target, src.attack_damage, 1)
+				src.set_hand(2) //mouth
+				src.set_a_intent(INTENT_HARM)
+				src.hand_attack(target)
 			else
-				src.visible_message("<span class='combat'><B>[src]</B> scratches [target]!</span>", "<span class='combat'>You scratch on [target]!</span>")
-				playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, -1)
-				random_brute_damage(target, src.attack_damage + 2, 1)
+				src.set_hand(1) //claws
+				src.set_a_intent(INTENT_HARM)
+				src.hand_attack(target)
 				if (prob(10))
 					bleed(target, 2)
 					boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
@@ -703,9 +704,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
 				pounce.handleCast(target)
 				return
-			src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-			playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1, -1, 1.3)
-			random_brute_damage(target, src.attack_damage, 1)
+			src.set_hand(2) //mouth
+			src.set_a_intent(INTENT_HARM)
+			src.hand_attack(target)
 
 	disposing()
 		. = ..()
