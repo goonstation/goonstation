@@ -51,6 +51,10 @@ TYPEINFO(/obj/submachine/chef_sink)
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"
+			if (istype(W, /obj/item/reagent_containers/mender))
+				var/obj/item/reagent_containers/mender/automender = W
+				if(automender.borg)
+					return
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
