@@ -318,7 +318,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			var/datum/plantgenes/DNA = src.plantgenes
 			var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
 			plant_data["hp"] = src.health
-			plant_data["hpmax"] = src.growing.starthelath
+			plant_data["hpmax"] = growing.starthealth
 			plant_data["growth"] = src.growth
 			plant_data["growthmax"] = growthlimit
 
