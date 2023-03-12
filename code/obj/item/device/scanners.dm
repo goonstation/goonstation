@@ -12,7 +12,7 @@ Contains:
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
 TYPEINFO(/obj/item/device/t_scanner)
-	mats = 5
+	mats = list("CRY-1", "CON-1")
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
@@ -23,7 +23,8 @@ TYPEINFO(/obj/item/device/t_scanner)
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
-	m_amt = 150
+	m_amt = 50
+	g_amt = 20
 	var/scan_range = 3
 	var/client/last_client = null
 	var/image/last_display = null

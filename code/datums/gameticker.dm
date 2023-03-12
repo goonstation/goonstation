@@ -315,11 +315,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
-					var/mob/living/intangible/blob_overmind/B = player.make_blob()
-					if (B)
-						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, B, "<b>Late join</b>: assigned antagonist role: blob.")
-						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
+					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
@@ -765,7 +762,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/chui/window/crew_credits/creds = new
+		var/datum/crewCredits/creds = new
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
@@ -776,7 +773,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (E.client.preferences.view_score)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
-					creds.Subscribe(E.client)
+					creds.ui_interact(E)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
 

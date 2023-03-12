@@ -1415,8 +1415,8 @@
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
-	var/active = 0
-	var/processing = 0
+	var/active = FALSE
+	var/processing = FALSE
 	var/atom/last_loc = null
 	acceptable_in_mutini = 0
 
@@ -1437,8 +1437,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				active = 0
-			processing = 0
+				active = FALSE
+				processing = FALSE
 		return
 
 /datum/targetable/geneticsAbility/dimension_shift
@@ -1484,7 +1484,7 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = FALSE
+				P.processing = FALSE
 			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
@@ -1503,8 +1503,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = 0
-			P.processing = 0
+				P.active = FALSE
+				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -886,11 +886,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message)
+			phrase_log.log_phrase("sing", message, user = src)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message)
+			phrase_log.log_phrase("radio", message, user = src)
 		else
-			phrase_log.log_phrase("say", message)
+			phrase_log.log_phrase("say", message, user = src)
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -1843,7 +1843,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V)
+			if(src != V && !V.reagents?.has_reagent("CBD"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 

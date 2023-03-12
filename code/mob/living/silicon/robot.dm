@@ -16,6 +16,7 @@
 	name = "Cyborg"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
+	voice_type = "cyborg"
 	icon_state = "robot"
 	health = 300
 	emaggable = TRUE
@@ -1795,10 +1796,8 @@
 		switch (name)
 			if ("help")
 				src.set_a_intent(INTENT_HELP)
-				hud.update_intent()
 			if ("harm")
 				src.set_a_intent(INTENT_HARM)
-				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
 			if ("swaphand")
@@ -3082,6 +3081,9 @@
 		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
 		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
 
+/mob/living/silicon/robot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/silicon/robot/proc/clearBatteryDistress()
 	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
