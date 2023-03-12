@@ -1773,8 +1773,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			for(var/damage_type in src.healthlist)
 				var/datum/healthHolder/hh = src.healthlist[damage_type]
 				hh.HealDamage(5)
-				src.health_brute = min(60, src.health_brute + 6)
-				src.health_burn = min(60, src.health_burn + 6)
+			src.health_brute = min(60, src.health_brute + 6)
+			src.health_burn = min(60, src.health_burn + 6)
 			if(M in src.friends)
 				src.emote("chitter")
 			else
@@ -1901,8 +1901,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			for(var/damage_type in src.healthlist)
 				var/datum/healthHolder/hh = src.healthlist[damage_type]
 				hh.HealDamage(5)
-				src.health_brute = min(60, src.health_brute + 6)
-				src.health_burn = min(60, src.health_burn + 6)
+			src.health_brute = min(60, src.health_brute + 6)
+			src.health_burn = min(60, src.health_burn + 6)
 			if(M in src.friends)
 				src.emote("rattle")
 			else
