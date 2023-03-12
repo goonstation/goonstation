@@ -32,7 +32,7 @@
 					LAGCHECK(LAG_LOW)
 			if (5)
 				while (spawnamount > 0)
-					new /obj/critter/spacerattlesnake(pestlandmark)
+					new /mob/living/critter/small_animal/rattlesnake(pestlandmark)
 					spawnamount -= 11
 					LAGCHECK(LAG_LOW)
 		//pestlandmark.visible_message("A group of [type] emerges from their hidey-hole")
