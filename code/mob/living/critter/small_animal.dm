@@ -1937,7 +1937,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> hisses!</span>"
 			if ("rattle", "snap")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 50) && icon_state == "rattlesnake")
 					icon_state = "rattlesnake_rattle"
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
