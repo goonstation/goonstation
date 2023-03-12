@@ -19,10 +19,6 @@
 		var/obj/overlay/tile_effect/cracks/C = new(T)
 		holder.owner.set_loc(C)
 
-		if (holder.owner.ai)
-			holder.owner.ai.disable()
-
-
 /obj/overlay/tile_effect/cracks
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cracks"
@@ -36,8 +32,8 @@
 	relaymove(var/mob/user, direction)
 		playsound(src, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
 		for (var/mob/M in src)
-			if (M.ai)
-				M.ai.enable()
+			if (M.ai?.enabled)
+				M.ai.interrupt()
 			M.set_loc(src.loc)
 		qdel(src)
 
