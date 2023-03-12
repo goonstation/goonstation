@@ -704,9 +704,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
 				pounce.handleCast(target)
 				return
-			src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-			playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1, -1, 1.3)
-			random_brute_damage(target, src.attack_damage, 1)
+			src.set_hand(2) //mouth
+			src.set_a_intent(INTENT_HARM)
+			src.hand_attack(target)
 
 	disposing()
 		. = ..()
