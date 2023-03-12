@@ -1292,14 +1292,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					charging = 1
 				else
 					charging = 0
-				var/charge_to_add = min(influx*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				cell.give(charge_to_add) // actually recharge the cell
-				. = charge_to_add / CELLRATE
+
+				//cells above 80% charge defer half of their load as optional;
+				//this keeps that load from counting against charge rate cap
+				var/cap_offset = 0
+				if(cell.charge > (cell.maxcharge * 0.8))
+					cap_offset = last_expend
+
+				//determine how much charge we can (or should) give the cell
+				var/charge_to_add = min(influx*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL) + cap_offset)
+				//then apply that charge
+				cell.give(charge_to_add)
+
+				if(cell.charge >= cell.maxcharge) charging = 2 // capped off for this tick? report fully charged
+
+				. = charge_to_add / CELLRATE // return the amount of consumed power for subtraction from netexcess
 
 				if (zamus_dumb_power_popups)
 					new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
 		else
-			charging = 2	// stop charging and report full
+			charging = 2	// didn't need to charge but power is still good. report fully charged
 
 	else // chargemode off
 		charging = 0

@@ -387,7 +387,9 @@ var/makingpowernetssince = 0
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				var/obj/machinery/power/apc/netapc = term.master
 				var/expended = netapc.accept_excess()				// and give them first share of excess power,
-				if(expended) recharge_sum += expended				// letting the power computer know it's appreciated
+				if(expended)
+					netexcess -= expended							// subtracting it from netexcess
+					recharge_sum += expended						// and letting the power computer know it's appreciated
 
 		for(var/obj/machinery/power/smes/S in nodes)			// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
