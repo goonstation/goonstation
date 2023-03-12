@@ -194,7 +194,7 @@
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [attack_verb]s [MT]!</b></span>",\
-		"<span class='combat'>You sting [MT]!</span>")
+		"<span class='combat'>You [attack_verb] [MT]!</span>")
 		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
