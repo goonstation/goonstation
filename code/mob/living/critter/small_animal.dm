@@ -1988,7 +1988,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 
 	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
-		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && src.is_npc && !(AM in src.friends))
+		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
 				sting.handleCast(AM)
