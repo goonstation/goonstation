@@ -45984,6 +45984,9 @@
 	network = "SS13";
 	tag = ""
 	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/singcore{
 	do_not_irradiate = 1
