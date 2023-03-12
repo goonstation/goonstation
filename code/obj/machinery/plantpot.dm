@@ -1393,6 +1393,10 @@ TYPEINFO(/obj/machinery/plantpot)
 
 			boutput(user, "<span class='notice'>You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""].</span>")
 			post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = cropcount, "seeds" = seedcount))
+#ifdef DATALOGGER
+			game_stats.Increment("hydro_harvests")
+			game_stats.IncrementBy("hydro_produce", cropcount)
+#endif
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
