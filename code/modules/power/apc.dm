@@ -7,6 +7,12 @@
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
 
+//Defines for load deference adjustment
+//When an APC is above this threshold (percentage from 0 to 1), it will defer part of its load to netexcess-based lower-priority charging
+#define LOAD_DEFERENCE_THRESHOLD 0.8
+//This value (percentage from 0 to 1) determines the amount of load deferred in this state; 1 means all cell load is deferred, 0 means none is
+#define LOAD_DEFERENCE_PORTION 0.5
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
 
@@ -60,7 +66,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
-	var/last_expend = 0 //! Keeps track of the last expenditure of cell power, so the recharge procedure can determine if it's reaching a net positive
+	var/deferred_load = 0 //tracks the amount of charge deferred by APCs, to only report charging if a net positive is occurring
 	var/main_status = 0
 	var/light_consumption = 0
 	var/equip_consumption = 0
@@ -1218,35 +1224,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	if(cell && !shorted)
 
-		// draw power from cell
+		// First, draw power from cell to the extent we're able
 
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, CELLRATE * lastused_total) // Clamp deduction to a max, amount left in cell
 		cell.use(cellused)
-		last_expend = cellused/CELLRATE
 
-		// current status: cell has had this update's power drawn
-		// next step: charge the load against available power
+		// Current status: cell has had this update's power drawn to the extent possible
+		// Next step: attempt to square up with the grid
 
-		// cells above 80% charge will leave half of their recharging to discretionary charging from netexcess
+		var/load_on_grid = lastused_total
+
+		// cells above the load deference threshold will skip immediately reimbursing themselves for a portion of load
 		// this plays nicely with self-charging cells, and allows prioritization of cells that have a higher draw
-		if(cell.charge > (cell.maxcharge * 0.8))
-			cellused *= 0.5
 
-		// attempt to fully cover the cell demand
-		if(add_load(cellused/CELLRATE))
+		deferred_load = 0
+
+		if(cell.charge > cell.maxcharge * LOAD_DEFERENCE_THRESHOLD)		//check if we're above the deference threshold
+			var/amount_to_defer = cellused * LOAD_DEFERENCE_PORTION		//if we are, figure out how much the cell is deferring,
+			deferred_load = amount_to_defer/CELLRATE					//report it to the charging procedure,
+			load_on_grid -= deferred_load								//adjust the amount of load we'll be putting on the grid,
+			cellused -=	amount_to_defer									//then adjust the amount to reimburse the cell for
+
+		// attempt to fully cover the load; if we can, all good!
+		if(add_load(load_on_grid))
 			cell.give(cellused)
-			last_expend -= cellused/CELLRATE
 
 		// if this fails, charge however much is left, or fall over and die otherwise
 		else
 			var/draw_portion = terminal?.powernet?.avail - terminal?.powernet?.newload
 			if(!add_load(draw_portion))
 				draw_portion = 0
-			if( (cell.charge/CELLRATE) + draw_portion >= lastused_total )
+			if( (cell.charge/CELLRATE) + draw_portion >= load_on_grid )
 				// do we have enough power in the cell + apc allotment to run?
-
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * draw_portion) //charge as much as we can
-				last_expend -= draw_portion
+				// if yes, reimburse what power we can and don't enter a failure state
+				cell.charge = min(cell.maxcharge, cell.charge + (draw_portion * CELLRATE))
 
 				// status: core allotment is empty and we recharged the cell
 				// we can pop a power usage change here: the total we couldn't recharge
@@ -1284,16 +1295,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/last_ch = charging
 	if(cell && !shorted && chargemode)
 		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
-			if(allocated_excess >= last_expend) //only outwardly indicate charging if you're turning a net positive on power
+			if(allocated_excess > deferred_load) //only outwardly indicate charging if you're turning a net positive on power
 				charging = 1
 			else
 				charging = 0
 
-			//cells above 80% charge defer half of their load as optional;
-			//this keeps that load from counting against charge rate cap
-			var/cap_offset = 0
-			if(cell.charge > (cell.maxcharge * 0.8))
-				cap_offset = last_expend*CELLRATE
+			//if there's a deferred load, it doesn't count against the charge rate cap
+			var/cap_offset = deferred_load*CELLRATE
 
 			//determine how much charge we can (or should) give the cell
 			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL) + cap_offset)
