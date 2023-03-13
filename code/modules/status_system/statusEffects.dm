@@ -2414,13 +2414,13 @@
 	onRemove()
 		. = ..()
 		var/mob/living/L = owner
-		if(L.eat_count <= 6)
+		if(L.eat_count <= 10)
 			L.eat_count = 0
 
 /datum/statusEffect/full // Gluttonious actions have resulted in this.
 	id = "full"
 	name = "Full"
-	desc = "You have eaten too much food, you probably should wait before eating more!"
+	desc = "You have eaten too much food! you probably should wait before eating more."
 	icon_state = "muted"
 	maxDuration = 5 MINUTES
 
