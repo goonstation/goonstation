@@ -123,11 +123,11 @@
 	if(terminal)
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-			charge += load * mult		// increase the charge
-			add_load(load)		// add the load to the terminal side network
-			load_last_tick = load
-			if (!src.is_charging) src.is_charging = TRUE
+			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
+			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
+				charge += load * mult						// increase the charge if we did
+				load_last_tick = load
+				if (!src.is_charging) src.is_charging = TRUE
 		else
 			load_last_tick = 0
 			if (src.is_charging) src.is_charging = FALSE
@@ -349,10 +349,6 @@
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
 			qdel(O)
-
-/obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal?.powernet)
-		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	//only call stop_firing() if output setting is hire than charge, and if we are actually firing

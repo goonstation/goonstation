@@ -51,7 +51,7 @@
 #endif
 
 /obj/machinery/power/proc/add_load(var/amount)
-	if(powernet.newload + amount <= powernet.avail)
+	if(powernet && powernet.newload + amount <= powernet.avail)
 		powernet.newload += amount
 		. = TRUE
 
