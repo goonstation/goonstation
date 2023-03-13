@@ -1298,11 +1298,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			else
 				charging = 0
 
+			//adjust the charge rate cap for APC's current processing tier
+			var/chargelevel_adj = CHARGELEVEL * PROCESSING_TIER_MULTI(src)
+
 			//if there's a deferred load, it doesn't count against the charge rate cap
 			var/cap_offset = deferred_load*CELLRATE
 
 			//determine how much charge we can (or should) give the cell
-			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL) + cap_offset)
+			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*chargelevel_adj) + cap_offset)
 			//then apply that charge
 			cell.give(charge_to_add)
 
