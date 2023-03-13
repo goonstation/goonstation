@@ -361,12 +361,14 @@ var/makingpowernetssince = 0
 			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
+	//bring in the outgoing tick's load
 	load = newload
 	newload = 0
 
-	//calculate netexcess here so you're not checking this tick's load against next tick's avail
+	//check how much of that load depleted the outgoing tick's available power
 	netexcess = avail - load
 
+	//then bring in the generation for the next tick
 	avail = newavail
 	newavail = 0
 
@@ -376,6 +378,7 @@ var/makingpowernetssince = 0
 	if (!nodes)
 		nodes = list()
 
+	//figure out how many APCs to count for perapc (used for TEG warning estimations) and apc_charge_share (used for excess power distribution)
 	for(var/obj/machinery/power/terminal/term in nodes)
 		if( istype( term.master, /obj/machinery/power/apc ) )
 			numapc++
@@ -383,12 +386,13 @@ var/makingpowernetssince = 0
 			if(check_apc.charging != 2)
 				non_full_apcs++
 
-	var/recharge_sum = 0
-
 	if(numapc)
 		perapc = avail/numapc
 
 	apc_charge_share = netexcess / max(1,non_full_apcs)
+
+	//mark down how much of the excess power is being taken by APCs for later reporting
+	var/recharge_sum = 0
 
 	if(netexcess > 100)		// if there was excess power last cycle
 		for(var/obj/machinery/power/terminal/term in nodes)					// go to each APC in the network through its terminal
@@ -404,6 +408,7 @@ var/makingpowernetssince = 0
 		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
 			SW.restore()				//Restore some of the power that was used.
 
+	//combine regular load and discretionary APC charging for the report of total consumption
 	viewload = 0.8*viewload + (0.2*load + 0.2*recharge_sum)
 
 	viewload = round(viewload)
