@@ -3713,8 +3713,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.set_dir(get_dir(src,target))
 			src.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
 			var/list/params = list()
-			params["left"] = 1
-			params["ai"] = 1
+			params["left"] = TRUE
+			params["ai"] = TRUE
 			src.hand_range_attack(target, params)
 		else
 			src.set_dir(get_dir(src,target))
@@ -3886,6 +3886,30 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		new /obj/item/reagent_containers/food/snacks/greengoo(get_turf(src))
 
 		..()
+
+	critter_attack(mob/target)
+		src.set_a_intent(INTENT_GRAB)
+		src.set_dir(get_dir(src, target))
+
+		var/list/params = list()
+		params["left"] = TRUE
+		params["ai"] = TRUE
+
+		var/obj/item/grab/G = src.equipped()
+		if (!istype(G)) //if it hasn't grabbed something, try to
+			if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+				src.drop_item()
+			src.hand_attack(target, params)
+		else
+			if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
+				src.drop_item()
+
+			if (G.state <= GRAB_PASSIVE)
+				G.AttackSelf(src)
+			else
+				src.emote("flip")
+				src.ai.move_away(target,1)
+
 
 	ai_controlled
 		is_npc = 1
