@@ -32,9 +32,9 @@
 	relaymove(var/mob/user, direction)
 		playsound(src, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
 		for (var/mob/M in src)
+			M.set_loc(src.loc)
 			if (M.ai?.enabled)
 				M.ai.interrupt()
-			M.set_loc(src.loc)
 		qdel(src)
 
 

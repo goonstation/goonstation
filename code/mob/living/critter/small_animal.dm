@@ -3708,18 +3708,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 
 	critter_attack(mob/target)
-		if (GET_DIST(src,target) < 4)
-			if (isliving(target)) //might be attacking a sub
-				src.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
-			else
-				src.set_a_intent(INTENT_HARM)
-
-			//owncritter.set_dir(get_dir(owncritter, M))
-
+		if (isliving(target) && prob(60)) //might be attacking a sub
+			//dash attack
+			src.set_dir(get_dir(src,target))
+			src.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
 			var/list/params = list()
 			params["left"] = 1
 			params["ai"] = 1
 			src.hand_range_attack(target, params)
+		else
+			src.set_dir(get_dir(src,target))
+			..() //punch attack
+
+
+
 
 	ai_controlled
 		is_npc = 1
