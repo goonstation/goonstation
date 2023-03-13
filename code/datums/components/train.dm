@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/train)
 
 /datum/component/train/UnregisterFromParent()
 	UnregisterSignal(src.parent, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE)
+	UnregisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE)
 
 /datum/component/train/proc/on_parent_move(atom/movable/thing, previous_loc, direction)
 	if (thing.loc != previous_loc)
