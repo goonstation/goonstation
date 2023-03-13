@@ -304,10 +304,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		consumer.eat_count += 1
+		var/mob/living/C = consumer
 		if(consumer.eat_count <= 10)
 			consumer.setStatus("eaten", 3 MINUTES)
 		else
-			var/mob/living/C = consumer
 			consumer.delStatus("eaten")
 			consumer.setStatus("full", 5 MINUTES)
 			if(C.organHolder)
@@ -319,6 +319,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
+		if(consumer.eat_count = 5)
+			boutput(C, "<span class='alert'>Your stomach feels satisfied!</span>")
+		if(consumer.eat_count = 8)
+			boutput(C, "<span class='alert'>Your stomach feels stuffed!</span>")
+		if(consumer.eat_count = 10)
+			boutput(C, "<span class='alert'>Your stomach feels like it's about to burst!</span>")
 		if (!src.bites_left)
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 				var/obj/item/reagent_containers/food/snacks/plant/P = src
