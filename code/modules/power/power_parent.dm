@@ -363,6 +363,10 @@ var/makingpowernetssince = 0
 /datum/powernet/proc/reset()
 	load = newload
 	newload = 0
+
+	//calculate netexcess here so you're not checking this tick's load against next tick's avail
+	netexcess = avail - load
+
 	avail = newavail
 	newavail = 0
 
@@ -379,7 +383,6 @@ var/makingpowernetssince = 0
 			if(check_apc.charging != 2)
 				non_full_apcs++
 
-	netexcess = avail - load
 	var/recharge_sum = 0
 
 	if(numapc)
