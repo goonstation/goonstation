@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			consumer.delStatus("eaten")
 			consumer.setStatus("full", 5 MINUTES)
 			if(C.organHolder)
-				C.organHolder.damage_organs(15, 0, 0, list("stomach"))
+				C.organHolder.damage_organs(10, 0, 0, list("stomach"))
 				boutput(C, "<span class='alert'>You feel a dull pain in your stomach!</span>")
 
 		src.heal(consumer)
