@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		consumer.nutrition += src.heal_amt * 10
 		consumer.eat_count += 1
 		var/mob/living/C = consumer
-		if(consumer.eat_count <= 10 && >= 0) // For if admemes want to make a mob with -INFINITY eat_count
+		if(consumer.eat_count <= 10 && consumer.eatcount >= 0) // For if admemes want to make a mob with -INFINITY eat_count
 			consumer.setStatus("eaten", 3 MINUTES)
 		else
 			consumer.delStatus("eaten")
