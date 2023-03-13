@@ -9,6 +9,11 @@
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
 	var/const/antags_possible = 6
+#ifdef RP_MODE
+	var/const/pop_divisor = 6
+#else
+	var/const/pop_divisor = 6
+#endif
 
 /datum/game_mode/salvager/announce()
 	boutput(world, "<B>The current game mode is - Salvagers!</B>")
@@ -24,7 +29,8 @@
 		if (player.ready)
 			num_players++
 
-	var/target_antag_count = clamp( round(num_players / 6 ), 2, antags_possible)
+	var/randomizer = rand(pop_divisor+1)
+	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 3, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	if (!length(possible_salvagers))
