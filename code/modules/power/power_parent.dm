@@ -402,12 +402,11 @@ var/makingpowernetssince = 0
 				netexcess -= expended												// subtracting it from netexcess
 				recharge_sum += expended											// and letting the power computer know it's appreciated
 
-	if(netexcess > 100)		// if there's still charge left after supplying optional APC draw
-
-		for(var/obj/machinery/power/smes/S in nodes)			// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
-		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
-			SW.restore()				//Restore some of the power that was used.
+	//then notify other devices they can attempt to reclaim any power that didn't go used, and update their reporting on effective output
+	for(var/obj/machinery/power/smes/S in nodes)
+		S.restore()
+	for(var/obj/machinery/power/sword_engine/SW in nodes)
+		SW.restore()
 
 	//combine regular load and discretionary APC charging for the report of total consumption
 	viewload = 0.8*viewload + (0.2*load + 0.2*recharge_sum)
