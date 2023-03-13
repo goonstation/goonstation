@@ -394,14 +394,15 @@ var/makingpowernetssince = 0
 	//mark down how much of the excess power is being taken by APCs for later reporting
 	var/recharge_sum = 0
 
-	if(netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/terminal/term in nodes)					// go to each APC in the network through its terminal
-			if( istype( term.master, /obj/machinery/power/apc ) )
-				var/obj/machinery/power/apc/netapc = term.master
-				var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of excess power,
-				if(expended)
-					netexcess -= expended												// subtracting it from netexcess
-					recharge_sum += expended											// and letting the power computer know it's appreciated
+	for(var/obj/machinery/power/terminal/term in nodes)					// go to each APC in the network through its terminal
+		if( istype( term.master, /obj/machinery/power/apc ) )
+			var/obj/machinery/power/apc/netapc = term.master
+			var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of power not used by mandatory load,
+			if(expended)
+				netexcess -= expended												// subtracting it from netexcess
+				recharge_sum += expended											// and letting the power computer know it's appreciated
+
+	if(netexcess > 100)		// if there's still charge left after supplying optional APC draw
 
 		for(var/obj/machinery/power/smes/S in nodes)			// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
