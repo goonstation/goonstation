@@ -307,11 +307,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if(consumer.eat_count <= 6)
 			consumer.setStatus("eaten", 3 MINUTES)
 		else
-			var/mob/living/L
+			var/mob/living/C = consumer
 			consumer.delStatus("eaten")
 			consumer.setStatus("full", 5 MINUTES)
-			consumer.L.organHolder.damage_organs(10, 0, 0, "stomach", 100)
-			boutput(L, "<span class='alert'>You feel a dull pain in your stomach!</span>")
+			C.organHolder.damage_organs(20, 0, 0, "stomach", 100)
+			boutput(C, "<span class='alert'>You feel a dull pain in your stomach!</span>")
+
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder)
