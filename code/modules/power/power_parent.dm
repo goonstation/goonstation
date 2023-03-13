@@ -409,6 +409,6 @@ var/makingpowernetssince = 0
 		SW.restore()
 
 	//combine regular load and discretionary APC charging for the report of total consumption
-	viewload = 0.8*viewload + (0.2*load + 0.2*recharge_sum)
+	viewload = 0.8*viewload + 0.2*(load + recharge_sum)
 
 	viewload = round(viewload)
