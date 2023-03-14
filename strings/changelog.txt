@@ -1,4 +1,7 @@
 
+(t)mon mar 13 23
+(u)aloe
+(+)Security cameras now give off a little bit of light, making them easier to notice/find in the dark.
 (t)sun mar 12 23
 (u)Kubius
 (p)12781
