@@ -930,7 +930,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 	over_hair = TRUE
 	see_face = 0
