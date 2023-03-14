@@ -40,7 +40,7 @@
 		playsound(holder.owner, 'sound/voice/animal/brullbar_roar.ogg', 80, 1)
 		disabled = 1
 		SPAWN(0)
-			var/frenz = rand(8, 15)
+			var/frenz = rand(8, 12)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 1 SECONDS)

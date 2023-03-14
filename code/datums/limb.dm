@@ -766,6 +766,7 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /datum/limb/brullbar/king
 	log_name = "king brullbar limbs"
