@@ -56,7 +56,7 @@
 				holder.owner.pixel_y = rand(-5, 5)
 				random_brute_damage(MT, 6, 1)
 				take_bleeding_damage(MT, null, 5, DAMAGE_CUT, 0, get_turf(MT))
-				if(prob(20) && if(!issilicon(MT))) // don't make quite so much mess
+				if(prob(20) && (!issilicon(MT))) // don't make quite so much mess
 					bleed(MT, 5, 5, get_step(get_turf(MT), pick(alldirs)), 1)
 				sleep(0.4 SECONDS)
 				frenz--
