@@ -1,7 +1,7 @@
 /datum/random_event/major/antag/salvagers
 	name = "Salvagers"
 	required_elapsed_round_time = 12.8 MINUTES
-	wont_occur_past_this_time = 45 MINUTES
+	wont_occur_past_this_time = 35 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
 	weight = 20
@@ -18,6 +18,19 @@
 	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
+
+		if(ticker?.mode)
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				return 0
+
+			if(istype(ticker.mode, /datum/game_mode/revolution))
+				return 0
+
+			if (istype(ticker.mode, /datum/game_mode/nuclear))
+				return 0
+
+			if (istype(ticker.mode, /datum/game_mode/flock))
+				wont_occur_past_this_time = 25 MINUTES
 
 		if(length(eligible_dead_player_list(allow_dead_antags = TRUE)) < minimum_count)
 			return 0
