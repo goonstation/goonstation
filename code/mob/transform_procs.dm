@@ -824,49 +824,14 @@ var/respawn_arena_enabled = 0
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
 			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
-			return make_flockmind()
+			src.mind.add_antagonist(ROLE_FLOCKMIND)
+			return
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
 			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
-
-/mob/proc/make_flockmind()
-	if (!src.mind && !src.client)
-		return null
-
-	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
-
-	var/turf/T = get_turf(src)
-	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (OS)
-			O.set_loc(OS)
-		else
-			O.z = 1
-	else
-		O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-
-	if (src.mind)
-		src.mind.transfer_to(O)
-	else
-		var/key = src.client.key
-		if (src.client)
-			src.client.mob = O
-		O.mind = new /datum/mind()
-		O.mind.ckey = ckey
-		O.mind.key = key
-		O.mind.current = O
-		ticker.minds += O.mind
-	O.flock.flockmind_mind = O.mind
-	O.mind.special_role = ROLE_FLOCKMIND
-	qdel(src)
-	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
-	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
-	boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
-	O.show_antag_popup("flockmind")
-	return O
 
 // flocktraces are made by flockminds
 /mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock, var/free = FALSE)
