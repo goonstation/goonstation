@@ -690,6 +690,7 @@
 /datum/limb/brullbar
 	var/log_name = "brullbar limbs"
 	var/quality = 1
+	var/king = FALSE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -764,13 +765,14 @@
 		if (prob(20 * quality))
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
-				C.do_disorient(25, disorient=2 SECONDS)
+				C.do_disorient(15, disorient = 1 SECONDS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /datum/limb/brullbar/king
 	log_name = "king brullbar limbs"
 	quality = 1.5
+	king = TRUE
 
 /datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
