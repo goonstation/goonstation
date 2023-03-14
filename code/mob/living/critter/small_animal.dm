@@ -3901,8 +3901,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.drop_item()
 			src.hand_attack(target, params)
 		else
-			if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
+			if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
 				src.drop_item()
+				return
 
 			if (G.state <= GRAB_PASSIVE)
 				G.AttackSelf(src)
