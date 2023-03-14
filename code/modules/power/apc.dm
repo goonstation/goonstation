@@ -1156,7 +1156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(load_cycle())
 			cell_cycle()
 
-// cycle phase 1: load cycle. check if the APC's able to operate, and if so, combine and prepare the load for phase 2 where it gets expended
+///APC cycle phase 1: load cycle. Check if the APC's able to operate, and if so, combine and prepare the load for phase 2 where it gets expended.
 /obj/machinery/power/apc/proc/load_cycle()
 	if(debug) boutput(world, "PROCESS [world.timeofday / 10]")
 
@@ -1202,7 +1202,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-// cycle phase 2: cell cycle. debit the load from cell, and if any external power is available, attempt to use it to "settle up"
+///APC cycle phase 2: cell cycle. Debit the load from cell, and if any external power is available, attempt to use it to "settle up"
 /obj/machinery/power/apc/proc/cell_cycle()
 	//store states to update icon if any change
 	var/last_lt = lighting
@@ -1281,7 +1281,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		UpdateIcon()
 		update()
 
-
+///Post-cycle APC proc; updates charging status, and delivers discretionary recharging if excess power is available.
 /obj/machinery/power/apc/proc/accept_excess(var/allocated_excess)
 	var/last_ch = charging
 	if(cell && !shorted && chargemode)
