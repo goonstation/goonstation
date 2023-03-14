@@ -1149,7 +1149,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(!circuit_disabled)
-		. = terminal.add_load(amount)
+		. = terminal?.add_load(amount)
 
 /obj/machinery/power/apc/avail()
 	if(terminal && !circuit_disabled)
