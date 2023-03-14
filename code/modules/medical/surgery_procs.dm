@@ -617,12 +617,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					"<span class='alert'>You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [src]!</span>")
 
-				I.on_remove(patient)
-				patient.implant.Remove(I)
-				I.set_loc(patient.loc)
-				// offset approximately around chest area, based on cutting over operating table
-				I.pixel_x = rand(-2, 5)
-				I.pixel_y = rand(-6, 1)
+				I.cut_out()
 				return 1
 
 			for (var/obj/item/implant/I in patient.implant)
@@ -645,7 +640,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					newcase.pixel_x = rand(-2, 5)
 					newcase.pixel_y = rand(-6, 1)
 					I.on_remove(patient)
-					patient.implant.Remove(I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = patient.blood_color
 					newcase.UpdateOverlays(wadblood, "blood")
@@ -661,11 +655,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out something alien from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 							"<span class='alert'>You cut out something alien from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 							"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out something alien from you with [src]!</span>")
-						imp.pixel_x = rand(-2, 5)
-						imp.pixel_y = rand(-6, 1)
-						imp.set_loc(get_turf(patient))
-						imp.on_remove(patient)
-						patient.implant.Remove(imp)
+						imp.cut_out()
 				return 1
 
 		/* chest op_stage description

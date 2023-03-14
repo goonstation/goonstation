@@ -91,6 +91,14 @@ THROWING DARTS
 		src.owner = null
 		src.implanted = 0
 
+	proc/cut_out()
+		if (!src.owner)
+			return
+		src.set_loc(get_turf(src.owner))
+		src.on_remove(src.owner)
+		src.pixel_x = rand(-2, 5)
+		src.pixel_y = rand(-6, 1)
+
 	proc/activate()
 		online = 1
 
@@ -2220,3 +2228,38 @@ TYPEINFO(/obj/item/gun/implanter)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 			src.implanted(M)
+
+/* =============================================================== */
+/* ------------------------ Implant Remover ---------------------- */
+/* =============================================================== */
+
+/obj/item/implant_remover
+	name = "implant remover"
+	desc = "A vicious looking bladed tool for cutting out implants."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw"
+	force = 7
+	hit_type = DAMAGE_CUT
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
+
+	attack(mob/M, mob/user, def_zone, is_special)
+		if (ishuman(M))
+			var/mob/living/carbon/human/human = M
+			if (length(human.implant))
+				playsound(human, 'sound/impact_sounds/circsaw.ogg', 50, 1, pitch = 0.5)
+				var/datum/action/bar/icon/callback/bar = new(user, M, 3 SECONDS, .proc/remove_implant, list(M, user), src.icon, src.icon_state, "<span class='alert'>You cut the implant out of [M]'s chest, destroying it in the process.</span>", null)
+				bar.call_proc_on = src
+				actions.start(bar, user)
+				return
+		. = ..()
+
+	proc/remove_implant(mob/living/carbon/human/target, mob/user)
+		playsound(target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+		target.emote("scream")
+		if (in_interact_range(target, user) && length(target.implant))
+			for (var/obj/item/implant/implant in target.implant)
+				implant.cut_out()
+				qdel(implant)
+				take_bleeding_damage(target, user, 10, DAMAGE_CUT)

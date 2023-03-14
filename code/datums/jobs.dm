@@ -447,7 +447,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	allow_spy_theft = 0
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
-	receives_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
@@ -478,6 +478,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		name = "Security Assistant"
 		limit = 3
 		cant_spawn_as_con = 1
+		receives_implant = /obj/item/implant/health/security
 		wages = PAY_UNTRAINED
 		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
