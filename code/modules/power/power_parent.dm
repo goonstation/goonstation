@@ -408,14 +408,11 @@ var/makingpowernetssince = 0
 
 	apc_charge_share = netexcess / max(1,non_full_apcs)
 
-	//mark down how much of the excess power is being taken by APCs for later reporting
-	var/recharge_sum = 0
-
 	for(var/obj/machinery/power/apc/netapc in our_apcs)					// go to each APC in the network
 		var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of any power not used by mandatory load,
 		if(expended)
 			netexcess -= expended												// subtracting it from netexcess
-			recharge_sum += expended											// and letting the power computer know it's appreciated
+			load += expended											// and letting the power computer know it's appreciated
 
 	//then notify other devices they can attempt to reclaim any power that didn't go used, and update their reporting on effective output
 	for(var/obj/machinery/power/smes/S in nodes)
@@ -424,7 +421,7 @@ var/makingpowernetssince = 0
 		SW.restore()
 
 	//combine regular load and discretionary APC charging for the report of total consumption
-	viewload = 0.8*viewload + 0.2*(load + recharge_sum)
+	viewload = 0.8*viewload + 0.2*load
 
 	viewload = round(viewload)
 
