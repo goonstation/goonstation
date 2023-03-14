@@ -109,7 +109,6 @@
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
-		add_health_holder(/datum/healthHolder/toxin)
 
 	seek_target(var/range = 9)
 		. = list()
@@ -142,9 +141,9 @@
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!tackle.disabled && tackle.cooldowncheck() && prob(20) && !is_incapacitated(target))
+		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(20) )
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
-		if (!frenzy.disabled && frenzy.cooldowncheck() && (is_incapacitated(target)) && prob(50))
+		if (!frenzy.disabled && frenzy.cooldowncheck() && is_incapacitated(target) && prob(40))
 			frenzy.handleCast(target)
 		else if (issilicon(target))
 			fuck_up_silicons(target)
@@ -162,9 +161,7 @@
 		else
 			src.visible_message("<span class='alert'<b>[src] bites a chunk out of [target]!</b></span>")
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1)
-			for(var/damage_type in src.healthlist)
-				var/datum/healthHolder/hh = src.healthlist[damage_type]
-				hh.HealDamage(10)
+			src.HealDamage("All", 8, 4)
 			return
 
 	can_critter_attack()
@@ -174,17 +171,17 @@
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
-			var/mob/living/silicon/robot/BORG = silicon
-			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
-				src.visible_message("<span class='alert'><B>[src] grabs [BORG.name]'s head and wrenches it right off!</B></span>")
+			var/mob/living/silicon/robot/cyborg = silicon
+			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
+				src.visible_message("<span class='alert'><B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B></span>")
 				playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-				BORG.compborg_lose_limb(BORG.part_head)
+				cyborg.compborg_lose_limb(cyborg.part_head)
 			else
-				src.visible_message("<span class='alert'><B>[src] pounds on [BORG.name]'s head furiously!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] pounds on [cyborg.name]'s head furiously!</B></span>")
 				playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
-				BORG.part_head.ropart_take_damage(rand(20,40),0)
+				cyborg.part_head.ropart_take_damage(rand(20,40),0)
 		else
 			src.visible_message("<span class='alert'><B>[src] smashes [silicon] furiously!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
