@@ -334,7 +334,6 @@
 					master.set_a_intent(INTENT_HARM)
 				else
 					master.set_a_intent(INTENT_HELP)
-				update_intent()
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)

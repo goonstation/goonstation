@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 	on_add()
 		. = ..()
 		var/obj/item/parts/lost_limb = src.owner.limbs.get_limb(data["lost_limb_string"])
-		lost_limb.delete()
+		lost_limb?.delete()
 
 /// Get some histamine after cloning
 /datum/cloner_defect/allergic
