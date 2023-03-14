@@ -420,8 +420,8 @@ var/makingpowernetssince = 0
 	for(var/obj/machinery/power/sword_engine/SW in nodes)
 		SW.restore()
 
-	//combine regular load and discretionary APC charging for the report of total consumption
-	viewload = 0.8*viewload + 0.2*load
+	//report total consumption, averaged out a bit
+	viewload = 0.6*viewload + 0.4*load
 
 	viewload = round(viewload)
 
