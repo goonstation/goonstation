@@ -365,42 +365,57 @@ var/makingpowernetssince = 0
 	load = newload
 	newload = 0
 
-	//check how much of that load depleted the outgoing tick's available power
-	netexcess = avail - load
-
-	//then bring in the generation for the next tick
-	avail = newavail
-	newavail = 0
-
 	var/numapc = 0
 	var/non_full_apcs = 0
 
 	if (!nodes)
 		nodes = list()
 
-	//figure out how many APCs to count for perapc (used for TEG warning estimations) and apc_charge_share (used for excess power distribution)
+	var/list/our_apcs = list()
+
+	//index working APCs and perform some initial setup
 	for(var/obj/machinery/power/terminal/term in nodes)
 		if( istype( term.master, /obj/machinery/power/apc ) )
-			numapc++
 			var/obj/machinery/power/apc/check_apc = term.master
-			if(check_apc.charging != 2)
-				non_full_apcs++
+			if(check_apc.load_cycle())
+				numapc++
+				our_apcs += check_apc
+				if(check_apc.charging != 2)
+					non_full_apcs++
 
 	if(numapc)
-		perapc = avail/numapc
+		perapc = (avail - load) / numapc
+
+	//organize APCs by load
+	sortList(our_apcs, /proc/cmp_apc_load_dsc)
+
+	//distribute the baseline perapc power, returning anything the APCs don't accept
+	for(var/obj/machinery/power/apc/netapc in our_apcs)
+		var/distributed_amount = min(netapc.cycle_load, perapc)
+		netapc.cycle_load -= distributed_amount
+		load += distributed_amount
+
+	//then tell each APC, from highest initial draw to lowest (achieved by earlier sort), to consume as much as it would like to + complete its cycle
+	for(var/obj/machinery/power/apc/netapc in our_apcs)
+		netapc.cell_cycle()
+
+	//mandatory load's done! check how much of that load depleted the outgoing tick's available power
+	netexcess = avail - load
+
+	//then bring in the generation for the next tick
+	avail = newavail
+	newavail = 0
 
 	apc_charge_share = netexcess / max(1,non_full_apcs)
 
 	//mark down how much of the excess power is being taken by APCs for later reporting
 	var/recharge_sum = 0
 
-	for(var/obj/machinery/power/terminal/term in nodes)					// go to each APC in the network through its terminal
-		if( istype( term.master, /obj/machinery/power/apc ) )
-			var/obj/machinery/power/apc/netapc = term.master
-			var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of power not used by mandatory load,
-			if(expended)
-				netexcess -= expended												// subtracting it from netexcess
-				recharge_sum += expended											// and letting the power computer know it's appreciated
+	for(var/obj/machinery/power/apc/netapc in our_apcs)					// go to each APC in the network
+		var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of any power not used by mandatory load,
+		if(expended)
+			netexcess -= expended												// subtracting it from netexcess
+			recharge_sum += expended											// and letting the power computer know it's appreciated
 
 	//then notify other devices they can attempt to reclaim any power that didn't go used, and update their reporting on effective output
 	for(var/obj/machinery/power/smes/S in nodes)
@@ -412,3 +427,6 @@ var/makingpowernetssince = 0
 	viewload = 0.8*viewload + 0.2*(load + recharge_sum)
 
 	viewload = round(viewload)
+
+/proc/cmp_apc_load_dsc(var/obj/machinery/power/apc/a,var/obj/machinery/power/apc/b)
+	return b.cycle_load - a.cycle_load

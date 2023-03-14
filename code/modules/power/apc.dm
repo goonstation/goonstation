@@ -7,12 +7,6 @@
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
 
-//Defines for load deference adjustment
-//When an APC is above this threshold (percentage from 0 to 1), it will defer part of its load to netexcess-based lower-priority charging
-#define LOAD_DEFERENCE_THRESHOLD 0.8
-//This value (percentage from 0 to 1) determines the amount of load deferred in this state; 1 means all cell load is deferred, 0 means none is
-#define LOAD_DEFERENCE_PORTION 0.5
-
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
 
@@ -66,7 +60,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
-	var/deferred_load = 0 //tracks the amount of charge deferred by APCs, to only report charging if a net positive is occurring
+	var/cycle_load = 0 //distinct from lastused_total; tracks state of expended power through the cycling process
 	var/main_status = 0
 	var/light_consumption = 0
 	var/equip_consumption = 0
@@ -1158,6 +1152,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		return 0
 
 /obj/machinery/power/apc/process()
+	if(!terminal || !terminal.powernet) // if no powernet is managing our cycling, do it on the APC
+		if(load_cycle())
+			cell_cycle()
+
+// cycle phase 1: load cycle. check if the APC's able to operate, and if so, combine and prepare the load for phase 2 where it gets expended
+/obj/machinery/power/apc/proc/load_cycle()
 	if(debug) boutput(world, "PROCESS [world.timeofday / 10]")
 
 	if(status & BROKEN)
@@ -1170,6 +1170,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
 
+	. = TRUE //APC is working and can proceed to the next phase
 
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
@@ -1187,6 +1188,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
+	cycle_load = lastused_total
 
 	if (src.setup_networkapc && host_id && terminal)
 		if(src.timeout == 0)
@@ -1200,6 +1202,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
+// cycle phase 2: cell cycle. debit the load from cell, and if any external power is available, attempt to use it to "settle up"
+/obj/machinery/power/apc/proc/cell_cycle()
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
@@ -1230,37 +1234,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		// Current status: cell has had this update's power drawn to the extent possible
 		// Next step: attempt to square up with the grid
 
-		var/load_on_grid = lastused_total
-
-		// cells above the load deference threshold will skip immediately reimbursing themselves for a portion of load
-		// this plays nicely with self-charging cells, and allows prioritization of cells that have a higher draw
-
-		deferred_load = 0
-
-		if(cell.charge > cell.maxcharge * LOAD_DEFERENCE_THRESHOLD)		//check if we're above the deference threshold
-			var/amount_to_defer = cellused * LOAD_DEFERENCE_PORTION		//if we are, figure out how much the cell is deferring,
-			deferred_load = amount_to_defer/CELLRATE					//report it to the charging procedure,
-			load_on_grid -= deferred_load								//adjust the amount of load we'll be putting on the grid,
-			cellused -=	amount_to_defer									//then adjust the amount to reimburse the cell for
-
 		// attempt to fully cover the load; if we can, all good!
-		if(add_load(load_on_grid))
+		if(add_load(cycle_load))
 			cell.give(cellused)
+			cycle_load = 0
 
 		// if this fails, charge however much is left, or fall over and die otherwise
 		else
 			var/draw_portion = terminal?.powernet?.avail - terminal?.powernet?.newload
 			if(!add_load(draw_portion))
 				draw_portion = 0
-			if( (cell.charge/CELLRATE) + draw_portion >= load_on_grid )
+			if( (cell.charge/CELLRATE) + draw_portion >= cycle_load )
 				// do we have enough power in the cell + apc allotment to run?
 				// if yes, reimburse what power we can and don't enter a failure state
 				cell.charge = min(cell.maxcharge, cell.charge + (draw_portion * CELLRATE))
+				cycle_load -= draw_portion
 
 				// status: core allotment is empty and we recharged the cell
 				// we can pop a power usage change here: the total we couldn't recharge
 				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = -(lastused_total - draw_portion), channel = -1)
+					new /obj/maptext_junk/power(get_turf(src), change = -(cycle_load - draw_portion), channel = -1)
 
 			else
 				// not enough power available to run the last tick!
@@ -1293,7 +1286,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/last_ch = charging
 	if(cell && !shorted && chargemode)
 		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
-			if(allocated_excess > deferred_load) //only outwardly indicate charging if you're turning a net positive on power
+			if(allocated_excess > cycle_load)
 				charging = 1
 			else
 				charging = 0
@@ -1301,11 +1294,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			//adjust the charge rate cap for APC's current processing tier
 			var/chargelevel_adj = CHARGELEVEL * PROCESSING_TIER_MULTI(src)
 
-			//if there's a deferred load, it doesn't count against the charge rate cap
-			var/cap_offset = deferred_load*CELLRATE
-
 			//determine how much charge we can (or should) give the cell
-			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*chargelevel_adj) + cap_offset)
+			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*chargelevel_adj))
 			//then apply that charge
 			cell.give(charge_to_add)
 
