@@ -40,10 +40,10 @@
 		playsound(holder.owner, 'sound/voice/animal/brullbar_roar.ogg', 80, 1)
 		disabled = 1
 		SPAWN(0)
-			var/frenz = rand(10, 20)
+			var/frenz = rand(8, 15)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", 2 SECONDS)
+				MT.changeStatus("weakened", 1 SECONDS)
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
@@ -54,7 +54,7 @@
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(MT, 10, 1)
+				random_brute_damage(MT, 8, 1)
 				take_bleeding_damage(MT, null, 5, DAMAGE_CUT, 0, get_turf(MT))
 				if(prob(33)) // don't make quite so much mess
 					bleed(MT, 5, 5, get_step(get_turf(MT), pick(alldirs)), 1)
