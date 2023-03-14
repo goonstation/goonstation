@@ -361,10 +361,6 @@ var/makingpowernetssince = 0
 			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
-	//bring in the outgoing tick's load
-	load = newload
-	newload = 0
-
 	var/numapc = 0
 	var/non_full_apcs = 0
 
@@ -384,7 +380,7 @@ var/makingpowernetssince = 0
 					non_full_apcs++
 
 	if(numapc)
-		perapc = (avail - load) / numapc
+		perapc = (avail - newload) / numapc
 
 	//organize APCs by load
 	sortList(our_apcs, /proc/cmp_apc_load_dsc)
@@ -393,13 +389,17 @@ var/makingpowernetssince = 0
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
 		var/distributed_amount = min(netapc.cycle_load, perapc)
 		netapc.cycle_load -= distributed_amount
-		load += distributed_amount
+		newload += distributed_amount
 
 	//then tell each APC, from highest initial draw to lowest (achieved by earlier sort), to consume as much as it would like to + complete its cycle
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
 		netapc.cell_cycle()
 
-	//mandatory load's done! check how much of that load depleted the outgoing tick's available power
+	//mandatory load's done! bring in the outgoing tick's load
+	load = newload
+	newload = 0
+
+	//check how much of that load depleted the outgoing tick's available power
 	netexcess = avail - load
 
 	//then bring in the generation for the next tick
