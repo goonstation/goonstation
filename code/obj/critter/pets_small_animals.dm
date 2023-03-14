@@ -1493,6 +1493,14 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	generic = 0
 	lock_color = 1
 
+//Gerhazo: another special ferret per wire's request
+/obj/critter/meatslinky/alfredo
+	name = "Alfredo"
+	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here? This one has a friendlier vibe than you would've expected, how cute."
+	health = 50
+	generic = 0
+	lock_color = 1
+
 /obj/critter/raccoon
 	name = "space raccoon"
 	desc = "A raccoon that came from space. Or maybe went to space. Who knows how it got here?"

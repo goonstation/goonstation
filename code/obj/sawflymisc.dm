@@ -27,10 +27,10 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 	is_dangerous = TRUE
 	is_syndicate = TRUE
-	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
+	issawfly = TRUE //used to tell the sawfly remote if it can or can't detonate() the grenade
 	contraband = 2
 	overlays = null
-	state = 0
+	armed = FALSE
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -42,7 +42,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			return
 		..()
 
-	prime()
+	detonate()
 		var/turf/T =  get_turf(src)
 		if (T && heldfly)
 			heldfly.set_loc(T)
@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 					S.icon_state = "sawflyunfolding"
 					SPAWN(S.det_time)
 						if(S)
-							S.prime()
+							S.detonate()
 
 				if (istype(S, /obj/item/old_grenade/spawner/sawflycluster))
 					S.visible_message("<span class='alert'>The [S] suddenly begins beeping as it is primed!</span>")
@@ -128,7 +128,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 						S.icon_state = "clusterflyB1"
 					SPAWN(S.det_time)
 						if(S)
-							S.prime()
+							S.detonate()
 			else
 				continue
 
