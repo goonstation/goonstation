@@ -7,10 +7,10 @@
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))
-	transition_tasks += holder.get_instance(/datum/aiTask/critter/brullbar/invis/, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/critter/brullbar/invis, list(holder, src))
 
 // brullbar invis task
-/datum/aiTask/critter/brullbar/invis/
+/datum/aiTask/critter/brullbar/invis
 	name = "go invisible"
 	weight = 2
 
