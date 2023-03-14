@@ -1,7 +1,7 @@
 
 (t)mon mar 13 23
 (u)aloe
-(+)Security cameras now give off a little bit of light, making them easier to notice/find in the dark.
+(+)Security cameras now give off a little bit of light, making them easier to notice/find in the dark. Cutting the cam disables the light, and repairing it reenables it.
 (t)sun mar 12 23
 (u)Kubius
 (p)12781
