@@ -3493,6 +3493,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Salvager Vessel Magpie"
 	icon_state = "red"
 	sanctuary = 1
+	teleport_blocked = 1
 
 /area/salvager/space
 	icon_state = "purple"

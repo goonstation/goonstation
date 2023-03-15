@@ -781,10 +781,6 @@
 			var/list/M = S.spies
 			if (src.mind in (L + M))
 				see_special = 1
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			if(src.mind.gang != null)
-				gang_to_see = src.mind.gang
-		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
 		else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			// var/datum/game_mode/pod_wars/PW = ticker.mode
 			PWT_to_see = get_pod_wars_team_num(src)
@@ -794,6 +790,7 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
+		gang_to_see = src.get_gang()
 		if (istraitor(src) && traitorsseeeachother)
 			see_traitors = TRUE
 		else if (isnukeop(src) || isnukeopgunbot(src))
@@ -826,7 +823,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && !gang_to_see && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -879,6 +876,14 @@
 				if (ROLE_NUKEOP)
 					if (see_everything || see_nukeops)
 						var/I = image(antag_syndicate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_LEADER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang_leader, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_MEMBER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_CHANGELING)
 					if (see_everything)
@@ -985,22 +990,6 @@
 				var/I = image(antag_spyleader, loc = leader_mind.current)
 				can_see.Add(I)
 
-	else if (istype(ticker.mode, /datum/game_mode/gang))
-		var/datum/game_mode/gang/mode = ticker.mode
-
-		for (var/datum/gang/G in mode.gangs)
-			if (G != gang_to_see && !see_everything) continue
-
-			if(G.leader && G.leader.current)
-				if (!see_everything && isobserver(G.leader.current)) continue
-				var/I = image(antag_gang_leader, loc = G.leader.current)
-				can_see.Add(I)
-
-			for(var/datum/mind/M in G.members)
-				if(M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/II = image(antag_gang, loc = M.current)
-					can_see.Add(II)
 	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (PWT_to_see || see_everything)
