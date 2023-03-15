@@ -6,4 +6,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate)
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
 		src.master = master
+		// Remove mind.master when it has been superseded by subordinate antagonist roles.
+		src.owner = new_owner
+		src.owner.master = src.master.ckey
 		. = ..()

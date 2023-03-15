@@ -734,6 +734,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\traitor\licensed_traitor.dm"
 #include "code\modules\antagonists\traitor\sleeper_agent.dm"
 #include "code\modules\antagonists\traitor\traitor.dm"
+#include "code\modules\antagonists\vampire\thrall.dm"
 #include "code\modules\antagonists\vampire\vampire.dm"
 #include "code\modules\antagonists\vampire\abilities\_vampire_ability_holder.dm"
 #include "code\modules\antagonists\vampire\abilities\blood_steal.dm"

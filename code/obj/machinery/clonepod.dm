@@ -381,7 +381,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else
-					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [src.occupant] with return code [success].")
+					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove [antag.display_name] antag status from [src.occupant] with return code [success].")
 
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)

@@ -1119,14 +1119,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_thrall/abil = src.mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if (abil)
-			if (abil.master)
-				abil.master.remove_thrall(src.mob)
-			else
-				remove_mindhack_status(src.mob, "vthrall", "death")
-		var/datum/component/tracker_hud/vampthrall/component = src.mob.GetComponent(/datum/component/tracker_hud/vampthrall)
-		component?.RemoveComponent()
+		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 		..()
 
 /datum/mutantrace/skeleton
