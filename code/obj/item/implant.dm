@@ -352,11 +352,8 @@ THROWING DARTS
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 
-	on_death()
-		mailgroups.Add(MGD_SECURITY)
-		..()
-
 	death_alert()
+		mailgroups.Add(MGD_SECURITY)
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
