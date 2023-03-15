@@ -758,20 +758,19 @@ proc/create_fluff(datum/mind/target)
 
 	check_completion()
 		if (!owner.current || isdead(owner.current))
-			return 0
+			return FALSE
 
-		if (!istype(ticker.mode, /datum/game_mode/gang))
-			return 0
-
-		var/datum/game_mode/gang/gangmode = ticker.mode
-		for (var/datum/mind/mindCheck in gangmode.leaders)
+		for (var/datum/mind/mindCheck in get_all_antagonists(ROLE_GANG_LEADER))
 			if (mindCheck == owner)
 				continue
 
 			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
+				return FALSE
 
-		return 1
+		return TRUE
+
+/datum/objective/specialist/gang/member
+	explanation_text = "Protect your boss, recruit new members, tag up the station, and beware the other gangs!."
 
 /datum/objective/specialist/blob
 	medal_name = "Blob everywhere!"

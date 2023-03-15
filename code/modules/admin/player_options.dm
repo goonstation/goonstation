@@ -115,6 +115,7 @@
 		if (antag_len)
 			antag = "<b>[antag_len] antagonist role\s present.</b><br>" + antag //this goes at the start
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
+			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 		else if (M.mind.special_role != null)
 			antag = {"
@@ -123,7 +124,9 @@
 			"}
 		else if (!isobserver(M))
 			antag = {"<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a> &bull;
-					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a>"}
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
+					"}
 		else
 			antag = "Observer"
 

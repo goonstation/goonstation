@@ -1678,7 +1678,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							var/mob/M = A
 							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 							if(M.lying)
-								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								var/datum/gang/gang = src.get_gang()
+								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
 								else
 									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)

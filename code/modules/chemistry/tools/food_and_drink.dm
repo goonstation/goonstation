@@ -6,36 +6,29 @@
 ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	var/heal_amt = 0
-	var/needfork = 0
-	var/needspoon = 0
-	/// Color for various food items
-	var/food_color = null
-	var/custom_food = 1 //Can it be used to make custom food like for pizzas
-	var/festivity = 0
-	var/brew_result = null // what will it make if it's brewable?
-	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
-	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
-	var/doants = 1
-	var/made_ants = 0
-	/// for if a food is intended to be able to be sliced
-	var/sliceable = FALSE
-	/// what product to spawn when sliced
-	var/slice_product = null
-	/// how much product to spawn when sliced
-	var/slice_amount = 1
-	/// if the produce is inert while being sliced
-	var/slice_inert = FALSE
-	/// When we want to name them slices or wedges or what-have-not. Default is slice
-	var/slice_suffix = "slice"
+	var/heal_amt = 0 							//! Amount this food heals for when eaten
+	var/required_utensil = null 				//! Which utensil we need to use to eat this
+	var/food_color = null 						//! Color for various food items
+	var/custom_food = TRUE 						//! Can it be used to make custom food like for pizzas
+	var/festivity = 0 							//! Amount of cheer this food adds/subtracts when eaten
+	var/brew_result = null 						//! What reagent will it make if it's brewable?
+	var/unlock_medal_when_eaten = null 			//! Add medal name here in the format of e.g. "That tasted funny".
+	var/from_emagged_oven = 0 					//! Was this food created by an emagged oven? To prevent re-rolling of food in emagged ovens.
+	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
+	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
+	var/sliceable = FALSE 						//! Can this food be sliced with a knife
+	var/slice_product = null 					//! Type to spawn when we slice this food
+	var/slice_amount = 1						//! How many slices to spawn after slicing
+	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
+	var/slice_suffix = "slice" 					//! When we want to name them slices or wedges or what-have-you
 	rc_flags = 0
 
 	proc/on_table()
-		if (!isturf(src.loc)) return 0
-		for (var/atom/movable/M in src.loc) //Arguably more elegant than a million locates. I don't think locate works with derived classes.
-			if (istype(M, /obj/table))
-				return 1
-		return 0
+		if (!isturf(src.loc))
+			return FALSE
+		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
+			return TRUE
+		return FALSE
 
 	proc/get_food_color()
 		if (food_color) // keep manually defined food colors
@@ -213,9 +206,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (!bypass_utensils)
 					var/utensil = null
 
-					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+					if (src.required_utensil == REQUIRED_UTENSIL_FORK && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-					else if (src.needspoon && isspooningtool(user.equipped()))
+					else if (src.required_utensil == REQUIRED_UTENSIL_SPOON && isspooningtool(user.equipped()))
 						utensil = user.equipped()
 
 					// If it's a plastic fork we've found then test if we've broken it
@@ -232,13 +225,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 							plastic_spoon.break_utensil(M)
 							utensil = null
 
-					if (!utensil && (needfork || needspoon))
-						if (needfork && needspoon)
-							boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
-						else if (needfork)
-							boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
-						else if (needspoon)
-							boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
+					if (!utensil && (src.required_utensil))
+						switch(src.required_utensil)
+							if (REQUIRED_UTENSIL_FORK_OR_SPOON)
+								boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
+							if (REQUIRED_UTENSIL_FORK)
+								boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+							if (REQUIRED_UTENSIL_SPOON)
+								boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
 
 						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 						return

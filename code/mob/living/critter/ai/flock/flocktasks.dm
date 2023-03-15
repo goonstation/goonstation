@@ -405,7 +405,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
@@ -484,7 +483,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
@@ -948,7 +946,6 @@ stare
 	if (drone)
 		drone.set_hand(2) // nanite spray
 		drone.set_a_intent(INTENT_DISARM)
-		drone.hud?.update_intent()
 		drone.hud?.update_hands()
 	has_started = FALSE
 
@@ -972,7 +969,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
@@ -1035,7 +1031,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_DISARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/succeedable/barricade
@@ -1097,7 +1092,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/get_targets()

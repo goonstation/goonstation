@@ -28042,7 +28042,6 @@
 /area/station/quartermaster/office)
 "bzt" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor/yellow/side{
@@ -36976,7 +36975,6 @@
 /area/station/storage/warehouse)
 "bWZ" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor/escape{
@@ -39832,7 +39830,6 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -40316,7 +40313,6 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,

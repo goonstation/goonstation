@@ -10,7 +10,7 @@
 
 	var/started = FALSE
 	///Pity respawn max
-	var/max_tries = 2
+	var/max_respawns = 1
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
 
@@ -78,7 +78,7 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (!src.flock)
+	if (!src.flock || src.flock.dead)
 		return
 	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
@@ -139,11 +139,12 @@
 	if (src.tutorial && !suicide)
 		return
 	src.emote("scream")
-	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_tries)
+	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_respawns)
 		src.reset()
 		src.flock.perish(FALSE)
 		src.flock.stats.respawns++
-		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns].</b></span>")
+		logTheThing(LOG_GAMEMODE, src, "respawns using pity respawn number [src.flock.stats.respawns]")
+		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns + 1].</b></span>")
 		return
 	. = ..()
 	if(src.client)

@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	sliceable = FALSE
 	var/slicetype = /obj/item/reagent_containers/food/snacks/pieslice
 	var/splat = 0 // for thrown pies
@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	name = "slice of pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	desc = "A slice of null pie. You shouldn't be able to see this!"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	food_effects = list("food_refreshed","food_cold")
 	bites_left = 1
 	heal_amt = 4
@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	desc = "It smells delicious. You just want to plant your face in it."
 	icon_state = "pie"
 	splat = 1
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 3
 	throwforce = 0
 	force = 0
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	desc = "More often used in pranks than culinary matters..."
 	icon_state = "creampie"
 	splat = 1
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	throwforce = 0
 	force = 0
 	bites_left = 2
