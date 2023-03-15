@@ -31513,8 +31513,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bKw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -32036,7 +32037,7 @@
 /obj/window_blinds/cog2/middle,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bLO" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -49937,7 +49938,7 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/engine/elect)
+/area/station/engine/power)
 "eXq" = (
 /obj/machinery/vehicle/pod_smooth/light,
 /obj/machinery/light{
@@ -52512,6 +52513,9 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"hRQ" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power)
 "hRW" = (
 /obj/item/toy/plush/small{
 	layer = 3.1;
@@ -109938,7 +109942,7 @@ bGw
 bGw
 bGw
 ctE
-bLM
+hRQ
 bLM
 bLM
 bLM
@@ -111146,8 +111150,8 @@ rhb
 dJf
 dJf
 lJn
-bLM
-bLM
+hRQ
+hRQ
 qMw
 bNo
 vsM
@@ -111449,7 +111453,7 @@ dJf
 qWY
 vLE
 bJi
-bLM
+hRQ
 bbg
 bNp
 bOR
@@ -112053,7 +112057,7 @@ dKt
 qog
 hJn
 xRA
-bLM
+hRQ
 bLT
 bNq
 vdE
@@ -112355,7 +112359,7 @@ bGw
 gjD
 rMu
 bHo
-bLM
+hRQ
 bLU
 clf
 sKw

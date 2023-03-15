@@ -57,6 +57,9 @@
 	desc = "Uhh, how long has this even been here? It looks kinda grubby and, uhh, singed. Wait, is that blood?"
 	icon_state = "santa"
 	item_state = "santahat"
+	hides_from_examine = C_EARS
+	c_flags = null
+	see_face = 1
 
 	noslow
 		setupProperties()
@@ -339,6 +342,7 @@
 	icon_state = "batman"
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
+	hides_from_examine = C_EARS
 	see_face = 0
 
 /obj/item/clothing/head/helmet/batman
@@ -346,6 +350,9 @@
 	desc = "I AM THE BAT"
 	icon_state = "batcowl"
 	item_state = "batcowl"
+	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_EARS
+	see_face = 0
 
 // see procitizen.dm for batman verbs
 
@@ -652,19 +659,20 @@
 	item_state = "bogloves"
 	see_face = 0
 	obstructs = C_EARS|C_GLASSES
+	hides_from_examine = C_GLASSES|C_EARS
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
 	desc = "FAPPO!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	see_face = 0
 
 /obj/item/clothing/mask/horse_mask
 	name = "horse mask"
 	desc = "Neigh."
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_GLASSES|C_EARS
 	see_face = 0
 	obstructs = C_EARS|C_GLASSES
 
@@ -683,6 +691,7 @@
 	icon_state = "genki"
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 	obstructs = C_EARS|C_GLASSES
+	hides_from_examine = C_EARS|C_GLASSES
 
 //birdman for nieks
 
@@ -692,6 +701,7 @@
 	icon_state = "birdman"
 	see_face = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //FACT: space birds can breathe in space
+	hides_from_examine = C_EARS
 
 /obj/item/clothing/under/gimmick/birdman
 	name = "birdman suit"
@@ -735,6 +745,9 @@
 	see_face = 0
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
 	obstructs = C_EARS|C_GLASSES|C_MASK
+	c_flags = COVERSEYES | COVERSMOUTH
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
@@ -894,6 +907,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_LAYER_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
@@ -930,6 +944,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_OVERLAY_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 	over_hair = TRUE
@@ -970,6 +985,9 @@
 	item_state = "mobile_suit"
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
 	obstructs = C_EARS|C_GLASSES|C_MASK
+	c_flags = COVERSMOUTH | COVERSEYES
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/armor/sneaking_suit
 	name = "sneaking suit"
@@ -1412,6 +1430,7 @@
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
@@ -1420,6 +1439,8 @@
 	name = "red skull mask and cowl"
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 	hides_from_examine = C_MASK|C_GLASSES|C_EARS
 	obstructs = C_MASK|C_GLASSES|C_EARS
@@ -1789,6 +1810,10 @@
 	item_state = "big_lizard"
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	obstructs = C_EARS|C_MASK|C_GLASSES
+	c_flags = COVERSMOUTH | COVERSEYES
+	seal_hair = 1
+	see_face = 0
+
 
 //sock hats
 
