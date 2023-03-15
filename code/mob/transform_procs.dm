@@ -822,10 +822,12 @@ var/respawn_arena_enabled = 0
 	if (src.mind || src.client)
 		if(flock == null)
 			// no flocks given, make flockmind
+			var/datum/mind/flock_mind = src.mind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
 			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
-			src.mind.add_antagonist(ROLE_FLOCKMIND)
-			return
+			flock_mind.add_antagonist(ROLE_FLOCKMIND)
+			if (isflockmob(flock_mind.current))
+				return flock_mind.current
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
