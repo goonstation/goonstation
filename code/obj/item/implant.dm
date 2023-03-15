@@ -356,7 +356,7 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack //Security w/o ass implant
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
@@ -717,8 +717,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return 0
-		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, "<span class='alert'>[H] is protected from mindhacking by \an [AM.name]!</span>")
+		if((locate(/obj/item/implant/health/security/anti_mindhack) in H.implant) && H.health >= 30)
+			boutput(user, "<span class='alert'>[H]'s fortitude is too strong and is protected from mindhacking by an Anti-Mindhack implant! They need to be highly weakened first.</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
@@ -744,9 +744,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!ishuman(M) || (src.uses <= 0))
 			return
 
-		boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
-		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 10 SECONDS)
+		boutput(M, "<span class='alert'>A bolt of a new found purpose curves through your veins!</span>")
+		M.reagents.add_reagent("omnizine",15)
+		M.reagents.add_reagent("synaptizine", 10)
+		M.reagents.add_reagent("saline", 10)
+		M.reagents.add_reagent("salbutamol", 10)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
