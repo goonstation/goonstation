@@ -302,6 +302,7 @@ TYPEINFO(/obj/machinery/power/solar)
 
 /obj/machinery/computer/solar_control/New()
 	..()
+	AddComponent(/datum/component/mechanics_holder)
 	SPAWN(1.5 SECONDS)
 		var/turf/T = get_turf(src)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -325,6 +326,7 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	lastgen = gen
 	gen = 0
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 	if(status & (NOPOWER | BROKEN))
 		return

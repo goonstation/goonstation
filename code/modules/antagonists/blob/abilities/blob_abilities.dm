@@ -635,8 +635,9 @@
 		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
-			if (blob_o?.mind) //ahem ahem AI blobs exist
-				blob_o.mind.blob_absorb_victims += target
+			var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+			if (antag_role)
+				antag_role.absorbed_victims += target
 			return
 
 		if (!ishuman(target))
@@ -646,8 +647,8 @@
 
 		var/mob/living/carbon/human/H = target
 
-		if (blob_o?.mind) //ahem ahem AI blobs exist
-			blob_o.mind.blob_absorb_victims += H
+		var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2

@@ -17,6 +17,8 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Are we the memory of a dead flockmind?
+	var/dead = FALSE
 	/// number of zero compute flocktraces the flock has
 	var/free_traces = 0
 	var/queued_trace_deaths = 0
@@ -657,6 +659,7 @@ var/flock_signal_unleashed = FALSE
 	if (!real)
 		src.load_structures()
 		return
+	src.dead = TRUE
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
 	if (src.flockmind)
@@ -790,7 +793,7 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/z_level_check(var/atom/A)
 	var/turf/T = get_turf(A)
-	if (src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
+	if (src.dead || src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 

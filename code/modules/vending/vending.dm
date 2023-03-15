@@ -617,6 +617,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 							src.credit -= product.product_cost
 					src.currently_vending = null
 					update_static_data(usr)
+				if(product.logged_on_vend)
+					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
+				if(player_list)
+					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
 	. = TRUE
 
 /obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)

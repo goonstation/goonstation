@@ -10,7 +10,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	_health = 150
 	_max_health = 150
-	var/armed = 0
+	var/armed = FALSE
 	var/det_time = 0
 	var/timer_default = 10 MINUTES
 	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
@@ -197,7 +197,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 				if (src.disk && istype(src.disk))
 					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
 					return
-				if (src.armed == 0)
+				if (!src.armed)
 					boutput(user, "<span class='alert'>The [src.name] isn't armed yet.</span>")
 					return
 

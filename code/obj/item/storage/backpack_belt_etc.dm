@@ -967,20 +967,16 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
-	var/has_added_antagonist_role = FALSE // Whether the belt has added an antagonist role to the owner.
 
 	equipped(var/mob/user)
 		..()
-		if (user.mind?.add_antagonist(ROLE_WRESTLER, do_equip = FALSE, respect_mutual_exclusives = FALSE, do_pseudo = TRUE))
-			var/datum/antagonist/wrestler/antag_role = user.mind?.get_antagonist(ROLE_WRESTLER)
-			antag_role.give_equipment(src.fake)
-			src.has_added_antagonist_role = TRUE
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		if (src.has_added_antagonist_role)
-			user.mind?.remove_antagonist(ROLE_WRESTLER)
-			src.has_added_antagonist_role = FALSE
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"

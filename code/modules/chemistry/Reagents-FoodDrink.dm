@@ -3088,16 +3088,6 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='notice'>That tasted amazing!</span>")
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
-					if (prob(10))
-						M.take_toxin_damage(rand(2,4) * mult)
-					if (prob(7))
-						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatusMin("stunned", 4 SECONDS * mult)
-				..()
-
 		fooddrink/egg
 			name = "egg"
 			id = "egg"
