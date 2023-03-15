@@ -199,6 +199,18 @@
 				src.rate = -src.rate
 			src.angle = rand(1,359)
 			// is the default settings pre #13206, but with 50% chance of random eclipsing
+		if ("atlas") // X3 and X5 are visible in the background, meaning it's near quadriga.
+			src.zlevel = 1
+			src.name = "Typhon"
+			src.desc = "Hanging around near the channel, there's plenty of illumination from Typhon."
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_status = ECLIPSE_FALSE
+			src.eclipse_order = list(ECLIPSE_FALSE)
+			src.visibility = 1
+			src.photovoltaic_efficiency = 2.5
+			src.rate = rand(75,125)/50
+			if(prob(50)) src.rate = -src.rate
+			src.angle = rand(1, 359)
 		if ("travel") // for ship maps (in deep space). Uses a slightly randomer randomiser
 			src.name = pick("Typhon", "Fugg", "Shidd")
 			src.desc = "Ship is currently in deep space, with its main lighting coming from [src.name]."

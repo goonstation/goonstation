@@ -201,8 +201,10 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
-		if (control.tracker.targetstar) // change the solars power generation based on the eclipse and pv efficiency
-			sgen *= control.tracker.targetstar.visibility * control.tracker.targetstar.photovoltaic_efficiency
+		if (!isnull(control))
+			if (!isnull(control.tracker))
+				if (!isnull(control.tracker.targetstar))// change the solars power generation based on the eclipse and pv efficiency
+					sgen *= control.tracker.targetstar.visibility * control.tracker.targetstar.photovoltaic_efficiency
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.get_direct_powernet())
@@ -381,7 +383,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		t += "Error! No tracker data available.<BR>"
 	else
 		if (!src.tracker.targetstar || src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
-			t += "Catastrophic Error! Stellar Data Corrupted<BR>"
+			t += "Catastrophic Error!<BR>Stellar Data Corrupted<BR>"
 		else
 			t += "<B>Target: [src.tracker.targetstar.name]</B><BR>"
 			t += "<B>Station location:</B> [src.tracker.targetstar.desc]<BR>"
