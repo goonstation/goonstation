@@ -1333,11 +1333,11 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "door1"
 		bookshelf
 			recipe_id = "bookshelf"
-			craftedType = /obj/item/furniture_parts/bookshelf
+			craftedType = /obj/bookshelf
 			name = "Bookshelf"
 			sheet_cost = 5
 			icon = 'icons/obj/furniture/bookshelf.dmi'
-			icon_state = "bookshelf_parts"
+			icon_state = "bookshelf_small"
 		wood_double_door
 			recipe_id = "wood_double_door"
 			craftedType = /obj/machinery/door/unpowered/wood/pyro
