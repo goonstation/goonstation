@@ -4575,9 +4575,9 @@ datum
 				..()
 			on_add()
 				if(holder.get_reagent_amount("miasma") > 0)
-var/miasma_amount = src.holder.get_reagent_amount("miasma")
-src.holder.remove_reagent("miasma", src.get_reagent_amount(src.id) * 2)
-src.holder.remove_reagent(src.id, miasma_amount/2)
+					var/miasma_amount = src.holder.get_reagent_amount("miasma")
+					src.holder.remove_reagent("miasma", src.get_reagent_amount(src.id) * 2)
+					src.holder.remove_reagent(src.id, miasma_amount/2)
 
 		fooddrink/lavenderlatte
 			name = "lavender latte"
