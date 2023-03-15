@@ -2233,33 +2233,36 @@ TYPEINFO(/obj/item/gun/implanter)
 /* ------------------------ Implant Remover ---------------------- */
 /* =============================================================== */
 
-/obj/item/implant_remover
+/obj/item/device/implant_remover
 	name = "implant remover"
-	desc = "A vicious looking bladed tool for cutting out implants."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw"
-	force = 7
-	hit_type = DAMAGE_CUT
-	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	desc = "A powerful electromagnet, capable of annihilating any non-syndicate implants."
+	icon_state = "satcom"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
 
 	attack(mob/M, mob/user, def_zone, is_special)
-		if (ishuman(M))
-			var/mob/living/carbon/human/human = M
-			if (length(human.implant))
-				playsound(human, 'sound/impact_sounds/circsaw.ogg', 50, 1, pitch = 0.5)
-				var/datum/action/bar/icon/callback/bar = new(user, M, 3 SECONDS, .proc/remove_implant, list(M, user), src.icon, src.icon_state, "<span class='alert'>You cut the implant out of [M]'s chest, destroying it in the process.</span>", null)
-				bar.call_proc_on = src
-				actions.start(bar, user)
-				return
-		. = ..()
+		playsound(M, 'sound/machines/shieldoverload.ogg', 40, 1)
+		boutput(user, "<span class='alert'>You begin purging [M]'s body of implants.</span>")
+		var/datum/action/bar/icon/callback/bar = new(user, M, 3 SECONDS, .proc/remove_implant, list(M, user), src.icon, src.icon_state, "", null)
+		bar.call_proc_on = src
+		actions.start(bar, user)
 
 	proc/remove_implant(mob/living/carbon/human/target, mob/user)
-		playsound(target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 		target.emote("scream")
-		if (in_interact_range(target, user) && length(target.implant))
-			for (var/obj/item/implant/implant in target.implant)
+		//this is cursed, why
+		var/list/implants = list()
+		if (ishuman(target))
+			var/mob/living/carbon/human/human = target
+			implants = human.implant
+		else if (ismobcritter(target))
+			var/mob/living/critter/critter = target
+			implants = critter.implants
+
+		if (in_interact_range(target, user))
+			target.TakeDamage("chest", 0, rand(5,10)) //always take some burn damage
+			for (var/obj/item/implant/implant in implants)
+				if (implant.scan_category == "syndicate")
+					continue
 				implant.cut_out()
 				qdel(implant)
-				take_bleeding_damage(target, user, 10, DAMAGE_CUT)
+				target.TakeDamage("chest", 0, 10)
