@@ -689,7 +689,7 @@
 
 /datum/limb/brullbar
 	var/log_name = "brullbar limbs"
-	var/quality = 1
+	var/quality = 0.7
 	var/king = FALSE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -767,15 +767,16 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(15, disorient = 1 SECONDS)
 		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+		ON_COOLDOWN(src, "limb_cooldown", 20)
 
 /datum/limb/brullbar/king
 	log_name = "king brullbar limbs"
-	quality = 1.5
+	quality = 1.4
 	king = TRUE
 
 /datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
+	quality = 1
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because

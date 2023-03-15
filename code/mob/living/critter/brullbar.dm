@@ -141,7 +141,7 @@
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30) )
+		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
 		if (!frenzy.disabled && frenzy.cooldowncheck() && is_incapacitated(target) && prob(30))
 			frenzy.handleCast(target)
