@@ -904,7 +904,7 @@ proc/broadcast_to_all_gangs(var/message)
 					user.equip_if_possible(headset, user.slot_r_store)
 				else if (!user.l_store)
 					user.equip_if_possible(headset, user.slot_l_store)
-				else if (istype(user.back, /obj/item/storage/) && length(user.back.contents) < 7)
+				else if (user.back?.storage && !user.back.storage.is_full())
 					user.equip_if_possible(headset, user.slot_in_backpack)
 				else
 					user.put_in_hand_or_drop(headset)
