@@ -83,6 +83,11 @@
 			if(new_color)
 				target.transition_filter(params["name"], 4, list("color" = new_color))
 				. = TRUE
+		if("convert_color_value_matrix")
+			var/new_color = normalize_color_to_matrix(target.filter_data[params["name"]]["color"])
+			if(new_color)
+				target.transition_filter(params["name"], 4, list("color" = new_color))
+				. = TRUE
 		if("modify_icon_value")
 			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
 			if(new_icon)
