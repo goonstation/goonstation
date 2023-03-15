@@ -439,6 +439,12 @@
 /mob/living/critter/flock/drone/is_spacefaring()
 	return TRUE
 
+/mob/living/critter/flock/drone/special_movedelay_mod(delay,space_movement,aquatic_movement)
+	. = delay
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. += 2
+
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflockmob(mover))
 		return TRUE
