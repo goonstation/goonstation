@@ -749,6 +749,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		M.reagents.add_reagent("synaptizine", 10)
 		M.reagents.add_reagent("saline", 10)
 		M.reagents.add_reagent("salbutamol", 10)
+		M.reagents.add_reagent("anti_rad", 20)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
