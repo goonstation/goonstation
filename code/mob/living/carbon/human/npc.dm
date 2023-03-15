@@ -797,7 +797,7 @@
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(!src.back?.storage?.is_full())
+		else if(src.back?.storage && !src.back.storage.is_full())
 			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup

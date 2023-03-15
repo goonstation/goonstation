@@ -76,7 +76,7 @@
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_r_store)
 		else if (!H.l_store)
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_l_store)
-		else if (!H.back?.storage?.is_full())
+		else if (H.back?.storage && !H.back.storage.is_full())
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_in_backpack)
 		else
 			var/obj/camera = new /obj/item/camera/spy(get_turf(H))

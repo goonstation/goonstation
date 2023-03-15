@@ -84,7 +84,7 @@
 		return
 
 	var/the_slot = null
-	if (!leader.back?.storage?.is_full())
+	if (leader.back?.storage && !leader.back.storage.is_full())
 		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
 		the_slot = "backpack"
 	else
