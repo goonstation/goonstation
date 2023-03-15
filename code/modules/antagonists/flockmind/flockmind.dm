@@ -3,6 +3,12 @@
 	display_name = "flockmind"
 	intangible_mob_path = /mob/living/intangible/flock/flockmind
 
+	give_equipment()
+		. = ..()
+		if (isflockmob(src.owner.current))
+			var/mob/living/intangible/flock/flockmob = src.owner.current
+			flockmob.flock.flockmind_mind = src.owner
+
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/flock, src)
 
