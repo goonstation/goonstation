@@ -111,6 +111,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/generic/implant_remover
+	name = "Implant Remover"
+	item = /obj/item/device/implant_remover
+	cost = 2
+	desc = "A powerful electromagnet, capable of annihilating any non-syndicate implants in someone's body after a short delay. Useful for those pesky security implants or for ditching a tracker."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
