@@ -157,33 +157,31 @@
 			boutput(M, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
 
-		if (istype(ticker.mode, /datum/game_mode/gang))
-			var/datum/game_mode/gang/mode = ticker.mode
-			mode.uniform_prompt(M.mind)
-		else
-			boutput(M, "<span class='alert'>The round's mode isn't Gang, you can't place a locker here!.</span>")
+		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
+		if (!antag_role)
 			return
 
-		M.mind.gang.base = area
+		antag_role.gang.select_gang_uniform()
+		antag_role.gang.base = area
 		area.gang_base = 1
 
 		for(var/obj/decal/cleanable/gangtag/G in area)
-			if(G.owners == M.mind.gang) continue
+			if(G.owners == antag_role.gang) continue
 			var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,G.loc)
-			T.icon_state = "gangtag[M.mind.gang.gang_tag]"
-			T.name = "[M.mind.gang.gang_name] tag"
-			T.owners = M.mind.gang
+			T.icon_state = "gangtag[antag_role.gang.gang_tag]"
+			T.name = "[antag_role.gang.gang_name] tag"
+			T.owners = antag_role.gang
 			T.delete_same_tags()
 			break
 
 		var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
-		locker.name = "[M.mind.gang.gang_name] Locker"
-		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [usr.mind.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
-		locker.gang = M.mind.gang
-		ticker.mode:gang_lockers += locker
-		M.mind.gang.locker = locker
+		locker.name = "[antag_role.gang.gang_name] Locker"
+		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
+		locker.gang = antag_role.gang
+		antag_role.gang.locker = locker
 		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
+		M.remove_ability_holder(/datum/abilityHolder/gang)
 
 		return
