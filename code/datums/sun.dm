@@ -338,9 +338,6 @@
 			src.rate = 0
 			src.angle = 90 // we can literally see it on the map
 
-/datum/sun/New()
-	..()
-
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
 	src.counter++ // this 'should' be every game tick, 1/10th of a second
