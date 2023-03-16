@@ -326,6 +326,7 @@
 				return
 
 			M.full_heal()
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
@@ -336,8 +337,9 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src.owner.mind)
-			src.owner.antagonist_overlay_refresh(TRUE, FALSE)
+			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
+			if (istype(src.owner, /mob))
+				src.owner.antagonist_overlay_refresh(TRUE, FALSE)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")

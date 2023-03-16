@@ -4,8 +4,16 @@
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 
-	/// The ability holder of this vampire, containing their respective abilities. This is also used for tracking blood, at the moment.
+	/// The ability holder of the master of this vampire thrall, which is to be used alongside `src.master`, due to vampire TEGs.
+	var/datum/abilityHolder/vampire/master_ability_holder
+	/// The ability holder of this vampire thrall, containing their respective abilities. This is also used for tracking blood, at the moment.
 	var/datum/abilityHolder/vampiric_thrall/ability_holder
+
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
+		if (istype(master, /datum/abilityHolder/vampire))
+			src.master_ability_holder = master
+
+		. = ..()
 
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
@@ -16,9 +24,9 @@
 
 		var/mob/living/carbon/human/H = src.owner.current
 
-		H.decomp_stage = DECOMP_STAGE_NO_ROT
-		H.coreMR = H.mutantrace
-		H.set_mutantrace(/datum/mutantrace/vampiric_thrall)
+		if (!istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
+			H.coreMR = H.mutantrace
+			H.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 		H.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
 
 		var/datum/abilityHolder/vampiric_thrall/A = H.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
@@ -27,11 +35,13 @@
 		else
 			src.ability_holder = A
 
-		var/datum/abilityHolder/vampire/master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/vampire)
-		if (master_ability_holder)
-			src.ability_holder.master = master_ability_holder
-			master_ability_holder.thralls += H
-			master_ability_holder.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(master_ability_holder.thralls)
+		if (!src.master_ability_holder && src.master)
+			src.master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/vampire)
+
+		if (src.master_ability_holder)
+			src.ability_holder.master = src.master_ability_holder
+			src.master_ability_holder.thralls += H
+			src.master_ability_holder.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.master_ability_holder.thralls)
 
 		src.ability_holder.addAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
@@ -54,4 +64,9 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</B></span>")
+		if (src.master)
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</B></span>")
+		else if (istype(src.master_ability_holder.owner, /mob))
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master_ability_holder.owner.real_name]!</B></span>")
+		else if (istype(src.master_ability_holder.owner, /obj/machinery/power/generatorTemp))
+			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve the Bone Generator!</B></span>")
