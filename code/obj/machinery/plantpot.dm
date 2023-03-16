@@ -12,6 +12,7 @@
 /obj/machinery/plantpot/hightech
 	name = "high-tech hydroponics tray"
 	desc = "A mostly debug-only plant tray that is capable of revealing more information about your plants."
+	more_info = TRUE
 
 	New()
 		..()
@@ -247,6 +248,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
 		// now it only does that if it needs to.
 	var/actionpassed 	//holds defines for action bar harvesting yay :D
+	var/more_info = FALSE // debug tray: show more info
+
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
@@ -264,18 +267,63 @@ TYPEINFO(/obj/machinery/plantpot)
 			net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
-	proc/post_alert(var/alert_msg)
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", .proc/mechcompScanPlant)
+
+	proc/post_alert(var/list/alert_data)
 		if(status & (NOPOWER|BROKEN)) return
-		if(!alert_msg) return
+		if(!alert_data) return
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
-		signal.data["data"] = alert_msg
+		// merge the alert data with the signal data to combine them
+		// signal.data["data"] = alert_msg
+		signal.data += alert_data
 		signal.data["netid"] = net_id
 		signal.data["address_tag"] = "plantpot_listener" // prevents unnecessarily sending to other plantpots
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+		// the alert data is a list of fields already, so just send that as a signal
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, list2params(alert_data))
+
+
+	proc/mechcompScanPlant(var/datum/mechanicsMessage/input)
+		if (!input) return
+		if (!src.current)
+			input.signal = "error=noplant"
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+			return
+		if (src.current.cantscan)
+			input.signal = "error=cantscan"
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+			return
+
+		var/list/plant_data = new
+		plant_data["event"] = "scan"
+		plant_data["plant"] = src.current.name
+		plant_data["generation"] = src.generation
+		plant_data["mat_rate"] = src.plantgenes.growtime
+		plant_data["prod_rate"] = src.plantgenes.harvtime
+		plant_data["yield"] = src.plantgenes.cropsize
+		plant_data["lifespan"] = src.plantgenes.harvests
+		plant_data["potency"] = src.plantgenes.potency
+		plant_data["endurance"] = src.plantgenes.endurance
+		plant_data["reagent_level"] = (src.reagents ? src.reagents.total_volume : 0)
+		plant_data["water_level"] = (src.reagents ? src.reagents.get_reagent_amount("water") : 0)
+
+		if (src.more_info)
+			// for the debug tray
+			var/datum/plant/growing = src.current
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
+			plant_data["hp"] = src.health
+			plant_data["hpmax"] = growing.starthealth
+			plant_data["growth"] = src.growth
+			plant_data["growthmax"] = growthlimit
+
+		input.signal = list2params(plant_data)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 
 	proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
 		var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
@@ -446,6 +494,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(!harvest_warning && HYPcheck_if_harvestable())
 			src.harvest_warning = 1
 			do_update_icon = TRUE
+			post_alert(list("event" = "harvestable", "plant" = src.current.name))
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
 			do_update_icon = TRUE
@@ -1343,6 +1392,11 @@ TYPEINFO(/obj/machinery/plantpot)
 					JOB_XP(user, "Botanist", 1)
 
 			boutput(user, "<span class='notice'>You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""].</span>")
+			post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = cropcount, "seeds" = seedcount))
+#ifdef DATALOGGER
+			game_stats.Increment("hydro_harvests")
+			game_stats.IncrementBy("hydro_produce", cropcount)
+#endif
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1398,7 +1452,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				// else just don't reduce the harvests
 			else
 				src.harvests--
-		if(growing.isgrass)
+		if(growing.isgrass || src.harvests <= 0)
 			// Vegetable-style plants always die after one harvest irregardless of harvests
 			// remaining, though they do get bonuses for having a good harvests gene.
 			HYPkillplant()
@@ -1479,7 +1533,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		qdel(SEED)
 
 		HYPmutateplant(1)
-		post_alert("event_new")
+		post_alert(list("event" = "new", "plant" = src.current.name))
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
@@ -1492,7 +1546,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.dead = 1
 		src.recently_harvested = 0
 		src.grow_level = 0
-		post_alert("event_death")
+		post_alert(list("event" = "death", "plant" = src.current.name))
 		src.health_warning = 0
 		src.harvest_warning = 0
 		UpdateIcon()
@@ -1524,7 +1578,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.generation = 0
 		UpdateIcon()
 		update_name()
-		post_alert("event_cleared")
+		post_alert(list("event" = "cleared"))
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
 		// The proc to use for causing health damage to plants. You can just directly alter

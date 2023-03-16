@@ -27,7 +27,7 @@
 								/obj/critter/lion,
 								/obj/critter/wraithskeleton,
 								/obj/critter/bear,
-								/obj/critter/brullbar,
+								/mob/living/critter/brullbar,
 								/obj/critter/gunbot/heavy)
 
 	New(var/mob_type_chosen = null)
@@ -158,7 +158,7 @@
 				return 3
 			if (/obj/critter/lion)
 				return 5
-			if (/obj/critter/brullbar)
+			if (/mob/living/critter/brullbar)
 				return 15
 			if (/obj/critter/gunbot/heavy)
 				return 15

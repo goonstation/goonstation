@@ -797,7 +797,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 

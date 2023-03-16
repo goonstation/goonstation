@@ -2,8 +2,6 @@
 	id = ROLE_SALVAGER
 	display_name = ROLE_SALVAGER
 
-	var/static/datum/allocated_region/home_base
-	var/static/building_base = FALSE
 	var/static/starting_freq = null
 
 	is_compatible_with(datum/mind/mind)
@@ -40,6 +38,9 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), H.slot_wear_id)
+
+
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)
@@ -53,19 +54,6 @@
 		new /datum/objective_set/salvager(src.owner, src)
 
 	relocate()
-#ifdef SECRETS_ENABLED
-		var/time = TIME
-		while(building_base) // yield to builder for a bit
-			sleep(0.5 SECONDS)
-			if( (TIME - time ) > 20 SECONDS)
-				break
-		if(!src.home_base)
-			building_base = TRUE
-			src.home_base = get_singleton(/datum/mapPrefab/allocated/salvager).load()
-			sleep(0.5 SECONDS)
-			building_base = FALSE
-#endif
-
 		if (!landmarks[LANDMARK_SALVAGER])
 			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
 			return 0

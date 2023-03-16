@@ -3962,6 +3962,10 @@ datum
 			on_add()
 				if (holder && ismob(holder.my_atom))
 					holder.my_atom.setStatus("miasma", duration = INFINITE_STATUS)
+				if(holder.get_reagent_amount("lavender_essence") > 0)
+					var/lavender_amount = src.holder.get_reagent_amount("lavender_essence")
+					src.holder.remove_reagent("lavender_essence", (src.holder.get_reagent_amount("miasma")/2))
+					src.holder.remove_reagent("miasma", lavender_amount*2)
 
 			on_remove()
 				if (ismob(holder.my_atom))
