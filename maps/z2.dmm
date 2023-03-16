@@ -71024,13 +71024,9 @@
 	name = "virtualizer pad"
 	},
 /mob/living/critter/bear{
-	aggressive = 0;
 	desc = "Wow, you haven't seen this guy since 2014!";
-	generic = 0;
-	material = null;
 	name = "DOngEun MesTur";
-	quality = 420;
-	wanderer = 0
+	
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
