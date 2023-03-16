@@ -325,6 +325,7 @@ obj/structure/ex_act(severity)
 	anchored = 1
 	density = 1
 	opacity = 1
+	mat_appearances_to_ignore = list("wood")
 	var/health = 30
 	var/health_max = 30
 	var/builtby = null
