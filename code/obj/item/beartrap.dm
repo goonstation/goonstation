@@ -48,7 +48,7 @@
 			actions.start(action_bar, M)
 		return
 
-	Crossed(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob)
 		if ((isliving(AM)) && (src.armed))
 			var/mob/living/M = AM
 			src.triggered(M)
