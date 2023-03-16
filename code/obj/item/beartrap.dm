@@ -49,22 +49,12 @@
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
-		if ((ishuman(AM)) && (src.armed))
-			var/mob/living/carbon/H = AM
-			src.triggered(H)
-			H.visible_message("<span class='alert'><B>[H] steps on the bear trap!</B></span>",\
+		if ((isliving(AM)) && (src.armed))
+			var/mob/living/M = AM
+			src.triggered(M)
+			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
 			"<span class='alert'><B>You step on the bear trap!</B></span>")
-
-		else if (istype(AM, /mob/living/critter/bear) && (src.armed))
-			var/mob/living/critter/bear/M = AM
-			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
-			set_icon_state("bear_trap-close")
-			src.armed = FALSE
-			src.anchored = FALSE
-			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
-			M.CritterDeath()
-		..()
-		return
+			..()
 
 	proc/arm(mob/M)
 		if (!src.armed)
@@ -88,14 +78,16 @@
 		if (!src || !src.armed)
 			return
 
-		if (target && ishuman(target))
-			var/mob/living/carbon/human/H = target
-			logTheThing(LOG_COMBAT, H, "stood on a [src] at [log_loc(src)].")
-			H.changeStatus("stunned", 4 SECONDS)
-			H.force_laydown_standup()
-			random_brute_damage(H, 50, 0)
-			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
-			H.UpdateDamageIcon()
+		if (target && isliving(target))
+			var/mob/living/M = target
+			logTheThing(LOG_COMBAT, M, "stood on a [src] at [log_loc(src)].")
+			if(istype(M, /mob/living/critter/bear))
+				M.death()
+			M.changeStatus("stunned", 4 SECONDS)
+			M.force_laydown_standup()
+			random_brute_damage(M, 50, 0)
+			take_bleeding_damage(M, null, 15, DAMAGE_CUT)
+			M.UpdateDamageIcon()
 
 		if (target)
 			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
