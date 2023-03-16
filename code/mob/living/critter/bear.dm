@@ -22,8 +22,8 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/bear
 	is_npc = TRUE
-	//left_arm = /obj/item/parts/human_parts/arm/left/bear
-	//right_arm = /obj/item/parts/human_parts/arm/right/bear
+	left_arm = /obj/item/parts/human_parts/arm/left/bear
+	right_arm = /obj/item/parts/human_parts/arm/right/bear
 	var/droparms = TRUE
 
 	on_pet(mob/user)
@@ -41,13 +41,13 @@
 				if (!HH.limb)
 					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
 					return
-				//actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
+				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
 			else if (user.zone_sel.selecting == "r_arm")
 				HH = hands[2]
 				if (!HH.limb)
 					boutput(user, ("<span class='alert'><B> [src] has no right arm! </B></span>"))
 					return
-				//actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
+				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -112,7 +112,7 @@
 					playsound(src.loc, 'sound/voice/MEraaargh.ogg', 40, 0)
 			return ..()
 
-	proc/update_dead_icon()
+	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
 		. = "abear"
 		if (!HH.limb)
