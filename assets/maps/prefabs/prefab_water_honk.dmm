@@ -848,7 +848,7 @@
 /area/prefab/slimy_honk)
 "cV" = (
 /obj/machinery/light/small/floor/harsh/very,
-/obj/critter/bear,
+/mob/living/critter/bear,
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)

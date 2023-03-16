@@ -8557,7 +8557,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
 "kiM" = (
-/obj/critter/bear,
+/mob/living/critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "kiO" = (

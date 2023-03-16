@@ -26,7 +26,7 @@
 								/obj/critter/bat/buff,
 								/obj/critter/lion,
 								/obj/critter/wraithskeleton,
-								/obj/critter/bear,
+								/mob/living/critter/bear,
 								/obj/critter/brullbar,
 								/obj/critter/gunbot/heavy)
 
@@ -146,7 +146,7 @@
 
 	proc/getMobValue(var/obj/O)
 		switch (O)
-			if (/obj/critter/bear)
+			if (/mob/living/critter/bear)
 				return 10
 			if (/obj/critter/wraithskeleton)
 				return 4

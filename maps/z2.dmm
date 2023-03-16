@@ -17153,7 +17153,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcp" = (
-/obj/critter/bear,
+/mob/living/critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcq" = (
@@ -61483,7 +61483,7 @@
 	desc = "A pad used for virtual reality experimentation.";
 	name = "virtualizer pad"
 	},
-/obj/critter/bear{
+/mob/living/critter/bear{
 	aggressive = 0;
 	desc = "Wow, you haven't seen this guy since 2014!";
 	generic = 0;

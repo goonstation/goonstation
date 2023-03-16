@@ -1083,7 +1083,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/mob/living/critter/bear)
 
 	tomato
 		name = "Killer Tomato"

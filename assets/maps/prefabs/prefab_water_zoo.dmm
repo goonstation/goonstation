@@ -155,7 +155,7 @@
 	},
 /area/prefab/zoo)
 "E" = (
-/obj/critter/bear,
+/mob/living/critter/bear,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

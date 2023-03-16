@@ -370,7 +370,7 @@
 	name = "Animal Siege"
 	warning_text = "A pack of animals have been teleported on board our station!"
 	attacker_types = list(/obj/critter/wasp, /mob/living/critter/small_animal/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /mob/living/critter/small_animal/cat, /mob/living/critter/spider/nice, /mob/living/critter/spider/spacerachnid)
-	bosses = list(/obj/critter/lion, /obj/critter/bear)
+	bosses = list(/obj/critter/lion, /mob/living/critter/bear)
 	original_size = 30
 	original_bosses = 5
 	is_abstract = 0
