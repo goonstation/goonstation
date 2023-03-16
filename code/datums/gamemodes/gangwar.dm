@@ -216,7 +216,7 @@
 		force_shuttle()
 	slow_process ++
 	boutput(world, slow_process)
-	if (slow_process < 20)
+	if (slow_process < 5)
 		return
 	else
 		slow_process = 0
@@ -224,19 +224,34 @@
 	for(var/datum/gang/G in gangs)
 		if (G.leader)
 			var/mob/living/carbon/human/H = G.leader.current
-			if (istype(H))
-				if (G.gear_worn(H) == 2)
-					H.setStatus("ganger", duration = INFINITE_STATUS)
-				else
-					H.delStatus("ganger")
+			var/turf/sourceturf = get_turf(H)
+			if ((G in sourceturf.gang_control) && G.gear_worn(H) == 2)
+				H.setStatus("ganger", duration = INFINITE_STATUS)
+			else
+				H.delStatus("ganger")
+
 		if (islist(G.members))
 			for (var/datum/mind/M in G.members)
 				var/mob/living/carbon/human/H = M.current
-				if (istype(H))
-					if (G.gear_worn(H) == 2)
+				var/turf/sourceturf = get_turf(H)
+				var/gearworn = G.gear_worn(H)
+
+				if ((G in sourceturf.gang_control)) //if we're in friendly territory (or contested territory)
+					H.delStatus("ganger_debuff")
+					if (gearworn == 2)  //gain a buff for wearing your gang outfit
 						H.setStatus("ganger", duration = INFINITE_STATUS)
 					else
 						H.delStatus("ganger")
+
+				else if (length(sourceturf.gang_control) > 0) //if we're in enemy territory (and not contested territory)
+					H.delStatus("ganger")
+					if (gearworn == 2) //gain a debuff for not wearing your outfit
+						H.delStatus("ganger_debuff")
+					else
+						H.setStatus("ganger_debuff", duration = INFINITE_STATUS)
+				else //if we're in neutral ground, remove all debuffs
+					H.delStatus("ganger_debuff")
+					H.delStatus("ganger")
 
 /datum/game_mode/gang/proc/increase_janktank_price()
 	janktank_price = round(janktank_price*1.1)
@@ -626,6 +641,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 	var/gang_name = "Gang Name"
 	var/gang_tag = 0
 	var/gang_frequency = 0
+	var/spray_paint_remaining = GANG_STARTING_SPRAYPAINT
 	var/obj/item/clothing/item1 = null
 	var/obj/item/clothing/item2 = null
 	var/area/base = null
@@ -924,7 +940,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			if (M?.mind?.gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
-				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
+				var/speedup = M.mind.gang.gear_worn(M)
 				switch (speedup)
 					if (1)
 						duration = 13 SECONDS
@@ -981,6 +997,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		T.delete_same_tags()
 		M.mind.gang.claim_tiles(target_turf)
 		target_area.gang_owners = M.mind.gang
+		qdel(S)
 		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
 /obj/ganglocker
@@ -1049,6 +1066,8 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
 				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
 				<font size="3">You have [gang.spendable_points] points to spend!</font>
+				<center><font size="6"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
+				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
 			</div>
 		    <div style="height: 150px;margin-left: 300px;padding-left: 5px;overflow: auto;"> [janktank] </div>
 		</div>
@@ -1080,6 +1099,8 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 
 		if (href_list["get_gear"])
 			handle_gang_gear(usr)
+		if (href_list["get_spray"])
+			handle_get_spraypaint(usr)
 		if (href_list["buy_item"])
 			if (usr.mind && usr.mind.gang != src.gang)
 				boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot purchase items from it.</span>")
@@ -1097,6 +1118,21 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 
+
+	proc/handle_get_spraypaint(var/mob/living/carbon/human/user)
+		var/image/overlay = null
+		if(user.mind.gang == src.gang)
+			if (gang.spray_paint_remaining > 0)
+				gang.spray_paint_remaining--
+				get_spray_bottle(user)
+				boutput(user, "<span class='alert'>You grab a bottle of spray paint from the locker..</span>")
+		else
+			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
+			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+
+		src.UpdateOverlays(overlay, "screen")
+		SPAWN(1 SECOND)
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	//Okay, this is fucked up. I don't know why get_gang_gear is a global proc and I don't care. - Kyle
 	proc/handle_gang_gear(var/mob/living/carbon/human/user)
@@ -1537,6 +1573,10 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 			flyer.desc = "A flyer offering membership in the [gang_name] gang."
 			flyer.gang = gang
 
+proc/get_spray_bottle(var/mob/living/carbon/human/user)
+	user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+
+
 proc/get_gang_gear(var/mob/living/carbon/human/user)
 	if (!istype(user)) return 0
 
@@ -1547,15 +1587,12 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 
 		var/hasitem1 = 0
 		var/hasitem2 = 0
-		var/haspaint = 0
 		var/hasheadset = 0
 		for(var/obj/item/I in user.contents)
 			if(istype(I,user.mind.gang.item1))
 				hasitem1 = 1
 			else if(istype(I,user.mind.gang.item2))
 				hasitem2 = 1
-			else if(istype(I,/obj/item/spray_paint))
-				haspaint = 1
 			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
 				hasheadset = 1
 		if(!hasitem1)
@@ -1579,9 +1616,6 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 			if (user.ears)
 				user.drop_from_slot(user.ears)
 			user.equip_if_possible(headset, user.slot_ears)
-
-		if(!haspaint)
-			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == ROLE_GANG_LEADER)
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
