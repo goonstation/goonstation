@@ -145,7 +145,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 /obj/item/gang_loot
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
-	icon_state = "bowling_bag"
+	icon_state = "gang_dufflebag"
 	item_state = "bowling"
 	var/hidden = 1
 	level = 1
