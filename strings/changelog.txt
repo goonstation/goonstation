@@ -1,5 +1,11 @@
 
 (t)wed mar 15 23
+(u)Ikea
+(p)13090
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(+)One unit of Lavender essence is now able to purge two units of miasma
+(u)LeahTheTech
+(+)Flockdrones now do more damage to pods and move slower in space.
 (u)Flaborized
 (p)13065
 (e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials

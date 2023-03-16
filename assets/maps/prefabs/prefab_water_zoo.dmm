@@ -154,14 +154,14 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
-"E" = (
+"L" = (
 /mob/living/critter/bear,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
 /area/prefab/zoo)
-"J" = (
-/obj/critter/brullbar,
+"T" = (
+/mob/living/critter/brullbar,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -407,7 +407,7 @@ b
 (13,1,1) = {"
 b
 c
-J
+T
 e
 k
 l
@@ -476,7 +476,7 @@ l
 l
 k
 e
-E
+L
 c
 b
 "}

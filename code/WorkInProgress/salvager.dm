@@ -540,6 +540,7 @@
 /obj/item/clothing/head/helmet/space/engineer/salvager
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
+/obj/item/device/pda2/salvager
 
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell

@@ -18,7 +18,7 @@
 	/obj/critter/wraithskeleton,
 	/obj/critter/gunbot/heavy,
 	/mob/living/critter/bear,
-	/obj/critter/brullbar,
+	/mob/living/critter/brullbar,
 	/obj/critter/gunbot/drone)
 
 	cast()

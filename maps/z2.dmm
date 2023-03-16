@@ -17152,10 +17152,6 @@
 /obj/decal/mushrooms/type4,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"bcp" = (
-/mob/living/critter/bear,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "bcq" = (
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/power_cond.dmi';
@@ -51333,11 +51329,6 @@
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"cVc" = (
-/obj/decal/cleanable/blood,
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "cVd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -61478,22 +61469,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"dEE" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/mob/living/critter/bear{
-	aggressive = 0;
-	desc = "Wow, you haven't seen this guy since 2014!";
-	generic = 0;
-	material = null;
-	name = "DOngEun MesTur";
-	quality = 420;
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "dEF" = (
 /obj/adventurepuzzle/element_link{
 	act_type = "on";
@@ -67998,6 +67973,11 @@
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"fCK" = (
+/mob/living/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "fCL" = (
 /obj/table/wood/auto,
 /obj/item/device/detective_scanner,
@@ -68539,6 +68519,11 @@
 /obj/submachine/weapon_vendor/syndicate,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"gzR" = (
+/obj/decal/cleanable/blood,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "gAq" = (
 /obj/railing/yellow/reinforced{
 	dir = 1
@@ -69112,11 +69097,6 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
-"hDJ" = (
-/obj/critter/brullbar,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hEq" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -69154,10 +69134,6 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
-"hIb" = (
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hIz" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -69203,6 +69179,14 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"hNF" = (
+/mob/living/critter/brullbar,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "hNS" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
@@ -69395,6 +69379,10 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"igq" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -69847,6 +69835,11 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNw" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "iOn" = (
 /obj/tree,
 /obj/spacevine{
@@ -69935,12 +69928,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iVf" = (
-/obj/critter/brullbar{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "iVt" = (
 /obj/machinery/light{
 	dir = 1;
@@ -70664,6 +70651,11 @@
 /obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"knb" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "kni" = (
 /obj/map/light/graveyard,
 /mob/living/critter/small_animal/firefly/ai_controlled,
@@ -71026,6 +71018,22 @@
 	icon_state = "wall3"
 	},
 /area/diner/tug)
+"lfD" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	aggressive = 0;
+	desc = "Wow, you haven't seen this guy since 2014!";
+	generic = 0;
+	material = null;
+	name = "DOngEun MesTur";
+	quality = 420;
+	wanderer = 0
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "lfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -74012,14 +74020,6 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
-"pRr" = (
-/obj/critter/brullbar,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "pRK" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -74172,6 +74172,10 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"qeN" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "qfG" = (
 /obj/shrub{
 	dir = 10;
@@ -74859,11 +74863,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base)
-"rrB" = (
-/obj/decal/icefloor,
-/obj/critter/brullbar/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "rst" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying the name of the art gallery.";
@@ -76912,6 +76911,10 @@
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
+"uVZ" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "uWx" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -77526,16 +77529,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
-"vOz" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/critter/brullbar{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "vOL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77838,6 +77831,14 @@
 /obj/item/clothing/gloves/sailormoon,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
+"wud" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "wvy" = (
 /obj/stool/chair/couch/red{
 	dir = 8
@@ -78201,11 +78202,6 @@
 /obj/reagent_dispensers/still,
 /turf/unsimulated/floor/plating,
 /area/diner/cow)
-"xch" = (
-/obj/decal/icefloor,
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "xcj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -82422,7 +82418,7 @@ aSG
 aSG
 aVL
 aRJ
-vOz
+wud
 faP
 faP
 faP
@@ -90604,7 +90600,7 @@ aLr
 aLS
 aLN
 bgC
-iVf
+qeN
 aLN
 aLN
 aLN
@@ -97532,7 +97528,7 @@ aIp
 aIp
 bdB
 bdQ
-rrB
+iNw
 aJE
 aJE
 aJE
@@ -98745,7 +98741,7 @@ aIp
 aIp
 aIp
 aIp
-hIb
+igq
 aIp
 aIp
 aIp
@@ -101453,7 +101449,7 @@ aIC
 bbs
 aIp
 aIp
-xch
+knb
 aIp
 aIp
 aIp
@@ -101761,7 +101757,7 @@ aIp
 aIp
 aIp
 aIp
-pRr
+hNF
 aIp
 aIC
 aIC
@@ -102659,7 +102655,7 @@ aNq
 aPE
 aIC
 aIp
-hIb
+igq
 aIC
 aIC
 aIC
@@ -103284,7 +103280,7 @@ aIp
 aIp
 aIC
 aJi
-hDJ
+fCK
 aIp
 bgr
 bgr
@@ -104179,12 +104175,12 @@ aIp
 aIp
 aIp
 aIC
-hIb
+igq
 aIp
 aYu
 bwn
 aIp
-cVc
+gzR
 aIp
 aIp
 aIp
@@ -105691,7 +105687,7 @@ bwk
 aIC
 aIp
 aIC
-hIb
+igq
 aIp
 aIC
 aIC
@@ -123510,7 +123506,7 @@ aIG
 aIG
 rIS
 aIG
-bcp
+uVZ
 aIG
 aIr
 aIG
@@ -125008,7 +125004,7 @@ bah
 aIr
 aIG
 aIG
-bcp
+uVZ
 bcM
 aIr
 aIG
@@ -125315,7 +125311,7 @@ bcN
 aIr
 aIG
 aIr
-bcp
+uVZ
 aIr
 aIr
 aIr
@@ -150973,7 +150969,7 @@ poK
 wel
 dEo
 dEx
-dEE
+lfD
 wel
 gtU
 eiT
