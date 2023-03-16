@@ -627,6 +627,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	w_class = W_CLASS_BULKY
 
 	disposing()
+		parent.defib = null
 		parent = null
 		..()
 
