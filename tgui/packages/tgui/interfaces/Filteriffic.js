@@ -89,7 +89,10 @@ const FilterTextEntry = (props, context) => {
 const FilterTransformEntry = (props, context) => {
   const { value, name, filterName } = props;
   const { act } = useBackend(context);
-
+  let transMatrix = value;
+  if (transMatrix === null) {
+    transMatrix = Array(1, 0, 0, 0, 1, 0);
+  }
   return (
     <Fragment>
       Matrix:
@@ -109,12 +112,12 @@ const FilterTransformEntry = (props, context) => {
                   {(col < 2) && (
                     <NumberInput
                       inline
-                      value={value[col*3+row]}
+                      value={transMatrix[col*3+row]}
                       step={0.01}
                       width="50px"
                       format={v => toFixed(v, 2)}
                       onDrag={(e, v) => {
-                        let retTrans = value;
+                        let retTrans = transMatrix;
                         retTrans[col*3+row] = v;
                         act('transition_filter_value', {
                           name: filterName,
