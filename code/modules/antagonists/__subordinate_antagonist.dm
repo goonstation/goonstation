@@ -11,3 +11,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate)
 			src.owner = new_owner
 			src.owner.master = src.master.ckey
 		. = ..()
+
+	disposing()
+		src.owner.master = null
+		. = ..()

@@ -13,6 +13,10 @@
 		if (istype(master, /datum/abilityHolder/vampire))
 			src.master_ability_holder = master
 
+			if (istype(src.master_ability_holder.owner, /mob))
+				src.owner = new_owner
+				src.owner.master = src.master_ability_holder.owner.ckey
+
 		. = ..()
 
 	is_compatible_with(datum/mind/mind)
@@ -25,7 +29,6 @@
 		var/mob/living/carbon/human/H = src.owner.current
 
 		if (!istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-			H.coreMR = H.mutantrace
 			H.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 		H.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
 
@@ -50,7 +53,6 @@
 		var/mob/living/carbon/human/H = src.owner.current
 
 		remove_mindhack_status(H, "vthrall", "death")
-		H.set_mutantrace(H.coreMR)
 		var/datum/component/C = H.GetComponent(/datum/component/tracker_hud/vampthrall)
 		C?.RemoveComponent(/datum/component/tracker_hud/vampthrall)
 

@@ -237,17 +237,18 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
-			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
-				src.occupant?.set_mutantrace(null)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
+			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
-		if (istype(oldabilities))
+		oldabilities.on_clone()
+		if (oldabilities && istype(oldabilities))
 			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
 			// Maybe not a bug? idk.
 			src.occupant.abilityHolder = oldabilities // This should already be a copy.

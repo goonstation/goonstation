@@ -46,6 +46,7 @@
 	tabName = "Thrall"
 	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
+	remove_on_clone = TRUE
 
 	var/mob/vamp_isbiting = null
 	var/datum/abilityHolder/vampire/master
