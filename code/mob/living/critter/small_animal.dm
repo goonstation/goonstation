@@ -2001,7 +2001,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return
 
 	death()
-		src.reagents.add_reagent("viper_venom", 80, null)
+		src.reagents.add_reagent("viper_venom", 40, null)
 		qdel(friends)
 		return ..()
 
