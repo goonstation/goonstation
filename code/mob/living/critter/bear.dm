@@ -2,7 +2,6 @@
 	name = "space bear"
 	real_name = "space bear"
 	desc = "Oh god."
-	density = 1
 	icon_state = "abear"
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
@@ -21,8 +20,9 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/bear
 	is_npc = TRUE
-	left_arm = /obj/item/parts/human_parts/arm/left/bear
-	right_arm = /obj/item/parts/human_parts/arm/right/bear
+	//left_arm = /obj/item/parts/human_parts/arm/left/bear
+	//right_arm = /obj/item/parts/human_parts/arm/right/bear
+	var/droparms = TRUE
 
 	on_pet(mob/user)
 		if (..())
@@ -32,20 +32,20 @@
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
 			return ..()
-		if (issawingtool(W))
+		if (issawingtool(W) && src.droparms)
 			var/datum/handHolder/HH
 			if (user.zone_sel.selecting == "l_arm")
 				HH = hands[1]
 				if (!HH.limb)
 					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
 					return
-				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
+				//actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
 			else if (user.zone_sel.selecting == "r_arm")
 				HH = hands[2]
 				if (!HH.limb)
 					boutput(user, ("<span class='alert'><B> [src] has no right arm! </B></span>"))
 					return
-				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
+				//actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -70,6 +70,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
 		HH.limb = new /datum/limb/bear
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left bear arm"
@@ -89,9 +90,10 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src) // lives in dark places
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50) // bear terminally on meth
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/reagent/energydrink, src) // bear terminally on meth
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "bear", 50)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 5)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 3)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		src.add_stam_mod_max("bear", 50)
 
@@ -100,10 +102,15 @@
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
 		else
-			playsound(src.loc, pick('sound/voice/MEraaargh.ogg'), 40, 0)
+			if(!ON_COOLDOWN(src, "bear_scream", 3 SECONDS))
+				src.visible_message("<b><span class='alert'>[src] roars!</span></b>")
+				if(istype(src, /mob/living/critter/bear/care))
+					playsound(src.loc, 'sound/voice/babynoise.ogg', 40, 0)
+				else
+					playsound(src.loc, 'sound/voice/MEraaargh.ogg', 40, 0)
 			return ..()
 
-	update_dead_icon()
+	proc/update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
 		. = "abear"
 		if (!HH.limb)
@@ -112,3 +119,16 @@
 		if (!HH.limb)
 			. += "-r"
 		icon_state = .
+
+/mob/living/critter/bear/care
+	name = "space carebear"
+	real_name = "space carebear"
+	desc = "I love you!"
+	icon_state = "carebear"
+	icon_state_dead = "carebear-dead"
+	droparms = FALSE
+
+	New()
+		..()
+		src.name = pick("Lovealot Bear", "Stuffums", "World Destroyer", "Pookie", "Colonel Sanders", "Hugbeast", "Lovely Bear", "HUG ME", "Empathy Bear", "Steve", "Mr. Pants", "wonk")
+
