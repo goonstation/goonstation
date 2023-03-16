@@ -1,7 +1,7 @@
 /mob/living/critter/bear
 	name = "space bear"
 	real_name = "space bear"
-	desc = "Oh god."
+	desc = "WOORGHHH"
 	icon_state = "abear"
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
