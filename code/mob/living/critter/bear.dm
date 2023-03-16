@@ -92,7 +92,7 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src) // lives in dark places
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/reagent/energydrink, src) // bear terminally on meth
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/spacebear, src) // bit faster than your average critter
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "bear", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 3)

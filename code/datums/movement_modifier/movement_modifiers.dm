@@ -240,3 +240,10 @@
 
 /datum/movement_modifier/shiver
 	additive_slowdown = 2
+
+// methed up bears
+
+/datum/movement_modifier/spacebear
+	health_deficiency_adjustment = -30
+	additive_slowdown = -0.4
+
