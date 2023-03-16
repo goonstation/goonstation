@@ -127,7 +127,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = TIME - started
+		var/done = src.time_spent()
 		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")

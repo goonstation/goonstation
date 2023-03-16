@@ -51,6 +51,10 @@ TYPEINFO(/obj/submachine/chef_sink)
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"
+			if (istype(W, /obj/item/reagent_containers/mender))
+				var/obj/item/reagent_containers/mender/automender = W
+				if(automender.borg)
+					return
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
@@ -984,7 +988,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/ingredient/oatmeal/(src.loc)
 					qdel( P )
 				if (/obj/item/plant/oat/salt)
-					new/obj/item/reagent_containers/food/snacks/ingredient/salt/(src.loc)
+					var/obj/item/reagent_containers/food/snacks/ingredient/salt/F = new(src.loc)
+					F.reagents.add_reagent("salt", P.reagents.get_reagent_amount("salt")) // item/plant has no plantgenes :(
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)
 					new/obj/item/reagent_containers/food/snacks/ingredient/rice(src.loc)
@@ -1055,7 +1060,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
-					new/obj/item/reagent_containers/food/snacks/ingredient/pepper(src.loc)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/ingredient/pepper/F = new(src.loc)
+					F.reagents.add_reagent("pepper", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
@@ -1083,6 +1090,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					qdel( P )
 				if (/obj/item/plant/herb/tea)
 					new/obj/item/reagent_containers/food/snacks/condiment/matcha(src.loc)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/mustard)
+					new/obj/item/reagent_containers/food/snacks/condiment/mustard(src.loc)
 					qdel( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)

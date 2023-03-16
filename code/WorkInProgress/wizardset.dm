@@ -489,7 +489,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/static/list/red_potions = list("elixir of preservation" = "formaldehyde", "elixir of flesh" = "synthflesh")
 	var/static/list/blue_potions = list("essence of ice" = "cryostylane", "draught of fresh water" = "water")
 	var/static/list/magenta_potions = list("essence of motion" = "anima", "potion of rejuvenation" = "omnizine")
-	var/static/list/green_potions = list("distillation of venom" = "sarin", "elixir of neutralize poison" = "charcoal")
+	var/static/list/green_potions = list("distillation of venom" = "saxitoxin", "elixir of neutralize poison" = "charcoal")
 	var/static/list/yellow_potions = list("distillation of madness" = "madness_toxin", "elixir of speed" = "methamphetamine")
 	var/static/list/black_potions = list("essence of death" = "initropidril", "elixir invulnerability" = "juggernaut")
 	var/static/list/white_potions = list("essence of creation" = "big_bang", "elixir of life" = "strange_reagent")

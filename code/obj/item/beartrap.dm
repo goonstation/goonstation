@@ -15,7 +15,7 @@
 
 	armed
 		icon_state = "bear_trap-open"
-		armed = 1
+		armed = TRUE
 
 	armed/hidden_a_bit
 		layer = -1 // layers under doors

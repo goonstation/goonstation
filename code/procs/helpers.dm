@@ -688,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -1366,13 +1366,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			for(var/datum/mind/M in someEnemies)
 				if (M.current)
 					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-					for(var/datum/mind/G in M.gang.members) //This may be fucked. Dunno how these are stored.
-						enemies += G
 
 		//Lists we grab regardless of game type
 		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
@@ -1850,8 +1843,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
-			sleep(30 SECONDS)
+		sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -2149,12 +2141,12 @@ proc/countJob(rank)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
-var/global/nextDectalkDelay = 5 //seconds
+var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg || !config.spacebee_api_key) return 0
-	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = world.timeofday
+	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub
@@ -2621,7 +2613,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat))
+		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()

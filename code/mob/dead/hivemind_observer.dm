@@ -103,40 +103,14 @@
 				.= 1
 
 	proc/boot()
-		var/mob/dead/observer/my_ghost = new(src.corpse)
+		var/mob/dead/observer/my_ghost = src.ghostize()
 
 		if (!src.corpse)
 			my_ghost.name = src.name
 			my_ghost.real_name = src.real_name
-
-		if (corpse)
+		else
 			corpse.ghost = my_ghost
 			my_ghost.corpse = corpse
-
-		my_ghost.delete_on_logout = my_ghost.delete_on_logout_reset
-
-		if (src.client)
-			src.removeOverlaysClient(src.client)
-			client.mob = my_ghost
-
-		if (src.mind)
-			mind.transfer_to(my_ghost)
-
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || my_ghost.client && my_ghost.client.holder)))
-				my_ghost.set_loc(T)
-			else
-				if (ASLoc)
-					my_ghost.set_loc(ASLoc)
-				else
-					my_ghost.z = 1
-		else
-			if (ASLoc)
-				my_ghost.set_loc(ASLoc)
-			else
-				my_ghost.z = 1
 
 		observers -= src
 		my_ghost.show_antag_popup("changeling_leave")

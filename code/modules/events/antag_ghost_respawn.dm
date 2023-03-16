@@ -65,8 +65,11 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
-
+			#ifdef MAP_OVERRIDE_NADIR
+			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#else
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			#endif
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
@@ -205,22 +208,13 @@
 			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
-					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
-					if (B && istype(B))
-						M3 = B
-						role = ROLE_BLOB
-						objective_path = /datum/objective_set/blob
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-
-						SPAWN(0)
-							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
-							if (B && newname)
-								phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-								newname = strip_html(newname) + " the Blob"
-								B.real_name = newname
-								B.name = newname
-
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_BLOB
+						M3 = mind.current
 					else
 						failed = 1
 
@@ -238,12 +232,13 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/living/intangible/wraith/W = M3.make_wraith()
-					if (W && istype(W))
-						M3 = W
-						role = ROLE_WRAITH
-						generate_wraith_objectives(lucky_dude)
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_WRAITH
+						M3 = mind.current
 					else
 						failed = 1
 
@@ -271,6 +266,7 @@
 				if ("Hunter")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
@@ -280,6 +276,7 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
@@ -287,30 +284,28 @@
 						failed = 1
 
 				if ("Wrestler")
-					var/mob/living/R2 = M3.humanize()
-					if (R2 && istype(R2))
-						M3 = R2
-						R2.make_wrestler(1)
+					var/mob/living/L = M3.humanize()
+					if (istype(L))
+						M3 = L
+						L.mind?.wipe_antagonists()
+						L.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						var/antag_type = src.antagonist_type
+						var/antagonist_role = src.antagonist_type
 						SPAWN(0)
-							R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
+							M3.choose_name(3, antagonist_role, M3.real_name + " the " + antagonist_role)
 					else
 						failed = 1
 
 				if ("Wrestler_Doodle")
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
-					if (C && istype(C))
+					if (istype(C))
 						M3 = C
-						C.make_wrestler(1)
+						C.mind?.wipe_antagonists()
+						C.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
-						objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-
-						var/antag_type = src.antagonist_type
+						var/antagonist_role = src.antagonist_type
 						SPAWN(0)
-							C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
+							C.choose_name(3, antagonist_role, C.real_name + " the " + antagonist_role)
 					else
 						failed = 1
 

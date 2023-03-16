@@ -82,6 +82,7 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/adjump,
 /datum/admins/proc/togglesimsmode,
 /datum/admins/proc/toggle_pull_slowing,
+/datum/admins/proc/togglepowerdebug,
 /client/proc/admin_toggle_nightmode,
 /client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
@@ -386,6 +387,21 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
+
+/client/proc/cmd_admin_toggle_ghost_interaction()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Interaction"
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	src.holder.ghost_interaction = !src.holder.ghost_interaction
+	boutput(usr, "<span class='notice'><b>Your ghost interaction mode is now [src.holder.ghost_interaction ? "ON" : "OFF"]</b></span>")
+	if(isobserver(mob))
+		setalive(mob)
+
+	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
 
 /client/proc/iddqd()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -972,6 +988,19 @@ client/proc/toggle_ghost_respawns()
 			C.set_widescreen(1)
 		message_admins( "[key_name(src)] toggled widescreen on." )
 */
+
+
+
+/datum/admins/proc/togglepowerdebug()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc="Toggle power debugging popups"
+	set name="Toggle Power Debug"
+	NOT_IF_TOGGLES_ARE_OFF
+	zamus_dumb_power_popups = !( zamus_dumb_power_popups )
+	logTheThing(LOG_ADMIN, usr, "toggled power debug popups.")
+	logTheThing(LOG_DIARY, usr, "toggled power debug popups.", "admin")
+	message_admins("[key_name(usr)] toggled power debug popups.")
+
 
 /client/proc/toggle_next_click()
 	set name = "Toggle next_click"

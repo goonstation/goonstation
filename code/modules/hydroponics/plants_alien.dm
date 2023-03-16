@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if(src.focused)
 			pr += 10
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(pr))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))

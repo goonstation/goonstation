@@ -378,7 +378,7 @@
 			/obj/stool/chair/office/syndie = 1,
 			/obj/item/paper/book/from_file/syndies_guide = 0.5,
 			/obj/item/beartrap/armed = 1,
-			/datum/reagent/harmful/sarin = 0.1,
+			/datum/reagent/harmful/saxitoxin = 0.1,
 			/datum/reagent/blood = 1,
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
@@ -1116,7 +1116,7 @@
 			var/obj/item/old_grenade/grenade = .
 			if(prob(50))
 				SPAWN(rand(1 SECOND, 10 SECONDS))
-					grenade.prime()
+					grenade.detonate()
 		else if(istype(., /obj/item/chem_grenade))
 			var/obj/item/chem_grenade/grenade = .
 			if(prob(50))

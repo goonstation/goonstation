@@ -26,6 +26,8 @@ proc/save_flock_stats()
 
 	//rotate, discarding the last
 	for(var/datum/flockstats/stat as anything in flockstats_global)
+		if (stat.drones_made <= 0) //ignore flocks that never deployed a rift
+			continue
 		players++
 		if(stat.built_relay)
 			builders++

@@ -2092,6 +2092,8 @@
 /area/station/crewquarters/cryotron)
 "agC" = (
 /obj/machinery/light_switch/auto,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -2529,8 +2531,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_y = 21
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -2669,6 +2670,7 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "aiz" = (
@@ -5121,7 +5123,7 @@
 /area/station/ai_monitored/armory)
 "aqW" = (
 /obj/grille/steel,
-/turf/simulated/floor/engine/vacuum,
+/turf/space,
 /area/station/engine/combustion_chamber)
 "aqY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -8215,6 +8217,7 @@
 	tag = ""
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "azV" = (
@@ -8222,6 +8225,7 @@
 /obj/health_scanner/wall,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "azX" = (
@@ -10245,7 +10249,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aFR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12612,7 +12616,7 @@
 /area/listeningpost)
 "aNL" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aNM" = (
 /turf/simulated/floor/airless/stairs/dark,
 /area/listeningpost/power)
@@ -12730,7 +12734,7 @@
 	name = "Molecular Integrity Hazard"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -12738,7 +12742,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12748,7 +12752,7 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -12756,7 +12760,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOf" = (
 /obj/lattice{
 	dir = 9;
@@ -12828,7 +12832,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOu" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -12888,11 +12892,11 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOD" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -12900,7 +12904,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aOF" = (
 /obj/decal/cleanable/ash,
 /obj/cable{
@@ -14507,7 +14511,6 @@
 	},
 /area/station/hangar/main)
 "aTr" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -14583,7 +14586,7 @@
 	},
 /area/station/hangar/main)
 "aTz" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -15892,7 +15895,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aWY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16067,7 +16070,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/circuit/red,
-/area/syndicate_teleporter)
+/area/listeningpost/syndicate_teleporter)
 "aXt" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
@@ -16698,7 +16701,7 @@
 /area/station/hallway/primary/east)
 "aZz" = (
 /obj/disposalpipe/segment,
-/obj/critter/dog/george/orwell,
+/mob/living/critter/small_animal/dog/george/orwell,
 /obj/machinery/phone/wall{
 	pixel_y = 33
 	},
@@ -18267,6 +18270,7 @@
 	pixel_x = -12;
 	pixel_y = 4
 	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lHo" = (

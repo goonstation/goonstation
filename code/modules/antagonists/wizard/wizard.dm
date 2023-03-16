@@ -1,6 +1,7 @@
 /datum/antagonist/wizard
 	id = ROLE_WIZARD
 	display_name = "wizard"
+	success_medal = "You're no Elminster!"
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -8,7 +9,7 @@
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
 
-	give_equipment(vr_equipment_restrictions = FALSE)
+	give_equipment()
 		if (!ishuman(src.owner.current))
 			return FALSE
 
@@ -23,7 +24,7 @@
 		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
 
 		// Initial abilities; all unlockable abilities will be handled by the abilityHolder.
-		if (!vr_equipment_restrictions)
+		if (!src.vr)
 			src.ability_holder.addAbility(/datum/targetable/spell/phaseshift)
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 			src.ability_holder.addAbility(/datum/targetable/spell/clairvoyance)
@@ -49,10 +50,10 @@
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/staff(H), H.slot_r_hand)
 
-		if (!vr_equipment_restrictions)
+		if (!src.vr)
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), H.slot_l_hand)
 
-		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(vr_equipment_restrictions)
+		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src.vr)
 		SB.wizard_key = src.owner.key
 		H.equip_if_possible(SB, H.slot_belt)
 
@@ -67,7 +68,7 @@
 		else
 			randomname = pick_string_autokey("names/wizard_male.txt")
 
-		if (!vr_equipment_restrictions)
+		if (!src.vr && !src.pseudo)
 			SPAWN(0)
 				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname)
 				if(newname && newname != randomname)

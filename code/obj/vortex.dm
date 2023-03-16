@@ -95,7 +95,7 @@
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /obj/critter/aberration)
+					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
 				if (was_eaten && prob(15))
 					horror_path = /obj/critter/blobman/meaty_martha
 			else

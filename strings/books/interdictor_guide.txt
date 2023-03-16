@@ -14,7 +14,7 @@
 	<br>
 	Radiation pulses safely remodulated within field range
 	<br>
-	Radiation storms interdicted on a per-individual basis**
+	Radiation storms fully deflected from field area**
 	<br>
 	Solar flare disruptions reduced per onboard interdictor
 	<br>
@@ -25,7 +25,7 @@
 	<br>
 	<i>*WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
-	<i>**ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<i>**WARNING: heavy interdiction cost. An adequate grid supply MUST be present for reliable deflection, and a high-capacity cell is recommended.</i>
 	<br>
 	<i>***ADVISORY: as a countermeasure to capacitance failure, interdicting spatial tears will require reinitializing the interdictor if it was not installed near the tear at the time of the event.</i>
 	<br>
@@ -61,7 +61,13 @@
 	<br>
 	(I) Fabricate the frame kit, mainboard and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
 	<br>
-	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
+	Phase control rods may be manufactured in Lambda, Sigma, Epsilon and Phi configurations.
+	<br>
+	Lambda and Sigma rods are recommended for typical operation; Lambda rods cover a four-unit radius, while the advanced but more materially complex Sigma rods cover a six-unit radius.
+	<br>
+	For circumstances where fine-tuning is advantageous, Epsilon and Phi rods provide the ability to improve range at the expense of efficiency, or vice versa.
+	<br>
+	Epsilon rods provide a greater radius (ten units) but expend approximately 180% of normal cost, while Phi rods provide a reduced radius (two units) but expend approximately 60% of normal cost.
 	<br>
 	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
 	<br>
@@ -69,6 +75,8 @@
 	(II) Gather the following equipment before assembly:
 	<br>
 	- Interdictor frame kit
+	<br>
+	- Nanotrasen standard diameter wrench
 	<br>
 	- Interdictor mainboard of your choice
 	<br>
@@ -78,12 +86,12 @@
 	<br>
 	- Four lengths of industry-compliant electrical cable
 	<br>
-	- Soldering iron
+	- Screwdriver (magnetic acceptable; however, installation using a rotary bit is not recommended)
 	<br>
 	- Four sheets of industry-compliant steel
 	<br>
 	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
+	(III) Assemble objects using the sequence listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
 	<br>
 	<br>
 	<hr>

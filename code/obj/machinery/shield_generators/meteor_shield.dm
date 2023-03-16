@@ -3,6 +3,7 @@
 	desc = "Generates a force field that stops meteors."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldgen"
+	density = FALSE
 
 	nocell
 		starts_with_cell = FALSE
