@@ -50,7 +50,7 @@
 	var/original_controller_name = null
 	var/original_controller_real_name = null
 
-	New(var/mob/living/carbon/human/M)
+	New(var/mob/living/M)
 		..()
 		if (M)
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)

@@ -1502,7 +1502,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\critter\critter_parent.dm"
 #include "code\obj\critter\drone.dm"
 #include "code\obj\critter\gunbot.dm"
-#include "code\obj\critter\headspider.dm"
 #include "code\obj\critter\helldrone.dm"
 #include "code\obj\critter\martian.dm"
 #include "code\obj\critter\miningcritters.dm"

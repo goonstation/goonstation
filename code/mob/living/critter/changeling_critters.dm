@@ -654,9 +654,7 @@
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = src.mind
-		var/datum/ailment/parasite/headspider/HSD = HS.master
-		HSD.changeling = changeling
+		HS.source = src
 		H.ailments += HS
 
 		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
