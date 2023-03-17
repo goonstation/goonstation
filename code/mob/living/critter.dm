@@ -70,6 +70,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
 	var/max_skins = 0
 
+	// for critters with removable arms(brullbar, bear)
+	var/left_arm = null
+	var/right_arm = null
+
 	var/fits_under_table = 0
 	var/table_hide = 0
 
@@ -369,6 +373,32 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		src.ghostize()
 		qdel (src)
+
+	proc/remove_arm(var/left_or_right) // for removing the arms of brullbars and bears
+		switch(left_or_right)
+			if("left")
+				if(!src.left_arm)
+					return
+				var/datum/handHolder/HH = hands[1]
+				if(!HH.limb)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.left_arm(src.loc)
+				src.update_dead_icon()
+				return
+			if("right")
+				if(!src.right_arm)
+					return
+				var/datum/handHolder/HH = hands[2]
+				if(!HH.limb)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.right_arm(src.loc)
+				src.update_dead_icon()
+				return
+
+	proc/update_dead_icon() // for brullbar and bear missing arm sprites
+		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
@@ -1296,7 +1326,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/can_critter_attack()
 		var/datum/handHolder/HH = get_active_hand()
 		if(HH?.limb)
-			return !HH.limb.is_on_cooldown() //if we have limb cooldowns, use that, otherwise use can_act()
+			return !HH.limb.is_on_cooldown() && can_act(src,TRUE) //if we have limb cooldowns, use that, otherwise use can_act()
 		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
@@ -1318,21 +1348,20 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 	. = ..()
 
+/mob/living/critter/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
-			hud.update_intent()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
-			hud.update_intent()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
-			hud.update_intent()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM )
-			hud.update_intent()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
