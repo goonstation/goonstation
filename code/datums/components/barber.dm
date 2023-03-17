@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
 	. = ..()
-	var/all_hair_types = all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+	var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
 
 	for (var/datum/customization_style/styles as anything in all_hair_types)
 		var/datum/customization_style/style = new styles
@@ -457,7 +457,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
 
 	if (isnull(src.preview))
-		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + src.parent // To avoid mixing up preview IDs, we gotta be *really* specific
+		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424", 2)
 		src.preview.preview_thing.appearance = src.barbee.appearance
