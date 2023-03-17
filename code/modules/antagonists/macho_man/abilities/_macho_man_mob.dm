@@ -16,8 +16,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	New(loc, pseudo)
 		..()
-		//src.mind = new
-		src.gender = "male"
+		src.gender = MALE
 		src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
 		if (pseudo)
@@ -79,9 +78,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (!src.stat && prob(6))
 			src.visible_message("<b>[src]</b> mutters to himself.")
 			playsound(src.loc, pick(snd_macho_idle), 50, 0, 0, src.get_age_pitch())
-
-//	movement_delay()
-//		return ..() - 10
 
 	show_inv(mob/user)
 		if (src.stance == "defensive")
@@ -284,38 +280,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (macho_touch)
 			macho_touch.cast()
 
-/*	verb/macho_minions()
-		set name = "Macho Minions"
-		set desc = "Summons a horde of micro men"
-		set category = "Macho Moves"
-		if (!src.stat && !src.transforming)
-			src.verbs -= /mob/living/carbon/human/machoman/verb/macho_minions
-			src.bioHolder.AddEffect("fire_resist")
-			src.transforming = 1
-			src.visible_message("<span class='alert'><B>[src] begins glowing with ominous power!</B></span>")
-			playsound(src.loc, 'sound/voice/chanting.ogg', 75, 0, 0, src.get_age_pitch())
-			sleep(4 SECONDS)
-			for (var/mob/N in viewers(src, null))
-				N.flash(3 SECONDS)
-				if (N.client)
-					shake_camera(N, 6, 16)
-					N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
-			playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>A group of micro men suddenly materializes!</B></span>")
-			var/made_minions = 0
-			for (var/turf/T in orange(1))
-				var/obj/critter/microman/micro = new(T)
-				made_minions ++
-				micro.friends += src
-				micro.set_dir(src.dir)
-				if (made_minions >= MAX_MINIONS_PER_SPAWN)
-					break
-			src.transforming = 0
-			src.bioHolder.RemoveEffect("fire_resist")
-			playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
-			SPAWN(2 MINUTES) // holy shit the micro man spam from ONE macho man is awful
-				src.verbs += /mob/living/carbon/human/machoman/verb/macho_minions
-*/
 	verb/macho_piledriver()
 		set name = "Atomic Piledriver"
 		set desc = "Piledrive a target"
@@ -372,79 +336,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.targeting_ability = macho_heartpunch
 			M.update_cursor()
 
-/*
-	verb/macho_meteor()
-		set name = "Macho Meteors"
-		set desc = "Summon a wave of meteors with dark macho magic"
-		set category = "Macho Moves"
-		if (!src.stat && !src.transforming)
-			src.bioHolder.AddEffect("fire_resist")
-			src.transforming = 1
-			src.mouse_opacity = 0
-			src.verbs -= /mob/living/carbon/human/machoman/verb/macho_meteor
-			src.visible_message("<span class='alert'>[src] pauses and curses for a moment.</span>")
-			playsound(src.loc, 'sound/voice/macho/macho_alert26.ogg', 50)
-			sleep(4 SECONDS)
-			src.visible_message("<span class='alert'>[src] begins to hover mysteriously above the ground!</span>")
-			playsound(src.loc, 'sound/effects/bionic_sound.ogg', 50)
-			playsound(src.loc, 'sound/voice/macho/macho_moan07.ogg', 50)
-			src.layer = 10
-			src.set_density(0)
-			for (var/i = 0, i < 20, i++)
-				src.pixel_y += 1
-				src.set_dir(turn(src.dir, 90))
-				sleep(0.1 SECONDS)
-			src.set_dir(SOUTH)
-			var/sound/siren = sound('sound/misc/airraid_loop.ogg')
-			var/list/masters = new()
-			for (var/area/subs in world)
-				if (subs.master && !(subs.master in masters))
-					masters += subs.master
-
-			for (var/area/A in masters)
-				if (A.type == /area) continue
-				for (var/area/R in A.related)
-					SPAWN(0)
-						R.eject = 1
-						R.UpdateIcon()
-			siren.repeat = 1
-			siren.channel = 5
-			boutput(world, siren)
-			randomevent_meteorshower(16)
-			sleep(30 SECONDS)
-			src.visible_message("<span class='alert'>[src] falls back to the ground!</span>")
-			for (var/i = 0, i < 20, i++)
-				src.pixel_y -= 1
-				src.set_dir(turn(src.dir, -90))
-				sleep(0.1 SECONDS)
-			if (istype(src.loc, /turf/simulated/floor))
-				src.loc:break_tile()
-			for (var/mob/M in viewers(src, 5))
-				if (M != src)
-					M.weakened = max(M.weakened, 8)
-				SPAWN(0)
-					shake_camera(M, 4, 8)
-			playsound(src.loc, "explosion", 40, 1)
-			playsound(src.loc, pick(snd_macho_rage), 50)
-			src.layer = MOB_LAYER
-			src.set_density(1)
-			src.transforming = 0
-			src.bioHolder.RemoveEffect("fire_resist")
-			src.mouse_opacity = 1
-			SPAWN(1 MINUTE)
-				if (siren)
-					siren.repeat = 0
-					siren.status = SOUND_UPDATE
-					siren.channel = 5
-					boutput(world, siren)
-				for (var/area/A in masters)
-					if (A.type == /area) continue
-					for (var/area/R in A.related)
-						SPAWN(0)
-							R.eject = 0
-							R.UpdateIcon()
-				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
-*/
 	emote(var/act, var/emoteTarget = null)
 		switch(act)
 			if ("scream")
@@ -455,19 +346,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message("<span class='alert'><b>[src] yells out a battle cry!</b></span>")
 			else
 				..()
-
-/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
-/turf/unsimulated/floor/specialroom/gym/macho_arena
-	var/previous_turf_type
-
-	New(var/loc,var/turf_type)
-		..()
-		previous_turf_type = turf_type
-
-	proc/change_back()
-		var/turf/old_turf = src.ReplaceWith(previous_turf_type)
-		animate_buff_in(old_turf)
-*/
 /obj/critter/microman
 	name = "Micro Man"
 	desc = "All the macho madness you'd ever need, shrunk down to pocket size."
