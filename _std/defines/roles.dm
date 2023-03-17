@@ -19,6 +19,7 @@
 #define ROLE_MISC "misc"
 
 // special antagonist roles
+#define ROLE_MACHO_MAN "macho man"
 #define ROLE_GANG_MEMBER "gang_member"
 #define ROLE_HUNTER "hunter"
 #define ROLE_WRESTLER "wrestler"

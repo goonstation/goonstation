@@ -2528,7 +2528,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.machoize()
+		M.mind?.add_antagonist(ROLE_MACHO_MAN)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
