@@ -49,7 +49,7 @@
 		return
 
 	Crossed(atom/movable/AM as mob)
-		if ((isliving(AM)) && (src.armed))
+		if ((isliving(AM)) && !isintangible(AM) && (src.armed))
 			var/mob/living/M = AM
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
@@ -78,7 +78,7 @@
 		if (!src || !src.armed)
 			return
 
-		if (target && isliving(target))
+		if (target && isliving(target) && !isintangible(target))
 			var/mob/living/M = target
 			logTheThing(LOG_COMBAT, M, "stood on a [src] at [log_loc(src)].")
 			if(istype(M, /mob/living/critter/bear))
