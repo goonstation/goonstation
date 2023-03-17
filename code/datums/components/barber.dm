@@ -553,16 +553,11 @@ TYPEINFO(/datum/component/barber)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					// This is so we don't have to deal with numbers in the TGUI part.
-					var/map_of_directions = list(
-						"south" = SOUTH,
-						"east"  = EAST,
-						"west"  = WEST,
-						"north" = NORTH
-					)
+					var/facing_dir = src.preview.preview_thing.dir
+
 
 					src.preview.preview_thing.appearance = src.barbee.appearance
-					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
+					src.preview.update_appearance(src.new_AH, src.preview.preview_thing.dir)
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
