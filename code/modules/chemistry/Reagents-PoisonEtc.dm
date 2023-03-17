@@ -1378,7 +1378,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.5*mult)
+				M.take_toxin_damage(mult)
 				bleed(M, 6 * mult, 6 * mult)
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\

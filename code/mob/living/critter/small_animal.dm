@@ -1755,7 +1755,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
-	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	var/aggressive = TRUE
 	var/list/friends = list()
 
@@ -1882,8 +1882,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/rattlesnake
 	is_npc = TRUE
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 1
-	ai_retaliate_persistence = RETALIATE_ONCE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
 	var/aggressive = TRUE
 	var/list/friends = list()
 	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
