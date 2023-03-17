@@ -504,9 +504,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					var/facing_dir = src.preview.preview_thing.dir
-
-
+					src.preview.preview_thing.Turn(params["direction"])
 					src.preview.preview_thing.appearance = src.barbee.appearance
 					src.preview.update_appearance(src.new_AH, src.preview.preview_thing.dir)
 
@@ -517,12 +515,12 @@ ABSTRACT_TYPE(/datum/component/barber)
 
 			return TRUE
 
-/datum/component/barber/haircut/ui_act(mob/user)
+/datum/component/barber/haircut/ui_act(var/action, var/params)
 	. = ..()
 	if (.) // If it's anything but null, it probably did something and we shouldn't run at all.
 		return
 
-	if("do_hair")
+	if(action == "do_hair")
 		if (isnull(params["style_id"])) // It means we are making a wig
 			actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
@@ -558,12 +556,12 @@ ABSTRACT_TYPE(/datum/component/barber)
 		src.preview.update_appearance(src.new_AH)
 		return TRUE
 
-/datum/component/barber/shave/ui_act(mob/user)
+/datum/component/barber/shave/ui_act(var/action, var/params)
 	. = ..()
 	if (.) // If it's anything but null, it probably did something and we shouldn't run at all.
 		return
 
-	if("do_hair")
+	if(action == "do_hair")
 		if (isnull(params["style_id"])) // It means we are making a wig
 			actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
