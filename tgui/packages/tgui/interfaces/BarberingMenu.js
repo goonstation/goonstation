@@ -111,10 +111,10 @@ const ArrowButtons = (_props, context) => {
   return (
     <Stack vertical>
       <Stack.Item align="center">
-        <Button icon="rotate-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": "left" })} />
+        <Button icon="rotate-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": -90 })} />
       </Stack.Item>
       <Stack.Item align="center">
-        <Button icon="rotate-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": "right" })} />
+        <Button icon="rotate-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": 90 })} />
       </Stack.Item>
     </Stack>
   );
