@@ -103,7 +103,7 @@
 					D.source.mind.add_antagonist(ROLE_CHANGELING, TRUE, FALSE, FALSE, TRUE, ANTAGONIST_SOURCE_SUMMONED, FALSE, FALSE, FALSE)
 					var/datum/antagonist/changeling/antag_datum = D.source.mind.get_antagonist(ROLE_CHANGELING)
 					D.source.changeling = antag_datum.ability_holder
-					logTheThing(LOG_COMBAT, D.source.mind, "became a changeling by infecting [log_loc(affected_mob)] as [D.source].")
+					logTheThing(LOG_COMBAT, D.source.mind, "became a changeling by infecting [affected_mob] as [D.source].")
 				// Absorb their DNA. Copies identities and DNA points automatically if victim was another changeling. This also inserts them into the hivemind.
 				D.source.changeling.addDna(affected_mob, TRUE)
 				// Remove changeling AH (if any) and copy our own.
