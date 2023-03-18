@@ -1,4 +1,6 @@
-
+(t)sat mar 18 23
+(u)LeahTheTech
+(+)Conspirators will now all correctly receive identical objectives.
 (t)thu mar 16 23
 (u)LeahTheTech
 (*)Atmospheric analyzers can now be used in-hand to track the nearest hull breach.
