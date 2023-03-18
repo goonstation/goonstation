@@ -283,8 +283,7 @@
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
-			var/obj/item/plankobj = new /obj/item/plank(user.loc)
-			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+			new /obj/item/sheet/wood(user.loc)
 			if (src.amount > 1)
 				change_stack_amount(-1)
 			else
@@ -301,8 +300,9 @@
 		..()
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
+			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src], leaving behind some usable building material.")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
+			new /obj/item/sheet/bamboo(user.loc)
 			if (src.amount > 1)
 				change_stack_amount(-1)
 			else

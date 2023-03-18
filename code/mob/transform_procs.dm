@@ -313,34 +313,6 @@
 		return
 	return 0
 
-/mob/proc/slasherize()
-	if(src.mind || src.client)
-		var/mob/living/carbon/human/slasher/W = new/mob/living/carbon/human/slasher(src)
-		var/turf/T = get_turf(src)
-		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-			if (ASLoc)
-				W.set_loc(ASLoc)
-			else
-				W.set_loc(locate(1, 1, 1))
-		else
-			W.set_loc(T)
-		src.show_antag_popup("slasher")
-		if(src.mind)
-			src.mind.transfer_to(W)
-			src.mind.special_role = "slasher"
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-		ticker.mode.Agimmicks += W.mind
-		qdel(src)
-
 /mob/proc/cubeize(var/life = 10, var/CT)
 	if (!CT)
 		CT = /mob/living/carbon/cube/meat
