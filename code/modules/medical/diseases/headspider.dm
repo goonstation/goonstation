@@ -123,10 +123,15 @@
 
 				D.stealth_asymptomatic = TRUE //Retain the disease but don't actually do anything with it
 				//kill the headspider, so if something causes it to drop it doesn't look alive with no mind
-				D.source?.death(FALSE)
+				if(!QDELETED(D.source))
+					D.source.death(FALSE)
 				SPAWN(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
-					//the headspider gets fully absorbed
-					D.source?.set_loc(null)
-					qdel(D.source)
 					affected_mob.cure_disease_by_path(/datum/ailment/parasite/headspider)
 
+/datum/ailment/parasite/headspider/on_remove(mob/living/affected_mob, datum/ailment_data/parasite/D)
+	if(!QDELETED(D?.source))
+		//the headspider gets fully absorbed
+		D.source?.set_loc(null)
+		qdel(D.source)
+		D.source = null
+	. = ..()
