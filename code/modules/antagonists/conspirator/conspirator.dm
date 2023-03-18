@@ -9,7 +9,7 @@
 
 	New(datum/mind/new_owner)
 		if (!src.conspirator_objective)
-			var/objective_type = /datum/objective/conspiracy/swap// pick(typesof(/datum/objective/conspiracy))
+			var/objective_type = pick(typesof(/datum/objective/conspiracy))
 			src.conspirator_objective = new objective_type
 
 		if (!src.meeting_point)
