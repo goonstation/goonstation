@@ -300,6 +300,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/datum/mind/leader = null
 	/// The minds of gang members associated with this gang. Does not include the gang leader.
 	var/list/members = list()
+	var/list/tags = list()
 	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
 	var/list/gear_cooldown = list()
 	/// The gang locker of this gang.
@@ -448,6 +449,17 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return count
 
+	proc/make_tag(turf/T)
+		var/obj/decal/cleanable/gangtag/tag = make_cleanable(/obj/decal/cleanable/gangtag, T)
+		tag.icon_state = "gangtag[src.gang_tag]"
+		tag.name = "[src.gang_name] tag"
+		tag.owners = src
+		src.tags |= tag
+		tag.delete_same_tags()
+		T.tagged = TRUE
+		var/area/area = T.loc
+		area.gang_owners = src
+
 	proc/make_item_lists()
 		// Must be jumpsuit. `/obj/item/clothing/under`
 		src.uniform_list = list(
@@ -578,6 +590,19 @@ proc/broadcast_to_all_gangs(var/message)
 			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
 		if(getarea.gang_owners && getarea.gang_owners != gang && !turftarget.tagged)
 			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
+			if (user.GetComponent(/datum/component/tracker_hud))
+				return
+			var/datum/game_mode/gang/mode = ticker.mode
+			if (!istype(mode))
+				return
+			for (var/datum/gang/other_gang in mode.gangs)
+				for (var/obj/decal/cleanable/gangtag/tag in other_gang.tags)
+					if (get_area(tag) == getarea)
+						user.AddComponent(/datum/component/tracker_hud/gang, get_turf(tag))
+						SPAWN(3 SECONDS)
+							var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
+							component.RemoveComponent()
+						return
 			return
 		if(getarea.being_captured)
 			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
@@ -667,12 +692,7 @@ proc/broadcast_to_all_gangs(var/message)
 		target_area.gang_owners = src.gang
 		src.gang.controlled_areas += target_area
 
-		var/obj/decal/cleanable/gangtag/T = make_cleanable(/obj/decal/cleanable/gangtag,target_turf)
-		T.icon_state = "gangtag[src.gang.gang_tag]"
-		T.name = "[src.gang.gang_name] tag"
-		T.owners = src.gang
-		T.delete_same_tags()
-		target_turf.tagged = TRUE
+		src.gang.make_tag(target_turf)
 		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
 
 /obj/ganglocker

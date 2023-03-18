@@ -157,12 +157,8 @@
 
 
 /mob/living/carbon/full_heal()
-	src.remove_ailments()
 	src.take_toxin_damage(-INFINITY)
 	src.take_oxygen_deprivation(-INFINITY)
-	src.change_misstep_chance(-INFINITY)
-	if (src.reagents)
-		src.reagents.clear_reagents()
 	..()
 
 /mob/living/carbon/take_brain_damage(var/amount)

@@ -3495,13 +3495,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sanctuary = 1
 	teleport_blocked = 1
 
-/area/salvager/space
-	icon_state = "purple"
-
-/area/salvager/lower
-	icon_state = "orange"
-
 /area/salvager/pod
+	name = "Magpie Launch Area"
 	icon_state = "yellow"
 
 /// Nukeops spawn station

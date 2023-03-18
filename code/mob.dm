@@ -2425,16 +2425,18 @@
 		if(isobserver(ghost))
 			qdel(ghost)
 
-	src.HealDamage("All", 100000, 100000)
-	src.delStatus("drowsy")
+	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
 	src.losebreath = 0
+	src.delStatus("drowsy")
 	src.delStatus("paralysis")
 	src.delStatus("stunned")
 	src.delStatus("weakened")
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("critical_condition")
+	src.delStatus("recent_trauma")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2445,6 +2447,8 @@
 	src.health = src.max_health
 	src.buckled = null
 	src.disfigured = FALSE
+	if (src.reagents)
+		src.reagents.clear_reagents()
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

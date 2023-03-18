@@ -1,4 +1,23 @@
-
+(t)sat mar 18 23
+(u)LeahTheTech
+(+)Conspirators will now all correctly receive identical objectives.
+(t)thu mar 16 23
+(u)LeahTheTech
+(*)Atmospheric analyzers can now be used in-hand to track the nearest hull breach.
+(p)13048
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Trying to gang tag a room containing a rival tag will now point you in the direction of the offending tag.
+(t)wed mar 15 23
+(u)Ikea
+(p)13090
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(+)One unit of Lavender essence is now able to purge two units of miasma
+(u)LeahTheTech
+(+)Flockdrones now do more damage to pods and move slower in space.
+(u)Flaborized
+(p)13065
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Processed planks and bamboo can now be used to craft many things, such as walls or floors or furniture. Process bamboo and wood with the chainsaw!
 (t)mon mar 13 23
 (u)aloe
 (+)Security cameras now give off a little bit of light, making them easier to notice/find in the dark. Cutting the cam disables the light, and repairing it reenables it.

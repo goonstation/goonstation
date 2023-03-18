@@ -97,3 +97,6 @@
 /datum/component/tracker_hud/flock
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	color = "#15ccb4"
+
+/datum/component/tracker_hud/gang
+	color = "#5a6edd"
