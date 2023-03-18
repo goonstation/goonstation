@@ -40,7 +40,7 @@
 		else
 			..()
 
-	attack_self(mob/M as mob)
+	attack_self(mob/M)
 		if (!src.armed)
 			M.show_text("You start to arm the beartrap...", "blue")
 			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
@@ -74,7 +74,7 @@
 			src.anchored = FALSE
 		return
 
-	proc/triggered(mob/target as mob)
+	proc/triggered(mob/target)
 		if (!src || !src.armed)
 			return
 
