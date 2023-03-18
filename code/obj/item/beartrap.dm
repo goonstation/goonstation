@@ -85,9 +85,9 @@
 				M.death()
 			else
 				M.changeStatus("stunned", 4 SECONDS)
-			M.force_laydown_standup()
-			random_brute_damage(M, 50, 0)
-			take_bleeding_damage(M, null, 15, DAMAGE_CUT)
+				M.force_laydown_standup()
+				random_brute_damage(M, 50, 0)
+				take_bleeding_damage(M, null, 15, DAMAGE_CUT)
 			M.UpdateDamageIcon()
 
 		if (target)
