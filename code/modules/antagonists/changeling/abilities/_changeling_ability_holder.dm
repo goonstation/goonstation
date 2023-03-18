@@ -94,128 +94,44 @@
 			src.absorbtions++
 		src.insert_into_hivemind(M)
 
-	//Insert a mob into the hivemind by creating a hivemind_observer for them and transferring Mind
-	proc/insert_into_hivemind(var/mob/victim, var/restore_name=0)
-		var/mob/dead/target_observer/hivemind_observer/obs
-		//since getting absorbed into the hivemind yoinks your mind away before calling death, we need to do this here
-		if (victim.mind)
-			for (var/datum/antagonist/antag in victim.mind.antagonists)
-				if (istype(antag, /datum/antagonist/changeling_critter))
-					victim.mind.remove_antagonist(antag.id)
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//Just inserting a random chumpler (regular human)
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if (iscarbon(victim))
-			var/mob/living/M = victim
-			obs = new(src.owner)
+	proc/insert_into_hivemind(var/mob/M)
+		var/datum/mind/mind_to_be_transferred
 
-			//Set up name and vision
-			obs.name = M.name
-			obs.real_name = M.real_name
-			if (src.owner.invisibility)
-				obs.see_invisible = src.owner.invisibility
-
-			//Transfer the control from the victim to the hivemind member
-			if (M.mind)
-				M.mind.transfer_to(obs)
-			else if (M.client)
-				obs.client = M.client
-			else if (M.ghost && !(M.ghost.mind && M.ghost.mind.get_player()?.dnr)) //Heh, death is no escape // (except sometimes when the ghost really doesn't want to come back and has DNR set HHHHEH)
-				var/mob/dead/ghost = M.ghost
-				ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and into another consciousness!</span>")
-				if(ghost.mind)
-					ghost.mind.transfer_to(obs)
-				else if (ghost.client)
-					obs.client = ghost.client
-				else if (ghost.key)
-					obs.key = ghost.key
-				else
-					return
-				M.ghost = null
-			else
-				return
-
-			/*
-			if(victim != src.owner)
-				obs.corpse = M
-				M.ghost = obs
-			*/
-			obs.set_owner(src)
-			obs.show_antag_popup("changeling_absorbed")
-		else if (istype(victim,/mob/dead/target_observer/hivemind_observer))
-			obs = victim
-
-			obs.set_owner(src)
-		else if (istype(victim,/mob/dead))
-			if(istype(victim,/mob/dead/target_observer)) // Gotta do some shuffling about
-				var/datum/mind/M = victim.mind
-				victim.ghostize()
-				victim = M.current
-			var/mob/dead/ghost = victim
-			if(istype(ghost, /mob/dead/observer)) // fuck corpse not being defined on /mob/dead
-				var/mob/dead/observer/O = ghost
-				if(O.corpse)
-					O.corpse.ghost = null
-					O.corpse = null
-			else if(istype(ghost, /mob/dead/target_observer))
-				var/mob/dead/target_observer/O = ghost
-				if(O.corpse)
-					O.corpse.ghost = null
-					O.corpse = null
-			obs = new(src.owner)
-			obs.corpse = null
-			obs.name = ghost.name
-			obs.real_name = ghost.real_name
+		// Locate the mind of the mob to be inserted into the hivemind.
+		if (M.mind)
+			mind_to_be_transferred = M.mind
+		else if (M.client)
+			mind_to_be_transferred = M.client.mob.mind
+		else if (M.ghost && (M.ghost.mind || M.ghost.client) && !M.ghost.mind.get_player().dnr)
+			var/mob/dead/ghost = M.ghost
 			ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and into another consciousness!</span>")
 			if(ghost.mind)
-				ghost.mind.transfer_to(obs)
+				mind_to_be_transferred = ghost.mind
 			else if (ghost.client)
-				obs.client = ghost.client
-			else if (ghost.key)
-				obs.key = ghost.key
-			else
-				return
+				mind_to_be_transferred = ghost.client.mob.mind
 
-			obs.set_owner(src)
+		// Last attempt to find a mind.
+		else if (M.last_client)
+			for (var/client/C in clients)
+				if (C == M.last_client && C.mob && (isobserver(C.mob) || isVRghost(C.mob)))
+					if(C.mob && C.mob.mind)
+						mind_to_be_transferred = C.mob.mind
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//	Inserting a handspider (or eyespider)
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		else if (istype(victim, /mob/living/critter/changeling))
-			var/mob/living/critter/changeling/spider = victim
-			obs = new(src.owner)
-			//Set up observer name
-			obs.name = victim.name
-			obs.real_name = victim.real_name
-			//Set up corpse and ghost stuff
-			obs.corpse = victim
-			victim.ghost = obs
+					break
 
-			//Handle vision
-			if (src.owner.invisibility)
-				obs.see_invisible = src.owner.invisibility
-			//Transfer the mind and control to the new observer
-			if (victim.mind)
-				victim.mind.transfer_to(obs)
-			else if (victim.client)
-				victim.client.mob = obs
+		if (!mind_to_be_transferred)
+			return
 
-			//Assign an owner to the observer
-			obs.set_owner(src)
+		// Remove changeling critter antagonist roles, as the mind is removed from the critter prior to death.
+		for (var/datum/antagonist/antag in mind_to_be_transferred.antagonists)
+			if (istype(antag, /datum/antagonist/subordinate/changeling_critter))
+				mind_to_be_transferred.remove_antagonist(antag.id)
 
-			src.hivemind -= spider
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//	Inserting an existing hivemind_observer
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-		if(restore_name)
-			obs.name = original_controller_name
-			obs.real_name = original_controller_real_name
-
-			original_controller_name = null
-			original_controller_real_name = null
-		obs.can_exit_hivemind_time = world.time + 1 MINUTE
-		return obs
+		// Remove any previous hivemind member roles, and add a new one.
+		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
+		mind_to_be_transferred.current.show_antag_popup("changeling_absorb")
+		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
 		if(master)

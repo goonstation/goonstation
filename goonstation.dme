@@ -698,6 +698,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\blob\blob.dm"
 #include "code\modules\antagonists\blob\abilities\blob_abilities.dm"
 #include "code\modules\antagonists\changeling\changeling.dm"
+#include "code\modules\antagonists\changeling\changeling_critter.dm"
+#include "code\modules\antagonists\changeling\hivemind_member.dm"
 #include "code\modules\antagonists\changeling\abilities\_changeling_ability_holder.dm"
 #include "code\modules\antagonists\changeling\abilities\abomination.dm"
 #include "code\modules\antagonists\changeling\abilities\absorb.dm"
