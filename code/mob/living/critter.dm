@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/area/registered_area = null
 	///time when mob last awoke from hibernation
 	var/last_hibernation_wake_tick = 0
-	var/is_hibernating = TRUE
+	var/is_hibernating = FALSE
 
 	var/can_burn = 1
 	var/can_throw = 0
