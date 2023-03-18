@@ -2476,7 +2476,7 @@
 		if(isobserver(ghost))
 			qdel(ghost)
 
-	src.HealDamage("All", 100000, 100000)
+	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.delStatus("drowsy")
 	src.stuttering = 0
 	src.losebreath = 0
@@ -2496,6 +2496,8 @@
 	src.health = src.max_health
 	src.buckled = null
 	src.disfigured = FALSE
+	if (src.reagents)
+		src.reagents.clear_reagents()
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

@@ -506,7 +506,7 @@
 		if(!target)
 			system.reply("Valid mob not found.", "user")
 			return FALSE
-		target.revive()
+		target.full_heal()
 		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")

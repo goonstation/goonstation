@@ -2107,7 +2107,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
-	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// but we should still allow ourselves to heal
+	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)

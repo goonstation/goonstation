@@ -983,7 +983,7 @@ var/global/noir = 0
 						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
 						return
 					if(config.allow_admin_rev)
-						M.revive()
+						M.full_heal()
 						message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 						logTheThing(LOG_ADMIN, usr, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, usr, "healed / revived [constructTarget(M,"diary")]", "admin")
@@ -4597,14 +4597,6 @@ var/global/noir = 0
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export_async("admin", ircmsg)
-
-/mob/proc/revive()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.full_heal()
-		H.stamina = H.stamina_max
-		H.remove_ailments() // don't spawn with heart failure
-	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 /proc/checktraitor(mob/M as mob)
