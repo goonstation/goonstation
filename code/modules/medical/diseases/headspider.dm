@@ -130,6 +130,8 @@
 
 /datum/ailment/parasite/headspider/on_remove(mob/living/affected_mob, datum/ailment_data/parasite/D)
 	if(!QDELETED(D?.source))
+		if(isalive(D.source))
+			D.source.death(FALSE)
 		//the headspider gets fully absorbed
 		D.source?.set_loc(null)
 		qdel(D.source)
