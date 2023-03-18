@@ -240,7 +240,7 @@ obj/item/cable_coil/dropped(mob/user)
 			return
 		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
 		if (istype(cable))
-			cable.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
+			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
 			boutput(user, "You cut a piece off the [base_name].")
 		return
 
