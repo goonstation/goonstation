@@ -48,8 +48,8 @@
 			actions.start(action_bar, M)
 		return
 
-	Crossed(atom/movable/AM as mob)
-		if ((isliving(AM)) && !isintangible(AM) && (src.armed))
+	Crossed(atom/movable/AM)
+		if (isliving(AM) && !isintangible(AM) && src.armed)
 			var/mob/living/M = AM
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
@@ -83,7 +83,8 @@
 			logTheThing(LOG_COMBAT, M, "stood on a [src] at [log_loc(src)].")
 			if(istype(M, /mob/living/critter/bear))
 				M.death()
-			M.changeStatus("stunned", 4 SECONDS)
+			else
+				M.changeStatus("stunned", 4 SECONDS)
 			M.force_laydown_standup()
 			random_brute_damage(M, 50, 0)
 			take_bleeding_damage(M, null, 15, DAMAGE_CUT)

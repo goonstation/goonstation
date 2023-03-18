@@ -31,7 +31,7 @@
 			return 1
 		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src))
 			return ..()
 		if (issawingtool(W) && src.droparms)
@@ -99,7 +99,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		src.add_stam_mod_max("bear", 50)
 
-	critter_attack(var/mob/target)
+	critter_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
