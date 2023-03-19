@@ -1721,14 +1721,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
 				return
 			else
-				if (prob(95))
-					src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
-					src.death()
-					return
-				else
-					src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
-					M.setStatus("weakened", 5 SECONDS)
-					return
+				src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
+				M.setStatus("weakened", 5 SECONDS)
+				return
 		. = ..()
 
 /* =================================================== */
