@@ -734,7 +734,7 @@ var/global/totally_random_jobs = FALSE
 
 /mob/living/carbon/human/proc/spawnId(var/datum/job/JOB)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
-	JOB = /datum/job/command/captain
+	JOB = new /datum/job/command/captain
 #endif
 	var/obj/item/card/id/C = null
 	if (!JOB || !JOB.slot_card)
