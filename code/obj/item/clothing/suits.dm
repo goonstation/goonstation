@@ -795,7 +795,7 @@
 		src.cape = TRUE
 		block_vision = FALSE
 		src.UpdateIcon()
-		src.update_examine()
+		src.update_flags()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
