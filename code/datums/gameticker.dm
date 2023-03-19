@@ -229,7 +229,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		shippingmarket.get_market_timeleft()
 
-		logTheThing(LOG_OOC, null, "<b>Current round begins</b>")
+		logTheThing(LOG_STATION, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
@@ -433,7 +433,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			// In a funny twist of fate there was no actual logging that the round was officially over.
 			// "why is it log_ooc": the current round begins message is also log_ooc
 			var/total_round_time = TIME - round_start_time
-			logTheThing(LOG_OOC, null, "The round is now over. Round time: [round(total_round_time / 3600)]:[add_zero(total_round_time / 60 % 60, 2)]:[add_zero(total_round_time % 60, 2)]")
+			logTheThing(LOG_STATION, null, "The round is now over. Round time: [round(total_round_time / 3600)]:[add_zero(total_round_time / 60 % 60, 2)]:[add_zero(total_round_time % 60, 2)]")
 
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
