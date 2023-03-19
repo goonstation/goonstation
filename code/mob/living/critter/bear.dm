@@ -112,6 +112,12 @@
 					playsound(src.loc, 'sound/voice/MEraaargh.ogg', 40, 0)
 			return ..()
 
+	critter_scavenge(var/mob/target)
+		src.visible_message("<span class='alert'<b>[src] nibbles [target]!</b></span>")
+		playsound(src.loc, 'sound/items/eatfood.ogg', 20, 1)
+		src.HealDamage("All", 4, 4)
+		return ..()
+
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
 		. = "abear"
