@@ -461,6 +461,8 @@
 		else if (health_pct > 90)
 			. = "<span style='color:#138015'>Healthy</span>"
 		else if (health_pct > 60)
+			if (health_pct < 70 && health_pct >= 69 && prob(1))
+				. = "<span style='color:#CC7A1D'Nice</span>"
 			. = "<span style='color:#CC7A1D'>Injured</span>"
 		else if (health_pct > 0)
 			. = "<span style='color:#CC7A1D'>Significantly Injured</span>"
