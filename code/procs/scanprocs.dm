@@ -486,7 +486,7 @@
 	burn_text = get_damage_text(round(M.get_burn_damage()), DAMAGE_TYPE_BURN)
 	brute_text = get_damage_text(round(M.get_brute_damage()), DAMAGE_TYPE_BRUTE)
 #else
-	var/health_text = "[M.max_health ? round(100 * M.health / M.max_health) : M.health]%"
+	health_text = "[M.max_health ? round(100 * M.health / M.max_health) : M.health]%"
 	if(M.max_health <= 0)
 		health_text = "???"
 	oxy_text = round(M.get_oxygen_deprivation())
