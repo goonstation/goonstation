@@ -651,6 +651,7 @@ a.latejoin-card:hover {
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
+		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
 
 		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
