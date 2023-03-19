@@ -66,7 +66,7 @@
 		// MeasureText sleeps and that fucks up a lot, removing for now
 		src.measured_height = measured * (1 + round(length(src.maptext_width) / 32)) // this is an incredibly fancy way to write * 1
 
-proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
+proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40, width_override = 0, height_override = 0)
 	var/image/chat_maptext/text = new /image/chat_maptext
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if (!force)
@@ -75,6 +75,10 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 	else
 		// force whatever it is to be shown. for not chat tings. honk.
 		text.maptext = msg
+		if (width_override)
+			text.maptext_width = width_override
+		if (height_override)
+			text.maptext_height = height_override
 	if(istype(target, /atom/movable) && target.chat_text)
 		var/atom/movable/L = target
 		text.loc = L.chat_text

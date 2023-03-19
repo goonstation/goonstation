@@ -1,6 +1,6 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
+/proc/scan_health(var/mob/M, var/verbose_reagent_info = FALSE, var/disease_detection = TRUE, var/organ_scan = FALSE, var/visible = FALSE, syndicate = FALSE,
 	admin = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -12,19 +12,26 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/death_state = M.stat
-	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
+	if (M.bioHolder?.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / (M.max_health||1))
-
 	var/colored_health
-	if(M.max_health <= 0)
+#ifdef RP_MODE
+	colored_health = get_health_text(M)
+#else
+	var/health_percent = round(100 * M.health / (M.max_health||1))
+	if (death_state > 1)
+		colored_health = "<span class='alert'>DEAD</span>"
+	else if(M.max_health <= 0)
 		colored_health = "<span class='alert'>???</span>"
 	if (health_percent >= 51 && health_percent <= 100)
 		colored_health = "<span style='color:#138015'>[health_percent]</span>"
 	else if (health_percent >= 1 && health_percent <= 50)
 		colored_health = "<span style='color:#CC7A1D'>[health_percent]</span>"
 	else colored_health = "<span class='alert'>[health_percent]</span>"
+
+	colored_health = "[death_state > 1 ? "<span class='alert'>DEAD</span>" : "[colored_health]% healthy"]"
+#endif
 
 	var/optimal_temp = M.base_body_temp
 	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
@@ -55,16 +62,22 @@
 	var/burn_font = "<span style='color:#CC7A1D'>"
 	var/brute_font = "<span style='color:#E60E4E'>"
 
+#ifdef RP_MODE
+	var/oxy_data = "[oxy_font][get_damage_text(oxy, DAMAGE_TYPE_OXY)]</span>"
+	var/tox_data = "[tox_font][get_damage_text(tox, DAMAGE_TYPE_TOX)]</span>"
+	var/burn_data = "[burn_font][get_damage_text(burn, DAMAGE_TYPE_BURN)]</span>"
+	var/brute_data = "[brute_font][get_damage_text(brute, DAMAGE_TYPE_BRUTE)]</span>"
+#else
 	var/oxy_data = "[oxy > 50 ? "<span class='alert'>" : "[oxy_font]"][oxy]</span>"
 	var/tox_data = "[tox > 50 ? "<span class='alert'>" : "[tox_font]"][tox]</span>"
 	var/burn_data = "[burn > 50 ? "<span class='alert'>" : "[burn_font]"][burn]</span>"
 	var/brute_data = "[brute > 50 ? "<span class='alert'>" : "[brute_font]"][brute]</span>"
+#endif
 
 	var/rad_data = null
 	var/nrad_data = null
 	var/blood_data = null
 	var/brain_data = null
-	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
 	var/pathogen_data = null
 	var/disease_data = null
@@ -235,7 +248,7 @@
 
 	var/data = "--------------------------------<br>\
 	Analyzing Results for <span class='notice'>[M]</span>:<br>\
-	&emsp; Overall Status: [death_state > 1 ? "<span class='alert'>DEAD</span>" : "[colored_health]% healthy"]<br>\
+	&emsp; Overall Status: [colored_health]<br>\
 	&emsp; Damage Specifics: [oxy_data] - [tox_data] - [burn_data] - [brute_data]<br>\
 	&emsp; Key: [oxy_font]Suffocation</span>/[tox_font]Toxin</span>/[burn_font]Burns</span>/[brute_font]Brute</span><br>\
 	Body Temperature: [colored_temp]\
@@ -407,26 +420,95 @@
 				R["cdi_d"] = "No notes."
 	return
 
-/proc/scan_health_generate_text(var/mob/M)
-	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+#ifdef RP_MODE
+/// Gets some descriptive flavor text for an amount of damage
+/proc/get_damage_text(damage, damtype)
+	// convert damage ro brute/burn equivalent numbers
+	// 100 brute roughly equivalent to 200 tox, 300 oxy
+	var/adjusted_damage = damage
+	switch(damtype)
+		if (DAMAGE_TYPE_OXY)
+			adjusted_damage /= 3
+		if (DAMAGE_TYPE_TOX)
+			adjusted_damage /= 2
+
+	// TODO maybe use specific terms for flavor, idk
+	if (adjusted_damage < 1)
+		. = "NONE"
+	else if (adjusted_damage < 25)
+		. = "MINOR"
+	else if (adjusted_damage < 50)
+		. = "MAJOR"
+	else if (adjusted_damage < 99)
+		. = "SEVERE"
+	else if (adjusted_damage < 200)
+		. = prob(0.1) ? "FUCKED" : "LIFE-THREATENING"
+	// oh you're FUCKED. add a multiplier for funzies if people want to get a high score
+	else
+		. = "[adjusted_damage / 200]x LETHAL AMOUNT" // ballparking 200 brute/burn as the 'you are fucked' threshold
+
+/// Gets some descriptive flavor text based on a mob's health.
+/// Very approximate because of discrepancies in damage type numbers
+/proc/get_health_text(mob/M)
+	var/health_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+	if (isdead(M) || M.bioHolder?.HasEffect("dead_scan"))
+		// ez
+		. = "<span class='alert'>DEAD</span>"
+	else
+		if (health_pct > 100)
+			// uhh
+			. = "<span style='color:#138015'>Vigorously Healthy</span>"
+		else if (health_pct > 90)
+			. = "<span style='color:#138015'>Healthy</span>"
+		else if (health_pct > 60)
+			. = "<span style='color:#CC7A1D'>Injured</span>"
+		else if (health_pct > 0)
+			. = "<span style='color:#CC7A1D'>Significantly Injured</span>"
+		else if (health_pct > -60)
+			. = "<span class='alert'>Severely Injured</span>"
+		else if (health_pct > -180)
+			. = "<span class='alert'>Critically Injured</span>"
+		else
+			// uhh
+			. = "<span class='alert'>[prob(0.1) ? "HOW ARE YOU ALIVE" : "CRITICAL CONDITION"]</span>"
+#endif
+
+/proc/scan_health_generate_text(mob/M)
+	var/health_text
+	var/oxy_text
+	var/tox_text
+	var/burn_text
+	var/brute_text
+#ifdef RP_MODE
+	health_text = get_health_text(M)
+	oxy_text = get_damage_text(round(M.get_oxygen_deprivation()), DAMAGE_TYPE_OXY)
+	tox_text = get_damage_text(round(M.get_toxin_damage()), DAMAGE_TYPE_TOX)
+	burn_text = get_damage_text(round(M.get_burn_damage()), DAMAGE_TYPE_BURN)
+	brute_text = get_damage_text(round(M.get_brute_damage()), DAMAGE_TYPE_BRUTE)
+#else
+	var/health_text = "[M.max_health ? round(100 * M.health / M.max_health) : M.health]%"
 	if(M.max_health <= 0)
-		h_pct = "???"
-	var/oxy = round(M.get_oxygen_deprivation())
-	var/tox = round(M.get_toxin_damage())
-	var/burn = round(M.get_burn_damage())
-	var/brute = round(M.get_brute_damage())
+		health_text = "???"
+	oxy_text = round(M.get_oxygen_deprivation())
+	tox_text = round(M.get_toxin_damage())
+	burn_text = round(M.get_burn_damage())
+	brute_text = round(M.get_brute_damage())
+#endif
 
-	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+	return "<span class='ol c pixel'><span class='vga'>[health_text]</span>\n"		\
+			+ "<span style='color: #40b0ff;'>[oxy_text]</span> - " 					\
+			+ "<span style='color: #33ff33;'>[tox_text]</span> - "					\
+			+ "<span style='color: #ffee00;'>[burn_text]</span> - "					\
+			+ "<span style='color: #ff6666;'>[brute_text]</span></span>"
 
-
-// output a health pop-up overhead thing to the client
+/// Outputs a health pop-up overhead thing to the client
 /proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
 	if (C.client && !C.client.preferences?.flying_chat_hidden)
 
 		var/image/chat_maptext/chat_text = null
 		var/popup_text = scan_health_generate_text(M)
 
-		chat_text = make_chat_maptext(M, popup_text, force = 1)
+		chat_text = make_chat_maptext(M, popup_text, force = TRUE, height_override = 80) // give it some extra space
 		if(chat_text)
 			chat_text.measure(C.client)
 			for(var/image/chat_maptext/I in C.chat_text.lines)
