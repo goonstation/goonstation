@@ -738,7 +738,6 @@
 		return ..(NewLoc, direct)
 
 /mob/living/critter/flock/drone/was_harmed(mob/M, obj/item/weapon, special, intent)
-	. = ..()
 	if (!M) return
 	if(src.ai_paused)
 		src.wake_from_ai_pause()
@@ -751,6 +750,7 @@
 				emote("scream")
 				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
 		src.flock.updateEnemy(M)
+	. = ..()
 
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
 	if(floorrunning)

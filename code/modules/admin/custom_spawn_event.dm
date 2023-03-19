@@ -28,9 +28,7 @@
 		if (ispath(src.thing_to_spawn, /mob))
 			var/mob/mob = src.thing_to_spawn
 			return initial(mob.name)
-		if (ispath(src.thing_to_spawn, /datum/job))
-			var/datum/job/job = src.thing_to_spawn
-			return initial(job.name)
+		return src.thing_to_spawn //job name etc.
 
 	proc/get_mob_instance(gender)
 		if (ismob(src.thing_to_spawn))
@@ -41,12 +39,11 @@
 
 		if (ispath(src.thing_to_spawn, /mob))
 			return new src.thing_to_spawn(src.get_spawn_loc())
-		if (ispath(src.thing_to_spawn, /datum/job))
-			var/datum/job/job = src.thing_to_spawn
+		if (istext(src.thing_to_spawn)) //if it's a string then it's (hopefully) a job name
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
 			M.initializeBioholder(gender) //try to preserve gender if we can
 			SPAWN(0)
-				M.JobEquipSpawned(initial(job.name))
+				M.JobEquipSpawned(src.thing_to_spawn)
 			return M
 
 	proc/do_spawn()
@@ -122,8 +119,8 @@
 			spawn_type = "mob_ref"
 		else if (ispath(src.spawn_event.thing_to_spawn, /mob))
 			spawn_type = "mob_type"
-		else if (ispath(src.spawn_event.thing_to_spawn, /datum/job))
-			spawn_type = "job_type"
+		else if (istext(src.spawn_event.thing_to_spawn))
+			spawn_type = "job"
 
 		var/loc_type = ""
 		if (isturf(src.spawn_event.spawn_loc))
@@ -137,7 +134,7 @@
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
 
 		return list(
-			"thing_to_spawn" = ispath(src.spawn_event.thing_to_spawn) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
+			"thing_to_spawn" = (ispath(src.spawn_event.thing_to_spawn) || istext(src.spawn_event.thing_to_spawn)) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
 			"thing_name" = src.spawn_event.get_mob_name(),
 			"spawn_directly" = src.spawn_event.spawn_directly,
 			"spawn_loc" = src.spawn_event.spawn_loc,
@@ -169,8 +166,11 @@
 					boutput(ui.user, "That's not a mob, dingus.")
 			if ("select_mob_type")
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select mob type", "Select type", concrete_typesof(/mob/living)) || src.spawn_event.thing_to_spawn
-			if ("select_job_type")
-				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", concrete_typesof(/datum/job)) || src.spawn_event.thing_to_spawn
+			if ("select_job")
+				var/list/job_names = list()
+				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
+					job_names |= job.name
+				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", job_names) || src.spawn_event.thing_to_spawn
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")

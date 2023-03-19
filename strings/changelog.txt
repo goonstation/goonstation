@@ -1,4 +1,12 @@
-
+(t)sat mar 18 23
+(u)LeahTheTech
+(+)Conspirators will now all correctly receive identical objectives.
+(t)thu mar 16 23
+(u)LeahTheTech
+(*)Atmospheric analyzers can now be used in-hand to track the nearest hull breach.
+(p)13048
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Trying to gang tag a room containing a rival tag will now point you in the direction of the offending tag.
 (t)wed mar 15 23
 (u)Ikea
 (p)13090
