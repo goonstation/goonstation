@@ -1030,6 +1030,48 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify limbs.")
 
+		if ("changeoutfit")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+					return
+				var/mob/living/carbon/human/H = M
+				if (H && usr.client)
+					var/delete_choice
+					var/obj/item/card/id
+					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+					sortList(jobs, /proc/cmp_text_asc)
+					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					if(!istype(job))
+						return
+					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
+					if (delete_choice == "Cancel")
+						return
+					if (!ishuman(H))
+						boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+						return
+					if (delete_choice == "Yes")
+						// Try to recover their ID
+						id = H.get_id()
+						if (istype(id))
+							H.u_equip(id)
+							// Hide this somewhere safe until we recover it as we can't keep it on the mob
+							id.set_loc(null)
+							id.dropped(H)
+						else
+							boutput(usr, "<span class='alert'>Could not find [H]'s ID card - Replacing with a standard job ID if available.</span>")
+					H.unequip_all(delete_choice == "Yes" ? 1 : 0)
+					SPAWN (1 SECOND)
+						equip_job_items(job, H)
+						if (istype(id))
+							if(!H.equip_if_possible(id, H.slot_wear_id))
+								H.put_in_hand(id)
+						else if (job.spawn_id)
+							H.spawnId(job)
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to change outfits.")
+
 
 		if ("jumpto")
 			if(src.level >= LEVEL_SA)
