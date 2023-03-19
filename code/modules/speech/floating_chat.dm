@@ -53,13 +53,6 @@
 			return
 		who << src
 		src.visible_to += who
-		/*var/mob/whomob = who.mob
-		if(istype(whomob) && !isunconscious(whomob) && isliving(whomob) && !whomob.sleeping && !whomob.getStatusDuration("paralysis"))
-			for (var/mob/dead/target_observer/observer in whomob:observers)
-				if(!observer.client)
-					continue
-				observer.client << src
-				src.visible_to += observer.client*/
 
 	proc/measure(var/client/who)
 		var/measured = 8

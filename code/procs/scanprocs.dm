@@ -445,7 +445,7 @@
 		. = prob(0.1) ? "FUCKED" : "FATAL"
 	// oh you're FUCKED. add a multiplier for funzies if people want to get a high score
 	else
-		. = "[adjusted_damage / 200]x LETHAL AMOUNT" // ballparking 200 brute/burn as the 'you are fucked' threshold
+		. = "[adjusted_damage / 200]x LETHAL" // ballparking 200 brute/burn as the 'you are fucked' threshold
 
 /// Gets some descriptive flavor text based on a mob's health.
 /// Very approximate because of discrepancies in damage type numbers
@@ -453,7 +453,7 @@
 	var/health_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
 	if (isdead(M) || M.bioHolder?.HasEffect("dead_scan"))
 		// ez
-		. = "<span class='alert'>DEAD</span>"
+		. = "<span style='color:#ff000'>DEAD</span>"
 	else
 		if (health_pct > 100)
 			// uhh
@@ -467,12 +467,12 @@
 		else if (health_pct > 0)
 			. = "<span style='color:#CC7A1D'>Significantly Injured</span>"
 		else if (health_pct > -60)
-			. = "<span class='alert'>Severely Injured</span>"
+			. = "<span style='color:#ff000'>Severely Injured</span>"
 		else if (health_pct > -180)
 			. = "<span class='alert'>Critically Injured</span>"
 		else
 			// uhh
-			. = "<span class='alert'>[prob(0.1) ? "HOW ARE YOU ALIVE" : "CRITICAL CONDITION"]</span>"
+			. = "<span style='color:#ff000'>[prob(0.1) ? "HOW ARE YOU ALIVE" : "CRITICAL CONDITION"]</span>"
 #endif
 
 /proc/scan_health_generate_text(mob/M)
@@ -497,7 +497,7 @@
 	brute_text = round(M.get_brute_damage())
 #endif
 
-	return "<span class='ol c pixel'><span class='vga'>[health_text]</span>\n"		\
+	return "<span class='ol c pixel'>[health_text] \n"								\
 			+ "<span style='color: #40b0ff;'>[oxy_text]</span> - " 					\
 			+ "<span style='color: #33ff33;'>[tox_text]</span> - "					\
 			+ "<span style='color: #ffee00;'>[burn_text]</span> - "					\
