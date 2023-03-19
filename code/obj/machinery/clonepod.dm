@@ -249,8 +249,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		oldabilities.on_clone()
 		if (oldabilities && istype(oldabilities))
-			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
-			// Maybe not a bug? idk.
 			src.occupant.abilityHolder = oldabilities // This should already be a copy.
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
