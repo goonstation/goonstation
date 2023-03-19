@@ -183,8 +183,8 @@
 		processing_items |= src
 
 	proc/stop_transfusion()
-		processing_items -= src
 		src.in_use = 0
+		processing_items -= src
 		src.patient = null
 
 /* =================================================== */
@@ -223,6 +223,7 @@ TYPEINFO(/obj/iv_stand)
 	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/IV = null
 	var/obj/paired_obj = null
+	var/finished_pumping = FALSE
 
 	get_desc()
 		if (src.IV)
@@ -249,6 +250,10 @@ TYPEINFO(/obj/iv_stand)
 				src.UpdateOverlays(src.fluid_image, "fluid")
 			else
 				src.UpdateOverlays(null, "fluid")
+			if (src.IV.in_use)
+				src.icon_state = "IVstand-active"
+			else
+				src.icon_state = "IVstand-finished"
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
@@ -352,6 +357,9 @@ TYPEINFO(/obj/iv_stand)
 			src.IV.stand = null
 			src.IV = null
 		..()
+
+#undef ACTIVE
+#undef INACTIVE
 
 /* ---------- IV Stand Parts ---------- */
 /obj/item/furniture_parts/IVstand
