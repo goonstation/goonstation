@@ -442,7 +442,7 @@
 	else if (adjusted_damage < 99)
 		. = "SEVERE"
 	else if (adjusted_damage < 200)
-		. = prob(0.1) ? "FUCKED" : "LIFE-THREATENING"
+		. = prob(0.1) ? "FUCKED" : "FATAL"
 	// oh you're FUCKED. add a multiplier for funzies if people want to get a high score
 	else
 		. = "[adjusted_damage / 200]x LETHAL AMOUNT" // ballparking 200 brute/burn as the 'you are fucked' threshold
