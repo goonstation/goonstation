@@ -320,11 +320,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
-					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
-					if (F)
-						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, F, "<b>Late join</b>: assigned antagonist role: flockmind.")
-						antagWeighter.record(role = ROLE_FLOCKMIND, ckey = F.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
+					antagWeighter.record(role = ROLE_FLOCKMIND, ckey = player.ckey)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)
