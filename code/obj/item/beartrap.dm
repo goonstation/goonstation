@@ -75,7 +75,7 @@
 		return
 
 	proc/triggered(mob/target)
-		if (!src || !src.armed || !isghostcritter(target) || !isintangible(target))
+		if (!src || !src.armed || isghostcritter(target) || isintangible(target))
 			return
 
 		if (target && isliving(target))
