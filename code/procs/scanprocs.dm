@@ -445,7 +445,7 @@
 		. = prob(0.1) ? "FUCKED" : "FATAL"
 	// oh you're FUCKED. add a multiplier for funzies if people want to get a high score
 	else
-		. = "[adjusted_damage / 200]x LETHAL" // ballparking 200 brute/burn as the 'you are fucked' threshold
+		. = "[round(adjusted_damage / 200, 0.1)]x LETHAL" // ballparking 200 brute/burn as the 'you are fucked' threshold
 
 /// Gets some descriptive flavor text based on a mob's health.
 /// Very approximate because of discrepancies in damage type numbers
