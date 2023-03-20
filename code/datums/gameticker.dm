@@ -428,7 +428,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
 			// In a funny twist of fate there was no actual logging that the round was officially over.
-			var/total_round_time = (TIME - round_start_time) / 10
+			var/total_round_time = (TIME - round_start_time) / SECONDS
 			logTheThing(LOG_STATION, null, "The round is now over. Round time: [round(total_round_time / 3600)]:[add_zero(total_round_time / 60 % 60, 2)]:[add_zero(total_round_time % 60, 2)]")
 
 			// Official go-ahead to be an end-of-round asshole
