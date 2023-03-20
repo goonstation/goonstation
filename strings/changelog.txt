@@ -1,3 +1,6 @@
+(t)sun mar 19 23
+(u)aloe
+(+)You can now use 'Ctrl+M' to do auditory custom emotes (ie, they can be read by blind people but not deaf people). 'M' has the same behavior as before, which is visual custom emotes (can be read by deaf people but not blind people).
 (t)sat mar 18 23
 (u)LeahTheTech
 (+)Conspirators will now all correctly receive identical objectives.
