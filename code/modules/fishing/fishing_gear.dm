@@ -126,3 +126,18 @@ TYPEINFO(/obj/item/fish_portal)
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 40)
 		user.visible_message("[user] flips off the [src].", "You turn off the [src].")
 		qdel(src)
+
+/obj/fishing_pool
+	name = "Aquatic Research Pool"
+	desc = "A small bulky pool that you can fish in. It has a low probability of containing various low-rarity fish."
+	anchored = 1
+	icon = 'icons\obj\hydroponics\machines_hydroponics.dmi'
+	icon_state = "tray"
+
+// Gannets new fishing gear
+
+/obj/submachine/fishing_upload_terminal
+	name = "Aquatic Research Upload Terminal"
+	desc = "Insert fish to recieve points to spend in the fishing vendor."
+
+	//TODO make this
