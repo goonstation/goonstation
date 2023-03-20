@@ -18,6 +18,7 @@
 #define WEAPON_VENDOR_CATEGORY_AMMO "ammo"
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
+#define WEAPON_VENDOR_CATEGORY_FISHING "fishing"
 
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
@@ -33,7 +34,7 @@
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0, WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
@@ -230,6 +231,26 @@
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		..()
+
+/obj/submachine/weapon_vendor/fishing
+	name = "Fishing Supplies Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon-pirates"
+	desc = "An automated quartermaster service for obtianing and upgrading your fishing gear."
+	token_accepted = /obj/item/requisition_token/fishing
+	log_purchase = FALSE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/fishing_gear/rod
+		..()
+
+	accepted_token()
+		src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
 		..()
 
 // Materiel avaliable for purchase:
@@ -522,6 +543,11 @@
 	path = /obj/item/storage/backpack/satchel/flintlock_pistol_satchel
 	description = "A set of two flintlock pistols and 15 rounds of ammunition."
 
+//FISHING
+/datum/materiel/fishing_gear/rod
+	name = "Basic Fishing Rod"
+	path = /obj/item/fishing_rod
+	description = "A basic fishing rod."
 
 // Requisition tokens
 /obj/item/requisition_token
@@ -557,7 +583,12 @@
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
 
+	fishing
+		desc = "An NT-provided token compatible with the Fishing Equipment Vendor."
+		icon_state = "req-token-sec"
+
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
 #undef WEAPON_VENDOR_CATEGORY_ASSISTANT
+#undef WEAPON_VENDOR_CATEGORY_FISHING
