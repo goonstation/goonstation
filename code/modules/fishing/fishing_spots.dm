@@ -151,3 +151,71 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/nuclear_reactor/prefilled
 	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
+
+// Gannets new fishing spots
+
+/datum/fishing_spot/fishing_pool
+	fishing_atom_type = /obj/fishing_pool
+	fish_available = list(/obj/item/fish/goldfish = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10)
+
+/datum/fishing_spot/pool
+	fishing_atom_type = /turf/simulated/floor/pool/no_animate
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gamma = 10)
+
+/datum/fishing_spot/water_cooler
+	fishing_atom_type =/obj/reagent_dispensers/watertank/fountain
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gamma = 10)
+
+/datum/fishing_spot/kitchen_sink
+	fishing_atom_type =/obj/submachine/chef_sink
+	fish_available = list(/obj/item/fish/goldfish = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10)
+
+/datum/fishing_spot/bathroom_sink
+	fishing_atom_type =/obj/submachine/chef_sink/chem_sink
+	fish_available = list(/obj/item/fish/goldfish = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10)
+
+/datum/fishing_spot/disposal_chute
+	fishing_atom_type =/obj/machinery/disposal
+
+/datum/fishing_spot/janitor_bucket
+	fishing_atom_type = /obj/mopbucket
+
+/datum/fishing_spot/meatzone_acid
+	fishing_atom_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
+
+/datum/fishing_spot/lava_moon
+	fishing_atom_type = /turf/unsimulated/floor/lava
+
+/datum/fishing_spot/time_ship
+	fishing_atom_type =/turf/unsimulated/floor/void/timewarp
+
+/*
+/datum/fishing_spot/station_aquarium //probably bad
+	fishing_atom_type = /turf/simulated/floor/sand
+
+/datum/fishing_spot/teleporter //is this the active state?
+	fishing_atom_type = /obj/machinery/teleport/portal_ring
+
+/datum/fishing_spot/telesci_portal //does this count pod portals and other stuff?
+	fishing_atom_type = /obj/perm_portal
+*/
