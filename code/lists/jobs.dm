@@ -83,7 +83,7 @@ var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Miner", "Quarter
 var/list/medical_jobs = list("Medical Director", "Medical Doctor", "Roboticist", "Geneticist")
 var/list/science_jobs = list("Research Director", "Scientist")
 var/list/medsci_jobs = medical_jobs + science_jobs
-var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Clown", "Chaplain", "Janitor")
+var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Fisher", "Clown", "Chaplain", "Janitor")
 
 var/list/command_gimmicks = list("Head of Mining", "Nanotrasen Security Consultant" /* NTSC isn't a gimmick role, but for the sake of sorting, it practically is*/)
 var/list/security_gimmicks = list("Vice Officer", "Part-time Vice Officer", "Forensic Technician")

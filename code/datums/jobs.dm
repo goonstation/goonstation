@@ -901,6 +901,24 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Rancher")
 		return
 
+/datum/job/civilian/fisher
+	name = "Fisher"
+	limit = 1
+	wages = PAY_TRADESMAN
+	slot_belt = list(/obj/item/storage/belt/rancher/prepared)
+	slot_jump = list(/obj/item/clothing/under/rank/fisher)
+	slot_head = list(/obj/item/clothing/head/black)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_poc2 = list(/obj/item/device/pda2/botanist)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/fishing_rod)
+
+	New()
+		..()
+		src.access = get_access("Rancher")
+		return
+
 /datum/job/civilian/janitor
 	name = "Janitor"
 	limit = 3
