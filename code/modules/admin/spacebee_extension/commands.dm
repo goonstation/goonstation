@@ -639,7 +639,7 @@
 	execute(user, ckey)
 		var/list/response
 		try
-			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey))
+			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey), forceResponse = 1)
 		catch(var/exception/e)
 			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
 			return
