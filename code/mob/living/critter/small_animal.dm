@@ -3615,7 +3615,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
-	add_abilities = list(/datum/targetable/critter/crabmaul)
+	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

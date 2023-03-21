@@ -7,9 +7,9 @@
 	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
 	blood_id = "beff"
 	burning_suffix = "humanoid"
 	skinresult = /obj/item/material_piece/cloth/brullbarhide
@@ -93,8 +93,8 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
-		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 		if (src.is_king) // kings are built like tanks
+			abilityHolder.addAbility(/datum/targetable/critter/frenzy/king)
 			src.add_stam_mod_max("brullbar", 100)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "brullbar", 20)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "brullbar", 20)
@@ -102,6 +102,7 @@
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 50)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "brullbar", 10)
 		else // normal ones are still strong
+			abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 			src.add_stam_mod_max("brullbar", 40)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "brullbar", 20)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 20)
@@ -139,7 +140,7 @@
 			. += M
 
 	critter_attack(var/mob/target)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility((is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy))
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
@@ -166,11 +167,11 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
-		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
+		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
 			var/mob/living/silicon/robot/cyborg = silicon
 			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
 				src.visible_message("<span class='alert'><B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B></span>")
