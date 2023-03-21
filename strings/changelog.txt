@@ -1,4 +1,6 @@
 (t)tue mar 21 23
+(u)LeahTheTech
+(*)The in-game bug report form is now working again- ahem I mean it definitely wasn't broken. At all. No bugs here.
 (u)aloe
 (+)Added a custom suicide to the claw machine. Hope the doctors have carnival skills!
 (t)sun mar 19 23
