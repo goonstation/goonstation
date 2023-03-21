@@ -630,6 +630,30 @@
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 
+/datum/spacebee_extension_command/vpn_whitelist
+	name = "checkvpnwhitelist"
+	help_message = "Checks if a given ckey is VPN whitelisted"
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, ckey)
+		var/list/response
+		try
+			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey))
+		catch(var/exception/e)
+			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
+			return FALSE
+		if (response["error"])
+			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
+		else if ((response["success"]))
+			if (response["whitelisted"])
+				system.reply("ckey [ckey] is VPN whitelisted. Whitelisted by [response["akey"] ? response["akey"] : "unknown admin"]")
+			else
+				system.reply("ckey [ckey] is not VPN whitelisted.")
+		else
+			system.reply("Failed to query vpn whitelist, received invalid response from API.")
+		return TRUE
+
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"
 	help_message = "Toggle a hard server reboot"
