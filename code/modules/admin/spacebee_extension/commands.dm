@@ -643,6 +643,8 @@
 		catch(var/exception/e)
 			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
 			return
+		if (!islist(response))
+			system.reply("Failed to query vpn whitelist, did not receive response from API.")
 		if (response["error"])
 			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
 		else if ((response["success"]))
