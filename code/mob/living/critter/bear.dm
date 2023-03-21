@@ -6,9 +6,9 @@
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
+	can_throw = FALSE
+	can_grab = TRUE
+	can_disarm = TRUE
 	blood_id = "methamphetamine"
 	burning_suffix = "humanoid"
 	skinresult = /obj/item/material_piece/cloth/leather
@@ -28,7 +28,7 @@
 
 	on_pet(mob/user)
 		if (..())
-			return 1
+			return TRUE
 		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
 
 	attackby(obj/item/W, mob/living/user)
@@ -92,8 +92,8 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src) // lives in dark places
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/spacebear, src) // bit faster than your average critter
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/spacebear, src) // bit faster than your average critter (meth)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50) // METH
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "bear", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 3)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
