@@ -630,7 +630,7 @@
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 
-/datum/spacebee_extension_command/vpn_whitelist
+/datum/spacebee_extension_command/check_vpn_whitelist
 	name = "checkvpnwhitelist"
 	help_message = "Checks if a given ckey is VPN whitelisted"
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
@@ -642,7 +642,7 @@
 			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey))
 		catch(var/exception/e)
 			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
-			return FALSE
+			return
 		if (response["error"])
 			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
 		else if ((response["success"]))
@@ -652,7 +652,6 @@
 				system.reply("ckey [ckey] is not VPN whitelisted.")
 		else
 			system.reply("Failed to query vpn whitelist, received invalid response from API.")
-		return TRUE
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"
