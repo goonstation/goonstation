@@ -7393,10 +7393,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aBs" = (
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -35796,8 +35792,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lcr" = (
-/obj/stool/chair,
 /obj/machinery/light/incandescent,
+/obj/mail_booth,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
