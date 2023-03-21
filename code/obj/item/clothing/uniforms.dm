@@ -550,6 +550,12 @@
 	icon_state = "rancher"
 	item_state = "rancher"
 
+/obj/item/clothing/under/rank/fisher
+	name = "fisher's overalls"
+	desc = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
+	icon_state = "rancher"
+	item_state = "rancher"
+
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
 	desc = "You don't really want to think about what those stains are from."
