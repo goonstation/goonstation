@@ -62,7 +62,7 @@
 					holder.owner.set_loc(MT.loc)
 				if (is_incapacitated(holder?.owner))
 					break
-				playsound(holder.owner, pick(attack_sound), 70, 1)
+				playsound(holder.owner, pick(attack_sounds), 70, 1)
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick(attack_verbs)] [MT]!</b></span>")
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
