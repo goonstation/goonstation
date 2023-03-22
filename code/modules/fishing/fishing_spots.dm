@@ -153,7 +153,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
 
 // Gannets new fishing spots
+// todo adjust availible fish lists & balance probabilities.
 
+// Normal fishing spots
 /datum/fishing_spot/fishing_pool
 	fishing_atom_type = /obj/fishing_pool
 	fish_available = list(/obj/item/fish/goldfish = 40,\
@@ -162,7 +164,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10)
 
-/datum/fishing_spot/pool
+/datum/fishing_spot/pool // this doesn't work yet.
 	fishing_atom_type = /turf/simulated/floor/pool/no_animate
 	fish_available = list(/obj/item/fish/clownfish = 40,\
 	/obj/item/fish/damselfish = 30,\
@@ -194,22 +196,118 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10)
 
+/datum/fishing_spot/bathtub
+	fishing_atom_type = /obj/machinery/bathtub
+	fish_available = list(/obj/item/fish/herring = 40,\
+	/obj/item/fish/tuna = 30,\
+	/obj/item/fish/cod = 20,\
+	/obj/item/fish/flounder = 15,\
+	/obj/item/fish/red_herring = 10)
+
+/datum/fishing_spot/watertank
+	fishing_atom_type = /obj/reagent_dispensers/watertank
+	fish_available = list(/obj/item/fish/goldfish = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10)
+
+/datum/fishing_spot/river
+	fishing_atom_type = /obj/river
+	fish_available = list(/obj/item/fish/herring = 40,\
+	/obj/item/fish/tuna = 30,\
+	/obj/item/fish/cod = 20,\
+	/obj/item/fish/flounder = 15,\
+	/obj/item/fish/red_herring = 10)
+
+/datum/fishing_spot/plantpot
+	fishing_atom_type = /obj/machinery/plantpot
+	fish_available = list(/obj/item/fish/goldfish = 20,\
+	/obj/item/fish/bass = 15,\
+	/obj/item/fish/salmon = 10,\
+	/obj/item/fish/carp = 7,\
+	/obj/item/fish/rainbow_trout = 5)
+
+// Trash fishing spots
 /datum/fishing_spot/disposal_chute
 	fishing_atom_type =/obj/machinery/disposal
+	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	/mob/living/critter/small_animal/cockroach = 10,\
+	/obj/item/c_tube = 10,\
+	/obj/item/raw_material/shard/glass = 10,\
+	/obj/item/cigbutt = 20,\
+	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
+	/obj/machinery/light/small/broken = 20)
 
 /datum/fishing_spot/janitor_bucket
 	fishing_atom_type = /obj/mopbucket
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gamma = 10)
 
+/datum/fishing_spot/bucket
+	fishing_atom_type = /obj/item/reagent_containers/glass/bucket
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gamma = 10)
+
+/datum/fishing_spot/drain
+	fishing_atom_type = /obj/machinery/drainage
+	fish_available = list(/obj/item/fish/herring = 40,\
+	/obj/item/fish/tuna = 30,\
+	/obj/item/fish/cod = 20,\
+	/obj/item/fish/flounder = 15,\
+	/obj/item/fish/red_herring = 10)
+
+// Alien/mutant fishing spots
 /datum/fishing_spot/meatzone_acid
 	fishing_atom_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
 
 /datum/fishing_spot/lava_moon
 	fishing_atom_type = /turf/unsimulated/floor/lava
 
+/datum/fishing_spot/cryo
+	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
+
+/datum/fishing_spot/clonepod
+	fishing_atom_type = /obj/machinery/clonepod
+
 /datum/fishing_spot/time_ship
 	fishing_atom_type =/turf/unsimulated/floor/void/timewarp
+	fish_available = list(/obj/item/space_thing = 5,\
+	/obj/item/gnomechompski = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/clothing/shoes/clown_shoes = 5,\
+	/obj/item/coin = 5,\
+	/mob/living/carbon/human/future = 1,\
+	/mob/living/critter/aberration = 1,\
+	/mob/living/critter/small_animal/cat = 2,\
+	/obj/item/clothing/head/void_crown = 1,\
+	/obj/item/record/spacebux = 4,\
+	/obj/critter/domestic_bee/trauma = 20)
 
 /*
+
+//biodome flooded area
+/turf/space/fluid/cenote
+
+//ainsley
+/obj/decal/fakeobjects/core
+
+//solarium
+/obj/the_sun
+
+//void
+/turf/unsimulated/floor/void
+
+//dojo
+/turf/unsimulated/wall/water
+
 /datum/fishing_spot/station_aquarium //probably bad
 	fishing_atom_type = /turf/simulated/floor/sand
 
@@ -218,4 +316,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/telesci_portal //does this count pod portals and other stuff?
 	fishing_atom_type = /obj/perm_portal
+
+terra 8 hydro dam
+
 */
