@@ -51,7 +51,8 @@
 		return
 
 	announce_removal()
-		src.owner.current.show_antag_popup("changeling_leave")
+		if (src.owner != src.master)
+			src.owner.current.show_antag_popup("changeling_leave")
 
 	do_popup()
 		return

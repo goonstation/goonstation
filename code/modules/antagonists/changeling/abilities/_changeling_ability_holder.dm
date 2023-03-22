@@ -135,14 +135,15 @@
 
 	proc/return_control_to_master()
 		if(master)
+			var/datum/mind/changeling_master_mind = src.master.mind
 			logTheThing(LOG_COMBAT, master, "has retaken control of the changeling body from [constructTarget(owner,"combat")].")
 			//Return the controller to the hivemind, with their original names.
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)
-			//src.insert_into_hivemind(src.owner, 1)
 			temp_controller = null
 			boutput(master, "<span class='notice'>We retake control of our form!</span>")
-			master.mind.transfer_to(owner)
+			changeling_master_mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+			changeling_master_mind.transfer_to(owner)
 			master = null
 			return 1
 
