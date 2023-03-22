@@ -34,7 +34,7 @@
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0, WEAPON_VENDOR_CATEGORY_FISHING = 0)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
@@ -277,6 +277,9 @@
 
 /datum/materiel/ammo
 	category = WEAPON_VENDOR_CATEGORY_AMMO
+
+/datum/materiel/fishing_gear
+	category = WEAPON_VENDOR_CATEGORY_FISHING
 
 //SECURITY
 

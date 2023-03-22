@@ -149,14 +149,14 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attack_hand(var/mob/user)
 		if (src.contents.len < 1)
-			boutput(user, "<span class='alert'>There is nothing in the terminal!</span>")
+			boutput(user, "<span class='alert'>There is nothing in the upload terminal!</span>")
 			return
 		if (src.working == 1)
 			boutput(user, "<span class='alert'>The terminal is busy!</span>")
 			return
 		src.icon_state = "processor-on"
 		src.working = 1
-		src.visible_message("The [src] begins processing its contents.")
+		src.visible_message("The [src] begins uploading research data.")
 		sleep(rand(30,70))
 		// Dispense processed stuff
 		for(var/obj/item/P in src.contents)
@@ -181,59 +181,10 @@ TYPEINFO(/obj/item/fish_portal)
 				proceed = 1
 				break
 		if (!proceed)
-			boutput(user, "<span class='alert'>You can't put that in the terminal!</span>")
+			boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
 		return
-/*
-		mouse_drop(over_object, src_location, over_location)
-			..()
-			if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
-				return
-			if (is_incapacitated(usr) || usr.restrained())
-				return
-			if (over_object == usr && (in_interact_range(src, usr) || usr.contents.Find(src)))
-				for(var/obj/item/P in src.contents)
-					P.set_loc(get_turf(src))
-				for(var/mob/O in AIviewers(usr, null))
-					O.show_message("<span class='notice'>[usr] empties the [src].</span>")
-				return
-
-		MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-			if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user) || !isalive(user) || isintangible(user))
-				return
-			if (is_incapacitated(user) || user.restrained())
-				return
-
-			if (istype(O, /obj/storage))
-				if (O:locked)
-					boutput(user, "<span class='alert'>You need to unlock it first!</span>")
-					return
-				user.visible_message("<span class='notice'>[user] loads [O]'s contents into [src]!</span>")
-				var/amtload = 0
-				for (var/obj/item/reagent_containers/food/M in O.contents)
-					M.set_loc(src)
-					amtload++
-				for (var/obj/item/plant/P in O.contents)
-					P.set_loc(src)
-					amtload++
-				if (amtload) boutput(user, "<span class='notice'>[amtload] items of food loaded from [O]!</span>")
-				else boutput(user, "<span class='alert'>No food loaded!</span>")
-			else if (istype(O, /obj/item/reagent_containers/food/) || istype(O, /obj/item/plant/))
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing food into [src]!</span>")
-				var/staystill = user.loc
-				for(var/obj/item/reagent_containers/food/M in view(1,user))
-					M.set_loc(src)
-					sleep(0.3 SECONDS)
-					if (user.loc != staystill) break
-				for(var/obj/item/plant/P in view(1,user))
-					P.set_loc(src)
-					sleep(0.3 SECONDS)
-					if (user.loc != staystill) break
-				boutput(user, "<span class='notice'>You finish stuffing food into [src]!</span>")
-			else ..()
-			src.updateUsrDialog()
-*/

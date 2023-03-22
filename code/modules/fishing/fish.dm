@@ -96,15 +96,15 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 
 /obj/item/fish/bass
 		name = "largemouth bass"
-		desc = "A freshwater fish native to North America."
+		desc = "A fighty freshwater fish, a good catch for a beginner angler."
 		icon_state = "bass"
-		inhand_color = "#64B19C"
+		inhand_color = "#398f3d"
 		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 		category = FISH_CATEGORY_FRESHWATER
 
 /obj/item/fish/salmon
 	name = "salmon"
-	desc = "A commercial saltwater fish prized for its flavor."
+	desc = "A commercial saltwater fish prized for its flavor for over five thousand years."
 	icon_state = "salmon"
 	inhand_color = "#E3747E"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon
@@ -112,21 +112,21 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 
 /obj/item/fish/carp
 		name = "carp"
-		desc = "A common run-of-the-mill carp."
+		desc = "The queen of rivers. A very popular game fish, though not as revered in the USA."
 		icon_state = "carp"
 		inhand_color = "#BBCA8A"
 		category = FISH_CATEGORY_FRESHWATER
 
 /obj/item/fish/rainbow_trout
 		name = "rainbow trout"
-		desc = "todo"
+		desc = "A highly-regarded game fish with a vivid red stripe along it."
 		icon_state = "bass_old"
 		inhand_color = "#4a6169"
 		category = FISH_CATEGORY_FRESHWATER
 
 /obj/item/fish/goldfish
 		name = "goldfish"
-		desc = "todo"
+		desc = "A commonly kept indoor aquarium fish. More clever than you might expect."
 		icon_state = "bass_old"
 		inhand_color = "#f3a807"
 		category = FISH_CATEGORY_FRESHWATER
@@ -148,7 +148,7 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 		category = FISH_CATEGORY_OCEAN
 
 /obj/item/fish/tuna
-		name = "bluefun tuna"
+		name = "bluefin tuna"
 		desc = "todo"
 		icon_state = "bass_old"
 		inhand_color = "#3123f8"
