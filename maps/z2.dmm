@@ -67188,8 +67188,8 @@
 /obj/effects/precipitation/snow/grey/tile,
 /obj/tree{
 	icon_state = "snowtree";
-	pixel_y = -1;
-	pixel_x = -18
+	pixel_x = -18;
+	pixel_y = -1
 	},
 /turf/unsimulated/floor/snowcalm,
 /area/centcom/offices{
@@ -73845,6 +73845,10 @@
 	temperature = 313.15
 	},
 /area/iomoon)
+"pIi" = (
+/obj/mail_booth,
+/turf/unsimulated/floor/wood,
+/area/afterlife/bar/sanctuary)
 "pJw" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -98557,7 +98561,7 @@ crf
 cpq
 aaa
 daM
-daZ
+pIi
 daZ
 daM
 daM

@@ -38,6 +38,14 @@
 						T.UpdateOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
+	proc/get_generator(turf/T)
+		if(T.z >= minimum_z)
+			for(var/datum/allocated_region/region in regions)
+				if(region.turf_in_region(T))
+					var/datum/planetData/planet = regions[region]
+					if(planet)
+						return planet.generator
+
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)

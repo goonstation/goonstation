@@ -651,6 +651,7 @@ a.latejoin-card:hover {
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
+		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
 
 		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
@@ -724,52 +725,18 @@ a.latejoin-card:hover {
 		var/datum/mind/traitor = traitormob.mind
 		ticker.mode.traitors += traitor
 
-		var/objective_set_path = null
-		// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
-		// It should be removed when all antagonists are on the new system.
-		var/do_objectives = TRUE
 		switch (type)
 			if (ROLE_TRAITOR)
 				if (traitor.assigned_role)
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
-				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER, ROLE_GRINCH, ROLE_WRAITH, ROLE_FLOCKMIND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_GRINCH)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WRAITH)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-		if (do_objectives)
-			if (!isnull(objective_set_path))
-				if (ispath(objective_set_path, /datum/objective_set))
-					new objective_set_path(traitor)
-				else if (ispath(objective_set_path, /datum/objective))
-					ticker.mode.bestow_objective(traitor, objective_set_path)
-
-			var/obj_count = 1
-			for(var/datum/objective/objective in traitor.objectives)
-				#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew)) continue
-				#endif
-				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-				obj_count++
 
 	proc/close_spawn_windows()
 		if(client)

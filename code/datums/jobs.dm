@@ -2745,7 +2745,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.slasherize()
+		M.mind?.add_antagonist(ROLE_SLASHER)
 
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
