@@ -17,6 +17,9 @@
 
 	give_equipment()
 		var/free = TRUE
+		// If this flocktrace has been created by a flockmind, ensure that the flocktrace is not free.
+		// Late spawning flockminds will receive a free flocktrace as part of the latejoin or random event.
+		// Likewise, Admin spawned flocktraces will also be free.
 		if (src.assigned_by == ANTAGONIST_SOURCE_SUMMONED)
 			free = FALSE
 
