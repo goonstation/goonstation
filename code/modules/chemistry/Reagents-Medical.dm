@@ -921,7 +921,7 @@ datum
 					M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					repair_bleeding_damage(H, 70, 1 * mult)
+					repair_bleeding_damage(H, 50, 1 * mult)
 				..()
 				return
 
