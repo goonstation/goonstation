@@ -354,6 +354,13 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/t_scanner
+	name = "T-ray scanner"
+	item_outputs = list(/obj/item/device/t_scanner)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_paths = list("MET-2","CRY-1")

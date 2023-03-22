@@ -1,4 +1,65 @@
-
+(t)tue mar 21 23
+(u)LeahTheTech
+(*)The in-game bug report form is now working again- ahem I mean it definitely wasn't broken. At all. No bugs here.
+(u)aloe
+(+)Added a custom suicide to the claw machine. Hope the doctors have carnival skills!
+(t)sun mar 19 23
+(u)aloe
+(+)You can now use 'Ctrl+M' to do auditory custom emotes (ie, they can be read by blind people but not deaf people). 'M' has the same behavior as before, which is visual custom emotes (can be read by deaf people but not blind people).
+(t)sat mar 18 23
+(u)LeahTheTech
+(+)Conspirators will now all correctly receive identical objectives.
+(t)thu mar 16 23
+(u)LeahTheTech
+(*)Atmospheric analyzers can now be used in-hand to track the nearest hull breach.
+(p)13048
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Trying to gang tag a room containing a rival tag will now point you in the direction of the offending tag.
+(t)wed mar 15 23
+(u)Ikea
+(p)13090
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(+)One unit of Lavender essence is now able to purge two units of miasma
+(u)LeahTheTech
+(+)Flockdrones now do more damage to pods and move slower in space.
+(u)Flaborized
+(p)13065
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Processed planks and bamboo can now be used to craft many things, such as walls or floors or furniture. Process bamboo and wood with the chainsaw!
+(t)mon mar 13 23
+(u)aloe
+(+)Security cameras now give off a little bit of light, making them easier to notice/find in the dark. Cutting the cam disables the light, and repairing it reenables it.
+(t)sun mar 12 23
+(u)Kubius
+(p)12781
+(e)🗺⚖⚙|A-Mapping, C-Balance, A-Internal
+(+)Nadir's maximum rated occupancy has increased to 70.
+(u)Zamujasa
+(*)Hydroponics trays now output slightly more useful signals over the radio.
+(*)Hydroponics trays output their radio signals over MechComp as well.
+(*)Hydroponics trays have a new "scan plant" input that gives you the plant's stats and reagent levels.
+(+)Microphone component show-source now uses a more signal-y format, similarly to the radio scanner component.
+(u)LeahTheTech
+(+)Added a custom suicide to bladed gloves.
+(t)sat mar 11 23
+(u)LeahTheTech
+(+)The flock relay now has visual feedback upon being damaged.
+(u)DrWolfy
+(p)13145
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added the T-Ray scanner to the general fabricator.
+(t)fri mar 10 23
+(u)Zamujasa
+(*)The thermo-electric generator, Oshan vent capture units, solar controller computers, and radiation collector controls now output a MechComp&trade; signal when they process, with "power" (e.g. 420690) and "powerfmt" (420.69kW) fields, as well as some others depending on the device. This brings them in line with the gas turbine.
+(*)Go for the high score! Impress all your friends!
+(t)thu mar 09 23
+(u)Virvatuli
+(e)🔊🤖|C-Sound, A-Silicons
+(*)Cyborgs now have unique talking sounds! And yes, they work with the voice pitch robot command.
+(u)Amylizzle
+(p)13333
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Cockroaches are now very resistant to radiation.
 (t)wed mar 08 23
 (u)glowbold
 (p)13217

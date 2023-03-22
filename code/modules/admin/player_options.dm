@@ -115,6 +115,7 @@
 		if (antag_len)
 			antag = "<b>[antag_len] antagonist role\s present.</b><br>" + antag //this goes at the start
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
+			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 		else if (M.mind.special_role != null)
 			antag = {"
@@ -123,7 +124,9 @@
 			"}
 		else if (!isobserver(M))
 			antag = {"<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a> &bull;
-					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a>"}
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
+					"}
 		else
 			antag = "Observer"
 
@@ -375,8 +378,7 @@
 						<a href='[playeropt_link(M, "makecritter")]'>Critter</a> &bull;
 						<a href='[playeropt_link(M, "makecube")]'>Meatcube</a> &bull;
 						<!-- <a href='[playeropt_link(M, "transform")]'>Transform</a> &bull; -->
-						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a>
-						<br>
+						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "makeai")]'>AI</a> &bull;
 						<a href='[playeropt_link(M, "makecyborg")]'>Cyborg</a> &bull;
 						<a href='[playeropt_link(M, "makeghostdrone")]'>Ghostdrone</a>
@@ -385,6 +387,8 @@
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
 						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
 						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
+						<br>
+						<a href='[playeropt_link(M, "changeoutfit")]'>Change Outfit</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;

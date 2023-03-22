@@ -2065,7 +2065,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				if(!volume_passed)
+				if(!volume_passed || M.nodamage)
 					return
 
 				//var/mob/living/carbon/human/H = M
@@ -3087,16 +3087,6 @@ datum
 					return
 				if(method == INGEST)
 					boutput(M, "<span class='notice'>That tasted amazing!</span>")
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
-					if (prob(10))
-						M.take_toxin_damage(rand(2,4) * mult)
-					if (prob(7))
-						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatusMin("stunned", 4 SECONDS * mult)
-				..()
 
 		fooddrink/egg
 			name = "egg"
@@ -4575,6 +4565,11 @@ datum
 					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
 
 				..()
+			on_add()
+				if(holder.get_reagent_amount("miasma") > 0)
+					var/miasma_amount = src.holder.get_reagent_amount("miasma")
+					src.holder.remove_reagent("miasma", (src.holder.get_reagent_amount("lavender_essence")) * 2)
+					src.holder.remove_reagent("lavender_essence", miasma_amount/2)
 
 		fooddrink/lavenderlatte
 			name = "lavender latte"

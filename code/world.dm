@@ -512,6 +512,7 @@ var/f_color_selector_handler/F_Color_Selector
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -961,9 +962,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
 								twitch_mob.set_a_intent(lowertext(msg))
-								if (ishuman(twitch_mob))
-									var/mob/living/carbon/human/H = twitch_mob
-									H.hud.update_intent()
 							return 1
 
 						if("attack")
@@ -990,7 +988,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
 									twitch_mob.set_a_intent(INTENT_HARM)
-									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
 								var/list/p = list()
