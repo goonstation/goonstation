@@ -900,17 +900,38 @@ datum
 			fluid_b = 224
 			transparency = 230
 			depletion_rate = 0.3
+			overdose = 10
+			threshold = THRESHOLD_INIT
+			
+			
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_proconvertin", -2)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_proconvertin")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					repair_bleeding_damage(H, 90, 1 * mult)
-					if (probmult(2))
-						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
+					repair_bleeding_damage(H, 70, 1 * mult)
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (isliving(M))
+					var/mob/living/H = M
+					if (probmult(6)) // ~60% chance to get a clot from 15u
+						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
 		medical/filgrastim // used to stimulate the body to produce more white blood cells. here, it will make you make more blood. this is good if you are losing a lot of blood and bad if you already have all your blood
 			name = "filgrastim"
@@ -1241,9 +1262,8 @@ datum
 					var/mob/living/L = M
 					if (L.bleeding == 1)
 						repair_bleeding_damage(L, 50, 1)
-					else
+					else if (L.bleeding <= 3)
 						repair_bleeding_damage(L, 5, 1)
-						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
