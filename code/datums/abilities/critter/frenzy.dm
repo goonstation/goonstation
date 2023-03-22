@@ -11,8 +11,8 @@
 
 	var/datum/projectile/slam/proj = new
 
-	var/frenzy_low = 6
-	var/frenzy_high = 10
+	var/frenzy_low = 6 // minimum number of frenzies
+	var/frenzy_high = 10 // max number of frenzies
 	var/frenzy_damage = 7
 
 	var/weakened_dur = 1.5 SECONDS
@@ -20,9 +20,9 @@
 	var/bleed_damage = 5
 	var/bleed_amount = 5
 
-	var/start_sound = 'sound/voice/animal/brullbar_roar.ogg'
-	var/list/attack_sounds = list("sound/voice/animal/brullbar_maul.ogg")
-	var/list/attack_verbs = list("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")
+	var/start_sound = 'sound/voice/animal/brullbar_roar.ogg' // sound when we start frenzy
+	var/list/attack_sounds = list("sound/voice/animal/brullbar_maul.ogg") // sounds for each frenzy
+	var/list/attack_verbs = list("mauls", "claws", "slashes", "tears at", "lacerates", "mangles") // verbs for each frenzy
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
