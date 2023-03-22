@@ -79,7 +79,7 @@
 			disabled = FALSE
 			holder.owner.pixel_x = 0
 			holder.owner.pixel_y = 0
-			holder.owner.canmove = 1
+			holder.owner.canmove = TRUE
 
 		return FALSE
 
