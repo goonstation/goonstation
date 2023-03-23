@@ -54,7 +54,7 @@
 
 /obj/item/storage/box/guardbot_kit
 	name = "\improper Guardbot construction kit"
-	icon_state = "flashbang"
+	icon_state = "box"
 	desc = "A useful kit for building guardbuddies. All you need is a module!"
 	spawn_contents = list(/obj/item/guardbot_frame,\
 	/obj/item/guardbot_core,\
