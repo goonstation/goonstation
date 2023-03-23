@@ -3665,7 +3665,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 4
 	base_walk_delay = 5
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
 
 	New()
 		..()
@@ -3829,7 +3832,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 2.3
 	base_walk_delay = 4
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
 	New()
 		..()
