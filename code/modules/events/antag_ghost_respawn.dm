@@ -219,15 +219,17 @@
 						failed = 1
 
 				if ("Flockmind")
-					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
-					if (F && istype(F))
-						M3 = F
-						role = ROLE_FLOCKMIND
-						objective_path = /datum/objective/specialist/flock
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-						if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_FLOCKMIND, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_FLOCKMIND
+						M3 = mind.current
+						var/mob/living/intangible/flock/flockmind/F = mind.current
+						if (istype(F) && (alive_player_count() > 40)) // Flockmind can have a free trace, as a treat.
 							SPAWN(1)
-								F.partition(TRUE)
+								F.partition(ANTAGONIST_SOURCE_RANDOM_EVENT)
 					else
 						failed = 1
 

@@ -873,7 +873,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +883,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -983,7 +985,7 @@ var/global/noir = 0
 						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
 						return
 					if(config.allow_admin_rev)
-						M.revive()
+						M.full_heal()
 						message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 						logTheThing(LOG_ADMIN, usr, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, usr, "healed / revived [constructTarget(M,"diary")]", "admin")
@@ -1029,6 +1031,48 @@ var/global/noir = 0
 					usr.client.modify_parts(MC, usr)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify limbs.")
+
+		if ("changeoutfit")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+					return
+				var/mob/living/carbon/human/H = M
+				if (H && usr.client)
+					var/delete_choice
+					var/obj/item/card/id
+					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+					sortList(jobs, /proc/cmp_text_asc)
+					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					if(!istype(job))
+						return
+					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
+					if (delete_choice == "Cancel")
+						return
+					if (!ishuman(H))
+						boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+						return
+					if (delete_choice == "Yes")
+						// Try to recover their ID
+						id = H.get_id()
+						if (istype(id))
+							H.u_equip(id)
+							// Hide this somewhere safe until we recover it as we can't keep it on the mob
+							id.set_loc(null)
+							id.dropped(H)
+						else
+							boutput(usr, "<span class='alert'>Could not find [H]'s ID card - Replacing with a standard job ID if available.</span>")
+					H.unequip_all(delete_choice == "Yes" ? 1 : 0)
+					SPAWN (1 SECOND)
+						equip_job_items(job, H)
+						if (istype(id))
+							if(!H.equip_if_possible(id, H.slot_wear_id))
+								H.put_in_hand(id)
+						else if (job.spawn_id)
+							H.spawnId(job)
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to change outfits.")
 
 
 		if ("jumpto")
@@ -4597,14 +4641,6 @@ var/global/noir = 0
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export_async("admin", ircmsg)
-
-/mob/proc/revive()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.full_heal()
-		H.stamina = H.stamina_max
-		H.remove_ailments() // don't spawn with heart failure
-	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 /proc/checktraitor(mob/M as mob)

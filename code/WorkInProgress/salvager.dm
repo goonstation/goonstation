@@ -312,6 +312,7 @@
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	in_list_or_max = 1
 	color = "#ff9933"
+	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
 	protected_radio = 1 // Ops can spawn with the deaf trait.
