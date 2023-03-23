@@ -30,7 +30,6 @@
 
 		if (!istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
 			H.set_mutantrace(/datum/mutantrace/vampiric_thrall)
-		H.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
 
 		var/datum/abilityHolder/vampiric_thrall/A = H.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (!A)
@@ -42,6 +41,7 @@
 			src.master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/vampire)
 
 		if (src.master_ability_holder)
+			H.AddComponent(/datum/component/tracker_hud/vampthrall, src.master_ability_holder.owner)
 			src.ability_holder.master = src.master_ability_holder
 			src.master_ability_holder.thralls += H
 			src.master_ability_holder.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.master_ability_holder.thralls)
