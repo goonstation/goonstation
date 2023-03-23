@@ -6,10 +6,10 @@
 	var/datum/abilityHolder/changeling/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current)
+		return isliving(mind.current)
 
 	give_equipment()
-		if (!ishuman(src.owner.current))
+		if (!isliving(src.owner.current))
 			return FALSE
 
 		var/datum/abilityHolder/changeling/A = src.owner.current.get_ability_holder(/datum/abilityHolder/changeling)
