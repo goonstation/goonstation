@@ -146,7 +146,6 @@
 		return
 
 	else if (isdead(src) && !src.client)
-		var/list/virus = src.ailments
 		var/atom/A = src.loc
 
 		var/bdna = null // For forensics (Convair880).
@@ -155,7 +154,7 @@
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
 		SPAWN(0)
-			gibs(A, virus, null, bdna, btype)
+			gibs(A, null, bdna, btype)
 
 		qdel(src)
 		return

@@ -2541,8 +2541,7 @@
 
 /mob/living/carbon/human/proc/spidergib()
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")

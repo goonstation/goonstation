@@ -1371,7 +1371,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				src.implant_activate(50)
 				sleep(2 SECONDS)
 				if (H && src && (src in H.implant))
-					gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+					gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 					H.set_mutantrace(pick(possible_mutantraces))
 		..()
 
@@ -1379,7 +1379,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.mutantrace != original_mutantrace)
-				gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+				gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 			H.set_mutantrace(original_mutantrace)
 		..()
 

@@ -461,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()

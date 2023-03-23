@@ -19,7 +19,7 @@
 			real_name = name
 		src.flags |= UNCRUSHABLE
 
-	proc/setup(var/L,var/list/viral_list)
+	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
