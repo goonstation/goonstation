@@ -13045,11 +13045,11 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -13068,11 +13068,11 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -15998,8 +15998,8 @@
 	pixel_y = -4
 	},
 /obj/item/pinpointer{
-	pixel_y = 7;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 7
 	},
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/black,
@@ -28021,8 +28021,8 @@
 	dir = 5
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 8;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 8
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -28042,7 +28042,6 @@
 /area/station/quartermaster/office)
 "bzt" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor/yellow/side{
@@ -28995,8 +28994,8 @@
 /obj/machinery/cashreg,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	autoclose = 0
+	autoclose = 0;
+	dir = 4
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
@@ -29394,8 +29393,8 @@
 /obj/item/stamp,
 /obj/item/pen,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	autoclose = 0
+	autoclose = 0;
+	dir = 4
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
@@ -34905,8 +34904,8 @@
 /obj/machinery/bot/secbot/beepsky,
 /obj/machinery/light_switch/auto,
 /obj/item/gun/energy/phaser_small{
-	pixel_y = -2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
@@ -36976,7 +36975,6 @@
 /area/station/storage/warehouse)
 "bWZ" = (
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor/escape{
@@ -38250,8 +38248,8 @@
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_name = 0;
-	randomize_look = 0
+	randomize_look = 0;
+	randomize_name = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -39832,7 +39830,6 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -40316,7 +40313,6 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -44494,6 +44490,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
+"oHI" = (
+/obj/mail_booth,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/crew_quarters/market)
 "oID" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -101514,7 +101516,7 @@ buv
 btM
 bvO
 bwu
-bxh
+oHI
 byd
 ady
 bzU

@@ -16,6 +16,7 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
+	var/satchel_compatible = TRUE
 
 	blue
 		icon_state = "backpackb"

@@ -28,12 +28,16 @@
 	flockminds |= chosen_flockminds
 	for (var/datum/mind/flockmind in flockminds)
 		flockmind.assigned_role = "MODE"
-		flockmind.special_role = ROLE_FLOCKMIND
 		src.traitors += flockmind
-		bestow_objective(flockmind, /datum/objective/specialist/flock)
 		possible_flockminds.Remove(flockmind)
 
 	return TRUE
+
+/datum/game_mode/flock/post_setup()
+	for (var/datum/mind/flockmind in flockminds)
+		flockmind.add_antagonist(ROLE_FLOCKMIND)
+
+	. = ..()
 
 /datum/game_mode/flock/victory_msg()
 	if (flock_signal_unleashed)

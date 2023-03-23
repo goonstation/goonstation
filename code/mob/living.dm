@@ -1678,7 +1678,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							var/mob/M = A
 							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 							if(M.lying)
-								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								var/datum/gang/gang = src.get_gang()
+								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
 								else
 									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
@@ -2106,7 +2107,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
-	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// but we should still allow ourselves to heal
+	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)

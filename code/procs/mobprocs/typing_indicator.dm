@@ -95,7 +95,8 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 
 	remove_emote_typing_indicator()
 	if(message)
-		say_verb("*customv [message]")
+		var/emote_verb = winget(src, "emotewindow.say-input", "saved-params")
+		say_verb("[emote_verb] [message]")
 
 /mob/verb/me_wrapper(message as text)
 	set name = ".Me"

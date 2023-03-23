@@ -577,13 +577,9 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
-		alert("It isn't gang mode, dummy!")
-		return
-
 	boutput(usr, "Gang scores:")
 
-	for(var/datum/gang/G in ticker.mode:gangs)
+	for(var/datum/gang/G in get_all_gangs())
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()

@@ -651,7 +651,7 @@
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -777,6 +777,7 @@
 		src.eyeholes = TRUE
 		block_vision = FALSE
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
@@ -788,6 +789,7 @@
 		src.cape = TRUE
 		block_vision = FALSE
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
@@ -799,7 +801,16 @@
 		src.cape = FALSE
 		block_vision = !src.eyeholes
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
+
+	proc/update_examine()
+		if(src.cape)
+			src.hides_from_examine = 0
+		else if(src.eyeholes)
+			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_EARS)
+		else
+			src.hides_from_examine = initial(src.hides_from_examine)
 
 /obj/item/clothing/suit/bedsheet/red
 	icon_state = "bedsheet-red"
