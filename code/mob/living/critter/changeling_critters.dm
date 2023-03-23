@@ -687,5 +687,5 @@
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-			obs.boot()
+			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()
