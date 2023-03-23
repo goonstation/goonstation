@@ -1,3 +1,7 @@
+(t)sun mar 23 23
+(u)Zamujasa
+(*)Changing the current round's game mode will now ask you if you want to do it for that round only.
+(*)No more "HOW long has it been stuck on nuclear?!"!
 (t)sun mar 19 23
 (u)LeahTheTech
 (*)New verb Set-Conspiracy-Objective, allows you to set a custom objective for all conspirators. Best used before any conspirators have spawned (ie lobby).
