@@ -875,19 +875,19 @@ TYPEINFO(/obj/machinery/transception_pad)
 	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
 	process()
 		..()
+		if(src.is_transceiving)
+			return
 		for(var/mob/M in src.contents)
-			if(!src.is_transceiving)
-				src.is_transceiving = TRUE
-				src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
-				playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
-				flick("neopad_activate",src)
-				SPAWN(0.4 SECONDS)
-					M.set_loc(src.loc)
-					showswirl(src.loc)
-					use_power(200)
-					telefrag(M)
-					src.is_transceiving = FALSE
-				break
+			src.is_transceiving = TRUE
+			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
+			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
+			flick("neopad_activate",src)
+			SPAWN(0.4 SECONDS)
+				M.set_loc(src.loc)
+				showswirl(src.loc)
+				use_power(200)
+				telefrag(M)
+				src.is_transceiving = FALSE
 
 
 /obj/machinery/computer/transception
