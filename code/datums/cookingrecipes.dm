@@ -114,6 +114,36 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
 
+/datum/cookingrecipe/synthbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/synthbuttburger
+
+/datum/cookingrecipe/robobuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/cyberbutt
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/robobuttburger
+
+/datum/cookingrecipe/synthheartburger
+	item1 = /obj/item/organ/heart/synth
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/synthheartburger
+
+/datum/cookingrecipe/roboheartburger
+	item1 = /obj/item/organ/heart/cyber
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/roboheartburger
+
+/datum/cookingrecipe/flockheartburger
+	item1 = /obj/item/organ/heart/flock
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/flockheartburger
+
 /datum/cookingrecipe/heartburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/heart
@@ -131,6 +161,24 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/organ/brain
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
+
+datum/cookingrecipe/synthbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/synthbrainburger
+
+datum/cookingrecipe/robobrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/latejoin
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/robobrainburger
+
+datum/cookingrecipe/flockbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/flockdrone
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/flockbrainburger
 
 /datum/cookingrecipe/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
