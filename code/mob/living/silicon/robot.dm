@@ -1843,7 +1843,9 @@
 	say_quote(var/text)
 		if (src.glitchy_speak || (src.dependent && isAI(src.mainframe) && src.mainframe.glitchy_speak))
 			text = voidSpeak(text)
-		var/ending = copytext(text, length(text))
+
+		var/stripped_text = say_strip_emphasis(text)
+		var/ending = copytext(stripped_text, length(stripped_text))
 
 		if (singing)
 			return singify_text(text)

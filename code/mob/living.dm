@@ -839,7 +839,6 @@
 	if(src.capitalize_speech())
 		message = capitalize(message)
 
-	message = say_emphasis(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
 		var/VT = voice_type
@@ -1106,10 +1105,11 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/message_maptext = say_emphasis(messages[1])
 		if(unique_maptext_style)
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
+			chat_text = make_chat_maptext(say_location, message_maptext, "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, message_maptext, "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)

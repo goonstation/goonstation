@@ -429,7 +429,8 @@
 	return 0*/
 
 /mob/proc/say_quote(var/text, var/special = 0, var/speechverb = null)
-	var/ending = copytext(text, length(text))
+	var/stripped_text = say_strip_emphasis(text)
+	var/ending = copytext(stripped_text, length(stripped_text))
 	var/loudness = 0
 	var/font_accent = null
 	var/class = ""
@@ -560,6 +561,13 @@
 	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
 	var/static/regex/remove_escape_backlashes = regex("\\\\(_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
 	input = remove_escape_backlashes.Replace_char(input, "$1")
+	return input
+
+#undef ENCODE_HTML_EMPHASIS
+
+/mob/proc/say_strip_emphasis(input)
+	var/static/regex/remove_emphasis_characters = regex(@"(?<!\\)[\+_|]", "g") // Gets the preceding character to the last emphasis character.
+	input = remove_emphasis_characters.Replace_char(input, "")
 	return input
 
 //no, voluntary is not a boolean. screm
