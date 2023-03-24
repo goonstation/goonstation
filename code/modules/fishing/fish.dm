@@ -1,21 +1,15 @@
 //file for da fish
 //TODO: refactor types of fish. add fish "qualities" which influence sell values?? but who do you sell fish to?? idk.
 
-// Gannets new fish
-
 /*
 Fish lists:
-Currently implemented: 5 (+1 joke)
-	Salmon*
-	Carp*
-	Bass*
-	Herring* & Red Herring*
+Uncatagorized:
 	Mahi-mahi
 
  Freshwater fish:
-	Large-mouth black bass (see bass above)
-	Salmon (see salmon above)
-	Crucian Carp (see carp above)
+	Large-mouth black bass
+	Salmon
+	Crucian Carp
 	Rainbow trout
 	Goldfish
 
@@ -26,7 +20,7 @@ Currently implemented: 5 (+1 joke)
 	Pike
 
 Ocean saltwater fish:
-	Herring (see herring/red herring above)
+	Herring / Red herring
 	Bluefun tuna
 	Cod
 	Flounder
@@ -135,7 +129,7 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 
 /obj/item/fish/herring
 		name = "herring"
-		desc = "A small ocean fish that swims in schools."
+		desc = "The silver darling. A small ocean fish that swims in schools."
 		icon_state = "herring"
 		inhand_color = "#90B6CA"
 		category = FISH_CATEGORY_OCEAN
@@ -149,28 +143,28 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 
 /obj/item/fish/tuna
 		name = "bluefin tuna"
-		desc = "todo"
+		desc = "Formerly known as the tunny. Delicious but sadly overfished."
 		icon_state = "bass_old"
 		inhand_color = "#3123f8"
 		category = FISH_CATEGORY_OCEAN
 
 /obj/item/fish/cod
 		name = "atlantic cod"
-		desc = "todo"
+		desc = "The keystone of fish & chips. Enjoyed since 800 AD."
 		icon_state = "bass_old"
 		inhand_color = "#87d1db"
 		category = FISH_CATEGORY_OCEAN
 
 /obj/item/fish/flounder
 		name = "flounder"
-		desc = "todo"
+		desc = "A flatfish found at the bottom of oceans around the world. It's got it's eyes on you!"
 		icon_state = "bass_old"
 		inhand_color = "#5c471b"
 		category = FISH_CATEGORY_OCEAN
 
 /obj/item/fish/coelacanth
 		name = "coelacanth"
-		desc = "todo"
+		desc = "Lazarus had nothing on you. We thought you went to the celestial zoo. The lungfish calls you brother and I guess that we should too."
 		icon_state = "bass_old"
 		inhand_color = "#81878a"
 		category = FISH_CATEGORY_OCEAN
@@ -179,34 +173,34 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 
 /obj/item/fish/clownfish
 		name = "clownfish"
-		desc = "todo"
+		desc = "A pop-culturarly significant orange fish that lives in a symbiotic relationship with an enemone."
 		icon_state = "bass_old"
 		inhand_color = "#ff6601"
 		category = FISH_CATEGORY_AQUARIUM
 
 /obj/item/fish/damselfish
 		name = "damselfish"
-		desc = "todo"
+		desc = "A small pretty fish native to tropical coral reefs and your local aquarium."
 		icon_state = "bass_old"
 		inhand_color = "#ff6601"
 		category = FISH_CATEGORY_AQUARIUM
 
 /obj/item/fish/green_chromis
 		name = "green chromis"
-		desc = "todo"
+		desc = "Beautiful iridescent apple-green. Wait a second, isn't this a damselfish?"
 		icon_state = "bass_old"
 		inhand_color = "#3af121"
 		category = FISH_CATEGORY_AQUARIUM
 
 /obj/item/fish/cardinalfish
 		name = "cardinalfish"
-		desc = "todo"
+		desc = "A nocturnal ray-finned fish enjoyed for being small, peaceful and colourful."
 		icon_state = "bass_old"
 		inhand_color = "#b2b427"
 		category = FISH_CATEGORY_AQUARIUM
 
-/obj/item/fish/royal_gamma
-		name = "daroyal gamma"
+/obj/item/fish/royal_gramma
+		name = "royal gramma"
 		desc = "todo"
 		icon_state = "bass_old"
 		inhand_color = "#9a05f0"
