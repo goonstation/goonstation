@@ -47,12 +47,15 @@ var/global/crew_creds = null
 	var/is_head = FALSE
 	if(M.special_role)
 		if(!M.current) return
-
+		var/role_name = M.special_role
+		var/datum/antagonist/antag = M.get_antagonist(M.special_role)
+		if(antag)
+			role_name = antag.display_name
 		. += list(list(
 			"real_name" = M.current.real_name,
 			"dead" = isdead(M.current),
 			"player" = M.displayed_key,
-			"role" = M.special_role,
+			"role" = capitalize(role_name),
 			"head" = is_head,
 		))
 		return .
