@@ -223,7 +223,6 @@
 						src.master.set_a_intent(INTENT_HELP)
 					else
 						src.master.set_a_intent(INTENT_GRAB)
-				src.update_intent()
 
 			if ("mintent")
 				if (src.master.m_intent == "run")

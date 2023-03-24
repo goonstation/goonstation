@@ -13,7 +13,7 @@
 	var/using = 0
 	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
-	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
+	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
 		..()
@@ -22,35 +22,38 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.dispose()
 			ability.owner = null
+			qdel(ability)
 		src.ability = null
 		..()
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			check_ability_owner()
-			var/mob/living/carbon/human/H = owner
-			H.hud.update_ability_hotbar()
-		return
+		check_ability_owner()
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.hud)
-				H.hud.update_ability_hotbar()
-		return
+		if (src.ability)
+			src.ability.holder.removeAbilityInstance(src.ability)
 
 	proc/check_ability_owner()
 		if (ispath(ability_path))
-			var/datum/targetable/geneticsAbility/AB = new ability_path(src)
+			var/datum/targetable/geneticsAbility/AB = src.owner?.abilityHolder?.addAbility(src.ability_path)
+			if (!AB)
+				return
 			ability = AB
+			AB.cooldown = src.cooldown
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
 			AB.owner = src.owner
+			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
+
+	//varedit support for cooldowns
+	onVarChanged(variable, oldval, newval)
+		if (variable == "cooldown" && istype(src.ability))
+			src.ability.cooldown = newval
+			src.ability.holder?.updateButtons()
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -1412,8 +1415,8 @@
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
-	var/active = 0
-	var/processing = 0
+	var/active = FALSE
+	var/processing = FALSE
 	var/atom/last_loc = null
 	acceptable_in_mutini = 0
 
@@ -1434,8 +1437,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				active = 0
-			processing = 0
+				active = FALSE
+				processing = FALSE
 		return
 
 /datum/targetable/geneticsAbility/dimension_shift
@@ -1481,7 +1484,7 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = FALSE
+				P.processing = FALSE
 			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
@@ -1500,8 +1503,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = 0
-			P.processing = 0
+				P.active = FALSE
+				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

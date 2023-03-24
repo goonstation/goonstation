@@ -38,6 +38,14 @@
 						T.UpdateOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
+	proc/get_generator(turf/T)
+		if(T.z >= minimum_z)
+			for(var/datum/allocated_region/region in regions)
+				if(region.turf_in_region(T))
+					var/datum/planetData/planet = regions[region]
+					if(planet)
+						return planet.generator
+
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
@@ -139,12 +147,13 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				LAGCHECK(LAG_LOW)
 
 			for(var/i in 1 to seed_density/2)
-				var/turf/target_center = pick(mountains)
-				var/list/turf/ast_list = list()
-				for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(2,9)]x[rand(2,9)]"))
-					ast_list |= AST
-				Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
-				Turfspawn_Asteroid_SeedEvents(mountains)
+				if(length(mountains))
+					var/turf/target_center = pick(mountains)
+					var/list/turf/ast_list = list()
+					for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(2,9)]x[rand(2,9)]"))
+						ast_list |= AST
+					Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
+					Turfspawn_Asteroid_SeedEvents(mountains)
 
 	//Allow folks to like uh, get here?
 	if(use_lrt)

@@ -114,6 +114,8 @@
 
 /mob/living/full_heal()
 	. = ..()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
 
 /mob/living/disposing()

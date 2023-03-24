@@ -208,45 +208,39 @@
 			log_respawn_event(lucky_dude, src.antagonist_type, source)
 			switch (src.antagonist_type)
 				if ("Blob")
-					var/mob/living/intangible/blob_overmind/B = M3.make_blob()
-					if (B && istype(B))
-						M3 = B
-						role = ROLE_BLOB
-						objective_path = /datum/objective_set/blob
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-
-						SPAWN(0)
-							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
-							if (B && newname)
-								phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-								newname = strip_html(newname) + " the Blob"
-								B.real_name = newname
-								B.name = newname
-
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_BLOB
+						M3 = mind.current
 					else
 						failed = 1
 
 				if ("Flockmind")
-					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
-					if (F && istype(F))
-						M3 = F
-						role = ROLE_FLOCKMIND
-						objective_path = /datum/objective/specialist/flock
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
-						if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_FLOCKMIND, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_FLOCKMIND
+						M3 = mind.current
+						var/mob/living/intangible/flock/flockmind/F = mind.current
+						if (istype(F) && (alive_player_count() > 40)) // Flockmind can have a free trace, as a treat.
 							SPAWN(1)
-								F.partition(TRUE)
+								F.partition(ANTAGONIST_SOURCE_RANDOM_EVENT)
 					else
 						failed = 1
 
 				if ("Wraith")
-					var/mob/living/intangible/wraith/W = M3.make_wraith()
-					if (W && istype(W))
-						M3 = W
-						role = ROLE_WRAITH
-						generate_wraith_objectives(lucky_dude)
+					var/datum/mind/mind = M3.mind
+					if (istype(mind))
 						send_to = 3
+						mind.wipe_antagonists()
+						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						role = ROLE_WRAITH
+						M3 = mind.current
 					else
 						failed = 1
 
@@ -274,6 +268,7 @@
 				if ("Hunter")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
@@ -283,6 +278,7 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						M3 = L
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER

@@ -4,10 +4,18 @@
 
 	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	shuttle_available_threshold = 20 MINUTES
+	antag_token_support = TRUE
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
 	var/const/antags_possible = 6
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+#ifdef RP_MODE
+	var/const/pop_divisor = 6
+#else
+	var/const/pop_divisor = 6
+#endif
 
 /datum/game_mode/salvager/announce()
 	boutput(world, "<B>The current game mode is - Salvagers!</B>")
@@ -23,7 +31,8 @@
 		if (player.ready)
 			num_players++
 
-	var/target_antag_count = clamp( round(num_players / 6 ), 2, antags_possible)
+	var/randomizer = rand(pop_divisor+1)
+	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 3, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	if (!length(possible_salvagers))
@@ -52,3 +61,6 @@
 /datum/game_mode/salvager/post_setup()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
+
+	SPAWN(rand(waittime_l, waittime_h))
+		send_intercept()

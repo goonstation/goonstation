@@ -165,6 +165,7 @@
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
+	mat_appearances_to_ignore = list("wood")
 
 	wood
 		icon_closed = "woodcoffin"

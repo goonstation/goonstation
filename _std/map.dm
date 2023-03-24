@@ -3,8 +3,8 @@
 #define Z_LEVEL_ADVENTURE 2	//! The Z-level used for Adventure Zones.
 #define Z_LEVEL_DEBRIS 3	//! The debris Z-level. Blank on underwater maps.
 #define Z_LEVEL_SECRET 4	//! The Z-level used for secret things.
-#define Z_LEVEL_MINING 5	//! The mining Z-level.
-#define Z_LEVEL_FOOTBALL 6	//! The Z-level used for football.
+#define Z_LEVEL_MINING 5	//! The mining Z-level. Trench on underwater maps
+#define Z_LEVEL_DYNAMIC 6	//! The Z-level used for dynamically loaded maps. See: region_allocator
 
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"

@@ -860,11 +860,14 @@
 
 /// used to set the a_intent var of a mob
 /mob/proc/set_a_intent(intent)
+	SHOULD_CALL_PARENT(TRUE)
 	if (!intent)
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
 		return
 	src.a_intent = intent
+	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
+		src.equipped().intent_switch_trigger(src)
 
 // medals
 /mob/proc/revoke_medal(title, debug)
@@ -2011,7 +2014,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(get_turf(src))
+			new /mob/living/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
@@ -2473,16 +2476,18 @@
 		if(isobserver(ghost))
 			qdel(ghost)
 
-	src.HealDamage("All", 100000, 100000)
-	src.delStatus("drowsy")
+	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
 	src.losebreath = 0
+	src.delStatus("drowsy")
 	src.delStatus("paralysis")
 	src.delStatus("stunned")
 	src.delStatus("weakened")
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("critical_condition")
+	src.delStatus("recent_trauma")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2493,6 +2498,8 @@
 	src.health = src.max_health
 	src.buckled = null
 	src.disfigured = FALSE
+	if (src.reagents)
+		src.reagents.clear_reagents()
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

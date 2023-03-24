@@ -886,11 +886,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message)
+			phrase_log.log_phrase("sing", message, user = src)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message)
+			phrase_log.log_phrase("radio", message, user = src)
 		else
-			phrase_log.log_phrase("say", message)
+			phrase_log.log_phrase("say", message, user = src)
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -1678,7 +1678,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							var/mob/M = A
 							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 							if(M.lying)
-								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								var/datum/gang/gang = src.get_gang()
+								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
 								else
 									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
@@ -1794,17 +1795,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
-//left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
-	if (src.ai)
-		src.ai.was_harmed(weapon,M)
-		if(src.is_hibernating)
-			if (src.registered_area)
-				src.registered_area.wake_critters(M)
-			else
-				src.wake_from_hibernation()
-	..()
-
 /mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))
@@ -1854,7 +1844,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V)
+			if(src != V && !V.reagents?.has_reagent("CBD"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 
@@ -2117,7 +2107,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
-	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// but we should still allow ourselves to heal
+	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)

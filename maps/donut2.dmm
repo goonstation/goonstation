@@ -4414,8 +4414,8 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 8;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -7393,10 +7393,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aBs" = (
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -16472,6 +16468,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bee" = (
@@ -17491,6 +17488,9 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -17609,17 +17609,19 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "biz" = (
-/obj/machinery/computer/robotics,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"biA" = (
-/mob/living/silicon/hivebot/eyebot,
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_y = 10
+	},
+/obj/item/aiModule/emergency,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "biC" = (
-/obj/machinery/sim/transmitter{
-	network = "prison"
+/obj/table/auto,
+/obj/item/aiModule/notHuman{
+	pixel_y = 10
 	},
+/obj/item/aiModule/oneHuman,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -18043,44 +18045,11 @@
 	dir = 4
 	},
 /area/station/engine/inner)
-"bkp" = (
-/obj/machinery/turret{
-	dir = 1;
-	icon_state = "grey_target_prism"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
 "bkq" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai_upload)
-"bkr" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai_upload)
-"bks" = (
-/obj/machinery/turret,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "bku" = (
 /obj/machinery/disposal,
@@ -18198,6 +18167,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -18480,11 +18450,8 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "blV" = (
-/obj/disposalpipe/segment/ejection{
-	icon_state = "pipe-c"
-	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -25132,6 +25099,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/sim/transmitter{
+	network = "prison"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bZk" = (
@@ -26750,14 +26720,10 @@
 /area/shuttle/arrival/station)
 "duU" = (
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/lawrack,
-/obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "dvb" = (
 /obj/storage/closet/wardrobe/white,
@@ -26797,10 +26763,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"dxq" = (
-/obj/storage/secure/closet/research/uniform,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/observatory)
 "dxC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -27752,6 +27714,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "emV" = (
@@ -28143,7 +28108,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ezM" = (
-/obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -28822,9 +28786,9 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Cell #1";
 	pixel_x = 24;
-	pixel_y = 4;
-	name = "Brig Cell #1"
+	pixel_y = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -29223,9 +29187,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "fpK" = (
-/obj/window/cubicle{
-	dir = 2
-	},
 /obj/machinery/shower{
 	dir = 4;
 	icon_state = "showerhead";
@@ -29455,6 +29416,7 @@
 	req_access = null
 	},
 /obj/access_spawn/hos,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -29818,8 +29780,8 @@
 "fPo" = (
 /obj/table/auto,
 /obj/item/storage/box/tapebox{
-	pixel_y = 12;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 12
 	},
 /obj/item/disk/data/tape{
 	layer = 3.5
@@ -30467,7 +30429,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable,
 /turf/simulated/floor,
 /area/station/security/brig)
 "gtg" = (
@@ -32290,7 +32251,7 @@
 /area/station/maintenance/south)
 "hZo" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "iam" = (
@@ -35831,8 +35792,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lcr" = (
-/obj/stool/chair,
 /obj/machinery/light/incandescent,
+/obj/mail_booth,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -35991,8 +35952,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "lkd" = (
+/obj/disposalpipe/segment/ejection{
+	icon_state = "pipe-c"
+	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -36258,9 +36222,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Cell #2";
 	pixel_x = -24;
-	pixel_y = 6;
-	name = "Brig Cell #2"
+	pixel_y = 6
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -39481,9 +39445,6 @@
 	icon_state = "showerhead";
 	pixel_y = 2
 	},
-/obj/window/cubicle{
-	dir = 1
-	},
 /obj/machinery/drainage,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -40003,8 +39964,8 @@
 "owl" = (
 /obj/stool,
 /obj/machinery/phone/wall{
-	pixel_y = -24;
-	name = "Brig Genpop Cell"
+	name = "Brig Genpop Cell";
+	pixel_y = -24
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -40881,7 +40842,6 @@
 "pfp" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	desc = "Its hinges have a bunch of split wire ends sticking out...";
 	dir = 4;
 	name = "busted airlock";
@@ -43041,12 +43001,12 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "qRj" = (
-/obj/table/auto,
-/obj/item/aiModule/notHuman{
-	pixel_y = 10
+/obj/machinery/turret{
+	dir = 1;
+	icon_state = "grey_target_prism"
 	},
-/obj/item/aiModule/oneHuman,
-/turf/simulated/floor/circuit,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "qRG" = (
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
@@ -43700,14 +43660,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"rwr" = (
-/obj/item/storage/wall{
-	name = "bath cabinet";
-	pixel_y = 32;
-	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
-	},
-/turf/space,
-/area/space)
 "rwt" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -44080,15 +44032,15 @@
 	},
 /area/station/crew_quarters/stockex)
 "rNi" = (
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_y = 10
-	},
-/obj/item/aiModule/emergency,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/turret{
+	dir = 1;
+	icon_state = "grey_target_prism"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "rNn" = (
 /obj/juggleplaque,
@@ -46418,6 +46370,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"tvI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/access_spawn/ai_upload,
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "tvX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46574,9 +46535,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Main Phone";
 	pixel_x = 24;
-	pixel_y = 4;
-	name = "Brig Main Phone"
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -47345,6 +47306,9 @@
 	intact = 0
 	},
 /area/station/solar/zeta)
+"ukA" = (
+/turf/simulated/wall/false_wall,
+/area/station/security/brig)
 "ukC" = (
 /obj/table/wood/auto,
 /obj/item/plate,
@@ -49717,12 +49681,12 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/hand_labeler{
-	pixel_y = 12;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 12
 	},
 /obj/item/device/audio_log{
-	pixel_y = 13;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 13
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 4
@@ -51005,6 +50969,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"xun" = (
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "xuw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -51291,11 +51261,14 @@
 /area/station/science/lab)
 "xIa" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-8"
 	},
+/obj/decal/stripe_delivery,
+/obj/cable,
+/obj/machinery/lawrack,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
 "xIe" = (
@@ -84830,10 +84803,10 @@ cMe
 ohG
 biz
 jxq
-rWZ
-rNi
-bkp
 bjw
+rNi
+jxq
+xun
 ohG
 ohG
 ohG
@@ -85130,11 +85103,11 @@ aaa
 aaa
 tbS
 ohG
-biA
+rWZ
 bjw
 epp
 bkq
-bkq
+epp
 bjw
 sLB
 bjw
@@ -85436,11 +85409,11 @@ duU
 blw
 blw
 xIa
-bkr
+blw
 fUr
 blw
 blw
-bqa
+tvI
 nVU
 bps
 bqa
@@ -85734,11 +85707,11 @@ aaa
 aaa
 tbS
 ohG
-biA
+xCz
 bjw
 epp
 epp
-bkq
+epp
 vmy
 bjw
 bna
@@ -86038,9 +86011,9 @@ kMK
 ohG
 biC
 byg
-xCz
+bjw
 qRj
-bks
+jxq
 bYJ
 ohG
 ohG
@@ -89646,7 +89619,7 @@ aXP
 aYE
 aXP
 aaa
-rwr
+aaa
 acK
 aOL
 azU
@@ -95713,7 +95686,7 @@ qTR
 cUs
 bgL
 bns
-bns
+ukA
 bns
 bns
 kcf
@@ -96611,8 +96584,8 @@ bij
 biS
 bgN
 bkM
-blV
-bmK
+blT
+bmM
 bmJ
 boq
 boq
@@ -96914,7 +96887,7 @@ biT
 bgN
 hYn
 lkd
-bmL
+bmK
 gsS
 kON
 bkP
@@ -97215,7 +97188,7 @@ bil
 bgN
 bgN
 wFJ
-tMz
+blV
 emR
 bed
 bkP
@@ -120683,7 +120656,7 @@ uUG
 oGb
 dlf
 hZo
-dxq
+ajD
 rYA
 ajA
 pyu

@@ -67,6 +67,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					var/stack_mult = 1
@@ -160,6 +162,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					if (volume >= 50 && prob(75))
@@ -1526,6 +1530,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1563,6 +1569,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1704,6 +1712,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)

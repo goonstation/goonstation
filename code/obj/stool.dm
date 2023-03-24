@@ -183,6 +183,10 @@
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+	mat_appearances_to_ignore = list("wood")
+
+	constructed //no "wood wood stool"
+		name = "stool"
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -1131,7 +1135,10 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+	mat_appearances_to_ignore = list("wood")
 
+	constructed //no "wood wood chair"
+		name = "chair"
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
@@ -1521,9 +1528,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 				L.shock(src, 2500, "chest", 1, 1)
 				L.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
-					ticker.mode:remove_revolutionary(L.mind)
+			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
+				L.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 		A.UpdateIcon()
 		return
