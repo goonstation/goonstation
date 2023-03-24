@@ -888,6 +888,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				use_power(200)
 				telefrag(M)
 				src.is_transceiving = FALSE
+			break
 
 
 /obj/machinery/computer/transception
