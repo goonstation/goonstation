@@ -956,6 +956,7 @@
 	*/
 
 	say_quote(message)
+		message = say_emphasis(message)
 		var/speechverb = pick("beeps", "boops", "buzzes", "bloops", "transmits")
 		return "[speechverb], \"[message]\""
 

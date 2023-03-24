@@ -98,6 +98,8 @@
 		game_stats.ScanText(message)
 #endif
 
+		message = say_emphasis(message)
+
 		var/more_class = " mhelp"
 		if(src.is_admin)
 			more_class = " adminooc"

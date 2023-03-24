@@ -839,6 +839,8 @@
 	if(src.capitalize_speech())
 		message = capitalize(message)
 
+	message = say_emphasis(message)
+
 	if (src.voice_type && world.time > last_voice_sound + 8)
 		var/VT = voice_type
 		var/ending = copytext(message, length(message))

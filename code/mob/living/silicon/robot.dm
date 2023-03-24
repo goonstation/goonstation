@@ -1848,6 +1848,8 @@
 		if (singing)
 			return singify_text(text)
 
+		text = say_emphasis(text)
+
 		if (ending == "?") return "queries, \"[text]\"";
 		else if (ending == "!") return "declares, \"[text]\"";
 

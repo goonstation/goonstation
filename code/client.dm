@@ -999,6 +999,17 @@ var/global/curr_day = null
 "}, "window=rprules;title=RP+Rules" )
 #endif
 
+/client/verb/speech_format_help()
+	set name = "Speech Format Help"
+	set category = "Commands"
+
+	var/message
+
+	message += "You can add emphasis to your text by surrounding words or sentences in certain characters.\n\n"
+	message += "+bold+, _underline_, and |italics| are supported."
+
+	boutput(usr, "<span class='notice'>[message]</span>")
+
 /client/verb/changeServer(var/server as text)
 	set name = "Change Server"
 	set hidden = 1
