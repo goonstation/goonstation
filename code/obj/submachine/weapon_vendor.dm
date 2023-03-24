@@ -238,6 +238,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-pirates"
 	desc = "An automated quartermaster service for obtianing and upgrading your fishing gear."
+	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	token_accepted = /obj/item/requisition_token/fishing
 	log_purchase = FALSE
 	layer = 4
@@ -247,10 +248,17 @@
 
 	New()
 		materiel_stock += new/datum/materiel/fishing_gear/rod
+		materiel_stock += new/datum/materiel/fishing_gear/uniform
+		materiel_stock += new/datum/materiel/fishing_gear/hat
 		..()
 
-	accepted_token()
-		src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
+	accepted_token(var/token)
+		if (istype(token, /obj/item/requisition_token/fishing/gold))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=5
+		else if (istype(token, /obj/item/requisition_token/fishing/silver))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=2
+		else
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
 		..()
 
 // Materiel avaliable for purchase:
@@ -552,6 +560,16 @@
 	path = /obj/item/fishing_rod
 	description = "A basic fishing rod."
 
+/datum/materiel/fishing_gear/uniform
+	name = "fisher's overalls"
+	path = /obj/item/clothing/under/rank/fisher
+	description = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
+
+/datum/materiel/fishing_gear/hat
+	name = "Fish fear me cap"
+	path = /obj/item/clothing/head/fish_fear_me
+	description = "The ultimate angling headwear."
+
 // Requisition tokens
 /obj/item/requisition_token
 	name = "requisition token"
@@ -587,8 +605,16 @@
 		icon_state = "doubloon"
 
 	fishing
-		desc = "An NT-provided token compatible with the Fishing Equipment Vendor."
+		desc = "A bronze NT-provided token compatible with the Fishing Equipment Vendor. Worth 1 credits."
 		icon_state = "req-token-sec"
+
+		silver
+			desc = "A silver NT-provided token compatible with the Fishing Equipment Vendor. Worth 2 credits."
+			icon_state = "req-token-sec"
+
+		gold
+			desc = "A gold NT-provided token compatible with the Fishing Equipment Vendor. Worth 5 credits."
+			icon_state = "req-token-sec"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
