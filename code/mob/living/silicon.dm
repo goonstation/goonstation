@@ -623,13 +623,13 @@ var/global/list/module_editors = list()
 	.= 1
 
 /mob/living/silicon/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
-		if (!wattage)
-			return 0
-		if (check_target_immunity(src))
-			return 0
-		boutput(src,"<span class='alert'>A powerful shock has slowed your movement!</span>")
-		var/slow = clamp(wattage / 2500 , 2, 8)
-		src.setStatus("slowed", slow SECONDS)
+	if (!wattage)
+		return 0
+	if (check_target_immunity(src))
+		return 0
+	boutput(src,"<span class='alert'>A powerful shock has slowed your movement!</span>")
+	var/slow = clamp(wattage / 2500 , 2, 8)
+	src.setStatus("slowed", slow SECONDS)
 
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
