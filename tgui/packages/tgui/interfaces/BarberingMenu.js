@@ -109,7 +109,7 @@ const HairPreview = (props, context) => {
 const ArrowButtons = (_props, context) => {
   const { act } = useBackend(context);
   return (
-    <Stack vertical>
+    <Stack justify="space-around">
       <Stack.Item align="center">
         <Button icon="rotate-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": -90 })} />
       </Stack.Item>

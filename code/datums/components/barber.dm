@@ -60,10 +60,16 @@ TYPEINFO(/datum/component/toggle_tool_use)
 
 TYPEINFO(/datum/component/barber)
 	initialization_args = list()
+	var/list/all_hairs = list()
+
+TYPEINFO_NEW(/datum/component/barber)
+	. = ..()
+
+	// just so we get a special icon sprite for no hair
+	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH)), "hair_type" = /datum/customization_style/none))
 
 ABSTRACT_TYPE(/datum/component/barber)
 /datum/component/barber
-	var/list/all_hairs = list()
 	var/datum/appearanceHolder/new_AH
 	var/datum/movable_preview/character/preview
 	var/mob/living/carbon/human/barbee
@@ -76,30 +82,45 @@ ABSTRACT_TYPE(/datum/component/barber)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
-	// just so we get a special icon sprite for no hair
-	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH))))
+TYPEINFO(/datum/component/barber/haircut)
+	initialization_args = list()
+
+TYPEINFO_NEW(/datum/component/barber/haircut)
+	. = ..()
+
+	if (length(src.all_hairs) <= 1) // Excluding the starter "none" style, if there's no hair style in `all_hairs`...
+		var/all_hair_types = concrete_typesof(/datum/customization_style/hair)
+		for (var/datum/customization_style/styles as anything in all_hair_types)
+			var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
+			var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+			src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
 	. = ..()
-	var/all_hair_types = concrete_typesof(/datum/customization_style/hair)
-
-	for (var/datum/customization_style/styles as anything in all_hair_types)
-		var/datum/customization_style/style = new styles
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon))
+	if (. == COMPONENT_INCOMPATIBLE)
+		return .
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
+
+TYPEINFO(/datum/component/barber/shave)
+	initialization_args = list()
+
+TYPEINFO_NEW(/datum/component/barber/shave)
+	. = ..()
+
+	if (length(src.all_hairs) <= 1) // Excluding the starter "none" style, if there's no hair style in `all_hairs`...
+		var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+		for (var/datum/customization_style/styles as anything in all_hair_types)
+			var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
+			var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+			src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
 	. = ..()
-	var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
-
-	for (var/datum/customization_style/styles as anything in all_hair_types)
-		var/datum/customization_style/style = new styles
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon))
+	if (. == COMPONENT_INCOMPATIBLE)
+		return .
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_shave)
 
@@ -467,8 +488,13 @@ ABSTRACT_TYPE(/datum/component/barber)
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
-/datum/component/barber/ui_static_data(mob/user)
-	. = list("available_styles" = all_hairs)
+/datum/component/barber/haircut/ui_static_data(mob/user)
+	var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+	. = list("available_styles" = typeinfo.all_hairs)
+
+/datum/component/barber/shave/ui_static_data(mob/user)
+	var/typeinfo/datum/component/barber/shave/typeinfo = src.get_typeinfo()
+	. = list("available_styles" = typeinfo.all_hairs)
 
 /datum/component/barber/ui_act(var/action, var/params)
 	. = ..()
@@ -484,11 +510,14 @@ ABSTRACT_TYPE(/datum/component/barber)
 		if("update_preview")
 			switch(params["action"])
 				if("new_hair")
+					var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+
 					var/datum/customization_style/new_hairstyle = new /datum/customization_style/none // If we don't find any styles, we are probably trying to use the "none" style.
 
-					for (var/datum/customization_style/iteration as anything in all_hairs)
-						if (initial(iteration.id) == params["style_id"])
-							new_hairstyle = new iteration
+					for (var/list/hair_listing as anything in typeinfo.all_hairs)
+						if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+							var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+							new_hairstyle = new hair_style_type
 							break
 
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance) // To avoid confusion and kind of nerf this feature, let's completely reset the hair when the client tries to view another style.
@@ -504,9 +533,8 @@ ABSTRACT_TYPE(/datum/component/barber)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					src.preview.preview_thing.Turn(params["direction"])
 					src.preview.preview_thing.appearance = src.barbee.appearance
-					src.preview.update_appearance(src.new_AH, src.preview.preview_thing.dir)
+					src.preview.preview_thing.dir = turn(src.preview.preview_thing.dir, params["direction"]) // Not using `update_appearance` to change dirs because it simply doesn't work. Why? Dunno.
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
@@ -521,10 +549,13 @@ ABSTRACT_TYPE(/datum/component/barber)
 		return
 
 	if(action == "do_hair")
+		if (ON_COOLDOWN(src.barber, "cut_hair", 1 SECOND))
+			return
+
 		if (isnull(params["style_id"])) // It means we are making a wig
 			actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
-			if (!barber)
+			if (!barber || !barbee)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
@@ -541,14 +572,17 @@ ABSTRACT_TYPE(/datum/component/barber)
 		var/hair_portion_selected = hair_portion_list[src.hair_portion]
 		var/datum/customization_style/new_hairstyle = null
 
-		for (var/datum/customization_style/iteration as anything in all_hairs)
-			var/datum/customization_style/style = new iteration
-			if (style.id == params["style_id"])
-				new_hairstyle = style
+		var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+
+		for (var/list/hair_listing as anything in typeinfo.all_hairs)
+			if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+				var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+				new_hairstyle = new hair_style_type
+				break
 
 		actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 
-		if (!barber)
+		if (!barber || !barbee)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
@@ -565,7 +599,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 		if (isnull(params["style_id"])) // It means we are making a wig
 			actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
-			if (!barber)
+			if (!barber || !barbee)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
@@ -582,14 +616,17 @@ ABSTRACT_TYPE(/datum/component/barber)
 		var/hair_portion_selected = hair_portion_list[src.hair_portion]
 		var/datum/customization_style/new_hairstyle = null
 
-		for (var/datum/customization_style/iteration as anything in all_hairs)
-			var/datum/customization_style/style = new iteration
-			if (style.id == params["style_id"])
-				new_hairstyle = style
+		var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+
+		for (var/list/hair_listing as anything in typeinfo.all_hairs)
+			if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+				var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+				new_hairstyle = new hair_style_type
+				break
 
 		actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 
-		if (!barber)
+		if (!barber || !barbee)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
