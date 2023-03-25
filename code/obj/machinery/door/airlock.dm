@@ -1831,35 +1831,50 @@ TYPEINFO(/obj/machinery/door/airlock)
 					send_status(,senderid)
 
 			if("unlock")
-				locked = 0
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
+					locked = 0
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
 				send_status(,senderid)
 
 			if("lock")
-				locked = 1
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
+					locked = 1
+					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
 				send_status()
 
 			if("secure_open")
 				SPAWN(0)
-					locked = 0
+					if(locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						locked = 0
+						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 					src.UpdateIcon()
 
-					sleep(0.5 SECONDS)
 					open(1)
+					sleep(0.5 SECONDS)
 
-					locked = 1
+					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						locked = 1
+						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+
 					src.UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
 			if("secure_close")
 				SPAWN(0)
-					locked = 0
-					close(1)
+					if(locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						locked = 0
+						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 
-					locked = 1
+					close(1)
 					sleep(0.5 SECONDS)
+
+					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						locked = 1
+						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+
 					src.UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
