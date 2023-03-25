@@ -873,7 +873,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +883,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else

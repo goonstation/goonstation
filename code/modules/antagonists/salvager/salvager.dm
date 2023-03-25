@@ -40,8 +40,6 @@
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), H.slot_wear_id)
 
-
-
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)
 		H.equip_new_if_possible(/obj/item/deconstructor, H.slot_in_backpack)

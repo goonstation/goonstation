@@ -332,7 +332,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
+									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
 							</html>
 						"}

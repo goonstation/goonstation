@@ -1441,6 +1441,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING
 		. = ..()
 
+	nt_specialist
+		name = "NT industrial space armor"
+		item_state = "indus-nt"
+		icon_state = "indus-nt"
+
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."

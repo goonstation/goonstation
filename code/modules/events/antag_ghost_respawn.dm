@@ -229,7 +229,7 @@
 						var/mob/living/intangible/flock/flockmind/F = mind.current
 						if (istype(F) && (alive_player_count() > 40)) // Flockmind can have a free trace, as a treat.
 							SPAWN(1)
-								F.partition(TRUE)
+								F.partition(ANTAGONIST_SOURCE_RANDOM_EVENT)
 					else
 						failed = 1
 
