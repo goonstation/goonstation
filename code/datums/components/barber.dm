@@ -88,12 +88,12 @@ TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
 	. = ..()
 
-	if (length(src.all_hairs) <= 1) // Excluding the starter "none" style, if there's no hair style in `all_hairs`...
-		var/all_hair_types = concrete_typesof(/datum/customization_style/hair)
-		for (var/datum/customization_style/styles as anything in all_hair_types)
-			var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
-			var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-			src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
+
+	var/all_hair_types = concrete_typesof(/datum/customization_style/hair)
+	for (var/datum/customization_style/styles as anything in all_hair_types)
+		var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
@@ -109,12 +109,11 @@ TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
 	. = ..()
 
-	if (length(src.all_hairs) <= 1) // Excluding the starter "none" style, if there's no hair style in `all_hairs`...
-		var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
-		for (var/datum/customization_style/styles as anything in all_hair_types)
-			var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
-			var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-			src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
+	var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+	for (var/datum/customization_style/styles as anything in all_hair_types)
+		var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
