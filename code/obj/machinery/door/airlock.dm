@@ -1822,62 +1822,70 @@ TYPEINFO(/obj/machinery/door/airlock)
 		switch( lowertext(signal.data["command"]) )
 			if("open")
 				SPAWN(0)
-					open(1)
-					send_status(,senderid)
+					src.open(1)
+					src.send_status(,senderid)
 
 			if("close")
 				SPAWN(0)
-					close(1)
-					send_status(,senderid)
+					src.close(1)
+					src.send_status(,senderid)
 
 			if("unlock")
 				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
-					locked = 0
+					src.locked = 0
 					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
-				send_status(,senderid)
+				src.send_status(,senderid)
 
 			if("lock")
 				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
-					locked = 1
+					src.locked = 1
 					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
-				send_status()
+				src.send_status()
 
 			if("secure_open")
 				SPAWN(0)
-					if(locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						locked = 0
+					if(src.locked && !src.density)
+						sleep(src.operation_time)
+						send_status(,senderid)
+						return
+					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 0
 						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 					src.UpdateIcon()
 
-					open(1)
+					src.open(1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						locked = 1
+						src.locked = 1
 						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 
 					src.UpdateIcon()
 					sleep(src.operation_time)
-					send_status(,senderid)
+					src.send_status(,senderid)
 
 			if("secure_close")
 				SPAWN(0)
-					if(locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						locked = 0
+					if(src.locked && src.density)
+						sleep(src.operation_time)
+						src.send_status(,senderid)
+						return
+					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 0
 						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 
-					close(1)
+					src.close(1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						locked = 1
+						src.locked = 1
 						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 
 					src.UpdateIcon()
 					sleep(src.operation_time)
-					send_status(,senderid)
+					src.send_status(,senderid)
 
 	proc/send_status(userid,target)
 		var/datum/signal/signal = get_free_signal()
