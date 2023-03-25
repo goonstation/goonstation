@@ -115,10 +115,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
-		SPAWN(0)
-			if(!src.disposed)
-				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -137,6 +133,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		hud = new custom_hud_type(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 
 		if (src.stamina_bar)
 			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
