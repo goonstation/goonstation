@@ -2370,7 +2370,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = list(access_maint_tunnels)
+		src.access = list(access_maint_tunnels, access_pirate )
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
