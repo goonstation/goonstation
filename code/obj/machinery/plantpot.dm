@@ -512,12 +512,14 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	attackby(obj/item/W, mob/user)
 		if(src.current)
+			var/datum/plant/growing = src.current
+			var/datum/plantgenes/DNA = src.plantgenes
 			// Inside this if block we'll handle reactions for specific kinds of plant.
 			// General reactions from the plantpot itself come after these.
-			if(istype(src.current,/datum/plant/maneater))
+			if(istype(growing,/datum/plant/maneater))
 				// We want to be able to feed stuff to maneaters, such as meat, people, etc.
-				if(istype(W, /obj/item/grab) && iscarbon(W:affecting) && istype(src.current,/datum/plant/maneater))
-					if(src.growth < 60)
+				if(istype(W, /obj/item/grab) && iscarbon(W:affecting) && istype(growing,/datum/plant/maneater))
+					if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
 						boutput(user, "<span class='alert'>It's not big enough to eat that yet.</span>")
 						return
 						// It doesn't make much sense to feed a full man to a dinky little plant.
@@ -551,7 +553,8 @@ TYPEINFO(/obj/machinery/plantpot)
 						user.show_text("You were interrupted!", "red")
 						return
 				else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-					if(src.growth > 60) boutput(user, "<span class='alert'>It's going to need something more substantial than that now...</span>")
+					if(src.growth > (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
+						boutput(user, "<span class='alert'>It's going to need something more substantial than that now...</span>")
 					else
 						src.reagents.add_reagent("blood", 5)
 						boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")

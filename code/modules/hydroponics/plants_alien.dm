@@ -279,10 +279,10 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(4))
+		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")))
+		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")))
 			var/obj/critter/maneater/ME = new(get_turf(POT))
 			ME.health = POT.health * 3
 			ME.friends = ME.friends | POT.contributors
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
+		if (POT.growth < (P.growtime - DNA?.get_effective_value("growtime"))) return 0
 
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))
