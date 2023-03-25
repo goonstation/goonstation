@@ -1308,6 +1308,29 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
+				else  if (istype(CROP,/mob/living/critter/plant))
+					// with the plant mob, we transfer the plants genome on top of the critter
+					var/mob/living/critter/plant/F = CROP
+					F.growers = F.growers | src.contributors
+					var/datum/plantgenes/FDNA = F.plantgenes
+
+					HYPpassplantgenes(DNA,FDNA)
+					F.generation = src.generation
+					// Copy the genes from the plant we're harvesting to the new critter.
+
+					if(growing.hybrid)
+						// We need to do special shit with the genes if the plant is a spliced
+						// hybrid since they run off instanced datums rather than referencing
+						// a specific already-existing one.
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(F)
+						for(var/V in growing.vars)
+							if(issaved(growing.vars[V]) && V != "holder")
+								hybrid.vars[V] = growing.vars[V]
+						F.planttype = hybrid
+					// Now while we have all stats together, let's make the critter adjust its stats itself and not bloat this object more than it needs to be
+					F.Setup_DNA()
+
 				else if (istype(CROP,/obj/item/organ))
 					var/obj/item/organ/O = CROP
 					if(istype(CROP,/obj/item/organ/heart))
@@ -1701,6 +1724,9 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		generation = S.generation
 	if(istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
+		generation = F.generation
+	if(istype(scanned, /mob/living/critter/plant))
+		var/mob/living/critter/plant/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?

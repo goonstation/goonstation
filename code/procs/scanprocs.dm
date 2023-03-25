@@ -828,6 +828,13 @@
 		P = F.planttype
 		DNA = F.plantgenes
 
+	else if (istype(A, /mob/living/critter/plant))
+		var/mob/living/critter/plant/F = A
+
+		P = F.planttype
+		DNA = F.plantgenes
+
+
 	else
 		return
 
