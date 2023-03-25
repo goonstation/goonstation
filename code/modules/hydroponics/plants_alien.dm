@@ -305,6 +305,30 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		random_brute_damage(user, 9,1)
 		return 1
 
+	proc/Feed_Maneater(var/obj/machinery/plantpot/POT, var/mob/user, var/mob/living/carbon/victim)
+		var/datum/plantgenes/DNA = POT.plantgenes
+		if(POT && victim && victim.loc == user.loc && victim)
+			user.visible_message("<span class='alert'>[POT.name] grabs [victim] and devours them ravenously!</span>")
+			logTheThing(LOG_COMBAT, user, "feeds [constructTarget(victim,"combat")] to a man-eater at [log_loc(POT)].")
+			message_admins("[key_name(user)] feeds [key_name(victim, 1)] ([isdead(victim) ? "dead" : "alive"]) to a man-eater at [log_loc(POT)].")
+			if(victim.mind)
+				victim.ghostize()
+				qdel(victim)
+			else
+				qdel(victim)
+			playsound(POT.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+			POT.reagents.add_reagent("blood", 120)
+			DNA.endurance += rand(50, 75) //since tray chemistry makes no differnce if you put a dip of blood or feed a human, we give some endurance as a reward (Lord_Earthfire)
+			SPAWN(2.5 SECONDS)
+				if(POT)
+					playsound(POT.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
+			return
+		else
+			user.show_text("You were interrupted!", "red")
+			return
+
+
+
 /datum/plant/crystal
 	name = "Crystal"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'

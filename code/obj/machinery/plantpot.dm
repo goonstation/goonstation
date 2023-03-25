@@ -517,9 +517,10 @@ TYPEINFO(/obj/machinery/plantpot)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
 			// General reactions from the plantpot itself come after these.
 			if(istype(growing,/datum/plant/maneater))
+				var/datum/plant/maneater/Manipulated_Maneater = growing
 				// We want to be able to feed stuff to maneaters, such as meat, people, etc.
 				if(istype(W, /obj/item/grab) && iscarbon(W:affecting) && istype(growing,/datum/plant/maneater))
-					if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
+					if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")))
 						boutput(user, "<span class='alert'>It's not big enough to eat that yet.</span>")
 						return
 						// It doesn't make much sense to feed a full man to a dinky little plant.
@@ -530,30 +531,21 @@ TYPEINFO(/obj/machinery/plantpot)
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
 						src.contributors += user
-					if(do_after(user, 3 SECONDS)) // Same as the gibber and reclaimer. Was 20 (Convair880).
-						if(src && W && W.loc == user && C)
-							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
-							logTheThing(LOG_COMBAT, user, "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
-							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
-							if(C.mind)
-								C.ghostize()
-								qdel(C)
-							else
-								qdel(C)
-							playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
-							src.reagents.add_reagent("blood", 120)
-							SPAWN(2.5 SECONDS)
-								if(src)
-									playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
-							return
-						else
-							user.show_text("You were interrupted!", "red")
-							return
-					else
-						user.show_text("You were interrupted!", "red")
-						return
+					var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+					user,
+					src,
+					3 SECONDS,
+					/datum/plant/maneater/proc/Feed_Maneater,
+					\list(src, user, C),
+					'icons/mob/screen1.dmi',
+					"grabbed",
+					"[user] offers [C] to the plant.",
+					INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION,
+					Manipulated_Maneater)
+					actions.start(action_bar, user)
+					return
 				else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-					if(src.growth > (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
+					if(src.growth > (growing.growtime - DNA?.get_effective_value("growtime")))
 						boutput(user, "<span class='alert'>It's going to need something more substantial than that now...</span>")
 					else
 						src.reagents.add_reagent("blood", 5)
