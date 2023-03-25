@@ -2448,6 +2448,46 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		// M.show_text("<b>Hostile assault force incoming! Defend the crew from the attacking Syndicate Special Operatives!</b>", "blue")
 
 
+/datum/job/special/nt_engineer
+	linkcolor = "#3348ff"
+	name = "Nanotrasen Emergency Repair Technician"
+	limit = 0
+	wages = PAY_IMPORTANT
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared)
+	slot_jump = list(/obj/item/clothing/under/rank/engineer)
+	slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+	slot_foot = list(/obj/item/clothing/shoes/magnetic)
+	slot_glov = list(/obj/item/clothing/gloves/yellow)
+	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+	slot_card = /obj/item/card/id/command
+	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc2 = list(/obj/item/storage/grenade_pouch/repair)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular,
+							/obj/item/device/flash,
+							/obj/item/rcd/construction,
+							/obj/item/sheet/steel/fullstack,
+							/obj/item/sheet/glass/reinforced/fullstack)
+
+	New()
+		..()
+		src.access = get_all_accesses()
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		var/obj/item/rcd/rcd = locate() in M.back
+		rcd.matter = 100
+		rcd.max_matter = 100
+		rcd.tooltip_rebuild = TRUE
+		rcd.UpdateIcon()
+		M?.traitHolder.addTrait("training_engineer")
+
 // Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security
 	linkcolor = "#3348ff"
