@@ -31065,6 +31065,12 @@
 /obj/machinery/atmospherics/valve{
 	name = "Heat Sink Loop"
 	},
+/obj/machinery/door_control{
+	id = "oh_boy_fire";
+	name = "Burn Chamber Heat Shields";
+	pixel_x = 9;
+	pixel_y = 24
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
