@@ -2457,7 +2457,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	slot_back = list(/obj/item/storage/backpack/NT)
-	slot_belt = list(/obj/item/storage/belt/utility/prepared)
+	slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
 	slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
@@ -2468,10 +2468,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
-	slot_poc2 = list(/obj/item/storage/grenade_pouch/repair)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
-							/obj/item/rcd/construction,
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
 
@@ -2481,12 +2479,13 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		var/obj/item/rcd/rcd = locate() in M.back
-		rcd.matter = 100
-		rcd.max_matter = 100
-		rcd.tooltip_rebuild = TRUE
-		rcd.UpdateIcon()
 		M?.traitHolder.addTrait("training_engineer")
+		SPAWN(1)
+			var/obj/item/rcd/rcd = locate() in M.belt
+			rcd.matter = 100
+			rcd.max_matter = 100
+			rcd.tooltip_rebuild = TRUE
+			rcd.UpdateIcon()
 
 // Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security

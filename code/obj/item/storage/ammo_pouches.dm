@@ -149,6 +149,13 @@
 		name = "napalm smoke grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/napalm = 6)
 
+	oxygen
+		name = "oxygen grenade pouch"
+		spawn_contents = list(/obj/item/old_grenade/oxygen = 6)
+
+	metal_foam
+		name = "metal foam grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/metalfoam = 6)
 	repair
 		name = "repair grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/oxygen = 3,
