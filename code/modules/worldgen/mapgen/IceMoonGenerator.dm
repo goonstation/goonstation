@@ -55,6 +55,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/icemoon
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(list/turfs, reuse_seed, flags)

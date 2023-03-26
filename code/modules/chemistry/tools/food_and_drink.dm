@@ -206,9 +206,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (!bypass_utensils)
 					var/utensil = null
 
-					if (src.required_utensil == REQUIRED_UTENSIL_FORK && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+					if ((src.required_utensil == REQUIRED_UTENSIL_FORK || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-					else if (src.required_utensil == REQUIRED_UTENSIL_SPOON && isspooningtool(user.equipped()))
+					else if ((src.required_utensil == REQUIRED_UTENSIL_SPOON || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON)  && isspooningtool(user.equipped()))
 						utensil = user.equipped()
 
 					// If it's a plastic fork we've found then test if we've broken it

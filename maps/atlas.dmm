@@ -19061,6 +19061,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
+"qAK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mail_booth,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "qCC" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -19303,8 +19310,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 8;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -66094,7 +66101,7 @@ agu
 agz
 ahG
 axq
-aca
+qAK
 alU
 akM
 aqo

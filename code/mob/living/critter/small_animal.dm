@@ -3665,7 +3665,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 4
 	base_walk_delay = 5
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
 
 	New()
 		..()
@@ -3706,6 +3709,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			new /obj/item/raw_material/claretine(src.loc)
 			new /obj/item/raw_material/chitin(src.loc)
 		..()
+
+	critter_attack(mob/target)
+		if (isliving(target) && prob(60)) //might be attacking a sub
+			//dash attack
+			src.set_dir(get_dir(src,target))
+			src.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
+			var/list/params = list()
+			params["left"] = TRUE
+			params["ai"] = TRUE
+			src.hand_range_attack(target, params)
+		else
+			src.set_dir(get_dir(src,target))
+			..() //punch attack
+
+
+
 
 	ai_controlled
 		is_npc = 1
@@ -3813,7 +3832,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 2.3
 	base_walk_delay = 4
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
 	New()
 		..()
@@ -3870,6 +3891,31 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		new /obj/item/reagent_containers/food/snacks/greengoo(get_turf(src))
 
 		..()
+
+	critter_attack(mob/target)
+		src.set_a_intent(INTENT_GRAB)
+		src.set_dir(get_dir(src, target))
+
+		var/list/params = list()
+		params["left"] = TRUE
+		params["ai"] = TRUE
+
+		var/obj/item/grab/G = src.equipped()
+		if (!istype(G)) //if it hasn't grabbed something, try to
+			if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+				src.drop_item()
+			src.hand_attack(target, params)
+		else
+			if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
+				src.drop_item()
+				return
+
+			if (G.state <= GRAB_PASSIVE)
+				G.AttackSelf(src)
+			else
+				src.emote("flip")
+				src.ai.move_away(target,1)
+
 
 	ai_controlled
 		is_npc = 1

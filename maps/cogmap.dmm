@@ -895,6 +895,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
+/obj/mail_booth,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},

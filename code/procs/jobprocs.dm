@@ -479,7 +479,7 @@ var/global/totally_random_jobs = FALSE
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
-			H.spawnId(rank)
+			H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
 			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
@@ -730,14 +730,13 @@ var/global/totally_random_jobs = FALSE
 		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-		src.equip_sensory_items()
+	src.equip_sensory_items()
 
-/mob/living/carbon/human/proc/spawnId(rank)
+/mob/living/carbon/human/proc/spawnId(var/datum/job/JOB)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
-	rank = "Captain"
+	JOB = new /datum/job/command/captain
 #endif
 	var/obj/item/card/id/C = null
-	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null
 
@@ -812,7 +811,7 @@ var/global/totally_random_jobs = FALSE
 	equip_job_items(JOB, src)
 
 	if (ishuman(src) && JOB.spawn_id)
-		src.spawnId(rank)
+		src.spawnId(JOB)
 
 	JOB.special_setup(src, no_special_spawn)
 

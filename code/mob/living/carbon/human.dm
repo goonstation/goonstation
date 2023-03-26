@@ -644,7 +644,7 @@
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-				obs.boot()
+				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()

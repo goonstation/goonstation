@@ -115,10 +115,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
-		SPAWN(0)
-			if(!src.disposed)
-				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -137,6 +133,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		hud = new custom_hud_type(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 
 		if (src.stamina_bar)
 			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -1091,28 +1088,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 					message = "<b>[src]</b> [param]"
 					m_type = 1
 				if ("flip")
-					if (src.emote_check(voluntary, 50) && !src.shrunk)
-						if (istype(src.loc,/obj/))
+					if (src.emote_check(voluntary, 50))
+						if (isobj(src.loc))
 							var/obj/container = src.loc
-							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 3 SECONDS)
-							src.changeStatus("weakened", 4 SECONDS)
-							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-							var/wiggle = 6
-							while(wiggle > 0)
-								wiggle--
-								container.pixel_x = rand(-3,3)
-								container.pixel_y = rand(-3,3)
-								sleep(0.1 SECONDS)
-							container.pixel_x = 0
-							container.pixel_y = 0
-							if (prob(33))
-								if (istype(container, /obj/storage))
-									var/obj/storage/C = container
-									if (C.can_flip_bust == 1)
-										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
-										C.bust_out()
+							container.mob_flip_inside(src)
 						else
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)

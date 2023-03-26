@@ -75,6 +75,21 @@ TYPEINFO(/obj/submachine/claw_machine)
 	I.set_loc(src)
 	boutput(user, "<span class='notice'>You insert \the [I] into \the [src] as a prize.</span>")
 
+/obj/submachine/claw_machine/custom_suicide = TRUE
+/obj/submachine/claw_machine/suicide(mob/user)
+	if (!src.user_can_suicide(user))
+		return FALSE
+	src.visible_message("<span class='alert'><b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b></span>")
+	user.set_loc(src) // contents is used as prize list, no special handling
+	bleed(user, 50, 50)
+	random_brute_damage(user, 200, FALSE)
+	playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 80)
+	SPAWN(45 SECONDS)
+		if (!isdead(user))
+			user.suiciding = FALSE
+	return TRUE
+
+
 /datum/action/bar/icon/claw_machine
 	duration = 100
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
