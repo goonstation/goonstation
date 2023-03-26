@@ -24,7 +24,7 @@
 								/obj/critter/mechmonstrositycrawler,
 								/obj/critter/shade,
 								/obj/critter/bat/buff,
-								/obj/critter/lion,
+								/mob/living/critter/lion,
 								/obj/critter/wraithskeleton,
 								/obj/critter/bear,
 								/mob/living/critter/brullbar,
@@ -156,7 +156,7 @@
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3
-			if (/obj/critter/lion)
+			if (/mob/living/critter/lion)
 				return 5
 			if (/mob/living/critter/brullbar)
 				return 15

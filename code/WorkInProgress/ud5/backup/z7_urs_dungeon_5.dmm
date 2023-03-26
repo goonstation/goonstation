@@ -277,7 +277,7 @@
 /turf/unsimulated/floor/purple,
 /area/adventure/urs_dungeon)
 "aG" = (
-/obj/critter/lion,
+/mob/living/critter/lion,
 /turf/unsimulated/floor/grass,
 /area/adventure/urs_dungeon)
 "aH" = (
@@ -1298,7 +1298,7 @@
 /turf/unsimulated/floor/lava,
 /area/adventure/urs_dungeon)
 "cH" = (
-/obj/critter/lion,
+/mob/living/critter/lion,
 /turf/unsimulated/floor/void,
 /area/adventure/urs_dungeon)
 "cI" = (

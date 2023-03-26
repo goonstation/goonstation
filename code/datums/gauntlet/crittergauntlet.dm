@@ -1209,7 +1209,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Lion"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/lion)
+		types = list(/mob/living/critter/lion)
 
 	maneater
 		name = "Man Eater"
