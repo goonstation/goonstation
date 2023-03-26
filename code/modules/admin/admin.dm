@@ -4791,10 +4791,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
-				M.mind.special_role = ROLE_FLOOR_GOBLIN
-				M.make_floor_goblin()
-				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_FLOOR_GOBLIN, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)
