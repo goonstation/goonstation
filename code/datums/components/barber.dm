@@ -61,12 +61,17 @@ TYPEINFO(/datum/component/toggle_tool_use)
 TYPEINFO(/datum/component/barber)
 	initialization_args = list()
 	var/list/all_hairs = list()
+	var/list/all_hair_types = list()
 
 TYPEINFO_NEW(/datum/component/barber)
 	. = ..()
 
 	// just so we get a special icon sprite for no hair
 	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH)), "hair_type" = /datum/customization_style/none))
+
+	for (var/datum/customization_style/style as anything in all_hair_types)
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', initial(style.id), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(initial(style.name) = list("hair_id" = initial(style.id), "hair_icon" = hair_icon, "hair_type" = style))
 
 ABSTRACT_TYPE(/datum/component/barber)
 /datum/component/barber
@@ -82,18 +87,9 @@ ABSTRACT_TYPE(/datum/component/barber)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
-TYPEINFO(/datum/component/barber/haircut)
-	initialization_args = list()
-
 TYPEINFO_NEW(/datum/component/barber/haircut)
+	all_hair_types = concrete_typesof(/datum/customization_style/hair)
 	. = ..()
-
-
-	var/all_hair_types = concrete_typesof(/datum/customization_style/hair)
-	for (var/datum/customization_style/styles as anything in all_hair_types)
-		var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
@@ -103,17 +99,9 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
 
-TYPEINFO(/datum/component/barber/shave)
-	initialization_args = list()
-
 TYPEINFO_NEW(/datum/component/barber/shave)
+	all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
 	. = ..()
-
-	var/all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
-	for (var/datum/customization_style/styles as anything in all_hair_types)
-		var/datum/customization_style/style = new styles // you have to initialize the datum before accessing it's values
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		src.all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon, "hair_type" = style.type))
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
