@@ -1,4 +1,9 @@
 
+(t)sun mar 26 23
+(u)Blackrep
+(p)13409
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Macro-phasers now have a proper in-hand sprite and can be worn on your back.
 (t)sat mar 25 23
 (u)Wisemonster
 (p)13415
