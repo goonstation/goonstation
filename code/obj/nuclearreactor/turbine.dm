@@ -56,7 +56,7 @@
 	/// Current gas for processing
 	var/datum/gas_mixture/air_contents
 	/// bodge factor for power generation
-	var/power_multiplier = 4
+	var/power_multiplier = 3
 
 	New()
 		. = ..()
