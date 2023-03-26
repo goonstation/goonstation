@@ -87,6 +87,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
+TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
 	all_hair_types = concrete_typesof(/datum/customization_style/hair)
 	. = ..()
@@ -99,6 +100,7 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
 
+TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
 	all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
 	. = ..()
