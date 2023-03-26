@@ -2478,7 +2478,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_engineer")
 		SPAWN(1)
-			var/obj/item/rcd/rcd = locate() in M.belt
+			var/obj/item/rcd/rcd = locate() in M.belt.storage.stored_items
 			rcd.matter = 100
 			rcd.max_matter = 100
 			rcd.tooltip_rebuild = TRUE
