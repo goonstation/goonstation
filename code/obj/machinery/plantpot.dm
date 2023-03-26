@@ -1311,9 +1311,16 @@ TYPEINFO(/obj/machinery/plantpot)
 				else  if (istype(CROP,/mob/living/critter/plant))
 					// with the plant mob, we transfer the plants genome on top of the critter
 					var/mob/living/critter/plant/F = CROP
+					//Adding the contributors to the list of friends :)
 					F.growers = F.growers | src.contributors
+					//this passes the same formular examining a plant used to determinate its % health
+					//a damaged plant will created damaged critters
+					if (growing.starthealth != 0)
+						F.percent_health_on_spawn = round(src.health / growing.starthealth * 100)
+					else
+						F.percent_health_on_spawn = round(src.health / 10 * 100)
+					//Now we pass plant genes
 					var/datum/plantgenes/FDNA = F.plantgenes
-
 					HYPpassplantgenes(DNA,FDNA)
 					F.generation = src.generation
 					// Copy the genes from the plant we're harvesting to the new critter.

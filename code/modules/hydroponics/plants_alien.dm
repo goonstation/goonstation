@@ -283,9 +283,28 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
 		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")))
-			var/obj/critter/maneater/ME = new(get_turf(POT))
-			ME.health = POT.health * 3
-			ME.friends = ME.friends | POT.contributors
+			var/mob/living/critter/plant/maneater/ME = new(get_turf(POT))
+			if (P.starthealth != 0) //this passes the same formular examining a plant used to determinate its % health
+				ME.percent_health_on_spawn = round(POT.health / P.starthealth * 100)
+			else
+				ME.percent_health_on_spawn = round(POT.health / 10 * 100)
+			ME.growers = ME.growers | POT.contributors
+			var/datum/plantgenes/FDNA = ME.plantgenes
+			HYPpassplantgenes(DNA,FDNA)
+			ME.generation = POT.generation
+			// Copy the genes from the plant we're harvesting to the new critter.
+			if(P.hybrid)
+				// We need to do special shit with the genes if the plant is a spliced
+				// hybrid since they run off instanced datums rather than referencing
+				// a specific already-existing one.
+				var/plantType = P.type
+				var/datum/plant/hybrid = new plantType(ME)
+				for(var/V in P.vars)
+					if(issaved(P.vars[V]) && V != "holder")
+						hybrid.vars[V] = P.vars[V]
+				ME.planttype = hybrid
+			// Now while we have all stats together, let's make the critter adjust its stats itself
+			ME.Setup_DNA()
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return

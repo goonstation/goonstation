@@ -28,7 +28,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/slug,
 /mob/living/critter/small_animal/slug/snail,
 /mob/living/critter/small_animal/bee,
-/mob/living/critter/maneater_polymorph,
+/mob/living/critter/plant/maneater_polymorph,
 /mob/living/critter/fermid_polymorph,
 /mob/living/critter/small_animal/crab_polymorph)
 

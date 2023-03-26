@@ -27,7 +27,7 @@
 
 	return produce
 
-/mob/living/critter/maneater
+/mob/living/critter/plant/maneater
 	name = "man-eating plant"
 	real_name = "man-eating plant"
 	desc = "It looks hungry..."
@@ -42,6 +42,9 @@
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/slam_polymorph,     //Changed how it added abilities to mimic ?newer? code from tomatoes.
 						/datum/targetable/critter/devour)    //I guess?
+	planttype = /datum/plant/maneater
+	var/baseline_health = 50 //! how much health the maneater should get normally and at 0 endurance
+	var/health_per_endurance = 4 //! how much health the maneater should get per point of endurance
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -73,16 +76,30 @@
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 
+	Setup_DNA()
+		var/datum/plantgenes/DNA = src.plantgenes
+		// raise the health of the plant linear from 0 endurance to max endurance
+		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * src.health_per_endurance)
+		for (var/datum/healthHolder/HB in src.healthlist)
+			HB.maximum_value = scaled_health
+			HB.value = scaled_health
+			HB.last_value = scaled_health
+		..()
+
 	New()
 		..()
 
 	setup_healths()
-		add_hh_flesh(50, 1)
-		add_hh_flesh_burn(50, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+		add_hh_flesh(src.baseline_health, 1)
+		add_hh_flesh_burn(src.baseline_health, 1.25)
+		var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
+		tox.maximum_value = src.baseline_health
+		tox.value = src.baseline_health
+		tox.last_value = src.baseline_health
+		tox.damage_multiplier = 1
 
 
-/mob/living/critter/maneater_polymorph
+/mob/living/critter/plant/maneater_polymorph
 	name = "man-eating plant"
 	real_name = "Wizard-eating plant"
 	desc = "It looks upset about something..."
@@ -96,6 +113,7 @@
 	can_grab = 1
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/slam_polymorph,/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
+	planttype = /datum/plant/maneater
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

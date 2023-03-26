@@ -6,6 +6,15 @@
 	var/datum/plantgenes/plantgenes = null //! saves the plantgenes of the critter. Important for seed creation as well as scaling with plant attributes
 	var/generation = 0 //! For genetics tracking.
 	var/growers = list() //! This contains people who contributed to the plant. For AI purposes
+	var/percent_health_on_spawn = 100 //! This passes the health % the plant in contrast to its starting health had when harvested to the critter
+
+	New()
+		if(ispath(src.planttype))
+			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
+			if (species)
+				src.planttype = species
+		src.plantgenes = new /datum/plantgenes(src)
+		..()
 
 	proc/HY_set_species(var/datum/plant/species)
 		if (species)
@@ -18,6 +27,15 @@
 				return
 
 	proc/Setup_DNA()
+		/// This proc gets called after the critter is created on-harvest. Use this one to apply any baseline-scaling, like health, to the critter with plant stats
+
+		if (src.percent_health_on_spawn < 1)
+			src.percent_health_on_spawn = 1
+		for (var/datum/healthHolder/HB in src.healthlist)
+			var/reduced_health = clamp(round(HB.maximum_value * src.percent_health_on_spawn / 100), 1, HB.maximum_value)
+			HB.value = reduced_health
+			HB.last_value = reduced_health
+
 
 	disposing()
 		src.plantgenes = null
