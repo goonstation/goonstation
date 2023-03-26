@@ -877,7 +877,8 @@ TYPEINFO(/obj/machinery/transception_pad)
 		..()
 		if(src.is_transceiving)
 			return
-		for(var/mob/M in src.contents)
+		var/mob/M = locate() in src.contents
+		if(M)
 			src.is_transceiving = TRUE
 			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
 			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
@@ -888,8 +889,6 @@ TYPEINFO(/obj/machinery/transception_pad)
 				use_power(200)
 				telefrag(M)
 				src.is_transceiving = FALSE
-			break
-
 
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"
