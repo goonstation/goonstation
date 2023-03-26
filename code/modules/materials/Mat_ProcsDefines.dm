@@ -561,18 +561,26 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		coil.updateName()
 
 /**
- * Returns the thermal conductivity between two materials, based on thermal conductivity mat property.
+ * Returns the thermal conductivity between two materials, based on thermal and electrical conductivity mat property.
  * Thermal conductivity ranges from 0 (perfect insulator) to infinity. Excellent conductors like copper are about 100
 */
 proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/material/matB)
 	var/hTC1 = 5
 	var/hTC2 = 5
 	if(matA)
-		if(matA.hasProperty("thermal"))
+		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
+			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
+		else if(matA.hasProperty("thermal"))
 			hTC1 = max(matA.getProperty("thermal"),0)
+		else if(matA.hasProperty("electrical"))
+			hTC1 = max(matA.getProperty("electrical"),0)
 	if(matB)
-		if(matB.hasProperty("thermal"))
+		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
+			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
+		else if(matB.hasProperty("thermal"))
 			hTC2 = max(matB.getProperty("thermal"),0)
+		else if(matB.hasProperty("electrical"))
+			hTC2 = max(matB.getProperty("electrical"),0)
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
 	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2

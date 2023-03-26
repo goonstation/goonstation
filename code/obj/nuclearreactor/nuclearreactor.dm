@@ -621,6 +621,22 @@
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
 		..()
 
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				switch(rand(1,4))
+					if(1)
+						src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/random_material
+					if(2)
+						src.component_grid[x][y] = new /obj/item/reactor_component/control_rod/random_material
+					if(3)
+						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
+					if(4)
+						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
+
+		..()
+
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
