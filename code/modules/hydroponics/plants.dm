@@ -181,9 +181,9 @@ ABSTRACT_TYPE(/datum/plant)
 					damage_amt = rand(15,30)
 			if ("blood","bloodc")
 				if (src.growthmode == "carnivore")
-					DNA.growtime += rand(5,10)
-					DNA.harvtime += rand(5,10)
-					DNA.endurance += rand(10,30)
+					DNA.growtime += rand(4,6)
+					DNA.harvtime += rand(4,6)
+					DNA.endurance += rand(4,8)
 			if ("radium","uranium")
 				damage_amt = rand(5,15)
 				HYPmutateDNA(DNA,1)
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/plant)
 			// optimise this later
 
 	/// This gives out a plant stat, modified by all commuts that affect produce
-	proc/get_effective_value(gene_stat as text) 
+	proc/get_effective_value(gene_stat as text)
 		var/output_base = 0
 		switch(gene_stat)
 			if("growtime")

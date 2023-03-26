@@ -45,11 +45,11 @@
 	planttype = /datum/plant/maneater
 	stamina = 300
 	stamina_max = 300
-	var/baseline_health = 50 //! how much health the maneater should get normally and at 0 endurance
-	var/health_per_endurance = 4 //! how much health the maneater should get per point of endurance
+	var/baseline_health = 100 //! how much health the maneater should get normally and at 0 endurance
+	var/health_per_endurance = 3 //! how much health the maneater should get per point of endurance
 	var/baseline_stamina = 300 //! how much stamina the maneater should have baseline
-	var/stamina_per_potency = 10 //! how much stamina each point of potency should add
-	var/stamreg_per_potency = 0.2 //! how much stamina regen each point of potency should add
+	var/stamina_per_potency = 5 //! how much stamina each point of potency should add
+	var/stamreg_per_potency = 0.1 //! how much stamina regen each point of potency should add
 	var/maximum_stamreg = 60 //! how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -161,10 +161,10 @@
 		..()
 
 	setup_healths()
-		add_hh_flesh(50, 1)
-		add_hh_flesh_burn(50, 1.25)
+		add_hh_flesh(120, 1)
+		add_hh_flesh_burn(120, 1.25)
 		var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
-		tox.maximum_value = 50
-		tox.value = 50
-		tox.last_value = 50
+		tox.maximum_value = 100
+		tox.value = 100
+		tox.last_value = 100
 		tox.damage_multiplier = 1
