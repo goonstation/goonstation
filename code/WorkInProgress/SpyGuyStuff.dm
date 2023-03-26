@@ -1018,7 +1018,7 @@ proc/Create_Tommyname()
 
 	proc/check_conditions()
 		. = 0
-		if(BOUNDS_DIST(owner, target) > 0 || !isturf(target.loc) || !target || !owner || !the_garrote || !the_garrote.wire_readied)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !isturf(target.loc) || !owner || !the_garrote || !the_garrote.wire_readied)
 			interrupt(INTERRUPT_ALWAYS)
 			. = 1
 
