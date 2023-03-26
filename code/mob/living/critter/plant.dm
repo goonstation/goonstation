@@ -31,7 +31,8 @@
 
 		if (src.percent_health_on_spawn < 1)
 			src.percent_health_on_spawn = 1
-		for (var/datum/healthHolder/HB in src.healthlist)
+		for (var/T in healthlist)
+			var/datum/healthHolder/HB = healthlist[T]
 			var/reduced_health = clamp(round(HB.maximum_value * src.percent_health_on_spawn / 100), 1, HB.maximum_value)
 			HB.value = reduced_health
 			HB.last_value = reduced_health

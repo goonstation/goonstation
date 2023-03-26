@@ -265,6 +265,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	sprite = "Maneater"
 	growthmode = "carnivore"
 	unique_seed = /obj/item/seed/maneater
+	genome = 12
 	starthealth = 40
 	growtime = 30
 	harvtime = 200

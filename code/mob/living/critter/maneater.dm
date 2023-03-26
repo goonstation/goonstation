@@ -43,8 +43,14 @@
 	add_abilities = list(/datum/targetable/critter/slam_polymorph,     //Changed how it added abilities to mimic ?newer? code from tomatoes.
 						/datum/targetable/critter/devour)    //I guess?
 	planttype = /datum/plant/maneater
+	stamina = 300
+	stamina_max = 300
 	var/baseline_health = 50 //! how much health the maneater should get normally and at 0 endurance
 	var/health_per_endurance = 4 //! how much health the maneater should get per point of endurance
+	var/baseline_stamina = 300 //! how much stamina the maneater should have baseline
+	var/stamina_per_potency = 10 //! how much stamina each point of potency should add
+	var/stamreg_per_potency = 0.2 //! how much stamina regen each point of potency should add
+	var/maximum_stamreg = 60 //! how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -80,10 +86,14 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		// raise the health of the plant linear from 0 endurance to max endurance
 		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * src.health_per_endurance)
-		for (var/datum/healthHolder/HB in src.healthlist)
+		for (var/T in healthlist)
+			var/datum/healthHolder/HB = healthlist[T]
 			HB.maximum_value = scaled_health
 			HB.value = scaled_health
 			HB.last_value = scaled_health
+		src.stamina = src.baseline_stamina + (DNA?.get_effective_value("potency") * src.stamina_per_potency)
+		src.stamina_max = src.baseline_stamina + (DNA?.get_effective_value("potency") * src.stamina_per_potency)
+		src.stamina_regen = min(STAMINA_REGEN + round(DNA?.get_effective_value("potency") * src.stamreg_per_potency), src.maximum_stamreg)
 		..()
 
 	New()
@@ -112,6 +122,8 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	stamina = 300
+	stamina_max = 300
 	add_abilities = list(/datum/targetable/critter/slam_polymorph,/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 	planttype = /datum/plant/maneater
 
@@ -151,4 +163,8 @@
 	setup_healths()
 		add_hh_flesh(50, 1)
 		add_hh_flesh_burn(50, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+		var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
+		tox.maximum_value = 50
+		tox.value = 50
+		tox.last_value = 50
+		tox.damage_multiplier = 1
