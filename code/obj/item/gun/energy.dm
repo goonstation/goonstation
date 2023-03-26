@@ -120,8 +120,7 @@ TYPEINFO(/obj/item/gun/energy)
 	item_state = "rifle"
 	force = 1
 	desc = "The XIANG|GIESEL model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
-	charge_up = 15
-	can_dual_wield = 0
+	can_dual_wield = FALSE
 	two_handed = 1
 	slowdown = 5
 	slowdown_time = 5
@@ -132,6 +131,7 @@ TYPEINFO(/obj/item/gun/energy)
 	New()
 		set_current_projectile(new/datum/projectile/heavyion)
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
 	pixelaction(atom/target, params, mob/user, reach)
