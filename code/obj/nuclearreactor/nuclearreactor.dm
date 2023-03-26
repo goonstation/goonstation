@@ -37,6 +37,8 @@
 	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
 
 	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
@@ -259,19 +261,19 @@
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			var/heat_transfer_mult = 0.95
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.current_gas.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
-				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*2.5)
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature -  src.current_gas.temperature
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = 10
+			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
+			src.current_gas.temperature = src.current_gas.temperature - (k * A * 1/HEAT_CAPACITY(current_gas))*-deltaT
+
+			if(src.current_gas.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+			src.material.triggerTemp(src,src.temperature)
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
