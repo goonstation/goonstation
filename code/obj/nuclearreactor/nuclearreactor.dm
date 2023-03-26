@@ -230,6 +230,9 @@
 			return
 
 		processCaseRadiation(tmpRads)
+
+		src.material.triggerTemp(src,src.temperature)
+
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
@@ -263,17 +266,38 @@
 		if(src.current_gas)
 			//first, define some helpful vars
 			// temperature differential
-			var/deltaT = src.temperature -  src.current_gas.temperature
+			var/deltaT = src.temperature - src.current_gas.temperature
+			// temp differential for radiative heating
+			var/deltaTr = (src.temperature ** 4) - (src.current_gas.temperature ** 4)
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
 			var/A = 10
-			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
-			src.current_gas.temperature = src.current_gas.temperature - (k * A * 1/HEAT_CAPACITY(current_gas))*-deltaT
+
+			var/total_thermal_e = THERMAL_ENERGY(current_gas) + (src.thermal_mass*src.temperature)
+			var/thermal_e = THERMAL_ENERGY(current_gas)
+
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
+			//since this is a discrete approximation, it breaks down when the temperatures are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.current_gas.temperature, src.temperature)
+			var/coldest = min(src.current_gas.temperature, src.temperature)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + (k * A * deltaT)/HEAT_CAPACITY(src.current_gas) + (5.67037442e-8 * A * deltaTr)/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
+
+			var/delta_thermal_e = total_thermal_e - (THERMAL_ENERGY(current_gas) + (src.thermal_mass*src.temperature))
+			if(abs(delta_thermal_e) > 1)
+				CRASH("VIOLATION OF CONSERVATION OF ENERGY!")
 
 			if(src.current_gas.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			src.material.triggerTemp(src,src.temperature)
+
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
