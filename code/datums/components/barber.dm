@@ -522,7 +522,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					src.preview.preview_thing.appearance = src.barbee.appearance
 					src.preview.preview_thing.dir = turn(src.preview.preview_thing.dir, params["direction"]) // Not using `update_appearance` to change dirs because it simply doesn't work. Why? Dunno.
 
 				if("reset")
