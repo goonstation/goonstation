@@ -315,7 +315,9 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
-	item_state = "phaser"
+	item_state = "phaser_xl"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
@@ -335,7 +337,8 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "phaser-xl[ratio]"
+			src.icon_state = "[initial(src.icon_state)][ratio]"
+			src.wear_state = "[initial(src.icon_state)]"
 			return
 
 ///////////////////////////////////////Rad Crossbow
