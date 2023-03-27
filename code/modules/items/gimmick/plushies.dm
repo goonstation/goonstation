@@ -176,7 +176,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		phrase_log.log_phrase("plushie", message)
 		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
-		if (ishuman(H))
+		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
