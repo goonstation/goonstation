@@ -2403,11 +2403,11 @@
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
 
-/datum/statusEffect/eaten //Let's em know how long till their eat_count resets
+/datum/statusEffect/eaten // Let's em know how long till their eat_count resets
 	id = "eaten"
 	name = "Eaten"
 	desc = "You have recently eaten some food."
-	icon_state = "stam+" //TODO: Make/use a better sprite
+	icon_state = "stam+" // TODO: Make/use a better sprite
 	maxDuration = 3 MINUTES
 
 
@@ -2420,7 +2420,7 @@
 /datum/statusEffect/full // Gluttonious actions have resulted in this.
 	id = "full"
 	name = "Full"
-	desc = "You have eaten too much food! you probably should wait before eating more."
+	desc = "You have eaten too much food! You probably should wait before eating more."
 	icon_state = "muted"
 	maxDuration = 5 MINUTES
 
