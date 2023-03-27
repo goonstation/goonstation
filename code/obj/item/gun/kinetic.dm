@@ -537,7 +537,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	wear_state = "survival_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	contraband = 8
 	two_handed = TRUE
 	can_dual_wield = FALSE
