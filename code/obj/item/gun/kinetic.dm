@@ -1870,18 +1870,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 // scout
 /obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
-	name = "tactical shotgun"
-	desc = "Multi-purpose high-grade military shotgun, painted a menacing black colour."
+	name = "\improper Pryderi tactical shotgun"
+	desc = "A compact multi-purpose shotgun from Mabinogi Firearms Company, standard-issue for Hafgan's mine guards and convoy security throughout the Martian War."
 	icon_state = "tactical_shotgun"
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 8
+	max_ammo_capacity = 5
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
+	fire_animation = TRUE
+	has_empty_state = TRUE
 
 	New()
 		ammo = new default_magazine
