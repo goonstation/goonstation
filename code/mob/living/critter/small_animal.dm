@@ -1846,6 +1846,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (isdead(C)) continue //don't attack the dead
 			if (isintangible(C)) continue //don't attack the AI eye
 			if (istype(C, src.type)) continue //don't attack other scorpions
+			if (istype(C, /mob/living/critter/small_animal/rattlesnake)) continue //don't attack space rattlesnakes(the snake would lose)
 			if (C in src.friends) continue //don't attack frens :)
 			. += C
 
@@ -1974,6 +1975,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (isdead(C)) continue //don't attack the dead
 			if (isintangible(C)) continue //don't attack the AI eye
 			if (istype(C, src.type)) continue //don't attack other snakes
+			if (istype(C, /mob/living/critter/small_animal/scorpion)) continue //don't attack scorpions(they can spawn together)
 			if (C in src.friends) continue //don't attack frens :)
 			if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
 				if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
