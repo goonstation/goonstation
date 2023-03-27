@@ -159,7 +159,8 @@
 				else
 					src.lockdown = 0
 				var/area/guardthis = input(usr, "Please type 'Here' or the name of an area. Capitalization matters!", "GuardTron 0.0.1a", "Here") as text
-				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0))
+				var/turf/summon_area = get_turf(src) // Can't use summon_turf, that's already used
+				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0) || (isAIeye(usr) && (summon_area.camera_coverage_emitters && length(summon_area.camera_coverage_emitters)))) // God damn AI eyes
 					if(guardthis == "Here")
 						guardthis = get_area(get_turf(src.master))
 					else if(guardthis in stationAreas)
