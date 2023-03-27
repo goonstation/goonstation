@@ -1,5 +1,10 @@
 
 (t)sun mar 26 23
+(u)Sord
+(e)⚖📦
+(*)Industrial space suits now are heavier armored, and slower to wear
+(*)Added a new light engineering space suit for miners, with basically no armor but no slowdown.
+(+)The CE spawns with one of the light space suits in their locker instead of a normal eng space suit.
 (u)Azrun & Lord_Earthfire
 (e)🪲|C-Bug
 (+)Nitrous oxide should cause people to be sleepy again.
