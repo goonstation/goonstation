@@ -351,10 +351,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	proc/check_stomach(var/mob/consumer) //For effects relating to checking the stomach capacity of mobs
 		var/mob/living/C = consumer
-		if((consumer.eat_count || consumer.stomach_count) == null)
+		var/consumer_threshold = max(0, consumer.stomach_limit - consumer.eat_count) //Credit to Blackrep for suggesting this
+		if((consumer.eat_count || consumer.stomach_limit) == null) // Not sure if there's any non-mob things that can eat, but this will stop that from causing issues
 			return
-		if(consumer.eat_count <= consumer.stomach_limit)
+
+		switch(consumer_threshold)
+			if(5)
+				boutput(C, "<span class='alert'>Your stomach feels satisfied!</span>")
+			if(3)
+				boutput(C, "<span class='alert'>Your stomach feels stuffed!</span>")
+			if(1)
+				boutput(C, "<span class='alert'>Your stomach feels like it's about to burst!</span>")
+
+		if(consumer_threshold > 0)
 			consumer.setStatus("eaten", 3 MINUTES)
+			return
+
 		else
 			consumer.delStatus("eaten")
 			consumer.setStatus("full", 5 MINUTES)
@@ -364,12 +376,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				C.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT) // Punish the ghost critters for their gluttony!
 				boutput(C, "<span class='alert'>You feel a sharp pain in your stomach!</span>")
-		if(consumer.eat_count == consumer.stomach_limit - 5)
-			boutput(C, "<span class='alert'>Your stomach feels satisfied!</span>")
-		if(consumer.eat_count == consumer.stomach_limit - 2)
-			boutput(C, "<span class='alert'>Your stomach feels stuffed!</span>")
-		if(consumer.eat_count == consumer.stomach_limit)
-			boutput(C, "<span class='alert'>Your stomach feels like it's about to burst!</span>")
 
 
 	afterattack(obj/target, mob/user, flag)

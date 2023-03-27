@@ -97,7 +97,7 @@
 	var/urine = 0
 	var/nutrition = 100
 	var/eat_count = 0 // how much they have eaten recently
-	var/stomach_limit = 10 // how much they can eat till they start taking stomach damage
+	var/stomach_limit = 11 // how much they can eat till they start taking stomach damage, equal to 2 burgers.
 	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
