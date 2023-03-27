@@ -573,10 +573,14 @@
 
 ///The next turf in line is being replaced with another, so check if it's now suitable to put another laser on
 /obj/linked_laser/proc/next_turf_replaced()
+	src.release_endpoint()
 	SPAWN(1)
 		var/turf/next_turf = get_next_turf()
 		if (src.turf_check(next_turf))
 			src.extend()
+		else
+			//if we can't put a new laser there, then register to watch the new turf
+			src.become_endpoint()
 
 /obj/linked_laser/proc/next_turf_uncrossed()
 	var/turf/next_turf = get_next_turf()
