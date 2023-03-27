@@ -162,42 +162,6 @@
 		SPAWN(2.5 SECONDS)
 			src.attacking = 0
 */
-/obj/critter/wraithskeleton
-	name = "skeleton"
-	desc = "It looks rather crumbly."
-	icon = 'icons/mob/human_decomp.dmi'
-	icon_state = "decomp4"
-	health = 25
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 1
-	seekrange = 7
-
-	skinresult = /obj/item/material_piece/bone
-	max_skins = 2
-	death_text = "%src% vaporizes instantly!"
-	chase_text = "knocks down"
-	atk_text = "beats"
-	atk_brute_amt = 6
-	crit_chance = 0
-
-	ChaseAttack(mob/M)
-		if (prob(75))
-			..()
-			M.changeStatus("weakened", 4 SECONDS)
-		else
-			src.visible_message("<span class='combat'><B>[src]</B> tries to knock down [M]!</span>")
-
-	CritterAttack(mob/M)
-		..()
-
-	CritterDeath()
-		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(x, y, z)))
-		qdel(src)
 
 /obj/critter/mimic2
 	name = "mechanical toolbox"
@@ -423,13 +387,7 @@
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 16 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
-	New()
-		..()
-		playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
 
-	Move()
-		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 0)
-		. = ..()
 
 	attackby(obj/item/W, mob/living/user)
 		..()
@@ -463,15 +421,7 @@
 			src.task = "chasing"
 			return
 
-	proc/CustomizeMagZom(var/NM, var/is_monkey)
-		src.name = "[capitalize(NM)]'s skeleton"
-		src.desc = "A horrible skeleton, raised from the corpse of [NM] by a wizard."
-		src.revivalChance = 100
 
-		if (is_monkey)
-			icon = 'icons/mob/monkey.dmi'
-
-		return
 
 	ChaseAttack(mob/M)
 		if (!src.alive) return
@@ -508,23 +458,6 @@
 	CritterDeath(mob/M)
 		if (!src.alive) return
 		..()
-		if (rand(100) <= revivalChance)
-			src.revivalChance -= revivalDecrement
-			SPAWN(rand(400,800))
-				src.alive = 1
-				src.set_density(1)
-				src.health = initial(src.health)
-				src.icon_state = initial(src.icon_state)
-				for(var/mob/O in viewers(src, null))
-					O.show_message("<span class='alert'><b>[src]</b> re-assembles and is ready to fight once more!</span>")
-		return
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
-	name = "skeleton egg"
-	desc = "Uh. What?"
-	critter_type = /obj/critter/magiczombie
-	warm_count = 5
-	critter_reagent = "ash"
 
 /obj/critter/golem
 	name = "Golem"
