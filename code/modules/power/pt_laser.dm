@@ -547,9 +547,11 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
 
 	var/turf/next_turf = get_next_turf()
+	if (!istype(next_turf) || next_turf == src.current_turf)
+		return
 	//check the turf for anything that might block us, and notify any laser sinks we find
 	var/blocked = FALSE
-	if (!istype(next_turf) || next_turf.density)
+	if (next_turf.density)
 		blocked = TRUE
 	else
 		for (var/obj/object in next_turf)
