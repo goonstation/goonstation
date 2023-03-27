@@ -480,7 +480,52 @@
 		if(istype(T, /turf/simulated/floor) && prob(power/1e5))
 			T:burn_tile()
 
+ABSTRACT_TYPE(/obj/laser_sink)
+/obj/laser_sink //might end up being a component or something
 
+/obj/laser_sink/proc/incident(obj/linked_laser/laser)
+	return
+
+/obj/laser_sink/proc/exident(obj/linked_laser/laser) //it's a word now
+	return
+
+#define NW_SE 0
+#define SW_NE 1
+/obj/laser_sink/mirror
+	anchored = 0
+	density = 1
+	opacity = 0
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "laser_mirror0"
+
+	var/obj/linked_laser/out_laser = null
+	var/obj/linked_laser/in_laser = null
+	var/facing = NW_SE
+
+/obj/laser_sink/mirror/attack_hand(mob/user)
+	var/obj/linked_laser/laser = src.in_laser
+	src.exident(laser)
+	boutput(user, "rotating mirror...")
+	src.facing = 1 - src.facing
+	src.icon_state = "laser_mirror[src.facing]"
+	src.incident(laser)
+
+/obj/laser_sink/mirror/incident(obj/linked_laser/laser)
+	src.in_laser = laser
+	var/out_dir = turn(laser.dir, src.facing == SW_NE ? 90 : -90) //rotate based on which way the mirror is facing
+	src.out_laser = laser.copy_laser(get_step(src, out_dir), out_dir)
+
+/obj/laser_sink/mirror/exident(obj/linked_laser/laser)
+	qdel(src.out_laser)
+	src.out_laser = null
+	src.in_laser = null
+
+/obj/laser_sink/mirror/Move()
+	src.exident(src.out_laser)
+	..()
+
+#undef NW_SE
+#undef SW_NE
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
@@ -492,14 +537,29 @@
 	var/turf/current_turf = null
 	///Are we at the very end of the beam, and so watching to see if the next turf becomes free
 	var/is_endpoint = FALSE
+	///A laser sink we're pointing into (null on most beams)
+	var/obj/laser_sink/sink = null
 
 /obj/linked_laser/New(loc, dir)
 	..()
 	src.dir = dir
 	src.current_turf = get_turf(src)
 	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
+
 	var/turf/next_turf = get_next_turf()
-	if (src.turf_check(next_turf))
+	//check the turf for anything that might block us, and notify any laser sinks we find
+	var/blocked = FALSE
+	if (!istype(next_turf) || next_turf.density)
+		blocked = TRUE
+	else
+		for (var/obj/object in next_turf)
+			if (istype(object, /obj/laser_sink))
+				src.sink = object
+				src.sink.incident(src)
+			if (src.is_blocking(object))
+				blocked = TRUE
+				break
+	if (!blocked)
 		src.extend()
 	else
 		src.become_endpoint()
@@ -507,9 +567,13 @@
 /obj/linked_laser/proc/get_next_turf()
 	return get_step(src, src.dir)
 
+///Returns a new segment with all its properties copied over (override on child types)
+/obj/linked_laser/proc/copy_laser(turf/T, dir)
+	return new src.type(T, dir)
+
 ///Set up a new laser on the next turf
 /obj/linked_laser/proc/extend()
-	src.next = new src.type(src.get_next_turf(), src.dir)
+	src.next = src.copy_laser(src.get_next_turf(), src.dir)
 	src.next.previous = src
 	src.release_endpoint()
 
@@ -532,6 +596,8 @@
 	UnregisterSignal(src.current_turf, COMSIG_TURF_REPLACED)
 	qdel(src.next)
 	src.next = null
+	src.sink?.exident(src)
+	src.sink = null
 	if (!QDELETED(src.previous))
 		src.previous.become_endpoint()
 	if (src.is_endpoint)
@@ -552,13 +618,11 @@
 		if (src.is_blocking(object))
 			return FALSE
 
-/obj/linked_laser/proc/update()
-	var/turf/T = get_turf(src)
-	if (!src.turf_check(T))
-		qdel(src)
-
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
+	if (istype(A, /obj/laser_sink) && src.previous)
+		src.previous.sink = A
+		src.previous.sink.incident(src.previous)
 	if (src.is_blocking(A))
 		qdel(src)
 
