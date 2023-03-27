@@ -1948,10 +1948,10 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 
 /obj/item/clothing/head/fish_fear_me
 	name = "fish fear me hat"
-	desc = "Fish fear me. Women want me."
+	desc = "an extremely witty piece of headwear for the discerning angler."
 	item_state = "basecap_green"
 	icon_state = "basecap_green"
 
 	New()
 		..()
-		name = "[pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")]. [pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")]"
+		name = "[pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")]. [pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")] hat."

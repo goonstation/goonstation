@@ -237,7 +237,7 @@
 	name = "Fishing Supplies Vendor"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-pirates"
-	desc = "An automated quartermaster service for obtianing and upgrading your fishing gear."
+	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	token_accepted = /obj/item/requisition_token/fishing
 	log_purchase = FALSE
@@ -250,6 +250,7 @@
 		materiel_stock += new/datum/materiel/fishing_gear/rod
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
+		materiel_stock += new/datum/materiel/fishing_gear/fish_box
 		..()
 
 	accepted_token(var/token)
@@ -559,6 +560,11 @@
 	name = "Basic Fishing Rod"
 	path = /obj/item/fishing_rod
 	description = "A basic fishing rod."
+
+/datum/materiel/fishing_gear/fish_box
+	name = "Portable aquarium"
+	path = /obj/item/storage/fish_box
+	description = "A temporary solution for bulk-fish transportation."
 
 /datum/materiel/fishing_gear/uniform
 	name = "fisher's overalls"

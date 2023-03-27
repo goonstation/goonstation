@@ -97,6 +97,14 @@
 		else //lets restart the action
 			src.onRestart()
 
+// upgraded rods are unimplemented.
+/obj/item/fishing_rod/upgraded
+	name = "fishing rod"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "fishing_rod-inactive"
+	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
+	item_state = "fishing_rod-inactive"
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
@@ -188,3 +196,10 @@ TYPEINFO(/obj/item/fish_portal)
 		W.set_loc(src)
 		W.dropped(user)
 		return
+
+/obj/item/storage/fish_box
+	name = 	"Portable aquarium"
+	desc = "A temporary solution for transporting fish."
+	icon_state = "box"
+	slots = 5
+	can_hold = 	list(/obj/item/fish)

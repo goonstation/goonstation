@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
-	/obj/item/fish/royal_gamma = 10)
+	/obj/item/fish/royal_gramma = 10)
 */
 
 /datum/fishing_spot/water_cooler
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
-	/obj/item/fish/royal_gamma = 10)
+	/obj/item/fish/royal_gramma = 10)
 
 /datum/fishing_spot/kitchen_sink
 	fishing_atom_type = /obj/submachine/chef_sink
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
-	/obj/item/fish/royal_gamma = 10)
+	/obj/item/fish/royal_gramma = 10)
 
 /datum/fishing_spot/bucket
 	fishing_atom_type = /obj/item/reagent_containers/glass/bucket
@@ -253,7 +253,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
-	/obj/item/fish/royal_gamma = 10)
+	/obj/item/fish/royal_gramma = 10)
 
 /datum/fishing_spot/drain
 	fishing_atom_type = /obj/machinery/drainage
@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
-	/obj/item/fish/royal_gamma = 10)
+	/obj/item/fish/royal_gramma = 10)
 
 /*
 
