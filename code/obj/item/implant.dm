@@ -1463,9 +1463,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
 			return
 
-		if(get_all_antagonists(!user) && (istype(src.imp, /obj/item/implanter/mindhack) || istype(src.imp, /obj/item/implanter/super_mindhack))) // prevents (mostly) crew from using mindhacks against antags, considering it's functionally a de-antager in the hands of crew.
-			boutput(user, "<span class='alert'>Your conscious prevents you from using this implant!</span>")
-			return
+		for(var/datum/mind/U in ticker.minds)
+			if(!U.special_role && (istype(src.imp, /obj/item/implanter/mindhack) || istype(src.imp, /obj/item/implanter/super_mindhack))) // prevents (mostly) crew from using mindhacks against antags, considering it's functionally a de-antager in the hands of crew.
+				boutput(user, "<span class='alert'>Your conscious prevents you from using this implant!</span>")
+				return
 
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
