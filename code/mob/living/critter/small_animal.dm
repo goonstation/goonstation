@@ -1877,8 +1877,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 	density = 0
 	flags = TABLEPASS
-	fits_under_table = 1
-	can_lie = 0
+	fits_under_table = TRUE
+	can_lie = FALSE
 	ai_type = /datum/aiHolder/rattlesnake
 	is_npc = TRUE
 	ai_retaliates = TRUE
@@ -2002,7 +2002,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death()
 		src.reagents.add_reagent("viper_venom", 40, null)
-		qdel(friends)
+		src.friends = null
 		return ..()
 
 /mob/living/critter/small_animal/cockroach/weak
