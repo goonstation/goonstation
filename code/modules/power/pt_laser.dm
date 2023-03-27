@@ -508,7 +508,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	boutput(user, "rotating mirror...")
 	src.facing = 1 - src.facing
 	src.icon_state = "laser_mirror[src.facing]"
-	src.incident(laser)
+	if (laser)
+		src.incident(laser)
 
 /obj/laser_sink/mirror/incident(obj/linked_laser/laser)
 	src.in_laser = laser
@@ -562,7 +563,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 				blocked = TRUE
 				break
 	if (!blocked)
-		src.extend()
+		SPAWN(0)
+			src.extend()
 	else
 		src.become_endpoint()
 
@@ -596,8 +598,9 @@ ABSTRACT_TYPE(/obj/laser_sink)
 ///Kill any upstream laser objects
 /obj/linked_laser/disposing()
 	UnregisterSignal(src.current_turf, COMSIG_TURF_REPLACED)
-	qdel(src.next)
-	src.next = null
+	SPAWN(0)
+		qdel(src.next)
+		src.next = null
 	src.sink?.exident(src)
 	src.sink = null
 	if (!QDELETED(src.previous))
