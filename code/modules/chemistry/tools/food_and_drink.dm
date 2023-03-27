@@ -356,9 +356,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		else
 			consumer.delStatus("eaten")
 			consumer.setStatus("full", 5 MINUTES)
-			if(C.organHolder)
+			if(C.organHolder && !ismobcritter(C))
 				C.organHolder.damage_organs(10, 0, 0, list("stomach"))
 				boutput(C, "<span class='alert'>You feel a dull pain in your stomach!</span>")
+			else
+				C.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT) // Punish the ghost critters for their gluttony!
+				boutput(C, "<span class='alert'>You feel a sharp pain in your stomach!</span>")
 		if(consumer.eat_count == consumer.stomach_limit - 5)
 			boutput(C, "<span class='alert'>Your stomach feels satisfied!</span>")
 		if(consumer.eat_count == consumer.stomach_limit - 2)
