@@ -2467,7 +2467,7 @@
 
 /mob/proc/full_heal()
 	SHOULD_CALL_PARENT(TRUE)
-	if(src.ghost)
+	if(src.ghost?.mind)
 		src.ghost.mind.transfer_to(src)
 		if(isliving(src))
 			var/mob/living/L = src
