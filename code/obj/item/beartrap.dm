@@ -49,7 +49,7 @@
 		return
 
 	Crossed(atom/movable/AM)
-		if (!isghostcritter(AM) && isliving(AM) && !isintangible(AM) && src.armed)
+		if (src.armed &&  isliving(AM) && !(isintangible(AM) || !isghostcritter(AM)))
 			var/mob/living/M = AM
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
