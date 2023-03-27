@@ -1,4 +1,6 @@
-
+(t)mon mar 27 23
+(u)Sord
+(+)Traitor scuttlebot now costs 4 bad guy coins
 (t)sun mar 26 23
 (u)Sord
 (e)⚖📦
