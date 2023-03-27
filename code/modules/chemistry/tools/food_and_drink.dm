@@ -351,6 +351,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	proc/check_stomach(var/mob/consumer) //For effects relating to checking the stomach capacity of mobs
 		var/mob/living/C = consumer
+		if((consumer.eat_count || consumer.stomach_count) == null)
+			return
 		if(consumer.eat_count <= consumer.stomach_limit)
 			consumer.setStatus("eaten", 3 MINUTES)
 		else
