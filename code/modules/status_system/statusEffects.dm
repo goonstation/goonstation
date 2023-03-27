@@ -2414,7 +2414,8 @@
 	onRemove()
 		. = ..()
 		var/mob/living/L = owner
-		if(L.eat_count <= L.stomach_limit)
+		var/consumer_threshold = max(0, L.stomach_limit - L.eat_count)
+		if(consumer_threshold > 0)
 			L.eat_count = 0
 
 /datum/statusEffect/full // Gluttonious actions have resulted in this.

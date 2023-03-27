@@ -367,15 +367,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			consumer.setStatus("eaten", 3 MINUTES)
 			return
 
-		else
-			consumer.delStatus("eaten")
-			consumer.setStatus("full", 5 MINUTES)
-			if(C.organHolder && !ismobcritter(C))
-				C.organHolder.damage_organs(10, 0, 0, list("stomach"))
-				boutput(C, "<span class='alert'>You feel a dull pain in your stomach!</span>")
-			else
-				C.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT) // Punish the ghost critters for their gluttony!
-				boutput(C, "<span class='alert'>You feel a sharp pain in your stomach!</span>")
+		consumer.delStatus("eaten")
+		consumer.setStatus("full", 5 MINUTES)
+		if(C.organHolder && !ismobcritter(C))
+			C.organHolder.damage_organs(10, 0, 0, list("stomach"))
+			boutput(C, "<span class='alert'>You feel a dull pain in your stomach!</span>")
+			return
+
+		C.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT) // Punish the ghost critters for their gluttony!
+		boutput(C, "<span class='alert'>You feel a sharp pain in your stomach!</span>")
 
 
 	afterattack(obj/target, mob/user, flag)
