@@ -169,6 +169,14 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 		inhand_color = "#81878a"
 		category = FISH_CATEGORY_OCEAN
 
+/obj/item/fish/mahimahi
+		name = "Mahi-mahi"
+		desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
+		icon_state = "mahimahi"
+		inhand_color = "#A6B967"
+		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+		category = FISH_CATEGORY_OCEAN
+
 // Aquarium saltwater fish
 
 /obj/item/fish/clownfish
@@ -206,11 +214,45 @@ Aquarium saltwater fish: Some of these are Oshan fish currently
 		inhand_color = "#9a05f0"
 		category = FISH_CATEGORY_AQUARIUM
 
-//Unsorted
+// adventure zone special fish
 
-/obj/item/fish/mahimahi
-		name = "Mahi-mahi"
-		desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
-		icon_state = "mahimahi"
-		inhand_color = "#A6B967"
-		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+//meatzone
+/obj/item/fish/meat_mutant
+	name = "meat mutant"
+	desc = "A fish? Whatver it is, it's grown accustomed to swimming in a pool of digestive acids."
+	icon_state = "bass_old"
+	inhand_color = "#af2323"
+
+/obj/item/fish/blood_fish
+	name = "blood fish"
+	desc = "A viscous, gory mass of congealed blood. You're really stretching the definition of fish here."
+	icon_state = "bass_old"
+	inhand_color = "#af2323"
+
+/obj/item/fish/eye_mutant
+	name = "eye mutant"
+	desc = "Was this a fish once? It's got too many eyes on you."
+	icon_state = "bass_old"
+	inhand_color = "#f0f0f0"
+
+//void
+/obj/item/fish/void_fish
+	name = "void fish"
+	desc = "This fish has swum through the timestream to witness the death of the universe. Probably doesn't fry too well."
+	icon_state = "bass_old"
+	inhand_color = "#8f3ed1"
+
+//solarium
+/obj/item/fish/sun_fish
+	name = "literal sun fish"
+	desc = "Nobody will ever believe you."
+	icon_state = "bass_old"
+	inhand_color = "#ebde2d"
+
+//lava moon
+/obj/item/fish/lava_fish
+	name = "lava fish"
+	desc = "a blazing hot catch straight from the planet's core!"
+	icon_state = "bass_old"
+	inhand_color = "#eb2d2d"
+
