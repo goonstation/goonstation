@@ -17,6 +17,8 @@
 	#define COMSIG_UPDATE_ICON "atom_update_icon"
 	/// when something triggers Crossed by entering this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
+	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
+	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated

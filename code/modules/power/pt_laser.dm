@@ -481,6 +481,108 @@
 			T:burn_tile()
 
 
+/obj/linked_laser
+	icon = 'icons/obj/power.dmi'
+	icon_state = "ptl_beam"
+	anchored = 2
+	density = 0
+	luminosity = 1
+	var/obj/linked_laser/next = null
+	var/obj/linked_laser/previous = null
+	var/turf/current_turf = null
+	///Are we at the very end of the beam, and so watching to see if the next turf becomes free
+	var/is_endpoint = FALSE
+
+/obj/linked_laser/New(loc, dir)
+	..()
+	src.dir = dir
+	src.current_turf = get_turf(src)
+	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
+	var/turf/next_turf = get_next_turf()
+	if (src.turf_check(next_turf))
+		src.extend()
+	else
+		src.become_endpoint()
+
+/obj/linked_laser/proc/get_next_turf()
+	return get_step(src, src.dir)
+
+///Set up a new laser on the next turf
+/obj/linked_laser/proc/extend()
+	src.next = new src.type(src.get_next_turf(), src.dir)
+	src.next.previous = src
+	src.release_endpoint()
+
+///Called on the last laser in the chain to make it watch for changes to the turf blocking it
+/obj/linked_laser/proc/become_endpoint()
+	src.is_endpoint = TRUE
+	var/turf/next_turf = get_next_turf()
+	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, .proc/next_turf_replaced)
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_uncrossed)
+
+///Called when we extend a new laser object and are therefore no longer an endpoint
+/obj/linked_laser/proc/release_endpoint()
+	src.is_endpoint = FALSE
+	var/turf/next_turf = get_next_turf() //this may cause problems when the next turf changes, we'll need to handle re-registering signals waa
+	UnregisterSignal(next_turf, COMSIG_TURF_REPLACED)
+	UnregisterSignal(next_turf, COMSIG_ATOM_UNCROSSED)
+
+///Kill any upstream laser objects
+/obj/linked_laser/disposing()
+	UnregisterSignal(src.current_turf, COMSIG_TURF_REPLACED)
+	qdel(src.next)
+	src.next = null
+	if (!QDELETED(src.previous))
+		src.previous.become_endpoint()
+	if (src.is_endpoint)
+		src.release_endpoint()
+	..()
+
+///Does something block the laser?
+/obj/linked_laser/proc/is_blocking(atom/movable/A)
+	if(!istype(A,/obj/window) && !istype(A,/obj/grille) && !ismob(A) && A.density)
+		return TRUE
+
+///Does anything on a turf block the laser?
+/obj/linked_laser/proc/turf_check(turf/T)
+	. = TRUE
+	if (!istype(T) || T.density)
+		return FALSE
+	for (var/obj/object in T)
+		if (src.is_blocking(object))
+			return FALSE
+
+/obj/linked_laser/proc/update()
+	var/turf/T = get_turf(src)
+	if (!src.turf_check(T))
+		qdel(src)
+
+/obj/linked_laser/Crossed(atom/movable/A)
+	..()
+	if (src.is_blocking(A))
+		qdel(src)
+
+//////////////clusterfuck signal registered procs///////////////
+
+///Our turf is being replaced with another
+/obj/linked_laser/proc/current_turf_replaced()
+	SPAWN(1) //wait for the turf to actually be replaced
+		var/turf/T = get_turf(src)
+		if (!istype(T) || T.density)
+			qdel(src)
+
+///The next turf in line is being replaced with another, so check if it's now suitable to put another laser on
+/obj/linked_laser/proc/next_turf_replaced()
+	SPAWN(1)
+		var/turf/next_turf = get_next_turf()
+		if (src.turf_check(next_turf))
+			src.extend()
+
+/obj/linked_laser/proc/next_turf_uncrossed()
+	var/turf/next_turf = get_next_turf()
+	if (turf_check(next_turf))
+		src.extend()
+
 /obj/lpt_laser
 	name = "laser"
 	desc = "A powerful laser beam."
@@ -498,6 +600,7 @@
 
 
 /obj/lpt_laser/New()
+	..()
 	light = new /datum/light/point
 	light.attach(src)
 	light.set_color(0, 0.8, 0.1)
@@ -519,8 +622,6 @@
 				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
 					source.affecting_mobs |= L
 
-	..()
-
 /obj/lpt_laser/ex_act(severity)
 	return
 
@@ -531,6 +632,7 @@
 			source.affecting_mobs |= AM
 
 /obj/lpt_laser/Uncrossed(var/atom/movable/AM)
+	..()
 	if(isliving(AM) && source)
 		source.affecting_mobs -= AM
 
