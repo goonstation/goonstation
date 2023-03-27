@@ -1,4 +1,41 @@
 
+(t)sun mar 26 23
+(u)Sord
+(e)⚖📦
+(*)Industrial space suits now are heavier armored, and slower to wear
+(*)Added a new light engineering space suit for miners, with basically no armor but no slowdown.
+(+)The CE spawns with one of the light space suits in their locker instead of a normal eng space suit.
+(u)Azrun & Lord_Earthfire
+(e)🪲|C-Bug
+(+)Nitrous oxide should cause people to be sleepy again.
+(u)Blackrep
+(p)13409
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Macro-phasers now have a proper in-hand sprite and can be worn on your back.
+(t)sat mar 25 23
+(u)Wisemonster
+(p)13415
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Securitrons will now properly arrest unauthorized people when on lockdown.
+(t)fri mar 24 23
+(u)LeahTheTech
+(+)Changelings are now completely immune to the effects of missing organs. (apart from the brain)
+(t)tue mar 21 23
+(u)Laboredih123
+(p)13144
+(e)🔎🔄📄|C-Code-Quality, C-Rework, A-UI
+(+)Made the Disposal Pipe Dispenser TGUI!
+(+)Make more than one pipe at a time, up to 20!
+(u)LeahTheTech
+(*)The in-game bug report form is now working again- ahem I mean it definitely wasn't broken. At all. No bugs here.
+(u)aloe
+(+)Added a custom suicide to the claw machine. Hope the doctors have carnival skills!
+(t)sun mar 19 23
+(u)aloe
+(+)You can now use 'Ctrl+M' to do auditory custom emotes (ie, they can be read by blind people but not deaf people). 'M' has the same behavior as before, which is visual custom emotes (can be read by deaf people but not blind people).
+(t)sat mar 18 23
+(u)LeahTheTech
+(+)Conspirators will now all correctly receive identical objectives.
 (t)thu mar 16 23
 (u)LeahTheTech
 (*)Atmospheric analyzers can now be used in-hand to track the nearest hull breach.

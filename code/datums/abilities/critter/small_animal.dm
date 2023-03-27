@@ -205,11 +205,11 @@
 
 	scorpion_sting
 		icon_state = "scorpion_sting"
-		cooldown = 10 SECONDS
+		cooldown = 12 SECONDS
 		venom1 = "neurotoxin"
-		amt1 = 15
+		amt1 = 6
 		venom2 = "toxin"
-		amt2 = 6
+		amt2 = 4
 
 	snake_bite
 		name = "Bite"
@@ -224,7 +224,7 @@
 /datum/targetable/critter/pincer_grab
 	name = "Grab"
 	desc = "Grab a mob with your pincers, imobilizing them for a bit"
-	cooldown = 10 SECONDS
+	cooldown = 15 SECONDS
 	targeted = 1
 	icon_state = "pincer_grab"
 	target_anything = 1
@@ -261,7 +261,7 @@
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
-		MT.changeStatus("weakened", 6 SECONDS)
+		MT.changeStatus("weakened", 3 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		SPAWN(6 SECONDS)

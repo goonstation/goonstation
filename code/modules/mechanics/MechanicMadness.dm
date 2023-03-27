@@ -627,6 +627,7 @@
 				user.drop_item()
 				qdel(W)
 
+				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
