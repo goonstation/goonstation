@@ -57,10 +57,10 @@
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/big)
 		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
-		if (!bite.disabled && bite.cooldowncheck())
-			bite.handleCast(target)
-		if (!slam.disabled && slam.cooldowncheck() && prob(30))
+		if (!slam.disabled && slam.cooldowncheck())
 			slam.handleCast(target)
+		if (!bite.disabled && bite.cooldowncheck() && prob(40))
+			bite.handleCast(target)
 		else
 			if(prob(20))
 				src.swap_hand()
