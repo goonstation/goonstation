@@ -56,6 +56,9 @@
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
+	reviving
+		revivalChance = 100
+
 	New()
 		..()
 		playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
@@ -115,14 +118,14 @@
 			. += C
 
 	death(var/gibbed)
-		if (rand(100) =< src.revivalChance)
+		if (prob(src.revivalChance))
 			..()
 			src.revivalChance -= src.revivalDecrement
 			SPAWN(rand(400,800))
 				src.full_heal()
 				src.set_density(1)
 				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
-				return
+			return
 		if (!gibbed)
 			src.unequip_all()
 			src.gib()
@@ -143,7 +146,6 @@
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
 	death_text = "%src% vanishes into bones!"
-	revivalChance = 0
 
 	seek_target(var/range = 6)
 		. = list()
@@ -157,7 +159,6 @@
 	death()
 		..()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(x, y, z)))
-		qdel(src)
 
 /////////////////// EGG ///////////////////
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
