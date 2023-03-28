@@ -43,21 +43,39 @@ var/global/crew_creds = null
 #endif
 
 /// Generates the crew member data bundle for TGUI use
-/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M)
+/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M, var/ignore_antagonist_roles = TRUE)
 	var/is_head = FALSE
-	if(M.special_role)
-		if(!M.current) return
+	if(M.special_role && !ignore_antagonist_roles)
+		if(!M.current)
+			return
 
-		. += list(list(
-			"real_name" = M.current.real_name,
-			"dead" = isdead(M.current),
-			"player" = M.displayed_key,
-			"role" = M.special_role,
-			"head" = is_head,
-		))
-		return .
+		if (length(M.antagonists))
+			for (var/datum/antagonist/antag_role in M.antagonists)
+				if (antag_role.pseudo || antag_role.vr || antag_role.silent)
+					continue
 
-	if(!M.assigned_role) return
+				. += list(list(
+					"real_name" = M.current.real_name,
+					"dead" = isdead(M.current),
+					"player" = M.displayed_key,
+					"role" = capitalize(antag_role.display_name),
+					"head" = is_head,
+				))
+
+		else
+			// Remove this after antagonists are fully datumised.
+			. += list(list(
+				"real_name" = M.current.real_name,
+				"dead" = isdead(M.current),
+				"player" = M.displayed_key,
+				"role" = M.special_role,
+				"head" = is_head,
+			))
+
+		return
+
+	if(!M.assigned_role)
+		return
 
 	if (M.assigned_role in list("Captain", "Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
 		is_head = TRUE
@@ -91,7 +109,7 @@ var/global/crew_creds = null
 
 		// Antagonist?
 		if(M.special_role)
-			antagonist += bundle_crew_member_data(M)
+			antagonist += bundle_crew_member_data(M, FALSE)
 		if(!M.assigned_role)
 			continue
 
