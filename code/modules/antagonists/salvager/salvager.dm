@@ -28,7 +28,7 @@
 			H.equip_if_possible(headset, H.slot_ears)
 		else
 			headset.protected_radio = TRUE
-
+		headset.frequency = src.pick_radio_freq()
 		// Allow for Salvagers to have a secure channel
 		//headset.secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 		//headset.secure_classes = list(RADIOCL_OTHER)
