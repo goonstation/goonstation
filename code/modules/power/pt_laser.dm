@@ -513,8 +513,20 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 /obj/laser_sink/mirror/incident(obj/linked_laser/laser)
 	src.in_laser = laser
-	var/out_dir = turn(laser.dir, src.facing == SW_NE ? 90 : -90) //rotate based on which way the mirror is facing
-	src.out_laser = laser.copy_laser(get_step(src, out_dir), out_dir)
+	//very stupid angle maths
+	var/angle
+	if (src.facing == NW_SE)
+		if (laser.dir in list(WEST, EAST))
+			angle = 90
+		else
+			angle = -90
+	else
+		if (laser.dir in list(WEST, EAST))
+			angle = -90
+		else
+			angle = 90
+	var/out_dir = turn(laser.dir, angle) //rotate based on which way the mirror is facing
+	src.out_laser = laser.copy_laser(get_turf(src), out_dir)
 
 /obj/laser_sink/mirror/exident(obj/linked_laser/laser)
 	qdel(src.out_laser)
