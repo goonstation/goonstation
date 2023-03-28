@@ -682,7 +682,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
+		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
