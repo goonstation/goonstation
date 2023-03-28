@@ -2407,7 +2407,7 @@
 	id = "eaten"
 	name = "Eaten"
 	desc = "You have recently eaten some food."
-	icon_state = "stam+" // TODO: Make/use a better sprite
+	icon_state = "food"
 	maxDuration = 3 MINUTES
 
 
