@@ -295,12 +295,6 @@
 
 		sender.say_thrall(message, src)
 
-
-	proc/remove_thrall(var/mob/victim)
-		remove_mindhack_status(victim)
-		thralls -= victim
-		src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
-
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
@@ -332,6 +326,7 @@
 				return
 
 			M.full_heal()
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
@@ -342,29 +337,9 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-			if (M.mind)
-				M.mind.special_role = ROLE_VAMPTHRALL
-				if(ismob(owner))
-					M.mind.master = owner.ckey
-				else
-					M.mind.master = owner
-				if (!(M.mind in ticker.mode.Agimmicks))
-					ticker.mode.Agimmicks += M.mind
-
-			thralls += M
-			src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
-
-			M.decomp_stage = DECOMP_STAGE_NO_ROT
-			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
-			M.make_vampiric_thrall()
-			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-			if (VZ && istype(VZ))
-				VZ.master = src
-			M.AddComponent(/datum/component/tracker_hud/vampthrall, src.owner)
-
-			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.antagonist_overlay_refresh(1)
-			owner.antagonist_overlay_refresh(1)
+			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
+			if (istype(src.owner, /mob))
+				src.owner.antagonist_overlay_refresh(TRUE, FALSE)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")

@@ -49,26 +49,15 @@ var/global/crew_creds = null
 		if(!M.current)
 			return
 
-		if (length(M.antagonists))
-			for (var/datum/antagonist/antag_role in M.antagonists)
-				if (antag_role.pseudo || antag_role.vr || antag_role.silent)
-					continue
+		for (var/datum/antagonist/antag_role in M.antagonists)
+			if (antag_role.pseudo || antag_role.vr || antag_role.silent)
+				continue
 
-				. += list(list(
-					"real_name" = M.current.real_name,
-					"dead" = isdead(M.current),
-					"player" = M.displayed_key,
-					"role" = capitalize(antag_role.display_name),
-					"head" = is_head,
-				))
-
-		else
-			// Remove this after antagonists are fully datumised.
 			. += list(list(
 				"real_name" = M.current.real_name,
 				"dead" = isdead(M.current),
 				"player" = M.displayed_key,
-				"role" = M.special_role,
+				"role" = capitalize(antag_role.display_name),
 				"head" = is_head,
 			))
 

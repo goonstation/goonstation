@@ -1,4 +1,33 @@
 
+(t)tue mar 28 23
+(u)Blackrep
+(p)13453
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers have recently been spotted with some heavier firepower.
+(t)mon mar 27 23
+(u)Sord
+(+)Traitor scuttlebot now costs 4 bad guy coins
+(t)sun mar 26 23
+(u)Sord
+(e)⚖📦
+(*)Industrial space suits now are heavier armored, and slower to wear
+(*)Added a new light engineering space suit for miners, with basically no armor but no slowdown.
+(+)The CE spawns with one of the light space suits in their locker instead of a normal eng space suit.
+(u)Azrun & Lord_Earthfire
+(e)🪲|C-Bug
+(+)Nitrous oxide should cause people to be sleepy again.
+(u)Blackrep
+(p)13409
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Macro-phasers now have a proper in-hand sprite and can be worn on your back.
+(t)sat mar 25 23
+(u)Wisemonster
+(p)13415
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Securitrons will now properly arrest unauthorized people when on lockdown.
+(t)fri mar 24 23
+(u)LeahTheTech
+(+)Changelings are now completely immune to the effects of missing organs. (apart from the brain)
 (t)tue mar 21 23
 (u)Laboredih123
 (p)13144
