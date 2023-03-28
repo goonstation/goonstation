@@ -881,6 +881,7 @@
 	stamina_cost = 21
 	stamina_crit_chance = 10
 	material_amt = 0.1
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -915,8 +916,6 @@
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100
-	if (ishuman(target))
-		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 	src.stamina_crit_chance = oldcrit
 
