@@ -1,13 +1,21 @@
 ///Mail order manifest datum: sent to quartermasters to sign off on the goods being imported
 /datum/mailorder_manifest
-	var/list/stock = list() //things to instantiate in the order
-	var/stock_frontend = "" //list of contents to show in the console
-	var/dest_tag = "Send to QM" //destination to ship to, defaults to QM
-	var/orderedby = null //name of orderer, as printed on card
-	var/orderer_account = null //account associated with orderer, used for refund
-	var/order_cost = null //tracks cost for refund in case of denial
-	var/order_catalogue = "unknown seller" //name of catalogue's fulfiller (same as name of catalogue program)
-	var/notify_netid = null //device address to ping
+	///Things to instantiate in the order, if it should succeed
+	var/list/stock = list()
+	///Formatted list of contents to show for quartermasters' inspection
+	var/stock_frontend = ""
+	///Destination goods are slated to be shipped to; defaults to QM
+	var/dest_tag = "Send to QM"
+	///Name of orderer, as printed on card
+	var/orderedby = null
+	///Bank account associated with orderer; used for refund in case of order denial
+	var/orderer_account = null
+	///Cost of order; used for refund in case of order denial
+	var/order_cost = null
+	///Name of catalogue's off-station "fulfiller" (same as name of catalogue program)
+	var/order_catalogue = "unknown seller"
+	///Device (PDA) to notify when an order has been approved or denied
+	var/notify_netid = null
 
 	proc/approve_order()
 		switch(dest_tag)
@@ -57,13 +65,15 @@
 //Adding the chute will not prevent purchase of the mail-order via QM secure crate;
 //merely add the option for a less secure but more convenient box-based delivery
 
-///Box for mail-based delivery
+///Handheld box for mail-loop delivery of mail orders
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
 	desc = "A box containing mail-ordered items."
-	var/mail_dest = null //used in mail loop delivery
+	///Routing variable used by the mail-order chute for mail loop delivery
+	var/mail_dest = null
 
+	///Ships the box to the station using mail-order spawn position
 	proc/yeetself()
 		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
 		SPAWN(yeetdelay)
@@ -74,12 +84,13 @@
 			src.set_loc(get_turf(yeetbegin))
 			src.throw_at(yeetend, 100, 1)
 
-///Box for QM-based delivery
+///Secured crate for QM-based delivery of mail orders
 /obj/storage/secure/crate/mailorder
 	name = "mail-order crate"
 	desc = "A crate that holds mail-ordered items."
 	personal = 1
 
+	///Prepare crate with identifying information so it can be claimed on arriving
 	proc/launch_procedure()
 		if(src.registered)
 			src.name = "\improper [src.registered]'s mail-order crate"

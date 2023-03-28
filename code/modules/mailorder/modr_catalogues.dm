@@ -60,12 +60,18 @@
 /datum/computer/file/pda_program/catalogue
 	name = "The Omega Catalogue"
 	size = 32
+	///Current menu mode of catalogue program; 0 (MODE_LIST) shows the catalogue listings
 	var/mode = 0
+	///Path of mail order entries that should be indexed. Each catalogue should have its own base entry type.
 	var/entries_to_index = /datum/mail_order
-	var/list/cart = list() //mail order entries selected for purchase
-	var/cartsize = 0 // based on amount of items in selected entries, not amount of entries
-	var/cartcost = 0 // how much your selection costs
-	var/list/canbuy = list() //list of catalog entries
+	///List of catalogue entries, populated from mail order entry datums on program initialization.
+	var/list/canbuy = list()
+	///Mail order entries currently selected for purchase.
+	var/list/cart = list()
+	///Representation of your current physical cart size; based on amount of items in selected entries, not amount of entries.
+	var/cartsize = 0
+	///Tally of the cost of items currently selected in cart.
+	var/cartcost = 0
 
 	audiovideo
 		name = "Tanhony & Sons"
@@ -220,7 +226,7 @@
 		src.master.updateSelfDialog()
 		return
 
-	// arrange for package assessment by QM, then clear cart
+	///Proc to prepare shipment of shopping cart products for review by QM
 	proc/shipCart(var/destination)
 		var/datum/mailorder_manifest/manifest = new /datum/mailorder_manifest
 		var/success_style = DELIVERED_TO_QM //tracks type of order placement for reply purposes
@@ -247,12 +253,14 @@
 		src.voidCart()
 		return success_style
 
+	///Small helper proc to fully reset shopping cart
 	proc/voidCart()
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
 
-	proc/authCard(var/mob/user as mob) //handles clearance requirements and payment check
+	///Order authorization procedure; validates that inserted card has sufficient funds and, if relevant, appropriate access
+	proc/authCard(var/mob/user as mob)
 		if(!src.master.ID_card)
 			return "NO CARD INSERTED"
 		if(!src.master.ID_card.registered)

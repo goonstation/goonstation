@@ -1,12 +1,18 @@
-//information for catalogue sale entries
 ABSTRACT_TYPE(/datum/mail_order)
+///Mail order datum; used to populate the contents of mail order catalogues with purchase options
 /datum/mail_order
+	///Listed name of the purchase, as it appears in mail-order catalogue
 	var/name = "Juicer Schweet's Spaghetti Western"
-	var/cleanname = null //sanitary version of name created for references
+	///"Sanitized" version of item's listed name, used for indexing; should not be manually defined
+	var/cleanname = null
+	///Description of the purchase, as it appears in mail-order catalogue
 	var/desc = "Be like the three-second elephant with heated value in space-bark."
-	var/list/order_items = list() // should not exceed 7 items, as mail order is sent in a box item
+	///List of items received with this purchase; should not exceed 7 items, as mail order can be sent in a box item
+	var/list/order_items = list()
+	///Price in credits to make this purchase
 	var/cost = PAY_UNTRAINED
-	var/list/order_perm = list() // optional access requirement to order a given item
+	///Optional access requirement for making the purchase, checked against ID card providing the payment
+	var/list/order_perm = list()
 
 	New()
 		..()
