@@ -70,7 +70,8 @@
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses?[type]
+		if(!lifeprocesses) return //sometimes list is null, causes runtime.
+		var/datum/lifeprocess/L = lifeprocesses[type]
 		lifeprocesses -= type
 		qdel(L)
 
