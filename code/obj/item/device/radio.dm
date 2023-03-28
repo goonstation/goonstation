@@ -510,6 +510,7 @@ var/list/headset_channel_lookup
 					for (var/obj/item/device/radio/rad in receive[R])
 						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
 							break
+						messages[1] = say_emphasis(messages[1])
 						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -531,6 +532,7 @@ var/list/headset_channel_lookup
 					for (var/obj/item/device/radio/rad in receive[R])
 						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
 							break
+						messages[1] = say_emphasis(messages[1])
 						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -550,6 +552,7 @@ var/list/headset_channel_lookup
 					for (var/obj/item/device/radio/rad in receive[R])
 						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
 							break
+						messages[1] = say_emphasis(messages[1])
 						rad.showMapText(R, M, receive, messages[2], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)

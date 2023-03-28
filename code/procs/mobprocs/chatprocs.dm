@@ -437,6 +437,8 @@
 	var/first_quote = " \""
 	var/second_quote = "\""
 
+
+
 	if(!speechverb)
 		speechverb = speechverb_say
 		if (ending == "?")
@@ -549,13 +551,14 @@
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
-// Transforms the speech emphasis mods from [/mob/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
+// Transforms the speech emphasis mods from [/atom/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>")
 
+// Forgive me for mixing atom and mob procs together, these need to be used in some objs - DisturbHerb
 // Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
-/mob/proc/say_emphasis(input)
+/atom/proc/say_emphasis(input)
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
 	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
@@ -565,7 +568,7 @@
 
 #undef ENCODE_HTML_EMPHASIS
 
-/mob/proc/say_strip_emphasis(input)
+/atom/proc/say_strip_emphasis(input)
 	var/static/regex/remove_emphasis_characters = regex(@"(?<!\\)[\+_|]", "g") // Gets the preceding character to the last emphasis character.
 	input = remove_emphasis_characters.Replace_char(input, "")
 	return input
