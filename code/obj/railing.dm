@@ -273,8 +273,7 @@
 		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].", "red")
+		ownerMob.visible_message("<span class='alert'>[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].</span>")
 
 	onEnd()
 		..()
@@ -306,15 +305,13 @@
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
-					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
+					ownerMob.visible_message("<span class='alert'>[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]</span>")
 				// chance for additional head bump damage
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
-					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+					ownerMob.visible_message("<span class='alert'>[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]</span>")
 			return TRUE
 		return FALSE
 
@@ -326,13 +323,12 @@
 
 	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
-		for(var/mob/O in AIviewers(ownerMob))
-			var/the_text = null
-			if (is_athletic_jump) // athletic jumps are more athletic!!
-				the_text = "[ownerMob] swooces right over [the_railing]!"
-			else
-				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
-			O.show_text("[the_text]", "red")
+		var/the_text = null
+		if (is_athletic_jump) // athletic jumps are more athletic!!
+			the_text = "[ownerMob] swooces right over [the_railing]!"
+		else
+			the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
+		ownerMob.visible_message("<span class='alert'>[the_text]</span>")
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -381,7 +377,7 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] at [log_loc(the_railing)] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
@@ -394,8 +390,7 @@
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[owner] begins [verbing] [the_railing].", "red")
+		ownerMob.visible_message("<span class='alert'>[owner] begins [verbing] [the_railing].</span>")
 
 	onEnd()
 		..()
@@ -414,7 +409,6 @@
 				verbens = "unfastens"
 				the_railing.anchored = 0
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
+		ownerMob.visible_message("<span class='alert'>[owner] [verbens] [the_railing].</span>")
+		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")
 
