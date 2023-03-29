@@ -2349,3 +2349,13 @@ var/list/zalgo_mid = list(
 	while (pos > 0 && (string[pos] in end_punctuation))
 		string = copytext(string, 1, pos--)
 	return string + "..."
+
+/proc/bingus_parse(var/string)
+	var/bingus_list = list(
+		@{"\bbingus\b"} = "bingus my beloved",
+		@{"\bantag\b"} = "floppa",
+		@{"\bantagonist\b"} = "big floppa",
+	)
+	for (var/pattern in bingus_list)
+		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string
