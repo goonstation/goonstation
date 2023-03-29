@@ -635,24 +635,23 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
-	play(mob/user as mob)
+	attack_self(mob/user as mob)
 		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
-			..()
+			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, 0, 0, 0.5)
+			var/turf/T = get_turf(src)
+			if (!T)
+				return
+			for (var/mob/living/carbon/human/H in viewers(3, T))
+				if (user && H == user)
+					continue
+				else
+					SPAWN(1 SECOND)
+						src.dootize(H, user)
 
-	post_play_effect(mob/user as mob)
-		var/turf/T = get_turf(src)
-		if (!T)
-			return
-		for (var/mob/living/carbon/human/H in viewers(T, null))
-			if (user && H == user)
-				continue
-			else
-				src.dootize(H)
-
-	proc/dootize(var/mob/living/carbon/human/S as mob)
+	proc/dootize(var/mob/living/carbon/human/S as mob, var/mob/M)
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONEY)
@@ -660,6 +659,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
+			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
 			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)

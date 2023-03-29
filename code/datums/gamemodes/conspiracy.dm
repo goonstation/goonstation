@@ -51,7 +51,9 @@
 	var/antag_role = pick(other_antag_roles)
 
 	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = ROLE_CONSPIRATOR, amount = numConspirators, recordChosen = 1)
-	var/list/chosen_other_antags = antagWeighter.choose(pool = potentialAntags - chosen_conspirator, role = antag_role, amount = num_other_antags - length(other_antags), recordChosen = 1)
+	var/list/chosen_other_antags = list()
+	if (length(potentialAntags - chosen_conspirator))
+		chosen_other_antags = antagWeighter.choose(pool = potentialAntags - chosen_conspirator, role = antag_role, amount = num_other_antags - length(other_antags), recordChosen = 1)
 	traitors |= chosen_conspirator
 	other_antags |= chosen_other_antags
 	for (var/datum/mind/conspirator in traitors)

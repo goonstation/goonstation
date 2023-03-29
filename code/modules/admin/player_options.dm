@@ -378,8 +378,7 @@
 						<a href='[playeropt_link(M, "makecritter")]'>Critter</a> &bull;
 						<a href='[playeropt_link(M, "makecube")]'>Meatcube</a> &bull;
 						<!-- <a href='[playeropt_link(M, "transform")]'>Transform</a> &bull; -->
-						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a>
-						<br>
+						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "makeai")]'>AI</a> &bull;
 						<a href='[playeropt_link(M, "makecyborg")]'>Cyborg</a> &bull;
 						<a href='[playeropt_link(M, "makeghostdrone")]'>Ghostdrone</a>
@@ -388,6 +387,8 @@
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
 						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
 						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
+						<br>
+						<a href='[playeropt_link(M, "changeoutfit")]'>Change Outfit</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;

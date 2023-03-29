@@ -273,6 +273,7 @@ datum/mind
 			qdel(A)
 		src.special_role = null
 		ticker.mode.traitors.Remove(src)
+		ticker.mode.Agimmicks.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()

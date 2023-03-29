@@ -14226,17 +14226,6 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
-"aUv" = (
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Upper Level Access";
-	req_access_txt = "33"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor,
-/area/crater/biodome/crew)
 "aUw" = (
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor,
@@ -15001,15 +14990,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
-"aWz" = (
-/obj/machinery/door/airlock/pyro/external{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	secondsElectrified = -1
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/upper_arctic/hall)
 "aWA" = (
 /obj/ladder{
 	id = "icemoon"
@@ -31360,17 +31340,6 @@
 	dir = 8
 	},
 /area/crypt/sigma/mainhall)
-"bSt" = (
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Lower Level Access";
-	req_access_txt = "33"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor,
-/area/crypt/sigma/mainhall)
 "bSu" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8
@@ -35303,22 +35272,6 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
-"cfH" = (
-/obj/decal/fakeobjects/firelock_broken{
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Hazardous Materials Storage";
-	req_access_txt = "";
-	secondsElectrified = -1
-	},
-/obj/trigger/critter,
-/turf/unsimulated/floor,
-/area/crunch)
 "cfL" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4;
@@ -66480,19 +66433,6 @@
 /obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"dSM" = (
-/obj/table/wood/round/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/paper_bin,
-/obj/item/pen{
-	desc = "It's a normal black ink pen. Looks like it has been chewed on."
-	},
-/obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "fgreen2"
-	},
-/area/afterlife/bar)
 "dSN" = (
 /obj/decal/fakeobjects/teleport_pad{
 	desc = "Who placed this here and why?";
@@ -67211,17 +67151,6 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
-"eip" = (
-/obj/effects/precipitation/snow/grey/tile,
-/obj/tree{
-	icon_state = "snowtree";
-	pixel_y = -1;
-	pixel_x = -18
-	},
-/turf/unsimulated/floor/snowcalm,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "eiT" = (
 /obj/item/reagent_containers/vending/bag/larger{
 	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
@@ -67445,6 +67374,17 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"eFU" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/tree{
+	icon_state = "snowtree";
+	pixel_x = -18;
+	pixel_y = -1
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -67973,11 +67913,6 @@
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
-"fCK" = (
-/mob/living/critter/brullbar,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "fCL" = (
 /obj/table/wood/auto,
 /obj/item/device/detective_scanner,
@@ -68474,6 +68409,11 @@
 	},
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"gwj" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "gwr" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
@@ -68519,11 +68459,6 @@
 /obj/submachine/weapon_vendor/syndicate,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
-"gzR" = (
-/obj/decal/cleanable/blood,
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "gAq" = (
 /obj/railing/yellow/reinforced{
 	dir = 1
@@ -68826,6 +68761,11 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"hgF" = (
+/mob/living/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "hgL" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
@@ -69179,14 +69119,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
-"hNF" = (
-/mob/living/critter/brullbar,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hNS" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
@@ -69379,10 +69311,6 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
-"igq" = (
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -69576,6 +69504,11 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"itq" = (
+/obj/storage/closet/office,
+/obj/item/pen/fancy,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "ius" = (
 /obj/machinery/light,
 /obj/item/clothing/suit/armor/vest/macho,
@@ -69835,11 +69768,6 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
-"iNw" = (
-/obj/decal/icefloor,
-/mob/living/critter/brullbar/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "iOn" = (
 /obj/tree,
 /obj/spacevine{
@@ -70036,6 +69964,10 @@
 /obj/item/instrument/harmonica,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"jfN" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "jgd" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
@@ -70136,6 +70068,11 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
+"jqo" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "jqz" = (
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
@@ -70651,11 +70588,6 @@
 /obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
-"knb" = (
-/obj/decal/icefloor,
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "kni" = (
 /obj/map/light/graveyard,
 /mob/living/critter/small_animal/firefly/ai_controlled,
@@ -71018,18 +70950,6 @@
 	icon_state = "wall3"
 	},
 /area/diner/tug)
-"lfD" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/mob/living/critter/bear{
-	desc = "Wow, you haven't seen this guy since 2014!";
-	name = "DOngEun MesTur";
-	
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "lfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -71549,6 +71469,29 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"lXE" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur";
+	
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
+"lYA" = (
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Lower Level Access";
+	req_access_txt = "33"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/crypt/sigma/mainhall)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -71638,10 +71581,6 @@
 	name = "plating"
 	},
 /area/hospital)
-"mje" = (
-/obj/storage/closet/office,
-/turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
 "mjk" = (
 /turf/unsimulated/floor/stairs/wood/wide{
 	dir = 6
@@ -72131,6 +72070,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"ndE" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "ndM" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -73448,6 +73395,15 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"pcE" = (
+/obj/machinery/door/airlock/pyro/external{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	secondsElectrified = -1
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/upper_arctic/hall)
 "pdL" = (
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
@@ -74168,10 +74124,6 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
-"qeN" = (
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "qfG" = (
 /obj/shrub{
 	dir = 10;
@@ -74317,6 +74269,22 @@
 /obj/machinery/microwave,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"qvf" = (
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Hazardous Materials Storage";
+	req_access_txt = "";
+	secondsElectrified = -1
+	},
+/obj/trigger/critter,
+/turf/unsimulated/floor,
+/area/crunch)
 "qwW" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/burger/plague/fishstick{
@@ -74342,6 +74310,11 @@
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/centcom/gallery)
+"qBW" = (
+/obj/decal/cleanable/blood,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -75763,6 +75736,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPM" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "sPY" = (
 /obj/stool/chair{
 	desc = "There are screws stuck at odd angles to keep this thing from falling apart. You feel like you'll have back spasms if you keep looking at it.";
@@ -75993,6 +75970,30 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
+"tsv" = (
+/obj/table/wood/round/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/paper_bin,
+/obj/map/light/brighterwhite,
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	desc = "It's a normal black ink pen. Looks like it has been chewed on."
+	},
+/obj/item/pen{
+	desc = "It's a normal black ink pen. Looks like it has been chewed on.";
+	pixel_x = 3
+	},
+/obj/item/pen/fancy{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 9;
+	icon_state = "fgreen2"
+	},
+/area/afterlife/bar)
 "tsD" = (
 /obj/item/device/radio/intercom/virtual{
 	dir = 1
@@ -76558,6 +76559,10 @@
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/floor/lava,
 /area/iomoon/robot_ruins)
+"uwp" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -76904,13 +76909,20 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"uUy" = (
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Upper Level Access";
+	req_access_txt = "33"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/crater/biodome/crew)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
-"uVZ" = (
-/mob/living/critter/bear,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "uWx" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -76974,6 +76986,14 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"vdi" = (
+/mob/living/critter/brullbar,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "vdq" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -77653,6 +77673,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"weC" = (
+/obj/mail_booth,
+/turf/unsimulated/floor/wood,
+/area/afterlife/bar/sanctuary)
 "wfm" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
@@ -77827,14 +77851,6 @@
 /obj/item/clothing/gloves/sailormoon,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
-"wud" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "wvy" = (
 /obj/stool/chair/couch/red{
 	dir = 8
@@ -81960,7 +81976,7 @@ bLn
 bLn
 ceO
 ceO
-cfH
+qvf
 ceO
 ceO
 bKw
@@ -82414,7 +82430,7 @@ aSG
 aSG
 aVL
 aRJ
-wud
+ndE
 faP
 faP
 faP
@@ -83319,7 +83335,7 @@ aTC
 aUk
 bMs
 uJX
-aWz
+pcE
 faP
 aYe
 aYZ
@@ -90596,7 +90612,7 @@ aLr
 aLS
 aLN
 bgC
-qeN
+sPM
 aLN
 aLN
 aLN
@@ -97524,7 +97540,7 @@ aIp
 aIp
 bdB
 bdQ
-iNw
+jqo
 aJE
 aJE
 aJE
@@ -98553,7 +98569,7 @@ crf
 cpq
 aaa
 daM
-daZ
+weC
 daZ
 daM
 daM
@@ -98737,7 +98753,7 @@ aIp
 aIp
 aIp
 aIp
-igq
+jfN
 aIp
 aIp
 aIp
@@ -99772,7 +99788,7 @@ dbi
 dbi
 dbi
 dbi
-mje
+itq
 cwC
 dTz
 cwf
@@ -101445,7 +101461,7 @@ aIC
 bbs
 aIp
 aIp
-knb
+gwj
 aIp
 aIp
 aIp
@@ -101753,7 +101769,7 @@ aIp
 aIp
 aIp
 aIp
-hNF
+vdi
 aIp
 aIC
 aIC
@@ -102651,7 +102667,7 @@ aNq
 aPE
 aIC
 aIp
-igq
+jfN
 aIC
 aIC
 aIC
@@ -103095,7 +103111,7 @@ ddA
 dfj
 dur
 cwC
-dSM
+tsv
 dSR
 cwC
 dSx
@@ -103276,7 +103292,7 @@ aIp
 aIp
 aIC
 aJi
-fCK
+hgF
 aIp
 bgr
 bgr
@@ -104171,12 +104187,12 @@ aIp
 aIp
 aIp
 aIC
-igq
+jfN
 aIp
 aYu
 bwn
 aIp
-gzR
+qBW
 aIp
 aIp
 aIp
@@ -105683,7 +105699,7 @@ bwk
 aIC
 aIp
 aIC
-igq
+jfN
 aIp
 aIC
 aIC
@@ -110493,8 +110509,8 @@ aIr
 aIr
 aIr
 rtc
-aUv
-aUv
+uUy
+uUy
 rtc
 aIr
 aIr
@@ -121485,14 +121501,14 @@ aDY
 aDY
 afW
 afW
-bSt
+lYA
 afW
 afW
 afW
 afW
 afW
 afW
-bSt
+lYA
 afW
 afW
 wMp
@@ -123502,7 +123518,7 @@ aIG
 aIG
 rIS
 aIG
-uVZ
+uwp
 aIG
 aIr
 aIG
@@ -125000,7 +125016,7 @@ bah
 aIr
 aIG
 aIG
-uVZ
+uwp
 bcM
 aIr
 aIG
@@ -125307,7 +125323,7 @@ bcN
 aIr
 aIG
 aIr
-uVZ
+uwp
 aIr
 aIr
 aIr
@@ -150965,7 +150981,7 @@ poK
 wel
 dEo
 dEx
-lfD
+lXE
 wel
 gtU
 eiT
@@ -153050,7 +153066,7 @@ ruY
 aES
 wel
 tfB
-eip
+eFU
 fBu
 tij
 vBO

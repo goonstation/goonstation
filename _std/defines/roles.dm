@@ -24,6 +24,7 @@
 #define ROLE_WRESTLER "wrestler"
 #define ROLE_EMAGGED_ROBOT "emagged robot"
 #define ROLE_SYNDICATE_ROBOT "syndicate robot"
+#define ROLE_CHANGELING_HIVEMIND_MEMBER "changeling_hivemind_member"
 #define ROLE_HANDSPIDER "handspider"
 #define ROLE_EYESPIDER "eyespider"
 #define ROLE_LEGWORM "legworm"
