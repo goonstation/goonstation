@@ -30,7 +30,6 @@
 	name = "skeleton"
 	real_name = "skeleton"
 	desc = "Clak clak, motherfucker."
-	death_text = "%src% explodes into bones!"
 	icon_state = "skeleton"
 	icon_state_dead = "skeleton"
 	custom_gib_handler = /proc/bonegibs
@@ -41,9 +40,9 @@
 	blood_id = "calcium"
 	burning_suffix = "humanoid"
 	metabolizes = FALSE
-	health_brute = 50
+	health_brute = 20
 	health_brute_vuln = 1
-	health_burn = 50
+	health_burn = 20
 	health_burn_vuln = 0.7
 	mob_flags = IS_BONEY
 	is_npc = TRUE
@@ -53,6 +52,7 @@
 	ai_type = /datum/aiHolder/sawfly
 	skinresult = /obj/item/material_piece/bone
 	max_skins = 3
+	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
@@ -113,8 +113,8 @@
 		for (var/mob/living/C in hearers(range, src))
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/skeleton)) continue //don't kill other brullbars
-			if (iswizard(C)) continue
+			if (istype(C, /mob/living/critter/skeleton)) continue
+			if (iswizard(C) && src.wizardSpawn) continue
 			. += C
 
 	death(var/gibbed)
@@ -136,6 +136,7 @@
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
+		src.wizardSpawn = TRUE
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
