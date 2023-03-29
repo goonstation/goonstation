@@ -5,7 +5,7 @@
 	var/filterInactive = FALSE
 	/// target key of the user, the centcom api will make it a ckey on its own
 	var/target_key
-	/// set if we need to force an update to the static date, used when we want to view a different player and recall the api
+	/// set if we need to force an update of the static data, used when we want to view a different player but have an old window still open
 	var/force_static_data_update = FALSE
 
 /datum/centcomviewer/ui_state(mob/user)
@@ -19,6 +19,7 @@
 	if (!ui)
 		ui = new(user, src, "CentComViewer")
 		ui.open()
+		force_static_data_update = FALSE
 	else if (force_static_data_update)
 		update_static_data(user, ui)
 		force_static_data_update = FALSE
