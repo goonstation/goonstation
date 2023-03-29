@@ -3,8 +3,10 @@
 /datum/centcomviewer
 	/// whether or not we are filtering inactive bans from view
 	var/filterInactive = FALSE
-	///target key of the user, the centcom api will make it a ckey on its own
+	/// target key of the user, the centcom api will make it a ckey on its own
 	var/target_key
+	/// set if we need to force an update to the static date, used when we want to view a different player and recall the api
+	var/force_static_data_update = FALSE
 
 /datum/centcomviewer/ui_state(mob/user)
 	return tgui_admin_state.can_use_topic(src, user)
@@ -17,8 +19,9 @@
 	if (!ui)
 		ui = new(user, src, "CentComViewer")
 		ui.open()
-	else
+	else if (force_static_data_update)
 		update_static_data(user, ui)
+		force_static_data_update = FALSE
 
 /datum/centcomviewer/ui_static_data(mob/user)
 	var/datum/http_request/request = new()
@@ -26,9 +29,11 @@
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
-	var/list/ban_data = list()
+	var/list/ban_data = url_decode(response.body)
 	if (rustg_json_is_valid(ban_data))
-		ban_data = json_decode(response.body)
+		ban_data = json_decode(ban_data)
+	else
+		ban_data = list()
 	. = list(
 			"banData" = ban_data,
 			"key" = target_key,

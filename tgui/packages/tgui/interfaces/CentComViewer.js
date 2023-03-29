@@ -36,64 +36,80 @@ const getBanLength = (bannedOn, expires) => {
   return 'Permanent';
 };
 
-// Define a functional component for rendering each ban object.
+// Define a functional component for rendering a single ban.
+const Ban = ({ ban }) => {
+  const { bannedOn, expires, jobs, reason, sourceName, type, unbannedBy } = ban;
+  const expired = new Date(expires) < new Date();
+
+  let currentStatus = '';
+  if (ban.active && !expired) {
+    currentStatus = "Banned";
+  } else if (!unbannedBy && expired) {
+    currentStatus = "Expired";
+  } else if (unbannedBy) {
+    currentStatus = "Unbanned";
+  }
+
+  return (
+    <Section title={`${type} Ban | ${sourceName}`}>
+      <LabeledList>
+        <LabeledList.Item label="Banned">
+          {new Date(bannedOn).toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          })}
+        </LabeledList.Item>
+        <LabeledList.Item label="Length">
+          {getBanLength(bannedOn, expires)}
+        </LabeledList.Item>
+        <LabeledList.Item label="Reason">
+          {reason}
+        </LabeledList.Item>
+        {jobs && (
+          <LabeledList.Item label="Jobs">
+            {jobs.join(", ")}
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item
+          label="Status"
+          color={currentStatus === "Banned" ? "bad" : currentStatus === "Expired" ? "average" : "good"}
+        >
+          {currentStatus}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+// Define a functional component for rendering the list of bans.
+const BanList = ({ banData, filterInactive }) => {
+  const filteredBans = filterInactive
+    ? banData.filter((ban) => ban.active)
+    : banData;
+
+  return (
+    <Stack fill vertical>
+      {filteredBans.map((ban, index) => (
+        <Stack.Item key={index}>
+          <Ban ban={ban} />
+        </Stack.Item>
+      ))}
+    </Stack>
+  );
+};
+
+// Define the main RenderBans component.
 const RenderBans = (props, context) => {
   const { data } = useBackend(context);
   const { banData, filterInactive } = data;
-  return banData?.map((ban, index) => {
-    // Destructure the properties of the ban object.
-    const { active, bannedOn, expires, jobs, reason, sourceName, type, unbannedBy } = ban;
-    const expired = new Date(expires) < new Date();
 
-    let currentStatus = '';
-    if (active && !expired) {
-      currentStatus = "Banned";
-    } else if (!unbannedBy && expired) {
-      currentStatus = "Expired";
-    } else if (unbannedBy) {
-      currentStatus = "Unbanned";
-    }
-
-    return (
-      (!filterInactive || active) && (
-        <Stack.Item key={index}>
-          <Section title={`${type} Ban | ${sourceName}`}>
-            <LabeledList>
-              <LabeledList.Item label="Banned">
-                {new Date(bannedOn).toLocaleString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                })}
-              </LabeledList.Item>
-              <LabeledList.Item
-                label="Length">
-                {getBanLength(bannedOn, expires)}
-              </LabeledList.Item>
-              <LabeledList.Item
-                label="Reason">
-                {reason}
-              </LabeledList.Item>
-              {jobs && (
-                <LabeledList.Item label="Jobs">
-                  {jobs.join(", ")}
-                </LabeledList.Item>
-              )}
-              <LabeledList.Item
-                label="Status"
-                color={currentStatus === "Banned" ? "bad" : currentStatus === "Expired" ? "average" : "good"} >
-                {currentStatus}
-              </LabeledList.Item>
-            </LabeledList>
-          </Section>
-        </Stack.Item>
-      )
-    );
-  });
+  return <BanList banData={banData} filterInactive={filterInactive} />;
 };
+
 
 export const CentComViewer = (props, context) => {
   const { act, data } = useBackend(context);
