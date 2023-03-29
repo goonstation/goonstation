@@ -450,6 +450,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
 
+/datum/supply_packs/fishing
+	name = "Angling Starter Kit"
+	desc = "A full complement of fishing tools for the amateur angler."
+	category = "Civilian Department"
+	contains = list(/obj/item/fishing_rod,
+					/obj/submachine/fishing_upload_terminal/portable,
+					/obj/submachine/weapon_vendor/fishing/portable,
+					/obj/fishing_pool)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Angling Starter Kit"
+
 /datum/supply_packs/chemical
 	name = "Chemistry Resupply Crate"
 	desc = "x6 Reagent Bottles, x1 Beaker Box, x1 Mechanical Dropper, x1 Spectroscopic Goggles, x1 Reagent Scanner"

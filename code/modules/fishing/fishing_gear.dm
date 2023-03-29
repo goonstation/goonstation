@@ -211,6 +211,9 @@ TYPEINFO(/obj/item/fish_portal)
 		W.dropped(user)
 		return
 
+/obj/submachine/fishing_upload_terminal/portable
+	anchored = 0
+
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."

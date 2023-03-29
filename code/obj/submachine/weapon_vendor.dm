@@ -266,6 +266,9 @@
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
 		..()
 
+/obj/submachine/weapon_vendor/fishing/portable
+	anchored = 0
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
