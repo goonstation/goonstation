@@ -1839,6 +1839,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
+/datum/mutantrace/cat/bingus // our beloved
+	name = "bingus"
+	icon = 'icons/mob/bingus.dmi'
+	mutant_folder = 'icons/mob/bingus.dmi'
+
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
