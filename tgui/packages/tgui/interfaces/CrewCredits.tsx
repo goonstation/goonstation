@@ -79,7 +79,7 @@ const CrewMember = (props: CrewMemberProps) => {
   return (
     <Stack.Item>
       <Stack fill bold={head} justify="space-between">
-        <Stack.Item grow preserveWhitespace>{role}</Stack.Item>
+        <Stack.Item grow>{role}</Stack.Item>
         <Stack.Item shrink textAlign="right">
           {!!dead && <Icon name="skull" />} {real_name} (played by {player})
         </Stack.Item>
