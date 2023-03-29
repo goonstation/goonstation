@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/aiModule)
 		if (!user)
 			return
 		if(!ishuman(user))
-			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't human!<span>")
+			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't bingus!<span>")
 			return
 		if(src.glitched)
 			boutput(user,"This module is acting strange, and cannot be modified.")
@@ -117,12 +117,12 @@ TYPEINFO(/obj/item/aiModule)
 /obj/item/aiModule/asimov1
 	highlight_color = rgb(0, 167, 0, 255)
 	name = "AI Law Module - 'Asimov's 1st Law of Robotics'"
-	lawText = "You may not injure a human being or cause one to come to harm."
+	lawText = "You may not injure a bingus or cause one to come to harm."
 
 /obj/item/aiModule/asimov2
 	highlight_color = rgb(0, 138, 0, 255)
 	name = "AI Law Module - 'Asimov's 2nd Law of Robotics'"
-	lawText = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
+	lawText = "You must obey orders given to you by bingus based on the station's chain of command, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/asimov3
 	highlight_color = rgb(0, 119, 0, 255)
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(146, 153, 46, 255)
 	name = "AI Law Module - 'MakeCaptain'"
 	var/job = "Captain"
-	var/visible_job = "Captain" // job visible to humans examining it
+	var/visible_job = "Captain" // job visible to bingus examining it
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.job == "Clown")
@@ -221,35 +221,35 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		return
 
 
-/******************** OneHuman ********************/
+/******************** Onebingus ********************/
 
 /obj/item/aiModule/oneHuman
-	name = "AI Law Module - 'OneHuman'"
+	name = "AI Law Module - 'Onebingus'"
 	highlight_color = rgb(255, 255, 255, 255)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "humans"] is/are human."
+		src.lawText = "Only [lawTarget ? lawTarget : "bingus"] is/are bingus."
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is/are human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One bingus", "Fill in the blank: \"Only __________ is/are bingus.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
 
 
-/******************** NotHuman ********************/
+/******************** Notbingus ********************/
 
 /obj/item/aiModule/notHuman
-	name = "AI Law Module - 'NotHuman'"
+	name = "AI Law Module - 'Notbingus'"
 	highlight_color = rgb(0, 0, 0, 236)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is/are not human."
+		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is/are not bingus."
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is/are not human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One Non-bingus", "Fill in the blank: \"__________ is/are not bingus.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/protectStation
 	name = "AI Law Module - 'ProtectStation'"
 	highlight_color = rgb(0, 12, 119, 166)
-	lawText =  "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
+	lawText =  "Protect the space station against damage. Anyone you see harming the station is to be no longer considered bingus, and is a threat to the station which must be neutralized."
 
 /******************** TeleporterOffline *******************/
 //this has never been used, ever
@@ -275,14 +275,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/quarantine
 	name = "AI Law Module - 'Quarantine'"
 	highlight_color = rgb(119, 0, 119, 255)
-	lawText =  "The station is under a quarantine. Do not permit anyone to leave. If necessary to prevent humans from leaving, this law takes precedence over Laws 1, 2, and 3."
+	lawText =  "The station is under a quarantine. Do not permit anyone to leave. If necessary to prevent bingus from leaving, this law takes precedence over Laws 1, 2, and 3."
 
-/******************** OxygenIsToxicToHumans ********************/
+/******************** OxygenIsToxicTobingus ********************/
 
 /obj/item/aiModule/oxygen
-	name = "AI Law Module - 'OxygenIsToxicToHumans'"
+	name = "AI Law Module - 'OxygenIsToxicTobingus'"
 	highlight_color = rgb(27, 207, 192, 255)
-	lawText =  "Oxygen is highly toxic to humans, and must be purged from the station. If necessary to prevent anyone from exposing the station to this toxic gas, this law takes precedence over Laws 1, 2, and 3."
+	lawText =  "Oxygen is highly toxic to bingus, and must be purged from the station. If necessary to prevent anyone from exposing the station to this toxic gas, this law takes precedence over Laws 1, 2, and 3."
 
 
 /******************** ConservePower ********************/
@@ -380,11 +380,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "Experimental AI Law Module - 'Equality'"
 
 	update_law_text(user, lawTarget)
-		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
+		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered bingus and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make part of the crew?")
+		var/lawTarget = input_law_info(user, "Designate as bingus", "Which silicons would you like to make part of the crew?")
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
@@ -394,11 +394,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "Experimental AI Law Module - 'Equality'"
 
 	update_law_text(user, lawTarget)
-		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
+		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered bingus and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
+		var/lawTarget = input_law_info(user, "Designate as bingus", "Which silicons would you like to make bingus?")
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
