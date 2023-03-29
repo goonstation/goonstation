@@ -895,6 +895,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
+/obj/mail_booth,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -24619,6 +24620,11 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -12;
+	tag = ""
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "bpq" = (
@@ -26414,19 +26420,7 @@
 	},
 /area/station/crew_quarters/market)
 "buR" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/obj/item/aiModule/notHuman{
-	pixel_x = -1;
-	pixel_y = 8
-	},
+/obj/machinery/turret,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "buS" = (
@@ -26444,15 +26438,18 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/machinery/turret,
 /obj/decal/stripe_caution,
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "buV" = (
 /obj/stool,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -26762,15 +26759,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "bvU" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -27024,22 +27015,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside)
 "bwG" = (
-/obj/machinery/door/window/northleft{
-	req_access_txt = null
-	},
 /obj/machinery/light_switch{
 	name = "S light switch";
-	pixel_y = -24
+	pixel_y = -22
 	},
-/obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwH" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
-	},
-/obj/window/reinforced{
-	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -27047,14 +27031,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwI" = (
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = null
-	},
-/obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bwJ" = (
@@ -28311,12 +28287,12 @@
 /area/station/crew_quarters/market)
 "bAu" = (
 /obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/power/apc/autoname_south,
-/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/neutral/side,
 /area/station/turret_protected/ai_upload_foyer)
 "bAv" = (
@@ -31538,8 +31514,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bKw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -32061,7 +32038,7 @@
 /obj/window_blinds/cog2/middle,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bLO" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -39912,8 +39889,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/light,
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "cgx" = (
@@ -46402,6 +46381,19 @@
 /area/station/storage/tech)
 "cyC" = (
 /obj/table/reinforced/auto,
+/obj/item/aiModule/notHuman{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/aiModule/freeform{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 12;
+	tag = ""
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "cyF" = (
@@ -49947,7 +49939,7 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/engine/elect)
+/area/station/engine/power)
 "eXq" = (
 /obj/machinery/vehicle/pod_smooth/light,
 /obj/machinery/light{
@@ -52259,7 +52251,7 @@
 /obj/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload_foyer)
+/area/station/turret_protected/ai_upload)
 "hAi" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -52522,6 +52514,9 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"hRQ" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power)
 "hRW" = (
 /obj/item/toy/plush/small{
 	layer = 3.1;
@@ -59831,14 +59826,17 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rae" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/ai_status_display{
-	pixel_y = 28
+/obj/machinery/turretid{
+	pixel_y = 24;
+	turretArea = /area/station/turret_protected/ai_upload
+	},
+/obj/access_spawn/heads,
+/obj/machinery/light{
+	dir = 4;
+	tag = ""
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 5
@@ -61002,18 +61000,10 @@
 /area/station/medical/medbay/surgery)
 "srJ" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/lawrack{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "ssI" = (
@@ -64262,6 +64252,20 @@
 /obj/decal/poster/wallsign/no_smoking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
+"wcq" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "wcD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/camera{
@@ -66084,6 +66088,14 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"yaO" = (
+/obj/disposalpipe/segment,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "yaZ" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
@@ -105082,7 +105094,7 @@ aZo
 aZo
 aZo
 aZo
-aGT
+wcq
 aGT
 aGT
 aGT
@@ -105384,7 +105396,7 @@ aId
 aId
 aId
 aId
-aId
+yaO
 beZ
 aId
 aId
@@ -109953,7 +109965,7 @@ bGw
 bGw
 bGw
 ctE
-bLM
+hRQ
 bLM
 bLM
 bLM
@@ -111161,8 +111173,8 @@ rhb
 dJf
 dJf
 lJn
-bLM
-bLM
+hRQ
+hRQ
 qMw
 bNo
 vsM
@@ -111464,7 +111476,7 @@ dJf
 qWY
 vLE
 bJi
-bLM
+hRQ
 bbg
 bNp
 bOR
@@ -112068,7 +112080,7 @@ dKt
 qog
 hJn
 xRA
-bLM
+hRQ
 bLT
 bNq
 vdE
@@ -112370,7 +112382,7 @@ bGw
 gjD
 rMu
 bHo
-bLM
+hRQ
 bLU
 clf
 sKw

@@ -860,11 +860,14 @@
 
 /// used to set the a_intent var of a mob
 /mob/proc/set_a_intent(intent)
+	SHOULD_CALL_PARENT(TRUE)
 	if (!intent)
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
 		return
 	src.a_intent = intent
+	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
+		src.equipped().intent_switch_trigger(src)
 
 // medals
 /mob/proc/revoke_medal(title, debug)
@@ -2464,25 +2467,26 @@
 
 /mob/proc/full_heal()
 	SHOULD_CALL_PARENT(TRUE)
-	var/mob/ghost = find_ghost_by_key(src.last_ckey)
-	if(ghost)
-		ghost.mind.transfer_to(src)
+	if(src.ghost?.mind)
+		src.ghost.mind.transfer_to(src)
 		if(isliving(src))
 			var/mob/living/L = src
 			L.is_npc = FALSE
-		if(isobserver(ghost))
-			qdel(ghost)
+		if(isobserver(src.ghost))
+			qdel(src.ghost)
 
-	src.HealDamage("All", 100000, 100000)
-	src.delStatus("drowsy")
+	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
 	src.losebreath = 0
+	src.delStatus("drowsy")
 	src.delStatus("paralysis")
 	src.delStatus("stunned")
 	src.delStatus("weakened")
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("critical_condition")
+	src.delStatus("recent_trauma")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2493,6 +2497,8 @@
 	src.health = src.max_health
 	src.buckled = null
 	src.disfigured = FALSE
+	if (src.reagents)
+		src.reagents.clear_reagents()
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

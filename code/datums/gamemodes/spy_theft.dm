@@ -467,7 +467,6 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/lawrack] = 3
 	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1

@@ -5,7 +5,7 @@
 	icon_state = "snake"
 	density = FALSE
 	custom_gib_handler = /proc/gibs
-	hand_count = 0
+	hand_count = 1
 	can_help = TRUE
 	can_throw = FALSE
 	can_grab = TRUE
@@ -35,10 +35,15 @@
 	//note: this is not the best way to do this, but I'm showing it here as an example. It is better to create a peaceful AI holder with no attack tasks and use that.
 	var/aggressive = TRUE
 
-	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+5))
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth	// if not null, the special limb to use when attack_handing
+		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon_state = "mouth"					// the icon state of the hand UI background
+		HH.name = "mouth"						// designation of the hand - purely for show
+		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.can_hold_items = 0
 
 	seek_target(var/range)
 		. = list()

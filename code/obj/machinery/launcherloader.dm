@@ -457,8 +457,8 @@
 	attack()
 		return
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
-		if (target.plane == PLANE_HUD || isgrab(target)) //just don't stick hud stuff or grabs PLEASE
+	afterattack(atom/target, mob/user, reach, params)
+		if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) //just don't stick hud stuff or grabs PLEASE
 			return
 		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something

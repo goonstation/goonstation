@@ -264,6 +264,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (!needs_oxy)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
 			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
+			if (!src.dna_mutagen_banned)
+				AH.original_mutant_race = src
 			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 				MakeMutantDimorphic(M)
 			AppearanceSetter(M, "set")
@@ -413,6 +415,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					AH.s_tone = AH.s_tone_original
 
 				AH.mutant_race = src
+				if (!src.dna_mutagen_banned)
+					AH.original_mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
 				AH.e_icon = src.eye_icon
@@ -1119,14 +1123,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_thrall/abil = src.mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if (abil)
-			if (abil.master)
-				abil.master.remove_thrall(src.mob)
-			else
-				remove_mindhack_status(src.mob, "vthrall", "death")
-		var/datum/component/tracker_hud/vampthrall/component = src.mob.GetComponent(/datum/component/tracker_hud/vampthrall)
-		component?.RemoveComponent()
+		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 		..()
 
 /datum/mutantrace/skeleton

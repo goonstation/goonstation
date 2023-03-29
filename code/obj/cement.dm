@@ -115,7 +115,7 @@
 		..()
 
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if (istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 

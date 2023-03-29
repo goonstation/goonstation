@@ -1355,7 +1355,7 @@ var/datum/action_controller/actions
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
 	/// what the target of the action is, if any
-	var/target = null
+	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
 	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
@@ -1602,6 +1602,44 @@ var/datum/action_controller/actions
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
+
+/datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
+	duration = 60
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	id = "removearmcritter"
+	var/mob/living/critter/target
+	var/left_or_right
+
+	New(Target, LR)
+		target = Target
+		left_or_right = LR
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt()
+		..()
+		if (target?.butcherer == owner)
+			target.butcherer = null
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target.butcherer)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		target.butcherer = owner
+		target.visible_message("<span class='alert'><B>[owner] begins to cut the [left_or_right] arm off of [target]. </B></span>")
+
+	onEnd()
+		..()
+		target?.butcherer = null
+		if(owner && target)
+			target.remove_arm(left_or_right)
+			target.visible_message("<span class='alert'><B>[owner] cuts the [left_or_right] arm off of [target].</B></span>")
 
 /datum/action/bar/icon/rev_flash
 	duration = 4 SECONDS
