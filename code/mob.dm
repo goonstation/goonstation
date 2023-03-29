@@ -509,10 +509,18 @@
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
+	if (isliving(src)) // If someone logs in to this mob its not an NPC
+		var/mob/living/L = src
+		L.is_npc = FALSE
+
 /mob/Logout()
 
 	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
+
+	if (isliving(src)) // If someone logs out it should be what it was before
+		var/mob/living/L = src
+		L.is_npc = initial(L.is_npc)
 
 	tgui_process?.on_logout(src)
 
