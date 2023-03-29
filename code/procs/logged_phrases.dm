@@ -39,6 +39,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/regex/uncool_words
 	var/regex/sussy_words
 	var/regex/ic_sussy_words
+	var/regex/anti_bingus_words
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
@@ -116,6 +117,13 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\b(:?fail\s?)?rp\b"
 		)
 		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
+		var/list/anti_bingus_word_list = list(
+			@"\bbing(us|o|y|ie)\s?su(x|ck)s?\b",
+			@"\b(hate|kill|despise|detest|loathe|abhor|curse|deride|murder|destroy|burn)\s?bing(us|o|y|ie)\b",
+			@"\bbing(us|o|y|ie)\s?(is)?\s?(bald|hairless|ugly|bad|evil|terrible|wrong|rude|not\s?good)",
+			@"\bbing(us|o|y|ie)\s?has\s?no\s?hair\b"
+		)
+		anti_bingus_words = regex(jointext(anti_bingus_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -187,6 +195,11 @@ var/global/datum/phrase_log/phrase_log = new
 		if(isnull(src.ic_sussy_words))
 			return FALSE
 		return !!(findtext(phrase, src.ic_sussy_words))
+
+	proc/is_anti_bingus(phrase)
+		if(isnull(src.anti_bingus_words))
+			return FALSE
+		return !!(findtext(phrase, src.anti_bingus_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
