@@ -53,10 +53,10 @@
 	return ..()
 
 /mob/living/silicon/can_eat()
-	return 0
+	return FALSE
 
 /mob/living/silicon/can_drink()
-	return 0
+	return FALSE
 
 ///mob/living/silicon/proc/update_canmove()
 //	..()

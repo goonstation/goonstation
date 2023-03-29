@@ -3189,7 +3189,7 @@
 	return
 
 /mob/proc/can_drink(var/atom/A)
-	return 1
+	return TRUE
 
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
