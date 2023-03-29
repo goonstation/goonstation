@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types."
@@ -1531,8 +1534,8 @@
 	honey_color = "#ff0033"
 
 	do_reagentStuff(mob/M)
-		if (M.reagents.get_reagent_amount("honkfartium") < 10)
-			M.reagents.add_reagent("honkfartium", 5)
+		if (M.reagents.get_reagent_amount("honk_fart") < 10)
+			M.reagents.add_reagent("honk_fart", 5)
 		M.reagents.add_reagent("lube", 5)
 
 
@@ -1846,28 +1849,33 @@
 			sleep(0.2 SECONDS)
 			src.pixel_x--
 			sleep(1 SECOND)
+		var/crittercount = 0
+		for(var/obj/critter/C in range(1, src))
+			crittercount++
+		if(crittercount <= 25)
+			src.visible_message("[src] hatches!")
+			var/obj/critter/domestic_bee_larva/newLarva
+			if (larva_type)
+				newLarva = new larva_type(get_turf(src))
+			else
+				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
-		src.visible_message("[src] hatches!")
-		var/obj/critter/domestic_bee_larva/newLarva
-		if (larva_type)
-			newLarva = new larva_type(get_turf(src))
+			reagents.del_reagent("egg")
+			reagents.del_reagent("bee")
+			var/main_reagent = reagents.get_master_reagent()
+			if (main_reagent == "LSD")
+				newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
+			if (main_reagent == "lsd_bee")
+				newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
+
+			newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
+
+			if (bee_name)
+				newLarva.name = bee_name
+			else if (prob(50))
+				newLarva.name = pick_string("bee_names.txt", "beename")
 		else
-			newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
-
-		reagents.del_reagent("egg")
-		reagents.del_reagent("bee")
-		var/main_reagent = reagents.get_master_reagent()
-		if (main_reagent == "LSD")
-			newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
-		if (main_reagent == "lsd_bee")
-			newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
-
-		newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
-
-		if (bee_name)
-			newLarva.name = bee_name
-		else if (prob(50))
-			newLarva.name = pick_string("bee_names.txt", "beename")
+			src.visible_message("[src] cracks open, but nothing was inside! Perhaps the larva was too shy to exist in such cramped conditions.")
 
 		qdel(src)
 
@@ -1879,18 +1887,22 @@
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		var/obj/critter/domestic_bee_larva/newLarva
-		if (larva_type)
-			newLarva = new larva_type(get_turf(src))
-		else
-			newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
+		var/crittercount = 0
+		for(var/obj/critter/C in range(1, src))
+			crittercount++
+		if(crittercount <= 25)
+			var/obj/critter/domestic_bee_larva/newLarva
+			if (larva_type)
+				newLarva = new larva_type(get_turf(src))
+			else
+				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
-		if (bee_name)
-			newLarva.name = bee_name
-		else if (prob(50))
-			newLarva.name = pick_string("bee_names.txt", "beename")
+			if (bee_name)
+				newLarva.name = bee_name
+			else if (prob(50))
+				newLarva.name = pick_string("bee_names.txt", "beename")
 
-		newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 		qdel (src)
 
 	buddy

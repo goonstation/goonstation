@@ -1,3 +1,45 @@
+(t)fri mar 24 23
+(u)LeahTheTech
+(+)New admin spawnable job: Nanotrasen Emergency Response Technician, basically a tooled up centcom repair tech.
+(t)sun mar 23 23
+(u)Zamujasa
+(*)Changing the current round's game mode will now ask you if you want to do it for that round only.
+(*)No more "HOW long has it been stuck on nuclear?!"!
+(t)sun mar 19 23
+(u)LeahTheTech
+(*)New verb Set-Conspiracy-Objective, allows you to set a custom objective for all conspirators. Best used before any conspirators have spawned (ie lobby).
+(u)Flappybat
+(*)Change Outfit has been added to the Player Options panel under Transformation, letting you dress someone quickly in a job's outfit. This attempts to keep their current ID card where possible.
+(t)fri mar 17 23
+(u)Zamujasa
+(*)Admin-healing should now be more consistent, and work on most mob critters.
+(t)mon feb 27 23
+(u)Zamujasa
+(*)Toggle-Power-Debug, will show maptext over (most) things that draw power.
+(t)sun feb 26 23
+(u)LeahTheTech
+(*)New verb "Custom Ghost Spawn", which allows you to set up a custom spawn event to respawn ghost players as a particular type of mob, job or spawn them directly into an existing mob. Has a bunch of other configurable settings such as antag role, spawn location and custom objective text.
+(t)thu feb 23 23
+(u)Zamujasa
+(*)New proc, /mob/proc/badminize. Gives you a bunch of really dumb and extremely OP genes and abilities.
+(*)Slightly rearranged an admin area for more Crime Potential.
+(t)mon feb 17 23
+(u)Sovexe
+(*)You can now view ban data from other servers ingame. There is a new "CentCom" link in the player options panel. Clicking it will launch the CentCom Viewer panel that lists out all known server and job bans associated with the target player.
+(t)mon feb 13 23
+(u)pali
+(*)New experimental ghost interaction mode. Use the toggle-ghost-interaction verb to toggle it on or off.<br>When it's toggled on you can interact with most machines and objects as a ghost by clicking on them.<br>You can also clickdrag things to move them around. When you clickdrag an unanchored thing onto its own tile you change its pixel position, if it's a neighbouring tile you move it there (even if it is a wall etc.), if it is a tile further away you throw the thing.<br>If you clickdrag an item onto some other object it'll act more or less as if you clicked on it with the item in hand.
+(u)Zamujasa
+(*)People who are not dead but can still hear deadchat (ghost VR, afterlife, wraith, etc) can now hear admin dsay as well.
+(t)sun feb 5 23
+(u)ZeWaka
+(*)When you edit <code>color</code> in View Variables, there is a new 'Color Matrix Editor' option to preview color matrix changes on your selection before applying.
+(t)sat feb 4 23
+(u)LeahTheTech
+(+)The player options panel now shows if someone is mentor or HoS whitelisted at the top.
+(t)tue jan 31 23
+(u)LeahTheTech and pali
+(*)Admin interact now has the ability to call certain procs on objects. These options are marked with a * and can be easily added to types using the ADMIN_INTERACT_PROCS macro. Examples include open and close procs on doors, toggle proc on airbridges, and arm proc on nuclear bombs.
 (t)sat jan 21 23
 (u)Zamujasa
 (*)Player Notes looks a little different. Feel free to tweak/adjust. (Dimmed entries are automatic notes, red ones are bans. Mostly. I tried.)

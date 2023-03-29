@@ -688,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -1366,13 +1366,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			for(var/datum/mind/M in someEnemies)
 				if (M.current)
 					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-					for(var/datum/mind/G in M.gang.members) //This may be fucked. Dunno how these are stored.
-						enemies += G
 
 		//Lists we grab regardless of game type
 		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
@@ -1850,8 +1843,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
-			sleep(30 SECONDS)
+		sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -1861,6 +1853,7 @@ proc/countJob(rank)
 					continue
 
 			if (candidates.len)
+				candidates = prioritize_dead_players(candidates)
 				if (return_minds == 1)
 					return candidates
 				else
@@ -1883,17 +1876,39 @@ proc/countJob(rank)
 		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
 			continue
 		if (!(O in candidates))
-			candidates.Add(O)
-
+			candidates.Add(O.mind)
+	candidates = prioritize_dead_players(candidates)
 	if (return_minds == 1)
-		var/list/datum/mind/minds = list()
-		for (var/mob/M2 in candidates)
-			if (M2.mind && !(M2.mind in minds))
-				minds.Add(M2.mind)
+		return candidates
+	else
+		var/list/mob/mobs = list()
+		for (var/datum/mind/M3 in candidates)
+			if (M3.current && ismob(M3.current))
+				if (!(M3.current in mobs))
+					mobs.Add(M3.current)
+		return mobs
 
-		return minds
+///Returns a randomized list of minds with players who joined as observer at the back
+/proc/prioritize_dead_players(list/datum/mind/minds)
+	var/list/observers = list()
+	for (var/datum/mind/mind in minds)
+		if (istype(mind.current, /mob/dead/observer))
+			var/mob/dead/observer/ghost = mind.current
+			if (ghost.observe_round)
+				minds -= mind
+				observers += mind
+	shuffle_list(minds)
+	shuffle_list(observers)
+	return minds + observers
 
-	return candidates
+///Logs a player respawning as something from a respawn event, noting if they joined the round as an observer or not
+///Note: should be called BEFORE they are transferred to the new body
+/proc/log_respawn_event(datum/mind/mind, respawning_as, source)
+	var/is_round_observer = FALSE
+	if (istype(mind.current, /mob/dead/observer))
+		var/mob/dead/observer/ghost = mind.current
+		is_round_observer = ghost.observe_round
+	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
@@ -1925,7 +1940,7 @@ proc/countJob(rank)
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
 	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
@@ -2126,12 +2141,12 @@ proc/countJob(rank)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
-var/global/nextDectalkDelay = 5 //seconds
+var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg || !config.spacebee_api_key) return 0
-	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = world.timeofday
+	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub
@@ -2598,7 +2613,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat))
+		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()

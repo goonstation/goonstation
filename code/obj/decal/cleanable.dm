@@ -1722,11 +1722,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		src.layer = 4
 
 	disposing(var/uncapture = 1)
-		var/area/tagarea = get_area(src)
-		if(tagarea.gang_owners == src.owners && uncapture)
-			tagarea.gang_owners = null
-			var/turf/T = get_turf(src)
-			T.tagged = 0
+		if (istype(owners))
+			src.owners.tags -= src
+			var/area/tagarea = get_area(src)
+			if(tagarea.gang_owners == src.owners && uncapture)
+				tagarea.gang_owners = null
+				var/turf/T = get_turf(src)
+				T.tagged = 0
 		..()
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.

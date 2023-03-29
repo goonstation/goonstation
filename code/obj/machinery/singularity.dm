@@ -319,11 +319,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			qdel(A)
 		else
 			var/obj/O = A
+			gain = 2
+			gain += length(O.contents) * 2
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)
 				qdel(O)
-			gain = 2
 
 	else if (isturf(A))
 		var/turf/T = A
@@ -548,8 +549,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
-/obj/machinery/field_generator/process()
-
+/obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
 			src.set_active(1)
@@ -570,7 +570,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.set_active(2)
 	src.power = clamp(src.power, 0, src.max_power)
 	if(src.active >= 1)
-		src.power -= 1
+		src.power -= 1 * mult
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
@@ -1073,6 +1073,7 @@ TYPEINFO(/obj/machinery/emitter)
 			src.dir &= 12 // Cardinalize
 		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
+		use_power(current_projectile.power)
 
 		if(prob(35))
 			elecflash(src)
@@ -1391,6 +1392,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/New()
 	..()
 	START_TRACKING
+	AddComponent(/datum/component/mechanics_holder)
 	SPAWN(1 SECOND)
 		updatecons()
 
@@ -1514,6 +1516,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[power_a]&powerfmt=[engineering_notation(power_a)]W")
 			..()
 	else
 		var/power_a = 0
@@ -1733,7 +1736,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 
 /obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
-	if(src.state != 3)
+	if(src.state != WELDED)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")
 		return
 	if (user.stat || user.restrained() || user.lying)

@@ -20,7 +20,14 @@ TYPEINFO(/obj/item/storage/wall)
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user)
+		if (istype(user, /mob/living/critter/small_animal))
+			return
 		return mouse_drop(user)
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(usr, /mob/living/critter/small_animal))
+			return
+		..()
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"

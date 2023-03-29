@@ -17,6 +17,8 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Are we the memory of a dead flockmind?
+	var/dead = FALSE
 	/// number of zero compute flocktraces the flock has
 	var/free_traces = 0
 	var/queued_trace_deaths = 0
@@ -49,10 +51,25 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
+	var/center_x = 0
+	var/center_y = 0
+
+	var/obj/dummy/center_marker = null
+
 	var/datum/flockstats/stats
 
 /datum/flock/New()
 	..()
+	src.center_marker = new(locate(0,0,1))
+	src.center_marker.anchored = TRUE
+	src.center_marker.mouse_opacity = 0
+	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
+	src.center_marker.icon_state = "structure-relay"
+	src.center_marker.color = COLOR_MATRIX_FLOCKMIND
+	src.center_marker.alpha = 0
+	src.center_marker.pixel_x = -64
+	src.center_marker.pixel_y = -64
+
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	src.stats = new(src)
@@ -95,11 +112,10 @@ var/flock_signal_unleashed = FALSE
 				F.release_control()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
-				var/turf/T = get_turf(origin)
-				if(T.z != Z_LEVEL_STATION)
+				if(!src.z_level_check(origin))
 					boutput(user, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
 				else
-					user.set_loc(T)
+					user.set_loc(get_turf(origin))
 		if("rally")
 			var/mob/living/critter/flock/C = locate(params["origin"])
 			if(C?.flock == src) // not sure when it'd apply but in case
@@ -637,16 +653,19 @@ var/flock_signal_unleashed = FALSE
 	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
+	for (var/turf/simulated/floor/feather/feathertile in src.all_owned_tiles)
+		feathertile.flock = null
+	all_owned_tiles = list()
 	if (!real)
 		src.load_structures()
 		return
+	src.dead = TRUE
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))
 	annotations = null
-	all_owned_tiles = null
 	busy_tiles = null
 	priority_tiles = null
 	units = null
@@ -674,8 +693,15 @@ var/flock_signal_unleashed = FALSE
 	if (!T)
 		return
 	src.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
+
+	if (!src.relay_in_progress && !src.relay_finished && ((abs(T.x - src.center_x) + abs(T.y - src.center_y))/2 < 50)) //ignore extreme outliers
+		var/length = length(src.all_owned_tiles)
+		src.center_x += (T.x - src.center_x)/(length + 1)
+		src.center_y += (T.y - src.center_y)/(length + 1)
+		src.center_marker.set_loc(locate(src.center_x, src.center_y, 1))
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+
 	if (isfeathertile(T))
 		src.stats.tiles_converted++
 	if (istype(T, /turf/simulated/floor/feather))
@@ -721,6 +747,27 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
+	if (src.total_compute() > 300)
+		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				continue
+			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
+	if (!src.relay_in_progress && !src.relay_finished)
+		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
+			src.relay_in_progress = TRUE
+			src.center_marker.alpha = 0
+			for (var/turf/T in range(3, src.center_marker))
+				for (var/atom/A in T)
+					if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
+						var/mob/M = A
+						M.gib()
+					else if (A.density)
+						qdel(A)
+				T.ReplaceWith(/turf/simulated/floor/feather)
+			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
+		else
+			src.center_marker.alpha = max(0, src.total_compute() - 300)
+
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
 
@@ -745,7 +792,8 @@ var/flock_signal_unleashed = FALSE
 // Z LEVEL CHECK
 
 /datum/flock/proc/z_level_check(var/atom/A)
-	if (src.flockmind.tutorial || A.z == Z_LEVEL_STATION)
+	var/turf/T = get_turf(A)
+	if (src.dead || src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 

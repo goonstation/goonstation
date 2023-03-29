@@ -12,16 +12,26 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
 	var/success_medal = null
+	/// If TRUE, the antag status will be removed when the person dies (changeling critters etc.)
+	var/remove_on_death = FALSE
+	/// If TRUE, the antag status will be removed when the person is cloned (zombies etc.)
+	var/remove_on_clone = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Whether the addition or removal of this antagonist role is announced to the player.
+	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
 	var/pseudo = FALSE
+	/// VR antagonists, similar to pseudo antagonists, are not real antagonists. They lack some exploitative abilities, are not relocated, and are removed on death.
+	var/vr = FALSE
+	/// The objectives assigned to the player by this specific antagonist role.
+	var/list/datum/objective/objectives = list()
 
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -32,13 +42,26 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return FALSE
 		src.owner = new_owner
 		src.pseudo = do_pseudo
-		if (!do_pseudo) // there is a special place in code hell for mind.special_role
+		src.vr = do_vr
+		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
 			else
 				ticker.mode.traitors |= new_owner // same with this variable in particular, but it's necessary for antag HUDs
+		if (do_vr)
+			src.pseudo = TRUE
+			src.remove_on_death = TRUE
+			src.remove_on_clone = TRUE
+			do_equip = TRUE
+			do_objectives = FALSE
+			do_relocate = FALSE
+			silent = TRUE
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
+
+		if (QDELETED(src))
+			return FALSE
+		src.owner.antagonists.Add(src)
 
 	Del()
 		if (owner && !src.pseudo)
@@ -51,12 +74,15 @@ ABSTRACT_TYPE(/datum/antagonist)
 		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear = TRUE, silent)
+	proc/remove_self(take_gear = TRUE)
 		if (take_gear)
 			src.remove_equipment()
 
-		if (!silent)
+		src.remove_objectives()
+
+		if (!src.silent && !src.pseudo)
 			src.announce_removal()
+			src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
@@ -68,6 +94,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		SHOULD_NOT_OVERRIDE(TRUE)
 
 		src.assigned_by = source
+		src.silent = silent
 
 		// Late setup has special logic, and is used for jobs like latejoining traitors that lack uplinks if given their equipment before their job.
 		// It will pause the setup proc for up to 60 seconds by sleeping every second, then checking if the owner's assigned role exists.
@@ -91,13 +118,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
-		if (!silent)
+		if (!src.silent)
 			src.announce()
 			src.do_popup()
 
 		if (do_objectives)
 			src.assign_objectives()
-			if (!silent)
+			if (!src.silent)
 				src.announce_objectives()
 
 		if (do_relocate)
@@ -123,12 +150,17 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
+	/// Remove objectives from the antagonist and the mind.
+	proc/remove_objectives()
+		for (var/datum/objective/objective in src.objectives)
+			src.owner.objectives.Remove(objective)
+			src.objectives.Remove(objective)
+			qdel(objective)
+
 	// Show the player what objectives they have in their mind.
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/objective in owner.objectives)
-			if (istype(objective, /datum/objective/crew))
-				continue
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [objective.explanation_text]")
 			obj_count++
 
@@ -185,7 +217,20 @@ ABSTRACT_TYPE(/datum/antagonist)
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (!isnull(success_medal) && log_data)
-				owner.current.unlock_medal(success_medal, TRUE)
+			if (log_data)
+				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
+				if (!isnull(success_medal))
+					owner.current.unlock_medal(success_medal, TRUE)
 		else
 			. += "<span class='alert'><b>\The [src.display_name] has failed!</b></span>"
+
+	proc/on_death()
+		if (src.remove_on_death)
+			src.owner.remove_antagonist(src.id)
+
+//this is stupid, but it's more reliable than trying to keep signals attached to mobs
+/mob/death()
+	if (src.mind)
+		for (var/datum/antagonist/antag in src.mind.antagonists)
+			antag.on_death()
+	..()

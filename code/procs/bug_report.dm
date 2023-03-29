@@ -9,6 +9,11 @@
 	var/labels = list()
 	for (var/label in form.data["tags"])
 		labels += "\[[label]\]"
+	var/testmerges = list()
+#ifdef TESTMERGE_PRS
+	for (var/testmerge in TESTMERGE_PRS)
+		testmerges += "#[testmerge]" // so they're clickable on GH
+#endif
 	var/desc = {"
 ### Labels
 
@@ -32,6 +37,7 @@
 
 Reported by: [user_client.key]
 On server: [global.config.server_name]
+Active test merges: [english_list(testmerges)]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 Map: [global.map_setting]

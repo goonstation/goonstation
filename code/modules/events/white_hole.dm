@@ -1,5 +1,6 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
-	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", "medbay", "security", "cargo", "nuclear")
+	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
+	"medbay", "security", "cargo", "nuclear", "janitorial")
 
 /datum/random_event/major/white_hole
 	name = "White Hole"
@@ -377,7 +378,7 @@
 			/obj/stool/chair/office/syndie = 1,
 			/obj/item/paper/book/from_file/syndies_guide = 0.5,
 			/obj/item/beartrap/armed = 1,
-			/datum/reagent/harmful/sarin = 0.1,
+			/datum/reagent/harmful/saxitoxin = 0.1,
 			/datum/reagent/blood = 1,
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
@@ -427,6 +428,9 @@
 			/obj/item/reagent_containers/glass/water_pipe = 1,
 			/obj/item/device/light/lava_lamp = 1,
 			/obj/item/paper = 3,
+			/obj/critter/killertomato = 0.5,
+			/mob/living/critter/small_animal/cat/synth = 1,
+			/mob/living/critter/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -508,7 +512,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random = 5,
+			/obj/item/spacecash/random/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
@@ -720,6 +724,34 @@
 			/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
 			/obj/item/material_piece/plutonium = 1,
 			/obj/item/raw_material/cerenkite = 10,
+		),
+		"janitorial" = list(
+			/obj/machinery/bot/cleanbot = 5,
+			/obj/machinery/bot/cleanbot/emagged = 3,
+			/obj/item/caution = 10,
+			/obj/item/caution/traitor = 2,
+			/obj/item/spraybottle/cleaner = 5,
+			/obj/item/reagent_containers/glass/bottle/cleaner = 3,
+			/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
+			"body_bag" = 2,
+			/obj/item/mop = 5,
+			/obj/item/sponge = 5,
+			/datum/reagent/water = 10,
+			/datum/reagent/space_cleaner = 5,
+			/obj/item/mousetrap/armed = 5,
+			/obj/item/chem_grenade/cleaner = 10,
+			/obj/item/clothing/gloves/long = 3,
+			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/head/bio_hood = 1,
+			/obj/item/clothing/shoes/white = 1,
+			/obj/mopbucket = 3,
+			/obj/submachine/laundry_machine = 1,
+			/obj/item/reagent_containers/bath_bomb = 10,
+			/obj/storage/cart/trash = 2,
+			/obj/item/scrap = 5,
+			/obj/item/reagent_containers/glass/bucket = 4,
+			/obj/vehicle/floorbuffer = 1,
+			/obj/item/handheld_vacuum = 1
 		)
 	)
 
@@ -991,7 +1023,8 @@
 			if ("organ")
 				spawn_type = pick(concrete_typesof(/obj/item/organ))
 				. = new spawn_type(src.loc)
-			if ("corpse")
+			if ("corpse", "body_bag")
+				var/bag_it = (spawn_type == "body_bag")
 				spawn_type = pick( //safe jobs that don't introduce too much loot
 					1; /mob/living/carbon/human/normal/assistant,
 					1; /mob/living/carbon/human/normal/clown,
@@ -1008,6 +1041,11 @@
 				human.death()
 				human.set_loc(src.loc)
 				. = human
+				if (bag_it)
+					var/obj/item/body_bag/bag = new(src.loc)
+					bag.UpdateIcon()
+					human.set_loc(bag)
+					. = bag
 			if("geneinjector")
 				var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
 				for(var/i in pick(100; 0,   80; 1,   25; 2,   10; 3,   1; 4))
@@ -1078,7 +1116,7 @@
 			var/obj/item/old_grenade/grenade = .
 			if(prob(50))
 				SPAWN(rand(1 SECOND, 10 SECONDS))
-					grenade.prime()
+					grenade.detonate()
 		else if(istype(., /obj/item/chem_grenade))
 			var/obj/item/chem_grenade/grenade = .
 			if(prob(50))

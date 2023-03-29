@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
+
 /obj/window
 	name = "window"
 	icon = 'icons/obj/window.dmi'

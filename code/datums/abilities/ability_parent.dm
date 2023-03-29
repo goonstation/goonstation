@@ -6,6 +6,8 @@
 
 	var/topBarRendered = 1
 	var/rendered = 1
+	///Is this holder temporarily hidden
+	var/hidden = FALSE
 	var/datum/targetable/shiftPower = null
 	var/datum/targetable/ctrlPower = null
 	var/datum/targetable/altPower = null
@@ -24,10 +26,11 @@
 
 	var/x_occupied = 0
 	var/y_occupied = 0
-	var/datum/abilityHolder/composite_owner = null
+	var/datum/abilityHolder/composite/composite_owner = null
 	var/any_abilities_displayed = 0
 
 	var/cast_while_dead = 0
+	var/remove_on_clone = FALSE
 
 	// cirr's effort to make these work like normal huds, take 1
 	var/datum/hud/hud
@@ -91,12 +94,6 @@
 				A.update_cooldown_cost()
 				num++
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			for(var/atom/movable/screen/ability/topBar/genetics/G in H.hud.objects)
-				G.update_cooldown_cost()
-				num++
-
 		return num
 
 
@@ -111,7 +108,7 @@
 		y_occupied = 0
 		any_abilities_displayed = 0
 
-		if (src.topBarRendered && src.rendered)
+		if (src.topBarRendered && src.rendered && !src.hidden)
 
 			if (!called_by_owner)
 				for(var/atom/movable/screen/ability/A in src.hud.objects)
@@ -306,6 +303,13 @@
 				return A
 		return null
 
+	proc/on_clone()
+		if (src.remove_on_clone)
+			if (src.composite_owner)
+				src.composite_owner.removeHolder(src.type)
+			else
+				src.owner?.remove_ability_holder(src)
+
 	proc/pointCheck(cost)
 		if (!usesPoints)
 			return 1
@@ -402,6 +406,9 @@
 		return 0
 
 	proc/remove_unlocks()
+		for (var/datum/targetable/geneticsAbility/ability in src.abilities)
+			if (!ability.linked_power)
+				src.removeAbilityInstance(ability)
 		return 0
 
 	proc/set_loc_callback(var/newloc)
@@ -861,7 +868,7 @@
 		action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 		waiting_for_hotkey = 0 //If 1, the next number hotkey pressed will be bound to this.
 
-		preferred_holder_type = /datum/abilityHolder
+		preferred_holder_type = /datum/abilityHolder/generic
 
 		icon = 'icons/mob/spell_buttons.dmi'
 		icon_state = "blob-template"
@@ -896,6 +903,9 @@
 		handleCast(atom/target, params)
 			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
+#ifdef NO_COOLDOWNS
+			result = TRUE
+#endif
 			if (result && result != 999)
 				last_cast = 0 // reset cooldown
 			else if (result != 999)
@@ -905,13 +915,15 @@
 				localholder.updateButtons()
 
 		cast(atom/target)
-			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
-			return
+			if(interrupt_action_bars)
+				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
 		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 		onAttach(var/datum/abilityHolder/H)
+#ifndef NO_COOLDOWNS
 			if (src.start_on_cooldown)
 				doCooldown()
+#endif
 			return
 
 		// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
@@ -1090,6 +1102,12 @@
 		holders = null
 		..()
 
+	on_clone()
+		for (var/datum/abilityHolder/H in src.holders)
+			H.composite_owner = src
+			H.on_clone()
+		. = ..()
+
 	//return holder on success, null on fail
 	proc/addHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
@@ -1172,17 +1190,18 @@
 	updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
 		if (src.topBarRendered && src.rendered && src.hud)
 			for(var/atom/movable/screen/ability/A in src.hud.objects)
-				src.hud.objects -= A
+				src.hud.remove_object(A)
 
 		x_occupied = 1
 		y_occupied = 0
 		any_abilities_displayed = 0
-		for (var/datum/abilityHolder/H in holders)
-			if (H.topBarRendered || H.rendered)
-				H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
-				x_occupied = H.x_occupied
-				y_occupied = H.y_occupied
-				any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
+		if (!src.hidden)
+			for (var/datum/abilityHolder/H in holders)
+				if (H.topBarRendered || H.rendered)
+					H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
+					x_occupied = H.x_occupied
+					y_occupied = H.y_occupied
+					any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
 
 
 		if (src.topBarRendered)
@@ -1234,31 +1253,27 @@
 			H.resumeAllAbilities()
 
 	addAbility(var/abilityType)
-		//why was this? Weird
-		// if (!holders.len)
-		// 	return
 		if (istext(abilityType))
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 
-		var/datum/targetable/tmp_A = new abilityType(src)
-
+		var/datum/targetable/tmp_A = abilityType
+		var/preferred_holder_type = initial(tmp_A.preferred_holder_type)
 		if (holders.len)
 			for (var/datum/abilityHolder/H in holders)
-				if (istype(H, tmp_A.preferred_holder_type))
+				if (istype(H, preferred_holder_type))
 					return H.addAbility(abilityType)
 
-		var/datum/targetable/A = new abilityType(src)
-		var/datum/abilityHolder/X
-		if (holders.len)
-			X = holders[1]
+		var/datum/abilityHolder/holder
+		if (length(src.holders) && (!istype(src.holders[1], /datum/abilityHolder/hidden) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
+			holder = holders[1]
 		else
-			X = src.addHolder(A.preferred_holder_type)
-		A = X.addAbility(abilityType)
+			holder = src.addHolder(preferred_holder_type)
+		var/datum/targetable/ability = holder.addAbility(abilityType)
 
 		src.updateButtons()
-		return A
+		return ability
 
 	removeAbility(var/abilityType)
 		if (istext(abilityType))

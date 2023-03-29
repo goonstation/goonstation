@@ -53,6 +53,7 @@
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
 
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -87,6 +88,8 @@ TYPEINFO(/obj/machinery/vending)
 	var/last_slogan = 0 //When did we last pitch?
 	var/slogan_delay = 600 //How long until we can pitch again?
 	var/slogan_chance = 5
+	var/slogan_text_alpha = 140
+	var/slogan_text_color = "#C2BEBE"
 
 	//Icons
 	var/icon_panel = "generic-panel"
@@ -152,6 +155,9 @@ TYPEINFO(/obj/machinery/vending)
 		light.set_color(light_r, light_g, light_b)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
+		if (!src.chat_text)
+			src.chat_text = new
+		src.vis_contents += src.chat_text
 	var/lastvend = 0
 
 	disposing()
@@ -375,7 +381,9 @@ TYPEINFO(/obj/machinery/vending)
 			//action bar is defined at the end of these procs
 			actions.start(new /datum/action/bar/icon/right_vendor(src), user)
 			return
-
+		else
+			actions.start(new /datum/action/bar/icon/rotate_machinery(src), user)
+			return
 	if (istype(W, /obj/item/vending/restock_cartridge))
 		//check if cartridge type matches the vending machine
 		var/obj/item/vending/restock_cartridge/Q = W
@@ -611,6 +619,10 @@ TYPEINFO(/obj/machinery/vending)
 							src.credit -= product.product_cost
 					src.currently_vending = null
 					update_static_data(usr)
+				if(product.logged_on_vend)
+					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
+				if(player_list)
+					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
 	. = TRUE
 
 /obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
@@ -846,11 +858,28 @@ TYPEINFO(/obj/machinery/vending)
 	if (!message)
 		return
 
-	for (var/mob/O in hearers(src, null))
+	var/image/chat_maptext/slogan_text
+	var/text_out
+
+	if (istype(src.loc, /turf))
 		if (src.glitchy_slogans)
-			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+			text_out = voidSpeak(message)
 		else
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			text_out = message
+		slogan_text = make_chat_maptext(src, text_out, "color: [src.slogan_text_color];", alpha = src.slogan_text_alpha)
+		if (slogan_text && src.chat_text && length(src.chat_text.lines))
+			slogan_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != slogan_text)
+					I.bump_up(slogan_text.measured_height)
+
+	if (!text_out)
+		return
+
+	if (src.glitchy_slogans)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
+	else
+		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
 
 	return
 
@@ -1182,6 +1211,7 @@ TYPEINFO(/obj/machinery/vending)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/nougat, 10, cost=PAY_UNTRAINED/12)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=PAY_UNTRAINED/8)
@@ -1502,9 +1532,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/counter, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/clock, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/mc14500, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/interval_timer, 5)
 		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
@@ -1540,6 +1573,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/screen_canvas, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/message_sign, 10)
 /obj/machinery/vending/mechanics/attackby(obj/item/W, mob/user)
 	if(!istype(W,/obj/item/mechanics))
 		..()
@@ -2167,9 +2202,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	name = "pizza vending machine"
 	icon_state = "pizza"
 	desc = "A vending machine that serves... pizza?"
+	var/bolt_status = " It is bolted to the floor."
 	var/pizcooking = 0
 	var/piztopping = "plain"
-	anchored = FALSE
+	anchored = 1
 	acceptcard = FALSE
 	vend_inhand = FALSE
 	pay = TRUE
@@ -2184,6 +2220,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
+
+	New()
+		. = ..()
+		update_desc()
 
 	create_products()
 		..()
@@ -2237,12 +2277,33 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			user.u_equip(W)
 			qdel(W)
 			return
+		if(iswrenchingtool(W) && !(status & BROKEN))
+			if (!src.anchored)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				boutput(user, "You secure the external reinforcing bolts to the floor.")
+				src.anchored = 1
+				update_desc()
+				return
+			else
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				boutput(user, "You undo the external reinforcing bolts.")
+				src.anchored = 0
+				update_desc()
+				return
 		return ..()
+
+/obj/machinery/vending/pizza/proc/update_desc()
+	if (src.anchored)
+		bolt_status = " It is bolted to the floor."
+	else
+		bolt_status = ""
+	desc = initial(src.desc) + bolt_status
 
 /obj/machinery/vending/pizza/fallen
 	New()
 		. = ..()
 		src.fall()
+		update_desc()
 
 TYPEINFO(/obj/machinery/vending/monkey)
 	mats = 0 // >:I
@@ -3084,3 +3145,42 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)
+
+/obj/machinery/vending/jobclothing/research
+	name = "Research Apparel"
+	desc = "A vending machine that vends Research clothing."
+	icon_state = "sciclothing"
+	icon_panel = "snack-panel"
+	icon_off = "sciclothing-off"
+	icon_broken = "sciclothing-broken"
+	icon_fallen = "sciclothing-fallen"
+	pay = 1
+	acceptcard = 1
+	req_access = list(access_research)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist, 6)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/research, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/bio_suit, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/white, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/bio_hood, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/purple, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/basecap/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/goggles/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/research, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/toxins, 5, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/research, 3)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/research, 3)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)

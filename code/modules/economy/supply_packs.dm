@@ -652,6 +652,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
 
+/datum/supply_packs/wedding
+	name = "Wedding Supplies"
+	desc = "Your very own DIY wedding! Chaplain not included."
+	contains = list(/obj/item/clothing/under/gimmick/wedding_dress = 2,
+					/obj/item/clothing/head/veil = 2,
+					/obj/item/clothing/under/misc/fancy_vest = 2,
+					/obj/item/clothing/suit/tuxedo_jacket = 2,
+					/obj/item/clothing/gloves/ring = 2,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
+	cost = 10000
+	containertype = /obj/storage/crate
+	containername = "Wedding Supplies"
+
 /datum/supply_packs/glowsticks
 	name = "Emergency Glowsticks Crate - 4 pack"
 	desc = "x4 Glowsticks Box (28 glowsticks total)"
@@ -1349,6 +1362,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
 
+/datum/supply_packs/lawrack
+	name = "AI Law Rack ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
+	cost = 30000
+	containertype = /obj/storage/secure/crate
+	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
@@ -1474,8 +1497,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-//Nadir is not intended to have station pods/submarines
-#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1484,7 +1505,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
-#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"

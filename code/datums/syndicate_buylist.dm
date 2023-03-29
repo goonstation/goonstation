@@ -485,7 +485,7 @@ This is basically useless for anyone but miners.
 	item = /obj/vehicle/clowncar/surplus
 	cost = 5
 	vr_allowed = 0
-	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with an extra set of clown clothes."
+	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Can be loaded with banana peels. Comes with an extra set of clown clothes."
 	job = list("Clown")
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_SPY_THIEF
 
@@ -684,7 +684,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	job = list("Engineer")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
@@ -970,7 +970,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/scuttlebot
 	name = "Controlled Syndicate Scuttlebot"
 	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
-	cost = 2
+	cost = 4
 	vr_allowed = 0
 	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
@@ -1134,9 +1134,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A special hacked hypospray, capable of holding any chemical!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
-/datum/syndicate_buylist/surplus/sarin_grenade
-	name = "Sarin Grenade"
-	item = /obj/item/chem_grenade/sarin
+/datum/syndicate_buylist/surplus/saxitoxin_grenade
+	name = "Saxitoxin Grenade"
+	item = /obj/item/chem_grenade/saxitoxin
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP

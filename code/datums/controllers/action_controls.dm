@@ -52,13 +52,18 @@ var/datum/action_controller/actions
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
+					if(OA.interrupt_start != -1)
+						OA.interrupt_time += TIME - OA.interrupt_start
+						OA.interrupt_start = -1
 					OA.onResume(A)
+					OA.onUpdate()
 					qdel(A)
 					return OA
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
 		A.onStart()
+		A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
@@ -71,7 +76,7 @@ var/datum/action_controller/actions
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
-				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
+				if( ((A.duration >= 0 && A.time_spent() >= A.duration) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
 					A.promise?.fulfill(A)
@@ -99,9 +104,19 @@ var/datum/action_controller/actions
 	var/id = "base" //! Unique ID for this action. For when you want to remove actions by ID on a person.
 	var/resumable = TRUE
 	var/datum/promise/promise //! Promise that will be fulfilled when the action is finished or deleted. Finished = fulfilled with the action, deleted = fulfilled with null.
+	var/interrupt_time = 0 //! How long the action spent interrupted. Used to calculate the remaining time when resuming.
+	var/interrupt_start = -1 //! When the action was interrupted. Used to calculate interrupt_time
+
+	proc/time_spent()
+		if(interrupt_start == -1)
+			return TIME - started - interrupt_time
+		else
+			return interrupt_start - started - interrupt_time
 
 	proc/interrupt(var/flag) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
+			if(state != ACTIONSTATE_INTERRUPTED)
+				interrupt_start = TIME
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
@@ -289,7 +304,7 @@ var/datum/action_controller/actions
 	updateBar(var/animate = 1)
 		if (duration <= 0 || isnull(bar))
 			return
-		var/done = TIME - started
+		var/done = src.time_spent()
 		// inflate it a little to stop it from hitting 100% "too early"
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
@@ -474,7 +489,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -488,8 +506,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -512,17 +528,18 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 /datum/action/bar/icon/hitthingwithitem // used when you need to make sure that mob is holding item
 	// and is next to other thing while doing thing
@@ -575,7 +592,10 @@ var/datum/action_controller/actions
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -610,14 +630,17 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
+
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
@@ -844,7 +867,10 @@ var/datum/action_controller/actions
 		if(call_proc_on)
 			src.call_proc_on = call_proc_on
 		if (proc_args)
-			src.proc_args = proc_args
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
 		if (icon) //optional, dont always want an icon
 			src.icon = icon
 			if (icon_state) //optional, dont always want an icon state
@@ -858,8 +884,6 @@ var/datum/action_controller/actions
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -882,17 +906,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 #define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
@@ -1329,7 +1355,7 @@ var/datum/action_controller/actions
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
 	/// what the target of the action is, if any
-	var/target = null
+	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
 	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
@@ -1383,18 +1409,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-
+			return
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
 		if (src.call_proc_on)
-			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
 		else if (src.target)
-			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
-			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 		if(E)
 			if(ismovable(src.target))
@@ -1575,6 +1602,44 @@ var/datum/action_controller/actions
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
+
+/datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
+	duration = 60
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	id = "removearmcritter"
+	var/mob/living/critter/target
+	var/left_or_right
+
+	New(Target, LR)
+		target = Target
+		left_or_right = LR
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt()
+		..()
+		if (target?.butcherer == owner)
+			target.butcherer = null
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target.butcherer)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		target.butcherer = owner
+		target.visible_message("<span class='alert'><B>[owner] begins to cut the [left_or_right] arm off of [target]. </B></span>")
+
+	onEnd()
+		..()
+		target?.butcherer = null
+		if(owner && target)
+			target.remove_arm(left_or_right)
+			target.visible_message("<span class='alert'><B>[owner] cuts the [left_or_right] arm off of [target].</B></span>")
 
 /datum/action/bar/icon/rev_flash
 	duration = 4 SECONDS

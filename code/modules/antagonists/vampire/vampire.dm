@@ -6,12 +6,9 @@
 	var/datum/abilityHolder/vampire/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current)
+		return ishuman(mind.current) || ismobcritter(mind.current)
 
 	give_equipment()
-		if (!ishuman(src.owner.current))
-			return FALSE
-
 		var/datum/abilityHolder/vampire/A = src.owner.current.get_ability_holder(/datum/abilityHolder/vampire)
 		if (!A)
 			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/vampire)
@@ -38,10 +35,11 @@
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
 
-		src.owner.current.assign_gimmick_skull()
+		SPAWN(2.5 SECONDS)
+			src.owner.current.assign_gimmick_skull()
 
 	assign_objectives()
-		new /datum/objective_set/vampire(src.owner)
+		new /datum/objective_set/vampire(src.owner, src)
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
+	color = "#534747"
 	New()
 		..()
 		setProperty("density", 4)
@@ -1116,11 +1116,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	texture = "wood"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 5)
 		setProperty("hard", 3)
 		setProperty("flammable", 4)
@@ -1131,11 +1131,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	texture = "bamboo"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 4)
 		setProperty("flammable", 4)
 

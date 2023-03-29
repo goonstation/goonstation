@@ -183,6 +183,10 @@
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+	mat_appearances_to_ignore = list("wood")
+
+	constructed //no "wood wood stool"
+		name = "stool"
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -877,6 +881,7 @@
 	stamina_cost = 21
 	stamina_crit_chance = 10
 	material_amt = 0.1
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -911,8 +916,6 @@
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100
-	if (ishuman(target))
-		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 	src.stamina_crit_chance = oldcrit
 
@@ -1131,7 +1134,10 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+	mat_appearances_to_ignore = list("wood")
 
+	constructed //no "wood wood chair"
+		name = "chair"
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
@@ -1496,7 +1502,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			return
 		if (!A.powered(EQUIP))
 			return
-		A.use_power(EQUIP, 5000)
+		A.use_power(5000, EQUIP)
 		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
@@ -1521,9 +1527,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 				L.shock(src, 2500, "chest", 1, 1)
 				L.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
-					ticker.mode:remove_revolutionary(L.mind)
+			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
+				L.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 		A.UpdateIcon()
 		return

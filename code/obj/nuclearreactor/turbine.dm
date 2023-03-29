@@ -19,7 +19,7 @@
 	bound_y = -32
 	dir = EAST
 	custom_suicide = TRUE
-
+	machine_registry_idx = MACHINES_FISSION
 	/// Reference to the power terminal we use to dump power onto the net
 	var/obj/machinery/power/terminal/terminal = null
 	/// ID of this object on the pnet
@@ -218,7 +218,7 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"rpm=[src.RPM]&power=[src.lastgen]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
 
 	suicide(mob/user)
 		user.visible_message("<span class='alert'><b>[user] puts their head into blades of \the [src]!</b></span>")

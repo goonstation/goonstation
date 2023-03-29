@@ -86,6 +86,7 @@
 
 	death()
 		if (master)
+			master.poltergeists -= src
 			boutput(master, "<span class='alert'>Your poltergeist, [src], has been destroyed!</span>")
 		qdel(marker)
 		..()

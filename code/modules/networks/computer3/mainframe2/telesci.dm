@@ -48,6 +48,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
+	power_usage = 200
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -408,6 +409,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		return
 
 	process()
+		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
 				qdel(start_portal)
@@ -417,8 +419,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				badreceive()
 
 			return
-
-		use_power(200)
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
@@ -482,6 +482,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
 		showswirl_out(src.loc)
@@ -512,6 +514,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)

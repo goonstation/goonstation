@@ -165,6 +165,7 @@
 
 // recharge the cell
 /obj/item/cell/proc/give(var/amount)
+	. = min(maxcharge-charge, amount)
 	charge = min(maxcharge, charge+amount)
 	if(rigged && amount > 0)
 		if (rigger)
