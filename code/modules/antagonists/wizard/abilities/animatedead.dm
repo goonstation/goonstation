@@ -25,8 +25,8 @@
 			holder.owner.say("EI NECRIS", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/mob/living/critter/skeleton/skeleton = new /mob/living/critter/skeleton/(get_turf(target)) // what the fuck
-		skeleton.CustomizeSkeleton(target.real_name, ismonkey(target))
+		var/mob/living/critter/skeleton/skeleton = new /mob/living/critter/skeleton/(get_turf(target))
+		skeleton.CustomiseSkeleton(target.real_name, ismonkey(target))
 
 		boutput(holder.owner, "<span class='notice'>You saturate [target] with dark magic!</span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] rips the skeleton from [target]'s corpse!</span>")
