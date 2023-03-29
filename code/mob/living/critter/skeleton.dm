@@ -49,7 +49,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/sawfly
+	ai_type = /datum/aiHolder/skeleton
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
