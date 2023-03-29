@@ -118,6 +118,13 @@
 			if (iswizard(C) && src.wizardSpawn) continue
 			. += C
 
+	critter_attack(mob/target)
+		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if (!tackle.disabled && tackle.cooldowncheck())
+			tackle.handleCast(target)
+		else
+			return ..()
+
 	death(var/gibbed)
 		if (prob(src.revivalChance))
 			..()
