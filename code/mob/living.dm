@@ -68,9 +68,6 @@
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
 
-	var/caneat = 1
-	var/candrink = 1
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
@@ -1881,7 +1878,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
 			if (P.proj_data.hit_type & (DAMAGE_CUT | DAMAGE_STAB | DAMAGE_CRUSH))
-				take_bleeding_damage(src, null, round(damage / 3 * rangedprot_mod), P.proj_data.hit_type)
+				take_bleeding_damage(src, null, round(damage / (2 * rangedprot_mod)), P.proj_data.hit_type)
 			src.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 		switch(P.proj_data.damage_type)

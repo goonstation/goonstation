@@ -873,7 +873,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +883,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -4789,10 +4791,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
-				M.mind.special_role = ROLE_FLOOR_GOBLIN
-				M.make_floor_goblin()
-				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_FLOOR_GOBLIN, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)

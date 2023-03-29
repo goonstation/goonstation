@@ -3499,6 +3499,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
 
+// Pirate ship:
+/area/pirate_ship
+	name = "Peregrine"
+	icon_state = "red"
+	requires_power = 0
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
+
 /// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"
