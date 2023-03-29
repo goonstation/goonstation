@@ -94,6 +94,7 @@
 
 	proc/return_wraith(mob/possessed) //we want to be absolutely sure the wraith goes back to their body no matter what
 		var/datum/abilityHolder/wraith/AH = src.holder
+		AH.possession_points = 0
 		UnregisterSignal(possessed, COMSIG_MOB_DEATH)
 		if (QDELETED(src.holder.owner)) //hopefully catch the wraith dying?
 			return
