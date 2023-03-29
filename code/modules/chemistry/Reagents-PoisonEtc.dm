@@ -1382,8 +1382,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.5*mult)
-				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
+				M.take_toxin_damage(mult)
+				bleed(M, 6 * mult, 6 * mult)
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
@@ -1393,7 +1393,7 @@ datum
 					M.reagents.add_reagent("histamine", rand(8,10) * mult)
 
 				if (probmult(10))
-					M.setStatus("staggered", max(M.getStatusDuration("staggered"), 5 SECONDS))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
@@ -1401,7 +1401,6 @@ datum
 				if (probmult(10))
 					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
-					M.take_toxin_damage(8)
 					if (!isdead(M))
 						M.emote(pick("shake", "tremble", "shudder"))
 
