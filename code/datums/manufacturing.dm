@@ -354,6 +354,13 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/t_scanner
+	name = "T-ray scanner"
+	item_outputs = list(/obj/item/device/t_scanner)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_paths = list("MET-2","CRY-1")
@@ -1936,7 +1943,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
-	item_paths = list("MET-3","CON-2","CRY-2")
+	item_paths = list("MET-3","CON-2", "CRY-2")
 	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
 	time = 90 SECONDS
@@ -2027,6 +2034,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1","MET-1","CRY-1")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/lightengspacesuit
+	name = "Light Engineering Space Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1", "ORG|RUB")
+	item_amounts = list(10,5,2,5)
+	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	time = 15 SECONDS
 	create = 1
 	category = "Clothing"

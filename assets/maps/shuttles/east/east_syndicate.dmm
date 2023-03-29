@@ -45,10 +45,6 @@
 	dir = 4
 	},
 /area/shuttle/escape/centcom)
-"aQ" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/circuit/red,
-/area/shuttle/escape/centcom)
 "aZ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -279,7 +275,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -322,7 +320,9 @@
 	},
 /area/shuttle/escape/centcom)
 "mY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -525,10 +525,6 @@
 	dir = 1
 	},
 /area/centcom/outside)
-"wT" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom)
 "xj" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/red,
@@ -629,7 +625,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/centcom)
 "BD" = (
 /turf/unsimulated/floor/arrival,
@@ -668,7 +666,7 @@
 /area/shuttle/escape/centcom)
 "DH" = (
 /obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "DI" = (
 /obj/machinery/light{
@@ -908,10 +906,12 @@
 /area/shuttle/escape/centcom)
 "NK" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "NR" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1469,7 +1469,7 @@ IK
 ZJ
 JY
 IV
-wT
+DH
 vx
 ro
 aB
@@ -1525,7 +1525,7 @@ XE
 XE
 BD
 IV
-wT
+DH
 Il
 DY
 oC
@@ -1553,7 +1553,7 @@ iD
 iD
 BD
 IV
-wT
+DH
 Il
 DY
 xj
@@ -1609,7 +1609,7 @@ aa
 rP
 sE
 IV
-wT
+DH
 To
 KD
 mc
@@ -1696,14 +1696,14 @@ rR
 zA
 vd
 RC
-aQ
+DH
 EQ
 xw
 xw
 xw
 xw
 GN
-aQ
+DH
 TZ
 vd
 rK
@@ -1724,14 +1724,14 @@ rR
 rR
 rR
 CC
-aQ
+DH
 wm
 xw
 px
 px
 xw
 If
-aQ
+DH
 eQ
 rR
 rR
@@ -1782,10 +1782,10 @@ rR
 zA
 RC
 Sp
-aQ
-aQ
-aQ
-aQ
+DH
+DH
+DH
+DH
 Sp
 TZ
 rK

@@ -498,47 +498,43 @@ THROWING DARTS
 			return
 		var/mob/living/carbon/human/H = src.owner
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if (H.mind in ticker.mode:head_revolutionaries)
-				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
-				H.changeStatus("weakened", 1 SECOND)
-				H.force_laydown_standup()
-				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
-				//src.on_remove(H)
-				//H.implant.Remove(src)
-				//src.set_loc(get_turf(H))
-			else if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1, 1, 0)
-				H.changeStatus("weakened", 1 SECOND)
-				H.setStatus("derevving")
-				H.force_laydown_standup()
-				H.emote("scream")
-				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
+		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
+			H.changeStatus("weakened", 1 SECOND)
+			H.force_laydown_standup()
+			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
+
+		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			H.TakeDamage("chest", 1, 1, 0)
+			H.changeStatus("weakened", 1 SECOND)
+			H.setStatus("derevving")
+			H.force_laydown_standup()
+			H.emote("scream")
+			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
 
 	do_process(var/mult = 1)
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if (!ishuman(src.owner))
-				return
-			var/mob/living/carbon/human/H = src.owner
-			if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
-				if (H.health < 0)
-					H.changeStatus("paralysis", 5 SECONDS)
-					H.changeStatus("newcause", 5 SECONDS)
-					H.delStatus("derevving")
-					H.force_laydown_standup()
-					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
+		if (!ishuman(src.owner))
+			return
+		var/mob/living/carbon/human/H = src.owner
+		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
+			if (H.health < 0)
+				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("newcause", 5 SECONDS)
+				H.delStatus("derevving")
+				H.force_laydown_standup()
+				H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
-					//heal a small amount for the trouble of bein critted via this thing
-					H.HealDamage("All", max(30 - H.health,0), 0)
-					H.HealDamage("All", 0, max(30 - H.health,0))
+				//heal a small amount for the trouble of bein critted via this thing
+				H.HealDamage("All", max(30 - H.health,0), 0)
+				H.HealDamage("All", 0, max(30 - H.health,0))
 
-					ticker.mode:remove_revolutionary(H.mind)
-				else
-					if (prob(30))
-						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
-						playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
-						H.emote("twitch_v")
+				H.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
+			else
+				if (prob(30))
+					H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the Heads of Staff!</B>", "blue")
+					playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
+					H.emote("twitch_v")
 
 		..()
 
@@ -975,8 +971,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I, bleed_time)
-	..()
-
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
@@ -984,7 +978,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(C) && leaves_wound)
 			var/datum/reagent/contained_blood = reagents_cache[C.blood_id]
 			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
-		C.update_clothing()
+
+	..()
 
 	if (!bleed_time)
 		return
@@ -1076,6 +1071,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				access.access = get_access("Medical Doctor") + get_access("Janitor") + get_access("Botanist") + get_access("Chef") + get_access("Scientist")
+
+		captain
+			New()
+				..()
+				access.access = get_access("Captain")
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */

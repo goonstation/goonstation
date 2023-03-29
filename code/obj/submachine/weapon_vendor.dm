@@ -193,7 +193,7 @@
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
-		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/saxitoxin_grenade
 		//materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
@@ -474,9 +474,9 @@
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
-/datum/materiel/utility/sarin_grenade
-	name = "Sarin Grenade"
-	path = /obj/item/chem_grenade/sarin
+/datum/materiel/utility/saxitoxin_grenade
+	name = "Saxitoxin Grenade"
+	path = /obj/item/chem_grenade/saxitoxin
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 /datum/materiel/utility/noslip_boots

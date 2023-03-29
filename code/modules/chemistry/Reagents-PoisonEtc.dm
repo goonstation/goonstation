@@ -67,6 +67,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					var/stack_mult = 1
@@ -160,6 +162,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					if (volume >= 50 && prob(75))
@@ -1526,6 +1530,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1563,6 +1569,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1704,6 +1712,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)
@@ -1755,10 +1765,10 @@ datum
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
-		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
-			id = "sarin"
-			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
+		harmful/saxitoxin // formerly: sarin
+			name = "saxitoxin"
+			id = "saxitoxin"
+			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255

@@ -2413,6 +2413,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Bathroom"
 	icon_state = "showers"
 
+	extra1
+		name = "Restroom #1"
+
+	extra2
+		name = "Restroom #2"
+
 /area/station/crew_quarters/jazz
 	name = "Jazz Lounge"
 	icon_state = "purple"
@@ -3487,12 +3493,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Salvager Vessel Magpie"
 	icon_state = "red"
 	sanctuary = 1
-
-/area/salvager/lower
-	icon_state = "orange"
+	teleport_blocked = 1
 
 /area/salvager/pod
+	name = "Magpie Launch Area"
 	icon_state = "yellow"
+
+// Pirate ship:
+/area/pirate_ship
+	name = "Peregrine"
+	icon_state = "red"
+	requires_power = 0
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
 
 /// Nukeops spawn station
 /area/syndicate_station

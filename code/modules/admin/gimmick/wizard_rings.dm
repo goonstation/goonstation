@@ -307,7 +307,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	if (alert(usr, "Are you sure you want to spawn all wizard rings at your current location?", "Spawn rings", "Yes", "No, I misclicked") == "No, I misclicked")
+		return
 	var/turf/T_LOC = get_turf(src.mob)
 
 	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard)

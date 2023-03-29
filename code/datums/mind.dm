@@ -34,9 +34,6 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/blob_absorb_victims = list()
-
-	var/datum/gang/gang = null //Associate a leader with their gang.
 
 	var/list/intrinsic_verbs = list()
 
@@ -217,22 +214,38 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
-		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
+		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
 				if (A.mutually_exclusive)
 					return FALSE
 		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist
-		if (!isnull(src.get_antagonist(role_id)))
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
 			return FALSE
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
-				if (QDELETED(new_datum))
+				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
+				if (!new_datum)
 					return FALSE
-				src.antagonists.Add(new_datum)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
+				return TRUE
+		return FALSE
+
+	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
+	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
+		if (!master)
+			return FALSE
+		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist.
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
+			return FALSE
+		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
+			var/datum/antagonist/subordinate/A = V
+			if (initial(A.id) == role_id)
+				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
+				if (!new_datum)
+					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
@@ -241,23 +254,26 @@ datum/mind
 	proc/remove_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
-				A.remove_self(TRUE, FALSE)
+				A.remove_self(TRUE)
 				src.antagonists.Remove(A)
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
+					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
-			A.remove_self(TRUE, FALSE)
+			A.remove_self(TRUE)
 			src.antagonists.Remove(A)
 			qdel(A)
 		src.special_role = null
 		ticker.mode.traitors.Remove(src)
+		ticker.mode.Agimmicks.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()

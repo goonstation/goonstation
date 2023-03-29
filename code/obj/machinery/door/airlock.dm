@@ -1,6 +1,10 @@
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
 
+// power usage defines
+#define OPEN_CLOSE_POWER_USAGE 50
+#define LINKED_FORCEFIELD_POWER_USAGE 100
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -167,7 +171,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 600
 	health_max = 600
 
-	var/ai_no_access = 0 //This is the dumbest var.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
@@ -946,7 +949,8 @@ About the new airlock wires panel:
 *		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire)
 */
 /obj/machinery/door/airlock/proc/play_deny()
-	play_animation("deny")
+	if(src.density && !src.operating) // only play the animation while fully closed
+		play_animation("deny")
 	playsound(src, src.sound_deny_temp, 35, 0, 0.8) //if this doesn't carry far enough, tweak the extrarange number, not the volume
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
@@ -1663,11 +1667,11 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/open()
-	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
-	src.use_power(50)
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
-		src.use_power(100)
+		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
 	if (narrator_mode)
@@ -1683,11 +1687,13 @@ About the new airlock wires panel:
 	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		if (src.linked_forcefield)
 			src.linked_forcefield.setactive(0)
+			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 		return
 	if (src.welded || src.locked || src.operating)
 		return
-	src.use_power(50)
-
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
+	if (src.linked_forcefield)
+		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
@@ -2158,3 +2164,5 @@ TYPEINFO(/obj/machinery/door/airlock)
 						. = TRUE
 
 #undef NET_ACCESS_OPTIONS
+#undef LINKED_FORCEFIELD_POWER_USAGE
+#undef OPEN_CLOSE_POWER_USAGE

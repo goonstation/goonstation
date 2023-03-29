@@ -92,7 +92,6 @@
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
-		src.set_a_intent("disarm")
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		AH = src.abilityHolder
@@ -341,117 +340,27 @@
 		return
 
 	Move(var/turf/NewLoc, direct)
-		if (loc)
-			if (!isturf(loc) && !density)
-				src.set_loc(get_turf(loc))
-		else
-			src.set_loc(locate(1,1,1))
+		if (NewLoc.x == world.maxx || NewLoc.y == world.maxy)
+			return
 
-		if(!canmove) return
+		if (src.density)
+			for (var/obj/machinery/door/door in NewLoc)
+				if (istype(door, /obj/machinery/door/poddoor))
+					continue
+				if (istype(door, /obj/machinery/door/feather) && !istype(door, /obj/machinery/door/feather/friendly))
+					continue
+				door.open()
+			return ..()
 
-		if(!isturf(src.loc)) src.set_loc(get_turf(src))
-
-		if (NewLoc)
-			if ((isghostrestrictedz(NewLoc.z) || ((NewLoc.z != Z_LEVEL_STATION) && (NewLoc.z != Z_LEVEL_ADVENTURE) && (NewLoc.z != 7))) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
-				OnMove()
-				return
-
-			var/mydir = get_dir(src, NewLoc)
-			var/salted = 0
-
-			if(src.density)
-				for(var/obj/machinery/door/airlock/A in NewLoc)
-					if(!A.welded && !A.locked && !A.operating && A.arePowerSystemsOn() && !A.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) && !(A.status & NOPOWER))
-						A.open()
-
-			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.Enter(src))
-					return
-
-			else
-				var/turf/vertical
-				var/turf/horizontal
-				var/blocked = 1
-				if (mydir & NORTH)
-					vertical = get_step(src, NORTH)
-				else
-					vertical = get_step(src, SOUTH)
-
-				if (mydir & WEST)
-					horizontal = get_step(src, WEST)
-				else
-					horizontal = get_step(src, EAST)
-
-				var/turf/oldloc = loc
-				var/horiz = FALSE
-				var/vert = FALSE
-
-				if (!src.density || vertical.Enter(src))
-					vert = TRUE
-					src.set_loc(vertical)
-					if (!src.density || NewLoc.Enter(src))
-						blocked = 0
-						for(var/obj/decal/cleanable/saltpile/A in vertical)
-							if (istype(A)) salted = TRUE
-							if (salted) break
-					src.set_loc(oldloc)
-
-				if (!src.density || horizontal.Enter(src))
-					horiz = TRUE
-					src.set_loc(horizontal)
-					if (!src.density || NewLoc.Enter(src))
-						blocked = FALSE
-						for(var/obj/decal/cleanable/saltpile/A in horizontal)
-							if (istype(A)) salted = TRUE
-							if (salted) break
-					src.set_loc(oldloc)
-
-				if (blocked)
-					if (horiz)
-						Move(horizontal)
-						return
-					else if (vert)
-						Move(vertical)
-						return
-					return
-
-			for(var/obj/decal/cleanable/saltpile/A in NewLoc)
-				if (istype(A)) salted = TRUE
-				if (salted) break
-
-			src.set_dir(get_dir(loc, NewLoc))
-			if (src.density) // if we're corporeal we follow normal mob restrictions
-				..()
-			else // if we're in ghost mode we get to cheat
-				src.set_loc(NewLoc)
-			OnMove()
-
-			//if tile contains salt, wraith becomes corporeal
-			if (salted && !src.density && !src.justdied)
+		if (!src.density && !src.justdied)
+			for (var/obj/decal/cleanable/saltpile/salt in NewLoc)
 				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
 				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
 				ability.doCooldown()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
+				break
 
-		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
-
-			return
-
-		//Z level boundary stuff
-		if((direct & NORTH) && src.y < world.maxy)
-			src.y++
-		if((direct & SOUTH) && src.y > 1)
-			src.y--
-		if((direct & EAST) && src.x < world.maxx)
-			src.x++
-		if((direct & WEST) && src.x > 1)
-			src.x--
-		OnMove()
+		return ..()
 
 	can_use_hands()
 		if (src.density) return 1
@@ -718,41 +627,8 @@
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
 		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		return make_wraith()
-	return null
-
-/mob/proc/make_wraith()
-	if (src.mind || src.client)
-		var/mob/living/intangible/wraith/W = new/mob/living/intangible/wraith(src)
-
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || ((isghostrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (OS)
-				W.set_loc(OS)
-			else
-				W.z = 1
-		else
-			W.set_loc(T)
-
-		if (src.mind)
-			src.mind.transfer_to(W)
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-			ticker.minds += W.mind
-		qdel(src)
-
-		//W.addAllAbilities()
-		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")
-		boutput(W, "Your astral powers enable you to survive one banishment. Beware of salt.")
-		boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-		return W
+		src.mind.add_antagonist(ROLE_WRAITH)
+		return
 	return null
 
 /proc/visibleBodies(var/mob/M)
