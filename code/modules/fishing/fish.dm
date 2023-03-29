@@ -116,6 +116,7 @@ Alien/mutant/other fish:
 	inhand_color = "#398f3d"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/salmon
 	name = "salmon"
@@ -124,6 +125,7 @@ Alien/mutant/other fish:
 	inhand_color = "#E3747E"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon
 	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/carp
 	name = "carp"
@@ -131,6 +133,7 @@ Alien/mutant/other fish:
 	icon_state = "carp"
 	inhand_color = "#BBCA8A"
 	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/rainbow_trout
 	name = "rainbow trout"
@@ -138,6 +141,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#4a6169"
 	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_UNCOMMON
 
 /obj/item/fish/goldfish
 	name = "goldfish"
@@ -145,6 +149,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#f3a807"
 	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
 
 // Ocean saltwater fish
 
@@ -154,6 +159,7 @@ Alien/mutant/other fish:
 	icon_state = "herring"
 	inhand_color = "#90B6CA"
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_COMMON
 
 
 /obj/item/fish/red_herring
@@ -162,7 +168,7 @@ Alien/mutant/other fish:
 	icon_state = "red_herring"
 	inhand_color = "#DC5A5A"
 	category = FISH_CATEGORY_OCEAN
-	value = FISH_RARITY_UNCOMMON
+	value = FISH_RARITY_LEGENDARY
 
 /obj/item/fish/tuna
 	name = "bluefin tuna"
@@ -170,6 +176,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#3123f8"
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_UNCOMMON
 
 /obj/item/fish/cod
 	name = "atlantic cod"
@@ -177,6 +184,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#87d1db"
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/flounder
 	name = "flounder"
@@ -184,6 +192,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#5c471b"
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/coelacanth
 	name = "coelacanth"
@@ -191,6 +200,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#81878a"
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_RARE
 
 /obj/item/fish/mahimahi
 	name = "Mahi-mahi"
@@ -199,6 +209,7 @@ Alien/mutant/other fish:
 	inhand_color = "#A6B967"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_COMMON
 
 // Aquarium saltwater fish
 
@@ -208,6 +219,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/damselfish
 	name = "damselfish"
@@ -215,6 +227,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/green_chromis
 	name = "green chromis"
@@ -222,6 +235,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#3af121"
 	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/cardinalfish
 	name = "cardinalfish"
@@ -229,6 +243,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#b2b427"
 	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
 
 /obj/item/fish/royal_gramma
 	name = "royal gramma"
@@ -236,6 +251,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#9a05f0"
 	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
 
 // adventure zone special fish
 
@@ -245,21 +261,21 @@ Alien/mutant/other fish:
 	desc = "A fish? Whatver it is, it's grown accustomed to swimming in a pool of digestive acids."
 	icon_state = "bass_old"
 	inhand_color = "#af2323"
-	value = 2
+	value  = FISH_RARITY_RARE
 
 /obj/item/fish/blood_fish
 	name = "blood fish"
 	desc = "A viscous, gory mass of congealed blood. You're really stretching the definition of fish here."
 	icon_state = "bass_old"
 	inhand_color = "#af2323"
-	value = 2
+	value  = FISH_RARITY_RARE
 
 /obj/item/fish/eye_mutant
 	name = "eye mutant"
 	desc = "Was this a fish once? It's got too many eyes on you."
 	icon_state = "bass_old"
 	inhand_color = "#f0f0f0"
-	value = 2
+	value  = FISH_RARITY_RARE
 
 //void
 /obj/item/fish/void_fish
@@ -267,7 +283,7 @@ Alien/mutant/other fish:
 	desc = "This fish has swum through the timestream to witness the death of the universe. Probably doesn't fry too well."
 	icon_state = "bass_old"
 	inhand_color = "#8f3ed1"
-	value = 2
+	value  = FISH_RARITY_RARE
 
 //solarium
 /obj/item/fish/sun_fish
@@ -275,7 +291,7 @@ Alien/mutant/other fish:
 	desc = "Nobody will ever believe you."
 	icon_state = "bass_old"
 	inhand_color = "#ebde2d"
-	value = 5
+	value  = FISH_RARITY_LEGENDARY
 
 //lava moon
 /obj/item/fish/lava_fish
@@ -283,5 +299,5 @@ Alien/mutant/other fish:
 	desc = "a blazing hot catch straight from the planet's core!"
 	icon_state = "bass_old"
 	inhand_color = "#eb2d2d"
-	value = 2
+	value  = FISH_RARITY_RARE
 
