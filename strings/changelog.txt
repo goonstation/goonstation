@@ -1,5 +1,9 @@
 
 (t)wed mar 29 23
+(u)LeahTheTech
+(p)13268
+(e)🧫💨⚙|C-Experimental, A-Atmospherics, A-Internal
+(*)The atmos process is ticking twice as fast, this should make repressurizing and so on a lot less tedious - but may cause Issues. Please report any if you find them.
 (u)Nexusuxen
 (p)13466
 (e)🪲💡|C-Bug, A-Station-Systems
