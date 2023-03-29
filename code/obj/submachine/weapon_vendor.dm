@@ -254,9 +254,13 @@
 		..()
 
 	accepted_token(var/token)
-		if (istype(token, /obj/item/requisition_token/fishing/gold))
+		if (istype(token, /obj/item/requisition_token/fishing/legendary))
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=5
-		else if (istype(token, /obj/item/requisition_token/fishing/silver))
+		else if (istype(token, /obj/item/requisition_token/fishing/epic))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=4
+		else if (istype(token, /obj/item/requisition_token/fishing/rare))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=3
+		else if (istype(token, /obj/item/requisition_token/fishing/uncommon))
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=2
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
@@ -610,17 +614,28 @@
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
 
-	fishing
-		desc = "A bronze NT-provided token compatible with the Fishing Equipment Vendor. Worth 1 credits."
-		icon_state = "req-token-sec"
+/obj/item/requisition_token/fishing
+	icon_state = "req-token-sec"
 
-		silver
-			desc = "A silver NT-provided token compatible with the Fishing Equipment Vendor. Worth 2 credits."
-			icon_state = "req-token-sec"
+	common
+		name = "common fishing token"
+		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 1 credit."
 
-		gold
-			desc = "A gold NT-provided token compatible with the Fishing Equipment Vendor. Worth 5 credits."
-			icon_state = "req-token-sec"
+	uncommon
+		name = "uncommon fishing token"
+		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 2 credits."
+
+	rare
+		name = "rare fishing token"
+		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 3 credits."
+
+	epic
+		name = "epic fishing token"
+		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 4 credits."
+
+	legendary
+		name = "Common fishing token"
+		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 5 credits."
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
