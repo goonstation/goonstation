@@ -40,9 +40,9 @@
 	blood_id = "calcium"
 	burning_suffix = "humanoid"
 	metabolizes = FALSE
-	health_brute = 20
+	health_brute = 30
 	health_brute_vuln = 1
-	health_burn = 20
+	health_burn = 30
 	health_burn_vuln = 0.7
 	mob_flags = IS_BONEY
 	is_npc = TRUE
@@ -127,6 +127,7 @@
 				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
 			return
 		if (!gibbed)
+			src.visible_message("<span class='alert'>[src] explodes into bones!</span>")
 			src.unequip_all()
 			src.gib()
 		return ..()
@@ -146,14 +147,16 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	death_text = "%src% vanishes into bones!"
+	health_brute = 25
+	health_burn = 25
 
-	seek_target(var/range = 6)
+	seek_target(var/range = 7)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (islivingobject(C)) continue //don't attack wraith objects
+			if (istype,(C, /mob/living/critter/wraith)) // don't ttack wraith summons
 			if (istype(C, /mob/living/critter/skeleton)) continue
 			. += C
 
