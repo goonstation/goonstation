@@ -689,12 +689,13 @@
 
 /datum/limb/brullbar
 	var/log_name = "brullbar limbs"
+	var/quality = 0.7
+	var/king = FALSE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
 		if(check_target_immunity( target ))
 			return
-		var/quality = src.holder.quality
 
 		if (!istype(user))
 			target.Attackhand(user, params, location, control)
@@ -751,7 +752,6 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 
@@ -765,11 +765,18 @@
 		if (prob(20 * quality))
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
-				C.do_disorient(25, disorient=2 SECONDS)
+				C.do_disorient(15, disorient = 1 SECONDS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 20)
+
+/datum/limb/brullbar/king
+	log_name = "king brullbar limbs"
+	quality = 1.4
+	king = TRUE
 
 /datum/limb/brullbar/severed_werewolf
 	log_name = "severed werewolf limb"
+	quality = 1
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
@@ -1490,18 +1497,21 @@
 	dam_high = 0
 
 /datum/limb/small_critter/med/dash
+	dam_low = 3
+	dam_high = 8
+	actions = list("cuts", "rips", "claws", "slashes")
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_3.ogg'
+
 	New(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/katana_dash/limb)
 		src.setHarmSpecial (/datum/item_special/katana_dash/limb)
-
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
 		if(check_target_immunity( target ))
 			return
-		//var/quality = src.holder.quality
 
 		if (!istype(user))
 			target.Attackhand(user, params, location, control)
@@ -1513,22 +1523,9 @@
 			return 0
 		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
 			return 0
-		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")
-		//	var/mob/living/L = target
-		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
-
-
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 5, rand(0,2) * quality, can_punch = 0, can_kick = 0)
-		user.attack_effects(target, user.zone_sel?.selecting)
-		var/action = pick("cut", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
-		msgs.damage_type = DAMAGE_CUT
-		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
-
+		..()
 
 //test for crab attack thing
 /datum/limb/swipe_quake

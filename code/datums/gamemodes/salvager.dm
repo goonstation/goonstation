@@ -9,6 +9,8 @@
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
 	var/const/antags_possible = 6
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 #ifdef RP_MODE
 	var/const/pop_divisor = 6
 #else
@@ -59,3 +61,6 @@
 /datum/game_mode/salvager/post_setup()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
+
+	SPAWN(rand(waittime_l, waittime_h))
+		send_intercept()

@@ -108,7 +108,7 @@
 
 				src.icon_state = "[src.catwalk_type][connectdir]"
 
-			if (istext(special_icon_state))
+			if (istext(special_icon_state) && special_icon_state != "cut")
 				src.icon_state += "-" + special_icon_state
 				return
 
@@ -220,10 +220,11 @@
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
-
-		UpdateIcon()
+		else
+			UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -239,10 +240,12 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			drop_rods(1)
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
+		else
+			UpdateIcon()
 
-		UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)

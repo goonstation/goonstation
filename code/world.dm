@@ -521,6 +521,7 @@ var/f_color_selector_handler/F_Color_Selector
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")

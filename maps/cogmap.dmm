@@ -895,6 +895,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
+/obj/mail_booth,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -64251,6 +64252,20 @@
 /obj/decal/poster/wallsign/no_smoking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
+"wcq" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "wcD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/camera{
@@ -66073,6 +66088,14 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"yaO" = (
+/obj/disposalpipe/segment,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "yaZ" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
@@ -105071,7 +105094,7 @@ aZo
 aZo
 aZo
 aZo
-aGT
+wcq
 aGT
 aGT
 aGT
@@ -105373,7 +105396,7 @@ aId
 aId
 aId
 aId
-aId
+yaO
 beZ
 aId
 aId
