@@ -24,7 +24,7 @@
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
-	add_abilities = /datum/targetable/critter/tackle
+	add_abilities = list(/datum/targetable/critter/tackle)
 	var/droparms = TRUE
 
 	on_pet(mob/user)
