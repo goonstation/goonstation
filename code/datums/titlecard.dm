@@ -2,36 +2,29 @@
 	var/global/list/maptext_areas = list()
 	var/global/last_pregame_html = ""
 
-	#if defined(MAP_OVERRIDE_OSHAN)
-	var/image_url = "images/oshan_titlecard.png"
-	#elif defined(MAP_OVERRIDE_MANTA)
-	var/image_url = "images/manta_titlecard.png"
-	#else
-	var/image_url = "images/main_titlecard.gif"
-	#endif
+	var/image_url = "images/bingus_titlecard.png"
 	var/is_game_mode = FALSE
 	var/add_html = ""
 	var/overlay_image_url = null
 
 	heisenbee
-		image_url = "images/heisenbee_titlecard.png"
-		add_html = {"<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>"}
+		image_url = "images/bingus_titlecard.png"
 
 	hehe
-		image_url = "images/hehe_titlecard.png"
+		image_url = "images/bingus_titlecard.png"
 
 	s
-		image_url = "images/s_titlecard.png"
+		image_url = "images/bingus_titlecard.png"
 
 	nightshade
-		image_url = "images/nightshade_titlecard.png"
+		image_url = "images/bingus_titlecard.png"
 
 	disaster
-		overlay_image_url = "images/disaster_titlecard.gif"
+		overlay_image_url = "images/bingus_titlecard.png"
 		is_game_mode = TRUE
 
 	battleroyale
-		overlay_image_url = "images/battleroyale_titlecard.png"
+		overlay_image_url = "images/bingus_titlecard.png"
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()
@@ -93,7 +86,7 @@
 /obj/titlecard
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	icon = null //set in New()
-	icon_state = "title_main"
+	icon_state = "title_bingus"
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
@@ -111,11 +104,9 @@
 		..()
 		icon = file("assets/icons/widescreen.dmi")
 	#if defined(MAP_OVERRIDE_OSHAN)
-		icon_state = "title_oshan"
 		name = "Oshan Laboratory"
 		desc = "An underwater laboratory on the planet Abzu."
 	#elif defined(MAP_OVERRIDE_MANTA)
-		icon_state = "title_manta"
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
 	#endif
