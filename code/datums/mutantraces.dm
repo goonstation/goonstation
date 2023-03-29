@@ -1843,6 +1843,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/cat/bingus // our beloved
 	name = "bingus"
 	icon = 'icons/mob/bingus.dmi'
+		mutant_organs = list("tail" = /obj/item/organ/tail/cat/bingus)
 	mutant_folder = 'icons/mob/bingus.dmi'
 
 

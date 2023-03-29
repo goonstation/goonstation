@@ -258,6 +258,10 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cat_over_suit"
 
+/obj/item/organ/tail/cat/bingus
+	desc = "A long, not-furry tail."
+	organ_image_icon = 'icons/mob/bingus.dmi'
+
 /obj/item/organ/tail/roach
 	name = "roach abdomen"
 	desc = "A large insect behind."
