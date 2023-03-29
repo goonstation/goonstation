@@ -674,7 +674,7 @@
 		return
 
 	if (phrase_log?.is_anti_bingus(message))
-		arcFlash(src, src, 5000 WATTS)
+		arcFlash(src, src, 3 MEGA WATTS)
 		if (issilicon(src))
 			src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
 
