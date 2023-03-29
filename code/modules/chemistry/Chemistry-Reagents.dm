@@ -162,7 +162,17 @@ datum
 						var/mob/living/carbon/human/H = M
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								H.sims.affectMotive("Hygiene", volume * hygiene_value)
+								if ((istype(src, /datum/reagent/water) || findtext(src.name, "water")) && H.hasStatus("aquaphobia"))
+									animate_shake(H)
+									H.emote("scream")
+									if (prob(75))
+										boutput(H, "The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!", group = "aquaphobia")
+									random_burn_damage(H, 1 * volume)
+								else
+									var/hygiene_restore = hygiene_value
+									if ((H.mutantrace?.name == "bingus") && istype(src, /datum/reagent/oil))
+										hygiene_restore = 3
+									H.sims.affectMotive("Hygiene", volume * hygiene_restore)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)

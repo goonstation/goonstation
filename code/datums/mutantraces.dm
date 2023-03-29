@@ -1816,16 +1816,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/cat)
 	mutant_folder = 'icons/mob/cat.dmi'
 	special_head = HEAD_CAT
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+			M.setStatus("aquaphobia", INFINITE_STATUS)
 
 	say_verb()
 		return "meows"

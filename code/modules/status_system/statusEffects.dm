@@ -2159,6 +2159,14 @@
 		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.setStatus("rancid", null)
 
+/datum/statusEffect/aquaphobia
+	id = "aquaphobia"
+	name = "Aquaphobia"
+	desc = "You absolutely hate water."
+	icon_state = "anti-water"
+	maxDuration = INFINITE_STATUS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
 /datum/statusEffect/rancid
 	id = "rancid"
 	name = "Rancid"
