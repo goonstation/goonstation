@@ -1544,7 +1544,10 @@
 "adu" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
@@ -16441,11 +16444,18 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aQB" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "EVA"
 	},
-/turf/simulated/floor/plating/random,
+/obj/access_spawn/eva,
+/obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "aQC" = (
 /obj/cable{
@@ -89445,7 +89455,7 @@ bCf
 bDu
 hFC
 bAU
-adv
+aQB
 bHl
 bHU
 bIX
@@ -89747,7 +89757,7 @@ bAU
 bDv
 bAU
 bAU
-aQB
+adu
 bHl
 bHU
 lTR
