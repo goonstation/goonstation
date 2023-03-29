@@ -58,7 +58,7 @@
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
 	reviving
-		revivalChance = 100
+		src.revivalChance = 100
 
 	New()
 		..()
