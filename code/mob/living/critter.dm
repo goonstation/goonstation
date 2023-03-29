@@ -1074,21 +1074,33 @@ ABSTRACT_TYPE(/mob/living/critter)
 					if (!param)
 						param = input("Choose an emote to display.")
 						if(!param) return
+					else //hack to fix double encoding of custom emotes when using hotkey, speech code is a knotted mess
+						param = html_decode(param)
+
 					param = html_encode(sanitize(param))
-					message = "<b>[src]</b> [param]"
+					var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+					message = "<b>[src]</b>[space][param]"
 					m_type = 1
 				if ("customh")
 					if (!param)
 						param = input("Choose an emote to display.")
 						if(!param) return
+					else
+						param = html_decode(param)
+
 					param = html_encode(sanitize(param))
-					message = "<b>[src]</b> [param]"
+					var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+					message = "<b>[src]</b>[space][param]"
 					m_type = 2
 				if ("me")
 					if (!param)
 						return
+					else
+						param = html_decode(param)
+
 					param = html_encode(sanitize(param))
-					message = "<b>[src]</b> [param]"
+					var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+					message = "<b>[src]</b>[space][param]"
 					m_type = 1
 				if ("flip")
 					if (src.emote_check(voluntary, 50))

@@ -420,7 +420,8 @@
 				else
 					alert("Unable to use this emote, must be either hearable or visible.")
 					return
-				message = "<B>[src]</B> [input]"
+				var/space = should_have_space_before_emote(html_decode(input)) ? " " : ""
+				message = "<B>[src]</B>[space][input]"
 				maptext_out = "<I>[input]</I>"
 				custom = copytext(input, 1, 10)
 
@@ -428,8 +429,12 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
+				else //hack to fix double encoding of custom emotes when using hotkey, speech code is a knotted mess
+					param = html_decode(param)
+
 				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+				message = "<b>[src]</b>[space][param]"
 				maptext_out = "<I>[param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
@@ -438,8 +443,11 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
-				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				else
+					param = html_decode(param)
+
+				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+				message = "<b>[src]</b>[space][param]"
 				maptext_out = "<I>[param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 2
@@ -447,8 +455,12 @@
 			if ("me")
 				if (!param)
 					return
+				else
+					param = html_decode(param)
+
 				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
+				message = "<b>[src]</b>[space][param]"
 				maptext_out = "<I>[param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
