@@ -29,9 +29,9 @@
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
-	var/list/ban_data = url_decode(response.body)
-	if (rustg_json_is_valid(ban_data))
-		ban_data = json_decode(ban_data)
+	var/list/ban_data
+	if (rustg_json_is_valid(response.body))
+		ban_data = json_decode(response.body)
 	else
 		ban_data = list()
 	. = list(
