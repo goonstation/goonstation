@@ -1532,6 +1532,9 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
+		setProperty("exploprot", 30)
+		setProperty("disorient_resist", 25)
+		setProperty("radprot", 50)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen

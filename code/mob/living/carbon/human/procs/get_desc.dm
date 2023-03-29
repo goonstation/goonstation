@@ -121,7 +121,7 @@
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
 
 	if (src.arrestIcon?.icon_state)
-		if(locate(usr) in global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount) // anyone that can see arrest status can see the flag too
+		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
 			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 			if(sec_record)
 				var/sechud_flag = sec_record["sec_flag"]
