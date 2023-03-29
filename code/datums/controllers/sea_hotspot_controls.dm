@@ -847,6 +847,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0
+	status = REQ_PHYSICAL_ACCESS
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -894,7 +895,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !user.equipped())
+			if(cell && !user.equipped() && in_interact_range(src, user))
 				cell.UpdateIcon()
 				user.put_in_hand_or_drop(cell)
 
