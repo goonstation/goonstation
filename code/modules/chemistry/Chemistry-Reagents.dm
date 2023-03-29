@@ -160,19 +160,22 @@ datum
 							did_not_react = 0
 					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
+						if ((istype(src, /datum/reagent/water) || findtext(src.name, "water")) && H.hasStatus("aquaphobia"))
+							animate_shake(H)
+							if (prob(50))
+								H.emote("scream")
+							else
+								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
+							random_burn_damage(H, 1.2 * volume)
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								if ((istype(src, /datum/reagent/water) || findtext(src.name, "water")) && H.hasStatus("aquaphobia"))
-									animate_shake(H)
-									H.emote("scream")
-									if (prob(75))
-										boutput(H, "The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!", group = "aquaphobia")
-									random_burn_damage(H, 1 * volume)
-								else
-									var/hygiene_restore = hygiene_value
-									if ((H.mutantrace?.name == "bingus") && istype(src, /datum/reagent/oil))
+								var/hygiene_restore = hygiene_value
+								if ((H.mutantrace?.name == "bingus"))
+									if (istype(src, /datum/reagent/oil))
 										hygiene_restore = 3
-									H.sims.affectMotive("Hygiene", volume * hygiene_restore)
+									else if (istype(src, /datum/reagent/water))
+										hygiene_restore = -3
+								H.sims.affectMotive("Hygiene", volume * hygiene_restore)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)

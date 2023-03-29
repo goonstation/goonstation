@@ -1710,12 +1710,12 @@
 // bingus limbs hehehe
 
 /obj/item/parts/human_parts/arm/mutant/cat/bingus
-	icon = 'icons/mob/cat.dmi'
-	partIcon = 'icons/mob/cat.dmi'
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
 
 /obj/item/parts/human_parts/leg/mutant/cat/bingus
-	icon = 'icons/mob/cat.dmi'
-	partIcon = 'icons/mob/cat.dmi'
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
 
 ////// ACTUAL CAT LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/cat/bingus/left

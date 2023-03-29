@@ -1341,7 +1341,8 @@ datum
 							var/mob/living/silicon/robot/R = M
 							R.add_oil(volume * 2)
 							boutput(R, "<span class='notice'>Your joints and servos begin to run more smoothly.</span>")
-						else boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
+						else if (!(M.mutantrace?.name == "bingus"))
+							boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
