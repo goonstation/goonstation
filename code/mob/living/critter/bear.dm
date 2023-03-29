@@ -24,6 +24,7 @@
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
+	add_abilities = /datum/targetable/critter/tackle
 	var/droparms = TRUE
 
 	on_pet(mob/user)
@@ -96,7 +97,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50) // METH
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "bear", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 3)
-		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		src.add_stam_mod_max("bear", 50)
 
 	critter_attack(mob/target)
