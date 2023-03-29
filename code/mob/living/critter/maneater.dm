@@ -83,7 +83,6 @@
 		HH.can_hold_items = 0
 
 	HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
-		// raise the health of the plant linear from 0 endurance to max endurance
 		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * src.health_per_endurance)
 		for (var/T in healthlist)
 			var/datum/healthHolder/HB = healthlist[T]
@@ -96,6 +95,14 @@
 		..()
 
 	New()
+		//Maneaters are scary and big, they should not be pinned for helplessly thrown around
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "Maneater")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
+		..()
+
+	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "Maneater")
 		..()
 
 	setup_healths()
