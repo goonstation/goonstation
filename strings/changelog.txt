@@ -1,4 +1,20 @@
 
+(t)wed mar 29 23
+(u)Hans and ability sprite by Mr Moriarty
+(*)Mobifies rattlesnakes.
+(+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
+(u)LeahTheTech
+(p)13268
+(e)🧫💨⚙|C-Experimental, A-Atmospherics, A-Internal
+(*)The atmos process is ticking twice as fast, this should make repressurizing and so on a lot less tedious - but may cause Issues. Please report any if you find them.
+(u)Nexusuxen
+(p)13466
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Amusing Ducks now correctly respond to packet controls. Quack.
+(u)Flappybat
+(p)13118
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Silicon and robotic life can no longer eat, drink or be forcefed.
 (t)tue mar 28 23
 (u)Blackrep
 (p)13453

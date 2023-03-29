@@ -196,92 +196,91 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			user.u_equip(src)
 			qdel(src)
 			return 0
-		if (iscarbon(M) || ismobcritter(M))
-			if (M == user)
-				//can this person eat this food?
-				if(!M.can_eat(src))
-					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+		if (M == user)
+			//can this person eat this food?
+			if(!M.can_eat(src))
+				boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+				return 0
+			if (!bypass_utensils)
+				var/utensil = null
+
+				if ((src.required_utensil == REQUIRED_UTENSIL_FORK || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+					utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
+				else if ((src.required_utensil == REQUIRED_UTENSIL_SPOON || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && isspooningtool(user.equipped()))
+					utensil = user.equipped()
+
+				// If it's a plastic fork we've found then test if we've broken it
+				var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
+				if (istype(plastic_fork))
+					if (prob(20))
+						plastic_fork.break_utensil(M)
+						utensil = null
+
+				// If it's a plastic spoon we've found then test if we've broken it
+				var/obj/item/kitchen/utensil/spoon/plastic/plastic_spoon = utensil
+				if (istype(plastic_spoon))
+					if (prob(20))
+						plastic_spoon.break_utensil(M)
+						utensil = null
+
+				if (!utensil && (src.required_utensil))
+					switch(src.required_utensil)
+						if (REQUIRED_UTENSIL_FORK_OR_SPOON)
+							boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
+						if (REQUIRED_UTENSIL_FORK)
+							boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+						if (REQUIRED_UTENSIL_SPOON)
+							boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
+
+					M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
+					return
+
+			//no or broken stomach
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+				if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
+					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
+					"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 					return 0
-				if (!bypass_utensils)
-					var/utensil = null
+				if (!H.organHolder.head)
+					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
+					"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
+					return 0
 
-					if ((src.required_utensil == REQUIRED_UTENSIL_FORK || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON) && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
-						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-					else if ((src.required_utensil == REQUIRED_UTENSIL_SPOON || src.required_utensil == REQUIRED_UTENSIL_FORK_OR_SPOON)  && isspooningtool(user.equipped()))
-						utensil = user.equipped()
+			src.take_a_bite(M, user)
+			return 1
+		if (check_target_immunity(M))
+			user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
+			return 0
+		else if(!M.can_eat(src))
+			user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+				"<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+				"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+			return 0
+		else
+			user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+				"<span class='alert'>You try to feed [M] [src]!</span>",\
+				"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+			logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
-					// If it's a plastic fork we've found then test if we've broken it
-					var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
-					if (istype(plastic_fork))
-						if (prob(20))
-							plastic_fork.break_utensil(M)
-							utensil = null
+			//no or broken stomach
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+				if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
+					user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+						"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+						"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
+					return 0
+				if (!H.organHolder.head)
+					user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
+						"<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
+						"<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
+					return 0
 
-					// If it's a plastic spoon we've found then test if we've broken it
-					var/obj/item/kitchen/utensil/spoon/plastic/plastic_spoon = utensil
-					if (istype(plastic_spoon))
-						if (prob(20))
-							plastic_spoon.break_utensil(M)
-							utensil = null
-
-					if (!utensil && (src.required_utensil))
-						switch(src.required_utensil)
-							if (REQUIRED_UTENSIL_FORK_OR_SPOON)
-								boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
-							if (REQUIRED_UTENSIL_FORK)
-								boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
-							if (REQUIRED_UTENSIL_SPOON)
-								boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
-
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
-						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
-						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
-						return 0
-					if (!H.organHolder.head)
-						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
-						"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
-						return 0
-
-				src.take_a_bite(M, user)
-				return 1
-			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
-				return 0
-			else if(!M.can_eat(src))
-				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
-					"<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
-					"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
-				return 0
-			else
-				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-					"<span class='alert'>You try to feed [M] [src]!</span>",\
-					"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-				logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
-
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
-						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
-						return 0
-					if (!H.organHolder.head)
-						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
-							"<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
-							"<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
-						return 0
-
-				actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
-				return 1
+			actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
+			return 1
 
 	///Called when we successfully take a bite of something (or make someone else take a bite of something)
 	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
@@ -574,6 +573,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 0
 
 		if (M == user)
+			if(!M.can_drink(src))
+				boutput(M, "<span class='alert'>You can't drink [src]!</span>")
+				return 0
 			src.take_a_drink(M, user)
 			return 1
 		else
@@ -581,6 +583,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			logTheThing(LOG_COMBAT, user, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
+				return 0
+			else if(!M.can_drink(src))
+				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to make [M] drink [src], but they can't drink that!</span>",\
+					"<span class='alert'>You try to make [M] drink [src], but they can't drink that!</span>",\
+					"<span class='alert'><b>[user]</b> tries to give you a drink of [src], but you can't drink that!</span>")
 				return 0
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
