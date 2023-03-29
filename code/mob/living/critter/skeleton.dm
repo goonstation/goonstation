@@ -156,7 +156,7 @@
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (islivingobject(C)) continue //don't attack wraith objects
-			if (istype,(C, /mob/living/critter/wraith)) // don't ttack wraith summons
+			if (istype,(C, /mob/living/critter/wraith)) continue // don't attack wraith summons
 			if (istype(C, /mob/living/critter/skeleton)) continue
 			. += C
 
