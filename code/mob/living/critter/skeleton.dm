@@ -51,7 +51,7 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/sawfly
 	skinresult = /obj/item/material_piece/bone
-	add_abilities = /datum/targetable/critter/tackle
+	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
 	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
