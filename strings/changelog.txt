@@ -1,5 +1,8 @@
 
 (t)wed mar 29 23
+(u)Hans and ability sprite by Mr Moriarty
+(*)Mobifies rattlesnakes.
+(+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
 (u)Flappybat
 (p)13118
 (e)🪲🤖|C-Bug, A-Silicons
