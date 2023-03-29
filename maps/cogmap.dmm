@@ -49757,15 +49757,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"eMF" = (
-/obj/rack,
-/obj/item/tank/jetpack/micro,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
 "eML" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -104503,7 +104494,7 @@ blK
 xOl
 xOl
 bnS
-eMF
+xOl
 xOl
 bpA
 bqe
