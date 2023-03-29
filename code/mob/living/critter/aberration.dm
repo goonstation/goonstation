@@ -24,8 +24,6 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
-	caneat = FALSE
-	candrink = FALSE
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE
