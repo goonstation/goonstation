@@ -82,8 +82,7 @@
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 
-	Setup_DNA()
-		var/datum/plantgenes/DNA = src.plantgenes
+	HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
 		// raise the health of the plant linear from 0 endurance to max endurance
 		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * src.health_per_endurance)
 		for (var/T in healthlist)

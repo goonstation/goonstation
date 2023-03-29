@@ -285,10 +285,9 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
 		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")))
 			var/mob/living/critter/plant/maneater/ME = new(get_turf(POT))
+			var/percent_health_on_spawn = round(POT.health / 10 * 100)
 			if (P.starthealth != 0) //this passes the same formular examining a plant used to determinate its % health
-				ME.percent_health_on_spawn = round(POT.health / P.starthealth * 100)
-			else
-				ME.percent_health_on_spawn = round(POT.health / 10 * 100)
+				percent_health_on_spawn = round(POT.health / P.starthealth * 100)
 			ME.growers = ME.growers | POT.contributors
 			var/datum/plantgenes/FDNA = ME.plantgenes
 			HYPpassplantgenes(DNA,FDNA)
@@ -305,7 +304,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 						hybrid.vars[V] = P.vars[V]
 				ME.planttype = hybrid
 			// Now while we have all stats together, let's make the critter adjust its stats itself
-			ME.Setup_DNA()
+			ME.HYPsetup_dna(DNA, percent_health_on_spawn)
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return

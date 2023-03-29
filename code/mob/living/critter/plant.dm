@@ -6,7 +6,6 @@
 	var/datum/plantgenes/plantgenes = null //! saves the plantgenes of the critter. Important for seed creation as well as scaling with plant attributes
 	var/generation = 0 //! For genetics tracking.
 	var/growers = list() //! This contains people who contributed to the plant. For AI purposes
-	var/percent_health_on_spawn = 100 //! This passes the health % the plant in contrast to its starting health had when harvested to the critter
 
 	New()
 		if(ispath(src.planttype))
@@ -26,14 +25,14 @@
 				qdel(src)
 				return
 
-	proc/Setup_DNA()
+	proc/HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
 		/// This proc gets called after the critter is created on-harvest. Use this one to apply any baseline-scaling, like health, to the critter with plant stats
-
-		if (src.percent_health_on_spawn < 1)
-			src.percent_health_on_spawn = 1
+		// percent_health_on_spawn gets passed by the plantpot.
+		if (percent_health_on_spawn < 1)
+			percent_health_on_spawn = 1
 		for (var/T in healthlist)
 			var/datum/healthHolder/HB = healthlist[T]
-			var/reduced_health = clamp(round(HB.maximum_value * src.percent_health_on_spawn / 100), 1, HB.maximum_value)
+			var/reduced_health = clamp(round(HB.maximum_value * percent_health_on_spawn / 100), 1, HB.maximum_value)
 			HB.value = reduced_health
 			HB.last_value = reduced_health
 

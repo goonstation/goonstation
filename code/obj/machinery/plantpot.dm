@@ -1315,10 +1315,9 @@ TYPEINFO(/obj/machinery/plantpot)
 					F.growers = F.growers | src.contributors
 					//this passes the same formular examining a plant used to determinate its % health
 					//a damaged plant will created damaged critters
+					var/percent_health_on_spawn = round(src.health / 10 * 100)
 					if (growing.starthealth != 0)
-						F.percent_health_on_spawn = round(src.health / growing.starthealth * 100)
-					else
-						F.percent_health_on_spawn = round(src.health / 10 * 100)
+						percent_health_on_spawn = round(src.health / growing.starthealth * 100)
 					//Now we pass plant genes
 					var/datum/plantgenes/FDNA = F.plantgenes
 					HYPpassplantgenes(DNA,FDNA)
@@ -1336,7 +1335,7 @@ TYPEINFO(/obj/machinery/plantpot)
 								hybrid.vars[V] = growing.vars[V]
 						F.planttype = hybrid
 					// Now while we have all stats together, let's make the critter adjust its stats itself and not bloat this object more than it needs to be
-					F.Setup_DNA()
+					F.HYPsetup_dna(DNA, percent_health_on_spawn)
 
 				else if (istype(CROP,/obj/item/organ))
 					var/obj/item/organ/O = CROP
