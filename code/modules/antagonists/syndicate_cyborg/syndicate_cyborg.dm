@@ -1,6 +1,8 @@
 /datum/antagonist/syndicate_cyborg
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
+	remove_on_death = TRUE
+	remove_on_clone = TRUE
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)
