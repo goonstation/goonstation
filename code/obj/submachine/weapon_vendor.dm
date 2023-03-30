@@ -236,7 +236,7 @@
 /obj/submachine/weapon_vendor/fishing
 	name = "Fishing Supplies Vendor"
 	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon-pirates"
+	icon_state = "fishing"
 	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	token_accepted = /obj/item/requisition_token/fishing
