@@ -59,6 +59,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 			silent = TRUE
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
 
+		if (QDELETED(src))
+			return FALSE
+		src.owner.antagonists.Add(src)
+
 	Del()
 		if (owner && !src.pseudo)
 			owner.former_antagonist_roles.Add(owner.special_role)

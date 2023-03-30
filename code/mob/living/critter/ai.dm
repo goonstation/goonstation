@@ -441,7 +441,8 @@ var/list/ai_move_scheduled = list()
 			else
 				current_subtask = subtasks[subtask_index]
 				current_subtask.reset()
-				// ready to run this immediately next tick
+				//double tick, fuck you
+				current_subtask.tick()
 				return
 		else if(current_subtask.failed())
 			// the sequence is ruined

@@ -173,7 +173,7 @@
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
 		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
-		return can_act(src,TRUE) && !flail.disabled
+		return ..() && !flail?.disabled
 
 /mob/living/critter/spider/nice
 	name = "bumblespider"
@@ -365,10 +365,6 @@
 			else
 				src.set_a_intent(INTENT_HARM)
 				src.hand_attack(target)
-
-	can_critter_attack()
-		return can_act(src,TRUE)
-
 	cluwne
 		name = "cluwnespider"
 		desc = "Uhhh. That's not normal. Like, even for clownspiders."
@@ -404,8 +400,6 @@
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
-		can_critter_attack()
-			return can_act(src,TRUE)
 
 
 /mob/living/critter/spider/clownqueen
@@ -470,7 +464,7 @@
 
 		can_critter_attack()
 			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
-			return can_act(src,TRUE) && !trample.disabled
+			return ..() && !trample?.disabled
 
 	New()
 		..()
@@ -549,7 +543,7 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
-		return can_act(src,TRUE) && !trample.disabled
+		return ..() && !trample?.disabled
 
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
