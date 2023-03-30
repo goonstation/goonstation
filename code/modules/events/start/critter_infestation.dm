@@ -14,7 +14,7 @@
 	list(/mob/living/critter/spider,/mob/living/critter/spider/baby),\
 	list(/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby),\
 	list(/mob/living/critter/spider/spacerachnid),\
-	list(/obj/critter/spacerattlesnake),\
+	list(/mob/living/critter/small_animal/rattlesnake),\
 	list(/obj/critter/fermid),)
 
 	admin_call(var/source)
