@@ -1575,3 +1575,51 @@ keeping this here because I want to make something else with it eventually
 			. = ..()
 			SPAWN(1 DECI SECOND) //sync with the organs spawn
 				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
+
+/* =========================================================== */
+/* -------------------- Casts and Splints -------------------- */
+/* =========================================================== */
+/// note that this is the item form for the cast, fiberglass bandages
+/obj/item/orthopedic_cast
+	name = "fiberglass bandages"
+	desc = "These special bandages harden upon application to make an orthopedic cast and provide support to healing bones."
+	icon = 'icons/obj/surgery.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	icon_state = null
+	item_state = null
+	uses_multiple_icon_states = 1
+
+	update_icon()
+		switch (src.uses)
+			if (-INFINITY to 0)
+				src.icon_state = "bandage-item-0"
+			if (1 to 2)
+				src.icon_state = "bandage-item-1"
+			if (3 to 4)
+				src.icon_state = "bandage-item-2"
+			if (5 to INFINITY)
+				src.icon_state = "bandage-item-3"
+
+/obj/item/orthopedic_cast/used
+	name = "fiberglass bandages"
+	desc = "The remains of what used to be an orthopedic cast."
+	icon_state = null
+	item_state = null
+
+/obj/item/orthopedic_cast/splint
+	name = "splint"
+	desc = "Sometimes called a half-cast, this reusable structure provides support to a limb while it recovers from a broken bone."
+	icon_state = null
+	item_state = null
+
+/* ================================================== */
+/* -------------------- Crutches -------------------- */
+/* ================================================== */
+
+/obj/item/crutches
+	name = "crutch"
+	desc = "By holding a crutch in one arm (or both), you're able to somewhat ignore one of your legs not working."
+	icon = 'icons/obj/surgery.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	icon_state = null
+	item_state = null
