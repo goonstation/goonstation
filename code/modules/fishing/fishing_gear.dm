@@ -147,11 +147,11 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/submachine/fishing_upload_terminal
 	name = "Aquatic Research Upload Terminal"
 	desc = "Insert fish to recieve points to spend in the fishing vendor."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "processor-off"
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "uploadterminal_open"
 	anchored = 1
 	density = 1
-	layer = OBJ_LAYER - 0.1
+	layer = 3
 	var/working = 0
 	var/allowed = list(/obj/item/fish)
 
@@ -162,7 +162,7 @@ TYPEINFO(/obj/item/fish_portal)
 		if (src.working == 1)
 			boutput(user, "<span class='alert'>The terminal is busy!</span>")
 			return
-		src.icon_state = "processor-on"
+		src.icon_state = "uploadterminal_working"
 		src.working = 1
 		src.visible_message("The [src] begins uploading research data.")
 		sleep(rand(30,70))
@@ -170,26 +170,26 @@ TYPEINFO(/obj/item/fish_portal)
 		for(var/obj/item/fish/P in src.contents)
 			switch( P.value )
 				if (FISH_RARITY_COMMON)
-					new/obj/item/requisition_token/fishing/common(src.loc)
+					new/obj/item/requisition_token/fishing/common(src.loc, src.layer + 0.1)
 					qdel( P )
 				if (FISH_RARITY_UNCOMMON)
-					new/obj/item/requisition_token/fishing/uncommon(src.loc)
+					new/obj/item/requisition_token/fishing/uncommon(src.loc, src.layer + 0.1)
 					qdel( P )
 				if (FISH_RARITY_RARE)
-					new/obj/item/requisition_token/fishing/rare(src.loc)
+					new/obj/item/requisition_token/fishing/rare(src.loc, src.layer + 0.1)
 					qdel( P )
 				if (FISH_RARITY_EPIC)
-					new/obj/item/requisition_token/fishing/epic(src.loc)
+					new/obj/item/requisition_token/fishing/epic(src.loc, src.layer + 0.1)
 					qdel( P )
 				if (FISH_RARITY_LEGENDARY)
-					new/obj/item/requisition_token/fishing/legendary(src.loc)
+					new/obj/item/requisition_token/fishing/legendary(src.loc, src.layer + 0.1)
 					qdel( P )
 
 		// Wind down
 		for(var/obj/item/S in src.contents)
 			S.set_loc(get_turf(src))
 		src.working = 0
-		src.icon_state = "processor-off"
+		src.icon_state = "upload_terminal_0"
 		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 		return
 
