@@ -40,9 +40,9 @@
 	blood_id = "calcium"
 	burning_suffix = "humanoid"
 	metabolizes = FALSE
-	health_brute = 30
+	health_brute = 25
 	health_brute_vuln = 1
-	health_burn = 30
+	health_burn = 25
 	health_burn_vuln = 0.7
 	mob_flags = IS_BONEY
 	is_npc = TRUE
@@ -155,8 +155,8 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	health_brute = 25
-	health_burn = 25
+	health_brute = 15
+	health_burn = 15
 
 	seek_target(var/range = 7)
 		. = list()
