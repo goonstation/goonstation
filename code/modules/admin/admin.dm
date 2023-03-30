@@ -514,6 +514,7 @@ var/global/noir = 0
 			if (isnull(centcomviewer))
 				centcomviewer = new
 			centcomviewer.target_key = target.key
+			centcomviewer.force_static_data_update = TRUE
 			centcomviewer.ui_interact(usr.client.mob)
 
 		/////////////////////////////////////ban stuff
