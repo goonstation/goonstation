@@ -3188,6 +3188,9 @@
 /mob/proc/on_eat(var/atom/A)
 	return
 
+/mob/proc/can_drink(var/atom/A)
+	return TRUE
+
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)

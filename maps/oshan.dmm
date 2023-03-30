@@ -1544,7 +1544,10 @@
 "adu" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
@@ -1669,34 +1672,50 @@
 "adH" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "adI" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "adJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "adK" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "adL" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "adM" = (
@@ -16441,11 +16460,18 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aQB" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "EVA"
 	},
-/turf/simulated/floor/plating/random,
+/obj/access_spawn/eva,
+/obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "aQC" = (
 /obj/cable{
@@ -26109,6 +26135,9 @@
 /area/station/bridge)
 "but" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "buu" = (
@@ -42370,7 +42399,6 @@
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/oneHuman,
 /obj/random_item_spawner/ai_experimental,
-/obj/cable,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -45198,6 +45226,13 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"rQU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/bridge)
 "rUH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
@@ -46210,6 +46245,9 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/ai_upload)
@@ -89445,7 +89483,7 @@ bCf
 bDu
 hFC
 bAU
-adv
+aQB
 bHl
 bHU
 bIX
@@ -89747,7 +89785,7 @@ bAU
 bDv
 bAU
 bAU
-aQB
+adu
 bHl
 bHU
 lTR
@@ -91546,7 +91584,7 @@ cjV
 bsI
 bts
 bts
-but
+rQU
 buV
 bvC
 bwj
