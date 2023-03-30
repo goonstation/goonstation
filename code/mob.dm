@@ -2467,14 +2467,13 @@
 
 /mob/proc/full_heal()
 	SHOULD_CALL_PARENT(TRUE)
-	var/mob/ghost = find_ghost_by_key(src.last_ckey)
-	if(ghost)
-		ghost.mind.transfer_to(src)
+	if(src.ghost?.mind)
+		src.ghost.mind.transfer_to(src)
 		if(isliving(src))
 			var/mob/living/L = src
 			L.is_npc = FALSE
-		if(isobserver(ghost))
-			qdel(ghost)
+		if(isobserver(src.ghost))
+			qdel(src.ghost)
 
 	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
@@ -3188,6 +3187,9 @@
 
 /mob/proc/on_eat(var/atom/A)
 	return
+
+/mob/proc/can_drink(var/atom/A)
+	return TRUE
 
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc

@@ -4,12 +4,13 @@
 	icon_state = "tripod"
 	density = 1
 	anchored = 1
+	status = REQ_PHYSICAL_ACCESS
 
 	machine_registry_idx = MACHINES_MISC
 	var/obj/item/tripod_bulb/bulb = null
 
 	attack_hand(mob/user)
-		if (can_reach(user,src))
+		if (in_interact_range(src, user))
 			if (bulb)
 				bulb.removed(src)
 				user.put_in_hand_or_drop(bulb)

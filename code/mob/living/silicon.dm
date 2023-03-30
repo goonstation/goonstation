@@ -52,6 +52,12 @@
 	req_access = null
 	return ..()
 
+/mob/living/silicon/can_eat()
+	return FALSE
+
+/mob/living/silicon/can_drink()
+	return FALSE
+
 ///mob/living/silicon/proc/update_canmove()
 //	..()
 	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)

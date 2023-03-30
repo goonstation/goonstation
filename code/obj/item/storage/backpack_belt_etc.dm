@@ -642,6 +642,23 @@
 	can_hold = list(/obj/item/deconstructor)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/utility/nt_engineer
+	name = "specialist engineering belt"
+	desc = "A high capacity engineering belt."
+	can_hold = list(
+		/obj/item/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/sheet,
+		/obj/item/tile
+	)
+	spawn_contents = list(
+		/obj/item/rcd/construction,
+		/obj/item/rcd_ammo/medium,
+		/obj/item/tool/omnitool,
+		/obj/item/device/analyzer/atmospheric/upgraded
+	)
+
 /obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
