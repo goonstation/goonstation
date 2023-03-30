@@ -138,7 +138,7 @@ Alien/mutant/other fish:
 /obj/item/fish/rainbow_trout
 	name = "rainbow trout"
 	desc = "A highly-regarded game fish with a vivid red stripe along it."
-	icon_state = "bass_old"
+	icon_state = "trout"
 	inhand_color = "#4a6169"
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_UNCOMMON
@@ -146,7 +146,7 @@ Alien/mutant/other fish:
 /obj/item/fish/goldfish
 	name = "goldfish"
 	desc = "A commonly kept indoor aquarium fish. More clever than you might expect."
-	icon_state = "bass_old"
+	icon_state = "goldfish"
 	inhand_color = "#f3a807"
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_COMMON
