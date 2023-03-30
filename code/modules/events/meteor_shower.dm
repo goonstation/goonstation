@@ -32,9 +32,26 @@ var/global/meteor_shower_active = 0
 			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
 				. = FALSE
 
-	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
+	event_effect(source, amount, direction, delay, warning_time, speed, datum/material/transmute_material_instead="random")
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
+
+		if(transmute_material_instead == "random")
+			#ifdef APRIL_FOOLS
+			transmute_material_instead = "jean"
+			#else
+			if(prob(97))
+				transmute_material_instead = null
+			else
+				if(prob(50))
+					transmute_material_instead = "jean"
+				else
+					transmute_material_instead = pick(material_cache)
+			#endif
+		if(istext(transmute_material_instead))
+			transmute_material_instead = getMaterial(transmute_material_instead)
+		if(transmute_material_instead?.mat_id == "jean")
+			shower_name = "jeteor jower"
 
 		if (isnum(direction) && direction == -1)
 			// dear station: get fucked
@@ -150,6 +167,8 @@ var/global/meteor_shower_active = 0
 				var/turf/pickedstart = locate(start_x, start_y, 1)
 				var/target = locate(targ_x, targ_y, 1)
 				var/obj/newmeteor/M = new meteor_type(pickedstart,target)
+				if(transmute_material_instead)
+					M.set_transmute(transmute_material_instead)
 				M.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
 				sleep(delay_between_meteors)
 
@@ -184,7 +203,12 @@ var/global/meteor_shower_active = 0
 		if (!isnum(spdinput) || spdinput < 1)
 			return
 
-		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput)
+		var/transmute_material_instead = null
+		if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
+			var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
+			transmute_material_instead = getMaterial(matid)
+
+		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput,  transmute_material_instead)
 		return
 
 ////////////////////////////////////////
@@ -206,6 +230,7 @@ var/global/meteor_shower_active = 0
 	var/atom/target = null
 	var/last_tile = null
 	var/explodes = 0
+	var/exploded = FALSE
 	var/exp_dev = 0
 	var/exp_hvy = 0
 	var/exp_lit = 0
@@ -214,6 +239,11 @@ var/global/meteor_shower_active = 0
 	var/sound_explode = 'sound/effects/exlow.ogg'
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
+	var/transmute_material = null
+
+	proc/set_transmute(datum/material/mat)
+		src.setMaterial(mat)
+		src.transmute_material = mat
 
 	shark
 		name = "shark chunk"
@@ -338,10 +368,49 @@ var/global/meteor_shower_active = 0
 			else
 				dump_ore()
 
+	proc/transmute_effect(range)
+		var/range_squared = range**2
+		var/turf/T = get_turf(src)
+		var/smoothEdge = prob(20)
+		var/affects_organic = pick(
+			20; "transmute",
+			10; "statue",
+			40; "nothing"
+		)
+		for(var/atom/G in range(range, T))
+			if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid))
+				continue
+			var/dist = GET_SQUARED_EUCLIDEAN_DIST(T, G)
+			var/distPercent = (dist/range_squared)*100
+			if(dist > range_squared)
+				continue
+			if(!smoothEdge && prob(distPercent))
+				continue
+			if(istype(G, /mob))
+				if(!isliving(G) || isintangible(G)) // not stuff like ghosts, please
+					continue
+				var/mob/M = G
+				switch(affects_organic)
+					if("transmute")
+						M.setMaterial(transmute_material)
+						for(var/atom/I in M.get_all_items_on_mob())
+							I.setMaterial(transmute_material)
+					if("statue")
+						if(distPercent < 40) // only inner 40% of range
+							if(M)
+								M.become_statue(transmute_material)
+			else
+				G.setMaterial(transmute_material)
+
 	proc/shatter()
+		if(exploded) return
+		exploded = TRUE
+		if(isnull(src.loc)) return
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN(1 DECI SECOND)
+			if(transmute_material)
+				transmute_effect(6)
+			else
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
 		qdel(source)
@@ -355,6 +424,8 @@ var/global/meteor_shower_active = 0
 			var/atom/movable/A = new type
 			A.set_loc(T)
 			A.name = "[A.name] chunk"
+			if(transmute_material)
+				A.setMaterial(transmute_material)
 
 		var/atom/source = src
 		qdel(source)
@@ -389,15 +460,22 @@ var/global/meteor_shower_active = 0
 		shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
 
 	shatter()
+		if(exploded) return
+		exploded = TRUE
+		if(isnull(src.loc)) return
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN(1 DECI SECOND)
+			if(transmute_material)
+				transmute_effect(12)
+			else
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
 			if(prob(15))
 				continue
 			var/type = pick(shatter_types)
 			var/atom/trg = get_step(src, A)
-			new type(src.loc, trg)
+			var/obj/newmeteor/met = new type(src.loc, trg)
+			if(transmute_material)
+				met.set_transmute(transmute_material)
 		var/atom/source = src
 		qdel(source)
