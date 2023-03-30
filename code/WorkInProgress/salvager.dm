@@ -286,7 +286,7 @@
 
 /obj/item/storage/box/salvager_frame_compartment
 	name = "electronics frame compartment"
-	desc = "A special compartment designed to neatly and safely store deconstructed eletronics and machinery frames."
+	desc = "A special compartment designed to neatly and safely store deconstructed electronics and machinery frames."
 	max_wclass = W_CLASS_HUGE
 	can_hold = list(/obj/item/electronics/frame)
 	slots = 8

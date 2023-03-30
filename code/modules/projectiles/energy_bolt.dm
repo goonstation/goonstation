@@ -91,6 +91,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
+		hit.emp_act()
 		impact_image_effect(ie_type, hit)
 		return
 
