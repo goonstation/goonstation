@@ -256,6 +256,9 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		var/is_emagged = src.emagged
+		var/is_syndicate = src.syndicate
+
 		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
@@ -272,11 +275,8 @@
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
-
-			if (src.emagged)
-				frame.emagged = TRUE
-			if (src.syndicate)
-				frame.syndicate = TRUE
+			frame.emagged = is_emagged
+			frame.syndicate = is_syndicate
 
 			src.ghostize()
 			qdel(src)
