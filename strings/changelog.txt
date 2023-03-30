@@ -1,5 +1,9 @@
 
 (t)wed mar 29 23
+(u)Nexusuxen
+(p)13430
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Airlocks now make sounds when un/bolted via packets. Can no longer toggle door bolts via packet if bolt wire cut.
 (u)Hans and ability sprite by Mr Moriarty
 (*)Mobifies rattlesnakes.
 (+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
