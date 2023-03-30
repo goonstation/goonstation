@@ -618,27 +618,32 @@
 		icon_state = "doubloon"
 
 /obj/item/requisition_token/fishing
-	icon_state = "req-token-sec"
+	icon_state = "fish_common"
 
 	common
-		name = "common fishing token"
-		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 1 credit."
+		name = "common research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 1 credit."
+		icon_state = "fish_common"
 
 	uncommon
-		name = "uncommon fishing token"
-		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 2 credits."
+		name = "uncommon research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 2 credits."
+		icon_state = "fish_uncommon"
 
 	rare
-		name = "rare fishing token"
-		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 3 credits."
+		name = "rare research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 3 credits."
+		icon_state = "fish_rare"
 
 	epic
-		name = "epic fishing token"
-		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 4 credits."
+		name = "epic research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 4 credits."
+		icon_state = "fish_epic"
 
 	legendary
-		name = "Common fishing token"
-		desc = "A NT-provided token compatible with the Fishing Equipment Vendor. Worth 5 credits."
+		name = "legendary research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 5 credits."
+		icon_state = "fish_legendary"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
