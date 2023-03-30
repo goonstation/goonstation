@@ -422,7 +422,10 @@
 					return
 				var/space = should_have_space_before_emote(html_decode(input)) ? " " : ""
 				message = "<B>[src]</B>[space][input]"
-				maptext_out = "<I>[input]</I>"
+				var/should_have_name_before_emote
+				if (!space)
+					should_have_name_before_emote = "[src]"
+				maptext_out = "<I>[should_have_name_before_emote][input]</I>"
 				custom = copytext(input, 1, 10)
 
 			if ("customv")
@@ -435,7 +438,10 @@
 				param = html_encode(sanitize(param))
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				message = "<b>[src]</b>[space][param]"
-				maptext_out = "<I>[param]</I>"
+				var/should_have_name_before_emote
+				if (!space)
+					should_have_name_before_emote = "[src]"
+				maptext_out = "<I>[should_have_name_before_emote][param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
 
@@ -448,7 +454,10 @@
 
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				message = "<b>[src]</b>[space][param]"
-				maptext_out = "<I>[param]</I>"
+				var/should_have_name_before_emote
+				if (!space)
+					should_have_name_before_emote = "[src]"
+				maptext_out = "<I>[should_have_name_before_emote][param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 2
 
@@ -461,7 +470,10 @@
 				param = html_encode(sanitize(param))
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				message = "<b>[src]</b>[space][param]"
-				maptext_out = "<I>[param]</I>"
+				var/should_have_name_before_emote
+				if (!space)
+					should_have_name_before_emote = "[src]"
+				maptext_out = "<I>[should_have_name_before_emote][param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
 
