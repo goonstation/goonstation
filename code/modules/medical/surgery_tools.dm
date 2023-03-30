@@ -1579,15 +1579,21 @@ keeping this here because I want to make something else with it eventually
 /* =========================================================== */
 /* -------------------- Casts and Splints -------------------- */
 /* =========================================================== */
-/// note that this is the item form for the cast, fiberglass bandages
+ABSTRACT_TYPE(/obj/item/orthopedic_cast)
 /obj/item/orthopedic_cast
-	name = "fiberglass bandages"
-	desc = "These special bandages harden upon application to make an orthopedic cast and provide support to healing bones."
+	name = "cast"
+	desc = "tell a coder that something is terribly wrong"
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+
+/// note that this is the item form for the cast, fiberglass bandages
+/obj/item/orthopedic_cast/cast
+	name = "fiberglass bandages"
+	desc = "These special bandages harden upon application to make an orthopedic cast and provide support to healing bones."
 	icon_state = null
 	item_state = null
 	uses_multiple_icon_states = 1
+	var/uses = 6
 
 	update_icon()
 		switch (src.uses)
@@ -1600,15 +1606,27 @@ keeping this here because I want to make something else with it eventually
 			if (5 to INFINITY)
 				src.icon_state = "bandage-item-3"
 
-/obj/item/orthopedic_cast/used
+/obj/item/orthopedic_cast/cast/used
 	name = "fiberglass bandages"
 	desc = "The remains of what used to be an orthopedic cast."
 	icon_state = null
 	item_state = null
+	flags = FPRINT | TABLEPASS
+	object_flags = NO_ARM_ATTACH
+	w_class = W_CLASS_TINY
 
+ABSTRACT_TYPE(/obj/item/orthopedic_cast/splint)
 /obj/item/orthopedic_cast/splint
 	name = "splint"
-	desc = "Sometimes called a half-cast, this reusable structure provides support to a limb while it recovers from a broken bone."
+	desc = "something's wrong! you shouldn't have this item. tell a coder."
+/obj/item/orthopedic_cast/splint/leg
+	name = "leg splint"
+	desc = "Sometimes called a half-cast, this reusable structure provides support to a leg while it recovers from a broken bone."
+	icon_state = null
+	item_state = null
+/obj/item/orthopedic_cast/splint/arm
+	name = "arm splint"
+	desc = "Sometimes called a half-cast, this reusable structure provides support to an arm while it recovers from a broken bone."
 	icon_state = null
 	item_state = null
 
