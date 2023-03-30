@@ -61,8 +61,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/handlistPart	// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
 	var/partlistPart	// Ditto, but for foot sprites, presumably
 	var/datum/bone/bones = null // for medical crap
-	/// this tells the limb that their bones should be getting better
-	var/bones_are_healing = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0

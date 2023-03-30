@@ -16,6 +16,8 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
+	/// this tells the limb that their bones should be getting better
+	var/bones_are_healing = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
