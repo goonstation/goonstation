@@ -23,4 +23,7 @@
 		src.owner.current.ghostize()
 		qdel(current_mob)
 
+	assign_objectives()
+		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
+
 
