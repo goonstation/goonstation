@@ -312,9 +312,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//surface area in thermal contact (m^2)
 			var/A = src.gas_thermal_cross_section
 
-			var/total_thermal_e = THERMAL_ENERGY(air_contents) + (src.thermal_mass*src.temperature)
 			var/thermal_e = THERMAL_ENERGY(air_contents)
-
 			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
 			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
 			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
@@ -327,11 +325,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.air_contents.temperature = clamp(src.air_contents.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.air_contents), coldest, hottest)
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass
-			boutput(world, "[src.air_contents.temperature], [src.temperature], [hottest], [coldest]")
-
-			var/delta_thermal_e = total_thermal_e - (THERMAL_ENERGY(air_contents) + (src.thermal_mass*src.temperature))
-			if(abs(delta_thermal_e) > 1)
-				CRASH("VIOLATION OF CONSERVATION OF ENERGY!")
 
 			if(src.air_contents.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")

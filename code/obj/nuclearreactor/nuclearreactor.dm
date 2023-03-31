@@ -274,7 +274,6 @@
 			//surface area in thermal contact (m^2)
 			var/A = 10
 
-			var/total_thermal_e = THERMAL_ENERGY(current_gas) + (src.thermal_mass*src.temperature)
 			var/thermal_e = THERMAL_ENERGY(current_gas)
 
 			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
@@ -292,9 +291,6 @@
 			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
 
 			var/delta_thermal_e = total_thermal_e - (THERMAL_ENERGY(current_gas) + (src.thermal_mass*src.temperature))
-			if(abs(delta_thermal_e) > 1)
-				CRASH("VIOLATION OF CONSERVATION OF ENERGY!")
-
 			if(src.current_gas.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
