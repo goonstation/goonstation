@@ -11,7 +11,7 @@
 	health_brute_vuln = 0.75
 	health_burn_vuln = 1.25
 	hand_count = 1
-	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/pounce)
+	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliates = TRUE
@@ -57,17 +57,32 @@
 			return src.gib()
 		. = ..()
 
-	proc/disguise_as(var/obj/target)
-		src.disguise = new /mutable_appearance(target)
+	was_harmed(mob/M, obj/item/weapon, special, intent)
+		. = ..()
+		src.is_hiding = FALSE
 		src.UpdateIcon()
 
+	proc/disguise_as(var/obj/target)
+		src.disguise = new /mutable_appearance(target)
+		src.is_hiding = TRUE
+		src.UpdateIcon()
+
+	proc/stop_hiding()
+		if(src.is_hiding)
+			src.is_hiding = FALSE
+			src.UpdateIcon()
+			src.visible_message("[src] suddenly opens eyes that weren't there and sprouts teeth!")
+
+	OnMove(source)
+		. = ..()
+		src.stop_hiding()
 
 /datum/targetable/critter/mimic
 	name = "Mimic Object"
 	desc = "Disguise yourself as a target object."
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "snakes"
-	cooldown = 600
+	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 

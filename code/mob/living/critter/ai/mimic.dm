@@ -5,7 +5,12 @@
 
 /datum/aiTask/prioritizer/critter/mimic/New()
 	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/ambush, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wait_in_ambush, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/run_and_hide, list(holder, src))
+	//wander and attack are only called if nothing else is possible
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 
 //TODO
 // We basically wanna replicate Prey mimics here. So mimics that are disguised should wander when not visible, and hide
@@ -13,10 +18,27 @@
 // re-disguise as something else.
 // Pouncing, biting. Maybe venom if you're feeling mean.
 
+/// Wait in ambush
+/datum/aiTask/timed/wait_in_ambush
+	name = "waiting in ambush"
+	minimum_task_ticks = 5
+	maximum_task_ticks = 10
+
+/datum/aiTask/timed/wait_in_ambush/evaluate()
+	var/mob/living/critter/mimic/C = holder.owner
+	if(C.is_hiding)
+		. = 2 //only return a low priority if we're hiding, otherwise 0. Note 2 > wander priority
+
+/datum/aiTask/timed/wait_in_ambush/on_tick()
+	var/mob/living/critter/mimic/C = holder.owner
+	holder.stop_move()
+	if(length(C.seek_target()))
+		src.holder.owner.ai.interrupt()
+
 /// If a target is in range and we're hiding, attack them until they're incapacitated
 /datum/aiTask/sequence/goalbased/ambush
 	name = "ambushing"
-	weight = 10
+	weight = 12 //higher than attack
 	max_dist = 3
 	ai_turbo = TRUE
 
@@ -24,13 +46,19 @@
 	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/ambush, list(holder)))
 
-/datum/aiTask/sequence/goalbased/critter/ambush/precondition()
+/datum/aiTask/sequence/goalbased/ambush/precondition()
 	var/mob/living/critter/mimic/C = holder.owner
-	return C.can_critter_attack() && C.is_hiding
+	return C.is_hiding && C.can_critter_attack()
 
 /datum/aiTask/sequence/goalbased/ambush/get_targets()
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
+
+/datum/aiTask/sequence/goalbased/ambush/on_tick()
+	var/mob/living/critter/mimic/C = holder.owner
+	if(C.is_hiding)
+		C.stop_hiding()
+	. = ..()
 
 /datum/aiTask/succeedable/ambush
 	name = "ambush subtask"
@@ -76,20 +104,31 @@
 /// If a target can see us and we're not hiding, then lets run away and hide
 /datum/aiTask/sequence/goalbased/run_and_hide
 	name = "hiding"
-	weight = 9
-	max_dist = 7
+	weight = 11 //lower than ambush
+	max_dist = 9
+	var/min_dist = 4
 
 /datum/aiTask/sequence/goalbased/run_and_hide/New(parentHolder, transTask)
 	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/run_and_hide, list(holder)))
 
-/datum/aiTask/sequence/goalbased/critter/run_and_hide/precondition()
+/datum/aiTask/sequence/goalbased/run_and_hide/precondition()
 	var/mob/living/critter/mimic/C = holder.owner
-	return !C.is_hiding && length(C.seek_target(src.max_dist))
+	var/datum/targetable/critter/mimic/mimic_ability = C.abilityHolder.getAbility(/datum/targetable/critter/mimic)
+	return !C.is_hiding && mimic_ability.cooldowncheck()
 
+//list of items in a range min to max that are not visible to other mobs
 /datum/aiTask/sequence/goalbased/run_and_hide/get_targets()
-	var/mob/living/critter/C = holder.owner
-	return list of items that aren't visible to other mobs? fuck that'll be expensive
+	. = list()
+	for(var/turf/T in orange(holder.owner, max_dist))
+		if(GET_DIST(holder.owner, T) < min_dist)
+			continue
+		for(var/mob/living/carbon/human/H in view(T, 3))
+			goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
+		for(var/obj/item/I in T) //otherwise add the items in this turf
+			. += I
+		breakout:
+	return .
 
 /datum/aiTask/succeedable/run_and_hide
 	name = "hiding subtask"
@@ -97,15 +136,20 @@
 	var/has_started = FALSE
 
 /datum/aiTask/succeedable/run_and_hide/failed()
+	var/mob/living/critter/C = holder.owner
 	//we got where we're going and we're still visible
 	return length(C.seek_target(src.max_dist))
 
 /datum/aiTask/succeedable/run_and_hide/succeeded()
+	var/mob/living/critter/mimic/C = holder.owner
 	//we sucesssfully hid
 	return C.is_hiding
 
 /datum/aiTask/succeedable/run_and_hide/on_tick()
 	//cast mimic ability on target item, then try and hide
+	if(holder.target)
+		var/datum/targetable/critter/mimic/mimic_ability = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/mimic)
+		mimic_ability.tryCast(holder.target)
 
 /datum/aiTask/succeedable/run_and_hide/on_reset()
 	src.has_started = FALSE
