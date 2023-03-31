@@ -1222,6 +1222,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()

@@ -918,6 +918,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 				for (var/atom/movable/O2 in H)
 					if(ismob(O2))
 						var/mob/M = O2
+						logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
 						M.ghostize()
 					qdel(O2)
 
@@ -938,8 +939,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 				else if (isliving(newIngredient))
 					playsound(src.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Liquid_Slosh_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
-					var/mob/living/poorSoul = newIngredient
-					if (issilicon(poorSoul))
+					var/mob/living/M = newIngredient
+					logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
+					if (issilicon(M))
 						newLoaf.reagents.add_reagent("oil",10)
 						newLoaf.reagents.add_reagent("silicon",10)
 						newLoaf.reagents.add_reagent("iron",10)
@@ -951,11 +953,11 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
 					else
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-					if(!isdead(poorSoul))
-						poorSoul:emote("scream")
-					poorSoul.death()
-					if (poorSoul.mind || poorSoul.client)
-						poorSoul.ghostize()
+					if(!isdead(M))
+						M:emote("scream")
+					M.death()
+					if (M.mind || M.client)
+						M.ghostize()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
