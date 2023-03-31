@@ -169,6 +169,7 @@
 	targeted = 1
 	icon_state = "waspbee_sting"
 	target_anything = 1
+	var/attack_verb = "sting"
 	var/venom1 = "histamine"
 	var/amt1 = 12
 	var/venom2 = "toxin"
@@ -184,16 +185,16 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
+				boutput(holder.owner, "<span class='alert'>Nothing to [attack_verb] there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
+			boutput(holder.owner, "<span class='alert'>That is too far away to [attack_verb].</span>")
 			return 1
 		var/mob/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
-		"<span class='combat'>You sting [MT]!</span>")
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [attack_verb]s [MT]!</b></span>",\
+		"<span class='combat'>You [attack_verb] [MT]!</span>")
 		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
@@ -209,6 +210,16 @@
 		amt1 = 6
 		venom2 = "toxin"
 		amt2 = 4
+
+	snake_bite
+		name = "Bite"
+		desc = "Bite a mob, injecting them with venom."
+		icon_state = "snake_bite"
+		cooldown = 12 SECONDS
+		attack_verb = "bite"
+		venom1 = "viper_venom"
+		amt1 = 40
+		amt2 = 0
 
 /datum/targetable/critter/pincer_grab
 	name = "Grab"

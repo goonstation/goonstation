@@ -1,3 +1,29 @@
+
+(t)wed mar 29 23
+(u)Nexusuxen
+(p)13430
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Airlocks now make sounds when un/bolted via packets. Can no longer toggle door bolts via packet if bolt wire cut.
+(u)Hans and ability sprite by Mr Moriarty
+(*)Mobifies rattlesnakes.
+(+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
+(u)LeahTheTech
+(p)13268
+(e)🧫💨⚙|C-Experimental, A-Atmospherics, A-Internal
+(*)The atmos process is ticking twice as fast, this should make repressurizing and so on a lot less tedious - but may cause Issues. Please report any if you find them.
+(u)Nexusuxen
+(p)13466
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Amusing Ducks now correctly respond to packet controls. Quack.
+(u)Flappybat
+(p)13118
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Silicon and robotic life can no longer eat, drink or be forcefed.
+(t)tue mar 28 23
+(u)Blackrep
+(p)13453
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers have recently been spotted with some heavier firepower.
 (t)mon mar 27 23
 (u)Sord
 (+)Traitor scuttlebot now costs 4 bad guy coins
