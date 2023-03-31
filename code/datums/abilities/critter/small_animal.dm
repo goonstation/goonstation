@@ -206,10 +206,10 @@
 	scorpion_sting
 		icon_state = "scorpion_sting"
 		cooldown = 12 SECONDS
-		venom1 = "neurotoxin"
-		amt1 = 6
+		venom1 = "neurodepressant"
+		amt1 = 5
 		venom2 = "toxin"
-		amt2 = 4
+		amt2 = 10
 
 	snake_bite
 		name = "Bite"
@@ -264,7 +264,7 @@
 		MT.changeStatus("weakened", 3 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
-		SPAWN(6 SECONDS)
+		SPAWN(3 SECONDS)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 
