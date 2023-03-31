@@ -289,8 +289,6 @@
 
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
-
-			var/delta_thermal_e = total_thermal_e - (THERMAL_ENERGY(current_gas) + (src.thermal_mass*src.temperature))
 			if(src.current_gas.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
