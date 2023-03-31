@@ -1954,4 +1954,4 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 
 	New()
 		..()
-		name = "\improper [pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")]. [pick("Fish", "Me", "God", "Women", "Men")] [pick("fear", "want")] [pick("fish", "me", "god", "women", "men")] hat."
+		name = "\improper [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love", "hate")] [pick("fish", "me", "god", "women", "men", "enbies", "people")]. [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love", "hate")] [pick("fish", "me", "god", "women", "men", "enbies", "people")] hat"

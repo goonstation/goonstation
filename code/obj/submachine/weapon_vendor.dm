@@ -248,6 +248,7 @@
 
 	New()
 		materiel_stock += new/datum/materiel/fishing_gear/rod
+		materiel_stock += new/datum/materiel/fishing_gear/upgraded_rod
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
@@ -567,6 +568,11 @@
 	name = "Basic Fishing Rod"
 	path = /obj/item/fishing_rod
 	description = "A basic fishing rod."
+
+/datum/materiel/fishing_gear/upgraded_rod
+	name = "Upgraded Fishing Rod"
+	path = /obj/item/fishing_rod/upgraded
+	description = "An upgraded fishing rod."
 
 /datum/materiel/fishing_gear/fish_box
 	name = "Portable aquarium"

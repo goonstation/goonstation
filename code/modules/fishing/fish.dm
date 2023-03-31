@@ -27,6 +27,7 @@ Ocean saltwater fish:
 		Flounder
 		Coelacanth
 		Mahi-mahi
+		Shrimp
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
@@ -210,6 +211,14 @@ Alien/mutant/other fish:
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_COMMON
+
+/obj/item/fish/shrimp
+	name = "shrimp"
+	desc = "Shrimple as that."
+	icon_state = "bass_old"
+	inhand_color = "#db82db"
+	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_UNCOMMON
 
 // Aquarium saltwater fish
 

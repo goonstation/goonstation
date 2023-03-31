@@ -288,14 +288,20 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/meatzone_acid
 	fishing_atom_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
 	required_rod = /obj/item/fishing_rod/upgraded
-	fish_available = list(/obj/item/fish/meat_mutant = 25, \
-	/obj/item/fish/blood_fish = 20, \
-	/obj/item/fish/eye_mutant = 15)
+	fish_available = list(/obj/item/fish/meat_mutant = 25,\
+	/obj/item/fish/blood_fish = 20,\
+	/obj/item/fish/eye_mutant = 15,\
+	/obj/decal/cleanable/blood/gibs = 25,\
+	/obj/decal/cleanable/blood/gibs/core = 25)
 
 /datum/fishing_spot/lava_moon
 	fishing_atom_type = /turf/unsimulated/floor/lava
 	required_rod = /obj/item/fishing_rod/upgraded
-	fish_available = list(/obj/item/fish/lava_fish = 50)
+	fish_available = list(/obj/item/fish/lava_fish = 20,\
+	/obj/item/material_piece/slag = 20,\
+	/obj/decal/cleanable/ash = 20,\
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
+	/obj/item/raw_material/char =20)
 
 /datum/fishing_spot/cryo
 	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
@@ -409,8 +415,17 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /*
 
 the singularity
+/obj/machinery/the_singularity
 
 black holes/white holes
+obj/bhole
+obj/whitehole
+
+martian wallholes
+/obj/crevice
+
+blob
+obj/blob
 
 /datum/fishing_spot/teleporter //is this the active state?
 	fishing_atom_type = /obj/machinery/teleport/portal_ring
