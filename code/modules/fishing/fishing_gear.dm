@@ -61,6 +61,10 @@
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!istype(src.rod, fishing_spot.required_rod))
+			user.visible_message("You need a different rod to fish here!")
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
