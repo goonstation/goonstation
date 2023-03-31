@@ -3,7 +3,10 @@ var/global/meteor_shower_active = 0
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
 	// centcom message handled modularly here
-#ifdef RP_MODE
+#ifdef APRIL_FOOLS
+	required_elapsed_round_time = 10 MINUTES
+	weight = 300
+#elif defined(RP_MODE)
 	required_elapsed_round_time = 55 MINUTES
 #else
 	required_elapsed_round_time = 26.6 MINUTES
@@ -169,6 +172,7 @@ var/global/meteor_shower_active = 0
 				var/obj/newmeteor/M = new meteor_type(pickedstart,target)
 				if(transmute_material_instead)
 					M.set_transmute(transmute_material_instead)
+					M.meteorhit_chance = 20
 				M.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
 				sleep(delay_between_meteors)
 
@@ -240,6 +244,7 @@ var/global/meteor_shower_active = 0
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
 	var/transmute_material = null
+	var/meteorhit_chance = 100
 
 	proc/set_transmute(datum/material/mat)
 		src.setMaterial(mat)
@@ -285,7 +290,8 @@ var/global/meteor_shower_active = 0
 	bump(atom/A)
 		SPAWN(0)
 			if (A)
-				A.meteorhit(src)
+				if (prob(meteorhit_chance))
+					A.meteorhit(src)
 				if (sound_impact)
 					playsound(src.loc, sound_impact, 40, 1)
 			if (--src.hits <= 0)
@@ -338,7 +344,8 @@ var/global/meteor_shower_active = 0
 		for(var/turf/simulated/S in range(1,src))
 			if(!S.density) continue
 			hit_object = 1
-			S.meteorhit(src)
+			if (prob(meteorhit_chance))
+				S.meteorhit(src)
 
 		for(var/mob/M in range(1,src))
 			if(M == src) continue //Just to make sure
@@ -347,14 +354,16 @@ var/global/meteor_shower_active = 0
 			hit_object = 1
 			hits -= 5
 			step(M,get_dir(src,M))
-			M.meteorhit(src)
+			if (prob(meteorhit_chance))
+				M.meteorhit(src)
 
 		for(var/obj/O in range(1,src))
 			if (O == src) continue
 			if (!O.density) continue
 			hit_object = 1
 			hits--
-			O.meteorhit(src)
+			if (prob(meteorhit_chance))
+				O.meteorhit(src)
 			if (O && !O.anchored)
 				step(O,get_dir(src,O))
 
@@ -369,7 +378,7 @@ var/global/meteor_shower_active = 0
 	proc/transmute_effect(range)
 		var/range_squared = range**2
 		var/turf/T = get_turf(src)
-		var/smoothEdge = prob(20)
+		var/smoothEdge = prob(10)
 		var/affects_organic = pick(
 			20; "transmute",
 			5; "statue",
@@ -379,7 +388,7 @@ var/global/meteor_shower_active = 0
 			if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid))
 				continue
 			var/dist = GET_SQUARED_EUCLIDEAN_DIST(T, G)
-			var/distPercent = (dist/range_squared)*100
+			var/distPercent = (dist/range_squared)*80
 			if(dist > range_squared)
 				continue
 			if(!smoothEdge && prob(distPercent))
@@ -461,7 +470,7 @@ var/global/meteor_shower_active = 0
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
 			if(transmute_material)
-				transmute_effect(9)
+				transmute_effect(10)
 			else
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
@@ -470,6 +479,7 @@ var/global/meteor_shower_active = 0
 			var/type = pick(shatter_types)
 			var/atom/trg = get_step(src, A)
 			var/obj/newmeteor/met = new type(src.loc, trg)
+			met.meteorhit_chance = src.meteorhit_chance
 			if(transmute_material)
 				met.set_transmute(transmute_material)
 		var/atom/source = src
