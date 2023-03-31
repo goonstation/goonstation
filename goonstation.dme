@@ -471,6 +471,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\flockcritter_parent.dm"
 #include "code\mob\living\critter\gunbot.dm"
 #include "code\mob\living\critter\hastur.dm"
+#include "code\mob\living\critter\jeans_elemental.dm"
 #include "code\mob\living\critter\killertomato.dm"
 #include "code\mob\living\critter\maneater.dm"
 #include "code\mob\living\critter\martian.dm"
