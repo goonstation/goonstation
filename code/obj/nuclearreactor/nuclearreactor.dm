@@ -282,11 +282,11 @@
 			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
 			//which in this case is given by k
 			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
-			//since this is a discrete approximation, it breaks down when the temperatures are low. As such, we linearise the equation
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
 			//by clamping between hottest and coldest. It's not pretty, but it works.
 			var/hottest = max(src.current_gas.temperature, src.temperature)
 			var/coldest = min(src.current_gas.temperature, src.temperature)
-			src.current_gas.temperature = clamp(src.current_gas.temperature + (k * A * deltaT)/HEAT_CAPACITY(src.current_gas) + (5.67037442e-8 * A * deltaTr)/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.current_gas), coldest, hottest)
 
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
@@ -619,6 +619,7 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random

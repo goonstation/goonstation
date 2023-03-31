@@ -282,14 +282,14 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_inserted = "gas"
 	icon_state_cap = "gas_cap"
 	thermal_cross_section = 1.5
-	var/gas_thermal_cross_section = 100
+	var/gas_thermal_cross_section = 2.5
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
 	thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	melt()
 		..()
-		gas_thermal_cross_section = 0.5 //oh no, all the fins and stuff are melted
+		gas_thermal_cross_section = 0.1 //oh no, all the fins and stuff are melted
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
@@ -320,14 +320,14 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
 			//which in this case is given by k
 			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4) ( + (5.67037442e-8 * A * deltaTr))
-			//since this is a discrete approximation, it breaks down when the temperatures are low. As such, we linearise the equation
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
 			//by clamping between hottest and coldest. It's not pretty, but it works.
 			var/hottest = max(src.air_contents.temperature, src.temperature)
 			var/coldest = min(src.air_contents.temperature, src.temperature)
-			src.air_contents.temperature = clamp(src.air_contents.temperature + (k * A * deltaT)/HEAT_CAPACITY(src.air_contents) + (5.67037442e-8 * A * deltaTr)/HEAT_CAPACITY(src.air_contents), coldest, hottest)
-
+			src.air_contents.temperature = clamp(src.air_contents.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.air_contents), coldest, hottest)
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass
+			boutput(world, "[src.air_contents.temperature], [src.temperature], [hottest], [coldest]")
 
 			var/delta_thermal_e = total_thermal_e - (THERMAL_ENERGY(air_contents) + (src.thermal_mass*src.temperature))
 			if(abs(delta_thermal_e) > 1)
