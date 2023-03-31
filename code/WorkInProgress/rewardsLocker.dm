@@ -313,22 +313,30 @@
 	required_medal = "Monkey Duty"
 
 	rewardActivate(var/mob/activator)
+		var/obj/item/clothing/M = null
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
-				var/obj/item/clothing/head/M = H.head
-				M.icon_state = "beret_base"
-				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
-				M.color = random_saturated_hex_color(1)
-				M.name = "beret"
-				M.real_name = "beret"
-				M.desc = "A colorful beret."
-				activator.set_clothing_icon_dirty()
-				return 1
-			boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a hat?</span>")
+			M = H.head
+		else if (isrobot(activator))
+			var/mob/living/silicon/robot/H = activator
+			M = H.clothes["head"]
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... only humans can redeem this.</span>")
-
+			boutput(activator, "<span class='alert'>Unable to redeem... only humans and cyborgs can redeem this.</span>")
+			return 0
+		if (!istype(M, /obj/item/clothing/head/helmet) && istype(M, /obj/item/clothing/head)) // ha...
+			M.icon_state = "beret_base"
+			M.wear_image_icon = 'icons/mob/clothing/head.dmi'
+			M.color = random_saturated_hex_color(1)
+			M.name = "beret"
+			M.real_name = "beret"
+			M.desc = "A colorful beret."
+			activator.set_clothing_icon_dirty()
+			if (isrobot(activator))
+				var/mob/living/silicon/robot/R = activator
+				R.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a hat?</span>")
 		return 0
 
 /datum/achievementReward/round_flask
