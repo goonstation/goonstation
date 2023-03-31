@@ -240,6 +240,8 @@
 
 	inventory = new(src)
 
+	src.set_mutantrace(/datum/mutantrace/cat/bingus)
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 
