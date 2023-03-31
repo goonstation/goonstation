@@ -363,10 +363,8 @@ var/global/meteor_shower_active = 0
 			playsound(src.loc, sound_impact, 40, 1)
 
 		if(hits <= 0)
-			if(prob(20))
-				shatter()
-			else
-				dump_ore()
+			dump_ore()
+			shatter()
 
 	proc/transmute_effect(range)
 		var/range_squared = range**2
@@ -374,7 +372,7 @@ var/global/meteor_shower_active = 0
 		var/smoothEdge = prob(20)
 		var/affects_organic = pick(
 			20; "transmute",
-			10; "statue",
+			5; "statue",
 			40; "nothing"
 		)
 		for(var/atom/G in range(range, T))
@@ -409,7 +407,7 @@ var/global/meteor_shower_active = 0
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
 			if(transmute_material)
-				transmute_effect(6)
+				transmute_effect(4)
 			else
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
@@ -426,9 +424,6 @@ var/global/meteor_shower_active = 0
 			A.name = "[A.name] chunk"
 			if(transmute_material)
 				A.setMaterial(transmute_material)
-
-		var/atom/source = src
-		qdel(source)
 
 /////////////////////////HUGE
 
@@ -466,7 +461,7 @@ var/global/meteor_shower_active = 0
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
 			if(transmute_material)
-				transmute_effect(12)
+				transmute_effect(9)
 			else
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
