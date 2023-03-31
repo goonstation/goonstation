@@ -144,8 +144,8 @@ TYPEINFO(/obj/item/fish_portal)
 	name = "Aquatic Research Pool"
 	desc = "A small bulky pool that you can fish in. It has a low probability of containing various low-rarity fish."
 	anchored = 1
-	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
-	icon_state = "tray"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "fishing_pool"
 
 // Gannets new fishing gear
 
@@ -227,6 +227,6 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."
-	icon_state = "box"
+	icon_state = "hard_case"
 	slots = 5
 	can_hold = 	list(/obj/item/fish)
