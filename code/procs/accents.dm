@@ -2355,6 +2355,7 @@ var/list/zalgo_mid = list(
 		@{"\bbingus\b"} = "bingus my beloved",
 		@{"\bantag\b"} = "floppa",
 		@{"\bantagonist\b"} = "big floppa",
+		@{"\bI love [a-zA-Z]+"} = "I love bingus"
 	)
 	for (var/pattern in bingus_list)
 		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
