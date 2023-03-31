@@ -571,6 +571,7 @@
 /area/station/science/artifact)
 "bN" = (
 /obj/table/wood/auto,
+/obj/random_item_spawner/tableware,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -1616,6 +1617,7 @@
 	})
 "ft" = (
 /obj/table/wood/auto,
+/obj/random_item_spawner/tableware,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple5"
@@ -2035,6 +2037,13 @@
 	dir = 1
 	},
 /area/station/engine/engineering/breakroom)
+"gW" = (
+/obj/table/reinforced/bar/auto,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 16
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "gX" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -4918,6 +4927,9 @@
 /obj/stool/chair/comfy{
 	dir = 4;
 	icon_state = "chair_comfy"
+	},
+/obj/submachine/GTM{
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
@@ -7918,6 +7930,15 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/chapel/sanctuary)
+"BH" = (
+/obj/table/reinforced/chemistry/auto{
+	name = "prep counter"
+	},
+/obj/machinery/espresso_machine{
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "BI" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -8660,6 +8681,10 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/gas)
+"Eg" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Eh" = (
 /obj/machinery/mass_driver{
 	id = "cargo_driver"
@@ -8935,6 +8960,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "Fl" = (
 /obj/table/wood/auto,
+/obj/random_item_spawner/tableware,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple5"
@@ -9246,6 +9272,14 @@
 	})
 "Gh" = (
 /obj/table/wood/auto,
+/obj/item/shaker/mustard{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -10461,6 +10495,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
+"Kt" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Ku" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/computer3/generic/communications,
@@ -11477,6 +11515,16 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/black,
 /area/station/hangar/main)
+"Of" = (
+/obj/table/reinforced/chemistry/auto{
+	name = "prep counter"
+	},
+/obj/machinery/glass_recycler{
+	glass_amt = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Og" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/vr{
@@ -12760,6 +12808,15 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
+"Sr" = (
+/obj/table/reinforced/chemistry/auto{
+	name = "prep counter"
+	},
+/obj/machinery/chem_heater{
+	pixel_x = 28
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Ss" = (
 /obj/machinery/computer/bank_data{
 	dir = 8
@@ -13440,6 +13497,10 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/black,
 /area/station/hangar/main)
+"UN" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "UO" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -13899,6 +13960,7 @@
 	})
 "Wj" = (
 /obj/table/wood/auto,
+/obj/random_item_spawner/tableware,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"
@@ -14101,12 +14163,6 @@
 	},
 /turf/space,
 /area/space)
-"WS" = (
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "WU" = (
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -14213,6 +14269,20 @@
 	dir = 8
 	},
 /area/station/security/equipment)
+"Xh" = (
+/obj/table/wood/auto,
+/obj/item/shaker/salt{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/shaker/pepper{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1"
+	},
+/area/station/crew_quarters/cafeteria)
 "Xj" = (
 /obj/disposalpipe/trunk/brig{
 	dir = 4
@@ -14257,6 +14327,13 @@
 "Xn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/customs)
+"Xo" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/cashreg{
+	pixel_y = 11
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "Xq" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -15014,6 +15091,10 @@
 /obj/machinery/portable_atmospherics/pressurizer,
 /turf/simulated/floor/purpleblack,
 /area/station/science/storage)
+"ZS" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "ZT" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -62896,7 +62977,7 @@ OP
 OP
 OP
 YA
-Gh
+Xh
 st
 OP
 nv
@@ -64102,10 +64183,10 @@ rh
 Ad
 Ae
 Ae
+gW
 Gu
 Gu
-Gu
-Gu
+Xo
 Gu
 Gu
 Xy
@@ -64711,7 +64792,7 @@ Zn
 Zn
 Zn
 Zn
-Zn
+ZS
 Xy
 wF
 Cx
@@ -65008,12 +65089,12 @@ PI
 PI
 PI
 Ae
-Zn
-Zn
-Zn
-Zn
-Zn
-Zn
+BH
+Of
+Sr
+Kt
+UN
+Eg
 Xy
 wF
 Cx
@@ -69290,7 +69371,7 @@ iK
 LZ
 LZ
 LZ
-LZ
+XW
 LZ
 LZ
 XY
@@ -69893,8 +69974,8 @@ Ai
 Ai
 LZ
 LZ
-XW
-WS
+iZ
+LZ
 LZ
 LZ
 XY
@@ -70497,7 +70578,7 @@ LZ
 LZ
 LZ
 LZ
-LZ
+XW
 LZ
 LZ
 XY
