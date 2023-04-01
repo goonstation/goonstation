@@ -769,6 +769,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\slasher\abilities\summon_machete.dm"
 #include "code\modules\antagonists\slasher\abilities\take_control.dm"
 #include "code\modules\antagonists\spy_thief\spy_thief.dm"
+#include "code\modules\antagonists\syndicate_cyborg\emagged_cyborg.dm"
 #include "code\modules\antagonists\traitor\licensed_traitor.dm"
 #include "code\modules\antagonists\traitor\sleeper_agent.dm"
 #include "code\modules\antagonists\traitor\traitor.dm"
