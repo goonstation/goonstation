@@ -279,7 +279,7 @@
 /mob/living/Logout()
 	. = ..()
 	src.UpdateOverlays(null, "speech_bubble")
-	src.is_npc = initial(L.is_npc)
+	src.is_npc = initial(src.is_npc)
 
 
 /mob/living/Login()
