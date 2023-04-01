@@ -1780,7 +1780,7 @@ TYPEINFO(/obj/item/mining_tool/drill)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.armed)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+				if (!src.check_placeable_target(target))
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
