@@ -1276,7 +1276,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/check_placeable_target(atom/A)
 		if (!istype(A, /obj/item))
 			return TRUE
-		if (istype(A, /obj/item/storage))// no blowing yourself up if you have full backpack
+		if (istype(A, /obj/item/storage)) // no blowing yourself up if you have full backpack
 			return FALSE
 		return A.density
 
