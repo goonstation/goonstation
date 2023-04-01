@@ -495,13 +495,15 @@
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
 	burn_possible = 0
+	set_name = TRUE
 
 	New()
 		..()
 		icon_state += "[rand(1,5)]"
-
-/obj/item/raw_material/scrap_metal/steel
-	material_name = "Steel"
+		if(!src.material)
+			src.setMaterial(getMaterial("steel"))
+	steel
+		material_name = "Steel"
 
 /obj/item/raw_material/shard
 	// same deal here
@@ -533,6 +535,8 @@
 		..()
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
+		if(!src.material)
+			src.setMaterial(getMaterial("glass"))
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!scalpel_surgery(M,user)) return ..()
