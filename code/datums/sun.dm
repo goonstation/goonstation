@@ -80,7 +80,6 @@
 			src.zlevel = ztemp
 		src.sun_area = assigned_area
 		global.areas_with_local_suns += assigned_area
-		return
 	else // global suns
 		if (isnull(location)) // if no location
 			if (isnull(ztemp) || ztemp == 1) // station sun
