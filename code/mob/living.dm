@@ -279,12 +279,12 @@
 /mob/living/Logout()
 	. = ..()
 	src.UpdateOverlays(null, "speech_bubble")
-	L.is_npc = initial(L.is_npc)
+	src.is_npc = initial(L.is_npc)
 
 
 /mob/living/Login()
 	..()
-	L.is_npc = FALSE
+	src.is_npc = FALSE
 	// If...
 	// living
 	// and not (in the afterlife, and not in hell)
