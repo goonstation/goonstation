@@ -1,3 +1,9 @@
+
+(t)sat apr 01 23
+(u)Wisemonster
+(p)13469
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)AIs can once again issue lockdown/guard orders using the securitron app while in Eye Mode.
 (t)sat apr 1 23
 (u)pali & walpvrgis
 (e)👖|J-Jeans
