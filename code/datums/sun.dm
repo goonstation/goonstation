@@ -105,7 +105,7 @@
 	#elif defined(MAP_OVERRIDE_CLARION)
 	src.stationloc = "travel"
 	#elif defined(MAP_OVERRIDE_ATLAS)
-	src.stationloc = "travel"
+	src.stationloc = "atlas"
 	#elif defined(MAP_OVERRIDE_COGMAP)
 	src.stationloc = "NT-13"
 	#elif defined(MAP_OVERRIDE_COGMAP2)
@@ -139,7 +139,7 @@
 		// 'error' suns
 		if ("void") // for admin nonsense generally. Where no stars apply.
 			src.name = "unknown"
-			src.desc = "The stars have abandoned you."
+			src.desc = "Error!"
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
@@ -162,7 +162,7 @@
 		if ("trench") // the mining level for nadir and oshan
 			src.zlevel = 5
 			src.name = "N/A"
-			src.desc = "No sunlight reaches the depths of the trench."
+			src.desc = "The Trench."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_ERROR
 			src.eclipse_order = list(ECLIPSE_ERROR)
@@ -173,7 +173,7 @@
 		if ("debris") // the debris field is in the main rings district
 			src.zlevel = 3
 			src.name = "Typhon"
-			src.desc = "Floating in the debris field, this area is illuminated far more strongly than the Mundus gap."
+			src.desc = "The Debris field, in the main rings district."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
@@ -186,7 +186,7 @@
 			src.zlevel = 5
 			if (src.name == "unknown")
 				src.name = pick("Fugg", "Shidd")
-			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
+			src.desc = "The mining belt, in the royal rings district."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
@@ -195,6 +195,7 @@
 			else src.photovoltaic_efficiency = 0.6
 			src.rate = 0
 			src.angle = rand(1, 359)
+		// global suns for different stations
 		if ("NT-13") // for most 'fixed' space stations. Space Station 13 in L2 lagrange point around Rota Fortuna in the mundus gap district.
 			/* If the station truly sat at the L2 point, Typhon would be permanently eclipsed, but it's probably in a lissajous orbit around the
 			umbra, making the lore reason for the solars turning is that the whole map is spinning.
@@ -202,7 +203,7 @@
 			on cogmap 1 (and probably other maps too). The solars should therefore theoretically point at the decals, but they don't.
 			Scope creep says to ignore that for now. If someone makes parallax and movable background decals a reality, consider it then.*/
 			src.name = "Typhon"
-			src.desc = "Station is currently in a stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
+			src.desc = "In stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
 			if (prob(50)) // this thing gives it a random eclipse
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
@@ -226,7 +227,7 @@
 		if ("atlas") // X3 and X5 are visible in the background, meaning it's near quadriga.
 			src.zlevel = 1
 			src.name = "Typhon"
-			src.desc = "Hanging around near the channel, there's plenty of illumination from Typhon."
+			src.desc = "Near Quadriga."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
@@ -237,7 +238,7 @@
 			src.angle = rand(1, 359)
 		if ("travel") // for ship maps (in deep space). Uses a slightly randomer randomiser
 			src.name = pick("Typhon", "Fugg", "Shidd")
-			src.desc = "Ship is currently in deep space, with its main lighting coming from [src.name]."
+			src.desc = "Deep space, in transit."
 			if (prob(50)) // 50 50 chance of it going into shadow every so often
 				src.eclipse_cycle_on = TRUE
 				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
@@ -264,7 +265,7 @@
 			else
 				src.name = "Fugg" // the nadir lighting is redder/darker
 				src.photovoltaic_efficiency = 0.6
-			src.desc = "The Nadir Extraction Site is located under miles of acid sea on Magus. The site is currently being lit by [src.name]."
+			src.desc = "Under the acid seas of Magus."
 			src.eclipse_cycle_on = FALSE // doesn't proceed at runtime
 			src.eclipse_status = ECLIPSE_TERRESTRIAL
 			src.eclipse_order = list(ECLIPSE_TERRESTRIAL, ECLIPSE_TERRESTRIAL)
@@ -276,7 +277,7 @@
 			// you get 6% of 60% strength sunlight overall
 		if ("abzu") //oshan and technically also manta
 			src.name = "Shidd"
-			src.desc = "The Oshan Laboratory is located under the seas of Abzu, and is lit by the blue-white light of its star, Shidd."
+			src.desc = "Under the seas of Abzu."
 			src.eclipse_time = 6 HOURS
 			src.down_time = 6 HOURS
 			src.eclipse_cycle_on = FALSE
@@ -300,7 +301,7 @@
 		if ("earth") //centcomm mainly. Same as oshan, day/night cycle is determined at build, not runtime.
 			src.zlevel = 2
 			src.name = "\improper Sun"
-			src.desc = "The sun illuminates the surface of the Earth, as it has done for millions of years."
+			src.desc = "Surface of the Earth."
 			src.eclipse_cycle_on = FALSE
 			src.down_time = 12 HOURS
 			src.eclipse_time = 12 HOURS
@@ -324,7 +325,7 @@
 			// so it doesn't matter that much
 			src.zlevel = 2
 			src.name = "\improper Sun"
-			src.desc = "The sun faintly illuminates Io, the scorched innermost moon of Jupiter."
+			src.desc = "Io, the scorched innermost moon of Jupiter."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_cycle_length = 1.77 DAYS
 			src.eclipse_time = 2.3 HOURS // figures based on irl measurements
@@ -338,7 +339,7 @@
 		if ("senex") // ice moon, theta outpost
 			src.zlevel = 2
 			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
-			src.desc = "Orbiting Flaminica, Senex's icy moon recieves only faint light from the binary stars."
+			src.desc = "On Senex, around Flaminica."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_counter = 0
 			src.eclipse_status = ECLIPSE_FALSE // always start in daytime
@@ -354,7 +355,7 @@
 		if ("solarium") // solarium
 			src.zlevel = 2
 			src.name = "\improper sun"
-			src.desc = "You're a little bit toasty there, don't you think? The sun looks pretty hot from this close."
+			src.desc = "Near Mercury. Very close to the sun."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1

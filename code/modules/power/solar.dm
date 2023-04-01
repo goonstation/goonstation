@@ -386,9 +386,9 @@ TYPEINFO(/obj/machinery/power/solar)
 		if (!src.tracker.targetstar || src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
 			t += "Catastrophic Error!<BR>Stellar Data Corrupted<BR>"
 		else
-			t += "<B>Target: [src.tracker.targetstar.name]</B><BR>"
-			t += "<B>Station location:</B> [src.tracker.targetstar.desc]<BR>"
-			t += "<B>Relative Rotation rate:</B> [src.tracker.targetstar.rate] deg/h<BR>"
+			t += "<B>Target:</B><BR>[src.tracker.targetstar.name]<BR>"
+			t += "<B>Station location:</B><BR>[src.tracker.targetstar.desc]<BR>" // this line usually extends off the side, sorry
+			t += "<B>Relative Rotation rate:</B><BR>[src.tracker.targetstar.rate] deg/h<BR>"
 			if (!src.tracker.targetstar.eclipse_cycle_on)
 				t += "No upcoming eclipses detected with current orbit/position.<BR>"
 			else
