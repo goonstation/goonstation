@@ -33,7 +33,8 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
+			UpdateName(src) // get the name in order so it has whatever it needs
+			name = "[amount] [src.name][amount > 1 ? "s":""]"
 		return
 
 	attackby(obj/item/W, mob/user)
