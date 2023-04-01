@@ -131,8 +131,10 @@
 	// but they are supposedly constructible so we need to have that data anyway.
 	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas,
 	// and create then suns for those in code/world.dm and code/global.dm
-	var/oldloc = src.stationloc
-	if (oldloc == src.stationloc) return
+	var/oldloc
+	if (oldloc == src.stationloc)
+		return
+	oldloc = src.stationloc
 	switch (src.stationloc)
 		// 'error' suns
 		if ("void") // for admin nonsense generally. Where no stars apply.
@@ -182,7 +184,8 @@
 			src.angle = rand(1, 359)
 		if ("mining") // the mining level is canonically in the royal rings district, near magus
 			src.zlevel = 5
-			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
+			if (src.name == "unknown")
+				src.name = pick("Fugg", "Shidd")
 			src.desc = "The mining belt lies in the royal rings district, illuminated mostly by the binary stars and not Typhon."
 			src.eclipse_cycle_on = FALSE
 			src.eclipse_status = ECLIPSE_FALSE
