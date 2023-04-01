@@ -461,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
@@ -925,6 +925,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
+
+	jean
+		name = "jasteroid"
+		desc = "A free-floating jineral jeposit from space."
+		default_ore = null
+		hardness = 1
+		default_material = "jean"
+		default_ore = /obj/item/material_piece/cloth/jean
+		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		stone_color = "#88c2ff"
 
 
 // cogwerks - adding some new wall types for cometmap and whatever else
@@ -1449,6 +1459,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+
+/turf/simulated/floor/plating/airless/asteroid/jean
+	name = "jasteroid"
+	desc = "A free-floating jineral jeposit from space."
+	stone_color = "#88c2ff"
 
 
 // Tool Defines

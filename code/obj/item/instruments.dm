@@ -669,7 +669,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)
 				bdna = S.bioHolder.Uid
 				btype = S.bioHolder.bloodType
-			gibs(S.loc, null, null, bdna, btype)
+			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
 			S.real_name = "[S.name]'s skeleton"

@@ -1,4 +1,15 @@
 
+(t)sat apr 01 23
+(u)pali
+(e)🐛|C-Bug
+(+)Fabricators now work with alloy materials.
+(u)Wisemonster
+(p)13469
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)AIs can once again issue lockdown/guard orders using the securitron app while in Eye Mode.
+(u)pali & walpvrgis
+(e)👖|J-Jeans
+(*)NanoTrasen has signed a contract with Jiscount Jan's Jomfy Jeans and upgraded the station wardrobe and possibly more than that!
 (t)wed mar 29 23
 (u)Nexusuxen
 (p)13430

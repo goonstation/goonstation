@@ -1,4 +1,4 @@
-/proc/bonegibs(turf/T, viral_list, list/ejectables, bdna, btype)
+/proc/bonegibs(turf/T, list/ejectables, bdna, btype)
 	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \
 		                    list(SOUTH, SOUTHEAST, SOUTHWEST), \
 		                    list(WEST, NORTHWEST, SOUTHWEST),  \
