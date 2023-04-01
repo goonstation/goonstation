@@ -1949,8 +1949,8 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 /obj/item/clothing/head/fish_fear_me
 	name = "fish fear me hat"
 	desc = "an extremely witty piece of headwear for the discerning angler."
-	item_state = "basecap_green"
-	icon_state = "basecap_green"
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
 
 	New()
 		..()
