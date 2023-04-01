@@ -2165,7 +2165,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /turf/unsimulated/floor/purple,
 /area/adventure/urs_dungeon)
 "eC" = (
@@ -2302,7 +2302,7 @@
 /area/adventure/urs_dungeon)
 "eS" = (
 /obj/rack,
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/unsimulated/floor/purple,
@@ -8095,7 +8095,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /turf/simulated/floor/yellow,
 /area/adventure/urs_dungeon)
 "pK" = (

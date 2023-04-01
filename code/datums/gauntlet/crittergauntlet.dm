@@ -1041,7 +1041,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/mimic)
+		types = list(/mob/living/critter/mimic)
 
 	meaty
 		name = "Meat Thing"
