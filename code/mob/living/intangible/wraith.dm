@@ -7,6 +7,8 @@
 	icon = 'icons/mob/mob.dmi'
 #if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
 	icon_state = "wraith-love"
+#elif defined(APRIL_FOOLS)
+	icon_state = "wraith-jeans"
 #else
 	icon_state = "wraith"
 #endif
@@ -63,6 +65,9 @@
 		var/len = rand(4, 8)
 		var/vowel_prob = 0
 		var/list/con = list("x", "z", "n", "k", "s", "l", "t", "r", "sh", "m", "d")
+		#ifdef APRIL_FOOLS
+		con += list("j", "j", "j", "j", "j", "j", "j", "j")
+		#endif
 		var/list/vow = list("y", "o", "a", "ae", "u", "ou")
 		var/theName = ""
 		for (var/i = 1, i <= len, i++)
@@ -75,7 +80,12 @@
 		var/fc = copytext(theName, 1, 2)
 		theName = "[uppertext(fc)][copytext(theName, 2)]"
 
-		theName = theName  + "[pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")]"
+		#ifdef APRIL_FOOLS
+		var/suffix = pick(" the Jimpaler", " the Jormentor", " the Jorsaken", " the Jestroyer", " the Jevourer", " the Jyrant", " the Joverlord", " the Jamned", " the Jesolator", " the Jexiled")
+		#else
+		var/suffix = pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")
+		#endif
+		theName = theName  + suffix
 		return theName
 
 	proc/get_movement_controller(mob/user)
@@ -105,6 +115,9 @@
 		src.flags |= UNCRUSHABLE
 		valid_locations = get_accessible_station_areas()
 		next_area_change = world.time + (5 SECONDS)
+		#ifdef APRIL_FOOLS
+		animate_levitate(src)
+		#endif
 
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
@@ -145,9 +158,25 @@
 		poltergeists = null
 		..()
 
+	proc/transmute_random_stuff(datum/material/mat, count=1)
+		var/list/valid_objs = list()
+		for (var/obj/O in range(3, src))
+			if (O.invisibility == 0 && !istype(O, /obj/effect) && !istype(O, /obj/overlay))
+				valid_objs += O
+		for (var/i in 1 to count)
+			var/obj/O = pick(valid_objs)
+			O.setMaterial(mat)
+
 	Life(parent)
 		if (..(parent))
 			return 1
+
+		#ifdef APRIL_FOOLS
+		transmute_random_stuff(getMaterial("jean"))
+		if(prob(1))
+			animate(src)
+			animate_levitate(src)
+		#endif
 
 		if (src.client)
 			src.antagonist_overlay_refresh(0, 0)
@@ -552,7 +581,11 @@
 	real_name = "plaguebringer"
 	desc = "A pestilent ghost, spreading disease wherever it goes. Just looking at it makes you queasy."
 	icon = 'icons/mob/mob.dmi'
+	#ifdef APRIL_FOOLS
+	icon_state = "wraith-jeans"
+	#else
 	icon_state = "wraith_plague"
+	#endif
 
 	New(var/mob/M)
 		..()
@@ -571,7 +604,11 @@
 	real_name = "harbinger"
 	desc = "An evil looking, regal specter. Usually seen commanding a horde of minions."
 	icon = 'icons/mob/mob.dmi'
+	#ifdef APRIL_FOOLS
+	icon_state = "wraith-jeans"
+	#else
 	icon_state = "wraith_harbinger"
+	#endif
 
 	New(var/mob/M)
 		..()
@@ -587,7 +624,11 @@
 	real_name = "trickster"
 	desc = "A living shadow seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
+	#ifdef APRIL_FOOLS
+	icon_state = "wraith-jeans"
+	#else
 	icon_state = "wraith_trickster"
+	#endif
 	/// How many points do we need to possess someone?
 	var/points_to_possess = 50
 	/// Steal someone's appearance and use it during haunt

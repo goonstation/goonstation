@@ -345,6 +345,14 @@
 		src.setMaterial(getMaterial("cotton"), appearance = TRUE, setname = TRUE)
 		..()
 
+/obj/item/material_piece/cloth/jean
+	name = "jean textile"
+	desc = "A type of a sturdy textile."
+	icon_state = "fabric"
+	setup_material()
+		src.setMaterial(getMaterial("jean"), appearance = TRUE, setname = FALSE)
+		..()
+
 /obj/item/material_piece/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
