@@ -4,7 +4,7 @@
 
 # NOTICE
 
-Hey, don't just sit there. It's Nickelodeons world wide day of play an entire day devoted to getting active. And to celebrate world wide day of play, Nickelodeon has gone off the air and is out to play. Which is where you should be. Tell your family, get your friends, grab your dog and do anything that gets you up and active. Ride a bike, kick a ball, do a dance, jump around. Once you've played, there'll be more Nick later, but until then, this message will keep repeating, and repeating, and repeating. Are you still there? Get outside and go play!
+Hey, don't just sit there. It's Nickelodeon's world wide day of play an entire day devoted to getting active. And to celebrate world wide day of play, Nickelodeon has gone off the air and is out to play. Which is where you should be. Tell your family, get your friends, grab your dog and do anything that gets you up and active. Ride a bike, kick a ball, do a dance, jump around. Once you've played, there'll be more Nick later, but until then, this message will keep repeating, and repeating, and repeating. Are you still there? Get outside and go play!
 
 ## LICENSE
 [![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
