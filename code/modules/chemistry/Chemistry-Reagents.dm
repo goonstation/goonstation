@@ -166,7 +166,8 @@ datum
 								H.emote("scream")
 							else
 								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
-							random_burn_damage(H, clamp(0.3 * volume, 4, 30))
+							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
+								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
 								var/hygiene_restore = hygiene_value
