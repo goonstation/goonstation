@@ -46335,7 +46335,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/grey/side,
+/turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "dmC" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -46872,7 +46872,7 @@
 	on = 1;
 	target_pressure = 2000
 	},
-/turf/unsimulated/floor/grey/side,
+/turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "dIo" = (
 /obj/machinery/atmospherics/valve,
@@ -49148,6 +49148,10 @@
 	can_rupture = 0;
 	dir = 10
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -49282,7 +49286,7 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/grey/side,
+/turf/simulated/floor/grey/side,
 /area/station/routing/engine)
 "fPv" = (
 /obj/table/auto,
@@ -49488,7 +49492,7 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/grey/side,
+/turf/simulated/floor/grey/side,
 /area/station/routing/engine)
 "fXj" = (
 /obj/stool/chair{
@@ -52798,9 +52802,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "jCi" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
@@ -64999,6 +65000,10 @@
 /obj/cable/brown{
 	icon_state = "0-8"
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65756,7 +65761,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/grey/side,
+/turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "xia" = (
 /obj/table/auto,
