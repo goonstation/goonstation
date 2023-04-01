@@ -11,7 +11,7 @@
 	health_brute_vuln = 0.75
 	health_burn_vuln = 1.25
 	hand_count = 1
-	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
+	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle, /datum/targetable/critter/sting/mimic)
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliates = TRUE
@@ -26,14 +26,13 @@
 		..()
 		src.face_image = icon('icons/misc/critter.dmi',"mimicface")
 		var/obj/item/storage/toolbox/startDisguise = new /obj/item/storage/toolbox/mechanical(src)
-		src.disguise = new /mutable_appearance(startDisguise)
-		src.UpdateIcon()
+		src.disguise_as(startDisguise)
 		startDisguise.set_loc(null) //don't just have a random toolbox inside mimics
 		qdel(startDisguise)
 
 	update_icon()
 		. = ..()
-		src.appearance = src.disguise
+		//src.appearance = src.disguise
 		if(!is_hiding)
 			src.add_filter("mimic_face", 101, layering_filter(icon = src.face_image,  blend_mode = BLEND_INSET_OVERLAY))
 
@@ -64,8 +63,11 @@
 
 	proc/disguise_as(var/obj/target)
 		src.disguise = new /mutable_appearance(target)
+		src.appearance = src.disguise
+		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.is_hiding = TRUE
 		src.UpdateIcon()
+
 
 	proc/stop_hiding()
 		if(src.is_hiding)
@@ -76,6 +78,25 @@
 	OnMove(source)
 		. = ..()
 		src.stop_hiding()
+
+	critter_attack(mob/target)
+		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
+		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if(!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+		else if(!pounce.disabled && pounce.cooldowncheck())
+			pounce.handleCast(target)
+		else
+			. = ..()
+
+	seek_target(var/range = 5)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (is_incapacitated(C)) continue
+			if (istype(C, src.type)) continue
+			. += C
+
 
 /datum/targetable/critter/mimic
 	name = "Mimic Object"
@@ -99,3 +120,7 @@
 		parent.disguise_as(target)
 		boutput(holder.owner, "<span class='alert'>You mimic [target].</span>")
 		return FALSE
+
+/datum/targetable/critter/sting/mimic
+	venom_ids = list("mimicotoxin")
+	inject_amount = 10

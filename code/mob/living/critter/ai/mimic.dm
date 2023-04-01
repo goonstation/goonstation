@@ -12,33 +12,29 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 
-//TODO
-// We basically wanna replicate Prey mimics here. So mimics that are disguised should wander when not visible, and hide
-// when people are nearby. If discovered, they should become aggressive until the target is incapacitated, then run and
-// re-disguise as something else.
-// Pouncing, biting. Maybe venom if you're feeling mean.
-
-/// Wait in ambush
+/// Wait in ambush - while hidden, stay hidden until a potential target is nearby, then interupt AI so ambush or attack can trigger
 /datum/aiTask/timed/wait_in_ambush
 	name = "waiting in ambush"
 	minimum_task_ticks = 5
 	maximum_task_ticks = 10
+	weight = 12 //Higher than attack - if we can wait in ambush instead of attacking, we should.
 
 /datum/aiTask/timed/wait_in_ambush/evaluate()
 	var/mob/living/critter/mimic/C = holder.owner
-	if(C.is_hiding)
-		. = 2 //only return a low priority if we're hiding, otherwise 0. Note 2 > wander priority
+	if(length(C.seek_target(3)))
+		return 0
+	return 100*C.is_hiding*weight  //Note goalbased evaluate returns a percentage which is multiplied by a weight. Only return a high priority if we're hiding, otherwise 0
 
 /datum/aiTask/timed/wait_in_ambush/on_tick()
 	var/mob/living/critter/mimic/C = holder.owner
 	holder.stop_move()
-	if(length(C.seek_target()))
+	if(length(C.seek_target(3))) //ambush max dist
 		src.holder.owner.ai.interrupt()
 
 /// If a target is in range and we're hiding, attack them until they're incapacitated
 /datum/aiTask/sequence/goalbased/ambush
 	name = "ambushing"
-	weight = 12 //higher than attack
+	weight = 13 //higher than waiting in ambush
 	max_dist = 3
 	ai_turbo = TRUE
 
@@ -62,7 +58,7 @@
 
 /datum/aiTask/succeedable/ambush
 	name = "ambush subtask"
-	max_dist = 7
+	max_dist = 5
 	var/has_started = FALSE
 
 /datum/aiTask/succeedable/ambush/failed()
@@ -104,9 +100,9 @@
 /// If a target can see us and we're not hiding, then lets run away and hide
 /datum/aiTask/sequence/goalbased/run_and_hide
 	name = "hiding"
-	weight = 11 //lower than ambush
-	max_dist = 9
-	var/min_dist = 4
+	weight = 11 //lower than ambush & waiting in ambush, but higher than attack
+	max_dist = 11
+	var/min_dist = 7
 
 /datum/aiTask/sequence/goalbased/run_and_hide/New(parentHolder, transTask)
 	..()
@@ -115,7 +111,7 @@
 /datum/aiTask/sequence/goalbased/run_and_hide/precondition()
 	var/mob/living/critter/mimic/C = holder.owner
 	var/datum/targetable/critter/mimic/mimic_ability = C.abilityHolder.getAbility(/datum/targetable/critter/mimic)
-	return !C.is_hiding && mimic_ability.cooldowncheck()
+	return !C.is_hiding && !mimic_ability.disabled && mimic_ability.cooldowncheck()
 
 //list of items in a range min to max that are not visible to other mobs
 /datum/aiTask/sequence/goalbased/run_and_hide/get_targets()
@@ -124,11 +120,11 @@
 		if(GET_DIST(holder.owner, T) < min_dist)
 			continue
 		for(var/mob/living/carbon/human/H in view(T, 3))
-			goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
+			if(!isdead(H))
+				goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
 		for(var/obj/item/I in T) //otherwise add the items in this turf
 			. += I
 		breakout:
-	return .
 
 /datum/aiTask/succeedable/run_and_hide
 	name = "hiding subtask"
