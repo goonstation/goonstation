@@ -17,6 +17,10 @@ CONTENTS:
 	sims_score = 100
 	sound_group = "solarium"
 
+/area/solarium/New()
+	. = ..()
+	solarium_sun = new /datum/sun("solarium", 2, /area/solarium)
+
 // it's about time this was an object I think
 var/global/the_sun = null
 /obj/the_sun

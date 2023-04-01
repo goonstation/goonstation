@@ -19,7 +19,9 @@
 	skip_sims = 1
 	sims_score = 30
 	sound_group = "ice_moon"
-
+/area/upper_arctic/New()
+	. = ..()
+	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic)
 /area/upper_arctic/pod1
 	name = "Outpost Theta Pod One Upper Level"
 	icon_state = "green"

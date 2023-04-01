@@ -108,6 +108,7 @@ var/sound/iomoon_alarm_sound = null
 
 /area/iomoon/New()
 	. = ..()
+	io_sun = new /datum/sun("io", 2, /area/iomoon)
 	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 	sfx_to_pick_from = iomoon_exterior_sounds
 

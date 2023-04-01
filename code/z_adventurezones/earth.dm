@@ -28,6 +28,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	is_centcom = 1
 	var/static/list/entered_ckeys = list()
 
+/area/centcom/New()
+	. = ..()
+	earth_sun = new /datum/sun("earth", 2, /area/centcom)
+
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
 		if (current_state < GAME_STATE_FINISHED)
