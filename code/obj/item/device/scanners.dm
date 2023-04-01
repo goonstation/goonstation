@@ -832,13 +832,13 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	proc/switch_mode(var/mode, set_flag, var/mob/user)
 		if (set_flag)
-			var/flag = tgui_input_text(user, "Flag:", "Set Sechud Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
-			if (!isnull(flag))
+			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
+			if (!isnull(flag) && src.sechud_flag != flag)
 				src.sechud_flag = flag
-
-			tooltip_rebuild = TRUE
-		else
+				tooltip_rebuild = TRUE
+		else if (src.mode != mode)
 			src.mode = mode
+			tooltip_rebuild = TRUE
 
 			switch (mode)
 				if(PRISONER_MODE_NONE)
@@ -858,7 +858,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	dropped(var/mob/user)
 		. = ..()
-		src.sechud_flag = initial(src.sechud_flag)
+		if (src.sechud_flag != initial(src.sechud_flag))
+			src.sechud_flag = initial(src.sechud_flag)
+			tooltip_rebuild = TRUE
 		user.closeContextActions()
 
 //// Prisoner Scanner Context Action
