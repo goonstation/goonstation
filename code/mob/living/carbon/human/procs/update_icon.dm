@@ -98,8 +98,6 @@
 
 	src.update_handcuffs(hand_offset)
 
-	src.update_shielded()
-
 	src.update_implants()
 
 	src.last_b_state = src.stat
@@ -636,22 +634,6 @@
 		UpdateOverlays(handcuff_img, "handcuffs")
 	else
 		UpdateOverlays(null, "handcuffs")
-
-/mob/living/carbon/human/proc/update_shielded()
-	var/shielded = 0
-
-	for (var/atom/A as anything in src)
-		if (A.flags & NOSHIELD)
-			if (istype(A,/obj/item/device/shield))
-				var/obj/item/device/shield/S = A
-				if (S.active)
-					shielded = 1
-					break
-
-	if (shielded)
-		UpdateOverlays(shield_image, "shield")
-	else
-		UpdateOverlays(null, "shield")
 
 /mob/living/carbon/human/proc/update_implants()
 	for (var/I in implant_images)
