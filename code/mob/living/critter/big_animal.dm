@@ -1,4 +1,3 @@
-
 /mob/living/critter/lion
 	name = "lion"
 	real_name = "lion"
@@ -18,10 +17,10 @@
 	butcherable = 1
 	name_the_meat = TRUE
 	max_skins = 3
-	health_brute = 30
-	health_brute_vuln = 0.6
-	health_burn = 30
-	health_burn_vuln = 0.8
+	health_brute = 25
+	health_brute_vuln = 0.8
+	health_burn = 25
+	health_burn_vuln = 1
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
@@ -71,3 +70,10 @@
 		playsound(src.loc, 'sound/items/eatfood.ogg', 20, 1)
 		src.HealDamage("All", 4, 4)
 		return ..()
+
+/mob/living/critter/lion/strong // Stronger one for admin stuff / one off spawns
+	desc = "Oh christ, this lion looks very buff..."
+	health_brute = 40
+	health_brute_vuln = 0.8
+	health_burn = 40
+	health_burn_vuln = 1
