@@ -26,7 +26,6 @@ TYPEINFO(/obj/machinery/power/tracker)
 	///the star that this tracker observes. Use this to pull info about the star datum.
 	var/datum/sun/targetstar
 	///an internal bool for the star to know whether the tracker knows its star yet
-	var/lockedon = FALSE
 
 	north
 		id = "north"

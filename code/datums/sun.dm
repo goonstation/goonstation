@@ -418,9 +418,7 @@
 			if (ignoreme)
 				ignoreme = FALSE
 				continue
-		if (!T.lockedon) // is targetstar set
-			T.lockedon = TRUE
-			T.targetstar = src
+		T.targetstar = src
 		T.set_angle(angle)
 
 	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
