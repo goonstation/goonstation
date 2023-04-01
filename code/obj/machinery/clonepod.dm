@@ -237,9 +237,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant

@@ -160,13 +160,17 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (src.mat_changename && setname)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
-		if(use_descriptors)
-			src.name_prefix(strPrefix ? strPrefix : "")
-			src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
-		src.name_prefix(mat1.name ? mat1.name : "")
-		if(use_descriptors)
-			src.name_suffix(strSuffix ? "of [strSuffix]" : "")
-		src.UpdateName()
+		if(mat1.special_naming)
+			src.UpdateName()
+			src.name = mat1.specialNaming(src)
+		else
+			if(use_descriptors)
+				src.name_prefix(strPrefix ? strPrefix : "")
+				src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
+			src.name_prefix(mat1.name ? mat1.name : "")
+			if(use_descriptors)
+				src.name_suffix(strSuffix ? "of [strSuffix]" : "")
+			src.UpdateName()
 
 	if (src.mat_changedesc && setname)
 		if (istype(src, /obj))
@@ -310,7 +314,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.suffixes = (mat1.suffixes | mat2.suffixes)
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
-	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.name = mat1.interpolateName(mat2, 0.5)
 	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
@@ -327,6 +331,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
 	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
 	else newMat.edible = FALSE
+
+	newMat.special_naming = FALSE // the naming proc doesn't carry over anyway
 
 	newMat.mixOnly = FALSE
 

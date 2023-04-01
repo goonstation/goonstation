@@ -1803,13 +1803,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.spellshield)
 		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 		return 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-				return 0
-			S.active = 0
-			S.icon_state = "shield0"
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()

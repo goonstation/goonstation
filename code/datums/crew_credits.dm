@@ -43,33 +43,47 @@ var/global/crew_creds = null
 #endif
 
 /// Generates the crew member data bundle for TGUI use
-/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M)
+/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M, var/generate_antagonist_data = FALSE)
 	var/is_head = FALSE
+	var/list/antag_display_names = list()
 	if(M.special_role)
-		if(!M.current) return
-		var/role_name = M.special_role
-		var/datum/antagonist/antag = M.get_antagonist(M.special_role)
-		if(antag)
-			role_name = antag.display_name
-		. += list(list(
-			"real_name" = M.current.real_name,
-			"dead" = isdead(M.current),
-			"player" = M.displayed_key,
-			"role" = capitalize(role_name),
-			"head" = is_head,
-		))
-		return .
+		if(!M.current)
+			return
 
-	if(!M.assigned_role) return
+		for (var/datum/antagonist/antag_role in M.antagonists)
+			if (antag_role.pseudo || antag_role.vr || antag_role.silent)
+				continue
+			antag_display_names += capitalize(antag_role.display_name)
+
+		//fall back to just displaying the special role string if no antag datums
+		if (!length(antag_display_names))
+			antag_display_names = list(M.special_role)
+
+		if (generate_antagonist_data)
+			. += list(list(
+				"real_name" = M.current.real_name,
+				"dead" = isdead(M.current),
+				"player" = M.displayed_key,
+				"role" = english_list(antag_display_names),
+				"head" = is_head,
+			))
+			return
+
+	if (!M.assigned_role)
+		return
 
 	if (M.assigned_role in list("Captain", "Head of Security", "Head of Personnel", "Medical Director", "Research Director", "Chief Engineer", "AI"))
 		is_head = TRUE
+
+	var/antag_roles_text = ""
+	if (length(antag_display_names))
+		antag_roles_text = " ([english_list(antag_display_names)])"
 
 	. += list(list(
 		"real_name" = M.current.real_name,
 		"dead" = isdead(M.current),
 		"player" = M.displayed_key,
-		"role" = M.assigned_role,
+		"role" = "[M.assigned_role][antag_roles_text]",
 		"head" = is_head,
 	))
 
@@ -94,7 +108,7 @@ var/global/crew_creds = null
 
 		// Antagonist?
 		if(M.special_role)
-			antagonist += bundle_crew_member_data(M)
+			antagonist += bundle_crew_member_data(M, TRUE)
 		if(!M.assigned_role)
 			continue
 

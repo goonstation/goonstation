@@ -42,6 +42,7 @@ TYPEINFO(/obj/machinery/processor)
 				totalAmount += M.amount
 
 			var/mat_id
+			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
 			var/div_factor = 1 / X.material_amt
@@ -57,6 +58,7 @@ TYPEINFO(/obj/machinery/processor)
 				if(exists_nearby)
 					exists_nearby.change_stack_amount(out_amount)
 					mat_id = exists_nearby.material.mat_id
+					mat = exists_nearby.material
 				else
 					var/newType = getProcessedMaterialForm(X.material)
 					var/obj/item/material_piece/P = new newType
@@ -64,10 +66,11 @@ TYPEINFO(/obj/machinery/processor)
 					P.setMaterial(copyMaterial(X.material))
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.mat_id
+					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
 					var/obj/machinery/manufacturer/M = output_location
-					M.update_resource_amount(mat_id, out_amount * 10)
+					M.update_resource_amount(mat_id, out_amount * 10, mat)
 
 				//If the input was a cable coil, output the conductor too
 				if (second_mat)
@@ -81,6 +84,7 @@ TYPEINFO(/obj/machinery/processor)
 					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
 						second_mat_id = second_exists_nearby.material.mat_id
+						second_mat = second_exists_nearby.material
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
 						var/obj/item/material_piece/PC = new newType
@@ -88,10 +92,11 @@ TYPEINFO(/obj/machinery/processor)
 						PC.setMaterial(copyMaterial(second_mat))
 						PC.change_stack_amount(out_amount - PC.amount)
 						second_mat_id = PC.material.mat_id
+						second_mat = PC.material
 
 					if (istype(output_location, /obj/machinery/manufacturer))
 						var/obj/machinery/manufacturer/M = output_location
-						M.update_resource_amount(second_mat_id, out_amount * 10)
+						M.update_resource_amount(second_mat_id, out_amount * 10, second_mat)
 
 			//Delete items in processor and output leftovers
 			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor
