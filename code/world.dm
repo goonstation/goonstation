@@ -437,12 +437,13 @@ var/f_color_selector_handler/F_Color_Selector
 		delete_queue = new /datum/dynamicQueue(100)
 
 	sun = new /datum/sun()
-	z2sun = new /datum/sun("adventure_void")
+	z2sun = new /datum/sun("adventure_void", 2)
 	#ifdef UNDERWATER_MAP
-	z5sun = new /datum/sun("trench")
+	// no z3 on nadir or oshan
+	z5sun = new /datum/sun("trench", 5)
 	#else
-	z3sun = new /datum/sun("debris")
-	z5sun = new /datum/sun("mining")
+	z3sun = new /datum/sun("debris", 3)
+	z5sun = new /datum/sun("mining", 5)
 	#endif
 
 

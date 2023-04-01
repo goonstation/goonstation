@@ -64,19 +64,39 @@
 	// the spess solars are just mega efficient basically.
 
 /// creates a new star based on (optional) stationloc provided and an assigned area for locals
-/datum/sun/New(var/location, var/area/assigned_area)
+/datum/sun/New(var/location, var/ztemp, var/area/assigned_area)
 	. = ..()
 	global.starlist += src
-	if (!isnull(location))
-		src.stationloc = location
-		if (!isnull(assigned_area))
-			src.sun_area = assigned_area
-			global.areas_with_local_suns += assigned_area
+	// this set of if conditions is the bane of my existence
+	if (!isnull(assigned_area)) // if it is a local sun, it has an area
+		if (isnull(location)) // if local sun with no location, assume void
+			src.identity_check()
+		else // if local sun with location
+			src.stationloc = location
+			src.identity_check()
+		if (isnull(ztemp)) // if local with no z
+			CRASH("You have a sun datum localised within [assigned_area] with no given z level!")
 		else
-			src.check_z1_global_sun()
-	else
-		src.check_z1_global_sun()
-	src.identity_check()
+			src.zlevel = ztemp
+		src.sun_area = assigned_area
+		global.areas_with_local_suns += assigned_area
+		return
+	else // global suns
+		if (isnull(location)) // if no location
+			if (isnull(ztemp) || ztemp == 1) // station sun
+				src.check_z1_global_sun()
+				src.identity_check()
+			else // no location with given zlevel, i.e. a zlevel sun
+				src.zlevel = ztemp
+				CRASH("You have a sun datum on z level [ztemp] with no given location!")
+				src.identity_check()
+		else // a global sun with manually assigned location
+			if (isnull(ztemp))
+				CRASH("You have a sun datum with an assigned location but no z level given!")
+			else
+				src.zlevel = ztemp
+			src.stationloc = location
+			src.identity_check()
 
 /// checks where the z level is, for global suns
 /datum/sun/proc/check_z1_global_sun()
