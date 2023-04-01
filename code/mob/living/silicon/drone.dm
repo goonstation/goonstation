@@ -148,7 +148,7 @@
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
-				robogibs(src.loc,null)
+				robogibs(src.loc)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return
