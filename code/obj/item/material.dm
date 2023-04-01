@@ -543,24 +543,7 @@
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
-				return
-			if(isabomination(H))
-				return
-			if(H.lying)
-				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
-				step_on(H)
-			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
-				if (H.mutantrace?.can_walk_on_shards)
-					return
-				if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
-					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
-					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					step_on(H)
+		walked_over(AM) // check if we need to hurt they feeties
 		..()
 
 	custom_suicide = 1
@@ -580,6 +563,24 @@
 		material_name = "Glass"
 	plasmacrystal
 		material_name = "Plasmaglass"
+
+/obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
+	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+		return
+	if(isabomination(H))
+		return
+	if(H.lying)
+		boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+		step_on(H)
+	else
+		//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
+		if (H.mutantrace?.can_walk_on_shards)
+			return
+		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
+			return
+		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+			boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
+			step_on(H)
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
