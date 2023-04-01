@@ -599,7 +599,7 @@
 	else
 		return FALSE
 
-/*
+/**
  Returns a boolean based on whether or not the string contains a comma or an apostrophe,
  to be used for emotes to decide whether or not to have a space between the name of the user
  and the emote.
