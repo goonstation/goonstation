@@ -24,7 +24,10 @@ var/list/miningModifiers = list()
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			if (map_currently_underwater)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.floor_turf_type)
+				src.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
@@ -33,13 +36,19 @@ var/list/miningModifiers = list()
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.wall_turf_type)
+				src.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+			else
+				src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			if (map_currently_underwater)
+			if(PLANET_LOCATIONS.repair_planet(src))
+				//
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)

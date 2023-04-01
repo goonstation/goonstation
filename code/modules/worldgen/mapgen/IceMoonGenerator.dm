@@ -6,7 +6,7 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/sealpup=15, /obj/critter/brullbar=5, /obj/critter/yeti=1)
+	fauna_types = list(/obj/critter/sealpup=15, /mob/living/critter/brullbar=5, /obj/critter/yeti=1)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
@@ -16,7 +16,7 @@
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 
-	fauna_types = list(/mob/living/critter/spider/ice/queen=1, /mob/living/critter/spider/ice/nice=5, /mob/living/critter/spider/ice=20, /obj/critter/brullbar=5)
+	fauna_types = list(/mob/living/critter/spider/ice/queen=1, /mob/living/critter/spider/ice/nice=5, /mob/living/critter/spider/ice=20, /mob/living/critter/brullbar=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
@@ -55,6 +55,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/icemoon
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(list/turfs, reuse_seed, flags)

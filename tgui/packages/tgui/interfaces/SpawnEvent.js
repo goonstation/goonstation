@@ -43,11 +43,11 @@ export const SpawnEvent = (props, context) => {
                 {(spawn_type === "mob_type") ? thing_name : "Mob type"}
               </Button>
               <Button
-                selected={thing_name && (spawn_type === "job_type")}
-                onClick={() => act("select_job_type")}
-                tooltip={(spawn_type === "job_type") && thing_name ? thing_to_spawn : ""}
+                selected={thing_name && (spawn_type === "job")}
+                onClick={() => act("select_job")}
+                tooltip={(spawn_type === "job") && thing_name ? thing_to_spawn : ""}
               >
-                {(spawn_type === "job_type") ? thing_name : "Job type"}
+                {(spawn_type === "job") ? thing_name : "Job"}
               </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Accept delay">

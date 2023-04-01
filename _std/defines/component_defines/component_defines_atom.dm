@@ -78,10 +78,12 @@
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
 // ---- turf signals ----
-	// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
+	/// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
-	// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
+	/// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
+	/// when a turf is replaced by another turf (what)
+	#define COMSIG_TURF_REPLACED "turf_replaced"
 
 // ---- obj signals ----
 

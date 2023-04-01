@@ -458,9 +458,12 @@ TYPEINFO_NEW(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
+	mat_appearances_to_ignore = list("wood")
 
 	auto
 		auto = 1
+	constructed //no "wood wood table"
+		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -679,7 +682,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
+		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return

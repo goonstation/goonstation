@@ -5,6 +5,8 @@ ABSTRACT_TYPE(/datum/objective)
 	var/explanation_text
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
+	///Sometimes we want an objective with no mind, for conspirators etc.
+	var/requires_mind = TRUE
 
 	New(text, datum/mind/owner, datum/antagonist/antag_role)
 		..()
@@ -15,7 +17,7 @@ ABSTRACT_TYPE(/datum/objective)
 			owner.objectives += src
 			if (antag_role)
 				antag_role.objectives += src
-		else
+		else if (src.requires_mind)
 			stack_trace("objective/New got called without a mind")
 		src.set_up()
 
@@ -758,20 +760,19 @@ proc/create_fluff(datum/mind/target)
 
 	check_completion()
 		if (!owner.current || isdead(owner.current))
-			return 0
+			return FALSE
 
-		if (!istype(ticker.mode, /datum/game_mode/gang))
-			return 0
-
-		var/datum/game_mode/gang/gangmode = ticker.mode
-		for (var/datum/mind/mindCheck in gangmode.leaders)
+		for (var/datum/mind/mindCheck in get_all_antagonists(ROLE_GANG_LEADER))
 			if (mindCheck == owner)
 				continue
 
 			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
+				return FALSE
 
-		return 1
+		return TRUE
+
+/datum/objective/specialist/gang/member
+	explanation_text = "Protect your boss, recruit new members, tag up the station, and beware the other gangs!."
 
 /datum/objective/specialist/blob
 	medal_name = "Blob everywhere!"
@@ -1219,8 +1220,8 @@ proc/create_fluff(datum/mind/target)
 // Conspirator objectives                              //
 /////////////////////////////////////////////////////////
 
-ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy
+	requires_mind = FALSE
 	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
 
 /datum/objective/conspiracy/commune

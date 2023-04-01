@@ -26,10 +26,11 @@
 
 	var/x_occupied = 0
 	var/y_occupied = 0
-	var/datum/abilityHolder/composite_owner = null
+	var/datum/abilityHolder/composite/composite_owner = null
 	var/any_abilities_displayed = 0
 
 	var/cast_while_dead = 0
+	var/remove_on_clone = FALSE
 
 	// cirr's effort to make these work like normal huds, take 1
 	var/datum/hud/hud
@@ -301,6 +302,13 @@
 			if (A.type == abilityType)
 				return A
 		return null
+
+	proc/on_clone()
+		if (src.remove_on_clone)
+			if (src.composite_owner)
+				src.composite_owner.removeHolder(src.type)
+			else
+				src.owner?.remove_ability_holder(src)
 
 	proc/pointCheck(cost)
 		if (!usesPoints)
@@ -860,7 +868,7 @@
 		action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 		waiting_for_hotkey = 0 //If 1, the next number hotkey pressed will be bound to this.
 
-		preferred_holder_type = /datum/abilityHolder
+		preferred_holder_type = /datum/abilityHolder/generic
 
 		icon = 'icons/mob/spell_buttons.dmi'
 		icon_state = "blob-template"
@@ -1094,6 +1102,12 @@
 		holders = null
 		..()
 
+	on_clone()
+		for (var/datum/abilityHolder/H in src.holders)
+			H.composite_owner = src
+			H.on_clone()
+		. = ..()
+
 	//return holder on success, null on fail
 	proc/addHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
@@ -1239,31 +1253,27 @@
 			H.resumeAllAbilities()
 
 	addAbility(var/abilityType)
-		//why was this? Weird
-		// if (!holders.len)
-		// 	return
 		if (istext(abilityType))
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 
-		var/datum/targetable/tmp_A = new abilityType(src)
-
+		var/datum/targetable/tmp_A = abilityType
+		var/preferred_holder_type = initial(tmp_A.preferred_holder_type)
 		if (holders.len)
 			for (var/datum/abilityHolder/H in holders)
-				if (istype(H, tmp_A.preferred_holder_type))
+				if (istype(H, preferred_holder_type))
 					return H.addAbility(abilityType)
 
-		var/datum/targetable/A = new abilityType(src)
-		var/datum/abilityHolder/X
-		if (holders.len)
-			X = holders[1]
+		var/datum/abilityHolder/holder
+		if (length(src.holders) && (!istype(src.holders[1], /datum/abilityHolder/hidden) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
+			holder = holders[1]
 		else
-			X = src.addHolder(A.preferred_holder_type)
-		A = X.addAbility(abilityType)
+			holder = src.addHolder(preferred_holder_type)
+		var/datum/targetable/ability = holder.addAbility(abilityType)
 
 		src.updateButtons()
-		return A
+		return ability
 
 	removeAbility(var/abilityType)
 		if (istext(abilityType))

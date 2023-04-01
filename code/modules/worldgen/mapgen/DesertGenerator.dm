@@ -30,6 +30,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/desert
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/desert
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/desert_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -93,6 +95,7 @@
 	stone_color = "#957a59"
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
+	temperature = 330
 	default_ore = null
 	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
 

@@ -46,46 +46,43 @@ var/global/noir = 0
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
-	var/level = 0
-	switch(rank)
-		if("Host")
-			level = LEVEL_HOST
-		if("Coder")
-			level = LEVEL_CODER
-		if("Administrator")
-			level = LEVEL_ADMIN
-		if("Primary Administrator")
-			level = LEVEL_PA
-		if("Intermediate Administrator")
-			level = LEVEL_IA
-		if("Secondary Administrator")
-			level = LEVEL_SA
-		if("Moderator")
-			level = LEVEL_MOD
-		if("Goat Fart", "Ayn Rand's Armpit")
-			level = LEVEL_BABBY
-	return level
+	switch(lowertext(rank))
+		if("host")
+			return LEVEL_HOST
+		if("coder")
+			return LEVEL_CODER
+		if("administrator")
+			return LEVEL_ADMIN
+		if("primary administrator")
+			return LEVEL_PA
+		if("intermediate administrator")
+			return LEVEL_IA
+		if("secondary administrator")
+			return LEVEL_SA
+		if("moderator")
+			return LEVEL_MOD
+		if("goat fart", "ayn rand's armpit")
+			return LEVEL_BABBY
 
 /proc/level_to_rank(var/level)
-	var/rank = "ERROR"
 	switch(level)
 		if(LEVEL_HOST)
-			rank = "Host"
+			return "Host"
 		if(LEVEL_CODER)
-			rank = "Coder"
+			return "Coder"
 		if(LEVEL_ADMIN)
-			rank = "Administrator"
+			return "Administrator"
 		if(LEVEL_PA)
-			rank = "Primary Administrator"
+			return "Primary Administrator"
 		if(LEVEL_IA)
-			rank = "Intermediate Administrator"
+			return "Intermediate Administrator"
 		if(LEVEL_SA)
-			rank = "Secondary Administrator"
+			return "Secondary Administrator"
 		if(LEVEL_MOD)
-			rank = "Moderator"
+			return "Moderator"
 		if(LEVEL_BABBY)
-			rank = "Goat Fart or Ayn Rand's Armpit"
-	return rank
+			return "Goat Fart or Ayn Rand's Armpit"
+	return "ERROR"
 
 /datum/admins/Topic(href, href_list)
 	..()
@@ -517,6 +514,7 @@ var/global/noir = 0
 			if (isnull(centcomviewer))
 				centcomviewer = new
 			centcomviewer.target_key = target.key
+			centcomviewer.force_static_data_update = TRUE
 			centcomviewer.ui_interact(usr.client.mob)
 
 		/////////////////////////////////////ban stuff
@@ -873,7 +871,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +881,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -983,7 +983,7 @@ var/global/noir = 0
 						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
 						return
 					if(config.allow_admin_rev)
-						M.revive()
+						M.full_heal()
 						message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 						logTheThing(LOG_ADMIN, usr, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, usr, "healed / revived [constructTarget(M,"diary")]", "admin")
@@ -1029,6 +1029,48 @@ var/global/noir = 0
 					usr.client.modify_parts(MC, usr)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify limbs.")
+
+		if ("changeoutfit")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+					return
+				var/mob/living/carbon/human/H = M
+				if (H && usr.client)
+					var/delete_choice
+					var/obj/item/card/id
+					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+					sortList(jobs, /proc/cmp_text_asc)
+					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					if(!istype(job))
+						return
+					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
+					if (delete_choice == "Cancel")
+						return
+					if (!ishuman(H))
+						boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+						return
+					if (delete_choice == "Yes")
+						// Try to recover their ID
+						id = H.get_id()
+						if (istype(id))
+							H.u_equip(id)
+							// Hide this somewhere safe until we recover it as we can't keep it on the mob
+							id.set_loc(null)
+							id.dropped(H)
+						else
+							boutput(usr, "<span class='alert'>Could not find [H]'s ID card - Replacing with a standard job ID if available.</span>")
+					H.unequip_all(delete_choice == "Yes" ? 1 : 0)
+					SPAWN (1 SECOND)
+						equip_job_items(job, H)
+						if (istype(id))
+							if(!H.equip_if_possible(id, H.slot_wear_id))
+								H.put_in_hand(id)
+						else if (job.spawn_id)
+							H.spawnId(job)
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to change outfits.")
 
 
 		if ("jumpto")
@@ -2006,7 +2048,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] into a Slasher?", "Make Slasher", list("Yes", "No")) == "Yes")
-				M.slasherize()
+				M.mind?.add_antagonist(ROLE_SLASHER, source = ANTAGONIST_SOURCE_ADMIN)
 
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
@@ -2149,8 +2191,9 @@ var/global/noir = 0
 					tgui_alert(usr,"Infiltrator. Objective(s):\n[t]", "[M.key]")
 					return
 			else if (istype(current_mode, /datum/game_mode/gang))
-				if(M.mind in current_mode:leaders)
-					tgui_alert(usr,"Leader of [M.mind.gang.gang_name].", "[M.key]")
+				if(M.mind in current_mode:traitors)
+					var/datum/gang/gang = M.get_gang()
+					tgui_alert(usr,"Leader of [gang.gang_name].", "[M.key]")
 					return
 				for(var/datum/gang/G in current_mode:gangs)
 					if(M.mind in G.members)
@@ -2233,7 +2276,8 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			for (var/V as anything in concrete_typesof(/datum/antagonist))
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
+			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
 					antag_options[initial(A.display_name)] = initial(A.id)
@@ -2259,6 +2303,53 @@ var/global/noir = 0
 				return
 			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+			if (success)
+				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
+			else
+				boutput(usr, "<span class='alert'>Addition failed with return code [success]. The mob may be incompatible. Report this to a coder.</span>")
+
+		if ("add_subordinate_antagonist")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr, "You must be at least a Primary Administrator to change someone's antagonist status.")
+				return
+			var/mob/M = locate(href_list["targetmob"])
+			if (!M?.mind)
+				return
+			var/list/antag_options = list()
+			for (var/V as anything in concrete_typesof(/datum/antagonist/subordinate))
+				var/datum/antagonist/A = V
+				if (!M.mind.get_antagonist(initial(A.id)))
+					antag_options[initial(A.display_name)] = initial(A.id)
+			if (!length(antag_options))
+				boutput(usr, "<span class='alert'>Antagonist assignment failed - no valid antagonist roles exist.</span>")
+				return
+			for (var/V as anything in M.mind.antagonists)
+				var/datum/antagonist/A = V
+				if (A.mutually_exclusive)
+					if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
+						return
+				break
+			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Subordinate Antagonist", antag_options)
+			if (!selected_keyvalue)
+				return
+			var/list/players = list()
+			for (var/client/C in clients)
+				if (!C?.mob || !C.mob.mind)
+					continue
+				players += C.mob
+			var/mob/master = tgui_input_list(usr, "Choose a master, leader, or so forth for this antagonist.", "Add Subordinate Antagonist", players)
+			if (!master)
+				return
+			var/do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Subordinate Antagonist", list("Yes", "No", "Cancel"))
+			if (do_equipment == "Cancel")
+				return
+			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Subordinate Antagonist", list("Yes", "No", "Cancel"))
+			if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
+				return
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+				return
+			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
+			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE, master = master.mind)
 			if (success)
 				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
 			else
@@ -3643,24 +3734,18 @@ var/global/noir = 0
 								else
 									dat += "There are no brainwashed followers."
 
-							else if (istype(ticker.mode, /datum/game_mode/gang))
-								var/datum/game_mode/gang/gangmode = ticker.mode
-								if (length(gangmode.leaders))
-									for(var/datum/mind/leader in gangmode.leaders)
-										var/mob/M = leader.current
-										var/datum/gang/gang = leader.gang
-										dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-										dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
-										for(var/datum/mind/member in gang.members)
-											if(member.current != null)
-												dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(member.current)]</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-												dat += "<td><a href='?action=priv_msg&target=[member.ckey]'>PM</A></td>"
-												dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
-									dat += "</table>"
-								else
-									dat += "There are no gangs."
+							for(var/datum/gang/gang in get_all_gangs())
+								var/mob/M = gang.leader.current
+								dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
+								dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+								dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
+								dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
+								for(var/datum/mind/member in gang.members)
+									if(member.current)
+										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(member.current)]</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<td><a href='?action=priv_msg&target=[member.ckey]'>PM</A></td>"
+										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
+								dat += "</table>"
 
 							if (ticker.mode.traitors.len > 0)
 								dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
@@ -4555,16 +4640,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export_async("admin", ircmsg)
 
-/mob/proc/revive()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.full_heal()
-		H.stamina = H.stamina_max
-		H.remove_ailments() // don't spawn with heart failure
-	return
-
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
-
 /proc/checktraitor(mob/M as mob)
 	set popup_menu = 0
 	if(!M || !M.mind || !ticker || !ticker.mode)
@@ -4582,12 +4658,6 @@ var/global/noir = 0
 	else if (istype(ticker.mode, /datum/game_mode/spy))
 		if(M.mind in (ticker.mode:leaders + ticker.mode:spies))
 			return 1
-	else if (istype(ticker.mode, /datum/game_mode/gang))
-		if(M.mind in (ticker.mode:leaders))
-			return 1
-		for(var/datum/gang/G in ticker.mode:gangs)
-			if(M.mind in G.members)
-				return 1
 
 	if(M.mind in ticker.mode:traitors)
 		return 1
@@ -4651,8 +4721,7 @@ var/global/noir = 0
 				if (ROLE_GRINCH)
 					eligible_objectives += /datum/objective/specialist/ruin_xmas
 				if (ROLE_GANG_LEADER)
-					new /datum/objective/specialist/gang(null, M.mind)
-					M.mind.special_role = ROLE_GANG_LEADER
+					eligible_objectives += /datum/objective/specialist/gang
 			var/done = 0
 			var/select_objective = null
 			var/custom_text = "Go hog wild!"
@@ -4720,34 +4789,13 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
-				M.mind.special_role = ROLE_FLOOR_GOBLIN
-				M.make_floor_goblin()
-				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_FLOOR_GOBLIN, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_GANG_LEADER)
-				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
-				// seeing as gang leaders are only allowed during the gang gamemode, this should work
-				// error checks included anyways
-				if(istype(ticker)) // the day we assume the foundation of the world exists is the day it crumbles into sand
-					var/datum/game_mode/gang/G = ticker.mode
-					if(istype(G))
-						G.generate_gang(M.mind)
-					else
-						boutput(usr, "<span class='alert'>The game mode isn't gang (or something is deeply fucked up).</span>")
-						return
-
-				boutput(M, "<h1><font color=red>You are the leader of the [M.mind.gang.gang_name] gang!</font></h1>")
-				boutput(M, "<span class='alert'>You must recruit people to your cause and fight other gangs!</span>")
-				boutput(M, "<span class='alert'>You may kill anyone you want, but are advised to convince them to join you instead!</span>")
-				boutput(M, "<span class='alert'>You can use the Set Gang Base command once which will make your current area into your gang's base and spawn a locker.</span>")
-				boutput(M, "<span class='alert'>You can get gear from your gang's locker. You must store guns, drugs and cash there for points.</span>")
-				boutput(M, "<span class='alert'>People can join your gang by reading a flyer, obtained from your gang locker.</span>")
-				boutput(M, "<span class='alert'>Your objectives are to <b>kill the opposing gang leaders</b>, and <b>stash guns, drugs and cash in your locker</b>.</span>")
-				M.verbs += /client/proc/set_gang_base
-				tgui_alert(M, "Use the Set Gang Base verb to claim a home turf, and start recruiting people with flyers from the locker!", "You are a gang leader!")
+				M.mind.add_antagonist(ROLE_GANG_LEADER, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_OMNITRAITOR)
 				M.mind.add_antagonist(ROLE_OMNITRAITOR, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_SPY_THIEF)

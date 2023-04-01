@@ -218,7 +218,7 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"rpm=[src.RPM]&power=[src.lastgen]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
 
 	suicide(mob/user)
 		user.visible_message("<span class='alert'><b>[user] puts their head into blades of \the [src]!</b></span>")
