@@ -1015,7 +1015,7 @@ var/global/curr_day = null
 	set hidden = TRUE
 	if(!A)
 		var/datum/promise/promise = new
-		var/datum/targetable/refpicker/abil = new
+		var/datum/targetable/refpicker/nonadmin/abil = new
 		abil.promise = promise
 		src.mob.targeting_ability = abil
 		src.mob.update_cursor()
