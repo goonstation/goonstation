@@ -72,8 +72,10 @@
 		if (!isnull(assigned_area))
 			src.sun_area = assigned_area
 			global.areas_with_local_suns += assigned_area
-		else src.check_z1_global_sun()
-	else src.check_z1_global_sun()
+		else
+			src.check_z1_global_sun()
+	else
+		src.check_z1_global_sun()
 	src.identity_check()
 
 /// checks where the z level is, for global suns
