@@ -736,7 +736,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		. += "<br>Arrest mode: <span class='notice'>[mode_string]</span>"
 		if (sechud_flag != initial(src.sechud_flag))
-			. += "<br>Active Sechud Flag: <span class='notice'>[src.sechud_flag]</span>"
+			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
