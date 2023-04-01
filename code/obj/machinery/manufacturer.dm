@@ -63,6 +63,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
+	var/list/stored_materials_by_id = list()
 
 	// Production options
 	var/search = null
@@ -1661,7 +1662,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/mat_id in mats_available)
 				if (mats_available[mat_id] < amount)
 					continue
-				var/datum/material/mat = getMaterial(mat_id)
+				var/datum/material/mat = src.get_our_material(mat_id)
 				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
 					mats_used[pattern] = mat_id
 					mats_available[mat_id] -= amount
@@ -1941,10 +1942,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	<tbody>
 		"}
 		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = getMaterial(mat_id)
+			var/datum/material/mat = src.get_our_material(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
 			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
@@ -2115,10 +2116,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for(var/obj/item/material_piece/M in src.contents)
 				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
-					src.update_resource_amount(M.material.mat_id, P.amount * 10)
+					src.update_resource_amount(M.material.mat_id, P.amount * 10, M.material)
 					qdel(P)
 					return
-			src.update_resource_amount(P.material.mat_id, P.amount * 10)
+			src.update_resource_amount(P.material.mat_id, P.amount * 10, P.material)
 
 		O.set_loc(src)
 
@@ -2149,8 +2150,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/update_resource_amount(mat_id, amt)
+	proc/update_resource_amount(mat_id, amt, datum/material/mat_added=null)
 		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
+		if (src.resource_amounts[mat_id] == 0)
+			stored_materials_by_id -= mat_id
+		else if (mat_added && !(mat_id in stored_materials_by_id))
+			stored_materials_by_id[mat_id] = copyMaterial(mat_added)
+
+	proc/get_our_material(mat_id)
+		if (mat_id in src.stored_materials_by_id)
+			return copyMaterial(src.stored_materials_by_id[mat_id])
+		return getMaterial(mat_id)
 
 	proc/claim_free_resources()
 		if (src.deconstruct_flags & DECON_BUILT)
@@ -2541,6 +2551,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+		/datum/manufacture/lightengspacesuit,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

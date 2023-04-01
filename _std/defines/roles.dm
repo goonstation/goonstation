@@ -33,7 +33,7 @@
 #define ROLE_SLEEPER_AGENT "sleeper agent"
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDHACK "mindhack"
-#define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
+#define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
 #define ROLE_ZOMBIE "zombie"
 
 // gimmicks

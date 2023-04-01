@@ -379,6 +379,7 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/Flesh_Tear_1.ogg" = 'sound/impact_sounds/Flesh_Tear_1.ogg',\
  	"sound/impact_sounds/Flesh_Tear_2.ogg" = 'sound/impact_sounds/Flesh_Tear_2.ogg',\
  	"sound/impact_sounds/Flesh_Tear_3.ogg" = 'sound/impact_sounds/Flesh_Tear_3.ogg',\
+ 	"sound/impact_sounds/folding_chair.ogg" = 'sound/impact_sounds/folding_chair.ogg',\
  	"sound/impact_sounds/Generic_Click_1.ogg" = 'sound/impact_sounds/Generic_Click_1.ogg',\
  	"sound/impact_sounds/Generic_Hit_1.ogg" = 'sound/impact_sounds/Generic_Hit_1.ogg',\
  	"sound/impact_sounds/Generic_Hit_2.ogg" = 'sound/impact_sounds/Generic_Hit_2.ogg',\

@@ -379,6 +379,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		spooktober_GH.update()
 #endif
 
+		#ifdef APRIL_FOOLS
+		if(prob(0.1))
+			if(isnull(random_floor_turfs))
+				build_random_floor_turf_list()
+			var/turf/T = pick(random_floor_turfs)
+			new /mob/living/critter/jeans_elemental(T)
+		#endif
+
 		wagesystem.process()
 
 		emergency_shuttle.process()
