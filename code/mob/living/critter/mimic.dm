@@ -123,4 +123,4 @@
 
 /datum/targetable/critter/sting/mimic
 	venom_ids = list("mimicotoxin")
-	inject_amount = 10
+	inject_amount = 15
