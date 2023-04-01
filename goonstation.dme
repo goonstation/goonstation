@@ -750,6 +750,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\hunter\abilities\hunter_summongear.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_taketrophy.dm"
 #include "code\modules\antagonists\nuclear_operative\nuclear_operative.dm"
+#include "code\modules\antagonists\nuclear_operative\nuclear_operative_gunbot.dm"
 #include "code\modules\antagonists\omnitraitor\omnitraitor.dm"
 #include "code\modules\antagonists\pirate\pirate.dm"
 #include "code\modules\antagonists\revolutionary\head_revolutionary.dm"
