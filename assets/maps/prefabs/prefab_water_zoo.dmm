@@ -161,7 +161,7 @@
 	},
 /area/prefab/zoo)
 "J" = (
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

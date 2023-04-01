@@ -643,7 +643,7 @@
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-				obs.boot()
+				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
@@ -906,21 +906,20 @@
 				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
 		*/
+/mob/living/carbon/human/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
-			hud.update_intent()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
-			hud.update_intent()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
-			hud.update_intent()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM)
-			hud.update_intent()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -1118,18 +1117,15 @@
 					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
 				src.set_a_intent(INTENT_DISARM)
-				src.hud.update_intent()
 				return
 			else if (src.client.check_key(KEY_PULL))
 				src.set_cursor('icons/cursors/combat_grab.dmi')
 				src.client.show_popup_menus = 0
 				src.set_a_intent(INTENT_GRAB)
-				src.hud.update_intent()
 				return
 			else if (src.client.show_popup_menus == 0)
 				src.client.show_popup_menus = 1
 				src.set_a_intent(INTENT_HELP)
-				src.hud.update_intent()
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				src.set_cursor('icons/cursors/throw.dmi')

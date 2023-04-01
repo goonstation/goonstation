@@ -299,6 +299,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			return FALSE
 		if (can_act_check && !can_act(owner, needs_hands))
 			return FALSE
+		if (targeted && GET_DIST(src.holder?.owner, target) > src.max_range)
+			boutput(src.holder?.owner, "<span class='alert'>[target] is too far away.</span>")
+			return FALSE
 		return ..()
 
 	handleCast(atom/target, params)

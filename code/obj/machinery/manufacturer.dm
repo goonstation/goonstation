@@ -2231,6 +2231,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/multitool,
+		/datum/manufacture/t_scanner,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
 		/datum/manufacture/rods2,
@@ -2540,6 +2541,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+		/datum/manufacture/lightengspacesuit,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

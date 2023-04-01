@@ -4414,8 +4414,8 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/computer/chem_requester/science{
-	dir = 8;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -7393,10 +7393,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aBs" = (
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -16472,6 +16468,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bee" = (
@@ -18453,11 +18450,8 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "blV" = (
-/obj/disposalpipe/segment/ejection{
-	icon_state = "pipe-c"
-	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -27720,6 +27714,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "emV" = (
@@ -28789,9 +28786,9 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Cell #1";
 	pixel_x = 24;
-	pixel_y = 4;
-	name = "Brig Cell #1"
+	pixel_y = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -29783,8 +29780,8 @@
 "fPo" = (
 /obj/table/auto,
 /obj/item/storage/box/tapebox{
-	pixel_y = 12;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 12
 	},
 /obj/item/disk/data/tape{
 	layer = 3.5
@@ -30432,7 +30429,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable,
 /turf/simulated/floor,
 /area/station/security/brig)
 "gtg" = (
@@ -35796,8 +35792,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lcr" = (
-/obj/stool/chair,
 /obj/machinery/light/incandescent,
+/obj/mail_booth,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -35956,8 +35952,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "lkd" = (
+/obj/disposalpipe/segment/ejection{
+	icon_state = "pipe-c"
+	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -36223,9 +36222,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Cell #2";
 	pixel_x = -24;
-	pixel_y = 6;
-	name = "Brig Cell #2"
+	pixel_y = 6
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -39965,8 +39964,8 @@
 "owl" = (
 /obj/stool,
 /obj/machinery/phone/wall{
-	pixel_y = -24;
-	name = "Brig Genpop Cell"
+	name = "Brig Genpop Cell";
+	pixel_y = -24
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -46536,9 +46535,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/phone/wall{
+	name = "Brig Main Phone";
 	pixel_x = 24;
-	pixel_y = 4;
-	name = "Brig Main Phone"
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -49682,12 +49681,12 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/hand_labeler{
-	pixel_y = 12;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 12
 	},
 /obj/item/device/audio_log{
-	pixel_y = 13;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 13
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 4
@@ -96585,8 +96584,8 @@ bij
 biS
 bgN
 bkM
-blV
-bmK
+blT
+bmM
 bmJ
 boq
 boq
@@ -96888,7 +96887,7 @@ biT
 bgN
 hYn
 lkd
-bmL
+bmK
 gsS
 kON
 bkP
@@ -97189,7 +97188,7 @@ bil
 bgN
 bgN
 wFJ
-tMz
+blV
 emR
 bed
 bkP

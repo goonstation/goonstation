@@ -196,6 +196,7 @@ var/datum/respawn_controls/respawn_controller
 		M.is_respawned_player = 1
 		M.key = the_client.key
 		M.Login()
+		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.mind.purchased_bank_item = null
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)
