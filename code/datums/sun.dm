@@ -87,8 +87,8 @@
 				src.identity_check()
 			else // no location with given zlevel, i.e. a zlevel sun
 				src.zlevel = ztemp
-				CRASH("You have a sun datum on z level [ztemp] with no given location!")
 				src.identity_check()
+				CRASH("You have a sun datum on z level [ztemp] with no given location!")
 		else // a global sun with manually assigned location
 			if (isnull(ztemp))
 				CRASH("You have a sun datum with an assigned location but no z level given!")
