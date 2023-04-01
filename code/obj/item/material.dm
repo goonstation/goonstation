@@ -546,7 +546,9 @@
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)
-		walked_over(AM) // check if we need to hurt they feeties
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			walked_over(H) // check if we need to hurt they feeties
 		..()
 
 	custom_suicide = 1
