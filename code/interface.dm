@@ -25,14 +25,14 @@
 				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
-
+		/*
 		bugreport()
 			set category = "Commands"
 			set name = "bugreport"
 			set desc = "Report a bug."
 			set hidden = 1
-			bug_report_form(src.mob, easteregg_chance=1)
-
+		bug_report_form(src.mob, easteregg_chance=1)
+		*/
 		disable_menu()
 			set category = "Commands"
 			set name = "disable_menu"
