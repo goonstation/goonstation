@@ -1041,14 +1041,14 @@ TYPEINFO(/atom)
 
 	return src
 
-/atom/movable/proc/move_trigger(var/mob/M, var/kindof)
-	var/atom/movable/x = loc
-	while (x && !isarea(x) && x != M)
-		x = x.loc
-	if (!x || isarea(x))
-		return 0
+/atom/movable/proc/move_trigger(mob/M, kindof)
+	var/atom/movable/AM = src.loc
+	while (AM && !isarea(AM) && AM != M)
+		AM = AM.loc
+	if (!AM || isarea(AM))
+		return FALSE
 	src.storage?.storage_item_move_triggered(M, kindof)
-	return 1
+	return TRUE
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
