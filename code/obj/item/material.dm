@@ -37,7 +37,7 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(check_valid_stack(W))
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
@@ -494,6 +494,7 @@
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
+	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = 0
 	set_name = TRUE
 
@@ -512,6 +513,7 @@
 	icon_state = "shard"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
+	stack_type = /obj/item/raw_material/shard
 	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
