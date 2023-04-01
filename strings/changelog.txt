@@ -1,5 +1,8 @@
 
 (t)sat apr 01 23
+(u)pali
+(e)🐛|C-Bug
+(+)Fabricators now work with alloy materials.
 (u)Wisemonster
 (p)13469
 (e)🪲💡|C-Bug, A-Station-Systems
