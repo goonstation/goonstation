@@ -2208,7 +2208,8 @@ datum
 							mimicface.blend_mode = BLEND_INSET_OVERLAY
 							var/client/client = M.client //hold a reference to the client directly
 							client?.images.Add(mimicface)
-							M.show_message("[I] suddenly opens eyes that weren't there and sprouts teeth!", 1)
+							if(prob(25))
+								M.show_message("[I] suddenly opens eyes that weren't there and sprouts teeth!", 1)
 							SPAWN (10 SECONDS)
 								client?.images.Remove(mimicface)
 								qdel(mimicface)
