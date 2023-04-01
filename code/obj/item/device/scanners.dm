@@ -707,8 +707,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_RELEASED 3
 	#define PRISONER_MODE_INCARCERATED 4
 
-	///List of record settings to mode strings
-	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED )
+	///List of record settings
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
 	/// The sechud flag that will be applied when scanning someone
