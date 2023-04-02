@@ -471,7 +471,6 @@ proc/istypes(datum/dat, list/types)
 /proc/get_random_atom(atom_type, return_instance = FALSE, return_instance_newargs = null)
   var/typeinfo/atom/info = get_type_typeinfo(atom_type)
   var/atom/chosen_type = pick(info.random_subtypes)
-  if (!return_instance)
-    return chosen_type
-  else
-    return new chosen_type(return_instance_newargs)
+	if (!return_instance)
+		return chosen_type
+	return new chosen_type(return_instance_newargs)
