@@ -1,5 +1,11 @@
 
 (t)sun apr 02 23
+(u)Amylizzle
+(p)13441
+(e)🪲⚖🧱📦|C-Bug, C-Balance, A-Materials, A-Game-Objects
+(*)Nuclear Reactor numbers have been tweaked. See minor changelog for details.
+(+)Nuclear components now cost only 2 materials, down from 3.
+(+)The nuclear engine thermodynamics sim has been fixed, so things will work a little differently. In particular, the reactor will respond much quicker to changes in temperature, and material's thermal and electrical conductivity matter a lot more. As a result of this, control rods will be much more meaningful. It's also much easier to meltdown.
 (u)Nexusuxen
 (p)13535
 (e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
