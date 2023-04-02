@@ -898,6 +898,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\atmospherics\machinery\mixer.dm"
 #include "code\modules\atmospherics\machinery\pipe.dm"
 #include "code\modules\atmospherics\machinery\portables_connector.dm"
+#include "code\modules\atmospherics\machinery\pressure_tank.dm"
 #include "code\modules\atmospherics\machinery\retrofilter.dm"
 #include "code\modules\atmospherics\machinery\valve.dm"
 #include "code\modules\atmospherics\machinery\binary\circulator.dm"
