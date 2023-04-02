@@ -11,7 +11,6 @@
 	dir = 4
 	bound_height = 96
 	bound_width = 96
-	var/range = 100			//how far the beam goes, set to max(world.maxx,world.maxy) in New()
 	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
@@ -21,7 +20,8 @@
 	var/online = FALSE
 	var/obj/machinery/power/terminal/terminal = null
 	var/firing = FALSE			//laser is currently active
-	var/list/laser_parts = list()	//all the individual laser objects
+	///the first laser object
+	var/obj/linked_laser/ptl/laser = null
 	var/list/laser_turfs = list()	//every turf with a laser on it
 	var/list/affecting_mobs = list()//mobs in the path of the beam
 	var/list/blocking_objects = list()	//the objects blocking the laser, if any
@@ -39,8 +39,6 @@
 
 /obj/machinery/power/pt_laser/New()
 	..()
-
-	range = max(world.maxx,world.maxy)
 
 	SPAWN(0.5 SECONDS)
 		var/turf/origin = get_rear_turf()
@@ -62,8 +60,7 @@
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
-	for(var/obj/O in laser_parts)
-		qdel(O)
+	qdel(src.laser)
 
 	for(var/x_off = 0 to 2)
 		for(var/y_off = 0 to 2)
@@ -138,10 +135,7 @@
 	if(online) // if it's switched on
 		if(!firing) //not firing
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
-				if(laser_parts.len == 0)
-					start_firing() //creates all the laser objects then activates the right ones
-				else
-					restart_firing() //if the laser was created already, just activate the existing objects
+				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
 				charge -= adj_output
 				if(selling)
@@ -166,7 +160,6 @@
 			else if(blocking_objects.len > 0)
 				melt_blocking_objects()
 
-			update_laser()
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
@@ -267,80 +260,21 @@
 	var/turf/T = get_barrel_turf()
 	if(!T) return //just in case
 
-	firing = 1
+	firing = TRUE
 	UpdateIcon(1)
-
-	var/scale_factor = round(bound_width / 96)
-	for(var/dist = 0, dist < range / scale_factor, dist += scale_factor) // creates each field tile
-		for(var/i in 1 to (dist == 0 ? 1 : scale_factor))
-			T = get_step(T, dir)
-		if(!T) break //edge of the map
-		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.bound_width *= scale_factor
-		laser.bound_height *= scale_factor
-		laser.Scale(scale_factor, scale_factor)
-		laser.Translate((scale_factor - 1) * world.icon_size / 2, (scale_factor - 1) * world.icon_size / 2)
-		laser.set_dir(src.dir)
-		laser.power = round(abs(output)*PTLEFFICIENCY)
-		laser.source = src
-		laser.active = 0
-		src.laser_parts += laser
-		src.laser_turfs += laser.locs
+	src.laser = new(T, src.dir, src)
 
 	melt_blocking_objects()
-	update_laser()
 
-/obj/machinery/power/pt_laser/proc/restart_firing()
-	firing = 1
-	UpdateIcon(1)
-	melt_blocking_objects()
-	update_laser()
-
-/obj/machinery/power/pt_laser/proc/check_laser_active() //returns number of laser_parts that should be active starting at top of list
-	blocking_objects = list()
-	var/turf/T = get_barrel_turf()
-	if(!T) return //just in case
-
-	for(var/dist = 0, dist < range, dist += 1)
-		T = get_step(T, dir)
-		if(!T || T.density)
-			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
-		for(var/obj/O in T)
-			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
-				blocking_objects += O
-		if(blocking_objects.len > 0) return dist
-
+/obj/machinery/power/pt_laser/proc/laser_power()
+	return round(abs(output)*PTLEFFICIENCY)
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
-	for(var/obj/lpt_laser/L in laser_parts)
-		L.invisibility = INVIS_ALWAYS //make it invisible
-		L.active = 0
-		L.light.disable()
+	qdel(src.laser)
 	affecting_mobs = list()
 	selling = 0
 	firing = 0
 	blocking_objects = list()
-
-/obj/machinery/power/pt_laser/proc/update_laser()
-	firing = 1
-	var/active_num = check_laser_active()
-
-	var/counter = 1
-	for(var/obj/lpt_laser/L in laser_parts)
-		if(counter <= active_num)
-			L.invisibility = INVIS_NONE //make it visible
-			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-			L.active = 1
-			L.light.enable()
-			L.burn_all_living_contents()
-			counter++
-		else
-			L.invisibility = INVIS_ALWAYS
-			L.active = 0
-			L.light.disable()
-
-	if(active_num == laser_parts.len)
-		selling = 1
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
@@ -358,10 +292,12 @@
 	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
 	if(src.firing && (abs(src.output) > src.charge))
 		stop_firing()
-
-	for(var/obj/lpt_laser/L in laser_parts)
-		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = clamp(((log(10, max(1,L.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	var/obj/linked_laser/ptl/current_laser = src.laser
+	var/alpha = clamp(((log(10, max(1,src.laser_power())) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	do
+		current_laser.alpha = alpha
+		current_laser = current_laser.next
+	while (current_laser)
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -430,6 +366,7 @@
 			if(!online) src.stop_firing()
 			. = TRUE
 		if("setOutput")
+			. = TRUE
 			if (src.emagged)
 				src.output_number = clamp(params["setOutput"], -999, 999)
 			else
@@ -437,8 +374,11 @@
 			src.output = src.output_number * src.output_multi
 			if(!src.output)
 				src.stop_firing()
-			src.update_laser_power()
-			. = TRUE
+				return
+			if (src.firing)
+				src.update_laser_power()
+			else
+				src.start_firing()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
@@ -558,6 +498,9 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	///A laser sink we're pointing into (null on most beams)
 	var/obj/laser_sink/sink = null
 
+/obj/linked_laser/ex_act(severity)
+	return
+
 /obj/linked_laser/New(loc, dir)
 	..()
 	src.dir = dir
@@ -676,23 +619,19 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	if (turf_check(next_turf))
 		src.extend()
 
-/obj/lpt_laser
+/obj/linked_laser/ptl
 	name = "laser"
 	desc = "A powerful laser beam."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
-	density = 0
-	luminosity = 1
-	invisibility = INVIS_ALWAYS
 	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
-	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null
 	var/datum/light/light
 
 
-/obj/lpt_laser/New()
+/obj/linked_laser/ptl/New(loc, dir, obj/machinery/power/pt_laser/source = null)
+	src.source = source
 	..()
 	light = new /datum/light/point
 	light.attach(src)
@@ -703,36 +642,49 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 	SPAWN(0)
 		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-		if(active)
-			if(istype(src.loc, /turf) && power > 5e7)
-				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
-			if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
-				src.loc:burn_tile()
+		if(istype(src.loc, /turf) && power > 5e7)
+			src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
+		if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
+			src.loc:burn_tile()
 
-			for (var/mob/living/L in src.loc)
-				if (isintangible(L))
-					continue
-				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-					source.affecting_mobs |= L
+		for (var/mob/living/L in src.loc)
+			if (isintangible(L))
+				continue
+			if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
+				source.affecting_mobs |= L
 
-/obj/lpt_laser/ex_act(severity)
-	return
+/obj/linked_laser/ptl/copy_laser(turf/T, dir)
+	return new src.type(T, dir, src.source)
 
-/obj/lpt_laser/Crossed(atom/movable/AM)
+/obj/linked_laser/ptl/Crossed(atom/movable/AM)
 	..()
-	if (src.active && isliving(AM) && !isintangible(AM))
+	if (isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM
 
-/obj/lpt_laser/Uncrossed(var/atom/movable/AM)
+/obj/linked_laser/ptl/Uncrossed(var/atom/movable/AM)
 	..()
 	if(isliving(AM) && source)
 		source.affecting_mobs -= AM
 
-/obj/lpt_laser/proc/burn_all_living_contents()
+/obj/linked_laser/ptl/proc/burn_all_living_contents()
 	for(var/mob/living/L in src.loc)
 		if(burn_living(L,power) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
+
+/obj/linked_laser/ptl/become_endpoint()
+	..()
+	var/turf/next_turf = get_next_turf()
+	for (var/obj/object in next_turf)
+		if (src.is_blocking(object))
+			src.source.blocking_objects |= object
+
+/obj/linked_laser/ptl/release_endpoint()
+	..()
+	var/turf/next_turf = get_next_turf()
+	for (var/obj/object in next_turf)
+		if (src.is_blocking(object))
+			src.source.blocking_objects -= object
 
 /obj/proc/burn_living(var/mob/living/L, var/power = 0)
 	if(power < 10) return
