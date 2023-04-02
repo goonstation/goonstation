@@ -436,7 +436,7 @@
 				param = html_encode(sanitize(param))
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				var/name_before_emote = !space ? "[src]" : ""
-				message = "<B>[src]</B>[space][input]"
+				message = "<B>[src]</B>[space][param]"
 				maptext_out = "<I>[name_before_emote][param]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
