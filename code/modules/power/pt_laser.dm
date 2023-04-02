@@ -575,7 +575,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 				blocked = TRUE
 				break
 	if (!blocked)
-		SPAWN(0)
+		SPAWN(0) //this is here because byond hates recursion depth
 			src.extend()
 	else
 		src.become_endpoint()
@@ -638,8 +638,11 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
 	if (istype(A, /obj/laser_sink) && src.previous)
-		src.previous.sink = A
-		src.previous.sink.incident(src.previous)
+		//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
+		SPAWN(0)
+			if (!QDELETED(src.previous))
+				src.previous.sink = A
+				src.previous.sink.incident(src.previous)
 	if (src.is_blocking(A))
 		qdel(src)
 
