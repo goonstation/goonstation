@@ -446,6 +446,12 @@ var/f_color_selector_handler/F_Color_Selector
 	z5sun = new /datum/sun("mining", 5)
 	#endif
 
+	// azone suns
+	earth_sun = new /datum/sun("earth", 2, /area/centcom)
+	io_sun = new /datum/sun("io", 2, /area/iomoon)
+	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic)
+	solarium_sun = new /datum/sun("solarium", 2, /area/solarium)
+
 
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
