@@ -1,5 +1,10 @@
 
 (t)sun apr 02 23
+(u)TDHooligan
+(p)13401
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)Styptic Powder & patches no longer fix extreme bleeding. Cauterization and bandages still work fine.
+(+)Proconvertin now reduces stamina, but doesn't cause blood clots until overdosed.
 (u)Amylizzle
 (p)13441
 (e)🪲⚖🧱📦|C-Bug, C-Balance, A-Materials, A-Game-Objects
