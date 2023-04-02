@@ -1,5 +1,9 @@
 
 (t)sun apr 02 23
+(u)Amylizzle
+(p)13548
+(e)🆕💅📄⏰|C-Feature, C-QoL, A-UI, A-Status-Effects
+(*)A HUD warning will pop up while you're actively taking rads now.
 (u)TDHooligan
 (p)13401
 (e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
