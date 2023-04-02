@@ -2132,7 +2132,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src] is destroyed!</b></span>")
 				playsound(src.loc, src.sound_destroyed, 50, 2)
-				robogibs(src.loc, null)
+				robogibs(src.loc)
 				qdel(src)
 				return
 			if (src.health <= 70 && !src.malfunction && prob(33))
