@@ -300,9 +300,9 @@
 	description = "One belt containing a taser SMG, a baton, and a barrier."
 
 /datum/materiel/loadout/justabaton
-	name = "Just a Baton"
+	name = "Throwable Baton"
 	path = /obj/item/storage/belt/security/baton
-	description = "One belt containing a baton, a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a throwable baton, a barrier, and a spare utility token. Does NOT come with a taser. Only for officers who DO NOT want a taser!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"

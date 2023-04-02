@@ -515,3 +515,19 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		usr.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+
+/obj/item/baton/throwable
+	name = "throwable stun baton"
+	desc = "A stun baton refitted to be able to stun when thrown."
+	icon_state = "ntso_baton-c"
+	item_state = "ntso-baton-c"
+	force = 7
+	icon_on = "ntso-baton-a-1"
+	icon_off = "ntso-baton-a-0"
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(isliving(A))
+			if (src.is_active && src.can_stun() && !GET_COOLDOWN(src, "ranged_stun"))
+				src.do_stun(usr, A, "stun")
+				return
+		..()
