@@ -1000,7 +1000,6 @@
 			health_burn.icon_state = "blank"
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
-			update_rad_indicator()
 
 			if (isdead(master) || master.fakedead)
 				health.icon_state = "health7" // dead
