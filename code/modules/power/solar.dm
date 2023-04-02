@@ -25,7 +25,6 @@ TYPEINFO(/obj/machinery/power/tracker)
 	var/obj/machinery/computer/solar_control/control
 	///the star that this tracker observes. Use this to pull info about the star datum.
 	var/datum/sun/targetstar
-	///an internal bool for the star to know whether the tracker knows its star yet
 
 	north
 		id = "north"
@@ -55,6 +54,9 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "aisat"
 	New()
 		..()
+		if (isnull(src.targetstar))
+			SPAWN(2 SECONDS)
+				src.targetstar = global.starlist[1]
 		SPAWN(1 SECOND)
 			powernet = src.get_direct_powernet()
 			if (powernet)
@@ -65,6 +67,7 @@ TYPEINFO(/obj/machinery/power/tracker)
 					control = controller
 					control.tracker = src // otherwise, we are now the tracker
 					break
+
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
 		sun_angle = angle

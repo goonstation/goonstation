@@ -440,6 +440,7 @@ var/f_color_selector_handler/F_Color_Selector
 	z2sun = new /datum/sun("adventure_void", 2)
 	#ifdef UNDERWATER_MAP
 	// no z3 on nadir or oshan
+	z3sun = new /datum/sun("void", 3) // needed for completeness in controllers/process/world.dm
 	z5sun = new /datum/sun("trench", 5)
 	#else
 	z3sun = new /datum/sun("debris", 3)

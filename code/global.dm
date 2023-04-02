@@ -389,9 +389,9 @@ var/global
 
 	// local suns for azones (and the earth)
 	datum/sun/earth_sun = null
-	datum/sun/solarium_sun = null
 	datum/sun/io_sun = null
 	datum/sun/senex_sun = null
+	datum/sun/solarium_sun = null
 
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null

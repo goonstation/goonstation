@@ -24,7 +24,7 @@
 
 	//stuff gets complicated starting from here.
 	//jargon i use: global sun means for the whole z level, local sun means it overrides the global in an area.
-	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null means all of z1.
+	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null indicates global sun.
 	var/area/sun_area = null
 	/// which z level does this star apply to? mainly for debris and mining fields
 	var/zlevel = 1
@@ -69,15 +69,16 @@
 	global.starlist += src
 	// this set of if conditions is the bane of my existence
 	if (!isnull(assigned_area)) // if it is a local sun, it has an area
-		if (isnull(location)) // if local sun with no location, assume void
+		if (isnull(ztemp)) // if local with no z (generally not possible due to how z1 is set up)
+			src.zlevel = 1
+			CRASH("You have a sun datum localised within [assigned_area] with no given z level!")
+		else
+			src.zlevel = ztemp
+		if (isnull(location)) // if local sun with no location given, assume void
 			src.identity_check()
 		else // if local sun with location
 			src.stationloc = location
 			src.identity_check()
-		if (isnull(ztemp)) // if local with no z
-			CRASH("You have a sun datum localised within [assigned_area] with no given z level!")
-		else
-			src.zlevel = ztemp
 		src.sun_area = assigned_area
 		global.areas_with_local_suns += assigned_area
 	else // global suns
@@ -426,7 +427,7 @@
 	else
 		src.dx = s / abs(s)
 		src.dy = c / abs(s)
-
+// update every tracker
 	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
 		var/turf/dummy = get_turf(T)
 		if (dummy.z != src.zlevel) // are we on the right z
@@ -434,6 +435,8 @@
 		if (!isnull(src.sun_area)) // local suns
 			if (get_area(dummy) != src.sun_area) // if local, are we in the right spot
 				continue
+			T.targetstar = src
+			T.set_angle(angle)
 		else // global sun (applies to whole z level)
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns) // is this an area which should use local star
@@ -445,7 +448,7 @@
 				continue
 		T.targetstar = src
 		T.set_angle(angle)
-
+// update every solar
 	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
 		var/turf/dummy = get_turf(S)
 		if (dummy.z != src.zlevel)
