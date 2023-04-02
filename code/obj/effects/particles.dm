@@ -234,8 +234,8 @@
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
-			src.particles.spawning = 0
-			sleep(src.particles.lifespan)
+			src.particles?.spawning = 0
+			sleep(src.particles?.lifespan)
 			qdel(src)
 
 	// Takes x and y of a normalised vector to set direction of smoke.
