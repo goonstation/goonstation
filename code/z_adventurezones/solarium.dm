@@ -16,6 +16,7 @@ CONTENTS:
 	skip_sims = 1
 	sims_score = 100
 	sound_group = "solarium"
+
 // it's about time this was an object I think
 var/global/the_sun = null
 /obj/the_sun

@@ -27,6 +27,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 	is_centcom = 1
 	var/static/list/entered_ckeys = list()
+
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
 		if (current_state < GAME_STATE_FINISHED)
@@ -41,9 +42,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 				entered_ckeys += M.client.ckey
 				logTheThing(LOG_DEBUG, M, "entered Centcom before round end [log_loc(M)].")
 
-/area/centcom/New()
-	. = ..()
-	earth_sun = new /datum/sun("earth", 2, /area/centcom)
 /area/centcom/outside
 	name = "Earth"
 	icon_state = "nothing_earth"
