@@ -199,9 +199,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
 		else
 			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
-		if (length(src.objectives))
+		if (length(owner.objectives))
 			var/obj_count = 1
-			for (var/datum/objective/objective as anything in src.objectives)
+			for (var/datum/objective/objective as anything in owner.objectives)
+				if (istype(objective, /datum/objective/crew))
+					continue
 				if (objective.check_completion())
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
@@ -215,7 +217,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (log_data)
+			if (log_data && length(src.objectives))
 				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
 				if (!isnull(success_medal))
 					owner.current.unlock_medal(success_medal, TRUE)
