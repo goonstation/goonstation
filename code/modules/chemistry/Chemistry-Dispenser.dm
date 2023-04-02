@@ -230,7 +230,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
 				beaker = null
 			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
-			robogibs(src.loc,null)
+			robogibs(src.loc)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)
 			return

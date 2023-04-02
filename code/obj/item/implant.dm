@@ -971,8 +971,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I, bleed_time)
-	..()
-
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
@@ -980,7 +978,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(C) && leaves_wound)
 			var/datum/reagent/contained_blood = reagents_cache[C.blood_id]
 			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
-		C.update_clothing()
+
+	..()
 
 	if (!bleed_time)
 		return
@@ -1371,7 +1370,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				src.implant_activate(50)
 				sleep(2 SECONDS)
 				if (H && src && (src in H.implant))
-					gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+					gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 					H.set_mutantrace(pick(possible_mutantraces))
 		..()
 
@@ -1379,7 +1378,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.mutantrace != original_mutantrace)
-				gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+				gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 			H.set_mutantrace(original_mutantrace)
 		..()
 

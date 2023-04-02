@@ -26,10 +26,11 @@
 
 	var/x_occupied = 0
 	var/y_occupied = 0
-	var/datum/abilityHolder/composite_owner = null
+	var/datum/abilityHolder/composite/composite_owner = null
 	var/any_abilities_displayed = 0
 
 	var/cast_while_dead = 0
+	var/remove_on_clone = FALSE
 
 	// cirr's effort to make these work like normal huds, take 1
 	var/datum/hud/hud
@@ -301,6 +302,13 @@
 			if (A.type == abilityType)
 				return A
 		return null
+
+	proc/on_clone()
+		if (src.remove_on_clone)
+			if (src.composite_owner)
+				src.composite_owner.removeHolder(src.type)
+			else
+				src.owner?.remove_ability_holder(src)
 
 	proc/pointCheck(cost)
 		if (!usesPoints)
@@ -1093,6 +1101,12 @@
 		holders.len = 0
 		holders = null
 		..()
+
+	on_clone()
+		for (var/datum/abilityHolder/H in src.holders)
+			H.composite_owner = src
+			H.on_clone()
+		. = ..()
 
 	//return holder on success, null on fail
 	proc/addHolder(holderType)

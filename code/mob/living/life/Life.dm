@@ -70,7 +70,8 @@
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses?[type]
+		if(!lifeprocesses) return //sometimes list is null, causes runtime.
+		var/datum/lifeprocess/L = lifeprocesses[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -114,6 +115,8 @@
 
 /mob/living/full_heal()
 	. = ..()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
 
 /mob/living/disposing()
@@ -610,9 +613,6 @@
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
-				else if (D.spread == "Sight")
-					if (src.eyes_protected_from_light())
-						resist_prob += 190
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")

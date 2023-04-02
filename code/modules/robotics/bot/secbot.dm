@@ -825,7 +825,7 @@
 					var/obj/item/card/id/perp_id = H.equipped()
 					if (!istype(perp_id))
 						perp_id = H.wear_id
-					if(!perp_id || (perp_id && !(perp_id.access & src.lockdown_permit)))
+					if(!perp_id || (perp_id && !length(perp_id.access & src.lockdown_permit)))
 						src.threatlevel += 4
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
