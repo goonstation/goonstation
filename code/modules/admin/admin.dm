@@ -2036,7 +2036,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a macho man?", "Make Macho", list("Yes", "No")) == "Yes")
-				M.machoize()
+				M.mind?.add_antagonist(ROLE_MACHO_MAN)
 
 		if ("makeslasher")
 			if( src.level < LEVEL_PA )
