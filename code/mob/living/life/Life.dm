@@ -613,9 +613,6 @@
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
-				else if (D.spread == "Sight")
-					if (src.eyes_protected_from_light())
-						resist_prob += 190
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")

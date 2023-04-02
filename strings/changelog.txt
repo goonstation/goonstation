@@ -7,7 +7,6 @@
 (p)13469
 (e)🪲💡|C-Bug, A-Station-Systems
 (+)AIs can once again issue lockdown/guard orders using the securitron app while in Eye Mode.
-(t)sat apr 1 23
 (u)pali & walpvrgis
 (e)👖|J-Jeans
 (*)NanoTrasen has signed a contract with Jiscount Jan's Jomfy Jeans and upgraded the station wardrobe and possibly more than that!
