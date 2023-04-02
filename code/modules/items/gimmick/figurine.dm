@@ -932,6 +932,40 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "pearlshess"
 		ckey = "fredric_80100"
 
+	seththecleric
+		name = "\improper Stephen Sawer"
+		icon_state = "stephensawer"
+		ckey = "seththecleric"
+
+	jugularWhale
+		name = "\improper Norm AlMann"
+		icon_state = "normalmann"
+		ckey = "jugularWhale"
+
+	carton171
+		name = "\improper Andrew Pieter"
+		icon_state = "andrewpieter"
+		ckey = "carton171"
+
+	jebsvs
+		name = "\improper Snart Blast"
+		icon_state = "snartblast"
+		ckey = "jebsvs"
+	lazy_shyguy
+		name = "\improper Bjeurn Seuz"
+		icon_state = "bjeurnseuz"
+		ckey = "lazy_shyguy"
+
+	mrmora
+		name = "\improper Loyd Xiphos"
+		icon_state = "loydxiphos"
+		ckey = "mrmora"
+
+	mintyphresh
+		name = "\improper Arp Davale"
+		icon_state = "arpdavale"
+		ckey = "mintyphresh"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
