@@ -943,8 +943,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "jugularWhale"
 
 	carton171
-		name = "\improper Andrew Peiter"
-		icon_state = "andrewpeiter"
+		name = "\improper Andrew Pieter"
+		icon_state = "andrewpieter"
 		ckey = "carton171"
 
 	jebsvs
@@ -962,8 +962,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "mrmora"
 
 	mintyphresh
-		name = "\improper Arp Darvale"
-		icon_state = "arpdarvale"
+		name = "\improper Arp Davale"
+		icon_state = "arpdavale"
 		ckey = "mintyphresh"
 
 /obj/item/item_box/figure_capsule
