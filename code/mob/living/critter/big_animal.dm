@@ -17,9 +17,9 @@
 	butcherable = 1
 	name_the_meat = TRUE
 	max_skins = 3
-	health_brute = 25
+	health_brute = 20
 	health_brute_vuln = 0.8
-	health_burn = 25
+	health_burn = 20
 	health_burn_vuln = 1
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -72,6 +72,8 @@
 		return ..()
 
 /mob/living/critter/lion/strong // Stronger one for admin stuff / one off spawns
+	name = "alpha lion"
+	real_name = "alpha lion"
 	desc = "Oh christ, this lion looks very buff..."
 	health_brute = 40
 	health_brute_vuln = 0.8

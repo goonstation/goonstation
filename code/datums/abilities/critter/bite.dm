@@ -47,7 +47,7 @@
 /datum/targetable/critter/bite/big
 	name = "Bite"
 	desc = "Bite down on a mob, causing some damage."
-	cooldown = 20 SECONDS
+	cooldown = 30 SECONDS
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	brute_damage = 30
 	bleed = 15
