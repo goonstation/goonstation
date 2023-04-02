@@ -438,7 +438,7 @@
 					phrase_log.log_phrase("emote", input)
 					var/space = should_have_space_before_emote(html_decode(input)) ? " " : ""
 					var/name_before_emote = !space ? "[src]" : ""
-					message = "<B>[src]</B>[space][input]"
+					message = "<B>[src]</B>[space][param]"
 					maptext_out = "<I>[name_before_emote][regex({"(&#34;.*?&#34;)"}, "g").Replace(input, "</i>$1<i>")]</I>"
 					custom = copytext(input, 1, 10)
 
@@ -454,7 +454,7 @@
 				phrase_log.log_phrase("emote", param)
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				var/name_before_emote = !space ? "[src]" : ""
-				message = "<B>[src]</B>[space][input]"
+				message = "<B>[src]</B>[space][param]"
 				maptext_out = "<I>[name_before_emote][regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
@@ -471,7 +471,7 @@
 				phrase_log.log_phrase("emote", param)
 				var/space = should_have_space_before_emote(html_decode(param)) ? " " : ""
 				var/name_before_emote = !space ? "[src]" : ""
-				message = "<B>[src]</B>[space][input]"
+				message = "<B>[src]</B>[space][param]"
 				maptext_out = "<I>[name_before_emote][regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
@@ -484,7 +484,7 @@
 				phrase_log.log_phrase("emote", param)
 				var/space = should_have_space_before_emote(html_decode(message)) ? " " : ""
 				var/name_before_emote = !space ? "[src]" : ""
-				message = "<B>[src]</B>[space][input]"
+				message = "<B>[src]</B>[space][param]"
 				maptext_out = "<I>[name_before_emote][regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
