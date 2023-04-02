@@ -1,5 +1,10 @@
 
 (t)sun apr 02 23
+(u)FlameArrow57
+(p)13536
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Security RecordTraks now have the ability to set a SecHUD flag as an option. Upon being dropped the flag will be reset.
+(+)RecordTraks can now be examined to see their current arrest mode, as well as any SecHUD flag set.
 (u)Amylizzle
 (p)13548
 (e)🆕💅📄⏰|C-Feature, C-QoL, A-UI, A-Status-Effects
