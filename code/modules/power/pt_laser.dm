@@ -483,10 +483,13 @@
 ABSTRACT_TYPE(/obj/laser_sink)
 /obj/laser_sink //might end up being a component or something
 
+///When a laser hits this sink
 /obj/laser_sink/proc/incident(obj/linked_laser/laser)
 	return
 
-/obj/laser_sink/proc/exident(obj/linked_laser/laser) //it's a word now
+///"that's not a word" - 🤓
+///When a laser stops hitting this sink
+/obj/laser_sink/proc/exident(obj/linked_laser/laser)
 	return
 
 #define NW_SE 0
@@ -494,7 +497,6 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/laser_sink/mirror
 	anchored = 0
 	density = 1
-	opacity = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "laser_mirror0"
 
@@ -503,9 +505,10 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	var/facing = NW_SE
 
 /obj/laser_sink/mirror/attack_hand(mob/user)
+	if (ON_COOLDOWN(src, "rotate", 1 SECOND)) //this is probably a good idea
+		return
 	var/obj/linked_laser/laser = src.in_laser
 	src.exident(laser)
-	boutput(user, "rotating mirror...")
 	src.facing = 1 - src.facing
 	src.icon_state = "laser_mirror[src.facing]"
 	if (laser)
@@ -545,6 +548,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	anchored = 2
 	density = 0
 	luminosity = 1
+	mouse_opacity = 0
 	var/obj/linked_laser/next = null
 	var/obj/linked_laser/previous = null
 	var/turf/current_turf = null
@@ -658,7 +662,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 ///The next turf in line is being replaced with another, so check if it's now suitable to put another laser on
 /obj/linked_laser/proc/next_turf_replaced()
 	src.release_endpoint()
-	SPAWN(1)
+	SPAWN(1) //wait for the turf to actually be replaced
 		var/turf/next_turf = get_next_turf()
 		if (src.turf_check(next_turf))
 			src.extend()
