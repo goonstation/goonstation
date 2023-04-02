@@ -530,6 +530,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 			angle = 90
 	var/out_dir = turn(laser.dir, angle) //rotate based on which way the mirror is facing
 	src.out_laser = laser.copy_laser(get_turf(src), out_dir)
+	src.out_laser.icon_state = "ptl_beam_corner[src.facing]"
 
 /obj/laser_sink/mirror/exident(obj/linked_laser/laser)
 	qdel(src.out_laser)
