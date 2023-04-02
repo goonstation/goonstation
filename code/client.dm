@@ -1007,7 +1007,7 @@ var/global/curr_day = null
 
 	message += "You can add emphasis to your text by surrounding words or sentences in certain characters.<br />"
 	message += "+bold+, _underline_, and |italics| are supported.<br />"
-	message += "Custom emotes that start with an apostrophe (') will delete the space between it and your name."
+	message += "Custom emotes that start with an apostrophe (') or comma (,) will delete the space between it and your name."
 
 	boutput(usr, "<span class='notice'>[message]</span>")
 
