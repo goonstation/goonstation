@@ -1,5 +1,9 @@
 
 (t)sun apr 02 23
+(u)Wisemonster
+(p)13551
+(e)⚖🍝|C-Balance, A-Catering
+(+)MONSTER burgers now take about 20 bites to eat.
 (u)FlameArrow57
 (p)13536
 (e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
