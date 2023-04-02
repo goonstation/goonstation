@@ -13,9 +13,9 @@
 	burning_suffix = "humanoid"
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 2
-	health_brute = 75
+	health_brute = 50
 	health_brute_vuln = 0.85
-	health_burn = 75
+	health_burn = 50
 	health_burn_vuln = 1.25
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
