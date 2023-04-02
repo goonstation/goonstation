@@ -199,11 +199,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
 		else
 			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
-		if (length(owner.objectives))
+		if (length(src.objectives))
 			var/obj_count = 1
-			for (var/datum/objective/objective as anything in owner.objectives)
-				if (istype(objective, /datum/objective/crew))
-					continue
+			for (var/datum/objective/objective as anything in src.objectives)
 				if (objective.check_completion())
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
