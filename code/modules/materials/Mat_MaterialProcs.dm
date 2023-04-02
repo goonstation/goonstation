@@ -379,7 +379,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(molitz.iterations <= 0) return
 		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
-		var/datum/gas_mixture/air = target.return_air()
+		var/datum/gas_mixture/air = target?.return_air()
 		if(!air) return
 
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
