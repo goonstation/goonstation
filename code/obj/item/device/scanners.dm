@@ -717,7 +717,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	var/list/datum/contextAction/contexts = list()
 
 	New()
-		contextLayout = new /datum/contextLayout/experimentalcircle
+		var/datum/contextLayout/experimentalcircle/context_menu = new
+		context_menu.center = TRUE
+		src.contextLayout = context_menu
 		..()
 		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
 			var/datum/contextAction/prisoner_scanner/action = new actionType()
@@ -880,10 +882,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
 		return prisoner_scanner in user
 
-	none
-		name = "None"
-		icon_state = "none"
-		mode = PRISONER_MODE_NONE
 	// a "mode" that acts as a simple way to set the sechud flag
 	set_sechud_flag
 		name = "Set Flag"
@@ -900,6 +898,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
 
 #undef PRISONER_MODE_NONE
 #undef PRISONER_MODE_PAROLED
