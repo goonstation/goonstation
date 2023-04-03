@@ -60,7 +60,7 @@
 	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
 	var/_last_total_coolant_e = 0
 	/// INTERNAL DEBUG: set to true to output debug messages
-	var/_debug_mode = TRUE
+	var/_debug_mode = FALSE
 
 	New()
 		. = ..()
