@@ -711,9 +711,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return 0
 		// all the stuff in here was added by Convair880, I just adjusted it to work with this can_implant() proc thing - haine
 		var/mob/living/carbon/human/H = target
-		//if (!H.mind || !H.client) // TODO: REMOVE BEFORE PRING
-		//	if (ismob(user)) user.show_text("[H] is braindead!", "red")
-		//	return 0
+		if (!H.mind || !H.client)
+			if (ismob(user)) user.show_text("[H] is braindead!", "red")
+			return 0
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return 0
