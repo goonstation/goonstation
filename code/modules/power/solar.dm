@@ -392,7 +392,7 @@ TYPEINFO(/obj/machinery/power/solar)
 			t += "<B>Target:</B><BR>[src.tracker.targetstar.name]<BR>"
 			t += "<B>Station location:</B><BR>[src.tracker.targetstar.desc]<BR>" // this line usually extends off the side, sorry
 			t += "<B>Relative Rotation rate:</B><BR>[src.tracker.targetstar.rate] deg/h<BR>"
-			if (!src.tracker.targetstar.eclipse_cycle_on)
+			if (length(src.tracker.targetstar.eclipse_order) <= 1)
 				t += "No upcoming eclipses detected with current orbit/position.<BR>"
 			else
 				var/timetostart = 0
