@@ -377,7 +377,7 @@
 			src.eclipse_time = 14.75 DAYS
 			src.eclipse_cycle_length = 29.5 DAYS
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			if (BUILD_TIME_DAY <= 15)
+			if (BUILD_TIME_DAY < 15)
 				src.eclipse_status = ECLIPSE_PLANETARY
 				src.visibility = 0
 			else
