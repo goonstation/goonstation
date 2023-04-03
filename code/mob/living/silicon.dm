@@ -627,3 +627,15 @@ var/global/list/module_editors = list()
 	. = ..()
 	if(Obj == src.cell)
 		src.cell = null
+
+/mob/living/silicon/proc/set_law_rack(obj/machinery/lawrack/rack, mob/user)
+	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
+		return
+	src.law_rack_connection = rack
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [user]" : ""]")
+	if (user)
+		var/area/A = get_area(src.law_rack_connection)
+		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
+	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+	src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+	src.show_laws()
