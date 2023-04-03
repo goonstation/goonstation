@@ -34,6 +34,8 @@
 	var/stationloc = null
 	/// flavour text for the tracker
 	var/desc
+	/// does the sun change position in the sky? does it move?
+	var/rotates = TRUE
 
 	// these time vars below theoretically use time units like SECOND and MINUTE, so 1 = 1/10 of a second
 	// also, the penumbra and cycle length times don't actually get perma assigned, but it's for reference.
@@ -64,9 +66,10 @@
 	// the spess solars are just mega efficient basically.
 
 /// creates a new star based on (optional) stationloc provided and an assigned area for locals
-/datum/sun/New(var/location, var/ztemp, var/area/assigned_area)
+/datum/sun/New(var/location, var/ztemp, var/area/assigned_area, var/do_we_process)
 	. = ..()
 	global.starlist += src
+	src.rotates = do_we_process
 	// this set of if conditions is the bane of my existence
 	if (!isnull(assigned_area)) // if it is a local sun, it has an area
 		if (isnull(ztemp)) // if local with no z (generally not possible due to how z1 is set up)
@@ -97,6 +100,8 @@
 				src.zlevel = ztemp
 			src.stationloc = location
 			src.identity_check()
+	SPAWN(10 SECONDS) // guessing that that's long enough for the z levels and areas to load
+		src.calc_position()
 
 /// checks where the z level is, for global suns
 /datum/sun/proc/check_z1_global_sun()
@@ -366,6 +371,8 @@
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
+	if (!src.rotates)
+		return
 	src.counter++ // this 'should' be every game tick, 1/10th of a second
 	if (src.counter < 2 SECONDS)
 		return
