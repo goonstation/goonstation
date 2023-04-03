@@ -519,11 +519,13 @@ TYPEINFO(/obj/item/baton/ntso)
 /obj/item/baton/throwable
 	name = "throwable stun baton"
 	desc = "A stun baton refitted to be able to stun when thrown."
-	icon_state = "ntso_baton-c"
-	item_state = "ntso-baton-c"
+	icon_state = "stunbaton_throw"
+	item_state = "baton-T-A"
 	force = 7
-	icon_on = "ntso-baton-a-1"
-	icon_off = "ntso-baton-a-0"
+	icon_on = "stunbaton_active-throw"
+	icon_off = "stunbaton-throw"
+	item_on = "baton-T-A"
+	item_off = "baton-T-D"
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))
