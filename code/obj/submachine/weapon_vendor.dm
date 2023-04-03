@@ -249,6 +249,7 @@
 	New()
 		materiel_stock += new/datum/materiel/fishing_gear/rod
 		materiel_stock += new/datum/materiel/fishing_gear/upgraded_rod
+		materiel_stock += new/datum/materiel/fishing_gear/master_rod
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
@@ -568,26 +569,37 @@
 	name = "Basic Fishing Rod"
 	path = /obj/item/fishing_rod
 	description = "A basic fishing rod."
+	cost = 5
 
 /datum/materiel/fishing_gear/upgraded_rod
 	name = "Upgraded Fishing Rod"
 	path = /obj/item/fishing_rod/upgraded
 	description = "An upgraded fishing rod."
+	cost = 25
+
+/datum/materiel/fishing_gear/master_rod
+	name = "Master Fishing Rod"
+	path = /obj/item/fishing_rod/master
+	description = "The ultimate fishing rod."
+	cost = 50
 
 /datum/materiel/fishing_gear/fish_box
 	name = "Portable aquarium"
 	path = /obj/item/storage/fish_box
 	description = "A temporary solution for bulk-fish transportation."
+	cost = 10
 
 /datum/materiel/fishing_gear/uniform
-	name = "fisher's overalls"
-	path = /obj/item/clothing/under/rank/fisher
+	name = "angler's overalls"
+	path = /obj/item/clothing/under/rank/angler
 	description = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
+	cost = 5
 
 /datum/materiel/fishing_gear/hat
 	name = "Fish fear me cap"
 	path = /obj/item/clothing/head/fish_fear_me
 	description = "The ultimate angling headwear."
+	cost = 15
 
 // Requisition tokens
 /obj/item/requisition_token

@@ -105,16 +105,36 @@
 /obj/item/fishing_rod/upgraded
 	name = "upgraded fishing rod"
 	icon = 'icons/obj/items/fishing_gear.dmi'
-	icon_state = "fishing_rod2-inactive"
+	icon_state = "fishing_rod_2-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
-	item_state = "fishing_rod2-inactive"
+	item_state = "fishing_rod-inactive"
+
+	update_icon()
+		//state for fishing
+		if (src.is_fishing)
+			src.icon_state = "fishing_rod_2-active"
+			src.item_state = "fishing_rod-active"
+		//state for not fishing
+		else
+			src.icon_state = "fishing_rod_2-inactive"
+			src.item_state = "fishing_rod-inactive"
 
 /obj/item/fishing_rod/master
 	name = "master fishing rod"
 	icon = 'icons/obj/items/fishing_gear.dmi'
-	icon_state = "fishing_rod3-inactive"
+	icon_state = "fishing_rod_3-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
-	item_state = "fishing_rod3-inactive"
+	item_state = "fishing_rod-inactive"
+
+	update_icon()
+		//state for fishing
+		if (src.is_fishing)
+			src.icon_state = "fishing_rod_3-active"
+			src.item_state = "fishing_rod-active"
+		//state for not fishing
+		else
+			src.icon_state = "fishing_rod_3-inactive"
+			src.item_state = "fishing_rod-inactive"
 
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)

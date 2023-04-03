@@ -57,6 +57,8 @@ Alien/mutant/other fish:
 		Void fish
 		Sun fish
 		Lava fish
+		Blobfish
+		Whale?
 */
 // These catagories aren't used currently.
 #define FISH_CATEGORY_FRESHWATER "freshwater"
@@ -308,5 +310,12 @@ Alien/mutant/other fish:
 	desc = "a blazing hot catch straight from the planet's core!"
 	icon_state = "bass_old"
 	inhand_color = "#eb2d2d"
+	value  = FISH_RARITY_RARE
+//blob
+/obj/item/fish/blobfish
+	name = "Blobfish"
+	desc = "Looking good, blobfish."
+	icon_state = "bass_old"
+	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
 

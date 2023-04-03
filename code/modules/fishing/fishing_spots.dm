@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
-
+	required_rod = /obj/item/fishing_rod/upgraded
 	fish_available = list(/obj/item/fish/carp = 1,\
 	/obj/item/fish/bass = 1,\
 	/obj/item/fish/salmon = 1,\
@@ -119,11 +119,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/fryer
 	fishing_atom_type = /obj/machinery/
 	required_rod = /obj/item/fishing_rod/upgraded
-	fish_available = list(/obj/item/fish/carp = 40,\
-	/obj/item/fish/bass = 30,\
+	fish_available = list(/obj/item/fish/tuna = 30,\
 	/obj/item/fish/salmon = 20,\
-	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5,\
+	/obj/item/fish/cod = 15,\
+	/obj/item/fish/flounder = 5,\
 	/obj/item/reagent_containers/food/snacks/yuckburn = 20,
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
@@ -167,8 +166,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/fishing_pool
 	fishing_atom_type = /obj/fishing_pool
 	required_rod = /obj/item/fishing_rod
-	fish_available = list(/obj/item/fish/goldfish = 40,\
-	/obj/item/fish/bass = 30,\
+	fish_available = list(/obj/item/fish/goldfish = 30,\
+	/obj/item/fish/bass = 20,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10)
@@ -198,7 +197,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/carp = 15,\
-	/obj/item/fish/rainbow_trout = 10,
+	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/reagent_containers/food/snacks/swedish_fish = 10)
 
 /datum/fishing_spot/bathroom_sink
@@ -235,16 +234,23 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/tuna = 30,\
 	/obj/item/fish/cod = 20,\
 	/obj/item/fish/flounder = 15,\
-	/obj/item/fish/red_herring = 10)
+	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
+	/obj/critter/frog = 10)
 
 /datum/fishing_spot/plantpot //add plants
 	fishing_atom_type = /obj/machinery/plantpot
 	required_rod = /obj/item/fishing_rod
 	fish_available = list(/obj/item/fish/goldfish = 20,\
-	/obj/item/fish/bass = 15,\
-	/obj/item/fish/salmon = 10,\
-	/obj/item/fish/carp = 7,\
-	/obj/item/fish/rainbow_trout = 5)
+	/obj/item/plant/herb/grass = 20,\
+	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
+	/obj/critter/frog = 10)
+
+/datum/fishing_spot/blob
+	fishing_atom_type = /obj/blob
+	required_rod = /obj/item/fishing_rod
+	fish_available = list(/obj/item/fish/blobfish = 25)
 
 // Trash fishing spots
 /datum/fishing_spot/disposal_chute // doesn't work yet
@@ -287,7 +293,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 // Alien/mutant fishing spots
 /datum/fishing_spot/meatzone_acid
 	fishing_atom_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
-	required_rod = /obj/item/fishing_rod/upgraded
+	required_rod = /obj/item/fishing_rod/master
 	fish_available = list(/obj/item/fish/meat_mutant = 25,\
 	/obj/item/fish/blood_fish = 20,\
 	/obj/item/fish/eye_mutant = 15,\
@@ -325,7 +331,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/time_ship
 	fishing_atom_type = /turf/unsimulated/floor/void/timewarp
-	required_rod = /obj/item/fishing_rod/upgraded
+	required_rod = /obj/item/fishing_rod/master
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
 	/obj/item/material_piece/cerenkite = 10,\
@@ -337,6 +343,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/clothing/head/void_crown = 1,\
 	/obj/critter/domestic_bee/trauma = 20,\
 	/obj/item/fish/void_fish = 20)
+
+/datum/fishing_spot/singularity
+	fishing_atom_type = /obj/machinery/the_singularity
+	required_rod = /obj/item/fishing_rod/master
+	fish_available = list(/obj/item/fish/void_fish = 75)
 
 //void
 /datum/fishing_spot/void
@@ -357,7 +368,37 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 //random event wormholes
 /datum/fishing_spot/wormhole
 	fishing_atom_type = /obj/portal/wormhole
-	required_rod = /obj/item/fishing_rod/upgraded
+	required_rod = /obj/item/fishing_rod/master
+	fish_available = list(/obj/item/space_thing = 5,\
+	/obj/item/gnomechompski = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/clothing/shoes/clown_shoes = 5,\
+	/mob/living/carbon/human/future = 1,\
+	/mob/living/critter/aberration = 1,\
+	/mob/living/critter/small_animal/cat = 2,\
+	/obj/item/clothing/head/void_crown = 1,\
+	/obj/critter/domestic_bee/trauma = 20,\
+	/obj/item/fish/void_fish = 20)
+
+/datum/fishing_spot/black_hole
+	fishing_atom_type = /obj/bhole
+	required_rod = /obj/item/fishing_rod/master
+	fish_available = list(/obj/item/space_thing = 5,\
+	/obj/item/gnomechompski = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/clothing/shoes/clown_shoes = 5,\
+	/mob/living/carbon/human/future = 1,\
+	/mob/living/critter/aberration = 1,\
+	/mob/living/critter/small_animal/cat = 2,\
+	/obj/item/clothing/head/void_crown = 1,\
+	/obj/critter/domestic_bee/trauma = 20,\
+	/obj/item/fish/void_fish = 20)
+
+/datum/fishing_spot/white_hole
+	fishing_atom_type = /obj/whitehole
+	required_rod = /obj/item/fishing_rod/master
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
 	/obj/item/material_piece/cerenkite = 10,\
@@ -383,7 +424,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 //ainsley
 /datum/fishing_spot/nuclear_core_decal
 	fishing_atom_type = /obj/decal/fakeobjects/core
-	required_rod = /obj/item/fishing_rod/upgraded
+	required_rod = /obj/item/fishing_rod/master
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
@@ -399,33 +440,32 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 //solarium
 /datum/fishing_spot/the_sun
 	fishing_atom_type = /obj/the_sun
-	required_rod = /obj/item/fishing_rod/upgraded
+	required_rod = /obj/item/fishing_rod/master
 	fish_available = list(/obj/item/fish/sun_fish = 50)
 
 //dojo
-/datum/fishing_spot/dojo_water // add koi to this
+/datum/fishing_spot/dojo_water
 	fishing_atom_type = /turf/unsimulated/wall/water
-	required_rod = /obj/item/fishing_rod
+	required_rod = /obj/item/fishing_rod/upgraded
 	fish_available = list(/obj/item/fish/clownfish = 40,\
 	/obj/item/fish/damselfish = 30,\
 	/obj/item/fish/green_chromis = 20,\
 	/obj/item/fish/cardinalfish = 15,\
 	/obj/item/fish/royal_gramma = 10)
 
+//martian wallholes
+/datum/fishing_spot/martian_wallhole
+	fishing_atom_type = /obj/crevice
+	required_rod = /obj/item/fishing_rod/upgraded
+	fish_available = list(/obj/item/fish/meat_mutant = 10,\
+	/obj/item/parts/human_parts/arm/left = 10,\
+	/obj/item/parts/human_parts/arm/right = 10,\
+	/obj/item/parts/human_parts/leg/left = 10,\
+	/obj/item/parts/human_parts/leg/right =10,\
+	/obj/item/organ/brain = 10)
+
 /*
-
-the singularity
-/obj/machinery/the_singularity
-
-black holes/white holes
-obj/bhole
-obj/whitehole
-
-martian wallholes
-/obj/crevice
-
-blob
-obj/blob
+Potential fishing spot ideas:
 
 /datum/fishing_spot/teleporter //is this the active state?
 	fishing_atom_type = /obj/machinery/teleport/portal_ring
@@ -434,5 +474,4 @@ obj/blob
 	fishing_atom_type = /obj/perm_portal
 
 terra 8 hydro dam
-
 */

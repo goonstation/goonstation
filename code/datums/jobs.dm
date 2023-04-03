@@ -1648,10 +1648,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/angler
 	name = "Angler"
 	wages = PAY_TRADESMAN
-	slot_belt = list(/obj/item/storage/belt/rancher/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/fisher)
+	slot_jump = list(/obj/item/clothing/under/rank/angler)
 	slot_head = list(/obj/item/clothing/head/black)
-	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc2 = list(/obj/item/device/pda2/botanist)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
