@@ -35,7 +35,6 @@
 
 	update_icon()
 		. = ..()
-		//src.appearance = src.disguise
 		if(!is_hiding)
 			src.add_filter("mimic_face", 101, layering_filter(icon = src.face_image,  blend_mode = BLEND_INSET_OVERLAY))
 
