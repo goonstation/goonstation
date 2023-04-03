@@ -498,12 +498,11 @@
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = 0
 	set_name = TRUE
+	material_name = "Steel"
 
 	New()
 		..()
 		icon_state += "[rand(1,5)]"
-		if(!src.material)
-			src.setMaterial(getMaterial("steel"))
 	steel
 		material_name = "Steel"
 
@@ -531,6 +530,7 @@
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
+	material_name = "Glass"
 	set_name = TRUE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
@@ -538,8 +538,6 @@
 		..()
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
-		if(!src.material)
-			src.setMaterial(getMaterial("glass"))
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!scalpel_surgery(M,user)) return ..()
