@@ -39,6 +39,7 @@ TYPEINFO(/obj)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
+		if(usr==0) usr = null
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/old_loc = get_turf(src)
 			. = ..()

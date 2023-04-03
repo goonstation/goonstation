@@ -49757,15 +49757,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"eMF" = (
-/obj/rack,
-/obj/item/tank/jetpack/micro,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
 "eML" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -65987,6 +65978,16 @@
 	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
+/area/space)
+"xXO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "Security Beacon"
+	},
+/turf/space,
 /area/space)
 "xXP" = (
 /obj/disposalpipe/segment,
@@ -90868,7 +90869,7 @@ adC
 adC
 adC
 aam
-aap
+aaq
 aaq
 aaq
 aaq
@@ -91170,7 +91171,7 @@ adC
 adC
 adC
 adC
-aii
+adC
 adC
 adC
 adC
@@ -91472,7 +91473,7 @@ adC
 adC
 adC
 adC
-aah
+xXO
 adC
 adC
 adC
@@ -104503,7 +104504,7 @@ blK
 xOl
 xOl
 bnS
-eMF
+xOl
 xOl
 bpA
 bqe

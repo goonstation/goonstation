@@ -1407,9 +1407,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 
@@ -1479,6 +1476,12 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+
+	can_eat()
+		return FALSE
+
+	can_drink()
+		return FALSE
 
 	vomit()
 		return

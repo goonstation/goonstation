@@ -1,5 +1,89 @@
 
+(t)sun apr 02 23
+(u)Mr. Moriarty
+(p)12733
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Pod Wars: The NSV Pytheas and Lodbrok have both been installed with debris field map displays and map controllers, similar to the ones that may be found on the Cairngorm, situated in their Bridges.
+(u)FlameArrow57
+(p)13526
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a warp beacon for the Cogmap 1 security hangar.
+(u)Wisemonster
+(p)13551
+(e)⚖🍝|C-Balance, A-Catering
+(+)MONSTER burgers now take about 20 bites to eat.
+(u)FlameArrow57
+(p)13536
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Security RecordTraks now have the ability to set a SecHUD flag as an option. Upon being dropped the flag will be reset.
+(+)RecordTraks can now be examined to see their current arrest mode, as well as any SecHUD flag set.
+(u)Amylizzle
+(p)13548
+(e)🆕💅📄⏰|C-Feature, C-QoL, A-UI, A-Status-Effects
+(*)A HUD warning will pop up while you're actively taking rads now.
+(u)TDHooligan
+(p)13401
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)Styptic Powder & patches no longer fix extreme bleeding. Cauterization and bandages still work fine.
+(+)Proconvertin now reduces stamina, but doesn't cause blood clots until overdosed.
+(u)Amylizzle
+(p)13441
+(e)🪲⚖🧱📦|C-Bug, C-Balance, A-Materials, A-Game-Objects
+(*)Nuclear Reactor numbers have been tweaked. See minor changelog for details.
+(+)Nuclear components now cost only 2 materials, down from 3.
+(+)The nuclear engine thermodynamics sim has been fixed, so things will work a little differently. In particular, the reactor will respond much quicker to changes in temperature, and material's thermal and electrical conductivity matter a lot more. As a result of this, control rods will be much more meaningful. It's also much easier to meltdown.
+(u)Nexusuxen
+(p)13535
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Three new PDA ringtones added, modeled after the highly regarded two-beep ringtone!
+(t)sat apr 01 23
+(u)pali
+(e)🐛|C-Bug
+(+)Fabricators now work with alloy materials.
+(u)Wisemonster
+(p)13469
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)AIs can once again issue lockdown/guard orders using the securitron app while in Eye Mode.
+(u)pali & walpvrgis
+(e)👖|J-Jeans
+(*)NanoTrasen has signed a contract with Jiscount Jan's Jomfy Jeans and upgraded the station wardrobe and possibly more than that!
+(t)wed mar 29 23
+(u)Nexusuxen
+(p)13430
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Airlocks now make sounds when un/bolted via packets. Can no longer toggle door bolts via packet if bolt wire cut.
+(u)Hans and ability sprite by Mr Moriarty
+(*)Mobifies rattlesnakes.
+(+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
+(u)LeahTheTech
+(p)13268
+(e)🧫💨⚙|C-Experimental, A-Atmospherics, A-Internal
+(*)The atmos process is ticking twice as fast, this should make repressurizing and so on a lot less tedious - but may cause Issues. Please report any if you find them.
+(u)Nexusuxen
+(p)13466
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Amusing Ducks now correctly respond to packet controls. Quack.
+(u)Flappybat
+(p)13118
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Silicon and robotic life can no longer eat, drink or be forcefed.
+(t)tue mar 28 23
+(u)Blackrep
+(p)13453
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers have recently been spotted with some heavier firepower.
+(t)mon mar 27 23
+(u)Sord
+(+)Traitor scuttlebot now costs 4 bad guy coins
 (t)sun mar 26 23
+(u)Sord
+(e)⚖📦
+(*)Industrial space suits now are heavier armored, and slower to wear
+(*)Added a new light engineering space suit for miners, with basically no armor but no slowdown.
+(+)The CE spawns with one of the light space suits in their locker instead of a normal eng space suit.
+(u)Azrun & Lord_Earthfire
+(e)🪲|C-Bug
+(+)Nitrous oxide should cause people to be sleepy again.
 (u)Blackrep
 (p)13409
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects

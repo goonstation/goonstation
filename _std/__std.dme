@@ -76,6 +76,7 @@
 #include "defines\RCD.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
+#include "defines\security.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sims.dm"

@@ -62,7 +62,7 @@ TYPEINFO(/obj/item/pinpointer)
 		active = TRUE
 		src.work()
 		var/mob/user = src.loc
-		if (istype(user))
+		if (istype(user) && src.target)
 			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
 
 	proc/turn_off()

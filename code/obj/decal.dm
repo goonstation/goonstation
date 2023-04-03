@@ -19,7 +19,7 @@
 			real_name = name
 		src.flags |= UNCRUSHABLE
 
-	proc/setup(var/L,var/list/viral_list)
+	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
@@ -438,7 +438,7 @@ obj/decal/fakeobjects/teleport_pad
 
 /obj/decal/fakeobjects/lawrack
 	name = "defunct AI Law Mount Rack"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	anchored = 1
