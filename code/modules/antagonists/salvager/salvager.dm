@@ -29,6 +29,12 @@
 		else
 			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
+		// Allow for Salvagers to have a secure channel
+		//headset.secure_frequencies = list("z" = R_FREQ_SYNDICATE)
+		//headset.secure_classes = list(RADIOCL_OTHER)
+		//headset.secure_colors = list("#a18146")
+		//headset.set_secure_frequency("z", src.pick_radio_freq())
+		//headset.desc += " The headset is covered in scratch marks and the screws look nearly stripped."
 
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
@@ -39,8 +45,6 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), H.slot_wear_id)
-
-
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, H.slot_in_backpack)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, H.slot_in_backpack)

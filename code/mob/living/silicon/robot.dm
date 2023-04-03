@@ -256,12 +256,19 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		var/is_emagged = src.emagged
+		var/is_syndicate = src.syndicate
+
 		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
+
+		if (src.mind)
+			for (var/datum/antagonist/antag_role in src.mind.antagonists)
+				antag_role.on_death()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -272,11 +279,8 @@
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
-
-			if (src.emagged)
-				frame.emagged = TRUE
-			if (src.syndicate)
-				frame.syndicate = TRUE
+			frame.emagged = is_emagged
+			frame.syndicate = is_syndicate
 
 			src.ghostize()
 			qdel(src)
@@ -997,17 +1001,8 @@
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-				src.emagged = 1
 				logTheThing(LOG_STATION, src, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
-				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
-					src.mind.special_role = ROLE_EMAGGED_ROBOT
-					if (!(src.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += src.mind
-				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
-				if(src.syndicate)
-					src.antagonist_overlay_refresh(1, 1)
+				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 				update_appearance()
 				return 1
 			return 0

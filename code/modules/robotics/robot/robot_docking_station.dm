@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					if (H.bioHolder.Uid && H.bioHolder.bloodType)
 						bdna = H.bioHolder.Uid
 						btype = H.bioHolder.bloodType
-					gibs(src.loc, null, null, bdna, btype)
+					gibs(src.loc, null, bdna, btype)
 
 					H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
