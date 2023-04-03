@@ -55,6 +55,9 @@
 	var/turf/_light_turf
 	/// INTERNAL: count of old pending grid updates, for the flicker prevention code
 	var/_pending_grid_updates = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the reactor grid
+	var/_last_total_thermal_e = 0
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -160,7 +163,7 @@
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		air_contents = air2
 		var/total_gas_volume = 0
-
+		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
@@ -176,6 +179,7 @@
 
 					//calculate neutron flux
 					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
+					total_thermal_e += comp.thermal_mass * comp.temperature
 				for(var/datum/neutron/N in src.flux_grid[x][y])
 					var/xmod = 0
 					var/ymod = 0
@@ -189,6 +193,7 @@
 					else
 						src.flux_grid[x][y]-=N
 						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
+
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
@@ -232,7 +237,9 @@
 		processCaseRadiation(tmpRads)
 
 		src.material.triggerTemp(src,src.temperature)
-
+		total_thermal_e += src.thermal_mass * src.temperature
+		boutput(world, "Delta thermal e: [sign(total_thermal_e - src._last_total_thermal_e)] x [engineering_notation(abs(total_thermal_e - src._last_total_thermal_e))]W ")
+		src._last_total_thermal_e = total_thermal_e
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
@@ -613,6 +620,12 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
+		//enable for faster debugging
+		src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+
 
 		..()
 
