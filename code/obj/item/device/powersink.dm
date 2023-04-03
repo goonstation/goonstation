@@ -111,7 +111,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 				// found a powernet, so drain up to max power from it
 
-				var/drained = min ( drain_rate, PN.avail )
+				var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 				PN.newload += drained
 				power_drained += drained
 
