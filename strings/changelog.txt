@@ -1,5 +1,9 @@
 
 (t)sun apr 02 23
+(u)Mr. Moriarty
+(p)12733
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Pod Wars: The NSV Pytheas and Lodbrok have both been installed with debris field map displays and map controllers, similar to the ones that may be found on the Cairngorm, situated in their Bridges.
 (u)FlameArrow57
 (p)13526
 (e)🗺💅|A-Mapping, C-QoL
