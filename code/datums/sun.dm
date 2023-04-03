@@ -368,6 +368,49 @@
 			src.photovoltaic_efficiency = 9000
 			src.rate = 0
 			src.angle = 90 // we can literally see it on the map
+		if ("moon")
+			src.zlevel = 2
+			src.name = "\improper Sun"
+			src.desc = "Surface of the Moon."
+			src.eclipse_cycle_on = FALSE
+			src.down_time = 14.75 DAYS
+			src.eclipse_time = 14.75 DAYS
+			src.eclipse_cycle_length = 29.5 DAYS
+			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			if (BUILD_TIME_DAY <= 15)
+				src.eclipse_status = ECLIPSE_PLANETARY
+				src.visibility = 0
+			else
+				src.eclipse_status = ECLIPSE_TERRESTRIAL
+				src.visibility = 1
+			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
+			src.rate = 0
+			src.angle = pick(90, 270)
+		if ("mars")
+			src.zlevel = 2
+			src.name = "\improper Sun"
+			src.desc = "Surface of the Mars."
+			src.eclipse_cycle_on = FALSE
+			src.down_time = 12 HOURS + 19.75 MINUTES
+			src.eclipse_time = 12 HOURS + 19.75 MINUTES
+			src.eclipse_cycle_length = 24 HOURS + 39.5 MINUTES
+			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			if (pick())
+				src.eclipse_status = ECLIPSE_PLANETARY
+				src.visibility = 0
+			else
+				src.eclipse_status = ECLIPSE_TERRESTRIAL
+				src.visibility = 1
+			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 6.7 // mars gets 43% earth's light.
+			src.rate = 0
+			src.angle = rand(0, 360)
+		if ("biodome")
+			src.zlevel = 2
+			// i don't know where it is.
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
@@ -440,14 +483,14 @@
 		if (dummy.z != src.zlevel) // are we on the right z
 			continue
 		if (!isnull(src.sun_area)) // local suns
-			if (!istype(get_area(dummy), src.sun_area)) // if local, are we in the right spot
+			if (!istype_exact(get_area(dummy), src.sun_area)) // if local, are we in the right spot
 				continue
 			T.targetstar = src
 			T.set_angle(angle)
 		else // global sun (applies to whole z level)
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns) // is this an area which should use local star
-				if (istype(get_area(dummy), ignorable_area))
+				if (istype_exact(get_area(dummy), ignorable_area))
 					ignoreme = TRUE
 					break
 			if (ignoreme)
@@ -461,12 +504,12 @@
 		if (dummy.z != src.zlevel)
 			continue
 		if (!isnull(src.sun_area))
-			if (!istype(get_area(dummy), src.sun_area))
+			if (!istype_exact(get_area(dummy), src.sun_area))
 				continue
 		else
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns)
-				if (istype(get_area(dummy), ignorable_area))
+				if (istype_exact(get_area(dummy), ignorable_area))
 					ignoreme = TRUE
 					break
 			if (ignoreme)

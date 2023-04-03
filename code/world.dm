@@ -455,6 +455,9 @@ var/f_color_selector_handler/F_Color_Selector
 	io_sun = new /datum/sun("io", 2, /area/iomoon, FALSE)
 	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic, FALSE)
 	solarium_sun = new /datum/sun("solarium", 2, /area/solarium, FALSE)
+	moon_sun = new /datum/sun("moon", 2, /area/moon, FALSE)
+	mars_sun = new /datum/sun("mars", 2, /area/marsoutpost, FALSE)
+	biodome_sun = new /datum/sun("biodome", 2, /area/crater, FALSE)
 
 
 	Z_LOG_DEBUG("World/Init", "Vox init")

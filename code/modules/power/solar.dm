@@ -392,6 +392,7 @@ TYPEINFO(/obj/machinery/power/solar)
 			t += "<B>Target:</B><BR>[src.tracker.targetstar.name]<BR>"
 			t += "<B>Station location:</B><BR>[src.tracker.targetstar.desc]<BR>" // this line usually extends off the side, sorry
 			t += "<B>Relative Rotation rate:</B><BR>[src.tracker.targetstar.rate] deg/h<BR>"
+			t += "<B>Eclipse Information:</B><BR>"
 			if (length(src.tracker.targetstar.eclipse_order) <= 1)
 				t += "No upcoming eclipses detected with current orbit/position.<BR>"
 			else
@@ -420,10 +421,10 @@ TYPEINFO(/obj/machinery/power/solar)
 						currentstatus = "Planetary Eclipse (night time)"
 					if (ECLIPSE_TERRESTRIAL)
 						currentstatus = "Not Eclipsing"
-				t += "<B>Time to eclipse:</B> [timetostart]<BR>"
-				t += "<B>Time to end of eclipse:</B> [timetoend]<BR>"
-				t += "<B>Length of eclipse:</B> [src.tracker.targetstar.eclipse_time]<BR>"
-				t += "<B>Length of peak eclipse<BR>"
+				t += "<B>Time to eclipse:</B>[time_to_text(timetostart)]<BR>"
+				t += "<B>Time to end of eclipse:</B>[time_to_text(timetoend)]<BR>"
+				t += "<B>Length of eclipse:</B>[time_to_text(src.tracker.targetstar.eclipse_time)]<BR>"
+				t += "<B>Length of peak eclipse:</B><BR>[time_to_text(src.tracker.targetstar.eclipse_time)]"
 				t += "<B>Current eclipsing status:</B> [currentstatus].<BR>"
 
 	user.Browse(t, "window=solcon")

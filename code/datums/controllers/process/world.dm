@@ -32,10 +32,15 @@
 		z2sun.calc_position()
 		z3sun.calc_position()
 		z5sun.calc_position()
+
 		earth_sun.calc_position()
 		io_sun.calc_position()
 		senex_sun.calc_position()
 		solarium_sun.calc_position()
+		moon_sun.calc_position()
+		mars_sun.calc_position()
+		biodome_sun.calc_position()
+
 
 		last_object = "genResearch.progress"
 		if(genResearch) genResearch.progress()

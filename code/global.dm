@@ -392,6 +392,9 @@ var/global
 	datum/sun/io_sun = null
 	datum/sun/senex_sun = null
 	datum/sun/solarium_sun = null
+	datum/sun/moon_sun = null
+	datum/sun/mars_sun = null
+	datum/sun/biodome_sun = null
 
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null
