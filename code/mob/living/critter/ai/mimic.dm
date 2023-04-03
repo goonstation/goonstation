@@ -123,7 +123,8 @@
 			if(!isdead(H))
 				goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
 		for(var/obj/item/I in T) //otherwise add the items in this turf
-			. += I
+			if(!I.anchored) //don't be wall closets or buttons
+				. += I
 		breakout:
 
 /datum/aiTask/succeedable/run_and_hide
