@@ -1771,6 +1771,19 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"aQc" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "aQs" = (
 /obj/machinery/door_control{
 	id = "cargogaming";
@@ -19027,18 +19040,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
-	})
-"ilj" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/turf/simulated/floor/black/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
 	})
 "ilO" = (
 /obj/machinery/drainage,
@@ -109000,8 +109001,8 @@ eGi
 hET
 pCL
 kRh
-pTT
-giN
+aQc
+aef
 kRh
 tkJ
 ayE
@@ -111114,8 +111115,8 @@ dsv
 qmH
 ppQ
 kRh
-ilj
-aef
+niC
+giN
 ntr
 cBV
 cBV
