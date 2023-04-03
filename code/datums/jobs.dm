@@ -2836,6 +2836,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		access = list(access_heads, access_medical, access_medical_lockers)
 		team = 1
 
+		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2877,6 +2878,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 2
 		add_to_manifest = FALSE
 
+		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)
