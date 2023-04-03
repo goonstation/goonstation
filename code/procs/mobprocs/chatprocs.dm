@@ -551,16 +551,18 @@
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
+// Say emphasis stuff
 /// Transforms the speech emphasis mods from [/atom/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>")
 
+// Italicised text looks bad in maptext without adding phantom trailing spaces. I'm sorry. - DisturbHerb
+var/static/min_spaces_after_italics = 3 // Minimum number of trailing spaces after a portion of italicised html.
+
 // Forgive me for mixing atom and mob procs together, these need to be used in some objs - DisturbHerb
 /// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
 /atom/proc/say_emphasis(input)
-	// Italicised text looks bad in maptext without adding phantom trailing spaces. I'm sorry. - DisturbHerb
-	var/static/min_spaces = 3 // Minimum number of trailing spaces after a portion of italicised html.
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
 	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
@@ -568,10 +570,13 @@
 	// Removes backslashes used to escape text modification.
 	var/static/regex/remove_escape_backlashes = regex(@"\\(_|\+|\|)", "g")
 	// Gets instances of whitespace after an italicised piece of text that contains less than 3 spaces total.
-	var/static/regex/add_spacing_after_italics = regex("(?<=(<\\/i>)(<\\/\\w>)*)\\s{1,[min_spaces]}(?=\\S)", "g")
+	var/static/regex/add_spacing_after_italics = regex("((<\\/i>)(<\\/\\w>)*)(\\s{1,[min_spaces_after_italics]})(?=\\S)", "g")
 
 	input = remove_escape_backlashes.Replace_char(input, "$1")
-	input = add_spacing_after_italics.Replace_char(input, "   ")
+	var/spaces // forgive me. we don't have a helper for this.
+	for (var/i in 1 to min_spaces_after_italics)
+		spaces += " "
+	input = add_spacing_after_italics.Replace_char(input, "$1[spaces]")
 	return input
 
 #undef ENCODE_HTML_EMPHASIS
