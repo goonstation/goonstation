@@ -77,13 +77,13 @@
 	//keep moving towards the target and attacking them in range for as long as is necessary
 	//has_started marks that we've hit them once
 	var/mob/living/critter/C = holder.owner
-	var/mob/T = holder.target
-	if(C && T && BOUNDS_DIST(C, T) == 0)
-		C.set_dir(get_dir(C, T))
+	var/mob/M = holder.target
+	if(C && M && BOUNDS_DIST(C, M) == 0)
+		C.set_dir(get_dir(C, M))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
 			C.critter_attack(holder.target)
 			src.has_started = TRUE
-	else if(C && T)
+	else if(C && M)
 		//we're not in punching range, let's fix that by moving back to the move subtask
 		var/datum/aiTask/sequence/goalbased/ambush/parent_task = holder.current_task
 		parent_task.current_subtask = parent_task.subtasks[1] //index 1 is always the move task in goalbased

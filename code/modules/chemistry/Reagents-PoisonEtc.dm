@@ -2217,6 +2217,6 @@ datum
 				if(poison_amount > 30)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						H.organHolder?.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
+						H.take_eye_damage(1)
 					else
 						M.take_toxin_damage(1 * mult)
