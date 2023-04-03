@@ -102,13 +102,19 @@
 		else //lets restart the action
 			src.onRestart()
 
-// upgraded rods are unimplemented.
 /obj/item/fishing_rod/upgraded
-	name = "fishing rod"
+	name = "upgraded fishing rod"
 	icon = 'icons/obj/items/fishing_gear.dmi'
-	icon_state = "fishing_rod-inactive"
+	icon_state = "fishing_rod2-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
-	item_state = "fishing_rod-inactive"
+	item_state = "fishing_rod2-inactive"
+
+/obj/item/fishing_rod/master
+	name = "master fishing rod"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "fishing_rod3-inactive"
+	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
+	item_state = "fishing_rod3-inactive"
 
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
