@@ -157,7 +157,7 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		defer_powernet_rebuild = 2
+		deferred_powernet_objs |= src
 
 		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src

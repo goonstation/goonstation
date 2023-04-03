@@ -320,6 +320,10 @@
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
 
+/datum/targetable/refpicker/nonadmin
+	castcheck(var/mob/M)
+		return TRUE
+
 ///Gives the target mob a reference picker ability and returns the atom picked. Synchronous.
 /proc/pick_ref(mob/M)
 	var/datum/promise/promise = new
