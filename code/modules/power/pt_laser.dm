@@ -262,7 +262,7 @@
 
 	firing = TRUE
 	UpdateIcon(1)
-	src.laser = new(T, src.dir, src)
+	src.laser = new(T, src.dir, 0, src)
 
 	melt_blocking_objects()
 
@@ -570,6 +570,10 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
+	///How many laser segments are behind us
+	var/length = 0
+	///Maximum number of segments in the beam, this exists to prevent nerds from blowing up the server
+	var/max_length = 500
 	var/obj/linked_laser/next = null
 	var/obj/linked_laser/previous = null
 	var/turf/current_turf = null
@@ -581,8 +585,9 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/linked_laser/ex_act(severity)
 	return
 
-/obj/linked_laser/New(loc, dir)
+/obj/linked_laser/New(loc, dir, length = 0)
 	..()
+	src.length = length
 	src.dir = dir
 	src.current_turf = get_turf(src)
 	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
@@ -604,6 +609,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 			if (src.is_blocking(object))
 				blocked = TRUE
 				break
+	if (src.length >= src.max_length)
+		return
 	if (!blocked)
 		SPAWN(0) //this is here because byond hates recursion depth
 			src.extend()
@@ -615,7 +622,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 ///Returns a new segment with all its properties copied over (override on child types)
 /obj/linked_laser/proc/copy_laser(turf/T, dir)
-	return new src.type(T, dir)
+	return new src.type(T, dir, src.length + 1)
 
 ///Set up a new laser on the next turf
 /obj/linked_laser/proc/extend()
@@ -720,7 +727,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	var/datum/light/light
 
 
-/obj/linked_laser/ptl/New(loc, dir, obj/machinery/power/pt_laser/source = null)
+/obj/linked_laser/ptl/New(loc, dir, length, obj/machinery/power/pt_laser/source = null)
 	src.source = source
 	..()
 	// light = new /datum/light/point
@@ -747,7 +754,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 				source.affecting_mobs |= L
 
 /obj/linked_laser/ptl/copy_laser(turf/T, dir)
-	return new src.type(T, dir, src.source)
+	return new src.type(T, dir, src.length + 1, src.source)
 
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)
 	..()
