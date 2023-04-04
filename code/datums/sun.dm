@@ -354,12 +354,13 @@
 			src.eclipse_time = 12 HOURS + 19.75 MINUTES
 			src.eclipse_cycle_length = 24 HOURS + 39.5 MINUTES
 			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			if (BUILD_TIME_HOUR > 12)
-				src.eclipse_status = ECLIPSE_PLANETARY
-				src.visibility = 0
-			else
-				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = 1
+			#if (BUILD_TIME_HOUR > 12)
+			src.eclipse_status = ECLIPSE_PLANETARY
+			src.visibility = 0
+			#else
+			src.eclipse_status = ECLIPSE_TERRESTRIAL
+			src.visibility = 1
+			#endif
 			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
 			src.eclipse_magnitude = 1
 			src.photovoltaic_efficiency = 6.7 // mars gets 43% earth's light.

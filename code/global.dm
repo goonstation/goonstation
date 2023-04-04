@@ -383,10 +383,10 @@ var/global
 
 	// suns for z1,debris field and mining level
 	datum/sun/sun = null
-	datum/sun/z2sun = null
-	datum/sun/z3sun = null
-	datum/sun/z3sun = null
-	datum/sun/z5sun = null
+	datum/sun/z2_sun = null
+	datum/sun/z3_sun = null
+	datum/sun/z4_sun = null
+	datum/sun/z5_sun = null
 
 	// local suns for azones (and the earth)
 	datum/sun/earth_outside_sun = null
