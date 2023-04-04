@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 ///When a laser hits this sink
 /obj/laser_sink/proc/incident(obj/linked_laser/laser)
-	return
+	return TRUE
 
 ///"that's not a word" - 🤓
 ///When a laser stops hitting this sink
@@ -528,6 +528,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 		src.incident(laser)
 
 /obj/laser_sink/mirror/incident(obj/linked_laser/laser)
+	if (src.in_laser) //no infinite loops allowed
+		return FALSE
 	src.in_laser = laser
 	//very stupid angle maths
 	var/angle
@@ -544,6 +546,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	var/out_dir = turn(laser.dir, angle) //rotate based on which way the mirror is facing
 	src.out_laser = laser.copy_laser(get_turf(src), out_dir)
 	src.out_laser.icon_state = "[initial(src.out_laser.icon_state)]_corner[src.facing]"
+	return TRUE
 
 /obj/laser_sink/mirror/exident(obj/linked_laser/laser)
 	qdel(src.out_laser)
@@ -594,8 +597,9 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	else
 		for (var/obj/object in next_turf)
 			if (istype(object, /obj/laser_sink))
-				src.sink = object
-				src.sink.incident(src)
+				var/obj/laser_sink/sink = object
+				if (sink.incident(src))
+					src.sink = sink
 			if (src.is_blocking(object))
 				blocked = TRUE
 				break
