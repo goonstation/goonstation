@@ -22,11 +22,9 @@
 	var/firing = FALSE			//laser is currently active
 	///the first laser object
 	var/obj/linked_laser/ptl/laser = null
-	var/list/laser_turfs = list()	//every turf with a laser on it
 	var/list/affecting_mobs = list()//mobs in the path of the beam
 	var/list/blocking_objects = list()	//the objects blocking the laser, if any
 	var/selling = FALSE
-	var/laser_process_counter = 0
 	var/input_number = 0
 	var/output_number = 0
 	var/input_multi = 1		//for kW, MW, GW etc
@@ -144,12 +142,6 @@
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
 				if(burn_living(L,adj_output*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
-
-			if(laser_process_counter > 9)
-				process_laser() //fine if it happens less often, just tile burning and hotspot exposure
-				laser_process_counter = 0
-			else
-				laser_process_counter ++
 
 			charge -= adj_output
 
@@ -420,16 +412,6 @@
 				UpdateIcon()
 	return
 
-/obj/machinery/power/pt_laser/proc/process_laser()
-	if(output == 0) return
-
-	var/power = abs(output)*PTLEFFICIENCY
-
-	for(var/turf/T in laser_turfs)
-		if(power > 5e7)
-			T.hotspot_expose(power/1e5,5) //1000K at 100MW
-		if(istype(T, /turf/simulated/floor) && prob(power/1e5))
-			T:burn_tile()
 
 //why was this on /obj, what the fuck
 /obj/machinery/power/pt_laser/proc/burn_living(var/mob/living/L, var/power = 0)
@@ -730,20 +712,12 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/linked_laser/ptl/New(loc, dir, length, obj/machinery/power/pt_laser/source = null)
 	src.source = source
 	..()
-	// light = new /datum/light/point
-	// light.attach(src)
-	// light.set_color(0, 0.8, 0.1)
-	// light.set_brightness(0.4)
-	// light.set_height(0.5)
-	// light.enable()
 
 	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
 
 	SPAWN(0)
 		var/power = src.source.laser_power()
 		alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-		if(istype(src.loc, /turf) && power > 5e7)
-			src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
 		if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
 			src.loc:burn_tile()
 
