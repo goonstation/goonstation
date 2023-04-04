@@ -503,8 +503,8 @@
 	New()
 		..()
 		icon_state += "[rand(1,5)]"
-	steel
-		material_name = "Steel"
+/obj/item/raw_material/scrap_metal/steel
+	material_name = "Steel"
 
 /obj/item/raw_material/shard
 	// same deal here
