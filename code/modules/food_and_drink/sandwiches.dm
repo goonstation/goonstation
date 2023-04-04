@@ -231,7 +231,7 @@
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
-/obj/item/reagent_containers/food/snacks/burger/synthbuttburger
+/obj/item/reagent_containers/food/snacks/burger/buttburger/synth
 	name = "buttburger"
 	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
 	icon_state = "assburger"
@@ -243,7 +243,7 @@
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","synthbuttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
-/obj/item/reagent_containers/food/snacks/burger/robobuttburger
+/obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 	name = "buttburger"
 	desc = "This burger's all buns. It seems to made out of a cybernetic butt."
 	icon_state = "robobuttburger"
@@ -266,9 +266,9 @@
 		..()
 		reagents.add_reagent("love", 15)
 
-/obj/item/reagent_containers/food/snacks/burger/synthheartburger
+/obj/item/reagent_containers/food/snacks/burger/heartburger/synth
 	name = "heartburger"
-	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart"
+	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart."
 	icon_state = "synthheartburger"
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -277,7 +277,7 @@
 		..()
 		reagents.add_reagent("love", 15)
 
-/obj/item/reagent_containers/food/snacks/burger/roboheartburger
+/obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
 	name = "heartburger"
 	desc = "A hearty meal, made with Love. This one seems to contain a shiny cyberheart."
 	icon_state = "roboheartburger"
@@ -288,7 +288,7 @@
 		..()
 		reagents.add_reagent("love", 15)
 
-/obj/item/reagent_containers/food/snacks/burger/flockheartburger
+/obj/item/reagent_containers/food/snacks/burger/heartburger/flock
 	name = "heartburger"
 	desc = "A hearty meal, made with Love. This one seems to cotain a teal pulsing octahedron."
 	icon_state = "flockheartburger"
@@ -301,13 +301,13 @@
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger
 	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient. It seems to contain a normal fleshy heart"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a normal fleshy Brain."
 	icon_state = "brainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
 	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-/obj/item/reagent_containers/food/snacks/burger/synthbrainburger
+/obj/item/reagent_containers/food/snacks/burger/brainburger/synth
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain a green sunthetic brain."
 	icon_state = "synthbrainburger"
@@ -315,15 +315,15 @@
 	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-/obj/item/reagent_containers/food/snacks/burger/robobrainburger
+/obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
 	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient. It seems to contain a spontaneous intelligence core."
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a Spontaneous Intelligence Creation Core."
 	icon_state = "robobrainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
 	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-/obj/item/reagent_containers/food/snacks/burger/flockbrainburger
+/obj/item/reagent_containers/food/snacks/burger/brainburger/flock
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain an odd crystal."
 	icon_state = "flockbrainburger"

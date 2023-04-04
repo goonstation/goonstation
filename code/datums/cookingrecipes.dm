@@ -118,31 +118,31 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/clothing/head/butt/synth
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/synthbuttburger
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
 
-/datum/cookingrecipe/robobuttburger
+/datum/cookingrecipe/cyberbuttburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/clothing/head/butt/cyberbutt
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/robobuttburger
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 
 /datum/cookingrecipe/synthheartburger
 	item1 = /obj/item/organ/heart/synth
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/synthheartburger
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
 
-/datum/cookingrecipe/roboheartburger
+/datum/cookingrecipe/cyberheartburger
 	item1 = /obj/item/organ/heart/cyber
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/roboheartburger
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
 
 /datum/cookingrecipe/flockheartburger
 	item1 = /obj/item/organ/heart/flock
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/flockheartburger
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
 
 /datum/cookingrecipe/heartburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -166,19 +166,19 @@ datum/cookingrecipe/synthbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/synth
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/synthbrainburger
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
 
-datum/cookingrecipe/robobrainburger
+datum/cookingrecipe/cyberbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/latejoin
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/robobrainburger
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
 
 datum/cookingrecipe/flockbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/flockdrone
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/flockbrainburger
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
 
 /datum/cookingrecipe/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
