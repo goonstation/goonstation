@@ -1267,6 +1267,7 @@
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
+		actions.interrupt(src, INTERRUPT_ACT)
 		var/obj/item/magtractor/origW
 		if (W.useInnerItem && W.contents.len > 0)
 			if (istype(W, /obj/item/magtractor))
