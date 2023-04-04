@@ -1771,6 +1771,19 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"aQc" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "aQs" = (
 /obj/machinery/door_control{
 	id = "cargogaming";
@@ -3449,16 +3462,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"bxP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "byf" = (
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
@@ -10533,19 +10536,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"eIz" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "eIK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -10617,18 +10607,6 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
-	})
-"eLp" = (
-/obj/random_item_spawner/junk/some,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
 	})
 "eLE" = (
 /obj/machinery/drainage,
@@ -14611,13 +14589,6 @@
 "gwB" = (
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -19078,18 +19049,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"ilj" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/turf/simulated/floor/black/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "ilO" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
@@ -21364,18 +21323,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
-	})
-"joN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/storage{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
 	})
 "joW" = (
 /obj/grille/catwalk{
@@ -25838,6 +25785,19 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"lfY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "lgg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28219,6 +28179,13 @@
 "mfc" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/storage{
@@ -84262,7 +84229,7 @@ ugi
 wWe
 dqY
 nQY
-bxP
+vKn
 vKn
 lyg
 cNf
@@ -104521,7 +104488,7 @@ erp
 lcu
 bSC
 hQo
-joN
+erp
 eRD
 uJB
 eRD
@@ -106929,7 +106896,7 @@ gYR
 gYR
 gYR
 gYR
-eIz
+txY
 qlx
 pRb
 pRb
@@ -108662,11 +108629,11 @@ mIG
 mIG
 mIG
 gFY
-pSO
-pSO
 avC
 pSO
 pSO
+pSO
+avC
 aDn
 mIG
 nYt
@@ -109042,8 +109009,8 @@ eGi
 hET
 pCL
 kRh
-pTT
-giN
+aQc
+aef
 kRh
 tkJ
 ayE
@@ -109905,7 +109872,7 @@ iww
 qxv
 xnE
 cHd
-eIK
+lfY
 oZp
 hXx
 oZp
@@ -111156,8 +111123,8 @@ dsv
 qmH
 ppQ
 kRh
-ilj
-aef
+niC
+giN
 ntr
 cBV
 cBV
@@ -112364,7 +112331,7 @@ ksc
 niC
 giN
 lFx
-eLp
+itp
 cBV
 cBV
 neB
