@@ -321,7 +321,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				flush(M, 5 * mult)
+				flush(holder, 5 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
@@ -668,7 +668,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 
 				if (M.health < -5 && M.health > -30)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
@@ -757,7 +757,7 @@ datum
 				if (M.druggy > 0)
 					M.druggy -= 3
 					M.druggy = max(0, M.druggy)
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
@@ -808,7 +808,7 @@ datum
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
-				flush(M, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
+				flush(holder, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -970,7 +970,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				//if(holder.has_reagent("cholesterol")) //probably doesnt actually happen but whatever
 					//holder.remove_reagent("cholesterol", 2)
 				..()
@@ -1144,7 +1144,7 @@ datum
 			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 5 * mult) //flushes all chemicals but itself
+				flush(holder, 5 * mult) //flushes all chemicals but itself
 				M.take_radiation_dose(-0.05 SIEVERTS * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
@@ -1187,7 +1187,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-20,0)
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
@@ -1347,7 +1347,7 @@ datum
 						M.take_brain_damage(-2 * mult)
 				else if (M.health > 15 && M.get_toxin_damage() < 70)
 					M.take_toxin_damage(1 * mult)
-					flush(M, 20 * mult, flushed_reagents)
+					flush(holder, 20 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1454,7 +1454,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(50))
-					flush(M, 1 * mult)
+					flush(holder, 1 * mult)
 				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
@@ -1497,7 +1497,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 8 * mult, flushed_reagents)
+				flush(holder, 8 * mult, flushed_reagents)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
 				..()
