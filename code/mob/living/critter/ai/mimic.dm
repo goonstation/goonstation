@@ -119,7 +119,7 @@
 	for(var/turf/T in orange(holder.owner, max_dist))
 		if(GET_DIST(holder.owner, T) < min_dist)
 			continue
-		for(var/mob/living/carbon/human/H in view(T, 3))
+		for(var/mob/living/carbon/human/H in viewers(T, 3))
 			if(!isdead(H))
 				goto breakout //this is a little cursed. If there are humans that can see this turf, jump to the end of the outer loop
 		for(var/obj/item/I in T) //otherwise add the items in this turf
