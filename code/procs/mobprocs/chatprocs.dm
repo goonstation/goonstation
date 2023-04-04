@@ -558,7 +558,7 @@
 	input = varname.Replace_char(input, "<[html]>$1</[html]>")
 
 // Italicised text looks bad in maptext without adding phantom trailing spaces. I'm sorry. - DisturbHerb
-var/static/min_spaces_after_italics = 3 // Minimum number of trailing spaces after a portion of italicised html.
+#define SPACES "   " // Minimum number of trailing spaces after a portion of italicised html.
 
 // Forgive me for mixing atom and mob procs together, these need to be used in some objs - DisturbHerb
 /// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
@@ -570,16 +570,14 @@ var/static/min_spaces_after_italics = 3 // Minimum number of trailing spaces aft
 	// Removes backslashes used to escape text modification.
 	var/static/regex/remove_escape_backlashes = regex(@"\\(_|\+|\|)", "g")
 	// Gets instances of whitespace after an italicised piece of text that contains less than 3 spaces total.
-	var/static/regex/add_spacing_after_italics = regex("((<\\/i>)(<\\/\\w>)*)(\\s{1,[min_spaces_after_italics]})(?=\\S)", "g")
+	var/static/regex/add_spacing_after_italics = regex("((<\\/i>)(<\\/\\w>)*)(\\s{1,[length(SPACES)]})(?=\\S)", "g")
 
 	input = remove_escape_backlashes.Replace_char(input, "$1")
-	var/spaces // forgive me. we don't have a helper for this.
-	for (var/i in 1 to min_spaces_after_italics)
-		spaces += " "
-	input = add_spacing_after_italics.Replace_char(input, "$1[spaces]")
+	input = add_spacing_after_italics.Replace_char(input, "$1[SPACES]")
 	return input
 
 #undef ENCODE_HTML_EMPHASIS
+#undef SPACES
 
 /// Strips all emphasis characters from input.
 /atom/proc/say_strip_emphasis(input)
