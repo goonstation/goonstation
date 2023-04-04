@@ -115,6 +115,7 @@
 
 /mob/living/full_heal()
 	. = ..()
+	if (src.ai && src.is_npc) src.ai.enable()
 	src.remove_ailments()
 	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
