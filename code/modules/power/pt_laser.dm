@@ -107,8 +107,6 @@
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
 /obj/machinery/power/pt_laser/process(mult)
-	if(status & BROKEN)
-		return
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_onln = online
@@ -257,6 +255,8 @@
 	return T
 
 /obj/machinery/power/pt_laser/proc/start_firing()
+	if (!src.output)
+		return
 	var/turf/T = get_barrel_turf()
 	if(!T) return //just in case
 
@@ -278,7 +278,7 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -288,16 +288,24 @@
 	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
+
+/obj/machinery/power/pt_laser/proc/can_fire()
+	return abs(src.output) <= src.charge
+
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
-	if(src.firing && (abs(src.output) > src.charge))
-		stop_firing()
+	if (!src.laser)
+		return
 	var/obj/linked_laser/ptl/current_laser = src.laser
 	var/alpha = clamp(((log(10, max(1,src.laser_power())) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 	do
 		current_laser.alpha = alpha
 		current_laser = current_laser.next
 	while (current_laser)
+
+/obj/machinery/power/pt_laser/broken_state_topic(mob/user)
+	if (src.charge)
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -363,7 +371,10 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(!online) src.stop_firing()
+			if(online)
+				src.start_firing()
+			else
+				src.stop_firing()
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -372,12 +383,12 @@
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
-			if(!src.output)
+			if(!src.output || !src.can_fire())
 				src.stop_firing()
 				return
 			if (src.firing)
 				src.update_laser_power()
-			else
+			else if (src.online)
 				src.start_firing()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
@@ -419,6 +430,68 @@
 			T.hotspot_expose(power/1e5,5) //1000K at 100MW
 		if(istype(T, /turf/simulated/floor) && prob(power/1e5))
 			T:burn_tile()
+
+//why was this on /obj, what the fuck
+/obj/machinery/power/pt_laser/proc/burn_living(var/mob/living/L, var/power = 0)
+	if(power < 10)
+		return
+	if(isintangible(L) || L.nodamage)
+		return
+
+	if(prob(min(power/1e5,50)))
+		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
+
+	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
+		var/safety = 1
+
+/*	L:head:up broke for no reason so I had to rewrite it.
+		if (istype(L:head, /obj/item/clothing/head/helmet/welding))
+			if(!L:head:up)
+				safety = 8*/
+		var/mob/living/carbon/human/newL = L
+		if (istype(newL.glasses, /obj/item/clothing/glasses/thermal) || newL.eye_istype(/obj/item/organ/eye/cyber/thermal))
+			safety = 0.5
+		else if (istype(newL.glasses, /obj/item/clothing/glasses/nightvision) || newL.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			safety = 0.25
+		else if (istype(newL.head, /obj/item/clothing/head/helmet/welding) && !newL.head:up)
+			safety = 8
+		else if (istype(newL.head, /obj/item/clothing/head/helmet/space))
+			safety = 8
+		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
+			safety = 2
+
+		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
+		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
+		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
+
+	//this will probably need fiddling with, hard to decide on reasonable values
+	switch(power)
+		if(10 to 1e7)
+			L.set_burning(power/1e5) //100 (max burning) at 10MW
+			L.bodytemperature = max(power/1e4, L.bodytemperature) //1000K at 10MW. More than hotspot because it's hitting them not just radiating heat (i guess? idk)
+		if(1e7+1 to 5e8)
+			L.set_burning(100)
+			L.bodytemperature = max(power/1e4, L.bodytemperature)
+			L.TakeDamage("chest", 0, power/1e7) //ow
+			if(ishuman(L) && prob(min(power/1e7,50)))
+				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
+				L:sever_limb(limb)
+				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+		if(5e8+1 to 1e11) //you really fucked up this time buddy
+			make_cleanable( /obj/decal/cleanable/ash,src.loc)
+			L.unlock_medal("For Your Ohm Good", 1)
+			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
+			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
+			L.elecgib()
+			return 1 //tells the caller to remove L from the laser's affecting_mobs
+		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
+			L.unlock_medal("For Your Ohm Good", 1)
+			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
+			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
+			L.blowthefuckup(min(1+round(power/1e12),20),0)
+			return 1 //tells the caller to remove L from the laser's affecting_mobs
+
+	return 0
 
 ABSTRACT_TYPE(/obj/laser_sink)
 /obj/laser_sink //might end up being a component or something
@@ -478,7 +551,11 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	src.in_laser = null
 
 /obj/laser_sink/mirror/Move()
-	src.exident(src.out_laser)
+	src.exident(src.in_laser)
+	..()
+
+/obj/laser_sink/mirror/disposing()
+	src.exident(src.in_laser)
 	..()
 
 #undef NW_SE
@@ -625,7 +702,6 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
 	event_handler_flags = USE_FLUID_ENTER
-	var/power = 0
 	var/obj/machinery/power/pt_laser/source = null
 	var/datum/light/light
 
@@ -633,15 +709,18 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/linked_laser/ptl/New(loc, dir, obj/machinery/power/pt_laser/source = null)
 	src.source = source
 	..()
-	light = new /datum/light/point
-	light.attach(src)
-	light.set_color(0, 0.8, 0.1)
-	light.set_brightness(0.4)
-	light.set_height(0.5)
-	light.enable()
+	// light = new /datum/light/point
+	// light.attach(src)
+	// light.set_color(0, 0.8, 0.1)
+	// light.set_brightness(0.4)
+	// light.set_height(0.5)
+	// light.enable()
+
+	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
 
 	SPAWN(0)
-		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		var/power = src.source.laser_power()
+		alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(istype(src.loc, /turf) && power > 5e7)
 			src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
 		if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
@@ -650,7 +729,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 		for (var/mob/living/L in src.loc)
 			if (isintangible(L))
 				continue
-			if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
+			if (!source.burn_living(L,power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
 				source.affecting_mobs |= L
 
 /obj/linked_laser/ptl/copy_laser(turf/T, dir)
@@ -659,7 +738,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)
 	..()
 	if (isliving(AM) && !isintangible(AM))
-		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
+		if (!src.source.burn_living(AM, src.source.laser_power())) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM
 
 /obj/linked_laser/ptl/Uncrossed(var/atom/movable/AM)
@@ -669,7 +748,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 /obj/linked_laser/ptl/proc/burn_all_living_contents()
 	for(var/mob/living/L in src.loc)
-		if(burn_living(L,power) && source) //returns 1 if they were gibbed
+		if(src.source.burn_living(L,src.source.laser_power()) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
 
 /obj/linked_laser/ptl/become_endpoint()
@@ -686,64 +765,12 @@ ABSTRACT_TYPE(/obj/laser_sink)
 		if (src.is_blocking(object))
 			src.source.blocking_objects -= object
 
-/obj/proc/burn_living(var/mob/living/L, var/power = 0)
-	if(power < 10) return
-	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
+/obj/linked_laser/ptl/disposing()
+	src.remove_simple_light("laser_beam")
+	..()
 
-	if(prob(min(power/1e5,50)))
-		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
-
-	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
-		var/safety = 1
-
-/*	L:head:up broke for no reason so I had to rewrite it.
-		if (istype(L:head, /obj/item/clothing/head/helmet/welding))
-			if(!L:head:up)
-				safety = 8*/
-		var/mob/living/carbon/human/newL = L
-		if (istype(newL.glasses, /obj/item/clothing/glasses/thermal) || newL.eye_istype(/obj/item/organ/eye/cyber/thermal))
-			safety = 0.5
-		else if (istype(newL.glasses, /obj/item/clothing/glasses/nightvision) || newL.eye_istype(/obj/item/organ/eye/cyber/nightvision))
-			safety = 0.25
-		else if (istype(newL.head, /obj/item/clothing/head/helmet/welding) && !newL.head:up)
-			safety = 8
-		else if (istype(newL.head, /obj/item/clothing/head/helmet/space))
-			safety = 8
-		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
-			safety = 2
-
-		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
-		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
-		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
-
-	//this will probably need fiddling with, hard to decide on reasonable values
-	switch(power)
-		if(10 to 1e7)
-			L.set_burning(power/1e5) //100 (max burning) at 10MW
-			L.bodytemperature = max(power/1e4, L.bodytemperature) //1000K at 10MW. More than hotspot because it's hitting them not just radiating heat (i guess? idk)
-		if(1e7+1 to 5e8)
-			L.set_burning(100)
-			L.bodytemperature = max(power/1e4, L.bodytemperature)
-			L.TakeDamage("chest", 0, power/1e7) //ow
-			if(ishuman(L) && prob(min(power/1e7,50)))
-				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
-		if(5e8+1 to 1e11) //you really fucked up this time buddy
-			make_cleanable( /obj/decal/cleanable/ash,src.loc)
-			L.unlock_medal("For Your Ohm Good", 1)
-			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
-			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
-			L.elecgib()
-			return 1 //tells the caller to remove L from the laser's affecting_mobs
-		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
-			L.unlock_medal("For Your Ohm Good", 1)
-			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
-			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
-			L.blowthefuckup(min(1+round(power/1e12),20),0)
-			return 1 //tells the caller to remove L from the laser's affecting_mobs
-
-	return 0
+/obj/machinery/power/pt_laser/cheat
+	charge = INFINITY
 
 #undef PTLEFFICIENCY
 #undef PTLMINOUTPUT
