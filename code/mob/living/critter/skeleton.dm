@@ -131,7 +131,6 @@
 			src.revivalChance -= src.revivalDecrement
 			SPAWN(rand(400,800))
 				src.full_heal()
-				src.set_density(1)
 				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
 			return
 		if (!gibbed)
@@ -149,7 +148,6 @@
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
-		return
 
 /mob/living/critter/skeleton/wraith
 	desc = "It looks rather crumbly."
