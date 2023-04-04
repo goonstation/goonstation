@@ -2915,14 +2915,12 @@
 	name = "Autopsy Table"
 	},
 /obj/adventurepuzzle/triggerable/spawnloc{
-	aggressive = 1;
-	atkcarbon = 1;
-	atksilicon = 1;
-	critter = /obj/critter/magiczombie;
-	health = 10;
+	critter = /mob/living/critter/skeleton;
+	health_brute = 5;
+	health_burn = 5;
 	icon_state = "abear";
 	id = "morgue_spawn_1";
-	wanderer = 1
+	
 	},
 /obj/item/scrap{
 	anchored = 1;
@@ -3967,14 +3965,12 @@
 	name = "Autopsy Table"
 	},
 /obj/adventurepuzzle/triggerable/spawnloc{
-	aggressive = 1;
-	atkcarbon = 1;
-	atksilicon = 1;
-	critter = /obj/critter/magiczombie;
-	health = 10;
+	critter = /mob/living/critter/skeleton;
+	health_burn = 5;
+	health_brute = 5;
 	icon_state = "abear";
-	id = "morgue_spawn_2";
-	wanderer = 1
+	id = "morgue_spawn_3";
+	
 	},
 /obj/item/scrap{
 	anchored = 1;
@@ -5892,14 +5888,12 @@
 	name = "Autopsy Table"
 	},
 /obj/adventurepuzzle/triggerable/spawnloc{
-	aggressive = 1;
-	atkcarbon = 1;
-	atksilicon = 1;
-	critter = /obj/critter/magiczombie;
-	health = 10;
+	critter = /mob/living/critter/skeleton;
+	health_burn = 5;
+	health_brute = 5;
 	icon_state = "abear";
-	id = "morgue_spawn_3";
-	wanderer = 1
+	id = "morgue_spawn_2";
+	
 	},
 /obj/item/scrap{
 	anchored = 1;
@@ -5972,14 +5966,12 @@
 	name = "Autopsy Table"
 	},
 /obj/adventurepuzzle/triggerable/spawnloc{
-	aggressive = 1;
-	atkcarbon = 1;
-	atksilicon = 1;
-	critter = /obj/critter/magiczombie;
-	health = 10;
+	critter = /mob/living/critter/skeleton;
+	health_burn = 5;
+	health_brute = 5;
 	icon_state = "abear";
 	id = "morgue_spawn_4";
-	wanderer = 1
+	
 	},
 /obj/item/scrap{
 	anchored = 1;
