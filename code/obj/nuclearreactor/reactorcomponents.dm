@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// Temperature of this component, starts at room temp Kelvin by default
 	var/temperature = T20C
 	/// How much does this component share heat with surrounding components? Basically surface area in contact (m2)
-	var/thermal_cross_section = 0.01
+	var/thermal_cross_section = 1.0
 	/// How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
 	var/neutron_cross_section = 0.5
 	/// Control rods don't moderate neutrons, they absorb them.
@@ -38,6 +38,9 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/static/list/ui_image_base64_cache = list()
 	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+
 
 	New(material_name="steel")
 		..()
@@ -109,13 +112,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		for(var/obj/item/reactor_component/RC as anything in adjacentComponents)
 			if(isnull(RC))
 				continue
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = RC.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(RC.material,src.material)
-			RC.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*hTC
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - RC.temperature
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(RC.material,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = min(src.thermal_cross_section,RC.thermal_cross_section)
+			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
+			RC.temperature = RC.temperature - (k * A * 1/RC.thermal_mass)*-deltaT
+
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 			RC.material.triggerTemp(RC,RC.temperature)
@@ -123,11 +129,11 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		//heat transfer with reactor vessel
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
-			var/deltaT = holder.temperature - src.temperature
-			var/hTC = calculateHeatTransferCoefficient(holder.material,src.material)
-
-			holder.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*hTC
+			var/deltaT = src.temperature - holder.temperature
+			var/k = calculateHeatTransferCoefficient(holder.material,src.material)
+			var/A = src.thermal_cross_section
+			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
+			holder.temperature = holder.temperature - (k * A * 1/holder.thermal_mass)*-deltaT
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
@@ -225,7 +231,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_inserted = "fuel"
 	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
-	thermal_cross_section = 0.02
+	thermal_cross_section = 2
+	thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	extra_info()
 		. = ..()
@@ -264,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A heat exchanger component for a nuclear reactor."
 	icon_state_inserted = "heat"
 	icon_state_cap = "heat_cap"
-	thermal_cross_section = 0.4
+	thermal_cross_section = 15
 	neutron_cross_section = 0.1
 
 ////////////////////////////////////////////////////////////////
@@ -274,10 +281,11 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A gas coolant channel component for a nuclear reactor."
 	icon_state_inserted = "gas"
 	icon_state_cap = "gas_cap"
-	thermal_cross_section = 0.05
-	var/gas_thermal_cross_section = 0.95
+	thermal_cross_section = 1.5
+	var/gas_thermal_cross_section = 2.5
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
+	thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	melt()
 		..()
@@ -294,24 +302,33 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.air_contents)
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.air_contents.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				//gas density << metal density, so energy to heat gas to T is much small than energy to heat metal to T
-				//basically, we just need a specific heat capactiy factor in here
-				//fortunately, atmos has macros for that - for everything else, let's just assume steel's heat capacity and density
-				//shc * moles/(shc of steel * density of steel * volume / molar mass of steel)
-				var/gas_thermal_e = THERMAL_ENERGY(air_contents)
-				src.air_contents.temperature += gas_thermal_cross_section*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(air_contents))/(420*7700*0.05) //specific heat capacity of steel (420 J/KgC) * density of steel (7700 Kg/m^3) * volume of material the gas channel is made of (m^3)
-				if(src.air_contents.temperature < 0 || src.temperature < 0)
-					CRASH("TEMP WENT NEGATIVE")
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - src.air_contents.temperature
+			// temp differential for radiative heating
+			var/deltaTr = (src.temperature ** 4) - (src.air_contents.temperature ** 4)
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = src.gas_thermal_cross_section
+
+			var/thermal_e = THERMAL_ENERGY(air_contents)
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4) ( + (5.67037442e-8 * A * deltaTr))
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.air_contents.temperature, src.temperature)
+			var/coldest = min(src.air_contents.temperature, src.temperature)
+			src.air_contents.temperature = clamp(src.air_contents.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.air_contents), coldest, hottest)
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass
+
+			if(src.air_contents.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+
 			. = src.air_contents
 			if(src.melted)
 				var/turf/T = get_turf(src.loc)
@@ -319,7 +336,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					T.assume_air(air_contents)
 		if(inGas)
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
-			src.air_contents.volume = gas_volume
+			src.air_contents?.volume = gas_volume
 
 #define SANE_COMPONENT_MATERIALS \
 		100;"gold",\

@@ -169,6 +169,7 @@
 	targeted = 1
 	icon_state = "waspbee_sting"
 	target_anything = 1
+	var/attack_verb = "sting"
 	var/venom1 = "histamine"
 	var/amt1 = 12
 	var/venom2 = "toxin"
@@ -184,16 +185,16 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
+				boutput(holder.owner, "<span class='alert'>Nothing to [attack_verb] there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
+			boutput(holder.owner, "<span class='alert'>That is too far away to [attack_verb].</span>")
 			return 1
 		var/mob/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
-		"<span class='combat'>You sting [MT]!</span>")
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [attack_verb]s [MT]!</b></span>",\
+		"<span class='combat'>You [attack_verb] [MT]!</span>")
 		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
@@ -204,16 +205,26 @@
 
 	scorpion_sting
 		icon_state = "scorpion_sting"
-		cooldown = 10 SECONDS
-		venom1 = "neurotoxin"
-		amt1 = 15
+		cooldown = 12 SECONDS
+		venom1 = "neurodepressant"
+		amt1 = 5
 		venom2 = "toxin"
-		amt2 = 6
+		amt2 = 10
+
+	snake_bite
+		name = "Bite"
+		desc = "Bite a mob, injecting them with venom."
+		icon_state = "snake_bite"
+		cooldown = 12 SECONDS
+		attack_verb = "bite"
+		venom1 = "viper_venom"
+		amt1 = 40
+		amt2 = 0
 
 /datum/targetable/critter/pincer_grab
 	name = "Grab"
 	desc = "Grab a mob with your pincers, imobilizing them for a bit"
-	cooldown = 10 SECONDS
+	cooldown = 15 SECONDS
 	targeted = 1
 	icon_state = "pincer_grab"
 	target_anything = 1
@@ -250,10 +261,10 @@
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
-		MT.changeStatus("weakened", 6 SECONDS)
+		MT.changeStatus("weakened", 3 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
-		SPAWN(6 SECONDS)
+		SPAWN(3 SECONDS)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 

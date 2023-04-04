@@ -131,6 +131,10 @@
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
 
+	clamp_values()
+		..()
+		src.lying = 0
+
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)

@@ -56,7 +56,6 @@ var/datum/explosion_controller/explosions
 		exploding = 1
 		RL_Suspend()
 
-		var/needrebuild = 0
 		var/p
 		var/datum/explosion/explosion
 
@@ -86,12 +85,8 @@ var/datum/explosion_controller/explosions
 				var/severity
 				if (power >= 6)
 					severity = 1
-					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
-						needrebuild = 1
 				else if (power > 3)
 					severity = 2
-					if (istype(O, /obj/cable))
-						needrebuild = 1
 				else
 					severity = 3
 				O.ex_act(severity, explosion?.last_touched, power)
@@ -133,7 +128,9 @@ var/datum/explosion_controller/explosions
 		defer_camnet_rebuild = 0
 		exploding = 0
 		RL_Resume()
-		if (needrebuild)
+
+		if(length(deferred_powernet_objs))
+			deferred_powernet_objs = list()
 			makepowernets()
 
 		rebuild_camera_network()

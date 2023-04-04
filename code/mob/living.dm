@@ -68,9 +68,6 @@
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
 
-	var/caneat = 1
-	var/candrink = 1
-
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
 
@@ -279,9 +276,12 @@
 /mob/living/Logout()
 	. = ..()
 	src.UpdateOverlays(null, "speech_bubble")
+	src.is_npc = initial(src.is_npc)
+
 
 /mob/living/Login()
 	..()
+	src.is_npc = FALSE
 	// If...
 	// living
 	// and not (in the afterlife, and not in hell)
@@ -886,11 +886,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message)
+			phrase_log.log_phrase("sing", message, user = src)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message)
+			phrase_log.log_phrase("radio", message, user = src)
 		else
-			phrase_log.log_phrase("say", message)
+			phrase_log.log_phrase("say", message, user = src)
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -1678,7 +1678,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							var/mob/M = A
 							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 							if(M.lying)
-								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								var/datum/gang/gang = src.get_gang()
+								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
 								else
 									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
@@ -1805,13 +1806,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.spellshield)
 		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 		return 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-				return 0
-			S.active = 0
-			S.icon_state = "shield0"
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
@@ -1880,7 +1874,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
 			if (P.proj_data.hit_type & (DAMAGE_CUT | DAMAGE_STAB | DAMAGE_CRUSH))
-				take_bleeding_damage(src, null, round(damage / 3 * rangedprot_mod), P.proj_data.hit_type)
+				take_bleeding_damage(src, null, round(damage / (2 * rangedprot_mod)), P.proj_data.hit_type)
 			src.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 		switch(P.proj_data.damage_type)
@@ -2106,7 +2100,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
-	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// but we should still allow ourselves to heal
+	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)

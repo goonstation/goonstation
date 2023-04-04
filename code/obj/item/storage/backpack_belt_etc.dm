@@ -16,6 +16,7 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
+	var/satchel_compatible = TRUE
 
 	blue
 		icon_state = "backpackb"
@@ -641,6 +642,23 @@
 	can_hold = list(/obj/item/deconstructor)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/utility/nt_engineer
+	name = "specialist engineering belt"
+	desc = "A high capacity engineering belt."
+	can_hold = list(
+		/obj/item/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/sheet,
+		/obj/item/tile
+	)
+	spawn_contents = list(
+		/obj/item/rcd/construction,
+		/obj/item/rcd_ammo/medium,
+		/obj/item/tool/omnitool,
+		/obj/item/device/analyzer/atmospheric/upgraded
+	)
+
 /obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
@@ -967,20 +985,16 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
-	var/has_added_antagonist_role = FALSE // Whether the belt has added an antagonist role to the owner.
 
 	equipped(var/mob/user)
 		..()
-		if (user.mind?.add_antagonist(ROLE_WRESTLER, do_equip = FALSE, respect_mutual_exclusives = FALSE, do_pseudo = TRUE))
-			var/datum/antagonist/wrestler/antag_role = user.mind?.get_antagonist(ROLE_WRESTLER)
-			antag_role.give_equipment(src.fake)
-			src.has_added_antagonist_role = TRUE
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		if (src.has_added_antagonist_role)
-			user.mind?.remove_antagonist(ROLE_WRESTLER)
-			src.has_added_antagonist_role = FALSE
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
