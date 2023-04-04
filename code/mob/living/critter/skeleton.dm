@@ -53,6 +53,7 @@
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
+	var/list/friends //! People this skeleton won't attack
 	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
@@ -115,6 +116,7 @@
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (istype(C, /mob/living/critter/skeleton)) continue
+			if (C in src.friends) continue
 			if (iswizard(C) && src.wizardSpawn) continue
 			. += C
 
