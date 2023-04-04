@@ -153,7 +153,7 @@
 			src.photovoltaic_efficiency = 0
 			src.rate = 0
 			src.angle = 0
-		if ("adventure_void") // z2's global sun. Useful for wormholes n stuff
+		if ("adventure_void") // z2 and z4's global sun. Useful for indoors areas and things.
 			src.zlevel = 2
 			src.name = "unknown"
 			src.desc = "Error!"
@@ -464,29 +464,29 @@
 	// now calculate and cache the (dx,dy) increments for line drawing
 	var/s = sin(angle)
 	var/c = cos(angle)
-	if(c == 0)
+	if (c == 0)
 		src.dx = 0
 		src.dy = s
-	else if( abs(s) < abs(c))
+	else if (abs(s) < abs(c))
 		src.dx = s / abs(c)
 		src.dy = c / abs(c)
 	else
 		src.dx = s / abs(s)
 		src.dy = c / abs(s)
-// update every tracker
-	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
+	// update every tracker
+	for (var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
 		var/turf/dummy = get_turf(T)
 		if (dummy.z != src.zlevel) // are we on the right z
 			continue
 		if (!isnull(src.sun_area)) // local suns
-			if (!istype_exact(get_area(dummy), src.sun_area)) // if local, are we in the right spot
+			if (!istype(get_area(dummy), src.sun_area)) // if local, are we in the right spot
 				continue
 			T.targetstar = src
 			T.set_angle(angle)
 		else // global sun (applies to whole z level)
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns) // is this an area which should use local star
-				if (istype_exact(get_area(dummy), ignorable_area))
+				if (istype(get_area(dummy), ignorable_area))
 					ignoreme = TRUE
 					break
 			if (ignoreme)
@@ -500,12 +500,12 @@
 		if (dummy.z != src.zlevel)
 			continue
 		if (!isnull(src.sun_area))
-			if (!istype_exact(get_area(dummy), src.sun_area))
+			if (!istype(get_area(dummy), src.sun_area))
 				continue
 		else
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns)
-				if (istype_exact(get_area(dummy), ignorable_area))
+				if (istype(get_area(dummy), ignorable_area))
 					ignoreme = TRUE
 					break
 			if (ignoreme)
