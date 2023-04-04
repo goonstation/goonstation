@@ -1501,3 +1501,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		boutput(src,"<span class='alert'>A powerful shock has slowed your movement!</span>")
 		var/slow = clamp(wattage / 2500 , 2, 8)
 		src.setStatus("slowed", slow SECONDS)
+
+	electric_expose(var/power = 1)
+		return 0
