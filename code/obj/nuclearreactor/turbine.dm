@@ -49,9 +49,9 @@
 	/// Flag for gas temperature being < T20C
 	var/undertemp = FALSE
 	/// INTERNAL: used to determine whether an icon update is required
-	var/_last_rpm_icon_update = 0
+	VAR_PRIVATE/_last_rpm_icon_update = 0
 	/// INTERNAL: ref to the turf the turbine light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// Turbine RPM/powergen/stator load history
 	var/list/history
 	var/const/history_max = 50
