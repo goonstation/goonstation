@@ -113,7 +113,7 @@
 			boutput(holder.owner, "<span class='alert'>You can't mimic this!</span>")
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>You must be in touch to mimic.</span>")
+			boutput(holder.owner, "<span class='alert'>You must be adjacent to [target] to mimic it.</span>")
 			return TRUE
 		var/mob/living/critter/mimic/parent = holder.owner
 		parent.disguise_as(target)
