@@ -129,7 +129,7 @@
 		if (prob(src.revivalChance))
 			..()
 			src.revivalChance -= src.revivalDecrement
-			SPAWN(rand(400,800))
+			SPAWN(rand(40 SECONDS, 80 SECONDS))
 				src.full_heal()
 				src.set_density(1)
 				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
@@ -169,8 +169,8 @@
 			. += C
 
 	death()
+		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
 		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(x, y, z)))
 
 /////////////////// EGG ///////////////////
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
