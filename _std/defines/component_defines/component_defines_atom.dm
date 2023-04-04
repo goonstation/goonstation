@@ -86,6 +86,8 @@
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
 	/// when a turf is replaced by another turf (what)
 	#define COMSIG_TURF_REPLACED "turf_replaced"
+	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
+	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
 
 // ---- obj signals ----
 

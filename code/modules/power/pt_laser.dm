@@ -115,7 +115,7 @@
 	var/dont_update = 0
 	var/adj_output = abs(output)
 
-	if(terminal)
+	if(terminal && !(src.status & BROKEN))
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
 			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
@@ -586,6 +586,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	src.dir = dir
 	src.current_turf = get_turf(src)
 	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
+	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/current_turf_density_change)
 
 	var/turf/next_turf = get_next_turf()
 	if (!istype(next_turf) || next_turf == src.current_turf)
@@ -627,7 +628,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	src.is_endpoint = TRUE
 	var/turf/next_turf = get_next_turf()
 	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, .proc/next_turf_replaced)
-	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_uncrossed)
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_updated)
+	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/next_turf_updated)
 
 ///Called when we extend a new laser object and are therefore no longer an endpoint
 /obj/linked_laser/proc/release_endpoint()
@@ -635,10 +637,12 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	var/turf/next_turf = get_next_turf() //this may cause problems when the next turf changes, we'll need to handle re-registering signals waa
 	UnregisterSignal(next_turf, COMSIG_TURF_REPLACED)
 	UnregisterSignal(next_turf, COMSIG_ATOM_UNCROSSED)
+	UnregisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY)
 
 ///Kill any upstream laser objects
 /obj/linked_laser/disposing()
 	UnregisterSignal(src.current_turf, COMSIG_TURF_REPLACED)
+	UnregisterSignal(src.current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY)
 	SPAWN(0)
 		qdel(src.next)
 		src.next = null
@@ -684,6 +688,11 @@ ABSTRACT_TYPE(/obj/laser_sink)
 		if (!istype(T) || T.density)
 			qdel(src)
 
+///Something is changing density in our current turf
+/obj/linked_laser/proc/current_turf_density_change(turf/T, old_density, atom/thing)
+	if (src.is_blocking(thing))
+		qdel(src)
+
 ///The next turf in line is being replaced with another, so check if it's now suitable to put another laser on
 /obj/linked_laser/proc/next_turf_replaced()
 	src.release_endpoint()
@@ -695,7 +704,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 			//if we can't put a new laser there, then register to watch the new turf
 			src.become_endpoint()
 
-/obj/linked_laser/proc/next_turf_uncrossed()
+///Something is crossing into or changing density in the next turf in line
+/obj/linked_laser/proc/next_turf_updated()
 	var/turf/next_turf = get_next_turf()
 	if (turf_check(next_turf))
 		src.extend()
