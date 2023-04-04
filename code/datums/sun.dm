@@ -479,14 +479,14 @@
 		if (dummy.z != src.zlevel) // are we on the right z
 			continue
 		if (!isnull(src.sun_area)) // local suns
-			if (!istype(get_area(dummy), src.sun_area)) // if local, are we in the right spot
+			if (get_area(dummy) == src.sun_area) // if local, are we in the right spot
 				continue
 			T.targetstar = src
 			T.set_angle(angle)
 		else // global sun (applies to whole z level)
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns) // is this an area which should use local star
-				if (istype(get_area(dummy), ignorable_area))
+				if (get_area(dummy) == ignorable_area)
 					ignoreme = TRUE
 					break
 			if (ignoreme)
@@ -500,12 +500,12 @@
 		if (dummy.z != src.zlevel)
 			continue
 		if (!isnull(src.sun_area))
-			if (!istype(get_area(dummy), src.sun_area))
+			if (get_area(dummy) == src.sun_area)
 				continue
 		else
 			var/ignoreme = FALSE
 			for (var/ignorable_area in areas_with_local_suns)
-				if (istype(get_area(dummy), ignorable_area))
+				if (get_area(dummy) == ignorable_area)
 					ignoreme = TRUE
 					break
 			if (ignoreme)
