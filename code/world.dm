@@ -440,24 +440,30 @@ var/f_color_selector_handler/F_Color_Selector
 		delete_queue = new /datum/dynamicQueue(100)
 
 	sun = new /datum/sun()
-	z2sun = new /datum/sun("adventure_void", 2)
+	z2_sun = new /datum/sun("adventure_void", 2)
+	z4_sun = new /datum/sun("adventure_void", 4)
 	#ifdef UNDERWATER_MAP
 	// no z3 on nadir or oshan
-	z3sun = new /datum/sun("void", 3) // needed for completeness in controllers/process/world.dm
-	z5sun = new /datum/sun("trench", 5)
+	z3_sun = new /datum/sun("void", 3) // needed for completeness in controllers/process/world.dm
+	z5_sun = new /datum/sun("trench", 5)
 	#else
-	z3sun = new /datum/sun("debris", 3)
-	z5sun = new /datum/sun("mining", 5)
+	z3_sun = new /datum/sun("debris", 3)
+	z5_sun = new /datum/sun("mining", 5)
 	#endif
 
-	// azone suns
-	earth_sun = new /datum/sun("earth", 2, /area/centcom/outside, FALSE)
-	io_sun = new /datum/sun("io", 2, /area/iomoon, FALSE)
-	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic/exterior, FALSE)
-	solarium_sun = new /datum/sun("solarium", 2, /area/solarium, FALSE)
+	// azone suns. areas not included are 'void' or underground or indoors.
+	earth_outside_sun = new /datum/sun("earth", 2, /area/centcom/outside, FALSE)
+	earth_garden_sun = new /datum/sun("earth", 2, /area/centcom/garden, FALSE)
 	moon_sun = new /datum/sun("moon", 2, /area/moon, FALSE)
-	mars_sun = new /datum/sun("mars", 2, /area/marsoutpost, FALSE)
+	mars_1_sun = new /datum/sun("mars", 2, /area/marsoutpost, FALSE)
+	mars_2_sun = new /datum/sun("mars", 2, /area/marsoutpost/duststorm, FALSE)
+	io_sun = new /datum/sun("io", 2, /area/iomoon, FALSE)
 	biodome_sun = new /datum/sun("biodome", 2, /area/crater, FALSE)
+	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic/exterior/surface, FALSE)
+	earth_dojo_1_sun = new /datum/sun("earth", 2, /area/dojo, FALSE)
+	earth_dojo_2_sun = new /datum/sun("earth", 2, /area/dojo/sakura, FALSE)
+	graveyard_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard, FALSE)
+	graveyard_swamp_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard/swamp, FALSE)
 
 
 	Z_LOG_DEBUG("World/Init", "Vox init")

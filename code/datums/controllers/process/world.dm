@@ -29,17 +29,23 @@
 	doWork()
 		last_object = "sun.calc_position"
 		sun.calc_position()
-		z2sun.calc_position()
-		z3sun.calc_position()
-		z5sun.calc_position()
+		z2_sun.calc_position()
+		z3_sun.calc_position()
+		z4_sun.calc_position()
+		z5_sun.calc_position()
 
-		earth_sun.calc_position()
-		io_sun.calc_position()
-		senex_sun.calc_position()
-		solarium_sun.calc_position()
+		earth_outside_sun.calc_position()
+		earth_garden_sun.calc_position()
 		moon_sun.calc_position()
-		mars_sun.calc_position()
+		mars_1_sun.calc_position()
+		mars_2_sun.calc_position()
+		io_sun.calc_position()
 		biodome_sun.calc_position()
+		senex_sun.calc_position()
+		earth_dojo_1_sun.calc_position()
+		earth_dojo_2_sun.calc_position()
+		graveyard_sun.calc_position()
+		graveyard_swamp_sun.calc_position()
 
 
 		last_object = "genResearch.progress"

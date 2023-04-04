@@ -385,16 +385,22 @@ var/global
 	datum/sun/sun = null
 	datum/sun/z2sun = null
 	datum/sun/z3sun = null
+	datum/sun/z3sun = null
 	datum/sun/z5sun = null
 
 	// local suns for azones (and the earth)
-	datum/sun/earth_sun = null
-	datum/sun/io_sun = null
-	datum/sun/senex_sun = null
-	datum/sun/solarium_sun = null
+	datum/sun/earth_outside_sun = null
+	datum/sun/earth_garden_sun = null
 	datum/sun/moon_sun = null
-	datum/sun/mars_sun = null
+	datum/sun/mars_1_sun = null
+	datum/sun/mars_2_sun = null
+	datum/sun/io_sun = null
 	datum/sun/biodome_sun = null
+	datum/sun/senex_sun = null
+	datum/sun/earth_dojo_1_sun = null
+	datum/sun/earth_dojo_2_sun = null
+	datum/sun/graveyard_sun = null
+	datum/sun/graveyard_swamp_sun = null
 
 	datum/changelog/changelog = null
 	datum/admin_changelog/admin_changelog = null

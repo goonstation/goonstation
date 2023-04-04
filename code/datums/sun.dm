@@ -324,6 +324,47 @@
 			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
 			src.rate = 0
 			src.angle = pick(90, 270)
+		if ("moon")
+			src.zlevel = 2
+			src.name = "\improper Sun"
+			src.desc = "Surface of the Moon."
+			src.eclipse_cycle_on = FALSE
+			src.down_time = 14.75 DAYS
+			src.eclipse_time = 14.75 DAYS
+			src.eclipse_cycle_length = 29.5 DAYS
+			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			#if (BUILD_TIME_DAY < 15)
+			src.eclipse_status = ECLIPSE_PLANETARY
+			src.visibility = 0
+			#else
+			src.eclipse_status = ECLIPSE_TERRESTRIAL
+			src.visibility = 1
+			#endif
+			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
+			src.rate = 0
+			src.angle = pick(90, 270)
+		if ("mars")
+			src.zlevel = 2
+			src.name = "\improper Sun"
+			src.desc = "Surface of the Mars."
+			src.eclipse_cycle_on = FALSE
+			src.down_time = 12 HOURS + 19.75 MINUTES
+			src.eclipse_time = 12 HOURS + 19.75 MINUTES
+			src.eclipse_cycle_length = 24 HOURS + 39.5 MINUTES
+			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
+			if (BUILD_TIME_HOUR > 12)
+				src.eclipse_status = ECLIPSE_PLANETARY
+				src.visibility = 0
+			else
+				src.eclipse_status = ECLIPSE_TERRESTRIAL
+				src.visibility = 1
+			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
+			src.eclipse_magnitude = 1
+			src.photovoltaic_efficiency = 6.7 // mars gets 43% earth's light.
+			src.rate = 0
+			src.angle = rand(0, 360)
 		if ("io") // lava moon
 			// interesting stuff to consider for lava moon
 			// io is pretty much tidally locked with jupiter, so lighting changes are genuine eclipses.
@@ -342,6 +383,9 @@
 			src.photovoltaic_efficiency = 2.5
 			src.rate = 0
 			src.angle = pick(90, 270)
+		if ("biodome")
+			src.zlevel = 2
+			// i don't know where it is.
 		if ("senex") // ice moon, theta outpost
 			src.zlevel = 2
 			if (src.name == "unknown") src.name = pick("Fugg", "Shidd")
@@ -358,59 +402,10 @@
 			else src.photovoltaic_efficiency = 0.03
 			src.rate = 0
 			src.angle = pick(90, 270)
-		if ("solarium") // solarium
+		if ("graveyard")
 			src.zlevel = 2
-			src.name = "\improper sun"
-			src.desc = "Near Mercury. Very close to the sun."
-			src.eclipse_cycle_on = FALSE
-			src.eclipse_order = list(ECLIPSE_FALSE)
-			src.visibility = 1
-			src.photovoltaic_efficiency = 9000
-			src.rate = 0
-			src.angle = 90 // we can literally see it on the map
-		if ("moon")
-			src.zlevel = 2
-			src.name = "\improper Sun"
-			src.desc = "Surface of the Moon."
-			src.eclipse_cycle_on = FALSE
-			src.down_time = 14.75 DAYS
-			src.eclipse_time = 14.75 DAYS
-			src.eclipse_cycle_length = 29.5 DAYS
-			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			if (BUILD_TIME_DAY < 15)
-				src.eclipse_status = ECLIPSE_PLANETARY
-				src.visibility = 0
-			else
-				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = 1
-			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
-			src.eclipse_magnitude = 1
-			src.photovoltaic_efficiency = 15.7 // the sun is brighter than typhon
-			src.rate = 0
-			src.angle = pick(90, 270)
-		if ("mars")
-			src.zlevel = 2
-			src.name = "\improper Sun"
-			src.desc = "Surface of the Mars."
-			src.eclipse_cycle_on = FALSE
-			src.down_time = 12 HOURS + 19.75 MINUTES
-			src.eclipse_time = 12 HOURS + 19.75 MINUTES
-			src.eclipse_cycle_length = 24 HOURS + 39.5 MINUTES
-			src.eclipse_order = list(ECLIPSE_PLANETARY, ECLIPSE_TERRESTRIAL)
-			if (pick())
-				src.eclipse_status = ECLIPSE_PLANETARY
-				src.visibility = 0
-			else
-				src.eclipse_status = ECLIPSE_TERRESTRIAL
-				src.visibility = 1
-			src.eclipse_counter = BUILD_TIME_DAY DAYS + BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES
-			src.eclipse_magnitude = 1
-			src.photovoltaic_efficiency = 6.7 // mars gets 43% earth's light.
-			src.rate = 0
-			src.angle = rand(0, 360)
-		if ("biodome")
-			src.zlevel = 2
-			// i don't know where it is.
+			// don't know where this is either.
+
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
