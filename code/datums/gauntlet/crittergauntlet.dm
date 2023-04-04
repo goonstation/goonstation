@@ -1125,7 +1125,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Skeleton"
 		point_cost = 3
 		count = 5
-		types = list(/obj/critter/magiczombie)
+		types = list(/mob/living/critter/skeleton)
 
 	zombie
 		name = "Zombie"

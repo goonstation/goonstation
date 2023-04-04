@@ -57,7 +57,7 @@
 					if("Lions")
 						mob_choice = /mob/living/critter/lion
 					if("Skeletons")
-						mob_choice = /obj/critter/wraithskeleton
+						mob_choice = /mob/living/critter/skeleton/wraith
 					if("Bears")
 						mob_choice = /obj/critter/bear
 					if("Brullbars")

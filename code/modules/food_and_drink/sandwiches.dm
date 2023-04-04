@@ -471,8 +471,8 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
-	bites_left = 1
-	heal_amt = 50
+	bites_left = 20
+	heal_amt = 3
 	throwforce = 10
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)

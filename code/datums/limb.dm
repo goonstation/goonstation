@@ -1550,3 +1550,6 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
+
+
+/datum/limb/jean
