@@ -38,7 +38,7 @@
 		if(!defer_powernet_rebuild)
 			makepowernets()
 		else
-			defer_powernet_rebuild = 2
+			deferred_powernet_objs |= src
 	. = ..()
 
 // common helper procs for all power machines

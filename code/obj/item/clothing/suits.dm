@@ -1532,6 +1532,9 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
+		setProperty("exploprot", 30)
+		setProperty("disorient_resist", 25)
+		setProperty("radprot", 50)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
@@ -1887,6 +1890,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 //crate loot
 

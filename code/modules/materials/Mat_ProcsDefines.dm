@@ -160,13 +160,17 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (src.mat_changename && setname)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
-		if(use_descriptors)
-			src.name_prefix(strPrefix ? strPrefix : "")
-			src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
-		src.name_prefix(mat1.name ? mat1.name : "")
-		if(use_descriptors)
-			src.name_suffix(strSuffix ? "of [strSuffix]" : "")
-		src.UpdateName()
+		if(mat1.special_naming)
+			src.UpdateName()
+			src.name = mat1.specialNaming(src)
+		else
+			if(use_descriptors)
+				src.name_prefix(strPrefix ? strPrefix : "")
+				src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
+			src.name_prefix(mat1.name ? mat1.name : "")
+			if(use_descriptors)
+				src.name_suffix(strSuffix ? "of [strSuffix]" : "")
+			src.UpdateName()
 
 	if (src.mat_changedesc && setname)
 		if (istype(src, /obj))
@@ -310,7 +314,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.suffixes = (mat1.suffixes | mat2.suffixes)
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
-	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.name = mat1.interpolateName(mat2, 0.5)
 	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
@@ -327,6 +331,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
 	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
 	else newMat.edible = FALSE
+
+	newMat.special_naming = FALSE // the naming proc doesn't carry over anyway
 
 	newMat.mixOnly = FALSE
 
@@ -561,23 +567,26 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		coil.updateName()
 
 /**
- * Returns the heat transfer coefficient between two materials based on (in order, if present): thermal conductivity, electrical conductivity
- * Defaults to 0.5 if neither property is present.
- * The result for each material is multiplied together. This is intended for use as h in hA(T1-T2), where A is the contact area and T1 and T2 are the tempertatures respectively
+ * Returns the thermal conductivity between two materials, based on thermal and electrical conductivity mat property.
+ * Thermal conductivity ranges from 0 (perfect insulator) to infinity. Excellent conductors like copper are about 100
 */
 proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/material/matB)
-	//heat transfer coefficient as a product of the thermal coefficient of each material
-	//fun fact I learned while looking into this: the thermal conductivity of materials is strongly related to the electrical conductivity
-	var/hTC1 = 1
-	var/hTC2 = 1
+	var/hTC1 = 5
+	var/hTC2 = 5
 	if(matA)
-		if(matA.hasProperty("thermal"))
-			hTC1 = max(matA.getProperty("thermal"),0)/10
-		else
-			hTC1 = 0.5 //default value
+		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
+			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
+		else if(matA.hasProperty("thermal"))
+			hTC1 = max(matA.getProperty("thermal"),0)
+		else if(matA.hasProperty("electrical"))
+			hTC1 = max(matA.getProperty("electrical"),0)
 	if(matB)
-		if(matB.hasProperty("thermal"))
-			hTC2 = max(matB.getProperty("thermal"),0)/10
-		else
-			hTC2 = 0.5 //default value
-	return hTC1*hTC2
+		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
+			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
+		else if(matB.hasProperty("thermal"))
+			hTC2 = max(matB.getProperty("thermal"),0)
+		else if(matB.hasProperty("electrical"))
+			hTC2 = max(matB.getProperty("electrical"),0)
+	//average thermal conductivity approximated as 10^(x/5)-1
+	//common values 0 = 0, 5 = 10, 10 = 100
+	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2
