@@ -37,6 +37,8 @@
 	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
 
 	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
@@ -228,6 +230,9 @@
 			return
 
 		processCaseRadiation(tmpRads)
+
+		src.material.triggerTemp(src,src.temperature)
+
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
@@ -259,19 +264,34 @@
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			var/heat_transfer_mult = 0.95
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.current_gas.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
-				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*2.5)
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - src.current_gas.temperature
+			// temp differential for radiative heating
+			var/deltaTr = (src.temperature ** 4) - (src.current_gas.temperature ** 4)
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = 10
+
+			var/thermal_e = THERMAL_ENERGY(current_gas)
+
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.current_gas.temperature, src.temperature)
+			var/coldest = min(src.current_gas.temperature, src.temperature)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
+			if(src.current_gas.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
@@ -593,6 +613,23 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				switch(rand(1,4))
+					if(1)
+						src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/random_material
+					if(2)
+						src.component_grid[x][y] = new /obj/item/reactor_component/control_rod/random_material
+					if(3)
+						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
+					if(4)
+						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
+
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown

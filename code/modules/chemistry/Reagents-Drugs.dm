@@ -952,7 +952,7 @@ datum
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -1051,7 +1051,7 @@ datum
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
 				if(purge_brain)
-					flush(M, 5 * mult, flushed_reagents)
+					flush(holder, 5 * mult, flushed_reagents)
 				..()
 				return
 

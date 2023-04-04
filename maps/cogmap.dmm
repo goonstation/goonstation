@@ -65979,6 +65979,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"xXO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "Security Beacon"
+	},
+/turf/space,
+/area/space)
 "xXP" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -90859,7 +90869,7 @@ adC
 adC
 adC
 aam
-aap
+aaq
 aaq
 aaq
 aaq
@@ -91161,7 +91171,7 @@ adC
 adC
 adC
 adC
-aii
+adC
 adC
 adC
 adC
@@ -91463,7 +91473,7 @@ adC
 adC
 adC
 adC
-aah
+xXO
 adC
 adC
 adC

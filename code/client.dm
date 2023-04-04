@@ -1015,7 +1015,7 @@ var/global/curr_day = null
 	set hidden = TRUE
 	if(!A)
 		var/datum/promise/promise = new
-		var/datum/targetable/refpicker/abil = new
+		var/datum/targetable/refpicker/nonadmin/abil = new
 		abil.promise = promise
 		src.mob.targeting_ability = abil
 		src.mob.update_cursor()
@@ -1026,7 +1026,7 @@ var/global/curr_day = null
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
 		boutput(src, "Target is too far away (it needs to be next to you).")
 		return
-	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
 		return
 	var/icon/icon = getFlatIcon(A)

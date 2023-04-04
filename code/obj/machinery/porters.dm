@@ -703,7 +703,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 		src.homeloc = src.loc
 
 		possible_new_friend = typesof(/mob/living/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
-						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /mob/living/critter/brullbar)\
+						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /mob/living/critter/skeleton/wraith, /mob/living/critter/skeleton, /mob/living/critter/brullbar)\
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
