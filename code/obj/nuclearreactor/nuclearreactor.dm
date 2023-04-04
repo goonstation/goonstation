@@ -50,11 +50,18 @@
 	var/melted = FALSE
 
 	/// INTERNAL: Used to detemine whether an icon update is needed for the component grid overlay
-	var/_comp_grid_overlay_update = TRUE
+	VAR_PRIVATE/_comp_grid_overlay_update = TRUE
 	/// ref to the turf the reactor light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// INTERNAL: count of old pending grid updates, for the flicker prevention code
-	var/_pending_grid_updates = 0
+	VAR_PRIVATE/_pending_grid_updates = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the reactor grid
+	VAR_PRIVATE/_last_total_thermal_e = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
+	VAR_PRIVATE/_last_total_coolant_e = 0
+	/// INTERNAL DEBUG: set to true to output debug messages
+	VAR_PRIVATE/_debug_mode = FALSE
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -70,6 +77,8 @@
 		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
+
+		src.air_contents = new /datum/gas_mixture()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
@@ -148,6 +157,13 @@
 		. = ..()
 		if(melted)
 			return
+
+		//pass through last tick's air. We do this here so that atmos analyser can read it in between process calls
+		var/coolant_thermal_e = THERMAL_ENERGY(src.air_contents)
+		src.air2.merge(src.air_contents)
+		//after merge, the original gas mixture is deleted, so create a new one
+		src.air_contents = new /datum/gas_mixture()
+
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
 
@@ -158,9 +174,11 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		air_contents = air2
+		air_contents.volume = air1.volume
+		gas_input?.volume = air_contents.volume
 		var/total_gas_volume = 0
-
+		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
+		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
@@ -169,13 +187,18 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) air_contents.merge(gas)
+					gas_input?.volume -= comp.gas_volume
+					if(gas)
+						src.air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
 
 					//calculate neutron flux
 					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
+
+					total_thermal_e += comp.thermal_mass * comp.temperature
+
 				for(var/datum/neutron/N in src.flux_grid[x][y])
 					var/xmod = 0
 					var/ymod = 0
@@ -190,12 +213,13 @@
 						src.flux_grid[x][y]-=N
 						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
+
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			air_contents.merge(gas)
+			src.air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		air_contents.merge(gas_input)
+		src.air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
@@ -233,7 +257,12 @@
 
 		src.material.triggerTemp(src,src.temperature)
 
+		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
+		if(src._debug_mode)
+			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
+		src._last_total_thermal_e = total_thermal_e
+
 		src.air1.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
 
@@ -613,6 +642,12 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
+		//enable for faster debugging
+		//src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		//src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		//src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+
 
 		..()
 
