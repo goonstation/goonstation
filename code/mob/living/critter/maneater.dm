@@ -46,11 +46,6 @@
 	stamina = 300
 	stamina_max = 300
 	var/baseline_health = 100 //! how much health the maneater should get normally and at 0 endurance
-	var/health_per_endurance = 3 //! how much health the maneater should get per point of endurance
-	var/baseline_stamina = 300 //! how much stamina the maneater should have baseline
-	var/stamina_per_potency = 5 //! how much stamina each point of potency should add
-	var/stamreg_per_potency = 0.1 //! how much stamina regen each point of potency should add
-	var/maximum_stamreg = 60 //! how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -83,15 +78,21 @@
 		HH.can_hold_items = 0
 
 	HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
-		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * src.health_per_endurance)
+		var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
+		var/baseline_stamina = 300 // how much stamina the maneater should have baseline
+		var/stamina_per_potency = 5 // how much stamina each point of potency should add
+		var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
+		var/maximum_stamreg = 60 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
+
+		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * health_per_endurance)
 		for (var/T in healthlist)
 			var/datum/healthHolder/HB = healthlist[T]
 			HB.maximum_value = scaled_health
 			HB.value = scaled_health
 			HB.last_value = scaled_health
-		src.stamina = src.baseline_stamina + (DNA?.get_effective_value("potency") * src.stamina_per_potency)
-		src.stamina_max = src.baseline_stamina + (DNA?.get_effective_value("potency") * src.stamina_per_potency)
-		src.stamina_regen = min(STAMINA_REGEN + round(DNA?.get_effective_value("potency") * src.stamreg_per_potency), src.maximum_stamreg)
+		src.stamina = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
+		src.stamina_max = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
+		src.stamina_regen = min(STAMINA_REGEN + round(DNA?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg)
 		..()
 
 	New()

@@ -42,13 +42,17 @@
 	get_targets()
 		. = list()
 		if(src.holder.owner)
-			for(var/mob/living/M in view(src.target_range, src.holder.owner))
+			for(var/mob/living/potential_target in view(src.target_range, src.holder.owner))
 				if (istype(src.holder.owner, /mob/living/critter/plant))
 					var/mob/living/critter/plant/plantowner = src.holder.owner
-					if (M in plantowner.growers) //ignore growers of the maneater at all cost
+					if (potential_target in plantowner.growers) //ignore growers of the maneater at all cost
 						continue
-				if(!ismobcritter(M)) //Maneaters don't care too much if alive or dead
-					. += M
+				if (potential_target.job == "Botanist")
+					continue
+				if (iskudzuman(potential_target))
+					continue
+				if(!ismobcritter(potential_target)) //Maneaters don't care too much if alive or dead
+					. += potential_target
 
 	score_target(atom/target)
 		. = 0
@@ -96,7 +100,7 @@
 							if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
 								owncritter.drop_item()
 
-							if (G.state <= GRAB_PASSIVE)
+							else if (G.state <= GRAB_PASSIVE)
 								G.AttackSelf(owncritter)
 							//From here on, the maneater should use its munching capabilities
 						else
