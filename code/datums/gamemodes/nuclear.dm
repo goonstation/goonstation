@@ -178,13 +178,12 @@
 
 /datum/game_mode/nuclear/proc/pick_leader()
 	RETURN_TYPE(/datum/mind)
-	var/list/datum/mind/possible_medal_leaders = list()
 	var/list/datum/mind/possible_leaders = list()
 	for(var/datum/mind/mind in syndicates)
 		if(mind.current.client.preferences.be_syndicate_commander && mind.current.has_medal("Manhattan Project"))
-			possible_medal_leaders += mind
-	if(length(possible_medal_leaders))
-		return pick(possible_medal_leaders)
+			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
 	else
 		for(var/datum/mind/mind in syndicates)
 			if(mind.current.client.preferences.be_syndicate_commander)
