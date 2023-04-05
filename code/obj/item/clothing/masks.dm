@@ -130,25 +130,6 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
-/obj/item/clothing/mask/gas/respirator
-	name = "gas respirator"
-	desc = "A close-fitting gas mask with a custom particle filter."
-	icon_state = "respirator"
-	item_state = "respirator"
-	uses_multiple_icon_states = 1
-	color_r = 0.9
-	color_g = 0.9
-	color_b = 0.95 // sunglasses config
-
-	attack_self(mob/user as mob)
-		user.show_text("You toggle the mask's visor.")
-		if (src.icon_state == "respirator-alt")
-			src.icon_state = "respirator"
-			src.item_state = "respirator"
-		else
-			src.icon_state = "respirator-alt"
-			src.item_state = "respirator-alt"
-
 TYPEINFO(/obj/item/clothing/mask/moustache)
 	mats = 2
 
