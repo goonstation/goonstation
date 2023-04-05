@@ -227,7 +227,7 @@ datum/mind
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
 				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
-				if (!new_datum)
+				if (!new_datum || QDELETED(new_datum))
 					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
@@ -244,7 +244,7 @@ datum/mind
 			var/datum/antagonist/subordinate/A = V
 			if (initial(A.id) == role_id)
 				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
-				if (!new_datum)
+				if (!new_datum || QDELETED(new_datum))
 					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
