@@ -1339,7 +1339,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		lighting = autoset(lighting, 2)
 		environ = autoset(environ, 1)
 		if (!noalerts) area.poweralert(0, src)
-	else if(cell.percent() < 20)			// <20%, turn off lighting
+	else if(cell.percent() < 30)			// <30%, turn off equipment
 		equipment = autoset(equipment, 1)
 		lighting = autoset(lighting, 2)
 		environ = autoset(environ, 1)
