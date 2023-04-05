@@ -1,5 +1,26 @@
 
 (t)sun apr 02 23
+(u)Mr. Moriarty
+(p)12733
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Pod Wars: The NSV Pytheas and Lodbrok have both been installed with debris field map displays and map controllers, similar to the ones that may be found on the Cairngorm, situated in their Bridges.
+(u)FlameArrow57
+(p)13526
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a warp beacon for the Cogmap 1 security hangar.
+(u)Wisemonster
+(p)13551
+(e)⚖🍝|C-Balance, A-Catering
+(+)MONSTER burgers now take about 20 bites to eat.
+(u)FlameArrow57
+(p)13536
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Security RecordTraks now have the ability to set a SecHUD flag as an option. Upon being dropped the flag will be reset.
+(+)RecordTraks can now be examined to see their current arrest mode, as well as any SecHUD flag set.
+(u)Amylizzle
+(p)13548
+(e)🆕💅📄⏰|C-Feature, C-QoL, A-UI, A-Status-Effects
+(*)A HUD warning will pop up while you're actively taking rads now.
 (u)TDHooligan
 (p)13401
 (e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry

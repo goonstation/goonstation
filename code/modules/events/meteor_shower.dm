@@ -109,7 +109,7 @@ var/global/meteor_shower_active = 0
 		commins = max(0,commins)
 		if (random_events.announce_events)
 			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert", alert_origin = ALERT_WEATHER)
-			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+			playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 			// for all directions, just give, uh, up
 			// todo: someone make shields have an all-sides option
 			meteor_shower_active = (direction == -1 ? NORTH : direction)
@@ -119,7 +119,7 @@ var/global/meteor_shower_active = 0
 		SPAWN(warning_delay)
 			if (random_events.announce_events)
 				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
-				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
+				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
 			var/start_x
 			var/start_y
