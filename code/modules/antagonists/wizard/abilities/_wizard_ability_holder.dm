@@ -222,13 +222,13 @@
 				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 			switch (src.restricted_area_check)
-				if (1)
+				if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 					if (isrestrictedz(T.z))
 						var/area/Arr = get_area(T)
 						if (!istype(Arr, /area/wizard_station))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							return CAST_ATTEMPT_FAIL_CAST_FAILURE
-				if (2)
+				if (ABILITY_AREA_CHECK_VR_ONLY)
 					var/area/A = get_area(T)
 					if (istype(A, /area/sim))
 						boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")

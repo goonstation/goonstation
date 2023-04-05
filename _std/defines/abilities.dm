@@ -12,3 +12,9 @@
 /// Cast failed for some reason, we don't want to start the cooldown
 #define CAST_ATTEMPT_FAIL_NO_COOLDOWN 999
 
+// restricted_area_check values. default is 0 (none)
+/// Cannot cast on restricted Z levels (mostly Z2 and Z4)
+#define ABILITY_AREA_CHECK_ALL_RESTRICTED_Z 1
+/// Cannot cast in VR
+#define ABILITY_AREA_CHECK_VR_ONLY 2
+

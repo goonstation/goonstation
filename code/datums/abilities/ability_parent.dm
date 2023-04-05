@@ -861,6 +861,7 @@
 	var/tooltip_flags = null
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
+	// 38 types have overriden this.
 	New(datum/abilityHolder/holder)
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
@@ -939,12 +940,12 @@
 					src.holder.locked = FALSE
 					return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 				switch (src.restricted_area_check)
-					if (1)
+					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 						if (isrestrictedz(T.z))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							src.holder.locked = FALSE
 							return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-					if (2)
+					if (ABILITY_AREA_CHECK_VR_ONLY)
 						var/area/A = get_area(T)
 						if (A && istype(A, /area/sim))
 							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
