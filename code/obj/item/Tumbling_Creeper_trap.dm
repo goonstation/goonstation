@@ -1,4 +1,4 @@
-/obj/item/Tumbling_Creeper
+/obj/item/tumbling_creeper
 	name = "Tumbling Creeper"
 	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground with a garden trowel, it serves as a prickly trap. Can absorb chemicals poured onto it."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -41,7 +41,6 @@
 	var/tumbling_speed = 0.3 //!how fast the throw while tumbling should be
 	var/tumbling_flip_duration = 1.25 SECONDS //!how long a flip of the tumbler should take
 	var/tumbling_chance = 20 //! the chance in % the item tries to thumble on each process tick
-	var/on_Ground = TRUE //! changed whenever the item is picked up or dropped
 	var/plantpot_damage_chance = 20 //! the chance for an armed tumbler to damage a plant in percent
 	var/plantpot_damage_amount = 6 //! the amount of damage the armed tumbler should deal to the plant
 	var/self_assemly_chance = 50 //! the chance in percent for the trap to auto-arm when it gets flung against a plantpot
@@ -175,9 +174,9 @@
 			if (ON_COOLDOWN(user, "arming_tumbling_creeper", user.combat_click_delay))
 				return
 			for(var/obj/item/B in get_turf(src))
-				if (istype(B, /obj/item/Tumbling_Creeper))
-					var/obj/item/Tumbling_Creeper/BM = B
-					if (BM.armed)
+				if (istype(B, /obj/item/tumbling_creeper))
+					var/obj/item/tumbling_creeper/other_creeper = B
+					if (other_creeper.armed)
 						boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 						return
 			user.show_text("You start to plant the creeper onto the ground...", "blue")
@@ -185,7 +184,7 @@
 				user,
 				src,
 				src.arming_time,
-				/obj/item/Tumbling_Creeper/proc/arm,
+				/obj/item/tumbling_creeper/proc/arm,
 				\list(user),
 				src.icon,
 				src.icon_state,
@@ -202,7 +201,7 @@
 					user,
 					src,
 					src.disarming_time,
-					/obj/item/Tumbling_Creeper/proc/disarm,\list(user),
+					/obj/item/tumbling_creeper/proc/disarm,\list(user),
 					W.icon,
 					W.icon_state,
 					"[user] finishes cutting out [src]")
@@ -231,9 +230,9 @@
 		if (!src)
 			return
 		for(var/obj/item/B in get_turf(src))
-			if (istype(B, /obj/item/Tumbling_Creeper))
-				var/obj/item/Tumbling_Creeper/BM = B
-				if (BM.armed)
+			if (istype(B, /obj/item/tumbling_creeper))
+				var/obj/item/tumbling_creeper/other_creeper = B
+				if (other_creeper.armed)
 					boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 					return
 		if (!src.armed)

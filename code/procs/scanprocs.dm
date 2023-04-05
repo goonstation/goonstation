@@ -828,11 +828,11 @@
 		P = F.planttype
 		DNA = F.plantgenes
 
-	else if (istype(A, /obj/item/Tumbling_Creeper))
-		var/obj/item/Tumbling_Creeper/F = A
+	else if (istype(A, /obj/item/tumbling_creeper))
+		var/obj/item/tumbling_creeper/handled_creeper = A
 
-		P = F.planttype
-		DNA = F.plantgenes
+		P = handled_creeper.planttype
+		DNA = handled_creeper.plantgenes
 
 	else
 		return

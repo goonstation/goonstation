@@ -1313,14 +1313,14 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
-				else  if (istype(CROP,/obj/item/Tumbling_Creeper))
+				else if (istype(CROP,/obj/item/tumbling_creeper))
 					// tumbling creepers behave with their DNA values are like food, but cannot be eaten.... ugh
 					// TODO: Make a proc that transfers all seed information, included hybrids
-					var/obj/item/Tumbling_Creeper/F = CROP
-					var/datum/plantgenes/FDNA = F.plantgenes
+					var/obj/item/tumbling_creeper/affected_creeper = CROP
+					var/datum/plantgenes/FDNA = affected_creeper.plantgenes
 
 					HYPpassplantgenes(DNA,FDNA)
-					F.generation = src.generation
+					affected_creeper.generation = src.generation
 					// Copy the genes from the plant we're harvesting to the new piece of produce.
 
 					if(growing.hybrid)
@@ -1328,13 +1328,13 @@ TYPEINFO(/obj/machinery/plantpot)
 						// hybrid since they run off instanced datums rather than referencing
 						// a specific already-existing one.
 						var/plantType = growing.type
-						var/datum/plant/hybrid = new plantType(F)
+						var/datum/plant/hybrid = new plantType(affected_creeper)
 						for(var/V in growing.vars)
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
-						F.planttype = hybrid
+						affected_creeper.planttype = hybrid
 					// Now while we have all stats together, let's make the object adjust its stats and not bloat this object more than it needs to be
-					F.Setup_DNA()
+					affected_creeper.Setup_DNA()
 
 				else if (istype(CROP,/obj/item/organ))
 					var/obj/item/organ/O = CROP
@@ -1730,8 +1730,8 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	if(istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 		generation = F.generation
-	if(istype(scanned, /obj/item/Tumbling_Creeper))
-		var/obj/item/Tumbling_Creeper/F = scanned
+	if(istype(scanned, /obj/item/tumbling_creeper))
+		var/obj/item/tumbling_creeper/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?

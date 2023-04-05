@@ -601,7 +601,7 @@
 	iconmod = "CreeperTumbling"
 	harvest_override = 1
 	harvest_cap = 3
-	crop = /obj/item/Tumbling_Creeper
+	crop = /obj/item/tumbling_creeper
 	chance = 10
 
 

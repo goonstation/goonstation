@@ -1685,7 +1685,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tool.dm"
 #include "code\obj\item\toys.dm"
 #include "code\obj\item\traitorcoins.dm"
-#include "code\obj\item\Tumbling_Creeper_trap.dm"
+#include "code\obj\item\tumbling_creeper_trap.dm"
 #include "code\obj\item\uplinks.dm"
 #include "code\obj\item\vending_restock.dm"
 #include "code\obj\item\yacht_dice_sheet.dm"
