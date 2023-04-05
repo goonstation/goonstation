@@ -912,7 +912,7 @@
 		// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
 		// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 		tryCast(atom/target, params)
-			if (!holder || !holder.owner)
+			if (!holder?.owner)
 				logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
 				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 			if (src.holder.locked && !src.ignore_holder_lock)
@@ -920,10 +920,10 @@
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			if (src.lock_holder)
 				src.holder.locked = TRUE
-			if (!holder.pointCheck(pointCost))
+			if (!src.holder.pointCheck(pointCost))
 				src.holder.locked = FALSE
 				return CAST_ATTEMPT_FAIL_POINTS
-			if (!holder.cast_while_dead && isdead(holder.owner))
+			if (!src.holder.cast_while_dead && isdead(holder.owner))
 				boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 				src.holder.locked = FALSE
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
