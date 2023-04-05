@@ -6,7 +6,7 @@
 	cooldown = 300
 	requires_robes = 1
 	cooldown_staff = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/MistFormGrim.ogg'
 	voice_fem = 'sound/voice/wizard/MistFormFem.ogg'
 	voice_other = 'sound/voice/wizard/MistFormLoud.ogg'
