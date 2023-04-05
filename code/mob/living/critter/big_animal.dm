@@ -26,7 +26,7 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/lion
 	is_npc = TRUE
-	add_abilities = list(/datum/targetable/critter/slam, /datum/targetable/critter/bite/big)
+	add_abilities = list(/datum/targetable/critter/bite/big)
 
 	New()
 		..()
@@ -55,9 +55,6 @@
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/big)
-		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
-		if (!slam.disabled && slam.cooldowncheck())
-			slam.handleCast(target)
 		if (!bite.disabled && bite.cooldowncheck() && prob(40))
 			bite.handleCast(target)
 		else
@@ -79,3 +76,6 @@
 	health_brute_vuln = 0.8
 	health_burn = 40
 	health_burn_vuln = 1
+	add_abilities = list(/datum/targetable/critter/slam, /datum/targetable/critter/bite/big)
+	is_npc = FALSE // Maybe change later if anyone wants to use these as a spawn
+
