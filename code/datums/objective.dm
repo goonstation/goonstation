@@ -700,20 +700,18 @@ proc/create_fluff(datum/mind/target)
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
-			return 0
+			return FALSE
 
-		if(!owner.current || isdead(owner.current))
-			return 0
+		if(!owner.current || (isdead(owner.current) && !istype(src.owner.current, /mob/dead/target_observer/hivemind_observer)))
+			return FALSE
 
 		if(!in_centcom(src.owner.current))
-			return 0
+			return FALSE
 
-		if (!ischangeling(src.owner.current))
-			return 0
-
-		var/datum/abilityHolder/changeling/ability_holder = src.owner.current.get_ability_holder(/datum/abilityHolder/changeling)
-		if (ability_holder?.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
-			return 1
+		// As the changeling's ability holder can be transferred to a member of the hivemind, access it via their antagonist datum.
+		var/datum/antagonist/changeling/antag_role = src.owner.get_antagonist(ROLE_CHANGELING)
+		if (antag_role?.ability_holder?.absorbtions >= absorb_count) // You start with 0 DNA these days, not 1.
+			return TRUE
 
 /datum/objective/specialist/drinkblood
 	medal_name = "Dracula Jr."

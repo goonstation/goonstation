@@ -46,17 +46,19 @@
 	var/overspeed = FALSE
 	/// Flag for gas temperature being > 3000K
 	var/overtemp = FALSE
+	/// Flag for gas temperature being < T20C
+	var/undertemp = FALSE
 	/// INTERNAL: used to determine whether an icon update is required
-	var/_last_rpm_icon_update = 0
+	VAR_PRIVATE/_last_rpm_icon_update = 0
 	/// INTERNAL: ref to the turf the turbine light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// Turbine RPM/powergen/stator load history
 	var/list/history
 	var/const/history_max = 50
 	/// Current gas for processing
 	var/datum/gas_mixture/air_contents
 	/// bodge factor for power generation
-	var/power_multiplier = 3
+	var/power_multiplier = 1
 
 	New()
 		. = ..()
@@ -159,6 +161,7 @@
 		air_contents =  air1.remove(transfer_moles)
 		src.lastgen = 0
 		src.overtemp = (air_contents?.temperature > 2500)
+		src.undertemp = (air_contents?.temperature < T20C)
 		if(air_contents?.temperature > 3000)
 			//overheat
 			src.assume_air(air_contents)
@@ -271,6 +274,7 @@
 			"history" = src.history,
 			"overspeed" = src.overspeed,
 			"overtemp" = src.overtemp,
+			"undertemp" = src.undertemp,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

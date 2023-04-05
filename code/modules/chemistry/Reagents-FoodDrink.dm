@@ -87,7 +87,7 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				flush(M,5 * mult, flushed_reagents)
+				flush(holder,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1232,7 +1232,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 8 * mult)
+				flush(holder, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -2465,7 +2465,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
+				flush(holder, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -4424,7 +4424,7 @@ datum
 					M = holder.my_atom
 				if (M.reagents.has_reagent("flockdrone_fluid"))
 					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
-				flush(M, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
+				flush(holder, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
 
 		fooddrink/matcha
 			name = "matcha"
@@ -4454,7 +4454,7 @@ datum
 			var/list/flushed_reagents = list("cholesterol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
 		fooddrink/iced/coconutmilkespresso
