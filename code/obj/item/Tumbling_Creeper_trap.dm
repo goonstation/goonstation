@@ -17,17 +17,10 @@
 	var/generation = 0 // For genetics tracking.
 	var/armed = FALSE //! This determinates if the trap is armed or not
 	var/armed_force = 8 //! how much damage the trap does when stepped upon. Will be set when harvested
-	var/armed_weakened = 2 SECONDS //! how long you are weakened after stepping into the trap
 	var/crashed_force = 20 //! how much damage the trap does when crashed into. Will be set when harvested
-	var/crashed_weakened = 3 SECONDS //! how long you are stunned if you crash into the trap
 	var/reagent_storage = 8 //! How much the max amount of chems is the trap should be able to hold
-	var/reagent_generation_multiplier = 0.5 //! How much percentage of the volume should be filled with assoc_reagents when harvested
-	var/stepon_transfer_multiplier = 0.5 //! Multiplier to damage to calculate the amount of chems tranferred when stepped into.
-	var/crash_transfer_multiplier = 0.4 //! Multiplier to damage to calculate the amount of chems tranferred when crashed into.
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
-	var/disarming_time = 3 SECONDS //! how long disarming with a wirecutter should take
-	var/arming_time = 2 SECONDS //! how long arming should take
-	var/self_assemly_chance = 50 //! the chance in percent for the trap to auto-arm when it gets flung against a plantpot
+
 
 /obj/item/tumbling_creeper/New()
 
@@ -54,6 +47,7 @@
 	var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
 	var/reagent_storage_min = 8 // How much the max amount of chems is the trap should be able to hold	at 0 potency
 	var/reagent_storage_max = 50 // How much the max amount of chems is the trap should be able to hold	at max potency
+	var/reagent_generation_multiplier = 0.5 //! How much percentage of the volume should be filled with assoc_reagents when harvested
 
 	var/datum/plantgenes/DNA = src.plantgenes
 
@@ -78,7 +72,7 @@
 				putreagents |= R.reagents_to_add
 		// Now we add each reagent into the tumbling creeper
 		if (length(putreagents) > 0)
-			var/volume_to_fill = src.reagent_storage * src.reagent_generation_multiplier
+			var/volume_to_fill = src.reagent_storage * reagent_generation_multiplier
 			var/to_add = volume_to_fill / length(putreagents)
 			for (var/plantReagent in putreagents)
 				src.reagents.add_reagent(plantReagent, to_add)
@@ -177,14 +171,17 @@
 			return
 
 
-/obj/item/tumbling_creeper/attackby(obj/item/W, mob/user)
+/obj/item/tumbling_creeper/attackby(obj/item/used_item, mob/user)
 
-	if(istype(W,/obj/item/gardentrowel) && !src.armed)
+	var/disarming_time = 3 SECONDS // how long disarming with a wirecutter should take
+	var/arming_time = 2 SECONDS // how long arming should take
+
+	if(istype(used_item,/obj/item/gardentrowel) && !src.armed)
 		if (ON_COOLDOWN(user, "arming_tumbling_creeper", user.combat_click_delay))
 			return
-		for(var/obj/item/B in get_turf(src))
-			if (istype(B, /obj/item/tumbling_creeper))
-				var/obj/item/tumbling_creeper/other_creeper = B
+		for(var/obj/item/iterated_item in get_turf(src))
+			if (istype(iterated_item, /obj/item/tumbling_creeper))
+				var/obj/item/tumbling_creeper/other_creeper = iterated_item
 				if (other_creeper.armed)
 					boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 					return
@@ -192,7 +189,7 @@
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
 			user,
 			src,
-			src.arming_time,
+			arming_time,
 			/obj/item/tumbling_creeper/proc/arm,
 			\list(user),
 			src.icon,
@@ -200,7 +197,7 @@
 			"[user] finishes planting [src]")
 		actions.start(action_bar, user)
 		return
-	if(issnippingtool(W))
+	if(issnippingtool(used_item))
 		if (src.armed)
 			if (ON_COOLDOWN(user, "disarming_tumbling_creeper", user.combat_click_delay))
 				return
@@ -209,25 +206,25 @@
 			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
 				user,
 				src,
-				src.disarming_time,
+				disarming_time,
 				/obj/item/tumbling_creeper/proc/disarm,\list(user),
-				W.icon,
-				W.icon_state,
+				used_item.icon,
+				used_item.icon_state,
 				"[user] finishes cutting out [src]")
 			actions.start(action_bar, user)
 			return
-	if(istype(W, /obj/item/reagent_containers/glass/))
-		if(!W.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [W] to pour onto [src]!</span>")
+	if(istype(used_item, /obj/item/reagent_containers/glass/))
+		if(!used_item.reagents.total_volume)
+			boutput(user, "<span class='alert'>There is nothing in [used_item] to pour onto [src]!</span>")
 			return
 		else
-			var/transferable_amount = min(W:amount_per_transfer_from_this, W.reagents.total_volume, src.reagents.maximum_volume - src.reagents.total_volume)
+			var/transferable_amount = min(used_item:amount_per_transfer_from_this, used_item.reagents.total_volume, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (transferable_amount <= 0)
 				boutput(user, "<span class='alert'>[src] cannot hold any more chemicals!</span>")
 				return
-			user.visible_message("<span class='notice'> [transferable_amount] units of [W]'s content are applied onto [src] by [user].</span>")
+			user.visible_message("<span class='notice'> [transferable_amount] units of [used_item]'s content are applied onto [src] by [user].</span>")
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			W.reagents.trans_to(src, transferable_amount)
+			used_item.reagents.trans_to(src, transferable_amount)
 			return
 	..()
 
@@ -240,9 +237,9 @@
 
 	if (!src)
 		return
-	for(var/obj/item/B in get_turf(src))
-		if (istype(B, /obj/item/tumbling_creeper))
-			var/obj/item/tumbling_creeper/other_creeper = B
+	for(var/obj/item/iterated_item in get_turf(src))
+		if (istype(iterated_item, /obj/item/tumbling_creeper))
+			var/obj/item/tumbling_creeper/other_creeper = iterated_item
 			if (other_creeper.armed)
 				boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 				return
@@ -267,40 +264,36 @@
 		src.armed = FALSE
 		src.anchored = FALSE
 
-/obj/item/tumbling_creeper/proc/break_down(mob/user)
-
-	//Cut down the creeper into nothing
-	if (!src)
-		return
-	qdel(src)
 
 /obj/item/tumbling_creeper/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 
+	var/self_assemly_chance = 50 // the chance in percent for the trap to auto-arm when it gets flung against a plantpot
+
 	//now the tumbler reaches its destination
 	if (istype(hit_atom, /obj/machinery/plantpot))
-		var/obj/machinery/plantpot/C = hit_atom
-		var/datum/plant/growing = C.current
-		if (!C.current || !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-			if (prob(src.self_assemly_chance))
+		var/obj/machinery/plantpot/hit_plantpot = hit_atom
+		var/datum/plant/growing = hit_plantpot.current
+		if (!hit_plantpot.current || !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+			if (prob(self_assemly_chance))
 				src.arm()
 
 
-/obj/item/tumbling_creeper/hitby(atom/movable/AM, datum/thrown_thing/thr)
+/obj/item/tumbling_creeper/hitby(atom/movable/targeted_atom, datum/thrown_thing/thr)
 
 	..()
-	if (src.armed && ishuman(AM) && AM.throwing)
-		var/mob/living/carbon/human/victim = AM
+	if (src.armed && ishuman(targeted_atom) && targeted_atom.throwing)
+		var/mob/living/carbon/human/victim = targeted_atom
 		//crashes into the creeper when being thrown/slipped at it
 		victim.visible_message("<span class='alert'><B>[victim] crashes into the planted [src]!</B></span>",\
 		"<span class='alert'><B>You crash into the planted [src]!</B></span>")
 		crash_into(victim)
 		qdel(src) //if crashed into, destroys the creeper
 
-/obj/item/tumbling_creeper/Crossed(atom/movable/AM as mob|obj)
+/obj/item/tumbling_creeper/Crossed(atom/movable/targeted_mob as mob|obj)
 
 	..()
-	if (src.armed && ishuman(AM))
-		var/mob/living/carbon/human/victim = AM
+	if (src.armed && ishuman(targeted_mob))
+		var/mob/living/carbon/human/victim = targeted_mob
 		//crawling or just walking between the sticks is a viable counter
 		//getting thrown at the trap has a different effect we want to check seperately
 		if(victim.lying || victim.throwing || !victim.running_check(walking_matters = 1, ignore_actual_delay = 1))
@@ -311,24 +304,31 @@
 		step_on(victim)
 
 /obj/item/tumbling_creeper/proc/crash_into(mob/living/carbon/human/victim as mob)
+
+	var/crash_transfer_multiplier = 0.4 //! Multiplier to damage to calculate the amount of chems tranferred when crashed into.
+	var/crashed_weakened = 3 SECONDS //! how long you are stunned if you crash into the trap
+
 	if (!src || !victim || !src.armed)
 		return
 	logTheThing(LOG_COMBAT, victim, "crashed into [src] at [log_loc(src)].")
-	victim.changeStatus("weakened", src.crashed_weakened)
+	victim.changeStatus("weakened", crashed_weakened)
 	victim.force_laydown_standup()
-	src.trap_damage(victim, src.crashed_force, src.crash_transfer_multiplier)
+	src.trap_damage(victim, src.crashed_force, crash_transfer_multiplier)
 	playsound(victim.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
 	victim.UpdateDamageIcon()
 
 
 /obj/item/tumbling_creeper/proc/step_on(mob/living/carbon/human/victim as mob)
 
+	var/armed_weakened = 2 SECONDS // how long you are weakened after stepping into the trap
+	var/stepon_transfer_multiplier = 0.5 // Multiplier to damage to calculate the amount of chems tranferred when stepped into.
+
 	if (!src || !victim || !src.armed)
 		return
 	logTheThing(LOG_COMBAT, victim, "stepped into [src] at [log_loc(src)].")
-	victim.changeStatus("weakened", src.armed_weakened)
+	victim.changeStatus("weakened", armed_weakened)
 	victim.force_laydown_standup()
-	src.trap_damage(victim, src.armed_force, src.stepon_transfer_multiplier)
+	src.trap_damage(victim, src.armed_force, stepon_transfer_multiplier)
 	playsound(victim.loc, 'sound/impact_sounds/Flesh_stab_1.ogg', 80, 1)
 	if (src.material)
 		src.material.triggerOnAttack(src, null, victim)
