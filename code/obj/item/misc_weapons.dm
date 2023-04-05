@@ -1971,7 +1971,7 @@ obj/item/whetstone
 		shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(!attached)
 			boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
 			return ..()
@@ -2014,7 +2014,7 @@ obj/item/whetstone
 		..()
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		return TRUE
+		return TRUE // ignore cant_drop and can't other remove since we handle those and need it this way
 
 	proc/setup_props(var/mob/user)
 		if(!attached)
