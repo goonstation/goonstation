@@ -310,7 +310,7 @@
 	target_anything = TRUE
 	targeted = TRUE
 	max_range = 3000
-	can_target_ghosts = TRUE
+	target_ghosts = TRUE
 	dont_lock_holder = TRUE
 
 	castcheck(var/mob/M)
