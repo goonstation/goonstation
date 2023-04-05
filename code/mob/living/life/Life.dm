@@ -540,8 +540,6 @@
 		if (L)
 			L.Process()
 
-		actions.interrupt(src, INTERRUPT_ACT)
-
 		if (src.client)
 			updateOverlaysClient(src.client)
 		if (length(src.observers))
