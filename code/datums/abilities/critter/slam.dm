@@ -103,13 +103,13 @@
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
 	icon_state = "slam"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/datum/projectile/slam/proj
 
 	cast(atom/target)
+		proj = new /datum/projectile/slam()
 		if (..())
 			return 1
 		var/turf/T = get_turf(target)
@@ -130,13 +130,13 @@
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
 	icon_state = "slam_polymorph"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/datum/projectile/slam/proj
 
 	cast(atom/target)
+		proj = new /datum/projectile/slam()
 		if (..())
 			return 1
 		var/turf/T = get_turf(target)

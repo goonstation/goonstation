@@ -16,8 +16,6 @@
 	var/hit_type = DAMAGE_CRUSH
 	var/bleed = 0
 
-	var/datum/projectile/slam/proj = new
-
 	cast(atom/target)
 		if (..())
 			return 1
