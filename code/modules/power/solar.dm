@@ -54,9 +54,6 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "aisat"
 	New()
 		..()
-		if (isnull(src.targetstar))
-			SPAWN(2 SECONDS)
-				src.targetstar = global.starlist[1]
 		SPAWN(1 SECOND)
 			powernet = src.get_direct_powernet()
 			if (powernet)
@@ -103,7 +100,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	processing_tier = PROCESSING_EIGHTH
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
-	var/obscured = 0
+	var/obscured = FALSE
 	var/sunfrac = 0
 	var/adir = SOUTH
 	var/ndir = SOUTH

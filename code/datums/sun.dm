@@ -516,6 +516,10 @@
 
 /// for a solar panel, trace towards sun to see if we're in shadow
 /datum/sun/proc/occlusion(var/obj/machinery/power/solar/S, var/eclipse_blockage)
+	if (eclipse_blockage == 0)
+		S.obscured = TRUE
+		S.update_solar_exposure()
+		return
 
 	var/ax = S.x		// start at the solar panel
 	var/ay = S.y
@@ -530,10 +534,10 @@
 			break
 
 		if(T.density)			// if we hit a solid turf, panel is obscured
-			S.obscured = 1
+			S.obscured = TRUE
 			return
 
-	S.obscured = 0		// if hit the edge or stepped 20 times, not obscured
+	S.obscured = FALSE		// if hit the edge or stepped 20 times, not obscured
 	S.update_solar_exposure()
 
 //returns the north-zero clockwise angle in degrees, given a direction
