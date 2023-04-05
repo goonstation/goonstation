@@ -311,7 +311,7 @@
 	targeted = TRUE
 	max_range = 3000
 	target_ghosts = TRUE
-	dont_lock_holder = TRUE
+	lock_holder = FALSE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
