@@ -849,16 +849,16 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 
-	action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
-	waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
+	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
+	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
 
-	preferred_holder_type = /datum/abilityHolder/generic
+	var/preferred_holder_type = /datum/abilityHolder/generic
 
-	icon = 'icons/mob/spell_buttons.dmi'
-	icon_state = "blob-template"
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "blob-template"
 
-	theme = null // for wire's tooltips, it's about time this got varized
-	tooltip_flags = null
+	var/theme = null // for wire's tooltips, it's about time this got varized
+	var/tooltip_flags = null
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
