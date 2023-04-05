@@ -891,7 +891,8 @@
 #else
 			var/result = tryCast(target, params)
 #endif
-			if (result == CAST_ATTEMPT_FAIL_DO_COOLDOWN)
+			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
+			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
 				doCooldown()
 			afterCast()
 			if(!QDELETED(localholder))
@@ -922,7 +923,7 @@
 				src.holder.locked = TRUE
 			if (!src.holder.pointCheck(pointCost))
 				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_POINTS
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			if (!src.holder.cast_while_dead && isdead(holder.owner))
 				boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 				src.holder.locked = FALSE

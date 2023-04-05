@@ -35,7 +35,7 @@
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = src
 				flick("monkey2h", animation)
-				sleep(4.8 SECONDS)
+				sleep(1 SECOND)
 				qdel(animation)
 				qdel(H.mutantrace)
 				H.set_mutantrace(null)
