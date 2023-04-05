@@ -283,6 +283,38 @@
 		new /obj/item/pod/paintjob/tronthing(get_turf(activator))
 		return 1
 
+/datum/achievementReward/respirator
+	title = "(Skin) Gas Respirator"
+	desc = "Replaces a gas mask you're holding with a gas respirator. Use inhand to change style."
+	required_medal = "Old Enemy"
+	once_per_round = 0
+	var/sacrifice_path = /obj/item/clothing/mask/gas
+	var/reward_path = /obj/item/clothing/mask/gas/respirator
+
+	rewardActivate(var/mob/activator) //code jank, COMMENCE!
+		if (!istype(activator))
+			return
+
+		var/found = 0
+		var/O = locate(sacrifice_path) in activator.contents
+		if (istype(O, sacrifice_path))
+			var/obj/item/clothing/mask/gas/E = O
+			activator.remove_item(E)
+			found = 1
+			qdel(E)
+
+		if (!found)
+			boutput(activator, "You need to be holding a gas mask in order to claim this reward.")
+
+		var/obj/item/clothing/mask/gas/respirator/LG = new reward_path()
+		if (!istype(LG))
+			boutput(activator, "Something went wrong. The reward path got screwed up somehow. Call 1-800-CODER for gear modification support.")
+
+		LG.set_loc(get_turf(activator))
+		activator.put_in_hand(LG)
+		boutput(activator, "You replace some components of the gas mask, refitting it into a [LG]!") //replaced C.mob with activator
+		return // deleted some variables from lawby code, let's hope they weren't important -RD
+
 /datum/achievementReward/swatgasmask
 	title = "(Skin) SWAT Gas Mask"
 	desc = "Turns your Gas Mask into a SWAT Gas Mask. If you're wearing one."
