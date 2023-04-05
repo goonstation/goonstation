@@ -77,7 +77,7 @@
 	target_anything = 0
 	human_only = 1
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 
 	cast(atom/target)
 		if (..())

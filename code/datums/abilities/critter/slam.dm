@@ -111,20 +111,20 @@
 	cast(atom/target)
 		proj = new /datum/projectile/slam()
 		if (..())
-			return 1
+			return TRUE
 		var/turf/T = get_turf(target)
 		if (!T)
-			return 1
+			return TRUE
 		var/mob/M = holder.owner
 		var/turf/S = get_turf(M)
 		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
 		if (!O)
-			return 1
+			return TRUE
 		if (!O.was_setup)
 			O.setup()
 		O.special_data["owner"] = src
 		O.launch()
-		return 0
+		return FALSE
 
 /datum/targetable/critter/slam_polymorph
 	name = "Slam"

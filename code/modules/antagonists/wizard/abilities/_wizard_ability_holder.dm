@@ -192,34 +192,34 @@
 	//mbc : i don't see why the wizard needs a specialized tryCast() proc. someone fix it later for me!
 	tryCast(atom/target)
 		if (!holder || !holder.owner)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/datum/abilityHolder/wizard/H = holder
-		if (H.locked && src.ignore_holder_lock != 1)
+		if (H.locked && !src.ignore_holder_lock)
 			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
-			return 1 // ASSHOLES
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE // ASSHOLES
 		if (src.last_cast > world.time)
-			return 1
+			return
 		if (isunconscious(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are unconscious.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!holder.cast_while_dead && isdead(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
 			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-			return 999
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/turf/T = get_turf(holder.owner)
-		if( offensive && T.loc:sanctuary )
+		if(offensive && T.loc:sanctuary )
 			boutput(holder.owner, "<span class='alert'>You cannot cast offensive spells on someone in a sanctuary.</span>")
 		if (src.restricted_area_check)
-			if (!T || !isturf(T))
+			if (!isturf(T))
 				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-				return 1
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 			switch (src.restricted_area_check)
 				if (1)
@@ -227,19 +227,18 @@
 						var/area/Arr = get_area(T)
 						if (!istype(Arr, /area/wizard_station))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-							return 1
+							return CAST_ATTEMPT_FAIL_CAST_FAILURE
 				if (2)
 					var/area/A = get_area(T)
-					if (A && istype(A, /area/sim))
+					if (istype(A, /area/sim))
 						boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
-						return 1
-		if (src.dont_lock_holder != 1)
-			H.locked = 1
+						return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (src.lock_holder)
+			H.locked = TRUE
 		if (src.cooldown_staff && !holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
-		var/val = cast(target)
-		H.locked = 0
-		return val
+		. = cast(target)
+		H.locked = FALSE
 
 	proc/targetSpellImmunity(mob/living/carbon/human/H, var/messages, var/chaplain_xp)
 		if (H.traitHolder.hasTrait("training_chaplain"))
