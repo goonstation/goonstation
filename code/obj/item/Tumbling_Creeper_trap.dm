@@ -16,19 +16,11 @@
 	var/datum/plantgenes/plantgenes = null
 	var/generation = 0 // For genetics tracking.
 	var/armed = FALSE //! This determinates if the trap is armed or not
-	var/endurance_for_max = 100 //! how much endurance is needed to reach max damage with the trap
-	var/potency_for_max = 200 //! how much potency is needed to generate the max injection-multiplier
 	var/armed_force = 8 //! how much damage the trap does when stepped upon. Will be set when harvested
-	var/armed_force_min = 8 //! how much damage the trap does when stepped upon with 0 endurance
-	var/armed_force_max = 14 //! how much damage the trap does when stepped upon with the maximum endurance
 	var/armed_weakened = 2 SECONDS //! how long you are weakened after stepping into the trap
 	var/crashed_force = 20 //! how much damage the trap does when crashed into. Will be set when harvested
-	var/crashed_force_min = 20 //! how much damage the trap does when stepped upon with 0 endurance
-	var/crashed_force_max = 30 //! how much damage the trap does when stepped upon with the maximum endurance
 	var/crashed_weakened = 3 SECONDS //! how long you are stunned if you crash into the trap
 	var/reagent_storage = 8 //! How much the max amount of chems is the trap should be able to hold
-	var/reagent_storage_min = 8 //! How much the max amount of chems is the trap should be able to hold	at 0 potency
-	var/reagent_storage_max = 50 //! How much the max amount of chems is the trap should be able to hold	at max potency
 	var/reagent_generation_multiplier = 0.5 //! How much percentage of the volume should be filled with assoc_reagents when harvested
 	var/stepon_transfer_multiplier = 0.5 //! Multiplier to damage to calculate the amount of chems tranferred when stepped into.
 	var/crash_transfer_multiplier = 0.4 //! Multiplier to damage to calculate the amount of chems tranferred when crashed into.
@@ -60,13 +52,22 @@
 
 
 	proc/Setup_DNA()
+		var/endurance_for_max = 100 // how much endurance is needed to reach max damage with the trap
+		var/potency_for_max = 200 // how much potency is needed to generate the max injection-multiplier
+		var/armed_force_min = 8 // how much damage the trap does when stepped upon with 0 endurance
+		var/armed_force_max = 14 // how much damage the trap does when stepped upon with the maximum endurance
+		var/crashed_force_min = 20 // how much damage the trap does when stepped upon with 0 endurance
+		var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
+		var/reagent_storage_min = 8 // How much the max amount of chems is the trap should be able to hold	at 0 potency
+		var/reagent_storage_max = 50 // How much the max amount of chems is the trap should be able to hold	at max potency
+
 		var/datum/plantgenes/DNA = src.plantgenes
 
 		// raise the reagent storage limit linear from 0 potency to max potency
 		src.reagent_storage = clamp(
-			round(src.reagent_storage_min + (DNA?.get_effective_value("potency")/src.potency_for_max) * (src.reagent_storage_max - src.reagent_storage_min)),
-			src.reagent_storage_min,
-			src.reagent_storage_max)
+			round(reagent_storage_min + (DNA?.get_effective_value("potency")/potency_for_max) * (reagent_storage_max - reagent_storage_min)),
+			reagent_storage_min,
+			reagent_storage_max)
 
 		src.reagents.maximum_volume = src.reagent_storage
 
@@ -90,14 +91,14 @@
 
 		// raise the damage of the plant linear from 0 endurance to max endurance
 		src.crashed_force = clamp(
-			round(src.crashed_force_min + (DNA?.get_effective_value("endurance")/src.endurance_for_max) * (src.crashed_force_max - src.crashed_force_min)),
-			src.crashed_force_min,
-			src.crashed_force_max)
+			round(crashed_force_min + (DNA?.get_effective_value("endurance")/endurance_for_max) * (crashed_force_max - crashed_force_min)),
+			crashed_force_min,
+			crashed_force_max)
 
 		src.armed_force = clamp(
-			round(src.armed_force_min + (DNA?.get_effective_value("endurance")/src.endurance_for_max) * (src.armed_force_max - src.armed_force_min)),
-			src.armed_force_min,
-			src.armed_force_max)
+			round(armed_force_min + (DNA?.get_effective_value("endurance")/endurance_for_max) * (armed_force_max - armed_force_min)),
+			armed_force_min,
+			armed_force_max)
 
 	disposing()
 		processing_items -= src
