@@ -1180,7 +1180,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		return "0 "
 
 	var/suffix = ""
-	var/power = round( log(10, value) / 3)
+	var/power = round( log(10, abs(value)) / 3)
 	switch (power)
 		if (-8)
 			suffix = "y"
