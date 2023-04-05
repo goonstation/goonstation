@@ -50,6 +50,8 @@
 	var/joined_observer = FALSE
 	/// Last time this person died (used for critter respawns)
 	var/last_death_time
+	/// real_names this person has joined as
+	var/joined_names = list()
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)

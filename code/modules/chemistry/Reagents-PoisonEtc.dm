@@ -67,6 +67,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					var/stack_mult = 1
@@ -160,6 +162,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					if (volume >= 50 && prob(75))
@@ -1378,8 +1382,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.5*mult)
-				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
+				M.take_toxin_damage(mult)
+				bleed(M, 6 * mult, 6 * mult)
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
@@ -1389,7 +1393,7 @@ datum
 					M.reagents.add_reagent("histamine", rand(8,10) * mult)
 
 				if (probmult(10))
-					M.setStatus("staggered", max(M.getStatusDuration("staggered"), 5 SECONDS))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
@@ -1397,7 +1401,6 @@ datum
 				if (probmult(10))
 					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
-					M.take_toxin_damage(8)
 					if (!isdead(M))
 						M.emote(pick("shake", "tremble", "shudder"))
 
@@ -1526,6 +1529,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1563,6 +1568,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1704,6 +1711,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)
@@ -1755,10 +1764,10 @@ datum
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
-		harmful/sarin // yet another thing that will put ol' cogwerks on a watch list probably
-			name = "sarin"
-			id = "sarin"
-			description = "A lethal organophosphate nerve agent. Can be neutralized with atropine."
+		harmful/saxitoxin // formerly: sarin
+			name = "saxitoxin"
+			id = "saxitoxin"
+			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255

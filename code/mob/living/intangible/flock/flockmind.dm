@@ -10,7 +10,7 @@
 
 	var/started = FALSE
 	///Pity respawn max
-	var/max_tries = 2
+	var/max_respawns = 1
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
 
@@ -78,7 +78,7 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (!src.flock)
+	if (!src.flock || src.flock.dead)
 		return
 	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
@@ -139,11 +139,12 @@
 	if (src.tutorial && !suicide)
 		return
 	src.emote("scream")
-	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_tries)
+	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_respawns)
 		src.reset()
 		src.flock.perish(FALSE)
 		src.flock.stats.respawns++
-		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns].</b></span>")
+		logTheThing(LOG_GAMEMODE, src, "respawns using pity respawn number [src.flock.stats.respawns]")
+		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns + 1].</b></span>")
 		return
 	. = ..()
 	if(src.client)
@@ -176,7 +177,7 @@
 	return O
 
 
-/mob/living/intangible/flock/flockmind/proc/partition(free = FALSE)
+/mob/living/intangible/flock/flockmind/proc/partition(antagonist_source = ANTAGONIST_SOURCE_SUMMONED)
 	boutput(src, "<span class='flocksay'>Partitioning initiated. Stand by.</span>")
 
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -200,7 +201,7 @@
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
 		return TRUE
 
-	if (!free && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+	if ((antagonist_source == ANTAGONIST_SOURCE_SUMMONED) && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
 		logTheThing(LOG_ADMIN, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
@@ -209,9 +210,9 @@
 	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	log_respawn_event(picked, "Flocktrace", src.real_name)
+	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
 
-	picked.make_flocktrace(get_turf(src), src.flock, free)
+	picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.mind)
 
 // old code for flocktrace respawns
 /datum/ghost_notification/respawn/flockdrone
@@ -234,7 +235,8 @@
 	// pick a random ghost
 	var/mob/dead/observer/winner = valid_ghosts[rand(1, valid_ghosts.len)]
 	if(winner) // probably a paranoid check
-		var/mob/living/trace = winner.make_flocktrace(get_turf(src), src.flock)
+		winner.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, master = src.mind)
+		var/mob/living/trace = winner.mind.current
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)

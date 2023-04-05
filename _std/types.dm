@@ -216,6 +216,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_AREA_PROCESS "process_area"
 #define TR_CAT_RANCID_STUFF "rancid_stuff"
 #define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
+#define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

@@ -2314,17 +2314,13 @@
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
-/*			if ("wedgie")
-				if (src.emote_check(voluntary))
-					var/mob/living/carbon/human/H = null
-					if(ishuman(src))
-						H = src
-					if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
-						src.show_text("You can't do that without arms!")
-						return
-					if(/mob/living/carbon/human in get_step(H.loc, 1).contents)
-						return
-*/
+			if ("woof")
+				if (!ispug(src)) // not accounting for critter dogs since they have their own bark handling
+					src.say("Woof.")
+					return
+				else
+					message = "<b>[src]</b> woofs!"
+					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
@@ -2454,7 +2450,7 @@
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
 	G.affecting.set_loc(newloc)
-	if (!G.affecting.reagents.has_reagent("fliptonium"))
+	if (!G.affecting.reagents?.has_reagent("fliptonium"))
 		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))

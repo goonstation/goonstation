@@ -214,7 +214,7 @@ TYPEINFO(/obj/vehicle/tug)
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
 
-	eject_rider(var/crashed, var/selfdismount)
+	eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 		var/mob/living/rider = src.rider
 		..()
 		if(rider)

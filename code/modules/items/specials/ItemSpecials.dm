@@ -1080,7 +1080,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
-		return
+		return 1
 
 
 	proc/on_hit(var/hit, var/mult = 1)

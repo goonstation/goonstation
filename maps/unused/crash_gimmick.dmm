@@ -1298,7 +1298,7 @@
 	},
 /area/russian/radiation)
 "aKr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet/grime{
 	desc = " It is made of temp."
 	},

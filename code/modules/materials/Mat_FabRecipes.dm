@@ -20,28 +20,28 @@
 	name = "Nuclear Fuel Rod"
 	desc = "A fuel rod for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/fuel_rod
 
 /datum/matfab_recipe/simple/nuclear/control_rod
 	name = "Control Rod"
 	desc = "A control rod for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/control_rod
 
 /datum/matfab_recipe/simple/nuclear/heat_exchanger
 	name = "Heat Exchanger"
 	desc = "A heat exchanger component for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/heat_exchanger
 
 /datum/matfab_recipe/simple/nuclear/gas_channel
 	name = "Coolant Channel"
 	desc = "A coolant channel component for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/gas_channel
 
 /datum/matfab_recipe/spacesuit
