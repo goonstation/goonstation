@@ -1942,6 +1942,7 @@ obj/item/whetstone
 	hit_type = DAMAGE_BLUNT
 	flags = FPRINT | TABLEPASS
 	c_flags = EQUIPPED_WHILE_HELD
+	object_flags = NO_ARM_ATTACH
 	force = 5
 	throwforce = 5
 	throw_speed = 1
@@ -1957,6 +1958,7 @@ obj/item/whetstone
 	attack_verbs = "slashes"
 	can_disarm = FALSE
 	uses_multiple_icon_states = 1
+	duration_remove = 6 SECONDS
 
 	var/mode = OFFENSIVE_MODE
 	var/attached = FALSE
@@ -1995,19 +1997,24 @@ obj/item/whetstone
 			boutput(H, "<span class='alert'>The [src] is now attached firmly to your wrist.</span>")
 			attached = TRUE
 			cant_self_remove = TRUE
-			cant_other_remove = TRUE
+			cant_drop = TRUE
 		else
 			boutput(H, "<span class='alert'>The [src] is no longer firmly attached to your wrist.</span>")
 			attached = FALSE
 			cant_self_remove = FALSE
-			cant_other_remove = FALSE
+			cant_drop = FALSE
 		setup_props(H)
 
 	dropped(var/mob/living/carbon/human/H)
-		..()
 		if(attached)
 			attached = FALSE
+			cant_self_remove = FALSE
+			cant_drop = FALSE
 		setup_props(H)
+		..()
+
+	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
+		return TRUE
 
 	proc/setup_props(var/mob/user)
 		if(!attached)
@@ -2026,7 +2033,7 @@ obj/item/whetstone
 			setProperty("disorient_resist", 0)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = FALSE
-			user.overlays -= shield
+			user.UpdateOverlays(null, "shield")
 		else if(src.mode == DEFENSIVE_MODE)
 			icon_state = "arm_blade"
 			item_state = "arm_blade-D"
@@ -2037,13 +2044,13 @@ obj/item/whetstone
 			stamina_cost = 15
 			stamina_crit_chance = 30
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
-			setProperty("meleeprot_all", 6)
-			setProperty("rangedprot", 1)
-			setProperty("movespeed", 0.3)
+			setProperty("meleeprot_all", 4)
+			setProperty("rangedprot", 0.7)
+			setProperty("movespeed", 0.4)
 			setProperty("disorient_resist", 40)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
-			user.overlays += shield
+			user.UpdateOverlays(src.shield, "shield")
 		else // Offensive mode
 			icon_state = "arm_blade_on"
 			item_state = "arm_blade-A"
@@ -2060,7 +2067,7 @@ obj/item/whetstone
 			setProperty("disorient_resist", 0)
 			src.setItemSpecial(/datum/item_special/rangestab)
 			can_disarm = FALSE
-			user.overlays -= shield
+			user.UpdateOverlays(null, "shield")
 		src.UpdateIcon()
 		user.update_equipped_modifiers()
 		user.update_inhands()
