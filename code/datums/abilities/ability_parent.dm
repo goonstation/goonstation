@@ -886,9 +886,10 @@
 	proc
 		handleCast(atom/target, params)
 			var/datum/abilityHolder/localholder = src.holder
-			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
-			result = TRUE
+			var/result = TRUE
+#else
+			var/result = tryCast(target, params)
 #endif
 			if (result == CAST_ATTEMPT_FAIL_DO_COOLDOWN)
 				doCooldown()
