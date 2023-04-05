@@ -753,7 +753,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
