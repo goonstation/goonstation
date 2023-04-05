@@ -27,14 +27,6 @@
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
 	var/disarming_time = 3 SECONDS //! how long disarming with a wirecutter should take
 	var/arming_time = 2 SECONDS //! how long arming should take
-	var/tumbling_cooldown = 15 SECONDS //!how long the item should take at minimum before it begins tumbling again
-	var/tumbling_distance_max = 6 //! how many tiles the item tries to move at most when tumbling
-	var/tumbling_distance_min = 3 //! how many tiles the item tries to move at least when tumbling
-	var/tumbling_speed = 0.3 //!how fast the throw while tumbling should be
-	var/tumbling_flip_duration = 1.25 SECONDS //!how long a flip of the tumbler should take
-	var/tumbling_chance = 20 //! the chance in % the item tries to thumble on each process tick
-	var/plantpot_damage_chance = 20 //! the chance for an armed tumbler to damage a plant in percent
-	var/plantpot_damage_amount = 6 //! the amount of damage the armed tumbler should deal to the plant
 	var/self_assemly_chance = 50 //! the chance in percent for the trap to auto-arm when it gets flung against a plantpot
 
 /obj/item/tumbling_creeper/New()
@@ -116,53 +108,62 @@
 
 /obj/item/tumbling_creeper/process()
 
+	var/tumbling_cooldown = 15 SECONDS // how long the item should take at minimum before it begins tumbling again
+	var/tumbling_distance_max = 6 // how many tiles the item tries to move at most when tumbling
+	var/tumbling_distance_min = 3 // how many tiles the item tries to move at least when tumbling
+	var/tumbling_speed = 0.3 // how fast the throw while tumbling should be
+	var/tumbling_flip_duration = 1.25 SECONDS // how long a flip of the tumbler should take
+	var/tumbling_chance = 20 // the chance in % the item tries to thumble on each process tick
+	var/plantpot_damage_chance = 20 // the chance for an armed tumbler to damage a plant in percent
+	var/plantpot_damage_amount = 6 // the amount of damage the armed tumbler should deal to the plant
+
 	. = ..()
 	// This handles the creepers invasive behaviour.
 	// When unarmed, it can randomly move. When armed, it starts attacking and planting creeper seeds into the trays
 	if (!src.armed)
 		//Let's see if our fellow creeper moves on their own
 		//this checks if the item is on the ground and on simulated ground
-		if (prob(src.tumbling_chance) && istype(src.loc, /turf) && issimulatedturf(get_turf(src)))
-			if (!ON_COOLDOWN(src, "tumbling_fun", src.tumbling_cooldown))
+		if (prob(tumbling_chance) && istype(src.loc, /turf) && issimulatedturf(get_turf(src)))
+			if (!ON_COOLDOWN(src, "tumbling_fun", tumbling_cooldown))
 				//the thumbler tries to randomly pick a cardinal direction and throws itself towards it
 				//It takes a random direction on purpose. Tumbling weeds likes to get stuck
 				var/target_direction = pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-				var/target_distance = rand(src.tumbling_distance_min, src.tumbling_distance_max)
+				var/target_distance = rand(tumbling_distance_min, tumbling_distance_max)
 				var/turf/target_turf = get_ranged_target_turf(get_turf(src), target_direction, target_distance * 32)
-				animate_spin(src, pick( "R" , "L"), src.tumbling_flip_duration, 2)
-				src.throw_at(target_turf, target_distance, src.tumbling_speed)
+				animate_spin(src, pick( "R" , "L"), tumbling_flip_duration, 2)
+				src.throw_at(target_turf, target_distance, tumbling_speed)
 	else
-		if (prob(src.plantpot_damage_chance))
+		if (prob(plantpot_damage_chance))
 		//we look at plantpots around is if the creep is able to spread
-			for (var/obj/machinery/plantpot/C in range(1,src))
-				var/datum/plant/growing = C.current
-				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-					C.HYPdamageplant("physical",plantpot_damage_amount,1)
-				else if (C.dead)
-					C.HYPdestroyplant()
-				else if (!C.current && src.plantgenes && !HYPCheckCommut(src.plantgenes, /datum/plant_gene_strain/seedless))
+			for (var/obj/machinery/plantpot/other_plantpot in range(1,src))
+				var/datum/plant/growing = other_plantpot.current
+				if (!other_plantpot.dead && other_plantpot.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+					other_plantpot.HYPdamageplant("physical", plantpot_damage_amount,1)
+				else if (other_plantpot.dead)
+					other_plantpot.HYPdestroyplant()
+				else if (!other_plantpot.current && src.plantgenes && !HYPCheckCommut(src.plantgenes, /datum/plant_gene_strain/seedless))
 					//we create a new seed now
-					var/obj/item/seed/WS = new /obj/item/seed
+					var/obj/item/seed/temporary_seed = new /obj/item/seed
 					var/datum/plant/New_Planttype = src.planttype
 					var/datum/plantgenes/DNA = src.plantgenes
-					var/datum/plantgenes/New_DNA = WS.plantgenes
+					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					if (!New_Planttype.hybrid)
-						WS.generic_seed_setup(New_Planttype)
+						temporary_seed.generic_seed_setup(New_Planttype)
 					HYPpassplantgenes(DNA,New_DNA)
 					// for spliced plants, we have to go some additional steps
 					if (New_Planttype.hybrid)
 						var/plantType = New_Planttype.type
-						var/datum/plant/hybrid = new plantType(WS)
-						for (var/V in New_Planttype.vars)
-							if (issaved(New_Planttype.vars[V]) && V != "holder")
-								hybrid.vars[V] = New_Planttype.vars[V]
-						WS.planttype = hybrid
+						var/datum/plant/hybrid = new plantType(temporary_seed)
+						for (var/transfered_variables in New_Planttype.vars)
+							if (issaved(New_Planttype.vars[transfered_variables]) && transfered_variables != "holder")
+								hybrid.vars[transfered_variables] = New_Planttype.vars[transfered_variables]
+						temporary_seed.planttype = hybrid
 					//we now devolve the seed to not make tumbler spread like wildfire
 					New_DNA.mutation = null
 					// now we are able to plant the seed
-					C.HYPnewplant(WS)
+					other_plantpot.HYPnewplant(temporary_seed)
 					spawn(0.5 SECONDS)
-						qdel(WS)
+						qdel(temporary_seed)
 
 /obj/item/tumbling_creeper/HY_set_species(var/datum/plant/species)
 
