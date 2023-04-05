@@ -1,4 +1,5 @@
 // Constants for return values. I used the legacy values for ease of find-replace.
+
 /// Cast was successful
 #define CAST_ATTEMPT_SUCCESS 0
 /** Awful name, I'm sorry. tryCast() calls cast(), and this is the value returned from cast() if something goes wrong,
