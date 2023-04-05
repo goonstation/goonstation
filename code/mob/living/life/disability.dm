@@ -27,15 +27,16 @@
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
 				owner.change_vampire_blood(-5 * mult)
 			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
-				var/totaleclipsing
+				var/totaleclipsing = FALSE
 				for (var/datum/sun/star in global.starlist) // total eclipses allow vamps to go on space turfs
 					var/turf/dummy = get_turf(src)
+					if (star.zlevel != dummy.z)
+						continue
+					if (!isnull(star.sun_area) && (get_area(dummy) != star.sun_area))
+						continue
 					if (star.eclipse_status != ECLIPSE_UMBRA || star.eclipse_magnitude != 1)
-						totaleclipsing = FALSE
-					else if (star.zlevel != dummy.z)
-						totaleclipsing = FALSE
-					else
-						totaleclipsing = TRUE
+						continue
+					totaleclipsing = TRUE
 				if (!totaleclipsing)
 					if (prob(33))
 						boutput(owner, "<span class='alert'>The starlight burns you!</span>")
