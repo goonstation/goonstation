@@ -20,13 +20,22 @@
 			owner.dizziness = max(0, owner.dizziness - 2*mult)
 			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
+		// Vampire damage from holy sources in area
 		if (owner.mind && isvampire(owner) || isvampiricthrall(owner))
+			// Holy ground damage (inflicted in chapel)
 			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
 				owner.change_vampire_blood(-5 * mult)
-			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
+
+			// Starlight damage (inflicted on non-fluid space turfs)
+			var/turf/vamp_location
+			if (istype(owner.loc, /obj/dummy/spell_batpoof))
+				vamp_location = get_turf(owner.loc)
+			else
+				vamp_location = owner.loc
+			if (istype(vamp_location,/turf/space) && !istype(vamp_location,/turf/space/fluid))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
 				owner.TakeDamage("chest", 0, 2.5 * mult, 0, DAMAGE_BURN)
