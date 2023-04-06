@@ -1317,7 +1317,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					// tumbling creepers behave with their DNA values are like food, but cannot be eaten.... ugh
 					var/obj/item/tumbling_creeper/affected_creeper = CROP
 					var/datum/plantgenes/FDNA = affected_creeper.plantgenes
-					affected_creeper.planttype = HYPgenerateplanttypecopy(growing)
+					affected_creeper.planttype = HYPgenerateplanttypecopy(affected_creeper, growing)
 					affected_creeper.generation = src.generation
 					HYPpassplantgenes(DNA,FDNA)
 					// Copy the genes from the plant we're harvesting to the new piece of produce.
@@ -1695,27 +1695,39 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
 
-proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype)
-	//This proc generates a seed with a copy of the planttype and genes of a given parent plant.
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
+	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
-
-	var/obj/item/seed/child = new /obj/item/seed
-	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(parent_planttype)
+	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
 	var/datum/plantgenes/child_genes = child.plantgenes
+	var/datum/plantmutation/child_mutation = parent_genes.mutation
 	// If the plant is a standard plant, our work here is mostly done
 	if (!child_planttype.hybrid)
 		child.generic_seed_setup(child_planttype)
+	else
+		child.planttype = child_planttype
+		child.plant_seed_color(child_planttype.seedcolor)
+	//Now we generate the seeds name
+	var/seedname = "[child_planttype.name]"
+	if(istype(child_mutation,/datum/plantmutation/))
+		if(!child_mutation.name_prefix && !child_mutation.name_suffix && child_mutation.name)
+			seedname = "[child_mutation.name]"
+		else if(child_mutation.name_prefix || child_mutation.name_suffix)
+			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
 	HYPpassplantgenes(parent_genes, child_genes)
+	child.name = "[seedname] seed"
+	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child
 
-proc/HYPgenerateplanttypecopy(var/datum/plant/parent_planttype)
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
 	// this proc returns a copy of a planttype
 	// for basic plants, it just returns the planttype, since they are singletons.
-	// for spliced plants, since they run on instanced copies, it adds some additional steps.
+	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
 	if (parent_planttype.hybrid)
 		var/plantType = parent_planttype.type
-		var/datum/plant/hybrid = new plantType()
+		var/datum/plant/hybrid = new plantType(applied_object)
 		for (var/transfered_variables in parent_planttype.vars)
 			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
 				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]

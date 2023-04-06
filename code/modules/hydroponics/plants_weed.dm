@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				//Seedless prevents the creeper to replant itself
 				else if (!growing && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
 					//we create a new seed now
-					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype)
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype, POT.generation)
 					//we now devolve the seed to not make tumbler spread like wildfire
 					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					New_DNA.mutation = null

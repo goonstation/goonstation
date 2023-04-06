@@ -137,7 +137,7 @@
 					other_plantpot.HYPdestroyplant()
 				else if (!other_plantpot.current && src.plantgenes && !HYPCheckCommut(src.plantgenes, /datum/plant_gene_strain/seedless))
 					//we create a new seed now
-					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(src.plantgenes, src.planttype)
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(src.plantgenes, src.planttype, src.generation)
 					//we now devolve the seed to not make tumbler spread like wildfire
 					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					New_DNA.mutation = null
