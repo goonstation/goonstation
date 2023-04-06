@@ -1,5 +1,7 @@
 
 (t)thu apr 06 23
+(u)LeahTheTech
+(+)Standing next to a UV lamp will now warm you up slightly.
 (u)aloe
 (+)Emote volume is now halved if you're suffocating/being choked/have negative stamina, etc (any time you're forced to whisper when speaking).
 (t)wed apr 05 23
