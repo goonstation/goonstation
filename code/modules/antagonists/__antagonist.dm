@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src.id)
+			src.owner.remove_antagonist(src)
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()
