@@ -134,8 +134,6 @@
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
 				charge -= adj_output
-				if(selling)
-					power_sold(adj_output)
 		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
@@ -707,25 +705,28 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/power/pt_laser/source = null
 	var/datum/light/light
-
+	///Are we pointing into the edge of the map?
+	var/is_edge = FALSE
 
 /obj/linked_laser/ptl/New(loc, dir, length, obj/machinery/power/pt_laser/source = null)
 	src.source = source
 	..()
 
 	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
+	var/turf/T = get_next_turf()
+	if (!T) //edge of z_level
+		src.is_edge = TRUE
+		src.source.selling = TRUE
+	var/power = src.source.laser_power()
+	alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
+		src.loc:burn_tile()
 
-	SPAWN(0)
-		var/power = src.source.laser_power()
-		alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-		if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
-			src.loc:burn_tile()
-
-		for (var/mob/living/L in src.loc)
-			if (isintangible(L))
-				continue
-			if (!source.burn_living(L,power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
-				source.affecting_mobs |= L
+	for (var/mob/living/L in src.loc)
+		if (isintangible(L))
+			continue
+		if (!source.burn_living(L,power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
+			source.affecting_mobs |= L
 
 /obj/linked_laser/ptl/copy_laser(turf/T, dir)
 	return new src.type(T, dir, src.length + 1, src.source)
@@ -762,6 +763,8 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 /obj/linked_laser/ptl/disposing()
 	src.remove_simple_light("laser_beam")
+	if (src.is_edge)
+		src.source.selling = FALSE
 	..()
 
 /obj/machinery/power/pt_laser/cheat
