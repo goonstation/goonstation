@@ -16,6 +16,7 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
+	var/satchel_compatible = TRUE
 
 	blue
 		icon_state = "backpackb"
@@ -641,6 +642,23 @@
 	can_hold = list(/obj/item/deconstructor)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/utility/nt_engineer
+	name = "specialist engineering belt"
+	desc = "A high capacity engineering belt."
+	can_hold = list(
+		/obj/item/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/sheet,
+		/obj/item/tile
+	)
+	spawn_contents = list(
+		/obj/item/rcd/construction,
+		/obj/item/rcd_ammo/medium,
+		/obj/item/tool/omnitool,
+		/obj/item/device/analyzer/atmospheric/upgraded
+	)
+
 /obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
@@ -686,6 +704,17 @@
 	/obj/item/wirecutters/yellow,
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,
+	/obj/item/device/multitool,
+	/obj/item/deconstructor)
+
+/obj/item/storage/belt/utility/virtual
+	name = "virtual utility belt"
+	desc = "Are these tools DLC?"
+	spawn_contents = list(/obj/item/crowbar/vr,
+	/obj/item/weldingtool/vr,
+	/obj/item/wirecutters/vr,
+	/obj/item/screwdriver/vr,
+	/obj/item/wrench/vr,
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
@@ -959,11 +988,13 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"

@@ -91,6 +91,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
+		hit.emp_act()
 		impact_image_effect(ie_type, hit)
 		return
 
@@ -132,8 +133,8 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	stun = 18
-	dissipation_delay = 2
+	stun = 17.5
+	dissipation_delay = 1
 	dissipation_rate = 2
 	max_range = 8
 	icon_state = "spark"

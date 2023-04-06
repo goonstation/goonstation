@@ -10,23 +10,41 @@
 	density = 1
 	anchored = 0
 	req_access = list(access_engineering)
-	var/obj/item/cell/intcap = null //short for internal capacitor.
-	var/chargerate = 700 // internal cell charge rate, per tick
-	var/connected = 0 //whether this is tied into a wire
+
+	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
+	var/obj/item/cell/intcap = null
+
+	///Maximum target rate at which the internal capacitor can be charged, per tick.
+	var/chargerate = 700
+
+	///Tracks whether interdictor is tied into area power and ready to attempt operation.
+	var/connected = 0
+
+	///Cooldown after the magnetic lock switches on or off before it can be toggled again.
 	var/maglock_cooldown = 3 SECONDS
 
-	var/canInterdict = 0 // indication of operability
-	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
+	///Tracks whether the interdictor has been emagged, removing the device's maglock access restriction.
+	var/emagged = 0
 
-	var/cumulative_cost = 0 // keeps a tally of used power per tick
-	//used to play interdiction noise / modulate its volume
+	///Indication of operability; if 0, whether from depletion or new installation, internal cell must fill to set this to 1 and activate interdiction
+	var/canInterdict = 0
 
-	var/interdict_range = 5 // range of the interdictor's field
-	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
+	///Tally of power used for interdiction in this machine tick. Used to determine presence and volume of the interdictor operating noise.
+	var/cumulative_cost = 0
 
-	var/interdict_class = ITDR_STANDARD // type of interdictor
-	//standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality
+	///Set during radstorm interdiction; when true, a cost has been paid in this tick, and further radstorm interdictions inside the tick are free.
+	var/radstorm_paid = FALSE
 
+	///Range of the interdictor's field; for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength.
+	var/interdict_range = 5
+
+	///Type of interdictor. Standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality.
+	var/interdict_class = ITDR_STANDARD
+
+	///Interdiction cost multiplier. Some part selections can influence this value, raising or lowing the effective energy cost of device functions.
+	var/interdict_cost_mult = 1
+
+	///List of fields that the interdictor has deployed; these fields are strictly visual, and outline the interdictor's operating range for clarity.
 	var/list/deployed_fields = list()
 
 	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
@@ -43,6 +61,8 @@
 
 		if(altrod)
 			src.interdict_range = altrod.interdist
+			if(altrod.power_multiplier)
+				src.interdict_cost_mult *= altrod.power_multiplier
 			qdel(altrod)
 
 		if(altboard)
@@ -82,7 +102,7 @@
 		..()
 
 	attack_hand(mob/user)
-		if(!src.allowed(user))
+		if(!emagged && !src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
@@ -94,8 +114,14 @@
 				boutput(user, "You deactivate the interdictor's magnetic lock.")
 				playsound(src.loc, src.sound_togglebolts, 50, 0)
 			else
-				var/obj/cable/C = locate() in get_turf(src)
-				if(C)
+				var/clear_field = TRUE
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if(IX.canInterdict)
+						var/net_range = max(src.interdict_range,IX.interdict_range)
+						if(IN_RANGE(src,IX,net_range))
+							clear_field = FALSE
+							break
+				if(clear_field)
 					src.anchored = 1
 					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
@@ -103,7 +129,7 @@
 					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 						src.start_interdicting()
 				else
-					boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+					boutput(user, "<span class='alert'>An interdictor is already active within range.</span>")
 		else
 			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
@@ -112,7 +138,7 @@
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
 		else if(istype(W, /obj/item/card/id))
-			if(!src.check_access(W))
+			if(!emagged && !src.check_access(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 				return
 			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
@@ -124,8 +150,14 @@
 					boutput(user, "You deactivate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
 				else
-					var/obj/cable/C = locate() in get_turf(src)
-					if(C)
+					var/clear_field = TRUE
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if(IX.canInterdict)
+							var/net_range = max(src.interdict_range,IX.interdict_range)
+							if(IN_RANGE(src,IX,net_range))
+								clear_field = FALSE
+								break
+					if(clear_field)
 						src.anchored = 1
 						src.connected = 1
 						boutput(user, "You activate the interdictor's magnetic lock.")
@@ -133,7 +165,7 @@
 						if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 							src.start_interdicting()
 					else
-						boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+						boutput(user, "<span class='alert'>Cannot activate interdictor - </span>")
 		else
 			..()
 
@@ -142,7 +174,12 @@
 		if(Obj == src.intcap)
 			src.intcap = null
 
-	// Typed variants for manual spawning
+	// Typed variants for manual spawning or map placement
+
+	unlocked
+		req_access = null
+		name = "unlocked spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. A small tag indicates its access requirement has been removed."
 
 	nimbus
 		interdict_class = ITDR_NIMBUS
@@ -180,7 +217,7 @@
 	UpdateOverlays(I_actv, "active", 0, 1)
 
 
-//updates only the charge overlay, used when charge is depleted by interdiction
+///Small visual update proc used for interdictions that want to immediately show an expenditure of charge and don't need a full update_icon
 /obj/machinery/interdictor/proc/updatecharge()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
@@ -190,7 +227,25 @@
 	UpdateOverlays(I_chrg, "charge", 0, 1)
 
 
-/obj/machinery/interdictor/process(mult)
+/obj/machinery/interdictor/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = 1
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		if(user)
+			boutput(user, "You short out the access lock on [src].")
+		return 1
+	return 0
+
+/obj/machinery/interdictor/demag(var/mob/user)
+	if (!src.emagged)
+		return 0
+	if (user)
+		user.show_text("You repair the access lock on [src].")
+	src.emagged = 0
+	return 1
+
+
+/obj/machinery/interdictor/process()
 	var/doupdateicon = 1 //avoids repeating icon updates, might be goofy
 	if (status & BROKEN)
 		return
@@ -202,11 +257,12 @@
 		return
 	if(anchored)
 		if(intcap.charge < intcap.maxcharge && powered())
-			var/added = intcap.give(src.chargerate * mult)
-			//boutput(world, "yep [added / CELLRATE]")
-			if(!src.canInterdict)
-				playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
-			use_power(added / CELLRATE)
+			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
+			if(amount_to_add)
+				var/added = intcap.give(amount_to_add)
+				if(!src.canInterdict)
+					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
+				use_power(added / CELLRATE)
 		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 			doupdateicon = 0
 			src.start_interdicting()
@@ -218,10 +274,13 @@
 			src.stop_interdicting()
 	if(src.cumulative_cost)
 		if(src.cumulative_cost >= 50) //if the cost was very minor, don't even make a sound
-			var/sound_strength = clamp(cumulative_cost/10,5,30)
+			var/sound_strength = clamp(cumulative_cost/10,5,25)
 			if(src.canInterdict)
 				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
 		src.cumulative_cost = 0
+	if(src.radstorm_paid)
+		src.updatecharge()
+		src.radstorm_paid = FALSE
 
 	if(doupdateicon)
 		src.UpdateIcon()
@@ -233,6 +292,7 @@
  * The core function of interdictors is to suppress energy-based random events; other beneficial functions are provided by alternate mainboards.
  *
  * The first argument (use_cost) is the cost in cell power units, charged to the interdictor's internal cell on successful expenditure.
+ * It's passed through modified_use_cost to take into account any multipliers on efficiency provided by installed parts.
  *
  * The second argument (target) specifies a range-checking target for localized effect application (i.e. blocking a radiation pulse).
  * To perform a global interdiction (such as shielding from solar flares), this argument can be skipped entirely.
@@ -249,15 +309,37 @@
 		return 0
 	if (target && !IN_RANGE(src,target,src.interdict_range))
 		return 0
-	if (!intcap || intcap.charge < use_cost)
+	var/net_use_cost = ceil(use_cost * src.interdict_cost_mult)
+	if (!intcap || intcap.charge < net_use_cost)
 		src.stop_interdicting()
 		return 0
 	else
-		intcap.use(use_cost)
-		src.cumulative_cost += use_cost
+		intcap.use(net_use_cost)
+		src.cumulative_cost += net_use_cost
 		if(!skipanim) src.updatecharge()
 		return 1
 
+///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
+/obj/machinery/interdictor/proc/radstorm_interdict(var/target = null)
+	var/use_cost = 900 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+	if (status & BROKEN || !src.canInterdict)
+		return 0
+	if (!target || !IN_RANGE(src,target,src.interdict_range))
+		return 0
+	if (!intcap)
+		src.stop_interdicting()
+		return 0
+	else
+		if(!src.radstorm_paid) //check if we still need to pay the cost for this machine tick; if we don't, good to go, just return right away
+			var/net_use_cost = ceil(use_cost * src.interdict_cost_mult)
+			if(intcap.charge > net_use_cost)
+				intcap.use(net_use_cost)
+				src.cumulative_cost += net_use_cost
+				src.radstorm_paid = TRUE
+			else
+				src.stop_interdicting()
+				return 0
+		return 1
 
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
@@ -319,14 +401,31 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
-	var/interdist = 3
-	//how far the interdictor constructed with this rod will extend its interdiction field
+
+	///How far the interdictor constructed with this rod will extend its interdiction field. Also influences strength against non-localized phenomena.
+	var/interdist = 4
+
+	///If present, influences the efficiency of interdictor operation. Lower number is more efficiency.
+	var/power_multiplier = null
+
+	phi
+		name = "Phi phase-control rod"
+		desc = "A large, narrow cylinder with a conductive core and control circuitry. Substantially increases interdictor efficiency at a cost of range."
+		interdist = 2
+		power_multiplier = 0.6
 
 	sigma
 		name = "Sigma phase-control rod"
 		desc = "A large, narrow cylinder with a highly conductive core and inbuilt control circuitry. Grants full range to interdictors."
 		icon_state = "interdict-rod-ex"
 		interdist = 6
+
+	epsilon
+		name = "Epsilon phase-control rod"
+		desc = "A large, narrow cylinder with a conductive core and control circuitry. Substantially increases interdictor range at a cost of efficiency."
+		icon_state = "interdict-rod-ex"
+		interdist = 10
+		power_multiplier = 1.8
 
 //interdictor board: power management circuitry and whatnot. alternate boards yield different functionality
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
@@ -460,7 +559,7 @@ TYPEINFO(/obj/item/interdictor_board)
 				else
 					..()
 			if(5)
-				if (istype(I, /obj/item/electronics/soldering))
+				if (isscrewingtool(I))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
@@ -480,7 +579,7 @@ TYPEINFO(/obj/item/interdictor_board)
 //1 > 2 (board installation)
 //2 > 3 (core installation)
 //4 > 5 (wire addition)
-//5 > 6 (wire soldering)
+//5 > 6 (screw down wire terminals)
 //6 > complete (plating )
 //transition 3 > 4 (battery installation) is done without an action bar as it's just putting a battery in a little slot
 //there is no visual difference between stage 5 and 6, both use stage 5 icon state
@@ -529,7 +628,7 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (itdr.state == 4)
 			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
 		if (itdr.state == 5)
-			playsound(itdr, 'sound/effects/zzzt.ogg', 30, 1)
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
 		if (itdr.state == 6)
 			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 	onEnd()
@@ -581,13 +680,13 @@ TYPEINFO(/obj/item/interdictor_board)
 			else if(the_tool.inventory_counter)
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
-			itdr.desc = "A nearly-complete frame for a spatial interdictor. Its wiring hasn't been soldered in place."
+			itdr.desc = "A nearly-complete frame for a spatial interdictor. Its wire terminals haven't been secured."
 			return
-		if (itdr.state == 5) //all components and wired > all components and soldered
+		if (itdr.state == 5) //all components and wired > all components and secured
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
-			boutput(owner, "<span class='notice'>You solder the wiring into place. The internal systems are now fully installed.</span>")
-			playsound(itdr, 'sound/effects/zzzt.ogg', 40, 1)
+			boutput(owner, "<span class='notice'>You finish securing the wire terminals. The internal systems are now fully installed.</span>")
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)

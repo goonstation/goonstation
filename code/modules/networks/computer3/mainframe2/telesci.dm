@@ -482,6 +482,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
 		showswirl_out(src.loc)
@@ -512,6 +514,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
@@ -749,7 +753,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")

@@ -820,7 +820,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "aWi" = (
-/obj/critter/zombie/hogan,
+/obj/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -5154,7 +5154,7 @@
 "fWn" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/salt,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "fWs" = (
@@ -5368,7 +5368,6 @@
 "gnk" = (
 /obj/machinery/door/airlock/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	locked = 1;
 	name = "Upper Level Access";
 	req_access_txt = "33"
@@ -8046,7 +8045,7 @@
 /area/swampzone/ground/canyon)
 "jDm" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
@@ -8061,7 +8060,7 @@
 "jDF" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/fire,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "jDP" = (
@@ -12867,7 +12866,6 @@
 "pmV" = (
 /obj/machinery/door/airlock/medical{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	locked = 1;
 	name = "Lower Level Access";
 	req_access_txt = "33"
@@ -13342,7 +13340,7 @@
 /area/crater/cave/lower)
 "pTu" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "pTF" = (
@@ -13546,7 +13544,7 @@
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
+	special = /mob/living/critter/skeleton
 	},
 /turf/unsimulated/grasstodirt{
 	dir = 1
@@ -15178,7 +15176,7 @@
 /area/crypt/graveyard)
 "sgi" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "sgr" = (
@@ -15351,7 +15349,7 @@
 "srz" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/proj,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "srT" = (

@@ -307,7 +307,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/smg_shot.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	implanted = /obj/item/implant/projectile/bullet_22
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
 
@@ -1285,7 +1285,7 @@ datum/projectile/bullet/autocannon
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
-					O.prime()
+					O.detonate()
 				return
 			else //what the hell happened
 				return

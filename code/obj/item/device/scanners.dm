@@ -12,7 +12,7 @@ Contains:
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
 TYPEINFO(/obj/item/device/t_scanner)
-	mats = 5
+	mats = list("CRY-1", "CON-1")
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
@@ -23,7 +23,8 @@ TYPEINFO(/obj/item/device/t_scanner)
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
-	m_amt = 150
+	m_amt = 50
+	g_amt = 20
 	var/scan_range = 3
 	var/client/last_client = null
 	var/image/last_display = null
@@ -499,7 +500,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	mats = 3
 
 /obj/item/device/analyzer/atmospheric
-	desc = "A hand-held environmental scanner which reports current gas levels."
+	desc = "A hand-held environmental scanner which reports current gas levels and can track nearby hull breaches."
 	name = "atmospheric analyzer"
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
@@ -511,6 +512,11 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	throw_speed = 4
 	throw_range = 20
 	var/analyzer_upgrade = 0
+	///The breach we are currently tracking
+	var/atom/target = null
+	var/hudarrow_color = "#0df0f0"
+	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
+	var/datum/air_group/tracking_airgroup = null
 
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
@@ -527,14 +533,67 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 
 		src.add_fingerprint(user)
 
-		var/turf/location = get_turf(user)
-		if (isnull(location))
-			user.show_text("Unable to obtain a reading.", "red")
-			return
+		if (!src.target)
+			src.find_breach()
+			if (src.target)
+				user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
+				src.UpdateOverlays(image('icons/obj/items/device.dmi', "atmos-tracker"), "breach_tracker")
+		else
+			src.tracker_off(user)
 
-		user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [location].</span>")
-		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
-		return
+	proc/tracker_off(mob/user)
+		src.UpdateOverlays(null, "breach_tracker")
+		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
+		src.target = null
+		src.tracking_airgroup = null
+
+	///Search the current airgroup for space borders and point to the closest one
+	proc/find_breach()
+		var/turf/simulated/T = get_turf(src)
+		if (!src.tracking_airgroup)
+			if (!istype(T) || !T.parent)
+				boutput(src.loc, "<span class='alert'>Unable to read atmospheric flow.</span>")
+				return
+			src.tracking_airgroup = T.parent
+
+		for (var/turf/breach in src.tracking_airgroup?.space_borders)
+			for (var/dir in cardinal)
+				var/turf/space/potential_space = get_step(breach, dir)
+				if (istype(potential_space) && (!src.target || (GET_DIST(src.target, T) > GET_DIST(potential_space, T))))
+					src.target = potential_space
+					break
+		if (!src.target)
+			src.tracking_airgroup = null
+			boutput(src.loc, "<span class='alert'>No breaches found in current atmosphere.</span>")
+			return
+		if (ismob(src.loc))
+			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
+			arrow?.change_target(src.target)
+		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, .proc/update_breach)
+
+	///When our target is replaced (most likely no longer a breach), pick a new one
+	proc/update_breach(turf/replaced, turf/new_turf)
+		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
+		//the signal has to be sent before the turf is replaced, but we need to search after it has been replaced, hence the accursed SPAWN(1)
+		SPAWN(1)
+			if (!istype(new_turf, /turf/space))
+				src.target = null
+				src.find_breach()
+				if (!src.target)
+					src.tracker_off(src.loc)
+
+	//we duplicate a little pinpointer code
+	pickup(mob/user)
+		. = ..()
+		if (src.target)
+			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
+
+	dropped(mob/user)
+		. = ..()
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.analyzer_upgrade)
@@ -649,19 +708,37 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_INCARCERATED 4
 
 	///List of record settings
-	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
+	/// The sechud flag that will be applied when scanning someone
+	var/sechud_flag = "None"
 
 	var/list/datum/contextAction/contexts = list()
 
 	New()
-		contextLayout = new /datum/contextLayout/experimentalcircle
+		var/datum/contextLayout/experimentalcircle/context_menu = new
+		context_menu.center = TRUE
+		src.contextLayout = context_menu
 		..()
 		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
 			var/datum/contextAction/prisoner_scanner/action = new actionType()
 			if (action.mode in src.modes)
 				src.contexts += action
+
+	get_desc()
+		. = ..()
+		var/mode_string = "None"
+		if (src.mode == PRISONER_MODE_PAROLED)
+			mode_string = "Paroled"
+		else if (src.mode == PRISONER_MODE_RELEASED)
+			mode_string = "Released"
+		else if (src.mode == PRISONER_MODE_INCARCERATED)
+			mode_string = "Incarcerated"
+
+		. += "<br>Arrest mode: <span class='notice'>[mode_string]</span>"
+		if (sechud_flag != initial(src.sechud_flag))
+			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -723,6 +800,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 				if(PRISONER_MODE_INCARCERATED)
 					E["criminal"] = "Incarcerated"
+			E["sec_flag"] = src.sechud_flag
 			return
 
 		src.active2 = new /datum/db_record()
@@ -741,7 +819,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			if(PRISONER_MODE_INCARCERATED)
 				src.active2["criminal"] = "Incarcerated"
 
-		src.active2["sec_flag"] = "None"
+		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -754,28 +832,37 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	proc/switch_mode(var/mode, var/mob/user)
+	proc/switch_mode(var/mode, set_flag, var/mob/user)
+		if (set_flag)
+			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
+			if (!isnull(flag) && src.sechud_flag != flag)
+				src.sechud_flag = flag
+				tooltip_rebuild = TRUE
+		else if (src.mode != mode)
+			src.mode = mode
+			tooltip_rebuild = TRUE
 
-		src.mode = mode
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
 
-		switch (mode)
-			if(PRISONER_MODE_NONE)
-				boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+				if(PRISONER_MODE_PAROLED)
+					boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
 
-			if(PRISONER_MODE_PAROLED)
-				boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+				if(PRISONER_MODE_RELEASED)
+					boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
 
-			if(PRISONER_MODE_RELEASED)
-				boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
-
-			if(PRISONER_MODE_INCARCERATED)
-				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
+				if(PRISONER_MODE_INCARCERATED)
+					boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
 
 	dropped(var/mob/user)
 		. = ..()
+		if (src.sechud_flag != initial(src.sechud_flag))
+			src.sechud_flag = initial(src.sechud_flag)
+			tooltip_rebuild = TRUE
 		user.closeContextActions()
 
 //// Prisoner Scanner Context Action
@@ -790,15 +877,15 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
 		if(!istype(prisoner_scanner))
 			return
-		prisoner_scanner.switch_mode(src.mode, user)
+		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
 
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
 		return prisoner_scanner in user
 
-	none
-		name = "None"
-		icon_state = "none"
-		mode = PRISONER_MODE_NONE
+	// a "mode" that acts as a simple way to set the sechud flag
+	set_sechud_flag
+		name = "Set Flag"
+		icon_state = "flag"
 	Paroled
 		name = "Paroled"
 		icon_state = "paroled"
@@ -811,6 +898,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
 
 #undef PRISONER_MODE_NONE
 #undef PRISONER_MODE_PAROLED

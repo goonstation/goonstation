@@ -565,7 +565,7 @@ obj/item/contract/macho
 		SPAWN(1 DECI SECOND)
 			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-			user.machoize(1)
+			user.mind?.add_antagonist(ROLE_MACHO_MAN, do_pseudo = TRUE)
 
 		return 1
 
@@ -580,7 +580,7 @@ obj/item/contract/wrestle
 			return 0
 		SPAWN(1 DECI SECOND)
 			sleep(0.1 SECONDS)
-			user.make_wrestler(1)
+			user.mind?.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 			user.traitHolder.addTrait("addict") //HEH
 			user.traitHolder.addTrait("clutz")
 			user.traitHolder.addTrait("leftfeet")

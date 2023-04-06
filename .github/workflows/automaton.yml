@@ -1,4 +1,4 @@
-# Automaton, a beepsky supplement for checking runtime violations in maps
+# Automaton, a beepsky supplement for checking runtime violations in maps and much more
 # Based on Turdis by Yogstation
 
 name: Automaton
@@ -14,7 +14,7 @@ jobs:
 
   runtime:
     name: Runtime Checker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
@@ -27,9 +27,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386 libssl-dev:i386
+          version: automaton
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -84,13 +89,13 @@ jobs:
 
   runtime_full:
     name: "Runtime Checker with Secret Submodule"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default"]
 
     steps:
@@ -102,9 +107,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386 libssl-dev:i386
+          version: automaton
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -159,7 +169,7 @@ jobs:
 
   unit_test:
     name: Unit Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
@@ -169,7 +179,12 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo sed -i 's/azure\.//' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386 libssl-dev:i386
+          version: automaton
 
       - name: Cache BYOND
         uses: actions/cache@v3

@@ -6,7 +6,7 @@
 	cooldown = 450
 	requires_robes = 1
 	cooldown_staff = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
 
 	cast()

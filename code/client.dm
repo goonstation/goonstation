@@ -332,7 +332,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
+									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
 							</html>
 						"}
@@ -364,6 +365,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if (data["error"])
 					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
 					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
+					fallback_scan()
 
 				// Successful Goonhub API query
 				else
@@ -383,6 +385,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							global.vpn_ip_checks["[src.address]"] = FALSE
 							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
 							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+							fallback_scan()
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
@@ -396,6 +399,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			catch(var/exception/e)
 				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
 				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
+				fallback_scan()
 #endif
 
 	//admins and mentors can enter a server through player caps.
@@ -1011,7 +1015,7 @@ var/global/curr_day = null
 	set hidden = TRUE
 	if(!A)
 		var/datum/promise/promise = new
-		var/datum/targetable/refpicker/abil = new
+		var/datum/targetable/refpicker/nonadmin/abil = new
 		abil.promise = promise
 		src.mob.targeting_ability = abil
 		src.mob.update_cursor()
@@ -1022,7 +1026,7 @@ var/global/curr_day = null
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
 		boutput(src, "Target is too far away (it needs to be next to you).")
 		return
-	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
 		return
 	var/icon/icon = getFlatIcon(A)
@@ -1652,6 +1656,8 @@ if([removeOnFinish])
 
 #ifndef SECRETS_ENABLED
 /client/proc/postscan(list/data)
+	return
+/client/proc/fallback_scan()
 	return
 #endif
 

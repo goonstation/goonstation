@@ -1,4 +1,4 @@
-/proc/tomatogibs(turf/T, viral_list, list/ejectables, bdna, btype)
+/proc/tomatogibs(turf/T, list/ejectables, bdna, btype)
 	var/PT = /obj/item/reagent_containers/food/snacks/plant/tomato
 
 	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \

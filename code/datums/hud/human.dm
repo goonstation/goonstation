@@ -42,7 +42,6 @@
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
-	var/show_genetics_abilities = TRUE
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -268,7 +267,7 @@
 			toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
 			rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-			rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+			rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
@@ -434,18 +433,13 @@
 				if (icon_x > 16)
 					if (icon_y > 16)
 						master.set_a_intent(INTENT_DISARM)
-						master.check_for_intent_trigger()
 					else
 						master.set_a_intent(INTENT_HARM)
-						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
 						master.set_a_intent(INTENT_HELP)
-						master.check_for_intent_trigger()
 					else
 						master.set_a_intent(INTENT_GRAB)
-						master.check_for_intent_trigger()
-				src.update_intent()
 
 			if ("mintent")
 				if (master.m_intent == "run")
@@ -496,14 +490,14 @@
 				//src.update_sprinting()
 
 			if ("ability")
-				if(show_genetics_abilities)
-					show_genetics_abilities = FALSE
-					boutput(master, "No longer showing genetic abilities.")
+				if(!master.abilityHolder.hidden)
+					master.abilityHolder.hidden = TRUE
+					boutput(master, "No longer showing abilities.")
 				else
-					show_genetics_abilities = TRUE
-					boutput(master, "Now showing genetic abilities.")
+					master.abilityHolder.hidden = FALSE
+					boutput(master, "Now showing abilities.")
 
-				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][show_genetics_abilities]"
+				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][!master.abilityHolder.hidden]"
 				update_ability_hotbar()
 
 			if ("health")
@@ -855,9 +849,6 @@
 		if(isdead(master))
 			return
 
-		// remove genetics buttons
-		for(var/atom/movable/screen/ability/topBar/genetics/G in src.objects)
-			remove_object(G)
 		for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 			master.client.screen -= PO
 		for(var/obj/ability_button/B in master.client.screen)
@@ -878,22 +869,6 @@
 			if(pos_x > 15)
 				pos_x = 1
 				pos_y++
-
-		// if toggled off, do not show genetics abilities
-		if (show_genetics_abilities)
-			var/datum/bioEffect/power/P
-			for(var/ID in master.bioHolder.effects)
-				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
-					continue
-				var/datum/targetable/geneticsAbility/POWER = P.ability
-				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object
-				BUTTON.update_on_hud(pos_x,pos_y)
-
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
 
 		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
 			var/obj/vehicle/V = master.loc
@@ -1018,9 +993,6 @@
 			health_oxy.icon_state = "moxy[stage]"
 			health_oxy.tooltipTheme = "healthDam healthDam[stage]"
 
-			// may as well let you see you're being irradiated if you can already see individual things like oxy/tox/burn/brute
-			//update_rad_indicator(master.radiation ? 1 : 0)
-
 			return
 
 		else
@@ -1028,7 +1000,6 @@
 			health_burn.icon_state = "blank"
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
-			update_rad_indicator(0)
 
 			if (isdead(master) || master.fakedead)
 				health.icon_state = "health7" // dead
@@ -1159,9 +1130,10 @@
 			return
 		fire.icon_state = "fire[status]"
 
-	proc/update_rad_indicator(var/status)
+	proc/update_rad_indicator()
 		if (!rad) // not rad :'(
 			return
+		var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 		rad.icon_state = "rad[status]"
 
 	proc/change_hud_style(var/icon/new_file)
