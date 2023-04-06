@@ -1707,6 +1707,31 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
 
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype)
+	//This proc generates a seed with a copy of the planttype and genes of a given parent plant.
+	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
+
+	var/obj/item/seed/child = new /obj/item/seed
+	var/datum/plant/child_planttype = parent_planttype
+	var/datum/plantgenes/child_genes = child.plantgenes
+	// If the plant is a standard plant, our work here is mostly done
+	if (!child_planttype.hybrid)
+		child.generic_seed_setup(child_planttype)
+	HYPpassplantgenes(parent_genes, child_genes)
+	// for spliced plants, we have to go some additional steps
+	if (child_planttype.hybrid)
+		var/plantType = child_planttype.type
+		var/datum/plant/hybrid = new plantType(child)
+		for (var/transfered_variables in child_planttype.vars)
+			if (issaved(child_planttype.vars[transfered_variables]) && transfered_variables != "holder")
+				hybrid.vars[transfered_variables] = child_planttype.vars[transfered_variables]
+		child.planttype = hybrid
+	//Now the seed it created and we can release it upon the world
+	return child
+
+
+
+
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
 	// Should be mostly self-explanatory to read through.

@@ -104,37 +104,30 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
+		var/damage_to_other_plants = 10 // the amount of damage the plant deals to other plants
+		var/chance_to_damage = 33 // the chance per tick to damage plants or spread per tick.
+		var/health_treshold_for_spreading = 50 // percentage amount of starting health of the plant needed to be able to spread
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && POT.health > P.starthealth / 2 && prob(33))
-			for (var/obj/machinery/plantpot/C in range(1,POT))
-				var/datum/plant/growing = C.current
-				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
-					C.HYPdamageplant("physical",10,1)
-				else if (C.dead)
-					C.HYPdestroyplant()
+		var/datum/plant/current_planttype = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		if (POT.growth > (current_planttype.growtime + DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
+				var/datum/plant/growing = checked_plantpot.current
+				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
+					checked_plantpot.HYPdamageplant("physical", damage_to_other_plants, 1)
+				else if (checked_plantpot.dead)
+					checked_plantpot.HYPdestroyplant()
 				//Seedless prevents the creeper to replant itself
-				else if (!C.current && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
-					var/obj/item/seed/WS = new /obj/item/seed
-					var/datum/plantgenes/New_DNA = WS.plantgenes
-					if (!P.hybrid)
-						WS.generic_seed_setup(P)
-					HYPpassplantgenes(DNA,New_DNA)
-					// for spliced plants, we have to go some additional steps
-					if (P.hybrid)
-						var/plantType = P.type
-						var/datum/plant/hybrid = new plantType(WS)
-						for (var/V in P.vars)
-							if (issaved(P.vars[V]) && V != "holder")
-								hybrid.vars[V] = P.vars[V]
-						WS.planttype = hybrid
-					//devolve the plant in case of tumbling creeper
+				else if (!growing && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
+					//we create a new seed now
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype)
+					//we now devolve the seed to not make tumbler spread like wildfire
+					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					New_DNA.mutation = null
 					// now we are able to plant the seed
-					C.HYPnewplant(WS)
+					checked_plantpot.HYPnewplant(temporary_seed)
 					spawn(0.5 SECONDS)
-						qdel(WS)
+						qdel(temporary_seed)
 					break
 
 /datum/plant/weed/radweed

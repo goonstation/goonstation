@@ -137,22 +137,9 @@
 					other_plantpot.HYPdestroyplant()
 				else if (!other_plantpot.current && src.plantgenes && !HYPCheckCommut(src.plantgenes, /datum/plant_gene_strain/seedless))
 					//we create a new seed now
-					var/obj/item/seed/temporary_seed = new /obj/item/seed
-					var/datum/plant/New_Planttype = src.planttype
-					var/datum/plantgenes/DNA = src.plantgenes
-					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
-					if (!New_Planttype.hybrid)
-						temporary_seed.generic_seed_setup(New_Planttype)
-					HYPpassplantgenes(DNA,New_DNA)
-					// for spliced plants, we have to go some additional steps
-					if (New_Planttype.hybrid)
-						var/plantType = New_Planttype.type
-						var/datum/plant/hybrid = new plantType(temporary_seed)
-						for (var/transfered_variables in New_Planttype.vars)
-							if (issaved(New_Planttype.vars[transfered_variables]) && transfered_variables != "holder")
-								hybrid.vars[transfered_variables] = New_Planttype.vars[transfered_variables]
-						temporary_seed.planttype = hybrid
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(src.plantgenes, src.planttype)
 					//we now devolve the seed to not make tumbler spread like wildfire
+					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					New_DNA.mutation = null
 					// now we are able to plant the seed
 					other_plantpot.HYPnewplant(temporary_seed)
