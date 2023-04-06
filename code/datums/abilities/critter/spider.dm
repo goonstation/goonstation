@@ -57,8 +57,6 @@
 	target_anything = TRUE
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -137,8 +135,6 @@
 	target_anything = TRUE
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -283,8 +279,6 @@
 	var/sound/sound_kick = "clownstep"
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())

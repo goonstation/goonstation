@@ -10,8 +10,6 @@
 	icon_state = "frenzy"
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -77,8 +75,6 @@
 	icon_state = "claw_maul"
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
