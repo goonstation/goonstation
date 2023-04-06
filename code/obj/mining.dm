@@ -1118,13 +1118,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/mining_tool/) || istype(W, /obj/item/armblade))
+		if(istype(W,/obj/item/mining_tool/))
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user, T)
 			if (T.status)
 				T.process_charges(T.digcost)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
+		else if (istype(W, /obj/item/armblade))
+			var/obj/item/armblade/A = W
+			src.dig_asteroid(user, A.tool)
 		else if (istype(W, /obj/item/oreprospector))
 			var/message = "----------------------------------<br>"
 			message += "<B>Geological Report:</B><br><br>"

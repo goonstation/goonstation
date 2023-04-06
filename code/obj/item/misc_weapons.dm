@@ -1974,8 +1974,8 @@ obj/item/whetstone
 		T.name = src.name
 		T.desc = src.desc
 		T.dig_strength = 5
-		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		T.hitsound_charged = 'sound/weapons/cutter.ogg'
+		T.hitsound_uncharged = 'sound/weapons/cutter.ogg'
 		src.shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
