@@ -234,7 +234,7 @@
 /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
 	name = "buttburger"
 	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
-	icon_state = "assburger"
+	icon_state = "synthbuttburger"
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 	name = "buttburger"
@@ -382,7 +382,7 @@
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
-	icon_state = "Synthburger"
+	icon_state = "synthburger"
 	bites_left = 5
 	heal_amt = 2
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
