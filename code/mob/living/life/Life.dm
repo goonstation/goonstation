@@ -268,7 +268,7 @@
 			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 			if (iscarbon(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR))
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
