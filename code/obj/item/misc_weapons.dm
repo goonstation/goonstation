@@ -2044,10 +2044,10 @@ obj/item/whetstone
 			stamina_cost = 15
 			stamina_crit_chance = 30
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
-			setProperty("meleeprot_all", 4)
+			setProperty("meleeprot_all", 6)
 			setProperty("rangedprot", 0.7)
-			setProperty("movespeed", 0.4)
-			setProperty("disorient_resist", 40)
+			setProperty("movespeed", 0.3)
+			setProperty("disorient_resist", 60)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
 			user.UpdateOverlays(src.shield, "shield")
