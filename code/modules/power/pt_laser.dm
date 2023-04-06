@@ -487,7 +487,11 @@ ABSTRACT_TYPE(/obj/laser_sink)
 
 #define NW_SE 0
 #define SW_NE 1
+TYPEINFO(/obj/laser_sink/mirror)
+	mats = list("MET-1"=10, "CRY-2"=10, "REF-1"=10)
 /obj/laser_sink/mirror
+	name = "laser mirror"
+	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."
 	anchored = 0
 	density = 1
 	icon = 'icons/obj/stationobjs.dmi'
@@ -496,6 +500,14 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	var/obj/linked_laser/out_laser = null
 	var/obj/linked_laser/in_laser = null
 	var/facing = NW_SE
+
+/obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
+	if (isscrewingtool(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		src.anchored = !src.anchored
+	else
+		..()
 
 /obj/laser_sink/mirror/attack_hand(mob/user)
 	if (ON_COOLDOWN(src, "rotate", 1 SECOND)) //this is probably a good idea
