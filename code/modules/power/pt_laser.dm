@@ -519,24 +519,26 @@ TYPEINFO(/obj/laser_sink/mirror)
 	if (laser)
 		src.incident(laser)
 
-/obj/laser_sink/mirror/incident(obj/linked_laser/laser)
-	if (src.in_laser) //no infinite loops allowed
-		return FALSE
-	src.in_laser = laser
+/obj/laser_sink/mirror/proc/get_reflected_dir(dir)
 	//very stupid angle maths
 	var/angle
 	if (src.facing == NW_SE)
-		if (laser.dir in list(WEST, EAST))
+		if (dir in list(WEST, EAST))
 			angle = 90
 		else
 			angle = -90
 	else
-		if (laser.dir in list(WEST, EAST))
+		if (dir in list(WEST, EAST))
 			angle = -90
 		else
 			angle = 90
-	var/out_dir = turn(laser.dir, angle) //rotate based on which way the mirror is facing
-	src.out_laser = laser.copy_laser(get_turf(src), out_dir)
+	return turn(dir, angle) //rotate based on which way the mirror is facing
+
+/obj/laser_sink/mirror/incident(obj/linked_laser/laser)
+	if (src.in_laser) //no infinite loops allowed
+		return FALSE
+	src.in_laser = laser
+	src.out_laser = laser.copy_laser(get_turf(src), src.get_reflected_dir(laser.dir))
 	laser.next = out_laser
 	src.out_laser.icon_state = "[initial(src.out_laser.icon_state)]_corner[src.facing]"
 	return TRUE
@@ -553,6 +555,15 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/disposing()
 	src.exident(src.in_laser)
 	..()
+
+/obj/laser_sink/mirror/bullet_act(obj/projectile/P)
+	//cooldown to prevent client lag caused by infinite projectile loops
+	if (istype(P.proj_data, /datum/projectile/laser/heavy) && !ON_COOLDOWN(src, "reflect_projectile", 1 DECI SECOND))
+		var/obj/projectile/new_proj = shoot_projectile_DIR(src, P.proj_data, src.get_reflected_dir(P.dir))
+		new_proj.travelled = P.travelled
+		P.die()
+	else
+		..()
 
 #undef NW_SE
 #undef SW_NE
