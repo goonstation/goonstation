@@ -1095,7 +1095,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.gloves, /obj/item/clothing/gloves/concussive))
 				var/obj/item/clothing/gloves/concussive/C = H.gloves
-				src.dig_asteroid(user,C.tool)
+				src.dig_asteroid(user ,C.tool)
+				return
+			else if (istype(H.equipped(), /obj/item/armblade))
+				var/obj/item/armblade/A = H.equipped()
+				src.dig_asteroid(user, A.tool)
 				return
 			else if (H.is_hulk())
 				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
@@ -1113,7 +1117,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if(ishuman(L))
 				H = L
 			var/obj/item/held = L.equipped()
-			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive) || istype(held, /obj/item/armblade))))
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || istype(held, /obj/item/armblade) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
 				UNLINT(L.click(src, list(), null, null))
 			return
 
