@@ -1097,10 +1097,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				var/obj/item/clothing/gloves/concussive/C = H.gloves
 				src.dig_asteroid(user ,C.tool)
 				return
-			else if (istype(H.equipped(), /obj/item/armblade))
-				var/obj/item/armblade/A = H.equipped()
-				src.dig_asteroid(user, A.tool)
-				return
 			else if (H.is_hulk())
 				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
 				playsound(H.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
@@ -1122,9 +1118,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/mining_tool/))
+		if(istype(W,/obj/item/mining_tool/) || istype(W, /obj/item/armblade))
 			var/obj/item/mining_tool/T = W
-			src.dig_asteroid(user,T)
+			src.dig_asteroid(user, T)
 			if (T.status)
 				T.process_charges(T.digcost)
 		else if (istype(W, /obj/item/mining_tools))

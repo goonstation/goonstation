@@ -1976,7 +1976,7 @@ obj/item/whetstone
 		T.dig_strength = 5
 		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
+		src.shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
 	attack_self(mob/user)
