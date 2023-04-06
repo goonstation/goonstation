@@ -106,6 +106,29 @@
 		}
 	</style>
 	"}
+
+	var/antagonist_roles
+	var/number_of_antagonist_roles = ""
+
+	if (M.mind)
+		var/number_of_antagonists = 0
+		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
+			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
+			if (antagonist_role.pseudo)
+				display_name += " <span class='pseudo'>(pseudo)</span>"
+			else
+				number_of_antagonists++
+
+			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
+
+		if (isnull(antagonist_roles))
+			antagonist_roles += "No antagonist roles present."
+		else
+			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
+
+		if (number_of_antagonists)
+			number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
+
 	//General info
 	//  Logs link:
 	//  <a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key];origin=adminplayeropts'>LOGS</a>
@@ -124,7 +147,7 @@
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
-	<br>Mob Type: <b>[M.type]</b>
+	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
 </div>
 	"}
 
@@ -321,19 +344,6 @@
 
 	if(!istype(M, /mob/new_player))
 		if (M.mind)
-			var/antagonist_roles
-			for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
-				var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
-				if (antagonist_role.pseudo)
-					display_name += " <span class='pseudo'>(pseudo)</span>"
-
-				antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
-
-			if (isnull(antagonist_roles))
-				antagonist_roles += "No antagonist roles present."
-			else
-				antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
-
 			dat += {"
 				<div class='optionGroup' style='border-color: #B57EDC;'>
 					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
