@@ -1315,7 +1315,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 				else if (istype(CROP,/obj/item/tumbling_creeper))
 					// tumbling creepers behave with their DNA values are like food, but cannot be eaten.... ugh
-					// TODO: Make a proc that transfers all seed information, included hybrids
 					var/obj/item/tumbling_creeper/affected_creeper = CROP
 					var/datum/plantgenes/FDNA = affected_creeper.plantgenes
 
