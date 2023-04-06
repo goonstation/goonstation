@@ -537,6 +537,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 			angle = 90
 	var/out_dir = turn(laser.dir, angle) //rotate based on which way the mirror is facing
 	src.out_laser = laser.copy_laser(get_turf(src), out_dir)
+	laser.next = out_laser
 	src.out_laser.icon_state = "[initial(src.out_laser.icon_state)]_corner[src.facing]"
 	return TRUE
 
@@ -775,6 +776,8 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/linked_laser/ptl/disposing()
 	src.remove_simple_light("laser_beam")
+	src.next?.previous = null
+	src.previous?.next = null
 	if (src.is_edge)
 		src.source.selling = FALSE
 	..()
