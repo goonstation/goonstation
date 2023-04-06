@@ -665,11 +665,11 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				for(var/turf/T in view(5,src.loc))
-					if(!T.reagents)
-						T.create_reagents(1000)
-					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, 1)
+				for (var/i in 1 to rand(3,5))
+					var/datum/projectile/neutron/projectile = new(15)
+					shoot_projectile_DIR(src, projectile, pick(alldirs))
+				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
