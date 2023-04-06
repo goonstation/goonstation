@@ -45,7 +45,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	name = "base arcfiend ability (you should never see me)"
 	icon = 'icons/mob/arcfiend.dmi'
 	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/arcfiend
 

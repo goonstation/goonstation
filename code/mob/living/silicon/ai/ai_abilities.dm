@@ -248,12 +248,12 @@
 				return FALSE
 
 	doCooldown()
-		var/since_last_cast = world.time - src.last_cast
+		var/since_last_cast = src.cooldowncheck()
 		var/cd_penalty_chance = clamp(src.cooldown * 2 - (since_last_cast), 0, 10)
 		..()
 		if(prob(cd_penalty_chance))
 			boutput(holder.owner, "<span class='alert'>Expansion module registers an error that must be adjusted for.</span>")
-			src.last_cast += src.cooldown
+			src.doCooldown()
 
 	proc/get_first_teleporter()
 		var/mob/living/silicon/ai/AI

@@ -957,8 +957,11 @@
 	proc/updateObject()
 		return
 
-	proc/doCooldown()
-		return ON_COOLDOWN(src, "cast", src.cooldown)
+	/// Apply the cooldown of this ability- resets cooldown to src.cooldown even if ability is on cooldown already,
+	/// if customCooldown is provided, use that instead of src.cooldown
+	proc/doCooldown(customCooldown)
+		SHOULD_CALL_PARENT(TRUE)
+		return ON_COOLDOWN(src, "cast", customCooldown || src.cooldown)
 
 	proc/castcheck(atom/target)
 		return 1

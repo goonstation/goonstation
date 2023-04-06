@@ -19,15 +19,14 @@
 		if (istype(user.abilityHolder))
 			var/datum/targetable/ability = user.abilityHolder.addAbility(ability_path)
 			if (istype(ability))
-				ability.last_cast = last_cast
+				ability.doCooldown(src.last_cast - world.time)
 
 	unequipped(var/mob/user)
 		..()
 		if (ability_path && istype(user.abilityHolder))
-
 			var/datum/targetable/ability = user.abilityHolder.getAbility(ability_path)
 			if (istype(ability))
-				src.last_cast = ability.last_cast
+				src.last_cast = world.time + ability.cooldowncheck()
 			user.abilityHolder.removeAbility(ability_path)
 			if (istype(user.abilityHolder, /datum/abilityHolder/wizard))
 				user.abilityHolder = null

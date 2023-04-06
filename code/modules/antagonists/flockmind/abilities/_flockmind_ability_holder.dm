@@ -47,7 +47,6 @@
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "template"
 	cooldown = 40
-	last_cast = 0
 	targeted = TRUE
 	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/flockmind
@@ -68,9 +67,7 @@
 	return FALSE
 
 /datum/targetable/flockmindAbility/doCooldown()
-	if (!holder)
-		return
-	last_cast = world.time + cooldown
+	. = ..()
 	holder.updateButtons()
 	SPAWN(cooldown + 5)
 		holder?.updateButtons()

@@ -61,7 +61,6 @@
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "lizard"
 	cooldown = 0
-	last_cast = 0
 	targeted = 0
 	preferred_holder_type = /datum/abilityHolder/lizard
 	var/mob/living/carbon/human/L

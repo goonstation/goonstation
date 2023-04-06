@@ -31,7 +31,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -60,7 +60,6 @@
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "template"
 	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/merchant
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
@@ -82,11 +81,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/merchant()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -94,7 +95,6 @@
 				pttxt = " \[[pointCost]\]"
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
-		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)

@@ -180,8 +180,9 @@
 		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
 			return 1
 
-		if (!src.cooldowncheck())
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown)] seconds.</span>")
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner

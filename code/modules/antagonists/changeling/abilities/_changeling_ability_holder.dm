@@ -26,7 +26,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -180,7 +180,6 @@
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "template" // No longer ToDo thanks to Sundance420.
 	cooldown = 0
-	last_cast = 0
 	var/abomination_only = 0
 	var/human_only = 0
 	var/can_use_in_container = 0
@@ -201,11 +200,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/changeling()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""

@@ -250,7 +250,7 @@
 /atom/movable/screen/ability/topBar/revenant
 	update_cooldown_cost()
 		var/newcolor = null
-		var/on_cooldown = round((owner.last_cast - world.time) / 10)
+		var/on_cooldown = src.cooldowncheck()
 
 		if (owner.pointCost)
 			if (owner.pointCost > owner.holder.relay.points)
@@ -298,9 +298,7 @@
 			return 0
 
 	doCooldown()
-		if (!holder)
-			return
-		last_cast = world.time + cooldown
+		. = ..()
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
 			holder?.updateButtons()
