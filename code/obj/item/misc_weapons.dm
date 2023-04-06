@@ -2054,7 +2054,7 @@ obj/item/whetstone
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
 			setProperty("meleeprot_all", 6)
 			setProperty("rangedprot", 0.7)
-			setProperty("movespeed", 0.05)
+			setProperty("movespeed", 0.3)
 			setProperty("disorient_resist", 60)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
