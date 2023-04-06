@@ -277,10 +277,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 /datum/targetable/geneticsAbility
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "template"
-	last_cast = 0
-	targeted = 1
-	target_anything = 1
-	var/has_misfire = 1
+	targeted = TRUE
+	target_anything = TRUE
+	var/has_misfire = TRUE
 	var/success_prob_min_cap = 30
 	var/can_act_check = 1
 	var/needs_hands = 1

@@ -129,7 +129,7 @@
 
 		if (!isturf(usr.loc))
 			return
-		if (world.time < spell.last_cast)
+		if (spell.cooldowncheck())
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -184,9 +184,10 @@
 			qdel(object)
 		..()
 
-	doCooldown()
-		src.last_cast = world.time + calculate_cooldown()
-		SPAWN(calculate_cooldown() + 5)
+	doCooldown(customCooldown)
+		var/on_cooldown = src.calculate_cooldown()
+		. = ..(on_cooldown)
+		SPAWN(on_cooldown + 0.5 SECONDS)
 			holder.updateButtons()
 
 	//mbc : i don't see why the wizard needs a specialized tryCast() proc. someone fix it later for me!
@@ -197,7 +198,7 @@
 		if (H.locked && !src.ignore_holder_lock)
 			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE // ASSHOLES
-		if (src.last_cast > world.time)
+		if (src.cooldowncheck())
 			return
 		if (isunconscious(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are unconscious.</span>")
@@ -267,8 +268,9 @@
 		if (!src.object)
 			src.object = new /atom/movable/screen/ability/topBar/spell()
 		object.icon = src.icon
-		if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
+		var/on_cooldown = src.calculate_cooldown()
+		if (on_cooldown)
+			object.name = "[src.name] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			object.name = src.name

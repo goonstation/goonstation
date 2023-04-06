@@ -649,7 +649,7 @@
 
 		var/newcolor = null
 
-		var/on_cooldown = round(src.cooldowncheck())
+		var/on_cooldown = round(src.owner.cooldowncheck())
 
 		if (owner.pointCost)
 			if (owner.pointCost > owner.holder.points)
@@ -663,7 +663,7 @@
 		if (on_cooldown > 0)
 			newcolor = rgb(96, 96, 96)
 			cooldown_overlay.alpha = 255
-			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, on_cooldown)]</span>"
+			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, round(on_cooldown/(1 SECOND)))]</span>" // on_cooldown is deciseconds, we display seconds
 			point_overlay.alpha = 64
 		else
 			cooldown_overlay.alpha = 0
@@ -675,7 +675,7 @@
 
 
 
-	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
+	proc/update_on_hud(pos_x = 0, pos_y = 0)
 
 		UpdateIcon()
 
@@ -957,11 +957,15 @@
 	proc/updateObject()
 		return
 
-	/// Apply the cooldown of this ability- resets cooldown to src.cooldown even if ability is on cooldown already,
-	/// if customCooldown is provided, use that instead of src.cooldown
+	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already,
 	proc/doCooldown(customCooldown)
 		SHOULD_CALL_PARENT(TRUE)
-		return ON_COOLDOWN(src, "cast", customCooldown || src.cooldown)
+		return OVERRIDE_COOLDOWN(src, "cast", customCooldown || src.cooldown)
+
+	/// Helper to set an ability's cooldown to 0 (ie make it usable again)
+	proc/resetCooldown()
+		SHOULD_NOT_OVERRIDE(TRUE)
+		return doCooldown(0)
 
 	proc/castcheck(atom/target)
 		return 1

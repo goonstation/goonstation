@@ -31,7 +31,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (src.cooldowncheck())
+			if (src.owner.cooldowncheck())
 				return
 			usr.targeting_ability = owner
 			usr.update_cursor()

@@ -1349,7 +1349,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			usr.targeting_ability = owner
 			usr.update_cursor()
@@ -1360,8 +1360,6 @@
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
-	cooldown = 0
-	last_cast = 0
 	preferred_holder_type = /datum/abilityHolder/organ
 	var/disabled = 0
 	var/toggled = 0
@@ -1383,11 +1381,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/organ()
 			object.icon = src.icon
 			object.owner = src
+
+		var/on_cooldown = src.cooldowncheck()
 		if (disabled)
 			object.name = "[src.name] (unavailable)"
 			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
+		else if (on_cooldown)
+			object.name = "[src.name] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else if (toggled)
 			if (is_on)

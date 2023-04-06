@@ -66,4 +66,4 @@
 
 		var/mob/living/M = owner
 		boutput(M, "<span class='alert'>Your transformation was interrupted!</span>")
-		transform.last_cast = 0 //reset cooldown
+		src.transform.resetCooldown()

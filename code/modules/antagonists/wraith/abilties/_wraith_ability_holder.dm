@@ -36,12 +36,10 @@
 /datum/targetable/wraithAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "template"
-	cooldown = 0
-	last_cast = 0
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/wraith
-	ignore_holder_lock = 1 //So we can still do things while our summons are coming
+	ignore_holder_lock = TRUE //So we can still do things while our summons are coming
 	theme = "wraith"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
@@ -71,10 +69,8 @@
 				return 1
 		return 0
 
-	doCooldown()
-		if (!holder)
-			return
-		last_cast = world.time + cooldown
+	doCooldown(customCooldown)
+		. = ..()
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
 			holder?.updateButtons()

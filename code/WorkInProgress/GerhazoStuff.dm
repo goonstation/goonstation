@@ -120,7 +120,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -150,9 +150,6 @@
 /datum/targetable/cyalume_knight
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_base"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/cyalume_knight
 
 	New(datum/abilityHolder/holder)
@@ -177,7 +174,6 @@
 	icon_state = "cknight_return_sword"
 	targeted = 0
 	cooldown = 6 SECONDS
-	pointCost = 0
 	var/obj/item/sword/sword = null
 
 	onAttach(datum/abilityHolder/holder)

@@ -83,16 +83,12 @@
 		return 0
 
 
-	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
-		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
-			return
+	doCooldown(customCooldown)         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
+		var/on_cooldown
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
-				cooldown = 45 SECONDS
+				on_cooldown = 45 SECONDS // I don't know how this is ever reached- they have to eat a body for us to ever be casting this, so they're gonna have a corpse
 			else
-				cooldown += W.corpsecount * 150
-		last_cast = world.time + cooldown
-		holder.updateButtons()
-		SPAWN(cooldown + 5)
-			holder?.updateButtons()
+				on_cooldown += W.corpsecount * 15 SECONDS
+		. = ..(on_cooldown)

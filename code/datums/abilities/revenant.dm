@@ -250,7 +250,7 @@
 /atom/movable/screen/ability/topBar/revenant
 	update_cooldown_cost()
 		var/newcolor = null
-		var/on_cooldown = src.cooldowncheck()
+		var/on_cooldown = src.owner.cooldowncheck()
 
 		if (owner.pointCost)
 			if (owner.pointCost > owner.holder.relay.points)

@@ -417,11 +417,11 @@
 					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
 					var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
 					var/datum/bioEffect/power/jumpy/jumpy = src.bioHolder.GetEffect("jumpy")
-					if (eyebeams && !eyebeams.cooldowncheck())
+					if (eyebeams && !eyebeams.ability.cooldowncheck())
 						eyebeams?.ability.handleCast(target)
-					else if (cryokinesis && cryokinesis.cooldowncheck())
+					else if (cryokinesis && cryokinesis.ability.cooldowncheck())
 						cryokinesis?.ability.handleCast(target)
-					else if (jumpy && jumpy.cooldowncheck())
+					else if (jumpy && jumpy.ability.cooldowncheck())
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand

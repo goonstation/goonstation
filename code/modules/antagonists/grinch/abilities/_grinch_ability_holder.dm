@@ -18,7 +18,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -38,8 +38,6 @@
 /datum/targetable/grinch
 	icon = 'icons/mob/grinch_ui.dmi'
 	icon_state = "grinchtemplate"
-	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/grinch
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
@@ -53,7 +51,6 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.object = B
-		return
 
 	updateObject()
 		..()
@@ -61,11 +58,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/grinch()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -73,7 +72,6 @@
 				pttxt = " \[[pointCost]\]"
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
-		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)
@@ -127,4 +125,3 @@
 	cast(atom/target)
 		. = ..()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return

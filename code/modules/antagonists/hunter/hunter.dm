@@ -215,7 +215,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -235,9 +235,6 @@
 /datum/targetable/hunter
 	icon = 'icons/mob/hunter_abilities.dmi'
 	icon_state = "trophycount"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/hunter
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
@@ -251,7 +248,6 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.object = B
-		return
 
 	updateObject()
 		..()
@@ -259,11 +255,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/hunter()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""

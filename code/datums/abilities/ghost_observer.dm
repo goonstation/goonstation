@@ -213,7 +213,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 #endif
 
 /datum/targetable/ghost_observer
-	cooldown = 0	preferred_holder_type = /datum/abilityHolder/ghost_observer
+	cooldown = 0
+	preferred_holder_type = /datum/abilityHolder/ghost_observer
 	icon = 'icons/mob/ghost_observer_abilities.dmi'
 	icon_state = "teleport"
 

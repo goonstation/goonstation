@@ -27,7 +27,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (src.cooldowncheck())
+			if (src.owner.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()

@@ -357,7 +357,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 /datum/targetable/artifact_limb_ability
 	icon = 'icons/mob/artifact_limb_abilities.dmi'
 	icon_state = "template-eldritch"
-	last_cast = 0
 	target_anything = TRUE
 
 /datum/targetable/artifact_limb_ability/eldritch_run

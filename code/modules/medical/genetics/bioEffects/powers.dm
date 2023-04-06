@@ -1250,7 +1250,7 @@
 		if (linked_power.power > 1)
 			base_path = /obj/
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, base_path)
 
 		if(target)
 			if (!(target in items))
@@ -1260,11 +1260,11 @@
 				boutput(usr, "<span class='alert'>You can't find anything nearby to touch.</span>")
 				return TRUE
 
-			linked_power.using = 1
+			linked_power.using = TRUE
 			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 			if (!the_object)
-				last_cast = 0
-				linked_power.using = 0
+				src.resetCooldown()
+				linked_power.using = FALSE
 				return TRUE
 
 		if(isitem(the_object))
@@ -1304,9 +1304,9 @@
 		linked_power.using = 1
 		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
+			src.resetCooldown()
+			linked_power.using = FALSE
+			return TRUE
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -2115,14 +2115,14 @@
 		if(!the_object)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
-				return 1
+				return TRUE
 
 			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
 			if (!the_object)
-				last_cast = 0
-				return 1
+				src.resetCooldown()
+				return TRUE
 		if (!(the_object in items))
-			return 1
+			return TRUE
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2130,7 +2130,7 @@
 		else
 			owner.visible_message("<span class='alert'>[owner] sprays ink onto [the_object]!</span>")
 			the_object.color = I.color
-		return 0
+		return FALSE
 
 /datum/bioEffect/power/shoot_limb
 	name = "Vestigal Ballistics"

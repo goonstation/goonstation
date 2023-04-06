@@ -49,13 +49,13 @@
 			var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
 			if (the_spiker.shuffling)
 				boutput(holder.owner, "<span class='notice'>You cannot use this while you're all squished up like that!</span>")
-				return TRUE
-		if (disabled && TIME > last_cast)
-			disabled = 0
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (disabled && !src.cooldowncheck())
+			disabled = FALSE
 		if (disabled)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
@@ -64,26 +64,26 @@
 					target = M
 					break
 		if (target == holder.owner)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (!ismob(target))
 			boutput(holder.owner, "<span class='alert'>Nothing to lash at there.</span>")
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to lash at.</span>")
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/M = target
 		if (!is_incapacitated(M))
 			boutput(holder.owner, "<span class='alert'>That is moving around far too much to immobilize.</span>")
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		playsound(holder.owner, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
-		disabled = 1
+		src.disabled = TRUE
 		SPAWN(0)
 			var/frenz = 5
-			holder.owner.canmove = 0
+			holder.owner.canmove = FALSE
 			holder.owner.set_loc(M.loc)
 			while (frenz > 0 && M && !M.disposed)
 				M.setStatus("weakened", 1.5 SECONDS)
-				M.canmove = 0
+				M.canmove = FALSE
 				if (M.loc && holder.owner.loc != M.loc)
 					break
 				if (is_incapacitated(holder?.owner))
@@ -102,7 +102,7 @@
 			if (M)
 				M.canmove = 1
 			doCooldown()
-			disabled = 0
+			disabled = FALSE
 			holder.owner.pixel_x = 0
 			holder.owner.pixel_y = 0
 			holder.owner.canmove = 1

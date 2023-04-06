@@ -27,7 +27,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -63,8 +63,6 @@
 /datum/targetable/gang
 	icon = 'icons/mob/gang_abilities.dmi'
 	icon_state = "gang-template"
-	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/gang
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
@@ -94,11 +92,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/gang()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
