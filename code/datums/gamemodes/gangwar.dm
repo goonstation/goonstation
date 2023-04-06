@@ -17,8 +17,13 @@
 	var/hot_zone_timer = 5 MINUTES
 	var/hot_zone_score = 1000
 
+#ifdef RP_MODE
+	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
+	var/const/delay_between_kidnappings = 12 MINUTES
+#else
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
+#endif
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
