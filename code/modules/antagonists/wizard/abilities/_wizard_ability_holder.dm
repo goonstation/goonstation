@@ -129,8 +129,6 @@
 
 		if (!isturf(usr.loc))
 			return
-		if (spell.cooldowncheck())
-			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
 			usr.update_cursor()

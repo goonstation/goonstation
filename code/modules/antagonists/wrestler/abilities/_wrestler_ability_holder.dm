@@ -30,17 +30,16 @@
 		else
 			SPAWN(0)
 				spell.handleCast()
-		return
 
 /datum/abilityHolder/wrestler
-	usesPoints = 0
+	usesPoints = FALSE
 	regenRate = 0
 	tabName = "Wrestler"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
-	var/fake = 0
+	var/fake = FALSE
 
 /datum/abilityHolder/wrestler/fake
-	fake = 1
+	fake = TRUE
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
 
 /datum/targetable/wrestler

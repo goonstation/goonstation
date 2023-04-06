@@ -333,7 +333,7 @@
 			if (casting)
 				var/on_cooldown = casting.cooldowncheck()
 				if(on_cooldown)
-					boutput(owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown)] seconds.</span>")
+					boutput(owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown / (1 SECOND))] seconds.</span>")
 					return FALSE
 				altPower.handleCast(target, params)
 				return TRUE
@@ -771,7 +771,7 @@
 				else
 					var/on_cooldown = owner.cooldowncheck()
 					if (on_cooldown)
-						boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown)] seconds.</span>")
+						boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown) / (1 SECOND)] seconds.</span>")
 						return
 
 					if (!owner.targeted)
@@ -919,7 +919,7 @@
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/cooldown_time_left = src.cooldowncheck()
 		if (cooldown_time_left)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [cooldown_time_left] seconds.</span>")
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [cooldown_time_left / (1 SECOND)] seconds.</span>")
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (src.restricted_area_check)
@@ -958,9 +958,10 @@
 		return
 
 	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already,
+	/// 0 is a valid argument so we check for null specifically
 	proc/doCooldown(customCooldown)
 		SHOULD_CALL_PARENT(TRUE)
-		return OVERRIDE_COOLDOWN(src, "cast", customCooldown || src.cooldown)
+		return OVERRIDE_COOLDOWN(src, "cast", isnull(customCooldown) ? src.cooldown : customCooldown)
 
 	/// Helper to set an ability's cooldown to 0 (ie make it usable again)
 	proc/resetCooldown()

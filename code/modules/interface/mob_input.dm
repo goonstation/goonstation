@@ -50,7 +50,7 @@
 			SPAWN(0)
 				S.handleCast(target)
 				if(S)
-					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
+					if((S.ignore_sticky_cooldown && S.cooldowncheck()) || (S.sticky && !S.cooldowncheck()))
 						if(src)
 							src.targeting_ability = S
 							src.update_cursor()
