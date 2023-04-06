@@ -1,4 +1,13 @@
 
+(t)wed apr 05 23
+(u)Amylizzle
+(p)13544
+(e)🗺🔒🔄📦📡|A-Mapping, A-Secret, C-Rework, A-Game-Objects, A-AI
+(*)Mimics are now capable of disguising themselves as a wide variety of objects, and can cause hallucinations.
+(u)Ikea
+(p)13574
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The game now tries to award the commander role for nukeops to an operative who has previously won a nuclear round before picking any non-winner operatives.
 (t)sun apr 02 23
 (u)Mr. Moriarty
 (p)12733

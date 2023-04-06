@@ -2183,3 +2183,40 @@ datum
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 
+		harmful/mimic_toxin
+			name = "mimicotoxin"
+			id = "mimicotoxin"
+			description = "A mild psychoactive neurotoxin that attacks the optic nerve, causing hallucinations, temporary blindness in low doses, and finally permenant blindness"
+			taste = "intensely bitter"
+			reagent_state = SOLID
+			fluid_r = 188
+			fluid_g = 111
+			fluid_b = 207
+			transparency = 255
+			depletion_rate = 0.2
+			target_organs = list("left_eye", "right_eye")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				var/poison_amount = holder.get_reagent_amount(src.id)
+				if(poison_amount > 5)
+					for(var/obj/item/I in oview(M,5))
+						if(probmult(2))
+							var/image/mimicface = image(icon('icons/misc/critter.dmi',"mimicface"))
+							mimicface.loc = I
+							mimicface.blend_mode = BLEND_INSET_OVERLAY
+							var/client/client = M.client //hold a reference to the client directly
+							client?.images.Add(mimicface)
+							if(prob(25))
+								M.show_message("[I] suddenly opens eyes that weren't there and sprouts teeth!", 1)
+							SPAWN (10 SECONDS)
+								client?.images.Remove(mimicface)
+								qdel(mimicface)
+				if(poison_amount > 15)
+					M.setStatusMin("blinded", 10 SECONDS * mult)
+				if(poison_amount > 30)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.take_eye_damage(1)
+					else
+						M.take_toxin_damage(1 * mult)
