@@ -14,7 +14,11 @@
 
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
+#ifdef RP_MODE
+	var/hot_zone_timer = 10 MINUTES
+#else
 	var/hot_zone_timer = 5 MINUTES
+#endif
 	var/hot_zone_score = 1000
 
 #ifdef RP_MODE
@@ -190,7 +194,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN(hot_zone_timer-600)
+	SPAWN(hot_zone_timer - 1 MINUTE)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
