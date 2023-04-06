@@ -1962,12 +1962,20 @@ obj/item/whetstone
 
 	var/mode = OFFENSIVE_MODE
 	var/attached = FALSE
+	var/obj/item/mining_tool/tool = null
 	var/image/shield = null
 
 	abilities = list(/obj/ability_button/armblade_toggle)
 
 	New()
 		..()
+		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
+		src.tool = T
+		T.name = src.name
+		T.desc = src.desc
+		T.dig_strength = 5
+		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
@@ -2046,7 +2054,7 @@ obj/item/whetstone
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
 			setProperty("meleeprot_all", 6)
 			setProperty("rangedprot", 0.7)
-			setProperty("movespeed", 0.3)
+			setProperty("movespeed", 0.05)
 			setProperty("disorient_resist", 60)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
@@ -2060,7 +2068,7 @@ obj/item/whetstone
 			stamina_damage = 25
 			stamina_cost = 20
 			stamina_crit_chance = 10
-			hitsound = 'sound/weapons/hadar_impact.ogg'
+			hitsound = 'sound/weapons/cutter.ogg'
 			setProperty("meleeprot_all", 0)
 			setProperty("rangedprot", 0)
 			setProperty("movespeed", 0)
