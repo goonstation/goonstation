@@ -139,10 +139,11 @@
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
-			var/chargescale = input(user,"Minimum [src.chargerate_min] | Maximum [src.chargerate_max] | Current [src.chargerate]","Target Recharge per Cycle","1") as num
-			chargescale = clamp(chargescale,src.chargerate_min,src.chargerate_max)
-			src.chargerate = chargescale
-			return
+			if(emagged || src.allowed(user))
+				var/chargescale = input(user,"Minimum [src.chargerate_min] | Maximum [src.chargerate_max] | Current [src.chargerate]","Target Recharge per Cycle","1") as num
+				chargescale = clamp(chargescale,src.chargerate_min,src.chargerate_max)
+				src.chargerate = chargescale
+				return
 		else if(istype(W, /obj/item/card/id))
 			if(!emagged && !src.check_access(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
