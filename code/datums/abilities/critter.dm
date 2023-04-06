@@ -24,7 +24,6 @@
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "template"  // TODO.
 	cooldown = 0
-	last_cast = 0
 	var/disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
@@ -46,11 +45,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/critter()
 			object.icon = src.icon
 			object.owner = src
+
+		var/on_cooldown = src.cooldowncheck()
 		if (disabled)
 			object.name = "[src.name] (unavailable)"
 			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
+		else if (on_cooldown)
+			object.name = "[src.name] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else if (toggled)
 			if (is_on)
