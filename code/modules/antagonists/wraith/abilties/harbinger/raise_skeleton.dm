@@ -32,23 +32,25 @@
 				boutput(usr, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
 				return 1
 			var/personname = H.real_name
-			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(get_turf(T))
+			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(get_turf(T))
 			S.name = "[personname]'s skeleton"
-			S.health = 30
+			S.health_burn = 15
+			S.health_brute = 15
 			H.gib()
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			return 0
 		if (isobj(T))
 			if (istype(T, /obj/storage/closet) || istype(T, /obj/storage/secure/closet))
 				var/obj/storage/C = T
-				for (var/obj/critter/wraithskeleton/S in C)
+				for (var/mob/living/critter/skeleton/wraith/S in C)
 					boutput(holder.owner, "That container is already rattling, you can't summon a skeleton in there!")
 					return 1
 				if (C.open)
 					C.close()
-				var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(C)
+				var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(C)
 				S.name = "Locker skeleton"
-				S.health = 20
+				S.health_burn = 10
+				S.health_brute = 10
 				S.icon = 'icons/misc/critter.dmi'
 				S.icon_state = "skeleton"
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)

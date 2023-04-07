@@ -2192,7 +2192,6 @@
 			hit.changeStatus("weakened", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
-		return 0
 
 	cast(atom/target)
 		if (..())

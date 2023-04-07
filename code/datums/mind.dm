@@ -238,10 +238,9 @@ datum/mind
 	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
 		if (!master)
 			return FALSE
-		// Refuse to add multiple types of the same antagonist, provided that the existing role's pseudo status is the same as the new role's.
-		for (var/datum/antagonist/antagonist as anything in src.antagonists)
-			if (antagonist.id == role_id && ((do_pseudo || do_vr) == (antagonist.pseudo || antagonist.vr)))
-				return FALSE
+		// To avoid wacky shenanigans
+		if (!isnull(src.get_antagonist(role_id)))
+			src.remove_antagonist(role_id)
 		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
 			var/datum/antagonist/subordinate/A = V
 			if (initial(A.id) == role_id)

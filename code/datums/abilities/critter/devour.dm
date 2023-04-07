@@ -51,7 +51,7 @@
 	desc = "After a short delay, instantly devour a mob. Both you and the target must stand still for this."
 	cooldown = 0
 	icon_state = "maneater_munch"
-	var/actual_cooldown = 200
+	var/actual_cooldown = 200 // fuck off
 	targeted = 1
 	target_anything = 1
 
