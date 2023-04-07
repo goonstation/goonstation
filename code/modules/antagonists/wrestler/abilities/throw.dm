@@ -2,16 +2,13 @@
 	name = "Throw (grab)"
 	desc = "Spin a grabbed opponent around and throw them."
 	icon_state = "Throw"
-	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0
-	target_selection_check = 0
 	max_range = 0
 	cooldown = 200
-	start_on_cooldown = 1
-	pointCost = 0
+	start_on_cooldown = TRUE
 	when_stunned = 0
-	not_when_handcuffed = 1
+	not_when_handcuffed = TRUE
 
 	cast(mob/target)
 		if (!holder)
@@ -22,7 +19,7 @@
 		if (!M)
 			return 1
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
+		var/obj/item/grab/G = src.grab_check()
 		if (!G || !istype(G))
 			return 1
 

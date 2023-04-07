@@ -138,15 +138,12 @@
 	name = "Select DNA Sting target"
 	desc = "Select target for DNA sting"
 	icon_state = "stingdna"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
 	copiable = FALSE
 	lock_holder = FALSE
-	ignore_holder_lock = 1
+	ignore_holder_lock = TRUE
 	var/datum/bioHolder/dna_sting_target = null
 	var/datum/targetable/changeling/sting = null
-	sticky = 1
+	sticky = TRUE
 
 	onAttach(var/datum/abilityHolder/G)
 		var/datum/abilityHolder/changeling/H = G

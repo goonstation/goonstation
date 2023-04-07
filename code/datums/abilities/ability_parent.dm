@@ -465,26 +465,20 @@
 	// See /atom/movable/screen/ability/wrestler/clicked() for a practical example (Convair880).
 	proc/do_target_selection_check()
 		var/datum/targetable/spell = owner
-		var/use_targeted = 0
+		var/use_targeted = FALSE
 
-		if (!spell || !istype(spell))
-			return 0
-		if (!spell.holder)
-			return 0
-
-		if (spell.target_selection_check == 1)
-			var/list/mob/targets = spell.target_reference_lookup()
-			if (targets.len <= 0)
-				boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
-				use_targeted = 2 // Abort parent proc.
-			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
-				use_targeted = 0
-				SPAWN(0)
-					spell.handleCast(targets[1])
-				use_targeted = 2 // Abort parent proc.
-			else
-				boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
-				use_targeted = 1
+		var/list/mob/targets = spell.target_reference_lookup()
+		if (length(targets) == 0)
+			boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
+			use_targeted = 2 // Abort parent proc.
+		else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
+			use_targeted = 0 // Quickly switch to non-targeted since we're immediately casting this on the one guy
+			SPAWN(0)
+				spell.handleCast(targets[1])
+			use_targeted = 2 // Abort parent proc since we're casting from here instead
+		else // >2 targets
+			boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
+			use_targeted = 1
 
 		return use_targeted
 
@@ -826,13 +820,13 @@
 	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
 	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
 	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
-	var/target_selection_check = FALSE 			//! See comment in /atom/movable/screen/ability.
+	var/target_selection_check = FALSE 			//! If this ability is targeted
 	var/lock_holder = TRUE 						//! If FALSE, bypass holder lock when we cast this spell.
-	var/ignore_holder_lock = FALSE				//! Can we cast this spell when the holder is locked?
+	var/ignore_holder_lock = FALSE				//! Can we cast this ability when the holder is locked?
 	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
 	var/check_range = TRUE						//! Does this check for range at all?
-	var/sticky = FALSE 							//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
-	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
+	var/sticky = FALSE 							//! Targeting stays active after using this ability if this is 1. click button again to disable the active ability.
+	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability targeting will remain active even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 			//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 
 	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
@@ -900,51 +894,51 @@
 	// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
 	// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 	proc/tryCast(atom/target, params)
+		. = CAST_ATTEMPT_SUCCESS
 		if (!holder?.owner)
-			logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
+			stack_trace("Orphaned ability used: [identify_object(src)] by [identify_object(usr)]. Issue: ([holder ? "no owning mob" : "no abilityHolder"].)")
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.holder.locked && !src.ignore_holder_lock)
 			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
 		if (src.lock_holder)
 			src.holder.locked = TRUE
+
 		if (!src.holder.pointCheck(pointCost))
-			src.holder.locked = FALSE
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (!src.holder.cast_while_dead && isdead(holder.owner))
+			boutput(holder.owner, "<span class='alert'>You don't have enough points to cast [src.name].</span>")
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (!src.holder.cast_while_dead && isdead(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
-			src.holder.locked = FALSE
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		var/cooldown_time_left = src.cooldowncheck()
-		if (cooldown_time_left)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [cooldown_time_left / (1 SECOND)] seconds.</span>")
-			src.holder.locked = FALSE
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (src.restricted_area_check)
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (src.cooldowncheck())
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (src.restricted_area_check)
 			var/turf/T = get_turf(holder.owner)
-			if (!T || !isturf(T))
+			if (!isturf(T))
 				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			switch (src.restricted_area_check)
-				if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
-					if (isrestrictedz(T.z))
-						boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-						src.holder.locked = FALSE
-						return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-				if (ABILITY_AREA_CHECK_VR_ONLY)
-					var/area/A = get_area(T)
-					if (A && istype(A, /area/sim))
-						boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
-						src.holder.locked = FALSE
-						return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
+				. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			else
+				switch (src.restricted_area_check)
+					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
+						if (isrestrictedz(T.z))
+							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+					if (ABILITY_AREA_CHECK_VR_ONLY)
+						var/area/A = get_area(T)
+						if (istype(A, /area/sim))
+							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
+							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
 			target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
-			src.holder.locked = FALSE
-			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
-		if (!castcheck(target))
-			src.holder.locked = FALSE
-			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
+		else if (!castcheck(target))
+			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
+
+		if (. != CAST_ATTEMPT_SUCCESS)
+			return
+
 		var/datum/abilityHolder/localholder = src.holder
 		. = cast(target, params)
 		if(!QDELETED(localholder))
@@ -964,8 +958,9 @@
 	/// Helper to set an ability's cooldown to 0 (ie make it usable again)
 	proc/resetCooldown()
 		SHOULD_NOT_OVERRIDE(TRUE)
-		return doCooldown(0)
+		return src.doCooldown(0)
 
+	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast
 	proc/castcheck(atom/target)
 		return TRUE
 
@@ -979,81 +974,46 @@
 		updateObject(holder.owner)
 		stat(null, object)
 
-	// Universal grab check you can use (Convair880).
-	proc/grab_check(var/mob/target, var/state = 1, var/dirty = 0)
-		if (!holder || state < 1)
-			return 0
+	/// Grab check for abilities. returns the grab we're using, or FALSE if we don't have a valid or strong enough grab
+	/// Works for off hand and active hand
+	proc/grab_check(var/min_state = GRAB_STRONG)
+		var/mob/living/user = holder.owner
+		if (!isliving(user))
+			return FALSE
 
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
+		var/obj/item/grab/G = user.equipped()
+		if (!istype(G))
+			// missed active hand, check off hand
+			G = user.hand ? user.r_hand : user.l_hand
+			if (!istype(G))
+				boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
+				return FALSE
 
-		var/obj/item/grab/G = null
 
-		if (dirty == 1)
-			var/obj/item/grab/GD = M.equipped()
-
-			if (!GD || !istype(GD) || (!GD.affecting || !ismob(GD.affecting)))
-				boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
-				return 0
-
-			var/mob/living/L = GD.affecting
-			if (L && ismob(L) && L != M)
-				if (GD.state >= state)
-					G = GD
-				else
-					boutput(M, "<span class='alert'>You need a tighter grip!</span>")
+		var/mob/living/L = G.affecting
+		if (istype(L) && L != user)
+			if (G.state >= min_state)
+				return G
 			else
-				boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
-
-			return G
-
+				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+				return FALSE
 		else
-			if (!target || !ismob(target))
-				return 0
-
-			if (src.targeted)
-				for (var/obj/item/grab/G2 in M)
-					if (G2.affecting)
-						if (G2.affecting != target)
-							continue
-						if (G2.affecting == M)
-							continue
-						if (G2.state >= state)
-							G = G2
-							break
-						else
-							boutput(M, "<span class='alert'>You need a tighter grip!</span>")
-							return 0
-				if (isnull(G) || !istype(G))
-					boutput(M, "<span class='alert'>You need to grab hold of [target] first!</span>")
-					return 0
-				else
-					return G
-
-		return 0
+			boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
+			return FALSE
 
 	// See comment in /atom/movable/screen/ability (Convair880).
 	proc/target_reference_lookup()
 		var/list/mob/targets = list()
-
-		if (!holder)
-			return targets
-
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return targets
-
-		for (var/mob/living/L in oview(src.max_range, M))
+		for (var/mob/living/L in oview(src.max_range, src.holder.owner))
 			targets.Add(L)
 
 		return targets
 
 	proc/display_available()
-		.= (src.icon && src.icon_state)
+		. = (src.icon && src.icon_state)
 
 	proc/flip_callback()
-		.= 0
+		. = 0
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

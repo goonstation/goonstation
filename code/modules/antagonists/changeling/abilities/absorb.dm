@@ -75,7 +75,7 @@
 			return 1
 		var/mob/living/C = holder.owner
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
+		var/obj/item/grab/G = src.grab_check()
 		if (!G || !istype(G))
 			return 1
 		var/mob/living/carbon/human/T = G.affecting
@@ -190,7 +190,7 @@
 			return 1
 		var/mob/living/C = holder.owner
 
-		var/obj/item/grab/G = src.grab_check(null, 3, 1)
+		var/obj/item/grab/G = src.grab_check(GRAB_CHOKE)
 		if (!G || !istype(G))
 			return 1
 		var/mob/living/carbon/human/T = G.affecting

@@ -59,6 +59,7 @@
 	var/stat = 0
 	var/next_click = 0
 	var/transforming = null
+	/// 1 is LEFT, 0 is RIGHT
 	var/hand = 0
 	var/eye_blind = null
 	var/eye_blurry = null

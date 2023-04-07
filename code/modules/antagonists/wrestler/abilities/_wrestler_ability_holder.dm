@@ -19,17 +19,17 @@
 			usr.update_cursor()
 			return
 
-		var/use_targeted = src.do_target_selection_check()
-		if (use_targeted == 2)
-			return
-		if (spell.targeted || use_targeted == 1)
-			if (spell.cooldowncheck())
+		if (spell.target_selection_check)
+			var/use_targeted = src.do_target_selection_check()
+			if (use_targeted == 2)
 				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
+			if (spell.targeted || use_targeted == 1)
+				if (spell.cooldowncheck())
+					return
+				owner.holder.owner.targeting_ability = owner
+				owner.holder.owner.update_cursor()
+
+		spell.handleCast()
 
 /datum/abilityHolder/wrestler
 	usesPoints = FALSE

@@ -5,7 +5,7 @@
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1
-	target_selection_check = 1
+	target_selection_check = TRUE
 	max_range = 1
 	cooldown = 250
 	start_on_cooldown = 1

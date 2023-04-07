@@ -5,7 +5,6 @@
 	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0
-	target_selection_check = 0
 	max_range = 0
 	cooldown = 250
 	start_on_cooldown = 1
@@ -22,7 +21,7 @@
 		if (!M)
 			return 1
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
+		var/obj/item/grab/G = src.grab_check()
 		if (!G || !istype(G))
 			return 1
 
