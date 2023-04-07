@@ -856,6 +856,7 @@ datum
 			return FALSE
 
 		proc/get_reagent(var/reagent_id)
+			RETURN_TYPE(/datum/reagent)
 			return reagent_list[reagent_id]
 
 		proc/get_reagent_amount(var/reagent)

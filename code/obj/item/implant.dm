@@ -450,6 +450,30 @@ THROWING DARTS
 		src.send_message(message, MGA_TRACKING, "TRACKER-MAILBOT")
 		..()
 
+/obj/item/implant/pod_wars
+	name = "pilot tracking implant"
+
+	deactivate()
+		. = ..()
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
+		C?.RemoveComponent(/datum/component/minimap_marker)
+
+	on_death()
+		src.deactivate()
+
+/obj/item/implant/pod_wars/nanotrasen
+
+	activate()
+		. = ..()
+		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+
+/obj/item/implant/pod_wars/syndicate
+
+	activate()
+		. = ..()
+		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+
+
 /** Deprecated **/
 /obj/item/implant/syn
 	name = "syndicate implant"

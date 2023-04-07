@@ -383,7 +383,6 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -400,7 +399,6 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
