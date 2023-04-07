@@ -1,7 +1,8 @@
 /mob/living/critter/mimic
-	name = "mechanical toolbox"
+	name = "Mimic"
 	desc = null
-	icon_state = null
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mimicface"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
@@ -65,12 +66,17 @@
 		src.appearance = src.disguise
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.is_hiding = TRUE
+		qdel(src.name_tag)
+		src.name_tag = null
 		src.UpdateIcon()
 
 
 	proc/stop_hiding()
 		if(src.is_hiding)
 			src.is_hiding = FALSE
+			src.name_tag = new()
+			src.update_name_tag()
+			src.vis_contents += src.name_tag
 			src.UpdateIcon()
 			src.visible_message("[src] suddenly opens eyes that weren't there and sprouts teeth!")
 
