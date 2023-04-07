@@ -450,7 +450,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/molitz_on_hit
 	max_generations = 1
 	execute(var/atom/owner, var/obj/attackobj)
-		owner.material.triggerTemp(owner, 1500)
+		owner.material.triggerTemp(owner, 499)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
