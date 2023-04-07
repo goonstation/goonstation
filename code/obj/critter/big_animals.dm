@@ -567,37 +567,3 @@ obj/critter/bear/care
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat
 	name = "bat egg"
 	critter_type = /obj/critter/bat
-
-/obj/critter/lion
-	name = "lion"
-	desc = "Oh christ"
-	icon_state = "lion"
-	density = 1
-	health = 20
-	aggressive = 1
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.5
-	brutevuln = 0.5
-	butcherable = 1
-	scavenger = 1
-	crit_chance = 15
-	atk_brute_amt = 10
-	crit_brute_amt = 20
-	atk_text = "savagely bites"
-	chase_text = "lunges upon"
-	crit_text = "really tears into"
-	death_text = "%src% gives up the ghost!"
-
-	CritterAttack(mob/M)
-		..()
-
-	ChaseAttack(mob/M)
-		..()
-		if(iscarbon(M))
-			if(prob(50)) M.changeStatus("stunned", 3 SECONDS)
-		random_brute_damage(M, rand(4,8),1)

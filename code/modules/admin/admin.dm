@@ -46,46 +46,43 @@ var/global/noir = 0
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
-	var/level = 0
-	switch(rank)
-		if("Host")
-			level = LEVEL_HOST
-		if("Coder")
-			level = LEVEL_CODER
-		if("Administrator")
-			level = LEVEL_ADMIN
-		if("Primary Administrator")
-			level = LEVEL_PA
-		if("Intermediate Administrator")
-			level = LEVEL_IA
-		if("Secondary Administrator")
-			level = LEVEL_SA
-		if("Moderator")
-			level = LEVEL_MOD
-		if("Goat Fart", "Ayn Rand's Armpit")
-			level = LEVEL_BABBY
-	return level
+	switch(lowertext(rank))
+		if("host")
+			return LEVEL_HOST
+		if("coder")
+			return LEVEL_CODER
+		if("administrator")
+			return LEVEL_ADMIN
+		if("primary administrator")
+			return LEVEL_PA
+		if("intermediate administrator")
+			return LEVEL_IA
+		if("secondary administrator")
+			return LEVEL_SA
+		if("moderator")
+			return LEVEL_MOD
+		if("goat fart", "ayn rand's armpit")
+			return LEVEL_BABBY
 
 /proc/level_to_rank(var/level)
-	var/rank = "ERROR"
 	switch(level)
 		if(LEVEL_HOST)
-			rank = "Host"
+			return "Host"
 		if(LEVEL_CODER)
-			rank = "Coder"
+			return "Coder"
 		if(LEVEL_ADMIN)
-			rank = "Administrator"
+			return "Administrator"
 		if(LEVEL_PA)
-			rank = "Primary Administrator"
+			return "Primary Administrator"
 		if(LEVEL_IA)
-			rank = "Intermediate Administrator"
+			return "Intermediate Administrator"
 		if(LEVEL_SA)
-			rank = "Secondary Administrator"
+			return "Secondary Administrator"
 		if(LEVEL_MOD)
-			rank = "Moderator"
+			return "Moderator"
 		if(LEVEL_BABBY)
-			rank = "Goat Fart or Ayn Rand's Armpit"
-	return rank
+			return "Goat Fart or Ayn Rand's Armpit"
+	return "ERROR"
 
 /datum/admins/Topic(href, href_list)
 	..()
@@ -517,6 +514,7 @@ var/global/noir = 0
 			if (isnull(centcomviewer))
 				centcomviewer = new
 			centcomviewer.target_key = target.key
+			centcomviewer.force_static_data_update = TRUE
 			centcomviewer.ui_interact(usr.client.mob)
 
 		/////////////////////////////////////ban stuff
@@ -873,7 +871,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +881,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -2036,7 +2036,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
 			if (tgui_alert(usr,"Make [M] a macho man?", "Make Macho", list("Yes", "No")) == "Yes")
-				M.machoize()
+				M.mind?.add_antagonist(ROLE_MACHO_MAN)
 
 		if ("makeslasher")
 			if( src.level < LEVEL_PA )
@@ -4789,10 +4789,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
-				M.mind.special_role = ROLE_FLOOR_GOBLIN
-				M.make_floor_goblin()
-				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_FLOOR_GOBLIN, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)

@@ -238,9 +238,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
-			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
-				src.occupant?.set_mutantrace(null)
+			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
@@ -248,8 +248,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 		if (istype(oldabilities))
-			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
-			// Maybe not a bug? idk.
+			oldabilities.on_clone()
 			src.occupant.abilityHolder = oldabilities // This should already be a copy.
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
@@ -381,7 +380,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else
-					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [src.occupant] with return code [success].")
+					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove [antag.display_name] antag status from [src.occupant] with return code [success].")
 
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)

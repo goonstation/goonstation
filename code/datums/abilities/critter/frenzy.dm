@@ -9,8 +9,6 @@
 	target_anything = TRUE
 	icon_state = "frenzy"
 
-	var/datum/projectile/slam/proj = new
-
 	var/frenzy_low = 6 // minimum number of frenzies
 	var/frenzy_high = 10 // max number of frenzies
 	var/frenzy_damage = 7
@@ -25,8 +23,6 @@
 	var/list/attack_verbs = list("mauls", "claws", "slashes", "tears at", "lacerates", "mangles") // verbs for each frenzy
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = FALSE // break the deadlock
 		if (disabled)
 			return TRUE
 		if (..())
@@ -54,10 +50,10 @@
 		disabled = TRUE
 		SPAWN(0)
 			var/frenz = rand(frenzy_low, frenzy_high)
-			holder.owner.canmove = FALSE
+			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "frenzy")
 			while (frenz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", weakened_dur)
-				MT.canmove = FALSE
+				APPLY_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "frenzy")
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
 				if (is_incapacitated(holder?.owner))
@@ -74,12 +70,12 @@
 				sleep(0.5 SECONDS)
 				frenz--
 			if (MT)
-				MT.canmove = TRUE
+				REMOVE_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "frenzy")
 			doCooldown()
 			disabled = FALSE
 			holder.owner.pixel_x = 0
 			holder.owner.pixel_y = 0
-			holder.owner.canmove = TRUE
+			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "frenzy")
 
 		return FALSE
 

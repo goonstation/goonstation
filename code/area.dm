@@ -41,6 +41,8 @@ TYPEINFO(/area)
 	var/minimaps_to_render_on = null
 	/// What colour should be displayed for this tile on the station map?
 	var/station_map_colour = MAPC_DEFAULT
+	/// Whether this area should be rendered separately to allow for the map colour to be changed during the game, and if so what area group to be rendered with.
+	var/dynamic_map_colour_group = null
 
 	// some semi-random turf in the area to guide spy thieves
 	var/turf/spyturf = null
@@ -3499,6 +3501,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
 
+// Pirate ship:
+/area/pirate_ship
+	name = "Peregrine"
+	icon_state = "red"
+	requires_power = 0
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
+
 /// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"
@@ -5641,6 +5651,12 @@ area/station/security/visitation
 
 */
 // pod_wars Areas
+/area/pod_wars
+	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE
+
+/area/pod_wars/team1
+	station_map_colour = MAPC_NANOTRASEN
+
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
 	icon_state = "purple"
@@ -5680,6 +5696,9 @@ area/station/security/visitation
 /area/pod_wars/team1/magnet
 	name = "NSV Pytheas Mineral Magnet"
 	icon_state = "purple"
+
+/area/pod_wars/team2
+	station_map_colour = MAPC_SYNDICATE
 
 /area/pod_wars/team2/bridge
 	name = "Lodbrok Bridge"
@@ -5721,6 +5740,12 @@ area/station/security/visitation
 	name = "Lodbrok Mineral Magnet"
 	icon_state = "purple"
 
+/area/pod_wars/team2
+	station_map_colour = MAPC_SYNDICATE
+
+/area/pod_wars/spacejunk
+	station_map_colour = MAPC_NEUTRAL
+
 /area/pod_wars/spacejunk/restaurant
 	name = "Cheesy Chuck's Premium Eatery"
 	icon_state = "yellow"
@@ -5736,6 +5761,8 @@ area/station/security/visitation
 /area/pod_wars/spacejunk/reliant
 	name = "NSV Reliant"
 	icon_state = "yellow"
+	station_map_colour = MAPC_UNCLAIMED
+	dynamic_map_colour_group = GROUP_NSV_RELIANT
 
 /area/pod_wars/spacejunk/reliant/landingpads
 	name = "NSV Reliant Landing Pads"
@@ -5756,6 +5783,8 @@ area/station/security/visitation
 /area/pod_wars/spacejunk/fstation
 	name = "Fortuna Main Hall"
 	icon_state = "blue"
+	station_map_colour = MAPC_UNCLAIMED
+	dynamic_map_colour_group = GROUP_FORTUNA
 
 /area/pod_wars/spacejunk/fstation/primary
 	name = "Fortuna Primary Dock"
@@ -5804,6 +5833,10 @@ area/station/security/visitation
 /area/pod_wars/spacejunk/fstation/landingpads
 	name = "Fortuna Landing Pads"
 	icon_state = "green"
+
+/area/pod_wars/spacejunk/uvb67
+	station_map_colour = MAPC_UNCLAIMED
+	dynamic_map_colour_group = GROUP_UVB67
 
 /area/pod_wars/spacejunk/uvb67/power
 	name = "UVB-67 Power Station"
@@ -5855,6 +5888,7 @@ area/station/security/visitation
 
 #define MAJOR_AST(num) area/pod_wars/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
 
+area/pod_wars/asteroid/station_map_colour = MAPC_ASTEROID
 area/pod_wars/asteroid/major/icon_state = "green"
 area/pod_wars/asteroid/minor/icon_state = "yellow"
 area/pod_wars/asteroid/minor/name = "minor asteroid"

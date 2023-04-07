@@ -37,6 +37,8 @@
 	var/datum/gas_mixture/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
+	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
+	var/thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
 
 	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
@@ -48,11 +50,18 @@
 	var/melted = FALSE
 
 	/// INTERNAL: Used to detemine whether an icon update is needed for the component grid overlay
-	var/_comp_grid_overlay_update = TRUE
+	VAR_PRIVATE/_comp_grid_overlay_update = TRUE
 	/// ref to the turf the reactor light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// INTERNAL: count of old pending grid updates, for the flicker prevention code
-	var/_pending_grid_updates = 0
+	VAR_PRIVATE/_pending_grid_updates = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the reactor grid
+	VAR_PRIVATE/_last_total_thermal_e = 0
+	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
+	VAR_PRIVATE/_last_total_coolant_e = 0
+	/// INTERNAL DEBUG: set to true to output debug messages
+	VAR_PRIVATE/_debug_mode = FALSE
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -68,6 +77,8 @@
 		//Prevents unreachable turfs from being damaged, so as not to ruin engineer rounds
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
+
+		src.air_contents = new /datum/gas_mixture()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
@@ -146,6 +157,13 @@
 		. = ..()
 		if(melted)
 			return
+
+		//pass through last tick's air. We do this here so that atmos analyser can read it in between process calls
+		var/coolant_thermal_e = THERMAL_ENERGY(src.air_contents)
+		src.air2.merge(src.air_contents)
+		//after merge, the original gas mixture is deleted, so create a new one
+		src.air_contents = new /datum/gas_mixture()
+
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
 
@@ -156,9 +174,11 @@
 		if(input_starting_pressure)
 			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		air_contents = air2
+		air_contents.volume = air1.volume
+		gas_input?.volume = air_contents.volume
 		var/total_gas_volume = 0
-
+		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
+		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
@@ -167,13 +187,18 @@
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					if(gas) air_contents.merge(gas)
+					gas_input?.volume -= comp.gas_volume
+					if(gas)
+						src.air_contents.merge(gas)
 
 					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
 
 					//calculate neutron flux
 					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
+
+					total_thermal_e += comp.thermal_mass * comp.temperature
+
 				for(var/datum/neutron/N in src.flux_grid[x][y])
 					var/xmod = 0
 					var/ymod = 0
@@ -188,12 +213,13 @@
 						src.flux_grid[x][y]-=N
 						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
+
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas)
-			air_contents.merge(gas)
+			src.air_contents.merge(gas)
 
 		//if we somehow ended up with input gas still
-		air_contents.merge(gas_input)
+		src.air_contents.merge(gas_input)
 
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
@@ -228,7 +254,15 @@
 			return
 
 		processCaseRadiation(tmpRads)
+
+		src.material.triggerTemp(src,src.temperature)
+
+		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
+		if(src._debug_mode)
+			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
+		src._last_total_thermal_e = total_thermal_e
+
 		src.air1.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
 
@@ -259,19 +293,34 @@
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			var/heat_transfer_mult = 0.95
-			//heat transfer equation = hA(T2-T1)
-			//assume A = 1m^2
-			var/deltaT = src.current_gas.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = calculateHeatTransferCoefficient(null, src.material)
-			if(hTC>0)
-				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
-				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				//Q = mcT
-				//dQ = mc(dT)
-				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*2.5)
+			//first, define some helpful vars
+			// temperature differential
+			var/deltaT = src.temperature - src.current_gas.temperature
+			// temp differential for radiative heating
+			var/deltaTr = (src.temperature ** 4) - (src.current_gas.temperature ** 4)
+			//thermal conductivity
+			var/k = calculateHeatTransferCoefficient(null,src.material)
+			//surface area in thermal contact (m^2)
+			var/A = 10
+
+			var/thermal_e = THERMAL_ENERGY(current_gas)
+
+			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
+			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
+			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
+			//which in this case is given by k
+			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
+			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
+			//by clamping between hottest and coldest. It's not pretty, but it works.
+			var/hottest = max(src.current_gas.temperature, src.temperature)
+			var/coldest = min(src.current_gas.temperature, src.temperature)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+
+			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
+			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
+			if(src.current_gas.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
@@ -593,6 +642,29 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+
+		//enable for faster debugging
+		//src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		//src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		//src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+
+
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				switch(rand(1,4))
+					if(1)
+						src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/random_material
+					if(2)
+						src.component_grid[x][y] = new /obj/item/reactor_component/control_rod/random_material
+					if(3)
+						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
+					if(4)
+						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
+
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown

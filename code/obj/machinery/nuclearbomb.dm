@@ -331,7 +331,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		src._health = max(0,src._health - amount)
 		if (src._health < 1)
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
-			robogibs(src.loc,null)
+			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/gamemode = null
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
