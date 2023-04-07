@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
+	material_amt = 1 //cannot efficiently recycle these
 
 	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
