@@ -552,6 +552,11 @@ TYPEINFO(/obj/laser_sink/mirror)
 	src.exident(src.in_laser)
 	..()
 
+/obj/laser_sink/mirror/set_loc(loc)
+	if (loc != src.loc)
+		src.exident(src.in_laser)
+	..()
+
 /obj/laser_sink/mirror/disposing()
 	src.exident(src.in_laser)
 	..()
