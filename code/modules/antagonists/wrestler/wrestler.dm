@@ -20,8 +20,7 @@
 			H.equip_new_if_possible(/obj/item/storage/backpack, H.slot_back)
 			H.equip_new_if_possible(/obj/item/device/radio/headset/civilian, H.slot_ears)
 			H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, H.slot_l_store)
-			var/is_luchador = pick(TRUE, FALSE)
-			if (is_luchador)
+			if (prob(50)) // Are they a luchador or not?
 				var/obj/item/clothing/mask/rand_mask = get_random_atom(/obj/item/clothing/mask/wrestling)
 				H.equip_new_if_possible(rand_mask, H.slot_wear_mask)
 				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_atom(/obj/item/clothing/under/shorts/luchador)
