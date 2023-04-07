@@ -24441,7 +24441,7 @@
 /area/station/routing/depot)
 "boP" = (
 /obj/machinery/mass_driver{
-	drive_range = 50;
+	drive_range = 15;
 	id = "qm_in"
 	},
 /turf/simulated/floor/plating,
@@ -24468,7 +24468,7 @@
 /area/station/maintenance/east)
 "boW" = (
 /obj/machinery/mass_driver{
-	drive_range = 50;
+	drive_range = 15;
 	id = "qm_in"
 	},
 /obj/machinery/door/poddoor/pyro{
