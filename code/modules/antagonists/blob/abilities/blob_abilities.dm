@@ -1,4 +1,12 @@
-// TODO: merge this with the new ability system.
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
 /datum/blob_ability
 	var/name = null
 	var/desc = null
@@ -11,7 +19,7 @@
 	var/mob/living/intangible/blob_overmind/owner
 	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
-	var/helpable = 1
+	var/helpable = TRUE
 
 	New()
 		..()
@@ -147,9 +155,8 @@
 	name = "Toggle Upgrade Bar"
 	desc = "Expand or contract the upgrades bar."
 	icon_state = "blob-viewupgrades"
-	targeted = 0
 	special_screen_loc = "SOUTH,WEST"
-	helpable = 0
+	helpable = FALSE
 
 	onUse(var/turf/T)
 		if (..())
@@ -164,9 +171,8 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "blob-help0"
-	targeted = 0
 	special_screen_loc = "SOUTH,EAST"
-	helpable = 0
+	helpable = FALSE
 
 	onUse(var/turf/T)
 		if (..())

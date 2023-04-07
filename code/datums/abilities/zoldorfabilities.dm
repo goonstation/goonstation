@@ -548,9 +548,7 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "helpoff"
-	targeted = 0
-	cooldown = 0
-	helpable = 0
+	helpable = FALSE
 	special_screen_loc = "SOUTH,WEST"
 
 	cast(atom/target)

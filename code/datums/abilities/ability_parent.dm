@@ -805,49 +805,47 @@
 
 /datum/targetable
 
-	var/name = null
-	var/desc = null
+	var/name = null								//! Name, as appears on the ability button
+	var/desc = null								//! Description, as appears on the ability button
+	var/icon = 'icons/mob/spell_buttons.dmi'	//! Icon for the ability button
+	var/icon_state = "blob-template"			//! icon_state for the ability button
+	var/atom/movable/screen/ability/object		//! The ability button which appears on the HUD and is clicked to cast the ability
 
-	var/max_range = 10
-	var/cooldown = 0
-	var/start_on_cooldown = FALSE
-	var/datum/abilityHolder/holder
-	var/atom/movable/screen/ability/object
-	var/pointCost = 0
-	var/special_screen_loc = null
-	var/helpable = TRUE
-	var/cd_text_color = "#FFFFFF"
-	var/copiable = TRUE
+	var/max_range = 10							//! If this is a targetable ability, what is the max range we can target people at
+	var/cooldown = 0							//! Time between ability uses
+	var/start_on_cooldown = FALSE				//! If TRUE, ability is put on cooldown immediately after a mob gains it
+	var/datum/abilityHolder/holder				//! Ability holder of this ability
+	var/pointCost = 0							//! Cost of using this ability
+	var/special_screen_loc = null				//! Overrides default positioning for this ability. Standard HUD positioning format
+	var/helpable = TRUE							//! Should this ability be cast normally in help mode (FALSE) or should it display help text (TRUE)
+	var/cd_text_color = "#FFFFFF"			   //! Color of the maptext placed on the button when the ability is on cooldown. so far unused
+	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
-	var/targeted = FALSE					//! Does this need a target? If FALSE, ability is performed instantly
-	var/target_anything = FALSE				//! Can we target absolutely anything?
-	var/target_in_inventory = FALSE			//! Can we target items in our inventory?
-	var/target_nodamage_check = FALSE 		//! Can we target godmoded mobs?
-	var/target_ghosts = FALSE				//! Can we target observers if we see them (ectogoggles)?
-	var/target_selection_check = FALSE 		//! See comment in /atom/movable/screen/ability.
-	var/lock_holder = TRUE 					//! If FALSE, bypass holder lock when we cast this spell.
-	var/ignore_holder_lock = FALSE			//! Can we cast this spell when the holder is locked?
-	var/restricted_area_check = FALSE 		//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
-	var/check_range = TRUE					//! Does this check for range at all?
-	var/sticky = FALSE 						//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
-	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
-	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
+	var/target_anything = FALSE					//! Can we target absolutely anything?
+	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
+	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
+	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
+	var/target_selection_check = FALSE 			//! See comment in /atom/movable/screen/ability.
+	var/lock_holder = TRUE 						//! If FALSE, bypass holder lock when we cast this spell.
+	var/ignore_holder_lock = FALSE				//! Can we cast this spell when the holder is locked?
+	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
+	var/check_range = TRUE						//! Does this check for range at all?
+	var/sticky = FALSE 							//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
+	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
+	var/interrupt_action_bars = TRUE 			//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 
-	var/action_key_number = -1 //! Number hotkey assigned to this ability. Only used if > 0
-	var/waiting_for_hotkey = FALSE //! If TRUE, the next number hotkey pressed will be bound to this.
-	var/list/cooldowns				//! Cooldowns list, used for the COOLDOWN macros
+	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
+	var/waiting_for_hotkey = FALSE 				//! If TRUE, the next number hotkey pressed will be bound to this.
+	var/list/cooldowns							//! Cooldowns list, used for the COOLDOWN macros
 
 	/** When applied to a mob, this ability will either add to a holder
 	 * 	of the preferred type, or create a new one and add it to the
-	 * composite holder if no holder of the preferred type exists
-	 */
+	 * composite holder if no holder of the preferred type exists */
 	var/preferred_holder_type = /datum/abilityHolder/generic
 
-	var/icon = 'icons/mob/spell_buttons.dmi'
-	var/icon_state = "blob-template"
-
-	var/theme = null // for wire's tooltips, it's about time this got varized
-	var/tooltip_flags = null
+	var/theme = null 							//! Theme for tooltips
+	var/tooltip_flags = null					//! Special tooltip flags for nonstandard UIs
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	// 38 types have overriden this.
@@ -969,7 +967,7 @@
 		return doCooldown(0)
 
 	proc/castcheck(atom/target)
-		return 1
+		return TRUE
 
 	proc/cooldowncheck()
 		return GET_COOLDOWN(src, "cast")

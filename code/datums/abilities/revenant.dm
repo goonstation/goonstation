@@ -561,9 +561,7 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "help0"
-	targeted = 0
-	cooldown = 0
-	helpable = 0
+	helpable = FALSE
 
 	cast(atom/target)
 		if (..())
