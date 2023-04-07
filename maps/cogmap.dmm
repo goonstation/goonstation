@@ -30817,7 +30817,8 @@
 "bIK" = (
 /obj/machinery/conveyor_switch{
 	id = "qmin";
-	layer = 4
+	layer = 4;
+	last_pos = 1
 	},
 /obj/machinery/door_control{
 	id = "cargodock_in";
