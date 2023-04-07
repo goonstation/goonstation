@@ -251,7 +251,7 @@
 				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
-				gibs(get_turf(W), list(), list())
+				gibs(get_turf(W))
 				qdel(W)
 				tutorial.Advance()
 
@@ -328,7 +328,7 @@
 				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
-				gibs(get_turf(W), list(), list())
+				gibs(get_turf(W))
 				qdel(W)
 				tutorial.Advance()
 

@@ -577,20 +577,16 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
-		alert("It isn't gang mode, dummy!")
-		return
-
 	boutput(usr, "Gang scores:")
 
-	for(var/datum/gang/G in ticker.mode:gangs)
+	for(var/datum/gang/G in get_all_gangs())
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear","Clothing Dummies")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -599,9 +595,10 @@ body
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
-				LAGCHECK(LAG_LOW)
-				qdel(door)
+			for (var/obj/machinery/door/door in by_type[/obj/machinery/door])
+				if (istype(door, /obj/machinery/door/airlock/pyro/maintenance) || istype(door, /obj/machinery/door/airlock/maintenance))
+					LAGCHECK(LAG_LOW)
+					qdel(door)
 			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
@@ -664,7 +661,15 @@ body
 				I = pick(concrete_typesof(/obj/item))
 				new I(get_turf(M))
 				sleep(1 SECONDS)
-
+		if ("Clothing Dummies")
+			for (var/i in 1 to 80)
+				var/human_type = pick(concrete_typesof(/mob/living/carbon/human/normal))
+				new human_type(pick_landmark(LANDMARK_PESTSTART))
+			while(TRUE)
+				var/mob/living/carbon/human/normal/human = pick(by_type[/mob/living/carbon/human])
+				human.update_clothing()
+				if (prob(40))
+					sleep(0.1 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

@@ -26,10 +26,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
 	var/pseudo = FALSE
+	/// VR antagonists, similar to pseudo antagonists, are not real antagonists. They lack some exploitative abilities, are not relocated, and are removed on death.
+	var/vr = FALSE
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
 
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -40,13 +42,26 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return FALSE
 		src.owner = new_owner
 		src.pseudo = do_pseudo
-		if (!do_pseudo) // there is a special place in code hell for mind.special_role
+		src.vr = do_vr
+		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
 			else
 				ticker.mode.traitors |= new_owner // same with this variable in particular, but it's necessary for antag HUDs
+		if (do_vr)
+			src.pseudo = TRUE
+			src.remove_on_death = TRUE
+			src.remove_on_clone = TRUE
+			do_equip = TRUE
+			do_objectives = FALSE
+			do_relocate = FALSE
+			silent = TRUE
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
+
+		if (QDELETED(src))
+			return FALSE
+		src.owner.antagonists.Add(src)
 
 	Del()
 		if (owner && !src.pseudo)
@@ -202,7 +217,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (log_data)
+			if (log_data && length(src.objectives))
 				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
 				if (!isnull(success_medal))
 					owner.current.unlock_medal(success_medal, TRUE)

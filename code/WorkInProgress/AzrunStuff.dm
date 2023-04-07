@@ -49,7 +49,6 @@
 
 /obj/item/storage/toilet/goldentoilet/azrun
 	name = "thinking throne"
-	icon_state = "goldentoilet"
 	desc = "A wonderful place to send bad ideas...  Clogged more often than not."
 	dir = NORTH
 
@@ -659,6 +658,7 @@
 	proc/sunrise()
 		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -945,6 +945,72 @@
 /obj/item/gun/energy/taser_gun/power_pack
 	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
 	can_swap_cell = FALSE
+
+/obj/effect/station_projectile_relocator
+	var/datum/projectile/current_projectile = new/datum/projectile/bullet/howitzer
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/obj/projectile/P = AM
+		if(istype(P) && istype(P.proj_data, current_projectile))
+			var/spread = 15
+			var/turf/T = get_random_station_turf()
+			var/rate = 10
+			var/angle = ((rate*world.timeofday/100)%360 + 360)%360
+			var/dir = angle_to_dir(angle)
+
+			var/source_x = clamp(round(200*sin(angle)+150),2, world.maxx-2)
+			var/source_y = clamp(round(200*cos(angle)+150),2, world.maxy-2)
+			var/turf/turf_source = locate(source_x, source_y, Z_LEVEL_STATION)
+			if(!ON_COOLDOWN(src, "warning", 20 SECONDS))
+				command_alert("One or more high velocity masses are headed towards the station from the [dir2text(dir)].  Brace for possible impact.", "Warning: Prepare for impact.")
+
+			message_admins("Projectile sent to station! From [log_loc(turf_source)] pointed at [log_loc(T)] with [angle]° [spread] spread.")
+			shoot_projectile_ST_pixel_spread(turf_source, current_projectile, T, 0, 0 , spread)
+			qdel(P)
+
+/obj/effect/station_torpedo_relocator
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if(ismob(AM) || istype(AM, /obj/storage/closet) || istype(AM, /obj/torpedo))
+			var/spread = 5
+			var/turf/station_turf = get_random_station_turf()
+			var/rate = 10
+			var/angle = ((rate*world.timeofday/100)%360 + 360)%360
+			var/dir = angle_to_dir(angle)
+
+			var/source_x = clamp(round(200*sin(angle)+150),2, world.maxx-2)
+			var/source_y = clamp(round(200*cos(angle)+150),2, world.maxy-2)
+			var/turf/turf_source = locate(source_x, source_y, Z_LEVEL_STATION)
+
+			var/fire_angle = arctan(station_turf.y - turf_source.y, station_turf.x - turf_source.x)
+			fire_angle = (fire_angle+rand(-spread+spread)+360)%360
+			var/target_x = clamp(round(425*sin(fire_angle)+source_x),2, world.maxx-1) //425 for edge length to (300,300) from origin
+			var/target_y = clamp(round(425*cos(fire_angle)+source_y),2, world.maxy-1)
+			var/turf/turf_target = locate(target_x, target_y, Z_LEVEL_STATION)
+
+			message_admins("[AM] sent to station! From [log_loc(turf_source)] [angle]° pointed at [log_loc(turf_target)] [fire_angle]°.")
+
+			if(istype(AM, /obj/torpedo) && !ON_COOLDOWN(src, "warning", 20 SECONDS))
+				command_alert("Unidentified missile detected from the [dir2text(dir)].  Brace for possible impact.", "Warning: Prepare for impact.")
+
+			if(ismob(AM) || istype(AM, /obj/storage/closet))
+				AM.throwing = FALSE
+				AM.set_loc(turf_source)
+				var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+				if(length(existing_throws))
+					for(var/list/datum/thrown_thing/throw_data in existing_throws)
+						global.throwing_controller.thrown -= throw_data
+						qdel(throw_data)
+				AM.throw_at(turf_target, 600, 2, thrown_from=turf_source)
+			else if(istype(AM, /obj/torpedo))
+				var/obj/torpedo/T = AM
+				var/torpedo_dir = target_y > source_y ? NORTH : SOUTH  //angle_to_dir(fire_angle)
+				T.target_turf = turf_target
+				T.set_loc(turf_source)
+				T.set_dir(torpedo_dir)
+				T.lockdir = torpedo_dir
 
 #ifdef MACHINE_PROCESSING_DEBUG
 /datum/power_usage_viewer

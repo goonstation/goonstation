@@ -111,7 +111,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend","salvager", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(25); "gang", "conspiracy"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -163,7 +163,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #endif
-
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to black now")
 	var/list/animateclients = list()
 	for (var/client/C)
@@ -174,7 +174,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
-
+#endif
 	// Give said clients time to animate the fadeout before we do this...
 	sleep(0.5 SECONDS)
 
@@ -197,6 +197,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//Equip characters
 	equip_characters()
 
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to normal")
 	for (var/client/C in animateclients)
 		if (C)
@@ -207,10 +208,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			animate(C, color = "#000000", time = 0, flags = ANIMATION_END_NOW)
 			animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
 			animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
-
+#endif
 
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
+	round_start_time = TIME	// this will not be accurate after 24 hours
 
 	SPAWN(0)
 		ircbot.event("roundstart")
@@ -227,7 +229,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		shippingmarket.get_market_timeleft()
 
-		logTheThing(LOG_OOC, null, "<b>Current round begins</b>")
+		logTheThing(LOG_STATION, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
@@ -308,27 +310,18 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
-					var/mob/living/intangible/wraith/W = player.make_wraith()
-					if (W)
-						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, W, "<b>Late join</b>: assigned antagonist role: wraith.")
-						antagWeighter.record(role = ROLE_WRAITH, ckey = W.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
+					antagWeighter.record(role = ROLE_WRAITH, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
-					var/mob/living/intangible/blob_overmind/B = player.make_blob()
-					if (B)
-						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, B, "<b>Late join</b>: assigned antagonist role: blob.")
-						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
+					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
-					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
-					if (F)
-						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing(LOG_DEBUG, F, "<b>Late join</b>: assigned antagonist role: flockmind.")
-						antagWeighter.record(role = ROLE_FLOCKMIND, ckey = F.ckey)
+					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
+					antagWeighter.record(role = ROLE_FLOCKMIND, ckey = player.ckey)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)
@@ -386,6 +379,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		spooktober_GH.update()
 #endif
 
+		#ifdef APRIL_FOOLS
+		if(prob(0.1))
+			if(isnull(random_floor_turfs))
+				build_random_floor_turf_list()
+			var/turf/T = pick(random_floor_turfs)
+			new /mob/living/critter/jeans_elemental(T)
+		#endif
+
 		wagesystem.process()
 
 		emergency_shuttle.process()
@@ -434,7 +435,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
-			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Finished declare_completion. The round is now over.")
+			// In a funny twist of fate there was no actual logging that the round was officially over.
+			var/total_round_time = (TIME - round_start_time) / (1 SECOND)
+			logTheThing(LOG_STATION, null, "The round is now over. Round time: [round(total_round_time / 3600)]:[add_zero(total_round_time / 60 % 60, 2)]:[add_zero(total_round_time % 60, 2)]")
 
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
@@ -766,7 +769,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/chui/window/crew_credits/creds = new
+		var/datum/crewCredits/creds = new
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
@@ -777,7 +780,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (E.client.preferences.view_score)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
-					creds.Subscribe(E.client)
+					creds.ui_interact(E)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
 

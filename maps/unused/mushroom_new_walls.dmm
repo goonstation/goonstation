@@ -685,7 +685,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "adg" = (
-/obj/machinery/computer/mining_shuttle{
+/obj/machinery/computer/transit_shuttle/mining{
 	dir = 4
 	},
 /turf/simulated/floor,

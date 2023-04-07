@@ -1028,6 +1028,16 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		if (!src.species)
 			src.apply_species(pick("smacaw","bmacaw","mmacaw","hmacaw"))
 
+	pirate
+		name = "Sharkbait"
+		species = "smacaw"
+		learn_phrase_chance = 0
+		learn_words_chance = 0
+		learned_phrases = list("YARR!")
+		learned_words = list("YARR!")
+		icon_state = "smacaw"
+		dead_state = "smacaw"
+
 /obj/critter/parrot/lovebird
 	name = "space lovebird"
 	desc = "A spacefaring species of parrot from the <i>agapornis</i> genus."
@@ -1489,6 +1499,14 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 /obj/critter/meatslinky/monkey
 	name = "Monkey"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here? This one is fatter than most, but playful."
+	health = 50
+	generic = 0
+	lock_color = 1
+
+//Gerhazo: another special ferret per wire's request
+/obj/critter/meatslinky/alfredo
+	name = "Alfredo"
+	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here? This one has a friendlier vibe than you would've expected, how cute."
 	health = 50
 	generic = 0
 	lock_color = 1

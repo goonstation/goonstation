@@ -129,7 +129,7 @@
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.
 						if (isnull(skull_type) && skull_value == default_skull_value && skull_desc == default_skull_desc)
 							if (H.mind)
-								if (H.mind.special_role == "macho man") // Not in ticker.Agimmicks.
+								if (H.mind.special_role == ROLE_MACHO_MAN) // Not in ticker.Agimmicks.
 									skull_type = /obj/item/skull/gold
 									skull_desc = "A trophy taken from a legendary wrestler. It is an immeasurable honor."
 								else

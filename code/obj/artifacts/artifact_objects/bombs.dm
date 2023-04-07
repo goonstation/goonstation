@@ -234,6 +234,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	post_setup()
 		. = ..()
 		payload_type = rand(0,3)
+		var/payload_type_name = "unknown"
+		switch (payload_type)
+			if (0)
+				payload_type_name = "smoke"
+			if (1)
+				payload_type_name = "foam"
+			if (2)
+				payload_type_name = "propellant"
+			if (3)
+				payload_type_name = "fluid"
+
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")
@@ -266,7 +277,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -373,6 +384,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					10;"wiz_amethyst",
 					10;"wiz_emerald",
 					10;"wiz_sapphire",
+					5;"jean",
 					10;"starstone")
 			if("eldritch") // fuck you
 				material = pick(
@@ -396,6 +408,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
+					5;"jean",
 					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(

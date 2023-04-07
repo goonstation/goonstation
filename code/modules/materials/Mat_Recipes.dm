@@ -26,24 +26,7 @@
 	proc/apply_to_obj(var/obj/O)
 		return
 
-/datum/material_recipe/dyneema
-	name = "dyneema"
-	result_id = "dyneema"
-	result_item = /obj/item/material_piece/cloth/dyneema
-
-	validate(var/datum/material/M)
-		var/hasCarbon = 0
-		var/hasSilk = 0
-
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "carbonfibre") hasCarbon = 1
-			if(CM.mat_id == "spidersilk") hasSilk = 1
-
-		if(M.mat_id == "carbonfibre") hasCarbon = 1
-		if(M.mat_id == "spidersilk") hasSilk = 1
-
-		if(hasCarbon && hasSilk) return 1
-		else return 0
+// Metal
 
 /datum/material_recipe/hauntium
 	name = "hauntium"
@@ -97,6 +80,21 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/copper // this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
+	name = "copper"
+	result_id = "copper"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "pharosium") one = 1
+			if(CM.mat_id == "char") two = 1
+
+		if(one && two) return 1
+		else return 0
+
 /datum/material_recipe/electrum
 	name = "electrum"
 	result_id = "electrum"
@@ -127,6 +125,8 @@
 		if(one && two) return 1
 		else return 0
 
+// Glass
+
 /datum/material_recipe/plasmaglass
 	name = "plasmaglass"
 	result_id = "plasmaglass"
@@ -140,6 +140,27 @@
 			if(CM.mat_id == "glass") two = 1
 
 		if(one && two) return 1
+		else return 0
+
+// Cloths // Organics // Leathers
+
+/datum/material_recipe/dyneema
+	name = "dyneema"
+	result_id = "dyneema"
+	result_item = /obj/item/material_piece/cloth/dyneema
+
+	validate(var/datum/material/M)
+		var/hasCarbon = 0
+		var/hasSilk = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "carbonfibre") hasCarbon = 1
+			if(CM.mat_id == "spidersilk") hasSilk = 1
+
+		if(M.mat_id == "carbonfibre") hasCarbon = 1
+		if(M.mat_id == "spidersilk") hasSilk = 1
+
+		if(hasCarbon && hasSilk) return 1
 		else return 0
 
 /datum/material_recipe/synthleather

@@ -492,6 +492,27 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	nodescripition = TRUE
 
+	custom_suicide = TRUE
+	suicide_in_hand = FALSE
+
+	suicide(mob/living/carbon/human/user)
+		if (!istype(user) || !src.user_can_suicide(user) || user.gloves != src)
+			return FALSE
+		if (!src.deployed)
+			src.sheathe_blades_toggle(user)
+			user.update_clothing()
+		user.visible_message("<span class='alert'>[user] crosses the blades of [his_or_her(user)] gloves across [his_or_her(user)] neck...</span>",
+			"<span class='alert'>You cross the blades of your gloves across your neck...</span>")
+		src.cant_self_remove = TRUE
+		SPAWN(3 SECONDS)
+			src.cant_self_remove = FALSE
+			user.drop_organ("head", get_turf(user))
+			user.visible_message("<span class='alert'>[user] slices [his_or_her(user)] head clean off! Holy shit!</span>", "<span class='alert'>You slice your head clean off!</span>")
+			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Cut_1.ogg', 70, 1)
+			take_bleeding_damage(user, user, 200, DAMAGE_CUT, TRUE, get_turf(user))
+			user.spread_blood_clothes(user)
+			user.death()
+
 	special_attack(mob/living/target, mob/living/user)
 		if(check_target_immunity( target ))
 			return 0

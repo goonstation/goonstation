@@ -10,7 +10,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	target_anything = 0
 	human_only = 0
 	can_use_in_container = 1
-	dont_lock_holder = 0
 	///The observer mob we chose to transfer mind from, this should just be returned from New, but datum/targetable/New relies on truthy fail states
 	var/mob/dead/target_observer/hivemind_observer/use_mob = null
 	///The associated ROLE_ define
@@ -49,19 +48,21 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		src.use_mob = eligible[use_mob_name]
 
-		var/obj/item/bodypart = src.get_bodypart()
-		if (!bodypart)
+		if (!src.available_bodypart())
 			return TRUE
 
 		var/datum/mind/mind = use_mob.mind
 		if (!mind)
-			CRASH("changeling critter created from mob with no mind")
-		mind.add_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, do_equip = FALSE)
-		var/datum/antagonist/changeling_critter/antag = mind.get_antagonist(src.antag_role)
-		antag.give_equipment(bodypart, src.holder)
-		logTheThing(LOG_COMBAT, holder.owner, "drops a [antag.display_name] [key_name(mind.current)] as a changeling [log_loc(holder.owner)].")
+			logTheThing(LOG_DEBUG, holder.owner, "tries to spawn a changeling critter from a mob with no mind. THIS SHOULD NEVER HAPPEN AND MAY BREAK THINGS.")
+			return TRUE
+		mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+		mind.add_subordinate_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, master = src.holder.owner.mind)
+		logTheThing(LOG_COMBAT, holder.owner, "drops \an [src.antag_role] [key_name(mind.current)] as a changeling [log_loc(src.holder.owner)].")
 
 		return FALSE
+
+	proc/available_bodypart()
+		return
 
 	proc/get_bodypart()
 		return
@@ -73,9 +74,16 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	pointCost = 4
 	antag_role = ROLE_HANDSPIDER
 
-	get_bodypart()
+	available_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_arm || owner.limbs.r_arm) || !ishuman(holder.owner))
+			return FALSE
+
+		return TRUE
+
+	get_bodypart()
+		var/mob/living/carbon/human/owner = holder.owner
+		if (!src.available_bodypart())
 			boutput(holder.owner, "<span class='notice'>We have no arms to detach!</span>")
 			return null
 
@@ -106,9 +114,16 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	pointCost = 0 // free for now, given you have to lose a fuckin' EYE
 	antag_role = ROLE_EYESPIDER
 
-	get_bodypart()
+	available_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.left_eye || owner.organHolder.right_eye) || !ishuman(holder.owner))
+			return FALSE
+
+		return TRUE
+
+	get_bodypart()
+		var/mob/living/carbon/human/owner = holder.owner
+		if (!src.available_bodypart())
 			boutput(holder.owner, "<span class='notice'>We have no eyes to eject!</span>") // what a terrifying fate you've given yourself
 			return null
 
@@ -140,9 +155,16 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	pointCost = 6
 	antag_role = ROLE_LEGWORM
 
-	get_bodypart()
+	available_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_leg || owner.limbs.r_leg) || !ishuman(holder.owner))
+			return FALSE
+
+		return TRUE
+
+	get_bodypart()
+		var/mob/living/carbon/human/owner = holder.owner
+		if (!src.available_bodypart())
 			boutput(holder.owner, "<span class='notice'>We have no legs to detach!</span>")
 			return null
 
@@ -174,9 +196,16 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	pointCost = 1
 	antag_role = ROLE_BUTTCRAB
 
-	get_bodypart()
+	available_bodypart()
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.butt) || !ishuman(holder.owner))
+			return FALSE
+
+		return TRUE
+
+	get_bodypart()
+		var/mob/living/carbon/human/owner = holder.owner
+		if (!src.available_bodypart())
 			boutput(holder.owner, "<span class='notice'>We have no ass!</span>") // what a terrifying fate you've given yourself
 			return null
 
@@ -198,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	can_use_in_container = 1
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	incapacitationCheck()
 		return 0
 
@@ -225,7 +254,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	interrupt_action_bars = 0
 
 	incapacitationCheck()
@@ -262,7 +291,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 		H.hivemind -= use_mob
 		boutput(use_mob, "<span class='alert'>You have been cut off from the hivemind by [holder.owner.real_name]!</span>")
-		use_mob.boot()
+		use_mob.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		boutput(holder.owner, "<span class='alert'>You have silenced [use_mob_name]'s consciousness from your hivemind.</span>")
 		return 0
 
@@ -277,7 +306,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	interrupt_action_bars = 0
 
 	incapacitationCheck()

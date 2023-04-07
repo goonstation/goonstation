@@ -8972,7 +8972,6 @@
 /area/space)
 "aru" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
 	},
@@ -24782,7 +24781,6 @@
 /area/space)
 "aUH" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
 	},

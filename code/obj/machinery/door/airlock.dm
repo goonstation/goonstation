@@ -171,7 +171,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 600
 	health_max = 600
 
-	var/ai_no_access = 0 //This is the dumbest var.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
@@ -950,7 +949,8 @@ About the new airlock wires panel:
 *		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire)
 */
 /obj/machinery/door/airlock/proc/play_deny()
-	play_animation("deny")
+	if(src.density && !src.operating) // only play the animation while fully closed
+		play_animation("deny")
 	playsound(src, src.sound_deny_temp, 35, 0, 0.8) //if this doesn't carry far enough, tweak the extrarange number, not the volume
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
@@ -1667,7 +1667,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/open()
-	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
@@ -1822,47 +1822,70 @@ TYPEINFO(/obj/machinery/door/airlock)
 		switch( lowertext(signal.data["command"]) )
 			if("open")
 				SPAWN(0)
-					open(1)
-					send_status(,senderid)
+					src.open(1)
+					src.send_status(,senderid)
 
 			if("close")
 				SPAWN(0)
-					close(1)
-					send_status(,senderid)
+					src.close(1)
+					src.send_status(,senderid)
 
 			if("unlock")
-				locked = 0
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
+					src.locked = 0
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
-				send_status(,senderid)
+				src.send_status(,senderid)
 
 			if("lock")
-				locked = 1
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
+					src.locked = 1
+					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				src.UpdateIcon()
-				send_status()
+				src.send_status()
 
 			if("secure_open")
 				SPAWN(0)
-					locked = 0
+					if(src.locked && !src.density)
+						sleep(src.operation_time)
+						send_status(,senderid)
+						return
+					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 0
+						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 					src.UpdateIcon()
 
+					src.open(1)
 					sleep(0.5 SECONDS)
-					open(1)
 
-					locked = 1
+					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 1
+						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+
 					src.UpdateIcon()
 					sleep(src.operation_time)
-					send_status(,senderid)
+					src.send_status(,senderid)
 
 			if("secure_close")
 				SPAWN(0)
-					locked = 0
-					close(1)
+					if(src.locked && src.density)
+						sleep(src.operation_time)
+						src.send_status(,senderid)
+						return
+					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 0
+						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 
-					locked = 1
+					src.close(1)
 					sleep(0.5 SECONDS)
+
+					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+						src.locked = 1
+						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+
 					src.UpdateIcon()
 					sleep(src.operation_time)
-					send_status(,senderid)
+					src.send_status(,senderid)
 
 	proc/send_status(userid,target)
 		var/datum/signal/signal = get_free_signal()

@@ -73,15 +73,16 @@ datum
 			transparency = 30
 			addiction_prob = 10//50
 			addiction_min = 15
-			overdose = 20
+			overdose = 15
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
+			depletion_rate = 0.4
 			value = 5
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine", -3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_morphine", -2)
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/morphine, src.type)
 				..()
 
@@ -100,16 +101,20 @@ datum
 					M.changeStatus("stimulants", -7.5 SECONDS * mult)
 				if(M.hasStatus("recent_trauma"))
 					M.changeStatus("recent_trauma", -5 SECONDS * mult)
-
+				if(probmult(7)) M.emote("yawn")
+				..()
 				switch(counter += 1 * mult)
-					if(1 to 15)
-						if(probmult(7)) M.emote("yawn")
-					if(16 to 35)
+					if(16 to 36)
+						if(probmult(10)) M.setStatus("drowsy", 10 SECONDS)
+					if(36 to INFINITY)
+						if(probmult(20)) M.setStatus("drowsy", 40 SECONDS)
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				switch(counter)
+					if(16 to 36)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
 						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
-
 				..()
 				return
 
@@ -156,7 +161,6 @@ datum
 					if(36 to INFINITY)
 						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
-
 				..()
 				return
 
@@ -317,7 +321,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				flush(M, 5 * mult)
+				flush(holder, 5 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
@@ -664,7 +668,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 
 				if (M.health < -5 && M.health > -30)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
@@ -753,7 +757,7 @@ datum
 				if (M.druggy > 0)
 					M.druggy -= 3
 					M.druggy = max(0, M.druggy)
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
@@ -804,7 +808,7 @@ datum
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
-				flush(M, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
+				flush(holder, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -896,17 +900,38 @@ datum
 			fluid_b = 224
 			transparency = 230
 			depletion_rate = 0.3
+			overdose = 10
+			threshold = THRESHOLD_INIT
+			
+			
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_proconvertin", -2)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_proconvertin")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					repair_bleeding_damage(H, 90, 1 * mult)
-					if (probmult(2))
-						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
+					repair_bleeding_damage(H, 50, 1 * mult)
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (isliving(M))
+					var/mob/living/H = M
+					if (probmult(6)) // ~60% chance to get a clot from 15u
+						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 
 		medical/filgrastim // used to stimulate the body to produce more white blood cells. here, it will make you make more blood. this is good if you are losing a lot of blood and bad if you already have all your blood
 			name = "filgrastim"
@@ -966,7 +991,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				//if(holder.has_reagent("cholesterol")) //probably doesnt actually happen but whatever
 					//holder.remove_reagent("cholesterol", 2)
 				..()
@@ -1140,7 +1165,7 @@ datum
 			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 5 * mult) //flushes all chemicals but itself
+				flush(holder, 5 * mult) //flushes all chemicals but itself
 				M.take_radiation_dose(-0.05 SIEVERTS * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
@@ -1183,7 +1208,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-20,0)
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
@@ -1237,9 +1262,8 @@ datum
 					var/mob/living/L = M
 					if (L.bleeding == 1)
 						repair_bleeding_damage(L, 50, 1)
-					else
+					else if (L.bleeding <= 3)
 						repair_bleeding_damage(L, 5, 1)
-						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
@@ -1343,7 +1367,7 @@ datum
 						M.take_brain_damage(-2 * mult)
 				else if (M.health > 15 && M.get_toxin_damage() < 70)
 					M.take_toxin_damage(1 * mult)
-					flush(M, 20 * mult, flushed_reagents)
+					flush(holder, 20 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1450,7 +1474,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(50))
-					flush(M, 1 * mult)
+					flush(holder, 1 * mult)
 				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
@@ -1493,7 +1517,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 8 * mult, flushed_reagents)
+				flush(holder, 8 * mult, flushed_reagents)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
 				..()

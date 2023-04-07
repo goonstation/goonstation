@@ -98,9 +98,14 @@
 			if (!(status & NOPOWER) && wire_powered)
 				use_power(src.power_usage, src.power_channel)
 				power_credit = power_usage
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
+
 				return
 		if (!(status & NOPOWER))
 			use_power(src.power_usage * mult, src.power_channel)
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
@@ -274,6 +279,9 @@
 	if (!src.loc)
 		return
 
+	if (zamus_dumb_power_popups)
+		new /obj/maptext_junk/power(get_turf(src), change = -amount, channel = chan)
+
 	if (machines_may_use_wired_power && wire_powered)
 		if (power_credit >= amount)
 			power_credit -= amount
@@ -396,3 +404,36 @@
 	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src
+
+/datum/action/bar/icon/rotate_machinery
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/tools/crowbar.dmi'
+	icon_state = "crowbar"
+	var/obj/machinery/machine = null
+
+	New(Target)
+		src.machine = Target
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, src.machine) > 0 || src.machine == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(!src.machine.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, src.machine) > 0 || src.machine == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.machine.visible_message("<span class='alert'><b>[owner]</b> begins to rotate [src.machine]</span>", 1)
+
+	onEnd()
+		..()
+		src.machine.set_dir(turn(src.machine.dir, -90))

@@ -83,6 +83,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
+	logTheThing(LOG_STATION, user, "puts the [log_object(W)] into the [log_object(src)] at [log_loc(src)].")
 	src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 	user.u_equip(W)
 	W.dropped(user)

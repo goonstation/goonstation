@@ -5,11 +5,9 @@
 	name = "Bite"
 	desc = "Bite a mob, doing a little damage and injecting them with your venom. (You do have venom, don't you?)"
 	icon_state = "clown_spider_bite"
-	cooldown = 200
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -53,12 +51,10 @@
 /datum/targetable/critter/spider_flail
 	name = "Flail"
 	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
-	cooldown = 300
+	cooldown = 30 SECONDS
 	icon_state = "spider_flail"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -136,11 +132,9 @@
 	name = "Drain"
 	desc = "Drain a dead human."
 	icon_state = "clown_spider_drain"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -241,13 +235,11 @@
 /datum/targetable/critter/clownspider_kick // for clown/cluwnespiders
 	name = "Kick"
 	desc = "Kick a mob, doing a little damage and possibly causing a short stun."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	icon_state = "clown_spider_kick"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = 'sound/musical_instruments/Bikehorn_1.ogg'
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -285,12 +277,10 @@
 	name = "Trample"
 	desc = "Kick the SHIT out of a mob with all eight legs."
 	icon_state = "clown_spider_trample"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = "clownstep"
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
