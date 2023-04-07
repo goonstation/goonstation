@@ -806,12 +806,12 @@
 // Athletic Gear
 
 TYPEINFO(/obj/item/clothing/under/shorts)
-   random_subtypes = list(/obj/item/clothing/under/shorts,
-	 												/obj/item/clothing/under/shorts/red,
-													/obj/item/clothing/under/shorts/green,
-													/obj/item/clothing/under/shorts/blue,
-													/obj/item/clothing/under/shorts/purple,
-													/obj/item/clothing/under/shorts/black)
+  random_subtypes = list(/obj/item/clothing/under/shorts,
+		/obj/item/clothing/under/shorts/red,
+		/obj/item/clothing/under/shorts/green,
+		/obj/item/clothing/under/shorts/blue,
+		/obj/item/clothing/under/shorts/purple,
+		/obj/item/clothing/under/shorts/black)
 
 /obj/item/clothing/under/shorts
 	name = "athletic shorts"
@@ -844,14 +844,14 @@ TYPEINFO(/obj/item/clothing/under/shorts)
 
 /obj/item/clothing/under/shorts/psyche
 	name = "psychedelic shorts"
-	desc = "Only wear these if you don't mind people staring at your crotch."
+	desc = "Only wear these if you don't mind being the center of attention."
 	icon_state = "shortsPs"
 	item_state = "shortsPs"
 
 TYPEINFO(/obj/item/clothing/under/shorts/luchador)
-   random_subtypes = list(/obj/item/clothing/under/shorts/luchador,
-	 												/obj/item/clothing/under/shorts/luchador/red,
-													/obj/item/clothing/under/shorts/luchador/green)
+	random_subtypes = list(/obj/item/clothing/under/shorts/luchador,
+		/obj/item/clothing/under/shorts/luchador/red,
+		/obj/item/clothing/under/shorts/luchador/green)
 /obj/item/clothing/under/shorts/luchador
 	name = "luchador shorts"
 	desc = "Taken from that strange uncle's trophy cabinet."

@@ -560,10 +560,10 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	see_face = 0
 
 TYPEINFO(/obj/item/clothing/mask/wrestling)
-   random_subtypes = list(/obj/item/clothing/mask/wrestling,
-											/obj/item/clothing/mask/wrestling/black,
-											/obj/item/clothing/mask/wrestling/green,
-											/obj/item/clothing/mask/wrestling/blue)
+	random_subtypes = list(/obj/item/clothing/mask/wrestling,
+		/obj/item/clothing/mask/wrestling/black,
+		/obj/item/clothing/mask/wrestling/green,
+		/obj/item/clothing/mask/wrestling/blue)
 /obj/item/clothing/mask/wrestling
 	name = "wrestling mask"
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
@@ -572,16 +572,16 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = 0
 
 /obj/item/clothing/mask/wrestling/black
-		icon_state = "blackmask"
-		item_state = "blackmask"
+	icon_state = "blackmask"
+	item_state = "blackmask"
 
 /obj/item/clothing/mask/wrestling/green
-		icon_state = "greenmask"
-		item_state = "greenmask"
+	icon_state = "greenmask"
+	item_state = "greenmask"
 
 /obj/item/clothing/mask/wrestling/blue
-		icon_state = "bluemask"
-		item_state = "bluemask"
+	icon_state = "bluemask"
+	item_state = "bluemask"
 
 /obj/item/clothing/mask/anime
 	name = "moeblob mask"

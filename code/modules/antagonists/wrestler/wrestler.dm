@@ -9,9 +9,10 @@
 
 	give_equipment(fake_equipment = FALSE)
 		src.fake = fake_equipment
+		src.owner.current.add_wrestle_powers(fake_equipment)
 		if (ismobcritter(src))
 			display_name = "wrestledoodle"
-		src.owner.current.add_wrestle_powers(fake_equipment)
+			return
 
 		// Assign wrestle attire.
 		if (ishuman(src.owner.current))
@@ -33,16 +34,16 @@
 					H.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho/random_color, H.slot_w_uniform)
 				if (prob(33))
 					H.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, H.slot_head)
-			var/shoes_prob = rand(1, 100)
 			var/obj/item/clothing/under/shorts/rand_shoes
-			if (shoes_prob <= 25)
-				rand_shoes = /obj/item/clothing/shoes/macho
-			else if (shoes_prob <= 50)
-				rand_shoes = /obj/item/clothing/shoes/cowboy
-			else if (shoes_prob <= 75)
-				rand_shoes = pick(/obj/item/clothing/shoes/bootsblk, /obj/item/clothing/shoes/bootswht, /obj/item/clothing/shoes/bootsblu)
-			else
-				rand_shoes = /obj/item/clothing/shoes/black
+			switch(pick(1,2,3,4))
+				if(1)
+					rand_shoes = /obj/item/clothing/shoes/macho
+				if(2)
+					rand_shoes = /obj/item/clothing/shoes/cowboy
+				if(3)
+					rand_shoes = pick(/obj/item/clothing/shoes/bootsblk, /obj/item/clothing/shoes/bootswht, /obj/item/clothing/shoes/bootsblu)
+				if(4)
+					rand_shoes = /obj/item/clothing/shoes/black
 			H.equip_new_if_possible(rand_shoes, H.slot_shoes)
 			H.equip_new_if_possible(/obj/item/storage/belt/macho_belt, H.slot_belt)
 
