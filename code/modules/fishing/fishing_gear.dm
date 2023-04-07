@@ -17,6 +17,8 @@
 	var/last_fished = 0
 	/// true if the rod is currently "fishing", false if it isnt
 	var/is_fishing = FALSE
+	/// what tier of rod is this? can be 0, 1 or 2
+	var/tier = 0
 
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	afterattack(atom/target, mob/user)
@@ -58,13 +60,15 @@
 
 	onStart()
 		..()
+		if (src.rod.tier < fishing_spot.rod_tier_required)
+			user.visible_message("You need a higher tier rod to fish here!")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!istype(src.rod, fishing_spot.required_rod))
-			user.visible_message("You need a different rod to fish here!")
-			interrupt(INTERRUPT_ALWAYS)
-			return
+
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
@@ -102,36 +106,44 @@
 		else //lets restart the action
 			src.onRestart()
 
-/obj/item/fishing_rod/upgraded
-	name = "upgraded fishing rod"
-	icon = 'icons/obj/items/fishing_gear.dmi'
-	icon_state = "fishing_rod_2-inactive"
-	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
+/obj/item/fishing_rod/basic
+	name = "basic fishing rod"
+	icon_state = "fishing_rod-inactive"
 	item_state = "fishing_rod-inactive"
+	tier = 1
 
 	update_icon()
-		//state for fishing
+		if (src.is_fishing)
+			src.icon_state = "fishing_rod-active"
+			src.item_state = "fishing_rod-active"
+		else
+			src.icon_state = "fishing_rod-inactive"
+			src.item_state = "fishing_rod-inactive"
+
+/obj/item/fishing_rod/upgraded
+	name = "upgraded fishing rod"
+	icon_state = "fishing_rod_2-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 2
+
+	update_icon()
 		if (src.is_fishing)
 			src.icon_state = "fishing_rod_2-active"
 			src.item_state = "fishing_rod-active"
-		//state for not fishing
 		else
 			src.icon_state = "fishing_rod_2-inactive"
 			src.item_state = "fishing_rod-inactive"
 
 /obj/item/fishing_rod/master
 	name = "master fishing rod"
-	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_rod_3-inactive"
-	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "fishing_rod-inactive"
+	tier = 3
 
 	update_icon()
-		//state for fishing
 		if (src.is_fishing)
 			src.icon_state = "fishing_rod_3-active"
 			src.item_state = "fishing_rod-active"
-		//state for not fishing
 		else
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
@@ -169,9 +181,19 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/fishing_pool
 	name = "Aquatic Research Pool"
 	desc = "A small bulky pool that you can fish in. It has a low probability of containing various low-rarity fish."
+	density = 1
 	anchored = 1
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_pool"
+
+	basic
+		name = "basic pool"
+
+	upgraded
+		name = "upgraded pool"
+
+	master
+		name = "master pool"
 
 // Gannets new fishing gear
 
