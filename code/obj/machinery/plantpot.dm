@@ -1908,10 +1908,13 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 			light.disable()
 
 
-	process()
+	process(mult)
 		..()
-		if(src.active && powered())
-			for (var/obj/machinery/plantpot/P in view(2,src))
+		if(!src.active || !powered())
+			return
+		for (var/atom/A in view(2,src))
+			if (istype(A, /obj/machinery/plantpot))
+				var/obj/machinery/plantpot/P = A
 				if(!P.current || P.dead)
 					continue
 				P.growth += 2
@@ -1919,7 +1922,11 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 					var/datum/plantgenes/DNA = P.plantgenes
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
 						P.growth += 4
-			use_power(ACTIVE_POWER_USAGE)
+			else if (ismob(A))
+				var/mob/M = A
+				if (M.bodytemperature < M.base_body_temp)
+					M.bodytemperature += 15 * mult
+		use_power(ACTIVE_POWER_USAGE)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
