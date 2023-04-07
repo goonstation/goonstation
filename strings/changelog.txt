@@ -1,5 +1,16 @@
 
+(t)thu apr 06 23
+(u)aloe
+(+)Experimentally, the gangs game mode will rarely appear on the RP servers.
+(u)LeahTheTech
+(+)Standing next to a UV lamp will now warm you up slightly.
+(u)aloe
+(+)Emote volume is now halved if you're suffocating/being choked/have negative stamina, etc (any time you're forced to whisper when speaking); the range is adjusted proportionally.
 (t)wed apr 05 23
+(u)Amylizzle
+(p)13544
+(e)🗺🔒🔄📦📡|A-Mapping, A-Secret, C-Rework, A-Game-Objects, A-AI
+(*)Mimics are now capable of disguising themselves as a wide variety of objects, and can cause hallucinations.
 (u)Ikea
 (p)13574
 (e)🆕🧛|C-Feature, A-Gamemodes
