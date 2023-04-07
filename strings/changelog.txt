@@ -1,5 +1,7 @@
 
 (t)fri apr 07 23
+(u)LeahTheTech
+(*)Mimics can now spawn as antagonist critters.
 (u)Amylizzle
 (p)13588
 (e)🪲🔎⚖🧱💨📦|C-Bug, C-Code-Quality, C-Balance, A-Materials, A-Atmospherics, A-Game-Objects

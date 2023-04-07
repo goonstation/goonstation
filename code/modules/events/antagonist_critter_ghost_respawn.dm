@@ -129,6 +129,11 @@
 				)
 			)
 		),
+		list(new /datum/eventSpawnedCritter(
+			name = "mimics",
+			critter_types = list(/mob/living/critter/mimic/antag_spawn)
+			)
+		), //no loot for mimics
 	)
 
 	admin_call(var/source)
