@@ -447,11 +447,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			molitz.unexploded = 0
 
 
-/datum/materialProc/molitz_on_hit
-	max_generations = 1
-	execute(var/atom/owner, var/obj/attackobj)
-		owner.material.triggerTemp(owner, 499)
-
 /datum/materialProc/miracle_add
 	execute(var/location)
 		animate_rainbow_glow(location)
