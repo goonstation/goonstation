@@ -382,17 +382,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/air
 		if(hasvar(owner, "air_contents"))
 			air = owner:air_contents
-		if(!air && hasvar(owner.loc, "air_contents"))
+		if(!istype(air) && hasvar(owner.loc, "air_contents"))
 			air = owner.loc:air_contents
-		if(!air)
+		if(!istype(air))
 			var/turf/target = get_turf(owner)
 			air = target?.return_air()
 
-		if(!air) return //all air finding has failed, so stop
+		if(!istype(air)) return //all air finding has failed, so stop
 
-		//okay, now we've passed all the conditions for gas generation - do that
 		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
+		//okay, now we've passed all the conditions for gas generation - do that
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
