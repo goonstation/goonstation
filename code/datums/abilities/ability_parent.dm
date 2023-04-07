@@ -890,9 +890,6 @@
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
-			var/result = TRUE
-#else
-			var/result = tryCast(target, params)
 #endif
 			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
 			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
