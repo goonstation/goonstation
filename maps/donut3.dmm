@@ -37218,6 +37218,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmX" = (
@@ -63205,6 +63206,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "tac" = (
@@ -67749,6 +67751,7 @@
 	id = "robotics"
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "uwY" = (
