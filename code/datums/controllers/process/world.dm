@@ -31,7 +31,6 @@
 		for (var/datum/sun/star in global.starlist)
 			star.calc_position()
 
-
 		last_object = "genResearch.progress"
 		if(genResearch) genResearch.progress()
 

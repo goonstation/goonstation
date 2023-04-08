@@ -439,7 +439,7 @@ var/f_color_selector_handler/F_Color_Selector
 	if(!delete_queue)
 		delete_queue = new /datum/dynamicQueue(100)
 
-	sun = new /datum/sun()
+	sun = new /datum/sun(null, 1, null, TRUE)
 	z2_sun = new /datum/sun("adventure_void", 2)
 	z4_sun = new /datum/sun("adventure_void", 4)
 	#ifdef UNDERWATER_MAP
@@ -452,18 +452,18 @@ var/f_color_selector_handler/F_Color_Selector
 	#endif
 
 	// azone suns. areas not included are 'void' or underground or indoors.
-	earth_outside_sun = new /datum/sun("earth", 2, /area/centcom/outside, FALSE)
-	earth_garden_sun = new /datum/sun("earth", 2, /area/centcom/garden, FALSE)
-	moon_sun = new /datum/sun("moon", 2, /area/moon, FALSE)
-	mars_1_sun = new /datum/sun("mars", 2, /area/marsoutpost, FALSE)
-	mars_2_sun = new /datum/sun("mars", 2, /area/marsoutpost/duststorm, FALSE)
-	io_sun = new /datum/sun("io", 2, /area/iomoon, FALSE)
-	biodome_sun = new /datum/sun("biodome", 2, /area/crater, FALSE)
-	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic/exterior/surface, FALSE)
-	earth_dojo_1_sun = new /datum/sun("earth", 2, /area/dojo, FALSE)
-	earth_dojo_2_sun = new /datum/sun("earth", 2, /area/dojo/sakura, FALSE)
-	graveyard_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard, FALSE)
-	graveyard_swamp_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard/swamp, FALSE)
+	earth_outside_sun = new /datum/sun("earth", 2, /area/centcom/outside)
+	earth_garden_sun = new /datum/sun("earth", 2, /area/centcom/garden)
+	moon_sun = new /datum/sun("moon", 2, /area/moon)
+	mars_1_sun = new /datum/sun("mars", 2, /area/marsoutpost)
+	mars_2_sun = new /datum/sun("mars", 2, /area/marsoutpost/duststorm)
+	io_sun = new /datum/sun("io", 2, /area/iomoon)
+	biodome_sun = new /datum/sun("biodome", 2, /area/crater)
+	senex_sun = new /datum/sun("senex", 2, /area/upper_arctic/exterior/surface)
+	earth_dojo_1_sun = new /datum/sun("earth", 2, /area/dojo)
+	earth_dojo_2_sun = new /datum/sun("earth", 2, /area/dojo/sakura)
+	graveyard_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard)
+	graveyard_swamp_sun = new /datum/sun("graveyard", 2, /area/crypt/graveyard/swamp)
 
 
 	Z_LOG_DEBUG("World/Init", "Vox init")

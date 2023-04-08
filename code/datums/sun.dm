@@ -35,7 +35,7 @@
 	/// flavour text for the tracker
 	var/desc
 	/// does the sun change position in the sky? does it move?
-	var/rotates = TRUE
+	var/rotates = FALSE
 
 	// these time vars below theoretically use time units like SECOND and MINUTE, so 1 = 1/10 of a second
 	// also, the penumbra and cycle length times don't actually get perma assigned, but it's for reference.
@@ -77,21 +77,16 @@
 			CRASH("You have a sun datum localised within [assigned_area] with no given z level!")
 		else
 			src.zlevel = ztemp
-		if (isnull(location)) // if local sun with no location given, assume void
-			src.identity_check()
-		else // if local sun with location
+		if (!isnull(location)) // if local sun with location
 			src.stationloc = location
-			src.identity_check()
 		src.sun_area = assigned_area
 		global.areas_with_local_suns += assigned_area
 	else // global suns
 		if (isnull(location)) // if no location
 			if (isnull(ztemp) || ztemp == 1) // station sun
 				src.check_z1_global_sun()
-				src.identity_check()
 			else // no location with given zlevel, i.e. a zlevel sun
 				src.zlevel = ztemp
-				src.identity_check()
 				CRASH("You have a sun datum on z level [ztemp] with no given location!")
 		else // a global sun with manually assigned location
 			if (isnull(ztemp))
@@ -99,9 +94,8 @@
 			else
 				src.zlevel = ztemp
 			src.stationloc = location
-			src.identity_check()
-	SPAWN(10 SECONDS) // guessing that that's long enough for the z levels and areas to load
-		src.calc_position()
+	src.identity_check()
+	src.calc_position()
 
 /// checks where the z level is, for global suns
 /datum/sun/proc/check_z1_global_sun()
@@ -137,10 +131,6 @@
 	// but they are supposedly constructible so we need to have that data anyway.
 	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas,
 	// and create then suns for those in code/world.dm and code/global.dm
-	var/oldloc
-	if (oldloc == src.stationloc)
-		return
-	oldloc = src.stationloc
 	switch (src.stationloc)
 		// 'error' suns
 		if ("void") // for admin nonsense generally. Where no stars apply.
