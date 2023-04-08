@@ -179,13 +179,13 @@
 		interacted(user, 0, params)
 
 	proc/interacted(var/mob/user, var/ai=0, params)
-		var/cover_state = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
 		var/dat
 		dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 		dat += "ID: [suffix]<BR>"
 		dat += "Power: [on ? "On" : "Off"]<BR>"
 
-		if(cover_state != WPANEL_COVER_OPEN)
+		if(cover_status != WPANEL_COVER_OPEN)
 			dat += "Status: "
 			switch(mode)
 				if(0)
@@ -207,7 +207,7 @@
 			dat += "Destination: [!destination ? "<i>none</i>" : destination]<BR>"
 			dat += "Power level: [cell ? cell.percent() : 0]%<BR>"
 
-			if(cover_state == WPANEL_COVER_LOCKED && !ai)
+			if(cover_status == WPANEL_COVER_LOCKED && !ai)
 				dat += "Controls are locked <A href='byond://?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
 			else
 				dat += "Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><hr>"

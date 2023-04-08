@@ -2094,8 +2094,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if (!dropped || !user || !isliving(user) || isintangible(user) || BOUNDS_DIST(dropped, user) > 0 || !in_interact_range(src, user) || !can_act(user))
 			return
 
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
+
 		if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart))
-			if(!loading || !panel_open)
+			if(!loading || cover_status != WPANEL_COVER_OPEN)
 				boutput(user, "<span class='alert'>\The [src]'s chute is not open to load stuff in!</span>")
 				return
 

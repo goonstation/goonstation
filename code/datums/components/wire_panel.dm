@@ -21,6 +21,7 @@ TYPEINFO(/datum/component/wirePanel)
 	var/active_wire_controls = ~0
 
 /datum/component/wirePanel/Initialize(_definition)
+	..()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
 	src.panel_def = _definition
