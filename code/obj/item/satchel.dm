@@ -9,6 +9,8 @@
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
+	var/list/exceptions = list() //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
+	var/maximal_w_class = W_CLASS_BULKY //! the maximum weight class the satchels should be able to carry.
 	var/itemstring = "items"
 	inventory_counter_enabled = 1
 
@@ -20,9 +22,14 @@
 	attackby(obj/item/W, mob/user)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
-			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
+			if(istype(W, check_path) && W.w_class < src.maximal_w_class)
 				proceed = 1
 				break
+		if (proceed && length(src.exceptions) > 0)
+			for(var/check_path in src.exceptions)
+				if(istype(W, check_path))
+					proceed = 0
+					break
 		if (!proceed)
 			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
@@ -120,9 +127,15 @@
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			var/obj/item/W = O
-			if(istype(O, check_path) && W.w_class < W_CLASS_BULKY)
+			if(istype(O, check_path) && W.w_class < src.maximal_w_class)
 				proceed = 1
 				break
+		if (proceed && length(src.exceptions) > 0)
+			for(var/check_path in src.exceptions)
+				var/obj/item/checked_item = O
+				if(istype(checked_item, check_path))
+					proceed = 0
+					break
 		if (!proceed)
 			boutput(user, "<span class='alert'>\The [src] can't hold that kind of item.</span>")
 			return
