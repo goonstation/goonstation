@@ -1267,6 +1267,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
 			S.UpdateIcon()
+			S:tooltip_rebuild = 1
 			src.updateUsrDialog()
 
 		else

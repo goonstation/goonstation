@@ -543,6 +543,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
 					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 						update_static_data(ui.user, ui)

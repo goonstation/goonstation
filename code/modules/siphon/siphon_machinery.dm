@@ -363,12 +363,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				var/staystill = usr.loc
 				var/interval = 0
 				for (var/obj/item/I in src.contents)
-					I.set_loc(satchel)
-					I.add_fingerprint(usr)
+					if (satchel.check_valid_content(I))
+						I.set_loc(satchel)
+						I.add_fingerprint(usr)
+						playsound(src, sound_unload, 30, 1)
 					if (!(interval++ % 4))
 						satchel.UpdateIcon()
 						src.update_storage_bar()
-					playsound(src, sound_unload, 30, 1)
 					sleep(0.1 SECONDS)
 					if (usr.loc != staystill) break
 					if (satchel.contents.len >= satchel.maxitems)
@@ -378,6 +379,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(satchel.contents.len == satchel.maxitems || !length(src.contents)) incomplete = 0
 				boutput(usr, "<span class='notice'>You [incomplete ? "stop" : "finish"] filling \the [satchel].</span>")
 				satchel.UpdateIcon()
+				satchel.tooltip_rebuild = 1
 				src.update_storage_bar()
 			else
 				boutput(usr, "<span class='notice'>\The [satchel] doesn't have any room to accept materials.</span>")

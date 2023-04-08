@@ -182,6 +182,7 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
+			satchel.tooltip_rebuild = 1
 			if (amtload)
 				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
 			else

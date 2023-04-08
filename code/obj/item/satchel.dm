@@ -8,6 +8,7 @@
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = list(/obj/item/)
 	var/list/exceptions = list() //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
 	var/maximal_w_class = W_CLASS_BULKY //! the maximum weight class the satchels should be able to carry.
@@ -20,30 +21,31 @@
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
-		var/proceed = 0
-		for(var/check_path in src.allowed)
-			if(istype(W, check_path) && W.w_class < src.maximal_w_class)
-				proceed = 1
-				break
-		if (proceed && length(src.exceptions) > 0)
-			for(var/check_path in src.exceptions)
-				if(istype(W, check_path))
-					proceed = 0
-					break
-		if (!proceed)
+
+		if (!src.check_valid_content(W))
 			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
 
 		if (src.contents.len < src.maxitems)
-			user.u_equip(W)
-			W.set_loc(src)
-			W.dropped(user)
-			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			var/max_stack_reached = FALSE
+			if (W.amount > 1)
+				boutput(user, "<span class='notice'>You begin to fill [src] with [W].</span>")
+				var/amount_of_stack_splits = src.split_stack_into_satchel(W, user)
+				if (amount_of_stack_splits == src.max_stack_scoop)
+					max_stack_reached = TRUE
+			else
+				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			W.add_fingerprint(user)
-			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
+			if (!max_stack_reached && (src.contents.len < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+				user.u_equip(W)
+				W.set_loc(src)
+				W.dropped(user)
+			if (src.contents.len == src.maxitems)
+				boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.UpdateIcon()
 			tooltip_rebuild = 1
-		else boutput(user, "<span class='alert'>[src] is full!</span>")
+		else
+			boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
 		if (length(src.contents))
@@ -148,8 +150,14 @@
 				if (!matches(I, O) || QDELETED(I)) continue
 				if (I in user)
 					continue
-				I.set_loc(src)
+				var/max_stack_reached = FALSE
+				if (I.amount > 1)
+					var/amount_of_stack_splits = src.split_stack_into_satchel(I, user)
+					if (amount_of_stack_splits == src.max_stack_scoop)
+						max_stack_reached = TRUE
 				I.add_fingerprint(user)
+				if (!max_stack_reached && (src.contents.len < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+					I.set_loc(src)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
@@ -161,6 +169,40 @@
 		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
 		src.UpdateIcon()
 		tooltip_rebuild = 1
+
+	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
+		// This proc splits an object with multiple stacks and stuff it into the satchel until either
+		// The satchel is full
+		// all but the origin item of the stack is in the satchel
+		// the safety-amount of items were stuffed to prevent laggs.
+		// The proc returns the amount of times splits were created and stuffed
+		if (!(item_to_split) || (item_to_split.amount <= 1))
+			return 0
+		var/increment = 0
+		//since we need to add additional manipulation to the item in hand, we won't touch the last item here
+		var/amount_of_stack_splits = min(src.maxitems - src.contents.len, item_to_split.amount - 1, src.max_stack_scoop)
+		for (increment = 0, increment < amount_of_stack_splits, increment++)
+			var/obj/item/splitted_stack = item_to_split.split_stack(1)
+			splitted_stack.set_loc(src)
+			if (user)
+				splitted_stack.add_fingerprint(user)
+		return amount_of_stack_splits
+
+	proc/check_valid_content(var/obj/item/item_to_check)
+		// this proc checks if an item is able to be added to the satchel
+		// returns TRUE when it is able to be stuffed, returns FALSE when it is unable to
+		var/proceed = FALSE
+		for(var/check_path in src.allowed)
+			if(istype(item_to_check, check_path) && item_to_check.w_class < src.maximal_w_class)
+				proceed = TRUE
+				break
+		if (proceed && length(src.exceptions) > 0)
+			for(var/check_path in src.exceptions)
+				if(istype(item_to_check, check_path))
+					proceed = FALSE
+					break
+		return proceed
+
 
 	proc/matches(atom/movable/inserted, atom/movable/template)
 		. = istype(inserted, template.type)

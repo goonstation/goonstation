@@ -71,7 +71,7 @@
 			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
-			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
+			S.tooltip_rebuild = 1
 			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))

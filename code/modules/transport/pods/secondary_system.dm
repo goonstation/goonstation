@@ -66,6 +66,7 @@
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	desc = "Allows the ship to scoop up ore automatically."
 	var/capacity = 300
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	hud_state = "cargo"
 	f_active = 1
 	icon_state = "ore_hold"

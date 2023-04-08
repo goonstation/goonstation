@@ -2437,11 +2437,14 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
-				if (satchel)
-					user.put_in_hand_or_drop(satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
 				S.set_loc(src)
-				satchel = S
-				icon_state = "scoop-bag"
+				src.satchel = S
+				if (old_satchel)
+					user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
 				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
@@ -2475,9 +2478,24 @@ TYPEINFO(/obj/item/ore_scoop)
 			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
-			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
-			src.attackby(target, user)
-			user.swap_hand()
+			if (!issilicon(user))
+				var/obj/item/satchel/mining/new_satchel = target
+				var/atom/old_location = new_satchel.loc //we need to store the old location to move the ejected satchel there
+				user.drop_item(new_satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
+				new_satchel.set_loc(src)
+				src.satchel = new_satchel
+				if (old_satchel && old_location)
+					if (istype(old_location, /obj/item/storage)) //if the old satchel was in a storage item, the new item should fit as well
+						old_satchel.set_loc(old_location)
+					else
+						user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 

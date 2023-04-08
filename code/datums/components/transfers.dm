@@ -158,6 +158,8 @@
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 				transfers++
 			incoming.UpdateIcon()
+			if (istype(incoming, /obj/item/satchel))
+				incoming:tooltip_rebuild = 1
 			if (transfers)
 				attacker.visible_message("<span class='notice'>[attacker] dumps [transfers] items out of [incoming] into [parent].</span>")
 			else

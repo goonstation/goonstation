@@ -115,6 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				var/obj/item/satchel/S = I
 				for(var/obj/item/O in S.contents) O.set_loc(src)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				src.update()
 				return

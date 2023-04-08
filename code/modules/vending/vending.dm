@@ -2108,6 +2108,9 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		for (var/obj/item/R in targetContainer)
 			targetStorage?.hud.remove_object(R)
 			productListUpdater(R, user)
+		if (istype(targetContainer, /obj/item/satchel))
+			targetContainer.UpdateIcon()
+			targetContainer.tooltip_rebuild = 1
 
 
 	proc/productListUpdater(obj/item/target, mob/user)

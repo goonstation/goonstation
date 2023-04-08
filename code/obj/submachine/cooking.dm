@@ -1120,7 +1120,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					amtload++
 				W:UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
-				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
+				W:tooltip_rebuild = 1
 			return
 		else
 			var/proceed = 0
