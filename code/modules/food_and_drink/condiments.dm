@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	name = "custard"
 	desc = "A perennial favourite of clowns."
 	icon_state = "custard"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 2
 	heal_amt = 3
 

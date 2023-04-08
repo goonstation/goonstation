@@ -4,12 +4,10 @@
 /datum/targetable/critter/tackle
 	name = "Tackle"
 	desc = "Tackle a mob, making them fall over."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	icon_state = "tackle"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -30,4 +28,4 @@
 		var/mob/MT = target
 		MT.changeStatus("weakened", 3 SECONDS)
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] tackles [MT]!</b></span>", "<span class='alert'>You tackle [MT]!</span>")
-		return 0
+		return FALSE

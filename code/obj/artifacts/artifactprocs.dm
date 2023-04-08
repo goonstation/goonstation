@@ -386,6 +386,7 @@
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
+			logTheThing(LOG_COMBAT, src, "experienced an artifact fault [F.type_name] affecting [constructTarget(user,"combat")] at [log_loc(src)]")
 			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP

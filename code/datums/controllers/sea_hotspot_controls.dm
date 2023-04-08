@@ -742,6 +742,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	New()
 		..()
 		START_TRACKING
+		AddComponent(/datum/component/mechanics_holder)
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -815,6 +816,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -845,6 +847,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0
+	status = REQ_PHYSICAL_ACCESS
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -892,7 +895,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !user.equipped())
+			if(cell && !user.equipped() && in_interact_range(src, user))
 				cell.UpdateIcon()
 				user.put_in_hand_or_drop(cell)
 

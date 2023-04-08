@@ -17,6 +17,8 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Are we the memory of a dead flockmind?
+	var/dead = FALSE
 	/// number of zero compute flocktraces the flock has
 	var/free_traces = 0
 	var/queued_trace_deaths = 0
@@ -657,6 +659,7 @@ var/flock_signal_unleashed = FALSE
 	if (!real)
 		src.load_structures()
 		return
+	src.dead = TRUE
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
 	if (src.flockmind)
@@ -744,6 +747,11 @@ var/flock_signal_unleashed = FALSE
 // PROCESS
 
 /datum/flock/proc/process()
+	if (src.total_compute() > 300)
+		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				continue
+			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
 	if (!src.relay_in_progress && !src.relay_finished)
 		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
 			src.relay_in_progress = TRUE
@@ -785,7 +793,7 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/z_level_check(var/atom/A)
 	var/turf/T = get_turf(A)
-	if (src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
+	if (src.dead || src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 

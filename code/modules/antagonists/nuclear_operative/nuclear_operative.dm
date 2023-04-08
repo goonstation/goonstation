@@ -5,7 +5,7 @@
 	var/static/commander_title
 	var/static/available_callsigns
 
-	New()
+	New(datum/mind/new_owner)
 		if (!src.commander_title)
 			src.commander_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 
@@ -13,12 +13,16 @@
 			var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
 			src.available_callsigns = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
+		src.owner = new_owner
 		if (istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if (!(src.owner in gamemode.syndicates))
 				gamemode.syndicates += src.owner
 
 		. = ..()
+
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
@@ -101,9 +105,3 @@
 /datum/antagonist/nuclear_operative/commander
 	id = ROLE_NUKEOP_COMMANDER
 	display_name = "\improper Syndicate Operative Commander"
-
-	do_popup(override)
-		if (!override)
-			override = "nukeop-commander"
-
-		..(override)

@@ -54,6 +54,7 @@
 		var/max_produce_miasma = H.decomp_stage * 20
 		if (T.active_airborne_liquid && prob(90)) //sometimes just add anyway lol
 			var/obj/fluid/F = T.active_airborne_liquid
+			F.group.reagents.get_reagent("miasma")?.flush(F.group.reagents, 2)
 			if (F.group && F.group.reagents && F.group.reagents.total_volume > max_produce_miasma)
 				max_produce_miasma = 0
 

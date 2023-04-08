@@ -534,7 +534,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			src.set_density(FALSE)
 
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if(istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 

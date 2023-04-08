@@ -4,8 +4,8 @@
 	if (src.abilityHolder)
 		if (istype(src.abilityHolder,/datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/C = src.abilityHolder
-			if (!C.getHolder(/datum/abilityHolder/generic))
-				C.addHolder(/datum/abilityHolder/generic)
+			if (!C.getHolder(/datum/abilityHolder/hidden))
+				C.addHolder(/datum/abilityHolder/hidden)
 		if (!chair_flip_ability)
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
@@ -22,16 +22,15 @@
 		src.chair_flip_ability.extrarange = 0
 
 /datum/abilityHolder/generic
+	usesPoints = FALSE
+	regenRate = 0
+
+/datum/abilityHolder/hidden
 	usesPoints = 0
 	regenRate = 0
 	topBarRendered = 0
 	rendered = 0
-
-	//updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
-	//	any_abilities_displayed = 0
-	//	x_occupied = start_x
-	//	y_occupied = start_y
-	//	return
+	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
@@ -40,7 +39,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 1
-	preferred_holder_type = /datum/abilityHolder/generic
+	preferred_holder_type = /datum/abilityHolder/hidden
 	icon = null
 	icon_state = null
 	var/extrarange = 0 //affects next flip only

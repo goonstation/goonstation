@@ -1285,7 +1285,7 @@ datum/projectile/bullet/autocannon
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
-					O.prime()
+					O.detonate()
 				return
 			else //what the hell happened
 				return

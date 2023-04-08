@@ -28567,7 +28567,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bsT" = (
 /obj/table/wood/auto,
@@ -28576,27 +28576,18 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/heads)
 "bsU" = (
 /obj/machinery/computer/bank_data,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/heads)
 "bsV" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/manufacturer/personnel,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/heads)
 "bsW" = (
 /obj/stool/bed,
@@ -28604,17 +28595,14 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/heads)
 "bsX" = (
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0
 	},
 /obj/storage/secure/closet/command/hop,
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bsY" = (
 /obj/grille/catwalk/cross{
@@ -29335,7 +29323,7 @@
 /obj/blind_switch/area{
 	pixel_x = -24
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "buK" = (
 /obj/cable{
@@ -29347,16 +29335,10 @@
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/heads)
 "buL" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/carpet/green/fancy/innercorner/se,
 /area/station/crew_quarters/heads)
 "buM" = (
 /obj/cable{
@@ -29365,16 +29347,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/carpet/green/fancy/innercorner/sw,
 /area/station/crew_quarters/heads)
 "buN" = (
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/heads)
 "buO" = (
 /obj/grille/catwalk{
@@ -30078,7 +30054,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bwz" = (
 /obj/cable{
@@ -30087,19 +30063,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/heads)
 "bwA" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/carpet/green/fancy/innercorner/ne,
 /area/station/crew_quarters/heads)
 "bwB" = (
 /obj/cable{
@@ -30108,10 +30078,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/carpet/green/fancy/innercorner/nw,
 /area/station/crew_quarters/heads)
 "bwC" = (
 /obj/machinery/light{
@@ -30119,7 +30086,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bwD" = (
 /obj/cable{
@@ -31004,22 +30971,17 @@
 /obj/item/dice/d100,
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew,
 /obj/machinery/light_switch/west,
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "byz" = (
 /obj/vehicle/segway,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/heads)
 "byA" = (
 /obj/table/wood/auto,
 /obj/item/material_piece/foolsfoolsgold,
 /obj/item/stamp/hop,
-/turf/simulated/floor/carpet{
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge,
 /area/station/crew_quarters/heads)
 "byB" = (
 /obj/machinery/light,
@@ -31029,15 +30991,10 @@
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/pen/crayon/golden,
-/turf/simulated/floor/carpet{
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge,
 /area/station/crew_quarters/heads)
 "byC" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/heads)
 "byD" = (
 /obj/machinery/firealarm{
@@ -31045,7 +31002,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "byE" = (
 /obj/grille/catwalk/cross,
@@ -58101,8 +58058,8 @@
 /area/station/quartermaster/office)
 "cJR" = (
 /obj/machinery/computer/chem_requester/science{
-	dir = 4;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -59910,10 +59867,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
+/turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/heads)
 "cOx" = (
 /obj/machinery/power/data_terminal,
@@ -73867,6 +73821,15 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"mcz" = (
+/obj/mail_booth,
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor6"
+	},
+/area/shuttle/arrival/station)
 "mde" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -141267,7 +141230,7 @@ arJ
 aaa
 aaa
 aKm
-aFx
+mcz
 aOn
 aFz
 aIP
@@ -141569,7 +141532,7 @@ aAD
 aaS
 arR
 aEA
-aFx
+aOn
 aOn
 aFz
 aFz

@@ -101,6 +101,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	/// Used by changelings to determine which type of limbs their victim had
 	var/datum/mutantrace/mutant_race = null
+	/// The last mutant race that the owner of this appearance holder possessed that was not mutagen banned.
+	var/datum/mutantrace/original_mutant_race = null
 
 	var/e_color = "#101010"
 	var/e_color_original = "#101010"
@@ -191,6 +193,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
 		mutant_race = toCopy.mutant_race
+		original_mutant_race = toCopy.original_mutant_race
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
@@ -295,6 +298,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			pronouns = toCopy.pronouns
 			special_style = toCopy.special_style
 			mutant_race = toCopy.mutant_race
+			original_mutant_race = toCopy.original_mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
@@ -791,7 +795,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 
@@ -804,7 +808,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 

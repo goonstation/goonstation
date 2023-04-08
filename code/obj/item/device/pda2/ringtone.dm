@@ -3,7 +3,11 @@
 	name = "Ringtone"
 	size = 4
 	/// The list of ringtone datii included in this program. Assoc'd list, "ringtone_ID" = new/datum/ringtone/urtone
-	var/list/ring_list = list("ring1" = new/datum/ringtone)
+	var/list/ring_list = list(
+		"ring1" = new/datum/ringtone,
+		"ring2" = new/datum/ringtone/thinktronic,
+		"ring3" = new/datum/ringtone/thinktronic/quad1,
+		"ring4" = new/datum/ringtone/thinktronic/quad2)
 	/// The text that goes at the top
 	var/topText = "<h4>Thinktronic Systems PDA Sound System Backup</h4>"
 	/// The text that goes just under the header

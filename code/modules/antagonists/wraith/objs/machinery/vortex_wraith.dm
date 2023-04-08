@@ -24,10 +24,10 @@
 								/obj/critter/mechmonstrositycrawler,
 								/obj/critter/shade,
 								/obj/critter/bat/buff,
-								/obj/critter/lion,
-								/obj/critter/wraithskeleton,
+								/mob/living/critter/lion,
+								/mob/living/critter/skeleton/wraith,
 								/obj/critter/bear,
-								/obj/critter/brullbar,
+								/mob/living/critter/brullbar,
 								/obj/critter/gunbot/heavy)
 
 	New(var/mob_type_chosen = null)
@@ -148,7 +148,7 @@
 		switch (O)
 			if (/obj/critter/bear)
 				return 10
-			if (/obj/critter/wraithskeleton)
+			if (/mob/living/critter/skeleton/wraith)
 				return 4
 			if (/obj/critter/shade)
 				return 4
@@ -156,9 +156,9 @@
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3
-			if (/obj/critter/lion)
+			if (/mob/living/critter/lion)
 				return 5
-			if (/obj/critter/brullbar)
+			if (/mob/living/critter/brullbar)
 				return 15
 			if (/obj/critter/gunbot/heavy)
 				return 15

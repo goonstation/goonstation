@@ -55,13 +55,13 @@
 					if("Bats")
 						mob_choice = /obj/critter/bat/buff
 					if("Lions")
-						mob_choice = /obj/critter/lion
+						mob_choice = /mob/living/critter/lion
 					if("Skeletons")
-						mob_choice = /obj/critter/wraithskeleton
+						mob_choice = /mob/living/critter/skeleton/wraith
 					if("Bears")
 						mob_choice = /obj/critter/bear
 					if("Brullbars")
-						mob_choice = /obj/critter/brullbar
+						mob_choice = /mob/living/critter/brullbar
 					if("Heavy gunner drones")
 						mob_choice = /obj/critter/gunbot/heavy
 					if("Random")

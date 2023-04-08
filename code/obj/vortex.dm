@@ -101,7 +101,7 @@
 			else
 				horror_path = pick(/obj/critter/killertomato,
 				/obj/critter/spore,
-				/obj/critter/spacerattlesnake,
+				/mob/living/critter/small_animal/rattlesnake,
 				/obj/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
@@ -109,7 +109,7 @@
 				/obj/machinery/bot/cleanbot/emagged,
 				/obj/critter/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
-				/obj/critter/mimic,
+				/mob/living/critter/mimic,
 				/obj/critter/fermid,
 				/obj/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
