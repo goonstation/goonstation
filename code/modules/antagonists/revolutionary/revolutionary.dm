@@ -1,6 +1,7 @@
 /datum/antagonist/revolutionary
 	id = ROLE_REVOLUTIONARY
 	display_name = "revolutionary"
+	display_at_round_end = FALSE
 
 	New()
 		. = ..()

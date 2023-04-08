@@ -20,12 +20,10 @@
 	name = "Peck"
 	desc = "Peck at a mob."
 	icon_state = "scuffed_peck"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-	var/take_eyes = 0
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/take_eyes = FALSE
 
 	cast(atom/target)
 		if (..())
@@ -90,12 +88,10 @@
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
-	cooldown = 200
+	cooldown = 20 SECONDS
 	icon_state = "pounce_polymorph"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -130,11 +126,9 @@
 	name = "Trip"
 	desc = "Weave around the legs of a mob, causing them to trip."
 	icon_state = "tail_trip"
-	cooldown = 250
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 25 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -166,16 +160,14 @@
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
 	cooldown = 5 SECONDS
-	targeted = 1
+	targeted = TRUE
 	icon_state = "waspbee_sting"
-	target_anything = 1
+	target_anything = TRUE
 	var/attack_verb = "sting"
 	var/venom1 = "histamine"
 	var/amt1 = 12
 	var/venom2 = "toxin"
 	var/amt2 = 2
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -206,10 +198,10 @@
 	scorpion_sting
 		icon_state = "scorpion_sting"
 		cooldown = 12 SECONDS
-		venom1 = "neurotoxin"
-		amt1 = 6
+		venom1 = "neurodepressant"
+		amt1 = 5
 		venom2 = "toxin"
-		amt2 = 4
+		amt2 = 10
 
 	snake_bite
 		name = "Bite"
@@ -225,11 +217,9 @@
 	name = "Grab"
 	desc = "Grab a mob with your pincers, imobilizing them for a bit"
 	cooldown = 15 SECONDS
-	targeted = 1
+	targeted = TRUE
 	icon_state = "pincer_grab"
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	target_anything = TRUE
 
 
 	cast(atom/target)
@@ -264,7 +254,7 @@
 		MT.changeStatus("weakened", 3 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
-		SPAWN(6 SECONDS)
+		SPAWN(3 SECONDS)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 

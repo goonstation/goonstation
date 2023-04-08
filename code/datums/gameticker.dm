@@ -111,7 +111,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend","salvager", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(25); "gang", "conspiracy"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -378,6 +378,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef HALLOWEEN
 		spooktober_GH.update()
 #endif
+
+		#ifdef APRIL_FOOLS
+		if(prob(0.1))
+			if(isnull(random_floor_turfs))
+				build_random_floor_turf_list()
+			var/turf/T = pick(random_floor_turfs)
+			new /mob/living/critter/jeans_elemental(T)
+		#endif
 
 		wagesystem.process()
 

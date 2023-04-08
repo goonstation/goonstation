@@ -128,7 +128,7 @@
 		if(open && repairstate)
 			switch(repairstate)
 				if(1)
-					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+					if (isweldingtool(W) && W:try_weld(user,0,-1))
 						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(2)
@@ -142,7 +142,7 @@
 							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(4)
-					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+					if (isweldingtool(W) && W:try_weld(user,0,-1))
 						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 
@@ -474,7 +474,6 @@
 		..()
 		// Weld > Crowbar > Rods > Weld
 		if (circ.repairstate == 1)
-			playsound(circ, 'sound/items/Welder.ogg', 50, 1)
 			owner.visible_message("<span class='notice'>[owner] begins to cut up the damaged piping of the lubrication system.</span>")
 		if (circ.repairstate == 2)
 			owner.visible_message("<span class='notice'>[owner] begins prying out the damaged lubrication system.</span>")
@@ -483,7 +482,6 @@
 			playsound(circ, 'sound/impact_sounds/Generic_Stab_1.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins replacing the sections of lubrication piping.</span>")
 		if (circ.repairstate == 4)
-			playsound(circ, 'sound/items/Welder.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the lubrication piping.</span>")
 
 	onEnd()

@@ -10,7 +10,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	target_anything = 0
 	human_only = 0
 	can_use_in_container = 1
-	dont_lock_holder = 0
 	///The observer mob we chose to transfer mind from, this should just be returned from New, but datum/targetable/New relies on truthy fail states
 	var/mob/dead/target_observer/hivemind_observer/use_mob = null
 	///The associated ROLE_ define
@@ -228,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	can_use_in_container = 1
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	incapacitationCheck()
 		return 0
 
@@ -255,7 +254,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	interrupt_action_bars = 0
 
 	incapacitationCheck()
@@ -307,7 +306,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	interrupt_action_bars = 0
 
 	incapacitationCheck()
