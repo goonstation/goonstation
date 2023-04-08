@@ -30,7 +30,7 @@
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()
 
-			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
+			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue) || istype(owner.loc, /obj/machinery/clonegrinder)))
 				icky_icky_miasma(T)
 
 			var/env_temp = 0
