@@ -1,4 +1,4 @@
-not #define GANG_STARTING_SPRAYPAINT 5 // number of spray bottles gangs start with
+#define GANG_STARTING_SPRAYPAINT 5 // number of spray bottles gangs start with
 #define GANG_SPRAYPAINT_REGEN 300 //time in seconds between gangs gaining another spray bottle
 
 
