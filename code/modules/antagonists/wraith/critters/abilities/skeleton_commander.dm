@@ -14,7 +14,7 @@
 	/obj/critter/gunbot/drone/buzzdrone,
 	/obj/critter/mechmonstrositycrawler,
 	/obj/critter/bat/buff,
-	/obj/critter/lion,
+	/mob/living/critter/lion,
 	/mob/living/critter/skeleton/wraith,
 	/obj/critter/gunbot/heavy,
 	/mob/living/critter/bear,
