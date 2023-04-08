@@ -84,7 +84,7 @@
 				/obj/critter/crunched,
 				/obj/critter/crunched,
 				/obj/critter/crunched,
-				/obj/critter/bloodling,
+				/mob/living/critter/bloodling,
 				/obj/critter/ancient_thing,
 				/obj/critter/ancient_thing,
 				/obj/critter/ancient_repairbot/grumpy,
