@@ -2046,16 +2046,16 @@ obj/item/whetstone
 			icon_state = "arm_blade"
 			item_state = "arm_blade-D"
 			hit_type = DAMAGE_BLUNT
-			force = 5
+			force = 3
 			throwforce = 5
-			stamina_damage = 40
-			stamina_cost = 15
+			stamina_damage = 30
+			stamina_cost = 20
 			stamina_crit_chance = 30
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
-			setProperty("meleeprot_all", 6)
-			setProperty("rangedprot", 0.7)
-			setProperty("movespeed", 0.3)
-			setProperty("disorient_resist", 60)
+			setProperty("meleeprot_all", 4)
+			setProperty("rangedprot", 0.5)
+			setProperty("movespeed", 0.4)
+			setProperty("disorient_resist", 40)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
 			user.UpdateOverlays(src.shield, "shield")
