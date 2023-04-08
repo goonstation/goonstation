@@ -1,4 +1,15 @@
 
+(t)fri apr 07 23
+(u)Amylizzle
+(p)13600
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Mimic nametags are now invisible when they're disguised.
+(u)LeahTheTech
+(*)Mimics can now spawn as antagonist critters.
+(u)Amylizzle
+(p)13588
+(e)🪲🔎⚖🧱💨📦|C-Bug, C-Code-Quality, C-Balance, A-Materials, A-Atmospherics, A-Game-Objects
+(+)Fixed a minor bug with molitz beta, and enabled it to produce gas inside the nuclear reactor (and other things)
 (t)thu apr 06 23
 (u)aloe
 (+)Experimentally, the gangs game mode will rarely appear on the RP servers.

@@ -1,7 +1,8 @@
 /mob/living/critter/mimic
-	name = "mechanical toolbox"
+	name = "Mimic"
 	desc = null
-	icon_state = null
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mimicface"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
@@ -65,12 +66,17 @@
 		src.appearance = src.disguise
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.is_hiding = TRUE
+		qdel(src.name_tag)
+		src.name_tag = null
 		src.UpdateIcon()
 
 
 	proc/stop_hiding()
 		if(src.is_hiding)
 			src.is_hiding = FALSE
+			src.name_tag = new()
+			src.update_name_tag()
+			src.vis_contents += src.name_tag
 			src.UpdateIcon()
 			src.visible_message("[src] suddenly opens eyes that weren't there and sprouts teeth!")
 
@@ -100,8 +106,7 @@
 /datum/targetable/critter/mimic
 	name = "Mimic Object"
 	desc = "Disguise yourself as a target object."
-	icon = 'icons/mob/spell_buttons.dmi'
-	icon_state = "snakes"
+	icon_state = "mimic"
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -121,5 +126,31 @@
 		return FALSE
 
 /datum/targetable/critter/sting/mimic
+	name = "Mimicotoxin Sting"
+	desc = "Inject your target with a confusing toxin."
 	venom_ids = list("mimicotoxin")
 	inject_amount = 15
+
+	antag_spawn
+		inject_amount = 17 //enough to blind someone for a few seconds
+
+/mob/living/critter/mimic/antag_spawn
+	//same health as a firebot
+	health_brute = 25
+	health_burn = 25
+	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle, /datum/targetable/critter/sting/mimic/antag_spawn)
+	hand_count = 2
+	//give them an actual hand so they can open doors etc.
+	setup_hands()
+		. = ..()
+		var/datum/handHolder/HH = hands[2]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "grabber"
+		HH.limb_name = "grabber"
+		HH.can_hold_items = TRUE
+		HH.can_attack = TRUE
+		HH.can_range_attack = FALSE
+		var/datum/limb/small_critter/L = HH.limb
+		L.max_wclass = W_CLASS_SMALL

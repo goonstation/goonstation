@@ -30,8 +30,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-#include "_std\defines\abilities.dm"
-#include "_std\defines\food.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -495,6 +493,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\ai\dog.dm"
 #include "code\mob\living\critter\ai\generic_critter.dm"
 #include "code\mob\living\critter\ai\human.dm"
+#include "code\mob\living\critter\ai\lion.dm"
 #include "code\mob\living\critter\ai\mimic.dm"
 #include "code\mob\living\critter\ai\mouse.dm"
 #include "code\mob\living\critter\ai\ocean.dm"

@@ -266,6 +266,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Miscellaneous"
 
+/datum/manufacture/fiddle
+	name = "Fiddle"
+	item_paths = list("WOOD", "FAB-1")
+	item_amounts = list(25, 10)
+	item_outputs = list(/obj/item/instrument/fiddle)
+	time = 5 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
 /datum/manufacture/bikehorn
 	name = "Bicycle Horn"
 	item_paths = list("ALL")
