@@ -143,6 +143,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			else
 				set_opacity(0)
 
+			if(src.material.special_naming)
+				name = src.material.specialNaming(src)
+
 		if (istype(reinforcement))
 
 			health_max += round(reinforcement.getProperty("density") * 5)

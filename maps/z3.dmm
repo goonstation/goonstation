@@ -7220,7 +7220,8 @@
 "aJx" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	icon = 'icons/obj/doors/shuttle.dmi'
 	},
 /area/abandonedmedicalship)
 "aJy" = (

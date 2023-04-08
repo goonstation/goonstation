@@ -665,11 +665,11 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				for(var/turf/T in view(5,src.loc))
-					if(!T.reagents)
-						T.create_reagents(1000)
-					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, 1)
+				for (var/i in 1 to rand(3,5))
+					var/datum/projectile/neutron/projectile = new(15)
+					shoot_projectile_DIR(src, projectile, pick(alldirs))
+				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
@@ -753,7 +753,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -788,7 +788,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/obj/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)

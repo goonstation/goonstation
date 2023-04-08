@@ -237,9 +237,9 @@ datum/mind
 	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
 		if (!master)
 			return FALSE
-		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist.
+		// To avoid wacky shenanigans
 		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
-			return FALSE
+			src.remove_antagonist(role_id)
 		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
 			var/datum/antagonist/subordinate/A = V
 			if (initial(A.id) == role_id)
@@ -273,6 +273,7 @@ datum/mind
 			qdel(A)
 		src.special_role = null
 		ticker.mode.traitors.Remove(src)
+		ticker.mode.Agimmicks.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()
