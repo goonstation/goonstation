@@ -53,7 +53,7 @@
 	New()
 		..()
 		if (prob(33))
-			src.icon_state = "panelscorched"
+			src.UpdateOverlays(image(src.icon, "panelscorched"), "burn")
 
 /turf/unsimulated/iomoon/ancient_floor
 	name = "Ancient Metal Floor"
@@ -1587,6 +1587,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		 return
 
 	Uncrossed(var/atom/crosser as mob|obj)
+		..()
 		if (crosser == activator)
 			activator = null
 			if (active)

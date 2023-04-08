@@ -99,6 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
+	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()

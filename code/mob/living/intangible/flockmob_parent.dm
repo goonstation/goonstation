@@ -77,11 +77,29 @@
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
+	if (!src.flock.z_level_check(src))
+		src.emote("scream")
+		if (length(src.flock.units[/mob/living/critter/flock/drone]))
+			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your drones, you retreat back to them to save yourself!</span>")
+			var/mob/living/critter/flock/unit = pick(src.flock.units[/mob/living/critter/flock/drone])
+			src.set_loc(get_turf(unit))
+		else
+			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your entrypoint, you retreat back to it to save yourself!</span>")
+			src.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150,150, Z_LEVEL_STATION)))
+
+	if (src.flock?.relay_finished)
+		return TRUE
 	if (get_turf(src) == src.previous_turf)
 		src.afk_counter += parent.schedule_interval
 	else
 		src.afk_counter = 0
 		src.previous_turf = get_turf(src)
+
+/mob/living/intangible/flock/death(datum/controller/process/mobs/parent)
+	var/datum/abilityHolder/flockmind/AH = src.abilityHolder
+	if (AH.drone_controller.drone)
+		AH.drone_controller.cast(AH.drone_controller.drone, FALSE)
+	..()
 
 /mob/living/intangible/flock/is_spacefaring() return 1
 /mob/living/intangible/flock/say_understands() return 1
@@ -140,6 +158,7 @@
 /mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
 	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
 	holder.drone_controller.drone = drone
+	drone.selected_by = src
 	drone.AddComponent(/datum/component/flock_ping/selected)
 	src.targeting_ability = holder.drone_controller
 	src.update_cursor()
@@ -160,12 +179,19 @@
 		return
 
 	if (istype(target, /mob/living/critter/flock/drone))
-		src.select_drone(target)
-		return
-
+		var/mob/living/critter/flock/drone/flockdrone = target
+		if (!isdead(flockdrone))
+			if (flockdrone.selected_by || flockdrone.controller)
+				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
+				return
+			src.select_drone(flockdrone)
+			return
 	//moved from flock_structure_ghost for interfering with ability targeting
-	if (istype(target, /obj/flock_structure/ghost))
+	else if (istype(target, /obj/flock_structure/ghost))
 		var/obj/flock_structure/ghost/tealprint = target
+		var/typeinfo/obj/flock_structure/info = get_type_typeinfo(tealprint.building)
+		if (!info.cancellable)
+			return
 		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 			tealprint.cancelBuild()
 		return

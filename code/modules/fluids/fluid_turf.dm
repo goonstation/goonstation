@@ -338,6 +338,12 @@
 			return
 		if (locate(/obj/lattice) in src)
 			return
+		if (AM.anchored == 2)
+			return
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client?.flying)
+				return
 		return_if_overlay_or_effect(AM)
 
 		try_build_turf_list()
@@ -424,6 +430,12 @@
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
+
+/turf/space/fluid/trench/nospawn
+	spawningFlags = null
+
+	generate_worldgen()
+		return
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

@@ -76,6 +76,8 @@ TYPEINFO(/obj/item/light_parts)
 
 // the standard tube light fixture
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/admin_fix)
+
 /var/global/stationLights = new/list()
 /obj/machinery/light
 	name = "light fixture"
@@ -88,6 +90,7 @@ TYPEINFO(/obj/item/light_parts)
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+	material_amt = 0.2
 
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
@@ -344,6 +347,16 @@ TYPEINFO(/obj/item/light_parts)
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 0
 	removable_bulb = 1
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
+	disposing()
+		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	exitsign
 		name = "illuminated exit sign"
@@ -925,6 +938,8 @@ TYPEINFO(/obj/item/light_parts)
 // break the light and make sparks if was on
 
 /obj/machinery/light/proc/broken(var/nospark = 0)
+	set name = "Break"
+
 	if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
 		return
 
@@ -961,6 +976,20 @@ TYPEINFO(/obj/item/light_parts)
 /obj/machinery/light/blob_act(var/power)
 	if(prob(power * 2.5))
 		broken()
+
+/obj/machinery/light/proc/admin_toggle()
+	set name = "Toggle"
+	on = (!on && current_lamp.light_status == LIGHT_OK)
+	update()
+
+/obj/machinery/light/proc/admin_fix()
+	set name = "Fix"
+	if(isnull(current_lamp))
+		current_lamp = new light_type
+	current_lamp.light_status = LIGHT_OK
+	current_lamp.update()
+	on = TRUE
+	update()
 
 //mbc : i threw away this stuff in favor of a faster machine loop process
 /*
@@ -1038,7 +1067,7 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
-	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched
 	m_amt = 60

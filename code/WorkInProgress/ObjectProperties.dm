@@ -197,7 +197,7 @@ var/list/globalPropList = null
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
-		desc = "Reduces armor piercing on recieved attacks." //Value is flat reduction of incoming piercing %
+		desc = "Reduces armor piercing on received attacks." //Value is flat reduction of incoming piercing %
 		tooltipImg = "protpierce.png"
 		defaultValue = 30
 		getTooltipDesc(var/obj/propOwner, var/propVal)

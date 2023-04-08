@@ -3,6 +3,9 @@
 	*
   * Lots of functionality resides in this type.
   */
+TYPEINFO(/atom)
+	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	var/list/admin_procs = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -60,6 +63,9 @@
 	var/num_allowed_prefixes = 10
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
+
+	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
+	var/material_applied_appearance = FALSE
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -197,12 +203,11 @@
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
@@ -310,6 +315,13 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
+/atom/Uncrossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im also cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
+
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
 
@@ -326,9 +338,15 @@
 /atom/proc/EnteredAirborneFluid(obj/fluid/F as obj, atom/old_loc)
 	.=0
 
+/// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	. = new_state != src.icon_state
 	src.icon_state = new_state
+	if(. && src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	signal_event("icon_updated")
+	// TODO: actual component signal here
+	// also TODO: use this proc instead of setting icon state directly probably
 
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
@@ -353,6 +371,8 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
+	if(src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
 	return
 
@@ -749,14 +769,12 @@
 	return
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
-/atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
-	var/image/I = getTexturedImage(src, texture, blendMode)//, key)
-	if (!I)
-		return
+/atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
-		worn_material_texture_image = getTexturedWornImage(src, texture, blendMode)
+		worn_material_texture_image = isnull(texture) ? null : getTexturedWornImage(src, texture, blendMode)
 	return
 
 /proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
@@ -847,6 +865,25 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
+		var/atom/movable/movablesrc = src
+		var/list/params_list = params2list(params)
+		if ((isturf(over_object) || over_object == src) && !movablesrc.anchored)
+			if ((over_object in movablesrc.locs) || over_object == src)
+				animate(src,
+					pixel_x = text2num(params_list["icon-x"]) - 16,
+					pixel_y = text2num(params_list["icon-y"]) - 16,
+					time = 0.1 SECONDS,
+					easing = LINEAR_EASING
+				)
+			else if (BOUNDS_DIST(src, over_object) <= 1)
+				movablesrc.set_loc(over_object)
+			else
+				movablesrc.throw_at(over_object, 1000, 1, params=params_list)
+			return
+		else if(isitem(movablesrc))
+			over_object.Attackby(movablesrc, usr, params_list)
+			return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
@@ -918,7 +955,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
-		CRASH("Tried to call set_loc on [identify_object(src)] to non-null location: [identify_object(newloc)]")
+		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
@@ -1006,6 +1043,7 @@
 	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
+		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

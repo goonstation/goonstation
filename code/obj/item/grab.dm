@@ -34,7 +34,7 @@
 
 			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
-			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
+			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
@@ -256,7 +256,10 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-
+		if (istype(src.loc, /obj/item/cloth))
+			var/obj/item/cloth/cloth = src.loc
+			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc

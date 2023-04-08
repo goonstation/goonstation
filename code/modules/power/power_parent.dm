@@ -38,7 +38,7 @@
 		if(!defer_powernet_rebuild)
 			makepowernets()
 		else
-			defer_powernet_rebuild = 2
+			deferred_powernet_objs |= src
 	. = ..()
 
 // common helper procs for all power machines
@@ -46,16 +46,8 @@
 	powernet?.newavail += amount
 
 #ifdef MACHINE_PROCESSING_DEBUG
-	var/area/A = get_area(src)
-	var/list/machines = detailed_machine_power[A]
-	if(!machines)
-		detailed_machine_power[A] = list()
-		machines = detailed_machine_power[A]
-	var/list/machine = machines[src]
-	if(!machine)
-		machines[src] = list()
-		machine = machines[src]
-	machine += amount
+	if(!detailed_power_data) detailed_power_data = new
+	detailed_power_data.log_machine(src, amount)
 #endif
 
 /obj/machinery/power/proc/add_load(var/amount)

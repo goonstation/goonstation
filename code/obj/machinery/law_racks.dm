@@ -9,6 +9,7 @@
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
 	_max_health = 120
+	power_usage = 1000 // + 100 per law
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
@@ -41,8 +42,8 @@
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
 		for (var/i in 1 to MAX_CIRCUITS)
-			src.welded[i] = false
-			src.screwed[i] = false
+			src.welded[i] = FALSE
+			src.screwed[i] = FALSE
 			if(src.law_circuits[i])
 				src.law_circuits[i].set_loc(get_turf(src))
 				src.law_circuits[i] = null
@@ -53,6 +54,12 @@
 		src.drop_all_modules()
 		UpdateIcon()
 		. = ..()
+
+	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				return "[src] cannot be deconstructed while it still has law modules inside!"
+		return ..()
 
 	was_deconstructed_to_frame(mob/user)
 		logTheThing(LOG_STATION, user, "<b>deconstructed</b> rack [constructName(src)]")
@@ -124,8 +131,8 @@
 						mod_index_list += i
 				if(length(mod_index_list) > 0)
 					var/i = pick(mod_index_list)
-					src.welded[i] = false
-					src.screwed[i] = false
+					src.welded[i] = FALSE
+					src.screwed[i] = FALSE
 					src.law_circuits[i].set_loc(get_turf(src))
 					src.law_circuits[i] = null
 					src.visible_message("<span class='alert'><b>A module tumbles out of the [src]!</b></span>")
@@ -135,8 +142,8 @@
 			//severely damaged - we're basically falling apart here
 			//break all the welds and screws, eject half of remaining modules
 			for (var/i in 1 to MAX_CIRCUITS)
-				src.welded[i] = false
-				src.screwed[i] = false
+				src.welded[i] = FALSE
+				src.screwed[i] = FALSE
 				if(src.law_circuits[i] && prob(50))
 					src.law_circuits[i].set_loc(get_turf(src))
 					src.law_circuits[i] = null
@@ -206,13 +213,13 @@
 		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1)
-				changeHealth(rand(-105,-90),"explosion severity [severity]")
+				changeHealth(rand(-90,-70),"explosion severity [severity]")
 				return
 			if(2)
-				changeHealth(rand(-80,-50),"explosion severity [severity]")
+				changeHealth(rand(-60,-40),"explosion severity [severity]")
 				return
 			if(3)
-				changeHealth(rand(-30,-10),"explosion severity [severity]")
+				changeHealth(rand(-20,-10),"explosion severity [severity]")
 				return
 
 	bullet_act(obj/projectile/P)
@@ -302,11 +309,11 @@
 			return
 		else if (istype(I, /obj/item/aiModule) && !issilicon(user))
 			var/obj/item/aiModule/AIM = I
-			var/inserted = false
+			var/inserted = FALSE
 			var/count = 1
 			while (!inserted && count <= MAX_CIRCUITS)
 				if(!src.law_circuits[count])
-					inserted = true
+					inserted = TRUE
 				else
 					count++
 			if(!inserted)
@@ -353,8 +360,8 @@
 				lawText[i] = law_circuits[i].get_law_text()
 				lawTitles[i] = law_circuits[i].get_law_name()
 			else
-				src.welded[i] = false
-				src.screwed[i] = false
+				src.welded[i] = FALSE
+				src.screwed[i] = FALSE
 
 		. = list(
 			"lawTitles" = lawTitles,
@@ -394,7 +401,6 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
-					playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 
@@ -590,7 +596,7 @@
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
-
+		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
@@ -636,7 +642,7 @@
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
@@ -645,7 +651,7 @@
 		if(isnull(src.law_circuits[slotNum]))
 			return FALSE
 		//add circuit to hand
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
@@ -706,8 +712,11 @@
 				fireflash(I,0,TRUE)
 				I.combust()
 
-	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
-	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
+	/**
+	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
+	 * Does not call UpdateLaws()
+	 */
+	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
@@ -717,12 +726,15 @@
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
 			UpdateIcon()
-			return true
+			src.calculate_power_usage()
+			return TRUE
 
-	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Does not call UpdateLaws()
+	/**
+	 * Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot.
+	 * Does not call UpdateLaws()
 	 * Intended for Admemery
-	*/
-	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
+	 */
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
@@ -732,9 +744,10 @@
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
 			src.holo_expansions -= holo.expansion
 		src.law_circuits[slot]=null
-		src.welded[slot]=false
-		src.screwed[slot]=false
+		src.welded[slot] = FALSE
+		src.screwed[slot] = FALSE
 		tgui_process.update_uis(src)
+		src.calculate_power_usage()
 		UpdateIcon()
 
 	/// Deletes all laws. Does not call UpdateLaws()
@@ -742,12 +755,13 @@
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
 
-	/** This will cause a module to glitch, either totally replace it law or adding picked_law
-	* to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
-	* law in that slot, this will trigger on the law closest to that slot
-	* if there are no laws to glitch, just do nothing
-	*/
-	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
+	/**
+	 * This will cause a module to glitch, either totally replace it law or adding picked_law to its text (depening on replace).
+	 * Lawnumber is a suggestion, not a guarentee.
+	 * - If there is no law in that slot, this will trigger on the law closest to that slot.
+	 * - If there are no laws to glitch, just do nothing.
+	 */
+	proc/cause_law_glitch(picked_law = "Beep repeatedly.", lawnumber = 1, replace = FALSE)
 		var/lawnumber_actual = 1
 		if(src.law_circuits[lawnumber])
 			lawnumber_actual = lawnumber
@@ -757,7 +771,7 @@
 				if(src.law_circuits[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
 					lawnumber_actual = i
 		if(!src.law_circuits[lawnumber_actual])
-			return false //we could not find a law to modify, sorry
+			return FALSE //we could not find a law to modify, sorry
 		else
 			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
 			tgui_process.update_uis(src)
@@ -765,7 +779,13 @@
 				src.visible_message("<span class='alert'><b>The [src] sparks violently!</b></span>")
 			else
 				src.visible_message("<span class='alert'><b>The [src] makes a brief fizzing noise!</b></span>")
-			return true
+			return TRUE
+
+	proc/calculate_power_usage()
+		src.power_usage = 1000
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				src.power_usage += 100
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

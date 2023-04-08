@@ -5,7 +5,7 @@
 #define BOUNTY_TYPE_BIG		5
 
 /datum/game_mode/spy_theft
-	name = "spy_thief"
+	name = "Spy Theft"
 	config_tag = "spy_theft"
 
 	antag_token_support = TRUE
@@ -116,17 +116,15 @@
 		playsound(pda_turf, "warp", 15, 1, 0.2, 1.2)
 		animate_portal_tele(hostpda)
 
-		if (user.mind)
-			user.mind.purchased_traitor_items += reward
-
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
 			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
-			//if (src.is_VR_uplink == 0)
-			//	statlog_traitor_item(user, reward.name, reward.cost)
+			if (istype(antag_role))
+				antag_role.redeemed_items.Add(item)
 		if (reward.item2)
 			new reward.item2(pda_turf)
 		if (reward.item3)
@@ -182,22 +180,8 @@
 	return 1
 
 /datum/game_mode/spy_theft/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/spy in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
-
-		new objective_set_path(spy)
-		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
-			equip_spy_theft(spy.current)
-
-		var/obj_count = 1
-		for(var/datum/objective/objective in spy.objectives)
-			boutput(spy.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-
-		//spy_name_list += spy.current.real_name
+		spy.add_antagonist(ROLE_SPY_THIEF)
 
 	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
@@ -212,28 +196,7 @@
 		src.update_bounty_readouts()
 
 /datum/game_mode/spy_theft/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/spy_theft/declare_completion()
 	. = ..()
 
@@ -504,7 +467,6 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/lawrack] = 3
 	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
@@ -683,29 +645,13 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_unblocked_turfs(/area/station)
-	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/jucer_trader)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/shield_zone)
-	possible_areas -= /area/sim/test_area
-
-	for (var/area/A in possible_areas)
+	for (var/area/A in (get_areas_with_unblocked_turfs(/area/station) + get_areas_with_unblocked_turfs(/area/diner)))
 		LAGCHECK(LAG_LOW)
 		if (A.virtual)
-			possible_areas -= A
-			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
-			possible_areas -= A
-			break
+			continue
+		var/typeinfo/area/typeinfo = A.get_typeinfo()
+		if (typeinfo.valid_bounty_area)
+			possible_areas += A
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)

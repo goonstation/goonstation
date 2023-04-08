@@ -7,9 +7,9 @@
 ////////////////
 
 ////////////////
-proc/make_cleanable(var/type,var/loc,var/list/viral_list)
+proc/make_cleanable(var/type,var/loc)
 	RETURN_TYPE(/obj/decal/cleanable)
-	return new type(loc, viral_list)
+	return new type(loc)
 
 /obj/decal/cleanable
 	density = 0
@@ -19,7 +19,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/sample_amt = 10
 	var/sample_reagent = "water"
 	var/sample_verb = "scoop"
-	var/list/diseases = list()
 	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie urine's slippery is 80 so you have an 80% chance to slip on it
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
@@ -37,18 +36,15 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	plane = PLANE_NOSHADOW_BELOW
 
-	New(var/loc,var/list/viral_list)
+	New(var/loc)
 		..()
 		if(loc)
-			setup(loc,viral_list)
+			setup(loc)
 
-	setup(var/L,var/list/viral_list)
+	setup(var/L)
 		..()
 		src.real_name = src.name
 
-		if (length(viral_list))
-			for (var/datum/ailment_data/AD in viral_list)
-				src.diseases += AD
 		if (src.can_dry)
 			src.Dry()
 
@@ -377,7 +373,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	disposing()
 		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
-			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA // okay so we shouldn't check to see if B has DNA/type because it's brand new and it does not, duh
 			B.blood_type = src.blood_type
@@ -420,7 +415,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	reagents_max = 100
 
 	disposing()
-		diseases = list()
 		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			B = new /obj/decal/bloodtrace(src.loc)
@@ -773,7 +767,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/writing/maptext_dummy
 	icon_state = ""
 
-	setup(var/L,var/list/viral_list)
+	setup(var/L)
 		. = ..()
 		icon_state = initial(icon_state)
 		maptext_width = 16
@@ -810,9 +804,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -1328,6 +1322,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
+/obj/decal/cleanable/machine_debris/radioactive
+	New()
+		.=..()
+		src.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "Useless heap of junk."
@@ -1717,11 +1716,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		src.layer = 4
 
 	disposing(var/uncapture = 1)
-		var/area/tagarea = get_area(src)
-		if(tagarea.gang_owners == src.owners && uncapture)
-			tagarea.gang_owners = null
-			var/turf/T = get_turf(src)
-			T.tagged = 0
+		if (istype(owners))
+			src.owners.tags -= src
+			var/area/tagarea = get_area(src)
+			if(tagarea.gang_owners == src.owners && uncapture)
+				tagarea.gang_owners = null
+				var/turf/T = get_turf(src)
+				T.tagged = 0
 		..()
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
@@ -1771,8 +1772,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					if("BLOOD")
 						var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 						if (!b) continue //ZeWaka: fix for null.diseases
-						if (src?.diseases)
-							b.diseases += src.diseases
 						if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
 							b.blood_DNA = src.blood_DNA
 							b.blood_type = src.blood_type
@@ -1805,3 +1804,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "sec_tape_1"
 	random_icon_states = list("sec_tape_1", "sec_tape_2")
+
+/obj/decal/cleanable/desk_clutter //RIP desk clutter object you're a decal now
+	name = "desk clutter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "deskclutter"
+	desc = "What a mess..."
+	plane = PLANE_DEFAULT //needs to go on desks
+	layer = OBJ_LAYER

@@ -42,8 +42,8 @@
 					A.pixel_y = initial(A.pixel_y)
 		return ..()
 
-/obj/tree1
-	name = "Tree"
+/obj/tree
+	name = "tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
 	icon_state = "tree" // changed from 0
@@ -53,6 +53,47 @@
 	pixel_x = -20
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
+
+	_max_health = 1
+
+	var/falling = FALSE
+	var/fallen = FALSE
+	var/fall_time = 2 SECONDS
+
+	attackby(obj/item/I, mob/user)
+		if ((issawingtool(I) || ischoppingtool(I)) && (!isrestrictedz(src.z) || isgenplanet(src)))
+			if (I.hitsound)
+				playsound(I, I.hitsound, 50, 1)
+			src._health -= I.force
+			user.lastattacked = src
+			if (src._health <= 0)
+				if (src.falling)
+					return
+				if (src.fallen)
+					var/turf/our_turf = get_turf(src)
+					for (var/i in 0 to 2)
+						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
+						log.Turn(90)
+					qdel(src)
+					return
+				src.falling = TRUE
+				src.animate_fall()
+				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
+				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
+				SPAWN(src.fall_time)
+					src.falling = FALSE
+					src.fallen = TRUE
+		..()
+
+	proc/animate_fall()
+		var/ratio = 0.3
+		var/icon/icon = new(src.icon)
+		var/transform1 = matrix(src.transform, 90 * ratio, MATRIX_ROTATE)
+		transform1 = matrix(transform1, icon.Width()/(3 / ratio), -icon.Height()/(2 / ratio), MATRIX_TRANSLATE)
+		var/transform2 = matrix(src.transform, 90, MATRIX_ROTATE)
+		transform2 = matrix(transform2, icon.Width()/3, -icon.Height()/2, MATRIX_TRANSLATE)
+		animate(src, transform = transform1, time = src.fall_time/2, easing = QUAD_EASING | EASE_IN)
+		animate(transform = transform2, time = src.fall_time/2, easing = BOUNCE_EASING | EASE_OUT)
 
 	elm_random
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
@@ -119,12 +160,39 @@
 	anchored = 1
 
 /obj/stone
-	name = "Stone"
+	name = "stone"
 	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
-	anchored = 1
-	density=1
+	anchored = TRUE
+	density = TRUE
+
+	_max_health = 25
+	_health = 25
+
+	attackby(obj/item/I, mob/user)
+		if ((istype(I, /obj/item/mining_tool) || istype(I, /obj/item/mining_tools)) && !isrestrictedz(src.z))
+			playsound(src, 'sound/impact_sounds/Stone_Cut_1.ogg', 50)
+			//bleh
+			if (istype(I, /obj/item/mining_tool))
+				src._health -= I.force
+			else
+				var/obj/item/mining_tools/tool = I
+				src._health -= tool.power * 2
+			if (src._health <= 0)
+				src.visible_message("<span class='alert'>\The [src] breaks apart.</span>", "<span class='alert'>You hear rock shattering.</span>")
+				for (var/i in 1 to 3)
+					new /obj/item/raw_material/rock{rand_pos = TRUE}(src.loc)
+				qdel(src)
+		. = ..()
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 	random
 		New()
@@ -492,6 +560,13 @@
 	icon_state = "grassplug"
 	anchored = 1
 
+/proc/switched_obj_toggle(var/category,var/id,var/new_state = FALSE)
+	if(!category || !id)
+		logTheThing(LOG_DEBUG, null, "Switched object toggle called without full var set. Variables passed: [category] | [id]")
+		return
+	for(var/atom/A in switched_objs[category][id])
+		A:toggle(new_state)
+
 /obj/window_blinds
 	name = "blinds"
 	desc = "Thin strips of plastic that can be angled to prevent light from passing through. There's probably a switch that controls them nearby."
@@ -504,15 +579,22 @@
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null
-	var/obj/blind_switch/mySwitch = null
 
 	New()
 		. = ..()
-		START_TRACKING
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
 
 	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
 		. = ..()
-		STOP_TRACKING
 
 	ex_act(var/severity)
 		switch(severity)
@@ -521,24 +603,19 @@
 			else
 				if(prob(50))
 					qdel(src)
+
 	attack_hand(mob/user)
-		src.toggle()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
 		src.toggle_group()
 
-	proc/toggle(var/force_state as null|num)
-		if (!isnull(force_state))
-			src.open = force_state
-		else
-			src.open = !(src.open)
+	proc/toggle(var/new_state)
+		src.open = new_state
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		if (istype(src.mySwitch))
-			src.mySwitch.toggle()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.open))
 
 	update_icon()
 		if (src.open)
@@ -595,14 +672,25 @@
 	density = 0
 	var/on = 0
 	var/id = null
-	var/list/myBlinds = list()
 
 	New()
-		..()
+		. = ..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN(0.5 SECONDS)
-			src.locate_blinds()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
+		. = ..()
+
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
@@ -610,29 +698,23 @@
 			else
 				if(prob(50))
 					qdel(src)
-	proc/locate_blinds()
-		for_by_tcl(blind, /obj/window_blinds)
-			if (blind.id == src.id)
-				if (!(blind in src.myBlinds))
-					src.myBlinds += blind
-					blind.mySwitch = src
 
-	proc/toggle()
-		src.on = !(src.on)
+	proc/toggle(var/new_state)
+		src.on = new_state
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !length(myBlinds))
-			return
-		for (var/obj/window_blinds/blind in myBlinds)
-			blind.toggle(src.on)
+		src.UpdateIcon()
+
+	proc/toggle_group()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
-		src.toggle()
+		src.toggle_group()
 
 	attack_ai(mob/user as mob)
-		src.toggle()
+		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
+		src.toggle_group()
 
 /obj/blind_switch/north
 	name = "N blind switch"
@@ -650,17 +732,8 @@
 	name = "W blind switch"
 	pixel_x = -24
 
+// left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
-	locate_blinds()
-		var/area/A = get_area(src)
-		for_by_tcl(blind, /obj/window_blinds)
-			var/area/blind_area = get_area(blind)
-			if(blind_area != A)
-				continue
-			LAGCHECK(LAG_LOW)
-			if (!(blind in src.myBlinds))
-				src.myBlinds += blind
-				blind.mySwitch = src
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
@@ -677,6 +750,151 @@
 /obj/blind_switch/area/west
 	name = "W blind switch"
 	pixel_x = -24
+
+/obj/sign_switch
+	name = "sign switch"
+	desc = "Connected to one or more illuminated signs, turning them on or off."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light0"
+	anchored = 1
+	density = 0
+	var/on = FALSE
+	var/id = null
+
+	New()
+		..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
+			src.name = "sign switch"
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.icon_state = "light[src.on]"
+		src.UpdateIcon()
+
+	proc/toggle_group()
+		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+
+	attack_hand(mob/user)
+		src.toggle_group()
+
+	attack_ai(mob/user as mob)
+		src.toggle_group()
+
+	attackby(obj/item/W, mob/user)
+		src.toggle_group()
+
+/obj/sign_switch/north
+	name = "N sign switch"
+	pixel_y = 24
+
+/obj/sign_switch/east
+	name = "E sign switch"
+	pixel_x = 24
+
+/obj/sign_switch/south
+	name = "S sign switch"
+	pixel_y = -24
+
+/obj/sign_switch/west
+	name = "W sign switch"
+	pixel_x = -24
+
+/obj/machinery/illuminated_sign
+	name = "illuminated sign"
+	desc = "It's a sign on the wall that does the glowy thing."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "occupancy-1"
+	anchored = 1
+	density = 0
+	opacity = 0
+	layer = FLY_LAYER+1.01 // just above windows
+	var/base_state = "occupancy"
+	var/on = FALSE
+	var/id = null
+
+	New()
+		..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.UpdateIcon()
+
+	power_change()
+		..()
+		UpdateIcon()
+
+/obj/machinery/illuminated_sign/update_icon()
+	if(!on || status & NOPOWER)
+		icon_state = "[src.base_state]-0"
+		src.UpdateOverlays(null, "light")
+	else
+		icon_state = "[src.base_state]-1"
+		var/mutable_appearance/light_ov = mutable_appearance(src.icon, "[src.base_state]-glow")
+		light_ov.plane = PLANE_LIGHTING
+		light_ov.alpha = 150
+		src.UpdateOverlays(light_ov, "light")
+
+/obj/machinery/illuminated_sign/occupancy
+	name = "occupancy sign"
+	desc = "A convenient illuminated sign to let you know that you're not supposed to butt in."
+	icon_state = "occupancy-0"
+	base_state = "occupancy"
+
+/obj/machinery/illuminated_sign/onair
+	name = "ON AIR sign"
+	desc = "Glows in proximity to pompous radio hosts."
+	icon_state = "onair-0"
+	base_state = "onair"
+
+/obj/machinery/illuminated_sign/open_neon
+	name = "open sign"
+	desc = "A fancy neon-style sign, traditionally used to welcome others to an active place of business."
+	icon_state = "opensign-0"
+	base_state = "opensign"
 
 /obj/disco_ball
 	name = "disco ball"
@@ -1190,7 +1408,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	bound_height = 32
 	bound_width = 32
 
@@ -1501,4 +1719,39 @@ obj/decoration/pottedfern
 				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
 
 			qdel(src)
+		return
+
+ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
+/obj/lever
+	name = "lever"
+	desc = "A big satisfying wall lever, ready to be pulled."
+	density = 0
+	anchored = TRUE
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "wall-lever-up"
+	var/on = FALSE
+
+	attack_hand(mob/user)
+		. = ..()
+		src.toggle()
+
+	proc/toggle()
+		if (ON_COOLDOWN(src, "toggle", 0.7 SECONDS))
+			return
+		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+		if (on)
+			on = FALSE
+			flick("wall-lever-up-anim", src)
+			src.icon_state = "wall-lever-up"
+			src.off()
+		else
+			on = TRUE
+			flick("wall-lever-down-anim", src)
+			src.icon_state = "wall-lever-down"
+			src.on()
+
+	proc/on()
+		return
+
+	proc/off()
 		return

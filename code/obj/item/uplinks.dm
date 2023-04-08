@@ -43,6 +43,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
+		if (istype(get_area(src), /area/sim/gunsim))
+			src.is_VR_uplink = TRUE
 		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
@@ -101,7 +103,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -449,7 +451,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src)
 					src.explode()
 
-		else if (href_list["synd_int"])
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
 			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
@@ -644,7 +646,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
-		if(has_synd_int)
+		if(has_synd_int && !src.is_VR_uplink)
 			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 			src.menu_message += "<HR>"
 		return
@@ -701,7 +703,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.print_to_host("<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>")
 			return
 
-		else if (href_list["synd_int"])
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
 			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
@@ -731,6 +733,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	spy
 		purchase_flags = UPLINK_SPY
+
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
@@ -778,6 +783,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	spy
 		purchase_flags = UPLINK_SPY
+
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
 
 ///Datum used to combine the bounty being claimed with the item being delivered
 /datum/bounty_claim
@@ -900,6 +908,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		delivery = claim.delivery
 		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
+
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
+		if (istype(antag_role))
+			antag_role.stolen_items.Add(bounty.item)
+
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
@@ -922,8 +935,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!istype(delivery,/obj/item/parts))
 			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 		qdel(delivery)
-		if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-			user.mind.spy_stolen_items += bounty.name
 
 		if (req_bounties() > 1)
 			bounty_tally += 1
@@ -1084,7 +1095,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<br><I>Each bounty is open to all spies. Be sure to satisfy the requirements before your enemies.</I><BR><BR>"
 		src.menu_message += "<br><I>A **HOT** bounty indicates that the payout will be higher in value.</I><BR><BR>"
 		src.menu_message += "<I>Stand in the Deliver Area and touch a bountied item (or use click + drag) to this PDA. Our fancy wormhole tech can take care of the rest. Your efforts will be rewarded.</I><BR><table cellspacing=5>"
-		if(has_synd_int)
+		if(has_synd_int && !src.is_VR_uplink)
 			src.menu_message += "<HR>"
 			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 		return
@@ -1101,7 +1112,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				//print photo of item or mob owner
 				src.print_photo(locate(href_list["bounty"]) , usr)
 
-		else if (href_list["synd_int"])
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
 			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
@@ -1233,10 +1244,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 							B.run_on_spawn(A, usr, FALSE, src)
 							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
+							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
 							. = TRUE
 							break
 
@@ -1291,7 +1302,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			if (user.abilityHolder.getAbility(assoc_spell))
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			if (antag_role.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
@@ -1301,8 +1313,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			user.abilityHolder.addAbility(src.assoc_spell)
-			user.abilityHolder.updateButtons()
+			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
+			antag_role.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))

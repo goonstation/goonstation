@@ -856,9 +856,8 @@ TYPEINFO(/obj/item/radiojammer)
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing(LOG_SIGNALERS, usr, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
-					ticker.mode:remove_revolutionary(M.mind)
+			if((M.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(M.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(20))
+				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 #ifdef USE_STAMINA_DISORIENT
 			M.do_disorient(200, weakened = 100, disorient = 60, remove_stamina_below_zero = 0)
@@ -1023,6 +1022,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 /obj/item/device/radio/signaler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if (.)
+		return
 	switch (action)
 		if ("set-code")
 			var/newcode = text2num_safe(params["value"])

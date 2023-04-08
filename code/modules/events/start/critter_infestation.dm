@@ -9,12 +9,12 @@
 
 	var/list/invasion_critter_types = list(\
 	list(/obj/critter/wasp),\
-	list(/obj/critter/spacescorpion),\
-	list(/obj/critter/wraithskeleton),\
+	list(/mob/living/critter/small_animal/scorpion),\
+	list(/mob/living/critter/skeleton/wraith),\
 	list(/mob/living/critter/spider,/mob/living/critter/spider/baby),\
 	list(/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby),\
 	list(/mob/living/critter/spider/spacerachnid),\
-	list(/obj/critter/spacerattlesnake),\
+	list(/mob/living/critter/small_animal/rattlesnake),\
 	list(/obj/critter/fermid),)
 
 	admin_call(var/source)

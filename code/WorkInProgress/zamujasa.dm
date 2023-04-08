@@ -104,6 +104,41 @@
 			qdel(src)
 
 
+/obj/maptext_junk/power
+	name = "power popup"
+	maptext_y = 16
+	maptext_x = -32
+	maptext_width = 96
+	anchored = 2
+
+	New(var/change = 0, var/channel = 0)
+		..()
+		if (abs(change) < 0.5)
+			qdel(src)
+			return
+		var/channel_text = "??"
+		var/hcol = (change > 0) ? "#88ff88" : "#ffff00"
+		switch (channel)
+			if (-1)
+				channel_text = "APC"
+				hcol = (change > 0) ? "#00ff00" : "#ff6666"
+			if (EQUIP)
+				channel_text = "Eq"
+			if (LIGHT)
+				channel_text = "Li"
+			if (ENVIRON)
+				channel_text = "En"
+
+		maptext = "<span class='pixel c ol'>[channel_text] <span style='color: [hcol];'>[change > 0 ? "+" : ""][round(change)]</span></span>"
+
+		animate(src, maptext_y = 36, time = 8, easing = EASE_OUT | QUAD_EASING)
+		animate(time = 18)
+		animate(alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
+
+		SPAWN(5 SECONDS)
+			qdel(src)
+
+
 /obj/maptext_junk/speech
 	name = "spoken chat"
 	maptext_x = -64
@@ -300,7 +335,7 @@
 			var/obj/item/reagent_containers/food/snacks/plant/I = W
 			base_score = 2 + I.quality
 
-		else if (istype(W, /obj/item/plant))
+		else if (istype(W, /obj/item/plant) || istype(W, /obj/item/clothing/head/flower))
 			var/obj/item/plant/I = W
 			base_score = 2 + I.quality
 
@@ -655,7 +690,7 @@
 
 /obj/machinery/fix_this_shit
 	name = "\proper imcoder"
-	desc = "They're not bugs, okay? They're <em>features</em>."
+	desc = "<i>Error: Cannot call <tt>usr.examine()</tt>.</i>"
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	plane = PLANE_HUD
@@ -725,6 +760,17 @@
 	var/update_delay = 0
 	var/require_var_or_list = 1
 
+	/// If enabled and autosize_target is set, scales the target based on the monitored value and the set scale and value boundaries.
+	var/autosize_enabled = 0
+	var/atom/autosize_target
+	// scale min/max - range in which target gets scaled
+	// single value means both x and y, a list(x, y) dictates respective x and y values
+	var/autosize_scale_min = 1
+	var/autosize_scale_max = 1
+	// monitored value bounds - the range of values to which scaling adjusts
+	var/autosize_min_monitored_value_bounds = 0
+	var/autosize_max_monitored_value_bounds = 0
+
 	New()
 		..()
 		src.maptext_x = -100
@@ -734,6 +780,8 @@
 
 	disposing()
 		UnsubscribeProcess()
+		if (autosize_target)
+			autosize_target_reset_transform()
 		..()
 
 	process()
@@ -795,9 +843,54 @@
 				src.last_value = current_value
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
+				if (autosize_enabled && autosize_target)
+					autosize_update_target()
 		catch(var/exception/e)
 			src.maptext = "<span class='c pixel sh'>[src.monitored]\n(Err: [e])</span>"
 
+	proc/autosize_update_target()
+		var/input_value = clamp(last_value, autosize_min_monitored_value_bounds, autosize_max_monitored_value_bounds)
+		var/output_x_start
+		var/output_x_end
+		var/output_y_start
+		var/output_y_end
+		if (islist(autosize_scale_min))
+			var/list/output_start_list = autosize_scale_min
+			if (length(autosize_scale_min) != 2)
+				// shouldn't occur, reverting to safe values
+				output_x_start = 1
+				output_y_start = 1
+			else
+				output_x_start = output_start_list[1]
+				output_y_start = output_start_list[2]
+		else
+			output_x_start = autosize_scale_min
+			output_y_start = autosize_scale_min
+		if (islist(autosize_scale_max))
+			var/list/output_end_list = autosize_scale_max
+			if (length(autosize_scale_max) != 2)
+				// shouldn't occur, reverting to safe values
+				output_x_end = 1
+				output_y_end = 1
+			else
+				output_x_end = output_end_list[1]
+				output_y_end = output_end_list[2]
+		else
+			output_x_end = autosize_scale_max
+			output_y_end = autosize_scale_max
+
+		var/mapping_slope_x = (1.0 * (output_x_end - output_x_start) / (autosize_max_monitored_value_bounds - autosize_min_monitored_value_bounds))
+		var/output_x = output_x_start + mapping_slope_x * (input_value - autosize_min_monitored_value_bounds)
+		var/mapping_slope_y = (1.0 * (output_y_end - output_y_start) / (autosize_max_monitored_value_bounds - autosize_min_monitored_value_bounds))
+		var/output_y = output_y_start + mapping_slope_y * (input_value - autosize_min_monitored_value_bounds)
+
+		var/matrix/new_matrix = matrix()
+		new_matrix.Scale(output_x, output_y)
+		autosize_target.transform = new_matrix
+
+	proc/autosize_target_reset_transform()
+		var/matrix/default_matrix = matrix()
+		autosize_target.transform = default_matrix
 
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
@@ -912,8 +1005,11 @@
 
 
 		emergency_shuttle
+			name = "emergency shuttle status monitor"
+			desc = "Fun fact about these: The 'Stats' tab in DreamSeeker lags my client really bad, so I use these to check how long until the shuttle arrives/leaves. Good job examining this!"
 			// remember those radio-controlled displays? i miss those.
 			// we should bring those back.
+			// 2023 edit: someone did!
 			maptext_prefix = "<span class='c pixel sh'>Emergency Shuttle\n<span class='vga'>"
 			display_mode = "time2"
 			update_delay = 1 SECOND
@@ -938,8 +1034,67 @@
 						return "Departing in [..(val)]"
 
 
+	ticker
+		New()
+			// Global ticker var
+			monitored = ticker
+			..()
+
+		round_timer
+			name = "round timer"
+			desc = "Time flies when you're having fun!"
+			maptext_prefix = "<span class='c pixel sh'>Shift Time\n<span class='xfont'>"
+			monitored_var = "round_elapsed_ticks"
+			display_mode = "time"
+			update_delay = 1 SECOND
+
+			wall_clock
+				name = "digital wall clock"
+				desc = "A digital readout of how long the shift has been so far."
+				maptext_prefix = "<span class='c xfont ol'>"
+				maptext_suffix = "</span>"
+
+				New()
+					..()
+					maptext_y += 21
+
+				more_accurate
+					get_value()
+						. = (TIME - round_start_time)
+
+
+				offset
+					New()
+						..()
+						maptext_x += 16
+
+
+	score_tracker
+		New()
+			// Global score_tracker var
+			monitored = score_tracker
+			..()
+
+		artifacts_analyzed
+			name = "counter of artifacts analyzed"
+			desc = "Shows how many artifacts have been shipped off with an analysis form stuck onto it."
+			maptext_prefix = "<span class='c pixel sh'>Artifacts\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_analyzed"
+			ding_on_change = 1
+
+		artifacts_analyzed_correctly
+			name = "counter of artifacts analyzed correctly"
+			desc = "Shows how many artifacts were shipped off with a <i>correct</i> analysis form. How high can <i>you</i> get this number?"
+			maptext_prefix = "<span class='c pixel sh'>Correctly\nAnalyzed:\n<span class='vga'>"
+			monitored_var = "artifacts_correctly_analyzed"
+			ding_on_change = 1
+			// u did it
+			ding_sound = 'sound/machines/futurebuddy_beep.ogg'
+
 
 	location
+		name = "location monitor"
+		desc = "Shows the location of something. Whatever it is."
 		require_var_or_list = 0
 		maptext_prefix = "<span class='c pixel sh'><span class='xfont'>"
 		maptext_suffix = "</span>"
@@ -953,13 +1108,15 @@
 
 
 		gps
+			name = "personal GPS"
+			desc = "Shows the location of whatever thing it happens to be on."
 			// Automated GPS! Wow!
 			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 			update_delay = 1
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -973,8 +1130,22 @@
 				set_loc(null)
 
 
+	power
+		name = "power generator monitor"
+		desc = "Shows how much power something or other is generating, probably."
+		display_mode = "power"
+		maptext_prefix = "<span class='c pixel sh'>Power Output:\n<span class='vga'>"
+		maptext_suffix = "W</span></span>"
+		monitored_var = "lastgen"
+		// to use this properly:
+		// spawn, varedit, go to [monitored], refpicker
+		// click the TEG or a solar computer
+		// (some other things may work, and you can always varedit more)
+
 
 	health
+		name = "health monitor"
+		desc = "Shows your current health and damage. For your health!"
 		require_var_or_list = 0
 		maptext_prefix = ""
 		maptext_suffix = ""
@@ -991,7 +1162,7 @@
 
 			New()
 				..()
-				src.pixel_y += 34
+				src.pixel_y += 54
 
 				var/atom/movable/home = src.loc
 				// Put it inside something to make it constantly show its location.
@@ -1014,50 +1185,78 @@
 			..()
 
 		farts
+			name = "fart counter"
+			desc = "If you see this you are probably going to push F a lot. Show your respect!"
 			monitored_var = "farts"
 			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
+
+		slips
+			name = "slips counter"
+			desc = "The number of times someone slipped on something else. May be an indicator of rampant clown crimes."
+			monitored_var = "slips"
+			maptext_prefix = "<span class='c pixel sh'>Slips:\n<span class='vga'>"
+			update_delay = 1
 
 		deaths
+			name = "death counter"
+			desc = "The number of times someone or something died. May not be fully accurate and counts NPCs."
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = 'sound/misc/lose.ogg'
+			update_delay = 1
 
 			players
+				name = "player death counter"
+				desc = "The number of times a player died. May not be fully accurate. You can inflate the number by going to the afterlife bar, if that's your thing."
 				monitored_var = "playerdeaths"
 				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 				ding_sound = 'sound/misc/lose.ogg'
 
 		adminhelps
+			name = "adminhelp counter"
+			desc = "The number of adminhelps. Adminhelping to make this number go up will <em>extremely</em> not end well for you, so <b>don't</b>."
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
 			ding_sound = 'sound/voice/screams/mascream6.ogg'
 
 		mentorhelps
+			name = "mentorhelp counter"
+			desc = "The number of mentorhelps sent. Mentorhelping just to make this number go up will not end well for you, so maybe don't."
 			monitored_var = "mentorhelps"
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
 			ding_sound = 'sound/voice/animal/mouse_squeak.ogg'
 
 		prayers
+			name = "prayer counter"
+			desc = "The number of prayers. Praying to make this number go up will not end well for you, so maybe don't."
 			monitored_var = "prayers"
 			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
 			ding_sound = 'sound/voice/heavenly.ogg'
 
 		violence
+			name = "acts of violence counter"
+			desc = "The number of times someone has Done A Violence&trade;, like punching someone."
 			monitored_var = "violence"
 			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
-			update_delay = 1 SECOND
+			update_delay = 1
 
 		clones
+			name = "clone counter"
+			desc = "The number of cloned players."
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 
 		last_death
+			name = "last death monitor"
+			desc = "RIP this idiot. Hope it wasn't you!"
 			require_var_or_list = 0
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
 			ding_sound = 'sound/misc/lose.ogg'
+			ding_on_change = 0
+			update_delay = 1
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])
@@ -1071,22 +1270,31 @@
 			src.monitored = wagesystem
 			..()
 
+		name = "station budget monitor"
+		desc = "This is the current amount of money the Head of Personell has yet to embezzle."
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
 		ding_sound = 'sound/misc/cashregister.ogg'
+		ding_on_change = 1
 
 		station
 			// the default, but explicit...
 		shipping
+			name = "shipping budget monitor"
+			desc = "This is the current amount of money in the cargo/shipping budget."
 			monitored_var = "shipping_budget"
 			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
 		research
+			name = "research budget monitor"
+			desc = "This is the current amount of money in the research budget that has yet to be blown on genetic materials."
 			monitored_var = "research_budget"
 			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
 
 
 	clients
+		name = "total client counter"
+		desc = "The number of your people connected to the game server right now, playing or not."
 		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
 		validate_monitored()
 			return 1
@@ -1094,6 +1302,9 @@
 			. = total_clients()
 
 	players
+		name = "total player counter"
+		desc = "The number of people who aren't sitting at the title screen."
+
 		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
 		var/what_group = "total"
 		validate_monitored()
@@ -1102,12 +1313,18 @@
 			. = get_crew_stats()[what_group]
 
 		alive
+			name = "alive player counter"
+			desc = "The number of your fellow crewmates that are alive. Includes ghost critters, VR, afterlife bar patrons, etc."
 			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
 			what_group = "alive"
 		dead
+			name = "dead player counter"
+			desc = "The number of your fellow crewmates that have shuffled off this mortal coil (and are, critically, still logged in). You can make this go down by becoming an animal or visiting the afterlife bar."
 			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
 			what_group = "dead"
 		observers
+			name = "observing player counter"
+			desc = "The number of people who clicked Observe and are still logged in, watching you. You might even be one!"
 			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
 			what_group = "observer"
 
@@ -1125,7 +1342,7 @@
 				var/mob/M = C.mob
 				if(!M || isnewplayer(M)) continue
 				if (isdead(M) && !isliving(M))
-					if (M.mind?.joined_observer)
+					if (M.mind?.get_player()?.joined_observer)
 						results["observer"]++
 					else
 						results["dead"]++
@@ -1137,8 +1354,10 @@
 
 
 	load
+		name = "server load monitor"
+		desc = "How loaded the server is (and the tick rate). The load is how much of a tick was spent Doing Things&trade;, so it can go over 100%. If it goes over 100%, that means the server is lagging."
 		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
-		update_delay = 1 SECOND
+		update_delay = 1
 
 		validate_monitored()
 			return 1
@@ -1155,6 +1374,57 @@
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
+
+		the_literal_server
+			var/obj/decal/fakeobjects/the_server = null
+			var/is_smoking = 0
+
+			New()
+				..()
+				src.maptext_y += 35	// appear *over* the fake server.
+
+				the_server = new(get_turf(src))
+				the_server.name = "server rack"
+				the_server.desc = "This looks kinda important.  You can barely hear farting and honking coming from a speaker inside.  Weird."
+				the_server.icon = 'icons/obj/networked.dmi'
+				the_server.icon_state = "server"
+				the_server.anchored = 1
+				the_server.density = 1
+				the_server.vis_contents += src
+				src.set_loc(the_server)
+
+				if (world.name)
+					the_server.name = world.name
+
+			get_value()
+				if (src.the_server)
+					switch (world.tick_lag)
+						if (0 to 0.4)
+							the_server.icon_state = "server0"
+						if (0.4 to 0.6)
+							the_server.icon_state = "server"
+						if (0.6 to 0.8)
+							the_server.icon_state = "server2"
+						if (0.8 to INFINITY)
+							the_server.icon_state = "serverf"
+
+					if (world.tick_lag > 1.0 && !src.is_smoking)
+						// starts smoking over 1.0, not at it
+						src.update_smoking(1)
+					else if (world.tick_lag <= 1.0 && src.is_smoking)
+						src.update_smoking(0)
+
+				. = ..()
+
+			proc/update_smoking(var/should_be_smoking)
+				if (should_be_smoking && !src.is_smoking)
+					src.is_smoking = 1
+					src.UpdateParticles(new/particles/barrel_embers, "embers")
+					src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+
+				else if (!should_be_smoking && src.is_smoking)
+					src.is_smoking = 0
+					src.ClearAllParticles()
 
 
 /obj/overlay/zamujasa/football_wave_timer
@@ -1385,12 +1655,13 @@ Other Goonstation servers:[serverList]</span>"})
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
-	desc = "Genetically engineered for passiveness and bred for badminning, the greater domestic zambee is increasingly unpopular among grayshirts and griefers."
+	desc = "Finally, badminnery in the form of a bad pun. Dead on the inside."
 	limb_path = /datum/limb/small_critter/bee/strong
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting/zambee,
 						 /datum/targetable/critter/bee_swallow,
-						 /datum/targetable/critter/bee_teleport)
+						 /datum/targetable/critter/bee_teleport,
+						 /datum/targetable/critter/bee_puke_honey)
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)

@@ -1,3 +1,5 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve)
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
@@ -34,6 +36,8 @@
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 		bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
+#define POP_ANIMATE_TIME 0.3 SECONDS // im a define FIEND. timed to roughly match the sound
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if(src.destroyed)
@@ -54,7 +58,14 @@
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
 			return
 		src.valve_open = TRUE
-		user.gib()
+		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
+		user.add_filter("canister pop", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0, y=8))
+		animate(user.get_filter("canister pop"), size=50, time=POP_ANIMATE_TIME, easing=SINE_EASING)
+
+		SPAWN(POP_ANIMATE_TIME)
+			user.gib()
+
+#undef POP_ANIMATE_TIME
 
 	powered()
 		return 1
@@ -410,18 +421,9 @@
 		"releasePressure" = src.release_pressure,
 		"valveIsOpen" = src.valve_open,
 		"hasValve" = src.has_valve ? TRUE : FALSE,
-		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"holding" = src.holding?.ui_describe(),
 		"detonator" = null,
 	)
-
-	if(src.holding)
-		. += list(
-			"holding" = list(
-				"name" = src.holding.name,
-				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-			)
-		)
 
 	if(src.det)
 		. += list(
@@ -447,10 +449,10 @@
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 
-		var/has_paper = false
+		var/has_paper = FALSE
 		for(var/obj/item/paper/sheet in src.det.attachments)
 			. += list("paperData" = sheet.ui_static_data())
-			has_paper = true
+			has_paper = TRUE
 		. += list("hasPaper" = has_paper)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)

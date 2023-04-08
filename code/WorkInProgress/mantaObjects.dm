@@ -235,7 +235,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 60), user)
 			if(5)
-				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
+				if (isweldingtool(I) && I:try_weld(user,0,-1))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(6)
 				if (istool(I, TOOL_WRENCHING))
@@ -249,7 +249,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					if (S.amount >= 5)
 						actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(9)
-				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
+				if (isweldingtool(I) && I:try_weld(user,0,-1))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 
 
@@ -311,7 +311,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	important = 1
 	bound_height = 64
 	bound_width = 64
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	New()
 		. = ..()
@@ -551,7 +551,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/repairstate = 0
 	bound_width = 32
 	bound_height = 32
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	ex_act(severity)
 		switch(severity)
@@ -952,7 +952,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			playsound(propeller, 'sound/impact_sounds/Generic_Stab_1.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (propeller.repairstate == 5)
-			playsound(propeller, 'sound/items/Welder.ogg', 50, 1)
+			the_tool:try_weld(owner,0,-1,0,0)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the connection points and soldering the control board.</span>")
 		if (propeller.repairstate == 6)
 			playsound(propeller, 'sound/items/Ratchet.ogg', 60, 1)
@@ -964,7 +964,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			playsound(propeller, 'sound/items/Deconstruct.ogg', 50, 1)
 			owner.visible_message("<span class='notice'>[owner] begins constructing replacements for the propellers..</span>")
 		if (propeller.repairstate == 9)
-			playsound(propeller, 'sound/items/Welder.ogg', 60, 1)
+			the_tool:try_weld(owner,0,-1,0,0)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the replacement propellers on.</span>")
 	onEnd()
 		..()
@@ -1560,7 +1560,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	anchored = 2
 	opacity = 1
 	bound_width = 96
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /turf/unsimulated/floor/special/fogofcheating
 	name = "fog of cheating prevention"

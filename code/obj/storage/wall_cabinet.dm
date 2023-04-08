@@ -20,7 +20,14 @@ TYPEINFO(/obj/item/storage/wall)
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user)
+		if (istype(user, /mob/living/critter/small_animal))
+			return
 		return mouse_drop(user)
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(usr, /mob/living/critter/small_animal))
+			return
+		..()
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -225,7 +232,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack/clothes1
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
-	/obj/item/clothing/under/misc/syndicate = 1,
+	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
@@ -264,7 +271,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
-	/obj/item/clothing/under/gimmick/hunter = 1,
+	/obj/item/clothing/under/misc/mobster = 1,
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
@@ -373,3 +380,19 @@ obj/item/storage/wall/clothingrack/hatrack
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
+
+/obj/item/storage/wall/surgery
+	name = "surgical cabinet"
+	desc = "A wall-mounted cabinet containing surgical tools."
+	icon_state = "minimed"
+	slots = 13
+	spawn_contents = list(
+		/obj/item/scalpel = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/scissors/surgical_scissors = 1,
+		/obj/item/surgical_spoon = 1,
+		/obj/item/staple_gun = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/suture = 1,
+		/obj/item/device/analyzer/healthanalyzer = 1,
+	)

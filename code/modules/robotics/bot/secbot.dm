@@ -825,7 +825,7 @@
 					var/obj/item/card/id/perp_id = H.equipped()
 					if (!istype(perp_id))
 						perp_id = H.wear_id
-					if(!perp_id || (perp_id && !(perp_id.access & src.lockdown_permit)))
+					if(!perp_id || (perp_id && !length(perp_id.access & src.lockdown_permit)))
 						src.threatlevel += 4
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
@@ -1281,7 +1281,6 @@
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
-			master.visible_message("<span class='alert'><B>...vigorously!</B></span>")
 			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
 
 	onInterrupt()

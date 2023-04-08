@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/glue_ready)
 	var/glue_removal_time
 
 /datum/component/glue_ready/Initialize(glue_duration=null, glue_removal_time=null)
+	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(src.parent.GetComponent(/datum/component/glued))
@@ -73,7 +74,7 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/grille))
 		return FALSE
-	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) || istype(glued_to, /mob/living/seanceghost))
+	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) )
 		if(user)
 			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
 		return FALSE

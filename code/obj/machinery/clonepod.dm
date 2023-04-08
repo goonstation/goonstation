@@ -19,7 +19,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
-	var/mob/living/occupant
+	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -213,7 +213,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
-		if (ghost.mind.dnr)
+		if (ghost.mind.get_player()?.dnr)
 			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 
@@ -238,9 +238,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
-			if(oldholder?.mobAppearance?.mutant_race?.dna_mutagen_banned)
-				src.occupant?.set_mutantrace(null)
+			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
@@ -248,8 +248,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 		if (istype(oldabilities))
-			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
-			// Maybe not a bug? idk.
+			oldabilities.on_clone()
 			src.occupant.abilityHolder = oldabilities // This should already be a copy.
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
@@ -267,9 +266,18 @@ TYPEINFO(/obj/machinery/clonepod)
 		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
 		defects.apply_to_on_move(src.occupant)
 
-		if (!src.clonehack) // syndies get good clones
-			for (var/i in 1 to rand(0, (src.emagged ? 6 : 3))) // uniform chance between 0-3, 0-6 if emagged
-				defects.add_random_cloner_defect()
+		if (!src.clonehack && !src.perfect_clone) // syndies and pod wars people get good clones
+			/* Apply clone defects, number picked from a uniform distribution on
+			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
+			 * (Clone generation is the number of times a person has been cloned)
+			 */
+			var/generation = src.occupant.bioHolder.clone_generation
+			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
+				if (generation)
+					defects.add_random_cloner_defect()
+				else
+					// First cloning can't get major defects
+					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
 
 		if (length(defects.active_cloner_defects) > 7)
 			src.occupant.unlock_medal("Quit Cloning Around")
@@ -337,7 +345,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			ticker.minds += src.occupant.mind
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
@@ -362,16 +370,17 @@ TYPEINFO(/obj/machinery/clonepod)
 				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
-		// Remove zombie antag status as zombie race is removed on cloning
-		var/mob/M = src.occupant
-		if (!M?.mind)
-			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
-		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
-			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
-			if (success)
-				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
-			else
-				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+		if (!src.occupant?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
+		else
+			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
+				if (!antag.remove_on_clone)
+					continue
+				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				if (success)
+					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
+				else
+					logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove [antag.display_name] antag status from [src.occupant] with return code [success].")
 
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
@@ -389,6 +398,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!is_puritan)
 			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
+#ifdef CLONING_IS_INSTANT
+		src.occupant.full_heal()
+#endif
 		return 1
 
 
@@ -1157,6 +1169,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.process_timer > 0)
+			return 0
+		if (src.occupant)
+			boutput(user, "<span class='alert'>[src] is full, you can't climb inside!</span>")
 			return 0
 
 		src.visible_message("<span class='alert'><b>[user] climbs into [src] and turns it on!</b></span>")

@@ -633,10 +633,11 @@ TYPEINFO(/obj/machinery/transception_pad)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
 	name = "\proper transception pad"
+	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
 	anchored = 1
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
+	processing_tier = PROCESSING_32TH //processes infrequently to check for stuck mobs
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
@@ -777,7 +778,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				for(var/nerd in oofed_nerds)
 					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
-					thing2send.loc = src
+					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
 						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
@@ -825,7 +826,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				else
 					tele_obstructed = TRUE
 				if(!tele_obstructed && transception_array.transceive(netnumber))
-					thing2get.loc = src.loc
+					thing2get.set_loc(src.loc)
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else
@@ -870,6 +871,24 @@ TYPEINFO(/obj/machinery/transception_pad)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
+
+	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
+	process()
+		..()
+		if(src.is_transceiving)
+			return
+		var/mob/M = locate() in src.contents
+		if(M)
+			src.is_transceiving = TRUE
+			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
+			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
+			flick("neopad_activate",src)
+			SPAWN(0.4 SECONDS)
+				M.set_loc(src.loc)
+				showswirl(src.loc)
+				use_power(200)
+				telefrag(M)
+				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"

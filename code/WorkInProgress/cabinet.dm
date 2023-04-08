@@ -9,7 +9,7 @@
 	bound_height = 32
 	bound_width = 32
 	layer = EFFECTS_LAYER_1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
 	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.

@@ -29,216 +29,6 @@
 	bullet_act(flag, A as obj)
 		CritterDeath()
 
-/obj/critter/mimic
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic_blue1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	death_text = "%src% flops closed, dead!"
-	chase_text = "hurls itself at"
-	atk_brute_amt = 3
-	crit_brute_amt = 6
-	var/toolbox_style = "blue"
-	var/list/toolbox_list = list("blue", "red", "yellow", "green")
-	var/switcharoo = 10 // set to 0 for mimics that always are mimics and never toolboxes
-
-	New()
-		..()
-		src.toolbox_style = pick(src.toolbox_list)
-		src.UpdateIcon()
-		if (prob(src.switcharoo))
-			switch (src.toolbox_style)
-				if ("blue")
-					new /obj/item/storage/toolbox/mechanical(src.loc)
-				if ("red")
-					new /obj/item/storage/toolbox/emergency(src.loc)
-				if ("yellow")
-					new /obj/item/storage/toolbox/electrical(src.loc)
-				if ("green")
-					if (prob(1))
-						new /obj/item/storage/toolbox/memetic(src.loc)
-					else
-						new /obj/item/storage/toolbox/artistic(src.loc)
-			qdel(src)
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch (task)
-				if ("thinking")
-					src.UpdateIcon()
-				if ("chasing")
-					src.UpdateIcon()
-				if ("attacking")
-					src.UpdateIcon()
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(33)) M.changeStatus("weakened", 4 SECONDS)
-
-	CritterAttack(mob/M)
-		..()
-
-	update_icon()
-		if (!src.toolbox_style)
-			src.toolbox_style = pick(src.toolbox_list)
-			src.dead_state = "mimic_[src.toolbox_style]1-dead"
-		switch (src.task)
-
-			if ("thinking")
-				src.icon_state = "mimic_[src.toolbox_style]1"
-
-				if (src.toolbox_style == "blue")
-					src.name = "mechanical toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds standard construction tools."
-
-				if (src.toolbox_style == "red")
-					src.name = "emergency toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
-
-				if (src.toolbox_style == "yellow")
-					src.name = "electrical toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds electrical supplies."
-
-				if (src.toolbox_style == "green")
-					src.name = "artistic toolbox"
-					src.desc = "It almost hurts to look at that, it's all out of focus."
-
-			if ("chasing")
-				src.icon_state = "mimic_[src.toolbox_style]2"
-				src.name = "mimic"
-				src.desc = "Oh shit, that's no toolbox at all!"
-
-			if ("attacking")
-				src.icon_state = "mimic_[src.toolbox_style]2"
-				src.name = "mimic"
-				src.desc = "Oh shit, that's no toolbox at all!"
-/*
-/obj/critter/mimic_old
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	death_text = "%src% crumbles to pieces!"
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch(task)
-				if("thinking")
-					src.icon_state = "mimic1"
-					src.name = "mechanical toolbox"
-				if("chasing")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-				if("attacking")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-
-	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> hurls itself at [M]!</span>")
-		if (prob(33)) M.weakened += rand(3,6)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		random_brute_damage(src.target, rand(2,4))
-		SPAWN(2.5 SECONDS)
-			src.attacking = 0
-*/
-/obj/critter/wraithskeleton
-	name = "skeleton"
-	desc = "It looks rather crumbly."
-	icon = 'icons/mob/human_decomp.dmi'
-	icon_state = "decomp4"
-	health = 25
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 1
-	seekrange = 7
-
-	skinresult = /obj/item/material_piece/bone
-	max_skins = 2
-	death_text = "%src% vaporizes instantly!"
-	chase_text = "knocks down"
-	atk_text = "beats"
-	atk_brute_amt = 6
-	crit_chance = 0
-
-	ChaseAttack(mob/M)
-		if (prob(75))
-			..()
-			M.changeStatus("weakened", 4 SECONDS)
-		else
-			src.visible_message("<span class='combat'><B>[src]</B> tries to knock down [M]!</span>")
-
-	CritterAttack(mob/M)
-		..()
-
-	CritterDeath()
-		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(x, y, z)))
-		qdel(src)
-
-/obj/critter/mimic2
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	var/objname = "mechanical toolbox" //name when in disguise
-	generic = 0
-	death_text = "%src% crumbles to pieces!"
-	chase_text = "hurls itself at"
-	atk_brute_amt = 3
-	crit_brute_amt = 6
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch(task)
-				if("thinking")
-					src.overlays = null
-					src.name = objname
-				if("chasing")
-					src.overlays += image("icon" = 'icons/misc/critter.dmi', "icon_state" = "mimicface", "layer" = FLOAT_LAYER)
-					src.name = "mimic"
-				if("attacking")
-					src.overlays += image("icon" = 'icons/misc/critter.dmi', "icon_state" = "mimicface", "layer" = FLOAT_LAYER)
-					src.name = "mimic"
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(33)) M.changeStatus("weakened", 4 SECONDS)
-
-	CritterAttack(mob/M)
-		..()
 
 /obj/critter/spirit
 	name = "spirit"
@@ -385,125 +175,6 @@
 			M.reagents.add_reagent("toxin", 2)
 			M.add_karma(1)
 
-/obj/critter/spacescorpion
-	name = "space scorpion"
-	desc = "A scorpion in space. It seems a little hungry."
-	icon_state = "spacescorpion"
-	critter_family = BUG
-	density = 1
-	health = 30
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 1
-	atksilicon = 1
-	firevuln = 1
-	brutevuln = 1
-	health_gain_from_food = 6
-	angertext = "snips at"
-	butcherable = 1
-	flags = TABLEPASS
-	flying = 0
-	maxhealth = 60
-
-	CritterDeath()
-		..()
-		src.reagents.add_reagent("toxin", 20, null)
-		src.reagents.add_reagent("neurotoxin", 80, null)
-		return
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in hearers(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (C.health < 0) continue
-			if (C in src.friends) continue
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
-
-			if (src.attack)
-				src.target = C
-				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
-				src.task = "chasing"
-				break
-			else
-				continue
-
-	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
-			if(prob(20))
-				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
-				friends += M
-				playsound(src.loc, 'sound/misc/bugchitter.ogg', 50, 0)
-				src.task = "thinking"
-			else
-				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
-				random_brute_damage(M, rand(6,12),1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
-				M.emote("scream")
-			M.drop_item()
-			qdel(W)
-			src.health = min(src.maxhealth, src.health + health_gain_from_food)
-			eat_twitch(src)
-		else
-			..()
-
-	attack_hand(mob/M)
-		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
-			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
-				src.aggressive = FALSE
-				src.task = "thinking"
-				return
-			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
-				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
-				src.aggressive = TRUE
-				src.task = "thinking"
-				return
-		..()
-
-	ChaseAttack(mob/M)
-		..()
-		if(!ON_COOLDOWN(src, "scorpion_ability", 15 SECONDS))
-			if(prob(50))
-				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
-				M.reagents?.add_reagent("neurotoxin", 15)
-				M.reagents?.add_reagent("toxin", 6)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-				M.emote("scream")
-			else
-				random_brute_damage(M, rand(5,10),1)
-				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
-				M.changeStatus("weakened", 4 SECONDS)
-				M.force_laydown_standup()
-
-
-	CritterAttack(mob/M)
-		if(!ON_COOLDOWN(src, "scorpion_ability", 15 SECONDS))
-			if(prob(50))
-				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
-				M.reagents?.add_reagent("neurotoxin", 15)
-				M.reagents?.add_reagent("toxin", 6)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-				M.emote("scream")
-			else
-				random_brute_damage(M, rand(5,10),1)
-				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
-				M.changeStatus("weakened", 4 SECONDS)
-				M.force_laydown_standup()
-		else
-			take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
-			M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
-
-
-
 /obj/critter/wasp/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
@@ -518,132 +189,6 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
 	critter_type = /obj/critter/wasp/angry
-
-/obj/critter/magiczombie
-	name = "skeleton"
-	desc = "Clak clak, motherfucker."
-	icon_state = "skeleton"
-	dead_state = "skeleton-dead"
-	density = 1
-	health = 20 // too strong
-	aggressive = 1
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.25
-	brutevuln = 0.5
-	chase_text = "bashes"
-	var/pixel_y_inc = 0
-	skinresult = /obj/item/material_piece/bone
-	max_skins = 2
-	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
-	var/revivalDecrement = 16 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
-
-	New()
-		..()
-		playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
-
-	Move()
-		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 0)
-		. = ..()
-
-	attackby(obj/item/W, mob/living/user)
-		..()
-		if (!src.alive) return
-		if (istype(W, /obj/item/clothing/head))
-			if (pixel_y_inc > 20) return
-			var/image/I = image('icons/mob/clothing/head.dmi', src,  W.icon_state)
-			I.pixel_y = pixel_y_inc
-			src.overlays += I
-			pixel_y_inc += 3
-
-	seek_target()
-
-		if (!src.alive) return
-		var/mob/living/Cc
-		for (var/mob/living/C in hearers(src.seekrange,src))
-			if (iswizard(C))  continue //do not attack our master
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (isdead(C)) continue
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
-			Cc = C
-
-		if (src.attack)
-			src.target = Cc
-			src.oldtarget_name = Cc.name
-			src.visible_message("<span class='combat'><b>[src]</b> charges towards [Cc.name]!</span>")
-			playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
-			src.task = "chasing"
-			return
-
-	proc/CustomizeMagZom(var/NM, var/is_monkey)
-		src.name = "[capitalize(NM)]'s skeleton"
-		src.desc = "A horrible skeleton, raised from the corpse of [NM] by a wizard."
-		src.revivalChance = 100
-
-		if (is_monkey)
-			icon = 'icons/mob/monkey.dmi'
-
-		return
-
-	ChaseAttack(mob/M)
-		if (!src.alive) return
-		..()
-		playsound(M.loc, "punch", 25, 1, -1)
-		random_brute_damage(M, rand(5,10),1)
-		if(prob(15)) // too mean before
-			M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
-			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
-
-	CritterAttack(mob/M)
-		if (!src.alive) return
-		src.attacking = 1
-		if (isliving(M))
-			var/mob/living/H = M
-			H.was_harmed(src)
-		if(!M.stat)
-			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
-			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-			if(prob(10)) // lowered probability slightly
-				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
-				M.changeStatus("stunned", 2 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, rand(5,10),1)
-		else
-			M.visible_message("<span class='combat'><B>[src]</B> hits [src.target] with a bone!</span>")
-			playsound(src.loc, "punch", 30, 1, -2)
-			random_brute_damage(M, rand(10,15),1)
-
-		SPAWN(1 SECOND)
-			src.attacking = 0
-
-	CritterDeath(mob/M)
-		if (!src.alive) return
-		..()
-		if (rand(100) <= revivalChance)
-			src.revivalChance -= revivalDecrement
-			SPAWN(rand(400,800))
-				src.alive = 1
-				src.set_density(1)
-				src.health = initial(src.health)
-				src.icon_state = initial(src.icon_state)
-				for(var/mob/O in viewers(src, null))
-					O.show_message("<span class='alert'><b>[src]</b> re-assembles and is ready to fight once more!</span>")
-		return
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
-	name = "skeleton egg"
-	desc = "Uh. What?"
-	critter_type = /obj/critter/magiczombie
-	warm_count = 5
-	critter_reagent = "ash"
 
 /obj/critter/golem
 	name = "Golem"
@@ -899,6 +444,8 @@
 	flying = 1
 	is_pet = FALSE
 	generic = 0
+	var/cleanable_type = /obj/decal/cleanable/blood
+	var/what_is_sucked_out = "blood"
 
 	New()
 		UpdateParticles(new/particles/bloody_aura, "bloodaura")
@@ -929,7 +476,7 @@
 		else
 			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
+			boutput(M, "<span class='combat'><b>You are forced to the ground by \the [src]!</b></span>")
 			random_brute_damage(M, rand(0,5))
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
@@ -937,15 +484,17 @@
 			return
 
 	CritterAttack(mob/M)
+		if(!what_is_sucked_out)
+			return
 		playsound(src.loc, 'sound/effects/ghost2.ogg', 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
 			if(prob(66))
 				random_brute_damage(M, rand(5,10))
 				take_bleeding_damage(M, null, rand(10,35), DAMAGE_CRUSH, 5, get_turf(M))
-				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
+				boutput(M, "<span class='combat'><b>You feel [what_is_sucked_out] getting drawn out through your skin!</b></span>")
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
+				boutput(M, "<span class='combat'>You feel uncomfortable. Your [what_is_sucked_out] seeks to escape you.</span>")
 				M.changeStatus("slowed", 3 SECONDS, 3)
 
 		SPAWN(0.5 SECONDS)
@@ -973,10 +522,10 @@
 		return
 
 	ai_think()
-		if(!locate(/obj/decal/cleanable/blood) in src.loc)
+		if(!locate(cleanable_type) in src.loc)
 			if(prob(50))
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
-				make_cleanable( /obj/decal/cleanable/blood,loc)
+				make_cleanable(cleanable_type, loc)
 		return ..()
 
 	CritterDeath()
@@ -984,8 +533,14 @@
 			return
 		..()
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
-		new /obj/decal/cleanable/blood(src.loc)
+		new cleanable_type(src.loc)
 		qdel(src)
+
+/obj/critter/bloodling/ketchupling
+	name = "Ketchupling"
+	desc = "A force of pure tomato and evil. They shy away from that which is holy."
+	cleanable_type = /obj/decal/cleanable/tomatosplat
+	what_is_sucked_out = "ketchup"
 
 /obj/critter/blobman
 	name = "mutant"
@@ -1018,96 +573,6 @@
 		if(iscarbon(M))
 			if (prob(5)) M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)
-
-//A terrible post-human cloud of murder.
-/obj/critter/aberration
-	name = "transposed particle field"
-	desc = "A cloud of particles transposed by some manner of dangerous science, echoing some mannerisms of their previous configuration. In layman's terms, a goddamned science ghost."
-	icon_state = "aberration"
-	density = 1
-	health = 2
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.01
-	brutevuln = 0.25
-	flying = 1
-	generic = 0
-	death_text = "%src% dissipates!"
-
-	CritterDeath()
-		..()
-		qdel(src)
-
-	CritterAttack(mob/M)
-		if(GET_COOLDOWN(src, "envelop_attack"))
-			return
-		actions.start(new/datum/action/bar/icon/envelopAbility/critter(M, null), src)
-		ON_COOLDOWN(src, "envelop_attack",7 SECONDS)
-
-	blob_act(power)
-		return
-
-	attack_hand(var/mob/user)
-		if (src.alive)
-			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
-		return
-
-	attackby(obj/item/W, mob/living/user)
-		if (!src.alive)
-			return
-		else
-			if (istype(W, /obj/item/baton))
-				var/obj/item/baton/B = W
-				if (B.can_stun(1, user) == 1)
-					user.visible_message("<span class='combat'><b>[user] shocks the [src.name] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
-					B.process_charges(-1, user)
-					src.health--
-
-					if (src.health <= 0)
-						src.CritterDeath()
-					return
-
-			boutput(user, "<span class='combat'><b>[W] passes right through!</b></span>")
-			return
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in range(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (ishuman(C) && istype(C:head, /obj/item/clothing/head/void_crown)) continue
-			if (C.health < 0) continue
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
-
-			if (src.attack)
-				src.target = C
-				src.oldtarget_name = C.name
-				src.task = "chasing"
-				return
-			else
-				continue
-
-	bullet_act(var/obj/projectile/P)
-		var/damage = 0
-		damage = round((P.power*(1-P.proj_data.ks_ratio)), 1.0)
-
-		if(P.proj_data.damage_type == D_ENERGY)
-			src.health -= damage
-		else
-			return
-
-		if (src.health <= 0)
-			src.CritterDeath()
-
-	ChaseAttack(mob/M)
-		return
 
 /obj/critter/ancient_thing
 	name = "???"
@@ -1292,124 +757,6 @@
 
 		src.visible_message("<b>[src.name]</b> says, \"[processedMessage]\"")
 		return
-
-/obj/critter/spacerattlesnake
-	name = "space rattlesnake"
-	desc = "A rattlesnake in space."
-	icon_state = "rattlesnake"
-	dead_state = "rattlesnake_dead"
-	density = 1
-	health = 20
-	maxhealth = 50
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 1
-	atksilicon = 1
-	firevuln = 1
-	brutevuln = 1
-	angertext = "hisses at"
-	butcherable = 1
-	flags = TABLEPASS
-	flying = 0
-
-	CritterDeath()
-		..()
-		src.reagents.add_reagent("viper_venom", 40, null)
-		return
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in hearers(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (C.health < 0) continue
-			if (C in src.friends) continue
-			if (isintangible(C)) continue
-
-			if(!src.attack)
-				switch(GET_DIST(src, C))
-					if (0 to 1)
-						src.mobile = 1
-						icon_state = "rattlesnake"
-						if (iscarbon(C) && src.atkcarbon) src.attack = 1
-						if (issilicon(C) && src.atksilicon) src.attack = 1
-						if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
-							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
-							C.reagents?.add_reagent("viper_venom", rand(25,35))
-							playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-							C.emote("scream")
-					if (1 to 2)
-						src.mobile = 0
-						src.task = "thinking"
-						icon_state = "rattlesnake_rattle"
-						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
-							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
-							playsound(src.loc, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 0, 0, 0.75)
-					if (2 to 3)
-						src.mobile = 0
-						src.task = "thinking"
-						icon_state = "rattlesnake_coiled"
-					if (3 to INFINITY)
-						src.mobile = 1
-						icon_state = "rattlesnake"
-
-			if (src.attack)
-				src.mobile = 1
-				icon_state = "rattlesnake"
-				src.target = C
-				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
-				src.task = "chasing"
-				break
-
-	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends) && src.alive)
-			if(prob(25))
-				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
-				src.friends += M
-				src.task = "thinking"
-			else
-				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
-				M.reagents?.add_reagent("viper_venom", rand(15,30))
-				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-				M.emote("scream")
-			M.drop_item()
-			qdel(W)
-			src.health = min(src.maxhealth, src.health + health_gain_from_food)
-			eat_twitch(src)
-		else
-			..()
-
-	attack_hand(mob/M)
-		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
-			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
-				src.aggressive = FALSE
-				src.mobile = TRUE
-				icon_state = "rattlesnake"
-				src.task = "thinking"
-				return
-			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
-				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
-				src.aggressive = TRUE
-				src.task = "thinking"
-				return
-		..()
-
-	ChaseAttack(mob/M)
-		..()
-		if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
-			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-			M.reagents?.add_reagent("viper_venom", rand(15,30))
-			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-			M.emote("scream")
-		src.task = "chasing"
-
-	CritterAttack(mob/M)
-		src.task = "chasing"
 
 /obj/critter/livingtail
 	name = "Living tail"

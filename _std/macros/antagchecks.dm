@@ -1,10 +1,11 @@
 
 // Macros with abilityHolder or mutantrace defines are used for more than antagonist checks, so don't replace them with mind.special_role.
 #define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_TRAITOR || x:mind:special_role == ROLE_HARDMODE_TRAITOR))
+#define isrevolutionary(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_HEAD_REVOLUTIONARY || x:mind:special_role == ROLE_REVOLUTIONARY))
 #define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_CONSPIRATOR)
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
-#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_NUKEOP)
+#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_NUKEOP || x:mind:special_role == ROLE_NUKEOP_COMMANDER))
 #define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
 #define isvampiricthrall(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_thrall) != null)
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)
@@ -14,6 +15,7 @@
 #define iswraith(x) istype(x, /mob/living/intangible/wraith)
 #define ispoltergeist(x) istype(x, /mob/living/intangible/wraith/poltergeist)
 #define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
+#define ispirate(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:special_role == ROLE_PIRATE || x:mind:special_role == ROLE_PIRATE_FIRST_MATE || x:mind:special_role == ROLE_PIRATE_CAPTAIN))
 #define issawflybuddy(x) ((istraitor(x)) || isnukeop(x) || isspythief(x) || isnukeopgunbot(x))
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)

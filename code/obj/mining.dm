@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 1
+	anchored = 2
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -461,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
@@ -702,7 +702,7 @@
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -715,7 +715,7 @@
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -734,7 +734,7 @@
 				src.automatic_mode = !src.automatic_mode
 				. = TRUE
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = tgui_broken_state.can_use_topic(src, user)
 
 
@@ -792,16 +792,16 @@
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
@@ -810,7 +810,7 @@
 				if(istype(src.linked_magnet))
 					. = src.linked_magnet.ui_act(action, params)
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = ..()
 		if(istype(src.linked_magnet))
 			. = min(., linked_magnet.ui_status(user))
@@ -876,6 +876,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
 	var/list/space_overlays = null
+	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
 	//NEW VARS
 	var/mining_health = 120
@@ -924,6 +925,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
+
+	jean
+		name = "jasteroid"
+		desc = "A free-floating jineral jeposit from space."
+		default_ore = null
+		hardness = 1
+		default_material = "jean"
+		default_ore = /obj/item/material_piece/cloth/jean
+		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		stone_color = "#88c2ff"
 
 
 // cogwerks - adding some new wall types for cometmap and whatever else
@@ -1165,7 +1176,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	update_icon()
 		. = ..()
 		src.color = src.stone_color
+		var/image/light
+		if(!src.fullbright)
+			light = src.GetOverlayImage("ambient")
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
+		if(light)
+			src.UpdateOverlays(light, "ambient")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1309,7 +1325,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/new_color = src.stone_color
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
+		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
@@ -1369,6 +1385,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
+	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1442,6 +1459,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+
+/turf/simulated/floor/plating/airless/asteroid/jean
+	name = "jasteroid"
+	desc = "A free-floating jineral jeposit from space."
+	stone_color = "#88c2ff"
 
 
 // Tool Defines
@@ -1756,8 +1779,8 @@ TYPEINFO(/obj/item/mining_tool/drill)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+			if (!src.armed)
+				if (!src.check_placeable_target(target))
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
@@ -2252,7 +2275,7 @@ TYPEINFO(/obj/item/cargotele)
 		if(Obj == src.cell)
 			src.cell = null
 
-/// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
+/// Basically a list wrapper that removes and adds cargo pads to a global list when it receives the respective signals
 /datum/cargo_pad_manager
 	var/list/pads = list()
 

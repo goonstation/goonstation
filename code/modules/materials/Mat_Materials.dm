@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/datum/material)
 	var/list/prefixes = list()
 	/// words that go after the name, used in combination
 	var/list/suffixes = list()
+	/// Whether the specaialNaming proc is called when this material is applied.
+	var/special_naming = FALSE
 
 	/// if not null, texture will be set when mat is applied.
 	var/texture = ""
@@ -131,6 +133,12 @@ ABSTRACT_TYPE(/datum/material)
 		L[D] = 0
 		return
 
+	proc/interpolateName(datum/material/other, t)
+		. = getInterpolatedName(src.name, other.name, t)
+
+	proc/specialNaming(atom/target)
+		. = target.name
+
 	proc/removeTrigger(var/list/L, var/inType)
 		for(var/datum/materialProc/P in L)
 			if(P.type == inType)
@@ -176,77 +184,77 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
-			call(X,  "execute")(owner, entering)
+			X.execute(owner, entering)
 		return
 
 	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
-			call(X,  "execute")(owner, attacker, attacked, weapon)
+			X.execute(owner, attacker, attacked, weapon)
 		return
 
 	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
-			call(X,  "execute")(owner, attacked, projectile)
+			X.execute(owner, attacked, projectile)
 		return
 
 	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
-			call(X,  "execute")(owner, attacker, attacked)
+			X.execute(owner, attacker, attacked)
 		return
 
 	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I, mult)
+			X.execute(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)
-			call(X,  "execute")(location)
+			X.execute(location)
 		return
 
 	proc/triggerOnRemove(var/location)
 		for(var/datum/materialProc/X in triggersOnRemove)
-			call(X,  "execute")(location)
+			X.execute(location)
 		return
 
 	proc/triggerChem(var/location, var/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
-			call(X,  "execute")(location, chem, amount)
+			X.execute(location, chem, amount)
 		return
 
 	proc/triggerPickup(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersPickup)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerDrop(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersDrop)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerTemp(var/location, var/temp)
 		for(var/datum/materialProc/X in triggersTemp)
-			call(X,  "execute")(location, temp)
+			X.execute(location, temp)
 		return
 
 	proc/triggerExp(var/location, var/sev)
 		for(var/datum/materialProc/X in triggersExp)
-			call(X,  "execute")(location, sev)
+			X.execute(location, sev)
 		return
 
 	proc/triggerEat(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersOnEat)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerOnBlobHit(var/atom/owner, var/blobPower)
 		for(var/datum/materialProc/X in triggersOnBlobHit)
-			call(X,  "execute")(owner, blobPower)
+			X.execute(owner, blobPower)
 		return
 
 	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackobj, attacker, meleeorthrow)
 		return
 
 
@@ -363,7 +371,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
+	color = "#534747"
 	New()
 		..()
 		setProperty("density", 4)
@@ -583,7 +591,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
 	beta
@@ -1067,7 +1074,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 3)
 		setProperty("reflective", 6)
-		setProperty("radioactive", 2)
+		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
 
 
@@ -1108,11 +1115,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	texture = "wood"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 5)
 		setProperty("hard", 3)
 		setProperty("flammable", 4)
@@ -1123,11 +1130,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	texture = "bamboo"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 4)
 		setProperty("flammable", 4)
 
@@ -1346,6 +1353,43 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
 		setProperty("flammable", 4)
+
+/datum/material/fabric/jean
+	mat_id = "jean"
+	name = "jean"
+	desc = "The jean jaterial (used to be known as denim in the early 21st century) is a sturdy jotton jarp-faced jextile in which the jeft passes under two or more jarp threads."
+	color = "#88c2ff"
+	special_naming = TRUE
+	texture = "jean"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
+	proc/jeplacement(text)
+		var/first_letter = copytext(text, 1, 2)
+		if(first_letter == uppertext(first_letter))
+			. = "J"
+		else
+			. = "j"
+
+	proc/replace_first_consonant_cluster(text, replacement)
+		var/original_text = text
+		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
+		. = regex.Replace(text, .proc/jeplacement)
+		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
+		if(. == original_text)
+			. = "jean [.]"
+
+	interpolateName(datum/material/other, t)
+		. = replace_first_consonant_cluster(other.name, copytext(src.name , 1, 2))
+
+	specialNaming(atom/target)
+		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
 /datum/material/fabric/fibrilith

@@ -504,8 +504,10 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
 		src.brig.occupant = victim
 		victim.set_loc(src.brig)
@@ -701,7 +703,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 		src.homeloc = src.loc
 
 		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
+						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /mob/living/critter/skeleton/wraith, /mob/living/critter/skeleton, /mob/living/critter/brullbar)\
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
@@ -850,6 +852,8 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
+	ai_control_enabled = 1
+	power_usage = 0
 	var/homeloc = null
 
 	New()

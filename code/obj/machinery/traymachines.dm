@@ -19,13 +19,14 @@
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 #define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
-#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
+#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer.
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
 //-----------------------------------------------------
 
 ABSTRACT_TYPE(/obj/machinery/traymachine)
+ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_tray)
 /obj/machinery/traymachine
 	name = "tray machine"
 	desc = "This thing sure has a big tray that goes vwwwwwwsh when you slide it in and out."
@@ -33,7 +34,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = TRUE
-	power_usage = TRAYMACHINE_DEFAULT_DRAW
+	power_usage = 50
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
@@ -70,11 +71,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 			if (!(AM in non_tray_contents))
 				AM.set_loc(T)
 	. = ..()
-
-/obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
-	..()
-	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
-		use_power(power_usage, EQUIP)
 
 /obj/machinery/traymachine/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -131,6 +127,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
+	set name = "open"
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	var/turf/T_src = get_turf(src)
@@ -156,6 +153,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
+	set name = "close"
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
 		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
@@ -188,6 +186,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 /obj/machinery/traymachine/locking
 	var/locked = FALSE
+	power_usage = TRAYMACHINE_DEFAULT_DRAW
 	var/powerdraw_use = TRAYMACHINE_DEFAULT_DRAW  //same as power_usage by default
 	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
 

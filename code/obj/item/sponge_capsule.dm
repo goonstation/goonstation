@@ -28,11 +28,11 @@
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
 					/mob/living/critter/spider,
-					/obj/critter/brullbar,
+					/mob/living/critter/brullbar,
 					/obj/critter/bat/buff,
 					/mob/living/critter/spider/ice,
 					/obj/critter/townguard/passive,
-					/obj/critter/lion,
+					/mob/living/critter/lion,
 					/obj/critter/fermid)
 
 /obj/item/toy/sponge_capsule/New()

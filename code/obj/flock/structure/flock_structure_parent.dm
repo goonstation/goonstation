@@ -1,5 +1,7 @@
 /// # Flock Structure Parent
 ABSTRACT_TYPE(/obj/flock_structure)
+TYPEINFO(/obj/flock_structure)
+	var/cancellable = TRUE
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
@@ -37,8 +39,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/compute = 0
 	///resource cost for building
 	var/resourcecost = 0
-	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
-	var/passthrough = FALSE
+	/// can flockdrones pass through this akin to a grille?
+	var/passthrough = TRUE
 	/// if the building can be supported by a sapper structure
 	var/accepts_sapper_power = FALSE
 	/// TIME of last process
@@ -354,4 +356,4 @@ ABSTRACT_TYPE(/obj/flock_structure)
 		. = TRUE
 
 /obj/flock_structure/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	return istype(mover,/mob/living/critter/flock) && src.passthrough

@@ -28,6 +28,9 @@
 	//Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Robust light
+	var/datum/light/point/light
+
 	ranch
 		name = "autoname"
 		network = "ranch"
@@ -106,10 +109,20 @@
 	..()
 	var/area/area = get_area(src)
 	//if only these had a common parent...
-	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
+	var/list/aiareas = list(/area/station/turret_protected/ai,
+							/area/station/turret_protected/ai_upload,
+							/area/station/turret_protected/AIsat,
+							/area/station/turret_protected/AIbasecore1)
+	if (locate(area) in aiareas)
 		src.ai_only = TRUE
 
 	AddComponent(/datum/component/camera_coverage_emitter)
+
+	src.light = new /datum/light/point
+	src.light.set_brightness(0.3)
+	src.light.set_color(209/255, 27/255, 6/255)
+	src.light.attach(src)
+	src.light.enable()
 
 	START_TRACKING
 	SPAWN(1 SECOND)
@@ -254,6 +267,7 @@
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
+	src.light.disable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
@@ -263,7 +277,7 @@
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
-	// updateCoverage()
+	src.light.enable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)

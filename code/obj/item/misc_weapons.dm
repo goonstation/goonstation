@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/sword)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -576,6 +576,45 @@ TYPEINFO(/obj/item/sword)
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 
+// Revolutionary sign.
+/obj/item/revolutionary_sign
+	name = "revolutionary sign"
+	desc = "A sign bearing revolutionary propaganda. Good for picketing."
+
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "revsign"
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
+	item_state = "revsign"
+
+	w_class = W_CLASS_BULKY
+	throwforce = 8
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 7
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 10
+	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (isrevolutionary(owner))
+				for (var/mob/M in viewers(5, owner))
+					if (isrevolutionary(M))
+						M.changeStatus("revspirit", 20 SECONDS)
+
 /obj/item/storage/box/shuriken_pouch
 	name = "Shuriken Pouch"
 	desc = "Contains four throwing stars!"
@@ -596,12 +635,10 @@ TYPEINFO(/obj/item/sword)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			src.implanted(M)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			src.set_loc(M)
-			src.implanted = 1
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -1032,6 +1069,8 @@ TYPEINFO(/obj/item/bat)
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
 	var/delimb_prob = 1
+	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1130,6 +1169,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
+	midair_fruit_slice = TRUE
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
@@ -1182,6 +1222,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()

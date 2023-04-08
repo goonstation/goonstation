@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
 		if (src.apply_material && materials.len > 0)
-			A.setMaterial(getMaterial(materials[materials[1]]))
+			A.setMaterial(M.get_our_material(materials[materials[1]]))
 		return 1
 
 /datum/manufacture/mechanics
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 				if(src.apply_material && materials.len > 0)
 					F.removeMaterial()
 					var/atom/thing = new frame_path(F)
-					thing.setMaterial(getMaterial(materials[materials[1]]))
+					thing.setMaterial(M.get_our_material(materials[materials[1]]))
 					F.deconstructed_thing = thing
 				else
 					F.store_type = src.frame_path
@@ -267,6 +267,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Miscellaneous"
 
+/datum/manufacture/fiddle
+	name = "Fiddle"
+	item_paths = list("WOOD", "FAB-1")
+	item_amounts = list(25, 10)
+	item_outputs = list(/obj/item/instrument/fiddle)
+	time = 5 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
 /datum/manufacture/bikehorn
 	name = "Bicycle Horn"
 	item_paths = list("ALL")
@@ -351,6 +360,13 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/multitool
 	name = "Multi Tool"
 	item_outputs = list(/obj/item/device/multitool)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/t_scanner
+	name = "T-ray scanner"
+	item_outputs = list(/obj/item/device/t_scanner)
 	time = 8 SECONDS
 	create = 1
 	category = "Tool"
@@ -1796,6 +1812,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/audiotape
+	name ="Audio Tape"
+	item_paths = list("MET-1")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/audio_tape)
+	time = 4 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/audiolog
+	name ="Audio Log"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,5)
+	item_outputs = list(/obj/item/device/audio_log)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -1919,7 +1953,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
-	item_paths = list("MET-3","CON-2","CRY-2")
+	item_paths = list("MET-3","CON-2", "CRY-2")
 	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
 	time = 90 SECONDS
@@ -2010,6 +2044,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1","MET-1","CRY-1")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/lightengspacesuit
+	name = "Light Engineering Space Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1", "ORG|RUB")
+	item_amounts = list(10,5,2,5)
+	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2158,7 +2201,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Red Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/red)
+	item_outputs = list(/obj/item/storage/backpack/empty/red)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2167,7 +2210,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Green Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/green)
+	item_outputs = list(/obj/item/storage/backpack/empty/green)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2176,7 +2219,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Blue Backpack"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/blue)
+	item_outputs = list(/obj/item/storage/backpack/empty/blue)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2185,7 +2228,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2194,7 +2237,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Red Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/red)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/red)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2203,7 +2246,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Green Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/green)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/green)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2212,7 +2255,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Blue Satchel"
 	item_paths = list("FAB-1")
 	item_amounts = list(8)
-	item_outputs = list(/obj/item/storage/backpack/satchel/blue)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -3091,7 +3134,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
 	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod)
-	time = 20 SECONDS
+	time = 12 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -3100,9 +3143,28 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
 	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
+	time = 15 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_epsilon
+	name = "Epsilon Phase-Control Rod"
+	item_paths = list("MET-2","electrum","DEN-1","POW-1")
+	item_amounts = list(2,10,5,2)
+	item_outputs = list(/obj/item/interdictor_rod/epsilon)
 	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_phi
+	name = "Phi Phase-Control Rod"
+	item_paths = list("MET-2","CRY-1","CON-1")
+	item_amounts = list(5,10,5)
+	item_outputs = list(/obj/item/interdictor_rod/phi)
+	time = 15 SECONDS
+	create = 1
+	category = "Machinery"
+
 
 /************ NADIR RESONATORS ************/
 

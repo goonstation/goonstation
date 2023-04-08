@@ -374,15 +374,16 @@ datum
 					var/list/candidates = list()
 					for(var/mob/living/carbon/human/human in viewers(M))
 						candidates += human
-					var/mob/living/carbon/human/chosen = pick(candidates)
-					var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
-					var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
-					override_img.override = TRUE
-					var/client/client = M.client //hold a reference to the client directly
-					client?.images.Add(override_img)
-					SPAWN (20 SECONDS)
-						client?.images.Remove(override_img)
-						qdel(override_img)
+					if (length(candidates))
+						var/mob/living/carbon/human/chosen = pick(candidates)
+						var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
+						var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
+						override_img.override = TRUE
+						var/client/client = M.client //hold a reference to the client directly
+						client?.images.Add(override_img)
+						SPAWN (20 SECONDS)
+							client?.images.Remove(override_img)
+							qdel(override_img)
 				..()
 				return
 
@@ -951,7 +952,7 @@ datum
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -1050,7 +1051,7 @@ datum
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
 				if(purge_brain)
-					flush(M, 5 * mult, flushed_reagents)
+					flush(holder, 5 * mult, flushed_reagents)
 				..()
 				return
 

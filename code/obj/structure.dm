@@ -318,13 +318,14 @@ obj/structure/ex_act(severity)
 		return ..()
 
 /obj/structure/woodwall
-	name = "wooden barricade"
+	name = "barricade"
 	desc = "This was thrown up in a hurry."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodwall"
 	anchored = 1
 	density = 1
 	opacity = 1
+	mat_appearances_to_ignore = list("wood")
 	var/health = 30
 	var/health_max = 30
 	var/builtby = null

@@ -216,7 +216,7 @@
 									boutput(H, "<h1 class='alert'>Frontier Authority Update</h1>")
 									boutput(H, "<h2 class='alert'>Nuclear Weapon Detected</h2>")
 									boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
-									has_faked_nuke = true
+									has_faked_nuke = TRUE
 							if (2)
 								if(!has_faked_shuttle)
 									sound_effect = 'sound/misc/shuttle_enroute.ogg'
@@ -224,7 +224,7 @@
 									boutput(H, "<h1 class='alert'>The Emergency Shuttle Has Been Called</h1>")
 									boutput(H, "<span>No reason given.</span>")
 									boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
-									has_faked_shuttle = true
+									has_faked_shuttle = TRUE
 					H.playsound_local(H.loc,sound_effect, volume, 1)
 				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
 					var/turf/owner_turf = get_turf(owner)
@@ -289,6 +289,7 @@
 			M.icon_state = "poltergeist-corp"
 			M.update_body()
 		M.set_density(TRUE)
+		M.event_handler_flags &= ~MOVE_NOCLIP
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M)
 		M.see_invisible = INVIS_NONE
 		M.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -307,6 +308,7 @@
 			M.update_body()
 		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 		M.set_density(FALSE)
+		M.event_handler_flags |= MOVE_NOCLIP
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M, INVIS_SPOOKY)
 		M.see_invisible = INVIS_SPOOKY
 		M.removeOverlayComposition(/datum/overlayComposition/insanity_light)

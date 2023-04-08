@@ -119,6 +119,12 @@
 
 		return null
 
+	proc/go_home()
+		return FALSE
+
+	proc/get_home_turf()
+		return
+
 /obj/item/device/ship_radio_control
 	name = "Ship Radio Control"
 	var/frequency = FREQ_DOOR_CONTROL

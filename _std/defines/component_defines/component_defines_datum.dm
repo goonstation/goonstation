@@ -15,6 +15,8 @@
 	#define COMSIG_MIND_ATTACH_TO_MOB "mind_attach_to_mob"
 	/// when a mind detaches from a mob (mind, mob)
 	#define COMSIG_MIND_DETACH_FROM_MOB "mind_detach_from_mob"
+	/// when a mind should update the contents of its memory
+	#define COMSIG_MIND_UPDATE_MEMORY "update_dynamic_player_memory"
 
 // ---- area signals ----
 
@@ -23,4 +25,10 @@
 	/// area's active var set to false (when all clients leave)
 	#define COMSIG_AREA_DEACTIVATED "area_deactivated"
 
+// ---- TGUI signals ----
+	/// A TGUI window was opened by a user (receives tgui datum)
+	#define COMSIG_TGUI_WINDOW_OPEN "tgui_window_open"
 
+// ---- reagents signals ----
+	/// When reagent scanned
+	#define COMSIG_REAGENTS_ANALYZED "reagents_analyzed"

@@ -55,9 +55,10 @@
 
 
 //very similar to playable_pests.dm :)
-/datum/random_event/major/antag/antagonist_pest
+/datum/random_event/major/player_spawn/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
 	customization_available = 1
+	targetable = TRUE
 	var/num_critters = 0
 	var/critter_type = null
 #ifdef RP_MODE
@@ -117,6 +118,22 @@
 				)
 			)
 		),
+		list(new /datum/eventSpawnedCritter(
+			name = "jean elementals",
+			critter_types = list(/mob/living/critter/jeans_elemental),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
+					remove_dropped_items = 1, number_of_rolls = 2, percent_droprate = 30, pity_drop_atleast_one = 0
+					)
+				)
+			)
+		),
+		list(new /datum/eventSpawnedCritter(
+			name = "mimics",
+			critter_types = list(/mob/living/critter/mimic/antag_spawn)
+			)
+		), //no loot for mimics
 	)
 
 	admin_call(var/source)
@@ -134,7 +151,7 @@
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn? ([length(eligible_dead_player_list(allow_dead_antags = TRUE))] players eligible)", src.name, 0) as num|null
 		if (!src.num_critters || src.num_critters < 1)
-			cleanup_event()
+			cleanup()
 			return
 		else
 			src.num_critters = round(src.num_critters)
@@ -143,7 +160,7 @@
 		if (alert(usr, "You have chosen to spawn [src.num_critters] [src.critter_type ? src.critter_type : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
 		else
-			cleanup_event()
+			cleanup()
 
 	event_effect(var/source)
 		..()
@@ -156,6 +173,14 @@
 			critter_name = initial(dummy.name) + "s"
 		else
 			select = pick(src.pest_invasion_critter_datums)
+			#ifdef APRIL_FOOLS
+			while(TRUE)
+				var/datum/eventSpawnedCritter/esc = select[1]
+				if(esc.name != "jean elementals")
+					select = pick(src.pest_invasion_critter_datums)
+				else
+					break
+			#endif
 			var/list/name_list = list()
 			for (var/datum/eventSpawnedCritter/C in select)
 				if(C.name)
@@ -176,7 +201,7 @@
 
 
 			if (!length(candidates))
-				cleanup_event()
+				cleanup()
 				global.random_events.next_spawn_event = TIME + 1 MINUTE
 				return
 
@@ -191,7 +216,7 @@
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
-					cleanup_event()
+					cleanup()
 					return
 
 			var/atom/pestlandmark = pick(EV)
@@ -205,9 +230,10 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
 					var/picked_critter = pick(select)
+					log_respawn_event(M, picked_critter, source)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided
 						var/datum/eventSpawnedCritter/picked_critter_datum = picked_critter
 						M.current.make_critter(pick(picked_critter_datum.critter_types), pestlandmark)
@@ -216,15 +242,16 @@
 							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
 					else // only path provided
 						M.current.make_critter(picked_critter, pestlandmark)
-					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
-					O.owner = M.current
-					O.implanted = 1
+					new /obj/item/implant/access/infinite/assistant(M.current)
+					if (src.custom_spawn_turf)
+						M.current.set_loc(src.custom_spawn_turf)
 					antagify(M.current, null, 1)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
-			cleanup_event()
+			cleanup()
 
-	proc/cleanup_event()
+	cleanup()
+		..()
 		src.critter_type = null
 		src.num_critters = 0

@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			Console.active = TRUE
 			if (src.transit_delay)
 				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+				playsound(Console.loc, 'sound/machines/transport_move.ogg', 75, 0)
 	return (currentlocation && end_location)
 
 /obj/machinery/computer/transit_shuttle/proc/call_shuttle(area/end_location)
@@ -328,7 +329,12 @@ var/bombini_saved
 	var/location = 1 // 0 for bottom, 1 for top
 
 /obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
-	if(emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
+		return
+	for (var/datum/flock/flock in flocks)
+		if (flock.relay_in_progress)
+			boutput(user, "<span class='alert'>[src] emits a pained burst of static, but nothing happens!</span>")
+			return
 
 	if (user)
 		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
@@ -370,6 +376,10 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
+				for (var/datum/flock/flock in flocks)
+					if (flock.relay_in_progress)
+						boutput(user, "Unable to contact central command, authorization rejected.")
+						return
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
@@ -571,5 +581,91 @@ proc/bioele_accident()
 	bioele_accidents++
 	bioele_shifts_since_accident = 0
 	bioele_save_stats()
+
+
+/obj/submachine/centcom_elevator
+	name = "elevator Control"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "shuttle"
+	var/active = FALSE
+	var/location = 0 // 0 for bottom, 1 for top
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	proc/call_shuttle()
+		if(location == 0) // at bottom
+			var/area/start_location = locate(/area/shuttle/centcom_elevator/lower)
+			var/area/end_location = locate(/area/shuttle/centcom_elevator/upper)
+			start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
+			location = 1
+		else // at top
+			var/area/start_location = locate(/area/shuttle/centcom_elevator/upper)
+			var/area/end_location = locate(/area/shuttle/centcom_elevator/lower)
+			for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+				if(!isintangible(L))
+					SPAWN(1 DECI SECOND)
+						logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
+						L.gib()
+				bioele_accident()
+			start_location.move_contents_to(end_location, /turf/unsimulated/floor/glassblock/transparent_cyan)
+			location = 0
+
+		for_by_tcl(O, /obj/submachine/centcom_elevator)
+			active = FALSE
+			O.visible_message("<span class='alert'>The elevator has moved.</span>")
+			O.location = src.location
+		return
+
+	attack_hand(mob/user)
+		if (!isadmin(user))
+			return
+		if(..())
+			return
+		var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
+
+		if(location)
+			dat += "Elevator Location: Upper level"
+		else
+			dat += "Elevator Location: Lower Level"
+		dat += "<BR>"
+		if(active)
+			dat += "Moving"
+		else
+			dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
+
+		user.Browse(dat, "window=centcom_elevator")
+		onclose(user, "centcom_elevator")
+		return
+
+	Topic(href, href_list)
+		if(..())
+			return
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+			src.add_dialog(usr)
+
+			if (href_list["send"])
+				USR_ADMIN_ONLY
+				if(!active)
+					for_by_tcl(O, /obj/submachine/centcom_elevator)
+						active = TRUE
+						O.visible_message("<span class='alert'>The elevator begins to move!</span>")
+						playsound(O.loc, 'sound/machines/elevator_move.ogg', 100, 0)
+					SPAWN(5 SECONDS)
+						call_shuttle()
+
+			if (href_list["close"])
+				src.remove_dialog(usr)
+				usr.Browse(null, "window=centcom_elevator")
+
+		src.add_fingerprint(usr)
+		src.updateUsrDialog()
+		return
+
 
 #undef MINING_OUTPOST_NAME
