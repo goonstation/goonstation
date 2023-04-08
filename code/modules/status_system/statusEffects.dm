@@ -1315,8 +1315,7 @@
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
 			if (ismob(owner))
 				var/mob/M = owner
-				if (M.mind)
-					gang = M.mind.gang
+				gang = M.get_gang()
 
 		onRemove()
 			. = ..()

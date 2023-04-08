@@ -47,7 +47,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\pooling.dm"
 #include "code\serialization.dm"
 #include "code\world.dm"
-#include "code\style.dms"
 #include "code\_lighting\base_lighting.dm"
 #include "code\_lighting\RobustLight2.dm"
 #include "code\_lighting\SimpleLight.dm"

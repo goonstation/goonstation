@@ -100,24 +100,22 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		return
 	proc/attempt_open(mob/user as mob)
 		for (var/obj/ganglocker/locker in range(1,src))
-			if (locker.gang == user.mind.gang && locked == 1)
+			if (locker.gang == user.get_gang() && locked == 1)
 				locked = 0
 				UpdateIcon()
 				locker.gang.add_points(500)
-				if (istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					mode.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, and take 500 points.",locker.gang)
+				user.get_gang().broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, and take 500 points.",locker.gang)
 				return TRUE
 		return FALSE
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(src.anchored)
-			if(user.mind.gang != null)
+			if(user.get_gang() != null)
 				user.show_text("This thing's locked into place! You better defend it for a bit.", "red")
 			else
 				user.show_text("This is locked into place and has weird gang signs all over it! You should probably move away.", "red")
 		else if(src.locked)
-			if(user.mind.gang != null)
+			if(user.get_gang() != null)
 				if (!attempt_open(user))
 					user.show_text("Access Denied. Bring to a gang locker to unlock it!", "red")
 					return

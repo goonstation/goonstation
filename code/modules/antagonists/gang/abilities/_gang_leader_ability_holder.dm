@@ -151,8 +151,6 @@
 	pointCost = 0
 	when_stunned = 2
 	not_when_handcuffed = 0
-	dont_lock_holder = 1
-	ignore_holder_lock = 1
 
 	cast(mob/target)
 		if (!holder)
@@ -163,7 +161,7 @@
 		if (!M)
 			return 1
 
-		if (!M.mind && !M.mind.gang)
+		if (!M.mind && !M.get_gang())
 			boutput(M, "<span class='alert'>Gang territory? What? You'd need to be in a gang to get it.</span>")
 			return 1
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)

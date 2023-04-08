@@ -329,7 +329,7 @@ var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","O
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = announcer_source.name
+		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
 		newsignal.data["address_1"] = civvie.originalPDA.net_id
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
@@ -654,12 +654,12 @@ proc/broadcast_to_all_gangs(var/message)
 		return count
 
 	proc/make_tag(turf/T)
-		var/obj/decal/gangtag/tag = new /obj/decal/gangtag(target_turf)
-		tag.icon_state = "gangtag[M.mind.gang.gang_tag]"
+		var/obj/decal/gangtag/tag = new /obj/decal/gangtag(T)
+		tag.icon_state = "gangtag[src.gang_tag]"
 		tag.name = "[src.gang_name] tag"
 		tag.owners = src
 		tag.delete_same_tags()
-		src.claim_tiles(target_turf)
+		src.claim_tiles(T)
 		var/area/area = T.loc
 		T.tagged = TRUE
 		area.gang_owners = src
@@ -783,28 +783,28 @@ proc/broadcast_to_all_gangs(var/message)
 
 		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_MINIMUM_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_MINIMUM_RANGE)) continue
-			if (tag.owners == user.mind.gang)
+			if (tag.owners == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to an existing tag!</span>")
 				return
 		for (var/obj/ganglocker/locker in orange(GANG_TAG_MINIMUM_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_MINIMUM_RANGE)) continue
-			if (locker.gang == user.mind.gang)
+			if (locker.gang == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
 				return
 
 		var/validLocation = FALSE
 		if (istype(target,/obj/decal/gangtag))
 			var/obj/decal/gangtag/tag = target
-			if (tag.owners != user.mind.gang)
+			if (tag.owners != user.get_gang())
 				//if we're tagging over someone's tag, double our search radius
 				//(this will find any tags whose influence intersects with the target tag's influence)
 				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE*2,target))
 					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE*2)) continue
-					if (locker.gang == user.mind.gang)
+					if (locker.gang == user.get_gang())
 						validLocation = TRUE
 				for (var/obj/decal/gangtag/otherTag in orange(GANG_TAG_INFLUENCE*2,target))
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
-					if (otherTag.owners && otherTag.owners == user.mind.gang)
+					if (otherTag.owners && otherTag.owners == user.get_gang())
 						validLocation = TRUE
 			else
 				boutput(user, "<span class='alert'>You can't spray over your own tags!</span>")
@@ -813,14 +813,14 @@ proc/broadcast_to_all_gangs(var/message)
 			//we're tagging a wall, check it's in our territory and not someone else's territory
 			for (var/obj/decal/gangtag/tag in orange(GANG_TAG_INFLUENCE,target))
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
-				if (tag.owners == user.mind.gang)
+				if (tag.owners == user.get_gang())
 					validLocation = TRUE
 				else if (tag.owners)
 					boutput(user, "<span class='alert'>You can't spray in another gang's territory! Spray over their tag, instead!</span>")
 					return
 			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE,target))
 				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE)) continue
-				if (locker.gang == user.mind.gang)
+				if (locker.gang == user.get_gang())
 					validLocation = TRUE
 				else
 					boutput(user, "<span class='alert'>There's better places to tag than here! </span>")
@@ -1053,6 +1053,20 @@ proc/broadcast_to_all_gangs(var/message)
 
 		HTML = dat
 
+	proc/handle_get_spraypaint(var/mob/living/carbon/human/user)
+		var/image/overlay = null
+		if(user.get_gang() == src.gang)
+			if (gang.spray_paint_remaining > 0)
+				gang.spray_paint_remaining--
+				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+				boutput(user, "<span class='alert'>You grab a bottle of spray paint from the locker..</span>")
+		else
+			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
+			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+
+		src.UpdateOverlays(overlay, "screen")
+		SPAWN(1 SECOND)
+			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	Topic(href, href_list)
 		..()
@@ -1200,7 +1214,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	proc/respawn_member(var/mob/H)
-		if (H.mind && H.mind.gang != src.gang)
+		if (H.mind && H.get_gang() != src.gang)
 			return
 		var/mob/living/carbon/human/clone = new /mob/living/carbon/human/clone(src.loc)
 		clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
