@@ -51,7 +51,7 @@
 		"Meat Mutant" = /obj/critter/blobman,
 		"Meat Thing" = /obj/critter/blobman/meaty_martha,
 		"Micro Man" = /obj/critter/microman,
-		"Mimic" = /obj/critter/mimic,
+		"Mimic" = /mob/living/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
 		"Skeleton" = /mob/living/critter/skeleton,
 		"Space Wasp" = /obj/critter/wasp,
