@@ -5,11 +5,10 @@
 	targeted = TRUE
 	target_anything = FALSE
 	target_nodamage_check = FALSE
-	target_selection_check = FALSE
 	max_range = 1
 	cooldown = 300
 	pointCost = 0
-	when_stunned = FALSE
+	incapacitation_restriction = FALSE
 	not_when_handcuffed = TRUE
 	werewolf_only = TRUE
 	//throw mostly stolen from macho man. Doesn't spin as fast and doesn't deal with grabs, it's just a targetable ability.

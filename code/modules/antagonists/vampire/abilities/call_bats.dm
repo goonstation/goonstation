@@ -17,7 +17,7 @@
 	max_range = 0
 	cooldown = 600
 	pointCost = 0//150
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 0
 	unlock_message = "You have gained Call Frost Bats, a protection spell."
 	var/datum/projectile/special/homing/orbiter/spiritbat/P = new
@@ -82,7 +82,7 @@
 	max_range = 0
 	cooldown = 1200
 	pointCost = 150
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 1
 	unlock_message = "You have gained call bats, which summons bats to fight for you."
 

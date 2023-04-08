@@ -7,7 +7,7 @@
 	max_range = 1
 	cooldown = 600
 	pointCost = 30
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 1
 	unlock_message = "You have gained diseased touch, which inflicts someone with a deadly, non-contagious disease."
 

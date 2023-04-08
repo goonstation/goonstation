@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 0
 	unlock_message = "You have gained cloak of darkness. It makes you invisible in dark areas and is a toggleable, permanent effect."
 

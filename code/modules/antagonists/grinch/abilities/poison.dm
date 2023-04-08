@@ -9,7 +9,7 @@
 	cooldown = 600
 	start_on_cooldown = 0
 	pointCost = 0
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 1
 	var/list/the_poison = list("coniine", "cyanide", "curare")
 	var/amount_per_poison = 7

@@ -7,7 +7,7 @@
 	max_range = 999
 	cooldown = 45 SECONDS
 	pointCost = 0
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 	sticky = 1
 

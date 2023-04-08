@@ -18,3 +18,8 @@
 /// Cannot cast in VR
 #define ABILITY_AREA_CHECK_VR_ONLY 2
 
+
+// strictness of incapacitation checks
+#define ABILITY_CAN_USE_ALWAYS 2 			//! Ignore all incapacitation statuses (still blocked by death!)
+#define ABILITY_CAN_USE_WHEN_STUNNED 1 		//! Can use this ability when stunned, but not when unconcious
+#define ABILITY_NO_INCAPACITATED_USE 0 		//! Cannot use when stunned or unconcious

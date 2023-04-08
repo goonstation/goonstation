@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 	hunter_only = 0
 

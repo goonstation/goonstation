@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 2000
 	pointCost = 0
-	when_stunned = 2
+	incapacitation_restriction = 2
 	not_when_handcuffed = 0
 	werewolf_only = 1
 

@@ -50,7 +50,7 @@
 	max_range = 999
 	cooldown = 600
 	pointCost = 0
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 	sticky = 1
 	unlock_message = "You have gained Hide Coffin. It allows you to hide a coffin somewhere on the station."
@@ -89,7 +89,7 @@
 	max_range = 999
 	cooldown = 600
 	pointCost = 400
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 	sticky = 1
 	unlock_message = "You have gained Coffin Escape. It allows you to heal within a coffin."

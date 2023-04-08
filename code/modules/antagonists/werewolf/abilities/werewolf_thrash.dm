@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 400
 	pointCost = 0
-	when_stunned = 2
+	incapacitation_restriction = 2
 	not_when_handcuffed = 1
 	werewolf_only = 1
 	cast(mob/target)

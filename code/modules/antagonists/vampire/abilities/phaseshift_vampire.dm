@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
@@ -65,7 +65,7 @@
 	max_range = 0
 	cooldown = 600
 	pointCost = 0
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 0
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	var/duration = 50

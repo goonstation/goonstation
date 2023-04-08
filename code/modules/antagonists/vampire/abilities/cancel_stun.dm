@@ -8,7 +8,7 @@
 	cooldown = 40
 	pointCost = 0
 	not_when_in_an_object = FALSE
-	when_stunned = 2
+	incapacitation_restriction = 2
 	not_when_handcuffed = 0
 
 	proc/remove_stuns(var/message_type = 1)
@@ -77,7 +77,7 @@
 	desc = "Recover from being stunned. Restores a minor amount of health."
 	cooldown = 600
 	pointCost = 0
-	when_stunned = 2
+	incapacitation_restriction = 2
 	unlock_message = "Your cancel stuns power now heals you in addition to its original effect."
 
 	cast(mob/target)

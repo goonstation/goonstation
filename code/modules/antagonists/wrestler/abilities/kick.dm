@@ -5,12 +5,12 @@
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1
-	target_selection_check = TRUE
+	shortcut_target_if_available = TRUE
 	max_range = 1
 	cooldown = 200
 	start_on_cooldown = 1
 	pointCost = 0
-	when_stunned = 1
+	incapacitation_restriction = 1
 	not_when_handcuffed = 0
 
 	cast(mob/target)

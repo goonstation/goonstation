@@ -65,7 +65,7 @@
 	icon_state = "gang-template"
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/gang
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive

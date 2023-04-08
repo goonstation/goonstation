@@ -40,7 +40,7 @@
 	icon_state = "grinchtemplate"
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/grinch
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 
 	New()
@@ -112,7 +112,7 @@
 			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
-		if (incapacitation_check(src.when_stunned) != 1)
+		if (incapacitation_check(src.incapacitation_restriction) != 1)
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 

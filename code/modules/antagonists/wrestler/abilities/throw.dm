@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 200
 	start_on_cooldown = TRUE
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = TRUE
 
 	cast(mob/target)

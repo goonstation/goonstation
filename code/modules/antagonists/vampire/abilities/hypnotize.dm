@@ -7,7 +7,7 @@
 	max_range = 2
 	cooldown = 700
 	pointCost = 0
-	when_stunned = 0
+	incapacitation_restriction = 0
 	not_when_handcuffed = 0
 
 	cast(mob/target)

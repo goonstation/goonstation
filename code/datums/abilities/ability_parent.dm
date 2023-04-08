@@ -433,7 +433,6 @@
 			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
 			UpdateOverlays(null, "action_key_number")
-		return
 
 	proc/set_number_overlay(var/num)
 
@@ -459,28 +458,23 @@
 			if(0)
 				. = src.zero
 
-	// Switch to targeted only if multiple mobs are in range. All screen abilities customize their clicked(),
-	// and you have to call this proc there if you want to use it. You also need to set 'target_selection_check = 1'
-	// for every spell that should function in this manner.
-	// See /atom/movable/screen/ability/wrestler/clicked() for a practical example (Convair880).
+	/// Immediately casts the spell if it's off cooldown and only has a single target in range, returning FALSE
+	/// If there's more than 1 target, or no targets, does nothing and returns TRUE
+	/// To use, ability must be targeted and have `shortcut_target_if_available` set to TRUE
 	proc/do_target_selection_check()
+		SHOULD_NOT_OVERRIDE(TRUE)
 		var/datum/targetable/spell = owner
-		var/use_targeted = FALSE
+		. = TRUE
 
 		var/list/mob/targets = spell.target_reference_lookup()
 		if (length(targets) == 0)
 			boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
-			use_targeted = 2 // Abort parent proc.
 		else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
-			use_targeted = 0 // Quickly switch to non-targeted since we're immediately casting this on the one guy
 			SPAWN(0)
 				spell.handleCast(targets[1])
-			use_targeted = 2 // Abort parent proc since we're casting from here instead
+			return FALSE // Abort parent proc since we're casting from here instead
 		else // >2 targets
 			boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
-			use_targeted = 1
-
-		return use_targeted
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -488,7 +482,7 @@
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
+				"content" = (src.desc || null),
 				"theme" = src.owner.theme,
 				"flags" = src.owner.tooltip_flags
 			))
@@ -703,6 +697,7 @@
 		last_y = pos_y
 
 	clicked(parameters)
+		//SHOULD_CALL_PARENT(TRUE)
 		if (!owner.holder || !owner.holder.owner || usr != owner.holder.get_controlling_mob())
 			boutput(usr, "<span class='alert'>You do not own this ability.</span>")
 			return
@@ -771,8 +766,10 @@
 					if (!owner.targeted)
 						owner.handleCast()
 					else
-						user.targeting_ability = owner
-						user.update_cursor()
+						if (!owner.shortcut_target_if_available || src.do_target_selection_check())
+							user.targeting_ability = owner
+							user.update_cursor()
+						// if we have shortcut_target_if_available set, and do_target_selection_check() returns FALSE, the spell is already cast in that proc
 		else if(parameters["middle"])
 			if(owner.waiting_for_hotkey)
 				holder.cancel_action_binding()
@@ -816,11 +813,11 @@
 	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
+	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
 	var/target_anything = FALSE					//! Can we target absolutely anything?
 	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
 	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
 	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
-	var/target_selection_check = FALSE 			//! If this ability is targeted
 	var/lock_holder = TRUE 						//! If FALSE, bypass holder lock when we cast this spell.
 	var/ignore_holder_lock = FALSE				//! Can we cast this ability when the holder is locked?
 	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
@@ -894,6 +891,7 @@
 	// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
 	// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 	proc/tryCast(atom/target, params)
+		// SHOULD_CALL_PARENT(TRUE)
 		. = CAST_ATTEMPT_SUCCESS
 		if (!holder?.owner)
 			stack_trace("Orphaned ability used: [identify_object(src)] by [identify_object(usr)]. Issue: ([holder ? "no owning mob" : "no abilityHolder"].)")

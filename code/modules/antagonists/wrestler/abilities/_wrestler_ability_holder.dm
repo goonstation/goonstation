@@ -4,33 +4,6 @@
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /atom/movable/screen/ability/topBar/wrestler
-	clicked(params)
-		var/datum/targetable/wrestler/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (owner.holder.owner) //how even
-			if (!isturf(owner.holder.owner.loc))
-				boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-				return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-
-		if (spell.target_selection_check)
-			var/use_targeted = src.do_target_selection_check()
-			if (use_targeted == 2)
-				return
-			if (spell.targeted || use_targeted == 1)
-				if (spell.cooldowncheck())
-					return
-				owner.holder.owner.targeting_ability = owner
-				owner.holder.owner.update_cursor()
-
-		spell.handleCast()
-
 /datum/abilityHolder/wrestler
 	usesPoints = FALSE
 	regenRate = 0
@@ -48,7 +21,9 @@
 	start_on_cooldown = TRUE // So you can't bypass the cooldown by taking off your belt and re-equipping it.
 	preferred_holder_type = /datum/abilityHolder/wrestler
 	interrupt_action_bars = TRUE
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	/// TODO MOVE BEHAVIOR TO PARENT
+	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	/// \TODO
 	var/not_when_handcuffed = 0
 	var/fake = FALSE
 
@@ -82,27 +57,16 @@
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
 
-	proc/incapacitation_check(var/stunned_only_is_okay = 0)
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
-
-		switch (stunned_only_is_okay)
-			if (0)
-				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
-					return 0
-				else
-					return 1
-			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
-					return 0
-				else
-					return 1
-			else
-				return 1
+	proc/incapacitation_check(strictness)
+		var/mob/living/M = src.holder.owner
+		if (!isalive(M))
+			return FALSE
+		if (strictness != ABILITY_CAN_USE_ALWAYS)
+			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
+				return FALSE
+			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // second check is unnecessary, keeping in case more levels are added later
+				return FALSE
+		return TRUE
 
 	tryCast(atom/target, params)
 		. = ..()
@@ -124,17 +88,9 @@
 			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
 			return 0
 
-		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
-			return 0
-
-		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
-			return 0
-
-		if (incapacitation_check(src.when_stunned) != 1)
+		if (!incapacitation_check(src.incapacitation_restriction))
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
-			return 0
+			return FALSE
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
