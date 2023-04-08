@@ -253,6 +253,7 @@ datum/mind
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
 	proc/remove_antagonist(role)
+		. = FALSE
 		var/list/datum/antagonist/antagonist_roles = list()
 		if (istext(role))
 			for (var/datum/antagonist/A as anything in src.antagonists)
@@ -271,8 +272,8 @@ datum/mind
 				ticker.mode.Agimmicks.Remove(src)
 			qdel(A)
 			src.current.antagonist_overlay_refresh(TRUE, FALSE)
-			return TRUE
-		return FALSE
+			. = TRUE
+		return
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
