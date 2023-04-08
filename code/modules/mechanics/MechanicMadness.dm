@@ -2948,8 +2948,7 @@
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || level == 2) return
-		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(charging) return
 		return ..()
 
 	update_icon()

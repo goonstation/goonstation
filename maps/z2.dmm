@@ -27317,7 +27317,7 @@
 /area/catacombs)
 "bFF" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bFN" = (
@@ -27473,7 +27473,7 @@
 /area/catacombs)
 "bGf" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGg" = (
@@ -27650,7 +27650,7 @@
 "bGK" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/salt,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGL" = (
@@ -27662,7 +27662,7 @@
 "bGM" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/proj,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bGO" = (
@@ -28427,7 +28427,7 @@
 /area/catacombs)
 "bIV" = (
 /obj/storage/closet/coffin,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
@@ -28444,7 +28444,7 @@
 "bIX" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/fire,
-/obj/critter/magiczombie,
+/mob/living/critter/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bIY" = (
@@ -72854,7 +72854,7 @@
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
 	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
+	special = /mob/living/critter/skeleton
 	},
 /turf/unsimulated/grasstodirt{
 	dir = 1

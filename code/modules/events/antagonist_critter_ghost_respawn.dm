@@ -118,6 +118,22 @@
 				)
 			)
 		),
+		list(new /datum/eventSpawnedCritter(
+			name = "jean elementals",
+			critter_types = list(/mob/living/critter/jeans_elemental),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
+					remove_dropped_items = 1, number_of_rolls = 2, percent_droprate = 30, pity_drop_atleast_one = 0
+					)
+				)
+			)
+		),
+		list(new /datum/eventSpawnedCritter(
+			name = "mimics",
+			critter_types = list(/mob/living/critter/mimic/antag_spawn)
+			)
+		), //no loot for mimics
 	)
 
 	admin_call(var/source)
@@ -157,6 +173,14 @@
 			critter_name = initial(dummy.name) + "s"
 		else
 			select = pick(src.pest_invasion_critter_datums)
+			#ifdef APRIL_FOOLS
+			while(TRUE)
+				var/datum/eventSpawnedCritter/esc = select[1]
+				if(esc.name != "jean elementals")
+					select = pick(src.pest_invasion_critter_datums)
+				else
+					break
+			#endif
 			var/list/name_list = list()
 			for (var/datum/eventSpawnedCritter/C in select)
 				if(C.name)

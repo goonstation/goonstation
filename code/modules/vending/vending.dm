@@ -1988,7 +1988,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			setFrameState("WIRESREMOVED", user)
 		else if (isweldingtool(target) && !wrenched)
 			var/obj/item/weldingtool/T = target
-			if (T.try_weld(user,0,-1,0,1))
+			if (T.try_weld(user,0,-1,1,1))
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null, null)
 		else . = ..()
