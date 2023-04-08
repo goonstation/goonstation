@@ -114,7 +114,9 @@
 		var/number_of_antagonists = 0
 		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
 			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
-			if (antagonist_role.pseudo)
+			if (antagonist_role.vr)
+				display_name += " <span class='pseudo'>(VR)</span>"
+			else if (antagonist_role.pseudo)
 				display_name += " <span class='pseudo'>(pseudo)</span>"
 			else
 				number_of_antagonists++
