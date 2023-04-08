@@ -1591,6 +1591,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
 		if (pattern == "RUB")
 			return mat.material_flags & MATERIAL_RUBBER
+		if (pattern == "WOOD")
+			return mat.material_flags & MATERIAL_WOOD
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num_safe(copytext(pattern, 5))
@@ -2299,6 +2301,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
+		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
 #define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
