@@ -87,6 +87,7 @@
 				press()
 
 	Uncrossed(atom/movable/O)
+		..()
 		if (O in pressing)
 			pressing -= O
 			for (var/atom/movable/Q in pressing)

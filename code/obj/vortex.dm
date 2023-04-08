@@ -109,7 +109,7 @@
 				/obj/machinery/bot/cleanbot/emagged,
 				/obj/critter/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
-				/obj/critter/mimic,
+				/mob/living/critter/mimic,
 				/obj/critter/fermid,
 				/obj/critter/bear)
 			var/obj/horror = new horror_path(src.loc)

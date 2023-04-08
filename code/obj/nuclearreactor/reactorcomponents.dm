@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
+	material_amt = 1 //cannot efficiently recycle these
 
 	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
@@ -21,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// Temperature of this component, starts at room temp Kelvin by default
 	var/temperature = T20C
 	/// How much does this component share heat with surrounding components? Basically surface area in contact (m2)
-	var/thermal_cross_section = 1.0
+	var/thermal_cross_section = 10
 	/// How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
 	var/neutron_cross_section = 0.5
 	/// Control rods don't moderate neutrons, they absorb them.
@@ -39,7 +40,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
-	var/thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	var/thermal_mass = 420*25//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
 	New(material_name="steel")
@@ -231,8 +232,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_inserted = "fuel"
 	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
-	thermal_cross_section = 2
-	thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	thermal_cross_section = 10
+	thermal_mass = 420*100//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	extra_info()
 		. = ..()
@@ -244,6 +245,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A control rod assembly for a nuclear reactor."
 	icon_state_inserted = "control"
 	icon_state_cap = "control_cap"
+	thermal_cross_section = 10
 	/// Control rods have a variable neutron_cross_section, which is essentially *actual* insertion level
 	neutron_cross_section = 1.0
 	/// Target insertion level, will be approached by up to 0.1 per tick
@@ -271,7 +273,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A heat exchanger component for a nuclear reactor."
 	icon_state_inserted = "heat"
 	icon_state_cap = "heat_cap"
-	thermal_cross_section = 15
+	thermal_cross_section = 25
 	neutron_cross_section = 0.1
 
 ////////////////////////////////////////////////////////////////
@@ -281,8 +283,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A gas coolant channel component for a nuclear reactor."
 	icon_state_inserted = "gas"
 	icon_state_cap = "gas_cap"
-	thermal_cross_section = 1.5
-	var/gas_thermal_cross_section = 2.5
+	thermal_cross_section = 15
+	var/gas_thermal_cross_section = 15
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
 	thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
@@ -329,11 +331,13 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			if(src.air_contents.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
-			. = src.air_contents
+
 			if(src.melted)
 				var/turf/T = get_turf(src.loc)
 				if(T)
 					T.assume_air(air_contents)
+			else
+				. = src.air_contents
 		if(inGas)
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			src.air_contents?.volume = gas_volume
