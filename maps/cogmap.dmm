@@ -895,6 +895,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
+/obj/mail_booth,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -49756,15 +49757,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"eMF" = (
-/obj/rack,
-/obj/item/tank/jetpack/micro,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
 "eML" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -64251,6 +64243,20 @@
 /obj/decal/poster/wallsign/no_smoking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
+"wcq" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "wcD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/camera{
@@ -65973,6 +65979,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"xXO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "Security Beacon"
+	},
+/turf/space,
+/area/space)
 "xXP" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -66073,6 +66089,14 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"yaO" = (
+/obj/disposalpipe/segment,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "yaZ" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
@@ -90845,7 +90869,7 @@ adC
 adC
 adC
 aam
-aap
+aaq
 aaq
 aaq
 aaq
@@ -91147,7 +91171,7 @@ adC
 adC
 adC
 adC
-aii
+adC
 adC
 adC
 adC
@@ -91449,7 +91473,7 @@ adC
 adC
 adC
 adC
-aah
+xXO
 adC
 adC
 adC
@@ -104480,7 +104504,7 @@ blK
 xOl
 xOl
 bnS
-eMF
+xOl
 xOl
 bpA
 bqe
@@ -105071,7 +105095,7 @@ aZo
 aZo
 aZo
 aZo
-aGT
+wcq
 aGT
 aGT
 aGT
@@ -105373,7 +105397,7 @@ aId
 aId
 aId
 aId
-aId
+yaO
 beZ
 aId
 aId

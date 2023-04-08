@@ -7,6 +7,18 @@
 	/// A list of items that this traitor has redeemed using their uplink. This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
 	var/list/obj/redeemed_items = list()
 
+	New()
+		if (!ticker?.mode?.spy_market)
+			ticker.mode.spy_market = new /datum/game_mode/spy_theft
+			SPAWN(5 SECONDS)
+				ticker.mode.spy_market.build_bounty_list()
+				ticker.mode.spy_market.update_bounty_readouts()
+
+		. = ..()
+
+	is_compatible_with(datum/mind/mind)
+		return ishuman(mind.current)
+
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")

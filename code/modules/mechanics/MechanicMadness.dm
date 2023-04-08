@@ -349,6 +349,8 @@
 	var/cabinet_only = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
+	// override disconnect all on unanchor/anchor. this is mostly for the bomb :|
+	var/dont_disconnect_on_change = FALSE
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -471,7 +473,8 @@
 			else
 				hide()
 
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+			if (!src.dont_disconnect_on_change)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
 		return ..()
 
@@ -624,6 +627,7 @@
 				user.drop_item()
 				qdel(W)
 
+				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
@@ -2500,11 +2504,16 @@
 		var/message = msg[2]
 		if(lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message), no_fucking_autoparse = TRUE)
+		// previously used "no_fucking_autoparse = TRUE", but not sure why
+		// this ended up stripping even "normal" characters like comma, quotes
+		// and other stuff said in common messages; the radio scanner component
+		// doesn't do it either, so .. ????
+		message = strip_html(html_decode(message))
 		var/heardname = M.name
 		if(real_name)
 			heardname = real_name
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "[heardname] : [message]":"[message]")
+		// changed to be in typical signal format to match the radio one
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "name=[heardname]&message=[message]":"[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
@@ -2636,7 +2645,7 @@
 	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	plane = PLANE_DEFAULT
-	density = 1
+	density = 0
 	var/spooky = FALSE
 
 	New()
@@ -2939,8 +2948,7 @@
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || level == 2) return
-		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(charging) return
 		return ..()
 
 	update_icon()
@@ -4106,6 +4114,116 @@
 		// tracks how many things someone's drawn on it.
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
+
+
+
+/obj/item/mechanics/bomb
+	// this thing is a buggy piece of shit and is A D M I N - O N L Y
+	// if you intend to make this player-available consider:
+	// making it less bad
+	name = "bomb"
+	desc = "You may want to find somewhere else to be."
+	icon_state = "bomb_disarmed"
+	cabinet_banned = TRUE
+	dont_disconnect_on_change = TRUE
+
+	var/arm_code = null
+	var/is_armed = FALSE
+	var/boom_size = 50
+	var/blowing_the_fuck_up = FALSE
+	var/det_time = 2 SECONDS
+
+	small
+		name = "small bomb"
+		desc = "A small bomb the size of a large bomb, you probably don't want to be on top of this when it goes."
+		boom_size = 10
+
+	big
+		name = "strong bomb"
+		desc = "All the fury of a tank-transfer-valve bomb in one easy package. You should probably run away."
+		boom_size = 200
+
+	bigger
+		name = "very strong bomb"
+		desc = "Bigger than a nerd's tank-transfer-valve bomb but not as big as the turbonerd's canister bomb, this occupies an unhappy middle. You should probably stop staring at it and run away."
+		boom_size = 1000
+
+	biggest
+		name = "incredibly strong bomb"
+		desc = "This looks like it contains the fury of an actual canister bomb. If this goes off there may not be a lot left to clean up."
+		boom_size = 7500
+
+	station_deleting
+		name = "station deleting bomb"
+		desc = "There is no running from this."
+		boom_size = 1000000
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "arm", .proc/arm)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "disarm", .proc/disarm)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "detonate", .proc/detonate)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Code",.proc/setSecretCode)
+
+	proc/arm(var/datum/mechanicsMessage/input)
+		if (blowing_the_fuck_up || is_armed || (arm_code && input.signal != arm_code))
+			return
+
+		src.is_armed = TRUE
+		src.icon_state = "bomb_armed"
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> clunks ominously.</span>")
+		return
+
+	proc/disarm(var/datum/mechanicsMessage/input)
+		if (blowing_the_fuck_up || !is_armed || (arm_code && input.signal != arm_code))
+			return
+
+		src.is_armed = FALSE
+		src.icon_state = "bomb_disarmed"
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> clicks quietly.</span>")
+		return
+
+	proc/detonate(var/datum/mechanicsMessage/input)
+		if (blowing_the_fuck_up || !is_armed || (arm_code && input.signal != arm_code))
+			return
+
+		blowing_the_fuck_up = TRUE
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps!</span>")
+		message_admins("A mechcomp bomb (<b>[src]</b>), power [boom_size], is detonating at [log_loc(src)].")
+		logTheThing(LOG_BOMBING, null, "A mechcomp bomb (<b>[src]</b>), power [boom_size], is detonating at [log_loc(src)].")
+
+		SPAWN(det_time)
+			explosion_new(src, src.loc, boom_size)
+			qdel(src)
+
+		return
+
+	proc/setSecretCode(obj/item/W as obj, mob/user as mob)
+		if (src.arm_code)
+			var/input = input(user, "Current secret code?", "Secret Arming Code", null) as text | null
+			if (isnull(input) || input != src.arm_code)
+				boutput(user,"<span class='alert'>That isn't the right code!</span>")
+				return
+
+		var/input = input(user, "Leave blank for none.", "Secret Arming Code", src.arm_code) as text | null
+		if (!in_interact_range(src, user) || user.stat || isnull(input))
+			return FALSE
+
+		if (input == "")
+			arm_code = null
+			boutput(user,"<span class='alert'>You clear the arming code.</span>")
+		else
+			arm_code = input
+			boutput(user,"<span class='alert'>You set the arming code. Hope you remembered it!</span>")
+
+	attackby(obj/item/W, mob/user)
+		// bug: you can still add/remove mechcomp connections to this
+		// bug: unwrenching it removes all connections
+		if (is_armed)
+			boutput(user,"<span class='alert'>You can't seem to interact with this at all while it's armed!</span>")
+			return FALSE
+
+		return ..(W, user)
 
 
 

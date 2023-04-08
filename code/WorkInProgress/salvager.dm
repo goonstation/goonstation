@@ -286,7 +286,7 @@
 
 /obj/item/storage/box/salvager_frame_compartment
 	name = "electronics frame compartment"
-	desc = "A special compartment designed to neatly and safely store deconstructed eletronics and machinery frames."
+	desc = "A special compartment designed to neatly and safely store deconstructed electronics and machinery frames."
 	max_wclass = W_CLASS_HUGE
 	can_hold = list(/obj/item/electronics/frame)
 	slots = 8
@@ -312,6 +312,7 @@
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	in_list_or_max = 1
 	color = "#ff9933"
+	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
 	protected_radio = 1 // Ops can spawn with the deaf trait.
@@ -540,6 +541,7 @@
 /obj/item/clothing/head/helmet/space/engineer/salvager
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
+/obj/item/device/pda2/salvager
 
 ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 /datum/commodity/magpie/sell

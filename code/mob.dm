@@ -224,6 +224,8 @@
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
+	/// last time this mob got dosed with radiation
+	var/last_radiation_dose_time = 0
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
@@ -860,6 +862,7 @@
 
 /// used to set the a_intent var of a mob
 /mob/proc/set_a_intent(intent)
+	SHOULD_CALL_PARENT(TRUE)
 	if (!intent)
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
@@ -1721,8 +1724,7 @@
 
 /mob/proc/gib(give_medal, include_ejectables)
 	if (istype(src, /mob/dead/observer))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -1753,9 +1755,6 @@
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
-	var/list/viral_list = list()
-	for (var/datum/ailment_data/AD in src.ailments)
-		viral_list += AD
 	var/list/ejectables = list_ejectables()
 	for(var/obj/item/organ/organ in ejectables)
 		if(organ.donor == src)
@@ -1763,13 +1762,13 @@
 	if (!custom_gib_handler)
 		if (iscarbon(src) || (ismobcritter(src) & !isrobocritter(src)))
 			if (bdna && btype)
-				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
+				. = gibs(src.loc, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
-				. = gibs(src.loc, viral_list, ejectables, source=src)
+				. = gibs(src.loc, ejectables, source=src)
 		else
-			. = robogibs(src.loc, viral_list)
+			. = robogibs(src.loc)
 	else
-		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
+		. = call(custom_gib_handler)(src.loc, ejectables, bdna, btype)
 
 	// splash our fluids around
 	if(src.reagents && src.reagents.total_volume)
@@ -1849,8 +1848,7 @@
 		newmob.corpse = null
 
 	if (!iscarbon(src))
-		var/list/virus = src.ailments
-		robogibs(src.loc, virus)
+		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
@@ -1887,8 +1885,7 @@
 		newmob.corpse = null
 
 	if (!iscarbon(src))
-		var/list/virus = src.ailments
-		robogibs(src.loc, virus)
+		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
@@ -1896,8 +1893,7 @@
 
 /mob/proc/partygib(give_medal)
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		partygibs(src.loc, virus)
+		partygibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -1926,12 +1922,10 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/list/virus = src.ailments
-
 	if (bdna && btype)
-		partygibs(src.loc, virus, bdna, btype) // For forensics (Convair880).
+		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
 	else
-		partygibs(src.loc, virus)
+		partygibs(src.loc)
 
 	playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
 
@@ -1941,8 +1935,7 @@
 
 /mob/proc/owlgib(give_medal, control_chance = 1)
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -1977,12 +1970,10 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/list/virus = src.ailments
-
 	if (bdna && btype)
-		gibs(src.loc, virus, null, bdna, btype) // For forensics (Convair880).
+		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
 	else
-		gibs(src.loc, virus)
+		gibs(src.loc)
 
 	playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
@@ -2158,7 +2149,6 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/list/virus = src.ailments
 	var/list/ejectables = list_ejectables()
 
 	for (var/i = 0, i < 16, i++)
@@ -2179,9 +2169,9 @@
 		ejectables += (the_butt)
 
 	if (bdna && btype)
-		gibs(src.loc, virus, ejectables, bdna, btype)
+		gibs(src.loc, ejectables, bdna, btype)
 	else
-		gibs(src.loc, virus, ejectables)
+		gibs(src.loc, ejectables)
 
 	playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
@@ -2466,25 +2456,26 @@
 
 /mob/proc/full_heal()
 	SHOULD_CALL_PARENT(TRUE)
-	var/mob/ghost = find_ghost_by_key(src.last_ckey)
-	if(ghost)
-		ghost.mind.transfer_to(src)
+	if(src.ghost?.mind)
+		src.ghost.mind.transfer_to(src)
 		if(isliving(src))
 			var/mob/living/L = src
 			L.is_npc = FALSE
-		if(isobserver(ghost))
-			qdel(ghost)
+		if(isobserver(src.ghost))
+			qdel(src.ghost)
 
-	src.HealDamage("All", 100000, 100000)
-	src.delStatus("drowsy")
+	src.HealDamage("All", INFINITY, INFINITY, INFINITY)
 	src.stuttering = 0
 	src.losebreath = 0
+	src.delStatus("drowsy")
 	src.delStatus("paralysis")
 	src.delStatus("stunned")
 	src.delStatus("weakened")
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("critical_condition")
+	src.delStatus("recent_trauma")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2495,6 +2486,8 @@
 	src.health = src.max_health
 	src.buckled = null
 	src.disfigured = FALSE
+	if (src.reagents)
+		src.reagents.clear_reagents()
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
@@ -3184,6 +3177,9 @@
 /mob/proc/on_eat(var/atom/A)
 	return
 
+/mob/proc/can_drink(var/atom/A)
+	return TRUE
+
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)
@@ -3229,6 +3225,7 @@
 	if(Sv > 0)
 		if(isdead(src))
 			return //no rads for the dead
+		src.last_radiation_dose_time = TIME
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))

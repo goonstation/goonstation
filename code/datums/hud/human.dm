@@ -267,7 +267,7 @@
 			toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
 			rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-			rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+			rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
@@ -440,7 +440,6 @@
 						master.set_a_intent(INTENT_HELP)
 					else
 						master.set_a_intent(INTENT_GRAB)
-				src.update_intent()
 
 			if ("mintent")
 				if (master.m_intent == "run")
@@ -994,9 +993,6 @@
 			health_oxy.icon_state = "moxy[stage]"
 			health_oxy.tooltipTheme = "healthDam healthDam[stage]"
 
-			// may as well let you see you're being irradiated if you can already see individual things like oxy/tox/burn/brute
-			//update_rad_indicator(master.radiation ? 1 : 0)
-
 			return
 
 		else
@@ -1004,7 +1000,6 @@
 			health_burn.icon_state = "blank"
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
-			update_rad_indicator(0)
 
 			if (isdead(master) || master.fakedead)
 				health.icon_state = "health7" // dead
@@ -1135,9 +1130,10 @@
 			return
 		fire.icon_state = "fire[status]"
 
-	proc/update_rad_indicator(var/status)
+	proc/update_rad_indicator()
 		if (!rad) // not rad :'(
 			return
+		var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 		rad.icon_state = "rad[status]"
 
 	proc/change_hud_style(var/icon/new_file)

@@ -1,0 +1,3015 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/pirate_ship)
+"ak" = (
+/obj/item/storage/wall/office,
+/turf/simulated/floor/orange/side,
+/area/pirate_ship)
+"at" = (
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = -3
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"aD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blackwhite/corner,
+/area/pirate_ship)
+"aJ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead"
+	},
+/turf/simulated/floor/sanitary,
+/area/pirate_ship)
+"aM" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/miniputt/indyputt{
+	dir = 1;
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Dreadful"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"aW" = (
+/turf/simulated/floor/blackwhite{
+	dir = 9
+	},
+/area/pirate_ship)
+"aZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/vehicle/miniputt/indyputt{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Deathly"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"be" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/decal/stage_edge/alt{
+	color = "#555555"
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"bu" = (
+/obj/decal/poster/wallsign/stencil/left/a{
+	pixel_x = -15;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = -5;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/g{
+	pixel_x = 5;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/right/o{
+	pixel_x = 15;
+	pixel_y = 41
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"bB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pirate_ship)
+"bG" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/pirate_ship)
+"cx" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/pod_smooth/black{
+	dir = 1;
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Waking Nightmare"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"cK" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pirate_ship)
+"cL" = (
+/obj/table/nanotrasen/auto,
+/obj/decal/poster/wallsign/stencil/left/y{
+	pixel_x = -10;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 4;
+	pixel_y = 41
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"cP" = (
+/turf/simulated/floor,
+/area/pirate_ship)
+"cS" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/shuttleweapon{
+	dir = 1
+	},
+/turf/space,
+/area/pirate_ship)
+"dd" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"dk" = (
+/obj/machinery/r_door_control/podbay{
+	access_type = -1;
+	id = "peregrine_podbay"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"do" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"dt" = (
+/obj/storage/crate,
+/obj/item/weldingtool{
+	pixel_x = 13
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"dC" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
+/obj/critter/parrot/macaw/pirate,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"dN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/vehicle/pod_smooth/industrial{
+	dir = 1;
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Vehement"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"ej" = (
+/obj/decoration/bullethole{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/decoration/bullethole{
+	pixel_x = 12;
+	pixel_y = -8
+	},
+/obj/decoration/bullethole{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/decoration/bullethole{
+	pixel_x = -10;
+	pixel_y = -11
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"ek" = (
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = 3
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"fh" = (
+/obj/submachine/record_player,
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"fu" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/classic,
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"fy" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1
+	},
+/turf/space,
+/area/pirate_ship)
+"fM" = (
+/obj/table/nanotrasen/auto,
+/obj/item/device/multitool{
+	pixel_x = 5;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/device/multitool{
+	pixel_y = 20;
+	rand_pos = 0
+	},
+/obj/item/device/multitool{
+	pixel_x = -5;
+	pixel_y = 19;
+	rand_pos = 0
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 2
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"gH" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"gJ" = (
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/pirate_ship)
+"gS" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"hg" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/pirate_ship)
+"hn" = (
+/obj/decoration/bullethole{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"hL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/vehicle/miniputt/wizard{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Brimstone"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"hS" = (
+/obj/decoration/bullethole{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"hY" = (
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/pirate_ship)
+"ip" = (
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"iH" = (
+/obj/decoration/bullethole{
+	pixel_x = 2
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -9
+	},
+/obj/decoration/bullethole{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"iP" = (
+/obj/rack,
+/obj/item/tank/jetpack{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -8
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 8
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"jk" = (
+/obj/machinery/light/incandescent/warm,
+/obj/item/reagent_containers/food/drinks/moonshine{
+	pixel_x = -1;
+	pixel_y = 12
+	},
+/obj/table/endtable_classic,
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/pirate_ship)
+"kq" = (
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"ku" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pirate_ship)
+"kz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"kI" = (
+/obj/table/nanotrasen/auto,
+/obj/item/storage/box/handcuff_kit{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/handcuffs/tape_roll{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"lb" = (
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/turf/space,
+/area/pirate_ship)
+"lf" = (
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"lg" = (
+/obj/decoration/frontwalldamage{
+	dir = 1
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"lN" = (
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/decoration/bullethole{
+	pixel_x = 12;
+	pixel_y = -7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"lY" = (
+/obj/table/nanotrasen/auto,
+/obj/item/ammo/bullets/flintlock/mortar{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"mh" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"mu" = (
+/obj/rack,
+/obj/item/clothing/mask/breath{
+	pixel_x = 10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 14
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = -6
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"mx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blackwhite/corner{
+	dir = 4
+	},
+/area/pirate_ship)
+"mL" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_y = -2;
+	pixel_x = -8
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"nu" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"nv" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"nC" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/pod_smooth{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Retribution"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"nK" = (
+/obj/decoration/bullethole{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/decoration/bullethole{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"nV" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"nW" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"nZ" = (
+/turf/simulated/floor/blackwhite{
+	dir = 6
+	},
+/area/pirate_ship)
+"oe" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"og" = (
+/obj/table/nanotrasen/auto,
+/obj/decal/poster/wallsign/stencil/left/b{
+	pixel_x = 2;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_x = 12;
+	pixel_y = 41
+	},
+/obj/item/breaching_charge{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/breaching_charge{
+	pixel_y = 5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"oE" = (
+/obj/item/device/radio/intercom{
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
+	device_color = "#E52780";
+	icon = 'icons/obj/radiostation.dmi';
+	icon_state = "mixtable-1";
+	name = "broadcast radio"
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"oO" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/terminal{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"pb" = (
+/obj/machinery/power/terminal,
+/obj/cable,
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/random,
+/area/pirate_ship)
+"ph" = (
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"pL" = (
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/lasagna,
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/orange/corner{
+	dir = 1
+	},
+/area/pirate_ship)
+"pO" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/pod_smooth/gold{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Cannonade"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"qg" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/pirate_ship)
+"qq" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"qM" = (
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/space,
+/area/pirate_ship)
+"rg" = (
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/pirate_ship)
+"rt" = (
+/obj/rack,
+/obj/item/clothing/mask/breath{
+	pixel_x = 10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 14
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = -6
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"rG" = (
+/obj/machinery/drainage,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/sanitary,
+/area/pirate_ship)
+"rI" = (
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"sd" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"sl" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"sG" = (
+/obj/table/wood/auto,
+/obj/item/spacecash/thousand,
+/turf/simulated/floor/grey/checker{
+	dir = 8
+	},
+/area/pirate_ship)
+"tB" = (
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/clothing/gloves/latex,
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orange/corner,
+/area/pirate_ship)
+"tH" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "peregrine_podbay";
+	name = "Cargo Bay Door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"tS" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/landmark{
+	name = "Pirate-First-Mate-Spawn"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"tU" = (
+/obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
+/obj/machinery/light/incandescent/warm,
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 6
+	},
+/area/pirate_ship)
+"ua" = (
+/obj/decoration/frontwalldamage{
+	dir = 4
+	},
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = -6
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"ui" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/vehicle/miniputt/black{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Black Flag"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"uq" = (
+/turf/simulated/floor/orange/side,
+/area/pirate_ship)
+"us" = (
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = 1;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/lemon{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/snacks/plant/lemon{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/snacks/plant/lemon{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/plant/lemon{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/plant/lemon{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/snacks/plant/lime{
+	pixel_x = -1;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/snacks/plant/lime{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/plant/lime{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/snacks/plant/lime{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/storage/crate/wooden{
+	icon_state = "woodencrate6";
+	name = "wooden crate - unfit for consumption"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"uw" = (
+/obj/rack,
+/obj/item/tank/jetpack{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -8
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 8
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"uI" = (
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/turf/simulated/floor/orange/side,
+/area/pirate_ship)
+"uN" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/miniputt/syndiputt{
+	dir = 1;
+	name = "The Deceitful"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"uS" = (
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"vh" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/space,
+/area/pirate_ship)
+"vl" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker/engineering{
+	pixel_y = 3
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 8
+	},
+/area/pirate_ship)
+"vm" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"vo" = (
+/obj/machinery/vending/cigarette,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/grey/side{
+	dir = 9
+	},
+/area/pirate_ship)
+"vp" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/gimmick/guybrush{
+	name = "pirate outfit"
+	},
+/obj/item/clothing/under/gimmick/guybrush{
+	name = "pirate outfit"
+	},
+/obj/item/clothing/under/misc/serpico,
+/obj/item/clothing/under/misc/serpico,
+/obj/item/clothing/under/gimmick/waldo,
+/obj/item/clothing/under/gimmick/waldo,
+/obj/item/clothing/head/pirate_brn,
+/obj/item/clothing/head/pirate_brn,
+/obj/item/clothing/head/bandana/red,
+/obj/item/clothing/head/bandana/red,
+/obj/item/clothing/head/red,
+/obj/item/clothing/head/red,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"vv" = (
+/obj/decal/poster/wallsign/stencil/left/y{
+	pixel_x = -12;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 2;
+	pixel_y = 41
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 5;
+	pixel_y = 41
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"vz" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"vN" = (
+/obj/decoration/bullethole{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/decoration/bullethole{
+	pixel_x = 12;
+	pixel_y = -8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"vX" = (
+/obj/submachine/mixing_desk,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"wp" = (
+/turf/simulated/floor/stairs/dark/wide,
+/area/pirate_ship)
+"wG" = (
+/obj/decal/poster/wallsign/stencil/left/a{
+	pixel_x = -13;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/left/g{
+	pixel_x = 7;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/right/o{
+	pixel_x = 17;
+	pixel_y = 41
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/table/nanotrasen/auto,
+/obj/item/flash_pistol{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/flash_pistol{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/flash_pistol{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"xd" = (
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"xs" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/door_control{
+	id = "peregrine_podbay";
+	name = "Podbay Door Control";
+	pixel_x = -24;
+	pixel_y = 12
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"xG" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1
+	},
+/turf/space,
+/area/pirate_ship)
+"yl" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "It seems a bit busted.";
+	dir = 4;
+	name = "leaky sink";
+	pixel_x = -2
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"yw" = (
+/obj/item/storage/belt/medical,
+/obj/item/clothing/gloves/latex,
+/obj/item/storage/pill_bottle/mutadone,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"yG" = (
+/turf/simulated/floor/grey/corner{
+	dir = 1
+	},
+/area/pirate_ship)
+"yJ" = (
+/obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
+/obj/machinery/light/incandescent/warm,
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 10
+	},
+/area/pirate_ship)
+"yM" = (
+/obj/machinery/optable,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"yQ" = (
+/obj/machinery/power/smes/magical,
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/space,
+/area/pirate_ship)
+"zd" = (
+/obj/decoration/bullethole,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"zo" = (
+/turf/simulated/floor/grey/corner,
+/area/pirate_ship)
+"zp" = (
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"zs" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/rudder{
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/plating/random,
+/area/pirate_ship)
+"zD" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 4
+	},
+/area/pirate_ship)
+"zF" = (
+/obj/storage/crate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/under/gimmick/guybrush{
+	name = "pirate outfit"
+	},
+/obj/item/clothing/head/bandana/red,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"zM" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"zX" = (
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"Au" = (
+/obj/table/nanotrasen/auto,
+/obj/machinery/recharger/wall{
+	dir = 4;
+	pixel_x = 23;
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -6
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"AJ" = (
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"AP" = (
+/turf/simulated/floor/blackwhite{
+	dir = 10
+	},
+/area/pirate_ship)
+"AW" = (
+/obj/decal/poster/wallsign/stencil/left/b{
+	pixel_x = 0;
+	pixel_y = 41
+	},
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_x = 10;
+	pixel_y = 41
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Be" = (
+/obj/rack,
+/obj/item/clothing/mask/breath{
+	pixel_x = 10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 14
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = -6
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Bp" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/weldingtool,
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"BL" = (
+/obj/machinery/manufacturer/uniform,
+/turf/simulated/floor/grey/checker{
+	dir = 8
+	},
+/area/pirate_ship)
+"Cc" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Ci" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Df" = (
+/obj/storage/closet/emergency,
+/turf/unsimulated/floor/plating/random,
+/area/pirate_ship)
+"Dj" = (
+/obj/decoration/bullethole{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = -9
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"Du" = (
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"DP" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"DQ" = (
+/obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"DS" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/pirate_ship)
+"Eo" = (
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 3
+	},
+/obj/item/scissors{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/obj/item/staple_gun/red{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/pirate_ship)
+"Ex" = (
+/obj/storage/crate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/head/pirate_brn,
+/obj/item/clothing/under/misc/serpico,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"EA" = (
+/obj/item/hemostat{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/circular_saw{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/suture{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"ED" = (
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"Fp" = (
+/obj/decoration/bullethole{
+	pixel_x = 12;
+	pixel_y = -1
+	},
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"FT" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "peregrine_podbay";
+	name = "Cargo Bay Door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Gq" = (
+/obj/storage/crate/medical{
+	name = "Medkits"
+	},
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin,
+/obj/item/reagent_containers/mender/burn,
+/obj/item/reagent_containers/mender/brute,
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"Gr" = (
+/obj/storage/crate/medical{
+	name = "Medkits"
+	},
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin,
+/obj/item/reagent_containers/mender/burn,
+/obj/item/reagent_containers/mender/brute,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/orange/corner{
+	dir = 1
+	},
+/area/pirate_ship)
+"GP" = (
+/obj/decoration/bullethole{
+	pixel_x = -10;
+	pixel_y = -11
+	},
+/obj/decoration/bullethole{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"GQ" = (
+/obj/machinery/microwave,
+/obj/item/storage/box/cutlery,
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"GY" = (
+/obj/submachine/weapon_vendor/pirate,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Hb" = (
+/obj/decal/poster/wallsign/stencil/right/c{
+	pixel_x = 7;
+	pixel_y = 41
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Hs" = (
+/turf/simulated/floor/grey/corner{
+	dir = 8
+	},
+/area/pirate_ship)
+"HH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/space{
+	pixel_y = 32
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"HZ" = (
+/obj/storage/crate/packing,
+/obj/machinery/light/incandescent/warm,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/fanny,
+/obj/item/storage/fanny,
+/obj/item/storage/fanny,
+/turf/simulated/floor,
+/area/pirate_ship)
+"Im" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/miniputt{
+	dir = 1;
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Inglorious"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Io" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"ID" = (
+/obj/decoration/frontwalldamage{
+	dir = 1;
+	pixel_x = 13;
+	pixel_y = 1
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"Je" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -16;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -9;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -2;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -16;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Jy" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"JA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = -3
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"JF" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"JI" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/pirate_ship)
+"JM" = (
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Ke" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/pirate_ship)
+"Kf" = (
+/obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 5
+	},
+/area/pirate_ship)
+"Kh" = (
+/obj/storage/crate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/under/gimmick/waldo,
+/obj/item/clothing/head/bandana/red,
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"Kn" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/security/console_upper{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"KF" = (
+/obj/decal/poster/wallsign/stencil/right/c{
+	pixel_x = 9;
+	pixel_y = 41
+	},
+/obj/table/nanotrasen/auto,
+/obj/item/flash_compound_bottle{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/flash_compound_bottle{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/flash_compound_bottle{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"KG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"KZ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"LU" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decoration/bustedmantapc,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Mw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/pirate_ship)
+"Mz" = (
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/pirate_ship)
+"MH" = (
+/obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
+/obj/landmark{
+	name = "Pirate-Spawn"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"MM" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/pirate_ship)
+"MZ" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/grey/checker{
+	dir = 8
+	},
+/area/pirate_ship)
+"Nj" = (
+/obj/decoration/bullethole{
+	pixel_y = -2
+	},
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/obj/decoration/bullethole{
+	pixel_x = -11;
+	pixel_y = -3
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"Nq" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Oi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pirate_ship)
+"Ox" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"OC" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"OK" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"ON" = (
+/obj/table/syndicate/auto,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"OQ" = (
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/decoration/bullethole{
+	pixel_x = 6
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"OU" = (
+/obj/table/syndicate/auto,
+/obj/item/storage/box/donkpocket_w_kit{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -9
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -16;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -9;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Pf" = (
+/obj/item/sticker/skull{
+	pixel_y = -6;
+	pixel_x = -4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"Ph" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn/pirate_ship,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Pt" = (
+/obj/table/nanotrasen/auto,
+/obj/item/gun/kinetic/single_action/flintlock/mortar{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"PH" = (
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = 3
+	},
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"PY" = (
+/obj/stool/chair/comfy/red,
+/obj/landmark{
+	name = "Pirate-Captain-Spawn"
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Qd" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "peregrine_armoury";
+	name = "Cargo Bay Door"
+	},
+/turf/unsimulated/floor/plating/random,
+/area/pirate_ship)
+"QR" = (
+/obj/storage/crate/packing{
+	icon_state = "packingcrate6"
+	},
+/obj/item/device/appraisal,
+/obj/item/paper/requisition/blood,
+/obj/item/paper/requisition/pizza_party,
+/obj/item/paper/requisition/weed_sample,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Re" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/console_upper{
+	name = "Peregrine Announcement Computer";
+	req_access = null
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Rp" = (
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"RM" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Sv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"Sw" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 5
+	},
+/area/pirate_ship)
+"SY" = (
+/obj/decoration/frontwalldamage{
+	pixel_y = -3
+	},
+/obj/decoration/bullethole{
+	pixel_x = 9;
+	pixel_y = -9
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"SZ" = (
+/obj/table/nanotrasen/auto,
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 10;
+	pixel_y = 18
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 10
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 3;
+	pixel_y = 18
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = 3
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5;
+	pixel_y = 18
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Tb" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decoration/bustedmantapc/bustedmantapc3{
+	dir = 1
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"To" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Tt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/vehicle/miniputt{
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Spectre"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Tw" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 5
+	},
+/area/pirate_ship)
+"TC" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/random,
+/area/pirate_ship)
+"TL" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"TY" = (
+/obj/decal/fakeobjects/palmtree{
+	layer = 4;
+	pixel_y = 6;
+	pixel_x = 2
+	},
+/obj/decorative_pot{
+	anchored = 1
+	},
+/turf/simulated/floor/grey/side,
+/area/pirate_ship)
+"Ub" = (
+/obj/storage/closet{
+	name = "janitorial equipment"
+	},
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/item/chem_grenade/cleaner,
+/obj/item/sponge,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"UL" = (
+/obj/table/auto,
+/obj/bedsheetbin,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"UX" = (
+/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Vf" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"Vj" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/pirate_ship)
+"Vm" = (
+/obj/decal/stage_edge/alt{
+	color = "#555555"
+	},
+/turf/simulated/floor,
+/area/pirate_ship)
+"Vo" = (
+/obj/decoration/bullethole{
+	pixel_x = 11;
+	pixel_y = -6
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"Vr" = (
+/obj/decoration/bullethole{
+	pixel_x = 6
+	},
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = -9
+	},
+/obj/decoration/bullethole{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"VJ" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/decoration/bustedmantapc/bustedmantapc2{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"VL" = (
+/turf/simulated/floor/grey/side,
+/area/pirate_ship)
+"VT" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orange/corner,
+/area/pirate_ship)
+"Wd" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/vehicle/miniputt/nanoputt/security{
+	dir = 1;
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	name = "The Betrayal"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"Wl" = (
+/turf/space,
+/area/space)
+"Wp" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/orange/side,
+/area/pirate_ship)
+"WB" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/pirate_ship)
+"WQ" = (
+/obj/reagent_dispensers/beerkeg/rum,
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/pirate_ship)
+"WY" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/orange/side,
+/area/pirate_ship)
+"Xy" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/machinery/door_control{
+	id = "peregrine_armoury";
+	name = "Armoury Blast Door Control";
+	pixel_x = 24
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Yb" = (
+/obj/machinery/light/incandescent/warm,
+/obj/submachine/weapon_vendor/pirate,
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"Yy" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/decal/fakeobjects/console_radar{
+	anchored = 2
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"YF" = (
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = -3;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/table/endtable_classic,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 8
+	},
+/area/pirate_ship)
+"YQ" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Zh" = (
+/obj/storage/crate,
+/obj/item/clothing/glasses/eyepatch/pirate,
+/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/head/red,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/pirate_ship)
+"Zq" = (
+/turf/simulated/floor/grey/corner{
+	dir = 4
+	},
+/area/pirate_ship)
+"Zt" = (
+/obj/decal/poster/wallsign/poster_beach{
+	pixel_y = -2;
+	pixel_x = 6
+	},
+/obj/item/sticker/bee{
+	pixel_x = -6
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"ZH" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/pirate_ship)
+"ZO" = (
+/obj/decoration/frontwalldamage{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+
+(1,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+cK
+nu
+nu
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Oi
+Wl
+Wl
+Wl
+"}
+(2,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+cK
+TC
+TC
+TC
+TC
+nu
+ek
+nu
+nu
+nu
+KF
+fM
+JM
+JM
+JM
+zM
+GY
+nu
+Ke
+MM
+Wl
+"}
+(3,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+nu
+tB
+yw
+zX
+Eo
+lN
+TL
+YQ
+yl
+OQ
+wG
+JM
+JM
+lY
+JM
+Ox
+Yb
+nu
+Ke
+MM
+Wl
+"}
+(4,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+cK
+nu
+nu
+Fp
+uq
+zp
+zp
+EA
+nu
+Ub
+zp
+rG
+nu
+og
+JM
+JM
+Pt
+JM
+zM
+GY
+nu
+nu
+hg
+Wl
+"}
+(5,1,1) = {"
+Wl
+Wl
+Wl
+OK
+TC
+oE
+mL
+nu
+ak
+yM
+zp
+ED
+nu
+UL
+zp
+aJ
+nu
+cL
+SZ
+JM
+kI
+JM
+Ox
+GY
+nu
+Ke
+MM
+Wl
+"}
+(6,1,1) = {"
+Vj
+ai
+cS
+fy
+Zt
+vX
+qq
+nu
+uI
+zp
+zp
+Gq
+nu
+Vo
+JF
+ID
+nu
+GP
+nu
+Nq
+JM
+JM
+zM
+Yb
+nu
+Ke
+MM
+Wl
+"}
+(7,1,1) = {"
+Wl
+cK
+nu
+nu
+Pf
+fh
+vz
+nu
+vl
+zp
+AJ
+Gr
+xd
+VT
+zp
+ph
+ph
+jk
+nu
+Au
+JM
+JM
+Xy
+GY
+nu
+Oi
+Wl
+Wl
+"}
+(8,1,1) = {"
+Wl
+nu
+Kn
+VJ
+Vm
+cP
+cP
+nu
+nu
+JF
+GP
+vN
+nu
+Wp
+zp
+gS
+gS
+ED
+nu
+nu
+Jy
+Jy
+nu
+hS
+at
+nu
+Wl
+Wl
+"}
+(9,1,1) = {"
+Wl
+TC
+LU
+tS
+wp
+cP
+cP
+nu
+vm
+zp
+sd
+HZ
+Dj
+WY
+zp
+ON
+To
+ED
+kq
+us
+JM
+JM
+JM
+JM
+Be
+TC
+nu
+Wl
+"}
+(10,1,1) = {"
+Wl
+TC
+zp
+nv
+WB
+zp
+zp
+Vr
+dd
+zp
+rI
+zp
+wp
+rI
+zp
+OU
+Je
+ED
+zd
+QR
+gJ
+AP
+rg
+nZ
+rt
+TC
+qM
+vh
+"}
+(11,1,1) = {"
+Wl
+zs
+PY
+mh
+ZH
+nW
+do
+Ph
+do
+do
+do
+Io
+Mw
+Io
+Io
+Io
+Io
+Sv
+fu
+Ci
+Ci
+aD
+mx
+Ci
+mu
+pb
+yQ
+DS
+"}
+(12,1,1) = {"
+Wl
+TC
+zp
+nv
+WB
+nv
+zp
+SY
+dd
+zp
+rI
+zp
+bG
+rI
+zp
+zp
+zp
+WQ
+nu
+iP
+aW
+hY
+nZ
+AP
+rt
+TC
+lb
+qg
+"}
+(13,1,1) = {"
+Wl
+TC
+Re
+dC
+bG
+oe
+cP
+nu
+JA
+zp
+zp
+JI
+ua
+YF
+OC
+AJ
+GQ
+pL
+lg
+uw
+JM
+JM
+JM
+JM
+Be
+TC
+nu
+Wl
+"}
+(14,1,1) = {"
+Wl
+nu
+Tb
+Yy
+be
+Vf
+cP
+nu
+nu
+DP
+DP
+nu
+nu
+nu
+nK
+nu
+PH
+ej
+uS
+nu
+zD
+Tw
+Sw
+ip
+nu
+nu
+Wl
+Wl
+"}
+(15,1,1) = {"
+Wl
+bB
+nu
+nu
+hn
+oO
+gH
+nu
+vo
+cP
+cP
+Du
+MH
+Zh
+yJ
+nu
+lf
+Bp
+dt
+xs
+JM
+JM
+JM
+UX
+nu
+ku
+Wl
+Wl
+"}
+(16,1,1) = {"
+Vj
+ai
+cS
+xG
+nu
+GP
+sl
+Nj
+vp
+zo
+Mz
+Mz
+Mz
+Zq
+VL
+iH
+Hb
+kz
+RM
+kz
+RM
+kz
+RM
+dN
+nu
+Ke
+MM
+Wl
+"}
+(17,1,1) = {"
+Wl
+Wl
+Wl
+OK
+TC
+Df
+zM
+nu
+vp
+VL
+BL
+sG
+MZ
+Rp
+TY
+nu
+bu
+nC
+KG
+uN
+hL
+nV
+KG
+nV
+nu
+Ke
+MM
+Wl
+"}
+(18,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+bB
+nu
+sl
+nu
+Rp
+Hs
+Du
+Du
+Du
+yG
+VL
+nu
+AW
+nV
+KG
+Im
+ui
+nV
+KG
+nV
+nu
+nu
+hg
+Wl
+"}
+(19,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+nu
+Kf
+zF
+DQ
+Kh
+DQ
+Ex
+tU
+nu
+vv
+pO
+KG
+aM
+Tt
+Cc
+KG
+cx
+nu
+Ke
+MM
+Wl
+"}
+(20,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bB
+nu
+nK
+hS
+nu
+ZO
+nu
+nu
+nu
+HH
+nV
+KG
+Wd
+aZ
+Cc
+KG
+KZ
+nu
+Ke
+MM
+Wl
+"}
+(21,1,1) = {"
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bB
+dk
+tH
+FT
+tH
+FT
+tH
+FT
+tH
+FT
+ku
+Wl
+Wl
+Wl
+"}

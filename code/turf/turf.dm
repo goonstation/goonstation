@@ -531,6 +531,7 @@ proc/generate_space_color()
 	return
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly

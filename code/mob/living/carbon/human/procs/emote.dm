@@ -2450,7 +2450,7 @@
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
 	G.affecting.set_loc(newloc)
-	if (!G.affecting.reagents.has_reagent("fliptonium"))
+	if (!G.affecting.reagents?.has_reagent("fliptonium"))
 		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))

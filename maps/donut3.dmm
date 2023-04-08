@@ -37218,6 +37218,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmX" = (
@@ -43228,6 +43229,7 @@
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/light/small/floor/cool,
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/treatment)
 "ndn" = (
@@ -59031,6 +59033,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"rLK" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/mail_booth,
+/turf/simulated/floor/arrival{
+	dir = 1
+	},
+/area/station/hangar/arrivals)
 "rLN" = (
 /obj/machinery/neosmelter,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -63195,6 +63206,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "tac" = (
@@ -67739,6 +67751,7 @@
 	id = "robotics"
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "uwY" = (
@@ -106662,7 +106675,7 @@ stQ
 vBJ
 rdj
 dne
-dCV
+rLK
 jUI
 czv
 sGu

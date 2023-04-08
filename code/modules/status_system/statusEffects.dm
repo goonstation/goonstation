@@ -1255,7 +1255,7 @@
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
-					gang = M.mind.gang
+					gang = M.get_gang()
 
 		onRemove()
 			. = ..()

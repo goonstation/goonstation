@@ -1,6 +1,7 @@
 /datum/antagonist/revolutionary
 	id = ROLE_REVOLUTIONARY
 	display_name = "revolutionary"
+	display_at_round_end = FALSE
 
 	New()
 		. = ..()
@@ -14,7 +15,7 @@
 		E.color = "#FF5555"
 		E.setup(src.owner.current.loc)
 
-	Del()
+	disposing()
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			var/datum/game_mode/revolution/gamemode = ticker.mode
 			if (src.owner in gamemode.revolutionaries)

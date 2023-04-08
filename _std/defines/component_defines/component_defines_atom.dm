@@ -17,6 +17,8 @@
 	#define COMSIG_UPDATE_ICON "atom_update_icon"
 	/// when something triggers Crossed by entering this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
+	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
+	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
@@ -78,10 +80,14 @@
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
 // ---- turf signals ----
-	// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
+	/// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
-	// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
+	/// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
+	/// when a turf is replaced by another turf (what)
+	#define COMSIG_TURF_REPLACED "turf_replaced"
+	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
+	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
 
 // ---- obj signals ----
 

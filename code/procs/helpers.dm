@@ -1180,7 +1180,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		return "0 "
 
 	var/suffix = ""
-	var/power = round( log(10, value) / 3)
+	var/power = round( log(10, abs(value)) / 3)
 	switch (power)
 		if (-8)
 			suffix = "y"
@@ -1366,13 +1366,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			for(var/datum/mind/M in someEnemies)
 				if (M.current)
 					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-					for(var/datum/mind/G in M.gang.members) //This may be fucked. Dunno how these are stored.
-						enemies += G
 
 		//Lists we grab regardless of game type
 		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists

@@ -265,7 +265,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				var/added_charge = clamp(src.chargerate * mult, 0, R.cell.maxcharge-R.cell.charge)
 				R.cell.charge += added_charge
-				src.use_power(added_charge / CELLRATE / MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER)
+				src.use_power(added_charge)
 				return
 
 		else if (ishuman(occupant) && src.conversion_chamber)
@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					if (H.bioHolder.Uid && H.bioHolder.bloodType)
 						bdna = H.bioHolder.Uid
 						btype = H.bioHolder.bloodType
-					gibs(src.loc, null, null, bdna, btype)
+					gibs(src.loc, null, bdna, btype)
 
 					H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
