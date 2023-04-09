@@ -16,12 +16,10 @@
 #define ECLIPSE_ERROR 8
 
 /datum/sun
-	var/angle
+	var/angle = 0
 	var/dx
 	var/dy
-	var/rate
-
-	//stuff gets complicated starting from here.
+	var/rate = 0 // deg/hr
 	//jargon i use: global sun means for the whole z level, local sun means it overrides the global in an area.
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null indicates global sun.
 	var/area/sun_area = null
@@ -32,7 +30,7 @@
 	/// where does this apply exactly? Where are we?
 	var/stationloc = null
 	/// flavour text for the tracker
-	var/desc
+	var/desc = ""
 	/// does the sun change position in the sky? does it move?
 	var/rotates = FALSE
 
@@ -383,14 +381,12 @@
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
-	if (!src.rotates)
-		return
 	// this proc, it's called every 2.3 seconds, 23 ticks. For some reason.
 	// 'code/datums/controllers/process/world.dm' line 8 has irritated me.
-	src.angle = ((src.rate * world.realtime/100)%360 + 360)%360
-	/* used to give about a 60 minute rotation time.
-	Now around 30 - 40 min, depending on rate. An array on one side would sometimes generate zero or close to zero electricity for up to 30 min
-	of a typical round (~60 min), making solars not so useful.*/
+	if (!src.rotates)
+		return
+	src.angle = (src.angle + (src.rate * 2.3 SECONDS / 360) + 360)%360
+	// the angle turns at rate degrees per hour.
 #ifdef ECLIPSE_ERROR
 	src.eclipse_order = list(ECLIPSE_ERROR)
 	src.eclipse_cycle_on = FALSE
@@ -400,7 +396,7 @@
 	src.angle = 0
 #endif
 	if (src.eclipse_cycle_on)
-		src.eclipse_counter ++ // this too should be every game tick
+		src.eclipse_counter += 2.3 SECONDS // this is approximately right? It's good enough for our purposes.
 		switch (src.eclipse_status)
 			if (ECLIPSE_FALSE)
 				if (src.eclipse_counter >= src.down_time)
@@ -412,12 +408,15 @@
 			if (ECLIPSE_PENUMBRA_WAXING)
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
+					if (src.eclipse_status == ECLIPSE_UMBRA)
+						command_alert("The eclipse is now entering totality. Solars are at 0% power. Totality is expected to last for [time_to_text(src.eclipse_time)]." , "Total Solar Eclipse", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility -= ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PENUMBRA_WANING)
 				if (src.eclipse_counter >= src.eclipse_cycle_length)
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 					src.eclipse_counter = 0
+					command_alert("The eclipse has now ended. Solar Panels are now back to normal opertion. The next one is predicted to be in [time_to_text(src.down_time)].","Eclipse Ended", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility += ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PARTIAL)
@@ -427,7 +426,7 @@
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time + src.eclipse_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 					if (src.zlevel == 1 && isnull(src.sun_area))
-						command_alert("The Solar Eclipse is now ending. The next one is predicted to be in [time_to_text(src.down_time)].", "Eclipse Ended", alert_origin = ALERT_WEATHER)
+						command_alert("The total eclipse is now ending. Normal operation of solar panels is resuming.", "Total Eclipse Ended", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility = 1 - src.eclipse_magnitude
 			// if (ECLIPSE_PLANETARY) planetary rotation isnt done at runtime so we dont need this
