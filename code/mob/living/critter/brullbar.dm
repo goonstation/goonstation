@@ -26,6 +26,7 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	var/is_king = FALSE
+	var/limb = /datum/limb/brullbar
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
@@ -76,13 +77,13 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = src.limb
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left [is_king ? "king" : "" ] brullbar arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = src.limb
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -222,6 +223,7 @@
 	is_king = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
+	limb = /datum/limb/brullbar/king
 
 	death()
 		..()
