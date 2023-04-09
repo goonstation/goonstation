@@ -423,7 +423,7 @@
 			src.end()
 			return
 
-		if (!H.do_bite(HH,mult = 1.5, thrall = B.thrall))
+		if (!H.do_bite(HH,mult = 1.5))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
