@@ -1,5 +1,8 @@
 
 (t)sun apr 09 23
+(u)Flappybat
+(e)⚖
+(*)Removed burst mode from the security taser.
 (u)Amylizzle
 (p)13625
 (e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
