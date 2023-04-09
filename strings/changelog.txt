@@ -10,6 +10,7 @@
 (+)everyone is a teeny tiny bit slower. You probably won't even notice!
 (u)LeahTheTech
 (+)Vomiting from severe addiction is now a lot rarer and addiction progresses slower.
+(+)Disorient now slows you down slightly less (8 -> 7 slowdown)
 (u)Amylizzle
 (p)13625
 (e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
