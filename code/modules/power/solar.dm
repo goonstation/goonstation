@@ -380,11 +380,12 @@ TYPEINFO(/obj/machinery/power/solar)
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 
 	t += "<BR><HR><BR>"
+	t += "<B>Star Data:</B><BR>"
 	if (!src.tracker)
-		t += "Error! No tracker data available.<BR>"
+		t += "Error! Tracker not found. <BR>"
 	else
 		if (!src.tracker.targetstar || src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
-			t += "Catastrophic Error!<BR>Stellar Data Corrupted<BR>"
+			t += "Star not found!<BR>"
 		else
 			t += "<B>Target:</B><BR>[src.tracker.targetstar.name]<BR>"
 			t += "<B>Station location:</B><BR>[src.tracker.targetstar.desc]<BR>" // this line usually extends off the side, sorry

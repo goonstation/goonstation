@@ -19,7 +19,6 @@
 	var/angle
 	var/dx
 	var/dy
-	var/counter = 20 // to make the vars update during 1st call
 	var/rate
 
 	//stuff gets complicated starting from here.
@@ -199,20 +198,15 @@
 			on cogmap 1 (and probably other maps too). The solars should therefore theoretically point at the decals, but they don't.
 			Scope creep says to ignore that for now. If someone makes parallax and movable background decals a reality, consider it then.*/
 			src.name = "Typhon"
-			src.desc = "In stable Lissajous orbit around Rota Fortuna's second Langrangian Point."
-			if (prob(50)) // this thing gives it a random eclipse
-				src.eclipse_cycle_on = TRUE
-				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
-				src.eclipse_magnitude = pick(1, rand(1,99)/100)
-				src.down_time = rand(20 MINUTES, 60 MINUTES)
-				src.eclipse_time = rand(10 SECONDS, 5 MINUTES)
-				src.penumbra_time = src.eclipse_time * rand(15,30)
-				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
-				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
-			else
-				src.eclipse_cycle_on = FALSE
-				src.eclipse_status = ECLIPSE_FALSE
-				src.eclipse_order = list(ECLIPSE_FALSE)
+			src.desc = "In Lissajous orbit around Rota Fortuna's L2 Point."
+			src.eclipse_cycle_on = TRUE
+			src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
+			src.eclipse_magnitude = 1
+			src.down_time = rand(40 MINUTES, 100 MINUTES)
+			src.eclipse_time = rand(100 SECONDS, 7 MINUTES)
+			src.penumbra_time = src.eclipse_time * rand(15,30)
+			src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
+			src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			src.visibility = 1
 			src.photovoltaic_efficiency = 1
 			src.rate = rand(75,125)/50 // 75% - 125% of standard rotation
@@ -235,24 +229,13 @@
 		if ("travel") // for ship maps (in deep space). Uses a slightly randomer randomiser
 			src.name = pick("Typhon", "Fugg", "Shidd")
 			src.desc = "Deep space, in transit."
-			if (prob(50)) // 50 50 chance of it going into shadow every so often
-				src.eclipse_cycle_on = TRUE
-				src.eclipse_order = list(ECLIPSE_FALSE, ECLIPSE_PENUMBRA_WAXING, pick(ECLIPSE_PARTIAL, ECLIPSE_UMBRA), ECLIPSE_PENUMBRA_WANING)
-				src.eclipse_magnitude = pick(1, rand(10,100)/100)
-				src.down_time = rand(25 MINUTES, 120 MINUTES)
-				src.eclipse_time = rand(5 SECONDS, 8 MINUTES)
-				src.penumbra_time = src.eclipse_time * rand(15,30)
-				src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
-				src.eclipse_counter = rand(1, src.eclipse_cycle_length)
-			else
-				src.eclipse_cycle_on = FALSE
-				src.eclipse_status = ECLIPSE_FALSE
-				src.eclipse_order = list(ECLIPSE_FALSE)
+			src.eclipse_cycle_on = FALSE
+			src.eclipse_status = ECLIPSE_FALSE
+			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
 			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
 			src.rate = rand(70,160)/50 // more range than the default
-			if(prob(50))
-				src.rate = -rate
+			if(prob(50)) src.rate = -rate
 			src.angle = rand(1,359)
 		if ("magus") //nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from the binary.
 			if ((BUILD_TIME_HOUR % 8) <= 3)
@@ -402,10 +385,8 @@
 /datum/sun/proc/calc_position()
 	if (!src.rotates)
 		return
-	src.counter++ // this 'should' be every game tick, 1/10th of a second
-	if (src.counter < 2 SECONDS)
-		return
-	src.counter = 0
+	// this proc, it's called every 2.3 seconds, 23 ticks. For some reason.
+	// 'code/datums/controllers/process/world.dm' line 8 has irritated me.
 	src.angle = ((src.rate * world.realtime/100)%360 + 360)%360
 	/* used to give about a 60 minute rotation time.
 	Now around 30 - 40 min, depending on rate. An array on one side would sometimes generate zero or close to zero electricity for up to 30 min
@@ -505,8 +486,8 @@
 
 
 /// for a solar panel, trace towards sun to see if we're in shadow
-/datum/sun/proc/occlusion(var/obj/machinery/power/solar/S, var/eclipse_blockage)
-	if (eclipse_blockage == 0)
+/datum/sun/proc/occlusion(var/obj/machinery/power/solar/S, var/eclipse_visibility)
+	if (eclipse_visibility == 0)
 		S.obscured = TRUE
 		S.update_solar_exposure()
 		return
