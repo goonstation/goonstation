@@ -95,28 +95,6 @@
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
 
-	proc/incapacitation_check(var/stunned_only_is_okay = 0)
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
-
-		switch (stunned_only_is_okay)
-			if (0)
-				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
-					return 0
-				else
-					return 1
-			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
-					return 0
-				else
-					return 1
-			else
-				return 1
-
 	castcheck()
 		if (!holder)
 			return 0

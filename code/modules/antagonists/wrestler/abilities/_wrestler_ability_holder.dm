@@ -11,6 +11,7 @@
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/fake = FALSE
 
+// TODO remove this var and the checks in parent, replace with  castcheck() override
 /datum/abilityHolder/wrestler/fake
 	fake = TRUE
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
@@ -21,9 +22,7 @@
 	start_on_cooldown = TRUE // So you can't bypass the cooldown by taking off your belt and re-equipping it.
 	preferred_holder_type = /datum/abilityHolder/wrestler
 	interrupt_action_bars = TRUE
-	/// TODO MOVE BEHAVIOR TO PARENT
-	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	/// \TODO
+	/// For fake wrestlers, who can only wrestle in the ring (abilities don't work outside)
 	var/fake = FALSE
 
 	New()
@@ -56,20 +55,7 @@
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
 
-	proc/incapacitation_check(strictness)
-		var/mob/living/M = src.holder.owner
-		if (!isalive(M))
-			return FALSE
-		// If we don't care about stuns, then skip this block and return TRUE right away
-		if (strictness != ABILITY_CAN_USE_ALWAYS)
-			// If we're stunned or weakened and we're at max stictness, fail and return FALSE
-			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
-				return FALSE
-			// Finally, if we're in the middle and we don't care about stuns or weakened, only paralysis, just check that one
-			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // this could be an 'else', keeping in case more levels are added later
-				return FALSE
-		// If we get here, we can cast the ability
-		return TRUE
+
 
 	tryCast(atom/target, params)
 		. = ..()
@@ -94,7 +80,5 @@
 		if (!incapacitation_check(src.incapacitation_restriction))
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return FALSE
-
-
 
 		return TRUE

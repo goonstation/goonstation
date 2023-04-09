@@ -910,18 +910,24 @@
 		if (src.lock_holder)
 			src.holder.locked = TRUE
 
+		// Check we have enough points
 		if (!src.holder.pointCheck(pointCost))
 			boutput(holder.owner, "<span class='alert'>You don't have enough points to cast [src.name].</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this while dead, if we're dead
 		else if (!src.holder.cast_while_dead && isdead(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		else if (!src.holder.cast_while_cuffed && src.holder.owner.restrained())
+		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
+		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you're restrained.</span>")
+		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())
 			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
+			// TODO maybe move to its own proc? bit out of place here
 			var/turf/T = get_turf(holder.owner)
 			if (!isturf(T))
 				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
@@ -937,13 +943,16 @@
 						if (istype(A, /area/sim))
 							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
 							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Custom checks by subtypes
+		else if (!castcheck(target))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Casting on godmode/immune mob
 		else if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
 			target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
 			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
-		else if (!castcheck(target))
-			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
 		if (. != CAST_ATTEMPT_SUCCESS)
+			src.holder.locked = FALSE
 			return
 
 		var/datum/abilityHolder/localholder = src.holder
@@ -971,9 +980,12 @@
 	proc/castcheck(atom/target)
 		return TRUE
 
+	/// Checks the cooldown on this ability.
+	/// returns 0 if off cooldown, positive float of time remaining if on cooldown
 	proc/cooldowncheck()
 		return GET_COOLDOWN(src, "cast")
 
+	/// Things we want to do after an ability is cast.
 	proc/afterCast()
 		return
 
@@ -1007,6 +1019,21 @@
 		else
 			boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
 			return FALSE
+
+	proc/incapacitation_check(strictness)
+		var/mob/living/M = src.holder.owner
+		if (!isalive(M))
+			return FALSE
+		// If we don't care about stuns, then skip this block and return TRUE right away
+		if (strictness != ABILITY_CAN_USE_ALWAYS)
+			// If we're stunned or weakened and we're at max stictness, fail and return FALSE
+			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
+				return FALSE
+			// Finally, if we're in the middle and we don't care about stuns or weakened, only paralysis, just check that one
+			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // this could be an 'else', keeping in case more levels are added later
+				return FALSE
+		// If we get here, we can cast the ability
+		return TRUE
 
 	// See comment in /atom/movable/screen/ability (Convair880).
 	proc/target_reference_lookup()

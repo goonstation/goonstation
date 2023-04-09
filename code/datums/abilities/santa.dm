@@ -64,7 +64,6 @@
 	cooldown = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/santa
-	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	can_cast_while_cuffed = TRUE
 
 	New()
@@ -119,7 +118,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
-		if (src.not_when_handcuffed && M.restrained())
+		if (src.can_cast_while_cuffed && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 

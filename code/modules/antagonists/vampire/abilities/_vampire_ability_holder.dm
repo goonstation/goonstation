@@ -363,7 +363,6 @@
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "vampire-template"
 	preferred_holder_type = /datum/abilityHolder/vampire
-	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	can_cast_while_cuffed = TRUE
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
@@ -405,28 +404,6 @@
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
 		return
-
-	proc/incapacitation_check(var/stunned_only_is_okay = 0)
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
-
-		switch (stunned_only_is_okay)
-			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
-					return 0
-				else
-					return 1
-			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
-					return 0
-				else
-					return 1
-			else
-				return 1
 
 	castcheck()
 		if (!holder)
