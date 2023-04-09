@@ -3,6 +3,10 @@
 (u)Flappybat
 (e)⚖
 (*)Removed burst mode from the security taser.
+(u)tarmunora
+(e)⚖
+(+)Taser SMG auto projectiles brought into (near) parity with Signifer II projectiles and vice versa
+(+)Taser shotgun falloff curve adjusted, less powerful within ~2 tiles.
 (u)Amylizzle
 (p)13625
 (e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
