@@ -788,7 +788,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/obj/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)
