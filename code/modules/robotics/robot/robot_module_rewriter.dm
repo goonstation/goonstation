@@ -94,8 +94,8 @@
 						switch (moduleId)
 							if ("brobocop")
 								moduleResetType = /obj/item/robot_module/brobocop
-							if ("research")
-								moduleResetType = /obj/item/robot_module/research
+							if ("science")
+								moduleResetType = /obj/item/robot_module/science
 							if ("civilian")
 								moduleResetType = /obj/item/robot_module/civilian
 							if ("engineering")
