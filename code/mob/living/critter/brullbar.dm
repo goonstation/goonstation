@@ -25,7 +25,9 @@
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
+	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
 	var/is_king = FALSE
+	var/limb = /datum/limb/brullbar
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
@@ -76,13 +78,13 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = src.limb
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left [is_king ? "king" : "" ] brullbar arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = src.limb
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -91,10 +93,7 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
-		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 		if (src.is_king) // kings are built like tanks
-			abilityHolder.addAbility(/datum/targetable/critter/frenzy/king)
 			src.add_stam_mod_max("brullbar", 100)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "brullbar", 20)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "brullbar", 20)
@@ -102,7 +101,6 @@
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 50)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "brullbar", 10)
 		else // normal ones are still strong
-			abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 			src.add_stam_mod_max("brullbar", 40)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "brullbar", 20)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "brullbar", 20)
@@ -140,7 +138,7 @@
 			. += M
 
 	critter_attack(var/mob/target)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility((is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy))
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
@@ -167,7 +165,7 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/)
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
@@ -223,6 +221,8 @@
 	is_king = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
+	limb = /datum/limb/brullbar/king
+	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy/king)
 
 	death()
 		..()
