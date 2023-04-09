@@ -8,7 +8,7 @@
 	cooldown = 0
 	pointCost = 0
 	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained cloak of darkness. It makes you invisible in dark areas and is a toggleable, permanent effect."
 
 	cast(mob/target)

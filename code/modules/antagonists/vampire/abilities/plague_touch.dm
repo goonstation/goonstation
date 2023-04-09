@@ -8,7 +8,7 @@
 	cooldown = 600
 	pointCost = 30
 	incapacitation_restriction = 0
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 	unlock_message = "You have gained diseased touch, which inflicts someone with a deadly, non-contagious disease."
 
 	cast(mob/target)

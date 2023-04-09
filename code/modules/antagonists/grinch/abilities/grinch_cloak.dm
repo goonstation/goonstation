@@ -2,15 +2,10 @@
 	name = "Activate cloak (temp.)"
 	desc = "Activates a cloaking ability for a limited amount of time."
 	icon_state = "grinchcloak"
-	targeted = 0
-	target_anything = 0
-	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 3600
+	cooldown = 6 MINUTES
 	start_on_cooldown = 0
-	pointCost = 0
-	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/cloak_duration = 30 SECONDS
 
 	cast(mob/target)

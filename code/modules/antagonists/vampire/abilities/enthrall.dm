@@ -8,7 +8,7 @@
 	cooldown = 300
 	pointCost = 200 //copy pasted below. sorry.
 	incapacitation_restriction = 0
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 	unlock_message = "You have gained Enthrall. It allows you to enthrall dead humans."
 
@@ -47,7 +47,7 @@
 	pointCost = 0
 	not_when_in_an_object = FALSE
 	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained 'Speak to Thralls'. It allows you to telepathically speak to all of your undead thralls."
 
 	cast(mob/target)

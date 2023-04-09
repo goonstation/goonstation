@@ -812,6 +812,10 @@
 	var/cd_text_color = "#FFFFFF"			   //! Color of the maptext placed on the button when the ability is on cooldown. so far unused
 	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
+	/// If this ability can be used while stunned/unconcious. Defaults to strict no for any stuns
+	var/incapacitation_restriction = ABILITY_NO_INCAPACITATED_USE
+	var/can_cast_while_cuffed = FALSE		//! If this ability can be used while cuffed or otherwise restrained.
+
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
 	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
 	var/target_anything = FALSE					//! Can we target absolutely anything?
@@ -876,6 +880,9 @@
 		if(!QDELETED(localholder))
 			localholder.updateButtons()
 
+	/// Where we actually do the ability effects. Don't put checks in here- that's all handled in tryCast().
+	/// If you need additional restrictions on the ability use that the vars don't cover, override castcheck() with those.
+	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMITTED TO CASTING THE ABILITY
 	proc/cast(atom/target)
 		if(interrupt_action_bars)
 			actions.interrupt(holder.owner, INTERRUPT_ACT)
@@ -909,6 +916,8 @@
 		else if (!src.holder.cast_while_dead && isdead(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (!src.holder.cast_while_cuffed && src.holder.owner.restrained())
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you're restrained.</span>")
 		else if (src.cooldowncheck())
 			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN

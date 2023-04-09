@@ -24,11 +24,10 @@
 	/// TODO MOVE BEHAVIOR TO PARENT
 	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	/// \TODO
-	var/not_when_handcuffed = 0
 	var/fake = FALSE
 
 	New()
-		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -61,11 +60,15 @@
 		var/mob/living/M = src.holder.owner
 		if (!isalive(M))
 			return FALSE
+		// If we don't care about stuns, then skip this block and return TRUE right away
 		if (strictness != ABILITY_CAN_USE_ALWAYS)
+			// If we're stunned or weakened and we're at max stictness, fail and return FALSE
 			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
 				return FALSE
-			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // second check is unnecessary, keeping in case more levels are added later
+			// Finally, if we're in the middle and we don't care about stuns or weakened, only paralysis, just check that one
+			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // this could be an 'else', keeping in case more levels are added later
 				return FALSE
+		// If we get here, we can cast the ability
 		return TRUE
 
 	tryCast(atom/target, params)
@@ -82,18 +85,16 @@
 		var/mob/living/M = holder.owner
 
 		if (!M)
-			return 0
+			return FALSE
 
 		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
 			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
-			return 0
+			return FALSE
 
 		if (!incapacitation_check(src.incapacitation_restriction))
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return FALSE
 
-		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
-			return 0
+
 
 		return TRUE

@@ -8,7 +8,7 @@
 	cooldown = 700
 	pointCost = 0
 	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 
 	cast(mob/target)
 		if (!holder)

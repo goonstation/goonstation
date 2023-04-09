@@ -9,7 +9,7 @@
 	pointCost = 0
 	not_when_in_an_object = FALSE
 	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	unlock_message = ""
 
 	incapacitation_check()

@@ -236,8 +236,7 @@
 	icon = 'icons/mob/hunter_abilities.dmi'
 	icon_state = "trophycount"
 	preferred_holder_type = /datum/abilityHolder/hunter
-	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/hunter_only = 0
 
 	New()
@@ -318,7 +317,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
-		if (src.not_when_handcuffed == 1 && M.restrained())
+		if (src.can_cast_while_cuffed == FALSE && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 

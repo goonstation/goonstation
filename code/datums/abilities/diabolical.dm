@@ -62,8 +62,7 @@
 	cooldown = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/merchant
-	var/incapacitation_restriction = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	incapacitation_restriction =  ABILITY_CAN_USE_WHEN_STUNNED
 
 	New()
 		var/atom/movable/screen/ability/topBar/merchant/B = new /atom/movable/screen/ability/topBar/merchant(null)
@@ -139,7 +138,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
-		if (src.not_when_handcuffed == 1 && M.restrained())
+		if (src.can_cast_while_cuffed == FALSE && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
@@ -166,13 +165,9 @@
 	icon_state = "clairvoyance"
 	name = "Summon Contract"
 	desc = "Spend PLACEHOLDER (you shouldn't see this) souls to summon a random new contract to your location"
-	targeted = 0
-	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 0
 	pointCost = CONTRACT_COST
-	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = FALSE
 
 	New()
 		..()
@@ -210,15 +205,15 @@
 	icon_state = "grasp"
 	name = "Send to hell"
 	desc = "Sends the target straight to hell."
-	targeted = 1
+	targeted = TRUE
 	max_range = 5
-	cooldown = 300
+	cooldown = 30 SECONDS
 
 	cast(mob/target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
-			return 1
+			return TRUE
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, 'sound/effects/fingersnap.ogg', 50, 0, -1)

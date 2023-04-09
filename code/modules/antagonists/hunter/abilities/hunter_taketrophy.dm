@@ -9,7 +9,7 @@
 	cooldown = 0
 	pointCost = 0
 	incapacitation_restriction = 0
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 	hunter_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 

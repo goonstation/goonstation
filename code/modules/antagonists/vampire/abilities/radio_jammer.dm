@@ -7,7 +7,7 @@
 	pointCost = 50
 	not_when_in_an_object = FALSE
 	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/duration = 300
 	unlock_message = "You have gained radio interference. It temporarily disables all headsets and intercoms close to you."
 

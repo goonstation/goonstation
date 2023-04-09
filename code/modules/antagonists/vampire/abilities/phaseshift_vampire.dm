@@ -8,7 +8,7 @@
 	cooldown = 0
 	pointCost = 0
 	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
 
@@ -66,7 +66,7 @@
 	cooldown = 600
 	pointCost = 0
 	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	var/duration = 50
 	unlock_message = "You have gained mist form. It temporarily turns you incorporeal, allowing you to pass through solid objects."

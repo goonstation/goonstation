@@ -9,7 +9,7 @@
 	pointCost = 0
 	not_when_in_an_object = FALSE
 	incapacitation_restriction = 2
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 

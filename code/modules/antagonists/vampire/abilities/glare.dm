@@ -8,7 +8,7 @@
 	cooldown = 600
 	pointCost = 0
 	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = FALSE
 	sticky = 1
 
 	cast(mob/target)

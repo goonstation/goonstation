@@ -8,7 +8,7 @@
 	cooldown = 200
 	start_on_cooldown = TRUE
 	incapacitation_restriction = 0
-	not_when_handcuffed = TRUE
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)

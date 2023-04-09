@@ -18,7 +18,7 @@
 	cooldown = 600
 	pointCost = 0//150
 	incapacitation_restriction = 0
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained Call Frost Bats, a protection spell."
 	var/datum/projectile/special/homing/orbiter/spiritbat/P = new
 
@@ -83,7 +83,7 @@
 	cooldown = 1200
 	pointCost = 150
 	incapacitation_restriction = 0
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 	unlock_message = "You have gained call bats, which summons bats to fight for you."
 
 	cast(mob/target)

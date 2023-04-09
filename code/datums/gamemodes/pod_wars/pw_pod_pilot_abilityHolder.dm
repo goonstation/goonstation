@@ -31,7 +31,7 @@
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/pod_pilot
 	var/incapacitation_restriction = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 

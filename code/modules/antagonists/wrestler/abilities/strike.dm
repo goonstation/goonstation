@@ -11,7 +11,7 @@
 	start_on_cooldown = 1
 	pointCost = 0
 	incapacitation_restriction = 1
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)

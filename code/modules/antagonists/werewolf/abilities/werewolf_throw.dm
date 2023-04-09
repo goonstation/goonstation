@@ -9,7 +9,7 @@
 	cooldown = 300
 	pointCost = 0
 	incapacitation_restriction = FALSE
-	not_when_handcuffed = TRUE
+	can_cast_while_cuffed = FALSE
 	werewolf_only = TRUE
 	//throw mostly stolen from macho man. Doesn't spin as fast and doesn't deal with grabs, it's just a targetable ability.
 	cast(mob/target)

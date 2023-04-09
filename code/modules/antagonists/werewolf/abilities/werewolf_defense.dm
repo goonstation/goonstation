@@ -8,7 +8,7 @@
 	cooldown = 500
 	pointCost = 0
 	incapacitation_restriction = 1
-	not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	werewolf_only = 1
 
 	cast(mob/target)

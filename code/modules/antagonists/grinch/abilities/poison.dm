@@ -10,7 +10,7 @@
 	start_on_cooldown = 0
 	pointCost = 0
 	incapacitation_restriction = 0
-	not_when_handcuffed = 1
+	can_cast_while_cuffed = FALSE
 	var/list/the_poison = list("coniine", "cyanide", "curare")
 	var/amount_per_poison = 7
 

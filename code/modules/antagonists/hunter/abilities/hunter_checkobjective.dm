@@ -7,8 +7,8 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	incapacitation_restriction = 3
-	not_when_handcuffed = 0
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
+	can_cast_while_cuffed = TRUE
 	hunter_only = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
