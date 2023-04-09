@@ -1,5 +1,9 @@
 
 (t)sun apr 09 23
+(u)Amylizzle
+(p)13625
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Adds clearer signage to the emergency coolers for the nuclear reactor. They are for emergencies only. You should not use them in normal operation.
 (u)The_Kakapo
 (p)13482
 (e)🎨🍝|C-Sprites, A-Catering
