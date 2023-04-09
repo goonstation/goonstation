@@ -374,9 +374,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
 		if(temp < 500) return //less than reaction temp
 
-		var/datum/material/crystal/molitz/molitz = owner.material
-		if(!istype(molitz)) CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
-
 		if(molitz.iterations <= 0) return
 
 		var/datum/gas_mixture/air
