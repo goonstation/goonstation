@@ -1,4 +1,15 @@
 
+(t)sun apr 09 23
+(u)The_Kakapo
+(p)13482
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds special sprites for different ingredients used in brain/heart/buttburgers
+(+)You can make flock heart/brainburgers, synthbutt/brain/heartburgers and cyberbutt/heartburgers and Spontaneous Intelligence Creation Core burgers.
+(t)sat apr 08 23
+(u)LeahTheTech
+(p)13572
+(e)🆕🎨🔄📦💡|C-Feature, C-Sprites, C-Rework, A-Game-Objects, A-Station-Systems
+(+)The PTL has been internally reworked, and should respond a lot faster. Please report any weirdness with the beam.
 (t)fri apr 07 23
 (u)Amylizzle
 (p)13600

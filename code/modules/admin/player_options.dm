@@ -78,6 +78,10 @@
 			color: #f55;
 		}
 
+		.pseudo {
+			color: #b57edc;
+		}
+
 		.mentor {
 			color: #a24cff;
 		}
@@ -103,32 +107,29 @@
 	</style>
 	"}
 
-	//Antag roles (yes i said antag jeez shut up about it already)
-	var/antag
+	var/antagonist_roles
+	var/number_of_antagonist_roles = ""
+
 	if (M.mind)
-		var/antag_len = 0
-		for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
-			if (this_antag.pseudo)
-				continue
-			antag_len++
-			antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
-		if (antag_len)
-			antag = "<b>[antag_len] antagonist role\s present.</b><br>" + antag //this goes at the start
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
-		else if (M.mind.special_role != null)
-			antag = {"
-			<a href='[playeropt_link(M, "traitor")]' class='antag'>[M.mind.special_role]</a> &mdash;
-			<a href='[playeropt_link(M, "remove_traitor")]' class='antag'>Remove</a>
-			"}
-		else if (!isobserver(M))
-			antag = {"<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a> &bull;
-					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
-					<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
-					"}
+		var/number_of_antagonists = 0
+		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
+			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
+			if (antagonist_role.vr)
+				display_name += " <span class='pseudo'>(VR)</span>"
+			else if (antagonist_role.pseudo)
+				display_name += " <span class='pseudo'>(pseudo)</span>"
+			else
+				number_of_antagonists++
+
+			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
+
+		if (isnull(antagonist_roles))
+			antagonist_roles += "No antagonist roles present."
 		else
-			antag = "Observer"
+			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
+
+		if (number_of_antagonists)
+			number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
 
 	//General info
 	//  Logs link:
@@ -148,7 +149,7 @@
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
-	<br>Mob Type: <b>[M.type]</b> ([antag])
+	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
 </div>
 	"}
 
@@ -343,28 +344,25 @@
 
 		dat += "</div></div>"
 
-	//Very special roles
 	if(!istype(M, /mob/new_player))
-		dat += {"
-			<div class='optionGroup' style='border-color: #B57EDC;'>
-				<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
-				<div>
-					<div class='l'>Antag Status</div>
-					<div class='r'>
-						[antag]
-					</div>
-					<div class='l'>Make Into</div>
-					<div class='r'>
-						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
-						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
-						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflockmob(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
-						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"] &bull;
-						[istype(M, /mob/living/carbon/human/slasher) ? "<em>Is Slasher</em>" : "<a href='[playeropt_link(M, "makeslasher")]'>Slasher</a>"]
+		if (M.mind)
+			dat += {"
+				<div class='optionGroup' style='border-color: #B57EDC;'>
+					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
+					<div>
+						<div class='l'>Options</div>
+						<div class='r'>
+							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
+							<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
+						</div>
+
+						<div class='l'>Antag Roles</div>
+						<div class='r'>
+							[antagonist_roles]
+						</div>
 					</div>
 				</div>
-			</div>
-			"}
+				"}
 
 		dat += {"
 			<div class='optionGroup' style='border-color: #779ECB;'>
