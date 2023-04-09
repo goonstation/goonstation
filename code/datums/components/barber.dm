@@ -140,6 +140,10 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		else
 			return 0
 
+	if (src.barbee) // If we are already cutting someone's hair...
+		user.show_text("You are already cutting someone's hair.", "red")
+		return
+
 	SPAWN(0)
 		src.barber = user
 		src.barbee = M
@@ -470,7 +474,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424", 2)
-		src.preview.preview_thing.appearance = src.barbee.appearance
+		src.copy_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 		// If you're wondering why I'm calling update_apperarance and also copying the appearance var from the barbee, it's because the appearance var copies the clothes and update_appearance copies the modified hair.
 
@@ -518,18 +522,44 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 							src.new_AH.customization_second = new_hairstyle
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
-					src.preview.preview_thing.appearance = src.barbee.appearance
+					src.copy_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					src.preview.preview_thing.dir = turn(src.preview.preview_thing.dir, params["direction"]) // Not using `update_appearance` to change dirs because it simply doesn't work. Why? Dunno.
+					src.preview.update_appearance(src.new_AH, src.new_AH.mutant_race, turn(src.preview.preview_thing.dir, params["direction"])) // Not using `update_appearance` to change dirs because it simply doesn't work. Why? Dunno.
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-					src.preview.preview_thing.appearance = src.barbee.appearance
+					src.copy_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
+
+/datum/component/barber/proc/copy_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
+	if (to_copy.wear_suit)
+		to_paste.wear_suit = new to_copy.wear_suit.type
+	if (to_copy.w_uniform)
+		to_paste.w_uniform = new to_copy.w_uniform.type
+	if (to_copy.shoes)
+		to_paste.shoes = new to_copy.shoes.type
+	if (to_copy.belt)
+		to_paste.belt = new to_copy.belt.type
+	if (to_copy.gloves)
+		to_paste.gloves = new to_copy.gloves.type
+	if (to_copy.glasses)
+		to_paste.glasses = new to_copy.glasses.type
+	if (to_copy.glasses)
+		to_paste.glasses = new to_copy.glasses.type
+	if (to_copy.head)
+		to_paste.head = new to_copy.head.type
+	if (to_copy.wear_id)
+		to_paste.wear_id = new to_copy.wear_id.type
+	if (to_copy.r_store)
+		to_paste.r_store = new to_copy.r_store.type
+	if (to_copy.l_store)
+		to_paste.l_store = new to_copy.l_store.type
+
+	to_paste.update_clothing()
 
 /datum/component/barber/haircut/ui_act(var/action, var/params)
 	. = ..()
@@ -547,7 +577,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.preview.preview_thing.appearance = src.barbee.appearance
+			src.copy_clothes(src.barbee, src.preview.preview_thing)
 			src.preview.update_appearance(src.new_AH)
 			return
 
@@ -574,7 +604,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.preview.preview_thing.appearance = src.barbee.appearance
+		src.copy_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH)
 		return TRUE
 
@@ -591,7 +621,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.preview.preview_thing.appearance = src.barbee.appearance
+			src.copy_clothes(src.barbee, src.preview.preview_thing)
 			src.preview.update_appearance(src.new_AH)
 			return
 
@@ -618,7 +648,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.preview.preview_thing.appearance = src.barbee.appearance
+		src.copy_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH)
 		return TRUE
 
