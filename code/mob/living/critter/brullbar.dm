@@ -138,7 +138,7 @@
 			. += M
 
 	critter_attack(var/mob/target)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
@@ -165,7 +165,7 @@
 
 	can_critter_attack()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
