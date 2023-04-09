@@ -720,23 +720,6 @@
 
 		if (abilityHud) //BAD BAD, this shouldnt happen but somehow it do
 			abilityHud.add_object(src)
-		/*
-		abilityHud.remove_object(src.cd_tens)
-		abilityHud.remove_object(src.cd_secs)
-
-		var/on_cooldown = round((owner.last_cast - world.time) / 10)
-		if (on_cooldown > 0)
-			on_cooldown = min(on_cooldown,99)
-			src.overlays += src.darkener
-			src.overlays += src.cooldown
-			if (on_cooldown >= 10)
-				src.cd_tens.icon_state = "[get_digit_from_number(on_cooldown,2)]"
-				src.cd_tens.screen_loc = "NORTH-[pos_y]:[src.tens_offset_y],[pos_x]:[src.tens_offset_x]"
-				abilityHud.add_object(src.cd_tens)
-			src.cd_secs.icon_state = "[get_digit_from_number(on_cooldown,1)]"
-			src.cd_secs.screen_loc = "NORTH-[pos_y]:[src.secs_offset_y],[pos_x]:[src.secs_offset_x]"
-			abilityHud.add_object(src.cd_secs)
-		*/
 		last_x = pos_x
 		last_y = pos_y
 
@@ -836,62 +819,64 @@
 		owner.holder.updateButtons()
 
 /datum/targetable
-	var
-		name = null
-		desc = null
 
-		max_range = 10
-		targeted = 0
-		target_anything = 0
-		target_in_inventory = 0
-		last_cast = 0
-		cooldown = 100
-		start_on_cooldown = 0
-		datum/abilityHolder/holder
-		atom/movable/screen/ability/object
-		pointCost = 0
-		special_screen_loc = null
-		helpable = 1
-		cd_text_color = "#FFFFFF"
-		copiable = 1
-		target_nodamage_check = 0
-		target_selection_check = 0 // See comment in /atom/movable/screen/ability.
-		dont_lock_holder = 0 // Bypass holder lock when we cast this spell.
-		ignore_holder_lock = 0 // Can we cast this spell when the holder is locked?
-		restricted_area_check = 0 // Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
-		can_target_ghosts = 0 // Can we target observers if we see them (ectogoggles)?
-		check_range = 1 //Does this check for range at all?
-		sticky = 0 //Targeting stays active after using spell if this is 1. click button again to disable the active spell.
-		ignore_sticky_cooldown = 0 //if 1, Ability will stick to cursor even if ability goes on cooldown after first cast.
-		interrupt_action_bars = 1 //if 1, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/name = null
+	var/desc = null
 
-		action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
-		waiting_for_hotkey = 0 //If 1, the next number hotkey pressed will be bound to this.
+	var/max_range = 10
+	var/last_cast = 0
+	var/cooldown = 0
+	var/start_on_cooldown = FALSE
+	var/datum/abilityHolder/holder
+	var/atom/movable/screen/ability/object
+	var/pointCost = 0
+	var/special_screen_loc = null
+	var/helpable = TRUE
+	var/cd_text_color = "#FFFFFF"
+	var/copiable = TRUE
 
-		preferred_holder_type = /datum/abilityHolder/generic
+	var/targeted = FALSE					//! Does this need a target? If FALSE, ability is performed instantly
+	var/target_anything = FALSE				//! Can we target absolutely anything?
+	var/target_in_inventory = FALSE			//! Can we target items in our inventory?
+	var/target_nodamage_check = FALSE 		//! Can we target godmoded mobs?
+	var/target_ghosts = FALSE				//! Can we target observers if we see them (ectogoggles)?
+	var/target_selection_check = FALSE 		//! See comment in /atom/movable/screen/ability.
+	var/lock_holder = TRUE 					//! If FALSE, bypass holder lock when we cast this spell.
+	var/ignore_holder_lock = FALSE			//! Can we cast this spell when the holder is locked?
+	var/restricted_area_check = FALSE 		//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
+	var/check_range = TRUE					//! Does this check for range at all?
+	var/sticky = FALSE 						//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
+	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
+	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 
-		icon = 'icons/mob/spell_buttons.dmi'
-		icon_state = "blob-template"
+	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
+	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
 
-		theme = null // for wire's tooltips, it's about time this got varized
-		tooltip_flags = null
+	var/preferred_holder_type = /datum/abilityHolder/generic
+
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "blob-template"
+
+	var/theme = null // for wire's tooltips, it's about time this got varized
+	var/tooltip_flags = null
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
+	// 38 types have overriden this.
 	New(datum/abilityHolder/holder)
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
 		if (src.icon && src.icon_state)
-			var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
-			B.icon = src.icon
-			B.icon_state = src.icon_state
-			B.owner = src
-			B.name = src.name
-			B.desc = src.desc
-			src.object = B
+			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
+			button.icon = src.icon
+			button.icon_state = src.icon_state
+			button.owner = src
+			button.name = src.name
+			button.desc = src.desc
+			src.object = button
 
 	disposing()
-		if (object && object.owner == src)
+		if (object?.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
 			qdel(object)
@@ -906,9 +891,8 @@
 #ifdef NO_COOLDOWNS
 			result = TRUE
 #endif
-			if (result && result != 999)
-				last_cast = 0 // reset cooldown
-			else if (result != 999)
+			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
+			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
 				doCooldown()
 			afterCast()
 			if(!QDELETED(localholder))
@@ -929,54 +913,54 @@
 		// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
 		// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 		tryCast(atom/target, params)
-			if (!holder || !holder.owner)
+			if (!holder?.owner)
 				logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
-				return 1
-			if (src.holder.locked == 1 && src.ignore_holder_lock != 1)
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			if (src.holder.locked && !src.ignore_holder_lock)
 				boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
-				return 999
-			if (src.dont_lock_holder != 1)
-				src.holder.locked = 1
-			if (!holder.pointCheck(pointCost))
-				src.holder.locked = 0
-				return 1000
-			if (!holder.cast_while_dead && isdead(holder.owner))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			if (src.lock_holder)
+				src.holder.locked = TRUE
+			if (!src.holder.pointCheck(pointCost))
+				src.holder.locked = FALSE
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			if (!src.holder.cast_while_dead && isdead(holder.owner))
 				boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
-				src.holder.locked = 0
-				return 999
+				src.holder.locked = FALSE
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			if (last_cast > world.time)
 				boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
-				src.holder.locked = 0
-				return 999
+				src.holder.locked = FALSE
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			if (src.restricted_area_check)
 				var/turf/T = get_turf(holder.owner)
 				if (!T || !isturf(T))
 					boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-					src.holder.locked = 0
-					return 999
+					src.holder.locked = FALSE
+					return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 				switch (src.restricted_area_check)
-					if (1)
+					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 						if (isrestrictedz(T.z))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
-							src.holder.locked = 0
-							return 999
-					if (2)
+							src.holder.locked = FALSE
+							return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+					if (ABILITY_AREA_CHECK_VR_ONLY)
 						var/area/A = get_area(T)
 						if (A && istype(A, /area/sim))
 							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
-							src.holder.locked = 0
-							return 999
-			if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target) == 1))
+							src.holder.locked = FALSE
+							return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
 				target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
-				src.holder.locked = 0
-				return 998
+				src.holder.locked = FALSE
+				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 			if (!castcheck(target))
-				src.holder.locked = 0
-				return 998
+				src.holder.locked = FALSE
+				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
 			if(!QDELETED(localholder))
-				localholder.locked = 0
+				localholder.locked = FALSE
 				if (!.)
 					localholder.deductPoints(pointCost)
 

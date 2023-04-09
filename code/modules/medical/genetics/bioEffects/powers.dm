@@ -2110,10 +2110,9 @@
 			return 1
 
 		var/obj/the_object = target
-
+		var/base_path = /obj
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if(!the_object)
-			var/base_path = /obj
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
 				return 1
@@ -2122,6 +2121,8 @@
 			if (!the_object)
 				last_cast = 0
 				return 1
+		if (!(the_object in items))
+			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2191,7 +2192,6 @@
 			hit.changeStatus("weakened", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
-		return 0
 
 	cast(atom/target)
 		if (..())

@@ -237,9 +237,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
@@ -247,8 +247,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
-		oldabilities.on_clone()
-		if (oldabilities && istype(oldabilities))
+		if (istype(oldabilities))
+			oldabilities.on_clone()
 			src.occupant.abilityHolder = oldabilities // This should already be a copy.
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
