@@ -72,7 +72,7 @@
 
 	return TRUE
 
-/datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampire/H = src
@@ -82,7 +82,7 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT && thrall || isdead(HH) && !thrall)
+	if (isdead(HH))
 		if (prob(20))
 			boutput(M, "<span class='alert'>The blood of the [thrall ? "rotten" : "dead"] provides little sustenance...</span>")
 
@@ -133,26 +133,24 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-			//vampires heal, thralls don't
-			if (!thrall)
-				if(istype(M))
-					M.HealDamage("All", 3, 3)
-					M.take_toxin_damage(-1)
-					M.take_oxygen_deprivation(-1)
 
-				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
-					if (HH.blood_volume < 300 && prob(15))
-						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
-						HH.changeStatus("paralysis", 10 SECONDS)
-					else
-						if (prob(65))
-							HH.changeStatus("weakened", 1 SECOND)
-							HH.stuttering = min(HH.stuttering + 3, 10)
+			//vampires heal, thralls don't
+			M.HealDamage("All", 3, 3)
+			M.take_toxin_damage(-1)
+			M.take_oxygen_deprivation(-1)
+			if (mult >= 1 && !ischangeling(HH)) //mult is only 1 or greater during a pointblank true suck
+				if (HH.blood_volume < 300 && prob(15))
+					if (!HH.getStatusDuration("paralysis"))
+						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
+					HH.changeStatus("paralysis", 10 SECONDS)
+				else
+					if (prob(65))
+						HH.changeStatus("weakened", 1 SECOND)
+						HH.stuttering = min(HH.stuttering + 3, 10)
 
 			if (istype(H)) H.blood_tracking_output()
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
+	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90) && !ischangeling(HH))
 		HH.death(FALSE)
 
 	if (istype(H))
@@ -236,7 +234,7 @@
 
 	return 1
 
-/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampiric_thrall/H = src
@@ -246,9 +244,9 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (isdead(HH))
+	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
 		if (prob(20))
-			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
+			boutput(M, "<span class='alert'>The blood of the rotten provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		M.change_vampire_blood(bitesize, 1)
@@ -293,23 +291,17 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-			//vampires heal, thralls don't
-			if (!thrall)
-				M.HealDamage("All", 3, 3)
-				M.take_toxin_damage(-1)
-				M.take_oxygen_deprivation(-1)
+			if (mult >= 1 && !ischangeling(HH)) //mult is only 1 or greater during a pointblank true suck
+				if (HH.blood_volume < 300 && prob(15))
+					if (!HH.getStatusDuration("paralysis"))
+						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
+					HH.changeStatus("paralysis", 10 SECONDS)
+				else
+					if (prob(65))
+						HH.changeStatus("weakened", 1 SECOND)
+						HH.stuttering = min(HH.stuttering + 3, 10)
 
-				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
-					if (HH.blood_volume < 300 && prob(15))
-						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
-						HH.changeStatus("paralysis", 10 SECONDS)
-					else
-						if (prob(65))
-							HH.changeStatus("weakened", 1 SECOND)
-							HH.stuttering = min(HH.stuttering + 3, 10)
-
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
+	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90) && !ischangeling(HH))
 		HH.death(FALSE)
 
 	eat_twitch(src.owner)
@@ -366,7 +358,6 @@
 
 /datum/targetable/vampire/vampire_bite/thrall
 	thrall = 1
-
 
 /datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
