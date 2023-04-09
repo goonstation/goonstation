@@ -61,40 +61,6 @@
 		return 0
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
-
-/atom/movable/screen/ability/topBar/vampire
-	clicked(params)
-		var/datum/targetable/vampire/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
-				return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (spell.cooldowncheck())
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/vampire
 	usesPoints = 1
 	regenRate = 0
@@ -368,25 +334,23 @@
 	var/unlock_message = null
 
 	New()
-		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
 		B.name = src.name
 		B.desc = src.desc
 		src.object = B
-		return
 
 	onAttach(var/datum/abilityHolder/H)
-		..() // Start_on_cooldown check.
+		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
 			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
-		return
 
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/vampire()
+			src.object = new /atom/movable/screen/ability/topBar()
 			object.icon = src.icon
 			object.owner = src
 
@@ -406,42 +370,17 @@
 		return
 
 	castcheck()
-		if (!holder)
-			return 0
+		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...
+			return TRUE
 
-		var/mob/living/M = holder.owner
+		var/mob/M = holder.owner // this is a safe assumption until some chucklefuck gives the floor an abilityHolder
 
-		if (!M)
-			return 0
-
-		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
-			return 1
 		if (src.not_when_in_an_object && !isturf(M.loc))
-			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
-			return 0
-		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
-			return 0
-
-		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
-			return 0
-
-		if (incapacitation_check(src.incapacitation_restriction) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
-			return 0
-
-		if (src.can_cast_while_cuffed == FALSE && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
-			return 0
+			boutput(M, "<span class='alert'>You can't use this ability while you're inside another object.</span>")
+			return FALSE
 
 		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
-			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
-			return 0
+			boutput(M, "<span class='alert'>Your powers do not work in this holy place! Maybe if you were more powerful...</span>")
+			return FALSE
 
-		return 1
-
-	cast(atom/target)
-		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
+		return TRUE

@@ -97,10 +97,8 @@
 /datum/targetable/vampiric_thrall
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "vampire-template"
-	cooldown = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
-	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
@@ -116,10 +114,9 @@
 		return
 
 	onAttach(var/datum/abilityHolder/H)
-		..() // Start_on_cooldown check.
+		. = ..()
 		if (src.unlock_message && src.holder && src.holder.owner)
 			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
-		return
 
 	updateObject()
 		..()
@@ -141,40 +138,9 @@
 				pttxt = " \[[pointCost]\]"
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
-		return
 
 	castcheck()
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 0
-
-		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
-			return 0
-
-		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
-			return 0
-
-		if (incapacitation_check(src.incapacitation_restriction) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
-			return 0
-
-		if (src.can_cast_while_cuffed == FALSE && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
-			return 0
-
-		if (istype(get_area(M), /area/station/chapel))
-			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
-			return 0
-
-		return 1
-
-	cast(atom/target)
-		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
+		if (istype(get_area(holder.owner), /area/station/chapel))
+			boutput(holder.owner, "<span class='alert'>Your powers do not work in this holy place!</span>")
+			return FALSE
+		return TRUE
