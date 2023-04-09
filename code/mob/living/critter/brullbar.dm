@@ -84,7 +84,7 @@
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = src.limb
+		HH.limb = new src.limb
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
