@@ -128,6 +128,10 @@
 			. += "-r"
 		icon_state = .
 
+	death()
+		can_lie = FALSE
+		..()
+
 /mob/living/critter/bear/care
 	name = "space carebear"
 	real_name = "space carebear"
