@@ -26792,7 +26792,8 @@
 /obj/decal/poster/wallsign/no_smoking{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
+/obj/item/paper/emergencycooler,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "chJ" = (
@@ -40617,7 +40618,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "qih" = (
