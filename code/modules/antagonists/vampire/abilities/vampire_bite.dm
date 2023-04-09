@@ -84,7 +84,7 @@
 
 	if (isdead(HH))
 		if (prob(20))
-			boutput(M, "<span class='alert'>The blood of the [thrall ? "rotten" : "dead"] provides little sustenance...</span>")
+			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		H.change_vampire_blood(bitesize, 1)
