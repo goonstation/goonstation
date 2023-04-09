@@ -2035,7 +2035,6 @@ obj/item/whetstone
 			stamina_cost = initial(stamina_cost)
 			stamina_crit_chance = initial(stamina_crit_chance)
 			hitsound = initial(hitsound)
-			setProperty("meleeprot_all", 0)
 			setProperty("rangedprot", 0)
 			setProperty("movespeed", 0)
 			setProperty("disorient_resist", 0)
@@ -2048,14 +2047,13 @@ obj/item/whetstone
 			hit_type = DAMAGE_BLUNT
 			force = 3
 			throwforce = 5
-			stamina_damage = 30
-			stamina_cost = 20
+			stamina_damage = 20
+			stamina_cost = 10
 			stamina_crit_chance = 30
 			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
-			setProperty("meleeprot_all", 4)
-			setProperty("rangedprot", 0.5)
+			setProperty("rangedprot", 0.8)
 			setProperty("movespeed", 0.4)
-			setProperty("disorient_resist", 40)
+			setProperty("disorient_resist", 60)
 			src.setItemSpecial(/datum/item_special/simple)
 			can_disarm = TRUE
 			user.UpdateOverlays(src.shield, "shield")
@@ -2068,8 +2066,7 @@ obj/item/whetstone
 			stamina_damage = 25
 			stamina_cost = 20
 			stamina_crit_chance = 10
-			hitsound = 'sound/weapons/cutter.ogg'
-			setProperty("meleeprot_all", 0)
+			hitsound = 'sound/weapons/visicarimpact.ogg'
 			setProperty("rangedprot", 0)
 			setProperty("movespeed", 0)
 			setProperty("disorient_resist", 0)
