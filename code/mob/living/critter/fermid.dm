@@ -107,7 +107,7 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 0.1
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid_polymorph, /datum/targetable/critter/slam_polymorph)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid/polymorph, /datum/targetable/critter/slam/polymorph)
 	is_npc = FALSE // Typically is a crewmember
 
 ///////////////////////////////////////////////
