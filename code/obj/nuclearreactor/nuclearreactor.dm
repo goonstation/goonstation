@@ -301,7 +301,7 @@
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
-			var/A = 10
+			var/A = 10 * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
 
 			var/thermal_e = THERMAL_ENERGY(current_gas)
 
