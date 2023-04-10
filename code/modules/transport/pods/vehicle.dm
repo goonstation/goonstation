@@ -1164,7 +1164,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !(iscritter(M) || ismobcritter(boarder)))
+		if(!src.pilot && !M.stat && M.client && !(iscritter(M) || ismobcritter(M)))
 			src.pilot = M
 			break
 
