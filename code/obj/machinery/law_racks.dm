@@ -401,7 +401,6 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
-					playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 

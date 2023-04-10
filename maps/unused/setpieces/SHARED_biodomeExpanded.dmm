@@ -47,6 +47,11 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
+"aeH" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "afx" = (
 /obj/decal/mushrooms/type5{
 	name = "glowing mushroom"
@@ -838,6 +843,12 @@
 	},
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/waffletek)
+"aWB" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/fire,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "aWJ" = (
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
@@ -4186,6 +4197,11 @@
 	dir = 8
 	},
 /area/swampzone/interiors/outbuildings)
+"eXw" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "eXH" = (
 /obj/neon_lining{
 	dir = 4
@@ -5151,12 +5167,6 @@
 /obj/item/balloon_animal/random,
 /turf/unsimulated/floor/carpet/clowncarpet/border,
 /area/swampzone/interiors/bonktek)
-"fWn" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/salt,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "fWs" = (
 /obj/table/wood/auto,
 /obj/decal/cleanable/desk_clutter,
@@ -5610,6 +5620,12 @@
 /obj/machinery/door/airlock/glass,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/swampzone/deeps)
+"gAf" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/salt,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "gCg" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -5632,6 +5648,16 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/deeps)
+"gCJ" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The inscription has eroded away.";
+	special = /mob/living/critter/skeleton
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "gCY" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -7806,6 +7832,12 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
+"jnJ" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "jof" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -8043,12 +8075,6 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
-"jDm" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "jDx" = (
 /turf/unsimulated/wall/setpieces{
 	desc = "A weird jet black metal wall indented with strange grooves and lines.";
@@ -8057,12 +8083,6 @@
 	name = "strange wall"
 	},
 /area/swampzone/heights)
-"jDF" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/fire,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "jDP" = (
 /obj/stool,
 /turf/unsimulated/floor/engine,
@@ -8556,10 +8576,6 @@
 /obj/grille/steel,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
-"kiM" = (
-/obj/critter/bear,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "kiO" = (
 /obj/chainlink_fence,
 /turf/unsimulated/wall/trench/side{
@@ -9865,6 +9881,12 @@
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
+"lIT" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/proj,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/auto/dirt,
+/area/catacombs)
 "lJG" = (
 /obj/neon_lining{
 	dir = 8
@@ -13338,11 +13360,6 @@
 "pSv" = (
 /turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
-"pTu" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "pTF" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
@@ -13540,16 +13557,6 @@
 	dir = 8
 	},
 /area/space)
-"qeW" = (
-/obj/map/light/graveyard,
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "qfR" = (
 /obj/item/storage/wall/clothingrack/clothes1,
 /turf/unsimulated/floor/black,
@@ -13791,6 +13798,10 @@
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
+"qyL" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "qAh" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -15174,11 +15185,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
-"sgi" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "sgr" = (
 /obj/item/reagent_containers/food/drinks/mug,
 /obj/table/glass/reinforced/auto,
@@ -15346,12 +15352,6 @@
 /obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
-"srz" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/proj,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/auto/dirt,
-/area/catacombs)
 "srT" = (
 /obj/stone,
 /turf/unsimulated/floor/cave,
@@ -89595,7 +89595,7 @@ hgP
 kIy
 dRF
 ciN
-qeW
+gCJ
 hgP
 hgP
 hgP
@@ -189252,13 +189252,13 @@ vuK
 vuK
 hrY
 hrY
-fWn
+gAf
 hrY
 wDR
 hrY
 mgK
 hrY
-jDm
+jnJ
 hrY
 fgn
 tqX
@@ -189552,7 +189552,7 @@ vHG
 sbw
 vuK
 vuK
-sgi
+aeH
 hrY
 hrY
 hrY
@@ -190758,17 +190758,17 @@ vHG
 vHG
 hrY
 hrY
-pTu
+eXw
 hrY
 cXc
 hrY
-srz
+lIT
 hrY
 cKA
 hrY
 chk
 hrY
-jDF
+aWB
 hrY
 fgn
 rjv
@@ -193842,7 +193842,7 @@ iej
 iej
 rMj
 iej
-kiM
+qyL
 iej
 auI
 iej
@@ -195340,7 +195340,7 @@ iTU
 auI
 iej
 iej
-kiM
+qyL
 npv
 auI
 iej
@@ -195647,7 +195647,7 @@ fFS
 auI
 iej
 auI
-kiM
+qyL
 auI
 auI
 auI

@@ -46,46 +46,43 @@ var/global/noir = 0
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
-	var/level = 0
-	switch(rank)
-		if("Host")
-			level = LEVEL_HOST
-		if("Coder")
-			level = LEVEL_CODER
-		if("Administrator")
-			level = LEVEL_ADMIN
-		if("Primary Administrator")
-			level = LEVEL_PA
-		if("Intermediate Administrator")
-			level = LEVEL_IA
-		if("Secondary Administrator")
-			level = LEVEL_SA
-		if("Moderator")
-			level = LEVEL_MOD
-		if("Goat Fart", "Ayn Rand's Armpit")
-			level = LEVEL_BABBY
-	return level
+	switch(lowertext(rank))
+		if("host")
+			return LEVEL_HOST
+		if("coder")
+			return LEVEL_CODER
+		if("administrator")
+			return LEVEL_ADMIN
+		if("primary administrator")
+			return LEVEL_PA
+		if("intermediate administrator")
+			return LEVEL_IA
+		if("secondary administrator")
+			return LEVEL_SA
+		if("moderator")
+			return LEVEL_MOD
+		if("goat fart", "ayn rand's armpit")
+			return LEVEL_BABBY
 
 /proc/level_to_rank(var/level)
-	var/rank = "ERROR"
 	switch(level)
 		if(LEVEL_HOST)
-			rank = "Host"
+			return "Host"
 		if(LEVEL_CODER)
-			rank = "Coder"
+			return "Coder"
 		if(LEVEL_ADMIN)
-			rank = "Administrator"
+			return "Administrator"
 		if(LEVEL_PA)
-			rank = "Primary Administrator"
+			return "Primary Administrator"
 		if(LEVEL_IA)
-			rank = "Intermediate Administrator"
+			return "Intermediate Administrator"
 		if(LEVEL_SA)
-			rank = "Secondary Administrator"
+			return "Secondary Administrator"
 		if(LEVEL_MOD)
-			rank = "Moderator"
+			return "Moderator"
 		if(LEVEL_BABBY)
-			rank = "Goat Fart or Ayn Rand's Armpit"
-	return rank
+			return "Goat Fart or Ayn Rand's Armpit"
+	return "ERROR"
 
 /datum/admins/Topic(href, href_list)
 	..()
@@ -517,6 +514,7 @@ var/global/noir = 0
 			if (isnull(centcomviewer))
 				centcomviewer = new
 			centcomviewer.target_key = target.key
+			centcomviewer.force_static_data_update = TRUE
 			centcomviewer.ui_interact(usr.client.mob)
 
 		/////////////////////////////////////ban stuff
@@ -873,7 +871,6 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "set the mode as [requestedMode].")
 					logTheThing(LOG_DIARY, usr, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
-					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
 						lobby_titlecard = new /datum/titlecard/battleroyale()
@@ -884,6 +881,9 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
+					if (tgui_alert(usr,"This round only?","Persistent Mode Change",list("Yes", "No")) == "No")
+						// generally speaking most gimmick mode changes are one-round affairs
+						world.save_mode(requestedMode)
 					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
@@ -1029,6 +1029,48 @@ var/global/noir = 0
 					usr.client.modify_parts(MC, usr)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify limbs.")
+
+		if ("changeoutfit")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+					return
+				var/mob/living/carbon/human/H = M
+				if (H && usr.client)
+					var/delete_choice
+					var/obj/item/card/id
+					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+					sortList(jobs, /proc/cmp_text_asc)
+					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					if(!istype(job))
+						return
+					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
+					if (delete_choice == "Cancel")
+						return
+					if (!ishuman(H))
+						boutput(usr, "<span class='alert'>Target is not human, aborting.</span>")
+						return
+					if (delete_choice == "Yes")
+						// Try to recover their ID
+						id = H.get_id()
+						if (istype(id))
+							H.u_equip(id)
+							// Hide this somewhere safe until we recover it as we can't keep it on the mob
+							id.set_loc(null)
+							id.dropped(H)
+						else
+							boutput(usr, "<span class='alert'>Could not find [H]'s ID card - Replacing with a standard job ID if available.</span>")
+					H.unequip_all(delete_choice == "Yes" ? 1 : 0)
+					SPAWN (1 SECOND)
+						equip_job_items(job, H)
+						if (istype(id))
+							if(!H.equip_if_possible(id, H.slot_wear_id))
+								H.put_in_hand(id)
+						else if (job.spawn_id)
+							H.spawnId(job)
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to change outfits.")
 
 
 		if ("jumpto")
@@ -1960,54 +2002,6 @@ var/global/noir = 0
 			if(!M) return
 			usr.client.cmd_admin_alert(M)
 
-		if ("makewraith")
-			if( src.level < LEVEL_PA)
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a wraith.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] a wraith?", "Make Wraith", list("Yes", "No")) == "Yes")
-				M.mind?.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ADMIN)
-
-		if ("makeblob")
-			if( src.level < LEVEL_PA )
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a blob.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] a blob?", "Make Blob", list("Yes", "No")) == "Yes")
-				M.mind?.add_antagonist(ROLE_BLOB, source = ANTAGONIST_SOURCE_ADMIN)
-
-		if ("makemacho")
-			if( src.level < LEVEL_PA )
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Macho Man.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] a macho man?", "Make Macho", list("Yes", "No")) == "Yes")
-				M.machoize()
-
-		if ("makeslasher")
-			if( src.level < LEVEL_PA )
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Slasher.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] into a Slasher?", "Make Slasher", list("Yes", "No")) == "Yes")
-				M.mind?.add_antagonist(ROLE_SLASHER, source = ANTAGONIST_SOURCE_ADMIN)
-
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
 				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Critter.")
@@ -2048,183 +2042,6 @@ var/global/noir = 0
 					if(!amt)
 						amt = INFINITY
 					M.cubeize(amt, CT)
-
-		if ("makeflock")
-			if( src.level < LEVEL_PA)
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] a flockmind or flocktrace?", "Make Flockmind", list("Yes", "No")) == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind()
-					mind.ckey = M.ckey
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				// if there's no existing flocks, default to making a flockmind
-				// else, present choice: new flockmind of new flock, or new flocktrace of existing flock?
-				var/datum/flock/chosen = null
-				if(flocks.len > 0)
-					var/flockName = input("Add to existing flock? (Hit Cancel to make new flockmind)","Flock Decide Time") as null|anything in flocks
-					chosen = flocks[flockName]
-				var/mob/living/intangible/flock/F = M.flockerize(chosen)
-				if (!F)
-					if (!istype(mind.current, /mob/living/intangible/flock))
-						boutput(usr, "<span class='alert'>Could not into flockmind. Cirr is a dum and must be shamed.</span>")
-						return
-					else
-						F = mind.current
-				if(istype(F, /mob/living/intangible/flock/flockmind))
-					mind.special_role = ROLE_FLOCKMIND
-				else if(istype(F, /mob/living/intangible/flock/trace))
-					mind.special_role = ROLE_FLOCKTRACE
-				ticker.mode.Agimmicks += mind
-				F.antagonist_overlay_refresh(1, 0)
-
-		if("makefloorgoblin")
-			if( src.level < LEVEL_PA)
-				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a floor goblin.")
-				return
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Make [M] a floor goblin?", "Make Floor Goblin", list("Yes", "No")) == "Yes")
-				evilize(M, ROLE_FLOOR_GOBLIN)
-
-		if ("remove_traitor")
-			if ( src.level < LEVEL_SA )
-				tgui_alert(usr,"You must be at least a Secondary Administrator to remove someone's status as an antagonist.")
-				return
-			if (!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (tgui_alert(usr,"Remove [M]'s antag status?", "Remove Antag", list("Yes", "No")) == "Yes")
-				if (!M) return
-				if (!isturf(M.loc))
-					// They could be in a pod or whatever, which would have unfortunate results when respawned (Convair880).
-					tgui_alert(usr, "You currently cannot remove the antagonist status of somebody hiding in a pod, closet or other container.", "An error occurred")
-					return
-				remove_antag(M, usr, 0, 1)
-
-		if ("traitor")
-			if(!ticker || !ticker.mode)
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-
-			//independant of mode and can be traitors as well
-			var/datum/game_mode/current_mode = ticker.mode
-			if (istype(current_mode, /datum/game_mode/revolution))
-				if(M.mind in current_mode:head_revolutionaries)
-					tgui_alert(usr,"Head Revolutionary!")
-					return
-				else if(M.mind in current_mode:revolutionaries)
-					tgui_alert(usr,"Revolutionary!")
-					return
-			else if (istype(current_mode, /datum/game_mode/nuclear))
-				if(M.mind in current_mode:syndicates)
-					tgui_alert(usr,"Syndicate Operative!", "[M.key]")
-					return
-			else if (istype(current_mode, /datum/game_mode/spy))
-				if(M.mind in current_mode:leaders)
-					var/datum/mind/antagonist = M.mind
-					var/t = ""
-					for(var/datum/objective/OB in antagonist.objectives)
-						if (istype(OB, /datum/objective/crew))
-							continue
-						t += "[OB.explanation_text]\n"
-					if(antagonist.objectives.len == 0)
-						t = "None defined."
-					tgui_alert(usr,"Infiltrator. Objective(s):\n[t]", "[M.key]")
-					return
-			else if (istype(current_mode, /datum/game_mode/gang))
-				if(M.mind in current_mode:traitors)
-					var/datum/gang/gang = M.get_gang()
-					tgui_alert(usr,"Leader of [gang.gang_name].", "[M.key]")
-					return
-				for(var/datum/gang/G in current_mode:gangs)
-					if(M.mind in G.members)
-						tgui_alert(usr,"Member of [G.gang_name].", "[M.key]")
-						return
-
-			// traitor, or other modes where traitors/counteroperatives would be.
-			if(M.mind in current_mode.traitors)
-				var/datum/mind/antagonist = M.mind
-				var/t = ""
-				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew))
-						continue
-					t += "[OB.explanation_text]\n"
-				if(antagonist.objectives.len == 0)
-					t = "None defined."
-				tgui_alert(usr,"Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
-				return
-			if(M.mind in ticker.mode.Agimmicks)
-				var/datum/mind/antagonist = M.mind
-				var/t = ""
-				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew))
-						continue
-					t += "[OB.explanation_text]\n"
-				if(antagonist.objectives.len == 0)
-					t = "None defined."
-				tgui_alert(usr,"Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
-				return
-
-			//they're nothing so turn them into a traitor!
-			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
-				var/antagonize = "Cancel"
-				antagonize = tgui_alert(usr,"Is not an antagonist, make antagonist?", "antagonist", list("Yes", "Cancel"))
-				if(antagonize == "Cancel")
-					return
-				if(antagonize == "Yes")
-					if (issilicon(M))
-						evilize(M, ROLE_TRAITOR)
-					else if (ismobcritter(M))
-						// The only role that works for all critters at this point is hard-mode traitor, really. The majority of existing
-						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
-						// That said, certain roles are mostly compatible and thus selectable.
-						var/list/traitor_types = list(ROLE_HARDMODE_TRAITOR, ROLE_WRESTLER, ROLE_GRINCH)
-						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_HARDMODE_TRAITOR) as null|anything in traitor_types
-						switch (selection)
-							if (ROLE_HARDMODE_TRAITOR)
-								evilize(M, ROLE_TRAITOR, "hardmode")
-							else
-								evilize(M, selection)
-					else
-						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
-						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
-							traitor_types += ROLE_GANG_LEADER
-						if(ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear) && ishuman(M))
-							traitor_types += ROLE_NUKEOP
-						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
-						switch(selection)
-							if(ROLE_TRAITOR)
-								if (tgui_alert(usr,"Hard Mode?","Treachery",list("Yes", "No")) == "Yes")
-									evilize(M, ROLE_TRAITOR, "hardmode")
-								else
-									evilize(M, ROLE_TRAITOR)
-							if(ROLE_NUKEOP)
-								if (tgui_alert(usr,"Commander?","Hierarchy",list("Yes", "No")) == "Yes")
-									evilize(M, ROLE_NUKEOP_COMMANDER, do_objectives = FALSE)
-								else
-									evilize(M, ROLE_NUKEOP, do_objectives = FALSE)
-							else
-								evilize(M, selection)
-			//they're a ghost/hivebotthing/etc
-			else
-				tgui_alert(usr,"Cannot make this mob a traitor")
 
 		if ("add_antagonist")
 			if (src.level < LEVEL_PA)
@@ -2653,9 +2470,10 @@ var/global/noir = 0
 
 		if ("viewvars")
 			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				if (!M) return
-				usr.client.debug_variables(M)
+				var/datum/target = locate(href_list["target"])
+				if (!target)
+					return
+				usr.client.debug_variables(target)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to view variables.")
 
@@ -4747,10 +4565,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_GRINCH, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_FLOOR_GOBLIN)
-				M.mind.special_role = ROLE_FLOOR_GOBLIN
-				M.make_floor_goblin()
-				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_FLOOR_GOBLIN, source = ANTAGONIST_SOURCE_ADMIN)
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_ADMIN)

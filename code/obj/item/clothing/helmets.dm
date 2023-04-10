@@ -268,6 +268,34 @@
 
 /obj/item/clothing/head/helmet/space/engineer/diving/abilities = list(/obj/ability_button/flashlight_engiehelm)
 
+/obj/item/clothing/head/helmet/space/light // Similar stats to normal space helmets, but way less armor or slowdown
+	name = "light space helmet"
+	desc = "A lightweight space helmet."
+	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	see_face = 0
+	item_state = "s_helmet"
+	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
+	seal_hair = 1
+	path_prot = 0
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 20)
+		setProperty("disorient_resist_eye", 4) // Less effective than normal spacesuit helm
+		setProperty("disorient_resist_ear", 4)
+		setProperty("radprot", 5)
+		setProperty("meleeprot_head", 1)
+		setProperty("space_movespeed", 0)
+
+	engineer
+		name = "engineering light space helmet"
+		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
+		icon_state = "spacelight-e"
+
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
@@ -895,9 +923,10 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 	setupProperties()
 		..()
+		setProperty("meleeprot_head", 4)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
-		setProperty("space_movespeed", 0)
+		setProperty("space_movespeed", 0.2)
 
 	attack_self(var/mob/user)
 		if(src.has_visor)
@@ -971,6 +1000,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)
+		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
@@ -991,6 +1021,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)
+		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	mats = 10

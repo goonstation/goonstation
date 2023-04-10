@@ -1,25 +1,6 @@
 // Converted everything related to vampires from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
-/mob/proc/make_vampiric_thrall()
-	if (ishuman(src))
-		var/datum/abilityHolder/vampiric_thrall/A = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if (A && istype(A))
-			return
-
-		var/datum/abilityHolder/vampiric_thrall/V = src.add_ability_holder(/datum/abilityHolder/vampiric_thrall)
-
-		V.addAbility(/datum/targetable/vampiric_thrall/speak)
-		V.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
-
-
-		V.transferOwnership(src)
-
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			src.show_antag_popup("vampthrall")
-
-
 /* 	/		/		/		/		/		/		Ability Holder	/		/		/		/		/		/		/		/		*/
 
 /atom/movable/screen/ability/topBar/vampiric_thrall
@@ -65,9 +46,10 @@
 	tabName = "Thrall"
 	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
+	remove_on_clone = TRUE
 
 	var/mob/vamp_isbiting = null
-	var/datum/abilityHolder/vampire/master = 0
+	var/datum/abilityHolder/vampire/master
 
 	var/last_blood_points = 0
 

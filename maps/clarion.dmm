@@ -21081,12 +21081,12 @@
 "bpS" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
+	layer = 32;
 	mail_tag = "genetics";
 	mailgroup = "medresearch";
 	message = "1";
 	name = "mail chute-'Genetics'";
-	pixel_y = 32;
-	layer = 32
+	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
@@ -22662,8 +22662,8 @@
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
 /obj/machinery/computer/chem_requester/science{
-	dir = 4;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -26792,7 +26792,8 @@
 /obj/decal/poster/wallsign/no_smoking{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
+/obj/item/paper/emergencycooler,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "chJ" = (
@@ -28500,9 +28501,9 @@
 	name = "quartermasters mail router"
 	},
 /obj/machinery/conveyor/SN{
+	id = "qm2hall";
 	name = "cargo belt - north";
-	operating = 1;
-	id = "qm2hall"
+	operating = 1
 	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
@@ -32821,7 +32822,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "iuo" = (
@@ -32882,8 +32883,8 @@
 	pixel_x = -5
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -33612,14 +33613,11 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "jeP" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/light/flashlight,
-/obj/random_item_spawner/med_kit,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mail_booth,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -37255,8 +37253,8 @@
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/storage/crate/robotics_supplies_borg,
 /turf/simulated/floor/black,
@@ -39662,9 +39660,9 @@
 "pmg" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/conveyor/SN{
+	id = "qm2hall";
 	name = "cargo belt - north";
-	operating = 1;
-	id = "qm2hall"
+	operating = 1
 	},
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
@@ -40620,7 +40618,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "qih" = (
@@ -40862,8 +40860,8 @@
 	icon_state = "line1"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 9
+	dir = 9;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -41895,7 +41893,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/stool/bench/yellow,
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 30
@@ -43012,8 +43009,8 @@
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/machinery/computer/robot_module_rewriter{
 	dir = 4
@@ -47521,8 +47518,8 @@
 	icon_state = "0-2"
 	},
 /obj/decal/tile_edge/line/white{
-	icon_state = "line1";
-	dir = 8
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)

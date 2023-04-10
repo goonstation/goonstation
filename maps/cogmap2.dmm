@@ -40419,19 +40419,19 @@
 	dir = 4
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/storage/emergency)
-"bRR" = (
-/obj/reagent_dispensers/foamtank,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
 /obj/item/storage/wall/medical{
 	dir = 1;
 	pixel_y = 32
 	},
+/turf/simulated/floor,
+/area/station/storage/emergency)
+"bRR" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
 /obj/decal/stripe_caution,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bRS" = (
@@ -43681,7 +43681,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "bZy" = (
@@ -58058,8 +58058,8 @@
 /area/station/quartermaster/office)
 "cJR" = (
 /obj/machinery/computer/chem_requester/science{
-	dir = 4;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -73821,6 +73821,15 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"mcz" = (
+/obj/mail_booth,
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor6"
+	},
+/area/shuttle/arrival/station)
 "mde" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -141221,7 +141230,7 @@ arJ
 aaa
 aaa
 aKm
-aFx
+mcz
 aOn
 aFz
 aIP
@@ -141523,7 +141532,7 @@ aAD
 aaS
 arR
 aEA
-aFx
+aOn
 aOn
 aFz
 aFz

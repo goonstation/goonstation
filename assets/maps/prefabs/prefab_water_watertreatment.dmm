@@ -62,7 +62,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/water_treatment)
 "an" = (
-/obj/critter/bear,
+/mob/living/critter/bear,
 /obj/map/light/dimred,
 /obj/machinery/light/small/warm/very{
 	dir = 1;

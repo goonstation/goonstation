@@ -91,6 +91,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
+		hit.emp_act()
 		impact_image_effect(ie_type, hit)
 		return
 
@@ -132,7 +133,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	stun = 18
+	stun = 15.5
 	dissipation_delay = 2
 	dissipation_rate = 2
 	max_range = 8
@@ -397,6 +398,12 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/smgburst
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -418,7 +425,7 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
-	stun = 12
+	stun = 11
 	cost = 8
 	max_range = 8
 	sname = "full-auto"

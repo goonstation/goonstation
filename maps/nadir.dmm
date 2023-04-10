@@ -442,10 +442,10 @@
 "ajo" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
@@ -702,10 +702,10 @@
 /area/pasiphae)
 "aoa" = (
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	icon_state = "bdoormid0";
 	id = "nadir_exnex";
 	name = "Extraction Nexus Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
@@ -721,8 +721,8 @@
 /area/station/maintenance/northeast)
 "aox" = (
 /obj/machinery/computer/operating{
-	id = "OR2";
-	dir = 4
+	dir = 4;
+	id = "OR2"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
@@ -953,8 +953,8 @@
 /obj/table/nanotrasen/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged{
-	pixel_y = 7;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 7
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -1733,8 +1733,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/security{
 	dir = 8;
-	status = 1;
-	icon_state = "securityb"
+	icon_state = "securityb";
+	status = 1
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/blueblack{
@@ -1770,6 +1770,19 @@
 /turf/space/fluid/acid/clear,
 /area/station/engine/inner{
 	name = "Transception Array Control"
+	})
+"aQc" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
 	})
 "aQs" = (
 /obj/machinery/door_control{
@@ -2216,11 +2229,11 @@
 /area/pasiphae)
 "aZV" = (
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	dir = 4;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/engine,
@@ -2480,6 +2493,14 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"bgC" = (
+/obj/mail_booth,
+/turf/simulated/floor/blackwhite{
+	dir = 10
+	},
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "bgG" = (
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -3441,16 +3462,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"bxP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "byf" = (
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
@@ -4134,8 +4145,8 @@
 /area/station/science/hall)
 "bPw" = (
 /obj/machinery/computer/chem_requester/science{
-	dir = 8;
-	area_name = "Quartermaster's office"
+	area_name = "Quartermaster's office";
+	dir = 8
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
@@ -5118,11 +5129,11 @@
 /area/station/hallway/primary/southwest)
 "cmb" = (
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	dir = 4;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -5612,8 +5623,8 @@
 "cxw" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/cell/supercell{
 	pixel_x = -12;
@@ -6158,8 +6169,8 @@
 "cMH" = (
 /obj/table/reinforced/auto,
 /obj/item/bee_egg_carton{
-	pixel_y = 6;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 6
 	},
 /obj/machinery/light/small{
 	dir = 4;
@@ -6959,10 +6970,10 @@
 "dfm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/engine,
@@ -7311,8 +7322,8 @@
 	pixel_y = -12
 	},
 /obj/item/device/nanoloom{
-	pixel_y = -4;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
@@ -7400,8 +7411,8 @@
 /area/station/hallway/primary/southeast)
 "dru" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	aiControlDisabled = 1
+	aiControlDisabled = 1;
+	dir = 4
 	},
 /obj/access_spawn/hos,
 /obj/cable{
@@ -8136,8 +8147,8 @@
 	},
 /obj/access_spawn/maint,
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
 	can_rupture = 0;
+	dir = 4;
 	level = 1
 	},
 /turf/simulated/floor/black,
@@ -8154,19 +8165,19 @@
 	icon_state = "line1"
 	},
 /obj/item/device/radio/headset/multifreq{
-	pixel_y = 13;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 13
 	},
 /obj/item/device/radio/headset/multifreq{
 	pixel_y = 13
 	},
 /obj/item/device/radio/headset/medical{
-	pixel_y = 13;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /obj/item/device/radio/headset/medical{
-	pixel_y = 13;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 13
 	},
 /obj/item/device/radio/headset/engineer{
 	pixel_x = -5;
@@ -8176,27 +8187,27 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/headset/research{
-	pixel_y = 5;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /obj/item/device/radio/headset/research{
-	pixel_y = 5;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 5
 	},
 /obj/item/device/radio/headset/security{
-	pixel_y = -3;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /obj/item/device/radio/headset/security{
 	pixel_y = -3
 	},
 /obj/item/device/radio/headset/miner{
-	pixel_y = -3;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -3
 	},
 /obj/item/device/radio/headset/miner{
-	pixel_y = -3;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -3
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -8845,8 +8856,8 @@
 	},
 /obj/machinery/door_control{
 	id = "nadir_nukecore";
-	pixel_y = 24;
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
@@ -8911,20 +8922,20 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/snacks/cereal_box/roach{
-	pixel_y = -3;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -3
 	},
 /obj/item/reagent_containers/food/snacks/cereal_box/roach{
-	pixel_y = -5;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -5
 	},
 /obj/item/reagent_containers/food/drinks/bowl{
-	pixel_y = -14;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -14
 	},
 /obj/item/reagent_containers/food/drinks/bowl{
-	pixel_y = -14;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -14
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -9348,9 +9359,9 @@
 /obj/rack,
 /obj/item/tank/air,
 /obj/decal/cleanable/molten_item{
-	pixel_y = 7;
+	desc = "There's tiny bits of orange in it.";
 	pixel_x = -5;
-	desc = "There's tiny bits of orange in it."
+	pixel_y = 7
 	},
 /obj/item/device/light/flashlight{
 	pixel_x = 7
@@ -9802,8 +9813,8 @@
 "esK" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
-	pixel_y = 13;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 13
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/cafeteria)
@@ -10432,17 +10443,17 @@
 	pixel_y = -4
 	},
 /obj/item/paper_bin{
-	pixel_y = 6;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
 /obj/item/paper{
+	info = "cannot recommend site N due to secondary anomalous reading, unable to quantify, please forward to nadir project administration for immediate review.";
 	pixel_x = -2;
-	pixel_y = -10;
-	info = "cannot recommend site N due to secondary anomalous reading, unable to quantify, please forward to nadir project administration for immediate review."
+	pixel_y = -10
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -10525,19 +10536,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"eIz" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "eIK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -10609,18 +10607,6 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
-	})
-"eLp" = (
-/obj/random_item_spawner/junk/some,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
 	})
 "eLE" = (
 /obj/machinery/drainage,
@@ -11302,10 +11288,10 @@
 	name = "idle server"
 	},
 /obj/decal/cleanable/generic{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floorscorched1";
 	alpha = 200;
 	desc = "Toasted.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorscorched1";
 	name = "scorch"
 	},
 /obj/cable,
@@ -12514,8 +12500,8 @@
 "fCW" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/computer3/generic/personal{
-	pixel_y = 7;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 7
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -12874,11 +12860,11 @@
 "fLQ" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	dir = 4;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/engine,
@@ -13052,8 +13038,8 @@
 	})
 "fPW" = (
 /obj/fluid_spawner{
-	reagent_id = "tene";
-	amount = 4600
+	amount = 4600;
+	reagent_id = "tene"
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/bridge)
@@ -14044,16 +14030,16 @@
 	})
 "gkP" = (
 /obj/decal/cleanable/generic{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floorscorched1";
 	alpha = 200;
 	desc = "Toasted.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorscorched1";
 	name = "scorch"
 	},
 /obj/decal/cleanable/machine_debris,
 /obj/item/peripheral/network/powernet_card{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/peripheral/videocard{
 	pixel_y = -6
@@ -14199,9 +14185,9 @@
 /area/station/security/detectives_office)
 "gnw" = (
 /obj/machinery/conveyor{
+	dir = 1;
 	id = "pasibelt";
 	name = "Pasiphae disposal belt";
-	dir = 1;
 	operating = 1
 	},
 /turf/simulated/floor/plating,
@@ -14378,10 +14364,10 @@
 "gsx" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /obj/cable/orange{
@@ -14604,13 +14590,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gwG" = (
@@ -14747,8 +14726,8 @@
 "gzB" = (
 /obj/table/reinforced/auto,
 /obj/item/item_box/medical_patches/mini_silver_sulf{
-	pixel_y = 6;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/pen/pencil{
 	pixel_x = -8
@@ -15421,16 +15400,16 @@
 "gNa" = (
 /obj/table/reinforced/auto,
 /obj/item/extinguisher{
-	pixel_y = 4;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /obj/item/chem_grenade/firefighting{
-	pixel_y = 5;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 5
 	},
 /obj/item/chem_grenade/firefighting{
-	pixel_y = -1;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -1
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
@@ -16016,16 +15995,16 @@
 	pixel_x = -10
 	},
 /obj/item/nanoloom_cartridge{
-	pixel_y = -2;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /obj/item/nanoloom_cartridge{
-	pixel_y = -4;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -4
 	},
 /obj/item/storage/pill_bottle/antirad{
-	pixel_y = 9;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 10
@@ -17389,8 +17368,8 @@
 "hAU" = (
 /obj/item/sheet/glass{
 	amount = 10;
-	pixel_y = -3;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -3
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/horizontal,
@@ -17482,8 +17461,8 @@
 /area/pasiphae)
 "hCz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
 	can_rupture = 0;
+	dir = 4;
 	level = 1
 	},
 /turf/simulated/floor/black,
@@ -17671,9 +17650,9 @@
 	})
 "hHa" = (
 /obj/machinery/space_heater{
-	set_temperature = 0;
 	desc = "Made by Space Amish using traditional space techniques, with a little bit of aftermarket tinkering.";
-	name = "modified space HVAC"
+	name = "modified space HVAC";
+	set_temperature = 0
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
@@ -18087,8 +18066,8 @@
 /area/station/hallway/secondary/east)
 "hQG" = (
 /obj/decal/cleanable/ash{
-	pixel_y = 12;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 12
 	},
 /obj/decal/fakeobjects/skeleton{
 	desc = "Well, there's your problem.";
@@ -18097,10 +18076,10 @@
 	name = "crispy corpse"
 	},
 /obj/decal/cleanable/generic{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floorscorched1";
 	alpha = 200;
 	desc = "Toasted.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorscorched1";
 	name = "scorch"
 	},
 /obj/cable{
@@ -18878,8 +18857,8 @@
 	pixel_y = 3
 	},
 /obj/item/paper/book/from_file/transception_guide{
-	pixel_y = 3;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
@@ -19069,18 +19048,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
-	})
-"ilj" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/turf/simulated/floor/black/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
 	})
 "ilO" = (
 /obj/machinery/drainage,
@@ -19487,8 +19454,8 @@
 	pixel_y = 7
 	},
 /obj/item/old_grenade/oxygen{
-	pixel_y = 3;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 3
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -19502,9 +19469,9 @@
 	})
 "iuH" = (
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4;
 	aiControlDisabled = 1;
 	cant_emag = 1;
+	dir = 4;
 	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle{
@@ -20171,8 +20138,8 @@
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = 7;
-	pixel_x = -15
+	pixel_x = -15;
+	pixel_y = 7
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -20195,9 +20162,9 @@
 "iLM" = (
 /obj/machinery/computer/announcement{
 	dir = 8;
+	icon_state = "commb";
 	name = "Pasiphae Announcement Computer";
 	req_access_txt = "19";
-	icon_state = "commb";
 	status = 1
 	},
 /obj/cable{
@@ -20644,15 +20611,15 @@
 "iYt" = (
 /obj/storage/crate,
 /obj/item/wrapping_paper{
-	pixel_y = -4;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -4
 	},
 /obj/item/clothing/under/misc/mail{
 	pixel_x = -5
 	},
 /obj/item/clothing/head/mailcap{
-	pixel_y = 4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/scissors,
 /turf/simulated/floor/industrial,
@@ -21357,18 +21324,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"joN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/storage{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
-	})
 "joW" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -21629,8 +21584,8 @@
 	pixel_y = -12
 	},
 /obj/item/device/nanoloom{
-	pixel_y = -4;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
@@ -22242,11 +22197,11 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "market";
 	name = "Public Market";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
@@ -22320,8 +22275,8 @@
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie{
-	pixel_y = 16;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 16
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -25830,6 +25785,19 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"lfY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "lgg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26189,8 +26157,8 @@
 	icon_state = "index_card";
 	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
 	name = "printed card";
-	pixel_y = 13;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -27524,12 +27492,12 @@
 "lQq" = (
 /obj/table/auto,
 /obj/item/bandage{
-	pixel_y = 5;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /obj/item/bandage{
-	pixel_y = 5;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 5
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -28211,6 +28179,13 @@
 "mfc" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/storage{
@@ -29286,8 +29261,8 @@
 	pixel_x = 5
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
-	pixel_y = 7;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 7
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -29900,8 +29875,8 @@
 	})
 "mPS" = (
 /obj/disposaloutlet{
-	name = "ore chute outlet";
-	dir = 4
+	dir = 4;
+	name = "ore chute outlet"
 	},
 /obj/disposalpipe/trunk/mineral{
 	dir = 4
@@ -30175,12 +30150,12 @@
 "mYy" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/nuclear_engineering{
-	pixel_y = 3;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 3
 	},
 /obj/item/paper/book/from_file/nuclear_engineering{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
@@ -30522,8 +30497,8 @@
 	})
 "nhd" = (
 /obj/decal/cleanable/generic{
-	name = "fragments";
-	desc = "Bits of loose material. You can't tell what they originally belonged to - what pieces remain seem to be severely corroded."
+	desc = "Bits of loose material. You can't tell what they originally belonged to - what pieces remain seem to be severely corroded.";
+	name = "fragments"
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -31948,8 +31923,8 @@
 	pixel_x = -5
 	},
 /obj/item/clothing/head/that{
-	pixel_y = 6;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -32960,8 +32935,8 @@
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 8;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -33086,8 +33061,8 @@
 	},
 /obj/item/clothing/suit/bedsheet/red,
 /obj/item/device/flash{
-	pixel_y = -2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black/side,
 /area/pasiphae/crew)
@@ -33165,8 +33140,8 @@
 	icon_state = "gib2"
 	},
 /obj/fluid_spawner{
-	reagent_id = "tene";
-	amount = 4600
+	amount = 4600;
+	reagent_id = "tene"
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/sys)
@@ -33364,8 +33339,8 @@
 /area/station/quartermaster/refinery)
 "ozc" = (
 /obj/item/device/light/flashlight{
-	pixel_y = -12;
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = -12
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -34989,7 +34964,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "pmV" = (
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -38180,10 +38155,10 @@
 "qPw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
 	name = "Reactor Core Shielding";
-	density = 0;
 	opacity = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -38198,8 +38173,8 @@
 	pixel_y = -3
 	},
 /obj/item/extinguisher{
-	pixel_y = 1;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 1
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/power/apc/autoname_north/nopoweralert{
@@ -38961,9 +38936,9 @@
 	dir = 4
 	},
 /obj/forcefield/energyshield/perma/doorlink{
+	desc = "It's shimmering faintly.";
 	dir = 8;
-	name = "thrumming barrier";
-	desc = "It's shimmering faintly."
+	name = "thrumming barrier"
 	},
 /turf/simulated/floor/shuttlebay/flock/middle,
 /area/flock_trader)
@@ -39656,8 +39631,8 @@
 	},
 /obj/cable,
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
 	can_rupture = 0;
+	dir = 4;
 	level = 1
 	},
 /turf/simulated/floor/plating,
@@ -40056,8 +40031,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
 	can_rupture = 0;
+	dir = 4;
 	level = 1
 	},
 /turf/simulated/floor/black,
@@ -40815,7 +40790,8 @@
 /turf/simulated/floor/black,
 /area/pasiphae)
 "scP" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
+/obj/item/paper/emergencycooler,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
 "scW" = (
@@ -41342,11 +41318,11 @@
 /area/station/ranch)
 "spn" = (
 /obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
 	dir = 4;
 	icon_state = "bdoormid0";
 	id = "nadir_exnex";
 	name = "Extraction Nexus Shielding";
-	density = 0;
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
@@ -41370,12 +41346,12 @@
 	},
 /obj/machinery/cell_charger,
 /obj/item/disk/data/cartridge/captain{
-	pixel_y = 10;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 10
 	},
 /obj/item/device/nanoloom{
-	pixel_y = 15;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 15
 	},
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
@@ -41840,8 +41816,8 @@
 /area/station/science/research_director)
 "sBk" = (
 /obj/machinery/computer/operating{
-	id = "OR1";
-	dir = 8
+	dir = 8;
+	id = "OR1"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
@@ -43512,8 +43488,8 @@
 	dir = 4
 	},
 /obj/forcefield/energyshield/perma/doorlink{
-	name = "thrumming barrier";
-	desc = "It's shimmering faintly."
+	desc = "It's shimmering faintly.";
+	name = "thrumming barrier"
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
@@ -43628,8 +43604,8 @@
 "tjx" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/item/spacecash/fifty{
-	pixel_y = -9;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -44013,7 +43989,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "ttQ" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core/nuclear)
 "ttW" = (
@@ -44125,8 +44101,8 @@
 	tag = ""
 	},
 /obj/machinery/computer/operating{
-	id = "robotics";
-	dir = 4
+	dir = 4;
+	id = "robotics"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
@@ -44601,8 +44577,8 @@
 	dir = 6
 	},
 /obj/item/extinguisher{
-	pixel_y = 17;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 17
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
@@ -45011,18 +44987,18 @@
 	name = "wooden table"
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = 14;
-	pixel_x = -13
+	pixel_x = -13;
+	pixel_y = 14
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/round{
-	pixel_x = 2;
-	pixel_y = 8;
 	initial_reagents = "sugar";
-	name = "sugar bowl"
+	name = "sugar bowl";
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = 7;
-	pixel_x = -13
+	pixel_x = -13;
+	pixel_y = 7
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -45672,8 +45648,8 @@
 	persistent_id = "research"
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = -6;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -6
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -45901,8 +45877,8 @@
 	})
 "uoc" = (
 /obj/stool/bed/moveable{
-	name = "Morty's roller bed";
-	desc = "A solid metal frame with some padding on it, useful for sleeping on. It's got wheels, and smells vaguely of fur and death."
+	desc = "A solid metal frame with some padding on it, useful for sleeping on. It's got wheels, and smells vaguely of fur and death.";
+	name = "Morty's roller bed"
 	},
 /obj/critter/opossum/morty{
 	dir = 4
@@ -46001,12 +45977,12 @@
 	},
 /obj/item/sheet/steel{
 	amount = 10;
-	pixel_y = 3;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = -2;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = -2
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
@@ -46028,8 +46004,8 @@
 	pixel_x = -15
 	},
 /obj/item/matchbook{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -47088,11 +47064,11 @@
 /area/station/medical/medbay/treatment)
 "uQI" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
-	dir = 4;
-	name = "emergency chamber airlock";
 	aiControlDisabled = 1;
 	cant_emag = 1;
-	hardened = 1
+	dir = 4;
+	hardened = 1;
+	name = "emergency chamber airlock"
 	},
 /turf/unsimulated/floor/shuttle{
 	dir = 8
@@ -47759,12 +47735,12 @@
 	pixel_y = 4
 	},
 /obj/item/nanoloom_cartridge{
-	pixel_y = -4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -4
 	},
 /obj/item/nanoloom_cartridge{
-	pixel_y = -4;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -48076,8 +48052,8 @@
 	icon_state = "index_card";
 	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
 	name = "printed card";
-	pixel_y = 13;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -48719,8 +48695,8 @@
 "vGt" = (
 /obj/table/auto,
 /obj/item/reagent_containers/mender_refill_cartridge/burn{
-	pixel_y = 14;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 14
 	},
 /obj/item/reagent_containers/mender/burn,
 /turf/simulated/floor/shuttle{
@@ -49536,12 +49512,12 @@
 	icon_state = "line1"
 	},
 /obj/item/storage/box/PDAbox{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /obj/item/storage/box/trackimp_kit2{
-	pixel_y = 1;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -50624,11 +50600,11 @@
 	icon_state = "gib7"
 	},
 /obj/decal/cleanable/generic{
+	alpha = 200;
+	desc = "Toasted.";
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floorscorched1";
-	alpha = 200;
-	name = "scorch";
-	desc = "Toasted."
+	name = "scorch"
 	},
 /obj/item/raw_material/telecrystal{
 	pixel_y = 8
@@ -51905,8 +51881,8 @@
 	},
 /obj/machinery/coffeemaker/engineering,
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = -6;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -6
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -52329,16 +52305,16 @@
 "xwb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
-	pixel_y = -8;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -8
 	},
 /obj/item/pen{
-	pixel_y = -5;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -5
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = -11;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -11
 	},
 /obj/item/camera{
 	pixel_y = 11
@@ -52840,8 +52816,8 @@
 	pixel_y = 9
 	},
 /obj/item/storage/firstaid/toxin{
-	pixel_y = 9;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/item/storage/pill_bottle/antirad{
 	pixel_x = -7
@@ -52945,24 +52921,24 @@
 	},
 /obj/machinery/light_switch/east,
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 17;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 17
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 12;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 7;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_y = 12;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 7;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby{
@@ -53256,8 +53232,8 @@
 "xQe" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/beakerbox{
-	pixel_y = 4;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -53271,8 +53247,8 @@
 	pixel_x = 24
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_y = 5;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 5
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -81832,7 +81808,7 @@ rJg
 fDm
 gfS
 gbL
-hxY
+bgC
 eMn
 jQa
 gbL
@@ -84254,7 +84230,7 @@ ugi
 wWe
 dqY
 nQY
-bxP
+vKn
 vKn
 lyg
 cNf
@@ -104513,7 +104489,7 @@ erp
 lcu
 bSC
 hQo
-joN
+erp
 eRD
 uJB
 eRD
@@ -106921,7 +106897,7 @@ gYR
 gYR
 gYR
 gYR
-eIz
+txY
 qlx
 pRb
 pRb
@@ -108654,11 +108630,11 @@ mIG
 mIG
 mIG
 gFY
-pSO
-pSO
 avC
 pSO
 pSO
+pSO
+avC
 aDn
 mIG
 nYt
@@ -109034,8 +109010,8 @@ eGi
 hET
 pCL
 kRh
-pTT
-giN
+aQc
+aef
 kRh
 tkJ
 ayE
@@ -109897,7 +109873,7 @@ iww
 qxv
 xnE
 cHd
-eIK
+lfY
 oZp
 hXx
 oZp
@@ -111148,8 +111124,8 @@ dsv
 qmH
 ppQ
 kRh
-ilj
-aef
+niC
+giN
 ntr
 cBV
 cBV
@@ -112356,7 +112332,7 @@ ksc
 niC
 giN
 lFx
-eLp
+itp
 cBV
 cBV
 neB

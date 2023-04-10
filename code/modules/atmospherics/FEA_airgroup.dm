@@ -328,8 +328,11 @@
 		for(var/turf/simulated/member as anything in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
-			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
-			maxTemperature = max(maxTemperature, member.air.temperature)
+			if(member.air)
+				ADD_MIXTURE_PRESSURE(member.air, totalPressure)
+				maxTemperature = max(maxTemperature, member.air.temperature)
+			else
+				air_master.groups_to_rebuild |= src
 			LAGCHECK(LAG_REALTIME)
 
 		if(totalPressure / max(length(members), 1) < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

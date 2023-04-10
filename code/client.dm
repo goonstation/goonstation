@@ -332,7 +332,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
+									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
 							</html>
 						"}
@@ -359,12 +360,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
+				if (vpn_prescan()) return
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
 					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
-					fallback_scan()
 
 				// Successful Goonhub API query
 				else
@@ -384,12 +385,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							global.vpn_ip_checks["[src.address]"] = FALSE
 							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
 							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
-							fallback_scan()
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
 						else if (result || (((data["vpn"] == TRUE) || (data["tor"] == TRUE)) && (data["fraud_score"] > 75)))
-							vpn_bonk(data["host"], data["asn"], data["organization"], data["fraud_score"])
+							vpn_bonk(data["host"], data["ASN"], data["organization"], data["fraud_score"])
 							return
 						// IP is not a known VPN
 						else
@@ -398,7 +398,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			catch(var/exception/e)
 				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
 				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
-				fallback_scan()
 #endif
 
 	//admins and mentors can enter a server through player caps.
@@ -459,6 +458,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
+
 		if (!preferences)
 			preferences = new
 		if (istype(src.mob, /mob/new_player))
@@ -490,26 +490,32 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
 #endif
-
-			if (src.byond_version < 514 || src.byond_build < 1566)
-				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
-					src << link("http://www.byond.com/download/")
-			if (src.byond_version >= 515)
-				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
-					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
-/*
- 				else
-					alert(src, "You won't be able to play without updating, sorry!")
-					del(src)
-					return
-*/
-
 		else
 			if (noir)
 				animate_fade_grayscale(src, 1)
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+
+#ifdef LIVE_SERVER
+		// check client version validity
+		if (src.byond_version < 514 || src.byond_build < 1584)
+			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("http://www.byond.com/download/")
+			else // warn out of date clients
+				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
+/*
+			// kick out of date clients
+			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
+			del(src)
+			tgui_process.close_user_uis(src.mob)
+			return
+*/
+		if (src.byond_version >= 515)
+			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
+				src << link("http://www.byond.com/download/")
+#endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -1014,7 +1020,7 @@ var/global/curr_day = null
 	set hidden = TRUE
 	if(!A)
 		var/datum/promise/promise = new
-		var/datum/targetable/refpicker/abil = new
+		var/datum/targetable/refpicker/nonadmin/abil = new
 		abil.promise = promise
 		src.mob.targeting_ability = abil
 		src.mob.update_cursor()
@@ -1025,7 +1031,7 @@ var/global/curr_day = null
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
 		boutput(src, "Target is too far away (it needs to be next to you).")
 		return
-	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
 		return
 	var/icon/icon = getFlatIcon(A)
@@ -1656,7 +1662,7 @@ if([removeOnFinish])
 #ifndef SECRETS_ENABLED
 /client/proc/postscan(list/data)
 	return
-/client/proc/fallback_scan()
+/client/proc/vpn_prescan()
 	return
 #endif
 

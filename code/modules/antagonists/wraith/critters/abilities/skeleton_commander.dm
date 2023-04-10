@@ -14,10 +14,10 @@
 	/obj/critter/gunbot/drone/buzzdrone,
 	/obj/critter/mechmonstrositycrawler,
 	/obj/critter/bat/buff,
-	/obj/critter/lion,
-	/obj/critter/wraithskeleton,
+	/mob/living/critter/lion,
+	/mob/living/critter/skeleton/wraith,
 	/obj/critter/gunbot/heavy,
-	/obj/critter/bear,
+	/mob/living/critter/bear,
 	/mob/living/critter/brullbar,
 	/obj/critter/gunbot/drone)
 
@@ -54,7 +54,7 @@
 			return 1
 		var/turf/T = get_turf(target)
 		if (isturf(T))
-			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(T)
+			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(T)
 			S.alpha = 0
 			animate(S, alpha=255, time=2 SECONDS)
 			playsound(S.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)

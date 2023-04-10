@@ -136,12 +136,6 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
-"B" = (
-/obj/critter/lion,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/zoo)
 "C" = (
 /obj/critter/killertomato,
 /turf/simulated/floor/grass{
@@ -154,14 +148,20 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
-"E" = (
-/obj/critter/bear,
+"G" = (
+/mob/living/critter/bear,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
 /area/prefab/zoo)
 "J" = (
 /mob/living/critter/brullbar,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"O" = (
+/mob/living/critter/lion,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -286,7 +286,7 @@ l
 l
 k
 e
-B
+O
 c
 b
 "}
@@ -476,7 +476,7 @@ l
 l
 k
 e
-E
+G
 c
 b
 "}

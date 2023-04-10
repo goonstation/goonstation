@@ -282,6 +282,9 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
 
+		Z_LOG_DEBUG("Preload", "Generating minimaps...")
+		minimap_renderer = new
+
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
 		Z_LOG_DEBUG("Preload", "manuf_controls set_up")
@@ -512,6 +515,7 @@ var/f_color_selector_handler/F_Color_Selector
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
