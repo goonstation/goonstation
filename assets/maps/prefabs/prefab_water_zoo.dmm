@@ -149,7 +149,7 @@
 	},
 /area/prefab/zoo)
 "D" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

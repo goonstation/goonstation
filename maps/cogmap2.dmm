@@ -68102,7 +68102,7 @@
 /area/space)
 "dhU" = (
 /obj/item/raw_material/gold,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhV" = (
@@ -68118,7 +68118,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhY" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhZ" = (

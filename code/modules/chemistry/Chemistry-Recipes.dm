@@ -3734,9 +3734,9 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder?.my_atom)
-					new /obj/critter/fermid(get_turf(holder.my_atom))
+					new /mob/living/critter/fermid(get_turf(holder.my_atom))
 				else
-					new /obj/critter/fermid(pick(holder.covered_cache))
+					new /mob/living/critter/fermid(pick(holder.covered_cache))
 				return
 
 		life

@@ -9,6 +9,7 @@
 
 /datum/limb/mouth/fermid
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -44,9 +45,11 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	is_npc = TRUE
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite,
-						/datum/targetable/critter/sting/fermid,
-						/datum/targetable/critter/slam)
+	ai_type = /datum/aiHolder/fermid
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 
 	setup_hands()
 		..()

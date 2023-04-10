@@ -270,7 +270,7 @@
 		"asteroid" = list(
 			"ore" = 200,
 			/obj/critter/rockworm = 3,
-			/obj/critter/fermid = 10,
+			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
 			/mob/living/carbon/human/normal/miner = 0.1,

@@ -19116,7 +19116,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "boy" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -27826,7 +27826,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "epI" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "epJ" = (
@@ -30123,7 +30123,7 @@
 /area/station/maintenance/disposal)
 "ggw" = (
 /obj/item/raw_material/gold,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "ggJ" = (
@@ -31635,7 +31635,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
 "hxM" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -42802,7 +42802,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "qMf" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /obj/item/raw_material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)

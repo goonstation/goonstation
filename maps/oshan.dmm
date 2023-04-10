@@ -24102,7 +24102,7 @@
 /obj/item/raw_material/claretine,
 /obj/item/raw_material/claretine,
 /obj/item/raw_material/uqill,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "boT" = (
@@ -24341,7 +24341,7 @@
 "bpC" = (
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bpD" = (
@@ -24547,7 +24547,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/power)
 "bqf" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bqg" = (
@@ -24948,7 +24948,7 @@
 "brg" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powerhammer,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "brh" = (
@@ -25566,7 +25566,7 @@
 /area/station/engine/storage)
 "bsX" = (
 /obj/item/raw_material/uqill,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bsY" = (
@@ -26549,7 +26549,7 @@
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bvz" = (
@@ -26688,7 +26688,7 @@
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bvS" = (
