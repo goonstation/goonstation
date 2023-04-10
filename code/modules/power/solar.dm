@@ -380,17 +380,21 @@ TYPEINFO(/obj/machinery/power/solar)
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 
 	t += "<BR><HR><BR>"
-	t += "<B>Star Data:</B><BR>"
+	t += "<B>Star Data:</B><BR><BR>"
 	if (!src.tracker)
 		t += "Error! Tracker not found. <BR>"
 	else
 		if (!src.tracker.targetstar || src.tracker.targetstar.eclipse_status == ECLIPSE_ERROR)
 			t += "Star not found!<BR>"
 		else
-			t += "<B>Target:</B><BR>[src.tracker.targetstar.name]<BR>"
+			t += "<B>Target:</B>[src.tracker.targetstar.name]<BR>"
 			t += "<B>Station location:</B><BR>[src.tracker.targetstar.desc]<BR>" // this line usually extends off the side, sorry
-			t += "<B>Relative Rotation rate:</B><BR>[src.tracker.targetstar.rate] deg/h<BR>"
-			t += "<B>Eclipse Information:</B><BR>"
+			// this next bit tells them the exact rotation rate hm. Maybe worth nerfing?
+			if (src.tracker.targetstar.rate >= 0)
+				t += "<B>Relative Rotation rate:</B><BR>[src.tracker.targetstar.rate] deg/h (CW).<BR>"
+			else
+				t += "<B>Relative Rotation rate:</B><BR>[-src.tracker.targetstar.rate] deg/h (CCW).<BR>"
+			t += "<HR><B>Eclipse Information:</B><BR>"
 			if (length(src.tracker.targetstar.eclipse_order) <= 1)
 				t += "No upcoming eclipses detected with current orbit/position.<BR>"
 			else
@@ -419,12 +423,12 @@ TYPEINFO(/obj/machinery/power/solar)
 						currentstatus = "Planetary Eclipse (night time)"
 					if (ECLIPSE_TERRESTRIAL)
 						currentstatus = "Not Eclipsing"
-				t += "<B>Time to eclipse:</B>[time_to_text(timetostart)]<BR>"
-				t += "<B>Time to end of eclipse:</B>[time_to_text(timetoend)]<BR>"
-				t += "<B>Length of eclipse:</B>[time_to_text(src.tracker.targetstar.eclipse_time)]<BR>"
-				t += "<B>Length of peak eclipse:</B><BR>[time_to_text(src.tracker.targetstar.eclipse_time)]"
-				t += "<B>Current eclipsing status:</B> [currentstatus].<BR>"
-
+				t += "<B>Current eclipsing status:</B><BR>[currentstatus].<BR><BR>"
+				t += "<B>Time to next eclipse:</B><BR>[time_to_text(timetostart)]<BR>"
+				t += "<B>Time to end of eclipse:</B><BR>[time_to_text(timetoend)]<BR>"
+				t += "<B>Length of total eclipse:</B><BR>[time_to_text(src.tracker.targetstar.eclipse_time)]<BR>"
+				t += "<B>Length of eclipse:</B><BR>[time_to_text(src.tracker.targetstar.eclipse_time + src.tracker.targetstar.penumbra_time * 2)]<BR>"
+	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(t, "window=solcon")
 	onclose(user, "solcon")
 	return

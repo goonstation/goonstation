@@ -205,12 +205,12 @@
 			src.eclipse_magnitude = 1
 			src.down_time = rand(40 MINUTES, 100 MINUTES)
 			src.eclipse_time = rand(100 SECONDS, 7 MINUTES)
-			src.penumbra_time = src.eclipse_time * rand(15,30)
+			src.penumbra_time = src.eclipse_time * rand(3,6)
 			src.eclipse_cycle_length = src.down_time + 2 * src.penumbra_time + src.eclipse_time
 			src.eclipse_counter = rand(1, src.eclipse_cycle_length)
 			src.visibility = 1
 			src.photovoltaic_efficiency = 1
-			src.rate = rand(75,125)/50 // 75% - 125% of standard rotation
+			src.rate = rand(75,150)/50 // 75% - 125% of standard rotation
 			if(prob(50))
 				src.rate = -src.rate
 			src.angle = rand(1,359)
