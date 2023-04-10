@@ -424,9 +424,9 @@ TYPEINFO(/obj/item/device/flash/turbo)
 		return
 
 	attack(mob/living/M, mob/user)
-		flash_mob(M, user, 1)
+		flash_mob(M, user)
 
-	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
+	flash_mob(mob/living/M as mob, mob/user as mob)
 		if (user.mind && !(user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
 			..()
 			return
