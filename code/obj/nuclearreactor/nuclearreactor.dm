@@ -607,6 +607,10 @@
 			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
 			return FALSE
 
+	/// Transmuting nuclear engine into textured materials (namely jeans) causes a client crash
+	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+		return // do nothing intentionally
+
 
 
 
