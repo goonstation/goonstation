@@ -14,6 +14,7 @@
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "types.dm"					// stuff like childrentypesof()
 #include "datum.dm"					// hasvar()
+#include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
@@ -49,6 +50,7 @@
 #include "defines\ephemeral.dm"
 #include "defines\floors.dm"
 #include "defines\fluid.dm"
+#include "defines\food.dm"
 #include "defines\infernal.dm"
 #include "defines\input.dm"
 #include "defines\item.dm"

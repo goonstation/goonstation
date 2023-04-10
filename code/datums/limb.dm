@@ -498,6 +498,7 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
 
@@ -1292,6 +1293,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /datum/limb/eldritch
 	var/static/list/organs = list("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")

@@ -59,7 +59,7 @@
 		/obj/item/clothing/under/gimmick/frog = 20,\
 		/obj/vehicle/skateboard = 20,\
 		/obj/item/device/flyswatter = 20,\
-		/obj/critter/bear = 20,\
+		/mob/living/critter/bear = 20,\
 		/obj/item/clothing/shoes/jetpack = 20,\
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
 		/obj/item/gun/kinetic/foamdartshotgun = 20,

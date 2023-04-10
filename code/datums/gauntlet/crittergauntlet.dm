@@ -1041,7 +1041,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/mimic)
+		types = list(/mob/living/critter/mimic)
 
 	meaty
 		name = "Meat Thing"
@@ -1083,7 +1083,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/mob/living/critter/bear)
 
 	tomato
 		name = "Killer Tomato"
@@ -1209,7 +1209,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Lion"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/lion)
+		types = list(/mob/living/critter/lion)
 
 	maneater
 		name = "Man Eater"

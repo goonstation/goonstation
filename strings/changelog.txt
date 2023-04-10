@@ -1,4 +1,68 @@
 
+(t)mon apr 10 23
+(u)Amylizzle
+(p)13637
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Nuclear reactor power output has been buffed.
+(u)LeahTheTech
+(*)Added new specialist manufacturer to all engineering departments that can manufacture laser mirrors and splitters, and interdictor components.
+(*)Added laser mirrors that can deflect emitter lasers and PTL beams. Anchorable using a screwdriver.
+(*)Added beam splitters that can split PTL beams. Also anchorable using a screwdriver.
+(+)Removed interdictor crates, the manual can now be found on top of the specialist manufacturer.
+(+)Beam splitters can now be rotated using a crowbar
+(t)sun apr 09 23
+(u)Flappybat
+(e)⚖
+(*)Removed burst mode from the security taser.
+(u)tarmunora
+(e)⚖
+(+)Taser SMG auto projectiles brought into (near) parity with Signifer II projectiles and vice versa
+(+)Taser shotgun falloff curve adjusted, less powerful within ~2 tiles.
+(+)everyone is a teeny tiny bit slower. You probably won't even notice!
+(u)LeahTheTech
+(+)Vomiting from severe addiction is now a lot rarer and addiction progresses slower.
+(+)Disorient now slows you down slightly less (8 -> 7 slowdown)
+(u)Amylizzle
+(p)13625
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Adds clearer signage to the emergency coolers for the nuclear reactor. They are for emergencies only. You should not use them in normal operation.
+(u)The_Kakapo
+(p)13482
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds special sprites for different ingredients used in brain/heart/buttburgers
+(+)You can make flock heart/brainburgers, synthbutt/brain/heartburgers and cyberbutt/heartburgers and Spontaneous Intelligence Creation Core burgers.
+(t)sat apr 08 23
+(u)LeahTheTech
+(p)13572
+(e)🆕🎨🔄📦💡|C-Feature, C-Sprites, C-Rework, A-Game-Objects, A-Station-Systems
+(+)The PTL has been internally reworked, and should respond a lot faster. Please report any weirdness with the beam.
+(t)fri apr 07 23
+(u)Amylizzle
+(p)13600
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Mimic nametags are now invisible when they're disguised.
+(u)LeahTheTech
+(*)Mimics can now spawn as antagonist critters.
+(u)Amylizzle
+(p)13588
+(e)🪲🔎⚖🧱💨📦|C-Bug, C-Code-Quality, C-Balance, A-Materials, A-Atmospherics, A-Game-Objects
+(+)Fixed a minor bug with molitz beta, and enabled it to produce gas inside the nuclear reactor (and other things)
+(t)thu apr 06 23
+(u)aloe
+(+)Experimentally, the gangs game mode will rarely appear on the RP servers.
+(u)LeahTheTech
+(+)Standing next to a UV lamp will now warm you up slightly.
+(u)aloe
+(+)Emote volume is now halved if you're suffocating/being choked/have negative stamina, etc (any time you're forced to whisper when speaking); the range is adjusted proportionally.
+(t)wed apr 05 23
+(u)Amylizzle
+(p)13544
+(e)🗺🔒🔄📦📡|A-Mapping, A-Secret, C-Rework, A-Game-Objects, A-AI
+(*)Mimics are now capable of disguising themselves as a wide variety of objects, and can cause hallucinations.
+(u)Ikea
+(p)13574
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The game now tries to award the commander role for nukeops to an operative who has previously won a nuclear round before picking any non-winner operatives.
 (t)sun apr 02 23
 (u)Mr. Moriarty
 (p)12733

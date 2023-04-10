@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
+	material_amt = 1 //cannot efficiently recycle these
 
 	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
@@ -39,7 +40,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
-	var/thermal_mass = 420*25//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
 	New(material_name="steel")
@@ -119,8 +120,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			var/k = calculateHeatTransferCoefficient(RC.material,src.material)
 			//surface area in thermal contact (m^2)
 			var/A = min(src.thermal_cross_section,RC.thermal_cross_section)
-			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
-			RC.temperature = RC.temperature - (k * A * 1/RC.thermal_mass)*-deltaT
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT //8 because machines are ticked when % 8 == 0
+			RC.temperature = RC.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/RC.thermal_mass)*-deltaT
 
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
@@ -132,8 +133,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			var/deltaT = src.temperature - holder.temperature
 			var/k = calculateHeatTransferCoefficient(holder.material,src.material)
 			var/A = src.thermal_cross_section
-			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
-			holder.temperature = holder.temperature - (k * A * 1/holder.thermal_mass)*-deltaT
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT
+			holder.temperature = holder.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/holder.thermal_mass)*-deltaT
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
@@ -232,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
 	thermal_cross_section = 10
-	thermal_mass = 420*100//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	thermal_mass = 420*1000//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	extra_info()
 		. = ..()
@@ -286,7 +287,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/gas_thermal_cross_section = 15
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
-	thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	melt()
 		..()
@@ -311,7 +312,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
-			var/A = src.gas_thermal_cross_section
+			var/A = src.gas_thermal_cross_section * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
 
 			var/thermal_e = THERMAL_ENERGY(air_contents)
 			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
