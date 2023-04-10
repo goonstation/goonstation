@@ -392,12 +392,7 @@
 	src.last_processed = TIME
 	// the angle turns at src.rate degrees per hour.
 	#ifdef ECLIPSE_ERROR
-	src.eclipse_order = list(ECLIPSE_ERROR)
-	src.eclipse_cycle_on = FALSE
-	src.visibility = 0
-	src.photovoltaic_efficiency = 0
-	src.rate = 0
-	src.angle = 0
+	src.identity_check()
 	#endif
 	if (src.eclipse_cycle_on)
 		src.eclipse_counter += dt
