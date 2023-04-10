@@ -32822,7 +32822,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "iuo" = (
