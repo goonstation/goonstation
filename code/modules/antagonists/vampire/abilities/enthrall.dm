@@ -1,75 +1,53 @@
+// aloe wuz here making nonhumans thrallable in a refactor PR
 /datum/targetable/vampire/enthrall
 	name = "Enthrall"
 	desc = "Cast this ability on a dead human to revive them as a loyal thrall. Thralls will weaken as their blood drains : use this ability on existing thralls to donate additional blood."
 	icon_state = "enthrall"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
 	max_range = 1
-	cooldown = 300
+	cooldown = 30 SECONDS
 	pointCost = 200 //copy pasted below. sorry.
-	incapacitation_restriction = 0
 	can_cast_while_cuffed = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 	unlock_message = "You have gained Enthrall. It allows you to enthrall dead humans."
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		. = ..()
+		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src, pointCost), src.holder.owner)
+		return TRUE //not FALSE, we dont awnna deduct points until cast finishes
 
-		var/mob/living/M = holder.owner
-		//var/datum/abilityHolder/vampire/H = holder
-
-		if (!M || !target || !ismob(target))
-			return 1
-
+	castcheck(atom/target)
+		. = ..()
+		var/mob/M = src.holder.owner
 		if (M == target)
 			boutput(M, "<span class='alert'>Why would you want to enthrall yourself?</span>")
-			return 1
+			return TRUE
 
-		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
-
-		if (!ishuman(target))
-			return 1
-
-		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src, pointCost), M)
-		return 1 //not 0, we dont awnna deduct points until cast finishes
 
 /datum/targetable/vampire/speak_thrall
 	name = "Speak to Thralls"
 	desc = "Telepathically speak to all of your undead thralls."
 	icon_state = "thrallspeak"
 	targeted = 0
-	target_nodamage_check = 1
-	max_range = 1
-	cooldown = 1
-	pointCost = 0
 	not_when_in_an_object = FALSE
-	incapacitation_restriction = 1
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained 'Speak to Thralls'. It allows you to telepathically speak to all of your undead thralls."
 
 	cast(mob/target)
-		if (!holder)
-			return 1
-
+		. = ..()
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/H = holder
-		if (!M)
-			return 1
 
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
-			return
+			return TRUE
 
-		.= H.transmit_thrall_msg(message, M)
-
-		return 0
+		H.transmit_thrall_msg(message, M)
 
 
 /datum/action/bar/private/icon/vampire_enthrall_thrall
-	duration = 20
+	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "vampire_enthrall"
 	icon = 'icons/ui/actions.dmi'
@@ -79,7 +57,7 @@
 	color_active = "#3c6dc3"
 	color_success = "#3fb54f"
 	color_failure = "#8d1422"
-	var/mob/living/carbon/human/target
+	var/mob/living/target
 	var/datum/targetable/vampire/enthrall/enthrall
 	var/cost = 200
 
@@ -94,11 +72,11 @@
 
 		var/mob/living/M = owner
 
-		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || target == null || M == null)
+		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || M == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!isdead(target) && !istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
+		if (!isdead(src.target) && !isvampiricthrall(src.target))
 			boutput(M, "<span class='alert'>[target] needs to be dead first.</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -124,23 +102,25 @@
 		var/mob/living/M = owner
 		var/datum/abilityHolder/vampire/H = enthrall.holder
 
-		if (!istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
-			H.make_thrall(target)
-		else
+		if (isvampiricthrall(target))
 			target.full_heal()
+		else
+			H.make_thrall(target)
 
 		if (target in H.thralls)
 			//and add blood!
-			var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
-			if (V)
-				V.blood_points += 200
+			if (ishuman(target))
+				var/mob/living/carbon/human/human_target = src.target
+				var/datum/mutantrace/vampiric_thrall/V = human_target.mutantrace
+				if (V)
+					V.blood_points += 200
 
-			H.blood_tracking_output(cost)
+				H.blood_tracking_output(cost)
 
-			H.deductPoints(cost)
+				H.deductPoints(cost)
 
-			boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
-			boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
+				boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
+				boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
 		else
 			boutput(M, "<span class='notice'>You were not able to enthrall [target] - their ghost has departed.</span>")
 

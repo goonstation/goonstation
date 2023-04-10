@@ -264,7 +264,7 @@
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/carbon/human/M = victim
+			var/mob/living/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -292,7 +292,9 @@
 				return
 
 			M.full_heal()
-			M.decomp_stage = DECOMP_STAGE_NO_ROT
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.decomp_stage = DECOMP_STAGE_NO_ROT
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
@@ -369,7 +371,7 @@
 			object.icon_state = src.icon_state
 		return
 
-	castcheck()
+	castcheck(atom/target)
 		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...
 			return TRUE
 

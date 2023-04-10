@@ -822,6 +822,7 @@
 	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
 	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
 	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
+	var/target_self = TRUE						//! Can we target ourselves? (to prevent misclicks with negative abilities, mostly)
 	var/lock_holder = TRUE 						//! If FALSE, bypass holder lock when we cast this spell.
 	var/ignore_holder_lock = FALSE				//! Can we cast this ability when the holder is locked?
 	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
@@ -882,10 +883,12 @@
 
 	/// Where we actually do the ability effects. Don't put checks in here- that's all handled in tryCast().
 	/// If you need additional restrictions on the ability use that the vars don't cover, override castcheck() with those.
-	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMITTED TO CASTING THE ABILITY
+	/// return FALSE to deduct points on successful cast, TRUE to not deduct points.
+	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMMITTED TO CASTING THE ABILITY
 	proc/cast(atom/target)
 		if(interrupt_action_bars)
 			actions.interrupt(holder.owner, INTERRUPT_ACT)
+		return FALSE
 
 	//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 	proc/onAttach(var/datum/abilityHolder/H)
@@ -904,7 +907,7 @@
 			stack_trace("Orphaned ability used: [identify_object(src)] by [identify_object(usr)]. Issue: ([holder ? "no owning mob" : "no abilityHolder"].)")
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.holder.locked && !src.ignore_holder_lock)
-			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
+			boutput(src.holder.owner, "<span class='alert'>You're already casting an ability.</span>")
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		if (src.lock_holder)
@@ -912,7 +915,7 @@
 
 		// Check we have enough points
 		if (!src.holder.pointCheck(pointCost))
-			boutput(holder.owner, "<span class='alert'>You don't have enough points to cast [src.name].</span>")
+			boutput(src.holder.owner, "<span class='alert'>You don't have enough points to cast [src.name].</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while dead, if we're dead
 		else if (!src.holder.cast_while_dead && isdead(holder.owner))
@@ -920,17 +923,23 @@
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
 		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you're restrained.</span>")
+			boutput(src.holder.owner, "<span class='alert'>You cannot cast this ability while you're restrained.</span>")
 		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
+			boutput(src.holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (src.targeted && max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
+			boutput(src.holder.owner, "<span class='alert'>[target] is too far away.</span>")
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (!src.target_self && target == src.holder.owner)
+			boutput(src.holder.owner, "<span class='alert'>You can't use that ability on yourself.</span>")
+			return FALSE
 		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
 			// TODO maybe move to its own proc? bit out of place here
-			var/turf/T = get_turf(holder.owner)
+			var/turf/T = get_turf(src.holder.owner)
 			if (!isturf(T))
-				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+				boutput(src.holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 				. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			else
 				switch (src.restricted_area_check)

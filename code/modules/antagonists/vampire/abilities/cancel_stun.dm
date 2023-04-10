@@ -2,98 +2,51 @@
 	name = "Cancel stuns"
 	desc = "Recover from being stunned. You will take damage in proportion to the amount of stun you dispel."
 	icon_state = "nostun"
-	targeted = 0
-	target_nodamage_check = 0
-	max_range = 0
-	cooldown = 40
-	pointCost = 0
+	cooldown = 4 SECONDS
 	not_when_in_an_object = FALSE
-	incapacitation_restriction = 2
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	can_cast_while_cuffed = FALSE
 
-	proc/remove_stuns(var/message_type = 1)
-		if (!holder)
-			return
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return
-
-		if (is_incapacitated(M) && M.stamina < 40)
-			M.set_stamina(40)
-
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
-		M.delStatus("slowed")
-		M.delStatus("disorient")
-		M.change_misstep_chance(-INFINITY)
-		M.stuttering = 0
-		M.delStatus("drowsy")
-
-		if (message_type == 3)
-			violent_standup_twitch(M)
-			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
-			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
-		else if (message_type == 2)
-			boutput(M, "<span class='notice'>You feel your flesh knitting itself back together.</span>")
-		else
-			boutput(M, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
-
-		M.delStatus("resting")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.hud.update_resting()
-
-		M.force_laydown_standup()
-
-
-		logTheThing(LOG_COMBAT, M, "uses cancel stuns at [log_loc(M)].")
-		return
-
 	cast(mob/target)
-		if (!holder)
-			return 1
+		var/mob/living/user = holder.owner
 
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 1
-
-		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
+		var/greatest_stun = max(3, user.getStatusDuration("stunned"), user.getStatusDuration("weakened"), \
+								user.getStatusDuration("paralysis"), user.getStatusDuration("slowed")/4, user.getStatusDuration("disorient")/2)
 		greatest_stun = round(greatest_stun / 20)
 
-		M.TakeDamage("All", greatest_stun, 0)
-		M.take_oxygen_deprivation(-5)
-		M.losebreath = min(usr.losebreath - 3)
-		boutput(M, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
+		user.TakeDamage("All", greatest_stun, 0)
+		user.take_oxygen_deprivation(-5)
+		user.losebreath = min(usr.losebreath - 3)
+		boutput(user, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
 
-		src.remove_stuns(3)
-		return 0
+		src.remove_stuns()
+		return FALSE
 
-/datum/targetable/vampire/cancel_stuns/mk2
-	name = "Cancel stuns Mk2"
-	desc = "Recover from being stunned. Restores a minor amount of health."
-	cooldown = 600
-	pointCost = 0
-	incapacitation_restriction = 2
-	unlock_message = "Your cancel stuns power now heals you in addition to its original effect."
+	proc/remove_stuns(var/message_type = 1)
+		var/mob/living/user = holder.owner
 
-	cast(mob/target)
-		if (!holder)
-			return 1
+		if (is_incapacitated(user) && user.stamina < 40)
+			user.set_stamina(40)
 
-		var/mob/living/M = holder.owner
+		user.delStatus("stunned")
+		user.delStatus("weakened")
+		user.delStatus("paralysis")
+		user.delStatus("slowed")
+		user.delStatus("disorient")
+		user.change_misstep_chance(-INFINITY)
+		user.stuttering = 0
+		user.delStatus("drowsy")
 
-		if (!M)
-			return 1
+		violent_standup_twitch(user)
+		user.visible_message("<span class='alert'><B>[user] contorts their body and judders upright!</B></span>")
+		playsound(user.loc, 'sound/effects/bones_break.ogg', 60, 1)
 
-		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
-			M.HealDamage("All", 40, 40)
-			M.take_toxin_damage(-40)
-			M.take_oxygen_deprivation(-40)
-			M.losebreath = min(usr.losebreath - 40)
+		user.delStatus("resting")
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.hud.update_resting()
 
-		src.remove_stuns(2)
-		return 0
+		user.force_laydown_standup()
+
+
+		logTheThing(LOG_COMBAT, user, "uses cancel stuns at [log_loc(user)].")

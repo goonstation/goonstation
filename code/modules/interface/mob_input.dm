@@ -41,7 +41,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (!S.castcheck(src))
+			if (!S.castcheck(target))
 				if(S.sticky)
 					src.targeting_ability = S
 					update_cursor()
