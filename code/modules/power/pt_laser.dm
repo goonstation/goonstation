@@ -512,7 +512,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 #define NW_SE 0
 #define SW_NE 1
 TYPEINFO(/obj/laser_sink/mirror)
-	mats = list("MET-1"=10, "CRY-2"=10, "REF-1"=10)
+	mats = list("MET-1"=10, "CRY-1"=10, "REF-1"=30)
 /obj/laser_sink/mirror
 	name = "laser mirror"
 	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."
@@ -584,8 +584,10 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/traverse(proc_to_call)
 	src.out_laser.traverse(proc_to_call)
 
+TYPEINFO(/obj/laser_sink/splitter)
+	mats = list("MET-1"=20, "CRY-2"=20, "REF-1"=30)
 /obj/laser_sink/splitter
-	name = "laser splitter"
+	name = "beam splitter"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "laser_splitter"
 	density = 1
