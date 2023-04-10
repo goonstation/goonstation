@@ -393,7 +393,6 @@
 	src.last_processed = TIME
 	// the angle turns at src.rate degrees per hour.
 	if (src.eclipse_status == ECLIPSE_ERROR)
-		src.stationloc = "void"
 		src.identity_check()
 		return
 	if (src.eclipse_cycle_on)
