@@ -459,26 +459,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 
-#ifdef LIVE_SERVER
-		// check client version validity
-		if (src.byond_version < 514 || src.byond_build < 1584)
-			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("http://www.byond.com/download/")
-			else // warn out of date clients
-				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
-			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-/*
-			// kick out of date clients
-			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
-			del(src)
-			tgui_process.close_user_uis(src.mob)
-			return
-*/
-		if (src.byond_version >= 515)
-			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
-				src << link("http://www.byond.com/download/")
-#endif
-
 		if (!preferences)
 			preferences = new
 		if (istype(src.mob, /mob/new_player))
@@ -516,6 +496,26 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+
+#ifdef LIVE_SERVER
+		// check client version validity
+		if (src.byond_version < 514 || src.byond_build < 1584)
+			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("http://www.byond.com/download/")
+			else // warn out of date clients
+				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
+/*
+			// kick out of date clients
+			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
+			del(src)
+			tgui_process.close_user_uis(src.mob)
+			return
+*/
+		if (src.byond_version >= 515)
+			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
+				src << link("http://www.byond.com/download/")
+#endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
