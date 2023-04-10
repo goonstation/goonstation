@@ -104,8 +104,7 @@
 
 		if (isvampiricthrall(target))
 			target.full_heal()
-		else
-			H.make_thrall(target)
+			target.mind?.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = enthrall.holder)
 
 		if (target in H.thralls)
 			//and add blood!

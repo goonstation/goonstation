@@ -1,4 +1,30 @@
-
+(t)mon apr 10 23
+(u)LeahTheTech
+(*)Added new specialist manufacturer to all engineering departments that can manufacture laser mirrors and splitters, and interdictor components.
+(*)Added laser mirrors that can deflect emitter lasers and PTL beams. Anchorable using a screwdriver.
+(*)Added beam splitters that can split PTL beams. Also anchorable using a screwdriver.
+(+)Removed interdictor crates, the manual can now be found on top of the specialist manufacturer.
+(t)sun apr 09 23
+(u)Flappybat
+(e)⚖
+(*)Removed burst mode from the security taser.
+(u)tarmunora
+(e)⚖
+(+)Taser SMG auto projectiles brought into (near) parity with Signifer II projectiles and vice versa
+(+)Taser shotgun falloff curve adjusted, less powerful within ~2 tiles.
+(+)everyone is a teeny tiny bit slower. You probably won't even notice!
+(u)LeahTheTech
+(+)Vomiting from severe addiction is now a lot rarer and addiction progresses slower.
+(+)Disorient now slows you down slightly less (8 -> 7 slowdown)
+(u)Amylizzle
+(p)13625
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Adds clearer signage to the emergency coolers for the nuclear reactor. They are for emergencies only. You should not use them in normal operation.
+(u)The_Kakapo
+(p)13482
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds special sprites for different ingredients used in brain/heart/buttburgers
+(+)You can make flock heart/brainburgers, synthbutt/brain/heartburgers and cyberbutt/heartburgers and Spontaneous Intelligence Creation Core burgers.
 (t)sat apr 08 23
 (u)LeahTheTech
 (p)13572
