@@ -111,7 +111,7 @@
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
 				/mob/living/critter/fermid,
-				/obj/critter/bear)
+				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else

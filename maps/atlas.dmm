@@ -4701,7 +4701,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/brig/genpop)
 "apy" = (
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "apz" = (

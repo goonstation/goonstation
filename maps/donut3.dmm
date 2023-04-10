@@ -26833,8 +26833,8 @@
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
 "idb" = (
-/obj/machinery/power/lgenerator,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellowblack,
 /area/station/storage/primary)
 "idd" = (
@@ -41914,7 +41914,6 @@
 /obj/item/device/radio/intercom/loudspeaker/speaker/east{
 	pixel_x = -22
 	},
-/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -78936,6 +78935,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/machinery/power/lgenerator,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
