@@ -224,7 +224,7 @@
 			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
 			src.photovoltaic_efficiency = 2.5
-			src.rate = rand(75,125)/50
+			src.rate = rand(75,150)/50
 			if(prob(50)) src.rate = -src.rate
 			src.angle = rand(1, 359)
 		if ("travel") // for ship maps (in deep space). Uses a slightly randomer randomiser
@@ -234,8 +234,8 @@
 			src.eclipse_status = ECLIPSE_FALSE
 			src.eclipse_order = list(ECLIPSE_FALSE)
 			src.visibility = 1
-			src.photovoltaic_efficiency = rand(20,150)/100 // it could be anywhere ooo
-			src.rate = rand(70,160)/50 // more range than the default
+			src.photovoltaic_efficiency = rand(60,150)/100 // it could be anywhere, so the brightness is variable.
+			src.rate = rand(75,150)/50
 			if(prob(50)) src.rate = -rate
 			src.angle = rand(1,359)
 		if ("magus") //nadir. Magus has an 8 hour rotation compared to Typhon. However, it's far enough that its main lighting comes from the binary.
