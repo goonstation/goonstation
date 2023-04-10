@@ -44913,7 +44913,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "qnG" = (
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "qqR" = (

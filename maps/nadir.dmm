@@ -34964,7 +34964,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "pmV" = (
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
