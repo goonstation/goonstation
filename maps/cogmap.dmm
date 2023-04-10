@@ -53117,15 +53117,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kWg" = (
-/obj/machinery/shieldgenerator/energy_shield,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "tile1"
-	},
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
