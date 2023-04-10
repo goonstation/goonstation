@@ -19,7 +19,9 @@
 	var/angle = 0
 	var/dx
 	var/dy
+	var/dt
 	var/rate = 0 // deg/hr
+	var/last_processed = 0 // used to calculate mult
 	//jargon i use: global sun means for the whole z level, local sun means it overrides the global in an area.
 	/// The datum/area which this star applies to. Generally used for z areas like centcomm. Null indicates global sun.
 	var/area/sun_area = null
@@ -381,22 +383,24 @@
 
 /// calculate the sun's position given the time of round, plus other things
 /datum/sun/proc/calc_position()
-	// this proc, it's called every 2.3 seconds, 23 ticks. For some reason.
+	// this proc, it's called every approximate 2.3 seconds, 23 ticks. For some reason.
 	// 'code/datums/controllers/process/world.dm' line 8 has irritated me.
 	if (!src.rotates)
 		return
-	src.angle = (src.angle + (src.rate * 2.3 SECONDS / 360) + 360)%360
-	// the angle turns at rate degrees per hour.
-#ifdef ECLIPSE_ERROR
+	dt = TIME - src.last_processed
+	src.angle = (src.angle + (src.rate * dt / 3600))%3600
+	src.last_processed = TIME
+	// the angle turns at src.rate degrees per hour.
+	#ifdef ECLIPSE_ERROR
 	src.eclipse_order = list(ECLIPSE_ERROR)
 	src.eclipse_cycle_on = FALSE
 	src.visibility = 0
 	src.photovoltaic_efficiency = 0
 	src.rate = 0
 	src.angle = 0
-#endif
+	#endif
 	if (src.eclipse_cycle_on)
-		src.eclipse_counter += 2.3 SECONDS // this is approximately right? It's good enough for our purposes.
+		src.eclipse_counter += dt
 		switch (src.eclipse_status)
 			if (ECLIPSE_FALSE)
 				if (src.eclipse_counter >= src.down_time)
@@ -464,7 +468,7 @@
 				continue
 		T.targetstar = src
 		T.set_angle(angle)
-// update every solar
+	// update every solar
 	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
 		var/turf/dummy = get_turf(S)
 		if (dummy.z != src.zlevel)
