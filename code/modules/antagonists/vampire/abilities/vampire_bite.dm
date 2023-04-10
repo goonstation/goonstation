@@ -324,6 +324,7 @@
 	not_when_handcuffed = TRUE
 	lock_holder = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	var/thrall = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -356,6 +357,9 @@
 		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)
 
 		return 0
+
+/datum/targetable/vampire/vampire_bite/thrall
+	thrall = TRUE
 
 /datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
