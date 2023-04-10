@@ -126,6 +126,7 @@
 	#endif
 /// This can be called to set the sun's data based on its assigned stationloc
 /datum/sun/proc/identity_check()
+	// this is only supposed to be called when the thing is initialised.
 	// the sun datums most places don't have a use at present, since those places don't have solars.
 	// but they are supposedly constructible so we need to have that data anyway.
 	// for anyone setting up adventure zones with solars in the future, make sure your 'outside' bits have areas,
@@ -391,9 +392,10 @@
 	src.angle = (src.angle + (src.rate * dt / 3600))%3600
 	src.last_processed = TIME
 	// the angle turns at src.rate degrees per hour.
-	#ifdef ECLIPSE_ERROR
-	src.identity_check()
-	#endif
+	if (src.eclipse_status == ECLIPSE_ERROR)
+		src.stationloc = "void"
+		src.identity_check()
+		return
 	if (src.eclipse_cycle_on)
 		src.eclipse_counter += dt
 		switch (src.eclipse_status)
@@ -408,14 +410,16 @@
 				if (src.eclipse_counter >= (src.down_time + src.penumbra_time))
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 					if (src.eclipse_status == ECLIPSE_UMBRA)
-						command_alert("The eclipse is now entering totality. Solars are at 0% power. Totality is expected to last for [time_to_text(src.eclipse_time)]." , "Total Solar Eclipse", alert_origin = ALERT_WEATHER)
+						if (src.zlevel == 1 && isnull(src.sun_area))
+							command_alert("The eclipse is now entering totality. Solars are at 0% power. Totality is expected to last for [time_to_text(src.eclipse_time)]." , "Total Solar Eclipse", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility -= ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PENUMBRA_WANING)
 				if (src.eclipse_counter >= src.eclipse_cycle_length)
 					src.eclipse_status = next_in_list(src.eclipse_status, src.eclipse_order)
 					src.eclipse_counter = 0
-					command_alert("The eclipse has now ended. Solar Panels are now back to normal opertion. The next one is predicted to be in [time_to_text(src.down_time)].","Eclipse Ended", alert_origin = ALERT_WEATHER)
+					if (src.zlevel == 1 && isnull(src.sun_area))
+						command_alert("The eclipse has now ended. Solar Panels are now back to normal opertion. The next one is predicted to be in [time_to_text(src.down_time)].","Eclipse Ended", alert_origin = ALERT_WEATHER)
 				else
 					src.visibility += ((1 - src.eclipse_magnitude) / src.penumbra_time)
 			if (ECLIPSE_PARTIAL)
