@@ -1,4 +1,9 @@
+
 (t)mon apr 10 23
+(u)Amylizzle
+(p)13637
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Nuclear reactor power output has been buffed.
 (u)LeahTheTech
 (*)Added new specialist manufacturer to all engineering departments that can manufacture laser mirrors and splitters, and interdictor components.
 (*)Added laser mirrors that can deflect emitter lasers and PTL beams. Anchorable using a screwdriver.
