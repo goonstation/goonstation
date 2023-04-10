@@ -138,7 +138,7 @@
 			M.HealDamage("All", 3, 3)
 			M.take_toxin_damage(-1)
 			M.take_oxygen_deprivation(-1)
-			if (mult >= 1 && !ischangeling(HH)) //mult is only 1 or greater during a pointblank true suck
+			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
 					if (!HH.getStatusDuration("paralysis"))
 						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
@@ -150,7 +150,8 @@
 
 			if (istype(H)) H.blood_tracking_output()
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90) && !ischangeling(HH))
+	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+		boutput(HH, "<span class='alert'>You feel your soul slipping away...</span>")
 		HH.death(FALSE)
 
 	if (istype(H))
@@ -291,7 +292,7 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-			if (mult >= 1 && !ischangeling(HH)) //mult is only 1 or greater during a pointblank true suck
+			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
 					if (!HH.getStatusDuration("paralysis"))
 						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
@@ -301,7 +302,8 @@
 						HH.changeStatus("weakened", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90) && !ischangeling(HH))
+	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+		boutput(HH, "<span class='alert'>You feel your soul slipping away...</span>")
 		HH.death(FALSE)
 
 	eat_twitch(src.owner)
@@ -313,16 +315,15 @@
 	name = "Bite Victim"
 	desc = "Bite the victim's neck to drain them of blood."
 	icon_state = "bite"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	when_stunned = FALSE
+	not_when_handcuffed = TRUE
 	lock_holder = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
-	var/thrall = 0
 
 	cast(mob/target)
 		if (!holder)
@@ -355,9 +356,6 @@
 		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)
 
 		return 0
-
-/datum/targetable/vampire/vampire_bite/thrall
-	thrall = 1
 
 /datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
