@@ -191,6 +191,14 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
+/obj/item/cable_coil/proc/check_for_catwalk_in_turf(var/turf/T)
+	for(var/obj/grille/catwalk/catwalk in T)
+		if (!catwalk) continue
+		if (!istype(catwalk, /obj/grille/catwalk/)) continue
+		return TRUE
+
+	return FALSE
+
 /obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
@@ -257,11 +265,11 @@ obj/item/cable_coil/dropped(mob/user)
 
 // Placing a cable on a turf
 /obj/item/cable_coil/proc/turf_place(turf/target, turf/source, mob/user)
-	if (target.intact)		// if floor is intact, complain
+	if (target.intact && !check_for_catwalk_in_turf(target))	// if floor is intact, complain, unless it's on a catwalk
 		return
-	if (!(istype(target,/turf/simulated/floor) || istype(target,/turf/space/fluid)))
+	if (!(istype(target,/turf/simulated/floor) || istype(target,/turf/space/fluid) || check_for_catwalk_in_turf(target)))
 		return
-	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
+	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid) || check_for_catwalk_in_turf(source)))
 		return
 	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
@@ -285,7 +293,7 @@ obj/item/cable_coil/dropped(mob/user)
 // called when cable_coil is clicked on an installed obj/cable or auto-laying found a stub to connect to
 /obj/item/cable_coil/proc/cable_join(obj/cable/C, turf/source, mob/user, attempt_at_source)
 	var/turf/target = C.loc
-	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
+	if (!isturf(target) || (target.intact && !check_for_catwalk_in_turf(target)))		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
 	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
@@ -301,7 +309,7 @@ obj/item/cable_coil/dropped(mob/user)
 	//Okay so this code branch tries to connect C on the turf you're standing on, for when you slap an obj/cable by hand
 	//Auto-laying cable doesn't need it because that attempts to put a cable on both turfs anyway
 	if (attempt_at_source && (C.d1 == dirn || C.d2 == dirn))		// one end of the clicked cable is pointing towards us
-		if (source.intact)						// can't place a cable if the floor is complete
+		if (source.intact && !check_for_catwalk_in_turf(source))						// can't place a cable if the floor is complete
 			boutput(user, "You can't lay cable there unless the floor tiles are removed.")
 			return
 		else
