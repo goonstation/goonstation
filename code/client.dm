@@ -360,12 +360,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
+				if (vpn_prescan()) return
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
 					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
-					fallback_scan()
 
 				// Successful Goonhub API query
 				else
@@ -385,12 +385,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							global.vpn_ip_checks["[src.address]"] = FALSE
 							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
 							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
-							fallback_scan()
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
 						else if (result || (((data["vpn"] == TRUE) || (data["tor"] == TRUE)) && (data["fraud_score"] > 75)))
-							vpn_bonk(data["host"], data["asn"], data["organization"], data["fraud_score"])
+							vpn_bonk(data["host"], data["ASN"], data["organization"], data["fraud_score"])
 							return
 						// IP is not a known VPN
 						else
@@ -399,7 +398,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			catch(var/exception/e)
 				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
 				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
-				fallback_scan()
 #endif
 
 	//admins and mentors can enter a server through player caps.
@@ -1657,7 +1655,7 @@ if([removeOnFinish])
 #ifndef SECRETS_ENABLED
 /client/proc/postscan(list/data)
 	return
-/client/proc/fallback_scan()
+/client/proc/vpn_prescan()
 	return
 #endif
 
