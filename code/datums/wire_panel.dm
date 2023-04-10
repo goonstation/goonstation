@@ -61,18 +61,18 @@
  */
 /datum/wirePanel/indicatorMap
 	var/static/list/datum/wirePanel/indicatorDefintion/indicators = list(
-		WPANEL_INDICATOR(WIRE_CONTROL_GROUND, "yellow", "on", "blinking"),
+		WPANEL_INDICATOR(WIRE_CONTROL_GROUND, "yellow", "on", "blink"),
 		WPANEL_INDICATOR(WIRE_CONTROL_POWER_A, "blue", "on", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_POWER_B, "brown", "on", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_A, "green", "on", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_B, "orange", "on", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_SILICON, "cyan", "on", "blinking"),
-		WPANEL_INDICATOR(WIRE_CONTROL_ACCESS, "red", "on", "blinking"),
-		WPANEL_INDICATOR(WIRE_CONTROL_SAFETY, "pink", "off", "blinking"),
-		WPANEL_INDICATOR(WIRE_CONTROL_RESTRICT, "white", "on", "blinking"),
+		WPANEL_INDICATOR(WIRE_CONTROL_SILICON, "cyan", "on", "blink"),
+		WPANEL_INDICATOR(WIRE_CONTROL_ACCESS, "red", "on", "blink"),
+		WPANEL_INDICATOR(WIRE_CONTROL_SAFETY, "pink", "off", "blink"),
+		WPANEL_INDICATOR(WIRE_CONTROL_RESTRICT, "white", "on", "blink"),
 		WPANEL_INDICATOR(WIRE_CONTROL_ACTIVATE, "grey", "off", "on"),
-		WPANEL_INDICATOR(WIRE_CONTROL_RECIEVE, "purple", "blinking", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_TRANSMIT, "lime", "blinking", "off"),
+		WPANEL_INDICATOR(WIRE_CONTROL_RECEIVE, "purple", "blink", "off"),
+		WPANEL_INDICATOR(WIRE_CONTROL_TRANSMIT, "lime", "blink", "off"),
 		)
 
 /**
