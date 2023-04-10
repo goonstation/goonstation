@@ -609,7 +609,7 @@
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
-		if(mat1.id == "jean")
+		if(mat1.mat_id == "jean")
 			return
 		. = ..()
 
