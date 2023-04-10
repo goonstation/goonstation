@@ -194,10 +194,6 @@ TYPEINFO(/datum/component/wirePanel)
 
 	. = src.act_wire(parent, user, wire, action)
 
-// /// Appends to a list the state of which wires are cut by index.
-// /datum/component/wirePanel/proc/state_cuts(obj/parent, list/cuts)
-// 	cuts.Add(src.cut_wires)
-
 /// Returns the currently active wire control flags
 /datum/component/wirePanel/proc/state_controls(obj/parent)
 	return src.active_wire_controls

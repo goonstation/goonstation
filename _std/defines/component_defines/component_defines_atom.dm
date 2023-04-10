@@ -157,7 +157,6 @@
 	/// When removed
 	#define COMSIG_ITEM_IMPLANT_REMOVED "implant_removed"
 
-
 	// ---- wire panel signals ----
 
 	/// When a mob attempts an action on a wire (mob/user, wire, action)

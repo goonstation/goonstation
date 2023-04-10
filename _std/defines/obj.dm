@@ -44,7 +44,7 @@
 /// Activate the thing
 #define WIRE_CONTROL_ACTIVATE	(1<<9)
 /// Recieve data
-#define WIRE_CONTROL_RECIEVE	(1<<10)
+#define WIRE_CONTROL_RECEIVE	(1<<10)
 /// Transmit data
 #define WIRE_CONTROL_TRANSMIT	(1<<11)
 

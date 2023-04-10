@@ -1,7 +1,7 @@
 import { Window } from '../layouts';
 import { Box, Collapsible, Dimmer, Icon, Section, Stack } from "../components";
 import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePanelTheme, WirePanelThemes } from './common/WirePanel/type';
-import { SimpleWires, SkeuomorphicWires, SimpleControls, SkeuomorphicControls } from './common/WirePanel';
+import { TextWires, PhysicalWires, TextControls, PhysicalControls } from './common/WirePanel';
 import { useBackend } from '../backend';
 import { InfernoNode } from 'inferno';
 
@@ -105,16 +105,16 @@ const WirePanelThemeSelector = (props: WirePanelTheme) => {
   return (
     <>
       { (wireTheme === WirePanelThemes.WPANEL_THEME_TEXT || !wireTheme) && (
-        <SimpleWires />
+        <TextWires />
       )}
       { (wireTheme === WirePanelThemes.WPANEL_THEME_PHYSICAL) && (
-        <SkeuomorphicWires />
+        <PhysicalWires />
       )}
       {(controlTheme === WirePanelThemes.WPANEL_THEME_TEXT || !controlTheme) && (
-        <SimpleControls />
+        <TextControls />
       )}
       {(controlTheme === WirePanelThemes.WPANEL_THEME_PHYSICAL) && (
-        <SkeuomorphicControls />
+        <PhysicalControls />
       )}
     </>
   );

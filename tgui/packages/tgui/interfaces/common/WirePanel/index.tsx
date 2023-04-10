@@ -4,14 +4,14 @@ import { Blink, Box, Button, Divider, Flex, Section, Stack, Tooltip } from "../.
 import { capitalize } from "../stringUtils";
 import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus, WirePanelData, WireProps } from "./type";
 
-export const SimpleWires = (props, context) => {
+export const TextWires = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
     <Box className="WirePanel-wires-container">
       {wirePanelStatic.wires.map((wire, i) => {
         return (
-          <SimpleWire
+          <TextWire
             key={i}
             index={i}
             name={wirePanelStatic.wires[i].name}
@@ -25,14 +25,14 @@ export const SimpleWires = (props, context) => {
   );
 };
 
-export const SkeuomorphicWires = (props, context) => {
+export const PhysicalWires = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
     <Box className="WirePanel-wires-container">
       {wirePanelStatic.wires.map((wire, i) => {
         return (
-          <SkeuomorphWire
+          <PhysicalWire
             key={i}
             index={i}
             name={wirePanelStatic.wires[i].name}
@@ -46,7 +46,7 @@ export const SkeuomorphicWires = (props, context) => {
   );
 
 };
-export const SimpleControls = (props, context) => {
+export const TextControls = (props, context) => {
   const { data } = useBackend<WirePanelData>(context);
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
@@ -55,7 +55,7 @@ export const SimpleControls = (props, context) => {
       <Box className="WirePanel-control-container">
         {wirePanelStatic.indicators.map((indicator, i) => {
           return (
-            <SimpleControl
+            <TextControl
               key={i}
               name={wirePanelStatic.indicators[i].name}
               value={wirePanelStatic.indicators[i].value}
@@ -70,7 +70,7 @@ export const SimpleControls = (props, context) => {
   );
 };
 
-export const SkeuomorphicControls = (props, context) => {
+export const PhysicalControls = (props, context) => {
   const { data } = useBackend<WirePanelData>(context);
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
@@ -78,7 +78,7 @@ export const SkeuomorphicControls = (props, context) => {
       <Stack>
         {wirePanelStatic.indicators.map((indicator, i) => {
           return (
-            <SkeuomorphicControl
+            <PhysicalControl
               key={i}
               pattern={wirePanelDynamic.indicators[i].pattern}
               colorValue={wirePanelStatic.indicators[i].value}
@@ -99,7 +99,7 @@ export const WirePanelShowControls = (props, context) => {
       <Box className="WirePanel-wires-container">
         {wirePanelStatic.wires.map((wire, i) => {
           return (
-            <SkeuomorphWire
+            <PhysicalWire
               key={i}
               index={i}
               name={wirePanelStatic.wires[i].name}
@@ -114,7 +114,7 @@ export const WirePanelShowControls = (props, context) => {
       <Box className="WirePanel-control-container">
         {wirePanelStatic.indicators.map((indicator, i) => {
           return (
-            <SimpleControl
+            <TextControl
               key={i}
               name={wirePanelStatic.indicators[i].name}
               value={wirePanelStatic.indicators[i].value}
@@ -137,7 +137,7 @@ export const WirePanelShowIndicators = (props, context) => {
       <Box className="WirePanel-wires-container">
         {wirePanelStatic.wires.map((wire, i) => {
           return (
-            <SkeuomorphWire
+            <PhysicalWire
               key={i}
               index={i}
               name={wirePanelStatic.wires[i].name}
@@ -153,7 +153,7 @@ export const WirePanelShowIndicators = (props, context) => {
         <Stack>
           {wirePanelStatic.indicators.map((indicator, i) => {
             return (
-              <SkeuomorphicControl
+              <PhysicalControl
                 key={i}
                 pattern={wirePanelDynamic.indicators[i].pattern}
                 colorValue={wirePanelStatic.indicators[i].value}
@@ -176,7 +176,7 @@ export const WirePanelAirlocks = (props, context) => {
         <Box className="WirePanel-wires-container">
           {wirePanelStatic.wires.map((wire, i) => {
             return (
-              <SimpleWire
+              <TextWire
                 key={i}
                 index={i}
                 name={wirePanelStatic.wires[i].name}
@@ -191,7 +191,7 @@ export const WirePanelAirlocks = (props, context) => {
         <Box className="WirePanel-control-container">
           {wirePanelStatic.indicators.map((indicator, i) => {
             return (
-              <SimpleControl
+              <TextControl
                 key={i}
                 name={wirePanelStatic.indicators[i].name}
                 value={wirePanelStatic.indicators[i].value}
@@ -207,7 +207,7 @@ export const WirePanelAirlocks = (props, context) => {
   );
 };
 
-const SimpleWire = (props: WireProps) => {
+const TextWire = (props: WireProps) => {
   const { act, name, value, cut, index } = props;
   return (
     <Box>
@@ -235,11 +235,6 @@ const SimpleWire = (props: WireProps) => {
                 content="Pulse"
                 onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_PULSE })}
               />
-              {/* <RemoteAccessButton
-                icon="broadcast-tower"
-                content={"Attach Signaler"}
-                onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_CUT })}
-              /> */}
             </>
           )}
         </Flex.Item>
@@ -248,9 +243,7 @@ const SimpleWire = (props: WireProps) => {
   );
 };
 
-
-
-const SkeuomorphWire = (props: WireProps) => {
+const PhysicalWire = (props: WireProps) => {
   const { act, name, value, cut, index } = props;
   return (
     <Box style={{ "background-color": value }}>
@@ -290,7 +283,7 @@ const SkeuomorphWire = (props: WireProps) => {
   );
 };
 
-const SimpleControl = (props: IndicatorProps) => {
+const TextControl = (props: IndicatorProps) => {
   const { name, value, control, pattern, status } = props;
   return (
     <Box className="WirePanel-control-pair">
@@ -307,7 +300,7 @@ const SimpleControl = (props: IndicatorProps) => {
   );
 };
 
-const SkeuomorphicControl = (props) => {
+const PhysicalControl = (props) => {
   const { pattern, colorValue, colorName } = props;
   return (
     <Box className="WirePanel-indicator-frame">

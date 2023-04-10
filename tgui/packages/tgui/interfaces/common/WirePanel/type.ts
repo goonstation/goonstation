@@ -9,7 +9,7 @@ export interface WireProps extends WireStatic, WireDynamic {
 } // per-wire data
 export interface IndicatorProps extends IndicatorsStatic, IndicatorsDynamic {}// per-indicator data
 
-// Wire Panel Defintions. Sync with `_std/defines/obj.dm`
+// Wire Panel Definitions. Sync with `_std/defines/obj.dm`
 
 // Wire Panel Component: Wire Controls
 export const WirePanelControls = {
@@ -24,7 +24,7 @@ export const WirePanelControls = {
   "WIRE_CONTROL_SAFETY": (1<<7),
   "WIRE_CONTROL_RESTRICT": (1<<8),
   "WIRE_CONTROL_ACTIVATE": (1<<9),
-  "WIRE_CONTROL_RECIEVE": (1<<10),
+  "WIRE_CONTROL_RECEIVE": (1<<10),
   "WIRE_CONTROL_TRANSMIT": (1<<11),
 };
 
@@ -38,9 +38,9 @@ export const WirePanelControlLabels = {
   32: "AI Control",
   64: "ID Scanner",
   128: "Safety",
-  256: "Restrictor",
+  256: "Restrict",
   512: "Activation",
-  1024: "Recieve",
+  1024: "Receive",
   2048: "Transmit",
 };
 
