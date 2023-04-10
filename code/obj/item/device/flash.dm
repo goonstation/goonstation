@@ -434,7 +434,6 @@ TYPEINFO(/obj/item/device/flash/turbo)
 			user.show_text("[src] refuses to flash!", "red")
 			return
 		else
-			message_admins("is a head rev smile")
 			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == REV_FLASH_IMPLANT)
