@@ -785,7 +785,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("majorsummon")
 				var/summon = pick(
 					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
 					/mob/living/critter/lion,
