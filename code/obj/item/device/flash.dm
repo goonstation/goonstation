@@ -1,3 +1,7 @@
+#define REV_FLASH_NORMAL 0
+#define REV_FLASH_IMPLANT 1
+#define REV_FLASH_ALLY 2
+
 TYPEINFO(/obj/item/device/flash)
 	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
@@ -178,8 +182,6 @@ TYPEINFO(/obj/item/device/flash)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 
-	convert(M,user)
-
 	// Log entry.
 	var/blind_msg_target = "!"
 	var/blind_msg_others = "!"
@@ -287,35 +289,26 @@ TYPEINFO(/obj/item/device/flash)
 	return
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
-	.= 0
+	.= REV_FLASH_NORMAL
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/safety = 0
-		if (H.eyes_protected_from_light())
-			safety = 1
-
-		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
-			var/nostun = 0
+		if (user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
 			else if (locate(/obj/item/implant/counterrev) in H.implant)
+				.= REV_FLASH_IMPLANT
 				user.show_text("There seems to be something preventing [H] from revolting.", "red")
-				.= 0.5
-				nostun = 1
 			else if (!H.can_be_converted_to_the_revolution())
 				user.show_text("[H] seems unwilling to revolt.", "red")
-				nostun = 1
 			else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				.= REV_FLASH_ALLY
 				user.show_text("[H] is already a member of the revolution.", "red")
 			else
-				.= 1
+				.= REV_FLASH_ALLY
 				if (!(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
 					H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
 				else
 					user.show_text("[H] is already a member of the revolution.", "red")
-			if (!nostun)
-				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
-
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
 	tooltip_rebuild = 1
@@ -431,19 +424,25 @@ TYPEINFO(/obj/item/device/flash/turbo)
 		return
 
 	attack(mob/living/M, mob/user)
-		flash_mob(M, user, 0)
 		flash_mob(M, user, 1)
 
-
 	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
-		if (!convert && M.mind && M.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+		if (user.mind && !(user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
+			..()
+			return
+		else if (M.mind && M.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			user.show_text("[src] refuses to flash!", "red")
 			return
 		else
+			message_admins("is a head rev smile")
 			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
-			if (convert_result == 0.5)
+			if (convert_result == REV_FLASH_IMPLANT)
 				user.show_text("Hold still to override . . . ", "red")
 				actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
-			if (convert_result)
+			else if (convert_result == REV_FLASH_NORMAL)
 				..()
+
+#undef REV_FLASH_NORMAL
+#undef REV_FLASH_IMPLANT
+#undef REV_FLASH_ALLY
