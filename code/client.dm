@@ -472,6 +472,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
 			del(src)
 			tgui_process.close_user_uis(src.mob)
+			return
 */
 		if (src.byond_version >= 515)
 			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
