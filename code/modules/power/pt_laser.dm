@@ -600,6 +600,11 @@ TYPEINFO(/obj/laser_sink/splitter)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
+	else if (ispryingtool(I))
+		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
+			return
+		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		src.dir = turn(src.dir, 90)
 	else
 		..()
 
