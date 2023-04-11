@@ -17,6 +17,12 @@
 		current_temperature = 150
 		on = 1
 
+	emergency
+		name = "emergency cooler"
+		current_temperature = 73.15
+		desc = "Emergency cooling for the reactor. Only for use in meltdown scenarios."
+
+
 	New()
 		..()
 		pipe_direction = src.dir

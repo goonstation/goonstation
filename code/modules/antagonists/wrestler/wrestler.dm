@@ -7,6 +7,9 @@
 	/// The ability holder of this wrestler, containing their respective abilities.
 	var/datum/abilityHolder/wrestler/ability_holder
 
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
+
 	give_equipment(fake_equipment = FALSE)
 		src.fake = fake_equipment
 		if (ismobcritter(src))
