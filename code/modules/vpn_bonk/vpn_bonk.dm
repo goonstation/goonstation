@@ -97,8 +97,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.Browse(vpn_kick_string, "window=vpnbonked")
 	sleep(3 SECONDS)
 	if (src)
-		del(src)
 		tgui_process.close_user_uis(src.mob)
+		del(src)
 	return
 
 #ifndef SECRETS_ENABLED
