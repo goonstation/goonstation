@@ -82,7 +82,9 @@
 /// Uncross should call this after setting `.` to make sure Bump gets called if needed
 #define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)
 
-// The anchored vars just used 0 1 and 2 raw before, which is absolutely intolerable.
-#define ANCHORED_FALSE 0
-#define ANCHORED_PICKUP 1
-#define ANCHORED_FULL 2
+/// For an unanchored movable atom
+#define UNANCHORED 0
+/// For an atom that can't be moved by people
+#define ANCHORED 1
+/// For an atom that's always immovable, even by stuff like black holes and gravity artifacts.
+#define ANCHORED_ALWAYS 2
