@@ -133,7 +133,7 @@
 /area/prefab/helianthus)
 "y" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/grass,
 /area/prefab/helianthus)

@@ -12,7 +12,7 @@
 /area/shuttle/escape/centcom)
 "bz" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/clothing/head/crown,
@@ -105,7 +105,7 @@
 /area/centcom)
 "in" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -148,7 +148,7 @@
 /area/shuttle/escape/centcom)
 "nC" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border,
@@ -183,7 +183,7 @@
 /area/shuttle/escape/centcom)
 "ph" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_bw{
@@ -207,14 +207,14 @@
 /area/shuttle/escape/centcom)
 "rA" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
 "rL" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -244,7 +244,7 @@
 /area/shuttle/escape/centcom)
 "ty" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -297,7 +297,7 @@
 /area/shuttle/escape/centcom)
 "xV" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border,
@@ -356,7 +356,7 @@
 /area/shuttle/escape/centcom)
 "Ck" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_bw,
@@ -401,7 +401,7 @@
 /area/shuttle/escape/centcom)
 "FS" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -424,7 +424,7 @@
 /area/shuttle/escape/centcom)
 "HA" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -460,7 +460,7 @@
 /area/centcom)
 "JD" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -537,7 +537,7 @@
 /area/shuttle/escape/centcom)
 "QK" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 1
@@ -647,7 +647,7 @@
 /area/shuttle/escape/centcom)
 "TD" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
@@ -688,7 +688,7 @@
 /area/shuttle/escape/centcom)
 "Vz" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{

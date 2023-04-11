@@ -24932,7 +24932,7 @@
 /area/russian/radiation)
 "cDp" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Telescience Recorder";
@@ -26072,7 +26072,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -32785,7 +32785,7 @@
 /area/russian/radiation)
 "cWZ" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -45395,7 +45395,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
@@ -45408,7 +45408,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
@@ -46597,7 +46597,7 @@
 	dir = 8
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -47298,7 +47298,7 @@
 /area/russian/radiation)
 "hTf" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -47315,7 +47315,7 @@
 /area/russian/radiation)
 "hTl" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -52348,7 +52348,7 @@
 /area/russian/radiation)
 "kgL" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52375,7 +52375,7 @@
 /area/russian/radiation)
 "khb" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52393,7 +52393,7 @@
 /area/russian/radiation)
 "khA" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52406,7 +52406,7 @@
 /area/russian/radiation)
 "khJ" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52426,7 +52426,7 @@
 /area/russian/radiation)
 "khW" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52435,7 +52435,7 @@
 /area/russian/radiation)
 "kis" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -52445,7 +52445,7 @@
 /area/russian/radiation)
 "kiB" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -60736,7 +60736,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -70583,7 +70583,7 @@
 	dir = 1
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/unsimulated/grasstodirt{
 	dir = 1
@@ -70931,7 +70931,7 @@
 /area/russian/radiation)
 "sXv" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/railing/orange/reinforced,
 /turf/unsimulated/grasstodirt,

@@ -853,7 +853,7 @@
 /area/station/science/testchamber)
 "abI" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -11968,7 +11968,7 @@
 /area/station/crew_quarters/quarters_east)
 "awS" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -14893,7 +14893,7 @@
 /area/station/crew_quarters/quarters_east)
 "aDi" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -18679,7 +18679,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -20141,7 +20141,7 @@
 /area/station/engine/core)
 "aOo" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -32998,7 +32998,7 @@
 /area/listeningpost)
 "bnw" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -33054,7 +33054,7 @@
 /area/listeningpost)
 "bnD" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -33676,7 +33676,7 @@
 /area/listeningpost)
 "boY" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -33697,7 +33697,7 @@
 /area/listeningpost)
 "boZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -33709,7 +33709,7 @@
 /area/listeningpost)
 "bpa" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	icon = 'icons/obj/large/64x96.dmi';

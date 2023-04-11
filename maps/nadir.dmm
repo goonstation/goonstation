@@ -3774,7 +3774,7 @@
 /area/pasiphae/bridge)
 "bGb" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -3919,7 +3919,7 @@
 /area/station/hallway/secondary/west)
 "bJI" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -5507,7 +5507,7 @@
 "cuz" = (
 /obj/storage/secure/closet/medical/anesthetic,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -7451,7 +7451,7 @@
 	})
 "dsY" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
 	icon = 'icons/obj/large_storage.dmi';
@@ -7460,7 +7460,7 @@
 	pixel_x = -8
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
 	icon = 'icons/obj/large_storage.dmi';
@@ -7832,7 +7832,7 @@
 /area/station/maintenance/disposal)
 "dzR" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -11280,7 +11280,7 @@
 /area/station/engine/core/nuclear)
 "eZZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and some of the modules seem slightly scorched.";
 	icon = 'icons/obj/networked.dmi';
@@ -11915,7 +11915,7 @@
 /area/station/maintenance/disposal)
 "fse" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/storage/wall{
@@ -18155,7 +18155,7 @@
 /area/station/maintenance/northeast)
 "hSC" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/rubberduck,
@@ -20446,7 +20446,7 @@
 	tag = ""
 	},
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8;
 	state = 1
 	},
@@ -21177,7 +21177,7 @@
 	})
 "jjz" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -22428,7 +22428,7 @@
 /area/station/hallway/primary/northeast)
 "jOe" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -25329,7 +25329,7 @@
 	})
 "kXy" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and several components seem to have been unceremoniously yanked out.";
 	icon = 'icons/obj/networked.dmi';
@@ -29429,7 +29429,7 @@
 /area/station/bridge/captain)
 "mGp" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -32309,7 +32309,7 @@
 /area/station/science/artifact)
 "nWU" = (
 /obj/machinery/power/lgenerator{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon_state = "ggen1"
 	},
 /turf/simulated/floor/yellowblack{
@@ -34057,7 +34057,7 @@
 /area/station/security/equipment)
 "oQc" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -35097,7 +35097,7 @@
 /area/station/maintenance/inner/west)
 "ppQ" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/light/small{
 	dir = 4;
@@ -37065,7 +37065,7 @@
 /area/station/turret_protected/ai_upload)
 "qmH" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -39944,7 +39944,7 @@
 /area/station/hallway/primary/northwest)
 "rKm" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -40385,7 +40385,7 @@
 /area/station/security/hos)
 "rTL" = (
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
@@ -40808,7 +40808,7 @@
 	})
 "sdl" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
 	dir = 1;
@@ -45839,7 +45839,7 @@
 /area/station/security/brig)
 "ung" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -51140,7 +51140,7 @@
 /area/pasiphae)
 "wTy" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/grey/corner{
@@ -54004,7 +54004,7 @@
 	})
 "yiB" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -54059,7 +54059,7 @@
 "yjq" = (
 /obj/deployable_turret/riot{
 	active = 1;
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/access_spawn/hos,

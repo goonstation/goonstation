@@ -60,7 +60,7 @@
 /area/station/turret_protected/sea_crashed)
 "ap" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -121,7 +121,7 @@
 /area/station/turret_protected/sea_crashed)
 "aE" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -194,7 +194,7 @@
 /area/station/turret_protected/sea_crashed)
 "aT" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -205,7 +205,7 @@
 /area/station/turret_protected/sea_crashed)
 "aU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -222,7 +222,7 @@
 "aW" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 4;
@@ -259,7 +259,7 @@
 /area/space)
 "bc" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -299,7 +299,7 @@
 /area/station/turret_protected/sea_crashed)
 "bi" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -321,7 +321,7 @@
 /area/station/turret_protected/sea_crashed)
 "bl" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -500,7 +500,7 @@
 /area/station/turret_protected/sea_crashed)
 "bU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -521,7 +521,7 @@
 /area/station/turret_protected/sea_crashed)
 "bX" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
 	dir = 2;
@@ -539,7 +539,7 @@
 /area/station/turret_protected/sea_crashed)
 "bZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -592,7 +592,7 @@
 /area/station/turret_protected/sea_crashed)
 "cj" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "wallterm0";
@@ -640,7 +640,7 @@
 /area/station/turret_protected/sea_crashed)
 "ct" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An emergency stop button.  I guess it has stopped working.  What an emergency HA HA HA HA HAaaaaaa";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "door_control_broken";
@@ -707,7 +707,7 @@
 /area/station/turret_protected/sea_crashed)
 "cA" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
@@ -744,7 +744,7 @@
 /area/station/turret_protected/sea_crashed)
 "cF" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	icon = 'icons/obj/computer.dmi';
@@ -841,7 +841,7 @@
 /area/station/turret_protected/sea_crashed)
 "cU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -898,7 +898,7 @@
 /area/space)
 "da" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -923,7 +923,7 @@
 /area/station/turret_protected/sea_crashed)
 "dd" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -1005,7 +1005,7 @@
 /area/station/turret_protected/sea_crashed)
 "dp" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -1025,7 +1025,7 @@
 /area/station/turret_protected/sea_crashed)
 "dr" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -1040,7 +1040,7 @@
 /area/station/turret_protected/sea_crashed)
 "dt" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -1062,7 +1062,7 @@
 /area/station/turret_protected/sea_crashed)
 "dw" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -1082,7 +1082,7 @@
 /area/station/turret_protected/sea_crashed)
 "dy" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1095,7 +1095,7 @@
 /area/station/turret_protected/sea_crashed)
 "dz" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1103,7 +1103,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1116,7 +1116,7 @@
 /area/station/turret_protected/sea_crashed)
 "dA" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1126,7 +1126,7 @@
 	tag = "icon-conduit (EAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1134,7 +1134,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1146,7 +1146,7 @@
 /area/station/turret_protected/sea_crashed)
 "dB" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1155,7 +1155,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1167,7 +1167,7 @@
 /area/station/turret_protected/sea_crashed)
 "dC" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1180,7 +1180,7 @@
 /area/station/turret_protected/sea_crashed)
 "dD" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1192,7 +1192,7 @@
 /area/station/turret_protected/sea_crashed)
 "dE" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1214,7 +1214,7 @@
 /area/station/turret_protected/sea_crashed)
 "dG" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1226,7 +1226,7 @@
 /area/station/turret_protected/sea_crashed)
 "dH" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1235,7 +1235,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1252,7 +1252,7 @@
 /area/space)
 "dJ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1261,7 +1261,7 @@
 	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1270,7 +1270,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1282,7 +1282,7 @@
 /area/station/turret_protected/sea_crashed)
 "dK" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1291,7 +1291,7 @@
 	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1300,7 +1300,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';

@@ -20,7 +20,7 @@
 /area/centcom)
 "aN" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
@@ -48,7 +48,7 @@
 /area/shuttle/escape/centcom)
 "be" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -106,7 +106,7 @@
 /area/centcom/outside)
 "ch" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -126,7 +126,7 @@
 /area/shuttle/escape/centcom)
 "dJ" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 1
@@ -150,7 +150,7 @@
 /area/centcom/outside)
 "ez" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -329,7 +329,7 @@
 /area/shuttle/escape/centcom)
 "jh" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -451,7 +451,7 @@
 	tag = "icon-line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -587,14 +587,14 @@
 /area/centcom/outside)
 "qx" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble,
 /area/shuttle/escape/centcom)
 "qE" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -616,7 +616,7 @@
 /area/centcom/outside)
 "ri" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -749,7 +749,7 @@
 /area/shuttle/escape/centcom)
 "uh" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -774,7 +774,7 @@
 /area/shuttle/escape/centcom)
 "vt" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/clothing/head/crown,
@@ -852,14 +852,14 @@
 /area/centcom/outside)
 "yi" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
 "ym" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -896,7 +896,7 @@
 /area/shuttle/escape/centcom)
 "zh" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1000,7 +1000,7 @@
 /area/centcom/outside)
 "Cp" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1016,7 +1016,7 @@
 /area/centcom/outside)
 "Da" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1029,7 +1029,7 @@
 /area/centcom/outside)
 "Dd" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/marble/black,
@@ -1091,7 +1091,7 @@
 /area/centcom)
 "Fo" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1100,7 +1100,7 @@
 /area/shuttle/escape/centcom)
 "FH" = (
 /obj/stool/chair/wooden/regal{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border,
@@ -1133,7 +1133,7 @@
 /area/centcom/outside)
 "GI" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
@@ -1171,7 +1171,7 @@
 	icon_state = "line2"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1186,7 +1186,7 @@
 /area/centcom/outside)
 "HL" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1626,7 +1626,7 @@
 	tag = "icon-line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1636,7 +1636,7 @@
 	tag = "icon-conduit (SOUTHWEST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1737,7 +1737,7 @@
 	tag = "icon-line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';

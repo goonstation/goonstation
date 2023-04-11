@@ -465,7 +465,7 @@
 "aco" = (
 /obj/deployable_turret/riot{
 	active = 1;
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
@@ -1155,7 +1155,7 @@
 /area/station/crew_quarters/quarters)
 "aev" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -2143,7 +2143,7 @@
 /area/station/security/brig)
 "ahp" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -13531,7 +13531,7 @@
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /turf/simulated/floor/carpet{
@@ -14746,7 +14746,7 @@
 /area/station/security/beepsky)
 "aPg" = (
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -25794,7 +25794,7 @@
 /area/space)
 "bsZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -25805,7 +25805,7 @@
 /area/ghostdrone_factory)
 "bta" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -36103,7 +36103,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -44328,7 +44328,7 @@
 /area/shuttle/mining/station)
 "csl" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -45617,7 +45617,7 @@
 	dir = 8
 	},
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -46477,7 +46477,7 @@
 /area/listeningpost)
 "czk" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -46529,7 +46529,7 @@
 /area/listeningpost)
 "czr" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -47024,7 +47024,7 @@
 /area/abandonedship)
 "cAZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Yikes.";
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
 	icon_state = "broken";
@@ -47056,7 +47056,7 @@
 /area/abandonedship)
 "cBc" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -63798,7 +63798,7 @@
 	dir = 4
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/railing/orange/reinforced{
 	dir = 4

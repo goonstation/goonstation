@@ -17,7 +17,7 @@
 /area/noGenerate)
 "r" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/unsimulated/floor/grass/random,
 /area/noGenerate)

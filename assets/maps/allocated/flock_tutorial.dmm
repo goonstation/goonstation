@@ -183,7 +183,7 @@
 /area/tutorial/flock)
 "Z" = (
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8;
 	pixel_x = 9
 	},

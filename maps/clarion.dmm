@@ -2919,7 +2919,7 @@
 "ait" = (
 /obj/machinery/light/emergency,
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /turf/simulated/floor/white/checker{
@@ -2934,7 +2934,7 @@
 "aiv" = (
 /obj/window/reinforced/east,
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/machinery/light,
@@ -7161,7 +7161,7 @@
 	})
 "atD" = (
 /obj/item/instrument/large/piano{
-	anchored = UNANCHORED;
+	anchored = 0;
 	name = "old piano"
 	},
 /obj/item/screwdriver,
@@ -7726,7 +7726,7 @@
 /area/station/security/detectives_office)
 "avr" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/landmark/start{
@@ -10863,7 +10863,7 @@
 	name = "bar mail router"
 	},
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -11750,7 +11750,7 @@
 	name = "costume eyepatch"
 	},
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /obj/machinery/light{
@@ -15203,7 +15203,7 @@
 /area/station/security/main)
 "aTT" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -15573,7 +15573,7 @@
 "aVn" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -16022,7 +16022,7 @@
 	dir = 4
 	},
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -25476,7 +25476,7 @@
 /area/listeningpost/power)
 "bKh" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -25528,7 +25528,7 @@
 /area/space)
 "bKs" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -28591,7 +28591,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -29203,7 +29203,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/chair/yellow{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/cable{
@@ -30716,7 +30716,7 @@
 /area/station/hydroponics/bay)
 "gnD" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/disposalpipe/segment/brig,
@@ -32175,7 +32175,7 @@
 	icon_state = "1-4"
 	},
 /obj/stool/chair/yellow{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -34963,7 +34963,7 @@
 	icon_state = "0-8"
 	},
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /obj/item/clothing/under/misc/flame,
@@ -35650,7 +35650,7 @@
 	},
 /obj/deployable_turret/riot{
 	active = 1;
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
@@ -35852,7 +35852,7 @@
 /area/station/security/brig)
 "lmM" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/cable{
@@ -36178,7 +36178,7 @@
 	icon_state = "0-8"
 	},
 /obj/stool/chair/yellow{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -36767,7 +36767,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/chair/yellow{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -37965,7 +37965,7 @@
 /area/station/engine/inner)
 "nyM" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -41969,7 +41969,7 @@
 	icon_state = "line1"
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -43270,7 +43270,7 @@
 /area/listeningpost)
 "sVn" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -45900,7 +45900,7 @@
 /area/station/engine/core/nuclear)
 "vtY" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Engineering Recorder";
@@ -48268,7 +48268,7 @@
 	icon_state = "0-4"
 	},
 /obj/stool/chair/yellow{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /turf/simulated/floor/caution/northsouth,

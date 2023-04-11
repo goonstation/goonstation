@@ -165,7 +165,7 @@
 	pixel_y = 5
 	},
 /obj/item/caution/target_sheet{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
@@ -291,7 +291,7 @@
 /area/prefab/shooting_range)
 "te" = (
 /obj/item/sticker/clover{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
@@ -336,7 +336,7 @@
 /area/prefab/shooting_range)
 "tW" = (
 /obj/item/sticker/horseshoe{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
@@ -381,13 +381,13 @@
 "xn" = (
 /obj/decal/cleanable/eggsplat,
 /obj/item/caution/target_sheet{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
 "xS" = (
 /obj/item/caution/target_sheet{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)

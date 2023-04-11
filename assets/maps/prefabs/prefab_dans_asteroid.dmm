@@ -490,7 +490,7 @@
 /area/prefab/discount_dans_asteroid)
 "qG" = (
 /obj/storage/secure/closet/fridge/opened{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/map/light/dimreddish,
 /turf/unsimulated/floor/arctic/snow/ice,
@@ -996,7 +996,7 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -1184,7 +1184,7 @@
 /area/prefab/discount_dans_asteroid)
 "Se" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -1205,7 +1205,7 @@
 /area/prefab/discount_dans_asteroid)
 "SO" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";
 	icon = 'icons/obj/vending.dmi';

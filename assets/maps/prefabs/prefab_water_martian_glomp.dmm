@@ -100,7 +100,7 @@
 /area/noGenerate)
 "E" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -171,7 +171,7 @@
 /area/prefab/martian_glomp)
 "S" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';

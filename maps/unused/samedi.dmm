@@ -192,7 +192,7 @@
 /area/station/engine/proto)
 "aaB" = (
 /obj/machinery/field_generator{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -207,7 +207,7 @@
 /area/station/engine/proto)
 "aaD" = (
 /obj/machinery/field_generator{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -2648,7 +2648,7 @@
 /area/station/maintenance/solar/east)
 "afG" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -4758,7 +4758,7 @@
 /area/station/garden/habitat)
 "ajT" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -5639,7 +5639,7 @@
 /area/station/mining/staff_room)
 "alS" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -21727,7 +21727,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -26148,7 +26148,7 @@
 /area/station/crew_quarters/showers)
 "bfn" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
@@ -28142,7 +28142,7 @@
 /area/station/janitor/office)
 "bjF" = (
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -31983,7 +31983,7 @@
 /obj/machinery/bathtub{
 	icon_state = "bathtub";
 	dir = 8;
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/rubberduck,
 /obj/machinery/light/small{
@@ -33412,7 +33412,7 @@
 /area/station/hydroponics/bay)
 "bvy" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -33422,7 +33422,7 @@
 /area/station/hydroponics/bay)
 "bvA" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grass,
@@ -35167,7 +35167,7 @@
 	dir = 8
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -35875,7 +35875,7 @@
 /obj/machinery/bathtub{
 	icon_state = "bathtub";
 	dir = 8;
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quartersA)
@@ -41809,7 +41809,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -42365,7 +42365,7 @@
 /area/station/crew_quarters/quarters_south)
 "bPh" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -44570,7 +44570,7 @@
 /area/research_outpost)
 "bTF" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -46944,7 +46944,7 @@
 /area/space)
 "bYM" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -47006,7 +47006,7 @@
 /area/space)
 "bYV" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -47802,7 +47802,7 @@
 /area/listeningpost)
 "caP" = (
 /obj/storage/secure/crate/gear{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -47826,7 +47826,7 @@
 /area/listeningpost)
 "caR" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -47847,7 +47847,7 @@
 /area/listeningpost)
 "caS" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -47859,7 +47859,7 @@
 /area/listeningpost)
 "caT" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	icon = 'icons/obj/large/64x96.dmi';

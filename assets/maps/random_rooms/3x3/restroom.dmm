@@ -37,7 +37,7 @@
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/decal/cleanable/gangtag{

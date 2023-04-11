@@ -192,7 +192,7 @@
 /area/station/bridge)
 "aaA" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
@@ -223,7 +223,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/fakeobjects/console_radar{
-	anchored = ANCHORED_ALWAYS
+	anchored = 2
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
@@ -267,7 +267,7 @@
 /area/station/communications/bedroom)
 "aaN" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -719,7 +719,7 @@
 /area/station/hydroponics/bay)
 "abY" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/dirt5,
@@ -747,7 +747,7 @@
 /area/station/turret_protected/ai_upload)
 "aca" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /turf/simulated/floor/grime,
@@ -771,7 +771,7 @@
 /area/station/chapel/sanctuary)
 "ace" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? Yes?  Oh, good...wait, where's the outlet?.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
@@ -808,7 +808,7 @@
 /area/diner/backroom)
 "acm" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
@@ -1458,7 +1458,7 @@
 /area/abandonedmedicalship/robot_trader)
 "aeP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
 	dir = 1;
@@ -2294,7 +2294,7 @@
 /area/station/crewquarters/cryotron)
 "aio" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /obj/item/device/radio/intercom/science,
@@ -3336,7 +3336,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "alt" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -3347,7 +3347,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "alu" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -3385,7 +3385,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "aly" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -3414,7 +3414,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "alE" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -3638,7 +3638,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "amj" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -3653,7 +3653,7 @@
 "aml" = (
 /obj/machinery/optable,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -3863,7 +3863,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "amO" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -4091,7 +4091,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anu" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/decal/cleanable/blood{
@@ -4138,7 +4138,7 @@
 /obj/item/bandage,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -4295,7 +4295,7 @@
 	},
 /obj/machinery/power/furnace,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -4399,7 +4399,7 @@
 	},
 /obj/machinery/power/furnace,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -6291,7 +6291,7 @@
 /area/abandonedship)
 "asL" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
@@ -6307,7 +6307,7 @@
 /area/abandonedship)
 "asO" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -6656,7 +6656,7 @@
 /area/mantaSpace)
 "atU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -9816,7 +9816,7 @@
 /area/station/turret_protected/port)
 "aCf" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -9954,7 +9954,7 @@
 /area/station/crew_quarters/quarters)
 "aCx" = (
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /obj/item/clothing/under/misc/flame,
@@ -11510,7 +11510,7 @@
 /area/station/engine/elect)
 "aGR" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail{
@@ -11644,7 +11644,7 @@
 	dir = 4
 	},
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -11714,7 +11714,7 @@
 /area/station/engine/gas)
 "aHr" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /obj/landmark/start{
@@ -12231,7 +12231,7 @@
 /area/station/crew_quarters/quarters)
 "aIy" = (
 /obj/stool/chair{
-	anchored = UNANCHORED
+	anchored = 0
 	},
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -12291,7 +12291,7 @@
 /area/station/crew_quarters/quarters)
 "aIB" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -12336,7 +12336,7 @@
 	name = "costume eyepatch"
 	},
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /obj/item/clothing/head/mime_beret,
@@ -13244,7 +13244,7 @@
 /area/station/medical/medbay/restroom)
 "aLu" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -13294,7 +13294,7 @@
 /area/station/crew_quarters/bathroom)
 "aLz" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -13621,7 +13621,7 @@
 /area/station/engine/inner)
 "aMx" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/item/storage/wall/medical{
@@ -17942,7 +17942,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aZa" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/decal/tile_edge/flowers,
@@ -18234,7 +18234,7 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZM" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /obj/decal/tile_edge/flowers,
@@ -19311,7 +19311,7 @@
 /area/station/hallway/portlowerhallway)
 "bcT" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/decal/tile_edge/flowers,
@@ -20196,7 +20196,7 @@
 /area/station/medical/robotics)
 "beQ" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -20582,7 +20582,7 @@
 /area/station/medical/robotics)
 "bfP" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark/start{
@@ -21781,7 +21781,7 @@
 /area/station/hydroponics/bay)
 "biK" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -22815,7 +22815,7 @@
 /area/station/janitor/office)
 "blm" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/decal/tile_edge/line/purple{
@@ -25139,7 +25139,7 @@
 /area/station/hallway/portlowerhallway)
 "bqM" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED
+	anchored = 0
 	},
 /obj/decal/tile_edge/flowers,
 /obj/landmark/start{
@@ -26340,7 +26340,7 @@
 /area/station/hallway/portlowerhallway)
 "buk" = (
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -26560,7 +26560,7 @@
 /area/station/hangar/starboard)
 "buX" = (
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -28510,7 +28510,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -29060,7 +29060,7 @@
 	pixel_y = 0
 	},
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -31903,7 +31903,7 @@
 /area/station/science/artifact)
 "bKX" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/machinery/firealarm{
@@ -32516,7 +32516,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "bMA" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -32544,7 +32544,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "bMD" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -32557,7 +32557,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "bME" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -32695,7 +32695,7 @@
 /area/station/maintenance/lowerport)
 "bMX" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -33333,7 +33333,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/camera/ranch{
@@ -34823,7 +34823,7 @@
 	pixel_x = -10
 	},
 /obj/stool/chair/blue{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/item/storage/wall/fire{
@@ -36360,7 +36360,7 @@
 	pixel_y = 20
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -36895,7 +36895,7 @@
 /area/station/ranch)
 "kfz" = (
 /obj/stool/chair{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 8
 	},
 /obj/machinery/light_switch/auto{
@@ -37097,7 +37097,7 @@
 /area/station/engine/engineering/breakroom)
 "kRd" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -37176,7 +37176,7 @@
 /area/station/maintenance/lowerstarboard)
 "len" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -38924,7 +38924,7 @@
 /area/station/maintenance/lowerstarboard)
 "pbC" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool{
@@ -41676,7 +41676,7 @@
 /area/station/engine/gas)
 "wjw" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 1
 	},
 /obj/machinery/light/incandescent/netural{

@@ -15514,7 +15514,7 @@
 /area/abandonedship)
 "azP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -15525,7 +15525,7 @@
 /area/listeningpost)
 "azQ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -15536,7 +15536,7 @@
 /area/ghostdrone_factory)
 "azR" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -15547,7 +15547,7 @@
 /area/listeningpost)
 "azS" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -15558,7 +15558,7 @@
 /area/ghostdrone_factory)
 "azT" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -15569,7 +15569,7 @@
 /area/abandonedship)
 "azU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Yikes.";
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
 	icon_state = "broken";
@@ -23482,7 +23482,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -28730,7 +28730,7 @@
 /area/station/hallway/secondary/exit)
 "bbu" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = ANCHORED;
+	anchored = 1;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -29173,7 +29173,7 @@
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /turf/simulated/floor/carpet{
@@ -35014,7 +35014,7 @@
 /area/station/medical/cdc)
 "bpL" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -44732,7 +44732,7 @@
 	dir = 4
 	},
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -50904,7 +50904,7 @@
 /area/station/crew_quarters/supplylobby)
 "bTU" = (
 /obj/machinery/vending/pizza{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -56409,7 +56409,7 @@
 /area/station/crew_quarters/catering)
 "ceS" = (
 /obj/storage/crate/freezer{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -67102,7 +67102,7 @@
 "dKx" = (
 /obj/deployable_turret/riot{
 	active = 1;
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
@@ -71650,7 +71650,7 @@
 	dir = 8
 	},
 /obj/machinery/plantpot{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/railing/orange/reinforced{
 	dir = 8

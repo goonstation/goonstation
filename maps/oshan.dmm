@@ -4118,7 +4118,7 @@
 /area/station/crew_quarters/toilets)
 "akb" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -4235,7 +4235,7 @@
 /area/station/chapel/sanctuary)
 "akp" = (
 /obj/storage/closet/dresser{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "costume dresser"
 	},
 /obj/item/clothing/under/shirt_pants,
@@ -12192,7 +12192,7 @@
 /area/station/science/restroom)
 "aEE" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -15472,7 +15472,7 @@
 /area/listeningpost)
 "aNH" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -15539,7 +15539,7 @@
 /area/station/hallway/primary/north)
 "aNS" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -17982,7 +17982,7 @@
 /area/iss)
 "aUU" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
 	dir = 1;
@@ -18264,7 +18264,7 @@
 /area/space)
 "aVO" = (
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -18606,7 +18606,7 @@
 /area/space)
 "aXg" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -18798,7 +18798,7 @@
 	dir = 4
 	},
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -19124,7 +19124,7 @@
 "aYZ" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -19281,7 +19281,7 @@
 /area/evilreaver/chapel)
 "aZG" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -19393,7 +19393,7 @@
 /area/evilreaver/security)
 "baj" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -19434,7 +19434,7 @@
 /area/evilreaver/bridge)
 "baq" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -22511,7 +22511,7 @@
 /area/evilreaver/security)
 "bkC" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -22527,7 +22527,7 @@
 /area/evilreaver/bridge)
 "bkE" = (
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -22752,7 +22752,7 @@
 /area/station/engine/engineering)
 "bli" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -22922,7 +22922,7 @@
 /area/station/engine/engineering)
 "blK" = (
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -25622,7 +25622,7 @@
 /area/station/crew_quarters/observatory)
 "bte" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -40275,7 +40275,7 @@
 /area/space)
 "cho" = (
 /obj/item/poster/titled_photo/bee{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/dining)

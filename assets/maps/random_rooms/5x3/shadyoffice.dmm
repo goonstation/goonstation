@@ -39,7 +39,7 @@
 	pixel_y = 7
 	},
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	deconstructable = 0;
 	lit = 1;
 	pixel_x = 8;
@@ -106,7 +106,7 @@
 	pixel_y = -5
 	},
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	deconstructable = 0;
 	lit = 1;
 	pixel_x = -8;

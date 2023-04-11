@@ -331,7 +331,7 @@
 "aT" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
@@ -2789,7 +2789,7 @@
 /area/space)
 "hL" = (
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -2814,7 +2814,7 @@
 /area/space)
 "hO" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -3289,7 +3289,7 @@
 /area/space)
 "je" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -3626,7 +3626,7 @@
 	name = "Server"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3698,7 +3698,7 @@
 /area/space)
 "kg" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3749,7 +3749,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3761,7 +3761,7 @@
 /area/space)
 "kq" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3770,7 +3770,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3779,7 +3779,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3791,7 +3791,7 @@
 "kr" = (
 /obj/machinery/light_switch/east,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3831,7 +3831,7 @@
 /area/space)
 "kA" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3891,7 +3891,7 @@
 /area/space)
 "kI" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3899,7 +3899,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3908,7 +3908,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3975,7 +3975,7 @@
 /area/space)
 "kP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3983,7 +3983,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -3992,7 +3992,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -4587,7 +4587,7 @@
 /area/space)
 "mu" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -4605,7 +4605,7 @@
 /area/space)
 "mw" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -4659,7 +4659,7 @@
 /area/space)
 "mD" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -4677,7 +4677,7 @@
 /area/space)
 "mF" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It seems to be a targeting console, but the system is offline.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "mars_status_comp";
@@ -4828,7 +4828,7 @@
 /area/space)
 "mY" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -4838,7 +4838,7 @@
 	tag = "icon-conduit (SOUTHWEST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -4851,7 +4851,7 @@
 /area/space)
 "mZ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -4875,7 +4875,7 @@
 /area/space)
 "nb" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -4883,7 +4883,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -5177,7 +5177,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/molten_item,
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -5748,7 +5748,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -5948,7 +5948,7 @@
 /area/space)
 "pQ" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -6029,7 +6029,7 @@
 /area/space)
 "qa" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
@@ -6060,7 +6060,7 @@
 "qg" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -6247,7 +6247,7 @@
 /area/space)
 "qJ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -6328,7 +6328,7 @@
 /obj/map/light/white,
 /obj/table/reinforced/auto,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
@@ -6584,7 +6584,7 @@
 /area/space)
 "rz" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -6677,7 +6677,7 @@
 /area/space)
 "rJ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6693,7 +6693,7 @@
 /area/space)
 "rK" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6709,7 +6709,7 @@
 /area/space)
 "rL" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6732,7 +6732,7 @@
 	name = "Compartment Hatch"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6753,7 +6753,7 @@
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6773,7 +6773,7 @@
 	name = "rusted valve"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6786,7 +6786,7 @@
 /area/space)
 "rP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -6799,7 +6799,7 @@
 /area/space)
 "rQ" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -6807,7 +6807,7 @@
 	name = "crusty vent"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It's some sort of command repeater.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -6830,7 +6830,7 @@
 /area/space)
 "rS" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -6869,7 +6869,7 @@
 /area/space)
 "rW" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -7828,7 +7828,7 @@
 /area/space)
 "uo" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/landmark{
@@ -8219,7 +8219,7 @@
 /area/space)
 "ve" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/cable{
@@ -8310,7 +8310,7 @@
 /area/space)
 "vo" = (
 /obj/stool/chair/red{
-	anchored = UNANCHORED;
+	anchored = 0;
 	dir = 4
 	},
 /obj/cable{
@@ -9428,7 +9428,7 @@
 	icon_state = "shuttle_chair-red"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 0;
 	desc = "It displays a variety of radio signals.'";
 	dir = 1;
@@ -9446,7 +9446,7 @@
 	icon_state = "shuttle_chair-red"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 0;
 	desc = "It displays a variety of radio signals.'";
 	dir = 1;

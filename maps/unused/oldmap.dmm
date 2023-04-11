@@ -92,7 +92,7 @@
 /area/space)
 "aq" = (
 /obj/decal{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "That'll never work again.";
 	icon = 'icons/obj/airtunnel.dmi';
@@ -5831,7 +5831,7 @@
 /area/crew_quarters/quarters)
 "no" = (
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor,
@@ -11026,7 +11026,7 @@
 /area/tdome)
 "zh" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11054,7 +11054,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11077,7 +11077,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11105,7 +11105,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11140,7 +11140,7 @@
 /area/tdome/tdomea)
 "zp" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11285,14 +11285,14 @@
 /area/meteor/dock)
 "zI" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -11548,7 +11548,7 @@
 /area/meteor/dock)
 "Aj" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -11684,7 +11684,7 @@
 /area/meteor/dock)
 "AB" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'beach.dmi';
 	icon_state = "crab2";
 	name = "crab"
@@ -11777,7 +11777,7 @@
 /area/sim/area2)
 "AM" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'beach.dmi';
 	icon_state = "water2";
 	layer = 10;
@@ -14085,7 +14085,7 @@
 /area/crew_quarters/hor)
 "FV" = (
 /obj/machinery/nuclearbomb{
-	anchored = ANCHORED;
+	anchored = 1;
 	name = "RD's Disarmed Nuke";
 	r_code = "Nope"
 	},
@@ -15023,7 +15023,7 @@
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/white,
@@ -16793,7 +16793,7 @@
 /area/zeta/bot_storage)
 "La" = (
 /obj/machinery/beacon{
-	anchored = ANCHORED;
+	anchored = 1;
 	sname = "Zeta"
 	},
 /turf/simulated/floor/plating/airless,

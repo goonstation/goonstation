@@ -49,7 +49,7 @@
 /area/marsoutpost)
 "al" = (
 /obj/decal{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "An old mainframe of some sort. It makes you thankful that the station's AI only takes one whole tile of space.";
 	icon = 'icons/effects/96x96.dmi';
@@ -107,7 +107,7 @@
 /area/marsoutpost)
 "as" = (
 /obj/decal{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "";
 	icon = 'icons/effects/96x96.dmi';
@@ -132,7 +132,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
 	icon_state = "1";
@@ -228,7 +228,7 @@
 "aD" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
 	icon_state = "1";
@@ -989,7 +989,7 @@
 /area/marsoutpost)
 "ct" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
 	dir = 6;
@@ -1065,7 +1065,7 @@
 /area/marsoutpost)
 "dc" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
 	dir = 6;
@@ -1296,7 +1296,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
 	icon_state = "1";
@@ -1342,7 +1342,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
 	icon_state = "1";
@@ -1362,7 +1362,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
 	icon_state = "1";

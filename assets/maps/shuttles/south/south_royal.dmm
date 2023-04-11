@@ -114,7 +114,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -263,7 +263,7 @@
 /area/shuttle/escape/centcom)
 "hY" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -279,7 +279,7 @@
 /area/centcom/outside)
 "jf" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -363,7 +363,7 @@
 /area/shuttle/escape/centcom)
 "lG" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /obj/decal/lightshaft,
@@ -399,7 +399,7 @@
 /area/shuttle/escape/centcom)
 "mr" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -584,7 +584,7 @@
 /area/shuttle/escape/centcom)
 "pm" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -627,7 +627,7 @@
 /area/shuttle/escape/centcom)
 "qB" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner,
@@ -664,7 +664,7 @@
 /area/centcom/outside)
 "rr" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -722,7 +722,7 @@
 /area/shuttle/escape/centcom)
 "vH" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -747,14 +747,14 @@
 /area/centcom/outside)
 "wq" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "wI" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
@@ -915,7 +915,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -924,7 +924,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -974,7 +974,7 @@
 	icon_state = "line2"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1048,7 +1048,7 @@
 /area/centcom/outside)
 "BU" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1092,7 +1092,7 @@
 /area/shuttle/escape/centcom)
 "Es" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1202,7 +1202,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1363,7 +1363,7 @@
 /area/shuttle/escape/centcom)
 "Iw" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -1372,7 +1372,7 @@
 /area/shuttle/escape/centcom)
 "IL" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1587,7 +1587,7 @@
 /area/shuttle/escape/centcom)
 "Ol" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1724,7 +1724,7 @@
 /area/centcom/outside)
 "SL" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_wb{
@@ -1798,7 +1798,7 @@
 /area/centcom/outside)
 "TU" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -1867,7 +1867,7 @@
 /area/shuttle/escape/centcom)
 "VO" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = ANCHORED;
+	anchored = 1;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -1935,7 +1935,7 @@
 /area/centcom/outside)
 "XY" = (
 /obj/decoration/regallamp{
-	anchored = ANCHORED;
+	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{

@@ -294,7 +294,7 @@
 /area/racing_track)
 "aT" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It seems to be rusted open.";
 	icon = 'icons/misc/rstation.dmi';
 	icon_state = "eng-open";
@@ -409,7 +409,7 @@
 /area/racing_track)
 "bj" = (
 /obj/overlay{
-	anchored = UNANCHORED;
+	anchored = 0;
 	desc = "Oh.  So THAT'S where he went off to.";
 	icon = 'hstation.dmi';
 	icon_state = "clowncorpse";
@@ -468,7 +468,7 @@
 /area/racing_track)
 "br" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -542,7 +542,7 @@
 /area/racing_track)
 "bB" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -571,14 +571,14 @@
 /area/racing_track)
 "bF" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -639,7 +639,7 @@
 /area/racing_track)
 "bM" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab2";
 	name = "crab"
@@ -677,14 +677,14 @@
 /area/racing_track)
 "bP" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -698,7 +698,7 @@
 /area/racing_track)
 "bQ" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab";
 	name = "crab"
@@ -846,7 +846,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -879,7 +879,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -905,7 +905,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1346,7 +1346,7 @@
 	})
 "dF" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1380,7 +1380,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1405,7 +1405,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1435,7 +1435,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1492,7 +1492,7 @@
 /area/racing_track)
 "dO" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1630,7 +1630,7 @@
 /area/racing_track)
 "ea" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1803,7 +1803,7 @@
 	})
 "es" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -1903,14 +1903,14 @@
 	})
 "eI" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
@@ -1925,7 +1925,7 @@
 /area/racing_track)
 "eJ" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -1955,7 +1955,7 @@
 /area/racing_track)
 "eL" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -1985,7 +1985,7 @@
 /area/racing_track)
 "eN" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -2045,14 +2045,14 @@
 	})
 "eT" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
@@ -2122,14 +2122,14 @@
 /area/racing_track)
 "eZ" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -2143,14 +2143,14 @@
 /area/sim/area2)
 "fa" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
 	name = "finish line"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "finishline_strip";
@@ -2166,7 +2166,7 @@
 /area/racing_track)
 "fb" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -2198,7 +2198,7 @@
 /area/racing_track)
 "fd" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -2230,7 +2230,7 @@
 /area/racing_track)
 "ff" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "";
 	icon = 'racing.dmi';
 	icon_state = "car_mark";
@@ -2439,7 +2439,7 @@
 /area/racing_entry)
 "fF" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -2488,7 +2488,7 @@
 /area/racing_entry)
 "fL" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -2568,7 +2568,7 @@
 /area/racing_entry)
 "fS" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "crab2";
 	name = "crab"
@@ -2582,7 +2582,7 @@
 /area/sim/area2)
 "fT" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "";
 	dir = 4;
@@ -2647,7 +2647,7 @@
 /area/sim/area2)
 "ga" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "water2";
 	layer = 10;

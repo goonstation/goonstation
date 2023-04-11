@@ -140,7 +140,7 @@
 /area/noGenerate)
 "gf" = (
 /obj/decal/fakeobjects/robot{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "How long has this been down here?"
 	},
 /turf/unsimulated/floor/white,
@@ -466,7 +466,7 @@
 	tag = "icon-intact-f (NORTHWEST)"
 	},
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -845,7 +845,7 @@
 /area/prefab/bee_sanctuary)
 "Jv" = (
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -1348,7 +1348,7 @@
 	icon_state = "manifold"
 	},
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";

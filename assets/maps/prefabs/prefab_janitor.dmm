@@ -275,7 +275,7 @@
 /area/janitor_setpiece)
 "aP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A mainframe computer. It's pretty big! Should it be blue like that?";
 	icon = 'icons/obj/networked.dmi';

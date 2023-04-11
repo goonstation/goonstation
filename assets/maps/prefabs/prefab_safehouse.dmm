@@ -350,7 +350,7 @@
 /area/prefab/safehouse)
 "kP" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "A vent. You can't feel any airflow.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";

@@ -150,7 +150,7 @@
 	dir = 1
 	},
 /obj/machinery/shitty_grill{
-	anchored = UNANCHORED;
+	anchored = 0;
 	name = "unchained shitty grill"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor{

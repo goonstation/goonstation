@@ -298,7 +298,7 @@
 /area/noGenerate)
 "aS" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -635,7 +635,7 @@
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
 	dir = 8;
-	anchored = ANCHORED
+	anchored = 1
 	},
 /obj/map/light/white,
 /turf/simulated/floor/airless/scorched,

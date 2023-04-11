@@ -2670,7 +2670,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/plating,
@@ -8296,7 +8296,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/plating,
@@ -19404,7 +19404,7 @@
 /area/station/hydroponics/bay)
 "aLl" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -19433,7 +19433,7 @@
 "aLo" = (
 /obj/machinery/camera,
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -19446,14 +19446,14 @@
 /area/station/crew_quarters/fitness)
 "aLp" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -21662,14 +21662,14 @@
 	d2 = 8
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -22252,7 +22252,7 @@
 "aQi" = (
 /obj/disposalpipe/segment,
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -22281,7 +22281,7 @@
 /area/station/crew_quarters/fitness)
 "aQl" = (
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -25275,7 +25275,7 @@
 	pixel_y = 0
 	},
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/blue/side{
@@ -26050,7 +26050,7 @@
 /area/station/maintenance/southwest)
 "aXl" = (
 /obj/machinery/bathtub{
-	anchored = ANCHORED
+	anchored = 1
 	},
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/west)
@@ -33172,7 +33172,7 @@
 	d2 = 4
 	},
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -33746,7 +33746,7 @@
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/white,
@@ -33808,7 +33808,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/computerframe{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/white,
@@ -33820,7 +33820,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/computer3frame/terminal{
-	anchored = ANCHORED;
+	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/white,
@@ -35207,7 +35207,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/overlay{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
 	icon = 'icons/obj/computer.dmi';
@@ -36997,7 +36997,7 @@
 /area/space)
 "cfX" = (
 /obj/machinery/beacon{
-	anchored = ANCHORED;
+	anchored = 1;
 	sname = "Zeta"
 	},
 /turf/simulated/floor/plating/airless,

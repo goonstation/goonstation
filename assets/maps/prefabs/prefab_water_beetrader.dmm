@@ -261,7 +261,7 @@
 /area/bee_trader)
 "J" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";
 	icon = 'icons/obj/cloning.dmi';

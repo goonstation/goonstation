@@ -364,7 +364,7 @@
 "lo" = (
 /obj/lattice,
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -972,7 +972,7 @@
 /area/noGenerate)
 "Gd" = (
 /obj/decal/fakeobjects{
-	anchored = ANCHORED;
+	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even cloned.";
 	icon = 'icons/obj/vending.dmi';
