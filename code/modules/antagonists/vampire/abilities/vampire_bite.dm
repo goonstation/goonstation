@@ -94,7 +94,6 @@
 			HH.blood_volume = 0
 		else
 			HH.blood_volume -= 20 * mult
-		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
@@ -150,7 +149,7 @@
 							HH.changeStatus("weakened", 1 SECOND)
 							HH.stuttering = min(HH.stuttering + 3, 10)
 
-			if (istype(H)) H.blood_tracking_output()
+			H.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
 		HH.death(FALSE)

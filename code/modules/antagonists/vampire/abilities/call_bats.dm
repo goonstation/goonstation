@@ -54,9 +54,6 @@
 			boutput(user, "<span class='alert'>The bats did not respond to your call!</span>")
 			return TRUE // No cooldown here, though.
 
-		if (src.pointCost)
-			AH.blood_tracking_output(src.pointCost)
-
 		playsound(user.loc, 'sound/effects/gust.ogg', 60, TRUE)
 
 		logTheThing(LOG_COMBAT, user, "uses call bats at [log_loc(user)].")

@@ -322,8 +322,8 @@
 // - If an ability isn't available from the beginning, add an unlock_message to notify the player of unlocks.
 // - Vampire abilities are logged. Please keep it that way when you make additions.
 // - Add this snippet at the bottom of cast() if the ability isn't free. Optional but basic feedback for the player.
-//		var/datum/abilityHolder/vampire/H = holder
-//		if (istype(H)) H.blood_tracking_output(src.pointCost)
+//		var/datum/abilityHolder/vampire/AH = holder
+//		AH.blood_tracking_output(src.pointCost)
 //		- You should also call the proc if you make the player pay for an interrupted attempt to use the ability, for
 //		  instance when employing do_mob() checks.
 
@@ -369,7 +369,6 @@
 				pttxt = " \[[pointCost]\]"
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
-		return
 
 	castcheck(atom/target)
 		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...

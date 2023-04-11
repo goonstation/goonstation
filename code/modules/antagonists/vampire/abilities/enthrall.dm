@@ -100,13 +100,13 @@
 		..()
 
 		var/mob/living/M = owner
-		var/datum/abilityHolder/vampire/H = enthrall.holder
+		var/datum/abilityHolder/vampire/AH = enthrall.holder
 
 		if (isvampiricthrall(target))
 			target.full_heal()
 			target.mind?.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = enthrall.holder)
 
-		if (target in H.thralls)
+		if (target in AH.thralls)
 			//and add blood!
 			if (ishuman(target))
 				var/mob/living/carbon/human/human_target = src.target
@@ -114,9 +114,9 @@
 				if (V)
 					V.blood_points += 200
 
-				H.blood_tracking_output(cost)
+				AH.blood_tracking_output(cost)
 
-				H.deductPoints(cost)
+				AH.deductPoints(cost)
 
 				boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
 				boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")

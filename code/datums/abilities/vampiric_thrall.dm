@@ -41,7 +41,7 @@
 		return
 
 /datum/abilityHolder/vampiric_thrall
-	usesPoints = 0
+	usesPoints = FALSE // fucking why
 	regenRate = 0
 	tabName = "Thrall"
 	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
@@ -54,7 +54,7 @@
 	var/last_blood_points = 0
 
 	onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
-		.= 0
+		. = 0
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
@@ -63,17 +63,6 @@
 				if (last_blood_points != V.blood_points)
 					last_blood_points = V.blood_points
 					src.updateText(0, src.x_occupied, src.y_occupied)
-
-
-	onAbilityStat() // In the 'Vampire' tab.
-		..()
-		.= list()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
-				.["Blood:"] = round(V.blood_points)
-				.["Max HP:"] = round(H.max_health)
 
 	proc/msg_to_master(var/msg)
 		if (master)
@@ -111,7 +100,6 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.object = B
-		return
 
 	onAttach(var/datum/abilityHolder/H)
 		. = ..()
@@ -140,7 +128,7 @@
 			object.icon_state = src.icon_state
 
 	castcheck()
+		. = ..()
 		if (istype(get_area(holder.owner), /area/station/chapel))
 			boutput(holder.owner, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return FALSE
-		return TRUE

@@ -2,85 +2,69 @@
 	name = "Chiropteran Screech"
 	desc = "Deafens nearby foes, smashes windows and lights. Blocked by ear protection."
 	icon_state = "screech"
-	targeted = 0
-	target_nodamage_check = 0
-	max_range = 0
-	cooldown = 300
+	cooldown = 30 SECONDS
 	pointCost = 60
 	not_when_in_an_object = FALSE
-	incapacitation_restriction = 1
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	var/duration = 10 SECONDS
 	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained chiropteran screech. It deafens nearby foes, damages windows and lights."
 	var/level = 1
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		var/mob/living/user = holder.owner
+		var/turf/T = get_turf(user)
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
-
-		if (!M)
-			return 1
-
-		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			boutput(M, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
-			M.visible_message("<span class='alert'><b>[M]</b> makes a loud noise.</span>")
-			if (istype(H)) H.blood_tracking_output(src.pointCost)
-			return 0 // Cooldown because spam is bad.
-
-		playsound(M.loc, 'sound/effects/screech_tone.ogg', 90, 1, pitch = 1)
+		playsound(user, 'sound/effects/screech_tone.ogg', 90, 1, pitch = 1)
 
 		var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
 		E.color = "#FFFFFF"
-		E.setup(M.loc)
+		E.setup(T)
 
+		var/screech_color
 		if (level == 2)
-			//add effect
-			SPAWN(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
-				EE.color = "#AAAAFF"
-				EE.setup(M.loc)
-
-			var/turf/T = get_turf(M)
-			for (var/turf/tile in range(3, T)) //get radios
-				var/i = 0
-				for (var/atom/O in tile.contents)
-					if (istype(O,/obj/item/device/radio))
-						O.emp_act()
-					i++
-					if (i > 20)
-						break
+			screech_color = "#AAAAFF"
+			for (var/obj/O in orange(3, T))
+				if (istype(O, /obj/item/device/radio))
+					O.emp_act()
 		else
-			SPAWN(1 DECI SECOND)
-				var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
-				EE.color = "#FFFFFF"
-				EE.setup(M.loc)
+			screech_color = "#FFFFFF"
 
-		for (var/mob/living/HH in hearers(M, null))
-			if (HH == M) continue
+		// we do 2 of these? ok
+		SPAWN(0.1 SECONDS)
+			var/obj/itemspecialeffect/screech/EE = new /obj/itemspecialeffect/screech
+			EE.color = screech_color
+			EE.setup(T)
 
+		for (var/mob/living/hearer in ohearers(user, null))
 			if (level == 2)
-				OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
+				OTHER_START_TRACKING_CAT(user, TR_CAT_RADIO_JAMMERS)
 				SPAWN(src.duration)
-					if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
-						OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
-			if (isvampire(HH) && HH.check_vampire_power(3) == 1)
-				boutput(HH, "<span class='notice'>You are immune to [M]'s screech!</span>")
+					if (user in by_cat[TR_CAT_RADIO_JAMMERS])
+						OTHER_STOP_TRACKING_CAT(user, TR_CAT_RADIO_JAMMERS)
+
+			if (isvampire(hearer) && hearer.check_vampire_power(3))
+				boutput(hearer, "<span class='notice'>You are immune to [user]'s screech!</span>")
 				continue
-			if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-				boutput(HH, "<span class='notice'>[M]'s scream only strengthens your resolve!</span>")
-				JOB_XP(HH, "Chaplain", 2)
+			if (hearer.traitHolder.hasTrait("training_chaplain"))
+				boutput(hearer, "<span class='notice'>[user]'s scream only strengthens your resolve!</span>")
+				JOB_XP(hearer, "Chaplain", 2)
 				continue
 
-			HH.apply_sonic_stun(0, 0, 40, 0, 50, 8, 12)
+			hearer.apply_sonic_stun(0, 0, 40, 0, 50, 8, 12)
 
-		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
+		sonic_attack_environmental_effect(user, 2, list("light", "window", "r_window"))
 
-		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing(LOG_COMBAT, M, "uses chiropteran screech at [log_loc(M)].")
-		return 0
+		logTheThing(LOG_COMBAT, user, "uses chiropteran screech at [log_loc(user)].")
+		return FALSE
+
+	castcheck(atom/target)
+		. = ..()
+		var/mob/living/user = src.holder.owner
+		if (user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+			boutput(user, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> makes a loud noise.</span>")
+			return FALSE // Cooldown because spam is bad.
 
 /datum/targetable/vampire/vampire_scream/mk2
 	name = "Chiropteran Screech Mk2"
