@@ -138,9 +138,9 @@ obj/structure/ex_act(severity)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.traitHolder.hasTrait("carpenter"))
-				duration = round(duration / 2)
+				duration = duration / 1.5
 			if (H.traitHolder.hasTrait("training_engineer"))
-				duration = duration / 2 // No rounding means faster
+				duration = duration / 2.5
 		var/mob/living/critter/robotic/bot/engibot/E = user
 		if(istype(E))
 			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
