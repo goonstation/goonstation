@@ -365,18 +365,14 @@ TYPEINFO(/obj)
 			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		if (rods)
-			rods.change_stack_amount(-1)
-
 		var/turf/T = get_turf(src.loc)
 		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk, keep_old_material = 0, handle_dir = 1)
-		var/obj/grille/catwalk/catwalk = new
-		catwalk.set_loc(T)
+		T.MakeCatwalk(rods)
 		qdel(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
-			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer"))
+			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer")) // // Engineers can bypass the actionbar and instantly put down catwalks.
 				src.replace_with_catwalk(C)
 				return
 			user.show_text("You start putting the rods together and making a catwalk...", "blue")
