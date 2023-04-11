@@ -81,3 +81,8 @@
 
 /// Uncross should call this after setting `.` to make sure Bump gets called if needed
 #define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)
+
+// The anchored vars just used 0 1 and 2 raw before, which is absolutely intolerable.
+#define ANCHORED_FALSE 0
+#define ANCHORED_PICKUP 1
+#define ANCHORED_FULL 2
