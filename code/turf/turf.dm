@@ -1077,13 +1077,7 @@ proc/generate_space_color()
 		return
 	var/obj/item/rods/R = C
 	if (istype(R))
-		var/lattice_on_turf = FALSE
-		for (var/obj/lattice/lattice in range(1, src))
-			if (istype(lattice))
-				lattice_on_turf = TRUE
-
-		if (lattice_on_turf) // If there's already lattice on the turf, we probably shouldn't build another.
-			return
+		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
