@@ -1529,7 +1529,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
 		setProperty("exploprot", 30)
