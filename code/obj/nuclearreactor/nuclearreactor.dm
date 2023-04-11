@@ -38,7 +38,7 @@
 	/// Reactor casing temperature
 	var/temperature = T20C
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
-	var/thermal_mass = 420*20//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
+	var/thermal_mass = 420*2000//specific heat capacity of steel (420 J/KgK) * mass of reactor (Kg)
 
 	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
@@ -60,7 +60,7 @@
 	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
 	VAR_PRIVATE/_last_total_coolant_e = 0
 	/// INTERNAL DEBUG: set to true to output debug messages
-	VAR_PRIVATE/_debug_mode = FALSE
+	VAR_PRIVATE/_debug_mode = TRUE
 
 	New()
 		. = ..()
@@ -301,10 +301,10 @@
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
-			var/A = 10 * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
+			var/A = 1 * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
 
 			var/thermal_e = THERMAL_ENERGY(current_gas)
-
+			var/coe_check = thermal_e + src.temperature*src.thermal_mass
 			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
 			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
 			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
@@ -314,10 +314,17 @@
 			//by clamping between hottest and coldest. It's not pretty, but it works.
 			var/hottest = max(src.current_gas.temperature, src.temperature)
 			var/coldest = min(src.current_gas.temperature, src.temperature)
-			src.current_gas.temperature = clamp(src.current_gas.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
+			//gas can't suck out more heat from the reactor than exists
+			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
+			src.current_gas.temperature = clamp(src.current_gas.temperature + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest)
 
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
-			src.temperature = src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass
+			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass, coldest, hottest)
+
+			var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
+			if(abs(coe2 - coe_check) > 5)
+				CRASH("COE VIOLATION COMPONENT")
 			if(src.current_gas.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
