@@ -140,7 +140,7 @@ obj/structure/ex_act(severity)
 			if (H.traitHolder.hasTrait("carpenter"))
 				duration = duration / 1.5
 			if (H.traitHolder.hasTrait("training_engineer"))
-				duration = duration / 2.5
+				duration = duration / 2
 		var/mob/living/critter/robotic/bot/engibot/E = user
 		if(istype(E))
 			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
