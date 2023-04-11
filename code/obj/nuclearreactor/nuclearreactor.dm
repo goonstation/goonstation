@@ -60,7 +60,7 @@
 	/// INTERNAL DEBUG: tracks total stored thermal energy in the coolant
 	VAR_PRIVATE/_last_total_coolant_e = 0
 	/// INTERNAL DEBUG: set to true to output debug messages
-	VAR_PRIVATE/_debug_mode = FALSE
+	VAR_PRIVATE/_debug_mode = TRUE
 
 	New()
 		. = ..()
@@ -324,6 +324,16 @@
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
+				if(istype(., /datum/gas_mixture))
+					var/datum/gas_mixture/result = .
+					result.merge(src.current_gas)
+					src.current_gas = null
+					return result
+				else
+					. = src.current_gas
+					src.current_gas = null
+					return .
 
 
 	proc/processCaseRadiation(var/rads)
@@ -650,9 +660,10 @@
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
 
 		//enable for faster debugging
-		//src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
-		//src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
-		//src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		if(src._debug_mode)
+			src.component_grid[4][2] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+			src.component_grid[4][4] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+			src.component_grid[4][6] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 
 
 		..()

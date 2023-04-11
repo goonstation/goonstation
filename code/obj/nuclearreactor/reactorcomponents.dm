@@ -341,6 +341,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		if(inGas)
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			src.air_contents?.volume = gas_volume
+			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
+				if(istype(., /datum/gas_mixture))
+					var/datum/gas_mixture/result = .
+					result.merge(src.air_contents)
+					src.air_contents = null
+					return result
+				else
+					. = src.air_contents
+					src.air_contents = null
+					return .
 
 #define SANE_COMPONENT_MATERIALS \
 		100;"gold",\
