@@ -367,6 +367,7 @@ TYPEINFO(/obj)
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
 		var/turf/T = get_turf(src.loc)
 		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk, keep_old_material = 0, handle_dir = 1)
+		var/turf/simulated/floor/airless/plating/catwalk/T = T
 		T.MakeCatwalk(rods)
 		qdel(src)
 
