@@ -78,7 +78,6 @@
 			which_way = 1
 
 		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
-		return
 
 // There used to be more stuff here, most of which was moved to limb datums.
 /mob/proc/werewolf_attack(var/mob/target = null, var/attack_type = "")
@@ -95,7 +94,7 @@
 	if (target == M)
 		return 0
 
-	if (check_target_immunity(target) == 1)
+	if (check_target_immunity(target))
 		target.visible_message("<span class='alert'><B>[M]'s swipe bounces off of [target] uselessly!</B></span>")
 		return 0
 	M.werewolf_tainted_saliva_transfer(target)
@@ -285,30 +284,6 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/werewolf
-	clicked(params)
-		var/datum/targetable/werewolf/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (spell.cooldowncheck())
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/werewolf
 	usesPoints = 0
 	regenRate = 0
@@ -316,29 +291,24 @@
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
 	var/datum/reagents/tainted_saliva_reservoir = null
-	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
 		..()
-		awaken_time = rand(5, 10)*100
-		src.tainted_saliva_reservoir = new/datum/reagents(500)
+		src.tainted_saliva_reservoir = new /datum/reagents(500)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
-		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
+		. = list()
+		if (src.owner.mind?.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 
 			if (src.feed_objective && istype(src.feed_objective))
 				.["Feedings:"] = src.feed_objective.feed_count
-
-		return
-
 //percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
-		A.cooldown = A.cooldown * (1-percent)
+		A.cooldown = A.cooldown * (1 - percent)
 
 /////////////////////////////////////////////// Werewolf spell parent ////////////////////////////
 
@@ -347,11 +317,12 @@
 	icon_state = "template"  // No custom sprites yet.
 	preferred_holder_type = /datum/abilityHolder/werewolf
 	can_cast_while_cuffed = TRUE
-	var/werewolf_only = 0
+	/// Ability can only be used while in wolf form if TRUE
+	var/werewolf_only = FALSE
 
 	New()
 		..()
-		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -362,7 +333,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/werewolf()
+			src.object = new /atom/movable/screen/ability/topBar()
 			object.icon = src.icon
 			object.owner = src
 
@@ -381,36 +352,13 @@
 			object.icon_state = src.icon_state
 
 	castcheck()
-		if (!holder)
-			return 0
-
-		var/mob/living/carbon/human/M = holder.owner
-
-		if (!M)
-			return 0
-
-		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
-			return 0
-
-		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
-			return 0
-
-		if (werewolf_only == 1 && !iswerewolf(M))
-			boutput(M, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
-			return 0
-
-		if (incapacitation_check(src.incapacitation_restriction) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
-			return 0
-
-		if (src.can_cast_while_cuffed == FALSE && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
-			return 0
-
-		return 1
-
-	cast(atom/target)
 		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
+		var/mob/living/carbon/human/user = src.holder.owner
+
+		if (!ishuman(user)) // Only humans use mutantrace datums.
+			boutput(user, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			return FALSE
+
+		if (src.werewolf_only && !iswerewolf(user))
+			boutput(user, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
+			return FALSE

@@ -810,7 +810,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\vampire\abilities\hypnotize.dm"
 #include "code\modules\antagonists\vampire\abilities\phaseshift_vampire.dm"
 #include "code\modules\antagonists\vampire\abilities\plague_touch.dm"
-#include "code\modules\antagonists\vampire\abilities\radio_jammer.dm"
 #include "code\modules\antagonists\vampire\abilities\screech.dm"
 #include "code\modules\antagonists\vampire\abilities\thrall_abilities.dm"
 #include "code\modules\antagonists\vampire\abilities\vamp_cloak.dm"
