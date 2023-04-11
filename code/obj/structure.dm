@@ -135,10 +135,12 @@ obj/structure/ex_act(severity)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
+		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+			if (H.traitHolder.hasTrait("carpenter"))
 				duration = round(duration / 2)
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = duration / 2 // No rounding means faster
 		var/mob/living/critter/robotic/bot/engibot/E = user
 		if(istype(E))
 			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
