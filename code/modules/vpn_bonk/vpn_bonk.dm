@@ -98,6 +98,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	sleep(3 SECONDS)
 	if (src)
 		del(src)
+		tgui_process.close_user_uis(src.mob)
 	return
 
 #ifndef SECRETS_ENABLED
