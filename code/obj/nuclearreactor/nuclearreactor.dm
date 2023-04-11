@@ -301,7 +301,7 @@
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
-			var/A = 10
+			var/A = 10 * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
 
 			var/thermal_e = THERMAL_ENERGY(current_gas)
 
@@ -606,6 +606,12 @@
 		else
 			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
 			return FALSE
+
+	/// Transmuting nuclear engine into jeans sometimes causes a client crash
+	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+		if(mat1.mat_id == "jean")
+			return
+		. = ..()
 
 
 

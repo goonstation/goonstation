@@ -278,6 +278,12 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
+				if (istype(R, /obj/item/parts/robot_parts/chest))
+					var/obj/item/parts/robot_parts/chest/chest = R
+					chest.wires = 1
+					if (src.cell)
+						chest.cell = src.cell
+
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = is_emagged
 			frame.syndicate = is_syndicate

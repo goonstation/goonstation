@@ -1455,6 +1455,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)

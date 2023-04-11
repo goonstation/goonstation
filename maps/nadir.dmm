@@ -34964,7 +34964,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "pmV" = (
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -40790,7 +40790,8 @@
 /turf/simulated/floor/black,
 /area/pasiphae)
 "scP" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
+/obj/item/paper/emergencycooler,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
 "scW" = (
@@ -43988,7 +43989,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "ttQ" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core/nuclear)
 "ttW" = (

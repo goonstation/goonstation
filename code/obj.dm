@@ -1,5 +1,7 @@
 TYPEINFO(/obj)
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = 0
 
 /obj
 	var/real_name = null
