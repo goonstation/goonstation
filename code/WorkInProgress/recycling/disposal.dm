@@ -435,6 +435,9 @@
 		if (isrestrictedz(z))
 			return
 		var/turf/T = src.loc
+		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
+			T.Attackby(I, user)
+			return
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 

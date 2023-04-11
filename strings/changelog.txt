@@ -1,5 +1,6 @@
 (t)tue apr 11 23
 (u)LeahTheTech, Kubius
+(+)Clicking on disposals pipes or cables with floor tiles will now interact with the turf beneath them for easier repairing.
 (+)APCs now correctly recharge at a maximum of 1% per second. (~32 times faster than before)
 (t)mon apr 10 23
 (u)Amylizzle
