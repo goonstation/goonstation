@@ -317,7 +317,7 @@
 		if(divert)
 			network_node1 = new_network
 
-	if(new_network.normal_members.Find(src))
+	if(src in new_network.normal_members)
 		return FALSE
 
 	new_network.normal_members += src
