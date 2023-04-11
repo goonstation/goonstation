@@ -364,7 +364,23 @@ TYPEINFO(/obj)
 				return
 			else
 
+	proc/replace_with_catwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/turf/T = get_turf(src.loc)
+		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk, keep_old_material = 0, handle_dir = 1)
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.set_loc(T)
+		qdel(src)
+
 	attackby(obj/item/C, mob/user)
+		if (istype(C, /obj/item/rods))
+			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer"))
+				src.replace_with_catwalk(C)
+				return
+			user.show_text("You start putting the rods together and making a catwalk...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECOND, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
@@ -378,12 +394,6 @@ TYPEINFO(/obj)
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
-		if (istype(C, /obj/item/rods))
-			var/obj/item/rods/R = C
-			if (R.change_stack_amount(-2))
-				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
-				new /obj/lattice/barricade(src.loc)
-				qdel(src)
 		return
 
 /obj/lattice/barricade

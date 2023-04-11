@@ -239,7 +239,6 @@
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			drop_rods(1)
 			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1

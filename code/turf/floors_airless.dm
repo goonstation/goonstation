@@ -30,6 +30,31 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+	proc/MakeCatwalk(var/obj/item/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.set_loc(src)
+
+	attackby(obj/item/C, mob/user, params)
+		if(istype(C, /obj/item/rods))
+			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer"))
+				src.MakeCatwalk(C)
+				return
+			user.show_text("You start putting the rods on the frame...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECOND, .proc/MakeCatwalk, list(C), C.icon, C.icon_state, null, null)
+			return
+
+		if(issnippingtool(C))
+			user.show_text("You cut away the support beams.")
+			var/obj/item/rods/steel/rod = new
+			rod.set_loc(src)
+			src.ReplaceWithSpace()
+			return
+
+		. = ..()
+
 /turf/unsimulated/floor/airless/plating/catwalk
 	name = "catwalk support"
 	icon_state = "catwalk"
