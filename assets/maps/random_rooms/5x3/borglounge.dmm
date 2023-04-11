@@ -30,7 +30,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects/robot{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "How long has this been down here?"
 	},
 /obj/machinery/light/small{

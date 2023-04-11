@@ -51,7 +51,7 @@
 	icon_state = "critter_spawn"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/critter = /obj/critter/bear
 	var/spawn_delay = 20
 	var/tmp/next_spawn = 0

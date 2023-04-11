@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	desc = "I wonder what this is."
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()

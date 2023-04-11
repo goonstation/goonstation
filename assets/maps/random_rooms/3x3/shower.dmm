@@ -19,7 +19,7 @@
 /area/dmm_suite/clear_area)
 "F" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,

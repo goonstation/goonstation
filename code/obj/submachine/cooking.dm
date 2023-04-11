@@ -6,7 +6,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	desc = "A water-filled unit intended for cookery purposes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
@@ -152,7 +152,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	desc = "A machine designed to dispense space ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
@@ -316,7 +316,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
@@ -925,7 +925,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 	desc = "Refines various food substances into different forms."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
@@ -1196,7 +1196,7 @@ TYPEINFO(/obj/submachine/mixer)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "blender"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()

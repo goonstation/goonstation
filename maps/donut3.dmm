@@ -1775,7 +1775,7 @@
 /area/station/maintenance/outer/east)
 "avb" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
@@ -5763,14 +5763,14 @@
 /area/station/crewquarters/fuq3)
 "bBC" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
 	pixel_y = 28
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -14641,7 +14641,7 @@
 /area/station/solar/east)
 "emi" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grass/random,
@@ -16723,7 +16723,7 @@
 	layer = 2.8
 	},
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -18837,7 +18837,7 @@
 /area/station/quartermaster/office)
 "fCM" = (
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
@@ -19384,7 +19384,7 @@
 "fKp" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/camera/ranch{
 	dir = 8
@@ -21573,7 +21573,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "gtU" = (
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/potted_plant/potted_plant2{
 	dir = 1;
@@ -25284,7 +25284,7 @@
 	})
 "hzO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -26263,7 +26263,7 @@
 /area/station/maintenance/inner/west)
 "hSD" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -26711,7 +26711,7 @@
 	dir = 10
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -27629,7 +27629,7 @@
 /area/station/security/main)
 "inC" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28480,7 +28480,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -34333,7 +34333,7 @@
 /area/station/ai_monitored/armory)
 "kpv" = (
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -35408,7 +35408,7 @@
 /area/shuttle/asylum/medbay)
 "kHx" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -35718,7 +35718,7 @@
 /area/station/hallway/secondary/exit)
 "kNY" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -36852,7 +36852,7 @@
 /area/station/maintenance/inner/sw)
 "lfJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -39329,7 +39329,7 @@
 	name = "costume eyepatch"
 	},
 /obj/storage/closet/dresser{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "costume dresser"
 	},
 /turf/simulated/floor/specialroom/chapel,
@@ -42495,7 +42495,7 @@
 /area/space)
 "mTc" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/status_display{
 	pixel_y = -30
@@ -48567,7 +48567,7 @@
 	dir = 4
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -60292,7 +60292,7 @@
 /area/station/maintenance/outer/north)
 "sfc" = (
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -66703,7 +66703,7 @@
 /area/station/maintenance/inner/se)
 "ueR" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/random,
@@ -66872,7 +66872,7 @@
 /area/station/crew_quarters/hor)
 "uhN" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/light_switch/east,
@@ -72037,7 +72037,7 @@
 	pixel_y = 32
 	},
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)

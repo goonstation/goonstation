@@ -733,7 +733,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This doesn't seem to be operating correctly.";
 	icon = 'icons/obj/networked.dmi';
@@ -878,7 +878,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';

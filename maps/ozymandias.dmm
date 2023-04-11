@@ -2069,7 +2069,7 @@
 	})
 "aEG" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -3482,7 +3482,7 @@
 /area/station/hallway/secondary/north)
 "aYn" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -3987,7 +3987,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -5479,7 +5479,7 @@
 /area/station/ai_monitored/armory)
 "bCk" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -7921,7 +7921,7 @@
 /area/station/security/equipment)
 "cjB" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -9080,7 +9080,7 @@
 /area/station/security/checkpoint/east)
 "cyV" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -12082,7 +12082,7 @@
 	icon_state = "line1"
 	},
 /obj/item/bballbasket{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8;
 	pixel_x = -20
 	},
@@ -15114,7 +15114,7 @@
 /area/station/engine/elect)
 "ebR" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -15394,7 +15394,7 @@
 	dir = 4
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/sand,
 /area/station/ranch)
@@ -19554,7 +19554,7 @@
 /area/station/maintenance/inner/ne)
 "fhN" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -20811,7 +20811,7 @@
 	})
 "fyJ" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -24667,7 +24667,7 @@
 /area/station/hydroponics/bay)
 "gwT" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -27472,7 +27472,7 @@
 /area/station/quartermaster/office)
 "hge" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -28789,7 +28789,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/southwest)
@@ -31394,7 +31394,7 @@
 /area/station/medical/medbay/lobby)
 "ihV" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -32374,7 +32374,7 @@
 /area/station/maintenance/solar/south)
 "iwE" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light,
 /turf/simulated/floor/grass,
@@ -37150,7 +37150,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -37782,7 +37782,7 @@
 /area/station/mining/staff_room)
 "jRU" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -42098,7 +42098,7 @@
 	})
 "kXi" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -44720,7 +44720,7 @@
 "lDL" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -45470,7 +45470,7 @@
 	dir = 8
 	},
 /obj/storage/secure/crate/gear{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -46323,7 +46323,7 @@
 	})
 "lVE" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -46504,7 +46504,7 @@
 	icon_state = "line1"
 	},
 /obj/item/bballbasket{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	pixel_x = 20
 	},
@@ -46609,7 +46609,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -48343,7 +48343,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -49905,7 +49905,7 @@
 /area/station/crewquarters/cryotron)
 "mQl" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -52325,7 +52325,7 @@
 	})
 "nBs" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -53046,7 +53046,7 @@
 	dir = 8
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/sand,
 /area/station/ranch)
@@ -53222,7 +53222,7 @@
 /area/station/medical/medbay/surgery/storage)
 "nNp" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -55216,7 +55216,7 @@
 /area/station/medical/medbooth)
 "oml" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -57042,7 +57042,7 @@
 	icon_state = "0-4"
 	},
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -57324,7 +57324,7 @@
 /area/station/chapel/sanctuary)
 "oNw" = (
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -60057,7 +60057,7 @@
 	name = "factory pipe"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -61993,7 +61993,7 @@
 /area/station/crew_quarters/bar)
 "pWD" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -62472,7 +62472,7 @@
 	},
 /obj/machinery/light,
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/sand,
 /area/station/ranch)
@@ -68199,7 +68199,7 @@
 	dir = 4
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -71356,7 +71356,7 @@
 /area/station/crew_quarters/fitness)
 "sok" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -71607,7 +71607,7 @@
 /area/station/science/lab)
 "sqv" = (
 /obj/machinery/field_generator{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -71979,7 +71979,7 @@
 /area/station/medical/medbay)
 "svH" = (
 /obj/machinery/field_generator{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -73458,7 +73458,7 @@
 /area/station/engine/engineering/private)
 "sNq" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -74256,7 +74256,7 @@
 	icon_state = "0-4"
 	},
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -75068,7 +75068,7 @@
 /area/station/crew_quarters/market)
 "tft" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/southwest)
@@ -76721,7 +76721,7 @@
 /area/station/crew_quarters/pool)
 "tAT" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
@@ -79131,7 +79131,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -82094,7 +82094,7 @@
 	})
 "uQf" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -83687,7 +83687,7 @@
 /area/station/maintenance/solar/west)
 "vic" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -85671,7 +85671,7 @@
 /area/station/ranch)
 "vFj" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -86067,7 +86067,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -89773,7 +89773,7 @@
 	pixel_x = -10
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -90091,7 +90091,7 @@
 /area/station/engine/power)
 "wFB" = (
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -90613,7 +90613,7 @@
 /area/station/janitor/office)
 "wMD" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -93787,7 +93787,7 @@
 /area/station/atmos/hookups/southwest)
 "xxY" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
@@ -95473,7 +95473,7 @@
 /area/station/hallway/primary/east)
 "xRp" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/lounge/research)

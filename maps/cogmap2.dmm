@@ -1142,7 +1142,7 @@
 /area/station/turret_protected/ai)
 "acJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -1153,7 +1153,7 @@
 /area/ghostdrone_factory)
 "acK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -4441,7 +4441,7 @@
 	info = ": )"
 	},
 /obj/storage/closet/dresser{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "An ornately-designed antique. How'd anyone even get it down here?";
 	name = "antique armoire"
 	},
@@ -7168,7 +7168,7 @@
 /area/station/chapel/sanctuary)
 "asO" = (
 /obj/item/instrument/large/piano{
-	anchored = 0;
+	anchored = UNANCHORED;
 	name = "old piano"
 	},
 /obj/item/screwdriver,
@@ -10468,7 +10468,7 @@
 /area/space)
 "aAH" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -10826,7 +10826,7 @@
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "costume dresser"
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -11167,13 +11167,13 @@
 /area/station/hydroponics/bay)
 "aCi" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aCj" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/catering)
@@ -15777,7 +15777,7 @@
 /area/station/maintenance/north)
 "aNJ" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
@@ -16217,7 +16217,7 @@
 /area/station/maintenance/north)
 "aOO" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -16329,7 +16329,7 @@
 	dir = 4
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -17496,7 +17496,7 @@
 /area/station/crew_quarters/locker)
 "aRP" = (
 /obj/machinery/bathtub{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -17910,7 +17910,7 @@
 /area/station/garden/owlery)
 "aSX" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -19010,7 +19010,7 @@
 /area/station/garden/owlery)
 "aVK" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/wood{
@@ -22115,7 +22115,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects/robot{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "How long has this been down here?"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -29749,7 +29749,7 @@
 /area/station/security/main)
 "bvU" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -32766,7 +32766,7 @@
 	dir = 10
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Engineering Recorder";
@@ -33014,7 +33014,7 @@
 /area/station/routing/depot)
 "bCX" = (
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	dir = 8;
 	icon = 'icons/obj/computer.dmi';
@@ -52268,7 +52268,7 @@
 /area/station/science/testchamber)
 "cwb" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -65264,7 +65264,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -68850,7 +68850,7 @@
 /area/research_outpost)
 "djG" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -70189,7 +70189,7 @@
 /area/station/solar/small_backup1)
 "dmV" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -70262,7 +70262,7 @@
 /area/listeningpost/solars)
 "dnf" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -72835,7 +72835,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/stripe{
 	dir = 1
@@ -74020,7 +74020,7 @@
 /area/station/maintenance/southeast)
 "mBW" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/stripe{
 	dir = 4

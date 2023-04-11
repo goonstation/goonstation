@@ -32,7 +32,7 @@
 	dir = 6
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 0;
 	desc = "Seems to be full of fiber optic cables.";
 	icon = 'icons/obj/tubing.dmi';
@@ -51,7 +51,7 @@
 	dir = 10
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 0;
 	desc = "Seems to be full of fiber optic cables.";
 	icon = 'icons/obj/tubing.dmi';
@@ -83,7 +83,7 @@
 /area/noGenerate)
 "m" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A device for scanning deep space.";
 	icon = 'icons/mob/hivebot.dmi';
@@ -116,7 +116,7 @@
 	dir = 9
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 0;
 	desc = "Seems to be full of fiber optic cables.";
 	icon = 'icons/obj/tubing.dmi';
@@ -131,7 +131,7 @@
 	dir = 5
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 0;
 	desc = "Seems to be full of fiber optic cables.";
 	icon = 'icons/obj/tubing.dmi';
@@ -145,7 +145,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 0;
 	desc = "Seems to be full of fiber optic cables.";
 	icon = 'icons/obj/tubing.dmi';

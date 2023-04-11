@@ -70,7 +70,7 @@
 	icon_state = "pressure_ancient_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2
 	var/pad_type
 	var/pressed = 0

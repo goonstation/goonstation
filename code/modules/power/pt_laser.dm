@@ -7,7 +7,7 @@
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	dir = 4
 	bound_height = 96
 	bound_width = 96
@@ -486,7 +486,7 @@
 	desc = "A powerful laser beam."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	invisibility = INVIS_ALWAYS

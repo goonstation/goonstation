@@ -507,7 +507,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			playsound(user.loc, "explosion", 100, 1)
 			SPAWN(0)
 				var/obj/overlay/O = new/obj/overlay(T)
-				O.anchored = 1
+				O.anchored = ANCHORED
 				O.name = "Explosion"
 				O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 				O.pixel_x = -92

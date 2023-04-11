@@ -11866,7 +11866,7 @@
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15771,7 +15771,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -22311,7 +22311,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -23819,7 +23819,7 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/white/checker{
 	dir = 6
@@ -27283,7 +27283,7 @@
 /area/station/hallway/primary/east)
 "bpC" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -28953,7 +28953,7 @@
 "buw" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/cargo{
@@ -31062,7 +31062,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
@@ -31076,7 +31076,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
@@ -31152,7 +31152,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw,
 /area/station/hallway/secondary/east)
@@ -31669,7 +31669,7 @@
 /area/station/hydroponics/bay)
 "bBb" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -33105,7 +33105,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10;
-	
+
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -36113,7 +36113,7 @@
 "bMd" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -36678,7 +36678,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -37253,7 +37253,7 @@
 /area/station/hydroponics/bay)
 "bPt" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -37840,7 +37840,7 @@
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
@@ -38498,7 +38498,7 @@
 "bSk" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -38893,7 +38893,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
@@ -40593,7 +40593,7 @@
 /area/station/hydroponics/bay)
 "bXn" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -44090,7 +44090,7 @@
 "cfo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow,
@@ -44509,7 +44509,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -44618,7 +44618,7 @@
 "cgz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -44952,7 +44952,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -45367,7 +45367,7 @@
 "chZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
@@ -45844,7 +45844,7 @@
 "cje" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
@@ -50807,7 +50807,7 @@
 "cwJ" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -50840,7 +50840,7 @@
 /area/space)
 "cwO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -50894,7 +50894,7 @@
 /area/space)
 "cwX" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -51140,7 +51140,7 @@
 /area/listeningpost/power)
 "cxC" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -51211,7 +51211,7 @@
 /area/space)
 "cxK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -51385,7 +51385,7 @@
 /area/listeningpost/power)
 "cyn" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -51422,7 +51422,7 @@
 /area/listeningpost/power)
 "cyr" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
@@ -52238,7 +52238,7 @@
 /area/station/science/chemistry)
 "cAV" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Telescience Recorder";
@@ -53257,7 +53257,7 @@
 /area/station/science/lobby)
 "cDv" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -53509,7 +53509,7 @@
 	},
 /obj/decal/cleanable/rust,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This teller is incredibly broken.  Look at how broken it is!  And someone took the cash...";
 	icon = 'icons/obj/computer.dmi';
@@ -54082,7 +54082,7 @@
 /area/station/maintenance/northeast)
 "dKQ" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -55489,7 +55489,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -56880,7 +56880,7 @@
 "jIi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -58214,7 +58214,7 @@
 /area/space)
 "mCu" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -58368,7 +58368,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/equipment)
@@ -59771,7 +59771,7 @@
 /area/station/crew_quarters/quarters_south)
 "pNl" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/green,
@@ -59940,7 +59940,7 @@
 "qgY" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
@@ -59955,7 +59955,7 @@
 	dir = 8
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -60540,7 +60540,7 @@
 /area/station/security/equipment)
 "rAd" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
@@ -61154,7 +61154,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -61725,7 +61725,7 @@
 	dir = 1
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -62589,7 +62589,7 @@
 /area/station/medical/robotics)
 "vLY" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -63427,7 +63427,7 @@
 /area/space)
 "xlR" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"

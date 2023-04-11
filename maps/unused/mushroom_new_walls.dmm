@@ -4245,7 +4245,7 @@
 "arg" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8;
 	state = 1
 	},
@@ -5174,14 +5174,14 @@
 /area/station/crew_quarters/pool)
 "auJ" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -6893,13 +6893,13 @@
 /area/station/crew_quarters/baroffice)
 "aBw" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -11543,7 +11543,7 @@
 "aTZ" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -15860,7 +15860,7 @@
 /area/station/medical/research)
 "bhQ" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -16523,7 +16523,7 @@
 /area/space)
 "blg" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -16582,7 +16582,7 @@
 /area/space)
 "blo" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -18424,7 +18424,7 @@
 /area/station/hydroponics/bay)
 "brl" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -23206,7 +23206,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "gyA" = (
 /obj/machinery/bathtub{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/sponge{
 	name = "loofah"
@@ -28945,7 +28945,7 @@
 /area/station/science/teleporter)
 "nRo" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -28965,7 +28965,7 @@
 "nRJ" = (
 /obj/machinery/camera,
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -30656,7 +30656,7 @@
 "pIZ" = (
 /obj/machinery/power/data_terminal,
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	state = 1
 	},
 /obj/cable{
@@ -33846,14 +33846,14 @@
 /area/station/crew_quarters/cafeteria)
 "thS" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -34852,7 +34852,7 @@
 /area/station/science/lab)
 "ugm" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;

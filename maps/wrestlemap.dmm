@@ -21739,7 +21739,7 @@
 /area/station/crew_quarters/bar)
 "jbX" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -23957,7 +23957,7 @@
 /area/station/maintenance/east)
 "jZh" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/item/reagent_containers/bath_bomb,
@@ -31742,7 +31742,7 @@
 /area/space)
 "nsG" = (
 /obj/item/instrument/large/jukebox{
-	anchored = 0;
+	anchored = UNANCHORED;
 	desc = "How is this thing still working?"
 	},
 /obj/decal/cleanable/dirt/dirt5,
@@ -32283,7 +32283,7 @@
 /area/station/hallway/primary/south)
 "nHi" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -39844,7 +39844,7 @@
 /area/station/engine/inner)
 "qQw" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -41201,7 +41201,7 @@
 /area/station/maintenance/inner/central)
 "rxs" = (
 /obj/reagent_dispensers/fueltank{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -41774,7 +41774,7 @@
 /area/station/crew_quarters/barber_shop)
 "rIY" = (
 /obj/reagent_dispensers/fueltank{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/emergency{
 	dir = 4
@@ -46915,7 +46915,7 @@
 	})
 "tLR" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';

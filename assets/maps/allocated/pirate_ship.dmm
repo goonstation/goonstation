@@ -2141,7 +2141,7 @@
 	pixel_x = 2
 	},
 /obj/decorative_pot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grey/side,
 /area/pirate_ship)
@@ -2308,7 +2308,7 @@
 	icon_state = "1-8"
 	},
 /obj/decal/fakeobjects/console_radar{
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 4

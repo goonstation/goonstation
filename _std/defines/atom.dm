@@ -84,7 +84,7 @@
 
 /// For an unanchored movable atom
 #define UNANCHORED 0
-/// For an atom that can't be moved by people
+/// For an atom that can't be moved by player actions
 #define ANCHORED 1
 /// For an atom that's always immovable, even by stuff like black holes and gravity artifacts.
 #define ANCHORED_ALWAYS 2

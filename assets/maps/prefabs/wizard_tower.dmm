@@ -27,7 +27,7 @@
 /area/space)
 "ag" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	icon = 'icons/turf/adventure.dmi';
 	icon_state = "door_runes_closed";
@@ -292,7 +292,7 @@
 /area/space)
 "bb" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	icon = 'icons/turf/adventure.dmi';
 	icon_state = "column";

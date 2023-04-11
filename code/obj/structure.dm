@@ -3,7 +3,7 @@ obj/structure
 
 	girder
 		icon_state = "girder"
-		anchored = 1
+		anchored = ANCHORED
 		density = 1
 		material_amt = 0.2
 		var/state = 0
@@ -12,7 +12,7 @@ obj/structure
 		displaced
 			name = "displaced girder"
 			icon_state = "displaced"
-			anchored = 0
+			anchored = UNANCHORED
 			desc = "An unsecured support for an incomplete wall. A screwdriver would seperate the metal into sheets, or adding metal or reinforced metal could turn it into fake wall that could opened by hand."
 
 		reinforced
@@ -322,7 +322,7 @@ obj/structure/ex_act(severity)
 	desc = "This was thrown up in a hurry."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodwall"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	mat_appearances_to_ignore = list("wood")

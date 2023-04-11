@@ -123,7 +123,7 @@
 /area/station/ai_monitored/armory)
 "aau" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -186,7 +186,7 @@
 /area/space)
 "aaC" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -841,7 +841,7 @@
 /area/station/science/lobby)
 "adv" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -1671,7 +1671,7 @@
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8;
 	state = 1
 	},
@@ -5057,7 +5057,7 @@
 /area/station/hangar/main)
 "atz" = (
 /obj/machinery/bathtub{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
@@ -7137,7 +7137,7 @@
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "costume dresser"
 	},
 /obj/disposalpipe/segment,
@@ -7944,7 +7944,7 @@
 	icon_state = "0-4"
 	},
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -9501,7 +9501,7 @@
 /area/station/medical/medbay)
 "aIs" = (
 /obj/machinery/bathtub{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -10753,7 +10753,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8;
 	state = 1
 	},
@@ -17297,7 +17297,7 @@
 /area/station/hallway/primary/west)
 "bhk" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -17452,7 +17452,7 @@
 "bib" = (
 /obj/table/auto,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -26885,7 +26885,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -28383,7 +28383,7 @@
 /area/station/atmos/highcap_storage)
 "eNr" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -30052,7 +30052,7 @@
 /area/station/quartermaster/refinery)
 "geo" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/grass,
@@ -30693,7 +30693,7 @@
 /area/station/maintenance/inner/central)
 "gIb" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -31863,7 +31863,7 @@
 /area/station/medical/research)
 "hGK" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
@@ -32772,7 +32772,7 @@
 /area/station/hallway/primary/south)
 "iAp" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -32865,7 +32865,7 @@
 /area/station/quartermaster/magnet)
 "iCT" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/grass,
@@ -33600,7 +33600,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -33982,7 +33982,7 @@
 /area/station/hangar/arrivals)
 "jAG" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -34381,7 +34381,7 @@
 /area/station/crew_quarters/hor)
 "jQy" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/grass,
@@ -35065,7 +35065,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass,
@@ -36316,7 +36316,7 @@
 /area/station/chapel/sanctuary)
 "lyh" = (
 /obj/storage/closet/dresser{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "costume dresser"
 	},
 /obj/item/clothing/suit/bedsheet/cape/green,
@@ -38266,7 +38266,7 @@
 /area/station/crew_quarters/heads)
 "nbv" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -40406,7 +40406,7 @@
 /area/space)
 "oNj" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass,
@@ -40525,7 +40525,7 @@
 /area/station/crew_quarters/bar)
 "oSE" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -42629,7 +42629,7 @@
 /area/station/crew_quarters/barber_shop)
 "qEO" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -43662,7 +43662,7 @@
 /area/station/crew_quarters/fitness)
 "rwt" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -44213,7 +44213,7 @@
 /area/station/maintenance/west)
 "rVq" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
@@ -45734,7 +45734,7 @@
 	dir = 1
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -46020,7 +46020,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/grass,
@@ -50549,7 +50549,7 @@
 /area/station/maintenance/inner/central)
 "xce" = (
 /obj/item/bell/hop{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "wall mounted service bell";
 	pixel_y = 24
 	},

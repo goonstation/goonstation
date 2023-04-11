@@ -35,7 +35,7 @@
 /area/space)
 "ag" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -165,7 +165,7 @@
 /area/space)
 "aA" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -545,7 +545,7 @@
 /area/space)
 "bB" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "You have no idea what this does.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -584,7 +584,7 @@
 /area/space)
 "bF" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -606,7 +606,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/decal/poster/wallsign/fire,
 /turf/unsimulated/wall/adaptive/concrete{
@@ -622,7 +622,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete12";
@@ -637,7 +637,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete9";
@@ -653,7 +653,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
@@ -665,7 +665,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTH)";
@@ -682,7 +682,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
@@ -705,7 +705,7 @@
 /area/space)
 "bP" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -727,7 +727,7 @@
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	dir = 4;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete10";
@@ -736,7 +736,7 @@
 /area/space)
 "bR" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
 	icon = 'icons/obj/networked.dmi';
@@ -755,7 +755,7 @@
 /area/space)
 "bT" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
 	icon = 'icons/obj/networked.dmi';
@@ -1165,7 +1165,7 @@
 /area/space)
 "cF" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1258,7 +1258,7 @@
 "cR" = (
 /obj/stomachacid,
 /obj/decal/fakeobjects/robot{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It looks like a reverse-engineered version of typical western robot designs.  It also looks completely broken.";
 	icon = 'icons/misc/meatland.dmi';

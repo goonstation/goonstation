@@ -64,7 +64,7 @@
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/dummy/spell_doppel/relaymove(var/mob/user, direction)
 	if (!src.can_move) return

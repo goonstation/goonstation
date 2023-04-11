@@ -31,7 +31,7 @@
 /area/evilreaver/security)
 "ah" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
@@ -125,7 +125,7 @@
 	pixel_x = 32
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -152,7 +152,7 @@
 /area/evilreaver/security)
 "aD" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -166,7 +166,7 @@
 /area/evilreaver/security)
 "aE" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 4;
 	icon = 'icons/turf/martian.dmi';
@@ -189,7 +189,7 @@
 /area/evilreaver/security)
 "aI" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -200,7 +200,7 @@
 /area/evilreaver/security)
 "aJ" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -214,7 +214,7 @@
 	pixel_y = -30
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -267,7 +267,7 @@
 /area/space)
 "aT" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 8;
 	icon = 'icons/turf/martian.dmi';
@@ -290,7 +290,7 @@
 /area/space)
 "aX" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Gross.";
 	dir = 1;
 	icon = 'icons/turf/martian.dmi';
@@ -607,7 +607,7 @@
 /area/wrecknsspolaris)
 "bZ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -650,7 +650,7 @@
 /area/wrecknsspolaris)
 "ce" = (
 /obj/stool/chair{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
@@ -801,7 +801,7 @@
 /area/wrecknsspolaris)
 "cA" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
@@ -893,7 +893,7 @@
 	pixel_y = 10
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -940,7 +940,7 @@
 	pixel_y = -32
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -959,7 +959,7 @@
 /area/wrecknsspolaris)
 "cT" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -976,7 +976,7 @@
 /area/wrecknsspolaris)
 "cV" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -996,7 +996,7 @@
 /area/wrecknsspolaris)
 "cX" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -1007,7 +1007,7 @@
 /area/wrecknsspolaris)
 "cY" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1020,7 +1020,7 @@
 /area/wrecknsspolaris)
 "cZ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1028,7 +1028,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1048,7 +1048,7 @@
 /area/wrecknsspolaris)
 "db" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1058,7 +1058,7 @@
 	tag = "icon-conduit (EAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1066,7 +1066,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1078,7 +1078,7 @@
 /area/wrecknsspolaris)
 "dc" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1087,7 +1087,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1107,7 +1107,7 @@
 /area/wrecknsspolaris)
 "de" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1119,7 +1119,7 @@
 /area/wrecknsspolaris)
 "df" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1131,7 +1131,7 @@
 /area/wrecknsspolaris)
 "dg" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1140,7 +1140,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1152,7 +1152,7 @@
 /area/wrecknsspolaris)
 "dh" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1161,7 +1161,7 @@
 	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1170,7 +1170,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1182,7 +1182,7 @@
 /area/wrecknsspolaris)
 "di" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1191,7 +1191,7 @@
 	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1200,7 +1200,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1212,7 +1212,7 @@
 /area/wrecknsspolaris)
 "dj" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1365,7 +1365,7 @@
 /area/wrecknsspolaris/outside/back)
 "dJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -1408,7 +1408,7 @@
 "dP" = (
 /obj/fluid_spawner/shortdelaybig,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -1566,7 +1566,7 @@
 "eh" = (
 /obj/item/casing/rifle{
 	alpha = 200;
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A spent rifle cartridge. It's stuck in the ice.";
 	name = "rifle casing";
 	pixel_x = 23;
@@ -1580,7 +1580,7 @@
 "ei" = (
 /obj/item/casing/rifle{
 	alpha = 200;
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A spent rifle cartridge. It's stuck in the ice.";
 	name = "rifle casing";
 	pixel_x = 6;
@@ -1594,7 +1594,7 @@
 "ej" = (
 /obj/item/casing/rifle{
 	alpha = 200;
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A spent rifle cartridge. It's stuck in the ice.";
 	name = "rifle casing";
 	pixel_x = 10;
@@ -1625,7 +1625,7 @@
 /area/wrecknsspolaris)
 "en" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -1637,7 +1637,7 @@
 "eo" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -1763,7 +1763,7 @@
 /area/wrecknsspolaris)
 "eC" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -1820,7 +1820,7 @@
 /area/wrecknsspolaris/vault)
 "eM" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -1855,7 +1855,7 @@
 /area/wrecknsspolaris)
 "eP" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1868,7 +1868,7 @@
 /area/wrecknsspolaris)
 "eQ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -2091,7 +2091,7 @@
 "fz" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Seems to be broken due to an impact.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -2285,7 +2285,7 @@
 "fZ" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -2365,7 +2365,7 @@
 "gm" = (
 /obj/item/casing/rifle{
 	alpha = 200;
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A spent rifle cartridge. It's stuck in the ice.";
 	name = "rifle casing";
 	pixel_x = 6;
@@ -2373,7 +2373,7 @@
 	},
 /obj/item/casing/rifle{
 	alpha = 200;
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A spent rifle cartridge. It's stuck in the ice.";
 	name = "rifle casing";
 	pixel_x = 18;

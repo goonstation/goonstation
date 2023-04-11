@@ -45,7 +45,7 @@
 /area/shuttle/escape/centcom)
 "dP" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/shuttle/escape/centcom)
@@ -72,7 +72,7 @@
 /area/shuttle/escape/centcom)
 "fv" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -87,7 +87,7 @@
 /area/shuttle/escape/centcom)
 "gz" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -108,7 +108,7 @@
 /area/shuttle/escape/centcom)
 "hy" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 10
@@ -116,7 +116,7 @@
 /area/shuttle/escape/centcom)
 "iF" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -160,7 +160,7 @@
 /area/shuttle/escape/centcom)
 "kZ" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 8
@@ -169,7 +169,7 @@
 "lj" = (
 /obj/decal/lightshaft,
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
@@ -184,7 +184,7 @@
 /area/shuttle/escape/centcom)
 "mx" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -300,7 +300,7 @@
 /area/shuttle/escape/centcom)
 "xH" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 6
@@ -336,7 +336,7 @@
 /area/shuttle/escape/centcom)
 "Bm" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 6
@@ -369,14 +369,14 @@
 /area/shuttle/escape/centcom)
 "FH" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/clothing/head/crown,
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
 "FR" = (
 /obj/stool/chair/wooden/regal{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 10
@@ -385,7 +385,7 @@
 "Gs" = (
 /obj/machinery/computer/shuttle/embedded/north,
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -411,7 +411,7 @@
 /area/shuttle/escape/centcom)
 "JY" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner,
@@ -426,7 +426,7 @@
 /area/shuttle/escape/centcom)
 "KA" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_bw{
@@ -440,7 +440,7 @@
 /area/shuttle/escape/centcom)
 "KV" = (
 /obj/stool/chair/comfy/throne_gold{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 4
@@ -448,14 +448,14 @@
 /area/shuttle/escape/centcom)
 "Lf" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "Me" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_bw{
@@ -509,7 +509,7 @@
 /area/shuttle/escape/centcom)
 "OO" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/border_bw{
@@ -518,7 +518,7 @@
 /area/shuttle/escape/centcom)
 "OT" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
@@ -545,7 +545,7 @@
 /area/shuttle/escape/centcom)
 "Pw" = (
 /obj/decoration/regallamp{
-	anchored = 1;
+	anchored = ANCHORED;
 	lit = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{

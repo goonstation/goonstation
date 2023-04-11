@@ -3,7 +3,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
 
@@ -39,7 +39,7 @@
 	icon_state = "superexpl"
 	plane = PLANE_ABOVE_LIGHTING
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	pixel_x = -96
 	pixel_y = -96

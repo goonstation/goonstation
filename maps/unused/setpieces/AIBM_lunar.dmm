@@ -2040,7 +2040,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A slightly more recent Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.  This one is attached to a track.";
 	dir = 8;
@@ -2357,7 +2357,7 @@
 /area/moon/museum/west)
 "gq" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	icon = 'icons/misc/lunar.dmi';
@@ -2368,7 +2368,7 @@
 /area/moon/museum/west)
 "gr" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 2;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
@@ -2420,7 +2420,7 @@
 /area/moon/museum/west)
 "gy" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -2433,7 +2433,7 @@
 /area/moon/museum/west)
 "gz" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 10;
@@ -2445,7 +2445,7 @@
 /area/moon/museum/west)
 "gA" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 6;
@@ -2457,7 +2457,7 @@
 /area/moon/museum/west)
 "gB" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 5;
@@ -2469,7 +2469,7 @@
 /area/moon/museum/west)
 "gC" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 9;
@@ -2481,7 +2481,7 @@
 /area/moon/museum/west)
 "gD" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 8;
@@ -2562,7 +2562,7 @@
 /area/moon/museum/west)
 "gO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
 	dir = 1;
@@ -2759,7 +2759,7 @@
 /area/moon/museum/west)
 "hj" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -2788,7 +2788,7 @@
 /area/moon)
 "ho" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A United States flag, placed here 84 years ago.  Well, placed and then moved and placed again...  It's faded from decades of ultraviolet light exposure.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "flag";
@@ -2926,7 +2926,7 @@
 /area/moon/museum/west)
 "hz" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 1;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3152,7 +3152,7 @@
 /area/moon/museum/west)
 "hW" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some kind of LESA base equipment doodad.  It's not clear what it was used for originally, but now it seems to just be configured for blinky lights.";
 	dir = 8;
@@ -3192,7 +3192,7 @@
 /area/moon/museum/west)
 "ib" = (
 /obj/storage/closet/emergency{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A closet of EVA gear for the tour.  Maybe.  There is a teeny tiny little chance that they aren't stocked during renovations.";
 	name = "tour eva gear closet"
 	},
@@ -3205,7 +3205,7 @@
 	name = "grimy pipe"
 	},
 /obj/storage/closet/emergency{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A closet of EVA gear for the tour.  Maybe.  There is a teeny tiny little chance that they aren't stocked during renovations.";
 	name = "tour eva gear closet"
 	},
@@ -3218,7 +3218,7 @@
 	pixel_y = 0
 	},
 /obj/storage/closet/emergency{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A closet of EVA gear for the tour.  Maybe.  There is a teeny tiny little chance that they aren't stocked during renovations.";
 	name = "tour eva gear closet"
 	},
@@ -3308,7 +3308,7 @@
 /area/moon/museum)
 "im" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -3532,7 +3532,7 @@
 /area/moon/museum)
 "iD" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 1;
 	desc = "A monochrome plasma display.  It appears to have some kind of problem.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3609,7 +3609,7 @@
 /area/moon/museum)
 "iK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -3940,7 +3940,7 @@
 /area/moon/museum)
 "jr" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 2;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3957,7 +3957,7 @@
 /area/moon/museum)
 "js" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "photo";
@@ -4429,7 +4429,7 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -4589,7 +4589,7 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
 	dir = 8;
@@ -4626,7 +4626,7 @@
 /area/moon/museum)
 "kB" = (
 /obj/window{
-	anchored = 0;
+	anchored = UNANCHORED;
 	desc = "A window.  For a museum exhibit.";
 	dir = 1;
 	name = "opened exhibit window"
@@ -4811,7 +4811,7 @@
 /area/moon/museum/west)
 "kY" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
 	dir = 8;
@@ -5026,7 +5026,7 @@
 	pixel_y = 0
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -5197,7 +5197,7 @@
 /area/moon/museum/west)
 "lM" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -5208,7 +5208,7 @@
 /area/moon/museum/west)
 "lN" = (
 /obj/decal/fakeobjects{
-	anchored = 0;
+	anchored = UNANCHORED;
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
 	dir = 2;
@@ -5221,7 +5221,7 @@
 /area/moon/museum/west)
 "lO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
 	dir = 2;
@@ -5297,7 +5297,7 @@
 /area/moon/museum/giftshop)
 "lZ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -5424,7 +5424,7 @@
 /area/moon/museum)
 "mp" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 2;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	dir = 8;
@@ -5440,7 +5440,7 @@
 /area/moon/museum)
 "mq" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 2;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
@@ -5463,7 +5463,7 @@
 /area/moon/museum)
 "ms" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -5507,7 +5507,7 @@
 	name = "old docking station"
 	},
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 1;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
@@ -5655,7 +5655,7 @@
 /area/moon/museum/giftshop)
 "mM" = (
 /obj/decal/glow{
-	anchored = 1;
+	anchored = ANCHORED;
 	brightness = 2;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	dir = 4;
@@ -5714,7 +5714,7 @@
 /area/moon/museum)
 "mS" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
@@ -5761,7 +5761,7 @@
 /area/moon/museum)
 "mZ" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Somebody removed the control board without unlatching the door bolts.  Rude";
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -5793,7 +5793,7 @@
 	pixel_y = 0
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -5916,7 +5916,7 @@
 /area/moon/museum)
 "nq" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
@@ -5945,11 +5945,11 @@
 	name = "grimy pipe"
 	},
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -6007,7 +6007,7 @@
 /area/moon/museum)
 "ny" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';

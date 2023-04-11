@@ -157,7 +157,7 @@
 /area/spacehabitat/beach)
 "C" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -234,7 +234,7 @@
 /area/spacehabitat)
 "L" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;

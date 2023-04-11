@@ -1,7 +1,7 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."

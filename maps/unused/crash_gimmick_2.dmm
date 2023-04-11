@@ -1335,7 +1335,7 @@
 /area/shuttle/arrival/station)
 "Wb" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/shuttle,

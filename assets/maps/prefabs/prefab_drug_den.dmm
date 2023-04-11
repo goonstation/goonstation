@@ -945,7 +945,7 @@
 /area/prefab/drug_den)
 "YK" = (
 /obj/item/instrument/large/jukebox{
-	anchored = 0;
+	anchored = UNANCHORED;
 	desc = "I wonder who fixed this thing? Oh wait - hmm...strange it feels very light?"
 	},
 /obj/machinery/light/incandescent/netural{

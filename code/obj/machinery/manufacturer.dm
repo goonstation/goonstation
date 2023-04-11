@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	icon_state = "fab-general"
 	var/icon_base = "general" //! This is used to make icon state changes cleaner by setting it to "fab-[icon_base]"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	power_usage = 200
 	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)

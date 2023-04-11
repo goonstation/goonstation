@@ -29,7 +29,7 @@
 /area/centcom/outside)
 "bM" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -82,7 +82,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -143,7 +143,7 @@
 /area/centcom/outside)
 "jf" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
@@ -370,7 +370,7 @@
 /area/centcom/outside)
 "rr" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -511,7 +511,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
 	icon = 'icons/obj/power_cond.dmi';
@@ -520,7 +520,7 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -557,7 +557,7 @@
 	icon_state = "line2"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -603,7 +603,7 @@
 /area/centcom/outside)
 "Es" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -658,7 +658,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -822,7 +822,7 @@
 /area/centcom/outside)
 "KS" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -836,7 +836,7 @@
 /area/shuttle/escape/centcom)
 "KU" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -908,7 +908,7 @@
 /area/centcom)
 "Ol" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';

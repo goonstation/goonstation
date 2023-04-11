@@ -79,7 +79,7 @@
 /area/space)
 "aar" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -1019,7 +1019,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4;
 	state = 1
 	},
@@ -2963,7 +2963,7 @@
 	persistent_id = "information office"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -11460,7 +11460,7 @@
 /area/station/ranch)
 "aNc" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -16259,7 +16259,7 @@
 /area/station/routing/depot)
 "bep" = (
 /obj/computer3frame{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8;
 	state = 1
 	},
@@ -32950,7 +32950,7 @@
 /area/research_outpost/indigo_rye)
 "ckO" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -33101,7 +33101,7 @@
 /area/research_outpost/indigo_rye)
 "cli" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -33181,7 +33181,7 @@
 /area/research_outpost/indigo_rye)
 "clu" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -33780,7 +33780,7 @@
 /area/listeningpost)
 "cnf" = (
 /obj/storage/secure/crate/gear{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -33802,7 +33802,7 @@
 /area/listeningpost)
 "cnh" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -33821,7 +33821,7 @@
 /area/listeningpost)
 "cni" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -33833,7 +33833,7 @@
 /area/listeningpost)
 "cnj" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	icon = 'icons/obj/large/64x96.dmi';
@@ -34540,7 +34540,7 @@
 /area/station/medical/robotics)
 "cpw" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -37403,7 +37403,7 @@
 	dir = 1
 	},
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -41940,7 +41940,7 @@
 "ipR" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -47130,7 +47130,7 @@
 /obj/access_spawn/hos,
 /obj/deployable_turret/riot{
 	active = 1;
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 1
 	},
 /turf/simulated/floor/engine{
@@ -49900,7 +49900,7 @@
 	pixel_x = -12
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
@@ -50204,7 +50204,7 @@
 /area/space)
 "pII" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -52788,7 +52788,7 @@
 /area/station/garden/aviary)
 "rYj" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/machinery/light/emergency{

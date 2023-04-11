@@ -4537,7 +4537,7 @@
 /area/pod_wars/asteroid/major/maj_14)
 "qK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;
@@ -12956,7 +12956,7 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Xf" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It seems to be locked";
 	dir = 4;

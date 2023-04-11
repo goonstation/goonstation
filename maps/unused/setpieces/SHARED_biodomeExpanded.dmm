@@ -521,7 +521,7 @@
 "aGg" = (
 /obj/map/light/dimreddish,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "What in the hell is this?";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -542,7 +542,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -1089,7 +1089,7 @@
 /area/crater/biodome/north)
 "bpR" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "..How the hell is this even possible?";
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -1858,7 +1858,7 @@
 /area/crater/cave)
 "chP" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2025,7 +2025,7 @@
 /area/swampzone/interiors/outbuildings)
 "cuO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -2127,7 +2127,7 @@
 "cDt" = (
 /obj/decal/cliff,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -2337,7 +2337,7 @@
 /area/swampzone/interiors/bonktek)
 "cOw" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "You're getting a really uncomfortable vibe just looking at this thing, whatever it is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2507,7 +2507,7 @@
 /area/swampzone/interiors/outbuildings)
 "dan" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "eldritch-2";
@@ -2744,7 +2744,7 @@
 /area/crypt/sigma/lab)
 "dsk" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -3483,7 +3483,7 @@
 /area/crater/biodome/maint)
 "eiZ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -4551,7 +4551,7 @@
 /area/swampzone/interiors/bonktek)
 "fru" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -4897,7 +4897,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4984,7 +4984,7 @@
 /area/swampzone/interiors/bonktek)
 "fOQ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It seems slightly warm.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -5490,7 +5490,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -5692,7 +5692,7 @@
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "These shapes are all wrong.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -6906,7 +6906,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -7105,7 +7105,7 @@
 "iwS" = (
 /obj/critter/ancient_thing,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "eldritch-2";
@@ -7420,7 +7420,7 @@
 /area/swampzone/ground)
 "iRq" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -7869,7 +7869,7 @@
 /area/swampzone/ground/canyon)
 "jtQ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -9112,7 +9112,7 @@
 /area/swampzone/interiors/bonktek)
 "kJq" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -9569,7 +9569,7 @@
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "What in the hell is this?";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -10056,7 +10056,7 @@
 /area/swampzone/interiors/bonktek/maintenance)
 "lUJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -10182,7 +10182,7 @@
 /area/crater/biodome/entry)
 "mbK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -10405,7 +10405,7 @@
 /area/swampzone/ground)
 "mrw" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -10666,7 +10666,7 @@
 /area/swampzone/ground)
 "mIt" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -10954,7 +10954,7 @@
 /area/swampzone/ground)
 "mYB" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -11384,7 +11384,7 @@
 /area/swampzone/interiors/bonktek/waffletek)
 "nAf" = (
 /obj/storage/secure/crate/gear{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -12556,7 +12556,7 @@
 /area/crypt/sigma/kitchen)
 "oUE" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -13400,7 +13400,7 @@
 /area/swampzone/interiors)
 "pVS" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -13707,7 +13707,7 @@
 /area/swampzone/interiors/quarry)
 "qpJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	icon = 'icons/obj/computer.dmi';
@@ -16708,7 +16708,7 @@
 "tUS" = (
 /obj/table/reinforced/auto,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hmicro";
@@ -18209,7 +18209,7 @@
 /area/swampzone/interiors/bonktek/blastotek)
 "vEK" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
@@ -18390,7 +18390,7 @@
 /area/crater/biodome/maint)
 "vNI" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "wallterm0";
@@ -18464,7 +18464,7 @@
 /area/swampzone/interiors/outbuildings)
 "vSf" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -19088,7 +19088,7 @@
 /obj/decal/cleanable/cobweb2,
 /obj/map/light/dimreddish,
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "What in the hell is this?";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -20411,7 +20411,7 @@
 /area/swampzone/interiors/outbuildings)
 "ygs" = (
 /obj/decal/fakeobjects/robot{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "How long has this been down here?"
 	},
 /obj/decal/cleanable/cobweb2,

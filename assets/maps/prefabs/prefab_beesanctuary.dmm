@@ -419,7 +419,7 @@
 /area/noGenerate)
 "oX" = (
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -889,7 +889,7 @@
 	tag = "icon-intact-f (NORTHWEST)"
 	},
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -903,7 +903,7 @@
 	icon_state = "manifold"
 	},
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -1316,7 +1316,7 @@
 /area/prefab/bee_sanctuary)
 "ME" = (
 /obj/decal/fakeobjects/robot{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "How long has this been down here?"
 	},
 /turf/unsimulated/floor/white,

@@ -129,7 +129,7 @@
 /area/shuttle/escape/centcom)
 "fG" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -330,7 +330,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -539,7 +539,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -727,7 +727,7 @@
 /area/shuttle/escape/centcom)
 "CC" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -933,7 +933,7 @@
 /area/centcom/outside)
 "KL" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1005,7 +1005,7 @@
 	icon_state = "line2"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1061,7 +1061,7 @@
 /area/centcom/outside)
 "OQ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1242,7 +1242,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
@@ -1251,7 +1251,7 @@
 	tag = "icon-conduit (NORTHEAST)"
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
 	icon = 'icons/obj/power_cond.dmi';

@@ -192,7 +192,7 @@
 /area/station/engine/proto)
 "aaB" = (
 /obj/machinery/field_generator{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -207,7 +207,7 @@
 /area/station/engine/proto)
 "aaD" = (
 /obj/machinery/field_generator{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "Containment Field Generator"
 	},
 /obj/cable{
@@ -2648,7 +2648,7 @@
 /area/station/maintenance/solar/east)
 "afG" = (
 /obj/storage/crate/freezer{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -4758,7 +4758,7 @@
 /area/station/garden/habitat)
 "ajT" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -5639,7 +5639,7 @@
 /area/station/mining/staff_room)
 "alS" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -12768,7 +12768,7 @@
 "aCa" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -14585,7 +14585,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -18977,7 +18977,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 4;
-	
+
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -21727,7 +21727,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Medical Recorder";
@@ -24469,7 +24469,7 @@
 "bbS" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26148,7 +26148,7 @@
 /area/station/crew_quarters/showers)
 "bfn" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
@@ -28142,7 +28142,7 @@
 /area/station/janitor/office)
 "bjF" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -31983,7 +31983,7 @@
 /obj/machinery/bathtub{
 	icon_state = "bathtub";
 	dir = 8;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/rubberduck,
 /obj/machinery/light/small{
@@ -33412,7 +33412,7 @@
 /area/station/hydroponics/bay)
 "bvy" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -33422,7 +33422,7 @@
 /area/station/hydroponics/bay)
 "bvA" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grass,
@@ -35167,7 +35167,7 @@
 	dir = 8
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -35875,7 +35875,7 @@
 /obj/machinery/bathtub{
 	icon_state = "bathtub";
 	dir = 8;
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quartersA)
@@ -39940,7 +39940,7 @@
 "bKF" = (
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -41809,7 +41809,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -41872,7 +41872,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -42365,7 +42365,7 @@
 /area/station/crew_quarters/quarters_south)
 "bPh" = (
 /obj/storage/crate/freezer{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -42523,7 +42523,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43069,7 +43069,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -43885,7 +43885,7 @@
 "bSl" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-	
+
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -44570,7 +44570,7 @@
 /area/research_outpost)
 "bTF" = (
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -44843,7 +44843,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44895,7 +44895,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45833,21 +45833,21 @@
 "bWr" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -46002,7 +46002,7 @@
 "bWJ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 5;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -46012,7 +46012,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners2";
@@ -46022,7 +46022,7 @@
 "bWL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -46038,7 +46038,7 @@
 "bWM" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -46134,7 +46134,7 @@
 "bWZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -46249,7 +46249,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -46327,7 +46327,7 @@
 "bXw" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1;
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -46944,7 +46944,7 @@
 /area/space)
 "bYM" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -47006,7 +47006,7 @@
 /area/space)
 "bYV" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -47802,7 +47802,7 @@
 /area/listeningpost)
 "caP" = (
 /obj/storage/secure/crate/gear{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -47826,7 +47826,7 @@
 /area/listeningpost)
 "caR" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -47847,7 +47847,7 @@
 /area/listeningpost)
 "caS" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -47859,7 +47859,7 @@
 /area/listeningpost)
 "caT" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	icon = 'icons/obj/large/64x96.dmi';

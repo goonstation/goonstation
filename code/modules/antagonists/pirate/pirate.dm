@@ -72,7 +72,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/list/gibs = list()
 
 	New()

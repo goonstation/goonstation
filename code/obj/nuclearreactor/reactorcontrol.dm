@@ -9,7 +9,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "engine"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
 	var/list/history
 	var/const/history_max = 50
@@ -109,7 +109,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
 
 	process()

@@ -117,7 +117,7 @@
 /area/space)
 "as" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
@@ -9058,7 +9058,7 @@
 "sz" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
@@ -9077,7 +9077,7 @@
 "sB" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -9091,7 +9091,7 @@
 "sC" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	d2 = 8;
@@ -17797,7 +17797,7 @@
 /area/listeningpost)
 "IW" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -17845,7 +17845,7 @@
 /area/listeningpost)
 "Jd" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -18473,7 +18473,7 @@
 /area/listeningpost)
 "KF" = (
 /obj/storage/secure/crate/gear{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
 	name = "unmarked secure crate";
 	req_access_txt = "52"
@@ -18497,7 +18497,7 @@
 /area/listeningpost)
 "KH" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
@@ -18518,7 +18518,7 @@
 /area/listeningpost)
 "KI" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It is still kinda warm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -18530,7 +18530,7 @@
 /area/listeningpost)
 "KJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	icon = 'icons/obj/large/64x96.dmi';
@@ -18946,7 +18946,7 @@
 /area/research_outpost/indigo_rye)
 "LN" = (
 /obj/machinery/plantpot{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -19038,7 +19038,7 @@
 	pixel_x = -12
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
@@ -21076,7 +21076,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 8
 	},
 /obj/item/rubberduck,

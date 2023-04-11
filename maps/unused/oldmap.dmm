@@ -92,7 +92,7 @@
 /area/space)
 "aq" = (
 /obj/decal{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "That'll never work again.";
 	icon = 'icons/obj/airtunnel.dmi';
@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -2996,7 +2996,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3690,7 +3690,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3902,7 +3902,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5810,7 +5810,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -5831,7 +5831,7 @@
 /area/crew_quarters/quarters)
 "no" = (
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	state = 1
 	},
 /turf/simulated/floor,
@@ -6795,7 +6795,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6933,7 +6933,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -7052,7 +7052,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7261,7 +7261,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7330,7 +7330,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -8380,7 +8380,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8429,7 +8429,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -11026,7 +11026,7 @@
 /area/tdome)
 "zh" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11054,7 +11054,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11077,7 +11077,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11105,7 +11105,7 @@
 	reinf = 1
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11140,7 +11140,7 @@
 /area/tdome/tdomea)
 "zp" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
@@ -11285,14 +11285,14 @@
 /area/meteor/dock)
 "zI" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -11548,7 +11548,7 @@
 /area/meteor/dock)
 "Aj" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -11684,7 +11684,7 @@
 /area/meteor/dock)
 "AB" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'beach.dmi';
 	icon_state = "crab2";
 	name = "crab"
@@ -11777,7 +11777,7 @@
 /area/sim/area2)
 "AM" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	icon = 'beach.dmi';
 	icon_state = "water2";
 	layer = 10;
@@ -12424,7 +12424,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -14085,7 +14085,7 @@
 /area/crew_quarters/hor)
 "FV" = (
 /obj/machinery/nuclearbomb{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "RD's Disarmed Nuke";
 	r_code = "Nope"
 	},
@@ -15023,7 +15023,7 @@
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
-	anchored = 1;
+	anchored = ANCHORED;
 	state = 1
 	},
 /turf/simulated/floor/white,
@@ -16793,7 +16793,7 @@
 /area/zeta/bot_storage)
 "La" = (
 /obj/machinery/beacon{
-	anchored = 1;
+	anchored = ANCHORED;
 	sname = "Zeta"
 	},
 /turf/simulated/floor/plating/airless,

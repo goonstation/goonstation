@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/power/tracker)
 	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
 	var/id = 1 // nolonger used, kept for map compatibility
@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "solar_panel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_EIGHTH

@@ -102,7 +102,7 @@
 	O.canmove = 0
 	O.name = src.name
 	O.real_name = src.real_name
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = src.client.address
 

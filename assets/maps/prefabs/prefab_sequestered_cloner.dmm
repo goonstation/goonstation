@@ -50,7 +50,7 @@
 /area/prefab/sequestered_cloner)
 "er" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
@@ -168,7 +168,7 @@
 /area/prefab/sequestered_cloner)
 "oU" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large video server. Garish branding reads Subliminal Mission Implanter Mk.2! Now with fewer seizures!";
 	icon = 'icons/obj/networked.dmi';
@@ -227,7 +227,7 @@
 	pixel_y = 2
 	},
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -532,7 +532,7 @@
 /area/prefab/sequestered_cloner)
 "Cw" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';

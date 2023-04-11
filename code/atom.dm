@@ -393,7 +393,7 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs

@@ -488,7 +488,7 @@
 /area)
 "bM" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	anchored = ANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/purple,

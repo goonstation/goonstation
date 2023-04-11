@@ -345,7 +345,7 @@
 /area/mining/manufacturing)
 "hK" = (
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -929,7 +929,7 @@
 /area/mining/hangar)
 "pL" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1027,7 +1027,7 @@
 /area/noGenerate)
 "qi" = (
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -2238,7 +2238,7 @@
 "xx" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
@@ -3134,7 +3134,7 @@
 /area/mining/comms)
 "Ci" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -3224,7 +3224,7 @@
 /area/mining/power)
 "Df" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
 	icon = 'icons/obj/networked.dmi';
@@ -3854,7 +3854,7 @@
 /area/noGenerate)
 "GX" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -4013,7 +4013,7 @@
 /area/mining/mainasteroid)
 "HX" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -4638,7 +4638,7 @@
 /area/mining/hangar)
 "LM" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -5304,7 +5304,7 @@
 /area/tech_outpost)
 "QE" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -6388,7 +6388,7 @@
 	dir = 4
 	},
 /obj/computerframe{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "It is highly unlikely that this still works.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";

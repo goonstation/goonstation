@@ -8390,7 +8390,7 @@
 /area/station/crew_quarters/fitness)
 "aIP" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -8418,7 +8418,7 @@
 /area/station/hangar/main)
 "aIZ" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
@@ -11090,7 +11090,7 @@
 	icon_state = "line1"
 	},
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 4
 	},
 /turf/simulated/floor/wood/three,
@@ -11104,7 +11104,7 @@
 	},
 /obj/machinery/light/small/floor,
 /obj/stool/chair/blue{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/wood/three,
@@ -15595,7 +15595,7 @@
 /area/space)
 "bzO" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -15653,7 +15653,7 @@
 /area/space)
 "bzV" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -16903,7 +16903,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/chair/yellow{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -17671,7 +17671,7 @@
 /area/station/crew_quarters/lounge)
 "cma" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /obj/landmark/start{
@@ -17877,7 +17877,7 @@
 	icon_state = "line1"
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Security Recorder";
@@ -18083,7 +18083,7 @@
 	dir = 8
 	},
 /obj/item/instrument/large/piano{
-	anchored = 0;
+	anchored = UNANCHORED;
 	name = "old piano"
 	},
 /obj/item/screwdriver,
@@ -18666,7 +18666,7 @@
 /area/station/medical/medbay/treatment)
 "cKO" = (
 /obj/stool/chair/red{
-	anchored = 0
+	anchored = UNANCHORED
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -20588,7 +20588,7 @@
 	dir = 4
 	},
 /obj/stool/chair/yellow{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 1
 	},
 /turf/simulated/floor/carpet{
@@ -25011,7 +25011,7 @@
 /obj/item/pen,
 /obj/item/stamp,
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Test Chamber Recorder";
@@ -26865,7 +26865,7 @@
 /area/station/maintenance/southeast)
 "gmz" = (
 /obj/stool/chair/red{
-	anchored = 0
+	anchored = UNANCHORED
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29476,7 +29476,7 @@
 /area/station/engine/engineering)
 "hDy" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /obj/machinery/light/emergency{
@@ -32564,7 +32564,7 @@
 	})
 "jtd" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /obj/decal/tile_edge/line/red{
@@ -35876,7 +35876,7 @@
 /area/station/quartermaster/cargobay)
 "ldD" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /obj/landmark/start{
@@ -39373,7 +39373,7 @@
 /area/station/crew_quarters/bar)
 "mTv" = (
 /obj/stool/chair/red{
-	anchored = 0
+	anchored = UNANCHORED
 	},
 /obj/decal/tile_edge/line/white{
 	dir = 1;
@@ -44915,7 +44915,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /obj/landmark/start{
@@ -47242,7 +47242,7 @@
 /area/station/hallway/primary/east)
 "qYk" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 4
 	},
 /obj/decal/tile_edge/line/red{
@@ -48372,7 +48372,7 @@
 /area/station/quartermaster/cargobay)
 "rFZ" = (
 /obj/stool/chair/red{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 4
 	},
 /obj/machinery/light/emergency{
@@ -48469,7 +48469,7 @@
 	icon_state = "pipe-j2"
 	},
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -53470,7 +53470,7 @@
 	min_amt2spawn = 6
 	},
 /obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
+	anchored = ANCHORED;
 	max_lines = 350;
 	mode = 1;
 	name = "Engineering Recorder";
@@ -55696,7 +55696,7 @@
 /area/station/hallway/primary/central)
 "vrH" = (
 /obj/machinery/vending/pizza{
-	anchored = 1
+	anchored = ANCHORED
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
@@ -57291,7 +57291,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/chair/blue{
-	anchored = 0;
+	anchored = UNANCHORED;
 	dir = 8
 	},
 /turf/simulated/floor/white,

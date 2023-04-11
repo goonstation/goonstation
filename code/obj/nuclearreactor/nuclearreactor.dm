@@ -18,7 +18,7 @@
 	pixel_y = -64
 	bound_x = -64
 	bound_y = -64
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	mat_changename = FALSE
 	dir = EAST

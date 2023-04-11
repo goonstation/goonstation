@@ -11,7 +11,7 @@
 	var/item_off = "sparkler-off"
 	w_class = W_CLASS_TINY
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	col_r = 0.7
 	col_g = 0.3

@@ -1454,7 +1454,7 @@
 /area/russian)
 "adQ" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "It wont budge.";
 	icon_state = "o_door1";
@@ -1668,7 +1668,7 @@
 /area/station/mining/refinery)
 "aex" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "You could probably squeeze through.";
 	icon_state = "bloodydoor";
 	layer = 6;
@@ -1722,7 +1722,7 @@
 /area/russian)
 "aeD" = (
 /obj/overlay{
-	anchored = 1;
+	anchored = ANCHORED;
 	desc = "You could probably squeeze through.";
 	icon_state = "bloodydoor";
 	layer = 6;
@@ -2062,7 +2062,7 @@
 /area/listeningpost)
 "afB" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "How old is this?";
 	icon = 'icons/obj/networked.dmi';
@@ -2132,7 +2132,7 @@
 /area/space)
 "afJ" = (
 /obj/decal/fakeobjects{
-	anchored = 1;
+	anchored = ANCHORED;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
 	icon = 'icons/obj/networked.dmi';
@@ -9180,7 +9180,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9710,7 +9710,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -21384,7 +21384,7 @@
 "bqo" = (
 /obj/table/auto,
 /obj/machinery/nuclearbomb{
-	anchored = 1;
+	anchored = ANCHORED;
 	name = "RD's Disarmed Nuke"
 	},
 /turf/simulated/floor/wood/two,
@@ -34647,7 +34647,7 @@
 	dir = 8
 	},
 /obj/stool/chair{
-	anchored = 0;
+	anchored = UNANCHORED;
 	desc = "The legs are loosened...";
 	name = "loose chair"
 	},
