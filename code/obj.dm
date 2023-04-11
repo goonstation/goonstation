@@ -372,11 +372,17 @@ TYPEINFO(/obj)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
+			var/actionbar_duration = 2 SECOND
+
 			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer")) // // Engineers can bypass the actionbar and instantly put down catwalks.
 				src.replace_with_catwalk(C)
 				return
+
+			if (ishuman(user) && user.traitHolder.hasTrait("carpenter"))
+				actionbar_duration /= 2
+
 			user.show_text("You start putting the rods together and making a catwalk...", "blue")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECOND, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
