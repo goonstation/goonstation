@@ -10,6 +10,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
 		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
+		var/list/round_stats = src.player?.get_round_stats(TRUE)
 
 		// We have already checked this user this round and they are indeed on a VPN, kick em
 		if (is_vpn_address)
@@ -19,7 +20,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
 		try
-			if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
+			if (isnull(is_vpn_address) && (round_stats?["participated"] < 5 || round_stats?["seen"] < 20))
 				var/list/data
 				if (vpn_prescan()) return
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
