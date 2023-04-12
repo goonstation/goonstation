@@ -35,7 +35,7 @@
 				if (prob(33))
 					H.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, H.slot_head)
 			var/obj/item/clothing/under/shorts/rand_shoes
-			switch(pick(1,2,3,4))
+			switch(pick(1, 2, 3, 4))
 				if(1)
 					rand_shoes = /obj/item/clothing/shoes/macho
 				if(2)
