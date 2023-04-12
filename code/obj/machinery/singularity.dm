@@ -169,6 +169,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			energy -= 15
 
+	if (prob(clamp(energy/400, 10, 60)))
+		for (var/i in 1 to rand(3,5))
+			var/datum/projectile/neutron/projectile = new(clamp(energy/400, 15, 60))
+			shoot_projectile_XY(src, projectile, rand(-20, 20), rand(-20, 20))
 
 	if (prob(20))//Chance for it to run a special event
 		event()
@@ -251,6 +255,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 		qdel(src)
+
+/obj/machinery/the_singularity/Cross(atom/movable/A)
+	if (istype(A, /obj/projectile))
+		var/obj/projectile/projectile = A
+		if (projectile.shooter == src)
+			return TRUE
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
