@@ -806,7 +806,7 @@
 // Athletic Gear
 
 TYPEINFO(/obj/item/clothing/under/shorts)
-  random_subtypes = list(/obj/item/clothing/under/shorts,
+	random_subtypes = list(/obj/item/clothing/under/shorts,
 		/obj/item/clothing/under/shorts/red,
 		/obj/item/clothing/under/shorts/green,
 		/obj/item/clothing/under/shorts/blue,
