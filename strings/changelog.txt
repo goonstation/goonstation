@@ -1,5 +1,9 @@
 
 (t)wed apr 12 23
+(u)Kubius
+(p)13646
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Nadir's diner now has a certain adventurous safe common to other diners.
 (u)Flappybat
 (p)13633
 (e)⚖|C-Balance
