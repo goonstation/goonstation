@@ -336,8 +336,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 
 	if (istype(A.material))
-		gain += material.getProperty("density") * 2
-		gain += material.getProperty("radioactive") * 2
+		gain += A.material.getProperty("density") * 2
+		gain += A.material.getProperty("radioactive") * 2
 	if (A.reagents)
 		gain += min(A.reagents.total_volume/4, 50)
 
