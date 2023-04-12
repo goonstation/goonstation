@@ -1,5 +1,9 @@
 
 (t)wed apr 12 23
+(u)Blackrep
+(p)13656
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Syndicate command, specialist heavy operative combat and salvager juggernaut combat armors are now flagged as contraband.
 (u)LeahTheTech
 (*)The singularity now takes materials and reagents into account when calculating gain from consumed objects. (this may be a bad idea)
 (+)The PTL no longer deletes pods.
