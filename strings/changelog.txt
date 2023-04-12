@@ -7,7 +7,6 @@
 (u)LeahTheTech
 (*)The singularity now takes materials and reagents into account when calculating gain from consumed objects. (this may be a bad idea)
 (+)The PTL no longer deletes pods.
-(+)The singularity now occasionally irradiates things around it, scaling with singularity energy.
 (u)Wisemonster
 (p)13103
 (e)⚖💡|C-Balance, A-Station-Systems
