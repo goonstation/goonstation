@@ -335,6 +335,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				T.ReplaceWithFloor()
 
+	if (istype(A.material))
+		gain += material.getProperty("density") * 2
+		gain += material.getProperty("radioactive") * 2
+	if (A.reagents)
+		gain += min(A.reagents.total_volume/4, 50)
+
 	src.energy += gain
 
 /obj/machinery/the_singularity/proc/get_center()
