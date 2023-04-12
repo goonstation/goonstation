@@ -1,5 +1,9 @@
 
 (t)wed apr 12 23
+(u)Wisemonster
+(p)13103
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)The health implants no longer send the coordinates of the implantee on an alert. The area is still sent.
 (u)Kubius
 (p)13646
 (e)🪲🗺|C-Bug, A-Mapping
