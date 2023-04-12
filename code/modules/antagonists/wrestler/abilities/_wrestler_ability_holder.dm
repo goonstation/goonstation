@@ -65,20 +65,9 @@
 					src.holder.owner.emote("flex")
 
 	castcheck()
-		if (!holder)
-			return 0
-
+		. = ..()
 		var/mob/living/M = holder.owner
-
-		if (!M)
-			return FALSE
 
 		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
 			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
 			return FALSE
-
-		if (!incapacitation_check(src.incapacitation_restriction))
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
-			return FALSE
-
-		return TRUE

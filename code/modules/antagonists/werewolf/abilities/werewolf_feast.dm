@@ -64,7 +64,6 @@
 		. = ..()
 
 		var/mob/living/M = owner
-		var/datum/abilityHolder/A = feast.holder
 
 		if (GET_DIST(M, target) > feast.max_range)
 			interrupt(INTERRUPT_ALWAYS)
@@ -77,7 +76,7 @@
 		..()
 
 		var/mob/living/M = owner
-		var/datum/abilityHolder/A = feast.holder
+
 
 		if (GET_DIST(M, target) > feast.max_range)
 			interrupt(INTERRUPT_ALWAYS)
@@ -97,8 +96,8 @@
 				if (!AH.feed_objective.mobs_fed_on.Find(target.bioHolder.Uid))
 					AH.feed_objective.mobs_fed_on.Add(target.bioHolder.Uid)
 					AH.feed_objective.feed_count++
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "feast-[W.feed_objective.feed_count]", 2)
-					M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "feast-[AH.feed_objective.feed_count]", 2)
+					M.add_stam_mod_max("feast-[AH.feed_objective.feed_count]", 10)
 					M.max_health += 10
 					health_update_queue |= M
 					AH.lower_cooldowns(0.1)
@@ -113,4 +112,4 @@
 
 	onInterrupt()
 		..()
-		boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
+		boutput(src.owner, "<span class='alert'>Your feast was interrupted.</span>")

@@ -928,11 +928,17 @@
 		else if (src.cooldowncheck())
 			boutput(src.holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're in range
 		else if (src.targeted && max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
 			boutput(src.holder.owner, "<span class='alert'>[target] is too far away.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast on ourselves, if relevant
 		else if (!src.target_self && target == src.holder.owner)
 			boutput(src.holder.owner, "<span class='alert'>You can't use that ability on yourself.</span>")
+			return FALSE
+		// Check if we're actionable enough to cast this
+		else if (!incapacitation_check(src.incapacitation_restriction))
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return FALSE
 		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
@@ -986,6 +992,8 @@
 		return src.doCooldown(0)
 
 	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast
+	/// Neat idea- add a castcheck proc to abilityHolders so they can use generic abilities, move holder-wide checks for there.
+	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities
 	proc/castcheck(atom/target)
 		return TRUE
 

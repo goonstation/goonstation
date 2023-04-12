@@ -40,7 +40,7 @@
 		A.addAbility(/datum/targetable/wrestler/kick/fake)
 		A.addAbility(/datum/targetable/wrestler/strike/fake)
 		A.addAbility(/datum/targetable/wrestler/drop/fake)
-		A.addAbility(/datum/targetable/wrestler/throw/fake)
+		A.addAbility(/datum/targetable/throw/wrestler/fake)
 		A.addAbility(/datum/targetable/wrestler/slam/fake)
 
 	else
@@ -51,7 +51,7 @@
 		A.addAbility(/datum/targetable/wrestler/kick)
 		A.addAbility(/datum/targetable/wrestler/strike)
 		A.addAbility(/datum/targetable/wrestler/drop)
-		A.addAbility(/datum/targetable/wrestler/throw)
+		A.addAbility(/datum/targetable/throw/wrestler)
 		A.addAbility(/datum/targetable/wrestler/slam)
 
 /mob/proc/remove_wrestle_powers(fake = FALSE)
@@ -67,7 +67,7 @@
 		src.removeAbility(/datum/targetable/wrestler/kick/fake)
 		src.removeAbility(/datum/targetable/wrestler/strike/fake)
 		src.removeAbility(/datum/targetable/wrestler/drop/fake)
-		src.removeAbility(/datum/targetable/wrestler/throw/fake)
+		src.removeAbility(/datum/targetable/throw/wrestler/fake)
 		src.removeAbility(/datum/targetable/wrestler/slam/fake)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler/fake)
 
@@ -75,6 +75,6 @@
 		src.removeAbility(/datum/targetable/wrestler/kick)
 		src.removeAbility(/datum/targetable/wrestler/strike)
 		src.removeAbility(/datum/targetable/wrestler/drop)
-		src.removeAbility(/datum/targetable/wrestler/throw)
+		src.removeAbility(/datum/targetable/throw/wrestler)
 		src.removeAbility(/datum/targetable/wrestler/slam)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler)
