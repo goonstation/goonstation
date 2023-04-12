@@ -304,12 +304,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
-
+		if (istype(A.material))
+			gain += A.material.getProperty("density") * 2
+			gain += A.material.getProperty("radioactive") * 2
+		if (A.reagents)
+			gain += min(A.reagents.total_volume/4, 50)
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
 			qdel(A)
-			gain = 2
+			gain += 2
 		else if (istype(A, /obj/machinery/nuclearbomb))
-			gain = 5000 //ten clowns
+			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
 			SPAWN(1 SECOND)
 				src.maxradius += 5
@@ -319,7 +323,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			qdel(A)
 		else
 			var/obj/O = A
-			gain = 2
+			gain += 2
 			gain += length(O.contents) * 2
 			O.set_loc(src.get_center())
 			O.ex_act(1)
@@ -331,15 +335,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (T.turf_flags & IS_TYPE_SIMULATED)
 			if (istype(T, /turf/simulated/floor))
 				T.ReplaceWithSpace()
-				gain = 2
+				gain += 2
 			else
 				T.ReplaceWithFloor()
-
-	if (istype(A.material))
-		gain += A.material.getProperty("density") * 2
-		gain += A.material.getProperty("radioactive") * 2
-	if (A.reagents)
-		gain += min(A.reagents.total_volume/4, 50)
 
 	src.energy += gain
 
