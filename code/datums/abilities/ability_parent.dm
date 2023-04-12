@@ -802,7 +802,7 @@
 	var/icon_state = "blob-template"			//! icon_state for the ability button
 	var/atom/movable/screen/ability/object		//! The ability button which appears on the HUD and is clicked to cast the ability
 
-	var/max_range = 10							//! If this is a targetable ability, what is the max range we can target people at
+	var/max_range = 1							//! If this is a targetable ability, what is the max range we can target people at
 	var/cooldown = 0							//! Time between ability uses
 	var/start_on_cooldown = FALSE				//! If TRUE, ability is put on cooldown immediately after a mob gains it
 	var/datum/abilityHolder/holder				//! Ability holder of this ability
