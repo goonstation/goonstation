@@ -422,12 +422,12 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	item_state = "machopants"
 
 	random_color
-	icon_state = "machopants_base"
-	item_state = "machopants_base"
+		icon_state = "machopants_base"
+		item_state = "machopants_base"
 
-	New()
-		..()
-		src.color = random_saturated_hex_color(1)
+		New()
+			..()
+			src.color = random_saturated_hex_color(1)
 
 /obj/item/clothing/suit/armor/vest/macho
 	name = "tiger stripe vest"
