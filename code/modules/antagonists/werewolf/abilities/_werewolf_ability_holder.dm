@@ -80,6 +80,8 @@
 		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
 
 // There used to be more stuff here, most of which was moved to limb datums.
+// THERE USED TO BE MORE STUFF HERE?????
+// this proc is a nightmare someone should refactor it but it ain't me
 /mob/proc/werewolf_attack(var/mob/target = null, var/attack_type = "")
 	if (!iswerewolf(src))
 		return 0

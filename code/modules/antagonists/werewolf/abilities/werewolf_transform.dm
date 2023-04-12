@@ -1,31 +1,18 @@
 /datum/targetable/werewolf/werewolf_transform
 	name = "Transform"
 	desc = "Switch between human and wolf form, Takes a couple seconds to complete."
-	icon_state = "transform"  // No custom sprites yet.
-	targeted = 0
-	target_nodamage_check = 0
-	max_range = 0
-	cooldown = 900
-	pointCost = 0
-	incapacitation_restriction = 1
+	icon_state = "transform"
+	cooldown = 90 SECONDS
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE
-	werewolf_only = 0
 
 	cast(mob/target)
-		if (!holder)
-			return 1
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 1
-
-		actions.start(new/datum/action/bar/private/icon/werewolf_transform(src), M)
-		return 0
+		. = ..()
+		actions.start(new/datum/action/bar/private/icon/werewolf_transform(src), src.holder.owner)
 
 /datum/action/bar/private/icon/werewolf_transform
-	duration = 50
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION
 	id = "werewolf_transform"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -36,11 +23,12 @@
 		..()
 
 	onStart()
-		..()
+		. = ..()
 
-		var/mob/living/M = owner
+		var/mob/living/M = src.owner
 
-		if (M == null || !ishuman(M) || M.stat != 0 || M.getStatusDuration("paralysis") || !transform)
+		// Not INTERRUPT_STUNNED because we can cast while stunned, just not unconcious
+		if (!ishuman(M) || M.stat)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -48,22 +36,18 @@
 
 	onUpdate()
 		..()
-
 		var/mob/living/M = owner
-
-		if (M == null || !ishuman(M) || M.stat != 0 || M.getStatusDuration("paralysis") || !transform)
+		if (M.stat)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
-		..()
-
+		. = ..()
 		var/mob/living/M = owner
 		M.werewolf_transform()
 
 	onInterrupt()
-		..()
-
+		. = ..()
 		var/mob/living/M = owner
 		boutput(M, "<span class='alert'>Your transformation was interrupted!</span>")
 		src.transform.resetCooldown()

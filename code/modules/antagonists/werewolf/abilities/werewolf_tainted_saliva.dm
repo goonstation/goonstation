@@ -12,56 +12,49 @@
 	werewolf_only = 1
 
 	cast(mob/target)
-		if (!holder)
-			return 1
-		var/mob/living/M = holder.owner
-		if (!M)
-			return 1
-		var/datum/abilityHolder/werewolf/W = holder
-		if (!istype(W))
-			return 1
-		if (M.reagents.total_volume == 0)
-			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
-			return 1
-
+		. = ..()
 		M.changeStatus("werewolf_saliva", 30 SECONDS)
-		return 0
+
+	castcheck()
+		. = ..()
+		var/mob/living/M = holder.owner
+		if (!M.reagents.total_volume)
+			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
+			return FALSE
 
 /datum/statusEffect/tainted_saliva
 	id = "werewolf_saliva"
 	name = "Tainted Saliva"
 	desc = "Your bite wounds will inflict reagents that are in your own body."
 	icon_state = "person"
-	maxDuration = 300
-	unique = 1
+	maxDuration = 30 SECONDS
+	unique = TRUE
 
-	onAdd(var/optional=null)
+	onAdd()
 		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
-		var/datum/abilityHolder/werewolf/W
+		var/datum/abilityHolder/werewolf/AH
 		if (M.abilityHolder)
-			W = M.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (!W) return
+			AH = M.get_ability_holder(/datum/abilityHolder/werewolf)
+		if (!AH) return
 
 		M.visible_message("<span class='alert'><B>[M] starts salivating a disgusting amount!</B></span>")
-		W.tainted_saliva_reservoir.clear_reagents()
-		M.reagents.copy_to(W.tainted_saliva_reservoir, 1, 1)
+		AH.tainted_saliva_reservoir.clear_reagents()
+		M.reagents.copy_to(AH.tainted_saliva_reservoir, do_not_react=TRUE)
 		M.reagents.clear_reagents()
-		return
 
 	onRemove()
 		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
-		var/datum/abilityHolder/werewolf/W
+		var/datum/abilityHolder/werewolf/AH
 		if (M.abilityHolder)
-			W = M.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (!W) return
+			AH = M.get_ability_holder(/datum/abilityHolder/werewolf)
+		if (!AH) return
 
-		W.tainted_saliva_reservoir.clear_reagents()
+		AH.tainted_saliva_reservoir.clear_reagents()
 		boutput(M, "<span class='notice'><B>You no longer will spread saliva when you attack!</B></span>")
 		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
-		return
