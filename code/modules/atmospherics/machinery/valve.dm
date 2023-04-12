@@ -103,8 +103,6 @@
 			if(!isnull(node1))
 				return node1.network_expand(new_network, src)
 
-	return null
-
 /obj/machinery/atmospherics/valve/disposing()
 	if(node1)
 		node1.disconnect(src)
@@ -157,9 +155,8 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/valve/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/valve/attack_ai(mob/user)
 	boutput(user, "This valve is manually controlled.")
-	return
 
 /obj/machinery/atmospherics/valve/attack_hand(mob/user)
 	interact_particle(user,src)
@@ -185,7 +182,6 @@
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
 	..()
-	return
 
 /obj/machinery/atmospherics/valve/process()
 	..()
@@ -202,7 +198,6 @@
 			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 				if(target.initialize_directions & get_dir(target,src))
 					connect_directions &= ~direction
-
 					node1 = target
 					break
 			break
@@ -211,7 +206,6 @@
 		if(direction&connect_directions)
 			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 				if(target.initialize_directions & get_dir(target,src))
-
 					node2 = target
 					break
 			break
