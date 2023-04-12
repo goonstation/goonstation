@@ -1,3 +1,9 @@
+
+(t)wed apr 12 23
+(u)Flappybat
+(p)13633
+(e)⚖|C-Balance
+(*)Critters can no longer pilot pods. They can still travel as passengers in large pods.
 (t)tue apr 11 23
 (u)LeahTheTech, Kubius
 (+)Clicking on disposals pipes or cables with floor tiles will now interact with the turf beneath them for easier repairing.
