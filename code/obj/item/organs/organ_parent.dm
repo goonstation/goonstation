@@ -288,7 +288,7 @@
 			return
 		var/datum/targetable/organAbility/OA = aholder.addAbility(abil)
 		if (istype(OA))
-			OA.linked_organ = src
+			OA.linked_organs = src
 
 	proc/remove_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!aholder || !abil)

@@ -322,37 +322,6 @@
 	/// Ability can only be used while in wolf form if TRUE
 	var/werewolf_only = FALSE
 
-	New()
-		..()
-		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-
 	castcheck()
 		. = ..()
 		var/mob/living/carbon/human/user = src.holder.owner

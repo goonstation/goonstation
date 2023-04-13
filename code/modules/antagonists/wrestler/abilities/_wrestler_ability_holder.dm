@@ -2,8 +2,6 @@
 // the opportunity to do some clean-up as well (Convair880).
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
-
-/atom/movable/screen/ability/topBar/wrestler
 /datum/abilityHolder/wrestler
 	usesPoints = FALSE
 	regenRate = 0
@@ -37,7 +35,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/wrestler()
+			src.object = new /atom/movable/screen/ability/topBar()
 			object.icon = src.icon
 			object.owner = src
 

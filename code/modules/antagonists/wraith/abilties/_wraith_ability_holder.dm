@@ -54,25 +54,10 @@
 		B.desc = src.desc
 		src.object = B
 
-	cast(atom/target)
-		if (!holder || !holder.owner)
-			return 1
-		if (ispoltergeist(holder.owner))
-			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
-			if (src.min_req_dist <= P.power_well_dist)
-				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
-				return 1
-		if (istype(holder.owner, /mob/living/intangible/wraith))
-			var/mob/living/intangible/wraith/W = holder.owner
-			if (W.forced_manifest == TRUE)
-				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
-				return 1
-		return 0
-
 	doCooldown(customCooldown)
 		. = ..()
 		holder.updateButtons()
-		SPAWN(cooldown + 5)
+		SPAWN(cooldown + 0.5 SECONDS)
 			holder?.updateButtons()
 
 	onAttach(datum/abilityHolder/holder)
@@ -86,6 +71,19 @@
 
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
+	castcheck(atom/target)
+		. = ..()
+		if (ispoltergeist(holder.owner))
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
+			if (src.min_req_dist <= P.power_well_dist)
+				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
+				return FALSE
+		if (istype(holder.owner, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = holder.owner
+			if (W.forced_manifest)
+				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
+				return FALSE
 
 /datum/targetable/wraithAbility/help
 	name = "Toggle Help Mode"
@@ -113,18 +111,9 @@
 	name = "Toggle deadchat"
 	desc = "Silences or re-enables the whispers of the dead."
 	icon_state = "hide_chat"
-	targeted = 0
-	cooldown = 0
-	pointCost = 0
 
 	cast(mob/target)
-		if (!holder)
-			return TRUE
-
 		var/mob/living/intangible/wraith/W = holder.owner
-
-		if (!W)
-			return TRUE
 
 		//hearghosts is checked in deadsay.dm and chatprocs.dm
 		W.hearghosts = !W.hearghosts
@@ -141,12 +130,9 @@
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
-	// invisibility = INVIS_ALWAYS
-	invisibility = INVIS_GHOST
-	anchored = 1
-	density = 0
-	opacity = 0
-	mouse_opacity = 0
+	invisibility = INVIS_SPOOKY
+	anchored = 0
+	mouse_opacity = FALSE
 	alpha = 100
 
 	New()

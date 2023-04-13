@@ -435,7 +435,6 @@
 			UpdateOverlays(null, "action_key_number")
 
 	proc/set_number_overlay(var/num)
-
 		switch(num)
 			if(1)
 				. = src.one
@@ -458,6 +457,21 @@
 			if(0)
 				. = src.zero
 
+	//WIRE TOOLTIPS
+	MouseEntered(location, control, params)
+		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
+				"title" = src.name,
+				"content" = (src.desc || null),
+				"theme" = src.owner.theme,
+				"flags" = src.owner.tooltip_flags
+			))
+
+	MouseExited()
+		if (usr.client.tooltipHolder)
+			usr.client.tooltipHolder.hideHover()
+
 	/// Immediately casts the spell if it's off cooldown and only has a single target in range, returning FALSE
 	/// If there's more than 1 target, or no targets, does nothing and returns TRUE
 	/// To use, ability must be targeted and have `shortcut_target_if_available` set to TRUE
@@ -475,21 +489,6 @@
 			return FALSE // Abort parent proc since we're casting from here instead
 		else // >2 targets
 			boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
-
-	//WIRE TOOLTIPS
-	MouseEntered(location, control, params)
-		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = (src.desc || null),
-				"theme" = src.owner.theme,
-				"flags" = src.owner.tooltip_flags
-			))
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
 
 /atom/movable/screen/abilitystat
 	maptext_x = 6
@@ -812,6 +811,10 @@
 	var/cd_text_color = "#FFFFFF"			   //! Color of the maptext placed on the button when the ability is on cooldown. so far unused
 	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
+	var/disabled = FALSE							//! Ability is disabled and unusable
+	var/toggled = FALSE								//! If this ability is a toggle (activating it switches between an on and an off state)
+	var/is_on = FALSE								//! If this is a toggled ability, is it turned on?
+
 	/// If this ability can be used while stunned/unconcious. Defaults to strict no for any stuns
 	var/incapacitation_restriction = ABILITY_NO_INCAPACITATED_USE
 	var/can_cast_while_cuffed = FALSE		//! If this ability can be used while cuffed or otherwise restrained.
@@ -834,6 +837,8 @@
 	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE 				//! If TRUE, the next number hotkey pressed will be bound to this.
 	var/list/cooldowns							//! Cooldowns list, used for the COOLDOWN macros
+	/// Typepath of the button we want to use. Generic will work 90% of the time, but sometimes we need extra handling.
+	var/button_type = /atom/movable/screen/ability/topBar
 
 	/** When applied to a mob, this ability will either add to a holder
 	 * 	of the preferred type, or create a new one and add it to the
@@ -851,13 +856,24 @@
 		src.cooldowns = list()
 		src.holder = holder
 		if (src.icon && src.icon_state)
-			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
+			var/atom/movable/screen/ability/topBar/button = new src.button_type()
 			button.icon = src.icon
 			button.icon_state = src.icon_state
-			button.owner = src
 			button.name = src.name
 			button.desc = src.desc
+			button.owner = src
 			src.object = button
+		else
+			var/problem
+			if (src.icon)
+					problem = "no icon_state"
+			else
+				if (src.icon_state)
+					problem = "no icon"
+				else
+					problem = "no icon and no icon_state"
+			stack_trace("Targetable ability [identify_object(src)], owned by [identify_object(src.holder.owner)] being created with [problem].")
+			qdel(src)
 
 	disposing()
 		if (object?.owner == src)
@@ -919,14 +935,17 @@
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while dead, if we're dead
 		else if (!src.holder.cast_while_dead && isdead(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
+			boutput(holder.owner, "<span class='alert'>You cannot cast [src.name] while you are dead.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if this ability is disabled for some reason
+		else if (src.disabled)
+			boutput(holder.owner, "<span class='alert'>[src.name].</span>")
 		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
 		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
-			boutput(src.holder.owner, "<span class='alert'>You cannot cast this ability while you're restrained.</span>")
+			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while you're restrained.</span>")
 		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())
-			boutput(src.holder.owner, "<span class='alert'>That ability is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
+			boutput(src.holder.owner, "<span class='alert'>[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're in range
 		else if (src.targeted && max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
@@ -934,29 +953,29 @@
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast on ourselves, if relevant
 		else if (!src.target_self && target == src.holder.owner)
-			boutput(src.holder.owner, "<span class='alert'>You can't use that ability on yourself.</span>")
+			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] on yourself.</span>")
 			return FALSE
 		// Check if we're actionable enough to cast this
 		else if (!incapacitation_check(src.incapacitation_restriction))
-			boutput(src.holder.owner, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] while incapacitated!</span>")
 			return FALSE
 		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
 			// TODO maybe move to its own proc? bit out of place here
 			var/turf/T = get_turf(src.holder.owner)
 			if (!isturf(T))
-				boutput(src.holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+				boutput(src.holder.owner, "<span class='alert'>[src.name] doesn't seem to work here.</span>")
 				. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			else
 				switch (src.restricted_area_check)
 					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 						if (isrestrictedz(T.z))
-							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+							boutput(holder.owner, "<span class='alert'>[src.name] doesn't seem to work here.</span>")
 							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 					if (ABILITY_AREA_CHECK_VR_ONLY)
 						var/area/A = get_area(T)
 						if (istype(A, /area/sim))
-							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
+							boutput(holder.owner, "<span class='alert'>You can't use [src.name] in virtual reality.</span>")
 							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Custom checks by subtypes
 		else if (!castcheck(target))
@@ -978,7 +997,30 @@
 				localholder.deductPoints(pointCost)
 
 	proc/updateObject()
-		return
+		var/on_cooldown = src.cooldowncheck()
+		var/pttxt = ""
+		if (src.pointCost)
+			pttxt = " \[[src.pointCost]\]"
+
+		if (disabled)
+			object.name = "[src.name] (unavailable)"
+			object.icon_state = src.icon_state + "_cd"
+		else if (on_cooldown)
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
+			object.icon_state = src.icon_state + "_cd"
+		else if (toggled)
+			if (is_on)
+				object.name = "[src.name][pttxt] (on)"
+				object.icon_state = src.icon_state
+			else
+				object.name = "[src.name][pttxt] (off)"
+				object.icon_state = src.icon_state + "_cd"
+		else
+			var/pttxt = ""
+			if (pointCost)
+				pttxt = " \[[pointCost]\]"
+			object.name = "[src.name][pttxt]"
+			object.icon_state = src.icon_state
 
 	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already,
 	/// 0 is a valid argument so we check for null specifically
@@ -1000,6 +1042,7 @@
 	/// Checks the cooldown on this ability.
 	/// returns 0 if off cooldown, positive float of time remaining if on cooldown
 	proc/cooldowncheck()
+		SHOULD_NOT_OVERRIDE(TRUE)
 		return GET_COOLDOWN(src, "cast")
 
 	/// Things we want to do after an ability is cast.
@@ -1024,7 +1067,6 @@
 			if (!istype(G))
 				boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
 				return FALSE
-
 
 		var/mob/living/L = G.affecting
 		if (istype(L) && L != user)

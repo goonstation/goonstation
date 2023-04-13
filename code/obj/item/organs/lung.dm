@@ -247,11 +247,11 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 			return ..()
 		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)//addAbility(abil)
 		if (istype(OA)) // already has an emagged lung. You need both for the ability to function
-			OA.linked_organ = list(OA.linked_organ, src)
+			OA.linked_organs = list(OA.linked_organs, src)
 		else
 			OA = aholder.addAbility(abil)
 			if (istype(OA))
-				OA.linked_organ = src
+				OA.linked_organs = src
 
 	remove_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
@@ -259,12 +259,12 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)
 		if (!OA) // what??
 			return
-		if (islist(OA.linked_organ)) // two emagged lungs, just remove us :3
-			var/list/lorgans = OA.linked_organ
+		if (islist(OA.linked_organs)) // two emagged lungs, just remove us :3
+			var/list/lorgans = OA.linked_organs
 			if(OA.is_on)
 				OA.handleCast() //turn it off - we only have one left!
 			lorgans -= src // remove us from the list so only the other lung is left and thus will be lorgans[1]
-			OA.linked_organ = lorgans[1]
+			OA.linked_organs = lorgans[1]
 		else // just us!
 			aholder.removeAbility(abil)
 

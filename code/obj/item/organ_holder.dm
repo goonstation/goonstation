@@ -1335,50 +1335,16 @@
 	regenRate = 0
 	tabName = "Body"
 
-/atom/movable/screen/ability/topBar/organ
-	clicked(params)
-		var/datum/targetable/organAbility/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr:targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (spell.cooldowncheck())
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
 	preferred_holder_type = /datum/abilityHolder/organ
-	var/disabled = 0
-	var/toggled = 0
-	var/is_on = 0   // used if a toggle ability
-	var/obj/item/organ/linked_organ = null
-
-	New()
-		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
-		B.name = src.name
-		B.desc = src.desc
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		src.object = B
+	var/list/obj/item/organ/linked_organs = null
 
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/organ()
+			src.object = new /atom/movable/screen/ability/topBar()
 			object.icon = src.icon
 			object.owner = src
 
@@ -1405,29 +1371,29 @@
 		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
-		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
+		if (!linked_organs)
 			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
-			return 0
+			return FALSE
 		else if (incapacitationCheck())
 			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
-			return 0
+			return FALSE
 		else if (disabled)
 			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 	cast(atom/target)
 		if (!holder || !holder.owner)
 			return 1
-		if (!linked_organ)
+		if (!linked_organs)
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]) on [target].")
 		else
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam
@@ -1493,7 +1459,7 @@
 		if (..())
 			return 1
 
-		var/obj/item/organ/eye/cyber/meson/M = linked_organ
+		var/obj/item/organ/eye/cyber/meson/M = linked_organs
 		if (istype(M))
 			M.toggle()
 			src.is_on = M.on
@@ -1515,12 +1481,12 @@
 		if (..())
 			return 1
 
-		if(length(linked_organ))
-			for(var/obj/item/organ/O in linked_organ)
+		if(length(linked_organs))
+			for(var/obj/item/organ/O in linked_organs)
 				O.take_damage(15, 15) //safe-ish
 		else
-			linked_organ.take_damage(30, 30) //not safe
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+			linked_organs.take_damage(30, 30) //not safe
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organs) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
@@ -1548,7 +1514,7 @@
 		if (..())
 			return 1
 
-		var/obj/item/organ/liver/cyber/L = linked_organ
+		var/obj/item/organ/liver/cyber/L = linked_organs
 		if (istype(L))
 			L.overloading = !L.overloading
 			src.is_on = L.overloading
@@ -1569,7 +1535,7 @@
 		if (..())
 			return 1
 
-		linked_organ.take_damage(20, 20) //not safe
+		linked_organs.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
 			if (L.stomach_process && length(L.stomach_process))
@@ -1578,7 +1544,7 @@
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
 			else
 				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organ.take_damage(30) //owwww
+				linked_organs.take_damage(30) //owwww
 
 
 /datum/targetable/organAbility/projectilevomit
@@ -1601,13 +1567,13 @@
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
-						linked_organ.take_damage(3)
+						linked_organs.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !length(L.stomach_process))
+						if(linked_organs.broken || !length(L.stomach_process))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
-				linked_organ.take_damage(30) //owwww
+				linked_organs.take_damage(30) //owwww
 				L.vomit()
 
 /datum/targetable/organAbility/rebreather
@@ -1626,13 +1592,13 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if(!islist(linked_organ) && !is_on)
+		if(!islist(linked_organs) && !is_on)
 			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
 			return 1
 
 		src.is_on = !src.is_on
 		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
-		for(var/obj/item/organ/lung/cyber/L in linked_organ)
+		for(var/obj/item/organ/lung/cyber/L in linked_organs)
 			L.overloading = is_on
 		if(is_on)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")

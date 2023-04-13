@@ -16,31 +16,6 @@
 	else return
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
-/atom/movable/screen/ability/topBar/merchant
-	clicked(params)
-		var/datum/targetable/merchant/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (spell.cooldowncheck())
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
-
 /datum/abilityHolder/merchant
 	usesPoints = 0
 	regenRate = 0
@@ -59,20 +34,8 @@
 /datum/targetable/merchant
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "template"
-	cooldown = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/merchant
 	incapacitation_restriction =  ABILITY_CAN_USE_WHEN_STUNNED
-
-	New()
-		var/atom/movable/screen/ability/topBar/merchant/B = new /atom/movable/screen/ability/topBar/merchant(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
 
 	updateObject()
 		..()
