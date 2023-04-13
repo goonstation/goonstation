@@ -135,10 +135,15 @@ obj/structure/ex_act(severity)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
+		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
+
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = duration / 2
+
+			else if (H.traitHolder.hasTrait("carpenter")) // It's so one nullifies the other. Carpenter and engineer training shouldn't stack up.
+				duration = duration / 1.5
+
 		var/mob/living/critter/robotic/bot/engibot/E = user
 		if(istype(E))
 			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
