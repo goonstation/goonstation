@@ -125,6 +125,25 @@
 				if(76 to INFINITY)
 					src.icon_state += "-0"
 
+		damage_slashing(var/amount) // Completely overriding it to make it only drop 1 rod.
+			if (!isnum(amount) || amount <= 0)
+				return
+
+			if (src.ruined)
+				drop_rods(1)
+				qdel(src)
+				return
+
+			amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
+
+			src.health = clamp(src.health - amount, 0, src.health_max)
+			if (src.health == 0)
+				UpdateIcon("cut")
+				src.set_density(0)
+				src.ruined = 1
+			else
+				UpdateIcon()
+
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
@@ -239,6 +258,7 @@
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
+			drop_rods(1)
 			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
