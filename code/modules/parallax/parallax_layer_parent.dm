@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
 	plane = PLANE_PARALLAX
 

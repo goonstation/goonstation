@@ -57,7 +57,6 @@
 
 
 // Planets
-ABSTRACT_TYPE(/atom/movable/screen/parallax_layer/planet)
 /atom/movable/screen/parallax_layer/planet
 	parallax_icon = 'icons/misc/512x512.dmi'
 	static_colour = TRUE
