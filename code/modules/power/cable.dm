@@ -219,9 +219,12 @@
 /obj/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
-	if (T.intact)
+	if (istype(W, /obj/item/tile)) //let people repair floors underneath cables
+		T.Attackby(W, user)
 		return
 
+	if (T.intact)
+		return
 	if (issnippingtool(W))
 		src.cut(user,T)
 		return	// not needed, but for clarity
