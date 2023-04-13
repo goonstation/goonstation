@@ -1,5 +1,6 @@
 #define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
 #define PLANE_SPACE -115
+#define PLANE_PARALLAX -114
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
 #define PLANE_NOSHADOW_BELOW -101
@@ -81,6 +82,7 @@ client
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "parallax_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_WALL, name = "wall_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))

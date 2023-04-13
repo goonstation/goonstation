@@ -220,6 +220,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// This helps to SIGNIFICANTLY smooth the apparent motion of the camera at higher speeds (almost buttery at default speed of 2)
 		// Unfortunately, there is still some stuttering at higher speeds, but it has been lessened quite a bit.
 		for(var/mob/M in src)
+			SEND_SIGNAL(M, COMSIG_MOB_MOVE_VEHICLE)
 			M.glide_size = src.glide_size ;
 			M.animate_movement = SYNC_STEPS;
 

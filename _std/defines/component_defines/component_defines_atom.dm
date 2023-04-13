@@ -57,6 +57,8 @@
 
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
+	/// Sent when an mob moves in a vehicle (passengers and driver)
+	#define COMSIG_MOB_MOVE_VEHICLE "mob_move_vehicle"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
 	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
 	/// when an AM changes its loc (thing, previous_loc)
