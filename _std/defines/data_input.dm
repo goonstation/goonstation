@@ -22,6 +22,7 @@
 #define DATA_INPUT_PARTICLE_EDITOR "Particle Editor"
 #define DATA_INPUT_FILTER_EDITOR "Filter Editor"
 #define DATA_INPUT_MATRIX "Matrix"
+#define DATA_INPUT_COLOR_MATRIX_EDITOR "Color Matrix Editor"
 
 // list stuff
 #define DATA_INPUT_LIST_BUILD "Build New List"

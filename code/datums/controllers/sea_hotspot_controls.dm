@@ -645,7 +645,7 @@
 	desc = "A hole dug in the seafloor."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "venthole_1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	ex_act(severity)
@@ -732,7 +732,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/last_gen = 0
 	var/total_gen = 0
@@ -742,6 +742,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	New()
 		..()
 		START_TRACKING
+		AddComponent(/datum/component/mechanics_holder)
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -815,6 +816,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -844,7 +846,8 @@ TYPEINFO(/obj/machinery/power/stomper)
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
+	status = REQ_PHYSICAL_ACCESS
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -892,7 +895,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !user.equipped())
+			if(cell && !user.equipped() && in_interact_range(src, user))
 				cell.UpdateIcon()
 				user.put_in_hand_or_drop(cell)
 
@@ -1289,7 +1292,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
 		decal.pixel_y = src.pixel_y
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.icon_state = "[src.icon_state]-rip1"
 		src.can_put_up = 0
 		user.put_in_hand_or_drop(src)
@@ -1300,6 +1303,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			"You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()

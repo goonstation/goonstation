@@ -230,7 +230,7 @@
 
 	name = "railway vehicle"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/road_rage_force = 40
 
 	New()

@@ -9,7 +9,7 @@
 	density = 0
 	canmove = 0
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	stat = 0
 	var/autofree = 0
@@ -389,8 +389,9 @@
 		return make_zoldorf()
 	return null
 
-/client/MouseDrop(var/over_object, var/src_location, var/over_location, mob/user as mob) //handling click dragging of items within one tile of a zoldorf booth.
+/client/MouseDrop(var/over_object, var/src_location, var/over_location) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
+	var/mob/zoldorf/user = usr
 	if(!istype(user,/mob/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)

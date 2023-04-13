@@ -53,7 +53,7 @@
 /// the power cable object
 /obj/cable
 	level = 1
-	anchored = TRUE
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	var/tmp/netnum = 0
 	name = "power cable"
@@ -157,7 +157,7 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		defer_powernet_rebuild = 2
+		deferred_powernet_objs |= src
 
 		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
@@ -219,9 +219,12 @@
 /obj/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
-	if (T.intact)
+	if (istype(W, /obj/item/tile)) //let people repair floors underneath cables
+		T.Attackby(W, user)
 		return
 
+	if (T.intact)
+		return
 	if (issnippingtool(W))
 		src.cut(user,T)
 		return	// not needed, but for clarity
@@ -423,7 +426,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	anchored = TRUE
+	anchored = ANCHORED
 	// this would make it connect to the centre, for like terminals and whatnot
 	// subtype node sets this to true
 	var/override_centre_connection = FALSE
@@ -431,19 +434,11 @@
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
-/obj/cablespawner/New()
-	..()
-	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
-		SPAWN(1 SECONDS)
-			if(!src.disposed)
-				initialize()
-
 /obj/cablespawner/node
 	name = "node cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-node"
 
-/// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
 	icon = 'icons/obj/power_cond.dmi'
@@ -456,6 +451,12 @@
 	override_centre_connection = TRUE
 	icon_state = "superstate-thick-node"
 
+/obj/cablespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
 
 /// makes the cable spawners actually spawn cables and delete themselves
 /obj/cablespawner/initialize()
@@ -466,17 +467,19 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
-	for (var/obj/cablespawner/dupe in range(0, src))
-		if (istype(dupe, src))
-			selftile += dupe
+	var/declarer = 0
+	// first we have to make sure we're checking the correct kind of cable
+	for (var/obj/cablespawner/self_loc in range(0, src))
+		if (self_loc.color == src.color)
+			selftile += self_loc
 	if (length(selftile) > 1)
-		CRASH("Multiple cablespawners on coordinate [src.x] x [src.y] y!")
-	qdel(selftile)
-	for (var/dir_to_cs in alldirs)
+		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
+	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
 	// checks for cablespawners around itself
-		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
+		// declarer is the dir being checked at present
+		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
-			if (spawner.cable_type == src.cable_type)
+			if (spawner.color == src.color)
 				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
@@ -507,15 +510,19 @@
 	if (cable_surr & EAST)
 	// optimises the outlier case
 		for (var/obj/cablespawner/spawner in get_step(src, EAST))
-			spawner.cable_surr |= WEST
+			if (src.color == spawner.color)
+				spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
 	// checks for regular cables (these always connect by default)
-		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
+		declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
-			if (istype(normal_cable, src) || istype(src, normal_cable))
-				if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
-					cable_surr |= declarer
+			if (normal_cable.color != src.color)
+				continue
+			if (!istype(normal_cable, src.cable_type) && !istype(src.cable_type, normal_cable))
+				continue
+			if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
+				cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
@@ -540,8 +547,8 @@
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
 		CRASH("The cable spawner at [src.x] x [src.y] y doesn't connect to anything!")
-	else if (src.override_centre_connection)
-	// multiple cables, spiral out from the centre 'knot'
+	else if (src.override_centre_connection || length(directions) == 1)
+	// multiple cables, spiral out from the centre 'knot', or the end of a cable
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	else if (length(directions) >= 3)
@@ -549,9 +556,6 @@
 		for (var/i in 1 to length(directions) - 1)
 			cable_laying(directions[i], directions[1+i])
 		cable_laying(directions[1], directions[length(directions)])
-	else if (length(directions) == 1)
-	// end of a cable
-		cable_laying(0, directions[1])
 	else if (length(directions) == 2)
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
@@ -560,6 +564,9 @@
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
+	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
+	current.color = src.color
+	// oddly the New() of these cables doesn't work during the setup process, so things get funky
+	// d1 and d2 have to be manually assigned here
 	current.d1 = min(dir1, dir2)
 	current.d2 = max(dir1, dir2)
-	current.UpdateIcon()

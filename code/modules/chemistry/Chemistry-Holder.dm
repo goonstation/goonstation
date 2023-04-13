@@ -212,12 +212,14 @@ datum
 			var/largest_volume = 0
 
 			for(var/reagent_id in reagent_list)
-				if(reagent_id == "smokepowder") continue
+				if(reagent_id == "smokepowder")
+					continue
 				var/datum/reagent/current = reagent_list[reagent_id]
 				if(current.volume > largest_volume)
 					largest_name = current.name
 					largest_volume = current.volume
-
+			if (largest_name == "mirabilis")
+				largest_name = " "
 			return largest_name
 
 
@@ -854,6 +856,7 @@ datum
 			return FALSE
 
 		proc/get_reagent(var/reagent_id)
+			RETURN_TYPE(/datum/reagent)
 			return reagent_list[reagent_id]
 
 		proc/get_reagent_amount(var/reagent)
@@ -927,6 +930,7 @@ datum
 						. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 						return
 
+				SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
 				. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 

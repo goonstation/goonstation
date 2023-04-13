@@ -6,7 +6,7 @@
 	icon_state = "metalfoam"
 	density = 1
 	opacity = 0 	// changed in New()
-	anchored = 1
+	anchored = ANCHORED
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	flags = FPRINT | CONDUCT | USEDELAY
@@ -72,8 +72,14 @@
 		else
 			boutput(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (prob((AM.throwforce + thr.bonus_throwforce) * 10 - src.metal * 25))
+			AM.visible_message("<span class='alert'>[AM] smashes through the foamed metal.</span>")
+			dispose()
+
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if (istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 

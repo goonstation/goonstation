@@ -279,15 +279,22 @@
 		src.remove_dialog(usr)
 	return
 
+/obj/item/electronics/frame/Exited(Obj, newloc)
+	. = ..()
+	var/atom/movable/AM = Obj
+	if(AM == deconstructed_thing && !QDELETED(AM))
+		src.visible_message("<span class='notice'>[src] vanishes in a puff of logic!</span>", "<span class='notice'>You hear a mild poof.</span>", "frame_poof")
+		qdel(src)
+
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
 	if (deconstructed_thing)
 		O = deconstructed_thing
+		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
-		deconstructed_thing = null
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
@@ -496,7 +503,7 @@
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null
@@ -955,6 +962,9 @@
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
+			return
+		if (istext(decon_complexity))
+			boutput(user, "<span class='alert'>[decon_complexity]</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")

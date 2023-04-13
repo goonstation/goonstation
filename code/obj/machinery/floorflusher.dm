@@ -1,12 +1,12 @@
 //Floor Flushing Mechanism.
-
+ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 /obj/machinery/floorflusher
 	name = "\improper Floor Flusher"
 	desc = "It's totally not just a gigantic disposal chute!"
 	//icon = 'icons/obj/disposal.dmi'
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 100
 	density = 0
 	flags = NOSPLASH

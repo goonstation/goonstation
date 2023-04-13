@@ -243,6 +243,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -287,6 +289,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
@@ -1353,7 +1357,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/oldlayer = A.layer
 	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
+	A.anchored = ANCHORED
 	if (!reverse)
 		A.alpha = 0
 		A.pixel_y = 176
@@ -1409,7 +1413,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
@@ -1449,7 +1453,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 

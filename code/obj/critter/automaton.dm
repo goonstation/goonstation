@@ -8,7 +8,7 @@ var/global/the_automaton = null
 	desc = "What is this thing? A toy? A machine? What is it doing? Why does it seem to be watching you?"
 	icon_state = "automaton"
 	health = 1000 // what kind of jerk would kill it
-	anchored = 1
+	anchored = ANCHORED
 	aggressive = 0
 	defensive = 0
 	wanderer = 0
@@ -176,7 +176,7 @@ var/global/the_automaton = null
 				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
 				user.changeStatus("stunned", 5 SECONDS)
 				user.canmove = 0
-				user.anchored = 1
+				user.anchored = ANCHORED
 				user.set_loc(src.loc)
 				K.burn_possible = 1
 				SPAWN(2 SECONDS)

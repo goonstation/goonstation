@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -76,6 +76,8 @@ TYPEINFO(/obj/item/light_parts)
 
 // the standard tube light fixture
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/admin_fix)
+
 /var/global/stationLights = new/list()
 /obj/machinery/light
 	name = "light fixture"
@@ -83,7 +85,7 @@ TYPEINFO(/obj/item/light_parts)
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
@@ -178,7 +180,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
-	anchored = 1
+	anchored = ANCHORED
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	fitting = "bulb"
@@ -346,6 +348,16 @@ TYPEINFO(/obj/item/light_parts)
 	on = 0
 	removable_bulb = 1
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
+	disposing()
+		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
@@ -474,7 +486,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"
@@ -926,6 +938,8 @@ TYPEINFO(/obj/item/light_parts)
 // break the light and make sparks if was on
 
 /obj/machinery/light/proc/broken(var/nospark = 0)
+	set name = "Break"
+
 	if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
 		return
 
@@ -962,6 +976,20 @@ TYPEINFO(/obj/item/light_parts)
 /obj/machinery/light/blob_act(var/power)
 	if(prob(power * 2.5))
 		broken()
+
+/obj/machinery/light/proc/admin_toggle()
+	set name = "Toggle"
+	on = (!on && current_lamp.light_status == LIGHT_OK)
+	update()
+
+/obj/machinery/light/proc/admin_fix()
+	set name = "Fix"
+	if(isnull(current_lamp))
+		current_lamp = new light_type
+	current_lamp.light_status = LIGHT_OK
+	current_lamp.update()
+	on = TRUE
+	update()
 
 //mbc : i threw away this stuff in favor of a faster machine loop process
 /*
@@ -1039,7 +1067,7 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
-	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched
 	m_amt = 60

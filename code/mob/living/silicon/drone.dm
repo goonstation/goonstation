@@ -148,7 +148,7 @@
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
-				robogibs(src.loc,null)
+				robogibs(src.loc)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return
@@ -323,7 +323,7 @@
 	icon_state = "frame-0"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/construct_stage = 0
 	var/obj/item/device/radio/part_radio = null
 	var/obj/item/cell/part_cell = null

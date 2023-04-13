@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/cell_charger)
 	var/obj/item/cell/charging = null
 	var/chargerate = 250 // power per tick
 	var/chargelevel = -1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	power_usage = 50
 
@@ -79,7 +79,7 @@ TYPEINFO(/obj/machinery/cell_charger)
 		return
 
 	var/added = charging.give(src.chargerate * mult)
-	use_power(added / CELLRATE)
+	use_power(added)
 
 	src.UpdateIcon()
 

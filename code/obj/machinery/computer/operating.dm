@@ -1,7 +1,7 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
@@ -30,6 +30,8 @@
 	ui_interact(user)
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	if (src.victim)
+		SEND_SIGNAL(src.victim.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "OperatingComputer")

@@ -306,7 +306,7 @@ proc/Create_Tommyname()
 	desc = "warning"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 
 	Crossed(atom/movable/AM)
@@ -1018,7 +1018,7 @@ proc/Create_Tommyname()
 
 	proc/check_conditions()
 		. = 0
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !isturf(target.loc) || !owner || !the_garrote || !the_garrote.wire_readied)
 			interrupt(INTERRUPT_ALWAYS)
 			. = 1
 

@@ -59,7 +59,7 @@
 	explode()
 		var/datum/reagents/R = new /datum/reagents(50)
 		R.my_atom = get_turf(src)
-		R.add_reagent("sarin", 50)
+		R.add_reagent("saxitoxin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
 		SPAWN(30 SECONDS) qdel(R)
@@ -85,7 +85,7 @@
 /obj/torpedo_targeter
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = 10
 	alpha = 200
@@ -106,7 +106,7 @@
 	name = "torpedo console"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
-	anchored = 1
+	anchored = ANCHORED
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
@@ -202,7 +202,7 @@
 	name = "torpedo button"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchored = ANCHORED
 	var/id = "torp1"
 	var/list/cachedTubes = list()
 
@@ -217,13 +217,15 @@
 			T.launch()
 		return
 
+ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
+
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "base"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2
 
 	var/icon_state_tube = "mantagun_left"
@@ -359,7 +361,7 @@
 	icon_state = "tray"
 	dir = NORTH
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 0
 	layer = 2.1
 	var/obj/machinery/torpedo_tube/parent = null
@@ -596,7 +598,7 @@
 	dir = NORTH
 	icon_state = "missilenotray"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	throw_spin = 0
 	layer = 5
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
@@ -607,6 +609,7 @@
 	var/icon/northsouth = null
 	var/icon/eastwest = null
 	var/launched = 0
+	var/turf/target_turf
 
 	var/icon_state_on_tray = "missileintray"
 	var/icon_state_off_tray = "missilenotray"
@@ -649,6 +652,10 @@
 			pixel_x = -16
 			pixel_y = 0
 			layer = 3
+#ifndef UNDERWATER_MAP
+		if(fired)
+			UpdateOverlays(SafeGetOverlayImage("space",src.icon,"torped_space"),"space")
+#endif
 		return
 
 	set_loc(var/newloc as turf|mob|obj in world)
@@ -657,6 +664,7 @@
 		changeIcon()
 
 	proc/launch(var/atom/target)
+		target_turf = get_turf(target)
 		if(launched) return
 		else launched = 1
 		var/flying = 1
@@ -665,9 +673,9 @@
 		var/aboutToBlow = 0
 		var/steps = 0
 		while(flying)
-			if(target && target == src.loc) target = null
+			if(target_turf && target_turf == src.loc) target_turf = null
 			var/turf/nextStep = null
-			if(target != null && target.z == src.z) nextStep = get_step_towards(src,target)
+			if(target_turf?.z == src.z) nextStep = get_step_towards(src,target_turf)
 			else nextStep = get_step(src, lockdir ? lockdir : dir)
 
 			if(!nextStep || (nextStep.x == 0 && nextStep.y == 0 && nextStep.z == 0))

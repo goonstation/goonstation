@@ -23,12 +23,14 @@
 			critter_owner.hud.update_temp_indicator()
 			critter_owner.hud.update_blood_indicator()
 			critter_owner.hud.update_pulling()
+			critter_owner.hud.update_rad_indicator()
 
 		if (human_owner)
 			human_owner.hud.update_health_indicator()
 			human_owner.hud.update_temp_indicator()
 			human_owner.hud.update_blood_indicator()
 			human_owner.hud.update_pulling()
+			human_owner.hud.update_rad_indicator()
 
 			var/color_mod_r = 255
 			var/color_mod_g = 255

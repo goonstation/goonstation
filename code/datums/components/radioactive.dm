@@ -25,7 +25,7 @@ TYPEINFO(/datum/component/radioactive)
 	var/static/image/_turf_glow = null
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
-		if(!istype(parent,/atom))
+		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
 		src.radStrength = radStrength
@@ -73,7 +73,7 @@ TYPEINFO(/datum/component/radioactive)
 			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
-		if(QDELETED(parent))
+		if(QDELETED(parent) || !parent.datum_components)
 			global.processing_items.Remove(src)
 			return
 		ticked(parent)
@@ -102,8 +102,6 @@ TYPEINFO(/datum/component/radioactive)
 		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
-		else if(ismob(parent))
-			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)

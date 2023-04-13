@@ -763,6 +763,8 @@ A Flamethrower in various states of assembly
 	return
 
 /obj/item/gun/flamethrower/ui_interact(mob/user, datum/tgui/ui)
+	if (src.fueltank)
+		SEND_SIGNAL(src.fueltank.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "Flamethrower")

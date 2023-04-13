@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -7,7 +8,7 @@
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
-	anchored = TRUE
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 
@@ -401,10 +402,13 @@
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if((src.status & (NOPOWER|BROKEN)) || inuse)
-		return
-
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+		return
+	src.toggle(user)
+	src.add_fingerprint(user)
+
+/obj/machinery/door_control/proc/toggle(mob/user)
+	if((src.status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	src.use_power(5)
@@ -414,7 +418,7 @@
 	if (!src.id)
 		return
 
-	logTheThing(LOG_STATION, user, "toggled the [src.name] at [log_loc(src)].")
+	logTheThing(LOG_STATION, user || usr, "toggled the [src.name] at [log_loc(src)].")
 
 	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
@@ -458,7 +462,6 @@
 	SPAWN(1.5 SECONDS)
 		if(!(src.status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -488,7 +491,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	/// compatible machines with a matching id will be activated
 	var/id = null
 	var/active = FALSE
-	anchored = TRUE
+	anchored = ANCHORED
 
 	proc/activate()
 		return
@@ -574,7 +577,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = POD_ACCESS_STANDARD
-	anchored = TRUE
+	anchored = ANCHORED
 	var/datum/light/light
 
 	syndicate

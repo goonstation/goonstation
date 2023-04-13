@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "centrifuge0"
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	var/obj/item/bloodslide/source = null
@@ -205,7 +205,7 @@
 
 	var/zoom = 0
 
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/message_parts(var/message)
 		var/cloc = findtext(message, ":")
@@ -1038,7 +1038,7 @@
 	icon_state = "manipulator"
 	desc = "A large, softly humming machine."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/machine_state = 0
 
@@ -1199,7 +1199,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "synth1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/list/obj/item/reagent_containers/glass/vial/vials[5]
 	var/obj/item/reagent_containers/glass/beaker/antiagent = null
@@ -1651,7 +1651,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "autoclave"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/item/reagent_containers/glass/sanitizing = null
 	var/machine_state = 0
 	var/santime = 3 // 15
@@ -1738,7 +1738,7 @@
 	icon_state = "incubator"
 	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null

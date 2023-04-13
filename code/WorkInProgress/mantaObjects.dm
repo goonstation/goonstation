@@ -18,7 +18,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	layer =  EFFECTS_LAYER_4
 	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
@@ -58,7 +58,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "lever1"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/on = 1
 	var/lastuse = 0
 	var/locked = 1 //Starts off locked.
@@ -187,7 +187,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/stateOff = ""
 	var/stateDamaged = ""
 	var/on = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	var/health = 100
 	var/maxhealth = 100
@@ -235,7 +235,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 60), user)
 			if(5)
-				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
+				if (isweldingtool(I) && I:try_weld(user,0,-1))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(6)
 				if (istool(I, TOOL_WRENCHING))
@@ -249,7 +249,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					if (S.amount >= 5)
 						actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(9)
-				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
+				if (isweldingtool(I) && I:try_weld(user,0,-1))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 
 
@@ -326,7 +326,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "heater"
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 
 	New()
@@ -374,7 +374,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	desc = "An electrical junction box is an enclosure housing electrical connections, to protect the connections and provide a safety barrier."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "junctionbox"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/open = 0
 	var/iconopen = "junctionbox_open"
 	var/iconclosed = "junctionbox"
@@ -501,7 +501,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Communications Tower"
 	icon_state = "commstower"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/health = 100
 	var/maxhealth = 100
 	var/broken = 0
@@ -544,7 +544,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "magbeacon"
 	desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/health = 100
 	var/maxhealth = 100
 	var/broken = 0
@@ -618,7 +618,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "englrt"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/recharging =0
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
@@ -722,7 +722,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	desc = "Uh oh.."
 	pixel_x = -16
@@ -734,7 +734,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "sea plant"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "It's thriving."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	var/database_id = null
@@ -952,7 +952,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			playsound(propeller, 'sound/impact_sounds/Generic_Stab_1.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (propeller.repairstate == 5)
-			playsound(propeller, 'sound/items/Welder.ogg', 50, 1)
+			the_tool:try_weld(owner,0,-1,0,0)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the connection points and soldering the control board.</span>")
 		if (propeller.repairstate == 6)
 			playsound(propeller, 'sound/items/Ratchet.ogg', 60, 1)
@@ -964,7 +964,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			playsound(propeller, 'sound/items/Deconstruct.ogg', 50, 1)
 			owner.visible_message("<span class='notice'>[owner] begins constructing replacements for the propellers..</span>")
 		if (propeller.repairstate == 9)
-			playsound(propeller, 'sound/items/Welder.ogg', 60, 1)
+			the_tool:try_weld(owner,0,-1,0,0)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the replacement propellers on.</span>")
 	onEnd()
 		..()
@@ -1557,7 +1557,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "vaultdoor_closed"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 	bound_width = 96
 	appearance_flags = TILE_BOUND | PIXEL_SCALE

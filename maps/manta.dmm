@@ -15941,7 +15941,7 @@
 /turf/simulated/floor/wood,
 /area/station/hos)
 "aTK" = (
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/blair,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -15978,7 +15978,7 @@
 /area/station/hos/quarter)
 "aTQ" = (
 /obj/table/wood/auto/desk,
-/obj/item/goldbar,
+/obj/item/material_piece/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)

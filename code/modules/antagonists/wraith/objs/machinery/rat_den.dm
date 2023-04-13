@@ -3,7 +3,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rat_den"
 	desc = "A pile of garbage vaguely ressembling a nest."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	_health = 25
 	var/linked_critters = 0

@@ -46,8 +46,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/process()
 	if (spy_market)
 		spy_market.process()
+	#ifndef NO_SHUTTLE_CALLS
 	if (shuttle_available && shuttle_auto_call_time)
 		process_auto_shuttle_call()
+	#endif
 
 /datum/game_mode/proc/process_auto_shuttle_call()
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)
@@ -110,12 +112,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				else
 					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-				if (traitor.special_role == ROLE_WEREWOLF)
-					// Werewolves may not have the feed objective, so we don't want to make this output universal.
-					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
-						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
-							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
-
 				if (traitor.special_role == ROLE_SLASHER)
 					var/foundmachete = FALSE
 					for_by_tcl(M, /obj/item/slasher_machete)
@@ -126,35 +122,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 							break
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
-
-				if (traitor.special_role == ROLE_BLOB)
-					var/victims = length(traitor.blob_absorb_victims)
-					stuff_to_output += "\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span>"
-					if (victims)
-						var/absorbed_announce = "They absorbed: "
-						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
-							if(!AV || !AV.last_client || !AV.last_client.key)
-								absorbed_announce += "[AV:real_name](NPC), "
-							else
-								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
-						stuff_to_output += absorbed_announce
-
-				if (traitor.special_role == ROLE_SPY_THIEF)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/stolen = length(traitor.spy_stolen_items)
-					stuff_to_output += "They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!"
-					if (purchases)
-						var/stolen_detail = "Items Thieved: "
-						for (var/i in traitor.spy_stolen_items)
-							stolen_detail += "[i], "
-						var/rewarded_detail = "They Were Rewarded: "
-						for (var/i in traitor.purchased_traitor_items)
-							rewarded_detail += "[bicon(i:item)] [i:name], "
-						rewarded_detail = copytext(rewarded_detail, 1, -2)
-						stuff_to_output += stolen_detail
-						stuff_to_output += rewarded_detail
-						if (stolen >= 7)
-							traitor.current?.unlock_medal("Professional thief", TRUE)
 
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
@@ -199,10 +166,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 				if (traitorwin)
 					if (traitor.current)
 						traitor.current.unlock_medal("MISSION COMPLETE", 1)
-					if (traitor.special_role == ROLE_WIZARD && traitor.current)
-						traitor.current.unlock_medal("You're no Elminster!", 1)
-					if (traitor.special_role == ROLE_WRESTLER && traitor.current)
-						traitor.current.unlock_medal("Cream of the Crop", 1)
 					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
 				else
 					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
@@ -299,11 +262,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
-	var/objective_set_path = null
-	// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
-	// It should be removed when all antagonists are on the new system.
-	var/do_objectives = TRUE
-
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
 		if (prob(50))
@@ -311,106 +269,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	switch (antag.special_role)
-		if (ROLE_TRAITOR)
-			antag.add_antagonist(ROLE_TRAITOR)
-			do_objectives = FALSE
-
-		if (ROLE_CHANGELING)
-			antag.add_antagonist(ROLE_CHANGELING)
-			do_objectives = FALSE
-
-		if (ROLE_WIZARD)
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			antag.current.unequip_all(1)
-
-			if (!job_start_locations["wizard"])
-				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-			else
-				antag.current.set_loc(pick(job_start_locations["wizard"]))
-
-			equip_wizard(antag.current)
-
-			var/randomname
-			if (antag.current.gender == "female")
-				randomname = pick_string_autokey("names/wizard_female.txt")
-			else
-				randomname = pick_string_autokey("names/wizard_male.txt")
-
-			SPAWN(0)
-				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-				if(newname && newname != randomname)
-					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
-				if (length(ckey(newname)) == 0)
-					newname = randomname
-
-				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname)
-					antag.current.real_name = newname
-					antag.current.UpdateName()
-
-		if (ROLE_WRAITH)
-			generate_wraith_objectives(antag)
-
-		if (ROLE_VAMPIRE)
-			antag.add_antagonist(ROLE_VAMPIRE)
-			do_objectives = FALSE
-
-		if (ROLE_HUNTER)
-			antag.add_antagonist(ROLE_HUNTER)
-			do_objectives = FALSE
-
-		if (ROLE_GRINCH)
-			objective_set_path = /datum/objective_set/grinch
-			boutput(antag.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
-			antag.current.make_grinch()
-
-		if (ROLE_BLOB)
-			objective_set_path = /datum/objective_set/blob
-			SPAWN(0)
-				var/newname = input(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
-
-				if (newname)
-					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname) + " the Blob"
-					antag.current.real_name = newname
-					antag.current.name = newname
-
-		if (ROLE_FLOCKMIND)
-			bestow_objective(antag, /datum/objective/specialist/flock)
-			antag.current.make_flockmind()
-		if (ROLE_SPY_THIEF)
-			objective_set_path = /datum/objective_set/spy_theft
-			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
-				equip_spy_theft(antag.current)
-
-			if (!src.spy_market)
-				src.spy_market = new /datum/game_mode/spy_theft
-				sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
-				src.spy_market.build_bounty_list()
-				src.spy_market.update_bounty_readouts()
-
-		if (ROLE_WEREWOLF)
-			objective_set_path = /datum/objective_set/werewolf
-			antag.current.make_werewolf()
-
-		if (ROLE_ARCFIEND)
-			antag.add_antagonist(ROLE_ARCFIEND)
-			do_objectives = FALSE
-
-		if (ROLE_SALVAGER)
-			antag.add_antagonist(ROLE_SALVAGER)
-			do_objectives = FALSE
-
-	if (do_objectives)
-		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
-			new objective_set_path(antag)
-		var/obj_count = 1
-		for (var/datum/objective/objective in antag.objectives)
-			boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+	antag.add_antagonist(antag.special_role)
 
 /datum/game_mode/proc/check_win()
 
@@ -419,7 +278,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", ROLE_CHANGELING)
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "vampire", "flock", ROLE_CHANGELING)
 	for(var/i = 1 to pick(2, 3))
 		possible_modes.Remove(pick(possible_modes))
 
@@ -440,11 +299,11 @@ ABSTRACT_TYPE(/datum/game_mode)
 //what do we do when a mob dies
 /datum/game_mode/proc/on_human_death(var/mob/M)
 
-/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
+/datum/game_mode/proc/bestow_objective(var/datum/mind/traitor, var/objective_path, var/datum/antagonist/antag_role)
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path(null, traitor)
+	var/datum/objective/O = new objective_path(null, traitor, antag_role)
 
 	return O
 

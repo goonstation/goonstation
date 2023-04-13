@@ -10,14 +10,14 @@
 	desc = "Pipe section allowing a catalytic rod to contact outside fluid for catalysis."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "doodad"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/power/catalytic_generator
 	name = "catalytic generator core"
 	desc = "Harnesses catalysts' reactions with a large body of appropriate fluid to generate electricity."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "core"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	var/obj/machinery/catalytic_rod_unit/anode_unit
@@ -161,7 +161,7 @@
 	desc = "Accepts a rod of catalytic material for use in electricity generation."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	icon_state = "nonvis"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	//Overlay objects

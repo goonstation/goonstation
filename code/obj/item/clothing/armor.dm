@@ -126,7 +126,7 @@
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.state)
+				if (CG.stage == 2 && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -140,7 +140,7 @@
 		else if (istype(W, /obj/item/old_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/old_grenade/OG = W
-				if (OG.not_in_mousetraps == 0 && !OG.state) // Same principle, okay.
+				if (OG.not_in_mousetraps == 0 && !OG.armed) // Same principle, okay.
 					user.u_equip(OG)
 					OG.set_loc(src)
 					src.grenade_old = OG
@@ -251,7 +251,7 @@
 			src.icon_state = "bombvest0"
 
 		else if (src.grenade_old)
-			src.grenade_old.prime()
+			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
@@ -354,6 +354,32 @@
 	red //for the red reward
 		icon_state = "centcoat-red"
 		item_state = "centcoat-red"
+
+/obj/item/clothing/suit/armor/pirate_captain_coat
+	name = "pirate captain's coat"
+	desc = "A luxurious yet dread inducing red and gold greatcoat, worn by only the greatest of mass larcenists. Probably stolen."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
+/obj/item/clothing/suit/armor/pirate_first_mate_coat
+	name = "pirate first mate's coat"
+	desc = "A rugged, protective, and pragmatic brown greatcoat, popular among pirates."
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"

@@ -234,9 +234,13 @@ obj/item/cable_coil/dropped(mob/user)
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
-		var/obj/item/cable_coil/A = split_stack(round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num))
-		if (istype(A))
-			A.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
+		var/cut_amount = round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num)
+		if (!in_interact_range(src, user))
+			boutput(user, "You're too far away from the cable that you're trying to cut from!")
+			return
+		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
+		if (istype(cable))
+			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
 			boutput(user, "You cut a piece off the [base_name].")
 		return
 
@@ -262,6 +266,8 @@ obj/item/cable_coil/dropped(mob/user)
 	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
+	if (src.amount == 1) // We are the last wire, and since we are gonna get used, we un-register the signal..
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn
 	if (target == source)
@@ -286,6 +292,9 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on
 		return		// may change later if can think of something logical to do
+
+	if (src.amount == 1) // We are the last wire in the coil, and since we are gonna get used, we un-register the signal.
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn = get_dir(C, source)
 

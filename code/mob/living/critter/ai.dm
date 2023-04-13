@@ -14,6 +14,9 @@ var/list/ai_move_scheduled = list()
 	var/list/datum/aiTask/priority_tasks = list()
 	var/move_target = null
 
+	///INTERNAL: Set to true when the mobai loop is processing this mob.
+	var/_mobai_being_processed = FALSE
+
 	var/move_dist = 0
 	var/move_reverse = 0
 	var/move_side = 0 //merge with reverse later ok messy
@@ -68,6 +71,9 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/switch_to(var/datum/aiTask/task)
+		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
+		//Do not remove unless you understand the implications.
+		SHOULD_NOT_SLEEP(TRUE)
 		current_task = task
 		if(task?.ai_turbo)
 			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
@@ -281,6 +287,9 @@ var/list/ai_move_scheduled = list()
 		on_tick()
 
 	proc/reset()
+		//This SHOULD_NOT_SLEEP is *absolutely necessary* for protecting the mobAI loop from hangs.
+		//Do not remove unless you understand the implications.
+		SHOULD_NOT_SLEEP(TRUE)
 		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
@@ -432,7 +441,8 @@ var/list/ai_move_scheduled = list()
 			else
 				current_subtask = subtasks[subtask_index]
 				current_subtask.reset()
-				// ready to run this immediately next tick
+				//double tick, fuck you
+				current_subtask.tick()
 				return
 		else if(current_subtask.failed())
 			// the sequence is ruined

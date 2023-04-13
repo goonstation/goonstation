@@ -344,7 +344,7 @@
 
 		if (src.limb_type == LIMB_IS_ARM)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "strange", "offensive", "cruel", "furious")] gesture!</span>")
 			else if (probmult(2))
 				owner.emote("slap")
 			else if (probmult(2))
@@ -360,7 +360,7 @@
 
 		else if (src.limb_type == LIMB_IS_LEG)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
 			else if (probmult(3))
 				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
@@ -702,7 +702,7 @@
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 

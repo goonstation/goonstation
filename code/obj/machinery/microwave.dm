@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/microwave)
 	desc = "The automatic chef of the future!"
 	icon_state = "mw"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	/// Current number of eggs inside the microwave
 	var/egg_amount = 0
 	/// Current amount of flour inside the microwave
@@ -310,6 +310,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 
 /obj/machinery/microwave/proc/cook(var/result)
 	src.operating = TRUE
+	src.power_usage = 80
 	src.icon_state = "mw1"
 	src.updateUsrDialog()
 	switch(result)
@@ -380,6 +381,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.clean_up()
 	src.operating = FALSE
+	src.power_usage = 5
 
 /**
 	*  Disposing of microwave contents

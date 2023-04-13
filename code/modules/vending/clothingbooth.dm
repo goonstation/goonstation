@@ -49,9 +49,9 @@ var/list/clothingbooth_paths = list()
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
 	flags = FPRINT | TGUI_INTERACTIVE
-	anchored = TRUE
+	anchored = ANCHORED
 	density = 1
-	var/datum/character_preview/multiclient/preview
+	var/datum/movable_preview/character/multiclient/preview
 	var/datum/light/light
 	var/datum/clothingbooth_item/item_to_purchase = null
 	var/mob/living/carbon/human/occupant
@@ -209,12 +209,13 @@ var/list/clothingbooth_paths = list()
 				if(!istype(selected_item))
 					return
 				var/selected_item_path = text2path(params["path"])
+				var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
 				if(src.preview_item)
-					src.preview.preview_mob.u_equip(src.preview_item)
+					preview_mob.u_equip(src.preview_item)
 					qdel(src.preview_item)
 					src.preview_item = null
 				src.preview_item = new selected_item_path
-				src.preview.preview_mob.force_equip(src.preview_item, selected_item.slot)
+				preview_mob.force_equip(src.preview_item, selected_item.slot)
 				src.item_to_purchase = selected_item
 				update_preview()
 				. = TRUE

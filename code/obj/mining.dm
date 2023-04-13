@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -461,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
@@ -702,7 +702,7 @@
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -715,7 +715,7 @@
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -734,7 +734,7 @@
 				src.automatic_mode = !src.automatic_mode
 				. = TRUE
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = tgui_broken_state.can_use_topic(src, user)
 
 
@@ -792,16 +792,16 @@
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
@@ -810,7 +810,7 @@
 				if(istype(src.linked_magnet))
 					. = src.linked_magnet.ui_act(action, params)
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = ..()
 		if(istype(src.linked_magnet))
 			. = min(., linked_magnet.ui_status(user))
@@ -925,6 +925,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
+
+	jean
+		name = "jasteroid"
+		desc = "A free-floating jineral jeposit from space."
+		default_ore = null
+		hardness = 1
+		default_material = "jean"
+		default_ore = /obj/item/material_piece/cloth/jean
+		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		stone_color = "#88c2ff"
 
 
 // cogwerks - adding some new wall types for cometmap and whatever else
@@ -1451,6 +1461,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.space_overlays += edge_overlay
 
 
+/turf/simulated/floor/plating/airless/asteroid/jean
+	name = "jasteroid"
+	desc = "A free-floating jineral jeposit from space."
+	stone_color = "#88c2ff"
+
+
 // Tool Defines
 
 /obj/item/mining_tool
@@ -1763,8 +1779,8 @@ TYPEINFO(/obj/item/mining_tool/drill)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+			if (!src.armed)
+				if (!src.check_placeable_target(target))
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
@@ -2129,7 +2145,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "gravgen-off"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/obj/item/cell/cell = null
 	var/target = null
@@ -2159,12 +2175,12 @@ TYPEINFO(/obj/item/cargotele)
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = 0
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
@@ -2185,14 +2201,14 @@ TYPEINFO(/obj/item/cargotele)
 			if (!src.cell)
 				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			PCEL.charge -= 5
@@ -2291,7 +2307,7 @@ TYPEINFO(/obj/submachine/cargopad)
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE

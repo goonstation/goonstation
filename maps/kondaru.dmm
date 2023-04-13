@@ -2963,12 +2963,12 @@
 	persistent_id = "information office"
 	},
 /obj/decal/fakeobjects{
+	anchored = 1;
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
-	name = "Simulatron";
-	anchored = 1
+	name = "Simulatron"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/radio/news_office)
@@ -11870,7 +11870,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -12194,8 +12193,8 @@
 "aQn" = (
 /obj/table/wood/auto,
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 4;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 4
 	},
 /obj/item/paper_bin{
 	pixel_y = 17
@@ -14741,12 +14740,12 @@
 "aYw" = (
 /obj/table/wood/auto,
 /obj/item/storage/pill_bottle/mannitol{
-	pixel_y = 9;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 10;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
@@ -16546,8 +16545,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bfz" = (
-/obj/storage/secure/closet/engineering/welding,
 /obj/machinery/light,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "bfA" = (
@@ -17147,8 +17146,8 @@
 /area/station/crew_quarters/catering)
 "bhT" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
-	dir = 2;
-	current_temperature = 250
+	current_temperature = 250;
+	dir = 2
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
@@ -18144,6 +18143,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/engineering/welding,
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/engine)
 "blv" = (
@@ -20020,8 +20020,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -25214,7 +25214,7 @@
 	},
 /area/station/science/lobby)
 "bKs" = (
-/obj/storage/secure/closet/research/uniform,
+/obj/machinery/vending/jobclothing/research,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -28968,9 +28968,9 @@
 /area/station/maintenance/east)
 "bXM" = (
 /obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
 	id = "cable_partition";
-	name = "High-Voltage Cable Partition";
-	dir = 4
+	name = "High-Voltage Cable Partition"
 	},
 /turf/space,
 /area/station/engine/power)
@@ -29859,11 +29859,18 @@
 	},
 /area/station/science/lab)
 "cbo" = (
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	frequency = 1449;
+	icon_state = "glass_locked";
+	id_tag = "tox_airlock_exterior";
+	locked = 1;
+	name = "Toxins Research Access";
+	req_access_txt = null;
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
 	},
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
@@ -30133,7 +30140,9 @@
 "ccd" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Toxin Chamber";
-	req_access = null
+	req_access = null;
+	autoclose = 0;
+	icon_state = "research_locked"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -31053,14 +31062,14 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door_control{
-	id = "tox_vent";
-	name = "Chamber Exhaust";
-	pixel_x = 9;
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/valve{
 	name = "Heat Sink Loop"
+	},
+/obj/machinery/door_control{
+	id = "oh_boy_fire";
+	name = "Burn Chamber Heat Shields";
+	pixel_x = 9;
+	pixel_y = 24
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -42310,8 +42319,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
-	dir = 2;
-	current_temperature = 250
+	current_temperature = 250;
+	dir = 2
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
@@ -43182,8 +43191,8 @@
 	},
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Outlet Meter";
-	tag = "Cold Loop Outlet Meter";
-	pixel_x = -12
+	pixel_x = -12;
+	tag = "Cold Loop Outlet Meter"
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -43369,6 +43378,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"jAk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
 "jAw" = (
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/cargobay)
@@ -44160,6 +44177,12 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"kpI" = (
+/obj/mail_booth,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "kqg" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -45720,12 +45743,12 @@
 /obj/machinery/light/emergency,
 /obj/machinery/computer/airbr{
 	density = 0;
+	dir = 4;
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatornord";
+	pixel_x = -26;
 	req_access = null;
 	req_access_txt = "44";
-	dir = 4;
-	pixel_x = -26;
 	starts_established = 1
 	},
 /obj/rack,
@@ -46262,8 +46285,8 @@
 	},
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 12;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal{
 	pixel_x = -3;
@@ -49889,7 +49912,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
 "ptX" = (
-/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "pur" = (
@@ -50080,9 +50102,9 @@
 "pEn" = (
 /obj/plasticflaps,
 /obj/machinery/door/poddoor/pyro{
+	dir = 4;
 	id = "kdrgasbelt";
-	name = "Gas Transit Door";
-	dir = 4
+	name = "Gas Transit Door"
 	},
 /obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
@@ -57859,9 +57881,9 @@
 "wxu" = (
 /obj/plasticflaps,
 /obj/machinery/door/poddoor/pyro{
+	dir = 4;
 	id = "kdrgasbelt";
-	name = "Gas Transit Door";
-	dir = 4
+	name = "Gas Transit Door"
 	},
 /obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
@@ -58504,8 +58526,8 @@
 	},
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Outlet Meter";
-	tag = "Hot Loop Outlet Meter";
-	pixel_x = 13
+	pixel_x = 13;
+	tag = "Hot Loop Outlet Meter"
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -59697,12 +59719,12 @@
 "xSj" = (
 /obj/machinery/computer/airbr{
 	density = 0;
+	dir = 8;
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatorsud";
+	pixel_x = 26;
 	req_access = null;
 	req_access_txt = "44";
-	dir = 8;
-	pixel_x = 26;
 	starts_established = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold{
@@ -107503,7 +107525,7 @@ cJr
 rTt
 bki
 xYT
-bzk
+jAk
 bzk
 rgh
 coJ
@@ -120754,7 +120776,7 @@ woB
 rtj
 izx
 twQ
-aUG
+kpI
 bDT
 aKX
 aMc

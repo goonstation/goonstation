@@ -5,12 +5,13 @@
 TYPEINFO(/obj/machinery/light_switch)
 	mats = list("MET-1"=10,"CON-1"=15)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1

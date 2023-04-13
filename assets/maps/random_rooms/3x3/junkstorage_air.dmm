@@ -14,7 +14,9 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "y" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
@@ -22,7 +24,9 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "I" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)

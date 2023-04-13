@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
@@ -256,7 +256,10 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-
+		if (istype(src.loc, /obj/item/cloth))
+			var/obj/item/cloth/cloth = src.loc
+			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc

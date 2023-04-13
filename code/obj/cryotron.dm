@@ -5,7 +5,7 @@
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"

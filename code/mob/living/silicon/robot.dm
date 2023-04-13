@@ -16,9 +16,10 @@
 	name = "Cyborg"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
+	voice_type = "cyborg"
 	icon_state = "robot"
 	health = 300
-	emaggable = 1
+	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
@@ -255,12 +256,19 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		var/is_emagged = src.emagged
+		var/is_syndicate = src.syndicate
+
 		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
+
+		if (src.mind)
+			for (var/datum/antagonist/antag_role in src.mind.antagonists)
+				antag_role.on_death()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -270,12 +278,15 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+				if (istype(R, /obj/item/parts/robot_parts/chest))
+					var/obj/item/parts/robot_parts/chest/chest = R
+					chest.wires = 1
+					if (src.cell)
+						chest.cell = src.cell
 
-			if (src.emagged)
-				frame.emagged = TRUE
-			if (src.syndicate)
-				frame.syndicate = TRUE
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			frame.emagged = is_emagged
+			frame.syndicate = is_syndicate
 
 			src.ghostize()
 			qdel(src)
@@ -969,6 +980,9 @@
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
+		if (!src.emaggable)
+			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
+			return FALSE
 
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
@@ -977,17 +991,8 @@
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-				src.emagged = 1
 				logTheThing(LOG_STATION, src, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
-				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
-					src.mind.special_role = ROLE_EMAGGED_ROBOT
-					if (!(src.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += src.mind
-				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
-				if(src.syndicate)
-					src.antagonist_overlay_refresh(1, 1)
+				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 				update_appearance()
 				return 1
 			return 0
@@ -1139,13 +1144,7 @@
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
-						src.law_rack_connection = linker.linked_rack
-						logTheThing(LOG_STATION, src, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
-						var/area/A = get_area(src.law_rack_connection)
-						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-						src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-						src.show_laws()
+						src.set_law_rack(linker.linked_rack, user)
 			else
 				boutput(user,"Linker lost connection to the stored law rack!")
 			return
@@ -1792,10 +1791,8 @@
 		switch (name)
 			if ("help")
 				src.set_a_intent(INTENT_HELP)
-				hud.update_intent()
 			if ("harm")
 				src.set_a_intent(INTENT_HARM)
-				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
 			if ("swaphand")
@@ -2269,7 +2266,7 @@
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
+		var/list/starter_modules = list("Brobocop", "Research", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
@@ -2284,10 +2281,10 @@
 				src.set_module(new /obj/item/robot_module/brobocop(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
-			if("Chemistry")
+			if("Research")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
-				src.set_module(new /obj/item/robot_module/chemistry(src))
+				boutput(src, "<span class='notice'>You chose the Research module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
+				src.set_module(new /obj/item/robot_module/research(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
@@ -2486,7 +2483,8 @@
 				// Nimbus-class interdictor: wirelessly charge cyborgs
 				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
+						if (IX.expend_interdict(round(ROBOT_BATTERY_WIRELESS_CHARGERATE*1.7),src,TRUE,ITDR_NIMBUS))
+							//multiplier to charge rate is an efficiency penalty due to over-the-air charging
 							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
 							break
 
@@ -3078,6 +3076,9 @@
 		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
 		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
 
+/mob/living/silicon/robot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/silicon/robot/proc/clearBatteryDistress()
 	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE

@@ -162,7 +162,7 @@
 
 /obj/overlay/tile_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 	alpha = 255
@@ -175,7 +175,7 @@
 
 /obj/overlay/tile_gas_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 
@@ -529,6 +529,7 @@ proc/generate_space_color()
 	return
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
@@ -537,6 +538,7 @@ proc/generate_space_color()
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
+	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -708,7 +710,7 @@ proc/generate_space_color()
 			var/turf/simulated/N = new_turf
 			if (oldair) //Simulated tile -> Simulated tile
 				N.air = oldair
-			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
+			else if(zero_new_turf_air && istype(N.air)) // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||

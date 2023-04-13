@@ -30,7 +30,7 @@
 		playsound(src.loc, pick('sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg'), 25, 0)*/
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iszombie(C)) continue // For admin gimmicks mixing player zombies and critters
@@ -227,7 +227,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN(2 SECONDS) 
+						SPAWN(2 SECONDS)
 							playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
@@ -289,17 +289,17 @@
 
 		harmless_smoke_puff(src.loc)
 
-		new /obj/critter/aberration(src.loc)
+		new /mob/living/critter/aberration(src.loc)
 		new /obj/item/clothing/suit/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
 		qdel (src)
 
 //It's like the jam mansion is back!
-/obj/critter/zombie/hogan
-	name = "Zombie Hogan"
-	desc = "Hulkamania is shambling wiilllldd in space!"
-	icon_state = "hoganzombie"
+/obj/critter/zombie/wrestler
+	name = "Zombie Wrestler"
+	desc = "This zombie is hulked out! Watch out for the piledriver!"
+	icon_state = "wrestlerzombie"
 	health = 25
 	firevuln = 0.15
 	hulk = 1

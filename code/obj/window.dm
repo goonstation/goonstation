@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
+
 /obj/window
 	name = "window"
 	icon = 'icons/obj/window.dmi'
@@ -30,7 +33,7 @@
 	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	material_amt = 0.1
 
 	the_tuff_stuff
@@ -139,6 +142,9 @@
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
+
+			if(src.material.special_naming)
+				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
 
@@ -359,7 +365,7 @@
 				damage_blunt(O.throwforce)
 
 		if (src && src.health <= 2 && !reinforcement)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.stops_space_move = 0
 			step(src, get_dir(AM, src))
 		..()
@@ -883,7 +889,7 @@
 	name = "extremely indestructible window"
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
 	var/initialPos
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	New()
 		..()
 		initialPos = loc
@@ -943,7 +949,7 @@
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE

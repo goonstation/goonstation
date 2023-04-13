@@ -132,10 +132,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
 				if(src.anchored)
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
 				else
-					src.anchored = 1
+					src.anchored = ANCHORED
 					boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
 			else ..()
 		else ..()
@@ -148,6 +148,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
+	if (src.holding)
+		SEND_SIGNAL(src.holding.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PortableScrubber", name)

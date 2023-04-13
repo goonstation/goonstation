@@ -12,7 +12,7 @@
 	health = 30
 	health_max = 30
 	alpha = 192
-	anchored = FALSE
+	anchored = UNANCHORED
 	hitTwitch = FALSE
 	passthrough = TRUE
 	var/atom/occupant = null
@@ -83,7 +83,7 @@
 			playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 80, 1)
 			boutput(H, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
 			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
-			flock.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
+			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 		else if(length(organs))
 			eating_occupant = TRUE
 			target = pick(organs)
@@ -93,7 +93,7 @@
 			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
 			boutput(H, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
 			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
-			flock.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
+			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 		else
 			H.gib()
 			occupant = null
@@ -152,7 +152,7 @@
 			occupant = null
 			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
-			flock.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
+			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
 	proc/spawnEgg()
 		src.visible_message("<span class='notice'>[src] spits out a device!</span>")
@@ -172,7 +172,7 @@
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
 
 		if(occupant && src.flock)
-			src.flock.updateEnemy(occupant)
+			src.flock?.updateEnemy(occupant)
 		// process stuff into fluids
 		if(isnull(target))
 			// find a new thing to eat
@@ -287,10 +287,6 @@
 			src.pixel_x = 0
 			src.pixel_y = 0
 
-	checkhealth()
-		if(src.health <= 0)
-			qdel(src)
-
 	mob_resist_inside(var/mob/user)
 		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
 			return
@@ -313,6 +309,9 @@
 			<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
 			<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
 			<br><span class='bold'>###=-</span></span>"}
+
+	gib(atom/location)
+		qdel(src)
 
 
 

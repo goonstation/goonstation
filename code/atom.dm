@@ -3,6 +3,9 @@
 	*
   * Lots of functionality resides in this type.
   */
+TYPEINFO(/atom)
+	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	var/list/admin_procs = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -200,12 +203,11 @@
 
 	proc/return_air()
 		return null
-
-/**
-  * Convenience proc to see if a container is open for chemistry handling
-	*
-  * * returns true if open, false if closed
-	*/
+	/**
+	  * Convenience proc to see if a container is open for chemistry handling
+	  *
+	  * returns true if open, false if closed
+	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
@@ -313,6 +315,13 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
+/atom/Uncrossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im also cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
+
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
 
@@ -391,7 +400,7 @@
 
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
@@ -412,7 +421,7 @@
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
 	var/tmp/last_move = null
-	var/anchored = 0
+	var/anchored = UNANCHORED
 	var/move_speed = 10
 	var/tmp/l_move_time = 1
 	var/throwing = 0
@@ -762,8 +771,6 @@
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
-	if (!I)
-		return
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
@@ -858,6 +865,25 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
+		var/atom/movable/movablesrc = src
+		var/list/params_list = params2list(params)
+		if ((isturf(over_object) || over_object == src) && !movablesrc.anchored)
+			if ((over_object in movablesrc.locs) || over_object == src)
+				animate(src,
+					pixel_x = text2num(params_list["icon-x"]) - 16,
+					pixel_y = text2num(params_list["icon-y"]) - 16,
+					time = 0.1 SECONDS,
+					easing = LINEAR_EASING
+				)
+			else if (BOUNDS_DIST(src, over_object) <= 1)
+				movablesrc.set_loc(over_object)
+			else
+				movablesrc.throw_at(over_object, 1000, 1, params=params_list)
+			return
+		else if(isitem(movablesrc))
+			over_object.Attackby(movablesrc, usr, params_list)
+			return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
@@ -1017,6 +1043,7 @@
 	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
+		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

@@ -9,7 +9,7 @@
 	icon_state = "mulebot0"
 	layer = MOB_LAYER
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	animate_movement=1
 	soundproofing = 0
 	on = 1
@@ -438,7 +438,7 @@
 		var/obj/storage/crate/crate = C
 		if(istype(crate))
 			crate.close()
-		C.anchored = 1
+		C.anchored = ANCHORED
 		C.set_loc(src.loc)
 		sleep(0.2 SECONDS)
 		C.set_loc(src)

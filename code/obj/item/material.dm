@@ -33,11 +33,12 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
+			UpdateName(src) // get the name in order so it has whatever it needs
+			name = "[amount] [src.name][amount > 1 ? "s":""]"
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(check_valid_stack(W))
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
@@ -494,7 +495,10 @@
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
+	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = 0
+	set_name = TRUE
+	material_name = "Steel"
 
 	New()
 		..()
@@ -510,6 +514,7 @@
 	icon_state = "shard"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
+	stack_type = /obj/item/raw_material/shard
 	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -526,6 +531,7 @@
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
+	material_name = "Glass"
 	set_name = TRUE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
@@ -540,23 +546,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
-				return
-			if(isabomination(H))
-				return
-			if(H.lying)
-				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
-				step_on(H)
-			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
-				if (H.mutantrace?.can_walk_on_shards)
-					return
-				if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
-					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
-					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					step_on(H)
+			walked_over(AM) // check if we need to hurt they feeties
 		..()
 
 	custom_suicide = 1
@@ -576,6 +566,24 @@
 		material_name = "Glass"
 	plasmacrystal
 		material_name = "Plasmaglass"
+
+/obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
+	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+		return
+	if(isabomination(H))
+		return
+	if(H.lying)
+		boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+		step_on(H)
+	else
+		//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
+		if (H.mutantrace?.can_walk_on_shards)
+			return
+		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
+			return
+		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+			boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
+			step_on(H)
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
@@ -685,7 +693,7 @@
 	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
 	var/active = 0
@@ -707,7 +715,7 @@
 		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
-		anchored = 1
+		anchored = ANCHORED
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
@@ -745,7 +753,7 @@
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
-		anchored = 0
+		anchored = UNANCHORED
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 

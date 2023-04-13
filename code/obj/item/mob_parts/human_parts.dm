@@ -180,6 +180,13 @@
 				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
+	sever(mob/user)
+		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
+			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
+				src.original_DNA = src.original_holder.bioHolder.Uid
+				src.original_fprints = src.original_holder.bioHolder.fingerprints
+		return ..()
+
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
 		. = ..()
 		if (.) // A successful attachment
@@ -756,6 +763,11 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
 
+/obj/item/parts/human_parts/arm/left/brullbar/king
+	name = "left king brullbar arm"
+	icon_state = "arm_left_brullbar"
+	limb_type = /datum/limb/brullbar/king
+
 /obj/item/parts/human_parts/arm/right/brullbar
 	name = "right brullbar arm"
 	icon_state = "arm_right_brullbar"
@@ -783,6 +795,11 @@
 		current_decomp_stage_s = decomp_stage
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
+
+/obj/item/parts/human_parts/arm/right/brullbar/king
+	name = "right king brullbar arm"
+	icon_state = "arm_right_brullbar"
+	limb_type = /datum/limb/brullbar/king
 
 /obj/item/parts/human_parts/arm/left/hot
 	name = "left hot arm"

@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/device/powersink)
 						boutput(user, "No exposed cable here to attach to.")
 						return
 					else
-						anchored = 1
+						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
 						for(var/mob/M in AIviewers(user))
@@ -69,9 +69,9 @@ TYPEINFO(/obj/item/device/powersink)
 										power_drained -= charge_amt * 5
 										A.cell.charge += charge_amt
 
-				anchored = 0
+				anchored = UNANCHORED
 				mode = POWERSINK_OFF
-				boutput(user, "You detach	the device from the cable.")
+				boutput(user, "You detach the device from the cable.")
 				for(var/mob/M in AIviewers(user))
 					if(M == user) continue
 					boutput(M, "[user] detaches the power sink from the cable.")

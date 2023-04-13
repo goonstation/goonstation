@@ -100,8 +100,9 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
+					log_respawn_event(M, "ghost critter", source)
 					M.current.make_ghost_critter(pestlandmark,select)
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current

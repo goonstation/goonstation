@@ -31,7 +31,7 @@ var/global/list/mapNames = list(
 	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
-	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
@@ -184,7 +184,7 @@ var/global/list/mapNames = list(
 
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
-		var/dmm_suite/dmm_suite = new
+		var/dmm_suite/dmm_suite = new(debug_id="shuttle [transit_path]")
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
 		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
 		var/turf/transit_start
