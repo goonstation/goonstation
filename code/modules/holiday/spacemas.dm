@@ -192,7 +192,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -411,7 +411,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in view(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -456,7 +456,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "xmastree_2022"
-	anchored = 1
+	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
@@ -678,7 +678,7 @@ proc/compare_ornament_score(list/a, list/b)
 		ornament.layer = src.layer + 0.1
 		ornament.plane = src.plane
 		ornament.on_tree = src
-		ornament.anchored = 2
+		ornament.anchored = ANCHORED_ALWAYS
 		ornament.set_loc(null)
 		src.placed_ornaments[slot_number] = ornament
 
@@ -816,7 +816,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
@@ -824,7 +824,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/wreath
 	plane = PLANE_DEFAULT
@@ -832,14 +832,14 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 /obj/decal/mistletoe
 	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
 	layer = 9
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/xmas_lights
 	plane = PLANE_DEFAULT
@@ -847,7 +847,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/light/light
 
 	New()
@@ -1262,7 +1262,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "stocking_red"
-	anchored = 1
+	anchored = ANCHORED
 	var/list/giftees = list()
 	var/list/gift_paths = null//list()
 	var/list/questionable_gift_paths = null//list()

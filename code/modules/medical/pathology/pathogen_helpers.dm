@@ -16,7 +16,7 @@
 	return string
 
 /obj/statue
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	layer = MOB_LAYER
 	var/mob/mob_inside

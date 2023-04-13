@@ -9,7 +9,7 @@
 	desc = "A large turbine used for generating power using hot gas."
 	icon = 'icons/obj/large/96x160.dmi'
 	icon_state = "turbine_main"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 96
 	bound_height = 160

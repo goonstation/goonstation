@@ -38,7 +38,7 @@
 	var/orig_opacity = 1
 	var/secured_open = FALSE
 	var/secured_closed = FALSE
-	anchored = TRUE
+	anchored = ANCHORED
 	icon_state = "door_normal_closed"
 	var/opening = FALSE
 	var/door_type = "normal"

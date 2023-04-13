@@ -38,7 +38,7 @@
 		return 1
 
 /obj/storage/closet/syndi/hidden
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		var/turf/T = get_turf(src.loc)

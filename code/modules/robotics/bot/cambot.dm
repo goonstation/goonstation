@@ -10,7 +10,7 @@
 	icon_state = "cambot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 20
 	locked = 1
@@ -128,7 +128,7 @@
 	else
 		src.on = !src.on
 
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	src.target = null
 	src.icon_state = "cambot[src.on]"
 	src.path = null
@@ -265,7 +265,7 @@
 	if (!T || !isturf(T))
 		return
 
-	src.anchored = 1
+	src.anchored = ANCHORED
 	src.icon_state = "cambot-c"
 	src.visible_message("<span class='alert'>[src] aims at [target].</span>")
 	src.photographing = 1
@@ -293,7 +293,7 @@
 
 		src.photographing = 0
 		src.icon_state = "cambot[src.on]"
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.path = null
 		src.target = null
 		src.frustration = 0

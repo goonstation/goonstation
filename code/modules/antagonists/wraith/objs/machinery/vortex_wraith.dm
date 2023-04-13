@@ -3,7 +3,7 @@
 	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	_health = 25
 	var/list/obj/critter/critter_list = list()

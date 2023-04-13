@@ -7,7 +7,7 @@
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	dir = 4
 	bound_height = 96
 	bound_width = 96
@@ -415,7 +415,6 @@
 				status |= BROKEN
 				UpdateIcon()
 	return
-
 
 //why was this on /obj, what the fuck
 /obj/machinery/power/pt_laser/proc/burn_living(var/mob/living/L, var/power = 0)

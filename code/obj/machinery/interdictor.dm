@@ -8,7 +8,7 @@
 	icon_state = "interdictor"
 	power_usage = 1250 //drawn while interdiction field is active; charging is a separate usage value that can be concurrent
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_engineering)
 
 	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
@@ -109,7 +109,7 @@
 			if(anchored)
 				if(src.canInterdict)
 					src.stop_interdicting()
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				src.connected = 0
 				boutput(user, "You deactivate the interdictor's magnetic lock.")
 				playsound(src.loc, src.sound_togglebolts, 50, 0)
@@ -122,7 +122,7 @@
 							clear_field = FALSE
 							break
 				if(clear_field)
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
@@ -145,7 +145,7 @@
 				if(anchored)
 					if(src.canInterdict)
 						src.stop_interdicting()
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					src.connected = 0
 					boutput(user, "You deactivate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
@@ -158,7 +158,7 @@
 								clear_field = FALSE
 								break
 					if(clear_field)
-						src.anchored = 1
+						src.anchored = ANCHORED
 						src.connected = 1
 						boutput(user, "You activate the interdictor's magnetic lock.")
 						playsound(src.loc, src.sound_togglebolts, 50, 0)
@@ -376,7 +376,7 @@
 	desc = "Delineates the functional area of a nearby spatial interdictor."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-edge"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	alpha = 80
 	plane = PLANE_OVERLAY_EFFECTS

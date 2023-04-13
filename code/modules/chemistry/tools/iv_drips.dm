@@ -232,7 +232,7 @@ TYPEINFO(/obj/iv_stand)
 	desc = "A metal pole that you can hang IV bags on, which is useful since we aren't animals that go leaving our sanitized medical equipment all over the ground or anything!"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IVstand"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	var/image/fluid_image = null
 	var/image/bag_image = null

@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/turf/T = get_turf(src)
 
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1 //Create a big bomb explosion overlay.
+		Ov.anchored = ANCHORED //Create a big bomb explosion overlay.
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
