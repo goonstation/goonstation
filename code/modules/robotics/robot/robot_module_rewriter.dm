@@ -2,7 +2,7 @@
 	name = "cyborg module rewriter"
 	desc = "A machine used to reconfigure cyborg modules."
 	icon_state = "robot_module_rewriter"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	light_r =1
 	light_g = 0.4

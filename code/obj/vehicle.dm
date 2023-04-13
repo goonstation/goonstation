@@ -2192,7 +2192,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	name = "forklift"
 	desc = "A vehicle used to transport crates."
 	icon_state = "forklift"
-	anchored = 1
+	anchored = ANCHORED
 	health = 80
 	health_max = 80
 	var/list/helditems = list()	//Items being held by the forklift

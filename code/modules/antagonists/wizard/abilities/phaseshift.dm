@@ -6,7 +6,7 @@
 	cooldown = 300
 	requires_robes = 1
 	cooldown_staff = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/MistFormGrim.ogg'
 	voice_fem = 'sound/voice/wizard/MistFormFem.ogg'
 	voice_other = 'sound/voice/wizard/MistFormLoud.ogg'
@@ -69,7 +69,7 @@
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.set_density(0)
-		animation.anchored = 1
+		animation.anchored = ANCHORED
 		animation.icon = 'icons/mob/mob.dmi'
 		animation.icon_state = "liquify"
 		animation.layer = EFFECTS_LAYER_BASE
@@ -108,7 +108,7 @@
 	var/canmove = 1 // can be used to completely stop movement
 	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
 	if (!src.canmove || src.movecd)

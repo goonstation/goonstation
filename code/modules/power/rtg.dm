@@ -2,7 +2,7 @@
 	name = "Leigong RTG"
 	desc = "The XIANG|GIESEL model '雷公' radio-thermal generator. Wrapped thermocouples produce power from the decay heat of nuclear fuel pellets."
 	icon_state = "rtg_empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/lastgen = 0
 	var/obj/item/fuel_pellet/fuel_pellet

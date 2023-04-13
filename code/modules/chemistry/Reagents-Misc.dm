@@ -3063,7 +3063,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				flush(M, 2 * mult, flushed_reagents)
+				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
 
@@ -4214,7 +4214,7 @@ datum
 	icon_state = "badman"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/deathtarget = null
 	var/deathspeed = 3
 

@@ -35,7 +35,7 @@
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = src
 				flick("monkey2h", animation)
-				sleep(4.8 SECONDS)
+				sleep(1 SECOND)
 				qdel(animation)
 				qdel(H.mutantrace)
 				H.set_mutantrace(null)
@@ -77,7 +77,7 @@
 	target_anything = 0
 	human_only = 1
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	lock_holder = FALSE
 
 	cast(atom/target)
 		if (..())

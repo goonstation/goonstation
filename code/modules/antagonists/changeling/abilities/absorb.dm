@@ -68,7 +68,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())
@@ -183,7 +183,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())

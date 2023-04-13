@@ -1,7 +1,7 @@
 /obj/minimap
 	name = "Station Map"
 	layer = TURF_LAYER
-	anchored = TRUE
+	anchored = ANCHORED
 
 	///The minimap datum for this minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/map
@@ -24,7 +24,7 @@
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!src.icon || !src.icon_state)
 			var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-			click_overlay_icon.Scale(300 * map_scale, 300 * map_scale)
+			click_overlay_icon.Scale(src.map.x_max * map_scale, src.map.y_max * map_scale)
 			click_overlay_icon.ChangeOpacity(0)
 			src.icon = click_overlay_icon
 			src.mouse_opacity = 2
@@ -118,7 +118,7 @@
 		light.set_brightness(1.3)
 		light.set_color(light_r, light_g, light_b)
 		light.set_height(2)
-		light.attach(src, 2.5, 2.5)
+		light.attach(src, 2.5 + (src.pixel_x / 32), 2.5 + (src.pixel_y / 32))
 		light.enable()
 
 /obj/minimap/map_computer/nukeop
@@ -138,10 +138,43 @@
 		STOP_TRACKING
 		. = ..()
 
+/obj/minimap/map_computer/pod_wars
+	name = "Debris Field Map"
+	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of reconnaissance data on the surrounding debris field."
+	map_scale = 0.3
+
+	nanotrasen
+		map_type = MAP_POD_WARS_NANOTRASEN
+		light_r = 0.3
+		light_g = 0.3
+		light_b = 1
+
+		New()
+			. = ..()
+			START_TRACKING
+
+		disposing()
+			STOP_TRACKING
+			. = ..()
+
+	syndicate
+		map_type = MAP_POD_WARS_SYNDICATE
+		light_r = 1
+		light_g = 0.3
+		light_b = 0.3
+
+		New()
+			. = ..()
+			START_TRACKING
+
+		disposing()
+			STOP_TRACKING
+			. = ..()
+
 /obj/minimap_controller
 	name = "Map Controller"
 	layer = TURF_LAYER
-	anchored = TRUE
+	anchored = ANCHORED
 
 	///The controlled minimap object.
 	var/obj/minimap/controlled_minimap
@@ -173,7 +206,7 @@
 		. = ..()
 		src.controlled_minimap = minimap
 
-		src.displayed_minimap = new minimap.map_path(minimap.map_type, 1)
+		src.displayed_minimap = new minimap.map_path(minimap.map_type, 1, (1 / minimap.map_scale))
 		for (var/atom/marker_target in minimap_marker_targets)
 			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, displayed_minimap)
 
@@ -182,7 +215,7 @@
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!src.icon || !src.icon_state)
 			var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-			click_overlay_icon.Scale(300, 300)
+			click_overlay_icon.Scale(src.displayed_minimap.x_max, src.displayed_minimap.y_max)
 			click_overlay_icon.ChangeOpacity(0)
 			src.icon = click_overlay_icon
 			src.mouse_opacity = 2
@@ -342,3 +375,62 @@
 		if (minimap)
 			src.minimap_controller = new(minimap)
 			src.minimap_ui = new(src, "nukeop_map", src.minimap_controller, "Atrium Station Map Controller", "syndicate")
+
+ABSTRACT_TYPE(/obj/machinery/computer/pod_wars_minimap_controller)
+/obj/machinery/computer/pod_wars_minimap_controller
+	name = "debris field map controller"
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "pod_wars_minimap_controller"
+	bound_width = 64
+	bound_height = 32
+
+	var/obj/minimap_controller/minimap_controller
+	var/atom/movable/minimap_ui_handler/minimap_controller/minimap_ui
+	var/team_num = null
+
+	New()
+		. = ..()
+		src.connect_to_minimap()
+
+		var/image/screen_light = image('icons/obj/large/64x64.dmi', "minimap_controller_lights")
+		screen_light.plane = PLANE_LIGHTING
+		screen_light.blend_mode = BLEND_ADD
+		screen_light.layer = LIGHTING_LAYER_BASE
+		screen_light.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_light, "screen_light")
+
+	attack_hand(mob/user)
+		if(status & (BROKEN|NOPOWER))
+			return
+
+		add_fingerprint(user)
+		if (!src.minimap_controller || !src.minimap_ui)
+			src.connect_to_minimap()
+			if (!src.minimap_controller || !src.minimap_ui)
+				return
+		src.minimap_ui.ui_interact(user)
+
+	proc/connect_to_minimap()
+		var/obj/minimap/map_computer/pod_wars/minimap
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				for_by_tcl(map, /obj/minimap/map_computer/pod_wars/nanotrasen)
+					minimap = map
+
+				if (minimap)
+					src.minimap_controller = new(minimap)
+					src.minimap_ui = new(src, "nt_debris_minimap", src.minimap_controller, "Debris Field Map Controller", "ntos")
+
+			if (TEAM_SYNDICATE)
+				for_by_tcl(map, /obj/minimap/map_computer/pod_wars/syndicate)
+					minimap = map
+
+				if (minimap)
+					src.minimap_controller = new(minimap)
+					src.minimap_ui = new(src, "synd_debris_minimap", src.minimap_controller, "Debris Field Map Controller", "syndicate")
+
+	nanotrasen
+		team_num = TEAM_NANOTRASEN
+
+	syndicate
+		team_num = TEAM_SYNDICATE

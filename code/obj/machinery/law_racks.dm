@@ -4,7 +4,7 @@
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
@@ -401,7 +401,6 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
-					playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 

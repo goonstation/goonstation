@@ -28,9 +28,9 @@
 
 	var/static/list/critters = list(
 		"Angry Bat" = /obj/critter/bat/buff,
-		"Bear" = /obj/critter/bear,
+		"Bear" = /mob/living/critter/bear,
 		"Bee" = /obj/critter/domestic_bee,
-		"Carebear" = /obj/critter/bear/care,
+		"Carebear" = /mob/living/critter/bear/care,
 		"Darkness" = /obj/critter/shade,
 		"Door (chompy)" = /obj/critter/monster_door,
 		"Drone (CR)" = /obj/critter/gunbot/drone/buzzdrone,
@@ -51,9 +51,9 @@
 		"Meat Mutant" = /obj/critter/blobman,
 		"Meat Thing" = /obj/critter/blobman/meaty_martha,
 		"Micro Man" = /obj/critter/microman,
-		"Mimic" = /obj/critter/mimic,
+		"Mimic" = /mob/living/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
-		"Skeleton" = /obj/critter/magiczombie,
+		"Skeleton" = /mob/living/critter/skeleton,
 		"Space Wasp" = /obj/critter/wasp,
 		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,

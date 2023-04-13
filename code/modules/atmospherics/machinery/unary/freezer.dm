@@ -3,11 +3,11 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	current_heat_capacity = 1000
 	var/pipe_direction = NORTH
 
-	// Medbay and kitchen freezers start at correct temperature to avoid pointless busywork.
+// Medbay and kitchen freezers start at correct temperature to avoid pointless busywork.
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo
 	name = "freezer (cryo cell)"
 	current_temperature = 73.15
@@ -16,6 +16,11 @@
 	name = "freezer (kitchen)"
 	current_temperature = 150
 	on = TRUE
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency
+	name = "emergency cooler"
+	current_temperature = 73.15
+	desc = "Emergency cooling for the reactor. Only for use in meltdown scenarios."
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/New()
 	..()

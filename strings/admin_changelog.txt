@@ -1,3 +1,6 @@
+(t)sat apr 8 23
+(u)Mr. Moriarty
+(*)The way antagonist roles are displayed in Player Options has changed. Each current role and the controls to add/remove roles is now centralized under Antagonist Options.
 (t)fri mar 24 23
 (u)LeahTheTech
 (+)New admin spawnable job: Nanotrasen Emergency Response Technician, basically a tooled up centcom repair tech.

@@ -1,7 +1,7 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
 	var/tmp/netnum = 0
@@ -38,7 +38,7 @@
 		if(!defer_powernet_rebuild)
 			makepowernets()
 		else
-			defer_powernet_rebuild = 2
+			deferred_powernet_objs |= src
 	. = ..()
 
 // common helper procs for all power machines

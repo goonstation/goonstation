@@ -2,7 +2,7 @@
 	name = "Critical System"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 64
 	bound_height = 64
@@ -183,6 +183,16 @@
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
+
+	start_clone()
+		. = ..()
+		if (.)
+			if (team_num == TEAM_NANOTRASEN)
+				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
+			else if (team_num == TEAM_SYNDICATE)
+				new /obj/item/implant/pod_wars/syndicate(src.occupant)
+
+		return
 
 	ex_act(severity)
 		return
@@ -550,7 +560,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/control_point_computer.dmi'
 	icon_state = "control_point_computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/image/screen
 	var/image/screen_light
@@ -706,7 +716,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1

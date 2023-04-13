@@ -11870,7 +11870,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -16546,8 +16545,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bfz" = (
-/obj/storage/secure/closet/engineering/welding,
 /obj/machinery/light,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "bfA" = (
@@ -18144,6 +18143,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/engineering/welding,
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/engine)
 "blv" = (
@@ -20020,8 +20020,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -29859,11 +29859,18 @@
 	},
 /area/station/science/lab)
 "cbo" = (
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	frequency = 1449;
+	icon_state = "glass_locked";
+	id_tag = "tox_airlock_exterior";
+	locked = 1;
+	name = "Toxins Research Access";
+	req_access_txt = null;
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
 	},
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
@@ -30133,7 +30140,9 @@
 "ccd" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Toxin Chamber";
-	req_access = null
+	req_access = null;
+	autoclose = 0;
+	icon_state = "research_locked"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -31053,14 +31062,14 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door_control{
-	id = "tox_vent";
-	name = "Chamber Exhaust";
-	pixel_x = 9;
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/valve{
 	name = "Heat Sink Loop"
+	},
+/obj/machinery/door_control{
+	id = "oh_boy_fire";
+	name = "Burn Chamber Heat Shields";
+	pixel_x = 9;
+	pixel_y = 24
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1

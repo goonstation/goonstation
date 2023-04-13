@@ -102,7 +102,7 @@
 	O.canmove = 0
 	O.name = src.name
 	O.real_name = src.real_name
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = src.client.address
 
@@ -311,84 +311,6 @@
 		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
 		src.mind.add_antagonist(ROLE_BLOB)
 		return
-	return 0
-
-/mob/proc/machoize(var/shitty = 0)
-	if (src.mind || src.client)
-		if (shitty)
-			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing(LOG_ADMIN, null, "[constructTarget(src,"admin")] has been made a faustian macho man.")
-		else
-			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a macho man.")
-		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src, shitty)
-
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-			if (ASLoc)
-				W.set_loc(ASLoc)
-			else
-				W.set_loc(locate(1, 1, 1))
-		else
-			W.set_loc(T)
-
-		if (src.mind)
-			if (shitty)
-				boutput(src, "<span class='notice'>You are being bombarded by energetic macho waves!</span>")
-				src.mind.transfer_to(W)
-				W.mind.special_role = "faustian macho man"
-				ticker.mode.Agimmicks.Add(W)
-				W.real_name = "[pick("Faustian", "Fony", "Fake", "False","Fraudulent", "Fragile")] [W.real_name]"
-				W.name = W.real_name
-
-			else
-				src.mind.transfer_to(W)
-				src.mind.special_role = "macho man"
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-		qdel(src)
-
-		SPAWN(2.5 SECONDS) // Don't remove.
-			if (W) W.assign_gimmick_skull()
-
-		if(shitty)
-			if (W)
-				W.traitHolder.addTrait("deathwish") //evil
-				W.traitHolder.addTrait("glasscannon") //what good will those stimulants do you now?
-			if (W)
-				var/list/dangerousVerbs = list(\
-					/mob/living/carbon/human/machoman/verb/macho_offense,\
-					/mob/living/carbon/human/machoman/verb/macho_defense,\
-					/mob/living/carbon/human/machoman/verb/macho_normal,\
-					/mob/living/carbon/human/machoman/verb/macho_grasp,\
-					/mob/living/carbon/human/machoman/verb/macho_headcrunch,\
-					/mob/living/carbon/human/machoman/verb/macho_chestcrunch,\
-					/mob/living/carbon/human/machoman/verb/macho_leap,\
-					/mob/living/carbon/human/machoman/verb/macho_rend,\
-					/mob/living/carbon/human/machoman/verb/macho_touch,\
-					/mob/living/carbon/human/machoman/verb/macho_piledriver,\
-					/mob/living/carbon/human/machoman/verb/macho_superthrow,\
-					/mob/living/carbon/human/machoman/verb/macho_soulsteal,\
-					/mob/living/carbon/human/machoman/verb/macho_stare,\
-					/mob/living/carbon/human/machoman/verb/macho_heartpunch,\
-					/mob/living/carbon/human/machoman/verb/macho_summon_arena,\
-					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal
-				W.verbs -= dangerousVerbs //this is just diabolical
-				W.reagents.add_reagent("anti_fart", 800) //as is this
-				boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
-
-		else
-			boutput(W, "<span class='notice'>You are now a macho man!</span>")
-
-		return W
 	return 0
 
 /mob/proc/cubeize(var/life = 10, var/CT)

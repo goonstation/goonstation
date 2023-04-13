@@ -450,7 +450,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	density = 1
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null

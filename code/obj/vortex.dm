@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	desc = "I wonder what this is."
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()
@@ -101,7 +101,7 @@
 			else
 				horror_path = pick(/obj/critter/killertomato,
 				/obj/critter/spore,
-				/obj/critter/spacerattlesnake,
+				/mob/living/critter/small_animal/rattlesnake,
 				/obj/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
@@ -109,9 +109,9 @@
 				/obj/machinery/bot/cleanbot/emagged,
 				/obj/critter/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
-				/obj/critter/mimic,
+				/mob/living/critter/mimic,
 				/obj/critter/fermid,
-				/obj/critter/bear)
+				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else

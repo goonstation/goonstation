@@ -1433,7 +1433,7 @@ var/datum/action_controller/actions
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
 	icon = 'icons/ui/actions.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = 5
@@ -2185,7 +2185,7 @@ var/datum/action_controller/actions
 		if(iswrenchingtool(tool))
 			playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 		else if(isweldingtool(tool))
-			playsound(target, 'sound/items/Welder.ogg', 50, 1)
+			tool:try_weld(owner,0,-1)
 		else if(isscrewingtool(tool))
 			playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
@@ -2194,6 +2194,6 @@ var/datum/action_controller/actions
 		..()
 		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
 		if(unanchor)
-			target.anchored = FALSE
+			target.anchored = UNANCHORED
 		else
-			target.anchored = TRUE
+			target.anchored = ANCHORED

@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 	icon_state = "computer_generic"
 	name = "door access logs"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
 	power_usage = 100

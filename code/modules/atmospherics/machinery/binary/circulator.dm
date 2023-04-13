@@ -12,7 +12,7 @@
 
 	var/last_pressure_delta = 0
 
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()

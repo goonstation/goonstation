@@ -1,6 +1,6 @@
 /obj/computerframe
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	name = "Console-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
@@ -19,7 +19,7 @@ TYPEINFO(/obj/item/circuitboard)
 
 /obj/item/circuitboard
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
@@ -176,7 +176,7 @@ TYPEINFO(/obj/item/circuitboard)
 			if (iswrenchingtool(P))
 				actions.start(action_bar, user)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
+			if (isweldingtool(P) && P:try_weld(user,0,-1,1,1))
 				actions.start(action_bar, user)
 		if (1)
 			if (iswrenchingtool(P))
@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/circuitboard)
 		if(0)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.state = 1
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -277,7 +277,7 @@ TYPEINFO(/obj/item/circuitboard)
 		if(1)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))

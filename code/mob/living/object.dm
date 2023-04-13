@@ -19,7 +19,7 @@
 	gender = NEUTER
 
 	blinded = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	a_intent = "disarm"
 	can_bleed = FALSE
 	var/name_prefix = "living "

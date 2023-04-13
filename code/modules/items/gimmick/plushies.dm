@@ -6,7 +6,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0

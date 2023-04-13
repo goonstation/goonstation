@@ -24628,10 +24628,10 @@
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "bpq" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "tile1"
 	},
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bps" = (
@@ -65897,7 +65897,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "xSY" = (
@@ -65978,6 +65978,16 @@
 	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
+/area/space)
+"xXO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "Security Beacon"
+	},
+/turf/space,
 /area/space)
 "xXP" = (
 /obj/disposalpipe/segment,
@@ -90859,7 +90869,7 @@ adC
 adC
 adC
 aam
-aap
+aaq
 aaq
 aaq
 aaq
@@ -91161,7 +91171,7 @@ adC
 adC
 adC
 adC
-aii
+adC
 adC
 adC
 adC
@@ -91463,7 +91473,7 @@ adC
 adC
 adC
 adC
-aah
+xXO
 adC
 adC
 adC

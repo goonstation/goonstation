@@ -1,5 +1,156 @@
 
+(t)wed apr 12 23
+(u)Blackrep
+(p)13656
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Syndicate command, specialist heavy operative combat and salvager juggernaut combat armors are now flagged as contraband.
+(u)LeahTheTech
+(*)The singularity now takes materials and reagents into account when calculating gain from consumed objects. (this may be a bad idea)
+(+)The PTL no longer deletes pods.
+(u)Wisemonster
+(p)13103
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)The health implants no longer send the coordinates of the implantee on an alert. The area is still sent.
+(u)Kubius
+(p)13646
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Nadir's diner now has a certain adventurous safe common to other diners.
+(u)Flappybat
+(p)13633
+(e)⚖|C-Balance
+(*)Critters can no longer pilot pods. They can still travel as passengers in large pods.
+(t)tue apr 11 23
+(u)LeahTheTech, Kubius
+(+)Clicking on disposals pipes or cables with floor tiles will now interact with the turf beneath them for easier repairing.
+(+)APCs now correctly recharge at a maximum of 1% per second. (~32 times faster than before)
+(t)mon apr 10 23
+(u)Amylizzle
+(p)13637
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Nuclear reactor power output has been buffed.
+(u)LeahTheTech
+(*)Added new specialist manufacturer to all engineering departments that can manufacture laser mirrors and splitters, and interdictor components.
+(*)Added laser mirrors that can deflect emitter lasers and PTL beams. Anchorable using a screwdriver.
+(*)Added beam splitters that can split PTL beams. Also anchorable using a screwdriver.
+(+)Removed interdictor crates, the manual can now be found on top of the specialist manufacturer.
+(+)Beam splitters can now be rotated using a crowbar
+(t)sun apr 09 23
+(u)Flappybat
+(e)⚖
+(*)Removed burst mode from the security taser.
+(u)tarmunora
+(e)⚖
+(+)Taser SMG auto projectiles brought into (near) parity with Signifer II projectiles and vice versa
+(+)Taser shotgun falloff curve adjusted, less powerful within ~2 tiles.
+(+)everyone is a teeny tiny bit slower. You probably won't even notice!
+(u)LeahTheTech
+(+)Vomiting from severe addiction is now a lot rarer and addiction progresses slower.
+(+)Disorient now slows you down slightly less (8 -> 7 slowdown)
+(u)Amylizzle
+(p)13625
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Adds clearer signage to the emergency coolers for the nuclear reactor. They are for emergencies only. You should not use them in normal operation.
+(u)The_Kakapo
+(p)13482
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds special sprites for different ingredients used in brain/heart/buttburgers
+(+)You can make flock heart/brainburgers, synthbutt/brain/heartburgers and cyberbutt/heartburgers and Spontaneous Intelligence Creation Core burgers.
+(t)sat apr 08 23
+(u)LeahTheTech
+(p)13572
+(e)🆕🎨🔄📦💡|C-Feature, C-Sprites, C-Rework, A-Game-Objects, A-Station-Systems
+(+)The PTL has been internally reworked, and should respond a lot faster. Please report any weirdness with the beam.
+(t)fri apr 07 23
+(u)Amylizzle
+(p)13600
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Mimic nametags are now invisible when they're disguised.
+(u)LeahTheTech
+(*)Mimics can now spawn as antagonist critters.
+(u)Amylizzle
+(p)13588
+(e)🪲🔎⚖🧱💨📦|C-Bug, C-Code-Quality, C-Balance, A-Materials, A-Atmospherics, A-Game-Objects
+(+)Fixed a minor bug with molitz beta, and enabled it to produce gas inside the nuclear reactor (and other things)
+(t)thu apr 06 23
+(u)aloe
+(+)Experimentally, the gangs game mode will rarely appear on the RP servers.
+(u)LeahTheTech
+(+)Standing next to a UV lamp will now warm you up slightly.
+(u)aloe
+(+)Emote volume is now halved if you're suffocating/being choked/have negative stamina, etc (any time you're forced to whisper when speaking); the range is adjusted proportionally.
+(t)wed apr 05 23
+(u)Amylizzle
+(p)13544
+(e)🗺🔒🔄📦📡|A-Mapping, A-Secret, C-Rework, A-Game-Objects, A-AI
+(*)Mimics are now capable of disguising themselves as a wide variety of objects, and can cause hallucinations.
+(u)Ikea
+(p)13574
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)The game now tries to award the commander role for nukeops to an operative who has previously won a nuclear round before picking any non-winner operatives.
+(t)sun apr 02 23
+(u)Mr. Moriarty
+(p)12733
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Pod Wars: The NSV Pytheas and Lodbrok have both been installed with debris field map displays and map controllers, similar to the ones that may be found on the Cairngorm, situated in their Bridges.
+(u)FlameArrow57
+(p)13526
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a warp beacon for the Cogmap 1 security hangar.
+(u)Wisemonster
+(p)13551
+(e)⚖🍝|C-Balance, A-Catering
+(+)MONSTER burgers now take about 20 bites to eat.
+(u)FlameArrow57
+(p)13536
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Security RecordTraks now have the ability to set a SecHUD flag as an option. Upon being dropped the flag will be reset.
+(+)RecordTraks can now be examined to see their current arrest mode, as well as any SecHUD flag set.
+(u)Amylizzle
+(p)13548
+(e)🆕💅📄⏰|C-Feature, C-QoL, A-UI, A-Status-Effects
+(*)A HUD warning will pop up while you're actively taking rads now.
+(u)TDHooligan
+(p)13401
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)Styptic Powder & patches no longer fix extreme bleeding. Cauterization and bandages still work fine.
+(+)Proconvertin now reduces stamina, but doesn't cause blood clots until overdosed.
+(u)Amylizzle
+(p)13441
+(e)🪲⚖🧱📦|C-Bug, C-Balance, A-Materials, A-Game-Objects
+(*)Nuclear Reactor numbers have been tweaked. See minor changelog for details.
+(+)Nuclear components now cost only 2 materials, down from 3.
+(+)The nuclear engine thermodynamics sim has been fixed, so things will work a little differently. In particular, the reactor will respond much quicker to changes in temperature, and material's thermal and electrical conductivity matter a lot more. As a result of this, control rods will be much more meaningful. It's also much easier to meltdown.
+(u)Nexusuxen
+(p)13535
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Three new PDA ringtones added, modeled after the highly regarded two-beep ringtone!
+(t)sat apr 01 23
+(u)pali
+(e)🐛|C-Bug
+(+)Fabricators now work with alloy materials.
+(u)Wisemonster
+(p)13469
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)AIs can once again issue lockdown/guard orders using the securitron app while in Eye Mode.
+(u)pali & walpvrgis
+(e)👖|J-Jeans
+(*)NanoTrasen has signed a contract with Jiscount Jan's Jomfy Jeans and upgraded the station wardrobe and possibly more than that!
 (t)wed mar 29 23
+(u)Nexusuxen
+(p)13430
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Airlocks now make sounds when un/bolted via packets. Can no longer toggle door bolts via packet if bolt wire cut.
+(u)Hans and ability sprite by Mr Moriarty
+(*)Mobifies rattlesnakes.
+(+)Rattlesnakes will no longer chase people around, instead biting once and hoping you go away.
+(u)LeahTheTech
+(p)13268
+(e)🧫💨⚙|C-Experimental, A-Atmospherics, A-Internal
+(*)The atmos process is ticking twice as fast, this should make repressurizing and so on a lot less tedious - but may cause Issues. Please report any if you find them.
+(u)Nexusuxen
+(p)13466
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Amusing Ducks now correctly respond to packet controls. Quack.
 (u)Flappybat
 (p)13118
 (e)🪲🤖|C-Bug, A-Silicons
