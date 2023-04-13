@@ -99,7 +99,20 @@
 				return 3
 		return ..()
 
+	critter_attack(var/mob/target)
+		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
+		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
+		if (!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+		else if (!bite.disabled && bite.cooldowncheck())
+			bite.handleCast(target)
+		else
+			if(prob(30))
+				src.swap_hand()
+			src.hand_attack(target)
+
 	death()
+		src.can_lie = FALSE
 		src.reagents.add_reagent("atropine", 50, null)
 		src.reagents.add_reagent("haloperidol", 50, null)
 		return ..()
