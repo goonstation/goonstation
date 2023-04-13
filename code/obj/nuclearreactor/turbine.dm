@@ -284,8 +284,8 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.stator_load = min(max(x,1),10e30)
-				logTheThing("station", src, null, "[src] stator load configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
 				src.flow_rate = min(max(x,1),10e5)
-				logTheThing("station", src, null, "[src] flow rate configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")

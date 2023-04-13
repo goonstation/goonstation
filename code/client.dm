@@ -137,7 +137,7 @@
 		// technically not disposing but it really should be here for feature parity
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 	catch(var/exception/E)
-		logTheThing("debug", src, "caught [E] in /client/Del() signal stuff.")
+		logTheThing(LOG_DEBUG, src, "caught [E] in /client/Del() signal stuff.")
 
 	src.mob?.move_dir = 0
 
