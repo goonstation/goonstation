@@ -40,12 +40,17 @@
 
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
-			if (ishuman(user) && user.traitHolder.hasTrait("training_engineer")) // Engineers can bypass the actionbar and instantly put down catwalks.
-				src.MakeCatwalk(C)
-				return
+			var/actionbar_duration = 2 SECONDS
+			if (ishuman(user)) // Engineers can bypass the actionbar and instantly put down catwalks.
+				if (user.traitHolder.hasTrait("training_engineer"))
+					src.MakeCatwalk(C)
+					return
+
+				else if(user.traitHolder.hasTrait("carpenter"))
+					actionbar_duration /= 2
 
 			user.show_text("You start putting the rods on the frame...", "blue")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECOND, .proc/MakeCatwalk, list(C), C.icon, C.icon_state, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, .proc/MakeCatwalk, list(C), C.icon, C.icon_state, null, null)
 			return
 
 		if(issnippingtool(C))
