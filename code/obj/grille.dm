@@ -137,12 +137,11 @@
 			amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
 
 			src.health = clamp(src.health - amount, 0, src.health_max)
+
 			if (src.health == 0)
-				UpdateIcon("cut")
-				src.set_density(0)
 				src.ruined = 1
-			else
-				UpdateIcon()
+
+			UpdateIcon()
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
