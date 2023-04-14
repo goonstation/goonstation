@@ -1,4 +1,4 @@
-
+// if these are mutually exclusive why did you make them powers of two
 #define BONE_HEALTHY 0
 #define BONE_BRUISED 1
 #define BONE_CRACKED 2
@@ -46,12 +46,19 @@
 		donor = null
 		..()
 
-/datum/bone/New(var/obj/item/parts/human_parts/limb)
+/datum/bone/New(var/host)
 	. = ..()
-	name = "[limb.name]'s bones"
-	parent_organ = limb
-	if (istype(limb.original_holder,/mob/living/carbon/human))
-		donor = limb.original_holder
+	if (isnull(host))
+		return
+	name = "[host.name]'s bones"
+	parent_organ = host
+	if (!istype(host,/obj/item/parts/human_parts))
+		return
+	var/obj/item/parts/human_parts/limb = host
+
+	if (!istype(limb.original_holder,/mob/living/carbon/human) || isnull(limb.original_holder))
+		return
+	donor = limb.original_holder
 
 /datum/bone/proc/take_damage(var/damage_type, var/amt = 1)
 	if (!bone_system)
@@ -64,14 +71,15 @@
 	BONE_DEBUG("[donor]'s [parent_organ]'s bones.take_damage() entered")
 
 	var/damtype_modifier = 1
-	if (damage_type == DAMAGE_BURN)
+	// basically it's done this way so that the bone damage takes the highest form. damage_type is a bitflag thing see
+	if (damage_type == DAMAGE_CRUSH)
+		damtype_modifier = 1.5
+	else if (damage_type == DAMAGE_BLUNT)
+		damtype_modifier = 1.3
+	else if (damage_type == DAMAGE_BURN)
 		damtype_modifier = 0.6
 	else if (damage_type == DAMAGE_STAB)
 		damtype_modifier = 0.6
-	else if (damage_type == DAMAGE_BLUNT)
-		damtype_modifier = 1.3
-	else if (damage_type == DAMAGE_CRUSH)
-		damtype_modifier = 1.5
 
 	if (!((amt * damtype_modifier) > 0))
 		return 0
@@ -112,6 +120,8 @@
 	if (istext(amt) && lowertext(amt) == "all")
 		src.damage = 0
 		src.damage_status = BONE_HEALTHY
+		return
+	if (isnum(amt))
 
 #undef BONE_HEALTHY
 #undef BONE_BRUISED
