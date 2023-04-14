@@ -118,8 +118,11 @@ TYPEINFO(/obj/item/storage/toilet)
 
 
 #ifdef UNDERWATER_MAP
-		for (var/obj/item/I as anything in src.storage.get_contents())
-			src.storage.transfer_stored_item(I, get_turf(src))
+		var/turf/T = get_turf(src)
+		if (T)
+			var/turf/target = locate(T.x, T.y, 5)
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, get_turf(src))
 #endif
 		src.clogged = 0
 		for (var/item in src.storage.get_contents())
