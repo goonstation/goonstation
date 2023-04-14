@@ -183,7 +183,6 @@
 		src.show_hud(user)
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
-		return
 	else
 		// make sure only the user can see the storage
 		for (var/mob/M as anything in src.hud.mobs)
