@@ -350,9 +350,11 @@
 		W.tooltip_rebuild = TRUE
 	// for storages that change icon with contents
 	src.linked_item.UpdateIcon()
-	// a mob put the item in
+
 	if (!istype(user))
 		return
+
+	// a mob put the item in
 	src.linked_item.add_fingerprint(user)
 	if (visible)
 		animate_storage_rustle(src.linked_item)
