@@ -267,7 +267,6 @@ TYPEINFO(/atom)
 
 /atom/proc/emp_act()
 	src.storage?.storage_emp_act()
-	return
 
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
@@ -745,7 +744,6 @@ TYPEINFO(/atom)
 	src.storage?.storage_item_attack_hand(user)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
-	return
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
@@ -898,7 +896,6 @@ TYPEINFO(/atom)
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_mouse_drop(usr, over_object, src_location, over_location)
-	return
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
