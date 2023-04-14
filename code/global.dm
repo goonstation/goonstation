@@ -280,7 +280,7 @@ var/global
 	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
-	bone_system = 0
+	bone_system = 1
 	pull_slowing = 0
 	suicide_allowed = 1
 	dna_ident = 1

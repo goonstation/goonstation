@@ -30,6 +30,9 @@
 		src.brute_dam += brute
 		src.burn_dam += burn
 		//src.tox_dam += tox
+		if (bone_system && breakable)
+			// gonna only take bone damage from brute for now, since that makes sense
+			src.bones.take_damage(damage_type, brute)
 
 		health_update_queue |= holder
 		return 1
