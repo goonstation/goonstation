@@ -300,6 +300,9 @@
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
 			M.color = list(0.157562,0.163186,0.844535,0.390637,0.414067,-0.58031,-0.0243897,-0.0534431,0.259584)
+			M.color_r = 0.8
+			M.color_g = 0.8
+			M.color_b = 1
 			activator.set_clothing_icon_dirty()
 			return 1
 		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
