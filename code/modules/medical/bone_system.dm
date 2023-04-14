@@ -1,9 +1,8 @@
-// if these are mutually exclusive why did you make them powers of two
 #define BONE_HEALTHY 0
 #define BONE_BRUISED 1
 #define BONE_CRACKED 2
-#define BONE_FRACTURED 4
-#define BONE_SHATTERED 8
+#define BONE_FRACTURED 3
+#define BONE_SHATTERED 4
 
 /* sticking these here just for reference
 #define DAMAGE_BLUNT 1
@@ -84,7 +83,7 @@
 	src.damage += (amt * damtype_modifier)
 
 	if (prob((10 + src.damage) * damtype_modifier))
-		src.damage_status = max(1, src.damage_status * 2) // a chance to bump up the current damage_status level
+		src.damage_status = max(1, src.damage_status + 1) // a chance to bump up the current damage_status level
 		BONE_DEBUG("[donor]'s [parent_organ]'s bones rolled increase in damage level at prob (20 + [src.damage]) * [damtype_modifier] = [(20 + src.damage) * damtype_modifier]")
 
 	switch (src.damage_status)
@@ -113,11 +112,22 @@
 /datum/bone/proc/repair_damage(var/amt)
 	if (!amt)
 		return 0
+	// no need to fix healed bones obviously.
+	if (src.damage == 0)
+		return
 	if (istext(amt) && lowertext(amt) == "all")
 		src.damage = 0
 		src.damage_status = BONE_HEALTHY
 		return
-	if (isnum(amt))
+	src.damage -= amt
+	if (prob(10 + src.damage))
+		src.damage_status = max(1, src.damage_status - 1)
+	if (src.damage <= 0)
+		src.damage = 0
+		src.damage_status = BONE_HEALTHY
+		BONE_DEBUG("[donor]'s [parent_organ]'s bones are fully recovered")
+		src.donor.visible_message("You feel like your [parent_organ] is back to normal now.")
+
 
 #undef BONE_HEALTHY
 #undef BONE_BRUISED
