@@ -68,19 +68,19 @@
 
 	var/damtype_modifier = 1
 	// basically it's done this way so that the bone damage takes the highest form. damage_type is a bitflag thing see
-	if (src.damage_type == DAMAGE_CRUSH)
+	if (damage_type == DAMAGE_CRUSH)
 		damtype_modifier = 1.5
-	else if (src.damage_type == DAMAGE_BLUNT)
+	else if (damage_type == DAMAGE_BLUNT)
 		damtype_modifier = 1.3
-	else if (src.damage_type == DAMAGE_BURN)
+	else if (damage_type == DAMAGE_BURN)
 		damtype_modifier = 0.6
-	else if (src.damage_type == DAMAGE_STAB)
+	else if (damage_type == DAMAGE_STAB)
 		damtype_modifier = 0.6
 
 	if (!((amt * damtype_modifier) > 0))
 		return 0
 
-	BONE_DEBUG("[src.donor]'s [src.parent_organ]'s bones.take_damage() amt: [amt], damage_type: [dam_num2name(src.damage_type)], damtype_modifier: [damtype_modifier], initial bone damage: [src.damage], damage changing to [src.damage + (amt * damtype_modifier)], initial damage_status: [bone_num2name(src.damage_status)]")
+	BONE_DEBUG("[src.donor]'s [src.parent_organ]'s bones.take_damage() amt: [amt], damage_type: [dam_num2name(damage_type)], damtype_modifier: [damtype_modifier], initial bone damage: [src.damage], damage changing to [src.damage + (amt * damtype_modifier)], initial damage_status: [bone_num2name(src.damage_status)]")
 	src.damage += (amt * damtype_modifier)
 
 	if (prob((10 + src.damage) * damtype_modifier))
