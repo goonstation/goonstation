@@ -387,7 +387,7 @@
 			I.dropped()
 
 /// return outputtable capacity
-/datum/storage/proc/get_capacity()
+/datum/storage/proc/get_capacity_string()
 	return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 /// storage is full or not
