@@ -64,7 +64,8 @@
 
 /datum/component/complexsignal/outermost_movable/_register(datum/listener, sig_type, proctype, override = FALSE, ...)
 	. = ..()
-	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2])
+	var/atom/A = parent
+	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2] && !(A.event_handler_flags & MOVE_NOCLIP))
 		src.RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_loc_change)
 		track_movable_moved = TRUE
 

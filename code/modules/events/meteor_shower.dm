@@ -137,7 +137,7 @@ var/global/meteor_shower_active = 0
 				var/list/params = list("scroll_angle" = scroll_angle)
 
 				for (var/client/client in clients)
-					client.parallax_controller.add_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower, layer_params = params)
+					client.parallax_controller?.add_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower, layer_params = params)
 	#endif
 
 			var/start_x
@@ -201,7 +201,7 @@ var/global/meteor_shower_active = 0
 
 	#ifndef UNDERWATER_MAP
 			for (var/client/client in clients)
-				client.parallax_controller.remove_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower)
+				client.parallax_controller?.remove_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower)
 	#endif
 
 	admin_call(var/source)

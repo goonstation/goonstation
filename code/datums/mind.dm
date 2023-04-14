@@ -102,7 +102,7 @@ datum/mind
 
 		if(current.client)
 			current.addOverlaysClient(current.client)
-			current.client.parallax_controller.update_parallax_z()
+			current.client.parallax_controller?.update_parallax_z()
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")
 

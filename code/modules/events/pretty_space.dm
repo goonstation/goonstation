@@ -27,11 +27,11 @@
 
 		command_alert("Navigational radar indicates that the [station_or_ship()] will shortly begin drifting through a molecular cloud. This poses no danger to structural integrity or personnel, so enjoy the view.", "Navigational Update", alert_origin = ALERT_WEATHER)
 		for (var/client/client in clients)
-			client.parallax_controller.recolour_parallax_layers(color, 10 SECONDS)
+			client.parallax_controller?.recolour_parallax_layers(color, 10 SECONDS)
 			LAGCHECK(LAG_HIGH)
 		SPAWN(duration)
 			for (var/client/client in clients)
-				client.parallax_controller.recolour_parallax_layers(list(), 10 SECONDS)
+				client.parallax_controller?.recolour_parallax_layers(list(), 10 SECONDS)
 				LAGCHECK(LAG_HIGH)
 #endif
 #endif

@@ -143,8 +143,8 @@
 	var/datum/parallax_controller/parallax_controller
 
 	New()
-	 . = ..()
-	 src.parallax_controller = new(null, src)
+		. = ..()
+		src.parallax_controller = new(null, src)
 
 
 /mob/New()
