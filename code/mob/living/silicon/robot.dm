@@ -2266,7 +2266,7 @@
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Brobocop", "Research", "Civilian", "Engineering", "Medical", "Mining")
+		var/list/starter_modules = list("Brobocop", "Science", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
@@ -2281,10 +2281,10 @@
 				src.set_module(new /obj/item/robot_module/brobocop(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
-			if("Research")
+			if("Science")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Research module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
-				src.set_module(new /obj/item/robot_module/research(src))
+				boutput(src, "<span class='notice'>You chose the Science module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
+				src.set_module(new /obj/item/robot_module/science(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
