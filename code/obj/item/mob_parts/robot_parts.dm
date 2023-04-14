@@ -10,13 +10,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
-	accepts_normal_human_overlays = 0
-	skintoned = 0
+	accepts_normal_human_overlays = FALSE
+	skintoned = FALSE
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
 
-	decomp_affected = 0
+	decomp_affected = FALSE
 	var/robot_movement_modifier
 
 	var/max_health = 100
@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	max_health = 60
 	can_hold_items = 1
-	accepts_normal_human_overlays = 1
+	accepts_normal_human_overlays = TRUE
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
