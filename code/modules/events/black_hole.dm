@@ -107,7 +107,7 @@
 	icon_state = "bhole"
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -175,7 +175,7 @@
 
 				if (O.anchored)
 					if (prob(pull_prob))
-						O.anchored = 0
+						O.anchored = UNANCHORED
 				if (prob(pull_prob))
 					step_towards(O,src)
 					if (hit_strength)

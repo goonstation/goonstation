@@ -1,4 +1,37 @@
 
+(t)fri apr 14 23
+(u)Wisemonster
+(p)13623
+(e)🪲🎨💅📄🤖|C-Bug, C-Sprites, C-QoL, A-UI, A-Silicons
+(+)Renames the cyborg chemist module to science module.
+(t)thu apr 14 23
+(u)Flappybat
+(e)🎩|A-Clothing
+(+)SWAT Gas Mask medal reward now gives a NT appropriate blue mask. You will have to work harder to acquire a red version.
+(t)wed apr 12 23
+(u)Blackrep
+(p)13656
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Syndicate command, specialist heavy operative combat and salvager juggernaut combat armors are now flagged as contraband.
+(u)LeahTheTech
+(*)The singularity now takes materials and reagents into account when calculating gain from consumed objects. (this may be a bad idea)
+(+)The PTL no longer deletes pods.
+(u)Wisemonster
+(p)13103
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)The health implants no longer send the coordinates of the implantee on an alert. The area is still sent.
+(u)Kubius
+(p)13646
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Nadir's diner now has a certain adventurous safe common to other diners.
+(u)Flappybat
+(p)13633
+(e)⚖|C-Balance
+(*)Critters can no longer pilot pods. They can still travel as passengers in large pods.
+(t)tue apr 11 23
+(u)LeahTheTech, Kubius
+(+)Clicking on disposals pipes or cables with floor tiles will now interact with the turf beneath them for easier repairing.
+(+)APCs now correctly recharge at a maximum of 1% per second. (~32 times faster than before)
 (t)mon apr 10 23
 (u)Amylizzle
 (p)13637

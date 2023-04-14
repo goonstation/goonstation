@@ -50,7 +50,7 @@ toxic - poisons
 	name = "sparks"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		src.pixel_x = rand(-8,8)

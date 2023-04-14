@@ -3,7 +3,7 @@
 	desc = "A punching bag. Can you get to speed level 4???"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "punchingbag"
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
@@ -51,7 +51,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
@@ -99,7 +99,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnessweight"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
@@ -120,7 +120,7 @@
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)
-			W.anchored = 1
+			W.anchored = ANCHORED
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))

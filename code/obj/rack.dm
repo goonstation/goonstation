@@ -5,7 +5,7 @@
 	density = 1
 	layer = STORAGE_LAYER
 	flags = FPRINT | NOSPLASH
-	anchored = 1
+	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL

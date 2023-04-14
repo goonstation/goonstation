@@ -428,7 +428,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "light"
 	desc = "There's light coming through a hole in the ceiling."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	mouse_opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -441,7 +441,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "stalactite" // c, not g! c as in ceiling, g as in ground. dang!
 	desc = "It's a stalactite."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	icon = 'icons/misc/exploration.dmi'
@@ -451,7 +451,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "stalagmite"
 	desc = "It's a stalagmite."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	icon = 'icons/misc/exploration.dmi'
@@ -461,7 +461,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "snow"
 	desc = "A bit of snow."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -471,7 +471,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "runes"
 	desc = "A set of dimly glowing runes is carved into the rock here."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -481,7 +481,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "cliff"
 	desc = "The edge of a cliff."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -495,7 +495,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "statue"
 	desc = "A statue of some humanoid being."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -517,7 +517,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "pieces of wood"
 	desc = "Theres bits and pieces of wood all over the place."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -527,7 +527,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "mushroom"
 	desc = "Some sort of mushroom."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -627,14 +627,14 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/line_obj/whip
 	name = "Whip"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/whip_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -676,7 +676,7 @@ SYNDICATE DRONE FACTORY AREAS
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
 
 		for(var/obj/O in affected)
-			O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 			O.name = "Whip"
 
 			var/turf/T = O.loc
@@ -705,7 +705,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "boulder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	New(var/atom/sloc)
@@ -744,7 +744,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/ready = 1
 	var/resets = 0
@@ -825,7 +825,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -948,7 +948,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -971,7 +971,7 @@ SYNDICATE DRONE FACTORY AREAS
 	dir = 4
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "These rocks are riddled with small cracks and fissures. A cold draft lingers around them."
 	name = "Rock Wall"
 	var/id = "alchemy"
@@ -1129,7 +1129,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/alchemy/empty
 	name = "Empty Circle"
 	desc = "An Empty Circle, waiting to be filled"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	icon = 'icons/obj/items/alchemy.dmi'
@@ -1157,7 +1157,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/alchemy/circle
 	name = "Alchemy Circle"
 	desc = "A bizzare looking mass of lines and circles is drawn onto the floor here."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	layer = FLOOR_EQUIP_LAYER1
@@ -1296,7 +1296,7 @@ SYNDICATE DRONE FACTORY AREAS
 var/satellite_crash_event_status = -1
 /obj/effects/sat_crash
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
@@ -1321,7 +1321,7 @@ var/satellite_crash_event_status = -1
 		satellite.pixel_x = -16
 		satellite.icon = 'icons/effects/64x64.dmi'
 		satellite.icon_state = "syndsat"
-		satellite.anchored = 1
+		satellite.anchored = ANCHORED
 		satellite.bound_width = 64
 		satellite.bound_height = 64
 		satellite.name = "Syndicate TeleRelay Satellite"

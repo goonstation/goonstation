@@ -6,7 +6,7 @@
 	icon_state = "chefbot-idle"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
 	var/raging = 0

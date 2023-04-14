@@ -1,5 +1,5 @@
 /atom/movable/screen
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_HUD//wow WOW why won't you use /atom/movable/screen/hud, HUD OBJECTS???
 	animate_movement = SLIDE_STEPS
 	text = ""
