@@ -50,7 +50,7 @@
 	if (isnull(limb))
 		return
 	src.name = "[limb]'s bones"
-	src.parent_organ
+	src.parent_organ = limb
 	if (!istype(limb.original_holder,/mob/living/carbon/human) || isnull(limb.original_holder))
 		return
 	src.donor = limb.original_holder
