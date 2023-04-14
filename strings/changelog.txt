@@ -1,3 +1,9 @@
+
+(t)fri apr 14 23
+(u)Wisemonster
+(p)13623
+(e)🪲🎨💅📄🤖|C-Bug, C-Sprites, C-QoL, A-UI, A-Silicons
+(+)Renames the cyborg chemist module to science module.
 (t)thu apr 14 23
 (u)Flappybat
 (e)🎩|A-Clothing
