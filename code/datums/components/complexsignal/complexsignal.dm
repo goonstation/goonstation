@@ -14,14 +14,14 @@
  */
 /datum/component/complexsignal
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	/// The number of complex signals registered to this datum
-	var/registered_count = 0
+	/// The complex signal types registered to this datum
+	var/list/registered_signals = list()
 	/// Whether the component should qdel itself when the number of registered signals drops to zero
 	var/qdel_when_unneeded = TRUE
 
 /datum/component/complexsignal/proc/register(datum/listener, sig_type, proctype, override = FALSE, ...)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	registered_count++
+	src.registered_signals += sig_type
 	. = src._register(arglist(args))
 
 /**
@@ -36,8 +36,8 @@
 /datum/component/complexsignal/proc/unregister(datum/listener, sig_type)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	. = src._unregister(listener, sig_type)
-	registered_count--
-	if(registered_count <= 0 && qdel_when_unneeded)
+	src.registered_signals -= sig_type
+	if(length(registered_signals) <= 0 && qdel_when_unneeded)
 		qdel(src)
 
 /**

@@ -16,15 +16,11 @@
 		src.update_parallax_z()
 
 	/// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
-	proc/update_parallax_layers()
-		var/turf/current_turf = get_turf(src.owner.eye)
-
-		if (!current_turf)
+	proc/update_parallax_layers(turf/previous_turf, turf/current_turf)
+		if (!isturf(previous_turf) || !isturf(current_turf))
 			return
 
-		if (!src.previous_turf)
-			src.previous_turf = current_turf
-			return
+		src.previous_turf = previous_turf
 
 		// Calculate the number of tiles the parallax layers are to move, in pixels.
 		var/x_pixel_change = round((src.previous_turf.x - current_turf.x) * world.icon_size, 1)
@@ -69,8 +65,6 @@
 
 			for (var/atom/movable/screen/parallax_layer/parallax_layer in src.parallax_layers)
 				parallax_layer.offset_layer()
-
-			src.update_parallax_layers()
 
 		src.owner.screen |= src.parallax_layers
 
@@ -155,25 +149,16 @@
 
 /mob/New()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_parallax)
-	RegisterSignal(src, COMSIG_MOB_MOVE_VEHICLE, .proc/update_parallax)
-	RegisterSignal(src, COMSIG_MOVABLE_SET_LOC, .proc/update_parallax)
-
+	RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, .proc/update_parallax)
 	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, .proc/update_parallax_z)
 
 /mob/disposing()
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(src, COMSIG_MOB_MOVE_VEHICLE)
-	UnregisterSignal(src, COMSIG_MOVABLE_SET_LOC)
-
+	UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 	UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
 	. = ..()
 
-/mob/proc/update_parallax()
-	src.client?.parallax_controller?.update_parallax_layers()
-
-	for (var/mob/dead/target_observer/observer in observers)
-		observer.client?.parallax_controller?.update_parallax_layers()
+/mob/proc/update_parallax(datum/component/component, turf/old_turf, turf/new_turf)
+	src.client?.parallax_controller?.update_parallax_layers(old_turf, new_turf)
 
 /mob/proc/update_parallax_z()
 	src.client?.parallax_controller?.update_parallax_z()

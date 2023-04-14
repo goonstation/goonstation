@@ -59,8 +59,6 @@
 
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
-	/// Sent when an mob moves in a vehicle (passengers and driver)
-	#define COMSIG_MOB_MOVE_VEHICLE "mob_move_vehicle"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
 	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
 	/// when an AM changes its loc (thing, previous_loc)
@@ -78,6 +76,8 @@
 
 	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+	/// When the outtermost movable in the .loc chain moves. (works in nested contents) (thing, old_turf, new_turf)
+	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
