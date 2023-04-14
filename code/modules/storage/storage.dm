@@ -250,7 +250,6 @@
 		src.transfer_stored_item(target, get_turf(src.linked_item), user = user)
 		SPAWN(1 DECI SECOND)
 			target.Attackhand(user)
-		return
 	// attempt to load item into storage if you have a free hand
 	else if (isitem(target) && !istype(target, /obj/item/storage))
 		var/obj/O = target
