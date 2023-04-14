@@ -26,7 +26,7 @@
 	desc = "dont see this"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines

@@ -10,7 +10,7 @@
 	desc = "A combined washer/dryer unit used for cleaning clothes."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "laundry"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WELDER | DECON_WRENCH
 	var/on = 0

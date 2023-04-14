@@ -639,7 +639,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon = 'icons/obj/compact_machines.dmi'
 	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	status = REQ_PHYSICAL_ACCESS
 	var/obj/item/robodefibrillator/mounted/defib = null
@@ -1404,7 +1404,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tray"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/max_to_move = 10
 	p_class = 1.5
 

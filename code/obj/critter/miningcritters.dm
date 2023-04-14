@@ -21,7 +21,7 @@
 	var/const/rocks_per_gem = 10
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/obj/item/raw_material/C in view(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"

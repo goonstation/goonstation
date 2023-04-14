@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
-	anchored = 0
+	anchored = UNANCHORED
 	speaker_range = 7
 	broadcasting = 0
 	listening = 0

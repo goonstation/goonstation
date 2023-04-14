@@ -91,7 +91,7 @@ var/global/obj/fuckyou/flashDummy
 		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
-		flashDummy.anchored = 1
+		flashDummy.anchored = ANCHORED
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
@@ -1697,8 +1697,8 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!istype(A) || !istype(B))
 		return
 	if (A.anchored || B.anchored)
-		A.anchored = 1
-		B.anchored = 1
+		A.anchored = ANCHORED
+		B.anchored = ANCHORED
 
 	if (!islist(A.attached_objs))
 		A.attached_objs = list()

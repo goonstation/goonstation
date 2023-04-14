@@ -25,6 +25,9 @@
 
 		. = ..()
 
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
+
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			return

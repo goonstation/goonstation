@@ -7,9 +7,9 @@
 	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
 	blood_id = "beff"
 	burning_suffix = "humanoid"
 	skinresult = /obj/item/material_piece/cloth/brullbarhide

@@ -1,7 +1,7 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
@@ -96,14 +96,14 @@
 	Cross(atom/movable/O as mob|obj)
 		if (O == null)
 			return 0
-		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			return 1
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
-		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			. = 1
 		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
 		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
@@ -401,11 +401,11 @@
 				the_railing.railing_deconstruct()
 			if (RAILING_FASTEN)
 				verbens = "fastens"
-				the_railing.anchored = 1
+				the_railing.anchored = ANCHORED
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
-				the_railing.anchored = 0
+				the_railing.anchored = UNANCHORED
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		ownerMob.visible_message("<span class='alert'>[owner] [verbens] [the_railing].</span>")
 		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")

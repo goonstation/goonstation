@@ -64,7 +64,7 @@
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
-		logTheThing("admin", usr, null, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
 /obj/whitehole
@@ -74,7 +74,7 @@
 	icon_state = "whole"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY

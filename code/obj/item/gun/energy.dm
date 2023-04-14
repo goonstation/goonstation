@@ -151,7 +151,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/burst)
+		projectiles = list(current_projectile)
 		..()
 
 	update_icon()
@@ -159,19 +159,8 @@ TYPEINFO(/obj/item/gun/energy)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			if (current_projectile.type == /datum/projectile/energy_bolt/burst)
-				src.icon_state = "taserburst[ratio]"
-			else if(current_projectile.type == /datum/projectile/energy_bolt)
-				src.icon_state = "taser[ratio]"
+			src.icon_state = "taser[ratio]"
 		..()
-
-	attack_self()
-		..()
-		UpdateIcon()
-		if(istype(src.current_projectile, /datum/projectile/energy_bolt/burst))
-			src.spread_angle = 6
-		else
-			src.spread_angle = initial(src.spread_angle)
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
