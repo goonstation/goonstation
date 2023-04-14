@@ -105,7 +105,7 @@
 			src.add_contents(new thing)
 			amt--
 	if (total_amt > slots)
-		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src.linked_item] has more than [slots] items in it!")
+		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [log_object(src.linked_item)] has more than [slots] items in it!")
 
 /// when clicking the storage item with an object
 /datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user)
