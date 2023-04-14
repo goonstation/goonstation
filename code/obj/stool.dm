@@ -130,6 +130,7 @@
 	proc/deconstruct()
 		if (!src.deconstructable)
 			return
+		unbuckle()
 		if (ispath(src.parts_type))
 			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
 			if (P && src.material)
