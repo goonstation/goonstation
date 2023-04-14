@@ -1545,6 +1545,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
