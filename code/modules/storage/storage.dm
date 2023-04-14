@@ -196,7 +196,7 @@
 	if (istype(over_object, /atom/movable/screen/hud))
 		var/atom/movable/screen/hud/S = over_object
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
-		if (!user.restrained() && !user.stat && src.linked_item.loc == user)
+		if (!user.restrained() && !is_incapacitated(user) && src.linked_item.loc == user)
 			if (S.id == "rhand" && !user.r_hand)
 				user.u_equip(src.linked_item)
 				user.put_in_hand_or_drop(src.linked_item)
@@ -204,7 +204,7 @@
 				user.u_equip(src.linked_item)
 				user.put_in_hand_or_drop(src.linked_item)
 	// if mouse dropping storage item onto self, look inside
-	else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !user.stat && !isintangible(user))
+	else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !is_incapacitated(user) && !isintangible(user))
 		user.s_active?.master.hide_hud(user)
 		if (src.mousetrap_check(user))
 			return
@@ -273,7 +273,7 @@
 
 /// when reaching inside the storage item, check for traps
 /datum/storage/proc/mousetrap_check(mob/user)
-	if (!ishuman(user) || user.stat)
+	if (!ishuman(user) || is_incapacitated(user))
 		return FALSE
 	for (var/obj/item/mousetrap/MT in src.get_contents())
 		if (MT.armed)
