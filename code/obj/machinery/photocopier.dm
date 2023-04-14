@@ -109,7 +109,7 @@ TYPEINFO(/obj/machinery/photocopier)
 					src.paper_info["name"] = P.name
 					src.paper_info["desc"] = P.desc
 					src.paper_info["info"] = P.info
-					src.paper_info["stamps"] = P.stamps
+					src.paper_info["stamps"] = P.stamps.Copy()
 					src.paper_info["form_fields"] = P.form_fields
 					src.paper_info["field_counter"] = P.field_counter
 					src.paper_info["icon_state"] = P.icon_state
@@ -228,6 +228,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.desc = src.paper_info["desc"]
 			P.info = src.paper_info["info"]
 			P.stamps = src.paper_info["stamps"]
+			P.stamps = P.stamps.Copy()
 			P.form_fields = src.paper_info["form_fields"]
 			P.field_counter = src.paper_info["field_counter"]
 			P.icon_state = src.paper_info["icon_state"]
