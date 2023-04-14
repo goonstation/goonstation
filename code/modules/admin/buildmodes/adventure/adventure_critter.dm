@@ -53,7 +53,7 @@
 		"Micro Man" = /obj/critter/microman,
 		"Mimic" = /obj/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
-		"Skeleton" = /obj/critter/magiczombie,
+		"Skeleton" = /mob/living/critter/skeleton,
 		"Space Wasp" = /obj/critter/wasp,
 		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,

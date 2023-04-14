@@ -298,7 +298,6 @@
 			user.put_in_hand(src)
 			src.Attackhand(user)
 			previous_storage.storage.add_contents(src, user, FALSE)
-			return
 		else
 			. = ..()
 
