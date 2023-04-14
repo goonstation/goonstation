@@ -46,21 +46,17 @@
 		donor = null
 		..()
 
-/datum/bone/New(var/host)
+/datum/bone/New(var/obj/item/parts/human_parts/limb)
 	. = ..()
-	if (isnull(host))
+	if (isnull(limb))
 		return
-	name = "[host.name]'s bones"
-	parent_organ = host
-	if (!istype(host,/obj/item/parts/human_parts))
-		return
-	var/obj/item/parts/human_parts/limb = host
-
+	name = "[limb.name]'s bones"
 	if (!istype(limb.original_holder,/mob/living/carbon/human) || isnull(limb.original_holder))
 		return
 	donor = limb.original_holder
 
 /datum/bone/proc/take_damage(var/damage_type, var/amt = 1)
+	// if the bone system is off, don't take damage, obviously.
 	if (!bone_system)
 		return 0
 

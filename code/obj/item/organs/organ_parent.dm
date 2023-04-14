@@ -312,8 +312,8 @@
 			var/mob/living/carbon/human/H = donor
 			//hit_twitch(H)		//no
 			health_update_queue |= H
-			if (bone_system && src.bones && brute && prob(brute * 2))
-				src.bones.take_damage(damage_type)
+			if (src.bones && brute && prob(brute * 2))
+				src.bones.take_damage(damage_type, brute)
 
 		// if (src.get_damage() >= max_damage)
 		if (brute_dam + burn_dam + tox_dam >= max_damage)
