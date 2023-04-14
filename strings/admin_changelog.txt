@@ -1,3 +1,6 @@
+(t)sat apr 15 23
+(u)LeahTheTech
+(+)New admin bioeffect: "robed", lets humans and critters cast wizard spells without needing a staff. Useful for making an army of magic crabs.
 (t)sat apr 8 23
 (u)Mr. Moriarty
 (*)The way antagonist roles are displayed in Player Options has changed. Each current role and the controls to add/remove roles is now centralized under Antagonist Options.
