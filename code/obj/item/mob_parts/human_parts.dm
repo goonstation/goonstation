@@ -15,7 +15,7 @@
 	hitsound = 'sound/impact_sounds/meat_smack.ogg'
 	var/original_DNA = null
 	var/original_fprints = null
-	var/show_on_examine = FALSE
+	var/show_on_examine = 0
 	var/breakable = FALSE
 	/// this tells the limb that their bones should be getting better
 	var/bones_are_healing = FALSE
