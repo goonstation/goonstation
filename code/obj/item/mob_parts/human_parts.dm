@@ -16,9 +16,12 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
+	/// can the bone break?
 	var/breakable = FALSE
-	/// this tells the limb that their bones should be getting better
-	var/bones_are_healing = FALSE
+	/// Is there a cast or splint on?
+	var/has_cast = FALSE
+	/// this multiplier tells them how fast they should fix broken bone damage. It's generally 0 until a cast or splint goes on.
+	var/bone_healrate = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
