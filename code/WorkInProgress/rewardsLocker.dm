@@ -295,8 +295,8 @@
 		if (!istype(activator))
 			return
 
+		var/found = FALSE
 		if (activator.wear_mask && istype(activator.wear_mask, /obj/item/clothing/mask/gas))
-			var/found = FALSE
 			var/O = locate(sacrifice_path) in activator.contents
 			
 		if (istype(O, sacrifice_path))
@@ -314,7 +314,7 @@
 
 		GR.set_loc(get_turf(activator))
 		activator.put_in_hand(GR)
-		activator.u_equip(obj/item/clothing/mask/gas/respirator/W)
+		activator.u_equip(GR)
 		boutput(activator, "You replace some components of the gas mask, refitting it into a [GR]!")
 		return
 
