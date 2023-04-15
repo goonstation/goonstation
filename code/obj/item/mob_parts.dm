@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	///Attachable without surgery?
 	var/easy_attach = FALSE
 
-	/// set to true if this limb has decomposition icons
+	/// set to TRUE if this limb has decomposition icons
 	var/decomp_affected = TRUE
 	var/current_decomp_stage_l = -1
 	var/current_decomp_stage_s = -1
