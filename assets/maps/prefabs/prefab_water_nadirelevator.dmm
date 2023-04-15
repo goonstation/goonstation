@@ -369,6 +369,11 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
+"mu" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "mG" = (
 /obj/storage/crate/packing,
 /obj/item/device/light/glowstick,
@@ -539,10 +544,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/shuttle/sea_elevator)
-"sC" = (
-/obj/item/seed/cannabis,
-/turf/simulated/floor/grime,
-/area/diner/bathroom)
 "sF" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
@@ -1086,10 +1087,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
-"JM" = (
-/obj/item/storage/toilet,
-/turf/simulated/floor/grime,
-/area/diner/bathroom)
 "JO" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1;
@@ -1282,7 +1279,6 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/marker/supplymarker,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "Ou" = (
@@ -1316,9 +1312,6 @@
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
-"Qp" = (
-/turf/simulated/floor/grime,
-/area/diner/bathroom)
 "QH" = (
 /obj/stool/bar,
 /obj/landmark/spawner{
@@ -1391,20 +1384,12 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
-"Su" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 8
-	},
-/obj/marker/supplymarker,
-/turf/simulated/floor/scorched2,
-/area/diner/bathroom)
 "Sw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/bee_trader)
 "Sy" = (
+/obj/machinery/vending/coffee,
 /obj/decal/tile_edge/check/purple,
-/obj/item/instrument/large/jukebox,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "Te" = (
@@ -1455,18 +1440,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"Tz" = (
-/obj/npc/trader/robot{
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
-	greeting = "I got what you need.";
-	illegal = 1;
-	name = "Sketchy D-5";
-	picture = "loungebuddy.png";
-	productset = 1;
-	trader_area = "/area/diner/bathroom"
-	},
-/turf/simulated/floor/grime,
-/area/diner/bathroom)
 "TC" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 1
@@ -3091,9 +3064,9 @@ nw
 nw
 nw
 nw
-JT
-JT
-JT
+nw
+nw
+nw
 JT
 JT
 JT
@@ -3140,9 +3113,9 @@ XP
 nw
 nw
 nw
-JT
-JM
-Sm
+nw
+nw
+nw
 JT
 NW
 Sm
@@ -3189,9 +3162,9 @@ XP
 nw
 nw
 nw
-JT
-Tz
-sC
+nw
+nw
+nw
 JT
 Oo
 Sr
@@ -3238,9 +3211,9 @@ nw
 nw
 nw
 nw
-JT
-Su
-Qp
+nw
+nw
+nw
 JT
 Ow
 rO
@@ -3287,9 +3260,9 @@ nw
 nw
 nw
 nw
-JT
-JT
-oB
+nw
+nw
+uP
 JT
 oB
 JT
@@ -3338,8 +3311,8 @@ nw
 nw
 nw
 uP
-Vf
-lZ
+uP
+mu
 Vf
 rV
 Vf
