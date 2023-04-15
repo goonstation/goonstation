@@ -295,7 +295,7 @@
 		if (!istype(activator))
 			return
 
-		var/found = 0
+		var/found = FALSE
 		var/O = locate(sacrifice_path) in activator.contents
 		if (istype(O, sacrifice_path))
 			var/obj/item/clothing/mask/gas/E = O
