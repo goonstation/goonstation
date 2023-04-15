@@ -38255,6 +38255,7 @@
 	pixel_y = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/marker/supplymarker,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "cbi" = (
@@ -38262,9 +38263,17 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	dir = 4
+	},
+/obj/npc/trader/robot{
+	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
+	greeting = "I got what you need.";
+	illegal = 1;
+	name = "Sketchy D-5";
+	picture = "loungebuddy.png";
+	productset = 1;
+	trader_area = "/area/diner/bathroom"
 	},
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
@@ -43675,6 +43684,7 @@
 /area/station/medical/medbay/surgery/storage)
 "kuQ" = (
 /mob/living/critter/small_animal/cockroach,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "kvl" = (
