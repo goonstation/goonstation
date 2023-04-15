@@ -33,6 +33,11 @@
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.reagents.maximum_volume = src.reagents.maximum_volume + passed_genes?.get_effective_value("endurance") // more endurance = larger and more sturdy balloons!
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
 	update_icon()
 		if (src.reagents)
 			if (src.reagents.total_volume)

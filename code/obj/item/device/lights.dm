@@ -154,6 +154,14 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
+		var/obj/item/device/light/glowstick/newstick = new type(src.loc)
+		newstick.light_c.a = clamp(passed_genes?.get_effective_value("potency")/60, 0.33, 1) * 255
+		newstick.turnon()
+		qdel(src)
+		return newstick
+
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
 		make_cleanable( /obj/decal/cleanable/generic,T)

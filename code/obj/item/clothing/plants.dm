@@ -4,6 +4,17 @@
 	icon_state = "rafflesiahat"
 	item_state = "rafflesiahat"
 
+/obj/item/clothing/head/flower
+	name = "flower"
+	desc = "A pretty nice flower... you shouldn't see this, though."
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
+
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
 	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent."

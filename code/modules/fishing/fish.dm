@@ -35,6 +35,16 @@
 				return
 		..()
 
+/obj/item/fish/botany
+	name = "botanical fish"
+	desc = "A curious type of fish, organical grown. You really should not see this..."
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		var/type = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
+		var/obj/item/fish/newfish = new type(src.loc)
+		qdel(src)
+		return newfish
+
 /obj/item/fish/salmon
 	name = "salmon"
 	desc = "A commercial saltwater fish prized for its flavor."

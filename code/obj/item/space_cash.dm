@@ -41,6 +41,11 @@
 		src.amount = max(amt,default_amount)
 		src.UpdateStackAppearance()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.amount = max(1, passed_genes?.get_effective_value("potency") * rand(2,4))
+		src.UpdateStackAppearance()
+		return src
+
 	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)

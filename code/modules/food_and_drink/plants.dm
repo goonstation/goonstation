@@ -28,6 +28,43 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if (!made_reagents)
 			make_reagents()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		// If we've got a piece of fruit or veg that contains seeds. More often than
+		// not this is fruit but some veg do this too.
+		var/datum/plantgenes/new_genes = src.plantgenes
+
+		HYPpassplantgenes(passed_genes,new_genes)
+		src.generation = harvested_plantpot.generation
+		// Copy the genes from the plant we're harvesting to the new piece of produce.
+
+		if(origin_plant.hybrid)
+			// We need to do special shit with the genes if the plant is a spliced
+			// hybrid since they run off instanced datums rather than referencing
+			// a specific already-existing one.
+			var/plantType = origin_plant.type
+			var/datum/plant/hybrid = new plantType(src)
+			for(var/V in origin_plant.vars)
+				if(issaved(origin_plant.vars[V]) && V != "holder")
+					hybrid.vars[V] = origin_plant.vars[V]
+			src.planttype = hybrid
+
+		// Now we calculate the effect of quality on the item
+		switch(quality_status)
+			if("jumbo")
+				src.heal_amt *= 2
+				src.bites_left *= 2
+			if("rotten")
+				src.heal_amt = 0
+			if("malformed")
+				src.heal_amt += rand(-2,2)
+				src.bites_left += rand(-2,2)
+		if (src.bites_left < 1)
+			src.bites_left = 1
+		// We also want to put any reagents the plant produces into the new item.
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
+
 	disposing()
 		src.plantgenes = null
 		..()
