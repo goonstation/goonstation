@@ -241,11 +241,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 		var/obj/item/storage/mechanics/cabinet = null
 		if(istype(comsig_target, /obj/item))
 			var/obj/item/I = comsig_target
-			if (istype(I.stored.linked_item, /obj/item/storage/mechanics))
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
 				cabinet = I.stored.linked_item
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
-			if (istype(I.stored.linked_item, /obj/item/storage/mechanics))
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
 				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
@@ -280,11 +280,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 		var/obj/item/storage/mechanics/cabinet = null
 		if(istype(comsig_target, /obj/item))
 			var/obj/item/I = comsig_target
-			if (istype(I.stored.linked_item, /obj/item/storage/mechanics))
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
 				cabinet = I.stored.linked_item
 		if(istype(trigger, /obj/item))
 			var/obj/item/I = trigger
-			if (istype(I.stored.linked_item, /obj/item/storage/mechanics))
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
 				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
