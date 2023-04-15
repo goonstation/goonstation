@@ -291,7 +291,7 @@
 	var/sacrifice_path = /obj/item/clothing/mask/gas
 	var/reward_path = /obj/item/clothing/mask/gas/respirator
 
-	rewardActivate(var/mob/activator) //code jank, COMMENCE!
+	rewardActivate(var/mob/activator)
 		if (!istype(activator))
 			return
 
@@ -306,14 +306,14 @@
 		if (!found)
 			boutput(activator, "You need to be holding a gas mask in order to claim this reward.")
 
-		var/obj/item/clothing/mask/gas/respirator/LG = new reward_path()
-		if (!istype(LG))
+		var/obj/item/clothing/mask/gas/respirator/GR = new reward_path()
+		if (!istype(GR))
 			boutput(activator, "Something went wrong. The reward path got screwed up somehow. Call 1-800-CODER for gear modification support.")
 
-		LG.set_loc(get_turf(activator))
-		activator.put_in_hand(LG)
-		boutput(activator, "You replace some components of the gas mask, refitting it into a [LG]!") //replaced C.mob with activator
-		return // deleted some variables from lawby code, let's hope they weren't important -RD
+		GR.set_loc(get_turf(activator))
+		activator.put_in_hand(GR)
+		boutput(activator, "You replace some components of the gas mask, refitting it into a [GR]!")
+		return
 
 /datum/achievementReward/swatgasmask
 	title = "(Skin) SWAT Gas Mask"
