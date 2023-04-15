@@ -81,6 +81,7 @@ var/global/list/mapNames = list(
 	var/list/atom/movable/screen/parallax_layer/parallax_layers = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
 	var/walls = /turf/simulated/wall/auto
@@ -212,6 +213,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/typhon/donut2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
 	escape_dir = WEST
@@ -256,6 +258,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
 	escape_dir = NORTH
@@ -319,6 +322,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/typhon/cogmap,
 		/atom/movable/screen/parallax_layer/planet/mundus,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
 	windows = /obj/window/auto
@@ -373,6 +377,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/typhon/cogmap2,
 		/atom/movable/screen/parallax_layer/planet/iustitia,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
 	windows = /obj/window/auto

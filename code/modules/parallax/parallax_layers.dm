@@ -89,6 +89,10 @@
 	static_colour = TRUE
 	parallax_value = 0.1
 
+	sparse
+		parallax_icon_state = "asteroids_sparse"
+		parallax_value = 0.15
+
 
 // Void Layers
 /atom/movable/screen/parallax_layer/void
