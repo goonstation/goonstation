@@ -154,7 +154,7 @@
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
-			if ((incoming.storage && !length(incoming.storage.get_contents())) || !length(incoming.contents)) // in case it changed between asking and them responding
+			if (!length(incoming.contents)) // in case it changed between asking and them responding
 				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
 				return
 			if (istype(incoming, /obj/item/ore_scoop))
