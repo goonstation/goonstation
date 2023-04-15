@@ -285,7 +285,7 @@
 
 /datum/achievementReward/respirator
 	title = "(Skin) Gas Respirator"
-	desc = "Replaces a gas mask you're holding with a gas respirator. Use inhand to change style."
+	desc = "Replaces a gas mask you're wearing with a gas respirator. Use inhand to change style."
 	required_medal = "Old Enemy"
 	once_per_round = FALSE
 	var/sacrifice_path = /obj/item/clothing/mask/gas
@@ -304,14 +304,14 @@
 			qdel(E)
 
 		if (!found)
-			boutput(activator, "You need to be holding a gas mask in order to claim this reward.")
+			boutput(activator, "Oops! You cannot claim this reward without a gas mask.")
 
 		var/obj/item/clothing/mask/gas/respirator/GR = new reward_path()
 		if (!istype(GR))
 			boutput(activator, "Something went wrong. The reward path got screwed up somehow. Call 1-800-CODER for gear modification support.")
 
 		GR.set_loc(get_turf(activator))
-		activator.put_in_hand(GR)
+		activator.wear_mask(GR)
 		boutput(activator, "You replace some components of the gas mask, refitting it into a [GR]!")
 		return
 
