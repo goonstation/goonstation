@@ -1,5 +1,7 @@
 /atom/movable/screen/parallax_layer
 	plane = PLANE_PARALLAX
+	appearance_flags = KEEP_TOGETHER | TILE_BOUND
+	screen_loc = "CENTER,CENTER"
 
 	/// The client that this parallax layer belongs to.
 	var/client/owner
@@ -52,8 +54,6 @@
 
 	New(turf/newLoc, new_owner, list/params)
 		. = ..()
-		src.owner = new_owner
-		src.appearance_flags = KEEP_TOGETHER | TILE_BOUND
 
 		if (length(params))
 			if (params["parallax_icon"])
@@ -75,13 +75,13 @@
 			if (params["initial_y_coordinate"])
 				src.initial_y_coordinate = params["initial_y_coordinate"]
 
+		src.owner = new_owner
 		src.layer += (src.parallax_value / 10)
 
 		var/icon/icon = icon(src.parallax_icon, src.parallax_icon_state)
 		src.icon_width = icon.Width()
 		src.icon_height = icon.Height()
 
-		src.screen_loc = "CENTER,CENTER"
 		src.tessellate()
 		src.offset_layer()
 
