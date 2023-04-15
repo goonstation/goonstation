@@ -361,7 +361,6 @@ var/makingpowernetssince = 0
 			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
-	var/numapc = 0
 	var/non_full_apcs = 0
 
 	if (!nodes)
@@ -376,7 +375,6 @@ var/makingpowernetssince = 0
 		if( istype( term.master, /obj/machinery/power/apc ) )
 			var/obj/machinery/power/apc/check_apc = term.master
 			if(check_apc.load_cycle())
-				numapc++
 				apcload += check_apc.cycle_load
 				our_apcs += check_apc
 				if(check_apc.charging != 2)
