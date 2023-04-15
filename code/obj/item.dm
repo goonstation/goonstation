@@ -310,9 +310,7 @@
 	..()
 	if(prob(src.mimic_chance))
 		SPAWN(10 SECONDS)
-			var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
-			replacer.disguise_as(src)
-			qdel(src)
+			src.become_mimic()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)

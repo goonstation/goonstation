@@ -562,3 +562,8 @@ TYPEINFO(/obj)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 		else if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
+
+/obj/proc/become_mimic()
+	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
+	replacer.disguise_as(src)
+	qdel(src)
