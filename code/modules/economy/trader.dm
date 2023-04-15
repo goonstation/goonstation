@@ -815,6 +815,7 @@
 				src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
+				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
 				src.goods_sell += new /datum/commodity/drugs/crank(src)
 				//src.goods_sell += new /datum/commodity/drugs/bathsalts(src)

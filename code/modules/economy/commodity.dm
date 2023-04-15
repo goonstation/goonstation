@@ -869,8 +869,8 @@
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
-	price = 1000
-	baseprice = 1000
+	price = 1500
+	baseprice = 1500
 	upperfluc = 500
 	lowerfluc = -500
 
