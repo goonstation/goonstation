@@ -287,7 +287,7 @@
 	title = "(Skin) Gas Respirator"
 	desc = "Replaces a gas mask you're holding with a gas respirator. Use inhand to change style."
 	required_medal = "Old Enemy"
-	once_per_round = 0
+	once_per_round = FALSE
 	var/sacrifice_path = /obj/item/clothing/mask/gas
 	var/reward_path = /obj/item/clothing/mask/gas/respirator
 
