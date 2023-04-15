@@ -17,6 +17,9 @@
 	metabolizes = FALSE
 	use_stamina = FALSE
 
+	var/obj/decal/cleanable/cleanable_type = /obj/decal/cleanable/blood
+	var/what_is_sucked_out = "blood"
+
 	New()
 		UpdateParticles(new/particles/bloody_aura, "bloodaura")
 
@@ -89,7 +92,7 @@
 
 	death(gibbed, do_drop_equipment)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE, -1)
-		new /obj/decal/cleanable/blood(get_turf(src))
+		new src.cleanable_type(get_turf(src))
 		..()
 		qdel(src)
 
@@ -104,12 +107,14 @@
 
 		playsound(user.loc, 'sound/effects/ghost2.ogg', 30, TRUE, -1)
 
+		var/mob/living/critter/bloodling/bloodling = user
+
 		if (prob(66))
 			random_brute_damage(target, rand(5, 10))
 			take_bleeding_damage(target, null, rand(10, 35), DAMAGE_CRUSH, 5, get_turf(target))
-			boutput(target, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
+			boutput(target, "<span class='combat'><b>You feel [bloodling.what_is_sucked_out] getting drawn out through your skin!</b></span>")
 		else
-			boutput(target, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
+			boutput(target, "<span class='combat'>You feel uncomfortable. Your [bloodling.what_is_sucked_out] seeks to escape you.</span>")
 			target.changeStatus("slowed", 3 SECONDS, 3)
 
 /datum/healthHolder/bloodling_brute
@@ -119,3 +124,10 @@
 /datum/healthHolder/bloodling_burn
 	name = "burn health"
 	associated_damage_type = "burn"
+
+// for admin gimmicks
+/mob/living/critter/bloodling/ketchupling
+	name = "Ketchupling"
+	desc = "A force of pure tomato and evil. They shy away from that which is holy."
+	cleanable_type = /obj/decal/cleanable/tomatosplat
+	what_is_sucked_out = "ketchup"
