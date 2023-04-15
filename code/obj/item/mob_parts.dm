@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
 	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
 	var/handlistPart
-	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite, but for foot sprites, presumably
+	/// Used by getPartIconState to determine the attached-to-mob-sprite non-hand sprite
 	var/partlistPart
 	/// for medical crap
 	var/datum/bone/bones = null
