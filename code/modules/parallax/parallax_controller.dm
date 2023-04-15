@@ -17,17 +17,9 @@
 
 	/// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
 	proc/update_parallax_layers(turf/previous_turf, turf/current_turf)
-		if (!isturf(previous_turf) || !isturf(current_turf))
-			return
-
-		src.previous_turf = previous_turf
-
-		// Calculate the number of tiles the parallax layers are to move, in pixels.
-		var/x_pixel_change = round((src.previous_turf.x - current_turf.x) * world.icon_size, 1)
-		var/y_pixel_change = round((src.previous_turf.y - current_turf.y) * world.icon_size, 1)
-
-		if (!x_pixel_change && !y_pixel_change)
-			return
+		// Calculate the number of tiles the client's eye has moved, in pixels.
+		var/x_pixel_change = round((previous_turf.x - current_turf.x) * world.icon_size, 1)
+		var/y_pixel_change = round((previous_turf.y - current_turf.y) * world.icon_size, 1)
 
 		src.previous_turf = current_turf
 
