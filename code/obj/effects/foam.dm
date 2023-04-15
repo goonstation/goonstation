@@ -6,7 +6,7 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	plane = PLANE_NOSHADOW_BELOW
@@ -180,7 +180,7 @@
 	desc = "It's foam."
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "foam"
 	animate_movement = SLIDE_STEPS

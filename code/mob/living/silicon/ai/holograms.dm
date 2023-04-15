@@ -178,7 +178,7 @@
 	desc = "A hologram projected by an AI. Usually lasts about 30 seconds."
 	icon = 'icons/misc/holograms.dmi'
 	icon_state = "caution"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	alpha = 0		//animates to 180 in New
 	// plane = PLANE_HUD

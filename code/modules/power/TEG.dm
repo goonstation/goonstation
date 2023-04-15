@@ -73,7 +73,7 @@
 	var/variant_b_active = FALSE
 	var/warning_active = FALSE
 
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 
 	var/datum/pump_ui/ui
@@ -554,14 +554,14 @@ datum/pump_ui/circulator_ui
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/teg_connector
 	name = "\improper TEG connector"
 	desc = "Connects a Thermo-Electric Generator to its turbines."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "teg_connector"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/machinery/teg_connector/random_appearance
@@ -573,7 +573,7 @@ datum/pump_ui/circulator_ui
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	//var/lightsbusted = 0
 
@@ -1418,7 +1418,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	name = "Zaojun-1 Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 

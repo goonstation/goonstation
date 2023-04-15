@@ -5,7 +5,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	name = "Zaojun-2 5kW Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/active = 0
 	var/last_active = 0

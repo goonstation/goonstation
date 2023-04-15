@@ -365,7 +365,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/smuggler_den)
 "aT" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "aU" = (

@@ -4,7 +4,7 @@
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
 	req_access = list(access_security)
-	anchored = TRUE
+	anchored = ANCHORED
 	var/id = null
 	var/time = 30
 	var/timing = FALSE

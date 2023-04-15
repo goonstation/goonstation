@@ -8,7 +8,7 @@
 	icon_state = "alarm0"
 	power_usage = 5
 	power_channel = ENVIRON
-	anchored = 1
+	anchored = ANCHORED
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
