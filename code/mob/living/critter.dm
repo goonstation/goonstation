@@ -1,4 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -243,6 +244,28 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (HH.count_in_total)
 				max_health += HH.maximum_value
 				health += HH.maximum_value
+
+	///admin varediting proc
+	proc/modify_health()
+		set name = "Modify critter health"
+		var/chosen = input(usr, "Pick health type") in (src.healthlist + "All")
+		if (!chosen)
+			return
+		var/value = input(usr, "Input new value") as num
+		if (!value)
+			return
+		var/to_update = list()
+		if (chosen == "All")
+			to_update = src.healthlist
+		else
+			to_update = list("chosen" = src.healthlist[chosen])
+		for (var/holder_id in to_update)
+			var/datum/healthHolder/holder = to_update[holder_id]
+			holder.maximum_value = value
+			holder.value = value
+			holder.last_value = value
+
+		src.count_healths()
 
 	// begin convenience procs
 	proc/add_hh_flesh(var/max, var/mult)
