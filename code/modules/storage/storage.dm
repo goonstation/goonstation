@@ -262,7 +262,7 @@
 		if (user.equipped() == null)
 			target.Attackhand(user)
 			if (target in user.equipped_list())
-				src.add_contents(target, user)
+				src.storage_item_attack_by(target, user)
 		else
 			boutput(user, "<span class='notice'>Your hands are full!</span>")
 		user.swap_hand()
