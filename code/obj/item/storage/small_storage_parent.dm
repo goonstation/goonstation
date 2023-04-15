@@ -44,17 +44,6 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			for (var/obj/item/I as anything in W.storage.get_contents())
-				if (src.storage.is_full())
-					break
-				if (src.storage.check_can_hold(I))
-					W.storage.transfer_stored_item(I, src, TRUE, user)
-			return
-		else
-			return ..()
-
 /obj/item/storage/box/starter // the one you get in your backpack
 	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
