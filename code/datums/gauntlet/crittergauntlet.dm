@@ -1203,7 +1203,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Fermid"
 		point_cost = 3
 		count = 3
-		types = list(/obj/critter/fermid)
+		types = list(/mob/living/critter/fermid)
 
 	lion
 		name = "Lion"
