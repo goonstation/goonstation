@@ -15,6 +15,8 @@
 	var/can_pickup_item = TRUE
 	var/attack_strength_modifier = 1 // scale from 0 to 1 on how well this limb can attack/hit things with items
 	var/can_gun_grab = TRUE // if the limb can gun grab with a held gun
+	/// is the arm broken
+	var/broken = FALSE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -40,6 +42,9 @@
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if(!target) // fix runtime Cannot execute null.attack hand().
 			return
+		if (broken)
+			// todo: figure out how to let this limb know which arm it is lol
+			holder.holder.TakeDamage("r_arm", rand(2, 6), 0, 0)
 		target.Attackhand(user, params, location, control)
 
 	proc/harm(mob/living/target, var/mob/living/user)
