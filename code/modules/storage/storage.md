@@ -28,7 +28,7 @@ Storage datums will also try updating the atom's icon upon an item being removed
 A new storage datum type should be created when a type is needed that rewrites how adding and removing contents to a linked item works, or a significant change is needed that warrants a new type. Ex. See `/datum/storage/bible`.
 
 ## Lower level things and practices to note
-* Items in an atom's storage are kept track of in the atom's `.contents` list _and_ in the storage datum, but when iterating through storagecontents, storage datum procs should be used for getting the contents.
+* Items in an atom's storage are kept track of in the atom's `.contents` list _and_ in the storage datum, but when iterating through storage contents, storage datum procs should be used for getting the contents.
 * For atoms of type `/obj/item`, `src.loc` and `src.stored.linked_item` will be the same, but the second should be used for consistency and clarity.
 
 ## Examples
