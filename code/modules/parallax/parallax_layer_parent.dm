@@ -20,7 +20,7 @@
 	var/static_colour = FALSE
 
 	/**
-	 * How much the parallax layer should move in responce to the player moving;
+	 * How much the parallax layer should move in response to the player moving;
 	 * - Negative values will result in the layer moving in the same direction as the player.
 	 * - A value of 0 will result in the layer appearing stationary relative to the player.
 	 * - A value of 0.5 will result in the layer moving half the number of pixels that the player moves.
