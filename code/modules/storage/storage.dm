@@ -5,13 +5,13 @@
 // see storage.md for an intro to storage datums
 
 /// add storage to an atom
-/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), check_wclass = FALSE,
-		max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
+/atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
+		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -26,6 +26,8 @@
 	var/list/can_hold = null
 	/// Exact types that can be held, in addition to can_hold, if it has types
 	var/list/can_hold_exact = null
+	/// Types that have a w_class holdable but that the storage will not hold
+	var/list/prevent_holding = null
 	/// If set, if can_hold is used, an item not in can_hold or can_hold_exact can fit in the storage if its weight is low enough
 	var/check_wclass = FALSE
 	/// Storage hud attached to the storage
@@ -45,7 +47,8 @@
 	/// All items stored
 	var/list/stored_items = null
 
-/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/prevent_holding, list/restricted_from_holding, check_wclass, max_wclass, \
+		slots, sneaky, opens_if_worn)
 	..()
 	src.stored_items = list()
 
@@ -53,6 +56,7 @@
 	src.hud = new (src)
 	src.can_hold = can_hold
 	src.can_hold_exact = can_hold_exact
+	src.prevent_holding = prevent_holding
 	src.check_wclass = check_wclass
 	src.max_wclass = max_wclass
 	src.slots = slots
@@ -119,7 +123,7 @@
 
 	// cases for if it seems the item cant be stored
 	if (canhold != STORAGE_CAN_HOLD)
-		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT)
+		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT || canhold == STORAGE_RESTRICTED_TYPE)
 			// locked storage check
 			if (istype(W, /obj/item/storage/secure))
 				var/obj/item/storage/secure/S = W
@@ -305,6 +309,10 @@
 
 	if (W.cant_drop)
 		return STORAGE_WONT_FIT
+
+	for (var/type in src.prevent_holding)
+		if (ispath(type) && istype(W, type))
+			return STORAGE_RESTRICTED_TYPE
 
 	// if can_hold is defined, check against that
 	if (length(src.can_hold))

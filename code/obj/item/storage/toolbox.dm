@@ -14,6 +14,7 @@
 	throw_range = 7
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
+	prevent_holding = list(/obj/item/storage/box)
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -63,15 +64,7 @@
 			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
 
-		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			for (var/obj/item/I as anything in W.storage.get_contents())
-				if (src.storage.is_full())
-					break
-				if (src.storage.check_can_hold(I))
-					W.storage.transfer_stored_item(I, src, TRUE, user)
-			return
-		else
-			return ..()
+		return ..()
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
