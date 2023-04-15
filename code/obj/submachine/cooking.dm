@@ -1118,9 +1118,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:UpdateIcon()
+				S.UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
-				W:tooltip_rebuild = 1
+				S.tooltip_rebuild = 1
 			return
 		else
 			var/proceed = 0

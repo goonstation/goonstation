@@ -9,8 +9,8 @@
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
-	var/list/allowed = list(/obj/item/)
-	var/list/exceptions = list() //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
+	var/list/allowed
+	var/list/exceptions  //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
 	var/maximal_w_class = W_CLASS_BULKY //! the maximum weight class the satchels should be able to carry.
 	var/itemstring = "items"
 	inventory_counter_enabled = 1
@@ -18,6 +18,8 @@
 
 	New()
 		..()
+		allowed = list(/obj/item/)
+		exceptions = list()
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
@@ -180,7 +182,7 @@
 			return 0
 		var/increment = 0
 		//since we need to add additional manipulation to the item in hand, we won't touch the last item here
-		var/amount_of_stack_splits = min(src.maxitems - src.contents.len, item_to_split.amount - 1, src.max_stack_scoop)
+		var/amount_of_stack_splits = min(src.maxitems - length(src.contents), item_to_split.amount - 1, src.max_stack_scoop)
 		for (increment = 0, increment < amount_of_stack_splits, increment++)
 			var/obj/item/splitted_stack = item_to_split.split_stack(1)
 			splitted_stack.set_loc(src)
@@ -241,17 +243,21 @@
 		name = "produce satchel"
 		desc = "A leather satchel for carrying around crops and seeds."
 		icon_state = "hydrosatchel"
-		allowed = list(/obj/item/seed,
-		/obj/item/plant,
-		/obj/item/clothing/head/flower,
-		/obj/item/reagent_containers/food/snacks,
-		/obj/item/organ,
-		/obj/item/clothing/head/butt,
-		/obj/item/parts/human_parts/arm,
-		/obj/item/parts/human_parts/leg,
-		/obj/item/raw_material/cotton,
-		/obj/item/feather)
+
 		itemstring = "items of produce"
+
+		New()
+			..()
+			allowed = list(/obj/item/seed,
+			/obj/item/plant,
+			/obj/item/clothing/head/flower,
+			/obj/item/reagent_containers/food/snacks,
+			/obj/item/organ,
+			/obj/item/clothing/head/butt,
+			/obj/item/parts/human_parts/arm,
+			/obj/item/parts/human_parts/leg,
+			/obj/item/raw_material/cotton,
+			/obj/item/feather)
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()
@@ -270,8 +276,11 @@
 		name = "mining satchel"
 		desc = "A leather satchel for holding various ores."
 		icon_state = "miningsatchel"
-		allowed = list(/obj/item/raw_material/)
 		itemstring = "ores"
+
+		New()
+			..()
+			allowed = list(/obj/item/raw_material/)
 
 		large
 			name = "large mining satchel"
@@ -289,9 +298,12 @@
 		desc = "A cool plastic case for storing little figurines!"
 		icon_state = "figurinecase"
 		maxitems = 30
-		allowed = list(/obj/item/toy/figure)
 		flags = null
 		w_class = W_CLASS_NORMAL
+
+		New()
+			..()
+			allowed = list(/obj/item/toy/figure)
 
 		update_icon()
 

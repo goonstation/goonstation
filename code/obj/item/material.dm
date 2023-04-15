@@ -49,7 +49,7 @@
 			if (!manipulated_satchel.check_valid_content(src))
 				boutput(user, "<span class='alert'>[manipulated_satchel] cannot hold that kind of item!</span>")
 				return
-			if (manipulated_satchel.contents.len < manipulated_satchel.maxitems)
+			if (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)
 				var/max_stack_reached = FALSE
 				if (src.amount > 1)
 					boutput(user, "<span class='notice'>You begin to fill [manipulated_satchel] with [src].</span>")
@@ -58,11 +58,11 @@
 						max_stack_reached = TRUE
 				else
 					boutput(user, "<span class='notice'>You put [src] in [manipulated_satchel].</span>")
-				if (!max_stack_reached && (manipulated_satchel.contents.len < manipulated_satchel.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+				if (!max_stack_reached && (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					user.u_equip(src)
 					src.set_loc(manipulated_satchel)
 					src.dropped(user)
-				if (manipulated_satchel.contents.len == manipulated_satchel.maxitems)
+				if (length(manipulated_satchel.contents) == manipulated_satchel.maxitems)
 					boutput(user, "<span class='notice'>[W] is now full!</span>")
 				manipulated_satchel.tooltip_rebuild = 1
 				manipulated_satchel.UpdateIcon()
@@ -95,37 +95,37 @@
 				if (src.amount > 1)
 					var/increment = 0
 					//since we need to add additional manipulation to the item in hand, we won't touch the last item here
-					var/amount_of_stack_splits = min(S.satchel.maxitems - S.satchel.contents.len, src.amount - 1, S.satchel.max_stack_scoop)
+					var/amount_of_stack_splits = min(S.satchel.maxitems - length(S.satchel.contents), src.amount - 1, S.satchel.max_stack_scoop)
 					if (amount_of_stack_splits == S.satchel.max_stack_scoop)
 						max_stack_reached = TRUE
 					for (increment = 0, increment < amount_of_stack_splits, increment++)
 						var/obj/item/splitted_stack = src.split_stack(1)
 						splitted_stack.set_loc(S.satchel)
-				if (!max_stack_reached && (S.satchel.contents.len < S.satchel.maxitems))
+				if (!max_stack_reached && (length(S.satchel.contents) < S.satchel.maxitems))
 					src.set_loc(S.satchel)  // if we split up the item and it was more than the satchel can find we should not add the rest
 				S.satchel.UpdateIcon()
-				if (S.satchel.contents.len >= S.satchel.maxitems)
+				if (length(S.satchel.contents) >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
 				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
-				if (SCOOP.contents.len >= SCOOP.capacity || !src.scoopable)
+				if (length(SCOOP.contents) >= SCOOP.capacity || !src.scoopable)
 					return
 				var/max_stack_reached = FALSE
 				if (src.amount > 1)
 					var/increment = 0
 					//since we need to add additional manipulation to the item in hand, we won't touch the last item here
-					var/amount_of_stack_splits = min(SCOOP.capacity - SCOOP.contents.len, src.amount - 1, SCOOP.max_stack_scoop)
+					var/amount_of_stack_splits = min(SCOOP.capacity - length(SCOOP.contents), src.amount - 1, SCOOP.max_stack_scoop)
 					if (amount_of_stack_splits == SCOOP.max_stack_scoop)
 						max_stack_reached = TRUE
 					for (increment = 0, increment < amount_of_stack_splits, increment++)
 						var/obj/item/splitted_stack = src.split_stack(1)
 						splitted_stack.set_loc(SCOOP)
-				if (!max_stack_reached && (SCOOP.contents.len < SCOOP.capacity)) // if we split up the item and it was more than the satchel can find we should not add the rest
+				if (!max_stack_reached && (length(SCOOP.contents) < SCOOP.capacity)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					src.set_loc(SCOOP)
-				if (SCOOP.contents.len >= SCOOP.capacity)
+				if (length(SCOOP.contents) >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
 					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return

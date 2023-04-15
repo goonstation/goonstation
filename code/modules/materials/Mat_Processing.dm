@@ -142,7 +142,7 @@ TYPEINFO(/obj/machinery/processor)
 				if(I.material)
 					I.set_loc(src)
 			S.UpdateIcon()
-			S:tooltip_rebuild = 1
+			S.tooltip_rebuild = 1
 			return
 
 		else if (W.cant_drop) //For borg held items
