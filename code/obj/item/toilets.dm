@@ -122,7 +122,7 @@ TYPEINFO(/obj/item/storage/toilet)
 		if (T)
 			var/turf/target = locate(T.x, T.y, 5)
 			for (var/obj/item/I as anything in src.storage.get_contents())
-				src.storage.transfer_stored_item(I, get_turf(src))
+				src.storage.transfer_stored_item(I, target)
 #endif
 		src.clogged = 0
 		for (var/item in src.storage.get_contents())
