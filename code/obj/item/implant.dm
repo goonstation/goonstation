@@ -316,6 +316,7 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
+		SPAWN(15 SECONDS)
 		health_alert()
 		..()
 
@@ -323,16 +324,21 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report death")
+		SPAWN(15 SECONDS)
 		death_alert()
 		..()
 
 	proc/health_alert()
 		if (!src.owner)
 			return
+		if (!src)
+			return
 		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
+			return
+		if (!src)
 			return
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
