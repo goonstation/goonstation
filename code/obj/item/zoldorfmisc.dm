@@ -310,7 +310,7 @@
 						var/obj/item/storage/fanny/pack = new /obj/item/storage/fanny
 						for (var/item in list(/obj/item/crowbar, /obj/item/screwdriver, /obj/item/wirecutters, /obj/item/wrench, /obj/item/weldingtool, \
 								/obj/item/device/multitool))
-							pack.storage.add_contents(new item)
+							pack.storage.add_contents(new item(pack))
 						user.put_in_hand_or_drop(pack)
 					if("oxy")
 						user.put_in_hand_or_drop(new /obj/item/tank/emergency_oxygen)

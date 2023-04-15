@@ -106,7 +106,7 @@
 			amt = abs(spawn_contents[thing])
 		total_amt += amt
 		while (amt > 0)
-			src.add_contents(new thing)
+			src.add_contents(new thing(src.linked_item))
 			amt--
 	if (total_amt > slots)
 		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [log_object(src.linked_item)] has more than [slots] items in it!")

@@ -1434,7 +1434,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
 			for (var/i = 1 to 2)
-				B.storage.add_contents(new /obj/item/stamped_bullion)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1541,7 +1541,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/clipboard/with_pen)
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1568,7 +1568,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
 			for (var/i = 1 to 2)
-				B.storage.add_contents(new /obj/item/stamped_bullion)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1600,10 +1600,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"})
-			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera)
-			B.storage.add_contents(new /obj/item/device/audio_log)
-			B.storage.add_contents(new /obj/item/clipboard/with_pen)
+			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
+			B.storage.add_contents(new /obj/item/device/audio_log(B))
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 

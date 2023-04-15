@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/storage/toilet)
 		if (prob(1))
 			var/something = pick(trinket_safelist)
 			if (ispath(something))
-				src.storage.add_contents(new something)
+				src.storage.add_contents(new something(src))
 
 /obj/item/storage/toilet/random/gold // important!!
 	New()

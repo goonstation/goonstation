@@ -225,14 +225,14 @@
 		src.hunger_message_level = 0
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
-		var/obj/item/storage/box/per_person = new
+		var/obj/item/storage/box/per_person = new /obj/item/storage/box(src)
 		src.storage.add_contents(per_person)
-		var/obj/item/storage/box/Gcontents = new
+		var/obj/item/storage/box/Gcontents = new /obj/item/storage/box(src)
 		per_person.storage.add_contents(Gcontents)
 		per_person.name = "Box-'[M.real_name]'"
 		for(var/obj/item/looted in M)
 			if(Gcontents.storage.is_full())
-				Gcontents = new
+				Gcontents = new /obj/item/storage/box(src)
 				per_person.storage.add_contents(Gcontents)
 			if(istype(looted, /obj/item/implant)) continue
 			M.u_equip(looted)
