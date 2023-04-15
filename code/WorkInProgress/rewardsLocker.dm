@@ -296,7 +296,7 @@
 			return
 
 		var/found = FALSE
-		var/O = locate(sacrifice_path) in activator.contents
+		var/O = locate(sacrifice_path) in activator.slot_wear_mask
 		if (istype(O, sacrifice_path))
 			var/obj/item/clothing/mask/gas/E = O
 			activator.remove_item(E)
@@ -304,14 +304,14 @@
 			qdel(E)
 
 		if (!found)
-			boutput(activator, "Oops! You cannot claim this reward without a gas mask.")
+			boutput(activator, "You must be wearing a gas mask to claim this reward.")
 
 		var/obj/item/clothing/mask/gas/respirator/GR = new reward_path()
 		if (!istype(GR))
 			boutput(activator, "Something went wrong. The reward path got screwed up somehow. Call 1-800-CODER for gear modification support.")
 
 		GR.set_loc(get_turf(activator))
-		activator.wear_mask(GR)
+		activator.equip_if_possible(GR)
 		boutput(activator, "You replace some components of the gas mask, refitting it into a [GR]!")
 		return
 
