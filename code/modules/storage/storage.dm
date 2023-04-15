@@ -315,7 +315,7 @@
 			return STORAGE_RESTRICTED_TYPE
 
 	// if can_hold is defined, check against that
-	if (length(src.can_hold))
+	if (length(src.can_hold) && !src.is_full())
 		// early skip if weight class is allowed
 		if (src.check_wclass && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
@@ -366,6 +366,10 @@
 			user.visible_message("<span class='notice'>[user] has added [I] to [src.linked_item]!</span>",
 				"<span class='notice'>You have added [I] to [src.linked_item].</span>")
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+
+/// use this versus add_contents() if you also want extra safety checks
+/datum/storage/proc/add_contents_safe(obj/item/I, mob/user = null, visible = TRUE)
+	src.storage_item_attack_by(I, user)
 
 /// when transfering something in the storage out
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)

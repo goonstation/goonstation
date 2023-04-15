@@ -346,7 +346,7 @@
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.add_contents(I, user)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 
@@ -405,7 +405,7 @@
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.add_contents(I, user)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 

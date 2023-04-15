@@ -2031,11 +2031,20 @@
 				equipped = 1
 		if (slot_in_backpack)
 			if (src.back?.storage)
-				src.back.storage.add_contents(I, src, !job_slot_equip)
-				equipped = 1
+				if (job_slot_equip)
+					src.back.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.back.storage.add_contents_safe(I, src)
+					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
 			if (src.belt?.storage)
-				src.belt.storage.add_contents(I, src, !job_slot_equip)
+				if (job_slot_equip)
+					src.belt.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.belt.storage.add_contents_safe(I, src)
+					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
 	if (equipped)
