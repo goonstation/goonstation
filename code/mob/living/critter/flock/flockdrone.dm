@@ -1317,7 +1317,7 @@
 
 	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1, extrarange = -10)
 
-	if(length(I.storage?.get_contents()) || length(I.contents))
+	if(length(I.contents))
 		var/anything_tumbled = FALSE
 		for (var/obj/item/W as anything in I.storage?.get_contents())
 			I.storage.transfer_stored_item(W, get_turf(flock_owner), user = flock_owner)
