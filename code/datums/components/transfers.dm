@@ -139,7 +139,7 @@
 	if (incoming.storage || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
-			if(incoming.storage || length(incoming.contents))
+			if(length(incoming.contents))
 				action = tgui_input_list(attacker, "What do you want to do with [incoming]?", "[parent]", list(CONTAINER_CHOICE_PLACE, CONTAINER_CHOICE_DUMP))
 			else
 				action = CONTAINER_CHOICE_PLACE
