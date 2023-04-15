@@ -1,3 +1,9 @@
+/* -For adventure zoneish mobs-
+   -Most of these orginally made by cogwerks-
+	whats here:
+	- Transposed scientist
+	- Shades
+*/
 /mob/living/critter/crunched
 	name = "transposed scientist"
 	real_name = "transposed scientist"
