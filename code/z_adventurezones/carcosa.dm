@@ -15,7 +15,7 @@ Dirt
 	desc = "A statue of some ominous looking, robed, figure. There's barely a scratch on it."
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "statue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 4
 	bound_height = 32
@@ -48,7 +48,7 @@ Dirt
 	desc = "A broken wall."
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "cwall1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_height = 32
 	bound_width = 64
@@ -94,7 +94,7 @@ Dirt
 	desc = ""
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 /obj/decal/fakeobjects/carcosa/grtrans/west
 	icon_state = "grtransW"
@@ -118,7 +118,7 @@ Dirt
 	desc = "Bits of stone and various other debris."
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /obj/decal/fakeobjects/carcosa/rubble/one
@@ -133,7 +133,7 @@ Dirt
 	desc = "A strange looking plant."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one
 	icon_state = "aplant1"

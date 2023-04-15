@@ -13,7 +13,7 @@
 	name = "projectile"
 	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
-	anchored = TRUE
+	anchored = ANCHORED
 	animate_movement = FALSE
 
 	/// Projectile data; almost all specific projectile information and functionality lives here

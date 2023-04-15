@@ -40419,19 +40419,19 @@
 	dir = 4
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/storage/emergency)
-"bRR" = (
-/obj/reagent_dispensers/foamtank,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
 /obj/item/storage/wall/medical{
 	dir = 1;
 	pixel_y = 32
 	},
+/turf/simulated/floor,
+/area/station/storage/emergency)
+"bRR" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
 /obj/decal/stripe_caution,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bRS" = (
@@ -43681,7 +43681,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "bZy" = (

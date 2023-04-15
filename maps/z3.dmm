@@ -17943,6 +17943,7 @@
 /obj/storage/crate,
 /obj/item/clothing/mask/medical,
 /obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/mask/gas/swat,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "eFq" = (

@@ -144,7 +144,7 @@
 	icon_state = "artillery_cannon"
 	desc = "Parent of broadside guns for fire support."
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	processing_tier = PROCESSING_EIGHTH
 	bound_width = 96
 	/// Ship name you're firing from, important for the designator

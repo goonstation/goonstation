@@ -706,7 +706,7 @@ MATERIAL
 	desc = "A human head impaled on a spike, dim-eyed, grinning faintly, blood blackening between the teeth."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "head_spike"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/list/heads = list()
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed

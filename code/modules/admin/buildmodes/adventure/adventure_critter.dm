@@ -28,9 +28,9 @@
 
 	var/static/list/critters = list(
 		"Angry Bat" = /obj/critter/bat/buff,
-		"Bear" = /obj/critter/bear,
+		"Bear" = /mob/living/critter/bear,
 		"Bee" = /obj/critter/domestic_bee,
-		"Carebear" = /obj/critter/bear/care,
+		"Carebear" = /mob/living/critter/bear/care,
 		"Darkness" = /obj/critter/shade,
 		"Door (chompy)" = /obj/critter/monster_door,
 		"Drone (CR)" = /obj/critter/gunbot/drone/buzzdrone,

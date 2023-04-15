@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
