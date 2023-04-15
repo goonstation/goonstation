@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -2145,7 +2145,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "gravgen-off"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/obj/item/cell/cell = null
 	var/target = null
@@ -2175,12 +2175,12 @@ TYPEINFO(/obj/item/cargotele)
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = 0
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
@@ -2201,14 +2201,14 @@ TYPEINFO(/obj/item/cargotele)
 			if (!src.cell)
 				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			PCEL.charge -= 5
@@ -2307,7 +2307,7 @@ TYPEINFO(/obj/submachine/cargopad)
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE

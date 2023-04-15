@@ -3,7 +3,7 @@
 	desc = "This is an Aurora Lithographics 'Academy' model automated printing press, used to reproduce books and pamphlets. This doesn't still use stone plates, does it?"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "printing_press" //proper icon is set in UpdateIcon
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 64 //the game just handles xtra wide objects already halleluiah
 

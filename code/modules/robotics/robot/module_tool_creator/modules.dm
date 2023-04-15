@@ -36,11 +36,11 @@
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/research
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
 		/obj/item/hand_labeler,
 		/obj/item/pen,
-		/obj/item/item_box/assorted/stickers/robot/research,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,

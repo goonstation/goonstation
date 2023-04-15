@@ -174,7 +174,7 @@ particles/rain
 					shared_particle.color = "#fff"
 
 obj/effects/precipitation
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/precipitation_controller/PC
 	event_handler_flags = 0
 

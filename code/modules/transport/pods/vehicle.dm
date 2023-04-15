@@ -4,7 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY
-	anchored = 1
+	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -1010,6 +1010,10 @@
 		boutput(boarder, "There is no more room!")
 		return
 
+	if(!src.pilot && (ismobcritter(boarder)))
+		boutput(boarder, "<span class='alert'>You don't know how to pilot a pod, you can only enter as a passenger!</span>")
+		return
+
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
@@ -1022,7 +1026,7 @@
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !isghostcritter(boarder))
+	if(!src.pilot && !(ismobcritter(boarder)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1160,7 +1164,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
+		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
 			src.pilot = M
 			break
 
@@ -1924,7 +1928,7 @@
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)

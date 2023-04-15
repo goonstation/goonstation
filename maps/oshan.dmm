@@ -24093,18 +24093,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"boS" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "boT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24338,12 +24326,6 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
-"bpC" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bpD" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24546,10 +24528,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/power)
-"bqf" = (
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bqg" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey,
@@ -24945,12 +24923,6 @@
 /obj/machinery/navbeacon/tour/oshan/tour9,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"brg" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "brh" = (
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -25564,11 +25536,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
-"bsX" = (
-/obj/item/raw_material/uqill,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bsY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26541,17 +26508,6 @@
 "bvx" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
-"bvy" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bvz" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/shuttlebay,
@@ -26682,15 +26638,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
 /area/station/hangar/main)
-"bvR" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bvS" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/recharge_station,
@@ -42331,6 +42278,11 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/ranch)
+"ezs" = (
+/obj/item/raw_material/uqill,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "ezU" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/barber_shop)
@@ -42953,6 +42905,10 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gOR" = (
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "gST" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
@@ -43837,6 +43793,12 @@
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"lqc" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/mining_tool/powerhammer,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "lrr" = (
 /obj/rack,
 /obj/item/clothing/suit/bio_suit/paramedic,
@@ -44651,6 +44613,17 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"pgk" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "pgC" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
@@ -44912,10 +44885,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"qnG" = (
-/obj/storage/secure/crate/eng/interdictor,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -45115,6 +45084,15 @@
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"roH" = (
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "rqc" = (
 /obj/machinery/power/apc/autoname_north{
 	cell_type = 15000
@@ -45473,6 +45451,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"tFL" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "tGH" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -45795,6 +45777,18 @@
 "vqP" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
+"vqQ" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/raw_material/pharosium,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/claretine,
+/obj/item/raw_material/uqill,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "vrP" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -46111,6 +46105,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"wPA" = (
+/obj/item/raw_material/bohrum,
+/obj/item/raw_material/bohrum,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "wRa" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/secondary/exit)
@@ -55626,7 +55626,7 @@ buR
 buR
 buR
 buR
-bqf
+tFL
 brF
 buR
 buR
@@ -55928,7 +55928,7 @@ buR
 buR
 buR
 boe
-brg
+lqc
 boe
 buR
 buR
@@ -56224,7 +56224,7 @@ buR
 buR
 buR
 buR
-boS
+vqQ
 bpr
 buR
 buR
@@ -56234,7 +56234,7 @@ buR
 boe
 boe
 boe
-bqf
+tFL
 buR
 buR
 buR
@@ -56527,7 +56527,7 @@ buR
 buR
 buR
 bpk
-bpC
+wPA
 bpO
 buR
 buR
@@ -57140,7 +57140,7 @@ buR
 buR
 boe
 buR
-bqf
+tFL
 boe
 buR
 buR
@@ -57434,11 +57434,11 @@ buR
 buR
 boe
 boe
-bqf
+tFL
 boe
 boe
 boe
-bqf
+tFL
 boe
 brZ
 boe
@@ -58048,9 +58048,9 @@ boe
 boe
 boe
 boe
-bqf
+tFL
 bsL
-bvy
+pgk
 buW
 buR
 boe
@@ -58351,7 +58351,7 @@ buR
 buR
 buR
 bqI
-bsX
+ezs
 bvD
 bwf
 buR
@@ -58646,7 +58646,7 @@ buR
 boe
 boe
 boe
-bqf
+tFL
 buR
 boe
 buR
@@ -58654,7 +58654,7 @@ buR
 buR
 buR
 buB
-bvR
+roH
 buR
 buR
 boe
@@ -58950,7 +58950,7 @@ buR
 buR
 boe
 boe
-bqf
+tFL
 buR
 buR
 buR
@@ -106063,7 +106063,7 @@ ayu
 bgL
 aff
 bge
-qnG
+gOR
 bkt
 blj
 blV

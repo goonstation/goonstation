@@ -1,143 +1,3 @@
-/obj/critter/bear
-	name = "space bear"
-	desc = "WOORGHHH"
-	icon_state = "abear"
-	health = 60
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 1
-	atksilicon = 1
-	butcherable = 1
-	scavenger = 1
-	atk_brute_amt = 10
-	crit_brute_amt = 20
-	atk_text = "claws into"
-	chase_text = "mauls"
-	crit_text = "digs its claws into"
-	var/loveometer = 0
-
-	var/left_arm_stage = 0
-	var/right_arm_stage = 0
-	var/obj/item/parts/human_parts/arm/left/bear/left_arm
-	var/obj/item/parts/human_parts/arm/right/bear/right_arm
-
-	skinresult = /obj/item/material_piece/cloth/leather
-	max_skins = 2
-
-	New()
-		..()
-		src.left_arm = new /obj/item/parts/human_parts/arm/left/bear(src)
-		src.right_arm = new /obj/item/parts/human_parts/arm/right/bear(src)
-
-	on_revive()
-		if (!src.left_arm)
-			src.left_arm = new /obj/item/parts/human_parts/arm/left/bear(src)
-			src.left_arm_stage = 0
-			src.visible_message("<span class='alert'>[src]'s left arm regrows!</span>")
-		if (!src.right_arm)
-			src.right_arm = new /obj/item/parts/human_parts/arm/right/bear(src)
-			src.right_arm_stage = 0
-			src.visible_message("<span class='alert'>[src]'s right arm regrows!</span>")
-		..()
-
-	CritterDeath()
-		if (!alive)
-			return
-		..()
-		src.update_dead_icon()
-
-	proc/update_dead_icon()
-		if (src.alive)
-			return
-		. = initial(icon_state)
-		if (!src.left_arm)
-			. += "-l"
-		if (!src.right_arm)
-			. += "-r"
-		. += "-dead"
-		icon_state = .
-
-	on_pet(mob/user)
-		if (..())
-			return 1
-		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
-
-	attackby(obj/item/W, mob/living/user)
-		if (!src.alive)
-			// TODO: tie this into surgery()
-			if (iscuttingtool(W))
-				if (user.zone_sel.selecting == "l_arm")
-					if (src.left_arm_stage == 0)
-						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
-						src.left_arm_stage++
-					else if (src.left_arm_stage == 2)
-						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
-						src.left_arm_stage++
-
-						var/turf/location = get_turf(src)
-						if (location)
-							src.left_arm.set_loc(location)
-							src.left_arm = null
-						src.update_dead_icon()
-
-				else if (user.zone_sel.selecting == "r_arm")
-					if (src.right_arm_stage == 0)
-						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s right arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s right arm with [W].</span>")
-						src.right_arm_stage++
-					else if (src.right_arm_stage == 2)
-						user.visible_message("<span class='combat'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
-						src.right_arm_stage++
-
-						var/turf/location = get_turf(src)
-						if (location)
-							src.right_arm.set_loc(location)
-							src.right_arm = null
-						src.update_dead_icon()
-
-			else if (issawingtool(W))
-				if (user.zone_sel.selecting == "l_arm")
-					if (src.left_arm_stage == 1)
-						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
-						src.left_arm_stage++
-				else if (user.zone_sel.selecting == "r_arm")
-					if (src.right_arm_stage == 1)
-						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s right arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s right arm with [W].</span>")
-						src.right_arm_stage++
-			else
-				..()
-			return
-		else
-			..()
-
-	CritterAttack(mob/M)
-		..()
-
-	ChaseAttack(mob/M)
-		..()
-		playsound(src.loc, pick('sound/voice/MEraaargh.ogg'), 40, 0)
-		M.changeStatus("weakened", 3 SECONDS)
-		M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5),1)
-
-obj/critter/bear/care
-	name = "space carebear"
-	desc = "I love you!"
-	icon_state = "carebear"
-	chase_text = "snuggles"
-
-	New()
-		..()
-		src.name = pick("Lovealot Bear", "Stuffums", "World Destroyer", "Pookie", "Colonel Sanders", "Hugbeast", "Lovely Bear", "HUG ME", "Empathy Bear", "Steve", "Mr. Pants", "wonk")
-
-	ChaseAttack(mob/M)
-		..()
-		playsound(src.loc, pick('sound/voice/babynoise.ogg'), 50, 0)
-		M.changeStatus("weakened", 3 SECONDS)
-		M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5),1)
-
 /obj/critter/yeti
 	name = "space yeti"
 	desc = "Well-known as the single most aggressive, dangerous and hungry thing in the universe."
@@ -165,7 +25,7 @@ obj/critter/bear/care
 		src.seek_target()
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -273,7 +133,7 @@ obj/critter/bear/care
 		src.seek_target()
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -536,7 +396,7 @@ obj/critter/bear/care
 	atk_text = "bites and claws at"
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -567,37 +427,3 @@ obj/critter/bear/care
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat
 	name = "bat egg"
 	critter_type = /obj/critter/bat
-
-/obj/critter/lion
-	name = "lion"
-	desc = "Oh christ"
-	icon_state = "lion"
-	density = 1
-	health = 20
-	aggressive = 1
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.5
-	brutevuln = 0.5
-	butcherable = 1
-	scavenger = 1
-	crit_chance = 15
-	atk_brute_amt = 10
-	crit_brute_amt = 20
-	atk_text = "savagely bites"
-	chase_text = "lunges upon"
-	crit_text = "really tears into"
-	death_text = "%src% gives up the ghost!"
-
-	CritterAttack(mob/M)
-		..()
-
-	ChaseAttack(mob/M)
-		..()
-		if(iscarbon(M))
-			if(prob(50)) M.changeStatus("stunned", 3 SECONDS)
-		random_brute_damage(M, rand(4,8),1)

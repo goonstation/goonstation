@@ -366,14 +366,14 @@ Contents:
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/kanji_2
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/dojohouse
 	icon = 'icons/effects/224x160.dmi'
@@ -388,7 +388,7 @@ Contents:
 /obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
 	name = "small shrine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/obj/dojo.dmi'
@@ -411,7 +411,7 @@ Contents:
 /obj/decal/fakeobjects/plantpot
 	name = "plant pot"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3
 	icon = 'icons/obj/dojo.dmi'
@@ -421,7 +421,7 @@ Contents:
 	name = "toro"
 	desc = "A stone lamp. It doesn't appear to be lit."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = 5
 	icon = 'icons/obj/large/32x64.dmi'
@@ -443,7 +443,7 @@ Contents:
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "furnace"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/effects/tatara/effect
 
 	var/temperature = T0C + 870
@@ -494,7 +494,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "anvil"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
 
@@ -510,7 +510,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "bellows"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	attack_hand(mob/user)
 		. = ..()
@@ -528,7 +528,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sword_wall_rack"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/rake
 	name = "zen garden rake"
@@ -542,7 +542,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sealed_door"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 
 /obj/decal/fakeobjects/katana_fake
@@ -557,7 +557,7 @@ Contents:
 	name = "paper lantern"
 	desc = "A brightly lit paper lantern."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 
 	var/datum/light/point/light

@@ -1,5 +1,7 @@
 TYPEINFO(/obj)
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = 0
 
 /obj
 	var/real_name = null
@@ -281,7 +283,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -309,7 +311,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
@@ -338,7 +340,7 @@ TYPEINFO(/obj)
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -451,7 +453,7 @@ TYPEINFO(/obj)
 
 /obj/overlay
 	name = "overlay"
-	anchored = TRUE
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
@@ -486,7 +488,7 @@ TYPEINFO(/obj)
 
 /obj/projection
 	name = "Projection"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

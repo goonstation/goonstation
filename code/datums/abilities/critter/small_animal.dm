@@ -277,7 +277,7 @@
 		D.name = ""
 		D.icon = 'icons/effects/effects.dmi'
 		D.icon_state = "hearts"
-		D.anchored = 1
+		D.anchored = ANCHORED
 		D.layer = EFFECTS_LAYER_2
 		holder.owner.attached_objs += D
 		SPAWN(4 SECONDS)

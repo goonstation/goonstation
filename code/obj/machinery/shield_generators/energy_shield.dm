@@ -107,7 +107,7 @@
 				if (src.checkForcefieldAllowed(T))
 					createForcefieldObject(xa, ya);
 
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		src.active = TRUE
 
 		// update_nearby_tiles()
@@ -187,7 +187,7 @@
 			if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
 				createDoorForcefield(D)
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 
 		// update_nearby_tiles()
@@ -248,7 +248,7 @@
 				animate(shield, time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#88FF00")
 				animate(time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#0088FF")
 
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		src.active = TRUE
 
 		playsound(src.loc, src.sound_on, 50, 1)

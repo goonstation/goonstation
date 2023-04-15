@@ -7,7 +7,7 @@
 	var/health_max = 200
 	robot_talk_understand = 2
 
-	anchored = 1
+	anchored = ANCHORED
 	var/online = 1
 	var/mob/living/silicon/hivebot = null
 	var/hivebot_name = null

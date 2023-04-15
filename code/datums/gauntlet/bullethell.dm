@@ -92,7 +92,7 @@
 	var/live_cycles = 1
 	var/broken = 1
 
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
