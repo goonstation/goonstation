@@ -127,15 +127,12 @@
 					boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
 					return
 			// if item has a storage, dump contents into this storage
-			var/obj/O
 			if (W.storage && !src.is_full())
-				for (var/atom/A in W.storage.get_contents())
-					if (src.check_can_hold(A) == STORAGE_CAN_HOLD)
-						if (istype(A, /obj))
-							O = A
-							if (O.anchored)
-								continue
-						W.storage.transfer_stored_item(A, src.linked_item, TRUE, user)
+				for (var/obj/item/I as anything in W.storage.get_contents())
+					if (src.check_can_hold(I) == STORAGE_CAN_HOLD)
+						if (I.anchored)
+							continue
+						W.storage.transfer_stored_item(I, src.linked_item, TRUE, user)
 				return
 		// show pocket or other storage
 		if(src.opens_if_worn)
