@@ -369,31 +369,29 @@ var/makingpowernetssince = 0
 
 	var/list/our_apcs = list()
 
-	//index working APCs and perform some initial setup
+	var/apcload = 0
+
+	//index working APCs and perform some initial setup, gathering their load
 	for(var/obj/machinery/power/terminal/term in nodes)
 		if( istype( term.master, /obj/machinery/power/apc ) )
 			var/obj/machinery/power/apc/check_apc = term.master
 			if(check_apc.load_cycle())
 				numapc++
+				apcload += check_apc.cycle_load
 				our_apcs += check_apc
 				if(check_apc.charging != 2)
 					non_full_apcs++
 
-	if(numapc)
-		perapc = (avail - newload) / numapc
+	//determine what proportion of APC load can be supplied by remaining power
+	var/charge_percentile = 0
+	if(apcload > 0)
+		var/end_cycle_draw = avail - newload
+		charge_percentile = min(end_cycle_draw/apcload,1)
+		boutput(world,"[charge_percentile] DEBUG DEBUG DEBUG")
 
-	//organize APCs by load
-	sortList(our_apcs, /proc/cmp_apc_load_dsc)
-
-	//distribute the baseline perapc power, returning anything the APCs don't accept
+	//then tell each APC to supply that proportion of its load
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
-		var/distributed_amount = min(netapc.cycle_load, perapc)
-		netapc.cycle_load -= distributed_amount
-		newload += distributed_amount
-
-	//then tell each APC, from highest initial draw to lowest (achieved by earlier sort), to consume as much as it would like to + complete its cycle
-	for(var/obj/machinery/power/apc/netapc in our_apcs)
-		netapc.cell_cycle()
+		netapc.cell_cycle(charge_percentile)
 
 	//mandatory load's done! bring in the outgoing tick's load
 	load = newload
@@ -424,6 +422,3 @@ var/makingpowernetssince = 0
 	viewload = 0.6*viewload + 0.4*load
 
 	viewload = round(viewload)
-
-/proc/cmp_apc_load_dsc(var/obj/machinery/power/apc/a,var/obj/machinery/power/apc/b)
-	return b.cycle_load - a.cycle_load

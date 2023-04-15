@@ -1203,7 +1203,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
 ///APC cycle phase 2: cell cycle. Debit the load from cell, and if any external power is available, attempt to use it to "settle up"
-/obj/machinery/power/apc/proc/cell_cycle()
+/obj/machinery/power/apc/proc/cell_cycle(var/charge_percentile = 1)
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
@@ -1234,26 +1234,27 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		// Current status: cell has had this update's power drawn to the extent possible
 		// Next step: attempt to square up with the grid
 
-		// attempt to fully cover the load; if we can, all good!
-		if(add_load(cycle_load))
+		// If our load is supposed to be fully covered, double check that it actually is, and if so we're good to go!
+		if(charge_percentile == 1 && add_load(cycle_load))
 			cell.give(cellused)
 			cycle_load = 0
 
-		// if this fails, charge however much is left, or fall over and die otherwise
+		// If not, see if we can reimburse enough to stay online, or fall over and die otherwise
 		else
-			var/draw_portion = terminal?.powernet?.avail - terminal?.powernet?.newload
-			if(!add_load(draw_portion))
-				draw_portion = 0
-			if( (cell.charge/CELLRATE) + draw_portion >= cycle_load )
+			//Charge based on the share we're supposed to have or the actual remaining power (whichever is lower)
+			var/attempt_to_supply = min(lastused_total * charge_percentile, terminal?.powernet?.avail - terminal?.powernet?.newload)
+			if(!add_load(attempt_to_supply))
+				attempt_to_supply = 0
+			if( (cell.charge/CELLRATE) + attempt_to_supply >= cycle_load )
 				// do we have enough power in the cell + apc allotment to run?
 				// if yes, reimburse what power we can and don't enter a failure state
-				cell.charge = min(cell.maxcharge, cell.charge + (draw_portion * CELLRATE))
-				cycle_load -= draw_portion
+				cell.charge = min(cell.maxcharge, cell.charge + (attempt_to_supply * CELLRATE))
+				cycle_load -= attempt_to_supply
 
 				// status: core allotment is empty and we recharged the cell
 				// we can pop a power usage change here: the total we couldn't recharge
 				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = -(cycle_load - draw_portion), channel = -1)
+					new /obj/maptext_junk/power(get_turf(src), change = -(cycle_load - attempt_to_supply), channel = -1)
 
 			else
 				// not enough power available to run the last tick!
