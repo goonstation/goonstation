@@ -300,7 +300,7 @@
 		if (istype(O, sacrifice_path))
 			var/obj/item/clothing/mask/gas/E = O
 			activator.remove_item(E)
-			found = 1
+			found = TRUE
 			qdel(E)
 
 		if (!found)
