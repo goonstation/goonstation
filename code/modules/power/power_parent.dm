@@ -385,7 +385,6 @@ var/makingpowernetssince = 0
 	if(apcload > 0)
 		var/end_cycle_draw = avail - newload
 		charge_percentile = min(end_cycle_draw/apcload,1)
-		boutput(world,"[charge_percentile] DEBUG DEBUG DEBUG")
 
 	//then tell each APC to supply that proportion of its load
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
