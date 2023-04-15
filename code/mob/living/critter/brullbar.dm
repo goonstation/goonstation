@@ -27,7 +27,8 @@
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
 	var/is_king = FALSE
-	var/limb = /datum/limb/brullbar
+	var/limbpath = /datum/limb/brullbar
+	var/frenzypath = /datum/targetable/critter/frenzy
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
@@ -138,7 +139,7 @@
 			. += M
 
 	critter_attack(var/mob/target)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(src.frenzypath)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
@@ -164,8 +165,8 @@
 			return
 
 	can_critter_attack()
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(src.frenzypath)
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(is_king ? /datum/targetable/critter/frenzy/king : /datum/targetable/critter/frenzy)
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
@@ -218,11 +219,12 @@
 	health_brute_vuln = 0.7
 	health_burn = 250
 	health_burn_vuln = 1.4
-	is_king = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
-	limb = /datum/limb/brullbar/king
 	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy/king)
+	is_king = TRUE
+	limbpath = /datum/limb/brullbar/king
+	frenzypath = /datum/targetable/critter/frenzy/king
 
 	death()
 		..()
