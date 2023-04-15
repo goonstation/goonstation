@@ -136,9 +136,9 @@
 	icon_state = "respirator"
 	item_state = "respirator"
 	uses_multiple_icon_states = 1
-	color_r = 0.9
-	color_g = 0.9
-	color_b = 0.95 // sunglasses config
+	color_r = 0.8
+	color_g = 0.8
+	color_b = 0.95
 
 	attack_self(mob/user as mob)
 		user.show_text("You toggle the mask's visor.")
