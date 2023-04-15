@@ -49,16 +49,8 @@
 		HH.can_hold_items = FALSE
 
 	setup_healths()
-		var/datum/healthHolder/brute = src.add_health_holder(/datum/healthHolder/bloodling_brute)
-		brute.value = 25
-		brute.maximum_value = 25
-		brute.last_value = 25
-		brute.damage_multiplier = 0.5
-
-		var/datum/healthHolder/burn = src.add_health_holder(/datum/healthHolder/bloodling_burn)
-		burn.value = 25
-		burn.maximum_value = 25
-		burn.last_value = 25
+		src.add_hh_flesh(25, 0.5)
+		src.add_hh_flesh_burn(25, 1)
 
 	movement_delay(atom/move_target = 0, running = 0)
 		. = BASE_SPEED
@@ -116,14 +108,6 @@
 		else
 			boutput(target, "<span class='combat'>You feel uncomfortable. Your [bloodling.what_is_sucked_out] seeks to escape you.</span>")
 			target.changeStatus("slowed", 3 SECONDS, 3)
-
-/datum/healthHolder/bloodling_brute
-	name = "brute health"
-	associated_damage_type = "brute"
-
-/datum/healthHolder/bloodling_burn
-	name = "burn health"
-	associated_damage_type = "burn"
 
 // for admin gimmicks
 /mob/living/critter/bloodling/ketchupling
