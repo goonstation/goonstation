@@ -79,13 +79,13 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new src.limb
+		HH.limb = new src.limbpath
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left [is_king ? "king" : "" ] brullbar arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new src.limb
+		HH.limb = new src.limbpath
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
