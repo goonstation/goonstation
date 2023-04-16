@@ -31,9 +31,11 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
 	update_icon()
 		. = ..()
 		src.icon_state = "[get_connected_directions_bitflag(src.type)]"
+
 /turf/unsimulated/floor/airless/plating/catwalk
 	name = "catwalk support"
 	icon_state = "catwalk"
