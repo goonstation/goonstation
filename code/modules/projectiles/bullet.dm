@@ -1222,7 +1222,7 @@ datum/projectile/bullet/autocannon
 	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (living(hit))
+		if (isliving(hit))
 			var/mob/living/L = hit
 			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
 
