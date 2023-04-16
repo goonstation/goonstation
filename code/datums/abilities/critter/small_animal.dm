@@ -20,12 +20,10 @@
 	name = "Peck"
 	desc = "Peck at a mob."
 	icon_state = "scuffed_peck"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-	var/take_eyes = 0
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/take_eyes = FALSE
 
 	cast(atom/target)
 		if (..())
@@ -46,10 +44,8 @@
 		var/mob/MT = target
 		if (iscarbon(MT) && prob(60))
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
-			playsound(target, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+			playsound(target, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
-			if (!isdead(MT))
-				MT.emote("scream")
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"
@@ -63,7 +59,7 @@
 				if (E)
 					holder.owner.visible_message("<span class='combat'><B>[holder.owner] [pick("tears","yanks","rips")] [MT]'s eye out! <i>Holy shit!!</i></B></span>")
 					E = H.drop_organ(chosen_eye)
-					playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					if (holder.owner.put_in_hand_or_drop(E))
 						E.set_loc(holder.owner)
 					else
@@ -74,7 +70,6 @@
 			if (prob(10))
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R] and snips an important-looking cable!</span>")
 				R.compborg_take_critter_damage(null, 0 ,rand(40,70))
-				MT.emote("scream")
 				return 0
 			else
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R]!</span>")
@@ -93,12 +88,10 @@
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
-	cooldown = 200
+	cooldown = 20 SECONDS
 	icon_state = "pounce_polymorph"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -116,7 +109,7 @@
 			boutput(holder.owner, "<span class='alert'>That is too far away to pounce on.</span>")
 			return 1
 		var/mob/MT = target
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		MT.changeStatus("stunned", 2 SECONDS)
 		MT.changeStatus("weakened", 2 SECONDS)
 		if (prob(25))
@@ -133,11 +126,9 @@
 	name = "Trip"
 	desc = "Weave around the legs of a mob, causing them to trip."
 	icon_state = "tail_trip"
-	cooldown = 250
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 25 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -169,15 +160,14 @@
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
 	cooldown = 5 SECONDS
-	targeted = 1
+	targeted = TRUE
 	icon_state = "waspbee_sting"
-	target_anything = 1
+	target_anything = TRUE
+	var/attack_verb = "sting"
 	var/venom1 = "histamine"
 	var/amt1 = 12
 	var/venom2 = "toxin"
 	var/amt2 = 2
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -187,17 +177,17 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
+				boutput(holder.owner, "<span class='alert'>Nothing to [attack_verb] there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
+			boutput(holder.owner, "<span class='alert'>That is too far away to [attack_verb].</span>")
 			return 1
 		var/mob/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
-		"<span class='combat'>You sting [MT]!</span>")
-		playsound(target, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [attack_verb]s [MT]!</b></span>",\
+		"<span class='combat'>You [attack_verb] [MT]!</span>")
+		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
@@ -207,21 +197,29 @@
 
 	scorpion_sting
 		icon_state = "scorpion_sting"
-		cooldown = 20 SECONDS
-		venom1 = "neurotoxin"
-		amt1 = 15
+		cooldown = 12 SECONDS
+		venom1 = "neurodepressant"
+		amt1 = 5
 		venom2 = "toxin"
-		amt2 = 6
+		amt2 = 10
+
+	snake_bite
+		name = "Bite"
+		desc = "Bite a mob, injecting them with venom."
+		icon_state = "snake_bite"
+		cooldown = 12 SECONDS
+		attack_verb = "bite"
+		venom1 = "viper_venom"
+		amt1 = 40
+		amt2 = 0
 
 /datum/targetable/critter/pincer_grab
 	name = "Grab"
 	desc = "Grab a mob with your pincers, imobilizing them for a bit"
-	cooldown = 200
-	targeted = 1
+	cooldown = 15 SECONDS
+	targeted = TRUE
 	icon_state = "pincer_grab"
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	target_anything = TRUE
 
 
 	cast(atom/target)
@@ -250,13 +248,13 @@
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] grabs [MT] with [his_or_her(holder.owner)] pincers!</b></span>",\
 		"<span class='combat'>You grab [MT]!</span>")
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
-		playsound(target, "sound/items/Wirecutter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
-		MT.changeStatus("weakened", 6 SECONDS)
+		MT.changeStatus("weakened", 3 SECONDS)
 		MT.force_laydown_standup()
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
-		SPAWN(6 SECONDS)
+		SPAWN(3 SECONDS)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 
@@ -273,13 +271,13 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] hoots seductively!</b></span>",\
 		"<span class='combat'>You hoot seductively!</span>")
-		playsound(holder.owner, "sound/voice/animal/hoot.ogg", 90, 0)
+		playsound(holder.owner, 'sound/voice/animal/hoot.ogg', 90, 0)
 		flick("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""
 		D.icon = 'icons/effects/effects.dmi'
 		D.icon_state = "hearts"
-		D.anchored = 1
+		D.anchored = ANCHORED
 		D.layer = EFFECTS_LAYER_2
 		holder.owner.attached_objs += D
 		SPAWN(4 SECONDS)

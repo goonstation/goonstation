@@ -18,6 +18,9 @@
 //Ticket writer
 //Cargo request
 //Station Namer
+//Revhead tracker
+//Head tracker
+//Generator Controller
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -61,14 +64,6 @@
 		dat += "Entries cannot be modified from this terminal.<br><br>"
 		dat += get_manifest()
 		dat += "<br>"
-
-		var/list/stored = list()
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		if(length(stored))
-			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -149,6 +144,7 @@
 		status_signal.source = src.master
 		status_signal.transmission_method = 1
 		status_signal.data["command"] = command
+		status_signal.data["address_tag"] = "STATDISPLAY"
 
 		switch(command)
 			if("message")
@@ -216,7 +212,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -328,7 +324,7 @@ Code:
 			return
 		if (last_honk && world.time < last_honk + 20)
 			return
-		playsound(src.master.loc, "sound/musical_instruments/Bikehorn_1.ogg", (src.honk_volume * 25), 1)
+		playsound(src.master.loc, 'sound/musical_instruments/Bikehorn_1.ogg', (src.honk_volume * 25), 1)
 		src.last_honk = world.time
 
 		return
@@ -415,7 +411,7 @@ Code:
 /datum/computer/file/pda_program/door_control
 	name = "DoorMaster"
 	size = 8
-	var/id = 1.0
+	var/id = 1
 	var/last_toggle = 0
 
 	syndicate
@@ -429,7 +425,7 @@ Code:
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
 		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
-		dat += "<font size=1><i>Like this program? Send $9.95 to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
+		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
 
@@ -555,7 +551,7 @@ Code:
 //PDA program for displaying engine data and laser output. By FishDance
 //Note: Could display weird results if there is more than one engine or PTL around.
 /datum/computer/file/pda_program/power_checker
-	name = "Power Checker 0.14"
+	name = "Power Checker 0.15"
 	size = 4
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -563,10 +559,12 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
+	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
+	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
-			ref = locate(type) in machine_registry[MACHINES_POWER]
+			ref = locate(type) in (machine_registry[MACHINES_POWER] + machine_registry[MACHINES_FISSION])
 			if(ref?.z != 1) ref = null
 		. = ref
 
@@ -583,14 +581,18 @@ Code:
 		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//NUKE
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
 		. = src.return_text_header()
-
+		. += "<BR>"
+		//TEG
 		if (generator)
 			engine_found = TRUE
-			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "<h4>Thermo-Electric Generator Status</h4>"
 			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
 			. += "<BR>"
 
@@ -606,6 +608,7 @@ Code:
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
+		// SINGULO
 		if(length(by_type[/obj/machinery/power/collector_control]))
 			var/controler_index = 1
 			var/collector_index = 1
@@ -613,7 +616,7 @@ Code:
 				collector_index = 1
 				if(C?.active && C.z == 1)
 					engine_found = TRUE
-					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "<h4>Radiation Collector [controler_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
 					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
@@ -621,16 +624,60 @@ Code:
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
 					. += "<BR>"
 
+		// NUKE
+		if(nuke_reactor)
+			engine_found = TRUE
+			// for some unfathomable reason trying to detect reactor rod insertion broke the whole damn thing. Todo for a better coder i guess
+			. += "<BR><h4>Reactor Status</h4>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)] clicks<BR>"
+			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
+			// . += "Control rod insertion: [rodlevel * 100]%"
+			if (isnull(nuke_turbine))
+				. += "<B>Error!</B> No turbine detected!<BR>"
+		if (nuke_turbine)
+			engine_found = TRUE
+			. += "<h4>Turbine Status</h4>"
+			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
+			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]J/RPM<BR>"
+			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
+			if (isnull(nuke_reactor))
+				. += "<B>Error!</B> No reactor detected!<BR>"
+			. += "<BR>"
+
+		//HOTSPOT
 		if(length(by_type[/obj/machinery/power/vent_capture]))
-			. += "<BR><h4>Vent Capture Unit Status</h4>"
+			. += "<h4>Vent Capture Unit Status</h4>"
 			for_by_tcl(V, /obj/machinery/power/vent_capture)
 				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
+		. += "<HR>"
+		// CATALYTICS
+		if(length(by_type[/obj/machinery/power/catalytic_generator]))
+			var/generator_index = 1
+			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
+				if(C.z == 1)
+					engine_found = TRUE
+					. += "<h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
+					if(C.anode_unit?.contained_rod)
+						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
+						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Anode Rod Installed<BR>"
+					if(C.cathode_unit?.contained_rod)
+						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
+						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Cathode Rod Installed<BR>"
+					. += "<BR>"
+
+		// todo: have some solar stats pop up, like angle and rate and whatnot. Once #13206 is in this'll have more info
 
 		if(!engine_found)
-			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
+			. += "<B>Error!</B> No power source detected!<BR><BR>"
 
 		. += "<HR>"
 		if(laser)
@@ -775,7 +822,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -801,16 +848,26 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && length(eye_loc.cameras)))
+			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 
+		if(isliving(usr) && !remote)
+			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
-	name = "BOMB"
+	name = "SELF-DESTRUCT"
 	size = 8
 	var/detonating = 0
 
@@ -914,15 +971,15 @@ Using electronic "Detomatix" MISSILE program is simple!<br>
 <li>now run MISSILE.PPROG and select IMPORT PDA LIST</li>
 <li>select up to four (4) PDAs you want EXPLODED from DISTANCE!</li>
 </ul><br>
-Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
+Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 <ul>
-<li>Copy BOMB.PPROG to main drive, as cart programs cannot be edited!</li>"
-<li>Simply rename new BOMB.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
+<li>Copy SELF-DESTRUCT.PPROG to main drive, as cart programs cannot be edited!</li>"
+<li>Simply rename new SELF-DESTRUCT.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
 <li>Now, COPY renamed file and open MESSENGER.  Select your target and SEND THEM the file!</li>
 <li>Finally, they run file expecting some attractive plants, but instead get EXPLODED PDA!</li>
 </ul>
 <br>
-<b>Caution: </b>Do not run BOMB.PPROG on your own system!  It will explode!
+<b>Caution: </b>Do not run SELF-DESTRUCT.PPROG on your own system!  It will explode!
 "}
 
 //Security ticket writer - not really a small prog any more but oh well
@@ -1030,8 +1087,8 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
@@ -1077,10 +1134,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
@@ -1097,7 +1154,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
@@ -1324,3 +1381,298 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+/datum/computer/file/pda_program/revheadtracker
+	name = "Revolutionary Leader Locater"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive revolutionary leaders located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.head_revolutionaries
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
+
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/headtracker
+	name = "Nanotrasen Command Tracker"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
+
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive command members located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.get_all_heads()
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+// utility for controlling power machinery
+/datum/computer/file/pda_program/power_controller
+	name = "Power Controller v1.0" // you should totally increment this if you make changes
+	size = 4
+	var/list/device_statuses = list()
+	var/list/device_messages = list()
+	var/list/cooldowns = list()
+
+	var/freq = FREQ_POWER_SYSTEMS
+
+	on_activated(obj/item/device/pda2/pda)
+		src.master.AddComponent(/datum/component/packet_connected/radio, \
+			"power_control",\
+			src.freq, \
+			src.master.net_id, \
+			null, \
+			FALSE, \
+			ADDRESS_TAG_POWER, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		src.get_devices()
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, null))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>Power Controller</h4>"
+		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan</a>"
+		dat += "<hr>"
+		for (var/gen in src.device_statuses)
+			var/list/data = params2list(src.device_statuses[gen]["data"])
+			var/list/variables = params2list(src.device_statuses[gen]["vars"])
+			var/device = src.device_statuses[gen]["device"]
+
+			dat += "<b>[strip_html(gen)]\> [device ? strip_html(device) : ""]</b><ul>"
+
+			if (length(data) > 0)
+				dat += "<b>Data:</b><br>"
+				for (var/field in data)
+					dat += "[strip_html(field)]: [strip_html(data[field])]<br>"
+
+			if (length(variables) > 0)
+				dat += "<br><b>Variables:</b><br>"
+				for (var/field in variables)
+					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[html_encode(field)]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+
+			dat += "</ul>"
+
+			if (gen in src.device_messages)
+				dat += "<b>Last Message:</b> [src.device_messages[gen]]"
+
+			dat += "<hr>"
+
+		return dat
+
+	Topic(href, href_list)
+		if (..())
+			return
+
+		if (href_list["scan"])
+			if (ON_COOLDOWN(src, "scan", 1 SECOND))
+				return
+
+			src.get_devices()
+
+		else if (href_list["set_var"])
+			if (!href_list["netid"])
+				return
+
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src.master
+			signal.data["address_1"] = href_list["netid"]
+			signal.data["sender"] = src.master.net_id
+			signal.data["command"] = "set_var"
+			signal.data["var_name"] = html_decode(href_list["set_var"])
+
+			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Editor") as text) // better safe than sorry!
+
+			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+		src.master.add_fingerprint(usr)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!signal || !src.master.net_id || signal.encryption)
+			return
+
+		var/sender = signal.data["sender"]
+		if (!sender)
+			return
+
+		if (signal.data["command"] == "ping_reply")
+			src.get_device_status(sender)
+			return
+
+		if (!signal.data["address_tag"] || signal.data["address_tag"] != ADDRESS_TAG_POWER)
+			return // we can assume we are not talking to a viable device
+
+		switch (signal.data["command"])
+			if ("status")
+				if (!signal.data["data"] && !signal.data["vars"])
+					return
+
+				src.device_statuses[sender] = signal.data // this packet should contain all the data we need
+				src.master.updateSelfDialog()
+				return
+
+			if ("error")
+				if (!(sender in src.device_statuses))
+					src.get_device_status()
+					return
+
+				if (!signal.data["data"])
+					return
+
+				if (!(sender in src.device_messages))
+					src.device_messages.Add(sender)
+
+				src.device_messages[sender] = signal.data["data"]
+				src.master.updateSelfDialog()
+				return
+
+	proc/get_device_status(var/target_id)
+		if (!target_id)
+			return
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = target_id
+		signal.data["sender"] = src.master.net_id
+		signal.data["command"] = "status"
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+	proc/get_devices() // ping all devices
+		src.device_statuses.Cut()
+		src.device_messages.Cut()
+		src.master.updateSelfDialog()
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = "ping"
+		signal.data["sender"] = src.master.net_id
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+//Genebooth Tracker
+/datum/computer/file/pda_program/genebooth_tracker
+	name = "Genebooth Tracker"
+	size = 6
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		var/booth_counter = 0
+		for_by_tcl(booth, /obj/machinery/genetics_booth)
+			booth_counter += 1
+			. += "<hr><h4>GeneBooth [booth_counter]</h4>"
+			for (var/datum/geneboothproduct/product as anything in booth.offered_genes)
+				. += "<b>[product.name]</b> [product.cost][CREDIT_SIGN] | [product.uses] uses left"
+				if(product.locked)
+					. += " (locked)"
+				. += "<br>"
+				if(product.desc)
+					. += product.desc
+					. += "<br>"

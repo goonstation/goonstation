@@ -7,13 +7,14 @@
 	icon_state = "crowbar"
 	item_state = "crowbar"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_PRYING
 	health = 5
 	w_class = W_CLASS_SMALL
 
-	force = 7.0
-	throwforce = 7.0
+	force = 7
+	throwforce = 7
 	stamina_damage = 35
 	stamina_cost = 12
 	stamina_crit_chance = 10

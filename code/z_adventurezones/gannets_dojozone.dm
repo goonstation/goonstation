@@ -136,13 +136,13 @@ Contents:
 	name = "Samurai"
 	limit = 0
 	wages = 0
-//	slot_belt = /obj/item/katana_sheath
+//	slot_belt = /obj/item/swords_sheaths/katana
 	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
 	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
 	slot_rhan = null
 	slot_lhan = list(/obj/item/dojohammer)
-	slot_belt = list(/obj/item/katana_sheath/reverse)
+	slot_belt = list(/obj/item/swords_sheaths/katana/reverse)
 	slot_back = list(/obj/item/storage/backpack/randoseru)
 	slot_card = null
 	slot_ears = null
@@ -238,24 +238,25 @@ Contents:
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
 		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
-		if( can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
+		if(!QDELETED(src) && can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
 			if( src.strikes > src.strikes_to_complete )
 				if(RC.reagents.has_reagent("reversium",1))
-					new /obj/item/katana/reverse(get_turf(target))
+					new /obj/item/swords/katana/reverse(get_turf(target))
 				else
-					new /obj/item/katana/crafted(get_turf(target))
+					new /obj/item/swords/katana/crafted(get_turf(target))
 				RC.reagents.smoke_start(RC.reagents.total_volume)
+				user.u_equip(src)
 				qdel(src)
 			else
 				RC.reagents.smoke_start(RC.reagents.total_volume)
-				var/obj/item/fragile_sword/sword = new(get_turf(target))
+				var/obj/item/swords/fragile_sword/sword = new(get_turf(target))
 
 				// scale sword based on % complete
 				sword.maximum_force = max(30 * (src.strikes / src.strikes_to_complete),10)
 				sword.force = sword.maximum_force
 				sword.throwforce = 10
+				user.u_equip(src)
 				qdel(src)
-
 
 
 /datum/action/bar/icon/forge_katana
@@ -283,7 +284,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || GET_DIST(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -343,18 +344,13 @@ Contents:
 	icon = 'icons/obj/large/160x128.dmi'
 	icon_state = "arch"
 
-/obj/sakura_tree
+/obj/tree/sakura_tree
 	name = "cherry tree"
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
-	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_3
-	pixel_x = -20
-	density = 1
-	opacity = 0
 
-/obj/sakura_tree/tree_2
+/obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
 
 /*
@@ -370,14 +366,14 @@ Contents:
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/kanji_2
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/dojohouse
 	icon = 'icons/effects/224x160.dmi'
@@ -392,7 +388,7 @@ Contents:
 /obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
 	name = "small shrine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/obj/dojo.dmi'
@@ -415,7 +411,7 @@ Contents:
 /obj/decal/fakeobjects/plantpot
 	name = "plant pot"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3
 	icon = 'icons/obj/dojo.dmi'
@@ -425,7 +421,7 @@ Contents:
 	name = "toro"
 	desc = "A stone lamp. It doesn't appear to be lit."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = 5
 	icon = 'icons/obj/large/32x64.dmi'
@@ -447,7 +443,7 @@ Contents:
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "furnace"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/effects/tatara/effect
 
 	var/temperature = T0C + 870
@@ -477,7 +473,7 @@ Contents:
 			if(istype(O,/obj/item/unfinished_katana))
 				var/obj/item/unfinished_katana/K = O
 				K.temperature = lerp(K.temperature, src.temperature, 0.3)
-				if(K.temperature >= src.temperature * 0.90)
+				if(K.temperature >= src.temperature * 0.9)
 					effect.spark_up()
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
@@ -498,7 +494,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "anvil"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
 
@@ -514,14 +510,14 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "bellows"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	attack_hand(mob/user)
 		. = ..()
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
@@ -532,7 +528,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sword_wall_rack"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/rake
 	name = "zen garden rake"
@@ -546,7 +542,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sealed_door"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 
 /obj/decal/fakeobjects/katana_fake
@@ -561,7 +557,7 @@ Contents:
 	name = "paper lantern"
 	desc = "A brightly lit paper lantern."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 
 	var/datum/light/point/light
@@ -686,14 +682,21 @@ Contents:
 // Turfs
 
 // -Walls
-
+TYPEINFO(/turf/unsimulated/wall/auto/sengoku)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
 	icon = 'icons/turf/walls_sengoku.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/sengoku)
 
+
+TYPEINFO(/turf/unsimulated/wall/auto/paper)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
 	icon = 'icons/turf/walls_paper.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/paper)
+
 
 /turf/unsimulated/wall/sengoku_tall
 	icon = 'icons/turf/walls_sengoku.dmi'

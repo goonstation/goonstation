@@ -5,7 +5,7 @@
 	icon_state = "beacon" //replace later
 	item_state = "electronic"
 	density = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -23,7 +23,7 @@
 		uses -= 1
 		boutput(user, "<span class='alert'>You activate the [src], before setting it down on the ground.</span>")
 		src.force_drop(user)
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		sleep(1 SECOND)
 		src.visible_message("<span class='alert'>The [src] beeps, before locking itself to the ground.</span>")
 		src.desc = "A handheld beacon that allows you to call a Syndicate gunbot to the user's current location. It seems to currently be transmitting something."
@@ -38,20 +38,13 @@
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if(!length(candidates))
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
-			src.anchored = FALSE
-		var/datum/mind/chosen = pick(candidates)
-		var/mob/living/critter/robotic/gunbot/syndicate/synd = new/mob/living/critter/robotic/gunbot/syndicate
-		chosen.transfer_to(synd)
-		//user.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
-		synd.mind.special_role = ROLE_NUKEOP_GUNBOT
-		synd.mind.current.antagonist_overlay_refresh(1, 0)
-		if(istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/nuke_mode = ticker.mode
-			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
-			nuke_mode.syndicates += synd.mind
-		synd.mind.current.show_antag_popup("nukeop-gunbot")
+			src.anchored = UNANCHORED
+		var/datum/mind/chosen = candidates[1]
+		log_respawn_event(chosen, "syndicate gunbot", user)
+		chosen.add_antagonist(ROLE_NUKEOP_GUNBOT, respect_mutual_exclusives = FALSE)
+
 		SPAWN(0)
-			launch_with_missile(synd, src.loc, null, "arrival_missile_synd")
+			launch_with_missile(chosen.current, src.loc, null, "arrival_missile_synd")
 		sleep(3 SECONDS)
 		if(src.uses <= 0)
 			elecflash(src)
@@ -61,6 +54,6 @@
 			qdel(src)
 		else
 			src.visible_message("<span class='alert'>The [src] beeps twice, before unbolting itself from the ground.</span>")
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 	else
 		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")

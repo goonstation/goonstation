@@ -16,6 +16,7 @@
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "energyShield"
 	density = FALSE
+	power_usage = 5
 	var/orientation = HORIZONTAL  //shield extend direction 0 = north/south, 1 = east/west
 	power_level = SHIELD_BLOCK_GAS //1 for atmos shield, 2 for liquid, 3 for solid material
 	var/max_power = SHIELD_BLOCK_ALL
@@ -31,7 +32,6 @@
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
-		src.power_usage = 5
 
 	get_desc(dist, mob/user)
 		..()
@@ -107,7 +107,7 @@
 				if (src.checkForcefieldAllowed(T))
 					createForcefieldObject(xa, ya);
 
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		src.active = TRUE
 
 		// update_nearby_tiles()
@@ -187,7 +187,7 @@
 			if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
 				createDoorForcefield(D)
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 
 		// update_nearby_tiles()
@@ -248,7 +248,7 @@
 				animate(shield, time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#88FF00")
 				animate(time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#0088FF")
 
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		src.active = TRUE
 
 		playsound(src.loc, src.sound_on, 50, 1)

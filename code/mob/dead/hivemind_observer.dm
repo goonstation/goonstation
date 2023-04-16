@@ -1,4 +1,5 @@
 /mob/dead/target_observer/hivemind_observer
+	is_respawnable = FALSE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
@@ -15,7 +16,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -23,7 +24,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -41,7 +42,7 @@
 
 	click(atom/target, params)
 		if (src.client.check_key(KEY_POINT))
-			point_at(target)
+			point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			return
 		if (try_launch_attack(target))
 			return
@@ -54,13 +55,26 @@
 				src.set_cursor('icons/cursors/point.dmi')
 				return
 
-	point_at(atom/target)
-		make_hive_point(target, color="#e2a059")
+	point_at(atom/target, var/pixel_x, var/pixel_y)
+		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
+			return
+		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
 
 	/// Like make_point, but the point is an image that is only displayed to hivemind members
-	proc/make_hive_point(atom/movable/target, color="#ffffff", time=2 SECONDS)
-		var/image/point = image(point_img, loc = target, layer = EFFECTS_LAYER_1)
+	proc/make_hive_point(atom/movable/target, var/pixel_x, var/pixel_y, color="#ffffff", time=2 SECONDS)
+		var/turf/target_turf = get_turf(target)
+		var/image/point = image(point_img, loc = target_turf, layer = EFFECTS_LAYER_1)
+		if (!target.pixel_point)
+			pixel_x = target.pixel_x
+			pixel_y = target.pixel_y
+		else
+			pixel_x -= 16 - target.pixel_x
+			pixel_y -= 16 - target.pixel_y
+		point.pixel_x = pixel_x
+		point.pixel_y = pixel_y
 		point.color = color
+		point.layer = EFFECTS_LAYER_1
+		point.plane = PLANE_HUD
 		var/list/client/viewers = new
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
@@ -69,7 +83,7 @@
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
-		M.Translate((hivemind_owner.owner.x - target.x)*32, (hivemind_owner.owner.y - target.y)*32)
+		M.Translate((hivemind_owner.owner.x - target_turf.x)*32 - pixel_x, (hivemind_owner.owner.y - target_turf.y)*32 - pixel_y)
 		point.transform = M
 		animate(point, transform=null, time=2)
 		SPAWN(time)
@@ -87,46 +101,6 @@
 				last_attack = world.time
 				playsound(src, 'sound/weapons/flaregun.ogg', 30, 0.1, 0, 2.6)
 				.= 1
-
-	proc/boot()
-		var/mob/dead/observer/my_ghost = new(src.corpse)
-
-		if (!src.corpse)
-			my_ghost.name = src.name
-			my_ghost.real_name = src.real_name
-
-		if (corpse)
-			corpse.ghost = my_ghost
-			my_ghost.corpse = corpse
-
-		my_ghost.delete_on_logout = my_ghost.delete_on_logout_reset
-
-		if (src.client)
-			src.removeOverlaysClient(src.client)
-			client.mob = my_ghost
-
-		if (src.mind)
-			mind.transfer_to(my_ghost)
-
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || my_ghost.client && my_ghost.client.holder)))
-				my_ghost.set_loc(T)
-			else
-				if (ASLoc)
-					my_ghost.set_loc(ASLoc)
-				else
-					my_ghost.z = 1
-		else
-			if (ASLoc)
-				my_ghost.set_loc(ASLoc)
-			else
-				my_ghost.z = 1
-
-		observers -= src
-		my_ghost.show_antag_popup("changeling_leave")
-		qdel(src)
 
 	proc/set_owner(var/datum/abilityHolder/changeling/new_owner)
 		if(!istype(new_owner)) return 0
@@ -162,9 +136,8 @@
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
-		hivemind_owner.hivemind -= src
 		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
-		src.boot()
+		src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 	else
 		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
 

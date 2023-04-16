@@ -3,7 +3,7 @@
 	organ_name = "pancreas"
 	organ_holder_name = "pancreas"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "pancreas"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/pancreatitis
@@ -43,6 +43,9 @@
 		..()
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
+TYPEINFO(/obj/item/organ/pancreas/cyber)
+	mats = 6
+
 /obj/item/organ/pancreas/cyber
 	name = "cyberpancreas"
 	desc = "A fancy robotic pancreas to replace one that someone's lost!"
@@ -52,7 +55,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	on_life(var/mult = 1)
 		if (!..())

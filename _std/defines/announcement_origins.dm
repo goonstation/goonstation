@@ -1,4 +1,4 @@
-#ifdef UNDERWATER_MAP
+#ifdef MAP_OVERRIDE_OSHAN
 	#define ALERT_ANOMALY "Ersetu Trench Anomaly Detection"
 	#define ALERT_WEATHER "Abzu Treaty Weather Station Alert"
 #else

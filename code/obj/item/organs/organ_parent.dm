@@ -8,16 +8,16 @@
 	desc = "What does this thing even do? Is it something you need?"
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 0.0
+	var/organ_holder_required_op_stage = 0
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS
-	force = 1.0
+	flags = TABLEPASS | FPRINT
+	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
@@ -46,7 +46,7 @@
 	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
 	var/transplanted = FALSE
 
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -58,8 +58,8 @@
 	var/unusual = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
-	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
-	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
+	var/max_damage = 100	//Max damage before organ "dies"
+	var/fail_damage = 65	//Total damage amount at which organ failure starts
 
 	var/created_decal = /obj/decal/cleanable/blood // what kinda mess it makes.  mostly so cyberhearts can splat oil on the ground, but idk maybe you wanna make something that creates a broken balloon or something on impact vOv
 	var/blood_color = null
@@ -106,7 +106,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -115,6 +115,8 @@
 
 		..()
 
+	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
+		. = ..()
 
 	New(loc, datum/organHolder/nholder)
 		..()
@@ -150,8 +152,6 @@
 					holder.vars[thing] = null
 
 
-		if (donor?.organs) //not all mobs have organs/organholders (fish)
-			donor.organs -= src
 		donor = null
 
 		if (bones)
@@ -163,7 +163,7 @@
 	proc/splat(turf/T)
 		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
 			return FALSE
-		playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
 		cleanable.blood_DNA = src.blood_DNA
 		cleanable.blood_type = src.blood_type
@@ -177,7 +177,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
 		src.splat(T)
 		..() // call your goddamn parents
 
@@ -185,7 +185,7 @@
 	//Under no circumstances should you ever reassign the donor or holder variables in here.
 	//Not checking donor here because it's checked where it's called. And I can't think of ANY REASON to EVER call this from somewhere else. And if I do, then I'll delete this comment. - kyle
 	proc/on_life(var/mult = 1)
-		if (holder && (src.broken || src.get_damage() > MAX_DAMAGE) )
+		if (holder && (src.broken || src.get_damage() > max_damage) )
 			return 0
 		return 1
 
@@ -255,6 +255,7 @@
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
 		src.donor = null
+		src.in_body = FALSE
 
 		return
 
@@ -296,7 +297,7 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
-		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
+		if((isvampire(donor) || istype(ticker?.mode, /datum/game_mode/battle_royale)) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head)))
 			return //vampires are already dead inside
 
 		src.brute_dam += brute
@@ -314,8 +315,8 @@
 			if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
 
-		// if (src.get_damage() >= MAX_DAMAGE)
-		if (brute_dam + burn_dam + tox_dam >= MAX_DAMAGE)
+		// if (src.get_damage() >= max_damage)
+		if (brute_dam + burn_dam + tox_dam >= max_damage)
 			src.breakme()
 			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor

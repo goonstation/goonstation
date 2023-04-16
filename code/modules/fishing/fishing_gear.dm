@@ -16,7 +16,7 @@
 	/// set to TIME when fished, value is checked when deciding if the rod is currently on cooldown
 	var/last_fished = 0
 	/// true if the rod is currently "fishing", false if it isnt
-	var/is_fishing = false
+	var/is_fishing = FALSE
 
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	afterattack(atom/target, mob/user)
@@ -63,9 +63,9 @@
 			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
-		playsound(src.user, "sound/items/fishing_rod_cast.ogg", 50, 1)
+		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
-		src.rod.is_fishing = true
+		src.rod.is_fishing = TRUE
 		src.rod.UpdateIcon()
 		src.user.update_inhands()
 
@@ -73,7 +73,7 @@
 		..()
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
-			src.rod.is_fishing = false
+			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
@@ -82,14 +82,14 @@
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
-			src.rod.is_fishing = false
+			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
-			src.rod.is_fishing = false
+			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
@@ -98,12 +98,14 @@
 			src.onRestart()
 
 // portable fishing portal currently found in a prefab in space
+TYPEINFO(/obj/item/fish_portal)
+	mats = 11
+
 /obj/item/fish_portal
 	name = "Fishing Portal Generator"
 	desc = "A small device that creates a portal you can fish in."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal"
-	mats = 11
 
 	attack_self(mob/user as mob)
 		new /obj/machinery/active_fish_portal(get_turf(user))
@@ -115,7 +117,7 @@
 /obj/machinery/active_fish_portal
 	name = "Fishing Portal"
 	desc = "A portal you can fish in. It's not big enough to go through."
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal-active"
 

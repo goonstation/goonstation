@@ -10,7 +10,7 @@
 	icon_state = "cambot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 20
 	locked = 1
@@ -48,10 +48,10 @@
 			user.show_text("You short out the flash control circuit on [src]!", "red")
 			src.emagger = user
 			src.add_fingerprint(user)
-			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src, "sound/weapons/flash.ogg", 50, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 50, 1)
 		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
@@ -75,10 +75,10 @@
 
 /obj/machinery/bot/cambot/ex_act(severity)
 	switch (severity)
-		if (1.0)
+		if (1)
 			src.explode()
 			return
-		if (2.0)
+		if (2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -105,7 +105,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 
@@ -128,7 +128,7 @@
 	else
 		src.on = !src.on
 
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	src.target = null
 	src.icon_state = "cambot[src.on]"
 	src.path = null
@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 
@@ -265,7 +265,7 @@
 	if (!T || !isturf(T))
 		return
 
-	src.anchored = 1
+	src.anchored = ANCHORED
 	src.icon_state = "cambot-c"
 	src.visible_message("<span class='alert'>[src] aims at [target].</span>")
 	src.photographing = 1
@@ -285,7 +285,7 @@
 					if (ismob(target))
 						var/mob/M = target
 						M.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-					playsound(src, "sound/weapons/flash.ogg", 100, 1)
+					playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 
 			// don't sit there taking pictures of the same thing over and over
 			if (!(target in src.photographed))
@@ -293,7 +293,7 @@
 
 		src.photographing = 0
 		src.icon_state = "cambot[src.on]"
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.path = null
 		src.target = null
 		src.frustration = 0

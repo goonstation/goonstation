@@ -3,12 +3,16 @@
 	desc = "An incredibly advanced power core created by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_core"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	is_syndicate = 1
 	contraband = 5
+
+TYPEINFO(/obj/item/syndicate_destruction_system)
+	mats = 18
 
 /obj/item/syndicate_destruction_system
 	name = "Syndicate Destruction System"
@@ -20,20 +24,19 @@
 	item_state = "SDS_empty_inhands"
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	mats = 18
 	is_syndicate = 1
 	contraband = 10
 	two_handed = 1
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 42
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/active_force = 50
 	var/active_stamina_dmg = 50
 	var/active_stamina_cost = 40
@@ -56,7 +59,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			icon = 'icons/misc/retribution/SWORD_loot.dmi'
 			src.icon_state = "SDS_empty"
@@ -69,13 +72,13 @@
 			stamina_damage = inactive_stamina_dmg
 			stamina_cost = inactive_stamina_cost
 			w_class = W_CLASS_SMALL
-			
+
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Destruction System!</span>", 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			icon = 'icons/misc/retribution/48x32.dmi'
 			src.icon_state = "SDS"
@@ -126,7 +129,7 @@
 			for (increment_y = -1; increment_y <= 1; increment_y++)
 				for (increment_x = -1; increment_x <= 1; increment_x++)
 					if (increment_x == 0 && increment_y == 0)
-						playsound(user.loc, "sound/effects/shielddown.ogg", 50, 1)
+						playsound(user.loc, 'sound/effects/shielddown.ogg', 50, 1)
 					else
 						destruction_point_x = scan_center_x + increment_x
 						destruction_point_y = scan_center_y + increment_y
@@ -134,12 +137,12 @@
 		..()
 
 	proc/destruction_sds(var/point_x, var/point_y, var/point_z)
-		var/create_scan_decal = false
+		var/create_scan_decal = FALSE
 		var/window_step = 0
 		var/turf/T = locate(point_x,point_y,point_z)
 		for (var/atom/scan_target in T)
 			if (ismob(scan_target))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				if (isrobot(scan_target))
 					random_burn_damage(scan_target, 15)
 					scan_target.changeStatus("stunned", 2 SECOND)
@@ -147,30 +150,30 @@
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("weakened", 2 SECOND)
 				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
-				playsound(scan_target.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				scan_target.ex_act(1)
 			else if (istype(scan_target, /obj/grille))
-				create_scan_decal = true
+				create_scan_decal = TRUE
 				window_step++
 				scan_target.ex_act(1)
 			else if (istype(scan_target, /obj/window))
 				if(window_step == 0)
-					create_scan_decal = true
+					create_scan_decal = TRUE
 					scan_target.ex_act(1)
 		if(istype(T, /turf/simulated/wall))
-			create_scan_decal = true
+			create_scan_decal = TRUE
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, "sound/effects/smoke_tile_spread.ogg", 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
 		return
 
 /obj/decal/syndicate_destruction_scan_center
 	name = "Scan"
 	desc = "A glowing hologram, indicating the center of a scan."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -187,7 +190,7 @@
 /obj/decal/syndicate_destruction_scan_side
 	name = "Scan"
 	desc = "A hardlight hologram, hot to the touch."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -203,7 +206,7 @@
 /obj/decal/purge_beam
 	name = "Linear Purge Beam"
 	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -219,7 +222,7 @@
 /obj/decal/purge_beam_end
 	name = "Linear Purge Beam"
 	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null

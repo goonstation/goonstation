@@ -15,6 +15,10 @@
 		. = ..()
 		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, src, location, control, params)
 
+	MouseMove(location, control, params)
+		. = ..()
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEMOVE, src, location, control, params)
+
 TYPEINFO(/datum/component/holdertargeting/fullauto)
 	initialization_args = list(
 		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
@@ -195,7 +199,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	shooting = 1
 
 	while(!stopping)
-		if(G.canshoot())
+		if(G.canshoot(L))
 			G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
 			G.suppress_fire_msg = 1
 		else

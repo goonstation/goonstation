@@ -23,6 +23,16 @@
 	dir = 1
 	},
 /area/prefab/dreamplaza)
+"aA" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "DreamPlaza Mall Beacon"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "aJ" = (
 /obj/machinery/clothingbooth,
 /obj/machinery/light/incandescent/purpleish{
@@ -335,7 +345,7 @@
 	},
 /area/prefab/dreamplaza)
 "kv" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "kK" = (
@@ -492,15 +502,6 @@
 /obj/random_item_spawner/junk/one,
 /turf/simulated/floor/neutral,
 /area/prefab/dreamplaza)
-"rf" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/obj/warp_beacon{
-	name = "DreamPlaza Mall Beacon"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "rA" = (
 /obj/decoration/floralarrangement{
 	pixel_x = 4;
@@ -1500,12 +1501,7 @@
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "Wd" = (
-/obj/machinery/vending/kitchen{
-	current_processing_tier = 1;
-	dir = 8;
-	layer = 3;
-	pixel_y = 5
-	},
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "Wt" = (
@@ -1605,6 +1601,13 @@
 "ZD" = (
 /obj/lattice{
 	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZM" = (
+/obj/lattice{
+	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/variableTurf/clear,
@@ -1927,7 +1930,7 @@ FS
 UK
 UK
 UK
-UK
+aA
 UK
 UK
 UK
@@ -1959,7 +1962,7 @@ UK
 UK
 UK
 UK
-Ww
+ZM
 UK
 UK
 UK
@@ -1990,7 +1993,7 @@ UK
 UK
 UK
 UK
-rf
+fL
 ei
 yS
 UK

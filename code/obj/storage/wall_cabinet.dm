@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/storage/wall)
+	mats = 8
+
 /obj/item/storage/wall
 	name = "cabinet"
 	desc = "It's basically a big box attached to the wall."
@@ -6,18 +9,25 @@
 	icon_state = "wall"
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
-	force = 8.0
+	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1.0
+	anchored = ANCHORED
 	density = 0
-	mats = 8
 	deconstruct_flags = DECON_SIMPLE
+	burn_possible = FALSE
 	max_wclass = W_CLASS_BULKY
 	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user)
+		if (istype(user, /mob/living/critter/small_animal))
+			return
 		return mouse_drop(user)
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(usr, /mob/living/critter/small_animal))
+			return
+		..()
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -41,7 +51,7 @@
 			new /obj/item/clothing/mask/gas/emergency(src)
 		for (var/i=rand(2,3), i>0, i--)
 			if (prob(40))
-				new /obj/item/tank/emergency_oxygen(src)
+				new /obj/item/tank/mini_oxygen(src)
 			if (prob(40))
 				new /obj/item/clothing/mask/breath(src)
 
@@ -193,7 +203,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	density = 1
 	slots = 7
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
@@ -222,7 +232,7 @@
 
 /obj/item/storage/wall/clothingrack/clothes1
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
-	/obj/item/clothing/under/misc/syndicate = 1,
+	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
@@ -261,7 +271,7 @@
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
-	/obj/item/clothing/under/gimmick/hunter = 1,
+	/obj/item/clothing/under/misc/mobster = 1,
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
@@ -329,7 +339,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 	icon_state = "toolshelf"
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
@@ -352,7 +362,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "mineralshelf"
 	plane = PLANE_DEFAULT
 	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
@@ -370,3 +380,19 @@ obj/item/storage/wall/clothingrack/hatrack
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
+
+/obj/item/storage/wall/surgery
+	name = "surgical cabinet"
+	desc = "A wall-mounted cabinet containing surgical tools."
+	icon_state = "minimed"
+	slots = 13
+	spawn_contents = list(
+		/obj/item/scalpel = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/scissors/surgical_scissors = 1,
+		/obj/item/surgical_spoon = 1,
+		/obj/item/staple_gun = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/suture = 1,
+		/obj/item/device/analyzer/healthanalyzer = 1,
+	)

@@ -10,6 +10,9 @@
 /datum/ailment/disease/going_catty/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if(!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
 	switch(D.stage)
 		if(2)
 			if(probmult(5))
@@ -27,5 +30,5 @@
 			boutput(affected_mob, "<span class='alert'>You feel your physical form condensing into something hairy and small... Uh oh...</span>")
 			affected_mob.visible_message("<span class='alert'><b>[affected_mob] transforms!</b></span>")
 			affected_mob.unequip_all()
-			logTheThing("combat", affected_mob, null, "is transformed into a critter cat by the [name] reagent at [log_loc(affected_mob)].")
+			logTheThing(LOG_COMBAT, affected_mob, "is transformed into a critter cat by the [name] reagent at [log_loc(affected_mob)].")
 			affected_mob.make_critter(/mob/living/critter/small_animal/cat)

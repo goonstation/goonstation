@@ -10,8 +10,8 @@ var/global/atom_emergency_stop = 0
 
 	if (!atom_emergency_stop)
 		atom_emergency_stop = 1
-		logTheThing("admin", usr, null, "used the emergency stop command for atom verbs.")
-		logTheThing("diary", usr, null, "used the emergency stop command for atom verbs.", "admin")
+		logTheThing(LOG_ADMIN, usr, "used the emergency stop command for atom verbs.")
+		logTheThing(LOG_DIARY, usr, "used the emergency stop command for atom verbs.", "admin")
 		message_admins("[key_name(usr)] used the emergency stop command for atom verbs.")
 		SPAWN(10 SECONDS) // after 10 seconds, turn it off
 			atom_emergency_stop = 0
@@ -53,30 +53,32 @@ var/global/atom_emergency_stop = 0
 		if(!mat)
 			return
 
-		logTheThing("admin", usr, null, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began transmuting all of [transmute_path] into [mat]")
 
 		var/transmute = 0
 		var/transmute_total = 0
 
 		for (var/atom/A as anything in find_all_by_type(transmute_path))
+			if(istype(A, /obj/overlay/tile_effect) || istype(A, /atom/movable/screen))
+				continue
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "type transmute command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "type transmute command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "type transmute command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "type transmute command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s type transmute command terminated due to an emergency stop!")
 				break
 			else
-				A.setMaterial(getMaterial(mat))
+				A.setMaterial(getMaterial(mat), copy = FALSE)
 				transmute ++
 				transmute_total ++
 				if (transmute >= amount_to_transmute)
 					transmute = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "transmuted [transmute_total] of [transmute_path] into [mat].")
-		logTheThing("diary", usr, null, "transmuted [transmute_total] of [transmute_path] into [mat].", "admin")
+		logTheThing(LOG_ADMIN, usr, "transmuted [transmute_total] of [transmute_path] into [mat].")
+		logTheThing(LOG_DIARY, usr, "transmuted [transmute_total] of [transmute_path] into [mat].", "admin")
 		message_admins("[key_name(usr)] transmuted [transmute_total] of [transmute_path] into [mat].")
 		return
 
@@ -98,8 +100,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "emagged every goddamn atom (details: [amount_to_emag] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "emagged every goddamn atom (details: [amount_to_emag] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "emagged every goddamn atom (details: [amount_to_emag] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "emagged every goddamn atom (details: [amount_to_emag] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began emagging every goddamn atom")
 
 		var/emagged = 0
@@ -108,8 +110,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A in world)
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "emagging command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "emagging command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "emagging command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "emagging command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s emagging command terminated due to an emergency stop!")
 				break
 			else
@@ -121,8 +123,8 @@ var/global/atom_emergency_stop = 0
 						emagged = 0
 						sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "emagged [emagged_total] atoms.")
-		logTheThing("diary", usr, null, "emagged [emagged_total] atoms.", "admin")
+		logTheThing(LOG_ADMIN, usr, "emagged [emagged_total] atoms.")
+		logTheThing(LOG_DIARY, usr, "emagged [emagged_total] atoms.", "admin")
 		message_admins("[key_name(usr)] emagged [emagged_total] atoms.")
 		return
 
@@ -149,8 +151,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "emagged all of [emag_path] (details: [amount_to_emag] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "emagged all of [emag_path] (details: [amount_to_emag] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "emagged all of [emag_path] (details: [amount_to_emag] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "emagged all of [emag_path] (details: [amount_to_emag] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began emagging all of [emag_path]")
 
 		var/emagged = 0
@@ -159,8 +161,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A as anything in find_all_by_type(emag_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "type emagging command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "type emagging command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "type emagging command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "type emagging command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s type emagging command terminated due to an emergency stop!")
 				break
 			else
@@ -172,8 +174,8 @@ var/global/atom_emergency_stop = 0
 						emagged = 0
 						sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "emagged [emagged_total] of [emag_path].")
-		logTheThing("diary", usr, null, "emagged [emagged_total] of [emag_path].", "admin")
+		logTheThing(LOG_ADMIN, usr, "emagged [emagged_total] of [emag_path].")
+		logTheThing(LOG_DIARY, usr, "emagged [emagged_total] of [emag_path].", "admin")
 		message_admins("[key_name(usr)] emagged [emagged_total] of [emag_path].")
 		return
 
@@ -192,8 +194,8 @@ var/global/atom_emergency_stop = 0
 	if (target?.emag_act())
 		target.emag_act(null,null)
 
-		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
-		logTheThing("diary", usr, null, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
+		logTheThing(LOG_ADMIN, usr, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
+		logTheThing(LOG_DIARY, usr, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
 		message_admins("[key_name(usr)] emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
 	else
 		boutput(usr, "<span class='alert'>Could not emag [target]!</span>")
@@ -224,8 +226,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "scaled every goddamn atom (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "scaled every goddamn atom (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "scaled every goddamn atom (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "scaled every goddamn atom (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began scaling every goddamn atom (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
 
 		var/scaled = 0
@@ -234,8 +236,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A in world)
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "scaling command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "scaling command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "scaling command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "scaling command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s scaling command terminated due to an emergency stop!")
 				break
 			else
@@ -246,8 +248,8 @@ var/global/atom_emergency_stop = 0
 					scaled = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "scaled [scaled_total] atoms.")
-		logTheThing("diary", usr, null, "scaled [scaled_total] atoms.", "admin")
+		logTheThing(LOG_ADMIN, usr, "scaled [scaled_total] atoms.")
+		logTheThing(LOG_DIARY, usr, "scaled [scaled_total] atoms.", "admin")
 		message_admins("[key_name(usr)] scaled [scaled_total] atoms.")
 		return
 
@@ -281,8 +283,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "scaled all of [scale_path] (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "scaled all of [scale_path] (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "scaled all of [scale_path] (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "scaled all of [scale_path] (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began scaling all of [scale_path] (details: X:[scalex], Y:[scaley], [amount_to_scale] things/batch, [sleep_time] sleep time)")
 
 		var/scaled = 0
@@ -291,8 +293,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A as anything in find_all_by_type(scale_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "type scaling command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "type scaling command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "type scaling command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "type scaling command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s type scaling command terminated due to an emergency stop!")
 				break
 			else
@@ -303,8 +305,8 @@ var/global/atom_emergency_stop = 0
 					scaled = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "scaled [scaled_total] of [scale_path].")
-		logTheThing("diary", usr, null, "scaled [scaled_total] of [scale_path].", "admin")
+		logTheThing(LOG_ADMIN, usr, "scaled [scaled_total] of [scale_path].")
+		logTheThing(LOG_DIARY, usr, "scaled [scaled_total] of [scale_path].", "admin")
 		message_admins("[key_name(usr)] scaled [scaled_total] of [scale_path].")
 		return
 
@@ -327,8 +329,8 @@ var/global/atom_emergency_stop = 0
 	if (!scaley)
 		return
 
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])", "admin")
+	logTheThing(LOG_ADMIN, usr, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
+	logTheThing(LOG_DIARY, usr, "scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])", "admin")
 	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley] ([log_loc(target)] in [target.loc])")
 
 	target.Scale(scalex, scaley)
@@ -356,8 +358,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "rotated every goddamn atom (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "rotated every goddamn atom (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "rotated every goddamn atom (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "rotated every goddamn atom (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began rotating every goddamn atom (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
 
 		var/rotated = 0
@@ -366,8 +368,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A in world)
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "rotating command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "rotating command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "rotating command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "rotating command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s rotating command terminated due to an emergency stop!")
 				break
 			else
@@ -378,8 +380,8 @@ var/global/atom_emergency_stop = 0
 					rotated = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "rotated [rotated_total] atoms.")
-		logTheThing("diary", usr, null, "rotated [rotated_total] atoms.", "admin")
+		logTheThing(LOG_ADMIN, usr, "rotated [rotated_total] atoms.")
+		logTheThing(LOG_DIARY, usr, "rotated [rotated_total] atoms.", "admin")
 		message_admins("[key_name(usr)] rotated [rotated_total] atoms.")
 		return
 
@@ -410,8 +412,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "rotated all of [rotate_path] (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "rotated all of [rotate_path] (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "rotated all of [rotate_path] (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "rotated all of [rotate_path] (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began rotating all of [rotate_path] (details: [rot] rotation, [amount_to_rotate] things/batch, [sleep_time] sleep time)")
 
 		var/rotated = 0
@@ -420,8 +422,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A as anything in find_all_by_type(rotate_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "type rotating command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "type rotating command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "type rotating command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "type rotating command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s type rotating command terminated due to an emergency stop!")
 				break
 			else
@@ -432,8 +434,8 @@ var/global/atom_emergency_stop = 0
 					rotated = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "rotated [rotated_total] of [rotate_path].")
-		logTheThing("diary", usr, null, "rotated [rotated_total] of [rotate_path].", "admin")
+		logTheThing(LOG_ADMIN, usr, "rotated [rotated_total] of [rotate_path].")
+		logTheThing(LOG_DIARY, usr, "rotated [rotated_total] of [rotate_path].", "admin")
 		message_admins("[key_name(usr)] rotated [rotated_total] of [rotate_path].")
 		return
 
@@ -453,8 +455,8 @@ var/global/atom_emergency_stop = 0
 	if (!rot)
 		return
 
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])", "admin")
+	logTheThing(LOG_ADMIN, usr, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
+	logTheThing(LOG_DIARY, usr, "rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])", "admin")
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees ([log_loc(target)] in [target.loc])")
 
 	target.Turn(rot)
@@ -493,8 +495,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "spun every goddamn atom (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] atoms/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "spun every goddamn atom (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] atoms/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "spun every goddamn atom (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] atoms/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "spun every goddamn atom (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] atoms/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began spinning every goddamn atom (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] atoms/batch, [sleep_time] sleep time)")
 
 		var/spun = 0
@@ -503,8 +505,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A in world)
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "spinning command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "spinning command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "spinning command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "spinning command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s spinning command terminated due to an emergency stop!")
 				break
 			else
@@ -515,8 +517,8 @@ var/global/atom_emergency_stop = 0
 					spun = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "spun [spun_total] atoms.")
-		logTheThing("diary", usr, null, "spun [spun_total] atoms.", "admin")
+		logTheThing(LOG_ADMIN, usr, "spun [spun_total] atoms.")
+		logTheThing(LOG_DIARY, usr, "spun [spun_total] atoms.", "admin")
 		message_admins("[key_name(usr)] spun [spun_total] atoms.")
 		return
 
@@ -559,8 +561,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "spun all of [spin_path] (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "spun all of [spin_path] (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "spun all of [spin_path] (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "spun all of [spin_path] (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began spinning all of [spin_path] (details: [direction] direction, [time] animate time, [looping] looping, [amount_to_spin] things/batch, [sleep_time] sleep time)")
 
 		var/spun = 0
@@ -569,8 +571,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A as anything in find_all_by_type(spin_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "type spinning command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "type spinning command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "type spinning command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "type spinning command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s type spinning command terminated due to an emergency stop!")
 				break
 			else
@@ -581,8 +583,8 @@ var/global/atom_emergency_stop = 0
 					spun = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "spun [spun_total] of [spin_path].")
-		logTheThing("diary", usr, null, "spun [spun_total] of [spin_path].", "admin")
+		logTheThing(LOG_ADMIN, usr, "spun [spun_total] of [spin_path].")
+		logTheThing(LOG_DIARY, usr, "spun [spun_total] of [spin_path].", "admin")
 		message_admins("[key_name(usr)] spun [spun_total] of [spin_path].")
 		return
 
@@ -612,8 +614,8 @@ var/global/atom_emergency_stop = 0
 	else
 		looping = 0
 
-	logTheThing("admin", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc])")
-	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))", "admin")
+	logTheThing(LOG_ADMIN, usr, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc])")
+	logTheThing(LOG_DIARY, usr, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))", "admin")
 	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [log_loc(target)] in [target.loc]))")
 
 	animate_spin(target, direction, time, looping, FALSE)
@@ -639,8 +641,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "teleported every goddamn obj/mob to them (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "teleported every goddamn obj/mob to them (details: [amount_to_get] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "teleported every goddamn obj/mob to them (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "teleported every goddamn obj/mob to them (details: [amount_to_get] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began teleporting every goddamn obj/mob to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
 
 		var/gotten = 0
@@ -649,8 +651,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/A in world)
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "teleport command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "teleport command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "teleport command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "teleport command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s teleport command terminated due to an emergency stop!")
 				break
 			else
@@ -665,8 +667,8 @@ var/global/atom_emergency_stop = 0
 					gotten = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "teleported [gotten_total] objs/mobs.")
-		logTheThing("diary", usr, null, "teleported [gotten_total] objs/mobs.", "admin")
+		logTheThing(LOG_ADMIN, usr, "teleported [gotten_total] objs/mobs.")
+		logTheThing(LOG_DIARY, usr, "teleported [gotten_total] objs/mobs.", "admin")
 		message_admins("[key_name(usr)] teleported [gotten_total] objs/mobs.")
 		return
 
@@ -695,8 +697,8 @@ var/global/atom_emergency_stop = 0
 		if (!sleep_time)
 			return
 
-		logTheThing("admin", usr, null, "teleported all of [get_path] to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
-		logTheThing("diary", usr, null, "teleported all of [get_path] to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)", "admin")
+		logTheThing(LOG_ADMIN, usr, "teleported all of [get_path] to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "teleported all of [get_path] to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)", "admin")
 		message_admins("[key_name(usr)] began teleporting all of [get_path] to themselves (details: [amount_to_get] things/batch, [sleep_time] sleep time)")
 
 		var/gotten = 0
@@ -705,8 +707,8 @@ var/global/atom_emergency_stop = 0
 		for (var/atom/movable/A as anything in find_all_by_type(get_path))
 			LAGCHECK(LAG_LOW)
 			if (atom_emergency_stop)
-				logTheThing("admin", usr, null, "teleport command terminated due to an emergency stop.")
-				logTheThing("diary", usr, null, "teleport command terminated due to an emergency stop.", "admin")
+				logTheThing(LOG_ADMIN, usr, "teleport command terminated due to an emergency stop.")
+				logTheThing(LOG_DIARY, usr, "teleport command terminated due to an emergency stop.", "admin")
 				message_admins("[key_name(usr)]'s teleport command terminated due to an emergency stop!")
 				break
 			else
@@ -719,8 +721,8 @@ var/global/atom_emergency_stop = 0
 					gotten = 0
 					sleep(sleep_time)
 
-		logTheThing("admin", usr, null, "teleported [gotten_total] of [get_path].")
-		logTheThing("diary", usr, null, "teleported [gotten_total] of [get_path].", "admin")
+		logTheThing(LOG_ADMIN, usr, "teleported [gotten_total] of [get_path].")
+		logTheThing(LOG_DIARY, usr, "teleported [gotten_total] of [get_path].", "admin")
 		message_admins("[key_name(usr)] teleported [gotten_total] of [get_path].")
 		return
 

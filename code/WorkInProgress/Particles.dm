@@ -13,7 +13,8 @@
 	name = ""
 	desc = ""
 	mouse_opacity = 0
-	anchored = 1
+	pass_unstable = FALSE
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
@@ -1375,9 +1376,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!issmokeimmune(L))
-					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
+					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((get_dist(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
+						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
@@ -1408,7 +1409,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 /datum/particleSystem/mechanic
 	New(var/atom/location, var/atom/destination)
-		..(location, "mechpart", get_dist(location, destination) * 5,  "#00FF00", destination)
+		..(location, "mechpart", GET_DIST(location, destination) * 5,  "#00FF00", destination)
 
 	InitPar()
 		sleepCounter = 10

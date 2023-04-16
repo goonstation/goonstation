@@ -24,6 +24,7 @@
 	desc = "Dispenses paint. Derp."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
+	icon_fallen = "paint-fallen"
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
@@ -72,7 +73,7 @@
 	desc = "Would dispense paint, if it were not broken."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/repair_stage = 0
 	var/paint_needed = 20
@@ -112,7 +113,7 @@
 				if (0)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to unscrew the maintenance panel.","You begin to unscrew the maintenance panel.")
-						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 						if (!do_after(user, 2 SECONDS) || repair_stage)
 							return
 						repair_stage = 1
@@ -125,7 +126,7 @@
 				if (1)
 					if (ispryingtool(W))
 						user.visible_message("[user] begins to pry off the maintenance panel.","You begin to pry off the maintenance panel.")
-						playsound(user, "sound/items/Crowbar.ogg", 65, 1)
+						playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
 						if (!do_after(user, 2 SECONDS) || (repair_stage != 1))
 							return
 						repair_stage = 2
@@ -142,7 +143,7 @@
 				if (2)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to loosen the service module bolts.","You begin to loosen the service module bolts.")
-						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 2))
 							return
 						repair_stage = 3
@@ -160,7 +161,7 @@
 							boutput(user, "<span class='alert'>You do not have enough cable to replace all of the burnt wires! (20 units required)</span>")
 							return
 						user.visible_message("[user] begins to replace the burnt wires.","You begin to replace the burnt wires.")
-						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 						if (!do_after(user, 100) || (repair_stage != 3))
 							return
 
@@ -177,7 +178,7 @@
 				if (5)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to tighten the service module bolts.","You begin to tighten the service module bolts.")
-						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 5))
 							return
 						repair_stage = 6
@@ -192,7 +193,7 @@
 				if (6)
 					if (istype(W, /obj/item/tile))
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
-						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
 							return
 						repair_stage = 7
@@ -208,7 +209,7 @@
 				if (7)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to secure the maintenance panel..","You begin to secure the maintenance panel.")
-						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 						if (!do_after(user, 100) || (repair_stage != 7))
 							return
 						repair_stage = 8
@@ -227,7 +228,7 @@
 						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)
-							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
+							playsound(src.loc, 'sound/effects/Explosion2.ogg', 100, 1)
 
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
@@ -258,56 +259,43 @@ var/list/cached_colors = new/list()
 	var/image/paint_overlay
 	var/uses = 15
 	var/paint_intensity = 0.5
-	var/add_orig = 0.0
+	var/add_orig = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
+	New()
+		..()
+		generate_icon()
+
 	attack_hand(mob/user)
 		..()
-
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return FALSE
 
-		if(!uses)
+		if(uses <= 0)
 			boutput(user, "It's empty.")
-			return
+			return FALSE
 
-		boutput(user, "You paint \the [target].")
-		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
-
-		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
+		user.visible_message("<span class='notice'>[user] paints \the [target].</span>", "You paint \the [target]", "<span class='notice'>You hear a wet splat.</span>")
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 
 		uses--
-		if(!uses) overlays = null
+		if(uses <= 0) overlays = null
 
-		/*
-		if( (paint_color+"[initial(target.icon)]") in cached_colors )
-			target.icon = cached_colors[(paint_color+"[initial(target.icon)]")]
-		else
-			var/icon/new_icon = icon(target.icon)
-			new_icon.ColorTone(paint_color)
-			cached_colors += (paint_color+"[initial(target.icon)]")
-			cached_colors[(paint_color+"[initial(target.icon)]")] = new_icon
-			target.icon = new_icon
-		*/
-		var/oldVal = target.color
-		target.color = src.actual_paint_color
-		target.onVarChanged("color", oldVal, actual_paint_color) // to force redraws on worn items if needed
-
-		//var/icon/new_icon = icon(initial(target.icon))
-		//new_icon.ColorTone(color)
-		//target.icon = new_icon
-
-		return
+		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
+		return TRUE
 
 	proc/generate_icon()
+		overlays = null
+		if(uses <= 0) return
 		if (!paint_overlay)
 			paint_overlay = image('icons/misc/old_or_unused.dmi',"paint_overlay")
 		paint_overlay.color = paint_color
-		overlays = null
 		overlays += paint_overlay
 		var/list/color_list = hex_to_rgb_list(src.paint_color)
 		src.actual_paint_color = list(
@@ -320,110 +308,91 @@ var/list/cached_colors = new/list()
 	name = "random paint can"
 	uses = 5
 	New()
-		..()
-		SPAWN(0.5 SECONDS)
-			var/colorname = "Weird"
-			switch(rand(1,6))
-				if(1)
-					paint_color = rgb(255,10,10)
-					colorname = "red"
-				if(2)
-					paint_color = rgb(10,255,10)
-					colorname = "green"
-				if(3)
-					paint_color = rgb(10,10,255)
-					colorname = "blue"
-				if(4)
-					paint_color = rgb(255,255,10)
-					colorname = "yellow"
-				if(5)
-					paint_color = rgb(255,10,255)
-					colorname = "purple"
-				if(6)
-					paint_color = rgb(150,150,150)
-					colorname = "gray"
+		var/colorname = "Weird"
+		switch(rand(1,6))
+			if(1)
+				paint_color = rgb(255,10,10)
+				colorname = "red"
+			if(2)
+				paint_color = rgb(10,255,10)
+				colorname = "green"
+			if(3)
+				paint_color = rgb(10,10,255)
+				colorname = "blue"
+			if(4)
+				paint_color = rgb(255,255,10)
+				colorname = "yellow"
+			if(5)
+				paint_color = rgb(255,10,255)
+				colorname = "purple"
+			if(6)
+				paint_color = rgb(150,150,150)
+				colorname = "gray"
 
-			name = "[colorname] paint can"
-			desc = "[colorname] paint. In a can. Whoa!"
-			src.generate_icon()
+		name = "[colorname] paint can"
+		desc = "[colorname] paint. In a can. Whoa!"
+		..()
 
 /obj/item/paint_can/rainbow
 	name = "rainbow paint can"
 	desc = "This Paint Can contains rich, thick, rainbow paint. No, we don't know how it works either."
-	var/colorlist[]
-	var/currentcolor
+	var/colorlist = list()
+	var/currentcolor = 1
 	New()
-		..()
-
 		//A rainbow of colours! Joy!
 		src.colorlist = list(rgb(255,0,0),rgb(255,165,0), rgb(255,255,0), rgb(0,128,0), rgb(0,0,255), rgb(075,0,128), rgb(238,128,238))
-		src.currentcolor = 1
+		src.currentcolor = rand(1, length(src.colorlist))
 		src.paint_color = colorlist[currentcolor]
-
-
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		..()
-		src.currentcolor += 1
-		if (src.currentcolor == 8)
-			src.currentcolor = 1
 
-		src.paint_color = colorlist[currentcolor]
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
+		if(!..()) return
 
-		src.generate_icon()
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
 
-		return
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
+		return TRUE
 
 /obj/item/paint_can/rainbow/plaid
 	name = "pattern paint can"
 	desc = "A perfectly ordinary can of paint. Oh, except that it paints patterns."
-	var/patternlist[]
-	var/currentpattern
+	var/patternlist = list()
+	var/currentpattern = 1
 
 	New()
 		..()
-
 		src.patternlist = list("tartan", "strongplaid", "polka", "hearts")
-		currentpattern = 1
+		for(var/i=1 to length(src.patternlist))
+			src.patternlist[i] =  new /icon('icons/obj/paint.dmi', patternlist[i])
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
-
-		if(!uses)
-			boutput(user, "It's empty.")
-			return
-
-		boutput(user, "You paint \the [target].")
-		for(var/mob/O in oviewers(world.view, user))
-			O.show_message("<span class='notice'>[user] paints \the [target].</span>", 1)
-
-		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
-
-		uses--
-		if(!uses) overlays = null
-
-		if( (paint_color+"[initial(target.icon)]") in cached_colors )
-			target.icon = cached_colors[(paint_color+"[initial(target.icon)]")]
-		else
-			var/icon/new_icon = icon(target.icon)
-
-			//Add pattern here.
-			var/icon/pattern = new('icons/obj/paint.dmi', patternlist[currentpattern])
-			new_icon.Blend(pattern,ICON_MULTIPLY)
-
-			new_icon.ColorTone(paint_color)
-			cached_colors += (paint_color+"[initial(target.icon)]")
-			cached_colors[(paint_color+"[initial(target.icon)]")] = new_icon
-			target.icon = new_icon
+		currentpattern = rand(1, length(src.patternlist))
 
 
-		src.currentcolor += 1
-		if (src.currentcolor == 8)
-			src.currentcolor = 1
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
+		if(!..(target, user, FALSE)) return
+		var/matrix/scale_transform = matrix()
+		var/icon/I = new(target.icon) //isn't DM great?
+		scale_transform.Scale(I.Width()/32, I.Height()/32)
+		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, transform=scale_transform, blend_mode=BLEND_MULTIPLY))
 
-		src.paint_color = colorlist[currentcolor]
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
 
-		src.currentpattern += 1
-		if (src.currentpattern == 4)
-			src.currentpattern = 1
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
 
-		src.generate_icon()
+			src.currentpattern += 1
+			if (src.currentpattern > length(src.patternlist))
+				src.currentpattern = 1
+
+
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
+		return TRUE

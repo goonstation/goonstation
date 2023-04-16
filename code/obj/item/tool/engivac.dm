@@ -15,7 +15,7 @@ obj/item/engivac
 	icon_state = "engivac"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "engivac_"
-	flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
+	c_flags = ONBELT | ONBACK | EQUIPPED_WHILE_HELD //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
 	w_class = W_CLASS_BULKY
 
 	//Stuff relating to the particular toolbox we have installed
@@ -102,7 +102,7 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
-				playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(user, "<span class='alert'>This toolbox has too many unrecognised things in it, and the vacuum rejects it.</span>")
 			return
 		user.u_equip(I)
@@ -180,7 +180,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 		if (!scan_for_floortiles()) //...and I'm all out of tiles
 			placing_tiles = FALSE
 			tooltip_rebuild = 1
-			playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates auto-placing.</span>")
 			return
 	if (istype(target, /turf/simulated/floor))

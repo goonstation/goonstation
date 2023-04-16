@@ -97,7 +97,6 @@ var/global
 				//"browserassets/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -179,7 +178,7 @@ var/global
 		if (json_decode_crasher.Find(cookie))
 			if (src.owner)
 				message_admins("[src.owner] just attempted to crash the server using at least 5 '\['s in a row.")
-				logTheThing("admin", src.owner, null, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
+				logTheThing(LOG_ADMIN, src.owner, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
 
 				//Irc message too
 				var/ircmsg[] = new()
@@ -190,7 +189,7 @@ var/global
 			return
 
 		var/list/connData = json_decode(cookie)
-		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
+		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
@@ -202,11 +201,11 @@ var/global
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (found.len > 0 && found["ckey"] != src.owner.ckey)
+			if (length(found) && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("debug", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("diary", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
+				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
 
 				//Irc message too
 				if(owner)
@@ -218,9 +217,9 @@ var/global
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
-				banData["compID"] = src.owner.computer_id
+				banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.owner.computer_id) // don't add CID if original ban doesn't have one
 				banData["akey"] = "Auto Banner"
-				banData["ip"] = src.owner.address
+				banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.owner.address) // don't add IP if original ban doesn't have one
 				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
 				banData["mins"] = 0
 				addBan(banData)
@@ -273,7 +272,7 @@ var/global
 			src.owner.addBanDialog(targetMob)
 		if ("gib")
 			src.owner.cmd_admin_gib(targetMob)
-			logTheThing("admin", src.owner, targetMob, "gibbed [constructTarget(targetMob,"admin")].")
+			logTheThing(LOG_ADMIN, src.owner, "gibbed [constructTarget(targetMob,"admin")].")
 		if ("popt")
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
@@ -370,7 +369,7 @@ var/global
 			var/list/partial = splittext(iconData, "{")
 
 			if (length(partial) < 2)
-				logTheThing("debug", null, null, "Got invalid savefile data for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Got invalid savefile data for: [obj]")
 				return
 
 			baseData = copytext(partial[2], 3, -5)
@@ -379,7 +378,7 @@ var/global
 			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
 
 			if (!icon)
-				logTheThing("debug", null, null, "Unable to create output icon for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
 				return
 
 			baseData = icon2base64(icon, iconKey)
@@ -413,11 +412,19 @@ var/global
 		if (isclient(target))
 			C = target
 		else if (ismob(target))
-			C = target:client
+			var/mob/M = target
+			if (M.boutput_relay_mob)
+				boutput(M.boutput_relay_mob, message, group, forceScroll)
+			else if(istype(M, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = M
+				if(AI.deployed_to_eyecam)
+					C = AI.eyecam?.client
+			else
+				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
-		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
+		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
 		else
@@ -454,9 +461,6 @@ var/global
 //Aliases for boutput
 /proc/out(target = 0, message = "", group = "")
 	boutput(target, message, group)
-/proc/bo(target = 0, message = "", group = "")
-	boutput(target, message, group)
-
 
 /*
 I spent so long on this regex I don't want to get rid of it :(

@@ -60,8 +60,8 @@
 		else
 			if (probmult(40))
 				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
-				affected_mob.playsound_local(affected_mob.loc, "sound/effects/heartbeat.ogg", 50, 1)
+				affected_mob.playsound_local(affected_mob.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 				affected_mob.emote("collapse")
 
-				affected_mob.make_vampire(FALSE, TRUE)
+				affected_mob.mind?.add_antagonist(ROLE_VAMPIRE, do_pseudo = TRUE)
 				affected_mob.cure_disease(D)

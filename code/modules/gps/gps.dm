@@ -49,7 +49,7 @@
 	var/list/sorted_names = list()
 	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
 		sorted_names += landmarks[LANDMARK_GPS_WAYPOINT][wp]
-	sorted_names = sortList(sorted_names)
+	sortList(sorted_names, /proc/cmp_text_asc)
 	boutput( usr, "::Sorted GPS Waypoints::" )
 	for(var/N in sorted_names)
 		boutput( usr, "[N]" )
@@ -59,7 +59,7 @@
 		boutput( usr, "No targets found! Try again later!" )
 		return
 
-	var/target = tgui_input_list(src, "Choose a destination!", "GPS Destination Pick", sortList(wtfbyond))
+	var/target = tgui_input_list(src, "Choose a destination!", "GPS Destination Pick", sortList(wtfbyond, /proc/cmp_text_asc))
 	if(!target || !src.client) return
 	target = targets[target]
 	gpsToTurf(target, param = ID)

@@ -114,6 +114,36 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
 
+/datum/cookingrecipe/synthbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+
+/datum/cookingrecipe/cyberbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/cyberbutt
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+
+/datum/cookingrecipe/synthheartburger
+	item1 = /obj/item/organ/heart/synth
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
+
+/datum/cookingrecipe/cyberheartburger
+	item1 = /obj/item/organ/heart/cyber
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
+
+/datum/cookingrecipe/flockheartburger
+	item1 = /obj/item/organ/heart/flock
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
+
 /datum/cookingrecipe/heartburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/heart
@@ -131,6 +161,24 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/organ/brain
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
+
+datum/cookingrecipe/synthbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
+
+datum/cookingrecipe/cyberbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/latejoin
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
+
+datum/cookingrecipe/flockbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/flockdrone
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
 
 /datum/cookingrecipe/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -402,6 +450,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
 
+/datum/cookingrecipe/toasted_french
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/french
+	cookbonus = 5
+	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
+
 /datum/cookingrecipe/sandwich_m_h
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
@@ -668,11 +721,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 					customSandwich.food_effects += snack.food_effects
 
 					//fillings += snack.name
-					if (snack.food_color)
+					if (snack.get_food_color())
 						if (fillingColors.len % 2 || fillingColors.len < (i*2))
-							fillingColors += "B[snack.food_color]"
+							fillingColors += "B[snack.get_food_color()]"
 						else
-							fillingColors.Insert((i++*2), "B[snack.food_color]")
+							fillingColors.Insert((i++*2), "B[snack.get_food_color()]")
 					qdel(snack)
 
 				else if (slice1)
@@ -688,8 +741,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 				customSandwich.food_effects += snack.food_effects
 
 				fillings += snack.name
-				if (snack.food_color && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
-					fillingColors += snack.food_color
+				if (snack.get_food_color() && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
+					fillingColors += snack.get_food_color()
 				else
 					var/obj/transformedFilling = image(snack.icon, snack.icon_state)
 					transformedFilling.transform = matrix(0.75, MATRIX_SCALE)
@@ -733,7 +786,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		if (slice1)
 			sandwichIcon = image('icons/obj/foodNdrink/food_meals.dmi', "sandwich-bread")//, 1, 1)
 			//sandwichIcon.Blend(slice1.food_color, ICON_ADD)
-			sandwichIcon.color = slice1.food_color
+			sandwichIcon.color = slice1.get_food_color()
 
 			customSandwich.overlays += sandwichIcon
 			//qdel(slice1)
@@ -762,7 +815,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		if (slice2)
 			newFilling = image('icons/obj/foodNdrink/food_meals.dmi', "sandwich-bread")//, 1, 1)
 			//newFilling.Blend( slice2.food_color, ICON_ADD)
-			newFilling.color = slice2.food_color
+			newFilling.color = slice2.get_food_color()
 			newFilling.pixel_y = fillingOffset
 
 			//qdel(slice2)
@@ -837,7 +890,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/eggtoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastegg
 
@@ -1080,9 +1133,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/onionchips
 	item1 = /obj/item/reagent_containers/food/snacks/onion_slice
-	item2 = /obj/item/reagent_containers/food/snacks/onion_slice
-	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/onionchips
 
@@ -1228,7 +1281,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			custom_pie.name = "[custom_pie_food.name] cream pie"
 
 		var/icon/I = new /icon('icons/obj/foodNdrink/food_dessert.dmi',"creampie")
-		I.Blend(custom_pie_food.food_color, ICON_ADD)
+		I.Blend(custom_pie_food.get_food_color(), ICON_ADD)
 		custom_pie.icon = I
 
 		return custom_pie
@@ -1254,11 +1307,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		for (var/obj/item/T in ourCooker.contents)
 
 			if (T.type == item1 && !found1)
-				found1 = true
+				found1 = TRUE
 				continue
 
 			if (T.type == item2 && !found2)
-				found2 = true
+				found2 = TRUE
 				continue
 
 			anItem = T
@@ -1285,6 +1338,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			custom_pie.w_class = max(custom_pie.w_class, T.w_class) //Well, that huge thing you put into it isn't going to shrink, you know
 			custom_pie.throw_range = min(custom_pie.throw_range, T.throw_range)
 			custom_pie.throw_speed = min(custom_pie.throw_speed, T.throw_speed)
+			custom_pie.contraband = max(custom_pie.contraband, T.contraband - 1)
 
 			count++
 
@@ -1483,7 +1537,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake
 
@@ -1505,7 +1559,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake(ourCooker)
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
-		B.food_color = S ? S.food_color : "#CC8555"
+		B.food_color = S ? S.get_food_color() : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
 		B.UpdateOverlays(overlay,"first")
@@ -1599,7 +1653,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1640,7 +1694,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1737,8 +1791,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe/sushi_roll
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
-	item3 = /obj/item/reagent_containers/food/snacks/rice_ball
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/sushi_roll
 
@@ -1827,7 +1881,41 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
-// Recipe for zongzi is a WIP; we're gonna need rice balls or something
+
+/datum/cookingrecipe/cheesewheel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	amt1 = 2
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cheesewheel
+
+/datum/cookingrecipe/ratatouille
+	item1 = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	item2 = /obj/item/reagent_containers/food/snacks/plant/tomato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/eggplant
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/ratatouille
+
+/datum/cookingrecipe/churro
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/dippable/churro
+
+/datum/cookingrecipe/french_toast
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice/
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/drinks/milk
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/french_toast
+
+/datum/cookingrecipe/zongzi
+	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo
+	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/zongzi
 
 /datum/cookingrecipe/beefood
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/honey
@@ -1880,4 +1968,3 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
-

@@ -15,12 +15,13 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
+	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
-	force = 5.0
-	throwforce = 10.0
+	force = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 	stamina_damage = 55
@@ -99,10 +100,11 @@ Contains:
 			var/mob/living/carbon/location = loc
 			if (!location)
 				return
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-					T.icon_state = "airoff"
+					if(T.the_item == src)
+						T.icon_state = "airoff"
 				location.internal = null
 				if (location.internals)
 					location.internals.icon_state = "internal0"
@@ -110,16 +112,21 @@ Contains:
 				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+					if(!isnull(location.internal)) //you're already using a tank and it's not this one
+						location.internal.toggle_valve()
+						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
 					location.internal = src
+
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						T.icon_state = "airon"
+						if(T.the_item == src)
+							T.icon_state = "airon"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
 					return TRUE
 				else
 					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
-					playsound(src.loc, "sound/items/penclick.ogg", 50, TRUE)
+					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
 	proc/remove_air_volume(volume_to_return)
@@ -143,7 +150,7 @@ Contains:
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
@@ -157,13 +164,13 @@ Contains:
 				for_by_tcl(B, /obj/item/storage/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing("bombing", src, null, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
 			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 			qdel(src)
@@ -173,14 +180,14 @@ Contains:
 				loc.assume_air(air_contents)
 				air_contents = null
 				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, TRUE)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
 			if(integrity <= 0)
-				playsound(src.loc, "sound/effects/spray.ogg", 50, TRUE)
+				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
 			else
@@ -193,13 +200,13 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)
@@ -276,6 +283,14 @@ Contains:
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
 
@@ -302,11 +317,13 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
+
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
-	mats = 16
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
 	distribute_pressure = 17
@@ -341,7 +358,7 @@ Contains:
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
-		playsound(src.loc, "sound/machines/click.ogg", 30, TRUE)
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		update_icon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
@@ -402,6 +419,22 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
+
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack0"
+	item_state = "microjetpack"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
+	force = 6
+
+	New()
+		..()
+		src.air_contents.volume = 18
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/oxygen
@@ -418,22 +451,61 @@ Contains:
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/emergency_oxygen
-	name = "emergency oxygen tank"
-	icon_state = "em_oxtank"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	name = "pocket oxygen tank"
+	icon_state = "pocket_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
 	health = 5
-	w_class = W_CLASS_SMALL
-	force = 3.0
+	w_class = W_CLASS_TINY
+	force = 1
+	stamina_damage = 20
+	stamina_cost = 8
+	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.volume = 3
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/emergency_oxygen/extended
+	name = "extended capacity pocket oxygen tank"
+	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	icon_state = "ex_pocket_oxtank"
+
+	New()
+		..()
+		src.air_contents.volume = 6
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+
+
+/obj/item/tank/mini_oxygen
+	name = "mini oxygen tank"
+	icon_state = "mini_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	health = 5
+	w_class = W_CLASS_NORMAL
+	force = 3
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A small personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 
 	New()
 		..()
-		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4.5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.volume = 8
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 ////////////////////////////////////////////////////////////
@@ -473,7 +545,7 @@ Contains:
 			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20

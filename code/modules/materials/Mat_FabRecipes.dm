@@ -1,46 +1,48 @@
 //See bottom of file for valid materials in /simple recipes.
 
-/datum/matfab_recipe/simple/insbody
-	name = "Instrument body"
-	desc = "The body of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=4)
-	result = /obj/item/musicpart/body
+/datum/matfab_recipe/simple/nuclear
+	name = "Nuclear Component - base"
+	desc = "You shouldn't see this"
+	category = "Nuclear"
+	result = /obj/item/reactor_component
 
-/datum/matfab_recipe/simple/insneck
-	name = "Instrument neck"
-	desc = "The neck of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=3)
-	result = /obj/item/musicpart/neck
+	postProcess(obj/item/reactor_component/I)
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		if(!I.material.hasProperty("density"))
+			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty("hard"))
+			I.material.setProperty("hard", 1)
+		if(I.material.mat_id=="ice") //ice is cold
+			I.temperature = T0C-10
 
-/datum/matfab_recipe/simple/insmouth
-	name = "Instrument mouthpiece"
-	desc = "The mouthpiece of an instrument."
-	category = "Miscellaneous"
+/datum/matfab_recipe/simple/nuclear/fuel_rod
+	name = "Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor"
+	category = "Nuclear"
 	materials = list("!any"=2)
-	result = /obj/item/musicpart/mouth
+	result = /obj/item/reactor_component/fuel_rod
 
-/datum/matfab_recipe/simple/insbell
-	name = "Instrument bell"
-	desc = "The bell of an instrument. Not an actual bell."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=4)
-	result = /obj/item/musicpart/bell
+/datum/matfab_recipe/simple/nuclear/control_rod
+	name = "Control Rod"
+	desc = "A control rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/control_rod
 
-/datum/matfab_recipe/simple/insbag
-	name = "Instrument bag"
-	desc = "The bag of an instrument."
-	category = "Miscellaneous"
-	materials = list("!clothorganic"=4)
-	result = /obj/item/musicpart/bag
+/datum/matfab_recipe/simple/nuclear/heat_exchanger
+	name = "Heat Exchanger"
+	desc = "A heat exchanger component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/heat_exchanger
 
-/datum/matfab_recipe/simple/insrod
-	name = "Instrument rod"
-	desc = "A plain old hollowed out rod."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=3)
-	result = /obj/item/musicpart/h_rod
+/datum/matfab_recipe/simple/nuclear/gas_channel
+	name = "Coolant Channel"
+	desc = "A coolant channel component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/gas_channel
 
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
@@ -56,23 +58,21 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/custom/suit = new()
-			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
-			suit.set_loc(getOutputLocation(owner))
-			helmet.set_loc(getOutputLocation(owner))
+			var/obj/item/clothing/head/helmet/space/custom/helm = new()
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/visr = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material) // suit stuff
-			suit.setupReinforcement(renf.material)
-			suit.UpdateName()
-			helmet.setMaterial(fabr.material) // helmet stuff
-			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
-			helmet.UpdateName()
+
+			suit.set_custom_mats(fabr.material, renf.material)
+			helm.set_custom_mats(fabr.material, visr.material)
+
+			suit.set_loc(getOutputLocation(owner))
+			helm.set_loc(getOutputLocation(owner))
 		return
 
 /datum/matfab_recipe/mining_mod_conc
 	name = "Tool mod (Concussive)"
-	desc = "A mod for mining tools. Increases AOE."
+	desc = "A mod for mining tools. Increases area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -88,7 +88,7 @@
 
 /datum/matfab_recipe/mining_head_pick
 	name = "Tool head (Pick)"
-	desc = "A Pick head. Picks have high power but no AOE."
+	desc = "A Pick head. Picks have high power but no area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -108,7 +108,7 @@
 
 /datum/matfab_recipe/mining_head_blaster
 	name = "Tool head (Blaster)"
-	desc = "A Blaster head. Blasters have lower power but very high AOE."
+	desc = "A Blaster head. Blasters have lower power but very high area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -127,7 +127,7 @@
 
 /datum/matfab_recipe/mining_head_hammer
 	name = "Tool head (Hammer)"
-	desc = "A Hammer head. Hammers have a wide AOE and normal power."
+	desc = "A Hammer head. Hammers have a wide area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -146,7 +146,7 @@
 
 /datum/matfab_recipe/mining_head_drill
 	name = "Tool head (Drill)"
-	desc = "A Drill head. Hammers have a long AOE and normal power."
+	desc = "A Drill head. Drills have a long area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -237,28 +237,9 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/coillarge
-	name = "Large coil"
-	desc = "A large coil used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/coil/large/newObj = new()
-			var/obj/item/source = getObjectByPartName("Coil")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spear
 	name = "Spear"
-	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
+	desc = "A simple spear with long reach."
 	category = "Weapons"
 
 	New()
@@ -343,7 +324,7 @@
 
 /datum/matfab_recipe/lens
 	name = "Lens"
-	desc = "A Lens used as a component in various objects."
+	desc = "A lens used as a component in various objects."
 	category = "Components"
 
 	New()
@@ -360,28 +341,9 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/gears
-	name = "Gears"
-	desc = "Some gears used as parts in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/gears/newObj = new()
-			var/obj/item/source = getObjectByPartName("Gears")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/tripod
 	name = "Tripod"
-	desc = "A tripod."
+	desc = "A tripod for attaching a light to."
 	category = "Components"
 
 	New()
@@ -392,25 +354,6 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/aplates
-	name = "Armor plates"
-	desc = "Armor plates used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/aplate/newObj = new()
-			var/obj/item/source = getObjectByPartName("Armor")
 			if(source?.material)
 				newObj.setMaterial(source.material)
 
@@ -606,7 +549,7 @@
 
 /datum/matfab_recipe/tripodbulb
 	name = "Tripod bulb"
-	desc = "a replacement tripod light bulb. Lens color affects light color."
+	desc = "A replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -628,7 +571,7 @@
 		return
 
 /datum/matfab_recipe/sheet
-	name = "Material Sheet"
+	name = "Material sheet"
 	desc = "Sheets for construction purposes."
 	category = "Tools"
 
@@ -888,7 +831,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing(LOG_DEBUG, null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

@@ -1,7 +1,7 @@
 //
 // Firealarm
 //
-
+ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -10,11 +10,12 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
+	power_channel = ENVIRON
 	var/alarm_frequency = FREQ_ALARM
-	var/detecting = 1.0
-	var/working = 1.0
+	var/detecting = 1
+	var/working = 1
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = ANCHORED
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0
@@ -119,9 +120,7 @@
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
-
-	use_power(power_usage, ENVIRON)
-
+	..()
 
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
@@ -185,7 +184,7 @@
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertTriggered")
 	if (!src.ringlimiter)
 		src.ringlimiter = 1
-		playsound(src.loc, "sound/machines/firealarm.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/firealarm.ogg', 50, 1)
 
 
 

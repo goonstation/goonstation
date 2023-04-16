@@ -320,6 +320,31 @@
 	req_access = list(access_syndicate_shuttle)
 	color = SECURITY
 
+/obj/access_spawn/pirate_ship
+	name = "pirate ship access spawn"
+	req_access = list(access_pirate)
+	color = SECURITY
+
+/obj/access_spawn/research_foyer
+	name = "research foyer access spawn"
+	req_access = list(access_researchfoyer)
+	color = RESEARCH
+
+/obj/access_spawn/artlab
+	name = "artlab access spawn"
+	req_access = list(access_artlab)
+	color = RESEARCH
+
+/obj/access_spawn/telesci
+	name = "telesci access spawn"
+	req_access = list(access_telesci)
+	color = RESEARCH
+
+/obj/access_spawn/robotdepot
+	name = "robot depot access spawn"
+	req_access = list(access_robotdepot)
+	color = RESEARCH
+
 //////////////////////owlzone access///////
 /obj/access_spawn/owlmaint
 	name = "owlery maint access spawn"

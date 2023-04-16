@@ -76,7 +76,8 @@
 
 /obj/hotspot
 	mouse_opacity = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
+	flags = UNCRUSHABLE
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_ABOVE_LIGHTING
 

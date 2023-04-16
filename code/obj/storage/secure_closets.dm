@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
@@ -20,7 +21,7 @@
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
-			anchored = 1
+			anchored = ANCHORED
 		src.attack_particle = new /obj/particle/attack
 		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
@@ -33,9 +34,9 @@
 				if (user)
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 				return
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
 			..()
@@ -58,12 +59,12 @@
 			else
 				var/damage
 				var/damage_text
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
-				if (I.force <= 10)
+				if (I.force < 10)
 					damage = round(I.force * 0.6)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
@@ -118,10 +119,11 @@
 		SPAWN(0.2 SECONDS)
 			src.attack_particle.alpha = 0
 
-	proc/toggle_bolts(var/mob/M)
-		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+	proc/toggle_bolts(var/mob/user)
+		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
+		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
 
 	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
 		if (!isnum(amount) || amount <= 0)
@@ -144,13 +146,13 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			else if (M)
-				logTheThing("combat", M, null, "broke open [src] with [I] at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, M, "broke open [log_object(src)] with [log_object(I)] at [log_loc(src)]")
 			else
-				logTheThing("combat", src, null, "was broken open by an unknown cause at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
 
 	proc/break_open(var/obj/projectile/P)
@@ -170,9 +172,9 @@
 	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
 		. = ..()
 		if (. == 1 && length(spawn_contents)) //if we've not spawned stuff before (also empty lockers get no backpack)
-			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
+			var/backwear = pick(/obj/item/storage/backpack/withO2,/obj/item/storage/backpack/withO2/blue,/obj/item/storage/backpack/withO2/red,/obj/item/storage/backpack/withO2/green)
 			new backwear(src)
-			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
+			backwear = pick(/obj/item/storage/backpack/satchel/withO2,/obj/item/storage/backpack/satchel/withO2/blue,/obj/item/storage/backpack/satchel/withO2/red,/obj/item/storage/backpack/satchel/withO2/green)
 			new backwear(src)
 
 /obj/storage/secure/closet/personal/empty
@@ -248,7 +250,8 @@
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
-	/obj/item/clipboard)
+	/obj/item/clipboard,
+	/obj/item/clothing/suit/hopjacket)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -302,32 +305,35 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
-	/obj/item/storage/toolbox/mechanical/yellow_tools,
-	/obj/item/storage/backpack/engineering,
-	/obj/item/storage/box/clothing/chief_engineer,
-	/obj/item/clothing/gloves/yellow,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/shoes/magnetic,
-	/obj/item/clothing/ears/earmuffs,
-	/obj/item/clothing/glasses/meson,
-	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/prepared/ceshielded,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/head/helmet/hardhat,
-	/obj/item/device/multitool,
-	/obj/item/device/flash,
-	/obj/item/stamp/ce,
-	/obj/item/clothing/suit/hi_vis,
-#ifdef UNDERWATER_MAP
-	/obj/item/clothing/suit/space/diving/engineering,
-	/obj/item/clothing/head/helmet/space/engineer/diving,
-#else
-	/obj/item/clothing/suit/space/engineer,
-	/obj/item/clothing/head/helmet/space/engineer,
-#endif
-	/obj/item/device/radio/headset/command/ce)
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded,
+		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+	#ifdef MAP_OVERRIDE_OSHAN
+		/obj/item/clothing/shoes/stomp_boots,
+	#endif
+	#ifdef UNDERWATER_MAP
+		/obj/item/clothing/suit/space/diving/engineering,
+		/obj/item/clothing/head/helmet/space/engineer/diving,
+		/obj/item/clothing/shoes/flippers
+	#else
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
+	#endif
+
+	)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -345,14 +351,12 @@
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
-	spawn_contents = list(/obj/item/storage/box/clothing/security,
-	/obj/item/clothing/suit/wintercoat/security,
-	/obj/item/clothing/suit/armor/vest,
+	spawn_contents = list(/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
+	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/storage/backpack/security,
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/security/forensics
@@ -378,12 +382,13 @@
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2,
-	/obj/item/clothing/glasses/nightvision = 2,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/ammo/bullets/abg,
-	/obj/item/ammo/bullets/abg,)
+	/obj/item/turret_deployer/riot = 2)
+
+/obj/storage/secure/closet/security/armory/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
@@ -400,13 +405,14 @@
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
+	spawn_contents = list(/obj/item/item_box/contraband)
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
 	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
-	anchored = 1
+	anchored = ANCHORED
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
@@ -474,7 +480,7 @@
 						break
 				if (!src.our_timer)
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
-					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
+					logTheThing(LOG_DEBUG, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
 	disposing()
@@ -492,7 +498,7 @@
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 5)
+		if (GET_DIST(over_object, src) > 5)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object, /obj/machinery/door_timer))
@@ -720,47 +726,39 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
-	/obj/item/storage/backpack/engineering,
 	/obj/item/device/accessgun/lite,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/storage/box/clothing/mechanic,
 	/obj/item/clothing/gloves/yellow,
-	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
 	/obj/item/storage/mechanics/housing_handheld=1,
-	/obj/item/paper/manufacturer_blueprint/ai_status_display,
-	/obj/item/clothing/suit/hi_vis)
+	/obj/item/paper/manufacturer_blueprint/ai_status_display)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
 	req_access = list(access_engineering_atmos)
-	spawn_contents = list(/obj/item/clothing/shoes/orange,
-	/obj/item/clothing/under/misc/atmospheric_technician,
-	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/clothing/head/helmet/hardhat,
+	spawn_contents = list(/obj/item/clothing/suit/fire,
+	/obj/item/clothing/head/helmet/firefighter,
+	/obj/item/device/analyzer/atmospheric/upgraded,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/device/radio/headset/engineer)
+	/obj/item/storage/toolbox/mechanical,
+	/obj/item/extinguisher,
+	/obj/item/chem_grenade/firefighting,
+	/obj/item/chem_grenade/firefighting)
 
 /obj/storage/secure/closet/engineering/engineer
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+#ifdef MAP_OVERRIDE_OSHAN
+	/obj/item/clothing/shoes/stomp_boots,
+#endif
 	/obj/item/engivac,
-	/obj/item/storage/box/clothing/engineer,
-	/obj/item/storage/backpack/engineering,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/clothing/mask/gas,
 	/obj/item/old_grenade/oxygen,
-	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/suit/hi_vis,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/pinpointer/category/apcs/station)
 
@@ -806,7 +804,8 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4)
+	/obj/item/caution = 4,\
+	/obj/item/disk/data/floppy/manudrive/cleaner_grenade = 1)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -824,10 +823,7 @@
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
 	req_access = list(access_kitchen)
-	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
-	/obj/item/storage/box/clothing/souschef,\
-	/obj/item/clothing/head/chefhatpuffy,\
-	/obj/item/storage/box/cutlery,\
+	spawn_contents = list(/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
 	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
@@ -835,9 +831,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
-	/obj/item/storage/box/clothing/waiter,\
-	/obj/item/gun/russianrevolver,\
+	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\
@@ -963,6 +957,46 @@
 /* ================ */
 /* ----- Misc ----- */
 /* ================ */
+
+/obj/storage/secure/closet/immersion
+	name = "Immersion Suit Vault"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	req_access = list(access_eva)
+	icon_state = "safe_immers"
+	icon_closed = "safe_immers"
+	icon_opened = "safe_locker-open"
+	bolted = TRUE
+
+	command
+		name = "Command Immersion Suit Vault"
+		icon_state = "safe_immers_com"
+		icon_closed = "safe_immers_com"
+		req_access = list(access_heads)
+
+	engineering
+		name = "Engineering Immersion Suit Vault"
+		icon_state = "safe_immers_eng"
+		icon_closed = "safe_immers_eng"
+		req_access = list(access_engineering)
+
+	quartermasters
+		name = "Quartermasters' Immersion Suit Vault"
+		icon_state = "safe_immers_qm"
+		icon_closed = "safe_immers_qm"
+		req_access = list(access_cargo)
+
+	research
+		name = "Research Immersion Suit Vault"
+		icon_state = "safe_immers_res"
+		icon_closed = "safe_immers_res"
+		req_access = list(access_research)
+
+	security
+		name = "Security Immersion Suit Vault"
+		icon_state = "safe_immers_sec"
+		icon_closed = "safe_immers_sec"
+		req_access = list(access_security)
 
 /obj/storage/secure/closet/courtroom
 	name = "\improper Courtroom locker"

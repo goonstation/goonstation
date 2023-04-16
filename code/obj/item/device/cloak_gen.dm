@@ -2,6 +2,9 @@
 //Cloak field generator
 //Remote for said generator
 
+TYPEINFO(/obj/item/cloak_gen)
+	mats = 12
+
 /obj/item/cloak_gen
 	name = "cloaking field generator"
 	desc = "It's humming softly."
@@ -13,7 +16,6 @@
 	var/icon_to_use = "noise2"
 	var/list/fields = new/list()
 	is_syndicate = 1
-	mats = 12
 	contraband = 2
 
 	New()
@@ -67,7 +69,7 @@
 			return
 
 		active = 1
-		anchored = 1
+		anchored = ANCHORED
 
 		if (usr && ismob(usr))
 			boutput(usr, "<span class='notice'>You activate the cloak field generator.</span>")
@@ -78,15 +80,16 @@
 			fields += O
 			O.icon = get_cloaked_icon(T)
 			O.layer = EFFECTS_LAYER_4
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.set_density(0)
 			O.name = T.name
+			O.mouse_opacity = FALSE // let people click through the field
 
 	proc/turn_off()
 		if (!active) return
 
 		active = 0
-		anchored = 0
+		anchored = UNANCHORED
 		if (usr && ismob(usr))
 			boutput(usr, "<span class='notice'>You deactivate the cloak field generator.</span>")
 		for(var/A in fields)

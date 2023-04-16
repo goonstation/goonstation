@@ -23,9 +23,6 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
-/datum/movement_modifier/mech_boots
-	multiplicative_slowdown = 0.50
-
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
@@ -48,7 +45,7 @@
 	additive_slowdown = 3
 
 /datum/movement_modifier/disoriented
-	additive_slowdown = 8
+	additive_slowdown = 7
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
@@ -62,6 +59,9 @@
 /datum/movement_modifier/reagent/juggernaut
 	health_deficiency_adjustment = -65
 
+/datum/movement_modifier/pain_immune
+	health_deficiency_adjustment = -10000
+
 /datum/movement_modifier/reagent/morphine
 	health_deficiency_adjustment = -60
 
@@ -74,7 +74,7 @@
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
-/datum/movement_modifier/reagent/energydrink // also meth
+/datum/movement_modifier/reagent/energydrink // also meth //also mechboots (for now)
 	ask_proc = 1
 
 /datum/movement_modifier/reagent/energydrink/modifiers(mob/user, move_target, running)
@@ -139,6 +139,19 @@
 
 /datum/movement_modifier/robot_part/thruster_right
 	additive_slowdown = -0.3
+
+// artifact legs
+/datum/movement_modifier/martian_legs/left
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
+
+/datum/movement_modifier/martian_legs/right
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
 
 // bioeffects
 
@@ -227,3 +240,10 @@
 
 /datum/movement_modifier/shiver
 	additive_slowdown = 2
+
+// methed up bears
+
+/datum/movement_modifier/spacebear
+	health_deficiency_adjustment = -30
+	additive_slowdown = -0.4
+

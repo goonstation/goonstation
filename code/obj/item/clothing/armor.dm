@@ -9,6 +9,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -27,6 +28,7 @@
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	New()
 		..()
@@ -75,7 +77,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)
-		setProperty("rangedprot", 0.4)
+		setProperty("rangedprot", 0.5)
 
 	attackby(obj/item/W, mob/user)
 		return
@@ -93,6 +95,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	var/obj/item/clothing/suit/armor/vest/part_vest = null
 	var/obj/item/assembly/anal_ignite/part_igniter = null // Just for show. Doesn't do anything here or in the igniter code.
@@ -123,7 +126,7 @@
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.state)
+				if (CG.stage == 2 && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -137,7 +140,7 @@
 		else if (istype(W, /obj/item/old_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/old_grenade/OG = W
-				if (OG.not_in_mousetraps == 0 && !OG.state) // Same principle, okay.
+				if (OG.not_in_mousetraps == 0 && !OG.armed) // Same principle, okay.
 					user.u_equip(OG)
 					OG.set_loc(src)
 					src.grenade_old = OG
@@ -239,7 +242,7 @@
 
 		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
-		logTheThing("bombing", wearer, null, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
+		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 
 		if (src.grenade)
 			src.grenade.explode()
@@ -248,7 +251,7 @@
 			src.icon_state = "bombvest0"
 
 		else if (src.grenade_old)
-			src.grenade_old.prime()
+			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
@@ -273,6 +276,7 @@
 	icon_state = "makeshift"
 	item_state = "makeshift"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -298,6 +302,7 @@
 	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -311,6 +316,7 @@
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -337,6 +343,7 @@
 	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
 	icon_state = "centcoat"
 	item_state = "centcoat"
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
@@ -348,11 +355,38 @@
 		icon_state = "centcoat-red"
 		item_state = "centcoat-red"
 
+/obj/item/clothing/suit/armor/pirate_captain_coat
+	name = "pirate captain's coat"
+	desc = "A luxurious yet dread inducing red and gold greatcoat, worn by only the greatest of mass larcenists. Probably stolen."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
+/obj/item/clothing/suit/armor/pirate_first_mate_coat
+	name = "pirate first mate's coat"
+	desc = "A rugged, protective, and pragmatic brown greatcoat, popular among pirates."
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
+	hides_from_examine = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
@@ -410,6 +444,7 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
@@ -417,6 +452,7 @@
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
@@ -428,6 +464,7 @@
 	icon_state = "eod"
 	item_state = "eod"
 	w_class = W_CLASS_NORMAL
+	hides_from_examine = C_UNIFORM|C_GLOVES
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
@@ -441,6 +478,7 @@
 	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

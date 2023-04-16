@@ -16,6 +16,7 @@
 	var/list/rare_colors = list("cluwne","bclown")
 	var/balloon_color = "white"
 	var/last_reag_total = 0
+	var/tied = FALSE
 
 	New()
 		..()
@@ -74,6 +75,21 @@
 				smash()
 				return
 */
+	is_open_container()
+		return !src.tied
+
+	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
+		. = ..()
+		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
+		if (!src.reagents)
+			return
+		if (!tied)
+			if(isliving(thrown_by))
+				thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
+				"<span class='alert'>You forgot to tie off [src] and it spills all over you! <b>[curse]!</b></span>")
+			src.reagents.reaction(get_turf(src))
+			src.reagents.clear_reagents()
+
 	attack_self(var/mob/user as mob)
 		if (!ishuman(user))
 			boutput(user, "<span class='notice'>You don't know what to do with the balloon.</span>")
@@ -83,9 +99,10 @@
 		var/list/actions = list()
 		if (user.mind && user.mind.assigned_role == "Clown")
 			actions += "Make balloon animal"
-		if (src.reagents.total_volume > 0)
+		if (src.reagents.total_volume > 0 && !src.tied)
 			actions += "Inhale"
-		if (H.urine >= 2)
+			actions += "Tie off"
+		if (H.urine >= 2 && !src.tied)
 			actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
@@ -150,6 +167,7 @@
 			if ("Inhale")
 				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
 				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
+				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
 				return
 
@@ -161,8 +179,13 @@
 				src.reagents.add_reagent("urine", 8)
 				return
 
+			if ("Tie off")
+				H.visible_message("<span class='alert'><B>[H] ties off [src]!</B></span>",\
+				"<span class='alert'><b>You tie off the opening of [src]!</b></span>")
+				src.tied = TRUE
+
 	afterattack(obj/target, mob/user)
-		if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

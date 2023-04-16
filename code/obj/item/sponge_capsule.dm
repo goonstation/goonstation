@@ -14,10 +14,10 @@
 	color = "#FF0000"
 	var/colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
 	var/obj/critter/animal_to_spawn = null
-	var/animals = list(/obj/critter/cat,
+	var/animals = list(/mob/living/critter/small_animal/cat,
 						/obj/critter/bat,
 						/obj/critter/domestic_bee,
-						/obj/critter/mouse,
+						/mob/living/critter/small_animal/mouse,
 						/obj/critter/opossum,
 						/obj/critter/parrot/eclectus,
 						/obj/critter/pig,
@@ -26,14 +26,14 @@
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
 	animals = list(/obj/critter/microman,
-					/obj/critter/bear,
-					/obj/critter/spider/aggressive,
-					/obj/critter/brullbar,
+					/mob/living/critter/bear,
+					/mob/living/critter/spider,
+					/mob/living/critter/brullbar,
 					/obj/critter/bat/buff,
-					/obj/critter/spider/ice,
+					/mob/living/critter/spider/ice,
 					/obj/critter/townguard/passive,
-					/obj/critter/lion,
-					/obj/critter/fermid)
+					/mob/living/critter/lion,
+					/mob/living/critter/fermid)
 
 /obj/item/toy/sponge_capsule/New()
 	..()
@@ -51,7 +51,7 @@
 /obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
-		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
 		eat_twitch(M)
 		user.u_equip(src)
 		qdel(src)
@@ -65,7 +65,7 @@
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
-	var/obj/critter/C = new animal_to_spawn(T)
+	var/atom/C = new animal_to_spawn(T)
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 
@@ -76,7 +76,7 @@
 /obj/item/toy/sponge_capsule/custom_suicide = TRUE
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
 	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
-	var/obj/critter/C = new animal_to_spawn(user.loc)
+	var/atom/C = new animal_to_spawn(user.loc)
 	C.name = user.real_name
 	C.desc = "Holy shit! That used to be [user.real_name]!"
 	user.gib()

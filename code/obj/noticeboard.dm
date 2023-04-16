@@ -7,7 +7,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/notices = 0
 
 
@@ -161,11 +161,11 @@ proc/save_noticeboards()
 		board.save_stuff()
 		some_board = board
 	if(isnull(some_board))
-		logTheThing("debug", null, null, "No persistent noticeboards to save.")
+		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
 	fdel(some_board.file_name)
 	var/json_data = json_encode(some_board.data)
-//	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
+//	logTheThing(LOG_DEBUG, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_data, some_board.file_name)
 
 #undef PERSISTENT_NOTICEBOARD_VERSION

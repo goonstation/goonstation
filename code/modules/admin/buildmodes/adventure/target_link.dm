@@ -9,10 +9,7 @@
 			src.target_me()
 
 	proc/target_me()
-		for(var/obj/adventurepuzzle/triggerable/targetable/A)
-
-			if(A.id == src.triggerable_id)
-				src.trap = A
-
-		if(src.trap)
-			src.trap.setTarget(src)
+		for_by_tcl(target, /obj/adventurepuzzle/triggerable/targetable)
+			if(target.id == src.triggerable_id)
+				src.trap = target
+		src.trap?.setTarget(src)

@@ -9,15 +9,18 @@
 //Machine that tracks the sun and reports it's direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
+TYPEINFO(/obj/machinery/power/tracker)
+	mats = list("CRY-1"=15, "CON-1"=20)
+
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
 	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
-	var/id = 1
+	var/id = 1 // nolonger used, kept for map compatibility
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
 
@@ -43,7 +46,22 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
-
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
+	New()
+		..()
+		SPAWN(1 SECOND)
+			powernet = src.get_direct_powernet()
+			if (powernet)
+				for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
+					if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+					var/obj/machinery/computer/solar_control/controller = test_link?.master
+					if(controller?.tracker) break // if there's already a tracker, dont connect
+					control = controller
+					control.tracker = src // otherwise, we are now the tracker
+					break
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
 		sun_angle = angle
@@ -55,8 +73,7 @@
 		if (!istype(powernet) || !control)
 			return
 		if(control.get_direct_powernet() == powernet)
-			if (!isnull(src.id) && src.id == control.solar_id)
-				control.tracker_update(angle)
+			control.tracker_update(angle)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -66,24 +83,27 @@
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/power/solar)
+	mats = list("MET-2"=15, "CON-1"=15)
+
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "solar_panel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
-	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
-	power_usage = 10
-	var/health = 10.0
-	var/id = 1
+	processing_tier = PROCESSING_EIGHTH
+	var/health = 10
+	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
+
 
 	north
 		id = "north"
@@ -107,13 +127,27 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN(1 SECOND)
+		if (current_state == GAME_STATE_PLAYING)
+			powernet = src.get_direct_powernet()
+			if(powernet)
+				for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
+					if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+					control = test_link?.master // we need to be able to find a control console
+					break
+				if(control?.cdir)
+					ndir = control.cdir
 		UpdateIcon()
 		update_solar_exposure()
+
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
 	..()
@@ -158,7 +192,7 @@
 #define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
-
+	..()
 	if(status & BROKEN)
 		return
 
@@ -174,7 +208,7 @@
 		var/max_move = rand(8, 12)
 		adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 		if(adir != old_adir)
-			use_power(power_usage)
+			use_power(10) // uses power to rotate
 			UpdateIcon()
 
 		update_solar_exposure()
@@ -193,16 +227,16 @@
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			if(prob(15))
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				broken()
 	return
@@ -230,6 +264,7 @@
 	var/trackrate = 600		// 300-900 seconds
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
+	var/obj/machinery/power/tracker/tracker
 
 	north
 		solar_id = "north"
@@ -253,22 +288,38 @@
 		solar_id = "diner"
 	silverglass
 		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
+	AddComponent(/datum/component/mechanics_holder)
 	SPAWN(1.5 SECONDS)
-		var/datum/powernet/powernet = src.get_direct_powernet()
-		if(!powernet) return
-		for(var/obj/machinery/power/solar/S in powernet.nodes)
-			if(S.id != solar_id) continue
-			cdir = S.adir
-		set_panels(cdir)
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if (!test_link) test_link = new /obj/machinery/power/data_terminal(T)
+		if(!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			test_link.master = src
+		set_panels(cdir) // this finds all the solars
+
+/obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (powernet)
+		for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+			if(Solar.control == src)
+				Solar.control = null
+		if (tracker) // we track the solar tracker now
+			tracker.control = null
+	..()
 
 /obj/machinery/computer/solar_control/process()
 	..()
 
 	lastgen = gen
 	gen = 0
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 	if(status & (NOPOWER | BROKEN))
 		return
@@ -354,25 +405,30 @@
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 		track = text2num_safe(href_list["track"])
 		if(track == 2)
-			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]
-			if(T)
-				cdir = T.sun_angle
+			if(tracker) // we keep track of the tracker now
+				cdir = tracker.sun_angle
 
 	src.updateUsrDialog()
 	return
 
 /obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
 	var/datum/powernet/powernet = src.get_direct_powernet()
-	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if(S.id != solar_id) continue
-		S.control = src
-		if(cdir)
-			S.ndir = cdir
+	if (!powernet) return
+	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+		if(Solar.control != src && Solar.control) continue
+		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
+			continue // some solars are weird
+		Solar.control = src
+		Solar.ndir = src.cdir
 
-	for(var/obj/machinery/power/tracker/T in powernet.nodes)
-		if(T.id != solar_id) continue
-		T.control = src
+	if (!src.tracker)
+		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
+			if(Tracker.control != src && Tracker.control) continue
+			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+				continue // some solars are weird
+			Tracker.control = src
+			src.tracker = Tracker
+			break
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
@@ -385,17 +441,20 @@
 
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && get_dist(src, S) >= closest_solar_distance)
+	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+		if (closest_solar_distance != null && GET_DIST(src, Solar) >= closest_solar_distance)
 			continue
 
-		closest_solar_id = S.id
-		closest_solar_distance = get_dist(src, S)
+		closest_solar_id = Solar.id
+		closest_solar_distance = GET_DIST(src, Solar)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)
 
 // solar panels which ignore occlusion
+
+TYPEINFO(/obj/machinery/power/solar/owl_cheat)
+	mats = 0
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"

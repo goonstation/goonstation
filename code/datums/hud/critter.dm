@@ -95,21 +95,17 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+	if (src.left_offset < -9) // Wraps vertically if the magnitude of left offset is greater than 9. Leave a 1 space column for storage containers.
 		src.wraparound_offset_left++
-		if (src.wraparound_offset_right < src.wraparound_offset_left)
-			src.right_offset = 0
-		else
-			src.right_offset = -1
 
 	var/next_left_offset = src.next_left()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_left_offset < 0)
-		x_offset = next_left_offset
+		x_offset = next_left_offset + src.wraparound_offset_left
 	else if (next_left_offset > 0)
-		x_offset = "+[next_left_offset]"
+		x_offset = "+[next_left_offset + src.wraparound_offset_left]"
 	else
 		x_offset = ""
 
@@ -122,21 +118,17 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 1 space column for the leave pod button.
 		src.wraparound_offset_right++
-		if (src.wraparound_offset_left < src.wraparound_offset_right)
-			src.right_offset = 0
-		else
-			src.right_offset = 1
 
 	var/next_right_offset = src.next_right()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_right_offset < 0)
-		x_offset = next_right_offset
+		x_offset = next_right_offset - src.wraparound_offset_right
 	else if (next_right_offset > 0)
-		x_offset = "+[next_right_offset]"
+		x_offset = "+[next_right_offset - src.wraparound_offset_right]"
 	else
 		x_offset = ""
 
@@ -201,7 +193,7 @@
 		return
 	src.throwing.icon_state = "throw[src.master.in_throw_mode]"
 
-/// recieves clicks from the screen hud objects
+/// receives clicks from the screen hud objects
 /datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))
@@ -231,7 +223,6 @@
 						src.master.set_a_intent(INTENT_HELP)
 					else
 						src.master.set_a_intent(INTENT_GRAB)
-				src.update_intent()
 
 			if ("mintent")
 				if (src.master.m_intent == "run")
@@ -269,7 +260,7 @@
 				if (icon_y > 16 || src.master.in_throw_mode)
 					src.master.toggle_throw_mode()
 				else
-					src.master.drop_item()
+					src.master.drop_item(null, TRUE)
 			if ("resist")
 				src.master.resist()
 
@@ -451,9 +442,10 @@
 	src.toxin.icon_state = "tox[status]"
 
 /// updates radiation hud element
-/datum/hud/critter/proc/update_rad_indicator(var/status)
+/datum/hud/critter/proc/update_rad_indicator()
 	if (!src.rad) // not rad :'(
 		return
+	var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 	src.rad.icon_state = "rad[status]"
 
 /// updates resting status
@@ -525,7 +517,7 @@
 /datum/hud/critter/proc/create_radiation_element()
 	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
 	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-	src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_bleeding_element()
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\

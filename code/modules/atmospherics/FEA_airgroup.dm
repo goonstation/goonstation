@@ -328,8 +328,11 @@
 		for(var/turf/simulated/member as anything in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
-			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
-			maxTemperature = max(maxTemperature, member.air.temperature)
+			if(member.air)
+				ADD_MIXTURE_PRESSURE(member.air, totalPressure)
+				maxTemperature = max(maxTemperature, member.air.temperature)
+			else
+				air_master.groups_to_rebuild |= src
 			LAGCHECK(LAG_REALTIME)
 
 		if(totalPressure / max(length(members), 1) < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
@@ -374,7 +377,7 @@
 			if (b == member)
 				continue
 
-			var/dist = get_dist(b, member)
+			var/dist = GET_DIST(b, member)
 			if (minDist == null || dist < minDist)
 				minDist = dist
 */
@@ -392,6 +395,9 @@
 			ADD_MIXTURE_PRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
 		LAGCHECK(LAG_REALTIME)
+
+	if(!length(members))  //bail to resolve div 0
+		return
 
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)

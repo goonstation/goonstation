@@ -3,8 +3,9 @@
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
 	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_small"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
+	mat_appearances_to_ignore = list("wood")
 	var/capacity = 30 //how many books can it hold?
 	var/list/obj/item/paper/bookshelf_contents = list() //ordered list of books
 
@@ -60,7 +61,7 @@
 			boutput(user, "\The [src] is too full!")
 			return
 
-	else if (istype(W, /obj/item/wrench))
+	else if (iswrenchingtool(W))
 		if (length(src.bookshelf_contents) > 0)
 			boutput(user, "You can't take apart \the [src] if there's still books on it.")
 			return
@@ -87,7 +88,7 @@
 		boutput(user, "There's nothing to take off the shelf!")
 
 /obj/bookshelf/proc/deconstruct()
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	var/obj/parts = new /obj/item/furniture_parts/bookshelf
 	parts.set_loc(src.loc)
 	qdel(src)
@@ -188,3 +189,4 @@
 	icon_state = "bookshelf_parts"
 	furniture_type = /obj/bookshelf
 	furniture_name = "bookshelf"
+	mat_appearances_to_ignore = list("wood")

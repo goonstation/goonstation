@@ -58,12 +58,12 @@
 
 	proc/deploy_ammobag(var/mob/user)
 		force_drop(user)
-		anchored = TRUE
+		anchored = ANCHORED
 		deployed = TRUE
 		icon_state = "[initial(icon_state)]-d[charge <= 0 ? "-empty" : ""]"
 
 	proc/fold_ammobag(var/mob/user)
-		anchored = FALSE
+		anchored = UNANCHORED
 		deployed = FALSE
 		icon_state = "[initial(icon_state)]"
 		sleep(1 DECI SECOND)
@@ -96,7 +96,7 @@
 			else if(length(W.ammobag_magazines) == 1)
 				ammo = W.ammobag_magazines[1]
 				if(!W.ammobag_spec_required)
-					ammo_cost = W.ammobag_restock_cost - 1
+					ammo_cost = clamp(W.ammobag_restock_cost - 1, 0, 99)
 				else
 					ammo_cost = W.ammobag_restock_cost
 
@@ -132,7 +132,7 @@
 	name = "Shooting Range Ammo Bag"
 	desc = "A universal ammo bag for kinetic ammunition."
 	icon_state = "ammobag-sp-d"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/gun/kinetic))

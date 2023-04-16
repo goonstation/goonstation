@@ -101,7 +101,7 @@ stories@=
 	what we found in the moon
 	that skeevy Jam fella
 	my buddy Dave-Dub
-	those bitchin' wizard dudes
+	those ballin' wizard dudes
 	what happened to the Vault
 	that old haunted factory
 	my cat
@@ -118,3 +118,4 @@ stories@=
 	the coming Dawn
 	oh, shit, nevermind
 	that delivery to Terra 8
+	the time I refused to turn in my badge and gun, and was locked in a cage with wasps

@@ -3,6 +3,9 @@
 #define POWERSINK_CLAMPED 1
 #define POWERSINK_OPERATING 2
 
+TYPEINFO(/obj/item/device/powersink)
+	mats = list("MET-2"=20, "CON-2"=20, "CRY-1"=10)
+
 /obj/item/device/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -21,7 +24,6 @@
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
 	is_syndicate = 1
-	mats = list("MET-2"=20, "CON-2"=20, "CRY-1"=10)
 	rand_pos = 0
 
 	var/obj/cable/attached		// the attached cable
@@ -44,7 +46,7 @@
 						boutput(user, "No exposed cable here to attach to.")
 						return
 					else
-						anchored = 1
+						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
 						for(var/mob/M in AIviewers(user))
@@ -67,16 +69,16 @@
 										power_drained -= charge_amt * 5
 										A.cell.charge += charge_amt
 
-				anchored = 0
+				anchored = UNANCHORED
 				mode = POWERSINK_OFF
-				boutput(user, "You detach	the device from the cable.")
+				boutput(user, "You detach the device from the cable.")
 				for(var/mob/M in AIviewers(user))
 					if(M == user) continue
 					boutput(M, "[user] detaches the power sink from the cable.")
 				light.disable()
 				icon_state = "powersink0"
 				processing_items.Remove(src)
-				logTheThing("combat", user, src, "deactivated [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "deactivated [src] at [log_loc(src)].")
 				return
 		else
 			..()
@@ -97,7 +99,7 @@
 				mode = POWERSINK_OPERATING
 				icon_state = "powersink1"
 				processing_items |= src
-				logTheThing("combat", user, src, "activated [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "activated [src] at [log_loc(src)].")
 				message_admins("[key_name(user)] activated [src] at [log_loc(src)].")
 
 	process()
@@ -125,7 +127,7 @@
 
 
 			if(power_drained > max_power * 0.95)
-				playsound(src, "sound/effects/screech.ogg", 50, 1, 1)
+				playsound(src, 'sound/effects/screech.ogg', 50, 1, 1)
 			if(power_drained >= max_power)
 				processing_items.Remove(src)
 				explosion(src, src.loc, 3,6,9,12)

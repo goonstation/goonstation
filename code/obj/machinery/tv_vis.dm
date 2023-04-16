@@ -4,17 +4,17 @@
 
 	//disabling this for now bcause somepotato says its costly on client fps stuff
 ///turf
-	//appearance_flags = KEEP_TOGETHER
+	//appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	//vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_PLANE|VIS_INHERIT_ID
 
 /obj/machinery/security_monitor
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
 	icon_state = "wall-monitor"
-	anchored = 1.0
+	anchored = ANCHORED
 	pixel_y = 30
 	layer = OBJ_LAYER+1
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	var/list/cameras = list()							//all camera's detected by this device which it can link to
 	var/obj/current_camera = null
 	var/obj/video_screen/video_screen
@@ -52,7 +52,6 @@
 		// 	turn_off()
 		// 	return
 
-		use_power(power_usage)
 		return
 
 	attack_hand(mob/user)
@@ -88,7 +87,7 @@
 
 /obj/video_screen
 	name = "video screen"
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	mouse_opacity = 0
 	// layer = MOB_LAYER+1
 	plane = PLANE_ABOVE_LIGHTING

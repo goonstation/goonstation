@@ -2,6 +2,7 @@ var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
+	"Mechanic" = "Engineer",
 )
 
 datum/preferences
@@ -12,6 +13,7 @@ datum/preferences
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/robot_name
 	var/gender = MALE
 	var/age = 30
 	var/pin = null
@@ -21,6 +23,7 @@ datum/preferences
 	// These notes are put in the datacore records on the start of the round
 	var/security_note
 	var/medical_note
+	var/synd_int_note
 	var/employment_note
 
 	var/be_traitor = 0
@@ -38,6 +41,7 @@ datum/preferences
 	var/be_blob = 0
 	var/be_conspirator = 0
 	var/be_flock = 0
+	var/be_salvager = 0
 	var/be_misc = 0
 
 	var/be_random_name = 0
@@ -68,7 +72,7 @@ datum/preferences
 
 	var/datum/appearanceHolder/AH = new
 
-	var/datum/character_preview/preview = null
+	var/datum/movable_preview/character/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -106,6 +110,9 @@ datum/preferences
 		return tgui_always_state.can_use_topic(src, user)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!tgui_process)
+			boutput(user, "<span class='alert'>Hold on a moment, stuff is still setting up.</span>")
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "CharacterPreferences")
@@ -117,6 +124,27 @@ datum/preferences
 		if (!isnull(src.preview))
 			qdel(src.preview)
 			src.preview = null
+
+	ui_static_data(mob/user)
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits[trait.id] = list(
+				"id" = trait.id,
+				"name" = trait.name,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+			)
+
+		. = list(
+			"traitsData" = traits
+		)
 
 	ui_data(mob/user)
 		if (isnull(src.preview))
@@ -145,6 +173,20 @@ datum/preferences
 
 		sanitize_null_values()
 
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
+
 		. = list(
 			"isMentor" = client.is_mentor(),
 
@@ -159,6 +201,7 @@ datum/preferences
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
 			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
@@ -169,6 +212,7 @@ datum/preferences
 			"flavorText" = src.flavor_text,
 			"securityNote" = src.security_note,
 			"medicalNote" = src.medical_note,
+			"syndintNote" = src.synd_int_note,
 			"fartsound" = src.AH.fartsound,
 			"screamsound" = src.AH.screamsound,
 			"chatsound" = src.AH.voicetype,
@@ -208,6 +252,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -256,11 +303,6 @@ datum/preferences
 				ui.close()
 				return TRUE
 
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
-				ui.close()
-				return TRUE
-
 			if ("save")
 				var/index = params["index"]
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
@@ -290,8 +332,8 @@ datum/preferences
 				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
-					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
-					if(!isnull(new_name) && length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
+					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
@@ -332,7 +374,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-profileName")
-				var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
+				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
@@ -352,7 +394,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameFirst")
-				var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a first name:", "Character Generation", src.name_first)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -379,7 +421,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-nameMiddle")
-				var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -398,7 +440,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameLast")
-				var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -424,6 +466,25 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
+			if ("update-robotName")
+				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
+				if (isnull(new_name))
+					return
+				if (is_blank_string(new_name))
+					src.robot_name = ""
+					src.profile_modified = TRUE
+					return TRUE
+
+				new_name = strip_html(new_name, MOB_NAME_MAX_LENGTH, 1)
+				if (!length(new_name))
+					tgui_alert(usr, "That name was too short after removing bad characters from it. Please choose a different name.", "Name too short")
+					return
+
+				if (new_name)
+					src.robot_name = new_name
+					src.profile_modified = TRUE
+					return TRUE
+
 			if ("update-gender")
 				if (src.gender == MALE)
 					src.gender = FEMALE
@@ -446,7 +507,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-age")
-				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
 
 				if (new_age)
 					src.age = clamp(round(text2num(new_age)), 20, 80)
@@ -455,7 +516,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-bloodType")
-				var/blTypeNew = input(usr, "Please select a blood type:", "Character Generation", src.blType)  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"), src.blType)
 
 				if (blTypeNew)
 					if (blTypeNew == "Random")
@@ -471,44 +532,56 @@ datum/preferences
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
+					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
 					if (new_pin)
 						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.flavor_text = new_text
+					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.security_note = new_text
+					src.security_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.medical_note = new_text
+					src.medical_note = new_text || null
+					src.profile_modified = TRUE
+
+					return TRUE
+
+			if ("update-syndintNote")
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
+				if (!isnull(new_text))
+					new_text = html_encode(new_text)
+					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
+						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
+						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
+					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -518,9 +591,9 @@ datum/preferences
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
-					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+					src.pda_ringtone_index = tgui_input_list(usr, "Choose a ringtone", "PDA", selectable_ringtones)
 					if (!(src.pda_ringtone_index in selectable_ringtones))
 						src.pda_ringtone_index = "Two-Beep"
 
@@ -585,10 +658,10 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 			if ("update-specialStyle")
-				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/mob/living/carbon/human/H = src.preview.preview_thing
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
-				if (!typeinfo)
-					tgui_alert(usr, "No usable special styles detected.", "Error")
+				if (!typeinfo || !typeinfo.special_styles)
+					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
 				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
@@ -646,7 +719,7 @@ datum/preferences
 						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
 						new_style = select_custom_style(customization_types, usr)
 					if ("underwear")
-						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
+						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
 				if (new_style)
 					switch(params["id"])
@@ -714,7 +787,7 @@ datum/preferences
 
 			if ("update-fartsound")
 				var/list/sound_list = list_keys(AH.fartsounds)
-				var/new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a farting sound", "Fart sound", sound_list)
 
 				if (new_sound)
 					src.AH.fartsound = new_sound
@@ -724,7 +797,7 @@ datum/preferences
 
 			if ("update-screamsound")
 				var/list/sound_list = list_keys(AH.screamsounds)
-				var/new_sound = input(usr, "Select a screaming sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a screaming sound", "Scream sound", sound_list)
 
 				if (new_sound)
 					src.AH.screamsound = new_sound
@@ -734,7 +807,7 @@ datum/preferences
 
 			if ("update-chatsound")
 				var/list/sound_list = list_keys(AH.voicetypes)
-				var/new_sound = input(usr, "Select a chatting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a chatting sound", "Chat sound", sound_list)
 
 				if (new_sound)
 					new_sound = src.AH.voicetypes[new_sound]
@@ -748,7 +821,7 @@ datum/preferences
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = input(usr, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE
@@ -785,7 +858,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = input(usr, "Please select a HUD style:", "New") as null|anything in hud_style_selection
+				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
 
 				if (new_hud)
 					src.hud_style = new_hud
@@ -793,7 +866,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-targetingCursor")
-				var/new_cursor = input(usr, "Please select a cursor:", "Cursor") as null|anything in cursors_selection
+				var/new_cursor = tgui_input_list(usr, "Please select a cursor:", "Cursor", cursors_selection)
 
 				if (new_cursor)
 					src.target_cursor = new_cursor
@@ -847,7 +920,20 @@ datum/preferences
 				return TRUE
 
 			if ("update-preferredMap")
-				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
+				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=TRUE)
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -943,7 +1029,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -973,12 +1059,12 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break
@@ -988,7 +1074,7 @@ datum/preferences
 		// bald trait preview stuff
 		if (!src.preview)
 			return
-		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)
@@ -1309,6 +1395,7 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+#ifdef LIVE_SERVER
 		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
@@ -1316,6 +1403,7 @@ datum/preferences
 			src.be_gangleader = FALSE
 			src.be_revhead = FALSE
 			src.be_conspirator = FALSE
+#endif
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = FALSE
@@ -1329,6 +1417,7 @@ datum/preferences
 			src.be_werewolf = FALSE
 			src.be_vampire = FALSE
 			src.be_arcfiend = FALSE
+			src.be_salvager = FALSE
 			src.be_wraith = FALSE
 			src.be_blob = FALSE
 			src.be_conspirator = FALSE
@@ -1351,6 +1440,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_salvager=1" class="[src.be_salvager ? "yup" : "nope"]">[crap_checkbox(src.be_salvager)] Salvager</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1442,7 +1532,7 @@ datum/preferences
 				if (3) valid_actions -= "Low Priority"
 				if (4) valid_actions -= "Unwanted"
 
-			picker = input("Which bracket would you like to move this job to?","Job Preferences") as null|anything in valid_actions
+			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
 			if (!picker)
 				src.antispam = 0
 				return
@@ -1519,17 +1609,13 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
-			return
-
 		if (link_tags["closejobswindow"])
 			user.Browse(null, "window=mob_occupation")
 			src.ShowChoices(user)
 			return
 
 		if (link_tags["resetalljobs"])
-			var/resetwhat = input("Reset all jobs to which level?","Job Preferences") as null|anything in list("Medium Priority","Low Priority","Unwanted")
+			var/resetwhat = tgui_input_list(user, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
 			switch(resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)
@@ -1597,6 +1683,11 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_salvager"])
+			src.be_salvager = !( src.be_salvager)
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_wraith"])
 			src.be_wraith = !( src.be_wraith)
 			src.SetChoices(user)
@@ -1649,13 +1740,15 @@ datum/preferences
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
 		character.real_name = src.real_name
+		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 
 		//Wire: Not everything has a bioholder you morons
 		if (character.bioHolder)
 			character.bioHolder.age = age
 			character.bioHolder.mobAppearance.CopyOther(AH)
 			character.bioHolder.mobAppearance.gender = src.gender
-			character.bioHolder.mobAppearance.flavor_text = src.flavor_text
+			if (!src.be_random_name)
+				character.bioHolder.mobAppearance.flavor_text = src.flavor_text
 
 		//Also I think stuff other than human mobs can call this proc jesus christ
 		if (ishuman(character))
@@ -1802,6 +1895,15 @@ proc/ismasc(datum/customization_style/style)
 var/global/list/hair_details = list("einstein" = /datum/customization_style/hair/short/einalt,\
 	"80s" = /datum/customization_style/hair/long/eightiesfade,\
 	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
+	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
+	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
+	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
+	"violet" = /datum/customization_style/hair/long/violet_fade,\
+	"willow" = /datum/customization_style/hair/long/willow_fade,\
+	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
+	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
+	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
+	"flick" = /datum/customization_style/hair/short/flick_fade,\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\

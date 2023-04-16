@@ -1,4 +1,4 @@
-/proc/gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type, var/headbits = 1, mob/living/source=null)
+/proc/gibs(atom/location, var/list/ejectables, var/blood_DNA, var/blood_type, var/headbits = 1, mob/living/source=null)
     // Added blood type and DNA for forensics (Convair880).
 	var/obj/decal/cleanable/blood/gibs/gib = null
 	var/list/gibs = new()
@@ -6,12 +6,11 @@
 		location = usr
 	if(!location?.z) // we care not for null gibs
 		return
-	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak_cleanable(NORTH)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -20,7 +19,6 @@
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak_cleanable(SOUTH)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -29,7 +27,6 @@
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak_cleanable(WEST)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -38,7 +35,6 @@
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak_cleanable(EAST)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -48,7 +44,6 @@
 		// RANDOM BODY
 		gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
 		gib.streak_cleanable()
-		gib.diseases += diseases
 		gib.blood_DNA = blood_DNA
 		gib.blood_type = blood_type
 		if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -56,7 +51,6 @@
 
 	// CORE
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/core,location)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	if(source?.blood_id) gib.sample_reagent = source.blood_id
@@ -82,14 +76,14 @@
 			I.set_loc(location)
 			ThrowRandom(I, 12, 3)
 
-/proc/robogibs(atom/location, var/list/diseases)
+/proc/robogibs(atom/location)
 	var/obj/decal/cleanable/robot_debris/gib = null
 	var/list/gibs = new()
 
 	if(!location)
 		return
 
-	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 
 	// RUH ROH
 	elecflash(location,power=2)
@@ -131,7 +125,7 @@
 
 	.=gibs
 
-/proc/partygibs(atom/location, var/list/diseases, var/blood_DNA, var/blood_type)
+/proc/partygibs(atom/location, var/blood_DNA, var/blood_type)
     // Added blood type and DNA for forensics (Convair880).
 	var/list/party_colors = list(rgb(0,0,255),rgb(204,0,102),rgb(255,255,0),rgb(51,153,0))
 	var/obj/decal/cleanable/blood/gibs/gib = null
@@ -140,7 +134,6 @@
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
 		gib.icon_state = "gibup1"
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -150,7 +143,6 @@
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
 		gib.icon_state = "gibdown1"
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -158,7 +150,6 @@
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -167,7 +158,6 @@
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -176,7 +166,6 @@
 
 	// RANDOM BODY
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -192,7 +181,6 @@
 
 	// CORE
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/core,location)
-	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
 	gib.blood_type = blood_type
 	gib.color = pick(party_colors)
@@ -228,7 +216,7 @@
 	gib = make_cleanable( /obj/decal/cleanable/martian_viscera/fluid,location)
 
 
-/proc/flockdronegibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type)
+/proc/flockdronegibs(atom/location, var/list/ejectables, var/blood_DNA, var/blood_type)
 	if(!location) return
 	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
 	var/obj/decal/cleanable/flockdrone_debris/gib = null
@@ -257,3 +245,22 @@
 
 	// CORE SPLAT
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,location)
+
+
+/proc/fire_elemental_gibs(atom/location, var/list/ejectables, var/blood_DNA, var/blood_type)
+	if(!location) return
+	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
+	var/obj/decal/cleanable/ash/gib = null
+	playsound(location, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5)
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+
+	handle_ejectables(location, ejectables)
+
+	// CORE SPLAT
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	fireflash(location, 1)

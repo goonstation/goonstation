@@ -92,6 +92,13 @@
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 
+	if(src.holder.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the variables of [D]")
+		logTheThing(LOG_DIARY, src, "tried to access the variables of [D]", "admin")
+		message_admins("[key_name(src)] tried to access the variables of [D] but was denied.")
+		alert("You need to be an actual admin to access view variables.")
+		return
+
 	if(D == world && src.holder.level < LEVEL_CODER) // maybe host???
 		src.audit(AUDIT_ACCESS_DENIED, "tried to view variables of world as non-coder.")
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
@@ -102,10 +109,12 @@
 	if (!D) //Wire: Fix for runtime error: Cannot read null.type (datum having been deleted)
 		return
 
+	#ifndef I_AM_HACKERMAN
 	if(istype(D, /datum/configuration) || istype(D, /datum/admins))
 		boutput(src, "<span class='alert'>YEAH... no....</span>")
 		src.audit(AUDIT_ACCESS_DENIED, "tried to View-Variables a forbidden type([D.type])")
 		return
+	#endif
 
 	if(D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
@@ -151,10 +160,14 @@
 				names += V
 	else
 		for (var/V in D.vars)
+			#ifdef I_AM_HACKERMAN
+			names += V
+			#else
 			if(!istype(D.vars[V], /datum/admins))
 				names += V
+			#endif
 
-	names = sortList(names)
+	names = sortList(names, /proc/cmp_text_asc)
 	if(D == "GLOB")
 		for (var/V in names)
 			body += debug_variable(V, global.vars[V], D, 0, 10)
@@ -730,9 +743,11 @@
 /client/proc/set_all(datum/D, variable, val)
 	if(!variable || !D || !(variable in D.vars))
 		return
+	#ifndef I_AM_HACKERMAN
 	if(variable == "holder")
 		boutput(src, "Access denied.")
 		return
+	#endif
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -749,7 +764,11 @@
 /client/proc/modify_variable(datum/D, variable, set_global = 0)
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
+	#ifdef I_AM_HACKERMAN
+	var/list/locked = list()
+	#else
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	#endif
 	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
@@ -761,23 +780,27 @@
 			return
 
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
+	#ifndef I_AM_HACKERMAN
 	if( istype(var_value, /datum/admins) || istype(D, /datum/admins) || var_value == logs || var_value == logs["audit"] )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to assign a value to a forbidden variable.")
 		boutput(src, "You can't set that value.")
 		return
+	#endif
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
 		return
 
 	//Let's prevent people from promoting themselves, yes?
+	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
-		logTheThing("admin", usr, null, "tried to varedit [D.type] but was denied!")
-		logTheThing("diary", usr, null, "tried to varedit [D.type] but was denied!", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
+		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
+	#endif
 
 	var/default = suggest_input_type(var_value, variable)
 
@@ -790,10 +813,11 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
-											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR), \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, \
+											DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, \
+											DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, \
+											DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, \
+											DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
 											default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
@@ -808,7 +832,8 @@
 					x.vars[variable] = initial(x.vars[variable])
 			else
 				if (D == "GLOB")
-					global.vars[variable] = initial(global.vars[variable])
+					// global.vars[variable] = initial(global.vars[variable]) // <- this trick does not work on global.vars
+					boutput(src, "<span class='alert'>You can't restore global variables.</span>")
 				else
 					D.vars[variable] = initial(D.vars[variable])
 
@@ -821,6 +846,11 @@
 			if(src.holder)
 				src.holder.particool = new /datum/particle_editor(D)
 				src.holder.particool.ui_interact(mob)
+
+		if (DATA_INPUT_COLOR_MATRIX_EDITOR)
+			if(src.holder)
+				src.holder.color_matrix_editor = new /datum/color_matrix_editor(src, D)
+				src.holder.color_matrix_editor.ui_interact(mob)
 
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))
@@ -849,8 +879,8 @@
 
 
 
-	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
-	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
+	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
+	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
 	SPAWN(0)
 		if (istype(D, /datum))
@@ -862,8 +892,8 @@
 	set category = "Debug"
 	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
 		if("Yes")
-			logTheThing("admin", usr, null, "deleted [A.name] at ([log_loc(A)])")
-			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
+			logTheThing(LOG_ADMIN, usr, "deleted [A.name] at ([log_loc(A)])")
+			logTheThing(LOG_DIARY, usr, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
 
 /proc/debug_overlays(target_thing, client/user, indent="")
 	for(var/ov in target_thing:overlays)

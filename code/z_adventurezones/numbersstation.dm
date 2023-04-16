@@ -7,8 +7,8 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 	ADMIN_ONLY
 
 	shut_up_about_the_fucking_numbers_station = !(shut_up_about_the_fucking_numbers_station)
-	logTheThing("admin", usr, null, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].")
-	logTheThing("diary", usr, null, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].")
+	logTheThing(LOG_DIARY, usr, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].", "admin")
 	message_admins("[key_name(usr)] toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"]")
 
 /area/spyshack
@@ -264,7 +264,7 @@ Nanotrasen, Inc.<br>
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
 			LAGCHECK(LAG_LOW)
@@ -294,10 +294,10 @@ Nanotrasen, Inc.<br>
 			next_play += play_interval
 			if (!shut_up_about_the_fucking_numbers_station)
 				message_coders("Numbers station [name] broadcasting now.")
-			logTheThing("debug", null, null, "<b>Numbers station</b>: [name] is broadcasting on frequency [frequency / 10].")
+			logTheThing(LOG_DEBUG, null, "<b>Numbers station</b>: [name] is broadcasting on frequency [frequency / 10].")
 			gather_listeners()
 			if (!listeners.len)
-				logTheThing("debug", null, null, "<b>Numbers station:</b> [name] broadcast aborted: no listeners.")
+				logTheThing(LOG_DEBUG, null, "<b>Numbers station:</b> [name] broadcast aborted: no listeners.")
 				return
 			SPAWN(1 SECOND)
 				broadcast_sound(login_signal)
@@ -412,17 +412,17 @@ var/global/datum/numbers_station/lincolnshire = new
 
 /proc/lincolnshire_numbers(data)
 	if (islist(data))
-		logTheThing("debug", null, null, "<b>Numbers station</b>: numbers: [data["numbers"]]")
+		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b>: numbers: [data["numbers"]]")
 		var/TP = data["numbers"]
 		if (TP == null)
 			return 1
 		var/list/nums = splittext(TP, " ")
 		if (nums.len < 21)
-			logTheThing("debug", null, null, "<b>Numbers station</b> got too few numbers.")
+			logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
 			return 2
 		for (var/i = 1, i <= 21, i++)
 			lincolnshire.numbers[i] = text2num(nums[i])
-		logTheThing("debug", null, null, "<b>Numbers station</b> woo success")
+		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> woo success")
 		return 0
 	return 3
 

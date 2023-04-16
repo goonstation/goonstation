@@ -134,11 +134,11 @@ var/global/lastStationNameChange = 0 //timestamp
 		"nouns" = "Nouns"
 	)
 
-	whitelist_lists = sortList(whitelist_lists)
+	sortList(whitelist_lists, /proc/cmp_text_asc)
 
 	for (var/section in whitelist_lists)
 		var/list/words = strings("station_name_whitelist.txt", section)
-		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words))
+		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
 			station_name_whitelist += lowertext(word)
@@ -186,17 +186,16 @@ var/global/lastStationNameChange = 0 //timestamp
 	return valid ? trim(formattedName) : valid
 
 
-/proc/set_station_name(mob/user = null, manual = null, admin_override=null)
+/proc/set_station_name(mob/user = null, manual = null, admin_override=null, name=null)
 	if(isnull(admin_override) && ismob(user))
 		admin_override = isadmin(user)
-
-	var/name
 
 	if (manual)
 		if (!station_name_changing)
 			return 0
 
-		name = verify_station_name(manual, admin_override)
+		if(isnull(name))
+			name = verify_station_name(manual, admin_override)
 
 		if (!name)
 			return 0
@@ -210,8 +209,8 @@ var/global/lastStationNameChange = 0 //timestamp
 		the_station_name = name
 
 		if (user)
-			logTheThing("admin", user, null, "changed the station name to: [name]")
-			logTheThing("diary", user, null, "changed the station name to: [name]", "admin")
+			logTheThing(LOG_ADMIN, user, "changed the station name to: [name]")
+			logTheThing(LOG_DIARY, user, "changed the station name to: [name]", "admin")
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()
@@ -221,25 +220,33 @@ var/global/lastStationNameChange = 0 //timestamp
 			ircbot.export_async("admin", ircmsg)
 
 	else
-		name = generate_random_station_name()
-		#if defined(REVERSED_MAP)
+		if(isnull(name))
+			name = generate_random_station_name()
+			#if defined(REVERSED_MAP)
 			name = reverse_text(name)
-		#endif
-		if (station_or_ship() == "ship")
-#ifdef HALLOWEEN // a lot of the halloween prefixes already have a "the" at the start of them so we can skip that
-			the_station_name = name
-#else
-			the_station_name = "the [name]"
-#endif
-		else
-			the_station_name = name
+			#endif
+			if (station_or_ship() == "ship")
+				#ifdef HALLOWEEN // a lot of the halloween prefixes already have a "the" at the start of them so we can skip that
+				the_station_name = name
+				#else
+				the_station_name = "the [name]"
+				#endif
+			else
+				the_station_name = name
 
 	station_name = name
 
+	var/extra = null
+	if (config.whitelistEnabled != config.baseWhitelistEnabled)
+		if (config.whitelistEnabled)
+			extra = "\[CLOSED\] "
+		else
+			extra = "\[OPEN\] "
+
 	if (config?.server_name)
-		world.name = "[config.server_name]: [name]"
+		world.name = "[extra][config.server_name]: [name]"
 	else
-		world.name = name
+		world.name = "[extra][name]"
 
 	return 1
 

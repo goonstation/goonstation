@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/intercom)
+	mats = 3
+
 /obj/item/device/radio/intercom
 	name = "Station Intercom (Radio)"
 #ifndef IN_MAP_EDITOR
@@ -5,9 +8,8 @@
 #else
 	icon_state = "intercom-map"
 #endif
-	anchored = 1.0
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
-	mats = 3
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
 	var/number = 0
@@ -56,31 +58,90 @@
 	SPAWN(0)
 		attack_self(user)
 
+/obj/item/device/radio/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/fish))
+		if(src.dir == SOUTH)
+			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board \
+				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board \
+				which you conveniently had.</span></b>")
+
+			new /obj/item/device/radio/intercom/fish(src.loc, src)
+			playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
+			user.drop_item(W)
+			qdel(W)
+			qdel(src)
+		else
+			boutput(user, "<span class='alert'>Looks like the fish won't fit over an intercom facing that way.</span>")
+		return
+	. = ..()
+
+
 /obj/item/device/radio/intercom/send_hear()
 	if (src.listening)
 		return hearers(7, src.loc)
 
 /obj/item/device/radio/intercom/showMapText(var/mob/target, var/mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
-	if (!isAI(sender) || isdead(sender) || (frequency == R_FREQ_DEFAULT))
-		..() // we also want the AI to be able to tune to any intercom and have maptext, but not the main radio (1459) because of spam
+	if ((!isAI(sender) || isdead(sender) || (frequency == R_FREQ_DEFAULT)) && !src.doesMapText) // doesMapText allows us to unconditionally display maptext
+		..() // we also want the AI to be able to tune to any intercom and have maptext, but not the main radio (1459) because of spam. fish can also have maptext
 		return
-	var/maptext = generateMapText(msg, textLoc, style = "color:#7F7FE2;", alpha = 255)
+	var/color
+	if (isAI(sender))
+		color = "#7F7FE2"
+	else
+		color = src.device_color || "#FFFFFF"
+	for(var/image/chat_maptext/I in src.chat_text?.lines)
+		I.bump_up()
+	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
-/obj/item/device/radio/intercom/putt
-	name = "Colosseum Intercommunicator"
-	frequency = R_FREQ_INTERCOM_COLOSSEUM
-	broadcasting = 1
-	device_color = "#aa5c00"
-	protected_radio = 1
+/obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
+	..()
 
-	initialize()
-		set_frequency(frequency)
+	if (!isAI(user))
+		return
+
+	if (!isAIeye(user))
+		boutput("Deploy to an AI Eye first to override intercoms.")
+		return
+
+	if(user.client.check_key(KEY_BOLT))
+		if (src.locked_frequency)
+			boutput(user, "<span class='alert'>You can't override an intercom with a locked frequency!</span")
+			return
+
+		var/original_src_frequency = src.frequency
+		var/original_src_broadcasting = src.broadcasting
+		var/original_src_listening = src.listening
+		var/text_colour = "#CC3FCC"
+
+		// fake it till you make it
+		var/message = "<span class='radio [src.chat_class]' style='color:[src.device_color || text_colour]'>[radio_icon(src)]\
+		<span class='name'>[src]</span> <span class='message'>alerts, \"AI override engaged!\"</span></span>"
+		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
+
+		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))
+		for (var/mob/M in hearers(7, src.loc))
+			M.playsound_local(src, 'sound/misc/talk/bottalk_3.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+			M.show_message(msg=message,assoc_maptext=maptext)
+
+		src.locked_frequency = TRUE // lockdown; saves us from clickspam
+		var/mob/living/intangible/aieye/eye = user
+		src.set_frequency(eye.mainframe.radio2.frequency)
+		src.broadcasting = TRUE
+		src.listening = TRUE
+
+		SPAWN(1 MINUTE)
+			src.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
+			src.set_frequency(original_src_frequency)
+			src.broadcasting = original_src_broadcasting
+			src.listening = original_src_listening
 
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
 	desc = "Virtual radio for all your beeps and bops."
+#ifndef IN_MAP_EDITOR
 	icon = 'icons/effects/VR.dmi'
+#endif
 	protected_radio = 1
 // --------------------------------------------
 
@@ -257,3 +318,41 @@
 
 	initialize()
 		set_frequency(frequency)
+
+
+/obj/item/device/radio/intercom/fish
+	name = "Fishercom"
+	desc = "Didn't some burger place invent these?"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "wallfish"
+	doesMapText = TRUE // carte blanche
+	pixel_y = 28 // fish only approved for dir = SOUTH
+	device_color = "#3983C6" // for chat color
+
+	// burning stuff
+	burn_type = 1 // burn down to a glob
+	burn_possible = TRUE
+	burn_point = 300
+	health = 50 // same as a plank
+
+	New(var/loc, var/obj/item/device/radio/intercom/intercom_to_copy)
+		. = ..()
+		if (intercom_to_copy && istype(intercom_to_copy))
+			src.device_color = intercom_to_copy.device_color
+			src.broadcasting = intercom_to_copy.broadcasting
+			src.name = replacetext(intercom_to_copy.name, "Intercom", "Fishercom")
+			src.frequency = intercom_to_copy.frequency
+
+	generateMapText(text, textLoc, mob/R, style, alpha, force, time)
+		if (src.burning)
+			text = stutter(text)
+		. = ..()
+
+	// kind of a hack since it'll flick for every mob that hears from this, but as far as I can see this is the only proc which is reliably called when
+	// an intercom receives a message. all the other logic is handled in talk_into of the sending radio.
+	showMapText(mob/target, mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
+		. = ..()
+		flick("wallfish_move", src)
+
+	update_pixel_offset_dir()
+		return // no

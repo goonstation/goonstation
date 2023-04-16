@@ -18,10 +18,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/text_cooldown = "makes a subdued noise."
 	var/text_dud = "sputters and rattles a bit, then falls quiet."
 	var/flascustomization_first_color = "#FF0000"
-	var/sound/alarm_initial = "sound/machines/lavamoon_plantalarm.ogg"
-	var/sound/alarm_during = "sound/machines/alarm_a.ogg"
-	var/sound/alarm_final = "sound/machines/engine_alert1.ogg"
-	var/sound/sound_cooldown = "sound/machines/weaponoverload.ogg"
+	var/sound/alarm_initial = 'sound/machines/lavamoon_plantalarm.ogg'
+	var/sound/alarm_during = 'sound/machines/alarm_a.ogg'
+	var/sound/alarm_final = 'sound/machines/engine_alert1.ogg'
+	var/sound/sound_cooldown = 'sound/machines/weaponoverload.ogg'
 	var/doAlert = 0
 	var/blewUp = 0
 	var/animationScale = 3
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, "sound/machines/satcrash.ogg", 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		new /obj/bhole(T,rand(100,300))
 
 		if (O)
@@ -234,6 +234,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	post_setup()
 		. = ..()
 		payload_type = rand(0,3)
+		var/payload_type_name = "unknown"
+		switch (payload_type)
+			if (0)
+				payload_type_name = "smoke"
+			if (1)
+				payload_type_name = "foam"
+			if (2)
+				payload_type_name = "propellant"
+			if (3)
+				payload_type_name = "fluid"
+
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")
@@ -253,7 +264,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","sarin")
+				"toxic_slurry","histamine","saxitoxin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
@@ -266,7 +277,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -300,6 +311,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				O.reagents.smoke_start(50,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
+				var/datum/fluid_group/FG = location.active_liquid?.group
+				if(FG)
+					FG.base_evaporation_time = 30 SECONDS
+					FG.bonus_evaporation_time = 0 SECONDS
 
 		O.reagents.clear_reagents()
 
@@ -335,7 +350,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_final = ""
 	alarm_initial = null
 	alarm_during = null
-	alarm_final = "sound/machines/satcrash.ogg"
+	alarm_final = 'sound/effects/glitchy1.ogg'
 	var/material = "gold"
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue
@@ -369,6 +384,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					10;"wiz_amethyst",
 					10;"wiz_emerald",
 					10;"wiz_sapphire",
+					5;"jean",
 					10;"starstone")
 			if("eldritch") // fuck you
 				material = pick(
@@ -392,6 +408,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
+					5;"jean",
 					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(
@@ -455,6 +472,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
+		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)
 
 		SPAWN(1 SECOND)
 			var/range_squared = range**2

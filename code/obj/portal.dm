@@ -5,7 +5,7 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1.0
+	anchored = ANCHORED
 	var/portal_lums = 2
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER
@@ -68,12 +68,12 @@
 
 					return
 				if(ismob(M))
-					logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
+					logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
 			if(ismob(M))
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
@@ -86,9 +86,9 @@
 
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
-		//consumes 400 units of charge per wormhole interdicted
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
+		//consumes 200 units of charge (100,000 joules) per wormhole interdicted
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(200,src))
 				icon = 'icons/effects/effects.dmi'
 				icon_state = "sparks_attack"
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

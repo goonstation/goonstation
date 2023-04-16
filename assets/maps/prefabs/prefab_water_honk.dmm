@@ -391,7 +391,7 @@
 /area/prefab/slimy_honk)
 "bq" = (
 /obj/machinery/light/small/floor/warm/very,
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /obj/item/reagent_containers/food/snacks/candy/nougat,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
@@ -619,7 +619,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "ce" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cf" = (
@@ -697,7 +697,7 @@
 /area/prefab/slimy_honk)
 "cs" = (
 /obj/item/clothing/shoes/clown_shoes/purple,
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
 "ct" = (
@@ -716,7 +716,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cv" = (
-/obj/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/slimy_honk)
 "cw" = (
@@ -789,7 +789,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
 "cJ" = (
-/obj/critter/spider/clown/cluwne,
+/mob/living/critter/spider/clown/cluwne,
 /obj/item/material_piece/cloth/spidersilk,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade,
@@ -811,7 +811,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cO" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
@@ -848,7 +848,7 @@
 /area/prefab/slimy_honk)
 "cV" = (
 /obj/machinery/light/small/floor/harsh/very,
-/obj/critter/bear,
+/mob/living/critter/bear,
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)

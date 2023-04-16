@@ -21,7 +21,6 @@
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
 #define MGO_ENGINEER "engineer"
-#define MGO_MECHANIC "mechanic"
 
 // Mail Groups (Alerts)
 // These cannot be joined, and no PDAs start in them.

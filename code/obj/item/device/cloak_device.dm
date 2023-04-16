@@ -1,18 +1,20 @@
+TYPEINFO(/obj/item/cloaking_device)
+	mats = 15
+
 /obj/item/cloaking_device
 	name = "cloaking device"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
 	uses_multiple_icon_states = 1
-	var/active = 0.0
+	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -32,9 +34,10 @@
 			src.deactivate(user)
 		else
 			if (src.activate(user))
-				user.show_text("You can't have more than one active [src.name] on your person.", "red")
-			else
 				user.show_text("The [src.name] is now active.", "blue")
+			else
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
+
 
 	update_icon()
 		if (src.active)
@@ -98,6 +101,11 @@
 		if (src.active && ismob(src.loc))
 			src.deactivate(src.loc)
 
+	disposing()
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+		..()
+
 	limited
 		name = "limited-use cloaking device"
 		desc = "A man-portable cloaking device, miniturization has reduced it's total uses to five."
@@ -130,4 +138,5 @@
 
 		disposing()
 			. = ..()
-			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			if (hunter_key)
+				STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

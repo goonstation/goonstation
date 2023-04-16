@@ -132,7 +132,7 @@
 		src.UpdateIcon()
 		return 1
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		// no air inside
 		return new/datum/gas_mixture
 
@@ -162,7 +162,7 @@ proc/save_intraround_jars()
 
 		var/zname = global.zlevels[jar_turf.z].name
 		jar_data_by_z[zname] += list(list(jar_turf.x, jar_turf.y, jar_contents))
-		logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar saved at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
+		logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> Jar saved at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
 
 	for(var/zname in jar_data_by_z)
 		var/list/jars_here = jar_data_by_z[zname]
@@ -177,7 +177,7 @@ proc/generate_backup_jars()
 		if(length(turfs))
 			var/turf/T = pick(turfs)
 			new/obj/item/reagent_containers/glass/jar(T)
-			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
+			logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 	tries_left = 50
@@ -185,7 +185,7 @@ proc/generate_backup_jars()
 		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 		if(istype(T))
 			new/obj/item/reagent_containers/glass/jar(T)
-			logTheThing("debug", null, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
+			logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> New empty jar created at [log_loc(T)]")
 		else
 			tries_left--
 
@@ -209,7 +209,7 @@ proc/load_intraround_jars()
 			jar_save["zlevel/[zname]"] >> jars_data
 		catch(var/exception/e)
 			if(!emitted_full_savefile)
-				logTheThing("debug", null, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
+				logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> full savefile<br>[jar_save.ExportText()]")
 				emitted_full_savefile = TRUE
 			stack_trace("[e.name]\n[e.desc]")
 		for(var/list/jar_data in jars_data)
@@ -227,13 +227,13 @@ proc/load_intraround_jars()
 				if(istype(pickled))
 					pickled.pickle_age++
 			jar.reagents.add_reagent("juice_pickle", 75)
-			logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
+			logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> Jar created at [log_loc(jar)] ([zname]) containing [json_encode(jar_contents)]")
 			var/area/AR = get_area(jar)
 			if(in_centcom(jar) || !istype(AR, /area/station) && !istype(AR, /area/diner) && prob(10))
 				SPAWN(randfloat(5 MINUTES, 30 MINUTES))
 					shippingmarket.receive_crate(jar)
 			if(length(length(by_type[/obj/item/reagent_containers/glass/jar])) >= MAX_JAR_COUNT)
-				logTheThing("debug", null, null, "<b>Pickle Jar:</b> Jar creation process hit maximum limit of [MAX_JAR_COUNT], further jars are lost to time.")
+				logTheThing(LOG_DEBUG, null, "<b>Pickle Jar:</b> Jar creation process hit maximum limit of [MAX_JAR_COUNT], further jars are lost to time.")
 				return
 
 	// in case we have less than the required amount generate more

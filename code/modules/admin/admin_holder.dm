@@ -9,11 +9,12 @@
 	var/extratoggle = 0
 	var/popuptoggle = 0
 	var/servertoggles_toggle = 0
-	var/animtoggle = 1
+	var/disable_atom_verbs = 1
 	var/attacktoggle = 1
 	var/ghost_respawns = 1
 	var/adminwho_alerts = 1
 	var/rp_word_filtering = 0
+	var/uncool_word_filtering = 1
 	var/auto_stealth = 0
 	/// toogle that determines whether or not clouddata for auto alt key and stealth is per server or global
 	var/auto_alias_global_save = FALSE
@@ -28,14 +29,19 @@
 	var/audible_ahelps = PM_NO_ALERT
 	var/buildmode_view = 0 //change view when using buildmode?
 	var/spawn_in_loc = 0 //spawn verb spawning in loc?
+	/// toggles seeing the Topic log entires on or off by default
+	var/show_topic_log = FALSE
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
+	var/ghost_interaction = FALSE //! if toggled on then the admin ghost can interact with things
 
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs
 
 	var/datum/filter_editor/filteriffic = null
 	var/datum/particle_editor/particool = null
+	var/datum/color_matrix_editor/color_matrix_editor = null
+	var/datum/centcomviewer/centcomviewer = null
 
 	var/list/hidden_categories = null
 
@@ -71,7 +77,8 @@
 			"Possess",\
 			"Create Poster",\
 			"Copy Here",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -102,7 +109,8 @@
 			"Transfer Client To",\
 			"Shamecube",\
 			"Create Poster",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
@@ -116,7 +124,8 @@
 			"View Variables",\
 			"View Fingerprints",\
 			"Delete",\
-			"Create Poster"\
+			"Create Poster",\
+			"Set Material",\
 			)
 
 
@@ -135,24 +144,26 @@
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For Uncool Words?: <a href='?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
 		HTML += "<b>Hide ATags?: <a href='?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
 			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
 		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
-		user.Browse(HTML.Join(),"window=aprefs;size=375x520")
+		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
 		if (!src.owner)
@@ -181,12 +192,13 @@
 			src.owner:toggle_server_toggles_tab()
 		servertoggles_toggle = saved_servertoggles_toggle
 
-		var/saved_animtoggle = AP["animtoggle"]
-		if (isnull(saved_animtoggle))
-			saved_animtoggle = 1
-		if (saved_animtoggle == 0 && animtoggle != 0)
+		//yes the var name makes no sense, but I'm not resetting everyone's prefs for it
+		var/saved_disable_atom_verbs = AP["animtoggle"]
+		if (isnull(saved_disable_atom_verbs))
+			saved_disable_atom_verbs = 1
+		if (saved_disable_atom_verbs == 0 && disable_atom_verbs != 0)
 			src.owner:toggle_atom_verbs()
-		animtoggle = saved_animtoggle
+		disable_atom_verbs = saved_disable_atom_verbs
 
 		var/saved_attacktoggle = AP["attacktoggle"]
 		if (isnull(saved_attacktoggle))
@@ -215,6 +227,15 @@
 		if (saved_rp_word_filtering == 1 && rp_word_filtering != 1)
 			src.owner:toggle_rp_word_filtering()
 		rp_word_filtering = saved_rp_word_filtering
+
+		var/saved_uncool_word_filtering = AP["uncool_word_filtering"]
+		if (isnull(saved_uncool_word_filtering))
+			saved_uncool_word_filtering = 1
+		if (saved_uncool_word_filtering == 0 && uncool_word_filtering != 0)
+			src.owner:toggle_uncool_word_filtering()
+		else
+			src.owner.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, /client/proc/message_one_admin)
+		uncool_word_filtering = saved_uncool_word_filtering
 
 		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]
 		if (isnull(saved_auto_alias_global_save))
@@ -277,6 +298,11 @@
 			saved_spawn_in_loc = 0
 		spawn_in_loc = saved_spawn_in_loc
 
+		var/saved_show_topic_log = AP["show_topic_log"]
+		if (isnull(saved_show_topic_log))
+			saved_show_topic_log = FALSE
+		show_topic_log = saved_show_topic_log
+
 		src.hidden_categories = list()
 		for(var/cat in toggleable_admin_verb_categories)
 			var/cat_hidden = AP["hidden_[cat]"]
@@ -320,9 +346,10 @@
 		AP["auto_alias_global_save"] = auto_alias_global_save
 		AP["popuptoggle"] = popuptoggle
 		AP["servertoggles_toggle"] = servertoggles_toggle
-		AP["animtoggle"] = animtoggle
+		AP["animtoggle"] = disable_atom_verbs
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
+		AP["uncool_word_filtering"] = uncool_word_filtering
 		AP["ghost_respawns"] = ghost_respawns
 		AP["adminwho_alerts"] = adminwho_alerts
 		AP["hear_prayers"] = hear_prayers
@@ -331,6 +358,7 @@
 		AP["audible_ahelps"] = audible_ahelps
 		AP["buildmode_view"] = buildmode_view
 		AP["spawn_in_loc"] = spawn_in_loc
+		AP["show_topic_log"] = show_topic_log
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)

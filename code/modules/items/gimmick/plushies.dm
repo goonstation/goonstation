@@ -1,11 +1,13 @@
+TYPEINFO(/obj/submachine/claw_machine)
+	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
+
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
 	var/list/prizes = list(/obj/item/toy/plush/small/bee,\
@@ -72,6 +74,21 @@
 	user.drop_item()
 	I.set_loc(src)
 	boutput(user, "<span class='notice'>You insert \the [I] into \the [src] as a prize.</span>")
+
+/obj/submachine/claw_machine/custom_suicide = TRUE
+/obj/submachine/claw_machine/suicide(mob/user)
+	if (!src.user_can_suicide(user))
+		return FALSE
+	src.visible_message("<span class='alert'><b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b></span>")
+	user.set_loc(src) // contents is used as prize list, no special handling
+	bleed(user, 50, 50)
+	random_brute_damage(user, 200, FALSE)
+	playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 80)
+	SPAWN(45 SECONDS)
+		if (!isdead(user))
+			user.suiciding = FALSE
+	return TRUE
+
 
 /datum/action/bar/icon/claw_machine
 	duration = 100
@@ -157,11 +174,12 @@
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		phrase_log.log_phrase("plushie", message)
-		logTheThing("say", user, null, "makes [src] say, \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
-		var/mob/living/carbon/human/H = user
-		if (H.sims)
-			H.sims.affectMotive("fun", 1)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
@@ -268,7 +286,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -298,7 +316,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

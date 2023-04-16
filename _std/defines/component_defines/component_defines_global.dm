@@ -13,6 +13,14 @@
 	/// When a cargo pad is built or turned on
 	#define COMSIG_GLOBAL_CARGO_PAD_ENABLED "global_cargo_pad_enabled"
 
+// ---- armory ----
+
+	/// Armory computer authorized
+	#define COMSIG_GLOBAL_ARMORY_AUTH "armory_auth_granted"
+
+	/// Armory computer unauthorized
+	#define COMSIG_GLOBAL_ARMORY_UNAUTH "armory_auth_removed"
+
 // ---- ඞ ----
 
 /// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -35,3 +43,4 @@
 /// ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀
 /// ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀
 #define COMSIG_GLOBAL_SUSSY_PHRASE "sussy"
+#define COMSIG_GLOBAL_UNCOOL_PHRASE "uncool_word"

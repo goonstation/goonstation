@@ -4,7 +4,7 @@
 	icon_state = "reactor_stats"
 	desc = "TODO"
 	density = 1
-	anchored = 1.0
+	anchored = ANCHORED
 
 	light_r =1
 	light_g = 0.8

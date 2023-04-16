@@ -25,9 +25,12 @@
 	var/slots = 7
 	/// Initial contents when created
 	var/list/spawn_contents = list()
+	/// specify if storage should grab other items on turf
+	var/grab_stuff_on_spawn = FALSE
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -47,6 +50,13 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
+
+		if (grab_stuff_on_spawn)
+			for (var/obj/item/I in src.loc)
+				if (I == src) continue
+				if (I.anchored) continue
+				if (check_can_hold(I) > 0)
+					add_contents(I)
 
 	Entered(Obj, OldLoc)
 		. = ..()
@@ -93,7 +103,7 @@
 			for (amt, amt>0, amt--)
 				new thing(src)
 		if (total_amt > slots)
-			logTheThing("debug", null, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
+			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
 		total_amt = null
 		return 1
 
@@ -108,7 +118,7 @@
 			user.drop_item()
 			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
-		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
+		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored && can_reach(user, O, 1))
 			user.swap_hand()
 			if(user.equipped() == null)
 				O.Attackhand(user)
@@ -284,7 +294,7 @@
 	attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
+		if (src.loc == user && (!does_not_open_in_pocket || (src in user.equipped_list(FALSE)) || IS_LIVING_OBJECT_USING_SELF(user)))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
@@ -302,10 +312,11 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as anything in hud.mobs)
-				if (M != user)
-					M.detach_hud(hud)
-			hud.update(user)
+			if (hud)
+				for (var/mob/M as anything in hud.mobs)
+					if (M != user)
+						M.detach_hud(hud)
+				hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -345,19 +356,28 @@
 			return ..()
 
 /obj/item/storage/box/starter // the one you get in your backpack
-	spawn_contents = list(/obj/item/clothing/mask/breath)
-	make_my_stuff()
+	icon_state = "emergbox"
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	make_my_stuff(onlyMaskAndOxygen)
 		..()
-		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES) //aaaaaa
+		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
 			new /obj/item/tank/emergency_oxygen(src)
-		if (ticker?.round_elapsed_ticks > 20 MINUTES)
+		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
 			new /obj/item/crowbar/red(src)
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+		new /obj/item/clothing/suit/space/emerg(src)
+		new /obj/item/clothing/head/emerg(src)
+#else
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
 			new /obj/item/clothing/head/emerg(src)
+#endif
 
-/obj/item/storage/box/starter/withO2
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+
+/obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	make_my_stuff()
+		..(TRUE)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
@@ -375,7 +395,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
@@ -420,7 +440,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

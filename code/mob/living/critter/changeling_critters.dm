@@ -31,10 +31,11 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
+		src.original_bodypart?.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -42,7 +43,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -104,7 +105,7 @@
 		..()
 
 	butcher(mob/user)
-		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
 		return ..(user, FALSE)
 
@@ -146,14 +147,18 @@
 	hand_count = 1
 	var/absorbed_dna = 0
 
-	New()
+	New(loc, obj/item/bodypart)
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/handspider)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/dna_gnaw)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
+
+		if (bodypart && istype(bodypart, /obj/item/parts/robot_parts))
+			src.icon_prefix = "robo"
+			src.UpdateIcon()
 
 		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
 		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
@@ -344,7 +349,7 @@
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/eyespider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/eyespider)
 		// TODO: ACTUAL ABILITIES
 		abilityHolder.addAbility(/datum/targetable/critter/mark)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
@@ -353,9 +358,7 @@
 		src.flags ^= TABLEPASS | DOORPASS
 
 		// EYE CAN SEE FOREVERRRR
-		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
-		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = INVIS_CLOAK
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
@@ -374,10 +377,10 @@
 				var/obj/item/organ/eye/E = new /obj/item/organ/eye()
 				E.donor = C
 				if(!C.organHolder.left_eye)
-					C.organHolder.receive_organ(E, "left_eye", 2.0)
+					C.organHolder.receive_organ(E, "left_eye", 2)
 					C.update_body()
 				else
-					C.organHolder.receive_organ(E, "right_eye", 2.0)
+					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
 				dna_gain = 2 // bad_ideas.txt
@@ -386,6 +389,21 @@
 		hivemind_owner.points += dna_gain
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if(src.marked_target && src.client)
+			var/image/arrow = image(icon = 'icons/mob/screen1.dmi', icon_state = "arrow", loc = src, layer = HUD_LAYER)
+			arrow.color = "#ff0000ff"
+			arrow.transform = matrix(arrow.transform, -2, -2, MATRIX_SCALE)
+			var/angle = get_angle(src, src.marked_target)
+			arrow.transform = matrix(arrow.transform, angle, MATRIX_ROTATE)
+			arrow.transform = matrix(arrow.transform, sin(angle)*40, cos(angle)*40, MATRIX_TRANSLATE)
+			src.client.images += arrow
+			animate(arrow, time = 3 SECONDS, alpha = 0)
+			SPAWN(3 SECONDS)
+				src.client?.images -= arrow
+				qdel(arrow)
 
 ///////////////////////////
 // LEGWORM
@@ -547,7 +565,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -628,18 +647,17 @@
 		var/mob/living/carbon/human/H = M
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
 		H.setStatusMin("paralysis", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = src.mind
-		var/datum/ailment/parasite/headspider/HSD = HS.master
-		HSD.changeling = changeling
+		HS.source = src
 		H.ailments += HS
 
-		logTheThing("combat", src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))
@@ -669,5 +687,5 @@
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-			obs.boot()
+			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()

@@ -59,6 +59,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/checkRespawnee(var/datum/respawnee/R)
 		switch(R.checkValid())
 			if(RESPAWNEE_STATE_WAITING)
+				; // Do nothing
 				// This could happen if the client disconnects
 			if(RESPAWNEE_STATE_ELIGIBLE)
 				// They are eligible for respawn
@@ -165,7 +166,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/notifyAndGrantVerb()
 		if(!client_processed && checkValid())
 			// Send a message to the client
-			the_client.mob.playsound_local(the_client.mob, "sound/misc/boing/[rand(1,6)].ogg", 50, flags=SOUND_IGNORE_SPACE)
+			the_client.mob.playsound_local(the_client.mob, 'sound/misc/respawn.ogg', 70, flags=SOUND_IGNORE_SPACE)
 
 			boutput(the_client.mob, "<h2>You are now eligible for a <a href='byond://winset?command=Respawn-As-New-Character'>respawn (click here)</a>!</h1>")
 			if(master.rp_alert)
@@ -180,15 +181,22 @@ var/datum/respawn_controls/respawn_controller
 				tgui_alert(usr, "You are not eligible for a respawn, bub!", "Cannot respawn")
 
 			return
+		var/is_round_observer = FALSE
+		if (istype(usr, /mob/dead/observer))
+			var/mob/dead/observer/ghost = usr
+			is_round_observer = ghost.observe_round
+		logTheThing(LOG_DEBUG, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].")
+		logTheThing(LOG_DIARY, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].", "game")
 
-		logTheThing("debug", usr, null, "used a timed respawn.")
-		logTheThing("diary", usr, null, "used a timed respawn.", "game")
+		//try to break all links with the previous body so we don't get pulled back by changeling absorb, cloning etc.
+		usr.mind = null
 
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
 		M.is_respawned_player = 1
 		M.key = the_client.key
 		M.Login()
+		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.mind.purchased_bank_item = null
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)

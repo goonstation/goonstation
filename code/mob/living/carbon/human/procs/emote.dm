@@ -1,8 +1,8 @@
 // emote
 
-
-
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+	set waitfor = FALSE
+	..()
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -26,10 +26,6 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
 			return
-
-	for (var/obj/item/implant/I in src.implant)
-		if (I.implanted)
-			I.trigger(act, src)
 
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
@@ -116,9 +112,9 @@
 
 
 						if (iscluwne(src))
-							playsound(src, "sound/voice/farts/poo.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 						else
@@ -432,7 +428,7 @@
 			if ("custom")
 				if (src.client)
 					if (IS_TWITCH_CONTROLLED(src)) return
-					var/input = sanitize(html_encode(input("Choose an emote to display.")))
+					var/input = copytext(sanitize(html_encode(input("Choose an emote to display."))), 1, MAX_MESSAGE_LEN)
 					var/input2 = input("Is this a visible or audible emote?") in list("Visible","Audible")
 					if (input2 == "Visible") m_type = 1
 					else if (input2 == "Audible") m_type = 2
@@ -449,8 +445,10 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
+				else //hack to fix double encoding of custom emotes when using hotkey, speech code is a knotted mess
+					param = html_decode(param)
 
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -462,7 +460,7 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -473,7 +471,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(param), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -619,7 +617,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
-						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -637,7 +635,7 @@
 									thing = src.l_hand
 								else if (src.r_hand)
 									thing = src.r_hand
-							if (thing)
+							if (thing && !thing.cant_drop)
 								if (src.juggling())
 									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 										src.drop_juggle()
@@ -662,10 +660,7 @@
 						if (thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
-							var/trans = thing.transform
-							animate(thing, transform = turn(trans, 120), time = 0.7, loop = 3, flags = ANIMATION_PARALLEL)
-							animate(transform = turn(trans, 240), time = 0.7, flags = ANIMATION_PARALLEL)
-							animate(transform = trans, time = 0.7, flags = ANIMATION_PARALLEL)
+							animate_spin(thing, prob(50) ? "L" : "R", 1, 0)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
@@ -682,7 +677,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
-							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
+							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -753,7 +748,7 @@
 				message = "<b>[src]</b> throws [his_or_her(src)] voice, badly, while flapping [his_or_her(src)] thumb and index finger like some sort of lips.[prob(10) ? " Admittedly, it is a pretty good impression of the [pick("captain", "head of personnel", "clown", "research director", "chief engineer", "head of security", "medical director", "AI", "chaplain", "detective")]." : null]"
 				m_type = 1
 
-			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
+			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump","squint")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				maptext_out = "<I>[act]s</I>"
@@ -819,7 +814,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter")
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -833,6 +828,12 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "yawn")
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
+						for (var/mob/living/carbon/C in view(5,get_turf(src)))
+							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
+								C.emote("yawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -887,26 +888,6 @@
 				maptext_out = "<I>shakes [his_or_her(src)] head</I>"
 				m_type = 1
 
-			if ("shakebutt","shakebooty","shakeass","twerk")
-				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
-				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
-				m_type = 1
-				src.add_karma(-3)
-
-				SPAWN(0.5 SECONDS)
-					var/beeMax = 15
-					for (var/obj/critter/domestic_bee/responseBee in range(5, src))
-						if (!responseBee.alive)
-							continue
-
-						if (beeMax-- < 0)
-							break
-
-						if (prob(75))
-							responseBee.visible_message("<b>[responseBee]</b> buzzes [pick("in a confused manner", "perplexedly", "in a perplexed manner")].", group = "responseBee")
-						else
-							responseBee.visible_message("<b>[responseBee]</b> can't understand [src]'s accent!")
-
 			if ("pale")
 				message = "<B>[src]</B> goes pale for a second."
 				maptext_out = "<I>goes pale...</I>"
@@ -925,6 +906,21 @@
 			if ("shame","hanghead")
 				message = "<B>[src]</B> hangs [his_or_her(src)] head in shame."
 				maptext_out = "<I>hangs [his_or_her(src)] head in shame</I>"
+				m_type = 1
+
+			if ("nods", "nodslowly")
+				message = "<B>[src]</B> nods slowly."
+				maptext_out = "<I>nods slowly</I>"
+				m_type = 1
+
+			if ("stareh", "starehands")
+				message = "<B>[src]</B> stares at [his_or_her(src)] hands."
+				maptext_out = "<I>stares at [his_or_her(src)] hands</I>"
+				m_type = 1
+
+			if ("jsay")
+				message = "<B>[src]</B> just stares at you."
+				maptext_out = "<I>just stares at you</I>"
 				m_type = 1
 
 			// basic emotes with alternates for restraints
@@ -1080,7 +1076,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						O.set_loc(src)
 						equip_if_possible(O, drophand)
@@ -1104,6 +1100,60 @@
 				else
 					message = "<B>[src]</B> starts writhing around in manic terror!"
 					maptext_out = "<I>starts writhing around in manic terror!</I>"
+				m_type = 1
+
+			if ("rubf", "rubface")
+				if (!src.restrained())
+					message = "<B>[src]</B> rubs [his_or_her(src)] face."
+					maptext_out = "<I>rubs [his_or_her(src)] face</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
+			if ("rubt", "rubtemples")
+				if (!src.restrained())
+					message = "<B>[src]</B> rubs [his_or_her(src)] temples."
+					maptext_out = "<I>rubs [his_or_her(src)] temples</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
+			if ("scratch", "scratchhead")
+				if (!src.restrained())
+					message = "<B>[src]</B> scratches [his_or_her(src)] head."
+					maptext_out = "<I>scratches [his_or_her(src)] head</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
+			if ("jazz", "jazzhands")
+				if (!src.restrained())
+					message = "<B>[src]</B> makes some jazz hands."
+					maptext_out = "<I>makes some jazz hands</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
+			if ("up", "thumbsup")
+				if (!src.restrained())
+					message = "<B>[src]</B> gives a thumbs up."
+					maptext_out = "<I>gives a thumbs up</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
+			if ("pose")
+				if (!src.restrained())
+					message = "<B>[src]</B> strikes a pose."
+					maptext_out = "<I>strikes a pose</I>"
+				else
+					message = "<B>[src]</B> squirms."
+					maptext_out = "<I>squirms</I>"
 				m_type = 1
 
 			// targeted emotes
@@ -1196,6 +1246,46 @@
 					message = "<B>[src]</B> boggles at the stupidity of it all."
 					maptext_out = "<I>boggles at the stupidity of it all</I>"
 
+			if ("eyes", "rolleyes")
+				m_type = 1
+				var/M = null
+				if (param)
+					for (var/mob/A in view(null, null))
+						if (ckey(param) == ckey(A.name))
+							M = A
+							break
+				else
+					var/list/target_list = src.get_targets(5, "mob")
+					if(length(target_list))
+						M = tgui_input_list(src, "Pick something to roll your eyes at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
+				if (M)
+					message = "<B>[src]</B> rolls [his_or_her(src)] eyes at [M]"
+					maptext_out = "<I> rolls [his_or_her(src)] eyes at [M]</I>"
+				else
+					message = "<B>[src]</B> rolls [his_or_her(src)] eyes."
+					maptext_out = "<I>rolls [his_or_her(src)] eyes</I>"
+
+			if ("sideeye")
+				m_type = 1
+				var/M = null
+				if (param)
+					for (var/mob/A in view(null, null))
+						if (ckey(param) == ckey(A.name))
+							M = A
+							break
+				else
+					var/list/target_list = src.get_targets(5, "mob")
+					if(length(target_list))
+						M = tgui_input_list(src, "Pick something to side-eye!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
+				if (M)
+					message = "<B>[src]</B> side-eyes [M]"
+					maptext_out = "<I> side-eyes [M]</I>"
+				else
+					message = "<B>[src]</B> side-eyes nothing in particular."
+					maptext_out = "<I>side-eyes nothing in particular</I>"
+
 			if ("shakefist")
 				m_type = 1
 				if (!src.restrained())
@@ -1238,14 +1328,22 @@
 							if (M && !in_interact_range(src, M))
 								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
 								return
-
 					if (M)
-						if (M.canmove && !M.r_hand && !M.restrained())
-							message = "<B>[src]</B> shakes hands with [M]."
-							maptext_out = "<I>shakes hands with [M]</I>"
+						if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
+								if (M in view(1,null))
+									message = "<B>[src]</B> shakes hands with [M]."
+									maptext_out = "<I>shakes hands with [M].</I>"
+							else
+								message = "<B>[src]</B> offers [M] a handshake, but [M] declines."
+								maptext_out = "<I>offers [M] a handshake, but [M] declines</I>"
 						else
 							message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
 							maptext_out = "<I>holds out [his_or_her(src)] hand to [M]</I>"
+					else
+						message = "<B>[src]</B> randomly extends [his_or_her(src)] hand."
+						maptext_out = "<I>randomly extends [his_or_her(src)] hand.</I>"
+
 
 			if ("daps","dap")
 				m_type = 1
@@ -1355,7 +1453,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5))
+						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
@@ -1373,6 +1471,11 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+								if(istype(gloves, /obj/item/clothing/gloves/bladed))
+									var/obj/item/clothing/gloves/bladed/blades = src.gloves
+									blades.sheathe_blades_toggle(src)
+									src.update_clothing()
 
 			if ("airquote","airquotes")
 				if (param)
@@ -1383,6 +1486,21 @@
 					message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
 					maptext_out = "<I>makes air quotes with [his_or_her(src)] fingers</I>"
 					m_type = 1
+
+			if ("turnover", "examine")
+				var/obj/item/thing = src.equipped()
+				if (!thing)
+					if (src.l_hand)
+						thing = src.l_hand
+					else if (src.r_hand)
+						thing = src.r_hand
+				if (thing)
+					animate_spin(thing, prob(50) ? "L" : "R", 3, 0)
+					message = "<B>[src]</B> turns [thing] over in [his_or_her(src)] hand, slowly examining it."
+					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining it</I>"
+					m_type = 1
+				else
+					boutput(src, "<span class='alert'>There's nothing in your hand.</span>")
 
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
@@ -1465,7 +1583,6 @@
 					if (M)
 						message = "<B>[src]</B> points to [M]."
 						maptext_out = "<I>points to [M]</I>"
-					else
 				m_type = 1
 
 			if ("signal")
@@ -1484,7 +1601,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
@@ -1512,7 +1629,7 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
-							src.say("GHEIT DAUN!")
+							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -1683,7 +1800,7 @@
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
 								boutput(src, "<span class='notice'>The ants arachnify.</span>")
-								playsound(src, "sound/effects/bubbles.ogg", 80, 1)
+								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
@@ -1734,7 +1851,7 @@
 								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
 							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
-								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
+								src.remove_stamina(STAMINA_FLIP_COST * 2)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
@@ -1816,7 +1933,7 @@
 											src.stamina_stun()
 										combatflipped |= M
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
+										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -1893,7 +2010,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1909,7 +2026,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1934,7 +2051,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1967,7 +2084,7 @@
 								for (var/obj/item/storage/toilet/T in src.loc)
 									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
 									src.urine = 0
-									T.clogged += 0.10
+									T.clogged += 0.1
 									break
 							else
 								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
@@ -2165,7 +2282,7 @@
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
@@ -2193,21 +2310,17 @@
 						src.limbs.l_leg?.sever()
 						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
 						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
-/*			if ("wedgie")
-				if (src.emote_check(voluntary))
-					var/mob/living/carbon/human/H = null
-					if(ishuman(src))
-						H = src
-					if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
-						src.show_text("You can't do that without arms!")
-						return
-					if(/mob/living/carbon/human in get_step(H.loc, 1).contents)
-						return
-*/
+			if ("woof")
+				if (!ispug(src)) // not accounting for critter dogs since they have their own bark handling
+					src.say("Woof.")
+					return
+				else
+					message = "<b>[src]</b> woofs!"
+					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
@@ -2231,7 +2344,7 @@
 							I.bump_up(chat_text.measured_height)
 
 			if (message)
-				logTheThing("say", src, null, "EMOTE: [message]")
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
@@ -2248,7 +2361,7 @@
 	else
 
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			act = lowertext(act)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
@@ -2260,13 +2373,6 @@
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-
-// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
-// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
-// that would be difficult, datumize emotes 2day!
-#ifdef SPACEMAN_DMM
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
-#endif
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
@@ -2298,15 +2404,15 @@
 	var/image/left_arm = image(null, src)
 	left_arm.render_source = src.render_target
 	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
-	left_arm.appearance_flags = KEEP_APART
+	left_arm.appearance_flags = KEEP_APART | PIXEL_SCALE
 	var/image/right_arm = image(null, src)
 	right_arm.render_source = src.render_target
 	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
-	right_arm.appearance_flags = KEEP_APART
+	right_arm.appearance_flags = KEEP_APART | PIXEL_SCALE
 	var/image/torso = image(null, src)
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
-	torso.appearance_flags = KEEP_APART
+	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
@@ -2344,7 +2450,7 @@
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
 	G.affecting.set_loc(newloc)
-	if (!G.affecting.reagents.has_reagent("fliptonium"))
+	if (!G.affecting.reagents?.has_reagent("fliptonium"))
 		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
@@ -2355,7 +2461,7 @@
 
 	src.emote("scream")
 	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-	logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
@@ -2363,7 +2469,7 @@
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 		src.changeStatus("weakened", 1.5 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
@@ -2376,7 +2482,7 @@
 			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	if (istype(tabl, /obj/table/glass))
 		var/obj/table/glass/g_tabl = tabl
 		if (!g_tabl.glass_broken)
@@ -2398,25 +2504,19 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	var/list/atom/movable/everything_around = list()
-
-	for(var/atom/movable/AM in view(range, get_turf(src)))
-		if(AM == src)
-			continue
-		everything_around |= AM
-
+	var/list/targets = list()
 	switch(kind_of_target)
 		if("both")
-			return everything_around
+			for(var/atom/movable/AM in view(range, get_turf(src)))
+				if(AM == src)
+					continue
+				targets += AM
 		if("mob")
-			. = list()
-			for(var/mob/M in everything_around)
-				if(M == src)
+			for(var/mob/M in view(range, get_turf(src)))
+				if(M == src || isintangible(M) || isobserver(M))
 					continue
-				. |= M
+				targets += M
 		if("obj")
-			. = list()
-			for(var/obj/O in everything_around)
-				if(O == src)
-					continue
-				. |= O
+			for(var/obj/O in view(range, get_turf(src)))
+				targets += O
+	return targets

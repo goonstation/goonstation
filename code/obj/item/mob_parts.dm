@@ -5,7 +5,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????
@@ -102,8 +103,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder?.organs?[src.slot] == src)
-				holder.organs[src.slot] = null
 		holder = null
 
 		if (bones)
@@ -118,7 +117,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
-			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null
@@ -179,6 +177,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	proc/sever(var/mob/user)
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing(LOG_ADMIN, user, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -255,7 +255,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.remove_object = null
 			holder = null
 			qdel(src)
-
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	//for humans
@@ -300,7 +301,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = 0)
+	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if(no_icon) return 0
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
@@ -323,12 +324,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.standImage = image(used_icon, "[src.slot][decomp]")
 			return standImage
 
-	proc/getAttachmentIcon(var/decomp_stage = 0)
+	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = 0)
+	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -336,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = 0)
+	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"

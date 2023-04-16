@@ -10,6 +10,7 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 * Don't use `del`, it's horrendously slow. Use `qdel()`.
+* Don't use `<>`, it's completely unused in the land of SS13. Use `!=` instead, as it's infinitely more sane.
 
 ## Stuff To Use
 
@@ -18,8 +19,31 @@
 * Bitflags (`&`) - Write as `bitfield & bitflag`
 * Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
 * Use `FALSE` and `TRUE` instead of `0` and `1` for booleans.
+* Use `x in y` rather than `y.Find(x)` unless you need the index.
+    * Does not apply to regexes, of course.
 
 # Syntax
+
+## Commenting
+
+### Purpose
+When possible, we always want people to document their code clearly so that others (or perhaps yourself in the future) can understand and learn why a piece of code was written. 
+
+Unless the code is extremely complex, what one generally wants to comment is the *motivation* behind a certain piece of code, or what it's supposed to fix - rather than what it's actually doing.
+
+### Doc Comments
+Additionally, we have a 'documentation comment' system set up. This is as simple as commenting code like:
+```cs
+/obj/item/clothing/suit
+    /// If TRUE the suit will hide whoever is wearing it's hair
+    var/over_hair = FALSE
+```
+By using this, when you hover over a variable or object, it'll display information in the comment. For example:
+
+![](https://i.imgur.com/IdKpEtf.png)
+
+For more detailed information on this system, see the [DMByExample page](https://spacestation13.github.io/DMByExample/meta/dmdoc.html).
+
 
 ## Defines to use
 
@@ -104,7 +128,7 @@ Example:
 ```javascript
 ABSTRACT_TYPE(/obj/item/hat)
 /obj/item/hat
-	var/is_cool = FAKSE
+	var/is_cool = FALSE
 
 /obj/item/hat/uncool
 	name = "Uncool Hat"
@@ -255,86 +279,10 @@ proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
 ```
 
 ## Flowchart: Check distances between things
-```mermaid
-%%{init: {'themeVariables': { 'fontSize': '26px'}}}%%
-flowchart TD
-    root([I need to check something's distance to some other thing])
-    literal([I need the literal range value])
-    diag([Diagonal Moves Allowed])
-    tile([Tile-Based])
-    notile([Non-Tile-Based])
-    ndiag([Diagonal Moves Not Allowed])
-    adj([I need to check if two things are literally touching/directly adjacent])
-    touch([I need to check if a mob can touch something])
-    goto([I need to check if a mob go to a tile])
-    subgraph in_interact_range["in_interact_range(atom/target, mob/user)" - can i use a thing]
-        direction RL
-        IIR("Checks that a mob is in range to interact with a target.
-        Accounts for corner cases like telekinesis, silicon
-        machinery interactions, and bibles.")
-    end
-    subgraph GET_DIST["GET_DIST(atom/A, atom/B) - distance in tiles"]
-        direction RL
-        GD("Gets the distance in tiles between A and B.
-        The position of objects is equivalent to the position of 
-        the turf the object is on, through any number of layers
-        (a pen in a bag on a person on a tile is calculated as being on the tile).
-        Different Z levels returns INFINITY.")
-    end
-    subgraph euclidean["Euclidean Distance - direct line distance"]
-        direction RL
-        subgraph euclidean_dist["GET_EUCLIDEAN_DIST"]
-            ED("The exact euclidean distance from A to B.")
-        end
-        subgraph squared_euclidean_dist["GET_SQUARED_EUCLIDEAN_DIST"]
-            SED("The squared euclidean distance sqrt(x^2 + y^2) from A to B.<br>Avoids a square root which saves on performance,<br>so this should be used if possible (such as if you're<br>calculating a ratio of squared distances).<br>Different Z levels returns INFINITY.")
-        end
-    end
-    subgraph manhattan["GET_MANHATTAN_DIST(A, B) - distance in city blocks"]
-        direction RL
-        MAN("The exact manhattan distance from A to B.")
-    end
-    subgraph BOUNDS_DIST["BOUNDS_DIST(atom/A, atom/B) - distance in pixels"]
-        direction RL
-        BD("Wrapper around BYOND's 'bounds_dist' built-in proc.
-        Returns the number of pixels A would have to move to be touching B,
-        Returning a negative value if they are already overlapping.
-        We don't ordinarily care about pixel distances, so this should
-        only be used to check adjacency.
-        Notably, functions fine for large (2x2 tile, 3x3 tile, etc) objects.")
-        subgraph bounds_dist_notouch["BOUNDS_DIST(A, B) > 0"]
-            BDNT("returns TRUE if A and B are not adjacent or overlapping.")
-        end
-        subgraph bounds_dist_touch["BOUNDS_DIST(A, B) == 0"]
-            BDT("returns TRUE if A and B are adjacent or overlapping.")
-        end
-    end
-    subgraph pathfind["get_path_to(atom/movable/mover, atom/target, ...optional args)" - can i go somewhere]
-        direction RL
-        PA("Attempts to pathfind a mover to the turf the target(s) is on.
-        Returns a list of turfs from the caller to the target or
-        a list of lists of the former if multiple targets are specified.
-        If no paths were found, returns an empty list.")
-    end
-    
-    root ------> literal
-    literal --> tile
-    tile --> diag
-    diag --> GET_DIST
-    tile --> ndiag
-    ndiag --> manhattan
-    literal --> notile
-    notile ---> euclidean
-    root --> adj
-    adj ---> BOUNDS_DIST
-    root --> touch
-    touch --> in_interact_range
-    root --> goto
-    goto ----> pathfind
-```
+![](https://mermaid.ink/img/pako:eNqVV21vGkcQ_iujkyxAxU7lSP1gNZYguClSQlobN0pNg5a7BTY-dvHunjG1_N_7zN4bbw0JH-DYm5l9duaZl32OYpPI6CI6OXlWWvkLem74uVzIv4RVYpJK18ASNaZG-xv1r8S_xvkvy6fGy8vLyclIT1OziufCehr2Rprwscb45l2ftJQJeUPxXMb35MxC-rnSs4ajRDkvdCz5La-TwY6Wwut_WrmVVHlpRVobmstyjazQM0mPIs1kKZ4oMWve9fBtNCQ-mEfpqJMCnExKGa9S2bwb4vu0K1y9rk3-ZmD06YG3B00PjN81L5Kv-8dWU_Irkx_NkbDVIdI1hLKY118lysrYYwUmRCy1rxCzxEGjghZmQrHQuUzt3lJ1Zrz5hubM8KIIPilVXDaZWbGck9JjpRll7MfB13ejaG-tKbxZvPLCzqRvs81XmZO2NYroNOBShP-8Q0CV75BHig-rjKbr9_Vqv3_dHEVvGaSDivAFTuWApgg4AJcQaKX8nI2H7c9qO504Npn2jqbGUmysBq9ihNPB7_cwIVN5r7R0yrXJqVTFRtfKC8HxkHZd7QOYEBQ6oYniXDgbRYWzpE52vPbuajju9W-GcFb5mPuoAwv8223BNRX3cSx2vhtFR53zrgffvJPehSzYs0AT6VdSauoEpN0NdwwhvzROBZNmSmbyFfYdu1U-ZAopBLaxY_2OYG2C3_jMTsNDrs_qRrexYk02Qxz0mnS2mMDXUE3FWlpXG2gKWgIc0AqaiBk0iVes4510wUE2GYs0zlLhQVjBhwJvWCAAgEhr41w9NZ1Ky9j_plQ-ytSRlUCpHfUHv_UH_eHnb4VKZnGqEik0YnVVPsNo4djTIg7gjK79_R2B2t9gzNoFI65u377v9646g8CNLXP8ueIoc8DkEzO8MlEHfGrNAkFGuLr16bZOuAXCPWQoOMn4IJibP28711e9Y6BuKlSFtUO43IP1zacv5_QTrb-ct7Zw_jqxl51HoxJUv8JG6BC0miuuW4KrKdwIQiBlF2yvzTouFE1Hbm6yFOknuZwkXMBAU8fJSE3HlQ9UweLaZA0rWbFkEbNHoHIgSMzKEn4J2rUCtB8i0par91kF8ChcPrCKXfyhM_i9MxwWrm2iDOxVgFj5NU1Sg6r3HfSCwS2KVBseocg-1O7H20HvpixXG_-OVKyleoKLvgNql2nzCXshrmh7qMkoTJ8_Dnpo_40J_3WBjQ2aZCr1p2zbmngjxa-LMHD618UlB4ATrgIt5qAPH3Zh8t-JrLoqddu7xnJKaDkDKR6LASJ06Llch94sUitFsiZYsymwQ2ED0SfUAqMbnoxNlMZ4hI4dBzUcyOfQan6hv2xRuLZjNBRLQletuej98XpjR0wZGMHWbZpmOm9GNOWSxM0t5dZHzfOn81Ad2_T66XXxJH3cKkv9NnsrAmyEYIz5h322Q4Scrpf0815N6PYGQ0S3zJPh9e0Ve7HoPsGRMFkNM3DXtkOPV65NdP-P7c2bg-COYfsxXPu5sxR-jigkwITZY8x_ATJPHPCQZ2b-lbZIonJEOjs7M0sOIoZILLnNUWmWD8IrjMHyaG790cEJO97LxZJHAlMhCjPTI0_SZrtt5xCarpV37gNZJtDrnOcMYyWX1xFWRTlNNywGQ_BcbaHW5F8XTMwDRRfQg-8XWerVMi2V8ynYLWWspkomG1j6U_AmHMbRCo6ADdCgXRVkeIqPvA4bHahu9fWDTsPnshy2t64UxC84UepbQVjiOb--TISlco7bkdS1qK5kq2K8v1l-wdi8bFBAV7XSLeSXzNDqSpFLbpB_Rzakx8ZtISzuDes7Snw5qK8JlPuqZFHUjhC5hVAJboXPLDaKwo1wFF3gMRH2fhSN9AvkRObNzVrH0cVUpE62o2yZYH7ju5IVi2L15T-fxKZS?bgColor=5B5F67)
 
 ## Flowchart: Get things in an area around a thing
-![](https://mermaid.ink/img/pako:eNqlVm2L20YQ_iuDvtgGNUfJt6NcKdw1OWhaOB8JoS7HSjuyt5F23d2VXRPy3zMzK1mS7RxHog-2NDuvz7zsfM5KpzG7zqra7cuN8hEeb1cW6PHOxfnfq-weLKKG6GCNERTUJkRwFeAO_SFujF2DsRBcg6A8qhxUWTqvmU4yQt9g60nKlKvsn0XSnn53Jhhnk5WSpEEVro0deWAulS0wIArnO7dTRY0B4kZFPoICgQ-h8q7pHImu-aXwN_Pl8ufX5PF6E9kfrfwniyGACWBdFE9bGym6yvnFxB4pZGN3HCQ0rhis0clgJMkkqQ0qfxYKE8n0mM-rvSY0Equz9WHMT4fAp8qWOBaKra_COB38PWYokQIR-3APe2UjzBJpBspqMDFA6ejb0gvlhTAztqxbTboofXGD4DG0NZ1KguemIkKNO9K0-HUEjeh8OqA48xHV5uzMOj76c3yitH4S6m9aw8zN2AM2SXF6KSb-2HpXglWE7NztDO5zcF7ZNeaAsVyMYw1tsfZquwFmI638N-9Ryzs_WCKx86ONxzJSVcHDHwN1oujJFf8-Ma6kMangOqGME_2K6ROF_Lz_8NfjfJU9IJ3aMOqNpq_RveEOkfB6_87qdqpTipj5e6uzAFsXDPueiz4qXQhbLI2qu07hzAaj0SvmCq-mGj-6lrEtyKMDlXxsVU0vUiIcNvowX7xaZYtBCq3-FkbUClN4uDkuAPPuh3CZapPmLg7CTdbyrnK5o5U99Bh41G3KsPOg2nVDPgoeJ3DcV4NJCsA1JtIEyEk-eStzTZq7N9i3_YtBKmtDxk9wSsQLUHVD8Fm8BBt2J2kZPJroWprG1Mr33UUTZUftUNBYofkG-w3BuEeZNlO5xh3nz_6yIXbAci8Yq83OaKohRubHoD2N5SK6x5cJxFS0Xd9z-Q6tz7qvXt7_7z8sCfclz5xwoHL5H1QQ_fNFws2fpmSQpS5iCML0ZpC4xP4Qz3kIMtcoAPn_fvcf3oyqZgTu0F2jCuWJURka98cUdXO3K1KWfM5nvskS7N3b9_v99uGy30ck2QIM_Kdejgv9OMLyUWpCaJu-a9xW_dfKOCVPAhS1Kz_RBd5a_Vy0wkaxyv-c5_CVXFa53LxXJPCSQB9_p0Afyfu-oeXa7i_c17edNxorY3E0To6XQLogKUwy2AnPZfoFs8PFqP2WwmiCSNEuR1DVWBGazlv0OdzxDpBOo9uC55VoEn9ayobVD36i56ZfxU7JnKAJ8aZfa85Y06YyWveE-7jSXToh-sniB8kX3I8XtCOR8j9ZrTp_qLeGzQx6t4W5t4r7ZFOKayASzxm9k53Qx3vPQOft6Bsn1p2sSqJO1qPJpidkKY4szxr0jTKatvTPzLLKKIsNbYfX9Mor7Spb2S_E1261ininTXQ-u65UHTDPVBvd8mDLIyFx3RpFhd501C9fAcvH5nU?bgColor=5B5F67)
+![](https://mermaid.ink/img/pako:eNqlV19v2zYQ_yoHvdgGtAZD34Ihw4BkW4BlA-KgRTEPASWebK4S6ZGUPaPod-_dUbIk2w2CVg-xdP_vx7vj5VNWOo3ZdVbVbl9ulI_wdLuyQI93Ls7_XmX3YBE1RAdrjKCgNiGCqwB36A9xY-wajIXgGgTlUeWgytJ5zXTSEfoGW09aplxl_yyS9fR3Z4JxNnkpSRtU4drYkQfhUtkCA6JIPridKmoMEDcqMgsKBGZC5V3TBRJd81Phb-bL5Y9vKeL1JnI8WvmPFkMAE8C6KJG2NlJ2lfOLiT8yyM7uOEloXDF4I87gJOkkrQ0qf5YKE8n1WM6rvSY0kqiz9WEsT0xgrrIljpVi66swPg7-HguUSImIf7iHvbIRZok0A2U1mBigdPRt6YXOhTAztqxbTbbo-OIGwWNoa-LKAc9NRYQad2Rp8fMIGrH5fEAJ5gOqzRnPOmb9OeYorZ-F-ovWMHMzjoBdUp5eiok_tt6VYBUhO3c7g_scnFd2jTlgLBfjXENbrL3aboDFyCr_zHvU8i4O1kji_GjjsYxUVfD4x0CdGHp2xb_PjCtZTCa4TujEiX7F9IlBft69_-tpvsoekbg2jHqj6Wt0b7hDJL0-vrO6ndqUImb53usswNYFw7HnYo9KF8IWS6PqrlP4ZIPR6BVLhTdTix9cy9gWFNGBSj62qqYXKRFOG32YL96sssWghVZ_DSNqhSk83BwXgHn4Llym1qS5i4NIk7e8q1zuaGUPPQYedZtO2HlQ7bqhGAWPEzjuq8ElJeAaE2kC5KSfopW5Js3dO-zb_tUglbUh5yc4JeIFqLoh-CJegg2Hk6wMEU1sLU1jauX77qKJsqN2KGis0HyD_YZg3KNMm6le447zZ3_ZEQdguReM1WZnNNUQI_N90J7mchHd48sEYiraru-5fIfWZ9tXr-__d--XhPuSZ044ULn8DyqI_fki4eZPj2TQpS5iCML0ZpC8xP-Qz3kKMtcoAfn99vAffxtVzQjcobtGFcoTozI07o9H1M3drkhZ86WY-SZLsHdv3x7374-X4z4iyR5gkD-NclzoxxGWj44mhLbpu8Zt1X-tjFOKJEBRu_IjXeCt1S9lK2KUq_zOeQ5fyWWVy817RQqvSfTpV0r0iaLvG1qu7f7CfXvbRaOxMhZH4-R4CaQLktIkh53yXKZfMDtcjNpvKYImiBbtcgRVjRWh6bxFn8Md7wCJG90WPK9Ek_zTUjasfvADPTf9KnZK5gOaEG_6teZMNG0qZ0uf6BwXu0scop-sf5Aiwv14TTsSqQrGbrp4utioz3oyvSYXUlHj7Q361MRUHxPuJ-I9kWTO6J3uBfPpa6DzBvUVjnUn65SYkxVqsg0KWQooy7MGfaOMpk3-E4usMjrphjbIa3rltXeVrexnkmu3WkW80yY6n11Xqg6YZ6qNbnmwZXYdfYu90K1R1AvNUQpF6SH9vyD_Nnz-Aqqx9s0?bgColor=5B5F67)
 
 # Whack BYOND shit
 
@@ -379,6 +327,29 @@ As long as you don't want to filter out between specific children types of a by_
 So, where possible, it's advised to use DM's syntax. (Note: the to keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
 **Be Warned:** if either `some_value` or `i` changes within the body of the for (underneath the `for(...)`) or if you are looping over a list and changing the length of the list then you cannot use this type of for-loop!
+
+## for-in loop copying
+
+Almost all of the time when iterating through lists, we use the `for (var/i in some_list)` syntax. However, in __some very few__ cases, we run into a performance issue.
+
+Internally, BYOND copies the `some_list` for this operation, so that when you are iterating through the list, you don't skip items or run into things twice if you modify the list inside the loop.
+
+However, this can cause performance issues with large lists of *complex* objects, generally greater than ~5000.
+There exists a performance optimization, but bear in mind it's **only applicable if you are traversing less than half of the list**.
+Perhaps you are breaking after a found item that's randomly in the list, or you only want to process the first 20 entries or something.
+
+Code that avoids this list copying would look like:
+```csharp
+/proc/direct_iteration()
+	var/list/some_list = list() // just say this has 10,000 objs in it
+
+	for (var/i in 1 to length(some_list))
+	var/obj/mine = some_list[i]
+
+	// do stuff with this object
+	if (condition)
+		break
+```
 
 ## Default Return (`.`)
 
@@ -469,13 +440,20 @@ proc/give_mob_item(mob/person as mob, obj/item/gift as obj)
 <span style="color: green">Good:</span>
 ```csharp
 proc/give_mob_item(mob/person, obj/item/gift)
-    
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
+
+*Additional note*: This applies in general to anything
+*used* as a verb, which can be any proc added to an atom
+via `atom.verbs += /proc/x`.
+
+So, be careful when removing `as x` to
+make sure it isn't being used as a verb somewhere else.
 
 # Useful Things
 
 ## VSCode Debugger
+//TODO
 
 ## Debugging Overlays
 
@@ -493,6 +471,18 @@ Guide to the categories:
 * Overtime: How much was spent past 100 tick_usage. This results in what we know as 'lag'.
 
 If total cpu and real time are the same the proc never sleeps, otherwise real time will be higher as it counts the time while the proc is waiting.
+
+## Even Better Profiler
+There exists a project to provide an incredibly more advanced real-time profiler for DM, named [byond-tracy](https://github.com/mafemergency/byond-tracy), capable of providing incredible resolution.
+
+![](https://i.imgur.com/1CEwo0g.png)
+
+To operate this, you will need to do three things: download [the tracy 'viewer' application v0.8.x](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases/tag/v0.8.2 (download the .7z and unzip it, it's portable)
+* The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+* Uncomment `#define TRACY_PROFILER_HOOK` in `_std/__build.dm`
+
+If you're on Linux you need to compile both yourself manually, obviously.
 
 ## Target Dummy
 You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.
@@ -517,12 +507,14 @@ To track a group of things which don't share the same type, define a tracking ca
 
 
 <span style="color: red">VERY VERY BAD:</span>
+
 ```javascript
 for (var/mob/living/jellyfish in world)
     ...
 ```
 
 <span style="color: green">Good:</span>
+
 ```javascript
 /mob/living/jellyfish
     
@@ -538,3 +530,42 @@ for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
         ...
 ```
 
+# Unit Test Woes
+
+## Passability Cache
+
+The passability cache unit test enforces rules associated with `pass_unstable`, a variable that is used to optimize pathfinding. It prevents the implementation of `Cross` and other collision-based callbacks for all types that declare `pass_unstable = FALSE`.
+
+```
+FAIL: /datum/unit_test/passability_cache 1.9s
+	REASON #1: /obj/machinery/silly_doodad is stable and must not implement Cross
+```
+
+In this situation, the unit test detected a forbidden proc `Cross` on `/obj/machinery/silly_doodad`. Because `/obj/machinery` declares `pass_unstable = FALSE`, your subtype must also follow the rules. In this situation, you have two options:
+
+- Remove the `Cross` implementation, or
+- Set `pass_unstable = TRUE`, which may cause performance degredation, especially if the atom in question frequently appears in-game.
+
+The same rules apply to any procs the test detects. For example, if it says `must not implement Enter`, then replace `Cross` with `Enter` in the above section.
+
+### Cross vs. Crossed, etc.
+
+These two procs do two similar but distinct things. `Cross` *returns* whether or not a given movable can cross `src`, while `Crossed` is called *whenever* a given movable crosses `src`.
+
+If you only need to cause something (i.e. your machine heals people when someone steps on it), then you want to use `Crossed` instead.
+
+Here's a quick list of all the side-effect versions of movement callbacks.
+- `Cross` -> `Crossed`
+- `Enter` -> `Entered`
+- `Exit` -> `Exited`
+- `Uncross` -> `Uncrossed`
+
+
+### Cannot Possibly Be Stable
+
+```
+FAIL: /datum/unit_test/passability_cache 3.9s
+	REASON #1: /obj/machinery/unstable_thingy/silly_doodad cannot possibly be stable because /obj/machinery/unstable_thingy implements Cross
+```
+
+This failure happens when you set `pass_unstable = FALSE` on a subtype of something that implements a forbidden proc. In most cases, there's nothing you can do except follow the section above for the offending parent type. In this case, you would look at `/obj/machinery/unstable_thingy` to see if you can make it stable.

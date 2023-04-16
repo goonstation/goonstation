@@ -2,7 +2,7 @@
 	name = "wet concrete"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "concrete_wet"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = OBJ_LAYER + 0.9
 
@@ -28,7 +28,7 @@
 		processing_items -= src
 		..()
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)
@@ -49,8 +49,7 @@
 	icon_state = "concrete"
 	density = 1
 	opacity = 0 	// changed in New()
-	anchored = 1
-	name = "concrete wall"
+	anchored = ANCHORED
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
 	flags = FPRINT | CONDUCT | USEDELAY
 	var/const/baseHealth = 30
@@ -112,11 +111,11 @@
 
 	onDestroy()
 		src.visible_message( "<span class='alert'>\The [src] crumbles to dust!</span>")
-		playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 		..()
 
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if (istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 

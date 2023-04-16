@@ -47,7 +47,7 @@
 	sound_group = "samostrel"
 
 /area/adventure/channel
-	name = "The Channel"
+	name = "Channel"
 	desc = "Better not try and change it!"
 	icon_state = "purple"
 	requires_power = 0
@@ -55,6 +55,8 @@
 	force_fullbright = 1
 
 	flingy
+		name = "Unstable Channel"
+
 		Entered(atom/movable/Obj,atom/OldLoc)
 			..()
 
@@ -64,6 +66,8 @@
 			return
 
 	teleport
+		name = "Extremely Unstable Channel"
+
 		Entered(atom/movable/Obj, atom/OldLoc)
 			..()
 
@@ -118,7 +122,7 @@
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -140,7 +144,7 @@
 	icon_state = "specter"
 	desc = "&#9617;????&#9617;&#9617;&#9617;&#9617;"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/targeting = 0
 
 
@@ -185,7 +189,7 @@
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
 			SPAWN(8 SECONDS)
-				playsound(target, "sound/ambience/loop/Static_Horror_Loop.ogg", 100)
+				playsound(target, 'sound/ambience/loop/Static_Horror_Loop.ogg', 100)
 				sleep(rand(100,400))
 				if(target)
 					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)
@@ -198,7 +202,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/ready = 1
 
@@ -372,7 +376,7 @@
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
 			var/image/O = image(icon = 'icons/misc/aprilfools.dmi', loc = theKey, icon_state = "key", layer = 20)
-			usr << O
+			user << O
 
 
 		..()
@@ -481,7 +485,7 @@
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -652,11 +656,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(master,signal.source.loc)
+			var/dist = GET_DIST(master,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 					nearest_beacon = recv
 					nearest_beacon_loc = signal.source.loc
 					next_destination = signal.data["next_patrol"]

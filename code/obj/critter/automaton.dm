@@ -8,7 +8,7 @@ var/global/the_automaton = null
 	desc = "What is this thing? A toy? A machine? What is it doing? Why does it seem to be watching you?"
 	icon_state = "automaton"
 	health = 1000 // what kind of jerk would kill it
-	anchored = 1
+	anchored = ANCHORED
 	aggressive = 0
 	defensive = 0
 	wanderer = 0
@@ -54,7 +54,7 @@ var/global/the_automaton = null
 		opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		..()
 
 	process()
@@ -63,15 +63,15 @@ var/global/the_automaton = null
 		if (!alive)
 			return
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
 			if (!src.muted)
 				src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 			if (!src.muted)
 				src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			spin()
 
 		if ((src.aggressive || prob(6)) && locate(/obj/critter/domestic_bee) in view(7,src))
@@ -173,10 +173,10 @@ var/global/the_automaton = null
 			if(K.dodgy)
 				//Oh, you've done it now.
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
-				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
 				user.changeStatus("stunned", 5 SECONDS)
 				user.canmove = 0
-				user.anchored = 1
+				user.anchored = ANCHORED
 				user.set_loc(src.loc)
 				K.burn_possible = 1
 				SPAWN(2 SECONDS)
@@ -195,8 +195,8 @@ var/global/the_automaton = null
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.  It doesn't seem to want it in the state it's in.</span>")
 				return
 
-			if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
-				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			if (istype(W, /obj/item/device/key/generic))
+				user.visible_message("<span class='alert'><b>[src]</b> studies [src]'s open hand for a moment, then looks disappointed.</span>", "<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back. Maybe this key isn't special enough?</span>")
 				return
 
 			if (istype(W, /obj/item/device/key/cheget)) //I don' like yer new-fangled mumbo-jumbo
@@ -208,12 +208,12 @@ var/global/the_automaton = null
 				if (!got_cheget_key)
 					got_cheget_key = 1
 					src.visible_message("<span class='alert'><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
-					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
+					playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
 					W.set_loc(src.loc)
 					W.throw_at(user, 20, 2)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")
-					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 					var/obj/item/raw_material/scrap_metal/scrapmetal = new /obj/item/raw_material/scrap_metal
 					scrapmetal.set_loc(src.loc)
 					qdel(W)
@@ -234,11 +234,11 @@ var/global/the_automaton = null
 				else
 					keycount = AUTOMATON_MAX_KEYS
 					src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
-					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+					playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 					qdel(W)
 					sleep(0.5 SECONDS)
-					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
+					playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
 					sleep(0.8 SECONDS)
 					src.visible_message("<span class='alert'><b>[src]</b> twitches before locking into a pose of contemplation.  Its hand held before it, as if reading from a text.</span>")
 
@@ -249,11 +249,11 @@ var/global/the_automaton = null
 			else if (dd_hasprefix(ckey(W.name), "solar"))
 				keycount = AUTOMATON_MAX_KEYS
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+				playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 				qdel(W)
 				sleep(0.5 SECONDS)
-				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
 				sleep(0.8 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b> makes a curious sign in the air. Huh.</span>")
 
@@ -276,24 +276,20 @@ var/global/the_automaton = null
 			else
 				keycount = min(keycount+1, AUTOMATON_MAX_KEYS-1)
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into one of many key holes in its chest.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+				playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 				qdel (W)
 				sleep(0.5 SECONDS)
 				inserted_key(user)
 
-				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
-			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime))
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
-			if (keycount < (AUTOMATON_MAX_KEYS-1) && !pied)
-				keycount++
-				inserted_key(user)
-				pied = 1
-
-			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a pie-shaped hole in its chest. How did you not notice that before?</span>")
-			playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 50, 1)
-			qdel (W)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
 		else if (istype(W, /obj/item/skull))
 			if (keycount != AUTOMATON_MAX_KEYS)
@@ -327,7 +323,7 @@ var/global/the_automaton = null
 				if (keycount < (AUTOMATON_MAX_KEYS-1))
 					keycount++
 					inserted_key(user)
-					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+					playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 			else
 				boutput(user, "<span class='alert'>[src] no longer seems interested in [W].</span>")
 		#endif
@@ -386,7 +382,7 @@ var/global/the_automaton = null
 					sleep(0.3 SECONDS)
 					tornpaper.combust()
 				keycount = INFINITY
-				playsound_global(world, "sound/musical_instruments/Gong_Rumbling.ogg", 70)
+				playsound_global(world, 'sound/musical_instruments/Gong_Rumbling.ogg', 70)
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
 				if (the_sun)
@@ -413,13 +409,13 @@ var/global/the_automaton = null
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
 			qdel(swirl)
 
 		src.visible_message("<span class='alert'>[src.name] seems to tense up and freeze.</span>")
-		playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/glitch1.ogg', 50, 1)
 		alive = 0
 
 		it_is_okay_to_do_the_endgame_thing = 1
@@ -437,7 +433,7 @@ var/global/the_automaton = null
 		random_events.force_event("Solar Flare","Solarium Event (DEATH)")
 
 		src.visible_message("<span class='alert'>[src.name] staggers!</span>")
-		playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/glitch1.ogg', 50, 1)
 		spin()
 
 		var/range = 7
@@ -445,7 +441,7 @@ var/global/the_automaton = null
 
 		var/temp_effect_limiter = 7
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks

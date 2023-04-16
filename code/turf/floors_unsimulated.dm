@@ -8,7 +8,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 225000
 
 
@@ -134,7 +134,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged2
@@ -142,7 +141,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged3
@@ -150,7 +148,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
@@ -361,6 +358,9 @@
 /turf/unsimulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/unsimulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/bluegreen
@@ -497,7 +497,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("pharosium"))
+		setMaterial(getMaterial("pharosium"), copy = FALSE)
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -642,33 +642,6 @@
 
 /////////////////////////////////////////
 
-/turf/unsimulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/unsimulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/unsimulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/unsimulated/floor/bot
-	icon_state = "bot"
-
-/turf/unsimulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/unsimulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/unsimulated/floor/bot/caution
-	icon_state = "botcaution"
-
-/turf/unsimulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/////////////////////////////////////////
-
 /turf/unsimulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -761,7 +734,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("wood"))
+		setMaterial(getMaterial("wood"), copy = FALSE)
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -894,16 +867,32 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/airless/plating/scorched
-	icon_state = "panelscorched"
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/airless/plating/damaged1
-	icon_state = "platingdmg1"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged2
-	icon_state = "platingdmg2"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged3
-	icon_state = "platingdmg3"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 //////////////
 
@@ -977,7 +966,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("synthrubber"))
+		setMaterial(getMaterial("synthrubber"), copy = FALSE)
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -1000,6 +989,33 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/unsimulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/unsimulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/unsimulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/unsimulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/unsimulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
+
+/////////////////////////////////////////
+
 /turf/unsimulated/floor/shuttlebay
 	name = "shuttle bay plating"
 	icon_state = "engine"
@@ -1019,7 +1035,8 @@
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+			if(istype(src))
+				edge_overlays()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
@@ -1126,7 +1143,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("ice"))
+		setMaterial(getMaterial("ice"), copy = FALSE)
 		name = initial(name)
 
 /turf/unsimulated/floor/auto/water/ice/rough

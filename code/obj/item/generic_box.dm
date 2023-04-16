@@ -84,6 +84,14 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	contraband
+		name = "contraband adjustment sticker box"
+		desc = "Contains stickers which can adjust the effective level of contraband an item is detected as."
+		contained_items_proc = FALSE
+		contained_item = /obj/item/sticker/contraband
+		item_amount = 10
+		max_item_amount = 10
+
 	glow_sticker
 		name = "glow stickers"
 		desc = "A box of stickers that glow when stuck to things."
@@ -161,7 +169,8 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )
+				// i hate this
+				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )  - /obj/item/sticker/contraband
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -186,13 +195,23 @@
 				attack_hand()
 				attack()
 
+				science //For the science module
+					name = "box shaped artifact form dispensor"
+					desc = "A box full of forms for classifying alien artifacts"
+					icon_state = "item_box"
+					icon_closed = "item_box"
+					icon_open = "item_box-open"
+					set_contained_items()
+						contained_items = list(/obj/item/sticker/postit/artifact_paper)
+
 			stickers_limited
 				desc = "This box contains a small assortment of stickers. Remember to share!"
 				item_amount = 10
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					// i hate this even more
+					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place - /obj/item/sticker/contraband
 
 			glow_sticker
 				name = "glow stickers"
@@ -225,7 +244,7 @@
 		take_from()
 			if( !contained_items.len )
 				boutput( usr, "Dag, this box has nothing special about it. Oh well." )
-				logTheThing("debug", src, null, "has no items in it!")
+				logTheThing(LOG_DEBUG, src, "has no items in it!")
 				return
 			src.contained_item = pick( contained_items )
 			return ..()//TODO: hack?
@@ -337,7 +356,7 @@
 			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
-					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
+					logTheThing(LOG_DEBUG, src, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
 				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!

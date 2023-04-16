@@ -53,6 +53,8 @@
 	pixel_y = -12
 	},
 /obj/decal/cleanable/machine_debris,
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "U" = (

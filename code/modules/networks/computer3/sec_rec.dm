@@ -339,7 +339,7 @@
 						return
 
 					if (FIELDNUM_SECFLAG)
-						src.print_text("Please enter new value (10 characters max), or \"None.\"")
+						src.print_text("Please enter new value ([SECHUD_FLAG_MAX_CHARS] characters max), or \"None\".")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -430,6 +430,10 @@
 							src.menu = MENU_IN_RECORD
 							return
 
+						if (lowertext(command) == "clown")
+							src.active_secure["criminal"] = "Clown"
+							return
+
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")
@@ -457,7 +461,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_secure["sec_flag"] = copytext(inputText, 1, 11) // 10 characters at most
+							src.active_secure["sec_flag"] = copytext(inputText, 1, SECHUD_FLAG_MAX_CHARS + 1)
 						else
 							return
 
@@ -567,7 +571,7 @@
 
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -769,7 +773,7 @@
 				return
 
 			if (usr)
-				logTheThing("station", usr, null, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing(LOG_STATION, usr, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
 			if(last_arrest_report && world.time < (last_arrest_report + 10))

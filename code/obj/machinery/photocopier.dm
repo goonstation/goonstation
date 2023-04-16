@@ -1,12 +1,15 @@
+TYPEINFO(/obj/machinery/photocopier)
+	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "This machine uses paper to copy photos, work documents... anything paper-based, really. "
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/machines/photocopier.dmi'
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
-	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
@@ -88,7 +91,7 @@
 				sleep(0.3 SECONDS)
 				src.icon_state = "close_sesame"
 				flick("scan", src)
-				playsound(src.loc, "sound/machines/scan.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/scan.ogg', 50, 1)
 				sleep(1.8 SECONDS)
 				src.icon_state = "open_sesame"
 				w.set_loc(get_turf(src))
@@ -106,7 +109,7 @@
 					src.paper_info["name"] = P.name
 					src.paper_info["desc"] = P.desc
 					src.paper_info["info"] = P.info
-					src.paper_info["stamps"] = P.stamps
+					src.paper_info["stamps"] = P.stamps.Copy()
 					src.paper_info["form_fields"] = P.form_fields
 					src.paper_info["field_counter"] = P.field_counter
 					src.paper_info["icon_state"] = P.icon_state
@@ -143,7 +146,7 @@
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
 				src.paper_amount += w.amount
-				P.amount = 0.0
+				P.amount = 0
 				P.update()
 				return
 
@@ -163,7 +166,7 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.reset_all()
-					playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
+					playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
 					return
 
@@ -183,7 +186,8 @@
 							break
 						flick("print", src)
 						sleep(1.8 SECONDS)
-						playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 1)
+						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
+						use_power(5)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0
@@ -199,7 +203,7 @@
 					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
-							playsound(src.loc, "sound/machines/ping.ogg", 20, 1)
+							playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else
@@ -224,6 +228,7 @@
 			P.desc = src.paper_info["desc"]
 			P.info = src.paper_info["info"]
 			P.stamps = src.paper_info["stamps"]
+			P.stamps = P.stamps.Copy()
 			P.form_fields = src.paper_info["form_fields"]
 			P.field_counter = src.paper_info["field_counter"]
 			P.icon_state = src.paper_info["icon_state"]

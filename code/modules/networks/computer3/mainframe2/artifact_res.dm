@@ -924,7 +924,7 @@
 /obj/machinery/networked/artifact_console
 	name = "artifact research console"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'
@@ -1338,7 +1338,7 @@
 	attackby(obj/item/W, mob/user)
 		/*
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()

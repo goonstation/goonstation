@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/pump)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/pump
 	name = "Portable Air Pump"
 
@@ -5,7 +8,6 @@
 	icon_state = "psiphon-off"
 	dir = NORTH //so it spawns with the fan side showing
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
@@ -105,7 +107,7 @@
 	..()
 
 /obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 
@@ -124,11 +126,7 @@
 		"direction_out" = src.direction_out
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding?.ui_describe()
 
 /obj/machinery/portable_atmospherics/pump/ui_static_data(mob/user)
 	. = list(

@@ -5,37 +5,43 @@
 		..()
 		var/pestlandmark = pick_landmark(LANDMARK_PESTSTART)
 		if(!pestlandmark)
+			logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find a LANDMARK_PESTSTART!")
 			return
 		var/masterspawnamount = rand(4,12)
 		var/spawnamount = masterspawnamount
-		var/type = rand(1,5)
-		switch (type)
+		var/type
+		switch (rand(1,5))
 			if (1)
 				while (spawnamount > 0)
-					new /obj/critter/roach(pestlandmark)
+					type = /mob/living/critter/small_animal/cockroach
+					new type(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (2)
 				while (spawnamount > 0)
-					new /obj/critter/mouse(pestlandmark)
+					type = /mob/living/critter/small_animal/mouse
+					new type(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (3)
 				while (spawnamount > 0)
-					new /obj/critter/wasp(pestlandmark)
+					type = /obj/critter/wasp
+					new type(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (4)
 				while (spawnamount > 0)
-					new /obj/critter/spacescorpion(pestlandmark)
+					type = /mob/living/critter/small_animal/scorpion
+					new type(pestlandmark)
 					spawnamount -= 3
 					LAGCHECK(LAG_LOW)
 			if (5)
 				while (spawnamount > 0)
-					new /obj/critter/spacerattlesnake(pestlandmark)
-					spawnamount -= 11
+					type = /mob/living/critter/small_animal/rattlesnake
+					new type(pestlandmark)
+					spawnamount -= 4
 					LAGCHECK(LAG_LOW)
-		//pestlandmark.visible_message("A group of [type] emerges from their hidey-hole")
+		logTheThing(LOG_STATION, null, "minor pest event spawned [type] at [log_loc(pestlandmark)]")
 
 #ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
 /datum/random_event/minor/electricmalfunction

@@ -6,7 +6,7 @@ var/maniac_previous_victim = "Unknown"
 
 /obj/chaser
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/mob/target = null
 
 	New()
@@ -21,7 +21,7 @@ var/maniac_previous_victim = "Unknown"
 			if (BOUNDS_DIST(src, src.target) == 0)
 				proximity_act()
 
-			var/dist = get_dist(src, src.target)
+			var/dist = GET_DIST(src, src.target)
 			if(dist > world.view * 2)
 				walk_towards(src, src.target, 3)
 			else
@@ -92,7 +92,7 @@ var/maniac_previous_victim = "Unknown"
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "chaser"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -112,7 +112,7 @@ var/maniac_previous_victim = "Unknown"
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "chaser"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -139,7 +139,7 @@ var/maniac_previous_victim = "Unknown"
 	desc = "The great-great-great-great-great grandfather of the PR-6 Guardbuddy, and it's almost in mint condition!"
 	icon = 'icons/misc/evilreaverstation.dmi'
 	icon_state = "pr1_0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/alert = 0

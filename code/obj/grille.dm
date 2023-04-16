@@ -13,14 +13,16 @@
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
+	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	material_amt = 0.1
 	///can you use wirecutters to dismantle it?
 	var/can_be_snipped = TRUE
 	///can you use a screwdriver to unanchor it?
@@ -33,6 +35,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
@@ -41,6 +44,7 @@
 				src.UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
@@ -57,7 +61,7 @@
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M)
+			src.setMaterial(M, copy=FALSE)
 
 	steel/broken
 		desc = "Looks like its been in this sorry state for quite some time."
@@ -70,39 +74,56 @@
 			icon_state = "grille-corroded"
 		melted
 			icon_state = "grille-melted"
-
 	catwalk
 		name = "catwalk surface"
-		icon = 'icons/obj/grille.dmi'
+		icon = 'icons/obj/catwalk.dmi'
 		icon_state = "catwalk"
 		density = 0
 		desc = "This doesn't look very safe at all!"
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
-		auto = FALSE
-		connects_to_turf = null
-		connects_to_turf = null
+		var/catwalk_type = "C" // Short for "Catwalk"
+		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
+
+		New()
+			..()
+			var/datum/material/M = getMaterial("steel")
+			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
 				return
 
-			if (istext(special_icon_state))
-				icon_state = initial(src.icon_state) + "-" + special_icon_state
+			if (src.auto)
+				var/connectdir = 0
+				for (var/dir in cardinal)
+					var/turf/T = get_step(src, dir)
+					for (var/i in 1 to length(connects_to_obj))
+						var/atom/movable/AM = locate(connects_to_obj[i]) in T
+						if (AM?.anchored)
+							connectdir |= dir
+							break
+
+				src.icon_state = "[src.catwalk_type][connectdir]"
+
+			if (istext(special_icon_state) && special_icon_state != "cut")
+				src.icon_state += "-" + special_icon_state
 				return
 
 			var/diff = get_fraction_of_percentage_and_whole(health,health_max)
 			switch(diff)
-				if(-INFINITY to 25)
-					icon_state = initial(src.icon_state) + "-3"
+				if(-INFINITY to 0)
+					src.icon_state += "-4"
+				if(1 to 25)
+					src.icon_state += "-3"
 				if(26 to 50)
-					icon_state = initial(src.icon_state) + "-2"
+					src.icon_state += "-2"
 				if(51 to 75)
-					icon_state = initial(src.icon_state) + "-1"
+					src.icon_state += "-1"
 				if(76 to INFINITY)
-					icon_state = initial(src.icon_state) + "-0"
+					src.icon_state += "-0"
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
@@ -112,6 +133,7 @@
 			name = "maintenance catwalk"
 			icon_state = "catwalk_jen"
 			desc = "This looks marginally more safe than the ones outside, at least..."
+			catwalk_type = "M" // Short for "Maintenance"
 			layer = PIPE_LAYER + 0.01
 
 			attack_hand(obj/M, mob/user)
@@ -224,6 +246,7 @@
 		else
 			UpdateIcon()
 
+
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
 			return
@@ -269,15 +292,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_blunt(40)
 				src.damage_heat(40)
 
-			if(2.0)
+			if(2)
 				src.damage_blunt(15)
 				src.damage_heat(15)
 
-			if(3.0)
+			if(3)
 				src.damage_blunt(7)
 				src.damage_heat(7)
 
@@ -391,7 +414,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
+					logTheThing(LOG_STATION, user, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(user)] in [user.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -411,27 +434,27 @@
 		if (src.material && src.material.getProperty("electrical") < 4)
 			OSHA_is_crying = 0
 
-		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
 			return
 
 		// Things that will electrocute you
 
 		if (can_be_snipped && issnippingtool(W))
 			damage_slashing(src.health_max)
-			src.visible_message("<span class='alert'><b>[usr]</b> cuts apart the [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> cuts apart the [src] with [W].</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 		else if (can_be_unscrewed && (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored)))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
-			src.visible_message("<span class='alert'><b>[usr]</b> attacks [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W].</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
 			switch(W.hit_type)

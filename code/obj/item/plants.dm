@@ -1,7 +1,9 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+
+ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
-/obj/item/plant/
+/obj/item/plant
 	name = "plant"
 	var/crop_suffix = ""
 	var/crop_prefix = ""
@@ -18,6 +20,7 @@
 		if (!src.reagents)
 			src.create_reagents(100)
 
+ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
 	health = 4
@@ -34,8 +37,13 @@
 		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-
+			if(istype(W, /obj/item/spacecash))
+				P.icon_state = "cig-[W.icon_state]"
+				P.item_state = "cig-[W.icon_state]"
+				P.litstate = "ciglit-[W.icon_state]"
+				P.buttstate = "cigbutt-[W.icon_state]"
 			P.name = build_name(W)
+			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
 			src.reagents.trans_to(P, src.reagents.total_volume)
 			W.force_drop(user)
@@ -52,6 +60,7 @@
 			if(B.flavor)
 				doink.flavor = B.flavor
 			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
 			W.reagents.trans_to(doink, W.reagents.total_volume)
@@ -343,6 +352,32 @@
 	icon_state = "mint"
 	brew_result = "menthol"
 
+/obj/item/plant/herb/nettle
+	name = "nettle leaves"
+	crop_suffix	= " leaves"
+	desc = "Stinging leaves that hurt to touch."
+	icon_state = "nettle"
+
+	attack_hand(mob/user)
+		var/mob/living/carbon/human/H = user
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				..()
+				return
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				..()
+				return
+		if(istype(H))
+			if(H.gloves)
+				..()
+				return
+		if(ON_COOLDOWN(src, "itch", 1 SECOND))
+			return
+		boutput(user, "<span class='alert'>Your hands itch from touching [src]!</span>")
+		random_brute_damage(user, 1)
+		H.changeStatus("weakened", 1 SECONDS)
+
 /obj/item/plant/herb/catnip
 	name = "nepeta cataria"
 	crop_suffix	= ""
@@ -423,6 +458,7 @@
 
 // FLOWERS //
 
+ABSTRACT_TYPE(/obj/item/plant/flower)
 /obj/item/plant/flower
 	// PLACEHOLDER FOR FLOURISH'S PLANT PLOT STUFF
 
@@ -430,46 +466,119 @@
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
-	var/thorned = 1
-	var/list/names = list("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia",
-	"Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Dakota", "Avery",
-	"Sofia", "Camila", "Aria", "Scarlett", "Liam", "Noah", "William", "James",
-	"Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan",
-	"Jacob", "Michael", "Daniel", "Henry", "Jackson", "Sebastian", "Aiden", "Matthew")
+	var/thorned = TRUE
+	var/backup_name_txt = "names/first.txt"
+
+	proc/possible_rose_names()
+		var/list/possible_names = list()
+		for(var/mob/M in mobs)
+			if(!M.mind)
+				continue
+			if(ishuman(M))
+				if(iswizard(M))
+					continue
+				if(isnukeop(M))
+					continue
+				possible_names += M
+		return possible_names
 
 	New()
 		..()
-		desc = desc + pick(names) + "."
+		var/list/possible_names = possible_rose_names()
+		var/rose_name
+		if(!length(possible_names))
+			rose_name = pick_string_autokey(backup_name_txt)
+		else
+			var/mob/chosen_mob = pick(possible_names)
+			rose_name = chosen_mob.real_name
+		desc = desc + rose_name + "."
 
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
-		if(src.thorned)
-			if (H.hand)//gets active arm - left arm is 1, right arm is 0
-				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
-					..()
-					return
-			else
-				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
-					..()
-					return
-			if(istype(H))
-				if(H.gloves)
-					..()
-					return
-			boutput(user, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
-			random_brute_damage(user, 3)
-			take_bleeding_damage(user,null,3,DAMAGE_STAB)
+		if(istype(H) && src.thorned)
+			if (src.thorns_protected(H))
+				..()
+				return
+			if(ON_COOLDOWN(src, "prick_hands", 1 SECOND))
+				return
+			src.prick(user)
 		else
 			..()
 
+	proc/thorns_protected(mob/living/carbon/human/H)
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				return TRUE
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				return TRUE
+		if(H.gloves)
+			return TRUE
+
+	proc/prick(mob/M)
+		boutput(M, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
+		random_brute_damage(M, 3)
+		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
+
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/wirecutters/) && src.thorned)
+		if (issnippingtool(W) && src.thorned)
 			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
-			src.thorned = 0
+			src.thorned = FALSE
 			src.desc += " Its thorns have been snipped off."
 			return
 		..()
-		return
+
+	attack(mob/living/carbon/human/M, mob/user, def_zone)
+		if (istype(M) && !(M.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
+			M.tri_message(user, "<span class='alert'>[user] holds [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>",
+				"<span class='alert'>[user] holds [src] to your nose, letting you take in the fragrance.</span>",
+				"<span class='alert'>You hold [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>"
+			)
+			return TRUE
+		..()
+
+	pickup(mob/user)
+		. = ..()
+		if(ishuman(user) && src.thorned && !src.thorns_protected(user))
+			src.prick(user)
+			SPAWN(0.1 SECONDS)
+				user.drop_item(src, FALSE)
+
+/obj/item/plant/flower/rose/poisoned
+	///Trick roses don't poison on attack, only on pickup
+	var/trick = FALSE
+	attack(mob/M, mob/user, def_zone)
+		if (!..() || is_incapacitated(M) || src.trick)
+			return
+		src.poison(M)
+
+	prick(mob/user)
+		..()
+		src.poison(user)
+
+	proc/poison(mob/M)
+		if (!M.reagents?.has_reagent("capulettium"))
+			if (M.mind?.assigned_role == "Mime")
+				//since this is used for faking your own death, have a little more reagent
+				M.reagents?.add_reagent("capulettium_plus", 20)
+				//mess with medics a little
+				M.bioHolder.AddEffect("dead_scan", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
+			else
+				M.reagents?.add_reagent("capulettium", 13)
+		//DO NOT add the SECONDS define to this, bioHolders are cursed and don't believe in ticks
+		M.bioHolder?.AddEffect("mute", timeleft = 40, do_stability = FALSE, magical = TRUE)
+
+/obj/item/plant/flower/rose/holorose
+	name = "holo rose"
+	desc = "A holographic display of a Rose. This one likes to be called "
+	icon_state = "holorose"
+	backup_name_txt = "names/ai.txt"
+
+	possible_rose_names()
+		var/list/possible_names = list()
+		for(var/mob/living/silicon/M in mobs)
+			possible_names += M
+		return possible_names
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

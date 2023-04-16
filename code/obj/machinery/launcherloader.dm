@@ -10,7 +10,7 @@
 	density = 0
 	opacity = 0
 	layer = 2.6
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -45,7 +45,7 @@
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, 1)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
@@ -113,7 +113,7 @@
 	desc = "Scans the barcode on objects and reroutes them accordingly."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -149,7 +149,7 @@
 		operating = 1
 
 		flick("amdl_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, 1)
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
@@ -333,7 +333,7 @@
 		if (printing)
 			return
 		printing = TRUE
-		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+		playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
 		sleep(1.75 SECONDS)
 		for (var/i in 1 to amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
@@ -457,7 +457,9 @@
 	attack()
 		return
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
+	afterattack(atom/target, mob/user, reach, params)
+		if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) //just don't stick hud stuff or grabs PLEASE
+			return
 		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
@@ -482,7 +484,19 @@
 						pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 						poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
-				src.stick_to(target, pox, poy)
+				src.stick_to(target, pox, poy, user)
+			if(isobj(target))
+				var/obj/O = target
+				if(O.artifact && src.scan)
+					var/datum/artifact/art = O.artifact
+					art.scan = src.scan
+					art.account = src.account
+					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					if(art.examine_hint)
+						art.examine_hint += " [target] belongs to [scan.registered]."
+					else
+						art.examine_hint = "[target] belongs to [scan.registered]."
+
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -495,4 +509,4 @@
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
 		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y)
+		src.stick_to(target, src.pixel_x, src.pixel_y, usr)

@@ -24,7 +24,10 @@ var/list/miningModifiers = list()
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			if (map_currently_underwater)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.floor_turf_type)
+				src.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
@@ -33,23 +36,29 @@ var/list/miningModifiers = list()
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.wall_turf_type)
+				src.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+			else
+				src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			if (map_currently_underwater)
+			if(PLANET_LOCATIONS.repair_planet(src))
+				//
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
-	name = ""
+	name = "BLOCK GENERATION"
 	icon_state = "blockgen"
 
 /area/allowGenerate //Areas of this type do not block asteroid/cavern generation.
-	name = ""
+	name = "ALLOW GENERATION"
 	icon_state = "allowgen"
 
 	trench
@@ -62,7 +71,7 @@ var/list/miningModifiers = list()
 		ambient_light = TRENCH_LIGHT
 
 /proc/decideSolid(var/turf/current, var/turf/center, var/sizemod = 0)
-	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
+	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate) && !isgenplanet(current)) || !istype(current, /turf/space))
 		return 0
 	if(ISDISTEDGE(current, AST_MAPBORDER))
 		return 0
@@ -108,23 +117,40 @@ var/list/miningModifiers = list()
 	return (count >= minSolid + ((generation==4||generation==3) ? endFill : 0 ) || (count2<=(generation==4?1:2) && fillLarge && (generation==3 || generation==4)) ) //Remove ((generation==4||generation==3)?-1:0) for larger corridors
 
 /datum/mapGenerator/seaCaverns //Cellular automata based generator. Produces cavern-like maps. Empty space is filled with asteroid floor.
-	generate(var/list/miningZ, var/z_level = AST_ZLEVEL, var/generate_borders = TRUE)
+	generate(var/list/miningZ, var/z_level = AST_ZLEVEL, var/generate_borders = TRUE, var/ore_seeds = 80)
 		var/width = world.maxx
 		var/height = world.maxy
+		var/x_scale = 1
+		var/y_scale = 1
 		var/n_iterations = 5
+
+		var/min_x = INFINITY
+		var/min_y = INFINITY
+		var/max_x = 0
+		var/max_y = 0
+
+		if(length(miningZ))
+			for(var/turf/boundry as anything in miningZ)
+				z_level = boundry.z
+				min_x = min(min_x, boundry.x)
+				min_y = min(min_y, boundry.y)
+				max_x = max(max_x, boundry.x)
+				max_y = max(max_y, boundry.y)
+			width = max_x - min_x + 1
+			height = max_y - min_y + 1
 
 		#ifdef UPSCALED_MAP
 		n_iterations = 3
-		width /= 2
-		height /= 2
+		x_scale = width / 2
+		y_scale = height / 2
 		#endif
 
 		var/map[width][height]
-		for(var/x=1,x<=width,x++)
-			for(var/y=1,y<=height,y++)
+		for(var/x in 1 to width)
+			for(var/y in 1 to height)
 				map[x][y] = pick(90;1,100;0) //Initialize randomly.
 
-		for(var/i=0, i<n_iterations, i++) //5 Passes to smooth it out.
+		for(var/i in 0 to n_iterations-1) //5 Passes to smooth it out.
 			var/mapnew[width][height]
 			for(var/x=1,x<=width,x++)
 				for(var/y=1,y<=height,y++)
@@ -132,12 +158,12 @@ var/list/miningModifiers = list()
 					LAGCHECK(LAG_REALTIME)
 			map = mapnew
 
-		for(var/x=1,x<=world.maxx,x++)
-			for(var/y=1,y<=world.maxy,y++)
-				var/map_x = clamp(round(x / world.maxx * width), 1, width)
-				var/map_y = clamp(round(y / world.maxy * height), 1, height)
-				var/turf/T = locate(x,y,z_level)
-				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
+		for(var/x in 1 to width)
+			for(var/y=1,y<=height,y++)
+				var/map_x = clamp(round(x * x_scale), 1, width)
+				var/map_y = clamp(round(y * y_scale), 1, height)
+				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
+				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate) || isgenplanet(T)) )
 					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
@@ -146,7 +172,7 @@ var/list/miningModifiers = list()
 				LAGCHECK(LAG_REALTIME)
 
 		var/list/used = list()
-		for(var/s=0, s<20, s++)
+		for(var/s in 0 to 19)
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
 			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
@@ -157,24 +183,23 @@ var/list/miningModifiers = list()
 			used.Add(TU)
 
 			var/list/holeList = list()
-			for(var/k=0, k<AST_RNGWALKINST, k++)
+			for(var/k in 0 to AST_RNGWALKINST-1)
 				var/turf/T = pick(L)
-				for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
+				for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
 					holeList.Add(T)
-					T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
+					T = get_step(T, pick(cardinal))
 					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 					var/turf/simulated/wall/auto/asteroid/ast = T
 					ast.destroy_asteroid(0)
 
-
-		for(var/i=0, i<80, i++)
+		for(var/i in 0 to ore_seeds-1)
 			var/list/L = list()
 			for (var/turf/simulated/wall/auto/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
 
-		for(var/i=0, i<80, i++)
+		for(var/i in 0 to ore_seeds-1)
 			Turfspawn_Asteroid_SeedOre(generated)
 
 
@@ -184,39 +209,39 @@ var/list/miningModifiers = list()
 		//	else
 		//		Turfspawn_Asteroid_SeedOre(generated)
 
-		for(var/i=0, i<40, i++)
+		for(var/i in 0 to (ore_seeds/2)-1)
 			Turfspawn_Asteroid_SeedEvents(generated)
 
 		if(generate_borders)
 			var/list/border = list()
-			border |= (block(locate(1,1,z_level), locate(AST_MAPBORDER,world.maxy,z_level))) //Left
-			border |= (block(locate(1,1,z_level), locate(world.maxx,AST_MAPBORDER,z_level))) //Bottom
-			border |= (block(locate(world.maxx-(AST_MAPBORDER-1),1,z_level), locate(world.maxx,world.maxy,z_level))) //Right
-			border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),z_level), locate(world.maxx,world.maxy,z_level))) //Top
+			border |= (block(locate(min_x, min_y, z_level), locate(min_x+AST_MAPBORDER, max_y, z_level))) //Left
+			border |= (block(locate(min_x, min_y, z_level), locate(max_x, min_y+AST_MAPBORDER, z_level))) //Bottom
+			border |= (block(locate(max_x-(AST_MAPBORDER-1),min_y,z_level), locate(max_x,max_y,z_level))) //Right
+			border |= (block(locate(min_x,max_y-(AST_MAPBORDER-1),z_level), locate(max_x,max_y,z_level))) //Top
 
 			for(var/turf/T in border)
 				T.ReplaceWith(/turf/unsimulated/wall/trench, FALSE, TRUE, FALSE, TRUE)
 				new/area/cordon/dark(T)
 				LAGCHECK(LAG_REALTIME)
 
-		for (var/i=0, i<55, i++)
-			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),z_level)
+		for (var/i in 0 to 54)
+			var/turf/T = locate(rand(min_x,max_x),rand(min_y,max_y),z_level)
 			for (var/turf/space/fluid/TT in range(rand(2,4),T))
 				TT.spawningFlags |= SPAWN_TRILOBITE
 
 		return miningZ
 
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
-	generate(var/list/miningZ)
-		var/numAsteroidSeed = AST_SEEDS + rand(1, 5)
+	generate(var/list/miningZ, numAsteroidSeed=AST_SEEDS)
+		numAsteroidSeed += rand(1, 5)
 		#ifdef UPSCALED_MAP
 		numAsteroidSeed *= 4
 		#endif
-		for(var/i=0, i<numAsteroidSeed, i++)
+		for(var/i in 0 to numAsteroidSeed-1)
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
+			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -226,7 +251,7 @@ var/list/miningModifiers = list()
 
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
-			while(edgeTiles.len)
+			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
 
@@ -253,8 +278,8 @@ var/list/miningModifiers = list()
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
-				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid)
+				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate) || isgenplanet(T))
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
@@ -266,15 +291,15 @@ var/list/miningModifiers = list()
 
 			Turfspawn_Asteroid_SeedEvents(placed)
 
-			if(placed.len)
+			if(length(placed))
 				generated.Add(placed)
-				if(placed.len > 9)
+				if(length(placed) > 9)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
-					for(var/k=0, k<AST_RNGWALKINST, k++)
+					for(var/k in 0 to AST_RNGWALKINST-1)
 						var/turf/T = pick(placed)
-						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
+						for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
@@ -296,7 +321,7 @@ var/list/miningModifiers = list()
 	#ifdef UPSCALED_MAP
 	num_to_place *= 3
 	#endif
-	for (var/n = 1, n <= num_to_place, n++)
+	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
 			wanted_tags = map_currently_underwater ? list("underwater") : null,
@@ -311,13 +336,13 @@ var/list/miningModifiers = list()
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				count++
 				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
 		else break
 
 	var/datum/mapGenerator/D
@@ -342,8 +367,10 @@ var/list/miningModifiers = list()
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
+	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
 	hotspot_controller.generate_map()
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae

@@ -112,14 +112,14 @@
 /obj/nerd_trap_door
 	name = "Heavily locked door"
 	desc = "Man, whatever is in here must be pretty valuable. This door seems to be indestructible and features an unrealistic amount of keyholes."
-	var/list/expected = list("silver key", "skeleton key", "literal skeleton key", "hot iron key", "cold steel key", "onyx key", "key lime pie", "futuristic key", "virtual key", "golden key", "bee key", "iron key", "iridium key", "lunar key")
+	var/list/expected = list("silver key", "skeleton key", "cold steel key", "literal skeleton key", "hot iron key", "onyx key", "virtual key", "golden key", "iron key", "iridium key", "lunar key")
 	var/list/unlocked = list()
 	var/list/ol = list()
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "hld0"
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	examine()
 		. = ..()
@@ -135,7 +135,7 @@
 			//		break
 			if (kname)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
 					overlays -= ol[kname]
@@ -150,7 +150,7 @@
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
 					overlays -= ol["key lime pie"]
@@ -179,10 +179,10 @@
 	proc/open()
 		if (unlocked.len != expected.len)
 			return
-		playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/door_open.ogg', 50, 1)
 		icon_state = "hld1"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		overlays.len = 0
 
 	meteorhit()
@@ -200,13 +200,13 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", /*"cold steel key",*/ "onyx key", /*"key lime pie",*/ "futuristic key", /*"virtual key",*/ "golden key", "bee key", /*"iron key",*/ /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ "literal skeleton key", "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key",*/ /*"virtual key",*/ "golden key", /*"bee key",*/ "iron key", /*"iridium key",*/ "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
 	name = "steel beams"
 	desc = "A bunch of unfortunately placed, tightly packed steel beams. You cannot get a meaningful glimpse of what's on the other side."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	icon = 'icons/obj/stationobjs.dmi'
@@ -227,7 +227,7 @@
 /obj/faint_shimmer
 	name = "faint shimmer"
 	desc = "Huh."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_CLOAK
 	blend_mode = 4
@@ -253,7 +253,7 @@
 
 	onStart()
 		..()
-		playsound(owner, 'sound/effects/bow_aim.ogg', 75, 1)
+		playsound(owner, 'sound/effects/bow_pull.ogg', 80, 1)
 		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
@@ -369,7 +369,7 @@
 			overlays += shaft
 			overlays += head
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		setName()
 		return
 
@@ -432,9 +432,6 @@
 				A.arrow = src
 				A.name = name
 				set_loc(A)
-				A.set_loc(target)
-				A.owner = target
-				H.implant += A
 				A.implanted(H, null, 100)
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
@@ -451,7 +448,7 @@
 					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
-					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
+					logTheThing(LOG_COMBAT, user, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
 					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 
@@ -481,7 +478,8 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
@@ -566,14 +564,13 @@
 
 /datum/projectile/arrow
 	name = "arrow"
-	power = 17
+	damage = 17
 	dissipation_delay = 12
 	dissipation_rate = 5
-	shot_sound = 'sound/effects/bow_fire.ogg'
+	shot_sound = 'sound/effects/bow_release.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1.0
 	impact_image_state = "bhole"
 	icon_state = "arrow"
 
@@ -592,7 +589,7 @@
 /obj/item/gun/bow
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "bow"
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
@@ -697,19 +694,21 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = copyMaterial(loaded.head_material)
-		var/default_power = 20
+		var/default_damage = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
+				current_projectile.damage = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
 			else
-				current_projectile.power = default_power
+				current_projectile.damage = default_damage
 		else
-			current_projectile.power = default_power
+			current_projectile.damage = default_damage
+
+		current_projectile.generate_stats()
 
 		loaded = null
 		return 1
 
-	canshoot()
+	canshoot(mob/user)
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -726,6 +725,7 @@
 				loadFromQuiver(user)
 				if(loaded)
 					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+					playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)
 				return
 			if(reach)
 				return
@@ -765,3 +765,4 @@
 			user.u_equip(I)
 			loaded = I
 			I.set_loc(src)
+			playsound(user, 'sound/effects/bow_nock.ogg', 60, 0)

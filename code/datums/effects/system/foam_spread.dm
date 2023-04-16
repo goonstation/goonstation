@@ -52,7 +52,7 @@
 		F.set_up(src.location, metal)
 		F.amount = amount
 
-		playsound(F.loc, "sound/effects/bubbles2.ogg", 80, 1, -3) //let's not play this from every single foam obj
+		playsound(F.loc, 'sound/effects/bubbles2.ogg', 80, 1, -3) //let's not play this from every single foam obj
 
 		if(!metal)			// don't carry other chemicals if a metal foam
 			F.create_reagents(15)

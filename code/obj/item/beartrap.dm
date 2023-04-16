@@ -15,7 +15,10 @@
 
 	armed
 		icon_state = "bear_trap-open"
-		armed = 1
+		armed = TRUE
+
+	armed/hidden_a_bit
+		layer = -1 // layers under doors
 
 	examine()
 		. = ..()
@@ -37,7 +40,7 @@
 		else
 			..()
 
-	attack_self(mob/M as mob)
+	attack_self(mob/M)
 		if (!src.armed)
 			M.show_text("You start to arm the beartrap...", "blue")
 			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
@@ -45,59 +48,52 @@
 			actions.start(action_bar, M)
 		return
 
-	Crossed(atom/movable/AM as mob|obj)
-		if ((ishuman(AM)) && (src.armed))
-			var/mob/living/carbon/H = AM
-			src.triggered(H)
-			H.visible_message("<span class='alert'><B>[H] steps on the bear trap!</B></span>",\
+	Crossed(atom/movable/AM)
+		if (src.armed &&  isliving(AM) && !(isintangible(AM) || isghostcritter(AM)))
+			var/mob/living/M = AM
+			src.triggered(M)
+			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
 			"<span class='alert'><B>You step on the bear trap!</B></span>")
-
-		else if (istype(AM, /obj/critter/bear) && (src.armed))
-			var/obj/critter/bear/M = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
-			set_icon_state("bear_trap-close")
-			src.armed = FALSE
-			src.anchored = FALSE
-			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
-			M.CritterDeath()
-		..()
-		return
+			..()
 
 	proc/arm(mob/M)
 		if (!src.armed)
-			logTheThing("combat", src, null, "armed a beartrap at [src.loc]")
+			logTheThing(LOG_COMBAT, src, "armed a beartrap at [src.loc]")
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
-			src.anchored = TRUE
-			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+			src.anchored = ANCHORED
+			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
 	proc/disarm(mob/M)
 		if (src.armed)
-			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 		return
 
-	proc/triggered(mob/target as mob)
-		if (!src || !src.armed)
+	proc/triggered(mob/target)
+		if (!src || !src.armed || isghostcritter(target) || isintangible(target))
 			return
 
-		if (target && ishuman(target))
-			var/mob/living/carbon/human/H = target
-			logTheThing("combat", H, null, "stood on a [src] at [log_loc(src)].")
-			H.changeStatus("stunned", 4 SECONDS)
-			H.force_laydown_standup()
-			random_brute_damage(H, 50, 0)
-			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
-			H.UpdateDamageIcon()
+		if (target && isliving(target))
+			var/mob/living/M = target
+			logTheThing(LOG_COMBAT, M, "stood on a [src] at [log_loc(src)].")
+			if(istype(M, /mob/living/critter/bear))
+				M.death()
+			else
+				M.changeStatus("stunned", 4 SECONDS)
+				M.force_laydown_standup()
+				random_brute_damage(M, 50, 0)
+				take_bleeding_damage(M, null, 15, DAMAGE_CUT)
+			M.UpdateDamageIcon()
 
 		if (target)
-			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 80, 1)
+			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
-			logTheThing("combat", target, null, "triggers [src] at [log_loc(src)]")
+			src.anchored = UNANCHORED
+			logTheThing(LOG_COMBAT, target, "triggers [src] at [log_loc(src)]")
 		return

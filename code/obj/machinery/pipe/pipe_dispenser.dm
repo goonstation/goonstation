@@ -1,68 +1,110 @@
 
+TYPEINFO(/obj/machinery/disposal_pipedispenser)
+	mats = 16
+
+var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
+	"Pipe" = 0,
+	"Bent Pipe" = 1,
+	"Junction" = 2,
+	"Flipped Junction" = 3,
+	"Y-Junction" = 4,
+	"Trunk" = 5,
+)
+
+#define MAX_BUILD_DISPOSAL 20
+
 /obj/machinery/disposal_pipedispenser
 	name = "Disposal Pipe Dispenser"
 	desc = "A clunky, old machine that dispenses unanchored disposal pipes one at a time."
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "pipe-fab"
 	density = 1
-	anchored = 1.0
-	mats = 16
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
-/obj/machinery/disposal_pipedispenser/attack_hand(mob/user)
-	if(..())
+	var/dispenser_ready = TRUE
+	var/dispenser_delay = 5 DECI SECONDS
+	var/mobile = FALSE
+	var/datum/action/bar/icon/timer
+
+/obj/machinery/disposal_pipedispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PipeDispenser")
+		ui.open()
+
+/obj/machinery/disposal_pipedispenser/ui_data(mob/user)
+	. = list(
+		"dispenser_ready" = src.dispenser_ready,
+	)
+
+/obj/machinery/disposal_pipedispenser/ui_static_data(mob/user)
+	. = list(
+		"mobile" = src.mobile,
+		"max_disposal_pipes" = MAX_BUILD_DISPOSAL,
+		"windowName" = src.name,
+	)
+	for (var/disposaltype in availdisposalpipes)
+		.["disposalpipes"] += list(list(
+			"disposaltype" = disposaltype,
+			"image" = getBase64ImgDisposal(disposaltype)
+			))
+
+/obj/machinery/disposal_pipedispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
 		return
+	switch(action)
+		if("dmake")
+			if (!dispenser_ready)
+				boutput(ui.user, "<span class='alert'>The [src] isn't ready yet!</span>")
+				return
+			var/p_type = text2num_safe(availdisposalpipes[params["disposal_type"]])
+			if (isnull(p_type))
+				stack_trace("Tried to get ptype of [params["disposal_type"]] but couldn't find it.")
+				return
+			var/amount = clamp(params["amount"], 0, MAX_BUILD_DISPOSAL)
+			var/duration = dispenser_delay * amount
+			src.dispenser_ready = FALSE
 
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-"}
+			var/obj/disposalconstruct/dummy_pipe = new
+			dummy_pipe.ptype = p_type
+			dummy_pipe.update()
+			SETUP_GENERIC_ACTIONBAR(src, null, duration, /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe, list(p_type, amount),\
+			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", INTERRUPT_NONE)
+			qdel(dummy_pipe) //Above creates a construct and changes its icon for usage in the actionbar icon.
+			. = TRUE
 
-	user.Browse("<HEAD><TITLE>Disposal Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	return
-
-// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
-
-
-/obj/machinery/disposal_pipedispenser/Topic(href, href_list)
-	if(..())
-		return
-	src.add_dialog(usr)
-	src.add_fingerprint(usr)
-	if(href_list["dmake"])
-		var/p_type = text2num_safe(href_list["dmake"])
+/obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe(pipe_type, amount)
+	for (var/i in 1 to amount)
 		var/obj/disposalconstruct/C = new (src.loc)
-		switch(p_type)
-			if(0)
-				C.ptype = 0
-			if(1)
-				C.ptype = 1
-			if(2)
-				C.ptype = 2
-			if(3)
-				C.ptype = 4
-			if(4)
-				C.ptype = 5
-
+		C.ptype = pipe_type
 		C.update()
+	src.dispenser_ready = TRUE
+	tgui_process?.update_uis(src)
 
-		usr.Browse(null, "window=pipedispenser")
-		src.remove_dialog(usr)
-	return
+/obj/machinery/disposal_pipedispenser/proc/getBase64ImgDisposal(disposalpipe)
+	var/obj/disposalconstruct/dummy_pipe = new
+	dummy_pipe.ptype = availdisposalpipes[disposalpipe]
+	dummy_pipe.update()
+	var/icon/dummy_icon = getFlatIcon(dummy_pipe,initial(dummy_pipe.dir),no_anim=TRUE)
+	qdel(dummy_pipe) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
+	. = icon2base64(dummy_icon)
+
+TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
+	mats = 16
 
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "A tool for removing some of the tedium from pipe-laying."
-	anchored = 0
+	anchored = UNANCHORED
 	icon_state = "fab-mobile"
-	mats = 16
-	var/laying_pipe = 0
-	var/removing_pipe = 0
+	mobile = TRUE
+
+	var/laying_pipe = FALSE
+	var/removing_pipe = FALSE
 	var/prev_dir = 0
-	var/first_step = 0
+	var/first_step = FALSE
 
 	Move(var/turf/new_loc,direction)
 		var/old_loc = loc
@@ -80,7 +122,7 @@
 			prev_dir = direction // might want to actually do this even when old_loc == loc but idk, it sucks with attempted diagonal movement
 
 	proc/connect_pipe(var/turf/new_loc, var/new_dir)
-		var/free_dirs = 1 | 2 | 4 | 8
+		var/free_dirs = NORTH|SOUTH|EAST|WEST
 		var/obj/disposalpipe/pipe = null
 		var/obj/disposalpipe/backup_pipe = null
 		var/obj/disposalpipe/backup_backup_pipe = null
@@ -89,9 +131,9 @@
 			free_dirs &= ~D.dpdir
 			if(istype(D, /obj/disposalpipe/trunk)) // don't wanna mess with those, they are important
 				continue
-			else if(avail_dirs.len >= 2)
+			else if(length(avail_dirs) >= 2)
 				backup_pipe = D
-			else if(avail_dirs.len == 0)
+			else if(length(avail_dirs) == 0)
 				backup_backup_pipe = D
 		if(!pipe)
 			pipe = backup_pipe
@@ -105,7 +147,7 @@
 	// look I didn't want to duplicate all this code either, I'm sorry :(
 	proc/lay_pipe(var/turf/new_loc, var/old_dir, var/new_dir)
 		var/is_first = src.first_step
-		src.first_step = 0
+		src.first_step = FALSE
 
 		if(new_loc.intact && !istype(new_loc,/turf/space))
 			return
@@ -117,7 +159,7 @@
 				junction.fix_sprite()
 				return
 
-		var/free_dirs = 1 | 2 | 4 | 8
+		var/free_dirs = NORTH|SOUTH|EAST|WEST
 		var/obj/disposalpipe/new_pipe = null
 		var/obj/disposalpipe/backup_pipe = null
 		var/obj/disposalpipe/backup_backup_pipe = null
@@ -126,13 +168,14 @@
 			free_dirs &= ~D.dpdir
 			if(istype(D, /obj/disposalpipe/trunk)) // don't wanna mess with those, they are important
 				continue
-			else if(avail_dirs.len == 1)
-				new_pipe = D
-				break
-			else if(avail_dirs.len >= 2)
-				backup_pipe = D
-			else if(avail_dirs.len == 0)
-				backup_backup_pipe = D
+			switch(length(avail_dirs))
+				if(0)
+					backup_backup_pipe = D
+				if(1)
+					new_pipe = D
+					break
+				if(2 to INFINITY)
+					backup_pipe = D
 		if(!new_pipe)
 			new_pipe = backup_pipe
 		if(!new_pipe)
@@ -157,14 +200,23 @@
 		if(new_dir & free_dirs)
 			pipe_reconnect_disconnected(new_pipe, new_dir, 1)
 
-	Topic(href, href_list)
-		src.add_dialog(usr)
-		src.add_fingerprint(usr)
-		if(href_list["toggle_laying"])
-			src.removing_pipe = 0
+/obj/machinery/disposal_pipedispenser/mobile/ui_data(mob/user)
+	. = ..()
+	. += list(
+		"removing_pipe" = src.removing_pipe,
+		"laying_pipe" = src.laying_pipe,
+	)
+
+/obj/machinery/disposal_pipedispenser/mobile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("toggle_laying")
+			src.removing_pipe = FALSE
 			src.laying_pipe = !(src.laying_pipe)
 			if(src.laying_pipe)
-				src.first_step = 1
+				src.first_step = TRUE
 				src.color = "#bbffbb"
 			else
 				src.color = "#ffffff"
@@ -182,54 +234,14 @@
 					trunk.set_dir(final_dir)
 					trunk.dpdir = trunk.dir
 					trunk.getlinked()
-			src.Attackhand(usr)
-			return
-		else if(href_list["toggle_removing"])
-			src.laying_pipe = 0
+			. = TRUE
+		if("toggle_removing")
+			src.laying_pipe = FALSE
 			src.removing_pipe = !(src.removing_pipe)
 			if(src.removing_pipe)
 				src.color = "#ffbbbb"
 			else
 				src.color = "#ffffff"
-			src.Attackhand(usr)
-			return
-		else if(href_list["dmake"])
-			var/p_type = text2num_safe(href_list["dmake"])
-			var/obj/disposalconstruct/C = new (src.loc)
-			switch(p_type)
-				if(0)
-					C.ptype = 0
-				if(1)
-					C.ptype = 1
-				if(2)
-					C.ptype = 2
-				if(3)
-					C.ptype = 4
-				if(4)
-					C.ptype = 5
+			. = TRUE
 
-			C.update()
-
-			usr << browse(null, "window=pipedispenser")
-			src.remove_dialog(usr)
-		return
-
-/obj/machinery/disposal_pipedispenser/mobile/attack_hand(user)
-	var/startstop_lay = (src.laying_pipe ? "Stop" : "Start")
-	var/startstop_remove = (src.removing_pipe ? "Stop" : "Start")
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<BR>
-<A href='?src=\ref[src];toggle_laying=1'>[startstop_lay] Laying Pipe Automatically</A><BR>
-<A href='?src=\ref[src];toggle_removing=1'>[startstop_remove] Removing Pipe Automatically</A><BR>
-"}
-
-	user << browse("<HEAD><TITLE>Disposal Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	return
-
-// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
-
+#undef MAX_BUILD_DISPOSAL

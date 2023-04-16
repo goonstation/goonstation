@@ -1,13 +1,15 @@
 /// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
+TYPEINFO(/obj/machinery/processor)
+	mats = 20
+
 /obj/machinery/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
 	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab3-on"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -40,6 +42,7 @@
 				totalAmount += M.amount
 
 			var/mat_id
+			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
 			var/div_factor = 1 / X.material_amt
@@ -55,6 +58,7 @@
 				if(exists_nearby)
 					exists_nearby.change_stack_amount(out_amount)
 					mat_id = exists_nearby.material.mat_id
+					mat = exists_nearby.material
 				else
 					var/newType = getProcessedMaterialForm(X.material)
 					var/obj/item/material_piece/P = new newType
@@ -62,10 +66,11 @@
 					P.setMaterial(copyMaterial(X.material))
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.mat_id
+					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
 					var/obj/machinery/manufacturer/M = output_location
-					M.update_resource_amount(mat_id, out_amount * 10)
+					M.update_resource_amount(mat_id, out_amount * 10, mat)
 
 				//If the input was a cable coil, output the conductor too
 				if (second_mat)
@@ -79,6 +84,7 @@
 					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
 						second_mat_id = second_exists_nearby.material.mat_id
+						second_mat = second_exists_nearby.material
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
 						var/obj/item/material_piece/PC = new newType
@@ -86,10 +92,11 @@
 						PC.setMaterial(copyMaterial(second_mat))
 						PC.change_stack_amount(out_amount - PC.amount)
 						second_mat_id = PC.material.mat_id
+						second_mat = PC.material
 
 					if (istype(output_location, /obj/machinery/manufacturer))
 						var/obj/machinery/manufacturer/M = output_location
-						M.update_resource_amount(second_mat_id, out_amount * 10)
+						M.update_resource_amount(second_mat_id, out_amount * 10, second_mat)
 
 			//Delete items in processor and output leftovers
 			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor
@@ -108,10 +115,10 @@
 				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
-				playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
+				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
 		return
 
 	attackby(var/obj/item/W, mob/user)
@@ -272,7 +279,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -310,7 +317,7 @@
 	name = "Portable material processor"
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 
 	custom_suicide = 1
@@ -328,7 +335,7 @@
 	desc = "A huge furnace-like machine used to combine materials."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "smelter0"
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	bound_height = 96
 	bound_width = 96
 	density = 1
@@ -386,7 +393,6 @@
 					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
 					var/newtype = getProcessedMaterialForm(merged)
 					var/apply_material = 1
-					var/output_item = 0
 
 					if(RE)
 						if(!RE.result_id && !RE.result_item)
@@ -394,7 +400,6 @@
 						else if(RE.result_item)
 							newtype = RE.result_item
 							apply_material = 0
-							output_item = 1
 						else if(RE.result_id)
 							merged = getMaterial(RE.result_id)
 
@@ -406,7 +411,7 @@
 					piece.change_stack_amount(amt - piece.amount)
 					FP.change_stack_amount(-amt)
 					SP.change_stack_amount(-amt)
-					if(!output_item)
+					if(istype(piece, /obj/item/material_piece))
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
@@ -507,7 +512,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)
@@ -535,7 +540,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

@@ -42,10 +42,10 @@
 	effect_activate(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		O.anchored = 1
+		O.anchored = ANCHORED
 		var/turf/Aloc = get_turf(O)
 		for (var/turf/T in range(field_radius,Aloc))
-			if(get_dist(O,T) == field_radius)
+			if(GET_DIST(O,T) == field_radius)
 				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
 				src.forcefields += FF
 		SPAWN(field_time)
@@ -55,7 +55,7 @@
 	effect_deactivate(obj/O)
 		if(..())
 			return
-		O.anchored = 0
+		O.anchored = UNANCHORED
 		for (var/obj/forcefield/F in src.forcefields)
 			src.forcefields -= F
 			qdel(F)

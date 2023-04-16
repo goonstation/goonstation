@@ -122,8 +122,8 @@
 	if (!wagesystem)
 		return
 	wagesystem.clones_for_cash = !(wagesystem.clones_for_cash)
-	logTheThing("admin", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"]")
 	boutput(world, "<b>Cloning now [wagesystem.clones_for_cash ? "requires" : "does not require"] money.</b>")
 
@@ -146,6 +146,7 @@
 	name = "bubblegum"
 	desc = "Some chewable gum. You can blow bubbles with it!"
 	icon_state = "anime"	// todo: decent sprites
+	c_flags = null
 	var/mob/chewer = null
 	var/chew_size = 0.2		// unit amount transferred when gum is chewed
 	var/spam_flag = 0		// counts down from spam_timer after each time the chew message is shown
@@ -255,27 +256,27 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/species = "critter"
 
 /datum/species_info/parrot
-	name = "space parrot" // ....................................... obj|mob
-	desc = "A spacefaring species of parrot." // ................... obj|mob
-	species = "parrot" // .......................................... obj|mob
-	var/list/subspecies = null // .................................. obj|mob
-	var/icon = 'icons/misc/bird.dmi' // ............................ obj|mob
-	var/gender = PLURAL // ............................................. mob
-	var/learned_words = null // .................................... obj ...
-	var/learned_phrases = null // .................................. obj ...
-	var/learn_words_chance = 33 // ................................. obj ...
-	var/learn_phrase_chance = 10 // ................................ obj ...
-	var/learn_words_max = 64 // .................................... obj ...
-	var/learn_phrase_max = 32 // ................................... obj ...
-	var/chatter_chance = 2 // ...................................... obj ...
-	var/find_treasure_chance = 2 // ................................ obj ...
-	var/destroys_treasure = 0 // ................................... obj ...
-	var/sells_furniture = 0 // ..................................... obj ...
-	var/hops = 0 // ................................................ obj|mob
-	var/pixel_x = 0 // ............................................. obj|mob
-	var/hat_offset_y = -5 // ....................................... obj|mob
-	var/hat_offset_x = 0 // ........................................ obj|mob
-	var/feather_color = "#ba1418" // ................................obj|mob
+	name = "space parrot" //						obj|mob
+	desc = "A spacefaring species of parrot." //	obj|mob
+	species = "parrot" //							obj|mob
+	var/list/subspecies = null //					obj|mob
+	var/icon = 'icons/misc/bird.dmi' //				obj|mob
+	var/gender = PLURAL //								mob
+	var/learned_words = null //						obj ...
+	var/learned_phrases = null //					obj ...
+	var/learn_words_chance = 33 //					obj ...
+	var/learn_phrase_chance = 10 //					obj ...
+	var/learn_words_max = 64 //						obj ...
+	var/learn_phrase_max = 32 //					obj ...
+	var/chatter_chance = 2 //						obj ...
+	var/find_treasure_chance = 2 //					obj ...
+	var/destroys_treasure = 0 //					obj ...
+	var/sells_furniture = 0 //						obj ...
+	var/hops = 0 //									obj|mob
+	var/pixel_x = 0 //								obj|mob
+	var/hat_offset_y = -5 //						obj|mob
+	var/hat_offset_x = 0 //							obj|mob
+	var/feather_color = "#ba1418" //				obj|mob
 
 /datum/species_info/parrot/eclectus
 	name = "space eclectus"
@@ -477,7 +478,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	cost = 1
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "red"
 	shot_sound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	shot_number = 1
@@ -489,8 +490,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	sname = "paintball"
 	name = "paintball jug"
 	icon_state = "357-2"
-	amount_left = 4.0
-	max_amount = 4.0
+	amount_left = 4
+	max_amount = 4
 	ammo_type = new/datum/projectile/special/paintball
 	caliber = 42069
 	icon_dynamic = 1
@@ -526,8 +527,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/pip_color = "#FFFFFF" // only set to other colors by white 50c chips atm but may as well make it a var because ~variety~
 	var/image/image_pip = null
 	var/value = 1
-	force = 2.0
-	throwforce = 2.0
+	force = 2
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -536,12 +537,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		if (src.amount <= 1)
 			src.icon_state = "chip"
@@ -649,7 +650,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette wheel and a little ball."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_e/partner = null
 	var/running = 0
@@ -698,7 +699,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette layout, used for placing bets."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_e"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_w/partner = null
 	var/list/bets = null
@@ -783,14 +784,16 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/list/nums_black = list("2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35")
 	var/list/nums_snake = list("1","5","9","12","14","16","19","23","27","30","32","34")
 /*
+TYPEINFO(/obj/submachine/blackjack)
+	mats = 9
+
 /obj/submachine/blackjack
 	name = "blackjack machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "BJ1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 9
 	var/on = 1
 	var/plays = 0
 	var/working = 0
@@ -987,7 +990,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			walk_towards(src,null)
 			return 1
 
-		else if (get_dist(src, M) >= 5)
+		else if (GET_DIST(src, M) >= 5)
 			var/insult = pick("fucker", "fuckhead", "shithead", "shitface", "shitass", "asshole")
 			var/targ = pick("", ", [target_name]", ", [insult]", ", you [insult]")
 
@@ -1152,7 +1155,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
-			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
+			var/mob/living/critter/small_animal/cat/luna = new /mob/living/critter/small_animal/cat (usagi.loc)
 			luna.name = "Luna"
 			luna.desc = "A cat with a little crescent moon on her forehead."
 			luna.cattype = 3
@@ -1168,10 +1171,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "moonstick"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
-	flags = FPRINT | TABLEPASS | ONBELT
-	force = 2.0
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
+	force = 2
 	w_class = W_CLASS_SMALL
-	throwforce = 2.0
+	throwforce = 2
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 15
@@ -1255,13 +1259,14 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "null_scalpel"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
@@ -1283,7 +1288,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing("combat", user, M, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
@@ -1357,7 +1362,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
-			playsound(T, "sound/effects/bamf.ogg", 40, 1)
+			playsound(T, 'sound/effects/bamf.ogg', 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
@@ -1377,7 +1382,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
 			C.amount -= max_accept
-			C.update_stack_appearance()
+			C.UpdateStackAppearance()
 			src.cash_amt = src.cash_max
 		else
 			src.cash_amt += C.amount
@@ -1512,21 +1517,29 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "revolver"
 	desc = "There are 7 bullets left! Each shot will currently use 1 bullets!"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
+	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(reach || src.bangfired)
 			..()
-		else
-			src.bangfired = 1
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(user, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
+		else
+			boutput(user, "<span class='notice'>The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is.</span>")
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, "<span class='notice'>You awkwardly jam the tiny flag back into the barrel.</span>")
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
@@ -1619,6 +1632,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
+TYPEINFO(/obj/item/space_thing)
+	mats = 50
+
 /obj/item/space_thing
 	name = "space thing"
 	desc = "Some kinda thing, from space. In space. A space thing."
@@ -1628,7 +1644,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
-	mats = 50
 	contraband = 1
 	stamina_damage = 40
 	stamina_cost = 23
@@ -1646,7 +1661,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_switch1-throw"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Switch Icon"
@@ -1670,7 +1685,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_base1"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Board Icon"
@@ -1688,14 +1703,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	attack_hand(mob/user)
 		src.change_icon()
 		return
-
-// tOt I ain't agree to no universal corgi ban
-// and no one's gunna get it if they just see George and Blair okay!!
-// and I can't just rename the pug!!!
-/obj/critter/dog/george/orwell
-	name = "Orwell"
-	icon_state = "corgi"
-	doggy = "corgi"
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=+KALI-MA+=-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -1806,16 +1813,16 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							src.visible_message("<span class='alert'><B>[src] shoves \his hand into [H]'s chest!</B></span>")
 							src.say("Kali ma, shakthi deh!")
 							if(HU.heart_op_stage <= 3.0)
-								HU:heart_op_stage = 4.0
+								HU:heart_op_stage = 4
 								HU.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 								var/obj/item/organ/heart/heart = new /obj/item/organ/heart(src.loc)
 								heart.donor = HU
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
 								sleep(2 SECONDS)
 								src.say("Ab, uski jan meri mutti me hai! AB, USKI JAN MERI MUTTI ME HAI!")
 							else
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
 								src.visible_message("<span class='alert'><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
 								sleep(2 SECONDS)

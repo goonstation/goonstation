@@ -567,7 +567,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
@@ -936,7 +936,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "ci" = (
 /obj/machinery/camera{
@@ -1504,23 +1505,20 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "dv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -1531,22 +1529,19 @@
 	id = "cargodock_in";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "dz" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dA" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/cable{
@@ -1556,15 +1551,13 @@
 /area/station/crew_quarters/clown)
 "dB" = (
 /obj/machinery/launcher_loader/west,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor{
@@ -1574,8 +1567,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dD" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -1747,7 +1739,8 @@
 	id = "cargodock_in";
 	pixel_x = 24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "dZ" = (
 /obj/decal/cleanable/dirt,
@@ -1929,23 +1922,20 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ev" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ew" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ex" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -1956,15 +1946,13 @@
 	id = "cargodock_out";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "ez" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/plating,
@@ -2033,7 +2021,7 @@
 /area/station/crew_quarters/kitchen)
 "eI" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 2
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -2234,7 +2222,8 @@
 	id = "cargodock_out";
 	pixel_x = 24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "fb" = (
 /obj/decal/cleanable/dirt,
@@ -2251,8 +2240,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "fd" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -2412,8 +2400,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/janitor/supply)
 "fy" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -2577,16 +2564,14 @@
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "fV" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "fW" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -2642,12 +2627,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/lounge)
 "gc" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "gd" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "ge" = (
@@ -2747,8 +2732,7 @@
 	id = "speedboost_crusher";
 	name = "Disposals Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -2756,8 +2740,7 @@
 /area/station/janitor/supply)
 "gr" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -3279,7 +3262,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hs" = (
@@ -3822,7 +3805,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "it" = (
 /obj/machinery/atmospherics/valve{
@@ -4330,7 +4314,8 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "js" = (
 /obj/cable{
@@ -4646,7 +4631,8 @@
 	req_access = null
 	},
 /obj/access_spawn/heads,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai)
 "jV" = (
 /obj/disposalpipe/segment,
@@ -5941,7 +5927,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mx" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -6526,8 +6515,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "nL" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -6687,7 +6675,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ob" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";

@@ -12,7 +12,7 @@ Shield and graivty well generators
 
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/active = 0
@@ -38,7 +38,7 @@ Shield and graivty well generators
 				if (malfunction && prob(33) || !malfunction)
 					deployed_shields += new /obj/shield(target_tile)
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"
 
@@ -50,7 +50,7 @@ Shield and graivty well generators
 		for(var/obj/shield/shield_tile in deployed_shields)
 			qdel(shield_tile)
 
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.active = 0
 		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
 
@@ -85,33 +85,33 @@ Shield and graivty well generators
 	return
 
 /obj/shield/meteorhit(obj/O as obj)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50, 1)
 	return
 
 /obj/shieldgen/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			src.checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			src.checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			src.checkhp()
 	return
 
 /obj/shield/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (prob(75))
 				qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 	return
@@ -134,7 +134,7 @@ Shield and graivty well generators
 	icon_state = "shieldsparkles"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	gas_impermeable = TRUE
 
@@ -150,7 +150,7 @@ Shield and graivty well generators
 
 		..()
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if (istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 
@@ -163,19 +163,21 @@ Shield and graivty well generators
 	icon_state = "test"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
+
+TYPEINFO(/obj/gravity_well_generator)
+	mats = 14
 
 /obj/gravity_well_generator
 	name = "gravity well generator"
 	desc = "A complex piece of machinery that alters gravity."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gravgen-off"
-	mats = 14
 
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/active = 0
@@ -190,13 +192,13 @@ Shield and graivty well generators
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				if (prob(75))
 					qdel(src)
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					qdel(src)
 		return
@@ -206,7 +208,7 @@ Shield and graivty well generators
 			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
 
 			icon_state = "gravgen-off"
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.active = 0
 
 		else
@@ -214,7 +216,7 @@ Shield and graivty well generators
 
 			icon_state = "gravgen-on"
 			src.active = 1
-			src.anchored = 1
+			src.anchored = ANCHORED
 			src.Life()
 
 	proc/Life()
@@ -230,7 +232,7 @@ Shield and graivty well generators
 			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
-			var/dist = get_dist(src,X)
+			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
 			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))

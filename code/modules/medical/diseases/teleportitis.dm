@@ -26,6 +26,6 @@
 		if(randomturfs.len > 0)
 			boutput(affected_mob, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
 			var/turf/destination = pick(randomturfs)
-			logTheThing("combat", affected_mob, null, "was teleported by Teleportitis from [log_loc(affected_mob)] to [log_loc(destination)].")
+			logTheThing(LOG_COMBAT, affected_mob, "was teleported by Teleportitis from [log_loc(affected_mob)] to [log_loc(destination)].")
 			affected_mob.set_loc(destination)
 			elecflash(affected_mob)

@@ -94,7 +94,8 @@
 "ao" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "ap" = (
 /obj/table/wood/auto,
@@ -192,13 +193,15 @@
 	},
 /obj/rack,
 /obj/item/clothing/head/emerg,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "aB" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "aC" = (
 /obj/decal/fakeobjects{
@@ -744,8 +747,7 @@
 	})
 "bI" = (
 /obj/lattice,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -905,8 +907,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "bZ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -976,7 +977,7 @@
 /turf/space,
 /area/space)
 "ci" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
@@ -1231,7 +1232,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1440,7 +1441,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/cable{
@@ -1883,7 +1884,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1895,7 +1896,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/engine,
@@ -1906,8 +1907,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -1949,7 +1949,7 @@
 	name = "Maru Solar Array"
 	})
 "eh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -2144,7 +2144,7 @@
 /area/space)
 "eD" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt"
 	},
@@ -2982,8 +2982,7 @@
 /area/research_outpost/indigo_rye)
 "gq" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -2993,8 +2992,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -3011,8 +3009,7 @@
 	})
 "gs" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -3217,7 +3214,7 @@
 /turf/simulated/floor,
 /area/station/garden/owlery)
 "gM" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmout"
 	},
 /obj/machinery/door/window/southleft,
@@ -3359,7 +3356,8 @@
 	name = "Erebus transportation unit"
 	},
 /obj/disposalpipe/trunk/south,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
 	})
@@ -3419,8 +3417,7 @@
 	icon_state = "bdoorsingle1";
 	id = "qm_dock"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -3708,7 +3705,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "hW" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmout"
 	},
 /obj/machinery/light_switch/west,
@@ -6514,8 +6511,7 @@
 "nB" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6526,7 +6522,7 @@
 	})
 "nC" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6838,7 +6834,7 @@
 	name = "Maru Solar Array"
 	})
 "og" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,
@@ -6852,8 +6848,7 @@
 	})
 "oi" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6869,8 +6864,7 @@
 	id = "maru_crusher";
 	name = "Maru Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6881,8 +6875,7 @@
 	})
 "ok" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -7825,8 +7818,7 @@
 "qd" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7835,7 +7827,7 @@
 /area/station/maintenance/inner/hammer)
 "qe" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7910,8 +7902,7 @@
 	})
 "qn" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7925,8 +7916,7 @@
 	id = "ham_crusher";
 	name = "Hammer Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7935,8 +7925,7 @@
 /area/station/maintenance/inner/hammer)
 "qp" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -9067,7 +9056,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sz" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2;
+
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -9083,7 +9075,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sB" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2;
+
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -9094,7 +9089,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sC" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/south,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 2;
+
+	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10405,7 +10403,7 @@
 	name = "Hammer Crew Quarters"
 	})
 "uV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -11805,7 +11803,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/light/lamp/green,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
 /obj/machinery/camera{
@@ -12348,8 +12346,7 @@
 "yy" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12360,7 +12357,7 @@
 	})
 "yz" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12512,8 +12509,7 @@
 	})
 "yP" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12529,8 +12525,7 @@
 	id = "asc_crusher";
 	name = "Asclepius Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12541,8 +12536,7 @@
 	})
 "yR" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12905,8 +12899,7 @@
 "zy" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -12917,7 +12910,7 @@
 	})
 "zz" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13014,8 +13007,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zK" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13035,8 +13027,7 @@
 	id = "dio_crusher";
 	name = "Dionysus Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13047,8 +13038,7 @@
 	})
 "zM" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13723,7 +13713,7 @@
 /area/station/storage/tech)
 "Bd" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/decal/cleanable/dirt,
@@ -14390,7 +14380,7 @@
 /area/station/chapel/sanctuary)
 "Cy" = (
 /obj/table/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -15229,7 +15219,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Eb" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -15919,7 +15909,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Fn" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "grass"
@@ -16491,7 +16481,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Gs" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "Gt" = (
@@ -16728,7 +16718,7 @@
 "GS" = (
 /obj/machinery/light,
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -17595,7 +17585,8 @@
 	name = "Erebus transportation unit"
 	},
 /obj/disposalpipe/trunk/north,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/science/tenebrae)
 "Iz" = (
 /obj/item/storage/wall/emergency{
@@ -18216,7 +18207,8 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "JU" = (
 /obj/machinery/light/small{
@@ -19164,7 +19156,7 @@
 /area/research_outpost/indigo_rye)
 "Mm" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper{
 	info = "delta oblique seneca toreador neptune"
 	},
@@ -19616,7 +19608,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/south{
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
+	dir = 2;
 	frequency = 1225;
 	id = "Toxin Chamber Siphon";
 	on = 0
@@ -20267,12 +20260,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
 "Oc" = (
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
@@ -21148,7 +21143,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21246,7 +21241,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pn" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21264,7 +21259,7 @@
 	})
 "Pp" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21272,13 +21267,13 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
 "Pr" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21849,7 +21844,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -22065,7 +22060,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "Qp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22184,8 +22179,7 @@
 "Qx" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -22679,8 +22673,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "RB" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22688,16 +22681,14 @@
 /area/ghostdrone_factory)
 "RC" = (
 /obj/machinery/ghostdrone_factory/part3,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
 "RD" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22705,8 +22696,7 @@
 /area/ghostdrone_factory)
 "RE" = (
 /obj/machinery/ghostdrone_factory/part2,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22714,8 +22704,7 @@
 /area/ghostdrone_factory)
 "RF" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22834,8 +22823,7 @@
 	})
 "Se" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23171,8 +23159,7 @@
 "Tf" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23659,8 +23646,7 @@
 	id = "erebus_crusher";
 	name = "Erebus Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23771,7 +23757,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
@@ -23881,7 +23868,7 @@
 	})
 "Vm" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -24430,8 +24417,7 @@
 	})
 "WZ" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1

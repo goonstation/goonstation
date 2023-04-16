@@ -51,7 +51,7 @@
 
 	proc/set_complete()
 		completed = 1
-		logTheThing("debug", null, null, "<B>Marquesas/Progress</B>: Milestone [name] complete.")
+		logTheThing(LOG_DEBUG, null, "<B>Marquesas/Progress</B>: Milestone [name] complete.")
 		var/datum/game_mode/construction/C = ticker.mode
 		C.events.notify_milestone_complete(src)
 
@@ -64,7 +64,7 @@
 			boutput(world, "<B><font color='red'>[uncompleted_message]</font></B>")
 		var/datum/game_mode/construction/C = ticker.mode
 		C.events.notify_milestone_uncomplete(src)
-		logTheThing("debug", null, null, "<B>Marquesas/Progress</B>: Milestone [name] uncompleted.")
+		logTheThing(LOG_DEBUG, null, "<B>Marquesas/Progress</B>: Milestone [name] uncompleted.")
 
 	proc/check_uncompletion()
 		if (is_abstract)
@@ -78,7 +78,7 @@
 		if (completed && !uncompletion && !is_complete)
 			uncompletion = 1
 			uncompleted_at = ticker.round_elapsed_ticks
-			logTheThing("debug", null, null, "<B>Marquesas/Progress</B>: Milestone [name] uncompleting.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Progress</B>: Milestone [name] uncompleting.")
 		else if (completed && uncompletion && is_complete)
 			uncompletion = 0
 		else if (completed && uncompletion && ticker.round_elapsed_ticks > uncompleted_at + grace_period)
@@ -305,7 +305,7 @@
 			if (P.m_w_system)
 				score += P.m_w_system.weapon_score
 			pod_score += score * multiplier * 0.5
-		logTheThing("debug", null, null, "<B>Marquesas/Progress</B>: Pod score is [pod_score].")
+		logTheThing(LOG_DEBUG, null, "<B>Marquesas/Progress</B>: Pod score is [pod_score].")
 		if (pod_score >= pod_score_required)
 			if (!completed)
 				set_complete()

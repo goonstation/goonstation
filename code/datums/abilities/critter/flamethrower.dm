@@ -21,19 +21,19 @@
 		var/turf/OT = get_turf(holder.owner)
 		var/turf/original_target = get_turf(target)
 		var/it = 7
-		while (get_dist(OT, target) > 3)
+		while (GET_DIST(OT, target) > 3)
 			target = get_step(target, get_dir(target, OT))
 			it--
 			if (it <= 0)
 				return 1
-		while (get_dist(OT, target) < 3)
+		while (GET_DIST(OT, target) < 3)
 			target = get_step(target, get_dir(OT, target))
 			it--
 			if (it <= 0)
 				return 1
 		if (target == holder.owner || target == OT)
 			return 1
-		playsound(target, "sound/effects/spray.ogg", 50, 1, -1,1.5)
+		playsound(target, 'sound/effects/spray.ogg', 50, 1, -1,1.5)
 		var/list/L = getline(OT, target)
 		for (var/turf/T in L)
 			if (T == OT)
@@ -43,8 +43,7 @@
 				if (!M.is_heat_resistant())
 					M.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
 					M.changeStatus("stunned", 2 SECONDS)
-					M.emote("scream")
-					logTheThing("combat", usr, null, "used their [src.name] ability on [M] at [log_loc(usr)]")
+					logTheThing(LOG_COMBAT, usr, "used their [src.name] ability on [M] at [log_loc(usr)]")
 					if (throws)
 						M.throw_at(original_target, 20, 2)
 		return 0

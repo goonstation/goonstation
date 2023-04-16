@@ -6,7 +6,9 @@
 /turf/simulated/floor/engine,
 /area/prefab/sequestered_cloner)
 "aG" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "bm" = (
@@ -107,7 +109,9 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "jJ" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "mm" = (
@@ -355,7 +359,9 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "xn" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "xv" = (
@@ -368,7 +374,7 @@
 /area/prefab/sequestered_cloner)
 "xI" = (
 /obj/cable,
-/obj/machinery/power/apc/puzzle_apc{
+/obj/machinery/power/apc/puzzle_apc/nopoweralert{
 	autoname_on_spawn = 0;
 	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
 	name = "Engine Test APC";
@@ -564,7 +570,9 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "EE" = (
@@ -721,7 +729,7 @@
 /area/prefab/sequestered_cloner)
 "Me" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	id = "seq_cloner_exit";
 	name = "reinforced airlock"
 	},
@@ -853,7 +861,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	id = "seq_education_exit";
 	name = "reinforced airlock"
@@ -1009,7 +1017,7 @@
 /turf/simulated/floor/yellow,
 /area/prefab/sequestered_cloner)
 "WS" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "WX" = (

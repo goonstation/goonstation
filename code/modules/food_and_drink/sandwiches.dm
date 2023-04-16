@@ -209,18 +209,19 @@
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
-	initial_volume = 20
+	initial_volume = 25
 	initial_reagents = list("cholesterol"=5)
 	food_effects = list("food_hp_up", "food_warm")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/))
 			src.bites_left += 1
-		else return ..()
+		else
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger
 	name = "buttburger"
-	desc = "This burger's all buns."
+	desc = "This burger's all buns. It seems to be made out of a gross normal butt."
 	icon_state = "assburger"
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
@@ -230,10 +231,19 @@
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
+/obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+	name = "buttburger"
+	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
+	icon_state = "synthbuttburger"
+
+/obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+	name = "buttburger"
+	desc = "This burger's all buns. It seems to made out of a cybernetic butt."
+	icon_state = "robobuttburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger
 	name = "heartburger"
-	desc = "A hearty meal, made with Love."
+	desc = "A hearty meal, made with Love. This one seems to contain a normal fleshy heart."
 	icon_state = "heartburger"
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -242,13 +252,43 @@
 		..()
 		reagents.add_reagent("love", 15)
 
+/obj/item/reagent_containers/food/snacks/burger/heartburger/synth
+	name = "heartburger"
+	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart."
+	icon_state = "synthheartburger"
+
+/obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
+	name = "heartburger"
+	desc = "A hearty meal, made with Love. This one seems to contain a shiny cyberheart."
+	icon_state = "roboheartburger"
+
+/obj/item/reagent_containers/food/snacks/burger/heartburger/flock
+	name = "heartburger"
+	desc = "A hearty meal, made with Love. This one seems to cotain a teal pulsing octahedron."
+	icon_state = "flockheartburger"
+
 /obj/item/reagent_containers/food/snacks/burger/brainburger
 	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient."
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a normal fleshy Brain."
 	icon_state = "brainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
-	food_effects = list("food_sweaty_big", "food_hp_up_big")
+	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/synth
+	name = "brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a green synthetic brain."
+	icon_state = "synthbrainburger"
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
+	name = "brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a Spontaneous Intelligence Creation Core."
+	icon_state = "robobrainburger"
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/flock
+	name = "brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain an odd crystal."
+	icon_state = "flockbrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/humanburger
 	name = "burger"
@@ -342,7 +382,7 @@
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
-	icon_state = "hburger"
+	icon_state = "synthburger"
 	bites_left = 5
 	heal_amt = 2
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -378,7 +418,7 @@
 			gib.streak_cleanable(M.dir)
 			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
 			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
-			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		else
 			..()
@@ -470,8 +510,8 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
-	bites_left = 1
-	heal_amt = 50
+	bites_left = 20
+	heal_amt = 3
 	throwforce = 10
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)

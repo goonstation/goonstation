@@ -538,7 +538,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/airless/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "vk" = (
@@ -785,7 +785,7 @@
 "Fr" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_east"
@@ -844,7 +844,7 @@
 	dir = 4;
 	icon_state = "gib4"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Jd" = (
@@ -875,7 +875,9 @@
 	},
 /area/prefab/discount_dans_asteroid)
 "JH" = (
-/obj/machinery/atmospherics/pipe/tank/air/north,
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 1
+	},
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Kl" = (
@@ -1084,7 +1086,7 @@
 /area/prefab/discount_dans_asteroid)
 "PC" = (
 /obj/machinery/r_door_control{
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
@@ -1099,7 +1101,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /obj/item/reagent_containers/food/snacks/burrito{
 	pixel_x = -5;
 	pixel_y = 4
@@ -1273,7 +1275,7 @@
 /area/prefab/discount_dans_asteroid)
 "Wo" = (
 /obj/decal/cleanable/blood/gibs/body,
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Wr" = (

@@ -7,11 +7,10 @@
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	dir = 4
 	bound_height = 96
 	bound_width = 96
-	var/range = 100			//how far the beam goes, set to max(world.maxx,world.maxy) in New()
 	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
@@ -21,12 +20,10 @@
 	var/online = FALSE
 	var/obj/machinery/power/terminal/terminal = null
 	var/firing = FALSE			//laser is currently active
-	var/list/laser_parts = list()	//all the individual laser objects
-	var/list/laser_turfs = list()	//every turf with a laser on it
+	///the first laser object
+	var/obj/linked_laser/ptl/laser = null
 	var/list/affecting_mobs = list()//mobs in the path of the beam
 	var/list/blocking_objects = list()	//the objects blocking the laser, if any
-	var/selling = FALSE
-	var/laser_process_counter = 0
 	var/input_number = 0
 	var/output_number = 0
 	var/input_multi = 1		//for kW, MW, GW etc
@@ -36,11 +33,11 @@
 	var/undistributed_earnings = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
+	///A list of all laser segments from this PTL that reached the edge of the z-level
+	var/list/selling_lasers = list()
 
 /obj/machinery/power/pt_laser/New()
 	..()
-
-	range = max(world.maxx,world.maxy)
 
 	SPAWN(0.5 SECONDS)
 		var/turf/origin = get_rear_turf()
@@ -62,9 +59,9 @@
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
-	for(var/obj/O in laser_parts)
-		qdel(O)
-
+	qdel(src.laser)
+	src.laser = null
+	src.selling_lasers = null
 	for(var/x_off = 0 to 2)
 		for(var/y_off = 0 to 2)
 			var/turf/T = locate(src.x + x_off,src.y + y_off,src.z)
@@ -110,8 +107,6 @@
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
 /obj/machinery/power/pt_laser/process(mult)
-	if(status & BROKEN)
-		return
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_onln = online
@@ -120,7 +115,7 @@
 	var/dont_update = 0
 	var/adj_output = abs(output)
 
-	if(terminal)
+	if(terminal && !(src.status & BROKEN))
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
 			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
@@ -138,41 +133,35 @@
 	if(online) // if it's switched on
 		if(!firing) //not firing
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
-				if(laser_parts.len == 0)
-					start_firing() //creates all the laser objects then activates the right ones
-				else
-					restart_firing() //if the laser was created already, just activate the existing objects
+				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
 				charge -= adj_output
-				if(selling)
-					power_sold(adj_output)
 		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
+				if (!locate(/obj/linked_laser/ptl) in get_turf(L)) //safety because Uncross is somehow unreliable
+					affecting_mobs -= L
+					continue
 				if(burn_living(L,adj_output*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
-			if(laser_process_counter > 9)
-				process_laser() //fine if it happens less often, just tile burning and hotspot exposure
-				laser_process_counter = 0
-			else
-				laser_process_counter ++
-
 			charge -= adj_output
 
-			if(selling)
-				power_sold(adj_output)
-			else if(blocking_objects.len > 0)
+			if(blocking_objects.len > 0)
 				melt_blocking_objects()
-
-			update_laser()
+			power_sold(adj_output)
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
+	var/proportion = 0
+	for (var/obj/linked_laser/ptl/laser in src.selling_lasers)
+		proportion += laser.power
+	adjusted_output *= proportion
+
 	if (round(adjusted_output) == 0)
 		return FALSE
 
@@ -188,7 +177,7 @@
 	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
 	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
-	if (output_mw < 0) //steals money since you emagged it
+	if (src.output < 0) //steals money since you emagged it
 		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
 	lifetime_earnings += generated_moolah
@@ -264,87 +253,31 @@
 	return T
 
 /obj/machinery/power/pt_laser/proc/start_firing()
+	if (!src.output)
+		return
 	var/turf/T = get_barrel_turf()
 	if(!T) return //just in case
 
-	firing = 1
+	firing = TRUE
 	UpdateIcon(1)
-
-	var/scale_factor = round(bound_width / 96)
-	for(var/dist = 0, dist < range / scale_factor, dist += scale_factor) // creates each field tile
-		for(var/i in 1 to (dist == 0 ? 1 : scale_factor))
-			T = get_step(T, dir)
-		if(!T) break //edge of the map
-		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.bound_width *= scale_factor
-		laser.bound_height *= scale_factor
-		laser.Scale(scale_factor, scale_factor)
-		laser.Translate((scale_factor - 1) * world.icon_size / 2, (scale_factor - 1) * world.icon_size / 2)
-		laser.set_dir(src.dir)
-		laser.power = round(abs(output)*PTLEFFICIENCY)
-		laser.source = src
-		laser.active = 0
-		src.laser_parts += laser
-		src.laser_turfs += laser.locs
+	src.laser = new(T, src.dir)
+	src.laser.source = src
+	src.laser.try_propagate()
 
 	melt_blocking_objects()
-	update_laser()
 
-/obj/machinery/power/pt_laser/proc/restart_firing()
-	firing = 1
-	UpdateIcon(1)
-	melt_blocking_objects()
-	update_laser()
-
-/obj/machinery/power/pt_laser/proc/check_laser_active() //returns number of laser_parts that should be active starting at top of list
-	blocking_objects = list()
-	var/turf/T = get_barrel_turf()
-	if(!T) return //just in case
-
-	for(var/dist = 0, dist < range, dist += 1)
-		T = get_step(T, dir)
-		if(!T || T.density)
-			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
-		for(var/obj/O in T)
-			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
-				blocking_objects += O
-		if(blocking_objects.len > 0) return dist
-
+/obj/machinery/power/pt_laser/proc/laser_power()
+	return round(abs(output)*PTLEFFICIENCY)
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
-	for(var/obj/lpt_laser/L in laser_parts)
-		L.invisibility = INVIS_ALWAYS //make it invisible
-		L.active = 0
-		L.light.disable()
+	qdel(src.laser)
 	affecting_mobs = list()
-	selling = 0
 	firing = 0
 	blocking_objects = list()
 
-/obj/machinery/power/pt_laser/proc/update_laser()
-	firing = 1
-	var/active_num = check_laser_active()
-
-	var/counter = 1
-	for(var/obj/lpt_laser/L in laser_parts)
-		if(counter <= active_num)
-			L.invisibility = INVIS_NONE //make it visible
-			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-			L.active = 1
-			L.light.enable()
-			L.burn_all_living_contents()
-			counter++
-		else
-			L.invisibility = INVIS_ALWAYS
-			L.active = 0
-			L.light.disable()
-
-	if(active_num == laser_parts.len)
-		selling = 1
-
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -354,14 +287,21 @@
 	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
-/obj/machinery/power/pt_laser/proc/update_laser_power()
-	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
-	if(src.firing && (abs(src.output) > src.charge))
-		stop_firing()
 
-	for(var/obj/lpt_laser/L in laser_parts)
-		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+/obj/machinery/power/pt_laser/proc/can_fire()
+	return abs(src.output) <= src.charge
+
+/obj/machinery/power/pt_laser/proc/update_laser_power()
+	src.laser?.traverse(.proc/update_laser_segment)
+
+/obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
+	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	laser.alpha = alpha
+
+/obj/machinery/power/pt_laser/broken_state_topic(mob/user)
+	if (src.charge)
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -427,18 +367,25 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(!online) src.stop_firing()
+			if(online)
+				src.start_firing()
+			else
+				src.stop_firing()
 			. = TRUE
 		if("setOutput")
+			. = TRUE
 			if (src.emagged)
 				src.output_number = clamp(params["setOutput"], -999, 999)
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
-			if(!src.output)
+			if(!src.output || !src.can_fire())
 				src.stop_firing()
-			src.update_laser_power()
-			. = TRUE
+				return
+			if (src.firing)
+				src.update_laser_power()
+			else if (src.online)
+				src.start_firing()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
@@ -457,91 +404,24 @@
 
 /obj/machinery/power/pt_laser/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				status |= BROKEN
 				UpdateIcon()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				status |= BROKEN
 				UpdateIcon()
 	return
 
-/obj/machinery/power/pt_laser/proc/process_laser()
-	if(output == 0) return
-
-	var/power = abs(output)*PTLEFFICIENCY
-
-	for(var/turf/T in laser_turfs)
-		if(power > 5e7)
-			T.hotspot_expose(power/1e5,5) //1000K at 100MW
-		if(istype(T, /turf/simulated/floor) && prob(power/1e5))
-			T:burn_tile()
-
-
-/obj/lpt_laser
-	name = "laser"
-	desc = "A powerful laser beam."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "ptl_beam"
-	anchored = 2
-	density = 0
-	luminosity = 1
-	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_FLUID_ENTER
-	var/power = 0
-	var/active = 1
-	var/obj/machinery/power/pt_laser/source = null
-	var/datum/light/light
-
-
-/obj/lpt_laser/New()
-	light = new /datum/light/point
-	light.attach(src)
-	light.set_color(0, 0.8, 0.1)
-	light.set_brightness(0.4)
-	light.set_height(0.5)
-	light.enable()
-
-	SPAWN(0)
-		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-		if(active)
-			if(istype(src.loc, /turf) && power > 5e7)
-				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
-			if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
-				src.loc:burn_tile()
-
-			for (var/mob/living/L in src.loc)
-				if (isintangible(L))
-					continue
-				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-					source.affecting_mobs |= L
-
-	..()
-
-/obj/lpt_laser/ex_act(severity)
-	return
-
-/obj/lpt_laser/Crossed(atom/movable/AM)
-	..()
-	if (src.active && isliving(AM) && !isintangible(AM))
-		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			source.affecting_mobs |= AM
-
-/obj/lpt_laser/Uncrossed(var/atom/movable/AM)
-	if(isliving(AM) && source)
-		source.affecting_mobs -= AM
-
-/obj/lpt_laser/proc/burn_all_living_contents()
-	for(var/mob/living/L in src.loc)
-		if(burn_living(L,power) && source) //returns 1 if they were gibbed
-			source.affecting_mobs -= L
-
-/obj/proc/burn_living(var/mob/living/L, var/power = 0)
-	if(power < 10) return
-	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
+//why was this on /obj, what the fuck
+/obj/machinery/power/pt_laser/proc/burn_living(var/mob/living/L, var/power = 0)
+	if(power < 10)
+		return
+	if(isintangible(L) || L.nodamage || QDELETED(L))
+		return
 
 	if(prob(min(power/1e5,50)))
 		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
@@ -586,17 +466,441 @@
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
-			logTheThing("combat", L, null, "was elecgibbed by the PTL at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
-			logTheThing("combat", L, null, "was explosively gibbed by the PTL at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
 			L.blowthefuckup(min(1+round(power/1e12),20),0)
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
+
+ABSTRACT_TYPE(/obj/laser_sink)
+///The abstract concept of a thing that does stuff when hit by a laser
+/obj/laser_sink //might end up being a component or something
+	var/obj/linked_laser/in_laser = null
+///When a laser hits this sink, return TRUE on successful connection
+/obj/laser_sink/proc/incident(obj/linked_laser/laser)
+	return TRUE
+
+///"that's not a word" - 🤓
+///When a laser stops hitting this sink
+/obj/laser_sink/proc/exident(obj/linked_laser/laser)
+	src.in_laser = null
+
+///Another stub, should call traverse on all emitted laser segments with the proc passed through
+/obj/laser_sink/proc/traverse(proc_to_call)
+	return
+
+/obj/laser_sink/Move()
+	src.exident(src.in_laser)
+	..()
+
+/obj/laser_sink/set_loc(loc)
+	if (loc != src.loc)
+		src.exident(src.in_laser)
+	..()
+
+/obj/laser_sink/disposing()
+	src.exident(src.in_laser)
+	..()
+
+#define NW_SE 0
+#define SW_NE 1
+TYPEINFO(/obj/laser_sink/mirror)
+	mats = list("MET-1"=10, "CRY-1"=10, "REF-1"=30)
+/obj/laser_sink/mirror
+	name = "laser mirror"
+	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."
+	anchored = 0
+	density = 1
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "laser_mirror0"
+
+	var/obj/linked_laser/out_laser = null
+	var/facing = NW_SE
+
+/obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
+	if (isscrewingtool(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		src.anchored = !src.anchored
+	else
+		..()
+
+/obj/laser_sink/mirror/attack_hand(mob/user)
+	if (ON_COOLDOWN(src, "rotate", 1 SECOND)) //this is probably a good idea
+		return
+	var/obj/linked_laser/laser = src.in_laser
+	src.exident(laser)
+	src.facing = 1 - src.facing
+	src.icon_state = "laser_mirror[src.facing]"
+	if (laser)
+		src.incident(laser)
+
+/obj/laser_sink/mirror/proc/get_reflected_dir(dir)
+	//very stupid angle maths
+	var/angle
+	if (src.facing == NW_SE)
+		if (dir in list(WEST, EAST))
+			angle = 90
+		else
+			angle = -90
+	else
+		if (dir in list(WEST, EAST))
+			angle = -90
+		else
+			angle = 90
+	return turn(dir, angle) //rotate based on which way the mirror is facing
+
+/obj/laser_sink/mirror/incident(obj/linked_laser/laser)
+	if (src.in_laser) //no infinite loops allowed
+		return FALSE
+	src.in_laser = laser
+	src.out_laser = laser.copy_laser(get_turf(src), src.get_reflected_dir(laser.dir))
+	laser.next = src.out_laser
+	src.out_laser.try_propagate()
+	src.out_laser.icon_state = "[initial(src.out_laser.icon_state)]_corner[src.facing]"
+	return TRUE
+
+/obj/laser_sink/mirror/exident(obj/linked_laser/laser)
+	qdel(src.out_laser)
+	src.out_laser = null
+	..()
+
+/obj/laser_sink/mirror/bullet_act(obj/projectile/P)
+	//cooldown to prevent client lag caused by infinite projectile loops
+	if (istype(P.proj_data, /datum/projectile/laser/heavy) && !ON_COOLDOWN(src, "reflect_projectile", 1 DECI SECOND))
+		var/obj/projectile/new_proj = shoot_projectile_DIR(src, P.proj_data, src.get_reflected_dir(P.dir))
+		new_proj.travelled = P.travelled
+		P.die()
+	else
+		..()
+
+/obj/laser_sink/mirror/traverse(proc_to_call)
+	src.out_laser.traverse(proc_to_call)
+
+TYPEINFO(/obj/laser_sink/splitter)
+	mats = list("MET-1"=20, "CRY-2"=20, "REF-1"=30)
+/obj/laser_sink/splitter
+	name = "beam splitter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "laser_splitter"
+	density = 1
+	var/obj/linked_laser/left = null
+	var/obj/linked_laser/right = null
+
+//todo: componentize anchoring behaviour
+/obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
+	if (isscrewingtool(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		src.anchored = !src.anchored
+	else if (ispryingtool(I))
+		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
+			return
+		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		src.dir = turn(src.dir, 90)
+	else
+		..()
+
+/obj/laser_sink/splitter/incident(obj/linked_laser/laser)
+	if (src.in_laser)
+		return FALSE
+	if (laser.dir != src.dir)
+		return FALSE
+
+	src.in_laser = laser
+
+	src.left = src.in_laser.copy_laser(get_turf(src), turn(src.dir, -90))
+	src.left.power = laser.power / 2
+	src.left.icon = null
+	src.left.try_propagate()
+
+	src.right = src.in_laser.copy_laser(get_turf(src), turn(src.dir, 90))
+	src.right.power = laser.power / 2
+	src.right.icon = null
+	src.right.try_propagate()
+
+	return TRUE
+
+/obj/laser_sink/splitter/exident(obj/linked_laser/laser)
+	qdel(src.left)
+	qdel(src.right)
+	src.left = null
+	src.right = null
+	..()
+
+/obj/laser_sink/splitter/traverse(proc_to_call)
+	src.left.traverse(proc_to_call)
+	src.right.traverse(proc_to_call)
+
+///This is a stupid singleton sink that exists so that lasers that hit the edge of the z-level have something to connect to
+/obj/laser_sink/ptl_seller
+
+/obj/laser_sink/ptl_seller/incident(obj/linked_laser/ptl/laser)
+	if (!istype(laser)) //we only care about PTL lasers
+		return FALSE
+	laser.source.selling_lasers |= laser
+	return TRUE
+
+/obj/laser_sink/ptl_seller/exident(obj/linked_laser/ptl/laser)
+	laser.source.selling_lasers -= laser
+
+#undef NW_SE
+#undef SW_NE
+/obj/linked_laser
+	icon = 'icons/obj/power.dmi'
+	icon_state = "ptl_beam"
+	anchored = 2
+	density = 0
+	luminosity = 1
+	mouse_opacity = 0
+	///How many laser segments are behind us
+	var/length = 0
+	///Maximum number of segments in the beam, this exists to prevent nerds from blowing up the server
+	var/max_length = 500
+	var/obj/linked_laser/next = null
+	var/obj/linked_laser/previous = null
+	var/turf/current_turf = null
+	///Are we at the very end of the beam, and so watching to see if the next turf becomes free
+	var/is_endpoint = FALSE
+	///A laser sink we're pointing into (null on most beams)
+	var/obj/laser_sink/sink = null
+	///Relative laser power, modified by splitters etc.
+	var/power = 1
+
+/obj/linked_laser/ex_act(severity)
+	return
+
+/obj/linked_laser/New(loc, dir)
+	..()
+	src.length = length
+	src.dir = dir
+	src.current_turf = get_turf(src)
+	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
+	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/current_turf_density_change)
+
+///Attempt to propagate the laser by extending, interacting with sinks etc.
+///Separated from New to allow setting up properties on a laser object without passing them as New args
+/obj/linked_laser/proc/try_propagate()
+	var/turf/next_turf = get_next_turf()
+	if (!istype(next_turf) || next_turf == src.current_turf)
+		return
+	//check the turf for anything that might block us, and notify any laser sinks we find
+	var/blocked = FALSE
+	if (next_turf.density)
+		blocked = TRUE
+	else
+		for (var/obj/object in next_turf)
+			if (istype(object, /obj/laser_sink))
+				var/obj/laser_sink/sink = object
+				if (sink.incident(src))
+					src.sink = sink
+			if (src.is_blocking(object))
+				blocked = TRUE
+				break
+	if (src.length >= src.max_length)
+		return
+	if (!blocked)
+		SPAWN(0) //this is here because byond hates recursion depth
+			src.extend()
+	else
+		src.become_endpoint()
+
+/obj/linked_laser/proc/get_next_turf()
+	return get_step(src, src.dir)
+
+///Returns a new segment with all its properties copied over (override on child types)
+/obj/linked_laser/proc/copy_laser(turf/T, dir)
+	var/obj/linked_laser/new_laser = new src.type(T, dir)
+	new_laser.length = src.length + 1
+	new_laser.power = src.power
+	return new_laser
+
+///Set up a new laser on the next turf
+/obj/linked_laser/proc/extend()
+	src.next = src.copy_laser(src.get_next_turf(), src.dir)
+	src.next.previous = src
+	src.next.try_propagate()
+	src.release_endpoint()
+
+///Called on the last laser in the chain to make it watch for changes to the turf blocking it
+/obj/linked_laser/proc/become_endpoint()
+	src.is_endpoint = TRUE
+	var/turf/next_turf = get_next_turf()
+	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, .proc/next_turf_replaced)
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_updated)
+	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/next_turf_updated)
+
+///Called when we extend a new laser object and are therefore no longer an endpoint
+/obj/linked_laser/proc/release_endpoint()
+	src.is_endpoint = FALSE
+	var/turf/next_turf = get_next_turf() //this may cause problems when the next turf changes, we'll need to handle re-registering signals waa
+	UnregisterSignal(next_turf, COMSIG_TURF_REPLACED)
+	UnregisterSignal(next_turf, COMSIG_ATOM_UNCROSSED)
+	UnregisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY)
+
+///Kill any upstream laser objects
+/obj/linked_laser/disposing()
+	UnregisterSignal(src.current_turf, COMSIG_TURF_REPLACED)
+	UnregisterSignal(src.current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY)
+	SPAWN(0)
+		qdel(src.next)
+		src.next = null
+	src.sink?.exident(src)
+	src.sink = null
+	if (!QDELETED(src.previous))
+		src.previous.become_endpoint()
+	if (src.is_endpoint)
+		src.release_endpoint()
+	..()
+
+///Does something block the laser?
+/obj/linked_laser/proc/is_blocking(atom/movable/A)
+	if(!istype(A,/obj/window) && !istype(A,/obj/grille) && !ismob(A) && A.density)
+		return TRUE
+
+///Does anything on a turf block the laser?
+/obj/linked_laser/proc/turf_check(turf/T)
+	. = TRUE
+	if (!istype(T) || T.density)
+		return FALSE
+	for (var/obj/object in T)
+		if (src.is_blocking(object))
+			return FALSE
+
+/obj/linked_laser/Crossed(atom/movable/A)
+	..()
+	if (istype(A, /obj/laser_sink) && src.previous)
+		//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
+		SPAWN(0)
+			if (!QDELETED(src.previous))
+				src.previous.sink = A
+				src.previous.sink.incident(src.previous)
+	if (src.is_blocking(A))
+		qdel(src)
+
+///Traverses all upstream laser segments and calls proc_to_call on each of them
+/obj/linked_laser/proc/traverse(proc_to_call)
+	var/obj/linked_laser/ptl/current_laser = src
+	do
+		call(proc_to_call)(current_laser)
+		if (!current_laser.next)
+			current_laser.sink?.traverse(proc_to_call)
+		current_laser = current_laser.next
+	while (current_laser)
+
+//////////////clusterfuck signal registered procs///////////////
+
+///Our turf is being replaced with another
+/obj/linked_laser/proc/current_turf_replaced()
+	SPAWN(1) //wait for the turf to actually be replaced
+		var/turf/T = get_turf(src)
+		if (!istype(T) || T.density)
+			qdel(src)
+
+///Something is changing density in our current turf
+/obj/linked_laser/proc/current_turf_density_change(turf/T, old_density, atom/thing)
+	if (src.is_blocking(thing))
+		qdel(src)
+
+///The next turf in line is being replaced with another, so check if it's now suitable to put another laser on
+/obj/linked_laser/proc/next_turf_replaced()
+	src.release_endpoint()
+	SPAWN(1) //wait for the turf to actually be replaced
+		var/turf/next_turf = get_next_turf()
+		if (src.turf_check(next_turf))
+			src.extend()
+		else
+			//if we can't put a new laser there, then register to watch the new turf
+			src.become_endpoint()
+
+///Something is crossing into or changing density in the next turf in line
+/obj/linked_laser/proc/next_turf_updated()
+	var/turf/next_turf = get_next_turf()
+	if (turf_check(next_turf))
+		src.extend()
+
+/obj/linked_laser/ptl
+	name = "laser"
+	desc = "A powerful laser beam."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "ptl_beam"
+	event_handler_flags = USE_FLUID_ENTER
+	var/obj/machinery/power/pt_laser/source = null
+	var/datum/light/light
+
+/obj/linked_laser/ptl/New(loc, dir)
+	..()
+	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
+
+/obj/linked_laser/ptl/try_propagate()
+	. = ..()
+	var/turf/T = get_next_turf()
+	if (!T) //edge of z_level
+		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
+		if (seller.incident(src))
+			src.sink = seller
+	var/power = src.source.laser_power()
+	alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
+		src.loc:burn_tile()
+
+	for (var/mob/living/L in src.loc)
+		if (isintangible(L))
+			continue
+		if (!source.burn_living(L,power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
+			source.affecting_mobs |= L
+
+/obj/linked_laser/ptl/copy_laser(turf/T, dir)
+	var/obj/linked_laser/ptl/new_laser = ..()
+	new_laser.source = src.source
+	return new_laser
+
+/obj/linked_laser/ptl/Crossed(atom/movable/AM)
+	..()
+	if (QDELETED(src))
+		return
+	if (isliving(AM) && !isintangible(AM))
+		if (!src.source.burn_living(AM, src.source.laser_power())) //burn_living() returns 1 if they are gibbed, 0 otherwise
+			source.affecting_mobs |= AM
+
+/obj/linked_laser/ptl/Uncrossed(var/atom/movable/AM)
+	if(isliving(AM) && source)
+		source.affecting_mobs -= AM
+	..()
+
+/obj/linked_laser/ptl/proc/burn_all_living_contents()
+	for(var/mob/living/L in src.loc)
+		if(src.source.burn_living(L,src.source.laser_power()) && source) //returns 1 if they were gibbed
+			source.affecting_mobs -= L
+
+/obj/linked_laser/ptl/become_endpoint()
+	..()
+	var/turf/next_turf = get_next_turf()
+	for (var/obj/object in next_turf)
+		if (src.is_blocking(object))
+			src.source.blocking_objects |= object
+
+/obj/linked_laser/ptl/release_endpoint()
+	..()
+	var/turf/next_turf = get_next_turf()
+	for (var/obj/object in next_turf)
+		if (src.is_blocking(object))
+			src.source.blocking_objects -= object
+
+/obj/linked_laser/ptl/disposing()
+	src.remove_simple_light("laser_beam")
+	src.next?.previous = null
+	src.previous?.next = null
+	..()
+
+/obj/machinery/power/pt_laser/cheat
+	charge = INFINITY
 
 #undef PTLEFFICIENCY
 #undef PTLMINOUTPUT

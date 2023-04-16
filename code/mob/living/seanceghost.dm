@@ -1,5 +1,5 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
-/mob/living/seanceghost
+/mob/living/intangible/seanceghost
 	name = "Seance Ghost"
 	desc = "Ominous hooded figure!"
 	icon = 'icons/obj/zoldorf.dmi'
@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
@@ -16,6 +16,7 @@
 
 	New(var/mob/M)
 		..()
+		invisibility = INVIS_NONE
 
 	is_spacefaring()
 		return 1
@@ -104,13 +105,14 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
 
 	emote(var/act, var/voluntary)
+		..()
 		var/message
 		switch (lowertext(act))
 			if("flip")
@@ -160,7 +162,7 @@
 	if(originalz) //theres different handling for if that previous mob was a zoldorf or not
 		originalg = originalz
 	if (src.mind || src.client)
-		var/mob/living/seanceghost/Z = new/mob/living/seanceghost(src)
+		var/mob/living/intangible/seanceghost/Z = new/mob/living/intangible/seanceghost(src)
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))

@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/foldable)
 	)
 
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(!ispath(briefcase_path, /obj/item/objBriefcase))
@@ -76,7 +77,7 @@ TYPEINFO(/datum/component/foldable)
 	icon_state = "briefcase"
 	desc = "A briefcase."
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY

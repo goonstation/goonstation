@@ -100,26 +100,27 @@
 		on_unset_scan(obj/item/device/pda2/pda)
 			qdel(get_radio_connection_by_id(pda, "ruckkit"))
 
-		scan_atom(atom/A as obj)
-			if (..() || !istype(A, /obj))
+		scan_atom(atom/A)
+			if (..() || !isobj(A) || !ismob(usr))
 				return
-
-			var/obj/O = A
-			if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
-				return
-
-			if(O.mats == 0 || isnull(O.mats) || O.disposed || O.is_syndicate != 0)
-				return "<span class='alert'>Unable to scan.</span>"
-
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-				return "<span class='alert'>Messaging must be on to communicate with engineering kit.</span>"
-
-			animate_scanning(O, "#FFFF00")
+				return "<span class='alert'>Messaging must be enabled to communicate with engineering kit.</span>"
+			var/obj/O = A
+			var/mob/user = usr
+			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+				return
+			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
+			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL)
+				return
+			animate_scanning(A, "#FFFF00")
+			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
+				return "<span class='alert'>Unable to scan.</span>"
 
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
-			theScan.scannedMats = O.mats
+			var/typeinfo/obj/typeinfo = O.get_typeinfo()
+			theScan.scannedMats = typeinfo.mats
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src.master

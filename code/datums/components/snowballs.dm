@@ -5,11 +5,12 @@ TYPEINFO(/datum/component/snowballs)
 	initialization_args = list()
 
 /datum/component/snowballs/Initialize()
+	. = ..()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	else
 		source_turf = parent
-	RegisterSignal(parent, list(COMSIG_ATTACKHAND), .proc/start_snowball)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_snowball)
 
 /datum/component/snowballs/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKHAND)

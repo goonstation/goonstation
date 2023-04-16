@@ -4,7 +4,7 @@
 	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.5
 	processing_tier = PROCESSING_FULL
 	var/list/list/mob/occupant_buckets
@@ -56,18 +56,18 @@
 	proc/process_big_effects()
 		playsound(src,
 			pick(
-				"sound/machines/mixer.ogg",
-				"sound/impact_sounds/Slimy_Splat_1.ogg",
-				"sound/misc/meat_plop.ogg",
-				"sound/effects/brrp.ogg",
-				"sound/impact_sounds/Metal_Clang_1.ogg",
-				"sound/effects/pump.ogg",
-				"sound/effects/syringeproj.ogg")
+				'sound/machines/mixer.ogg',
+				'sound/impact_sounds/Slimy_Splat_1.ogg',
+				'sound/misc/meat_plop.ogg',
+				'sound/effects/brrp.ogg',
+				'sound/impact_sounds/Metal_Clang_1.ogg',
+				'sound/effects/pump.ogg',
+				'sound/effects/syringeproj.ogg')
 			, 100, 1)
 
 		if (prob(15))
 			visible_message("<span class='alert'>[src] sprays vomit all around itself!</span>")
-			playsound(src, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
+			playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
 					continue
@@ -97,7 +97,7 @@
 
 		if (prob(5))
 			visible_message("<span class='alert'>[occupant] pukes [his_or_her(occupant)] guts out!</span>")
-			playsound(src, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
+			playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
 					continue
@@ -151,7 +151,7 @@
 
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
-			logTheThing("combat", user, target, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.UpdateIcon()
 			qdel(G)
@@ -160,7 +160,7 @@
 		if (iswrenchingtool(I))
 			anchored = !anchored
 			user.show_text("You [anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-			playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
 			return
 
 		. = ..()

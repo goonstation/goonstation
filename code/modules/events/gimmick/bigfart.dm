@@ -37,7 +37,7 @@
 			if (prob(4) || freebie)
 				freebie = 0
 				SPAWN(50+rand(0,550))
-					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
+					playsound_global(world, 'sound/voice/farts/superfart.ogg', 60)
 					for (var/mob/M in mobs)
 						if (M.client)
 							shake_camera(M, 20, 8)
@@ -70,7 +70,6 @@
 		return
 
 	limbloss_prob = clamp(limbloss_prob, 0, 100)
-	var/severed_something
 
 	var/is_bot = 0 // so we don't do a bunch of ishuman/isrobot calls
 	var/changer = ischangeling(H)
@@ -89,9 +88,8 @@
 			B = new /obj/item/clothing/head/butt/cyberbutt(T)
 			B.donor = H
 			ThrowRandom(B, dist = 6, speed = 1)
-		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
+		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
-		severed_something = TRUE
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -107,8 +105,7 @@
 
 		if (length(possible_limbs)) /// Dont want your tail removed? Keep all your limbs intact!
 			if(istype(H.organHolder.tail) && prob(100 - (25 * length(possible_limbs)))) // 25% chance to lose a tail per missing limb
-				severed_something = TRUE
-				H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from \his body[magical ? " in a magical explosion" : null]!</span>",\
+				H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 				"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
 			for(var/obj/item/parts/L in possible_limbs)
@@ -128,14 +125,12 @@
 						ass_explosion_message(L, H, magical, possible_limbs[L], 0)
 						continue
 					if(1)
-						severed_something = TRUE
 						ass_explosion_message(L, H, magical, possible_limbs[L], 1)
 						L.sever()
 						break
 					if(2)
 						if(prob(50))
 							ass_explosion_message(L, H, magical, possible_limbs[L], 1)
-							severed_something = TRUE
 							L.sever()
 							break
 						else
@@ -160,8 +155,6 @@
 	else
 		H.changeStatus("weakened", 1 DECI SECOND)
 	H.force_laydown_standup()
-	if(!severed_something)
-		H.emote("scream")
 
 /// Returns 0 if it cant be severed like this, 1 if it always gets severed, or 2 if it *sometimes* gets severed
 /proc/ass_explosion_limb_success(var/obj/item/parts/L)
@@ -178,7 +171,7 @@
 				return 0
 		else if((HAS_FLAG(F,LIMB_ABOM)) || (HAS_FLAG(F,LIMB_BEAR)))
 			return 0 // Not even magic wants to get near these things
-		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
+		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)) || (HAS_FLAG(F,LIMB_ARTIFACT)))
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
@@ -279,7 +272,6 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] rips free from its socket!</span>")
 				else
 					boutput(H, "<span class='notification'>...but it slips, only managing to rip out a clump of hair!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)
@@ -294,13 +286,26 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] breaks off at the [armleg == "arm" ? "shoulder" : "hip"]!</span>")
 				else
 					boutput(H, "<span class='notification'>...but it slips off the smooth stony finish of [ch ? "our" : "your"] [L]!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)
 					boutput(H, "<span class='alert'>It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!</span>")
 				else
 					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] grounds the energy!</span>")
+
+		else if(HAS_FLAG(F, LIMB_ARTIFACT))
+			if(magical)
+				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
+				if(severed)
+					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] is ripped off!</span>")
+				else
+					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] resists it!</span>")
+			else
+				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
+				if(severed)
+					boutput(H, "<span class='alert'>It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!</span>")
+				else
+					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] absorbs the energy!</span>")
 
 		else
 			if(magical)
@@ -309,7 +314,6 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] rips free from its socket!</span>")
 				else
 					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] manages to hold it on!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)

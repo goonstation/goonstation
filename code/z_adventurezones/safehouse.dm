@@ -63,7 +63,7 @@
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 
 		asteroid_horizontal
 			name = "asteroid"
@@ -161,7 +161,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	src.add_fingerprint(user)
 	if(ON_COOLDOWN(src, "bio_handscanner_attackhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
-	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
+	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.bioHolder.Uid == allowed_bioHolders) //Are you the authorised bioHolder (for all intents and purposes)?
@@ -180,7 +180,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "cloner1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3.1
 	var/datum/light/light
@@ -214,7 +214,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	attack_hand(mob/user)
 		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -294,7 +294,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A small tracking beacon in fairly poor condition. What's it doing all the way out here?"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "beaconbroken"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/disk/data/fixed_disk/safehouse_rdrive
 	New()
@@ -378,7 +378,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "An old fashioned turntable for playing vinyl. Doesn't appear to be plugged in."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "recordplayer"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)
@@ -396,7 +396,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "reclaimer"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3.1 //I mess with layers here & below to help me set-up the clone room. Quite a bit was var-edited in StrongDMM as well.
 
@@ -410,7 +410,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A reserve tank for storing large quantities of biomatter. You could clone a small army with a tank that size."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "biomatter_tank0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3.1
 
@@ -419,7 +419,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A large pipe for transporting fluid. It looks very durable."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "biotube"
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2.8
 
 /obj/decal/fakeobjects/safehouse/conduit
@@ -427,7 +427,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "An electrical conduit. The casing is welded on"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "conduit"
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2.8
 
 /obj/decal/fakeobjects/safehouse/mechcomp_cabinet
@@ -435,7 +435,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A pair of cabinets containing mechanical components, set up to automate operation of the cloner. Technology is incredible!"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "cabinets1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3.1
 
@@ -444,7 +444,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "A console used to operate a cloning scanner and pod. This one looks like it's seen better days."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scannerb"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3.1
 
@@ -452,7 +452,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	name = "dead clone"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "deadexecclean"
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2.9
 
 	bloody
@@ -464,7 +464,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "This a recirculating air handling unit designed to keep ambient conditions within comfortable limits."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "airhandlingunit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/safehouse/airfilter
@@ -472,7 +472,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "This is a filter for scrubbing CO2 and other harmful gases out the air. The 'filter clogged' alarm is lit up."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "filter1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/datum/light/light
 
@@ -480,7 +480,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		..()
 		light = new/datum/light/point //We want this to stand out in the dark & draw the player to examine it.
 		light.set_brightness(0.3)
-		light.set_color(1, 0.50, 0.50)
+		light.set_color(1, 0.5, 0.5)
 		light.attach(src)
 		light.enable()
 
@@ -669,12 +669,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "",
 "Here's your order summary:",
 "",
-"CO2 Filters - 4 off - $1400",
+"CO2 Filters - 4 off - 1400[CREDIT_SIGN]",
 "",
-"Subtotal: $1400",
-"Shipping: $40",
-"Discount $0",
-"Grand Total: $1440",
+"Subtotal: 1400[CREDIT_SIGN]",
+"Shipping: 40[CREDIT_SIGN]",
+"Discount 0[CREDIT_SIGN]",
+"Grand Total: 1440[CREDIT_SIGN]",
 "",
 "If you have any queries about your order please log",
 "on to our customer portal.",

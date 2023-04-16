@@ -12,7 +12,7 @@
 	layer = 5.0 // Todo layer
 	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 5
 	no_camera = 1
@@ -136,7 +136,7 @@
 	if(src.emagged == 1)
 		var/message = src.buttifricky()
 		if(prob(2))
-			playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
+			playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		speak(message)
 		var/fartmessage = src.fart()
 		if(fartmessage)
@@ -155,7 +155,7 @@
 		if(user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
+		playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		src.emagged = 1
 		return 1
 	return 0
@@ -312,7 +312,7 @@
 	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
-	playsound(src, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	SPAWN(2 SECONDS)
 		var/jitters = 30
 		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
@@ -338,7 +338,7 @@
 				sleep(0.1 SECONDS)
 			SPAWN(3 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b>'s ass explodes!</span>")
-				playsound(src.loc, "sound/voice/farts/superfart.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/farts/superfart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.robo_expel_fart_gas(2)
 				var/turf/src_turf = get_turf(src)
 				if(src_turf)
@@ -380,7 +380,7 @@
 		return
 
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
-		playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	else
 		if(narrator_mode)
 			playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)

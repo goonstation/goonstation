@@ -124,7 +124,7 @@
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "az" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
@@ -841,7 +841,7 @@
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "cK" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "cL" = (
@@ -975,10 +975,10 @@
 /area/prefab/sea_monkey_hideout)
 "dd" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "de" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "df" = (
 /obj/pool/perspective{
@@ -1008,17 +1008,17 @@
 /area/prefab/sea_monkey_hideout)
 "di" = (
 /obj/machinery/light/small/floor/blueish,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dj" = (
 /obj/item/sticker/banana,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dk" = (
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dl" = (
 /obj/pool/perspective{
@@ -1061,11 +1061,11 @@
 /obj/fluid_spawner{
 	amount = 3700
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "ds" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dt" = (
 /obj/decal/cleanable/blood/tracks{

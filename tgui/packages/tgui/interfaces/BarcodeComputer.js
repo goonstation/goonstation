@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, LabeledList, NumberInput, Section, Flex, Box, Stack } from '../components';
+import { Button, NumberInput, Section, Box, Stack } from '../components';
 import { Window } from '../layouts';
 
 const BarcodeComputerSection = (props, context) => {
@@ -82,7 +82,7 @@ export const BarcodeComputer = (props, context) => {
               <Box align="center">
                 <IDCard card={card} act={act} />
                 <br />
-                {card ? `Account balance: $${card.balance}` : null}
+                {card ? `Account balance: ${card.balance}⪽` : null}
               </Box>
             </Section>
           </Stack.Item>

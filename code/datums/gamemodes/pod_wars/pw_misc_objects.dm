@@ -2,7 +2,7 @@
 	name = "Critical System"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 64
 	bound_height = 64
@@ -145,7 +145,7 @@
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -184,6 +184,16 @@
 		SubscribeToProcess()
 		last_check = world.time
 
+	start_clone()
+		. = ..()
+		if (.)
+			if (team_num == TEAM_NANOTRASEN)
+				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
+			else if (team_num == TEAM_SYNDICATE)
+				new /obj/item/implant/pod_wars/syndicate(src.occupant)
+
+		return
+
 	ex_act(severity)
 		return
 
@@ -206,7 +216,7 @@
 			return
 
 		for(var/datum/mind/mind in to_search)
-			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
+			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
 				//prune puritan trait
 				mind.current?.traitHolder.removeTrait("puritan")
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
@@ -272,14 +282,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	//just "deactivates"
 	die()
 		if (!destroyed)
-			playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			destroyed = 1
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
-			src.opacity = 0
+			src.set_opacity(0)
 			if (reconstruction_time)
 				sleep(reconstruction_time)
-				src.opacity = 1
+				src.set_opacity(1)
 				src.alpha = 255
 				health = initial(health)
 				destroyed = 0
@@ -289,7 +299,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
@@ -383,7 +393,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
-					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
 					ship.locked = 0
@@ -547,10 +557,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 /obj/control_point_computer
 	name = "computer"	//name it based on area.
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer_generic"
+	icon = 'icons/obj/control_point_computer.dmi'
+	icon_state = "control_point_computer"
 	density = 1
-	anchored = 1.0
+	anchored = ANCHORED
+
+	var/image/screen
+	var/image/screen_light
+	var/image/name_overlay
+
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -568,7 +583,29 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
 
-		//name it based on area.
+		src.update_screen("screen")
+
+		if (src.dir == NORTH || src.dir == SOUTH)
+			src.bound_width = 64
+			src.bound_height = 32
+		else if (src.dir == EAST || src.dir == WEST)
+			src.bound_width = 32
+			src.bound_height = 64
+
+	proc/update_screen(var/icon_state)
+		src.screen = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.UpdateOverlays(src.screen, "screen")
+
+		src.screen_light = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.screen_light.plane = PLANE_LIGHTING
+		src.screen_light.blend_mode = BLEND_ADD
+		src.screen_light.layer = LIGHTING_LAYER_BASE
+		src.screen_light.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(src.screen_light, "screen_light")
+
+	proc/update_name_overlay(var/icon_state)
+		src.name_overlay = image('icons/obj/control_point_computer.dmi', icon_state)
+		src.UpdateOverlays(src.name_overlay, "name_overlay")
 
 	ex_act()
 		return
@@ -595,11 +632,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
+			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
@@ -638,17 +675,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			light_r = 0
 			light_g = 0
 			light_b = 1
-			icon_state = "computer_blue"
+			src.update_screen("nanotrasen")
 		else if (owner_team == TEAM_SYNDICATE)
 			light_r = 1
 			light_g = 0
 			light_b = 0
-			icon_state = "computer_red"
+			src.update_screen("syndicate")
 		else
 			light_r = 1
 			light_g = 1
 			light_b = 1
-			icon_state = "computer_generic"
+			src.update_screen("screen")
 
 		light.set_color(light_r, light_g, light_b)
 
@@ -679,7 +716,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1.0
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -711,14 +748,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			var/obj/machinery/vehicle/V = AM
 			V.health -= round(src.health/4)
 			V.checkhealth()
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			qdel(src)
 		..()
 
 	attackby(var/obj/item/W, var/mob/user)
 		attack_particle(user,src)
 		take_damage(W.force)
-		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 20, 1)
+		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
 		user.lastattacked = src
 		..()
 
@@ -736,7 +773,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 						take_damage(20)
 					else
 						take_damage(5)
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+					playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 					attack_particle(user,src)
 
 
@@ -787,7 +824,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing(LOG_DIARY, user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -796,7 +833,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -843,7 +880,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)

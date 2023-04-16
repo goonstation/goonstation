@@ -3,7 +3,7 @@
 	desc = "Implants the user with an counter-revolutionary implant"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/obj/item/implant/imp = null
 
@@ -22,12 +22,12 @@
 		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 	else
 		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
-	M.anchored = 1
+	M.anchored = ANCHORED
 	M.buckled = src
 	M.set_loc(src.loc)
 	implantgo(M)
 	src.add_fingerprint(user)
-	playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+	playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
@@ -41,7 +41,7 @@
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	return
 
 /obj/machinery/imp/chair/proc/implantgo(mob/M as mob)
@@ -52,15 +52,6 @@
 
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
-
-	logTheThing("combat", usr, M, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.implant.Add(src.imp)
-
-	src.imp.set_loc(M)
-	src.imp.owner = M
-	src.imp.implanted = 1
 	src.imp.implanted(M)
 	src.imp = null
 	return

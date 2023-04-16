@@ -12,14 +12,16 @@
 
 //////////////////////////////////////// Sleeper control console //////////////////////////////
 
+TYPEINFO(/obj/machinery/sleep_console)
+	mats = 8
+
 /obj/machinery/sleep_console
 	name = "sleeper console"
 	desc = "A device that displays the vital signs of the occupant of the sleeper, and can dispense chemicals."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
@@ -39,19 +41,17 @@
 					our_sleeper = locate() in orange(src,1)
 		else if (!our_sleeper && istype(src.loc, /obj/machinery/sleeper))
 			our_sleeper = src.loc
-		return
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
 			else
-		return
 
 	// Just relay emag_act() here.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -74,35 +74,40 @@
 				else
 					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
-			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
-		return
+			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	process()
-		if (!src)
+		if (src.status & (NOPOWER | BROKEN))
 			return
-		if (src.status & (NOPOWER|BROKEN))
-			return
+
 		if (!src.our_sleeper)
 			src.time = 0
 			src.timing = 0
 			src.time_started = 0
 			src.updateDialog()
 			return
+
+		// non-anchored sleeper assumed to be portable, don't want to eject
+		// in case someone is using it for body transport
+		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
+			src.our_sleeper.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
+			src.time = 0
+			src.timing = 0
+			src.time_started = 0
+			src.our_sleeper.go_out()
+			src.updateDialog()
+			return
+
 		if (src.timing)
 			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
 						var/mob/living/carbon/human/O = occupant
-						if (isdead(O))
-							src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No further life signs detected from occupant.\"")
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
-							src.timing = 0
-							src.time_started = 0
-						else
-							if (O.sleeping != 5)
-								O.sleeping = 5
-							src.our_sleeper.alter_health(O)
+						if (O.sleeping != 5)
+							O.sleeping = 5
+						src.our_sleeper.alter_health(O)
 				else
 					src.timing = 0
 					src.time_started = 0
@@ -112,8 +117,9 @@
 				src.timing = 0
 				src.time_started = 0
 
+
+
 			src.updateDialog()
-		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
 	powered()
@@ -151,7 +157,7 @@
 					if (src.timing)
 						src.time_started = TIME
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
+						logTheThing(LOG_STATION, usr, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time = clamp(src.time + src.time_started - TIME, 0, src.maximum_time)
 						src.time_started = 0
@@ -162,7 +168,7 @@
 					var/t = params["tp"]
 					if (t > 0 && src.timing && src.our_sleeper.occupant)
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
+						logTheThing(LOG_STATION, usr, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
 				. = TRUE
 			if("inject")
@@ -229,14 +235,16 @@
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/sleeper)
+	mats = 25
+
 /obj/machinery/sleeper
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"//_0"
 	desc = "An enterable machine that analyzes and stabilizes the vital signs of the occupant."
 	density = 1
-	anchored = 1
-	mats = 25
+	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -279,59 +287,54 @@
 
 	disposing()
 		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+			MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 			occupant = null
 		..()
 
 	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
-		return
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				for (var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				qdel(src)
-				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
-			if (3.0)
+			if (3)
 				if (prob(25))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
-		return
 
 	// Let's get us some poisons.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.add_fingerprint(user)
-		if (src.emagged == 1)
-			return 0
+		if (src.emagged)
+			return FALSE
 		else
-			src.emagged = 1
+			src.emagged = TRUE
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
-			return 1
+			logTheThing(LOG_STATION, user, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			return TRUE
 
 	demag(var/mob/user)
 		if (!src.emagged)
-			return 0
+			return FALSE
 		if (user)
 			user.show_text("You repair [src]'s reagent synthesis safety protocols.", "blue")
-		src.emagged = 0
-		return 1
+		src.emagged = FALSE
+		return TRUE
 
 	blob_act(var/power)
 		if (prob(power * 3.75))
@@ -342,7 +345,7 @@
 		return
 
 	allow_drop()
-		return 0
+		return FALSE
 
 	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
@@ -366,7 +369,7 @@
 				continue
 			O.set_loc(src.loc)
 		qdel(G)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 30, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 30, 1)
 		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
@@ -430,10 +433,9 @@
 				injected_anything = TRUE
 
 		if (injected_anything)
-			playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
+			playsound(src.loc, 'sound/items/hypo.ogg', 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
-		return
 
 	// Called by sleeper console when injecting stuff manually.
 	proc/inject(mob/user_feedback as mob, var/manual_injection = 0)
@@ -476,8 +478,8 @@
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
-					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+					if (manual_injection)
+						logTheThing(LOG_STATION, user_feedback, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
 					var/inject_c = src.inject_reagent
@@ -503,16 +505,13 @@
 			src.no_med_spam = world.time
 
 			if (injected_anything)
-				playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
-
-		return
+				playsound(src.loc, 'sound/items/hypo.ogg', manual_injection ? 50 : 25, 1)
 
 
 	proc/go_out()
 		if (!src || !src.occupant)
 			return
-		if (src.occupant.loc == src)
-			src.occupant.set_loc(get_turf(src))
+		MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 
 	was_deconstructed_to_frame(mob/user)
 		src.go_out()
@@ -529,7 +528,7 @@
 			src.occupant.force_laydown_standup()
 			src.occupant = null
 			src.UpdateIcon()
-			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -572,7 +571,7 @@
 			usr.show_text("The [src.name] is already occupied!", "red")
 			return FALSE
 
-		.= TRUE
+		. = TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -590,8 +589,7 @@
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
 			O.set_loc(src.loc)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
-		return
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
 	attack_hand(mob/user)
 		..()
@@ -608,10 +606,9 @@
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user)) return
+		if (!isalive(user) || iswraith(user) || isintangible(user)) return
 		src.go_out()
 		add_fingerprint(user)
 
@@ -663,14 +660,15 @@
 			if("inject")
 				src.inject(null, 1)
 
-		return
+
+TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
+	mats = 30
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
 	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
-	anchored = 0
-	mats = 30
+	anchored = UNANCHORED
 	p_class = 1.2
 	var/homeloc = null
 	allow_self_service = 0
@@ -732,7 +730,7 @@
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	move_inside()
@@ -767,7 +765,7 @@
 	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()

@@ -17,46 +17,70 @@
 	animate(A, alpha = 0,  transform = M2, time = 10, easing = LINEAR_EASING)
 
 /proc/animate_fade_grayscale(var/atom/A, var/time=5)
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-	animate(A, color=list(0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0, 0, 0, 1), time=time, easing=SINE_EASING)
-	return
+	var/start = COLOR_MATRIX_IDENTITY
+	var/end = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_grayscale(var/atom/A, var/time=5)
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0, 0, 0, 1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
@@ -166,7 +190,7 @@
 	if(prob(10))
 		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
-	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	A.underlays += underneath
 	var/matrix/pivot = matrix()
 	pivot.Scale(0.2, 1.0)
@@ -179,7 +203,7 @@
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
-	src.attack_particle.appearance_flags = TILE_BOUND
+	src.attack_particle.appearance_flags = TILE_BOUND | PIXEL_SCALE
 	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
 	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
@@ -199,7 +223,7 @@
 		icon = 'icons/mob/mob.dmi'
 		icon_state = "sprint_cloud"
 		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	muzzleflash
 		icon = 'icons/mob/mob.dmi'
@@ -219,6 +243,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -263,6 +289,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
@@ -873,7 +901,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A)
-	if (!istype(A) && !isclient(A))
+	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
 	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -882,6 +910,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FF00FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
+
+/proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
+	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
+		return
+	for(var/the_color in colors_to_swap)
+		if(the_color == colors_to_swap[1])
+			animate(A, color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		else
+			animate(color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 
 /proc/animate_fade_to_color_fill(var/atom/A,var/the_color,var/time)
 	if (!istype(A) || !the_color || !time)
@@ -1162,7 +1199,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1179,7 +1216,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1196,7 +1233,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1313,33 +1350,51 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/atom/movable/A)
+/proc/heavenly_spawn(var/atom/movable/A, reverse = FALSE)
 	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
+	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
-	A.alpha = 0
-	A.pixel_y = 176
+	A.anchored = ANCHORED
+	if (!reverse)
+		A.alpha = 0
+		A.pixel_y = 176
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			old_canbegrabbed = living.canbegrabbed
+			living.canbegrabbed = FALSE
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
-	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
+	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
-	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(A, pixel_y = reverse ? 176 : 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	sleep(12 SECONDS)
 	A.anchored = was_anchored
 	A.layer = oldlayer
 	animate(lightbeam,alpha = 0, time=15)
+	if (reverse)
+		animate(A,alpha=0,time=15)
 	sleep(1.5 SECONDS)
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			living.canbegrabbed = old_canbegrabbed
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+	if (reverse)
+		if (ismob(A))
+			var/mob/M = A
+			M.ghostize()
+			M.set_loc(null)
+			M.death()
+		qdel(A)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
@@ -1358,13 +1413,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,0)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
@@ -1398,7 +1453,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
@@ -1434,7 +1489,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1504,7 +1559,10 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_turf_slidein(turf/T, new_turf_type, dir, time)
 	var/obj/overlay/tile_effect/sliding_turf/slide = new(T)
 	var/had_fullbright = T.fullbright
-	T.ReplaceWith(new_turf_type)
+	if(station_repair.station_generator && T.z == Z_LEVEL_STATION)
+		station_repair.repair_turfs(list(T))
+	else
+		T.ReplaceWith(new_turf_type)
 	T.layer -= 2
 	var/list/tr
 	switch(dir)
@@ -1631,5 +1689,34 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN(stomp_duration)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
 			M.update_canmove()
+
+/obj/decal/laserbeam
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "Contain_F"
+
+/proc/spawn_beam(atom/movable/AM)
+	var/scale_x = 3
+	var/scale_y = -15
+	var/beam_time = 4 DECI SECONDS
+	AM.alpha = 0
+	var/turf/T = get_turf(AM)
+	var/matrix/M = matrix()
+	M.Scale(scale_x, scale_y)
+	var/obj/decal/laserbeam/beam = new(T)
+	beam.pixel_y =  abs(scale_y * 32)
+	beam.Scale(scale_x, 1)
+	beam.plane = PLANE_ABOVE_LIGHTING
+	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, 1)
+	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
+	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
+	SPAWN(beam_time / 2)
+		AM.alpha = initial(AM.alpha)
+		if (issimulatedturf(T))
+			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched[rand(1,2)]")
+			burn_overlay.alpha = 200
+			T.UpdateOverlays(burn_overlay,"burn")
+	SPAWN(beam_time)
+		qdel(beam)
 
 

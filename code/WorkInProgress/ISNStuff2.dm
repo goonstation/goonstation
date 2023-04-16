@@ -142,7 +142,7 @@
 	icon_state = "anom"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/has_processing_loop = 0
 
 	New(var/turf/loc)
@@ -171,9 +171,9 @@
 	name = "do not press this button"
 	desc = "This button stand is covered in warnings that say not to press it. Huh. Guess you shouldn't press it."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/mechanicsExpansion.dmi'
-	icon_state = "comp_button"
+	icon_state = "button_comp_button_unpressed"
 	var/steps_until_pressable = 18
 	var/being_pressed = 0
 	var/has_been_pressed = 0
@@ -262,7 +262,7 @@
 				A.eject = 0
 				A.UpdateIcon()
 
-			for_by_tcl(G, /obj/critter/dog/george)
+			for_by_tcl(G, /mob/living/critter/small_animal/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return

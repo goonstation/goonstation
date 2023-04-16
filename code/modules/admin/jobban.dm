@@ -12,6 +12,12 @@
 	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server_id)))
 		var/datum/player/player = make_player(M) //Recache the player.
 		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		var/ircmsg[] = new()
+		ircmsg["key"] = M
+		ircmsg["rank"] = rank
+		ircmsg["akey"] = akey
+		ircmsg["applicable_server"] = server_id
+		ircbot.export_async("job_ban", ircmsg)
 		return 1
 	return 0 //Errored.
 
@@ -50,7 +56,7 @@
 			return TRUE
 
 	if(cache.Find("Engineering Department"))
-		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
@@ -61,12 +67,16 @@
 		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
 			return TRUE
 
+	if(cache.Find("Ghostdrone"))
+		if(rank in list("Ghostdrone","Remy","Bumblespider","Crow"))
+			return TRUE
+
 	if(cache.Find("[rank]"))
 		return TRUE
 	else
 		return FALSE
 
-/proc/jobban_unban(mob/M, rank)//This is full of faff to try and account for raw ckeys and actual players.
+/proc/jobban_unban(mob/M, rank, akey)//This is full of faff to try and account for raw ckeys and actual players.
 	var/checkey
 	var/list/cache
 
@@ -87,3 +97,9 @@
 	if(rank == "Security Department")
 		if(cache.Find("Security Officer"))
 			apiHandler.queryAPI("jobbans/del", list("ckey"=checkey, "rank"="Security Officer"))
+	var/ircmsg[] = new()
+	ircmsg["key"] = checkey
+	ircmsg["rank"] = rank
+	ircmsg["akey"] = akey
+	ircmsg["applicable_server"] = config.server_id
+	ircbot.export_async("job_unban", ircmsg)

@@ -1,29 +1,31 @@
 ##### Labeler ##########################################################################################################
 # Enable "labeler" for your PR that would add labels to PRs based on the paths that are modified in the PR.
 labelPRBasedOnFilePath:
-  # Add 'sprites' label to any changes within 'icons' folder or any subfolders
-  sprites:
-    - icons/**/*
-    - '**/*.dmi'
 
   # Add 'mapping' label to any changes within 'maps' folder or any subfolders
-  mapping:
+  A-Mapping:
     - maps/**/*
     - '**/*.dmm'
 
+  # Add 'tooling' label to any changes to the .github folder or any subfolders
+  A-Tooling:
+    - .github/**/*
+    - 'tools/**/*'
+
+  # Add 'tgui' label to any changes to the tgui folder or any subfolders
+  A-UI:
+    - tgui/**/*
+
+  # Add 'documentation' label to any changes to a .md file
+  C-Documentation:
+    - '**/*.md'
+
   # Add 'sound' label to any changes within 'sound' folder or any subfolders
-  sound:
+  C-Sound:
     - sound/**/*
     - '**/*.ogg'
 
-  # Add 'documentation' label to any changes to a .md file
-  documentation:
-    - '**/*.md'
-
-  # Add 'github' label to any changes to the .github folder or any subfolders
-  github:
-    - .github/**/*
-
-  # Add 'tgui' label to any changes to the tgui folder or any subfolders
-  tgui:
-    - tgui/**/*
+  # Add 'sprites' label to any changes within 'icons' folder or any subfolders
+  C-Sprites:
+    - icons/**/*
+    - '**/*.dmi'

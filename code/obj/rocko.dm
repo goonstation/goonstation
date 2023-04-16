@@ -36,7 +36,7 @@ obj/item/rocko
 			var/datum/material/dummy = new new_material
 			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
 		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		UpdateIcon()
 
@@ -73,7 +73,7 @@ obj/item/rocko
 			view_chance += 2
 			if(src.holder == M)
 				view_chance += 5
-		else if(M.job in list("Engineer", "Mechanic"))
+		else if(M.job in list("Engineer"))
 			view_chance += 1
 			if(src.holder == M)
 				view_chance += 1
@@ -138,7 +138,7 @@ obj/item/rocko
 			painted = pick(list("#000","#151","#514","#511","#218"))
 
 		smiley.color = painted
-		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		smiley.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 
 		src.UpdateOverlays(smiley, "face")
 		update_hat()
@@ -148,7 +148,7 @@ obj/item/rocko
 			var/icon/working_icon = icon(src.hat.wear_image_icon, src.hat.icon_state, SOUTH )
 			working_icon.Shift(SOUTH, 10)
 			var/image/working_hat = image(working_icon)
-			working_hat.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			working_hat.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 			src.UpdateOverlays(working_hat, "hat")
 		else
 			src.UpdateOverlays(null, "hat")
@@ -156,7 +156,7 @@ obj/item/rocko
 	get_desc(dist, mob/user)
 		if(ismob(user) &&	user.job == "Chief Engineer")
 			. = "A rock but also [pick(rocko_is)]."
-		else if(ismob(user) && (user.job in list("Engineer", "Mechanic", "Quartermaster", "Captain")))
+		else if(ismob(user) && (user.job in list("Engineer", "Quartermaster", "Captain")))
 			. = "The Chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."

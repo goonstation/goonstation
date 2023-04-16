@@ -18,7 +18,7 @@
 							M.ghostize()
 							qdel(M)
 							owner.emote("burp")
-							playsound(owner.loc, "sound/voice/burp.ogg", 50, 1)
+							playsound(owner.loc, 'sound/voice/burp.ogg', 50, 1)
 							continue
 						if (air_master.current_cycle%3==1)
 							if (!M.nodamage)

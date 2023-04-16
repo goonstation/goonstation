@@ -9,7 +9,7 @@
 	density = 0
 	canmove = 0
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	stat = 0
 	var/autofree = 0
@@ -217,7 +217,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -232,6 +232,7 @@
 			return
 		if(src.emoting)
 			return
+		..()
 		var/icon/soulcache
 		var/icon/blendic
 		switch (lowertext(act))
@@ -312,6 +313,13 @@
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")
 
+	stopObserving()
+		if(src.homebooth)
+			src.set_loc(homebooth)
+		else
+			src.ghostize()
+		src.observing = null
+
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
 		var/mob/zoldorf/Z = new/mob/zoldorf(get_turf(src))
@@ -377,13 +385,14 @@
 /mob/proc/zoldize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a zoldorf.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a zoldorf.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a zoldorf.")
 		return make_zoldorf()
 	return null
 
-/client/MouseDrop(var/over_object, var/src_location, var/over_location, mob/user as mob) //handling click dragging of items within one tile of a zoldorf booth.
+/client/MouseDrop(var/over_object, var/src_location, var/over_location) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
-	if(!istype(usr,/mob/zoldorf))
+	var/mob/zoldorf/user = usr
+	if(!istype(user,/mob/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)
 	var/turf/Ta = get_turf(src_location)
@@ -391,18 +400,18 @@
 	if(!Tb || !Ta || Ta.density || Tb.density)
 		return
 
-	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
+	if(istype(over_object,/obj/item) && istype(user.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
 		if(i.anchored)
 			return
-		var/obj/machinery/playerzoldorf/pz = usr.loc
-		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
+		var/obj/machinery/playerzoldorf/pz = user.loc
+		if((i in range(1,user.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
 				SPAWN(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
-			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))
+			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(user.loc)))
 				var/obj/item/paper/thermal/playerfortune/fi = i
 				fi.icon = 'icons/obj/zoldorf.dmi'
 				fi.icon_state = "fortuneburn"

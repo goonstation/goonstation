@@ -10,13 +10,13 @@ TOWELS:
 	* clown: can eat and vomit
 
 HANDKERCHIEFS:
-	* clean eyeglasses
 	* wipe people's faces
 	* various emotes into
 	* wave
 	* tiny secret
 
 BOTH:
+	* clean eyeglasses
 	* chem gag rag
 	* wipe heads
 	* TODO: embroider
@@ -84,6 +84,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")
+		playsound(src, 'sound/items/glass_wipe.ogg', 35, 1)
 
 /obj/item/cloth/towel/white
 	name = "white towel"
@@ -109,12 +110,13 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	name = "clown towel"
 	desc = "About the most massively useful thing a clown can have."
 	icon_state = "towel_clown"
+	var/hidden_pocket = null // storage components when!
 
-/obj/item/cloth/towel/clown/attack_self(mob/user)
-	if (!ishuman(user) || user.mind?.assigned_role != "Clown")
+/obj/item/cloth/towel/clown/attack(mob/living/M, mob/user)
+	if (M != user || user.mind?.assigned_role != "Clown")
 		return ..()
 	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
-	playsound(user, "sound/misc/gulp.ogg", 30, 1)
+	playsound(user, 'sound/misc/gulp.ogg', 30, 1)
 	eat_twitch(user)
 	user.drop_item(src)
 	src.set_loc(user)
@@ -122,6 +124,28 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		user.emote("burp")
 	var/mob/living/carbon/human/H = user
 	H.stomach_process += src
+
+/obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
+	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
+		return ..()
+	if (!isnull(hidden_pocket))
+		boutput(user, "<span class='alert'>You already have an item stored in the towel!</span>")
+		return
+	animate_storage_rustle(src)
+	playsound(src, "rustle", 50, 1, -5)
+	user.visible_message("<span class='notice'>[user] [pick("surreptitiously", "sneakily", "awkwardly")] stows [I] away in one of [src]'s many hidden pockets.</span>")
+	user.drop_item(I)
+	I.set_loc(src)
+	hidden_pocket = I
+
+/obj/item/cloth/towel/clown/attack_self(mob/user)
+	if (!hidden_pocket)
+		return ..()
+	animate_storage_rustle(src)
+	playsound(src, "rustle", 50, 1, -5)
+	user.visible_message("<span class='notice'>[user] rummages through [src] and retrieves [hidden_pocket] from one of its many hidden pockets!</span>")
+	user.put_in_hand_or_drop(hidden_pocket)
+	hidden_pocket = null
 
 /obj/item/cloth/towel/blue
 	name = "blue towel"
@@ -148,51 +172,82 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	name = "handkerchief"
 	desc = "Probably bought from an upscale boutique somewhere."
 	w_class = W_CLASS_TINY
+	var/obj/item/clothing/mask/bandana/bandana = null
 
 /obj/item/cloth/handkerchief/attack(mob/living/M, mob/user)
 	if (!..())
 		return
 	user.visible_message("<span class='notice'>[user] [pick("dabs at", "blots at", "wipes")] [M == user ? his_or_her(user) : "[M]'s"] face with [src].</span>")
 
+/obj/item/cloth/handkerchief/attack_self(mob/user)
+	if (!src.bandana)
+		return
+	var/obj/item/clothing/mask/bandana/the_bandana = new src.bandana
+	the_bandana.setMaterial(src.material)
+	the_bandana.color = src.color
+	src.copy_filters_to(the_bandana)
+	qdel(src)
+	user.put_in_hand_or_drop(the_bandana)
+	boutput(user, "<span class='notice'>You tie \the [src] together to make \a [the_bandana].</span>")
+
 /obj/item/cloth/handkerchief/white
 	name = "white handkerchief"
 	icon_state = "hanky_white"
+	bandana = /obj/item/clothing/mask/bandana/white
 
 /obj/item/cloth/handkerchief/yellow
 	name = "yellow handkerchief"
 	icon_state = "hanky_yellow"
+	bandana = /obj/item/clothing/mask/bandana/yellow
 
 /obj/item/cloth/handkerchief/red
 	name = "red handkerchief"
 	icon_state = "hanky_red"
+	bandana = /obj/item/clothing/mask/bandana/red
 
 /obj/item/cloth/handkerchief/purple
 	name = "purple handkerchief"
 	icon_state = "hanky_purple"
+	bandana = /obj/item/clothing/mask/bandana/purple
 
 /obj/item/cloth/handkerchief/pink
 	name = "pink handkerchief"
 	icon_state = "hanky_pink"
+	bandana = /obj/item/clothing/mask/bandana/pink
 
 /obj/item/cloth/handkerchief/orange
 	name = "orange handkerchief"
 	icon_state = "hanky_orange"
+	bandana = /obj/item/clothing/mask/bandana/orange
 
 /obj/item/cloth/handkerchief/nt
 	name = "NT handkerchief"
 	desc = "The handkerchief of an esteemed NanoTrasen official."
 	icon_state = "hanky_nt"
+	bandana = /obj/item/clothing/mask/bandana/nt
 
 /obj/item/cloth/handkerchief/green
 	name = "green handkerchief"
 	icon_state = "hanky_green"
+	bandana = /obj/item/clothing/mask/bandana/green
 
 /obj/item/cloth/handkerchief/blue
 	name = "blue handkerchief"
 	icon_state = "hanky_blue"
+	bandana = /obj/item/clothing/mask/bandana/blue
 
 /obj/item/cloth/handkerchief/random
+	var/list/possible_handkerchief = list(/obj/item/cloth/handkerchief/white,
+										/obj/item/cloth/handkerchief/yellow,
+										/obj/item/cloth/handkerchief/red,
+										/obj/item/cloth/handkerchief/purple,
+										/obj/item/cloth/handkerchief/pink,
+										/obj/item/cloth/handkerchief/orange,
+										/obj/item/cloth/handkerchief/green,
+										/obj/item/cloth/handkerchief/blue)
 
 /obj/item/cloth/handkerchief/random/New()
 	..()
-	icon_state = "hanky_[pick("white", "yellow", "red", "purple", "pink", "orange", "green", "blue")]"
+	var/obj/item/cloth/handkerchief/handkerchief_to_spawn = pick(possible_handkerchief)
+	new handkerchief_to_spawn(src.loc)
+	qdel(src)

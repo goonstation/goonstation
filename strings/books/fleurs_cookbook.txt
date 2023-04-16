@@ -1,0 +1,68 @@
+<h1>Fleur's Cookbook</h1>
+
+<i>A collection of recipes developed by Fleur DeLaCreme, while working as a Culinary Scientist for NanoTrasen.</i>
+
+<hr>
+<h2>Fettucine Alfredo</h2>
+<h3>Ingredients</h3>
+<div class = "alfredo">
+<li>1 Spaghetti Noodles
+<li>1 Cream
+</div>
+<div class ="alfredosteps">
+<li>Cook the ingredients in the oven for 8 seconds on high.
+</div>
+
+<hr>
+<h2>Chicken Alfredo</h2>
+<h3>Ingredients</h3>
+<div class = "calfredo">
+<li>1 Spaghetti Noodles
+<li>1 Cream
+<li>1 Chicken Nugget
+</div>
+<div class ="calfredosteps">
+<li>Cook the ingredients in the oven for 8 seconds on high.
+</div>
+
+<hr>
+<h2>Chicken Parmigiana</h2>
+<h3>Ingredients</h3>
+<div class = "cparm">
+<li>1 Spaghetti Noodles
+<li>1 Ketchup
+<li>1 Chicken Nugget
+</div>
+<div class ="cparmsteps">
+<li>Cook the ingredients in the oven for 8 seconds on high.
+</div>
+
+<hr>
+<h2>Lasagna</h2>
+<h3>Ingredients</h3>
+<div class = "lasagna">
+<li>1 Pasta Sheet
+<li>1 Ketchup
+<li>2 Cheese Slice
+</div>
+<div class ="lasagnasteps">
+<li>Cook the ingredients in the oven for 8 seconds on high.
+</div>
+
+<hr>
+<h2>Blueberry Pie</h2>
+<h3>Ingredients</h3>
+<div class = "bluepie">
+<li>1 Sweet Dough
+<li>1 Blueberry
+</div>
+<div class ="bluepiesteps">
+<li>Cook the ingredients in the oven for 2 seconds on high.
+</div>
+
+<hr>
+<i>Chef's Tip: Try using other fruit to make a pie, like Blackberry, Raspberry, or Cherry!</i>
+
+<hr>
+<h2>Looks like there's plenty more empty pages in here...</h2>
+<h3>She's going to be working on this book for years to come.</h3>

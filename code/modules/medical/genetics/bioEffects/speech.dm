@@ -4,7 +4,7 @@
 	id = "stutter"
 	probability = 40
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Y-you f.. feel a.. a bit n-n-nervous."
 	msgLose = "You don't feel nervous anymore."
 	reclaim_fail = 10
@@ -14,6 +14,7 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech"
+	var/mixingdesk_allowed = TRUE
 
 	proc/OnSpeak(var/message)
 		if (!istext(message))
@@ -26,7 +27,7 @@
 	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin when engaged."
 	id = "accent_smiling"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like you want to smile and smile and smile forever :)"
 	msgLose = "You don't feel like smiling anymore. :("
 	reclaim_fail = 10
@@ -48,7 +49,7 @@
 	desc = "Forces the language center of the subject's brain to drawl out sentences in a funky manner."
 	id = "accent_elvis"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel funky."
 	msgLose = "You feel a little less conversation would be great."
 	reclaim_fail = 10
@@ -69,7 +70,7 @@
 	desc = "Forces the language center of the subject's brain to construct sentences in a more rudimentary manner."
 	id = "accent_chav"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Ye feel like a reet prat like, innit?"
 	msgLose = "You no longer feel like being rude and sassy."
 	reclaim_fail = 10
@@ -90,7 +91,7 @@
 	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a highlander."
 	id = "accent_scots"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Och aye! You feel like a true Scot!"
 	msgLose = "You weren't a true Scot after all."
 	reclaim_fail = 10
@@ -112,7 +113,7 @@
 	desc = "Forces the language center of the subject's brain to construct sentences in a vaguely norse manner."
 	id = "accent_swedish"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel Swedish, however that works."
 	msgLose = "The feeling of Swedishness passes."
 	reclaim_fail = 10
@@ -133,7 +134,7 @@
 	desc = "Forces the language center of the subject's brain to construct sentences in a manner not conclusively proven to exist by scientists."
 	id = "accent_finnish"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Sauna and birch beatings! Hyvä!"
 	msgLose = "The lure of the sauna subsides..."
 	reclaim_fail = 10
@@ -154,14 +155,14 @@
 	desc = "Forces the langua.... what!? What the fuck is this? What happened here!? Gods have mercy on our souls."
 	id = "accent_tommy"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel torn apart!"
 	msgLose = "You pull yourself together."
 	reclaim_fail = 10
 	probability = 0 // NO
-	occur_in_genepools = 0 // NO ALSO
-	can_make_injector = 0
-	can_copy = 0
+	occur_in_genepools = FALSE // NO ALSO
+	can_make_injector = FALSE
+	can_copy = FALSE
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -175,14 +176,14 @@
 	desc = "unfunny"
 	id = "accent_wonk"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Fuckable owwwwwwwls!"
 	msgLose = "More like honk."
 	reclaim_fail = 10
-	probability = 0 // NO
-	occur_in_genepools = 0 // NO ALSO
-	can_make_injector = 0
-	can_copy = 0
+	probability = FALSE // NO
+	occur_in_genepools = FALSE // NO ALSO
+	can_make_injector = FALSE
+	can_copy = FALSE
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -197,7 +198,7 @@
 	desc = "Causes the speech center of the subject's brain to become, uh. Well, SOMETHING happens to it."
 	id = "accent_comic"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "<font face='Comic Sans MS'>You feel great!!</font>"
 	msgLose = "You feel okay."
 	reclaim_fail = 10
@@ -229,18 +230,18 @@
 	desc = "Spooky. Red."
 	id = "accent_badmin"
 	effectType = EFFECT_TYPE_POWER
-	isBad = 0
+	isBad = FALSE
 	msgGain = "You now speak with black and red text."
 	msgLose = "Back to normal text."
 	probability = 0 // NO
-	occur_in_genepools = 0 // NO ALSO
-	can_make_injector = 0
-	can_copy = 0
+	occur_in_genepools = FALSE // NO ALSO
+	can_make_injector = FALSE
+	can_copy = FALSE
 
 	OnAdd()
 		var/mob/living/L = owner
 		if (istype(L))
-			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 1px 1px 0 black; -dm-text-outline: 1px black;"
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 0 0 3px black; -dm-text-outline: 2px black;"
 
 	OnRemove()
 		var/mob/living/L = owner
@@ -303,7 +304,7 @@
 	desc = "Causes the subject to have impaired control over their oral muscles, resulting in malformed speech."
 	id = "slurring"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like your tongue's made out of lead."
 	msgLose = "You feel less tongue-tied."
 	reclaim_fail = 10
@@ -324,7 +325,7 @@
 	name = "Frontal Gyrus Alteration Type-X"
 	desc = "Heavily corrupts the part of the brain responsible for forming spoken sentences."
 	id = "unintelligable"
-	isBad = 1
+	isBad = TRUE
 	effectType = EFFECT_TYPE_DISABILITY
 	blockCount = 4
 	blockGaps = 4
@@ -490,18 +491,18 @@
 	desc = "The subject's larynx is channeling a chaotic dimension of elder beings."
 	id = "accent_zalgo"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "HE COMES"
 	msgLose = "You feel sane again."
 	probability = 0
-	occur_in_genepools = 0 // Probably shouldn't look like this? http://f.666kb.com/i/d2iqlzm1qa2gk6dqs.png
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
+	occur_in_genepools = FALSE // Probably shouldn't look like this? http://f.666kb.com/i/d2iqlzm1qa2gk6dqs.png
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
 
 	New()
 		src.msgGain = zalgoify(src.msgGain, rand(0,8), rand(0, 2), rand(0, 8))
@@ -519,18 +520,18 @@
 	desc = "The subject's speech appears to come from multiple, shunted locations."
 	id = "accent_void"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Ah, friend! It's so good to be able to speak again!"
 	msgLose = "Your voice is only yours again."
 	probability = 0
-	occur_in_genepools = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
 
 	New()
 		src.msgGain = voidSpeak(src.msgGain)
@@ -538,11 +539,11 @@
 
 	OnAdd()
 		var/mob/living/L = owner
-		L.speech_void = 1
+		L.speech_void = TRUE
 
 	OnRemove()
 		var/mob/living/L = owner
-		L.speech_void = 0
+		L.speech_void = FALSE
 
 
 
@@ -551,18 +552,18 @@
 	desc = "yee"
 	id = "accent_yee"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "yee"
 	msgLose = "nee"
 	probability = 0 // noo
-	occur_in_genepools = 0 // not for human consumption
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
+	occur_in_genepools = FALSE // not for human consumption
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -585,27 +586,27 @@
 
 /proc/yee_parse(var/datum/text_roamer/R)
 	var/new_string = ""
-	var/used = 0
+	var/used = FALSE
 
 	switch(R.curr_char)
 		if ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Z") // all but Y
 			if (R.prev_char == " " || R.curr_char_pos == 1) // start of a word or start of the string
 				new_string = "Y"
-				used = 1
+				used = TRUE
 			else
 				new_string = "E"
-				used = 1
+				used = TRUE
 		if ("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z") // all but e
 			if (R.prev_char == " " || R.curr_char_pos == 1) // start of a word or start of the string
 				new_string = "y"
-				used = 1
+				used = TRUE
 			else
 				new_string = "e"
-				used = 1
+				used = TRUE
 
 	if (new_string == "")
 		new_string = R.curr_char
-		used = 1
+		used = TRUE
 
 	var/datum/parse_result/P = new/datum/parse_result
 	P.string = new_string
@@ -654,11 +655,11 @@
 	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
 	id = "accent_uwu"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 0 // heh
+	isBad = FALSE // heh
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
-	occur_in_genepools = 0
-	acceptable_in_mutini = 0
+	occur_in_genepools = FALSE
+	acceptable_in_mutini = FALSE
 	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
@@ -678,19 +679,19 @@
 	desc = "Reconstructs the language center of the subject's brain, shutting most of it down and allowing for a very limited functionality."
 	id = "accent_literalowo"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "Owo wowo wowow owow!"
 	msgLose = "You feel like your vocabulary has expanded!"
 	probability = 0
-	occur_in_genepools = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
-	acceptable_in_mutini = 0
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
+	acceptable_in_mutini = FALSE
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -700,7 +701,7 @@
 		if(!speech_list || !length(speech_list))
 			return ""
 
-		var/o = 1
+		var/o = TRUE
 
 		for (var/i = 1 to length(speech_list))
 			o = 1
@@ -721,7 +722,7 @@
 	desc = "Forces the language center of the subject's brain to construct rude and vaguely-canadian sentences."
 	id = "accent_french"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like your province is a nation, however that works."
 	msgLose = "The feeling of Independence passes."
 	reclaim_fail = 10
@@ -742,7 +743,7 @@
 	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a northerner."
 	id = "accent_tyke"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like you're on Ilkley Moor without a hat."
 	msgLose = "You never want to hear a brass band again."
 	reclaim_fail = 10
@@ -763,7 +764,7 @@
 	desc = "Forces the language center of the subject's brain to bark out sentences like a dog."
 	id = "accent_scoob"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like you've got some work to do now."
 	msgLose = "You feel like you've found yourself."
 	reclaim_fail = 10
@@ -784,22 +785,125 @@
 	desc = "Influences select language centers of the subject's brain to bark out sentences like a dog."
 	id = "accent_scoob_nerf"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = TRUE
 	msgGain = "You feel like you're talking through a dog's snout."
 	msgLose = "You feel less vocally canine."
 	probability = 0
-	occur_in_genepools = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
-	acceptable_in_mutini = 0
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
+	acceptable_in_mutini = FALSE
 
 	OnSpeak(var/message)
 		if (!istext(message))
 			return ""
 		message = scoobify(message, 1)
+		return message
+
+/datum/bioEffect/speech/thrall
+	name = "Frontal Gyrus Alteration Type-V"
+	desc = "Forces the language center of the subject's brain to emit gurgling, raspy speech."
+	id = "accent_thrall"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Your throat gurgles with blood."
+	msgLose = "You feel your throat clear."
+	probability = 0
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	curable_by_mutadone = FALSE
+	acceptable_in_mutini = TRUE
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		return thrall_parse(message)
+
+/datum/bioEffect/speech/emoji
+	name = "Frontal Gyrus Alteration Type-😃"
+	desc = "Makes the 💬 center of the 🧑's 🧠 to use pictograms in 🗣."
+	id = "emoji"
+	probability = 1
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Y-you feel a bit 🤪."
+	msgLose = "You don't feel like talking in pictograms anymore."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+	mixingdesk_allowed = FALSE
+	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
+	var/static/list/word_to_emoji = null
+	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		var/list/words = splittext_char(message, src.word_regex)
+		var/list/out_words = list()
+		if(isnull(src.word_to_emoji))
+			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))
+
+		for(var/word in words)
+			var/found = FALSE
+			for(var/suffix in src.suffixes)
+				if(suffix == "" || (length(word) > 3 && endswith(word, suffix)))
+					var/modword = suffix == "" ? word : copytext(word, 1, length(word) - length(suffix))
+					var/list/emojis = src.word_to_emoji[lowertext(modword)]
+					if(length(emojis))
+						out_words += pick(emojis)
+						found = TRUE
+						break
+			if(!found)
+				out_words += word
+
+		return jointext(out_words, "")
+
+
+/datum/bioEffect/speech/emoji/only
+	name = "Frontal Gyrus Alteration Type-🤪"
+	desc = "💬🧑🧠🗣"
+	id = "emojionly"
+	probability = 0.2
+	msgGain = "🧑⬅🗨🤪"
+	msgLose = "You don't feel like talking only in pictograms anymore."
+
+	OnSpeak(message)
+		var/processed = ..(message)
+		var/list/output = list()
+		for(var/i in 1 to length(processed))
+			var/char = text2ascii_char(processed, i)
+			if(char == 0)
+				break
+			else if(char > 127)
+				output += ascii2text(char)
+		return jointext(output, "")
+
+/datum/bioEffect/speech/lol
+	name = "Frontal Gyrus Alteration Type-LOL"
+	desc = "Reconstructs the language center of the subject's brain with memetic patterns."
+	id = "accent_lolcat"
+	effectType = EFFECT_TYPE_DISABILITY
+	msgGain = "YOU CAN HAZ LULZ SPEAKS!"
+	msgLose = "You don't feel like talking in memetic patterns anymore."
+	occur_in_genepools = FALSE
+	probability = 0 // Should not be player accessible
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = lolcat(message)
 		return message

@@ -279,7 +279,7 @@
 /area/prefab/raceway)
 "aN" = (
 /obj/table/auto,
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "aO" = (
@@ -333,7 +333,7 @@
 	},
 /area/prefab/raceway)
 "aU" = (
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /obj/item/sea_ladder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -482,7 +482,7 @@
 /area/prefab/raceway)
 "br" = (
 /obj/table/auto,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/prefab/raceway)

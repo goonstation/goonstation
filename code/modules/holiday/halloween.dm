@@ -26,6 +26,12 @@
 // also /obj/item/storage/nerd_kit/New() is in storage.dm with /obj/item/storage/nerd_kit instead of RANDOMLY FLOATING AROUND IN HERE WHAT IS WRONG WITH YOU PEOPLE
 //deathbutton to deathbutton.dm
 
+#ifdef HALLOWEEN
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_SHOWN
+#else
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_HIDDEN
+#endif
+
 /*
  *	DEATH PLAQUE
  */
@@ -46,7 +52,7 @@
 	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
@@ -66,7 +72,7 @@
 	desc = "A classic 20th century jukebox. Ayyy!"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/last_switch = 0
 	var/list/to_transfer = list() //List of mobs waiting to be shuffled back.
@@ -84,7 +90,7 @@
 		if (user.a_intent == "harm")
 			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
 			playsound(src.loc, pick(sounds_punch), 100, 1)
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, rand(1, 4))
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, rand(1, 4))
 			return
 		else
 			src.visible_message("<b>[user]</b> thumps the [src]!  Ayy!")
@@ -99,7 +105,7 @@
 
 	proc/mindswap()
 		src.visible_message("<span class='alert'>The [src] activates!</span>")
-		playsound(src.loc,"sound/effects/ghost2.ogg", 100, 1)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
@@ -171,7 +177,7 @@
 		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
-			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
 
@@ -316,7 +322,7 @@
 	desc = "The television, that insidious beast, that Medusa which freezes a billion people to stone every night, staring fixedly, that Siren which called and sang and promised so much and gave, after all, so little."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "security_det"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attack_hand(mob/user)
@@ -327,7 +333,7 @@
 		if (ishuman(user) && !user.stat)
 			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
 			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
 			if(M.mind)
@@ -345,7 +351,7 @@
 			M.set_loc(stoneman)
 			stoneman.name = "statue of [M.name]"
 			stoneman.desc = "A really dumb looking statue. Very well carved, though."
-			stoneman.anchored = 0
+			stoneman.anchored = UNANCHORED
 			stoneman.set_density(1)
 			stoneman.layer = MOB_LAYER
 
@@ -493,10 +499,10 @@
 	desc = "A decorative ghost, hanging from the ceiling. It's <b><u><i>pretty scary!!!!</i></u></b>"
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "g_drone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	pixel_y = 7
-	var/trigger_sound = "sound/effects/ExtremelyScaryGhostNoise.ogg"
+	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
 	var/trigger_duration = 118 // should be about as long as the sound clip
 	var/spam_flag = 0
 	var/spam_timer = 150
@@ -528,3 +534,41 @@
 			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
 			sleep(0.1 SECONDS)
+
+/obj/cauldron
+	name = "cauldron"
+	desc = "An empty cast-iron cauldron."
+	icon = 'icons/misc/halloween.dmi'
+	icon_state = "cauldron"
+	anchored = ANCHORED
+	density = 1
+
+	candy
+		name = "candy-filled cauldron"
+		desc = "It's full of candy! Treats... or tricks?"
+		icon_state = "cauldron-candy"
+
+		attack_hand(mob/user)
+			var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
+			var/newcandy_path = pick(candytypes)
+			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path
+			user.put_in_hand_or_drop(newcandy)
+			if (prob(5))
+				newcandy.razor_blade = 1
+			boutput(user, "You grab [newcandy] from the cauldron!")
+
+		/// subtype named "ephemeral" which only spawns on halloween
+		EPHEMERAL_HALLOWEEN
+
+	jellybean
+		name = "jellybean-filled cauldron"
+		desc = "It's full of jellybeans! Wonder what's in these..."
+		icon_state = "cauldron-jellybean"
+
+		attack_hand(mob/user)
+			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new
+			user.put_in_hand_or_drop(B)
+			boutput(user, "You grab [B] from the cauldron!")
+
+		/// subtype named "ephemeral" which only spawns on halloween
+		EPHEMERAL_HALLOWEEN

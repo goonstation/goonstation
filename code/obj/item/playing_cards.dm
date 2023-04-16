@@ -86,6 +86,8 @@
 
 	mouse_drop(var/atom/target as obj|mob) //r o t a t e
 		if(!istype(target,/obj/item/card_group))
+			if (is_incapacitated(usr) || !usr.can_use_hands() || !can_reach(usr, src) || usr.sleeping || (target && target.event_handler_flags & NO_MOUSEDROP_QOL))
+				return
 			tap_or_reverse(usr)
 		else
 			..()
@@ -250,7 +252,7 @@
 						icon_state = "stg-m-[icon_state_num]"
 					if("their")
 						icon_state_num = rand(1,NUMBER_N)
-						icon_state = "stg-N-[icon_state_num]"
+						icon_state = "stg-n-[icon_state_num]"
 			else
 				name = chosen_card_type.card_name
 				var/gender = rand(1,3)
@@ -263,7 +265,7 @@
 						icon_state = "stg-m-[icon_state_num]"
 					if(3)
 						icon_state_num = rand(1,NUMBER_N)
-						icon_state = "stg-N-[icon_state_num]"
+						icon_state = "stg-n-[icon_state_num]"
 		if(chosen_card_type.LVL)
 			name = "LVL [chosen_card_type.LVL] [name]"
 		var/atk
@@ -347,9 +349,10 @@
 			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
 			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
 			if(!foiled)
+				logTheThing(LOG_COMBAT, user, "was instantly braindeath killed by [src] at [log_loc(src)].")
 				user.take_brain_damage(1000)
 			else
-				logTheThing("combat", user, null, "was partygibbed by [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")
 				user.partygib(1)
 
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand

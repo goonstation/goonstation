@@ -16,7 +16,7 @@
 	return string
 
 /obj/statue
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	layer = MOB_LAYER
 	var/mob/mob_inside
@@ -87,5 +87,5 @@
 	P.spread = 25
 	P.suppression_threshold = max(1, P.suppression_threshold)
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
-	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
+	logTheThing(LOG_PATHOLOGY, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P

@@ -1,5 +1,5 @@
 // It is a gizmo that flashes a small area
-
+ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 /obj/machinery/flasher
 	name = "\improper Mounted Flash"
 	desc = "A wall-mounted flashbulb device."
@@ -12,7 +12,7 @@
 	var/base_state = "mflash"
 	var/datum/light/light
 	var/cooldown_flash = 15 SECONDS
-	anchored = 1
+	anchored = ANCHORED
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -209,13 +209,13 @@
 	if (src.disable)
 		return
 
-	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+		if (GET_DIST(src, O) > src.range)
 			continue
 
 		// Heavy-duty flashers should be capable of disrupting cloaks in a reliable fashion, hence the 100% at the end.
@@ -228,7 +228,7 @@
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-c"
 	strength = 8
-	anchored = 0
+	anchored = UNANCHORED
 	base_state = "pflash"
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER

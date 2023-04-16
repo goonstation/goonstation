@@ -7,7 +7,7 @@
 	var/health_max = 200
 	robot_talk_understand = 2
 
-	anchored = 1
+	anchored = ANCHORED
 	var/online = 1
 	var/mob/living/silicon/hivebot = null
 	var/hivebot_name = null
@@ -113,7 +113,7 @@
 				if(!H.stat)
 					bodies += H
 
-	var/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies))
+	var/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
 	if (!target_shell)
 		return

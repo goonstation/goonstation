@@ -98,6 +98,29 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 		src.rollcount++
 		. = TRUE
 
+ABSTRACT_TYPE(/datum/rc_entry/food)
+///Food item entry, used to properly detect food integrity.
+/datum/rc_entry/food
+	entryclass = RC_ITEM
+	///Type path of the item the entry is looking for.
+	var/typepath
+	///If true, requires precise path; if false (default), sub-paths are accepted.
+	var/exactpath = FALSE
+	///Must-be-whole switch. If true, food must be at initial bites_left value and is counted by whole units; if false, it is counted by bites left.
+	var/must_be_whole = TRUE
+
+	rc_eval(obj/item/reagent_containers/food/snacks/eval_item)
+		. = ..()
+		if(rollcount >= count) return // Standard skip-if-complete
+		if(src.exactpath && eval_item.type != typepath) return // More fussy type evaluation
+		else if(!istype(eval_item,typepath)) return // Regular type evaluation
+		if(must_be_whole)
+			if(eval_item.bites_left != initial(eval_item.bites_left)) return
+			src.rollcount++
+		else
+			src.rollcount += eval_item.bites_left
+		. = TRUE
+
 ABSTRACT_TYPE(/datum/rc_entry/stack)
 ///Stackable item entry. Remarkably, used for items that can be stacked.
 /datum/rc_entry/stack
@@ -108,6 +131,8 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath_alt
 	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
+	///Material ID string. If defined, will require the stack's material's mat_id to match the specified mat_id.
+	var/mat_id
 
 	New()
 		if(src.commodity) // Fetch configuration data from commodity if specified
@@ -121,6 +146,9 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
+		if(mat_id) // If we're checking for materials, do that here with a tag comparison
+			if(!eval_item.material || eval_item.material.mat_id != src.mat_id)
+				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount
 			. = TRUE // Let manager know passed eval item is claimed by contract
@@ -191,9 +219,9 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
 			switch(index)
 				if("Maturation")
-					if(cultivar.plantgenes.growtime <= gene_reqs["Maturation"]) gene_count++
+					if(cultivar.plantgenes.growtime >= gene_reqs["Maturation"]) gene_count++
 				if("Production")
-					if(cultivar.plantgenes.harvtime <= gene_reqs["Production"]) gene_count++
+					if(cultivar.plantgenes.harvtime >= gene_reqs["Production"]) gene_count++
 				if("Lifespan")
 					if(cultivar.plantgenes.harvests >= gene_reqs["Lifespan"]) gene_count++
 				if("Yield")
@@ -360,6 +388,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(X) qdel(X)
 			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
 				. = REQ_RETURN_FULLSALE
+		else //sale unsuccessful; reset rolling counts of all contract entries in preparation for subsequent fulfillment attempts
+			for(var/datum/rc_entry/shopped in rc_entries)
+				shopped.rollcount = 0
 		return
 
 #undef RC_ITEM

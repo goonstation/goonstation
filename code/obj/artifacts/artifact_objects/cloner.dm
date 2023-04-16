@@ -67,11 +67,12 @@
 
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
+				clone.is_npc = FALSE
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)
 
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((clone.mind in ticker.mode:revolutionaries) || (clone.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(clone))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 			ArtifactLogs(user, clone, O, "touched","creating an evil clone of ([user])",0)

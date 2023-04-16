@@ -30,6 +30,15 @@
 		else
 			src.UpdateOverlays(null, "barcode")
 
+	attackby(obj/item/I, mob/user)
+		if(!src.open && istype(I, /obj/item/antitamper))
+			if(src.locked)
+				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				return
+			var/obj/item/antitamper/AT = I
+			AT.attach_to(src, user)
+			return
+		..()
 
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
@@ -170,11 +179,16 @@
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"
+	throwforce = 10
 
 /obj/storage/crate/bin/lostandfound
 	name = "\improper Lost and Found bin"
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
 	spawn_contents = list(/obj/item/gnomechompski)
+
+/obj/storage/crate/bin/trash
+	name = "trash can"
+	desc = "A can for trash. Garbage. That kind of thing."
 
 /obj/storage/crate/adventure
 	name = "adventure crate"
@@ -244,7 +258,23 @@
 	name = "building materials crate"
 	spawn_contents = list(/obj/item/sheet/steel/fullstack,
 	/obj/item/sheet/glass/fullstack)
-
+/obj/storage/crate/radio
+	name = "radio headsets crate"
+	spawn_contents = list(
+		/obj/item/storage/box/PDAbox,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/research,
+		/obj/item/device/radio/headset/research,
+	)
 /*
  *	SPOOKY haunted crate!
  */
@@ -299,11 +329,12 @@
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
 					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					if (owner.mind)
-						owner.mind.traitor_crate_items += item_datum
+					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(T))
+						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
+			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
@@ -311,19 +342,6 @@
 	New()
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
-
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/bee
 	name = "Bee crate"
@@ -559,7 +577,8 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
+		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/pouch/veritate,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
@@ -577,7 +596,6 @@
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 

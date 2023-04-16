@@ -215,7 +215,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "yb" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "zi" = (
@@ -404,7 +404,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Ra" = (
-/obj/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Rb" = (
@@ -458,7 +458,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/obj/critter/spider/clownqueen/cluwne,
+/mob/living/critter/spider/clownqueen/cluwne,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Zh" = (

@@ -8,12 +8,12 @@
 		"byond://goon1.goonhub.com:26100",
 		1, ghost_notif_target=FALSE
 		))
-	add_server(new/datum/game_server(
+/* 	add_server(new/datum/game_server(
 		"main2",
 		"Goonstation 2 Classic: Bombini",
 		"byond://goon2.goonhub.com:26200",
 		2
-		))
+		)) */
 	add_server(new/datum/game_server(
 		"main3",
 		"Goonstation 3 Roleplay: Morty",

@@ -6,7 +6,7 @@
 	desc = "A huge pipe segment used for constructing disposal systems."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "conpipe-s"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
@@ -146,16 +146,16 @@
 
 		if (iswrenchingtool(I))
 			if(anchored)
-				anchored = 0
+				anchored = UNANCHORED
 				level = 2
 				set_density(1)
 				boutput(user, "You detach the pipe from the underfloor.")
 			else
-				anchored = 1
+				anchored = ANCHORED
 				level = 1
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
-			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 		else if(isweldingtool(I))
 			if(I:try_weld(user, 2, noisy = 2))
@@ -185,7 +185,7 @@
 					P.mail_tag = mail_tag
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
-					logTheThing("station", user, null, "welded the disposal pipe in place at [log_loc(P)]")
+					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")
 
 					qdel(src)
 				else

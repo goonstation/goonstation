@@ -117,7 +117,7 @@
 			howmanysell--
 			var/the_commodity = pick(goods_sell_temp)
 			var/datum/commodity/COM = new the_commodity(src)
-			if(COM.type == /datum/commodity) logTheThing("debug", src, null, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
+			if(COM.type == /datum/commodity) logTheThing(LOG_DEBUG, src, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
 			src.goods_sell += COM
 			goods_sell_temp -= the_commodity
 

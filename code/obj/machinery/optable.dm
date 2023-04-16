@@ -1,17 +1,20 @@
+TYPEINFO(/obj/machinery/optable)
+	mats = 25
+
 /obj/machinery/optable
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
-	anchored = 1.0
-	mats = 25
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
-	var/strapped = 0.0
+	var/strapped = 0
 
 	var/obj/machinery/computer/operating/computer = null
-	var/id = 0.0
+	var/id = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
 /obj/machinery/optable/New()
@@ -22,14 +25,14 @@
 /obj/machinery/optable/ex_act(severity)
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				src.set_density(0)
 		else
@@ -43,7 +46,7 @@
 	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
-		logTheThing("combat", user, null, "uses hulk to smash an operating table at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "uses hulk to smash an operating table at [log_loc(src)].")
 		qdel(src)
 	return
 
@@ -58,11 +61,13 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting"))
+		if(M.hasStatus("resting") || isunconscious(M) ||  M.traitHolder.hasTrait("training_medical"))
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
-	src.victim = null
+	if (src.victim)
+		src.victim = null
+		src.computer?.victim = null
 	icon_state = "table2-idle"
 	return 0
 
@@ -137,4 +142,3 @@
 			src.victim = C
 		else
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
-	return

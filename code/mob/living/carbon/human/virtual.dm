@@ -37,10 +37,6 @@
 		return
 
 	death(gibbed)
-		for (var/atom/movable/a in contents)
-			if (a.flags & ISADVENTURE)
-				a.set_loc(get_turf(src))
-
 		Station_VNet.Leave_Vspace(src)
 
 		. = ..()
@@ -119,7 +115,7 @@
 	targeted = 0
 	target_anything = 0
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 
 	//castcheck()
 		//if (!holder)

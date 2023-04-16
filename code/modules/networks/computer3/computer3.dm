@@ -6,7 +6,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
@@ -170,7 +170,7 @@
 			manta_computer
 				icon = 'icons/obj/large/32x96.dmi'
 				icon_state = "nuclearcomputer"
-				anchored = 2
+				anchored = ANCHORED_ALWAYS
 				density = 1
 				bound_height = 96
 				bound_width = 32
@@ -255,6 +255,10 @@
 		var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 		var/deployed = 1
 
+		Exited(Obj, newloc)
+			. = ..()
+			if(Obj == src.cell)
+				src.cell = null
 
 		personal
 			name = "Personal Laptop"
@@ -272,8 +276,17 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN(0.4 SECONDS)
+	src.base_icon_state = src.icon_state
 
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
+	SPAWN(0.4 SECONDS)
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -314,18 +327,6 @@
 
 			src.hd.root.add_file(os)
 
-		src.tag = null
-
-		src.base_icon_state = src.icon_state
-
-		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
-
 		src.post_system()
 
 		if (prob(60))
@@ -365,6 +366,8 @@
 			src.temp += temp_add
 			temp_add = null
 
+		// preference is in a percentage of the default
+		var/font_size = user.client ? (((user.client.preferences.font_size/100) * 10) || 10) : 10 // font size pref is null if you haven't changed it from the default, so we need extra logic
 		var/dat = {"<title>Computer Terminal</title>
 		<style type="text/css">
 		body
@@ -388,7 +391,7 @@
 			background-color:[src.setup_bg_color];
 			color:[src.setup_font_color];
 			font-family: "Consolas", monospace;
-			font-size:10pt;
+			font-size:[font_size]pt;
 		}
 
 		#consoleshell
@@ -633,7 +636,6 @@ function lineEnter (ev)
 	..()
 	if(status & NOPOWER)
 		return
-	use_power(250)
 
 	for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 		P.process()
@@ -653,10 +655,6 @@ function lineEnter (ev)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
@@ -684,7 +682,7 @@ function lineEnter (ev)
 			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
@@ -696,6 +694,7 @@ function lineEnter (ev)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
 		src.setup_frame_type = /obj/computer3frame
 	var/obj/computer3frame/A = new setup_frame_type( src.loc )
+	A.computer_type = src.type
 	if(src.material) A.setMaterial(src.material)
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
@@ -729,7 +728,7 @@ function lineEnter (ev)
 	A.mainboard.integrated_floppy = src.setup_has_internal_disk
 
 
-	A.anchored = 1
+	A.anchored = ANCHORED
 	//dispose()
 	src.dispose()
 
@@ -745,14 +744,14 @@ function lineEnter (ev)
 
 /obj/machinery/computer3/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//dispose()
 			src.dispose()
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				set_broken()
 		else
@@ -980,7 +979,7 @@ function lineEnter (ev)
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
@@ -1096,7 +1095,7 @@ function lineEnter (ev)
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")

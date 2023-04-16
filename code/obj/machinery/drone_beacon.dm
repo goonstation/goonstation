@@ -7,7 +7,7 @@
 	desc = "Some strange transmitter."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacon_synd"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	processing_tier = PROCESSING_SIXTEENTH
 	_max_health = 500

@@ -50,7 +50,8 @@
 	var/power = 5 //Damage to asteroid tiles.
 	var/hit_sound = 'sound/items/mining_drill.ogg'
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -69,7 +70,7 @@
 		if(istype(src.material))
 			src.power = max(20, (src.material.getProperty("hard") - 3) * 66)
 		if(blasting)
-			src.power *= 0.90
+			src.power *= 0.9
 		return
 
 	proc/use(var/mob/user, var/atom/target)
@@ -96,7 +97,7 @@
 			src.power += max(10, (src.material.getProperty("hard") - 3) * 33)
 			src.power *= 2.5
 			if(blasting)
-				src.power *= 0.90
+				src.power *= 0.9
 			src.power = round(src.power)
 		return
 
@@ -137,9 +138,9 @@
 		..()
 		if(istype(src.material))
 			src.power = max(20, (src.material.getProperty("electrical") - 4) * 80)
-			src.power *= 0.80
+			src.power *= 0.8
 			if(blasting)
-				src.power *= 0.90
+				src.power *= 0.9
 			src.power = round(src.power)
 		return
 
@@ -221,7 +222,7 @@
 		if(istype(src.material))
 			src.power = max(20, (src.material.getProperty("density") - 3) * 66)
 			if(blasting)
-				src.power *= 0.90
+				src.power *= 0.9
 			src.power = round(src.power)
 		return
 
@@ -277,7 +278,7 @@
 		if(istype(src.material))
 			src.power = max(20, (src.material.getProperty("hard") - 3) * 66)
 			if(blasting)
-				src.power *= 0.90
+				src.power *= 0.9
 			src.power = round(src.power)
 		return
 

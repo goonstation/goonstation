@@ -9,17 +9,21 @@ datum
 		var/list/inhibitors = list()
 		var/instant = 1
 #ifdef CHEM_REACTION_PRIORITIES
-		//lower priorities happen last
-		//higher priorities happen first
+		/// lower priorities happen last
+		/// higher priorities happen first
 		var/priority = 10
 #endif
 
-		var/min_temperature = -INFINITY		//Will not react if below this
-		var/required_temperature = -1 //Not used by default. -1 = not used. //Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
-		var/max_temperature = INFINITY //Will not react if above this
+		/// Will not react if below this
+		var/min_temperature = -INFINITY
+		/// Not used by default. -1 = not used.
+		/// Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
+		var/required_temperature = -1
+		/// Will not react if above this
+		var/max_temperature = INFINITY
 
-
-		var/reaction_speed = 5 // units produced per second
+		/// units produced per second
+		var/reaction_speed = 5
 		var/base_reaction_temp = T20C
 		var/reaction_temp_divider = 10
 
@@ -32,14 +36,9 @@ datum
 		var/mix_sound = 'sound/effects/bubbles.ogg'
 		var/drinkrecipe = 0
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
+
 		///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 		var/hidden = FALSE
-
-
-#ifdef CHEM_REACTION_PRIORITIES
-		proc/operator<(var/datum/chemical_reaction/reaction)
-			return priority > reaction.priority
-#endif
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
@@ -60,6 +59,7 @@ datum
 			mix_sound = 'sound/voice/heavenly.ogg'
 			result_amount = 3
 			result = "lumen"
+			hidden = TRUE
 
 		no_lumen_new_smoke
 			name = "no lumen new smoke"
@@ -77,17 +77,17 @@ datum
 					holder.del_reagent("hydrogen")
 					holder.del_reagent("platinum")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -105,17 +105,17 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("propellant")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -135,17 +135,17 @@ datum
 					holder.del_reagent("phosphorus")
 					holder.del_reagent("potassium")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -163,17 +163,17 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("smokepowder")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -191,17 +191,17 @@ datum
 					holder.del_reagent("fluorosurfactant")
 					holder.del_reagent("water")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -276,6 +276,7 @@ datum
 			required_temperature = T0C + 100
 			result_amount = 4
 			mix_phrase = "The solution shows signs of life, forming shapes!"
+			hidden = TRUE
 
 		denatured_enzyme
 			name = "Denatured Enzyme"
@@ -285,6 +286,7 @@ datum
 			required_temperature = T0C + 150
 			result_amount = 1
 			mix_phrase = "The solution burns, leaving behind a lifeless mass!"
+			hidden = TRUE
 
 		water_holy
 			name = "Holy Water"
@@ -348,6 +350,7 @@ datum
 			//required_temperature = T0C + 400 // commenting out for now so you can actually make this, maybe
 			result_amount = 12
 			mix_phrase = "The mixture reduces into a fine crystalline powder and an unbelievably delicious smell wafts upwards."
+			hidden = TRUE
 
 /*		argine
 			name = "Argine"
@@ -659,7 +662,7 @@ datum
 			drinkrecipe = 1
 
 		honey_tea
-			name = "tea"
+			name = "honey tea"
 			id = "honey_tea"
 			result = "honey_tea"
 			required_reagents = list("honey" = 1, "tea" = 1)
@@ -669,7 +672,7 @@ datum
 			drinkrecipe = 1
 
 		mint_tea
-			name = "tea"
+			name = "mint tea"
 			id = "mint_tea"
 			result = "mint_tea"
 			required_reagents = list("mint" = 1, "tea" = 1)
@@ -941,6 +944,7 @@ datum
 			mix_phrase = "The mixture can't seem to control itself and settle down!"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
+			hidden = TRUE
 
 		cocktail_beach
 			name = "Bliss on the Beach"
@@ -1056,6 +1060,7 @@ datum
 			mix_phrase = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
+			hidden = TRUE
 
 		cocktail_beepskybeer
 			name = "Beepskybräu Security Schwarzbier"
@@ -1139,6 +1144,7 @@ datum
 			result_amount = 4
 			mix_phrase = "The martini gains a soft green glow."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		cocktail_manhattan
 			name = "Manhattan"
@@ -1279,6 +1285,7 @@ datum
 			result_amount = 1
 			mix_phrase = "A tiny mushroom cloud erupts from the container. That's not worrying at all!"
 			mix_sound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+			hidden = TRUE
 
 		cocktail_gtonic
 			name = "Gin and Tonic"
@@ -1626,7 +1633,7 @@ datum
 
 		cocktail_grasshopper/grasshopper2
 			id = "grasshopper2"
-			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla " = 1)
+			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla" = 1)
 			result_amount = 5
 
 		cocktail_freeze
@@ -1637,6 +1644,7 @@ datum
 			result_amount = 1
 			mix_phrase = "The drink turns a pale mint color and frost forms on its surface."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		cocktail_bluelagoon
 			name = "Blue Lagoon"
@@ -1843,6 +1851,83 @@ datum
 						boutput(M, "<span class='alert'>The gnesis rapidly absorbs the remaining blood before becoming inert.</span>")
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
+
+		iced/coconutmilkespresso
+			name = "Iced Coconut Milk Espresso"
+			id = "icedcoconutmilkespresso"
+			result = "icedcoconutmilkespresso"
+			required_reagents = list("espresso" = 1, "ice" = 3, "coconut_milk" =2, "sugar" = 2)
+			result_amount = 8
+			mix_phrase = "The ice clinks against the container as you blend everything together."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/pineapplematcha
+			name = "Iced Pineapple Matcha"
+			id = "icedpineapplematcha"
+			result = "icedpineapplematcha"
+			required_reagents = list("matcha" = 1, "juice_pineapple" = 1, "coconut_milk" = 2, "ice" = 1)
+			result_amount = 5
+			mix_phrase = "The milk mixes with the matcha in a soothing green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee
+			name = "Thai Iced Coffee"
+			id = "thaiicedcoffee"
+			result = "thaiicedcoffee"
+			required_reagents = list("coffee" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee/thaiicedcoffee2
+			id = "thaiicedcoffee2"
+			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+
+		pepperminthotchocolate
+			name = "Peppermint Hot Chocolate"
+			id = "pepperminthotchocolate"
+			result = "pepperminthotchocolate"
+			required_reagents = list("chocolate" = 2, "mint" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		pepperminthotchocolate/pepperminthotchocolate2
+			id = "pepperminthotchocolate2"
+			required_reagents =list("mint" = 1, "chocolate_milk" = 3)
+			result_amount = 4
+
+		mexicanhotchocolate
+			name = "Mexican Hot Chocolate"
+			id = "mexicanhotchocolate"
+			result = "mexicanhotchocolate"
+			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "A spicy smell drifts up from the chocolate."
+
+		mexicanhotchocolate/mexicanhotchocolate2
+			id = "mexicanhotchocolate2"
+			required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
+			result_amount = 4
+
+		pumpkinspicelatte
+			name = "Pumpkin Spice Latte"
+			id = "pumpkinspicelatte"
+			result = "pumpkinspicelatte"
+			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "The drink smells vaguely like artifical autumn."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		lavenderlatte
+			name = "Lavender Latte"
+			id = "lavender_latte"
+			result = "lavender_latte"
+			required_reagents = list("lavender_essence"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "A sweet floral scent drifts up from the pale foamy mixture."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		explosion_potassium // get in
 			name = "Potassium Explosion"
@@ -2068,14 +2153,15 @@ datum
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
-		sarin // oh god why am i adding this
-			name = "Sarin"
-			id = "sarin"
-			result = "sarin"
+		Saxitoxin // replacing Sarin - come back to this with new recipe
+			name = "Saxitoxin"
+			id = "saxitoxin"
+			result = "saxitoxin"
 			required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
 			result_amount = 3 // it is super potent
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -2084,7 +2170,7 @@ datum
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", created_volume / 6)
+					smokeContents.add_reagent("saxitoxin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
 					return
 
@@ -2323,6 +2409,7 @@ datum
 			required_reagents = list("cyclopentanol" = 1, "oxygen" = 3, "acetone" = 1, "hydrogen" = 1, "aluminium" = 1, "nickel" = 1)
 			result_amount = 3
 			mix_phrase = "This pungent odor could probably melt steel."
+			hidden = TRUE
 
 		formaldehyde
 			name = "Embalming fluid"
@@ -2543,6 +2630,7 @@ datum
 			required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
 			result_amount = 4 // lowered slightly
 			mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
+			hidden  = TRUE
 
 /*
 		initrobeedril_old
@@ -2561,6 +2649,7 @@ datum
 			result_amount = 5
 			required_temperature = T0C + 200
 			mix_phrase = "A sweet and sugary scent drifts from the royal purple substance."
+			hidden = TRUE
 
 		initrobeedril
 			name = "initrobeedril"
@@ -2569,6 +2658,7 @@ datum
 			required_reagents = list("initropidril" = 1, "bee" = 1, "honey" = 1, "dna_mutagen" = 1)
 			result_amount = 5
 			mix_phrase = "A sweet and sugary scent drifts from the golden substance."
+			hidden = TRUE
 
 		fake_initropidril
 			name = "initropidril"
@@ -2610,7 +2700,7 @@ datum
 			id = "flashpowder"
 			result = "flashpowder"
 			required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1, "chlorine" = 1, "stabiliser" = 1)
-			result_amount = 5
+			result_amount = 1
 			mix_phrase = "The chemicals hiss and fizz briefly before falling still."
 
 		flash
@@ -2631,17 +2721,12 @@ datum
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
 
-
-
-
-// Don't forget to update Reagents-ExplosiveFire.dm too, we have duplicate code for sonic and flash powder there (Convair880).
-
 		sonic_powder
 			name = "Hootingium"
 			id = "sonicpowder"
 			result = "sonicpowder"
 			required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1, "stabiliser" = 1)
-			result_amount = 2
+			result_amount = 1
 			mix_phrase = "The mixture begins to bubble slighly!"
 
 		sonic_boom //The "bang" part of "flashbang"
@@ -2660,62 +2745,15 @@ datum
 
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
-					if (hootmode)
-						playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
-					else
-						playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
-
-					for (var/mob/living/M in all_hearers(world.view, location))
-						if (isintangible(M))
-							continue
-						if (!M.ears_protected_from_sound())
-							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-						else
-							continue
-
-						var/checkdist = get_dist(M, location)
-						var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
-						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
-
-						if (issilicon(M))
-							M.apply_sonic_stun(weak, 0)
-						else
-							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
+					sonicpowder_reaction(location, created_volume, hootmode, FALSE)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
 					created_volume /= amt
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						if (sound_plays > 0)
-							sound_plays--
-							if (hootmode)
-								playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
-							else
-								playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
-						for (var/mob/living/M in all_hearers(world.view, location))
-							if (isintangible(M))
-								continue
-							if (!M.ears_protected_from_sound())
-								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
-
-							var/checkdist = get_dist(M, location)
-							var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
-							var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-							var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
-							var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-							var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
-
-							if (issilicon(M))
-								M.apply_sonic_stun(weak, 0)
-							else
-								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
+						sonicpowder_reaction(location, created_volume, hootmode, sound_plays-- > 4)
 
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"
@@ -2773,6 +2811,8 @@ datum
 			instant = 1
 			mix_phrase = null
 			mix_sound = 'sound/effects/ghostbreath.ogg'
+			hidden = TRUE
+
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/my_atom = holder.my_atom
 				if(!my_atom) return
@@ -3155,7 +3195,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			required_reagents = list("fluorine" = 1, "carbon" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -3207,7 +3247,7 @@ datum
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
 						var/datum/effects/system/foam_spread/s = new()
-						s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = created_volume / holder.covered_cache.len)
+						s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 						s.start()
 					holder.clear_reagents()
 				return
@@ -3290,19 +3330,6 @@ datum
 			required_reagents = list("oxygen" = 1, "hydrogen" = 1, "nitrogen" = 1, "carbon" = 1)
 			result_amount = 3
 			mix_phrase = "The solution seems to highlight stains in the container."
-
-/*		fuckthisshit
-			name = "fuck this shit"
-			id = "fuckthisshit"
-			result = null
-			required_reagents = list("carbon" = 5, "flourine" = 5, "acid" = 5, "sugar" = 5,  "phosphorus" = 5, "potassium" = 5, "water" = 15)
-			result_amount = 5
-			mix_phrase = "The chemicals mix into a shade of brown and begin to bubble."
-			mix_sound = 'poo2.ogg'
-
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.clear_reagents()
-				message_admins("[] attempted to make infinifoam what a piece of shit", usr) */
 
 		// Synthesizing these three chemicals is pretty complex in real life, but fuck it, it's just a game!
 		ammonia
@@ -3646,6 +3673,7 @@ datum
 			result_amount = 5
 			mix_phrase = "The solution settles into a liquid form of electricity."
 			mix_sound = 'sound/effects/elec_bigzap.ogg'
+			hidden = TRUE
 
 		energydrink
 			name = "Energy Drink"
@@ -3654,6 +3682,7 @@ datum
 			required_reagents = list("voltagen" = 1, "coffee" = 1, "cola" = 3)
 			result_amount = 5
 			mix_phrase = "The solution emits a tutti frutti stench."
+			hidden = TRUE
 
 		voltagen_arc
 			name = "Voltagen Arc"
@@ -3705,9 +3734,9 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder?.my_atom)
-					new /obj/critter/fermid(get_turf(holder.my_atom))
+					new /mob/living/critter/fermid(get_turf(holder.my_atom))
 				else
-					new /obj/critter/fermid(pick(holder.covered_cache))
+					new /mob/living/critter/fermid(pick(holder.covered_cache))
 				return
 
 		life
@@ -3734,7 +3763,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -3760,6 +3789,7 @@ datum
 			required_temperature = T0C + 117 // world's oldest person!
 			mix_phrase = "The bubbling mixture gives off a scent of perfume, hard candy, and death."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		//Hello, here are some fake werewolf serum precursors
 		werewolf_serum_fake1
@@ -3808,6 +3838,7 @@ datum
 			result_amount = 3
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
+			hidden = TRUE
 
 			does_react(var/datum/reagents/holder)
 				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
@@ -3819,6 +3850,7 @@ datum
 		 	required_reagents = list("bloodc" = 1, "water_holy" = 1, "werewolf_serum" = 1)
 		 	result_amount = 3
 		 	mix_phrase = "The substance gives off a coppery stink."
+			hidden = TRUE
 
 			//Super hairgrownium + Tongue of dog + Stable mutagen + Grog + Glowing Slurry + Aconitum
 
@@ -3831,7 +3863,8 @@ datum
 			// has to be <50C, as changeling blood boils off at that
 			required_temperature = T0C + 45
 			mix_phrase = "The reagents combine with an audible ho0t."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
+			hidden = TRUE
 
 		hootagen_stable
 			name = "stable hootagen"
@@ -3840,7 +3873,8 @@ datum
 			required_reagents = list("sonicpowder" = 1, "egg" = 1, "bloodc" = 1, "strange_reagent" = 1, "sorium" = 1, "dna_mutagen" = 3)
 			result_amount = 3
 			mix_phrase = "The reagents combine with an audible hoot."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
+			hidden = TRUE
 
 		colors
 			name = "colorful reagent"
@@ -3865,6 +3899,7 @@ datum
 			required_reagents = list("fliptonium" = 1, "anima" = 1, "uranium" = 1, "space_drugs" = 1/*, "lumen" = 1*/) // Lumen reagent was removed.
 			result_amount = 1
 			mix_phrase = "The mixture swirls around and begins to glow strangely!"
+			hidden = TRUE
 
 		diluted_fliptonium
 			name = "diluted fliptonium"
@@ -3916,6 +3951,7 @@ datum
 			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "blood" = 1, "sonicpowder" = 1, "eraser" = 1)
 			result_amount = 1
 			mix_phrase = "The solution makes a little 'chirp' noise and settles."
+			hidden = TRUE
 
 		mewtini
 			name = "Mewtini"
@@ -3948,6 +3984,7 @@ datum
 			required_reagents = list("yuck" = 1, "denatured_enzyme" = 1, "something" = 1, "poo" = 1)
 			result_amount = 3
 			mix_phrase = "The substance gives off a terrible stench. Are those maggots?"
+			hidden = TRUE
 
 		love
 			name = "pure love"
@@ -3992,11 +4029,12 @@ datum
 			name = "Rajaijah"
 			id = "madness_toxin"
 			result = "madness_toxin"
-			required_reagents = list("prions" = 1, "sarin" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
+			required_reagents = list("prions" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
 			//required_temperature = 100 - T0C
 			result_amount = 8
 			mix_phrase = "The mixture forms a clear greenish liquid, emitting a nauseating smell reminiscent of chlorophyll and rubbing alcohol."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		strychnine
 			name = "Strychnine"
@@ -4006,6 +4044,7 @@ datum
 			result_amount = 6
 			mix_phrase = "The mixture congeals into an off-white crystalline powder."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		spiders // can also be made by eating unstable mutagen and ants and dancing - see human.dm
 			name = "spiders"
@@ -4052,6 +4091,7 @@ datum
 			result_amount = 1
 			mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		transparium
 			name = "transparium"
@@ -4061,6 +4101,7 @@ datum
 			result_amount = 1
 			mix_phrase = "The solution fizzes and begins losing color."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		diluted_transparium
 			name = "diluted transparium"
@@ -4069,6 +4110,7 @@ datum
 			required_reagents = list("transparium" = 1, "water" = 2)
 			result_amount = 3
 			mix_phrase = "The solution gains a slight blue hue."
+			hidden = TRUE
 
 		expresso
 			name = "expresso"
@@ -4086,6 +4128,7 @@ datum
 			result_amount = 2.5
 			mix_phrase = "The mixture swirls and bubbles becoming blue, you can hear faint music emanating from the it."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		bubsium
 			name = "Bubsium"
@@ -4095,6 +4138,7 @@ datum
 			result_amount = 3
 			mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		flubber
 			name = "Liquified Space Rubber"
@@ -4104,6 +4148,7 @@ datum
 			result_amount = 5
 			mix_phrase = "The mixture congeals and starts to vibrate <b>powerfully!</b>"
 			mix_sound = 'sound/misc/boing/6.ogg'
+			hidden = TRUE
 
 		calcium_carbonate //CaCl2 + Na2CO3 -> CaCO3 + 2NaCl
 			name = "calcium carbonate"

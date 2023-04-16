@@ -1,7 +1,9 @@
 /mob/living/carbon/human/normal
-	initializeBioholder()
+	initializeBioholder(gender)
+		if (gender)
+			src.gender = gender
 		. = ..()
-		randomize_look(src, 1, 1, 1, 1, 1, 1, src)
+		randomize_look(src, !gender, 1, 1, 1, 1, 1, src)
 		src.gender = src.bioHolder?.mobAppearance?.gender
 		src.update_colorful_parts()
 		set_clothing_icon_dirty()
@@ -35,6 +37,11 @@
 	New()
 		..()
 		JobEquipSpawned("Research Director")
+
+/mob/living/carbon/human/normal/medicaldirector
+	New()
+		..()
+		JobEquipSpawned("Medical Director")
 
 /mob/living/carbon/human/normal/headofsecurity
 	New()
@@ -91,11 +98,6 @@
 		..()
 		JobEquipSpawned("Janitor")
 
-/mob/living/carbon/human/normal/mechanic
-	New()
-		..()
-		JobEquipSpawned("Mechanic")
-
 /mob/living/carbon/human/normal/engineer
 	New()
 		..()
@@ -150,16 +152,6 @@
 	New()
 		..()
 		JobEquipSpawned("Inspector")
-
-/mob/living/carbon/human/normal/wizard
-	New()
-		..()
-		if (src.gender && src.gender == "female")
-			src.real_name = pick_string_autokey("names/wizard_female.txt")
-		else
-			src.real_name = pick_string_autokey("names/wizard_male.txt")
-
-		equip_wizard(src, 1)
 
 /mob/living/carbon/human/normal/rescue
 	New()

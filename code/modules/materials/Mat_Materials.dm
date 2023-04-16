@@ -45,11 +45,13 @@ ABSTRACT_TYPE(/datum/material)
 	var/list/prefixes = list()
 	/// words that go after the name, used in combination
 	var/list/suffixes = list()
+	/// Whether the specaialNaming proc is called when this material is applied.
+	var/special_naming = FALSE
 
 	/// if not null, texture will be set when mat is applied.
 	var/texture = ""
 	/// How to blend the [/datum/material/var/texture].
-	var/texture_blend = ICON_MULTIPLY
+	var/texture_blend = BLEND_ADD
 
 	/// Should this even color the objects made from it? Mostly used for base station materials like steel
 	var/applyColor = 1
@@ -127,10 +129,15 @@ ABSTRACT_TYPE(/datum/material)
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
-		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
+
+	proc/interpolateName(datum/material/other, t)
+		. = getInterpolatedName(src.name, other.name, t)
+
+	proc/specialNaming(atom/target)
+		. = target.name
 
 	proc/removeTrigger(var/list/L, var/inType)
 		for(var/datum/materialProc/P in L)
@@ -154,6 +161,8 @@ ABSTRACT_TYPE(/datum/material)
 	var/list/triggersExp = list()
 	/// Called when the material is added to an object
 	var/list/triggersOnAdd = list()
+	/// Called when the material is removed from an object
+	var/list/triggersOnRemove = list()
 	/// Called when the life proc of a mob that has the owning item equipped runs.
 	var/list/triggersOnLife = list()
 	/// Called when the owning object is used to attack something or someone.
@@ -175,72 +184,77 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
-			call(X,  "execute")(owner, entering)
+			X.execute(owner, entering)
 		return
 
 	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
-			call(X,  "execute")(owner, attacker, attacked, weapon)
+			X.execute(owner, attacker, attacked, weapon)
 		return
 
 	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
-			call(X,  "execute")(owner, attacked, projectile)
+			X.execute(owner, attacked, projectile)
 		return
 
 	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
-			call(X,  "execute")(owner, attacker, attacked)
+			X.execute(owner, attacker, attacked)
 		return
 
 	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I, mult)
+			X.execute(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)
-			call(X,  "execute")(location)
+			X.execute(location)
+		return
+
+	proc/triggerOnRemove(var/location)
+		for(var/datum/materialProc/X in triggersOnRemove)
+			X.execute(location)
 		return
 
 	proc/triggerChem(var/location, var/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
-			call(X,  "execute")(location, chem, amount)
+			X.execute(location, chem, amount)
 		return
 
 	proc/triggerPickup(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersPickup)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerDrop(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersDrop)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerTemp(var/location, var/temp)
 		for(var/datum/materialProc/X in triggersTemp)
-			call(X,  "execute")(location, temp)
+			X.execute(location, temp)
 		return
 
 	proc/triggerExp(var/location, var/sev)
 		for(var/datum/materialProc/X in triggersExp)
-			call(X,  "execute")(location, sev)
+			X.execute(location, sev)
 		return
 
 	proc/triggerEat(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersOnEat)
-			call(X,  "execute")(M, I)
+			X.execute(M, I)
 		return
 
 	proc/triggerOnBlobHit(var/atom/owner, var/blobPower)
 		for(var/datum/materialProc/X in triggersOnBlobHit)
-			call(X,  "execute")(owner, blobPower)
+			X.execute(owner, blobPower)
 		return
 
 	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackobj, attacker, meleeorthrow)
 		return
 
 
@@ -357,7 +371,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
+	color = "#534747"
 	New()
 		..()
 		setProperty("density", 4)
@@ -498,7 +512,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 1 //Can not be easily modified.
+	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 	quality = 60
@@ -569,21 +583,21 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
+	var/unexploded = 1
+	var/iterations = 4
 
 	New()
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
-
 
 	beta
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 		New()
 			..()
@@ -832,6 +846,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	texture = "flock"
+	texture_blend = BLEND_OVERLAY
 
 	transparent
 		mat_id = "gnesisglass"
@@ -989,7 +1004,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	alpha = 180
 	quality = 2
 	texture = "bubbles"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
@@ -1023,9 +1038,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 
 	butt
+		color = "#ebbd97"
 		mat_id = "butt"
 		name = "butt"
+		texture = "buttgrey"
+		texture_blend = BLEND_OVERLAY
 		desc = "...it's butt flesh. Why is this here. Why do you somehow know it's butt flesh. Fuck."
+
+		New()
+			..()
+			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
+			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
@@ -1051,7 +1074,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 3)
 		setProperty("reflective", 6)
-		setProperty("radioactive", 2)
+		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
 
 
@@ -1092,11 +1115,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	texture = "wood"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 5)
 		setProperty("hard", 3)
 		setProperty("flammable", 4)
@@ -1107,11 +1130,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	texture = "bamboo"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 4)
 		setProperty("flammable", 4)
 
@@ -1211,7 +1234,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "It's pepperoni pizza. Some would say the best kind of pizza"
 	color = "#FFFFFF"
 	texture = "pizza2"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 	edible_exact = 1
 	edible = 1
 
@@ -1226,7 +1249,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	texture = "coral"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 
 	New()
 		..()
@@ -1330,6 +1353,43 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
 		setProperty("flammable", 4)
+
+/datum/material/fabric/jean
+	mat_id = "jean"
+	name = "jean"
+	desc = "The jean jaterial (used to be known as denim in the early 21st century) is a sturdy jotton jarp-faced jextile in which the jeft passes under two or more jarp threads."
+	color = "#88c2ff"
+	special_naming = TRUE
+	texture = "jean"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
+	proc/jeplacement(text)
+		var/first_letter = copytext(text, 1, 2)
+		if(first_letter == uppertext(first_letter))
+			. = "J"
+		else
+			. = "j"
+
+	proc/replace_first_consonant_cluster(text, replacement)
+		var/original_text = text
+		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
+		. = regex.Replace(text, .proc/jeplacement)
+		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
+		if(. == original_text)
+			. = "jean [.]"
+
+	interpolateName(datum/material/other, t)
+		. = replace_first_consonant_cluster(other.name, copytext(src.name , 1, 2))
+
+	specialNaming(atom/target)
+		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
 /datum/material/fabric/fibrilith
@@ -1437,7 +1497,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	desc = "Wool of adorable furry space bees."
 	color = "#ffcc00"
 	texture = "bee"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 
 	New()
 		..()
@@ -1495,3 +1555,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/metal/plutonium
+	mat_id = "plutonium"
+	name = "plutonium 239"
+	canMix = 0 //Can not be easily modified.
+	desc = "Weapons grade refined plutonium."
+	color = "#230e4d"
+	quality = 60
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 8)
+		setProperty("hard", 7)
+		setProperty("n_radioactive", 5)
+		setProperty("radioactive", 3)
+		setProperty("electrical", 7)

@@ -4,6 +4,8 @@
 // time to show the message for before removing it
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
+var/global/cloning_with_records = TRUE
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -93,9 +95,19 @@
 	return
 
 /obj/machinery/computer/cloning/proc/records_scan()
+	// check if we're busy cloning
+	var/all_cloning = TRUE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (!P.attempting)
+			// at least one free pod
+			all_cloning = FALSE
+	if (all_cloning)
+		icon_state = "dnap"
+		return TRUE
+	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
-		if (!selected || (selected.mind && selected.mind.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
@@ -135,9 +147,9 @@
 		new /obj/item/cloneModule/genepowermodule(src.loc)
 		src.BE = null
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
@@ -165,7 +177,7 @@
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -175,7 +187,7 @@
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -188,7 +200,7 @@
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing("combat", src, user, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 
@@ -239,6 +251,9 @@
 	if (subject.mob_flags & IS_BONEY)
 		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
 		return
+	if (!cloning_with_records && isalive(subject))
+		show_message("Error: Unable to scan alive patient.")
+		return
 
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
@@ -254,11 +269,12 @@
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
-	if (!isnull(find_record(ckey(subjMind.key))))
+	var/datum/db_record/R = find_record(ckey(subjMind.key))
+	if (!isnull(R))
 		show_message("Subject already in database.", "info")
-		return
+		return R
 
-	var/datum/db_record/R = new /datum/db_record(  )
+	R = new
 	R["ckey"] = ckey(subjMind.key)
 	R["name"] = subject.real_name
 	R["id"] = copytext(md5(subject.real_name), 2, 6)
@@ -277,10 +293,9 @@
 	if(!isnull(subject.traitHolder))
 		R["traits"] = subject.traitHolder.copy(null)
 
+	R["defects"] = subject.cloner_defects.copy()
+
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -291,6 +306,8 @@
 	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
+	return R
+
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
 	RETURN_TYPE(/datum/db_record)
@@ -300,6 +317,16 @@
 			selected_record = R
 			break
 	return selected_record
+
+/obj/machinery/computer/cloning/proc/scan_someone()
+	src.scan_mob(src.scanner?.occupant)
+
+/obj/machinery/computer/cloning/proc/clone_someone()
+	for (var/datum/db_record/record in src.records)
+		var/mob/ghost = find_ghost_by_key(record["ckey"])
+		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+			src.clone_record(record)
+			return
 
 /obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))
@@ -346,7 +373,7 @@
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.dnr)
+	if (selected.mind && selected.mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
@@ -368,7 +395,7 @@
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -382,7 +409,7 @@
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
@@ -398,7 +425,11 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+		if(istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				return null
+		if(iswraith(M))
 			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
@@ -408,16 +439,18 @@ proc/find_ghost_by_key(var/find_key)
 #define PROCESS_STRIP 1
 #define PROCESS_MINCE 2
 
+TYPEINFO(/obj/machinery/clone_scanner)
+	mats = 15
+
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1.0
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -504,7 +537,8 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M, var/mob/user)
-		if (!can_operate(user) || !ishuman(M)) return
+		if (!can_operate(user) || !ishuman(M) || QDELETED(M))
+			return
 
 		M.remove_pulling()
 		M.set_loc(src)
@@ -517,7 +551,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.add_fingerprint(user)
 		src.connected?.updateUsrDialog()
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
 	attack_hand(mob/user)
 		..()
@@ -537,7 +571,7 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user))
+		if (!isalive(user) || iswraith(user) || isintangible(user))
 			return
 		src.go_out()
 		add_fingerprint(user)
@@ -557,20 +591,22 @@ proc/find_ghost_by_key(var/find_key)
 	proc/go_out()
 		if ((!( src.occupant ) || src.locked))
 			return
-
 		if(!src.occupant.disposed)
 			src.occupant.set_loc(get_turf(src))
-
-		src.occupant = null
-
-		for(var/atom/movable/A in src)
-			A.set_loc(src.loc)
-
-		src.icon_state = "scanner_0"
-
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			src.occupant = null
+
+			for(var/atom/movable/A in src)
+				if(!QDELETED(A))
+					A.set_loc(src.loc)
+
+			src.icon_state = "scanner_0"
+
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	was_deconstructed_to_frame(mob/user)
 		src.go_out()
@@ -579,11 +615,11 @@ proc/find_ghost_by_key(var/find_key)
 		if(lock_status && !locked)
 			locked = 1
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
+			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
+			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
 	proc/find_pods()
@@ -625,14 +661,14 @@ proc/find_ghost_by_key(var/find_key)
 		timer_length = 15 + rand(-5, 5)
 		process_timer = timer_length
 		set_lock(1)
-		bo(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
+		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
 		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
 		SubscribeToProcess()
 
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
+		boutput(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -684,7 +720,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				boutput(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(src, "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else
@@ -711,13 +747,15 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("station", usr, null, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if (!cloning_with_records)
+				return
 			if(usr == src.scanner.occupant)
 				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
 				return TRUE
@@ -725,9 +763,22 @@ proc/find_ghost_by_key(var/find_key)
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
 		if("clone")
+			if (!cloning_with_records)
+				return
 			var/ckey = params["ckey"]
 			if(ckey)
 				clone_record(find_record(ckey))
+				. = TRUE
+		if ("scanAndClone")
+			if (cloning_with_records)
+				return
+			if(usr == src.scanner.occupant)
+				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
+				return TRUE
+			if(!isnull(src.scanner))
+				var/datum/db_record/R = src.scan_mob(src.scanner.occupant)
+				if (!isnull(R))
+					clone_record(R)
 				. = TRUE
 		if("toggleGeneticAnalysis")
 			if (any_active)
@@ -746,7 +797,7 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 
@@ -785,6 +836,26 @@ proc/find_ghost_by_key(var/find_key)
 			if(!loaded)
 				show_message("Load error.", "warning")
 				. = TRUE
+		if ("loadAndClone")
+			if (cloning_with_records)
+				return
+			var/loaded = FALSE
+			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+				var/mob/ghost = find_ghost_by_key(cloneRecord.fields["ckey"])
+				if (isnull(ghost))
+					show_message("Load error.", "warning")
+					continue
+				var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
+				src.records += R
+				loaded = TRUE
+				var/read_only = src.diskette.read_only
+				src.diskette.read_only = FALSE
+				src.diskette.root.remove_file(cloneRecord)
+				src.diskette.read_only = read_only
+				clone_record(R)
+				break
+
+			. = loaded
 		if("toggleLock")
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))
@@ -805,6 +876,7 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/computer/cloning/ui_data(mob/user)
 
 	. = list(
+		"cloningWithRecords" = cloning_with_records,
 		"allowedToDelete" = src.allowed(user),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
@@ -820,13 +892,13 @@ proc/find_ghost_by_key(var/find_key)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
-		"cloneSlave" = list(),
+		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
-		.["cloneSlave"] += P.cloneslave
+		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(

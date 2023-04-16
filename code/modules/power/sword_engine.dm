@@ -14,7 +14,7 @@
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_mangled"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	requires_power = FALSE
 	var/output = 30000
 	var/lastout = 0
@@ -28,7 +28,7 @@
 	var/lastexcess = 0
 	var/online = 0
 	var/integrity_state = 0		//0 - covered in mangled metal. 1 - normal, panel closed. 2 - normal, panel open.
-	var/core_inserted = true
+	var/core_inserted = TRUE
 	var/obj/machinery/power/terminal/terminal = null
 	var/image/glow
 	var/image/core
@@ -52,7 +52,7 @@
 		if(integrity_state == 0)
 			boutput(user, "<span class='notice'>Pieces of mangled metal make screwing off the panel impossible!</span>")
 			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		var/action_buffer = 0
 		if(integrity_state == 1)
 			boutput(user, "<span class='notice'>You unscrew the panel!</span>")
@@ -70,7 +70,7 @@
 		if (!istype(src.loc, /turf/simulated/floor/))
 			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
 			return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		if(src.anchored == 0)
 			boutput(user, "<span class='notice'>Now securing the SWORD Engine.</span>")
@@ -83,11 +83,11 @@
 		if(get_turf(user) == T)
 			if(src.anchored == 0)
 				boutput(user, "<span class='notice'>You secured the SWORD Engine!</span>")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				//terminal_setup()
 			else
 				boutput(user, "<span class='notice'>You unsecured the SWORD Engine!</span>")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				//for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
 				//	if(temp_term.master == src)
 				//		qdel(temp_term)
@@ -101,13 +101,13 @@
 		elecflash(src)
 		if (src.online)
 			src.online = 0
-		core_inserted = false
+		core_inserted = FALSE
 		user.put_in_hand_or_drop(new /obj/item/sword_core)
 		user.show_message("<span class='notice'>You remove the SWORD core from the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
 		UpdateIcon()
 	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
-		core_inserted = true
+		core_inserted = TRUE
 		qdel(W)
 		user.show_message("<span class='notice'>You insert the SWORD core into the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."

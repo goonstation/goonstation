@@ -1,4 +1,4 @@
-/proc/vegetablegibs(turf/T, viral_list, list/ejectables, bdna, btype)
+/proc/vegetablegibs(turf/T, list/ejectables, bdna, btype)
 	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soylent, \
 		                       /obj/item/reagent_containers/food/snacks/plant/lettuce, \
 		                       /obj/item/reagent_containers/food/snacks/plant/cucumber, \
@@ -40,14 +40,14 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	add_abilities = list(/datum/targetable/critter/slam_polymorph,     //Changed how it added abilities to mimic ?newer? code from tomatoes.
+	add_abilities = list(/datum/targetable/critter/slam/polymorph,     //Changed how it added abilities to mimic ?newer? code from tomatoes.
 						/datum/targetable/critter/devour)    //I guess?
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -95,13 +95,13 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	add_abilities = list(/datum/targetable/critter/slam_polymorph,/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
+	add_abilities = list(/datum/targetable/critter/slam/polymorph, /datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/MEraaargh.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 

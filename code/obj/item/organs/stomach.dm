@@ -4,9 +4,9 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4.0
+	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
-	FAIL_DAMAGE = 100
+	fail_damage = 100
 
 	//Do something with this when you figure out what the guy who made digestion and handle stomach was doing with stomach_contents and stomach_process - kyle
 	// on_transplant()
@@ -44,7 +44,7 @@
 			return 0
 		donor.handle_digestion(mult)
 
-		// if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		// if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 		// 	donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -77,6 +77,9 @@
 		..()
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 
+TYPEINFO(/obj/item/organ/stomach/cyber)
+	mats = 6
+
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
@@ -86,7 +89,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	on_transplant(mob/M)
 		. = ..()

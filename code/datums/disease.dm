@@ -27,7 +27,7 @@
 	//IM SORRY
 
 	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
-		if (!affected_mob || !D)
+		if (QDELETED(affected_mob) || !D)
 			return 1
 		return 0
 
@@ -245,9 +245,9 @@
 /datum/ailment_data/parasite
 	var/was_setup = 0
 	var/surgery_prob = 50
-
-	var/source = null // for headspiders
+	var/mob/living/critter/changeling/headspider/source = null // for headspiders
 	var/stealth_asymptomatic = 0
+
 	proc/setup()
 		src.stage_prob = master.stage_prob
 		src.cure = master.cure
@@ -261,7 +261,7 @@
 			affected_mob.cure_disease(src)
 			return
 
-		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source))
+		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source?.mind))
 			affected_mob.cure_disease(src)
 			return
 
@@ -276,7 +276,7 @@
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,mult,source)
+			master.stage_act(affected_mob,src,mult)
 
 		return
 
@@ -362,8 +362,8 @@
 	if (count >= A.max_stacks)
 		return null
 
-	if (ischangeling(src) || isvampire(src) || src.nodamage)
-		//Vampires and changelings are immune to disease, as are the godmoded.
+	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
+		//Vampires, thralls, zombies and changelings are immune to disease, as are the godmoded.
 		//This is here rather than in the resistance check proc because otherwise certain things could bypass the
 		//hard immunity these folks are supposed to have
 		return null

@@ -344,7 +344,7 @@
 
 		if (src.limb_type == LIMB_IS_ARM)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "strange", "offensive", "cruel", "furious")] gesture!</span>")
 			else if (probmult(2))
 				owner.emote("slap")
 			else if (probmult(2))
@@ -360,7 +360,7 @@
 
 		else if (src.limb_type == LIMB_IS_LEG)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
 			else if (probmult(3))
 				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
@@ -400,17 +400,13 @@
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
-	OnLife(var/mult)
-		if(..()) return
-		owner.changeStatus("radiation", 3 SECONDS*mult, 1)
-		for(var/mob/living/L in range(1, owner))
-			if (L == owner)
-				continue
-			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 5 SECONDS*mult, 1)
-		return
+	OnRemove()
+		. = ..()
+		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
@@ -492,7 +488,7 @@
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
-				logTheThing("combat", L, null, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
 				L.set_loc(pick(destination))
 
 //////////////
@@ -706,7 +702,7 @@
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
@@ -758,8 +754,8 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
-			owner.playsound_local(owner.loc, "sound/machines/phones/ring_incoming.ogg", 40, 1)
+			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"
@@ -881,7 +877,7 @@
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
-	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
+	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordturnon.ogg')
 	icon_state  = "bad"
 
 	New(var/for_global_list = 0)

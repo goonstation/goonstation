@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/multitool)
+	mats = 6
+
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
@@ -5,18 +8,18 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/multitool.dmi'
 	icon_state = "multitool"
 
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL
 
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
 
 	m_amt = 50
 	g_amt = 20
-	mats = 6
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

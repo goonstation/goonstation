@@ -3,6 +3,12 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
+///List of 2 letter shorthands for the reagent, currently only used by the cybernetic hypospray
+var/list/reagent_shorthands = list(
+	"salbutamol" = "Sb",
+	"anti_rad" = "KI"
+)
+
 ABSTRACT_TYPE(/datum/reagent)
 
 datum
@@ -54,6 +60,8 @@ datum
 		var/can_crack = 0 // used by organic chems
 		var/threshold_volume = null //defaults to not using threshold
 		var/threshold = null
+		/// Has this chem been in the person's bloodstream for at least one cycle?
+		var/initial_metabolized = FALSE
 
 		New()
 			..()
@@ -69,6 +77,10 @@ datum
 			return
 
 		proc/on_remove()
+			return
+
+		/// Called once on the first cycle that this chem is processed in the target
+		proc/initial_metabolize()
 			return
 
 		proc/check_threshold()
@@ -118,26 +130,33 @@ datum
 		// YES i know this is kind of backwards - however it's much easier to change these return values to 1 than to change every single reagent
 
 		proc/reaction_blob(var/obj/blob/B, var/volume)
+			SHOULD_CALL_PARENT(TRUE)
 			if (!blob_damage)
-				return 1
+				return TRUE
 			B.take_damage(blob_damage, volume, "poison")
-			return 1
+			return TRUE
 
-		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0) //By default we have a chance to transfer some
+		//Proc to check a mob's chemical protection in advance of reaction.
+		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
+		proc/reaction_mob_chemprot_layer(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+			var/raw_volume = volume
+			if(method == TOUCH && !src.pierces_outerwear && !("ignore_chemprot" in paramslist))
+				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+				if(percent_protection)
+					percent_protection = 1 - (percent_protection/100) //inverts the percentage to get the multiplier on effective reagents
+					volume *= percent_protection
+			. = reaction_mob(M, method, volume, paramslist, raw_volume)
+			return
+
+		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume) //By default we have a chance to transfer some
 			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
-						var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
-						var/modifier = 1
-						if(!src.pierces_outerwear)
-							modifier -= (percent_protection/100)
-						modifier *= touch_modifier
-
 						if(M.reagents)
-							M.reagents.add_reagent(self.id,volume*modifier,self.data)
+							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
 					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
@@ -221,7 +240,11 @@ datum
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
 
-			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
+			if (!initial_metabolized)
+				initial_metabolized = TRUE
+				initial_metabolize(M)
+
+			holder?.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return
@@ -243,6 +266,8 @@ datum
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
 					amount *= (0.65)
+				if(HAS_ATOM_PROPERTY(H, PROP_MOB_OVERDOSE_WEAKNESS))
+					amount *= 2
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)
@@ -297,10 +322,10 @@ datum
 				return AD
 			return
 
-		proc/flush(var/mob/M, var/amount, var/list/flush_specific_reagents)
-			for (var/reagent_id in M.reagents.reagent_list)
+		proc/flush(var/datum/reagents/holder, var/amount, var/list/flush_specific_reagents)
+			for (var/reagent_id in holder.reagent_list)
 				if ((reagent_id != src.id) && ((reagent_id in flush_specific_reagents) || !flush_specific_reagents))//checks if there's a specific reagent list to flush or if it should flush all reagents.
-					holder.remove_reagent(reagent_id, (amount * M.reagents.reagent_list[reagent_id].flushing_multiplier))
+					holder.remove_reagent(reagent_id, (amount * holder.reagent_list[reagent_id].flushing_multiplier))
 			return
 
 		// reagent state helper procs
@@ -320,6 +345,22 @@ datum
 		proc/crack(var/amount) //this proc is called by organic chemistry machines. It should return nothing.
 			return							//rather it should subtract its own volume and create the appropriate byproducts.
 
+		/// Returns a representation of this reagent's recipes in text form
+		proc/get_recipes_in_text(allow_secret = FALSE)
+			. = ""
+			for (var/datum/chemical_reaction/recipe in chem_reactions_by_result[src.id])
+				. += "<b>Recipe for [recipe.result_amount] unit[recipe.result_amount > 1 ? "s": ""] of [reagents_cache[recipe.result] || "NULL"]:</b>"
+				if (recipe.hidden && !allow_secret)
+					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
+				else
+					if (recipe.required_temperature != -1)
+						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
+					for (var/id in recipe.required_reagents)
+						. += "<br>&emsp;[reagents_cache[id]] - [recipe.required_reagents[id]] unit[recipe.required_reagents[id] > 1 ? "s" : ""]" // English name - Required amount
+				. += "<br><br>"
+			if (!.) // empty string is falsey
+				. += "<b>No known recipes.</b>"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -337,7 +378,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

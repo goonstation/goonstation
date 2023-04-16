@@ -60,10 +60,10 @@
 	desc = "A clunky projectile weapon of alien machine origin. It appears to have been based off of a couple pictures of regular human guns, but with no clear understanding of ergonomics."
 	icon_state = "incapacitor"
 	item_state = "incapacitor"
-	force = 1.0
+	force = 1
 	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
 	can_swap_cell = 0 // No
-	cell_type = /obj/item/ammo/power_cell/self_charging
+	cell_type = /obj/item/ammo/power_cell/self_charging/flockdrone
 	projectiles = null
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100

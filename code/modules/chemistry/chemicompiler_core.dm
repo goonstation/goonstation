@@ -844,7 +844,7 @@
 		beepCode(4, 1) // Invalid temperature value
 		return
 
-	// Ok now heat this bitch
+	// Ok now heat this container
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	var/datum/reagents/R = holder.reagents
 	var/heating_in_progress = 1

@@ -43,7 +43,7 @@
 		if(1, 2)
 
 			if(probmult(8))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 45, 1)
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
 				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
 			if(probmult(8))
 				boutput(affected_mob, "<span class='alert'>You feel your feet crying out!</span>")
@@ -97,7 +97,7 @@
 								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 			if(probmult(10))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 45, 1)
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
 			if(probmult(10))
 
 				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/cursedclown_hat)))
@@ -174,7 +174,7 @@
 					affected_mob:equip_if_possible( clowngloves, affected_mob:slot_gloves)
 
 			if(probmult(8))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 45, 1)
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
 				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
 
 			if(probmult(4) && isturf(affected_mob.loc))

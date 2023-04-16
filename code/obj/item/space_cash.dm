@@ -1,4 +1,3 @@
-
 /obj/item/spacecash
 	name = "1 credit"
 	real_name = "credit"
@@ -8,9 +7,9 @@
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = UNANCHORED
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -31,7 +30,7 @@
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
 		..(loc)
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	proc/setup(var/atom/L, var/amt = 1 as num)
 		set_loc(L)
@@ -40,9 +39,9 @@
 	proc/set_amt(var/amt = 1 as num)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount)
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
 		switch (src.amount)
@@ -102,7 +101,7 @@
 			src.visible_message("[src] melds together into a single credit. What?")
 			src.desc += " It looks all melted together or something."
 			src.change_stack_amount(-(src.amount-1))
-			update_stack_appearance()
+			UpdateStackAppearance()
 
 //	attack_self(mob/user as mob)
 //		user.visible_message("fart")
@@ -170,7 +169,7 @@
 		..()
 		processing_items |= src
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		return
 
 	UpdateName()
@@ -234,9 +233,9 @@
 
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = UNANCHORED
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -251,7 +250,7 @@
 		if (amt != null)
 			src.amount = amt
 
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	get_desc()
 		. += "This one is worth [amount >= 1000000 ? "ONE FUCKING GOD DAMN MILLION" : amount] spacebux."
@@ -263,9 +262,9 @@
 	proc/set_amt(var/amt = 1 as num)
 		tooltip_rebuild = 1
 		src.amount = amt
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter?.update_number(amount)
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)
@@ -359,3 +358,15 @@
 	thousand
 		amount = 1000
 
+//not a good spot for this but idc
+/obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
+	name = "stamped bullion"
+	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "stamped_gold"
+	force = 4
+	throwforce = 6
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

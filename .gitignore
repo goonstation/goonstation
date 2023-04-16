@@ -9,9 +9,11 @@
 /data/**/*
 /adventure/**/*
 *.log
+cfg/admin.txt
 
 # Build files
 /_stdlib/__build.dm
+/testmerges
 z_build_opts.dm
 
 # Pre-processor related
@@ -36,6 +38,9 @@ __pycache__/
 
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
+
+# Ignore the tracy profiler .dll
+prof.dll
 
 # Build tools cache
 /tools/**/.cache
@@ -69,4 +74,3 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
-cfg/admin.txt

@@ -8,7 +8,8 @@
 	heal_amt = 1
 	food_color = "#FFFFCC"
 	real_name = "bread"
-	flags = ONBELT | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
 	initial_volume = 30
 	initial_reagents = "bread"
@@ -24,7 +25,7 @@
 			return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)
@@ -191,6 +192,14 @@
 		initial_reagents = list("bread"=5,"cornsyrup"=5,"honey"=10)
 		meal_time_flags = MEAL_TIME_DINNER
 
+	french
+		name = "slice of french bread"
+		desc = "A slice of a french piece of bread. Merveilleux!"
+		icon_state = "baguetteslice"
+		heal_amt = 2
+		real_name = "french bread"
+		food_color = "#C78000"
+
 	New()
 		..()
 		src.pixel_x += rand(-3,3)
@@ -243,6 +252,14 @@
 		real_name = "terror toast"
 		food_effects = list("food_warm", "food_all")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+	french
+		name = "toasted slice of french bread"
+		icon_state = "baguettetoast"
+		desc = "It's French, it's toasted, but it's not french toast."
+		heal_amt = 2
+		real_name = "toasted french bread"
+		food_color = "#B04000"
 
 	New()
 		..()
@@ -350,7 +367,7 @@
 	desc = "Hon hon hon, oui oui! Needs to be cut into slices before eating."
 	stamina_damage = 5
 	stamina_cost = 1
-	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
+	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice/french
 
 	New()
 		..()
@@ -358,7 +375,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)

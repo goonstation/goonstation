@@ -1,4 +1,4 @@
-/mob/wraith/poltergeist
+/mob/living/intangible/wraith/poltergeist
 	name = "Poltergeist"
 	real_name = "Poltergeist"
 	desc = "Jesus Christ, how spooky."
@@ -6,9 +6,9 @@
 	icon_state = "poltergeist"
 	deaths = 1					//only 1 life
 	hud_path = /datum/hud/wraith/poltergeist
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/obj/spookMarker/marker = null
-	haunt_duration = 150
+	forced_haunt_duration = 15 SECONDS
 	death_icon_state = "derangedghost"
 	weak_tk = TRUE
 	var/max_dist_marker = 15
@@ -42,7 +42,7 @@
 		theName = theName  + "[pick(" the Poltergeist", " the Mischievous", " the Playful", " the Trickster", " the Sneaky", " the Child", " the Kid", " the Ass", " the Inquisitive", " the Exiled")]"
 		return theName
 
-	New(var/turf/T, var/mob/wraith/master, var/obj/spookMarker/marker)
+	New(var/turf/T, var/mob/living/intangible/wraith/master, var/obj/spookMarker/marker)
 		..(T)
 		src.master = master
 		src.marker = marker
@@ -86,6 +86,7 @@
 
 	death()
 		if (master)
+			master.poltergeists -= src
 			boutput(master, "<span class='alert'>Your poltergeist, [src], has been destroyed!</span>")
 		qdel(marker)
 		..()
@@ -97,7 +98,7 @@
 		qdel(orbit_anchor)
 		..()
 
-	addAllAbilities()
+	addAllBasicAbilities()
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)
@@ -118,24 +119,6 @@
 		src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 
 		src.removeAbility(/datum/targetable/wraithAbility/retreat)
-
-	makeCorporeal()
-		if (!src.density)
-			src.set_density(1)
-			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-			src.icon_state = "poltergeist-corp"
-			src.see_invisible = INVIS_NONE
-			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
-		update_body()
-
-	makeIncorporeal()
-		if (src.density)
-			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
-			src.set_density(0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
-			src.icon_state = "poltergeist"
-			src.see_invisible = INVIS_GHOST
-		update_body()
 
 	Move(var/turf/NewLoc, direct)
 		..()
@@ -214,9 +197,9 @@
 	//values, TRUE, FALSE. which, if any of these two do we want to update the distances of
 	proc/update_well_dist(var/update_master, var/update_marker)
 		if (update_master)
-			dist_from_master = master ? get_dist(src, master) : 0
+			dist_from_master = master ? GET_DIST(src, master) : 0
 		if (update_marker)
-			dist_from_marker = marker ? get_dist(src, marker) : 0
+			dist_from_marker = marker ? GET_DIST(src, marker) : 0
 
 		//lesser of dist from master and marker
 		power_well_dist = min(dist_from_master, dist_from_marker)
@@ -227,7 +210,7 @@
 			p_hud.update_well_dist(power_well_dist)
 
 //switch to poltergeist after testing
-/mob/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+/mob/living/intangible/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -274,7 +257,7 @@
 			return 1
 
 		if (ispoltergeist(holder.owner))
-			var/mob/wraith/poltergeist/P = holder.owner
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (P.density)
 				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
 				return 1

@@ -155,25 +155,45 @@
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("spyslave")
+			if ("spyminion")
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if (ROLE_MINDSLAVE)
+			if (ROLE_MINDHACK)
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if (ROLE_NUKEOP)
+			if (ROLE_FLOCKMIND)
+				var/relay_successful = FALSE
+				if (isflockmob(M.current))
+					if (!istype(M.current, /mob/living/critter/flock/drone))
+						var/mob/living/intangible/flock/flockmind/flockmind = M.current
+						relay_successful = flockmind.flock.relay_finished
+					else
+						var/mob/living/critter/flock/drone/flockdrone = M.current
+						relay_successful = flockdrone.flock.relay_finished
+				special = "Relay transmission [relay_successful ? "successful" : "unsuccessful"]"
+			if (ROLE_FLOCKTRACE)
+				if (isflockmob(M.current))
+					var/datum/flock/flock_joined = null
+					if (!istype(M.current, /mob/living/critter/flock/drone))
+						var/mob/living/intangible/flock/trace/flocktrace = M.current
+						flock_joined = flocktrace.flock
+					else
+						var/mob/living/critter/flock/drone/flockdrone = M.current
+						flock_joined = flockdrone.flock
+					special = "Part of Flock [flock_joined.name]"
+			if (ROLE_NUKEOP, ROLE_NUKEOP_COMMANDER)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
 					if (ticker.mode:nuke_detonated)
 						message["success"] = 1
 			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
-				for(var/stolen_item_name in M.spy_stolen_items)
-					if (stolen_item_name != "")
-						special += stolen_item_name
-						special += ", "
+				var/datum/antagonist/spy_thief/antag_role = M.get_antagonist(ROLE_SPY_THIEF)
+				for(var/obj/stolen_item in antag_role.stolen_items)
+					if (stolen_item.name != "")
+						special += "[stolen_item.name], "
 
 		message["special"] = special
 

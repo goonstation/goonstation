@@ -7,6 +7,7 @@
 	pays_to_construct = FALSE
 	health_brute = 5
 	health_burn = 5
+	repair_per_resource = 1
 	fits_under_table = TRUE
 	flags = TABLEPASS
 
@@ -22,6 +23,12 @@
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
 	src.real_name = src.flock ? src.flock.pick_name("flockbit") : name
 	src.update_name_tag()
+	src.flock_name_tag = new
+	src.flock_name_tag.set_name(src.real_name)
+	src.vis_contents += src.flock_name_tag
+
+	if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
+		src.flock.stats.bits_made++
 
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -39,7 +46,7 @@
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
+	if (!src.dormant && src.flock && !src.flock.z_level_check(src) && src.z != Z_LEVEL_NULL)
 		src.dormantize()
 
 /mob/living/critter/flock/bit/MouseDrop_T(mob/living/target, mob/user)
@@ -95,7 +102,7 @@
 // for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
-	src.client?.color = null
+	src.client?.set_color()
 	src.ai?.stop_move()
 	src.is_npc = FALSE
 
@@ -103,7 +110,7 @@
 	switch (act)
 		if ("whistle", "beep", "burp", "scream", "growl", "abeep", "grump", "fart")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 40, 1)
+				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, 1, extrarange = -10)
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
@@ -130,5 +137,5 @@
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else
-		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 40)
+		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, extrarange = -10)
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

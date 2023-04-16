@@ -29,16 +29,6 @@
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
-	// Comes with upgraded health scanner.
-	doctor_spawn
-		spawn_contents = list(/obj/item/reagent_containers/mender/brute,\
-		/obj/item/reagent_containers/mender/burn,\
-		/obj/item/reagent_containers/patch/bruise,\
-		/obj/item/reagent_containers/patch/burn,\
-		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/upgraded,\
-		/obj/item/reagent_containers/emergency_injector/epinephrine)
-
 	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\
@@ -146,7 +136,7 @@
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
@@ -445,6 +435,11 @@
 	name = "pill bottle (space ipecac)"
 	desc = "Contains pills used induce emesis."
 	spawn_contents = list(/obj/item/reagent_containers/pill/ipecac = 7)
+
+/obj/item/storage/pill_bottle/mannitol
+	name = "pill bottle (mannitol)"
+	desc = "Contains pills used to treat... brain damage."
+	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
 
 /* -------------------- Pill Bottles - Drugs -------------------- */
 

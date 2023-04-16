@@ -17,12 +17,19 @@
 	initial_volume = null
 	initial_reagents = null
 	food_effects = list()
-	var/image/fluid_icon
+	var/image/fluid_image
 
-	New(var/datum/custom_soup/S)
+	New(var/datum/custom_soup/S, var/obj/item/reagent_containers/food/drinks/bowl/bowl = null)
 		if(!S || !istype(S))
 			qdel(src)
 			return
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+			src.inhand_image_icon = bowl.inhand_image_icon
+			src.item_state = bowl.item_state
+		src.fluid_image = bowl?.fluid_image || image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "bowl_fluid")
 		src.name = S.name
 		src.bites_left = S.bites_left
 		if(S.desc)
@@ -41,25 +48,26 @@
 				temp -= effect
 
 
-		fluid_icon = image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "fluid")
 
 		..()
 
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
-			fluid_icon.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_icon, "fluid")
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
 		else
 			src.UpdateOverlays(null, "fluid")
+
+TYPEINFO(/obj/stove)
+	mats = 18
 
 /obj/stove
 	name = "stove"
 	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it.<br>It seems this model doesn't have a built in igniter, so you'll have to light it manually."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "stove0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/obj/item/soup_pot/pot
 	var/on = 0
@@ -82,7 +90,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))

@@ -54,7 +54,7 @@
 	icon_state = "fireball"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/range = 6
 	var/power = 5
@@ -84,7 +84,7 @@
 						var/D = range + 1
 						var/mob/living/M = null
 						for (var/mob/living/C in view(src.range))
-							var/dist = get_dist(src, C)
+							var/dist = GET_DIST(src, C)
 							if (dist < D)
 								M = C
 								D = dist
@@ -142,7 +142,7 @@
 	icon_state = "fireball"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/atom/target = null
 	var/timeout = 15
 	var/power = 5

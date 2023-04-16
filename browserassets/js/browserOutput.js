@@ -35,7 +35,6 @@ var opts = {
     'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
-    'twemoji': false, // whether Twemoji are used instead of the default emoji
     'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display
@@ -161,16 +160,8 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    if (opts.twemoji) {
-      return twemoji.parse(message, {
-        folder: 'svg',
-        ext: '.svg'
-      });
-    }
-    else {
-      var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-      return message.replace(pattern, '<span class="emoji">$1</span>');
-    }
+	var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+	return message.replace(pattern, '<span class="emoji">$1</span>');
 }
 
 //Send a message to the client
@@ -605,7 +596,6 @@ $(function() {
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
-        'stwemoji': getCookie('twemoji'),
         'smessageLimitEnabled': getCookie('messageLimitEnabled')
     };
 
@@ -644,9 +634,6 @@ $(function() {
         body.addClass(savedConfig.stheme);
         opts.currentTheme = savedConfig.stheme;
         output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
-    }
-    if (savedConfig.stwemoji) {
-      opts.twemoji = true;
     }
     if (savedConfig.smessageLimitEnabled) {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
@@ -893,12 +880,6 @@ $(function() {
         setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
     });
 
-    $('#toggleEmojiFont').click(function(e) {
-        opts.twemoji = !opts.twemoji;
-        setCookie('twemoji', opts.twemoji, 365);
-        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
-    });
-
     $('#toggleMessageLimit').click(function(e) {
         opts.messageLimitEnabled = !opts.messageLimitEnabled;
         setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
@@ -936,7 +917,7 @@ $(function() {
         }
         var popupContent = '<div class="head">String Highlighting</div>' +
             '<div class="highlightPopup" id="highlightPopup">' +
-                '<div>Choose up to '+opts.highlightLimit+' strings that will highlight the line when they appear in chat.</div>' +
+                '<div>Choose up to '+opts.highlightLimit+' strings that will highlight the line when they appear in chat. Regex is supported.</div>' +
                 '<form id="highlightTermForm">' +
                     termInputs +
                     '<div><input type="text" name="highlightColor" id="highlightColor" class="highlightColor" '+
@@ -961,7 +942,7 @@ $(function() {
         for (var count = 0; count < opts.highlightLimit; count++) {
             var term = $('#highlightTermInput'+count).val();
             if (term !== null && /\S/.test(term)) {
-                opts.highlightTerms.push(term.trim().toLowerCase());
+                opts.highlightTerms.push(term);
             }
         }
 

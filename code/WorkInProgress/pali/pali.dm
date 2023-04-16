@@ -20,8 +20,8 @@
 	name = "beepsky box"
 	desc = "A box of large Beepsky-shaped bullets"
 	icon_state = "lmg_ammo"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/special/spawner/beepsky
 
 	ammo_cat = AMMO_BEEPSKY
@@ -115,7 +115,7 @@
 	fits_under_table = 1
 	good_grip = 1
 	bird_call_msg = "honks"
-	bird_call_sound = "sound/voice/animal/goose.ogg"
+	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	health_brute = 50
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
@@ -219,7 +219,7 @@
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_BASE
 	blend_mode = BLEND_ADD
-	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM // PIXEL_SCALE omitted intentionally
 	var/ray_density = 3
 	var/shift_x = 0
 	var/shift_y = 0
@@ -294,9 +294,7 @@
 	New()
 		. = ..()
 		access = new /obj/item/implant/access(src)
-		access.owner = src
 		access.uses = -1
-		access.implanted = 1
 
 	bump(atom/movable/AM, yes = 1)
 		. = ..()
@@ -474,3 +472,51 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("negativematter"))
+
+
+
+
+
+
+proc/get_upscaled_icon(icon, icon_state, dx, dy)
+	var/list/static/upscaled_icon_cache = null
+	if(isnull(upscaled_icon_cache))
+		upscaled_icon_cache = list()
+	var/key = "[icon] [icon_state] [dx] [dy]"
+	if(upscaled_icon_cache[key])
+		return upscaled_icon_cache[key]
+	var/icon/ic = icon(icon, icon_state)
+	ic.Crop(world.icon_size / 2 * dx + 1, world.icon_size / 2 * dy + 1, world.icon_size / 2 * (dx + 1), world.icon_size / 2 * (dy + 1))
+	ic.Scale(world.icon_size, world.icon_size)
+	upscaled_icon_cache[key] = ic
+	return ic
+
+#ifdef UPSCALED_MAP
+/turf/var/base_icon
+
+/turf/proc/fix_upscale()
+	var/dx = (src.x - 1) % 2
+	var/dy = (src.y - 1) % 2
+	var/icon_to_use = src.icon
+	if(isnull(src.base_icon))
+		src.base_icon = src.icon
+	else
+		icon_to_use = src.base_icon
+	src.icon = get_upscaled_icon(icon_to_use, src.icon_state, dx, dy)
+
+/turf/simulated/floor/update_icon()
+	. = ..()
+	fix_upscale()
+
+/turf/unsimulated/floor/update_icon()
+	. = ..()
+	fix_upscale()
+
+/turf/simulated/floor/New()
+	..()
+	fix_upscale()
+
+/turf/unsimulated/floor/New()
+	..()
+	fix_upscale()
+#endif

@@ -5,12 +5,12 @@
 	icon_state = "owl"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/base_state = "owl"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/flash_prob = 80
 
 	proc/flash()
-		playsound(src.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 		flick("[base_state]_flash", src)
 		ON_COOLDOWN(src, "flash", 5 SECONDS)
 
@@ -44,14 +44,14 @@
 			src.flash()
 
 /obj/machinery/portableowl/attached
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/portableowl/judgementowl
 	name = "Hooty McJudgementowl"
 	desc = "A grumpy looking owl."
 	icon_state = "judgementowl1"
 	base_state = "judgementowl1"
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()

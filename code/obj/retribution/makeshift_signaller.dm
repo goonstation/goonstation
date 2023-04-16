@@ -1,18 +1,21 @@
 #define MINUTES_TO_SWORD_LINK 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
-var/sword_summoned_before = false
+var/sword_summoned_before = FALSE
+
+TYPEINFO(/obj/item/makeshift_signaller_frame)
+	mats = 4
 
 /obj/item/makeshift_signaller_frame
 	name = "makeshift signaller frame"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
 	icon_state = "frame"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
 	burn_type = 1
 	var/build_stage = 0
-	mats = 4
 	desc = "A disemboweled remote signaller, ready for further modifications."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -59,20 +62,23 @@ var/sword_summoned_before = false
 			return
 		return
 
+TYPEINFO(/obj/item/makeshift_syndicate_signaller)
+	mats = 4
+
 /obj/item/makeshift_syndicate_signaller
 	name = "makeshift syndicate signaller"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
 	icon_state = "metadata_0"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
 	var/metadata = 0
-	var/was_emagged = false
-	var/is_exploding = false
+	var/was_emagged = FALSE
+	var/is_exploding = FALSE
 	is_syndicate = 1
-	mats = 4
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 
@@ -91,15 +97,15 @@ var/sword_summoned_before = false
 								nearby_turfs += T
 						if (length(nearby_turfs))
 							new/obj/critter/sword(pick(nearby_turfs))
-							sword_summoned_before = true
+							sword_summoned_before = TRUE
 
 							icon_state = "explosion"
 							user.show_message("<span class='notice'>You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good...</span>", 1)
 							desc = "Oh shit, it's overloading!"
 							tooltip_rebuild = 1
-							is_exploding = true
+							is_exploding = TRUE
 							spawn(2 SECONDS)
-								logTheThing("combat", user, null, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
+								logTheThing(LOG_COMBAT, user, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								elecflash(src.loc)
 								qdel(src)
@@ -123,7 +129,7 @@ var/sword_summoned_before = false
 		if (istype(W,/obj/item/factionrep/ntboard) && !is_exploding)	//If a Syndicate Circuit Board is used on this item, turn the former into it's fried version and fill a metadata node.
 			if (metadata < 8)
 				qdel(W)
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
 				user.put_in_hand_or_drop(new /obj/item/factionrep/ntboardfried)
 				metadata += 1
 				user.show_message("<span class='notice'>You uploaded some metadata from the syndicate circuit board, frying it in the process.</span>", 1)
@@ -144,9 +150,9 @@ var/sword_summoned_before = false
 				return
 			else
 				metadata += rand(2, 7)
-				playsound(src.loc, "sound/misc/flockmind/flockdrone_beep2.ogg", 60, 0)
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
-				was_emagged = true
+				playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep2.ogg', 60, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
+				was_emagged = TRUE
 				. = TRUE
 			if(metadata >= 8)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
@@ -163,10 +169,10 @@ var/sword_summoned_before = false
 	if (!(istype(dying_drone, /obj/critter/gunbot/drone/buzzdrone/fish) || istype(dying_drone, /obj/critter/gunbot/drone/gunshark)) && T1.z == T2.z)	//Not increasing the filled metadata node amount if the dead drone is an aquatic one, as they drop Syndicate Circuit Boards already.
 		if (metadata < 8)
 			metadata += 1
-			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep3.ogg", metadata * 12, 0)
+			playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep3.ogg', metadata * 12, 0)
 			set_icon_state("metadata_[metadata]")
 		if (metadata >= 8)
-			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep4.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep4.ogg', 100, 0)
 			if(!sword_summoned_before)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 			else

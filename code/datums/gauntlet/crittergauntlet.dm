@@ -52,7 +52,7 @@
 /obj/stagebutton
 	name = "Gauntlet Staging Button"
 	desc = "By pressing this button, you begin the staging process. No more new attendees will be accepted."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/effects/VR.dmi'
@@ -222,7 +222,7 @@
 				moblist_names += thename
 				if (M.client)
 					moblist_names += " ([M.client.key])"
-			logTheThing("debug", null, null, "<b>Marquesas/Critter Gauntlet</b>: Starting arena game with players: [moblist_names]")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Critter Gauntlet</b>: Starting arena game with players: [moblist_names]")
 		announceAll("The Critter Gauntlet Arena game is now in progress. The first level will begin soon.")
 		next_level_at = ticker.round_elapsed_ticks + 300
 
@@ -407,7 +407,7 @@
 
 
 		var/points = 2.5 + (round(current_level * 0.1) * 1.5) + ((current_level % 10) / 20)
-		logTheThing("debug", null, null, "<b>Marquesas/Critter Gauntlet:</b> On level [current_level]. Spending [points] points, composed of 1 base, [round(current_level * 0.1) * 1.5] major and [(current_level % 10) / 20] minor.")
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Critter Gauntlet:</b> On level [current_level]. Spending [points] points, composed of 1 base, [round(current_level * 0.1) * 1.5] major and [(current_level % 10) / 20] minor.")
 
 		var/datum/gauntletEvent/candidate = pick(possible_events)
 		if (current_level >= candidate.minimum_level && points > candidate.point_cost && prob(candidate.probability))
@@ -540,7 +540,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/buildmode.dmi'
@@ -555,19 +555,14 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	gauntlet
 		name = "The Gauntlet Arena"
-		has_camera = 1
-		cam_network = "Zeta"
-
-	colosseum
-		name = "The Colosseum Arena"
 		has_camera = 1
 		cam_network = "Zeta"
 
@@ -685,13 +680,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
 
 	ak47
-		name = "An AK47"
+		name = "An AKM"
 		point_cost = -2
 		minimum_level = 45
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/ak47)
+		supplies = list(/obj/item/gun/kinetic/akm)
 
 	bfg
 		name = "The BFG"
@@ -785,7 +780,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 	proc/setUp()
 	proc/process()
-	proc/onSpawn(var/obj/critter/C)
+	proc/onSpawn(var/atom/movable/C)
 	proc/tearDown()
 
 	barricade
@@ -915,7 +910,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			for (var/obj/adventurepuzzle/triggerable/light/gauntlet/G in gauntlet_controller.gauntlet)
 				G.off()
 
-		onSpawn(var/obj/critter/C)
+		onSpawn(var/atom/movable/C)
 			var/datum/light/light = new /datum/light/point
 			light.set_brightness(0.4)
 			light.set_height(0.5)
@@ -978,7 +973,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
 			if (!T)
-				logTheThing("debug", null, null, "Gauntlet event Lightning Strikes failed setup.")
+				logTheThing(LOG_DEBUG, null, "Gauntlet event Lightning Strikes failed setup.")
 			D1 = new(T)
 			D2 = new()
 
@@ -1003,7 +998,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/zapdummy
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /datum/gauntletWave
@@ -1018,13 +1013,24 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/turf/T = pick(gauntlet_controller.spawnturfs)
 			var/crit_type = pick(types)
 			showswirl(T)
-			var/obj/critter/C = new crit_type(T)
-			C.health *= health_multiplier
-			C.aggressive = 1
-			C.defensive = 1
-			C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			var/atom/mob_or_critter = new crit_type(T)
+			if(iscritter(mob_or_critter))
+				var/obj/critter/C = mob_or_critter
+				C.health *= health_multiplier
+				C.aggressive = 1
+				C.defensive = 1
+				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			else if (isliving(mob_or_critter))
+				var/mob/living/critter/C = mob_or_critter
+				C.health *= health_multiplier //for critters that don't user health holders
+				for(var/damage_key in C.healthlist) //for critters that do
+					var/datum/healthHolder/HH = C.healthlist[damage_key]
+					HH.maximum_value *= health_multiplier
+					HH.value *= health_multiplier
+			else
+				CRASH("Gauntlet tried to spawn [identify_object(mob_or_critter)], but only /mob/living or /obj/critter are allowed.")
 			if (ev)
-				ev.onSpawn(C)
+				ev.onSpawn(mob_or_critter)
 			count--
 		if (count < 1)
 			count = initial(count)
@@ -1035,7 +1041,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/mimic)
+		types = list(/mob/living/critter/mimic)
 
 	meaty
 		name = "Meat Thing"
@@ -1077,7 +1083,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/mob/living/critter/bear)
 
 	tomato
 		name = "Killer Tomato"
@@ -1119,7 +1125,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Skeleton"
 		point_cost = 3
 		count = 5
-		types = list(/obj/critter/magiczombie)
+		types = list(/mob/living/critter/skeleton)
 
 	zombie
 		name = "Zombie"
@@ -1137,55 +1143,55 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/baby)
+		types = list(/mob/living/critter/spider/baby)
 
 	spidericebaby
 		name = "Ice Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider/ice/baby)
 
 	spider
 		name = "Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider)
+		types = list(/mob/living/critter/spider)
 
 	spiderice
 		name = "Ice Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice)
+		types = list(/mob/living/critter/spider/ice)
 
 	spiderqueen
 		name = "Ice Spider Queen"
 		point_cost = 8
 		count = 0.05
-		types = list(/obj/critter/spider/ice/queen)
+		types = list(/mob/living/critter/spider/ice/queen)
 
 	spacerachnid
 		name = "Space Arachnid"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/spider/spacerachnid)
+		types = list(/mob/living/critter/spider/spacerachnid)
 
 	ohfuckspiders
 		name = "OH FUCK SPIDERS"
 		point_cost = 8
 		count = 7
-		types = list(/obj/critter/spider,/obj/critter/spider/baby,/obj/critter/spider/ice,/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider,/mob/living/critter/spider/baby,/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby)
 
 	brullbar
 		name = "Brullbar"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/brullbar)
+		types = list(/mob/living/critter/brullbar)
 
 	brullbarking
 		name = "Brullbar King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/brullbar/king)
+		types = list(/mob/living/critter/brullbar/king)
 
 	badbot
 		name = "Security Zapbot"
@@ -1197,13 +1203,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Fermid"
 		point_cost = 3
 		count = 3
-		types = list(/obj/critter/fermid)
+		types = list(/mob/living/critter/fermid)
 
 	lion
 		name = "Lion"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/lion)
+		types = list(/mob/living/critter/lion)
 
 	maneater
 		name = "Man Eater"
@@ -1219,16 +1225,16 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])
-		logTheThing("<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
 		for (var/userkey in data["keys"])
-			logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
 			var/matches = data[userkey]
-			logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
 			var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[userkey]") in world
 			if (G && istype(G))
 				G.SetMatchCount(text2num(matches))
 			else
-				logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
+				logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
 				return 1
 
 	else

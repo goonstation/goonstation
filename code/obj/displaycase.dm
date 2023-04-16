@@ -4,7 +4,8 @@
 	icon_state = "glassbox0"
 	desc = "A display case for antique possessions."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.3
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
@@ -82,7 +83,7 @@
 			playsound(src, "shatter", 70, 1)
 			UpdateIcon()
 	else
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 	return
 
 /obj/displaycase/update_icon()
@@ -96,17 +97,17 @@
 /obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
-			src.anchored = 1
-			playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+			src.anchored = ANCHORED
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
 		else
-			src.anchored = 0
-			playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+			src.anchored = UNANCHORED
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken
 		boutput(user, "<span class='notice'>You begin to disassemble the broken display case.</span>")
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
@@ -115,7 +116,7 @@
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
 		boutput(user, "<span class='notice'>You begin to repair the broken display case.</span>")
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(1.5 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
@@ -168,10 +169,11 @@
 	name = "antique laser gun"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "caplaser"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
-	force = 1.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	force = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/stability = 10
 
 	var/repair_stage = 0
@@ -360,22 +362,22 @@
 
 		// Nothing special, just a plain old laser.
 		if (src.quality_counter < src.q_threshold1)
-			src.our_projectile = /datum/projectile/laser
+			src.our_projectile = /datum/projectile/laser/glitter
 			if (user && ismob(user))
-				user.show_text("The [src.name] looks a little worn, but appears to work alright.", "blue")
+				user.show_text("The [src.name] looks a little worn, but appears to work alright, all things considered.", "blue")
 
 		// Player put some effort into it, so let's give him something a little more powerful.
 		else if (src.quality_counter >= src.q_threshold1 && src.quality_counter < src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name] seems to work better than expected thanks to above-average replacment parts.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
+			src.our_projectile = /datum/projectile/laser
 
 		// Now we're talking about top-notch stuff.
 		else if (src.quality_counter >= src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name]'s high-quality replacement parts fit together perfectly, increasing the gun's output.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
-			src.our_projectile2 = /datum/projectile/laser/old_burst
+			src.our_projectile = /datum/projectile/laser
+			src.our_projectile2 = /datum/projectile/laser/glitter/burst
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return

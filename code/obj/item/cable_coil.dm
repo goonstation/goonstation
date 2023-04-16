@@ -22,7 +22,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
@@ -63,7 +64,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -95,17 +96,21 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return 0
 		amount -= used
 		if (src.amount <= 0)
+			if (currently_laying && usr)
+				UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 			return 1
 		else
 			UpdateIcon()
 			return 1
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		update_icon()
 
 	update_icon()
 		if (amount <= 0)
+			if (currently_laying && ismob(src.loc))
+				UnregisterSignal(src.loc, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)
 			set_icon_state("coil[amount][iconmod]")
@@ -186,12 +191,14 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
 	if (!isturf(M.loc))
 		return
-	var/turf/source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
+
+	if(!source)
+		source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
 
 	var/obj/cable/C = find_half_cable(source, get_dir(source, target))
 	if (C)
@@ -227,9 +234,13 @@ obj/item/cable_coil/dropped(mob/user)
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
-		var/obj/item/cable_coil/A = split_stack(round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num))
-		if (istype(A))
-			A.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
+		var/cut_amount = round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num)
+		if (!in_interact_range(src, user))
+			boutput(user, "You're too far away from the cable that you're trying to cut from!")
+			return
+		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
+		if (istype(cable))
+			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
 			boutput(user, "You cut a piece off the [base_name].")
 		return
 
@@ -252,9 +263,11 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
 		return
-	if (get_dist(target, source) > 1)
+	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
+	if (src.amount == 1) // We are the last wire, and since we are gonna get used, we un-register the signal..
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn
 	if (target == source)
@@ -274,11 +287,14 @@ obj/item/cable_coil/dropped(mob/user)
 	var/turf/target = C.loc
 	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
-	if (get_dist(C, user) > 1)		// make sure it's close enough
+	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on
 		return		// may change later if can think of something logical to do
+
+	if (src.amount == 1) // We are the last wire in the coil, and since we are gonna get used, we un-register the signal.
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn = get_dir(C, source)
 

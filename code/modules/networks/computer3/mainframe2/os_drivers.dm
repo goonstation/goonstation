@@ -1064,7 +1064,7 @@
 				if (!isnum(data["time"]))
 					return ESIG_GENERIC
 
-				var/newtime = clamp("time", 0, MAX_NUKE_TIME)
+				var/newtime = clamp(data["time"], MIN_NUKE_TIME, MAX_NUKE_TIME)
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
@@ -1227,7 +1227,7 @@
 								logUser = "Terminal \[[src.useracc.user_id]]"
 
 						message_admins("NUKE: Research Sector nuclear charge activated by [key_name(logUser)].")
-						logTheThing("combat", logUser, null, "Activated the Research Sector nuclear charge.")
+						logTheThing(LOG_COMBAT, logUser, "Activated the Research Sector nuclear charge.")
 
 						message_user("!Transmitting Activation Code!")
 					if (ESIG_USR1)

@@ -37,8 +37,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			else
 				loadTries++
 				if (loadTries >= 5)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing("diary", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
 				return 0
 
 
@@ -101,7 +101,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					response = request.into_response()
 
 				if (response.errored || !response.body)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
 					return
 
 				var/content = response.body
@@ -112,7 +112,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				//Handle the response
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
 					return 0
 				if (contentJson["status"] == "error")
 					var/log = ""
@@ -120,7 +120,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
 					else
 						log = "An unknown error was returned from export: [json_encode(contentJson)]"
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> [log]")
 				return 1
 
 
@@ -162,7 +162,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		logDebug(log)
 			if (!log) return 0
-			logTheThing("debug", null, null, "<b>IRCBOT DEBUGGING:</b> [log]")
+			logTheThing(LOG_DEBUG, null, "<b>IRCBOT DEBUGGING:</b> [log]")
 			return 1
 
 

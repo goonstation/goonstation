@@ -182,7 +182,7 @@
 			log_tgui(usr,
 				"Error: Couldn't find the window datum, force closing.",
 				context = window_id)
-			tgui_process.force_close_window(usr, window_id)
+			tgui_process?.force_close_window(usr, window_id)
 			return TRUE
 	// Decode payload
 	var/payload

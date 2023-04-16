@@ -34,7 +34,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	for (var/datum/keybind_style/found_style as anything in keybind_styles)
 		if (initial(found_style.name) == style_name)
 			return found_style
-	logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
+	logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
 /** apply_keys: Takes a keybind_style to apply to the src client
  *	Internal use only.
@@ -44,7 +44,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	PROTECTED_PROC(TRUE)
 
 	if (initial(style.name) in applied_keybind_styles)
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
+		logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
 		return
 	src.applied_keybind_styles.Add(initial(style.name))
 	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts
@@ -102,6 +102,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"CTRL+N" = "nod",
 	"CTRL+Q" = "wave",
 	"CTRL+R" = "flip",
+	"CTRL+I" = "twirl",
 	"CTRL+S" = "scream",
 	"CTRL+W" = "wink",
 	"CTRL+X" = "flex",
@@ -309,6 +310,46 @@ var/global/list/datum/keybind_style/keybind_styles = null
 //
 //	MISC-SPECIFIC KEYBINDS
 //
+
+/datum/keybind_style/instrument_keyboard
+	name = "instrument_keyboard"
+	changed_keys = list(
+		"1" = "",
+		"2" = "",
+		"3" = "",
+		"4" = "",
+		"5" = "",
+		"6" = "",
+		"7" = "",
+		"8" = "",
+		"9" = "",
+		"0" = "",
+		"Q" = "",
+		"W" = "",
+		"E" = "",
+		"R" = "",
+		"T" = "",
+		"Y" = "",
+		"U" = "",
+		"O" = "",
+		"P" = "",
+		"A" = "",
+		"S" = "",
+		"D" = "",
+		"F" = "",
+		"G" = "",
+		"H" = "",
+		"J" = "",
+		"K" = "",
+		"L" = "",
+		"Z" = "",
+		"X" = "",
+		"C" = "",
+		"V" = "",
+		"B" = "",
+		"N" = "",
+		"M" = "",
+	)
 
 /datum/keybind_style/pod
 	name = "pod"

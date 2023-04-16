@@ -91,25 +91,25 @@
 
 		switch(menu)
 			if (MENU_MAIN)
-				switch (command)
-					if ("0") //Exit program
+				switch (round( max( text2num_safe(command), 0) ))
+					if (0) //Exit program
 						src.print_text("Quitting...")
 						src.master.unload_program(src)
 						return
 
-					if ("1") //View records
+					if (1) //View records
 						src.record_database = data_core.general
 
 						src.menu = MENU_INDEX
 						src.print_index()
 
-					if ("2") //Search records
+					if (2) //Search records
 						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
 
-					if ("3") //Viral records.
+					if (3) //Viral records.
 
 						src.master.temp = null
 						src.print_text(virusmenu_text())
@@ -296,7 +296,7 @@
 							return
 
 						src.active_general["age"] = newAge
-						return
+
 
 					if (FIELDNUM_PSTAT)
 						if (ckey(inputText))
@@ -515,7 +515,7 @@
 
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -548,13 +548,13 @@
 
 			if (MENU_VIRUS_INDEX)
 				var/entrydat = null
-				switch (copytext(text, 1,2))
-					if ("0")
+				switch (round( max( text2num_safe(text), 0) ))
+					if (0)
 						src.menu = MENU_MAIN
 						src.master.temp = null
 						src.print_text(virusmenu_text())
 						return
-					if ("1")
+					if (1)
 						entrydat = {"<b>Name:</b> GBS
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Airborne Transmission
@@ -564,7 +564,7 @@
 						<br><b>Notes:</b> If left untreated death will occur.
 						<br>
 						<br><b>Severity:</b> Major"}
-					if ("2")
+					if (2)
 						entrydat = {"<b>Name:</b> Common Cold
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -574,7 +574,7 @@
 						<br><b>Notes:</b> If left untreated the subject will contract the flu.
 						<br>
 						<br><b>Severity:</b> Minor"}
-					if ("3")
+					if (3)
 						entrydat = {"<b>Name:</b> The Flu
 						<br><b>Number of stages:</b> 3
 						<br><b>Spread:</b> Airborne Transmission
@@ -585,7 +585,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("4")
+					if (4)
 						entrydat = {"<b>Name:</b> Monkey Madness
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Airborne Transmission
@@ -596,7 +596,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("5")
+					if (5)
 						entrydat = {"<b>Name:</b> Clowning Around
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Contact Transmission
@@ -607,7 +607,7 @@
 						<br>
 						<br><b>Severity:</b> Laughable"}
 
-					if ("6")
+					if (6)
 						entrydat = {"<b>Name:</b> Space Rhinovirus
 						<br><b>Number of stages:</b> 4
 						<br><b>Spread:</b> Airborne Transmission
@@ -618,7 +618,7 @@
 						<br>
 						<br><b>Severity:</b> Medium"}
 
-					if ("7")
+					if (7)
 						entrydat = {"<b>Name:</b> Robot Transformation
 						<br><b>Number of stages:</b> 5
 						<br><b>Spread:</b> Infected food
@@ -629,7 +629,7 @@
 						<br>
 						<br><b>Severity:</b> Major"}
 
-					if ("8")
+					if (8)
 						entrydat = {"<b>Name:</b> Teleportitis
 						<br><b>Number of stages:</b> 1
 						<br><b>Spread:</b> Unknown
@@ -641,7 +641,7 @@
 						in physical position of subject.  Keep patients away from active engines.<br>
 						<br><b>Severity:</b> Unknown"}
 
-					if ("9")
+					if (9)
 						entrydat = {"<b>Name:</b> Berserker
 						<br><b>Number of stages:</b> 2
 						<br><b>Spread:</b> Contact Transmission
@@ -662,7 +662,7 @@
 				src.menu = MENU_VIRUS_RECORD
 
 			if (MENU_VIRUS_RECORD)
-				if (copytext(text, 1,2) == "0")
+				if (round( max( text2num_safe(command), 0) ) == 0)
 					src.master.temp = null
 					src.menu = MENU_MAIN
 					src.print_text(mainmenu_text())

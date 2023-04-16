@@ -25,6 +25,9 @@ GAUNTLET CARDS
 				B.botcard = null
 		..()
 
+TYPEINFO(/obj/item/card/emag)
+	mats = 8
+
 /obj/item/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry. Commonly referred to as an EMAG"
 	name = "Electromagnetic Card"
@@ -33,7 +36,6 @@ GAUNTLET CARDS
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
 	is_syndicate = 1
-	mats = 8
 	contraband = 6
 
 	afterattack(var/atom/A, var/mob/user)
@@ -87,7 +89,7 @@ GAUNTLET CARDS
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
-	var/money = 0.0
+	var/money = 0
 	var/pin = 0000
 
 	//It's a..smart card.  Sure.
@@ -157,14 +159,9 @@ GAUNTLET CARDS
 	keep_icon = TRUE
 	var/touched = FALSE
 	New()
-		access = get_access("Captain")
 		..()
-
-	pickup(mob/user)
-		. = ..()
-		if(!touched && user.job != "Captain")
-			touched = TRUE
-			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
+		access = get_access("Captain")
+		src.AddComponent(/datum/component/log_item_pickup, "Captain")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -242,7 +239,7 @@ GAUNTLET CARDS
 		boutput(user, "<span class='alert'>The ID-Card explodes.</span>")
 		user.transforming = 1
 		var/obj/overlay/O = new/obj/overlay(get_turf(user))
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -250,7 +247,7 @@ GAUNTLET CARDS
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		SPAWN(3.5 SECONDS) qdel(O)
-		logTheThing("combat", user, null, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
@@ -273,6 +270,8 @@ GAUNTLET CARDS
 		if (istype(src, /obj/item/card/id/syndicate)) // Nuke ops unable to exit their station (Convair880).
 			src.access += access_syndicate_shuttle
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
+	user?.show_text("You run [E] over [src], scrambling its access.", "red")
+	logTheThing(LOG_STATION, user || usr, "emagged [src], scrambling its access and granting random access at [log_loc(user || usr)].")
 	src.emagged = 1
 	return TRUE
 
@@ -426,30 +425,60 @@ GAUNTLET CARDS
 	desc = "The bearer of this license is allowed to kill any player they like, but only as long as it is in their inventory. Yes, even if you arent an antag. No, you dont need to ahelp this we already know if you have it. Get to it!"
 	icon_state="fingerprint1"
 	var/mob/owner = null
+	var/is_very_visible = 0
+	var/obj/maptext_junk/indicator = null
+
+	very_visible
+		is_very_visible = 1
 
 	New()
 		..()
 		processing_items.Add(src)
+		if (is_very_visible)
+			indicator = new(src)
+			indicator.maptext_x = -100
+			indicator.maptext_y = 38
+			indicator.maptext_width = 232
+			indicator.maptext_height = 64
+			var/col1 = "color: #fff; -dm-text-outline: 2px #000;"
+			var/col2 = "color: #f00; -dm-text-outline: 2px #000;"
+			var/blink1 = "<span class='c vb ps2p' style='[col1]'><span class='vga'>KILL</span>\n↓</span>"
+			var/blink2 = "<span class='c vb ps2p' style='[col2]'><span class='vga'>KILL</span>\n↓</span>"
+			indicator.maptext = blink1
+			animate(indicator, maptext = blink1, time = 3, loop = -1)
+			animate(maptext = blink2, time = 3, loop = -1)
+
+
 
 	process()
 		if(!owner) return
 		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
-			logTheThing("combat",owner,null,"dropped their license to kill")
-			logTheThing("admin",owner,null,"dropped their license to kill")
+			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
+			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
+			owner.mind?.remove_antagonist(ROLE_LICENSED)
+			if (is_very_visible)
+				owner.vis_contents -= indicator
 			owner = null
 
 	pickup(mob/user as mob)
 		if(user != owner)
-			logTheThing("combat",user,null,"picked up a license to kill")
-			logTheThing("admin",user,null,"picked up a license to kill")
+			logTheThing(LOG_COMBAT, user, "picked up a license to kill")
+			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
 			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
+			user.mind?.add_antagonist(ROLE_LICENSED)
+			if (is_very_visible)
+				user.vis_contents += indicator
+
 			if(owner)
 				boutput(owner, "<h2>You have lost your license to kill!</h2>")
-				logTheThing("combat",user,null,"dropped their license to kill")
-				logTheThing("admin",user,null,"dropped their license to kill")
-				message_admins("[key_name(user)] dropped their license to kill")
+				logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
+				logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
+				message_admins("[key_name(owner)] dropped their license to kill")
+				owner.mind?.remove_antagonist(ROLE_LICENSED)
+				if (is_very_visible)
+					owner.vis_contents -= indicator
 			owner = user
 		..()

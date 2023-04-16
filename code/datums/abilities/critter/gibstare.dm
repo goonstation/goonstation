@@ -3,50 +3,60 @@
 // ------------------------------------------------
 
 /datum/action/bar/icon/gibstareAbility
-	duration = 60
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 6 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target
-	var/datum/targetable/critter/gibstare/gibstare
+	var/datum/targetable/critter/gibstare/ability
+	var/max_range
 
-	New(Target, Gibstare)
+	New(Target, Gibstare, new_duration, new_max_range = 10)
 		target = Target
-		gibstare = Gibstare
+		ability = Gibstare
+		if(new_duration)
+			duration = new_duration
+		max_range = new_max_range
 		..()
 
 	onUpdate()
-		..()
-
-		if(!(target in view(owner)) || target == null || owner == null || !gibstare || !gibstare.cooldowncheck())
+		if(istype(owner, /obj/critter))
+			var/obj/critter/ownerCritter = owner
+			if (!ownerCritter.alive)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || !gibstare || !gibstare.cooldowncheck())
+		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
-		var/mob/ownerMob = owner
-		playsound(ownerMob.loc, "sound/effects/mindkill.ogg", 50, 1)
+		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
 	onEnd()
 		..()
-		var/mob/ownerMob = owner
-		if(ownerMob && target && (target in view(owner)) && gibstare?.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "gibs [constructTarget(target,"combat")] using martin gib stare.")
-			for(var/mob/O in AIviewers(ownerMob))
+		if(istype(owner, /obj/critter))
+			var/obj/critter/ownerCritter = owner
+			if (!ownerCritter.alive)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
+			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
 			if (target == owner)
 				boutput(owner, "<span class='success'>Good. Job.</span>")
 			target.gib()
-			gibstare.actionFinishCooldown()
+			ability?.actionFinishCooldown()
 
 /datum/targetable/critter/gibstare
 	name = "Psychic Stare"

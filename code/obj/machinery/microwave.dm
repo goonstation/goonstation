@@ -8,13 +8,16 @@
 #define MW_STATE_BROKEN_1 1
 #define MW_STATE_BROKEN_2 2
 
+TYPEINFO(/obj/machinery/microwave)
+	mats = 12
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'icons/obj/kitchen.dmi'
 	desc = "The automatic chef of the future!"
 	icon_state = "mw"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	/// Current number of eggs inside the microwave
 	var/egg_amount = 0
 	/// Current amount of flour inside the microwave
@@ -49,7 +52,6 @@
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
 	var/obj/item/extra_item
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = FALSE
 
@@ -169,11 +171,14 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			O.set_loc(src)
 	else
 		if(!isitem(extra_item)) //Allow one non food item to be added!
-			user.u_equip(O)
-			extra_item = O
-			user.u_equip(O)
-			O.set_loc(src)
-			src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			if(O.w_class <= W_CLASS_NORMAL)
+				user.u_equip(O)
+				extra_item = O
+				user.u_equip(O)
+				O.set_loc(src)
+				src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			else
+				boutput(user, "[O] is too large and bulky to be microwaved.")
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
@@ -257,7 +262,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			/// If cook was pressed in the menu
 			if(operation == 1)
 				src.visible_message("<span class='notice'>The microwave turns on.</span>")
-				playsound(src.loc, 'sound/machines/microwave_start.ogg', 50, 0)
+				playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
 				var/diceinside = 0
 				for(var/obj/item/dice/D in src.contents)
 					if(!diceinside)
@@ -305,6 +310,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 
 /obj/machinery/microwave/proc/cook(var/result)
 	src.operating = TRUE
+	src.power_usage = 80
 	src.icon_state = "mw1"
 	src.updateUsrDialog()
 	switch(result)
@@ -325,6 +331,8 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					src.being_cooked.reagents.add_reagent("radium", 25)
 				if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
 					qdel(src.extra_item)
+				if(prob(1))
+					src.being_cooked.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 				src.being_cooked.set_loc(get_turf(src)) // Create the new item
 				src.extra_item = null
 				src.cooked_recipe = null
@@ -373,6 +381,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.clean_up()
 	src.operating = FALSE
+	src.power_usage = 5
 
 /**
 	*  Disposing of microwave contents

@@ -40,17 +40,20 @@
 
 		src.product_cost = cost
 
+TYPEINFO(/obj/machinery/glass_recycler)
+	mats = 10
+
 /obj/machinery/glass_recycler
 	name = "glass recycler"//"Kitchenware Recycler"
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/glass_amt = 0
 	var/list/product_list = list()
-	mats = 10
 	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
@@ -58,6 +61,15 @@
 		..()
 		src.get_products()
 		UnsubscribeProcess()
+
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!istype(O, /obj/item)) // dont recycle the floor!
+			return
+
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
+			return
+
+		src.attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)
@@ -172,6 +184,7 @@
 		src.glass_amt -= target_product.product_cost
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		use_power(20 WATTS)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)

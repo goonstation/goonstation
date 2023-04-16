@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1.0
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 
 /obj/machinery/shuttle/engine/heater
@@ -55,14 +55,14 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
 			boutput(user, "<span class='notice'>Resecuring outer frame.</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='notice'>Outer frame secured.</span>")
 			src.stat1 = 1
 			return
 		if (src.stat1 == 1)
 			boutput(user, "<span class='alert'>Unsecuring outer frame.</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='alert'>Done.</span>")
 			src.stat1 = 0
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 		return
 	else if (iswrenchingtool(W) && src.stat2 == 1)
 		var/obj/item/rods/R = new /obj/item/rods
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		boutput(user, "<span class='alert'>Removing outer hull plating.</span>")
 		sleep(2 SECONDS)
 		boutput(user, "<span class='alert'>Done.</span>")
@@ -137,12 +137,19 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 
 ///// SHIP-SCALE WEAPONRY. BEEOO BEEOO HIT THE DECK /////
 
+ADMIN_INTERACT_PROCS(/obj/machinery/shuttle/weapon, proc/fire)
+
+ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
+/obj/machinery/shuttle/weapon
+	proc/fire()
+		return
+
 /obj/machinery/shuttle/weapon/howitzer_plasma
 	icon = 'icons/misc/64x32.dmi'
 	icon_state = "howitzer-idle"
 	name = "plasma howitzer"
 	desc = "This sure looks dangerous."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 20
 	dir = 8
@@ -152,7 +159,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 	var/current_projectile = new/datum/projectile/special/howitzer
 
 
-	proc/fire()
+	fire()
 		flick(src.icon_firing, src)
 		src.visible_message("<span class='alert'>[src] is charging up!</span>")
 		playsound(src.loc, sound_firing, 70, 1)
@@ -166,14 +173,14 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 	desc = "A huge cannon firing six inch artillery rounds. It looks extremely dangerous."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "howitzerL"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 20
 	dir = 8
 	var/icon_firing = "howitzerL-firing"
 	var/current_projectile = new/datum/projectile/bullet/howitzer
 
-	proc/fire()
+	fire()
 		flick(src.icon_firing, src)
 		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
 		sleep(0.25 SECONDS)

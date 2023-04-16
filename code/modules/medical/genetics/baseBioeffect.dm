@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if(src.holder)
 			src.holder.RemovePoolEffect(src)
 			src.holder.RemoveEffect(src.id)
-		if(!removed)
+		if(!removed && src.owner)
 			src.OnRemove()
 		holder = null
 		owner = null
@@ -103,7 +103,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(overlay_image, id)
-		return
 
 	proc/OnRemove()  //Called when the effect is removed.
 		removed = 1
@@ -111,13 +110,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
-		return
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
 
 	proc/OnLife(var/mult)    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
-		return removed
+		return removed || QDELETED(owner)
 
 	proc/GetCopy()
 		//Gets a copy of this effect. Used to build local effect pool from global instance list.
@@ -276,44 +274,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/lockcode = ""
 	var/locktries = 0
 
-/atom/movable/screen/ability/topBar/genetics
-	tens_offset_x = 19
-	tens_offset_y = 7
-	secs_offset_x = 23
-	secs_offset_y = 7
-
-	clicked(parameters)
-		var/mob/living/user = usr
-
-		if (!istype(user) || !istype(owner))
-			boutput(user, "<span class='alert'>Oh christ something's gone completely batshit. Report this to a coder.</span>")
-			return
-
-		if (!owner.cooldowncheck())
-			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
-			return
-
-		if (owner.targeted && user.targeting_ability == owner)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-
-		if (!owner.targeted)
-			owner.handleCast()
-			return
-		else
-			user.targeting_ability = owner
-			user.update_cursor()
-
-	get_controlling_mob()
-		if (!istype(owner,/datum/targetable/geneticsAbility/))
-			return null
-		var/datum/targetable/geneticsAbility/GA = owner
-		var/mob/M = GA.owner
-		if (!istype(M) || !M.client)
-			return null
-		return M
-
 /datum/targetable/geneticsAbility
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "template"
@@ -327,89 +287,50 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/datum/bioEffect/power/linked_power = null
 	var/mob/living/owner = null
 
-	New()
-		var/atom/movable/screen/ability/topBar/genetics/B = new /atom/movable/screen/ability/topBar/genetics(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.name = src.name
-		B.desc = src.desc
-		B.owner = src
-		src.object = B
-
 	disposing()
 		owner = null
 		linked_power = null
 		..()
 
-	doCooldown()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			last_cast = world.time + linked_power.cooldown
-			if (linked_power.cooldown > 0)
-				SPAWN(linked_power.cooldown)
-					if (src && H?.hud)
-						H.hud.update_ability_hotbar()
-
-	tryCast(atom/target)
+	castcheck(atom/target)
+		if (!owner)
+			return FALSE
+		if (!linked_power)
+			return FALSE
 		if (can_act_check && !can_act(owner, needs_hands))
-			return 999
-		if (last_cast > world.time)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
-			return 999
+			return FALSE
+		if (targeted && GET_DIST(src.holder?.owner, target) > src.max_range)
+			boutput(src.holder?.owner, "<span class='alert'>[target] is too far away.</span>")
+			return FALSE
+		return ..()
 
-		if (has_misfire)
-			var/success_prob = 100
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if (H.bioHolder)
-					var/datum/bioHolder/BH = H.bioHolder
-					success_prob = BH.genetic_stability
-					success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
-
-			if (prob(success_prob))
-				. = cast(target)
-			else
-				. = cast_misfire(target)
-		else
-			. = cast(target)
-
-	handleCast(atom/target)
-		var/result = tryCast(target)
-		if (result && result != 999)
-			last_cast = 0 // reset cooldown
-		else if (result != 999)
-			doCooldown()
-		afterCast()
+	handleCast(atom/target, params)
+		if (src.linked_power) //paranoia check to keep them synched
+			src.cooldown = src.linked_power.cooldown
+		..()
 
 	cast(atom/target)
-		if (!owner)
-			return 1
-		if (!linked_power)
-			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "used the [linked_power.name] power.")
-		return 0
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power.")
+		if (!has_misfire)
+			return ..(target)
+		var/success_prob = 100
+		success_prob = src.linked_power.holder.genetic_stability
+		success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
+		if (prob(success_prob))
+			return ..(target)
+		else
+			return cast_misfire(target)
 
 	proc/cast_misfire(atom/target)
-		if (!owner)
-			return 1
-		if (!linked_power)
-			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power.")
-		return 0
-
-	afterCast()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H?.hud)
-				H.hud.update_ability_hotbar()
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power.")
 		return 0

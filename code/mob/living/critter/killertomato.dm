@@ -1,4 +1,4 @@
-/proc/tomatogibs(turf/T, viral_list, list/ejectables, bdna, btype)
+/proc/tomatogibs(turf/T, list/ejectables, bdna, btype)
 	var/PT = /obj/item/reagent_containers/food/snacks/plant/tomato
 
 	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \
@@ -33,13 +33,13 @@
 	can_throw = 0
 	blood_id = "juice_tomato"
 	add_abilities = list(/datum/targetable/critter/bite/tomato_bite,
-						/datum/targetable/critter/slam_polymorph)
+						/datum/targetable/critter/slam/polymorph)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -64,7 +64,7 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,src.loc)
 			B.name = "ruined tomato"
 			ghostize()

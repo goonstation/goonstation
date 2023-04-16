@@ -2342,3 +2342,10 @@ var/list/zalgo_mid = list(
 		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
 
 	return modded
+
+/proc/thrall_parse(var/string)
+	var/list/end_punctuation = list("!", "?", ".")
+	var/pos = length(string)
+	while (pos > 0 && (string[pos] in end_punctuation))
+		string = copytext(string, 1, pos--)
+	return string + "..."

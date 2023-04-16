@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	//name = "Don't Ask Too Many Questions"
 	payout = 5000
 	weight = 80
-	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN")
+	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc_whystudy = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
 	payout = 3300
-	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey")
+	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey","Component Restock","Photonics Project")
 	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
 		"Field laboratory at crystal excavation site",
@@ -121,7 +121,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
 	payout = 2500
-	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study")
+	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study","Botanical Advancement")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
 		"A cultivation analysis project",
@@ -174,15 +174,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.cropname = initial(plantalyze.name)
 
 		switch(rand(1,7))
-			if(1) src.gene_reqs["Maturation"] = rand(10,20) * -1
-			if(2) src.gene_reqs["Production"] = rand(10,20) * -1
+			if(1) src.gene_reqs["Maturation"] = rand(10,20)
+			if(2) src.gene_reqs["Production"] = rand(10,20)
 			if(3) src.gene_reqs["Lifespan"] = rand(3,5)
 			if(4) src.gene_reqs["Yield"] = rand(3,5)
 			if(5) src.gene_reqs["Potency"] = rand(3,5)
 			if(6) src.gene_reqs["Endurance"] = rand(3,5)
 			if(7)
-				src.gene_reqs["Maturation"] = rand(5,10) * -1
-				src.gene_reqs["Production"] = rand(5,10) * -1
+				src.gene_reqs["Maturation"] = rand(5,10)
+				src.gene_reqs["Production"] = rand(5,10)
 		..()
 
 

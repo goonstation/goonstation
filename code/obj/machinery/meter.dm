@@ -4,7 +4,8 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 1.0
+	anchored = ANCHORED
+	power_usage = 5
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
@@ -24,7 +25,7 @@
 		icon_state = "meter0"
 		return 0
 
-	use_power(5)
+	..()
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
@@ -47,7 +48,7 @@
 		icon_state = "meter4"
 		if(!noiselimiter)
 			if(prob(50))
-				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 				noiselimiter = 1
 				SPAWN(6 SECONDS)
 				noiselimiter = 0
@@ -65,37 +66,21 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 
-/obj/machinery/meter/examine()
-	. = list("A gas flow meter. ")
+/obj/machinery/meter/get_desc(dist, mob/user)
+	. = ..()
+	. += "A gas flow meter. "
 	if(status & (NOPOWER|BROKEN))
 		. += "It appears to be nonfunctional."
 	else if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			. += text("The pressure gauge reads [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
+			. += "The pressure gauge reads [round(MIXTURE_PRESSURE(environment), 0.1)] kPa"
 		else
 			. += "The sensor error light is blinking."
 	else
 		. += "The connect error light is blinking."
 
 
-/obj/machinery/meter/Click()
-
-	if(status & (NOPOWER|BROKEN))
-		return
-
-	var/t = null
-	if (get_dist(usr, src) <= 3 || isAI(usr))
-		if (src.target)
-			var/datum/gas_mixture/environment = target.return_air()
-			if(environment)
-				t = text("<B>Pressure:</B> [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
-			else
-				t = "<span class='alert'><B>Results: Sensor Error!</B></span>"
-		else
-			t = "<span class='alert'><B>Results: Connection Error!</B></span>"
-	else
-		boutput(usr, "<span class='notice'><B>You are too far away.</B></span>")
-
-	boutput(usr, t)
-	return
+/obj/machinery/meter/attack_hand(mob/user)
+	. = ..()
+	user.examine_verb(src)

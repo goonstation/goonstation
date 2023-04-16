@@ -9,8 +9,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	density = 1
-	anchored = 0
-	flags = FPRINT | FLUID_SUBMERGE
+	anchored = UNANCHORED
+	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
@@ -37,14 +37,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				smash()
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					smash()
 					return
-			if (3.0)
+			if (3)
 				if (prob(5))
 					smash()
 					return
@@ -61,8 +61,14 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
+	attackby(obj/item/W, mob/user)
+		// prevent attacked by messages
+		if(istype(W, /obj/item/reagent_containers/hypospray) || istype(W, /obj/item/reagent_containers/mender))
+			return
+		..(W, user)
+
 	mouse_drop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
@@ -74,6 +80,8 @@
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
+/obj/reagent_dispensers/cleanable
+	flags = FPRINT | FLUID_SUBMERGE
 
 /obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
@@ -82,7 +90,7 @@
 	icon_state = "spaceants"
 	layer = MOB_LAYER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	amount_per_transfer_from_this = 5
 
 	New()
@@ -110,7 +118,7 @@
 	icon_state = "spaceants"
 	layer = MOB_LAYER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	amount_per_transfer_from_this = 5
 	color = "#160505"
 
@@ -162,19 +170,19 @@
 	desc = "A specialised high-pressure water tank for holding large amounts of water."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertankbig"
-	anchored = 0
+	anchored = UNANCHORED
 	amount_per_transfer_from_this = 25
 
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				src.anchored = 1
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.anchored = ANCHORED
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				src.anchored = 0
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.anchored = UNANCHORED
 			return
 
 	New()
@@ -182,13 +190,15 @@
 		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
+TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
+	mats = 8
+
 /obj/reagent_dispensers/watertank/fountain
 	name = "water cooler"
 	desc = "A popular gathering place for NanoTrasen's finest bureaucrats and pencil-pushers."
 	icon_state = "coolerbase"
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
-	mats = 8
 	capacity = 500
 
 	var/has_tank = 1
@@ -257,11 +267,11 @@
 
 		if (isscrewingtool(W))
 			if (src.anchored)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
 				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					return
 			else
 				var/turf/T = get_turf(src)
@@ -269,11 +279,11 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 					return
 				else
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
 					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
-						src.anchored = 1
+						src.anchored = ANCHORED
 						return
 		..()
 
@@ -324,6 +334,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
+	var/isburst = FALSE
 
 	New()
 		..()
@@ -337,7 +348,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
 		src.reagents.remove_any(20)
-		playsound(src.loc, "sound/items/drink.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
@@ -359,6 +370,14 @@
 			add_fingerprint(AM, TRUE)
 		else if (ismob(usr))
 			add_fingerprint(usr, TRUE)
+
+	ex_act(severity)
+		..()
+		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
+		isburst = TRUE
+
+	is_open_container()
+		return isburst
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -382,12 +401,22 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/beerkeg/rum
+	name = "barrel of rum"
+	desc = "It better not be empty."
+	icon_state = "rum_barrel"
+
+	New()
+		..()
+		reagents.remove_reagent("beer",1000)
+		reagents.add_reagent("rum",1000)
+
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "compost"
-	anchored = 0
+	anchored = UNANCHORED
 	amount_per_transfer_from_this = 30
 	event_handler_flags = NO_MOUSEDROP_QOL
 	New()
@@ -405,23 +434,24 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				src.anchored = 1
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.anchored = ANCHORED
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				src.anchored = 0
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.anchored = UNANCHORED
 			return
 		var/load = 1
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)
 		else if (istype(W,/obj/item/seed/)) src.reagents.add_reagent("poo", 2)
-		else if (istype(W,/obj/item/plant/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/plant/) || istype(W,/obj/item/clothing/head/flower/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/organ/)) src.reagents.add_reagent("poo", 35)
 		else load = 0
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
@@ -438,7 +468,7 @@
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
-		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
+		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) || istype(O, /obj/item/clothing/head/flower/))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 			var/itemtype = O.type
 			var/staystill = user.loc
@@ -455,7 +485,7 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				src.reagents.add_reagent("poo", amount)
 				qdel( P )
 				sleep(0.3 SECONDS)

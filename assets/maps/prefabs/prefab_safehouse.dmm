@@ -772,7 +772,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
 "Dl" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"

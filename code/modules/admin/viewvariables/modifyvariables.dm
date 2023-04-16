@@ -69,7 +69,7 @@
 		boutput(src, "<span class='alert'>That's not a List!</span>")
 		return
 
-	var/list/names = sortList(L)
+	var/list/names = sortList(L, /proc/cmp_text_asc)
 
 	var/list/fixedList = list()
 
@@ -94,16 +94,13 @@
 
 	var/datum/data_input_result/result = input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 													DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-													DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_LIST_BUILD, DATA_INPUT_LIST_DEL_FROM, DATA_INPUT_RESTORE, \
+													DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_LIST_BUILD, DATA_INPUT_LIST_DEL_FROM, \
 													default_type = default, default = variable))
 
 	switch(result.output_type)
 
 		if (null)
 			return
-
-		if (DATA_INPUT_RESTORE)
-			L[variable_index] = initial(variable)
 
 		if (DATA_INPUT_LIST_DEL_FROM)
 			L -= variable

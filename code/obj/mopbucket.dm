@@ -6,7 +6,7 @@
 	density = 1
 	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	p_class = 1.2
@@ -52,7 +52,7 @@
 			src.reagents.trans_to(W, W.reagents ? W.reagents.maximum_volume : 10)
 
 			boutput(user, "<span class='notice'>You dunk the mop into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='notice'>[src] is empty!</span>")
 	else
@@ -109,14 +109,14 @@
 
 /obj/mopbucket/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 				return

@@ -16,7 +16,7 @@
 
 /// Allows connections for disposal pipes
 #define DISJOINT_TURF_CONNECTION_DISPOSAL (1<<0)
-/// Allows connections for atmos machinary (nodes)
+/// Allows connections for atmos machinery (nodes)
 #define DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY (1<<1)
 /// Allows for connections for powernets
 #define DISJOINT_TURF_CONNECTION_POWERNETS (1<<2)

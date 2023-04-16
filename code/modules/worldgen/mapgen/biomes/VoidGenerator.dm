@@ -17,10 +17,10 @@
 
 	generate_turf(gen_turf, flags)
 		. = ..()
-		if(prob(corridor_density))
+		if((flags & (MAPGEN_TURF_ONLY) == 0) && prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
 			SPAWN(5 SECONDS)
-				void_corridor(get_step(gen_turf,pick(cardinal)), rand(6,10), start=TRUE)
+				void_corridor(get_step(gen_turf, pick(cardinal)), rand(6,10), start=TRUE)
 
 	proc/void_corridor(turf/T, max_size=7, start=FALSE)
 		if(max_size <= 0)
@@ -64,10 +64,10 @@
 
 
 /datum/biome/void/oddities
-	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/spook=1, /obj/map/light/void=2)
+	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/item/spook=1, /obj/map/light/void=2)
 	flora_density = 1
 
-	fauna_types = list( /obj/critter/floateye=4, /obj/spook=1)
+	fauna_types = list( /obj/critter/floateye=4, /obj/item/spook=1)
 	fauna_density = 0.6
 
 	corridor_density = 0.3
@@ -76,7 +76,7 @@
 	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/map/light/void=5)
 	flora_density = 0.5
 
-	fauna_types = list(/obj/spook=3, /obj/critter/aberration=1, /obj/critter/crunched=2, /obj/critter/spirit=6)
+	fauna_types = list(/obj/item/spook=3, /mob/living/critter/aberration=1, /obj/critter/crunched=2, /obj/critter/spirit=6)
 	fauna_density = 0.5
 
 	corridor_density = 1
@@ -155,7 +155,7 @@
 		else //Over 0.85; It's MORE VOID HAHAHAHAHA
 			selected_biome = /datum/biome/void
 		selected_biome = biomes[selected_biome]
-		selected_biome.generate_turf(gen_turf)
+		selected_biome.generate_turf(gen_turf, flags)
 
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)

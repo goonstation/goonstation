@@ -20,13 +20,13 @@
 /datum/heap/proc/is_empty()
 	return !length(L)
 
-//insert and place at its position a new node in the heap
+/// insert and place at its position a new node in the heap
 /datum/heap/proc/insert(atom/A)
 	L.Add(A)
 	swim(length(L))
 
-//removes and returns the first element of the heap
-//(i.e the max or the min dependant on the comparison function)
+/// removes and returns the first element of the heap
+/// (i.e the max or the min dependant on the comparison function)
 /datum/heap/proc/pop()
 	if(!length(L))
 		return 0
@@ -37,7 +37,7 @@
 	if(length(L))
 		sink(1)
 
-//Get a node up to its right position in the heap
+/// Get a node up to its right position in the heap
 /datum/heap/proc/swim(index)
 	var/parent = round(index * 0.5)
 
@@ -46,7 +46,7 @@
 		index = parent
 		parent = round(index * 0.5)
 
-//Get a node down to its right position in the heap
+/// Get a node down to its right position in the heap
 /datum/heap/proc/sink(index)
 	var/g_child = get_greater_child(index)
 
@@ -55,8 +55,8 @@
 		index = g_child
 		g_child = get_greater_child(index)
 
-//Returns the greater (relative to the comparison proc) of a node children
-//or 0 if there's no child
+/// Returns the greater (relative to the comparison proc) of a node children
+/// or 0 if there's no child
 /datum/heap/proc/get_greater_child(index)
 	if(index * 2 > length(L))
 		return 0
@@ -69,7 +69,7 @@
 	else
 		return index * 2
 
-//Replaces a given node so it verify the heap condition
+/// Replaces a given node so it verify the heap condition
 /datum/heap/proc/resort(atom/A)
 	var/index = L.Find(A)
 

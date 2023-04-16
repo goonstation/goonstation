@@ -4,6 +4,7 @@
 	icon = null
 	event_handler_flags = 0
 	var/atom/target
+	var/is_respawnable = TRUE
 
 	New()
 		..()
@@ -16,6 +17,7 @@
 		var/mob/living/M = src.target
 		if(istype(M))
 			M.observers -= src
+			src.UnregisterSignal(M, list(COMSIG_TGUI_WINDOW_OPEN))
 
 		if (isobj(target))
 			src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
@@ -36,21 +38,6 @@
 		if (src.client)
 			src.removeOverlaysClient(src.client)
 
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src, T) || (src.client && src.client.holder)))))
-				src.set_loc(T)
-			else
-				if (ASLoc)
-					src.set_loc(ASLoc)
-				else
-					src.z = 1
-		else
-			if (ASLoc)
-				src.set_loc(ASLoc)
-			else
-				src.z = 1
 		STOP_TRACKING
 		..()
 
@@ -106,7 +93,8 @@
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
 		src.set_loc(target)
-
+		if(src.ghost?.auto_tgui_open)
+			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, .proc/open_tgui_if_interactive)
 		set_eye(target)
 
 		var/mob/living/M = target
@@ -118,8 +106,23 @@
 				src.attach_hud(hud)
 
 		if (isobj(target))
-			src.RegisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING), .verb/stop_observing)
+			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, .verb/stop_observing)
 
+	click(atom/target, params, location, control)
+		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
+			if(ismob(src.target))
+				var/mob/mob_target = src.target
+				for(var/datum/tgui/ui in mob_target.tgui_open_uis)
+					if(ui.src_object == target)
+						return target.ui_interact(src)
+		return ..()
+
+	/// Checks if the tgui window being created is from an object with TGUI_INTERACTIVE, and opens the window for the observer if true
+	proc/open_tgui_if_interactive(mob/sender, datum/tgui/observe_window)
+		if(istype(observe_window.src_object, /atom))
+			var/atom/atom_object = observe_window.src_object
+			if(atom_object.flags & TGUI_INTERACTIVE)
+				return observe_window.src_object.ui_interact(src)
 
 	verb
 		stop_observing()
@@ -131,6 +134,7 @@
 
 /mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
+	is_respawnable = FALSE
 	var/start_time
 
 	New()
@@ -146,7 +150,7 @@
 		if(src.key || src.client)
 			var/mob/dead/observer/O = new/mob/dead/observer(src)
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-			if (client) client.color = null
+			if (client) client.set_color()
 			setdead(O)
 
 			src.mind?.transfer_to(O)

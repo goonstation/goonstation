@@ -54,7 +54,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 	name = "Zoldorf"
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "background"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	explosion_resistance = 1000
 	var/list/souldorfs = list() //ability interaction
@@ -260,7 +260,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			sleep(0.1 SECONDS)
 
 	proc/lightrfade(var/targetbright = 0.8) //fade in
-		var/initialbright = 0.0
+		var/initialbright = 0
 		var/loops = targetbright*10
 		for(var/i=1,i<=loops,i++)
 			initialbright += 0.1

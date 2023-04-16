@@ -1,12 +1,13 @@
 //Floor Flushing Mechanism.
-
+ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 /obj/machinery/floorflusher
 	name = "\improper Floor Flusher"
 	desc = "It's totally not just a gigantic disposal chute!"
 	//icon = 'icons/obj/disposal.dmi'
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
-	anchored = 1
+	anchored = ANCHORED
+	power_usage = 100
 	density = 0
 	flags = NOSPLASH
 	plane = PLANE_NOSHADOW_BELOW
@@ -19,6 +20,8 @@
 	var/flush = 0	// true if triggered
 	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk, if none reject user
 	var/flushing = 0	// true if flushing in progress
+	var/mail_tag = null // mail_tag to apply on next flush
+	var/mail_id = null // id for linking a flusher for mail tagging
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
@@ -228,6 +231,17 @@
 					boutput(M, "You feel your handcuffs being removed.")
 					M.handcuffs.drop_handcuffs(M)
 
+				//Might as well set their security record to "released"
+				var/nameToCheck = M.name
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					// this makes it so that if your face is unobstructed and your id is wrong, i.e. you show up as John Smith (as Someone Else)
+					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
+					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
+					nameToCheck = H.face_visible() ? H.real_name : H.name
+				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
+				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
+					R["criminal"] = "Released"
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
@@ -241,8 +255,7 @@
 		if(status & NOPOWER)			// won't charge if no power
 			return
 
-		use_power(100)		// base power usage
-
+		..()
 		if(mode != 1)		// if off or ready, no need to charge
 			return
 		return
@@ -255,13 +268,14 @@
 		closeup()
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
+		H.mail_tag = src.mail_tag // apply mail_tag
 
 		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents.zero() // empty gas
 
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -308,7 +322,7 @@
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -376,7 +390,7 @@
 		if(status & NOPOWER)			// won't charge if no power
 			return
 
-		use_power(100)		// base power usage
+		..()
 
 		if(mode == 1)
 			mode = 2

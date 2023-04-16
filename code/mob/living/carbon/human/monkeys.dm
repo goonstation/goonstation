@@ -255,6 +255,17 @@
 						things_to_pick += M
 				if(!length(things_to_pick))
 					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands", "healingtouch")) // this monkey's all gene'd up
+					var/atom/thing_to_poke = pick(things_to_pick)
+					var/datum/bioEffect/power/healing_touch/healing_touch = src.bioHolder.GetEffect("healing_touch")
+					var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
+					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands")
+					if (ismob(thing_to_poke) && healing_touch && healing_touch.ability.last_cast < world.time)
+						healing_touch.ability.handleCast(thing_to_poke)
+					else if (!ismob(thing_to_poke) && midas_touch && midas_touch?.ability.last_cast < world.time)
+						midas_touch.ability.handleCast(thing_to_poke)
+					else
+						ink_glands?.ability.handleCast(thing_to_poke)
 				else if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
@@ -294,10 +305,11 @@
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
-			src.emote("scream")
+			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
+				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
-			if (get_dist(src, pal) > 7)
+			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
@@ -311,9 +323,11 @@
 			pal.shitlist[T] ++
 			pals ++
 			if (prob(40))
-				src.emote("scream")
+				if(!ON_COOLDOWN(pal, "monkey_harmed_scream", 5 SECONDS))
+					pal.emote("scream")
 			if(src.client)
 				break
+
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
@@ -337,7 +351,7 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 11))
+		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else
@@ -481,7 +495,8 @@
 							"You sound like you singing in two keys at same time!", \
 							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
 							if (prob(40))
-								src.emote("scream")
+								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
+									src.emote("scream")
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
@@ -533,7 +548,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
+		logTheThing(LOG_COMBAT, source, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
@@ -554,7 +569,7 @@
 			return
 
 		if(I.handle_other_remove(source, target))
-			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
+			logTheThing(LOG_COMBAT, source, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
 			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
 			else
@@ -606,6 +621,12 @@
 
 	ai_is_valid_target(mob/M)
 		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
+
+/mob/living/carbon/human/npc/monkey/angry/testing
+	ai_attacknpc = TRUE
+
+	ai_is_valid_target(mob/M)
+		return isalive(M)
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea

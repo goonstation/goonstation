@@ -54,7 +54,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = I
 
-	var/desc = tgui_input_list(usr, "Please select a location to lock in.", "Locking Computer", sortList(L))
+	var/desc = tgui_input_list(usr, "Please select a location to lock in.", "Locking Computer", sortList(L, /proc/cmp_text_asc))
 	if (isnull(desc))
 		return
 	src.locked = L[desc]

@@ -1,16 +1,3 @@
-/obj/item/goldbar //deprecated, needs getting rid of except the map is being weird about it
-	name = "fool's pyrite bar"
-	desc = "It's gold that isn't. Except it is. MINDFUCK"
-	icon = 'icons/obj/materials.dmi'
-	icon_state = "gold-bar"
-	force = 8
-	throwforce = 10
-	//metal = 1
-	//conductor = 1
-	New()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
-		return ..()
-
 /datum/ore
 	var/name = null
 	var/output = null
@@ -62,7 +49,7 @@
 	output = /obj/item/raw_material/molitz
 	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
-	event_chance = 12
+	event_chance = 20
 	hardness_mod = 1
 	mining_health = 160
 
@@ -159,13 +146,13 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 5 SECONDS, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 10 SECONDS, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)
 
 /datum/ore/plasmastone
 	name = "plasmastone"
@@ -206,8 +193,10 @@
 /datum/ore/miracle
 	name = "miraclium"
 	output = /obj/item/raw_material/miracle
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
+	event_chance = 1
 	hardness_mod = 2
 	rarity_tier = 3
 	amount_per_tile_min = 1
@@ -244,6 +233,8 @@
 /datum/ore/nanite
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
+	events = list(/datum/ore/event/loot_crate)
+	event_chance = 1
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15
 	hardness_mod = 2

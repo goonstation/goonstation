@@ -7,11 +7,13 @@
 
 // Item slot machine
 
+TYPEINFO(/obj/submachine/slot_machine/item)
+	mats = null
+
 /obj/submachine/slot_machine/item
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	mats = null
 	var/uses = 0
 	max_roll = 1000
 	icon_base = "slotsitem"
@@ -29,7 +31,7 @@
 		/obj/item/paper_bin,
 		/obj/item/item_box/gold_star,
 		/obj/item/storage/box/costume/hotdog,
-		/obj/critter/roach,
+		/mob/living/critter/small_animal/cockroach,
 		/obj/item/device/light/flashlight,
 		/obj/item/kitchen/utensil/knife,
 		/obj/item/staple_gun,
@@ -61,7 +63,7 @@
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/brullbar, // have fun!
+		/mob/living/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)
@@ -69,18 +71,18 @@
 	money_roll(waver)
 		var/roll = rand(1,max_roll)
 		var/exclamation = ""
-		var/win_sound = "sound/machines/ping.ogg"
+		var/win_sound = 'sound/machines/ping.ogg'
 		var/prize_type = null
 
 		if(roll > (max_roll - uses * 20)) // failure chances increase by 2% every roll
 			src.emag_act(null, null) // bye bye!
 			prize_type = /obj/item/gimmickbomb/butt/prearmed
 			exclamation = "Big Loser! Goodbye! "
-			win_sound = "sound/musical_instruments/Trombone_Failiure.ogg"
+			win_sound = 'sound/musical_instruments/Trombone_Failiure.ogg'
 			return
 		else if (roll <= 20 && wager > 250) // rare tier, 2% chance, only on high wagers
 			prize_type = pick(raretier)
-			win_sound = "sound/misc/airraid_loop_short.ogg"
+			win_sound = 'sound/misc/airraid_loop_short.ogg'
 			exclamation = "JACKPOT! "
 			src.uses += 20
 		else if (roll > 20 && roll <= 170) // half decent tier, 15% chance
@@ -97,21 +99,21 @@
 		if (!prize_type)
 			prize_type = /obj/item/raw_material/rock
 		var/obj/item/prize = new prize_type
-		prize.loc = src.loc
+		prize.set_loc(src.loc)
 		prize.layer += 0.1
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")
 		playsound(get_turf(src), "[win_sound]", 55, 1)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E) // Freak out and die
 		src.icon_state = "slotsitem-malf"
-		playsound(get_turf(src), "sound/misc/klaxon.ogg", 55, 1)
+		playsound(get_turf(src), 'sound/misc/klaxon.ogg', 55, 1)
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'WINNER! WINNER! JACKPOT! WINNER! JACKPOT! BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1, pitch = 1.2)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 60, 1, pitch = 1.2)
 		animate_shake(src,7,5,2)
 		sleep(3.5 SECONDS)
 
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_2.ogg", 60, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_2.ogg', 60, 1, pitch = 0.8)
 		animate_shake(src,5,7,2)
 		sleep(1.5 SECONDS)
 
@@ -128,7 +130,7 @@
 	name = "modified GeneTek Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/chefbot
@@ -136,7 +138,7 @@
 	desc = "It seems to still be sparking..."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot0"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/brokengamblebot
 	name = "inactive gambling robot"

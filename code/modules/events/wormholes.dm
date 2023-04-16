@@ -30,6 +30,10 @@ var/global/list/turf/random_floor_turfs = null
 	var/list/turf/station_z_turfs = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 	var/rand_amt = rand(150, 250)
 
+	#ifdef UNIT_TESTS
+	rand_amt = 10
+	#endif
+
 	while (rand_amt > length(random_floor_turfs))
 		var/turf/T = pick(station_z_turfs)
 		if(istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))

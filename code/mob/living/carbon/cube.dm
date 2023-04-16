@@ -10,7 +10,7 @@
 	icon_state = "meatcube"
 	a_intent = "disarm" // just so they don't swap with help intent users
 	health = INFINITY
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	nodamage = 1
 	opacity = 0
@@ -35,20 +35,19 @@
 
 	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 40, 1)
 		src.add_fingerprint(user)
 		return
 
 	ex_act(severity)
 		..() // Logs.
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.gib(1)
 				return
-			if(2.0)
+			if(2)
 				if (prob(25))
 					src.gib(1)
-			else
 		return
 
 	proc/get_cube_idle()
@@ -70,6 +69,7 @@
 		return 1
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))
@@ -125,7 +125,7 @@
 							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							animate_shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
@@ -143,7 +143,7 @@
 				else
 					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message(message, m_type)
@@ -187,7 +187,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 
@@ -236,7 +236,7 @@
 				M.icon_state = "cybermeat"
 				if (prob(50))
 					M.reagents.add_reagent("nanites", 5)
-			playsound(src.loc, "sound/machines/engine_grump2.ogg", 75, 1)
+			playsound(src.loc, 'sound/machines/engine_grump2.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
 			..()
 

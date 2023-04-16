@@ -15,9 +15,23 @@ change the direction of created objects.<br>
 	var/objpath = null
 	var/cinematic = "Blink"
 	var/tmp/matrix/mtx = matrix()
+	var/static/list/spawn_types = list(
+		"Telepad", \
+		"Blink", \
+		"Supplydrop", \
+		"Supplydrop (no lootbox)", \
+		"Lethal Supplydrop", \
+		"Lethal Supplydrop (no lootbox)", \
+		"Spawn Heavenly", \
+		"Spawn Demonically", \
+		"Missile", \
+		"Pop in", \
+		"Beam", \
+		"Poof", \
+		"None")
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "Pop in", "None")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in spawn_types) || cinematic
 			return
 		if (!objpath)
 			objpath = /obj/critter/domestic_bee/heisenbee
@@ -111,7 +125,7 @@ change the direction of created objects.<br>
 						marker.pixel_y = -16
 						marker.plane = PLANE_OVERLAY_EFFECTS
 						marker.layer = NOLIGHT_EFFECTS_LAYER_BASE
-						marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+						marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 						marker.alpha = 100
 						usr.client.images += marker
 						SPAWN(0)
@@ -142,7 +156,25 @@ change the direction of created objects.<br>
 					if (ispath(objpath, /atom/movable))
 						var/atom/movable/A = new objpath(T)
 						A.Scale(0,0)
-						animate(A, transform = matrix(), time = 0.8 SECONDS, easing = ELASTIC_EASING)
+						animate(A, transform = matrix(), time = 1 SECOND, easing = ELASTIC_EASING)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Beam")
+					if(ispath(objpath, /atom/movable))
+						var/atom/movable/AM = new objpath(T)
+						spawn_beam(AM)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Poof")
+					if(ispath(objpath, /atom/movable))
+						new objpath(T)
+						var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
+						P.setup(T)
+						playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else

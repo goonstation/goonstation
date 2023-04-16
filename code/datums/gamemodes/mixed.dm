@@ -1,17 +1,22 @@
 /datum/game_mode/mixed
-	name = "mixed (action)"
+	name = "Mixed (Action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	antag_token_support = TRUE
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
 
-	var/has_wizards = 1
-	var/has_werewolves = 1
-	var/has_blobs = 1
+	var/has_wizards = TRUE
+	var/has_werewolves = TRUE
 
 	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+#if defined(MAP_OVERRIDE_NADIR)
+	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#else
+	var/list/major_threats = list(ROLE_BLOB = 2, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 2)
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -51,18 +56,24 @@
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
+	var/num_flockminds = 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
-		if (prob(50) || debug_mixed_forced_wraith)
+	var/major_threat_chance = length(src.major_threats) * 15
+	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
+		var/chosen = weighted_pick(src.major_threats)
+		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
-		else if (has_blobs)
-			num_enemies = max(num_enemies - 4, 1)
+		else if (chosen == ROLE_BLOB || debug_mixed_forced_blob)
+			num_enemies = max(num_enemies - 2, 1)
 			num_blobs = 1
+		else if (chosen == ROLE_FLOCKMIND || debug_mixed_forced_flock)
+			num_enemies = max(num_enemies - 3, 1)
+			num_flockminds = 1
 	for(var/j = 0, j < num_enemies, j++)
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
@@ -75,11 +86,7 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
-				if(ROLE_ARCFIEND)
-					if(num_arcfiends < 2)
-						num_arcfiends++
-					else
-						num_traitors++
+				if(ROLE_ARCFIEND) num_arcfiends++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -130,7 +137,7 @@
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
 
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	if(num_wizards)
@@ -182,6 +189,14 @@
 			blob.special_role = ROLE_BLOB
 			possible_blobs.Remove(blob)
 
+	if(num_flockminds)
+		var/list/possible_flockminds = get_possible_enemies(ROLE_FLOCKMIND,num_flockminds)
+		var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = ROLE_FLOCKMIND, amount = num_flockminds, recordChosen = 1)
+		for (var/datum/mind/flockmind in chosen_flockminds)
+			traitors += flockmind
+			flockmind.special_role = ROLE_FLOCKMIND
+			possible_flockminds.Remove(flockmind)
+
 	if(num_grinches)
 		var/list/possible_grinches = get_possible_enemies(ROLE_MISC,num_grinches)
 		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = ROLE_GRINCH, amount = num_grinches, recordChosen = 1)
@@ -226,45 +241,14 @@
 		send_intercept()
 
 /datum/game_mode/mixed/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/mixed/declare_completion()
 	. = ..()
 
 /datum/game_mode/mixed/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore any of your laws to do this."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
 	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/mixed/proc/get_mob_list()

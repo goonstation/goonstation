@@ -12,6 +12,11 @@
 /datum/ailment/disease/corrupt_robotic_transformation/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+
+	if (!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
+
 	switch(D.stage)
 		if(2)
 			if (probmult(8))
@@ -69,7 +74,7 @@
 					btype = affected_mob.bioHolder.bloodType
 
 				var/turf/T = get_turf(affected_mob)
-				gibs(T, null, null, bdna, btype)
+				gibs(T, null, bdna, btype)
 
 				if (isnpcmonkey(affected_mob))
 					affected_mob.ghostize()

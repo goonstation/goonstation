@@ -3,7 +3,7 @@
 	desc = ""
 	object_flags = NO_GHOSTCRITTER
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = -1
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
@@ -65,12 +65,16 @@
 			step(src,direction)
 		return
 
+TYPEINFO(/obj/item/device/chameleon)
+	mats = 14
+
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | SUPPRESSATTACK
+	c_flags = ONBELT
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -81,7 +85,6 @@
 	tooltip_flags = REBUILD_DIST
 
 	is_syndicate = 1
-	mats = 14
 
 	New()
 		..()
@@ -130,7 +133,7 @@
 				cham = new(src)
 				cham.master = src
 
-			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
+			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			cham.name = target.name
 			cham.real_name = target.name
@@ -152,7 +155,7 @@
 
 		if (active) //active_dummy)
 			active = 0
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
@@ -166,7 +169,7 @@
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
 				return
 
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			usr.set_loc(cham)
@@ -208,7 +211,7 @@
 		if (src.active)
 			if (user)
 				message_admins("[key_name(user)] triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -216,7 +219,7 @@
 	attack_hand(var/mob/user)
 		if (src.active && isturf(loc))
 			message_admins("[key_name(user)] picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
-			logTheThing("bombing", user, null, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -241,7 +244,7 @@
 		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
-			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
+			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
@@ -263,17 +266,17 @@
 
 		if (active)
 			active = 0
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			src.active = 1
 			boutput(usr, "<span class='notice'>You arm the [src].</span>")
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 	disrupt()
 		if (active)

@@ -7,7 +7,7 @@
 	icon_state = "goosebot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 10
 	no_camera = 1
@@ -28,10 +28,10 @@
 		quack(message)
 		wakka_wakka()
 		if(prob(50))
-			playsound(src.loc, "sound/misc/thegoose_honk.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/thegoose_honk.ogg', 100, 0)
 			throw_egg_is_true()
 		else
-			playsound(src.loc, "sound/misc/thegoose_song.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/thegoose_song.ogg', 100, 0)
 
 
 
@@ -72,7 +72,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	explosion(src, src.loc , 0, 0, 1, 1)
 	qdel(src)
 	return
@@ -88,7 +88,7 @@
 
 		icon_state = "goosebot-wild"
 		src.visible_message("<span class='combat'><b>[src] fires an egg at [target.name]!</b></span>")
-		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 		SPAWN(1 SECOND)
 			E.throwforce = 1
 			sleep(4 SECONDS)

@@ -32,18 +32,20 @@
 
 #define DECON_NONE 0
 /// no reqs, just deconstruct!
-#define DECON_SIMPLE 1
-#define DECON_SCREWDRIVER 2
-#define DECON_WRENCH 4
-#define DECON_CROWBAR 8
-#define DECON_WELDER 16
-#define DECON_WIRECUTTERS 32
-#define DECON_MULTITOOL 64
+#define DECON_SIMPLE (1 << 0)
+#define DECON_SCREWDRIVER (1 << 1)
+#define DECON_WRENCH (1 << 2)
+#define DECON_CROWBAR (1 << 3)
+#define DECON_WELDER (1 << 4)
+#define DECON_WIRECUTTERS (1 << 5)
+#define DECON_MULTITOOL (1 << 6)
 /// flag added to something that is player-built
-#define DECON_BUILT 128
+#define DECON_BUILT (1 << 7)
 /// can only be deconstructed if access required is null
-#define DECON_ACCESS 256
+#define DECON_NULL_ACCESS (1 << 8)
 /// item will be saved by path instead of stored in the frame
-#define DECON_DESTRUCT 512
+#define DECON_DESTRUCT (1 << 9)
 // item cannot be deconstructed by cyborgs
-#define DECON_NOBORG 1024
+#define DECON_NOBORG (1 << 10)
+/// can be deconstructed without has access
+#define DECON_NO_ACCESS (1 << 11)

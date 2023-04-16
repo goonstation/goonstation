@@ -6,18 +6,21 @@ on:
 jobs:
   merge-upstream:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '!merge_upstream' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
+
     - name: PR Data
       run: |
         curl -H "Authorization: token ${{ github.token }}" ${{ github.event.issue.pull_request.url }} > pr.json
         echo "PR_REPO=`jq -r '.head.repo.full_name' < pr.json`" >> $GITHUB_ENV
         echo "PR_BRANCH=`jq -r '.head.ref' < pr.json`" >> $GITHUB_ENV
-    - uses: actions/checkout@v2
+
+    - uses: actions/checkout@v3
       with:
         repository: ${{ env.PR_REPO }}
         ref: ${{ env.PR_BRANCH }}
         fetch-depth: 0
+
     - name: Perform Merge
       run: |
         bash tools/hooks/install.sh
@@ -29,6 +32,7 @@ jobs:
         git remote add upstream "https://github.com/${{ github.repository }}.git"
         git fetch upstream master
         git merge upstream/master && git push origin
+
     - name: Notify Failure
       if: failure()
       run: |

@@ -12,7 +12,7 @@
 	var/failing = 0
 
 	attackby(obj/item/W, mob/living/user)
-		if (istype(W, /obj/item/crowbar))
+		if (ispryingtool(W))
 			boutput(user, "There's no maintenance panel to open.")
 			return
 		if (isweldingtool(W))
@@ -60,7 +60,7 @@
 	desc = "A sophisticated machine that fabricates large objects from a nearby reserve of supplies."
 	icon = 'icons/obj/machines/podfab.dmi'
 	icon_state = "fab-still"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = 2.9
 	var/active = 0
@@ -197,6 +197,6 @@
 	name = "semi-constructed object"
 	desc = "A thing in the process of being assembled by a fabricator."
 	alpha = 5
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0

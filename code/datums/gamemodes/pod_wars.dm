@@ -25,13 +25,14 @@ var/list/pw_rewards_tier2 = null
 var/list/pw_rewards_tier3 = null
 
 /datum/game_mode/pod_wars
-	name = "pod wars"
+	name = "Pod Wars (Beta)(only works if current map is pod_wars.dmm)"
 	config_tag = "pod_wars"
+	regular = FALSE
 	votable = 1
 	probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	crew_shortage_enabled = 0
 
-	shuttle_available = 0 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
+	shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 	list/latejoin_antag_roles = list() // Unrecognized roles default to traitor in mob/new_player/proc/makebad().
 	do_antag_random_spawns = 0
 	do_random_events = 0
@@ -192,12 +193,15 @@ var/list/pw_rewards_tier3 = null
 		if (istype(A, /area/pod_wars/spacejunk/reliant))
 			name = "The NSV Reliant"
 			true_name = RELIANT
+			CPC.update_name_overlay("reliant")
 		else if (istype(A, /area/pod_wars/spacejunk/fstation))
 			name = "Fortuna Station"
 			true_name = FORTUNA
+			CPC.update_name_overlay("fortuna")
 		else if (istype(A, /area/pod_wars/spacejunk/uvb67))
 			name = "UVB-67"
 			true_name = UVB67
+			CPC.update_name_overlay("uvb")
 		var/datum/control_point/P = new/datum/control_point(CPC, A, name, true_name, src)
 
 		CPC.ctrl_pt = P 		//computer's reference to datum
@@ -357,7 +361,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
-	fraction = clamp(fraction, 0.00, 0.99)
+	fraction = clamp(fraction, 0, 0.99)
 
 
 	var/matrix/M1 = matrix()
@@ -424,7 +428,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team.first_system_destroyed = 1
 		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed{ALTS}.ogg", sound_type=PW_CRIT_SYSTEM_DESTORYED)
 	else
-		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg", 60)
+		src.playsound_to_team(team, 'sound/effects/ship_alert_major.ogg', 60)
 
 	//Gah, why? Gotta say "The" I guess.
 	var/team_name_string = team?.name
@@ -444,7 +448,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		if (TEAM_SYNDICATE)
 			team = team_SY
 
-	src.playsound_to_team(team, "sound/effects/ship_alert_minor.ogg")
+	src.playsound_to_team(team, 'sound/effects/ship_alert_minor.ogg')
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
@@ -551,7 +555,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team = pw_team
 	//error handling...
 	else
-		logTheThing("debug", null, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
+		logTheThing(LOG_DEBUG, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 
@@ -794,7 +798,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	capacity = 1
 	health = 100
 	maxhealth = 100
-	anchored = 0
+	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 	speed = 1.7
 
@@ -931,7 +935,7 @@ proc/setup_pw_crate_lists()
 
 /proc/make_fake_explosion(var/atom/I)
 	var/obj/overlay/O = new/obj/overlay(get_turf(I))
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.name = "Explosion"
 	O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 	O.pixel_x = -92
@@ -945,7 +949,7 @@ proc/setup_pw_crate_lists()
 	name = "Generic Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 
@@ -953,7 +957,7 @@ proc/setup_pw_crate_lists()
 	name = "Nanotrasen Mission Log"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 

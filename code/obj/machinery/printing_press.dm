@@ -1,9 +1,9 @@
 /obj/machinery/printing_press //this makes books
-	name = "printing press"
-	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
+	name = "\improper Academy automated printing press"
+	desc = "This is an Aurora Lithographics 'Academy' model automated printing press, used to reproduce books and pamphlets. This doesn't still use stone plates, does it?"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "printing_press" //proper icon is set in UpdateIcon
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 64 //the game just handles xtra wide objects already halleluiah
 
@@ -218,7 +218,7 @@
 					boutput(user, "no good, asshole >:\[")
 					return
 			qdel(W)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else
 			..()
@@ -355,7 +355,7 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing("say", user, null, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
 				make_books()
 				return
 
@@ -466,7 +466,7 @@
 				UpdateIcon()
 				break
 
-			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))
@@ -543,7 +543,7 @@
 	desc = "Looks like this upgrade module is for letting your press customise book covers!"
 	icon_state = "press_books"
 
-/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest bitch
+/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest coder
 	name = "ink cartridge"
 	desc = "Looks like this is an ink restock cartridge for the printing press!"
 	icon_state = "press_ink"
@@ -563,14 +563,17 @@
 /obj/item/paper/press_warning
 	name = "printing press setup warning"
 	info = {"
-<b>WARNING FOR ALL PROSPECTIVE BUILDERS OF THE NT-112 PRINTING PRESS</b>
-<br>In this shipment you received a frame for your new NT-112 Printing Press.
+<b>WARNING BEFORE INSTALLING your new ACADEMY PRINTING PRESS by AURORA LITHOGRAPHICS</b>
+<br>In this shipment you received a frame for your new Academy automated offset Printing Press.
 <br>This device takes up 2 standard floor tiles once fully deployed.
-<br>If you are seeking to set up your own NT-112 Printing Press, be aware:
+<br>If you are seeking to set up your own Academy Printing Press, be aware:
 <ul>
 	<li>The left side of the device will be deployed on the tile where the frame is.
 	<li>The right side of the device will be one tile to the right of the frame.
 	<li>If the device cannot fit, it will attempt to deploy one tile to the left.
 	<li>If there is no space available at all, the device will fail to deploy.
 </ul>
-Have a secure day."}
+<br>Congratulations on your new adventure in self-publishing!
+<br><i>Aurora Lithographics</i>
+<br><i>Aurora-on-Cayuga, NY</i>
+"}

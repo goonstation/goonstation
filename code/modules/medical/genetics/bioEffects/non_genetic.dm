@@ -37,6 +37,14 @@
 	msgLose = "The tingling in your skin fades."
 	can_copy = 0
 
+/datum/bioEffect/hidden/robed
+	name = "Robed"
+	desc = "Subject can cast arcane spells without the use of magical robes or a staff."
+	id = "robed"
+	msgGain = "You feel the constraints of traditional sorcery falling from your mind."
+	msgGain = "You feel once more bound by the laws of magic."
+	can_copy = FALSE
+
 /datum/bioEffect/hidden/husk
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."
@@ -151,7 +159,7 @@
 
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
-				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
 
@@ -197,8 +205,8 @@
 
 	OnLife(var/mult)
 		if(..()) return
-		if (probmult(10))
-			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
+		if (probmult(5))
+			for(var/mob/living/carbon/C in view(3,get_turf(owner)))
 				if (C == owner)
 					continue
 				if (ispug(C))

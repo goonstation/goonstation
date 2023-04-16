@@ -40,7 +40,7 @@
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
 		..()
@@ -51,11 +51,11 @@
 			src.icon_state = "bowling_ball"
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		var/mob/living/carbon/human/user = usr
+		var/mob/living/carbon/human/user = thr.user || usr
 
 		src.icon_state = "bowling_ball"
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
@@ -77,7 +77,7 @@
 	desc = "Just keep rollin' rollin'."
 	icon_state = "armadillo_ball"
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = 0, bonus_throwforce = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 		if(!ismob(target))
 			throw_unlimited = 1
 		..()

@@ -1,13 +1,14 @@
 
-//[00:45]	AngriestIBM	Let me generate a round backstory in 5 seconds: This is how the syndicate determines who gets higher ranking positions -- by handing the candidates quad-injectors of mindslaves and having them fight to the death
+//[00:45]	AngriestIBM	Let me generate a round backstory in 5 seconds: This is how the syndicate determines who gets higher ranking positions -- by handing the candidates quad-injectors of mindhacks and having them fight to the death
 
 // Idea: each leader gets a unique goofy experimental piece of equipment, traitor gear that needs field testing (Or worse)
 // ex: bottle of corrosive fermid oil, OmegaFlash (field effect turboflash), etc
 // like the R&D stuff in paranoia
 
 /datum/game_mode/spy
-	name = "conspiracy"
+	name = "Spy"
 	config_tag = "spy"
+	regular = FALSE
 
 	var/list/leaders = list()
 	var/list/spies = list()
@@ -76,31 +77,11 @@
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list("revolution", "wizard", "nuke", "traitor", "changeling")
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(leaders))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.leaders)
 
 /datum/game_mode/spy/proc/equip_leader(mob/living/carbon/human/leader)
 	if (!istype(leader))
 		return
-
-	//equip_traitor(leader) <- Quad mindslaves and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
 
 	var/the_slot = null
 	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
@@ -111,7 +92,7 @@
 		leader.put_in_hand_or_drop(K2)
 		the_slot = "hand"
 
-	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindslaved henchmen!</span>")
+	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!</span>")
 	return
 
 /datum/game_mode/spy/proc/add_spy(mob/living/new_spy, mob/living/leader)
@@ -129,7 +110,7 @@
 
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
-	spymind.special_role = "spyslave"
+	spymind.special_role = "spyminion"
 	spymind.master = leader.ckey
 
 	return 1
@@ -253,14 +234,6 @@
 
 			var/obj/item/implant/spy_implant/new_imp = new
 			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.implant.Add(new_imp)
-
-			new_imp.set_loc(M)
-			new_imp.implanted = 1
-			new_imp.owner = M
 			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
 			new_imp.implanted(M, user, override)
 
@@ -269,7 +242,7 @@
 
 
 /obj/item/implant/spy_implant
-	name = "mind slave XL"
+	name = "mind hack XL"
 	var/leader_name = null
 	var/datum/mind/leader_mind = null
 	var/datum/objective/linked_objective = null
@@ -284,11 +257,12 @@
 
 		if (M == Implanter)
 			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
-			alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
+			SPAWN(0)
+				alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
 		if (override == -1)
-			logTheThing("combat", M, Implanter, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
+			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
 			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
 			return
 
@@ -306,15 +280,17 @@
 		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
 			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
-			alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
+			SPAWN(0)
+				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
 				for (var/image/I in M.client.images)
 					if (I.loc == oldLeader.current)
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!", "YOU HAVE BEEN MADE A MINDSLAVE!")
+			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
+			SPAWN(0)
+				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
 		if (M.mind)
 			if (!src.linked_objective)
