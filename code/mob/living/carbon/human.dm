@@ -1848,10 +1848,7 @@
 		src.r_hand = I
 		I.pickup(src)
 		I.add_fingerprint(src)
-		if (I.stored)
-			I.stored.transfer_stored_item(I, src, user = src)
-		else
-			I.set_loc(src)
+		I.set_loc(src)
 		src.update_inhands()
 		if (hud)
 			hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
@@ -1878,10 +1875,7 @@
 					src.l_hand = I
 					I.pickup(src)
 					I.add_fingerprint(src)
-					if (I.stored)
-						I.stored.transfer_stored_item(I, src, user = src)
-					else
-						I.set_loc(src)
+					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
 					return 1
@@ -1896,10 +1890,7 @@
 					src.r_hand = I
 					I.pickup(src)
 					I.add_fingerprint(src)
-					if (I.stored)
-						I.stored.transfer_stored_item(I, src, user = src)
-					else
-						I.set_loc(src)
+					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
 					return 1

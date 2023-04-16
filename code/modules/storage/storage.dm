@@ -328,7 +328,7 @@
 	if (user?.equipped() == I)
 		user.u_equip(I)
 	src.stored_items += I
-	I.set_loc(src.linked_item)
+	I.set_loc(src.linked_item, FALSE)
 	src.hud.add_item(I, user)
 	I.stored = src
 
@@ -379,7 +379,7 @@
 	if (location?.storage && add_to_storage)
 		location.storage.add_contents(I, user)
 	else
-		I.set_loc(location)
+		I.set_loc(location, FALSE)
 		if (isturf(location))
 			I.dropped()
 

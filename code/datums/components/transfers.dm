@@ -104,14 +104,7 @@
 
 /datum/component/transfer_input/proc/handle_incoming(comsig_target, atom/movable/incoming)
 	if(is_permitted(incoming))
-		if (istype(incoming, /obj/item))
-			var/obj/item/I = incoming
-			if (I.stored)
-				I.stored.transfer_stored_item(I, parent)
-			else
-				I.set_loc(parent)
-		else
-			incoming.set_loc(parent)
+		incoming.set_loc(parent)
 		if (transfer_proc)
 			call(parent, transfer_proc)(incoming)
 		return TRUE

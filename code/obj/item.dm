@@ -312,7 +312,16 @@
 		src.health = get_initial_item_health(src.type)
 	..()
 
-/obj/item/set_loc(var/newloc as turf|mob|obj in world)
+/obj/item/set_loc(var/newloc as turf|mob|obj in world, storage_check = TRUE)
+	// storage check is meant as a catch-all/safety check for any explicit cases of
+	// if (src.stored)
+	//     src.stored.transfer_stored_item(src, newloc, user = usr)
+	// else
+	//     src.set_loc(newloc)
+	// this should be fine in most cases but if there's any bugs from using usr or unique functionality wanted, this should be manually defined
+	if (storage_check && src.stored)
+		src.stored.transfer_stored_item(src, newloc)
+		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
 			..()

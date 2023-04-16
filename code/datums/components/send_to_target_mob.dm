@@ -24,8 +24,6 @@ TYPEINFO(/datum/component/send_to_target_mob)
 		var/mob/M2 = I.loc
 		M2.u_equip(I)
 
-	I.stored?.transfer_stored_item(I, get_turf(M))
-
 	I.set_loc(get_turf(M))
 	if (teleport_effect)
 		flick("[initial(I.icon_state)]-tele", I)
