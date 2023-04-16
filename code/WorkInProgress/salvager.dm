@@ -292,12 +292,13 @@
 	slots = 8
 
 	attack_hand(mob/user)
-		src.stored?.hide_hud(user)
-		// in case its somehow attacked without opening where its stored
-		if (user.s_active)
-			user.detach_hud(user.s_active)
-			user.s_active = null
-		src.storage.show_hud(user)
+		if (src.stored)
+			src.stored.hide_hud(user)
+			// in case its somehow attacked without opening where its stored
+			if (user.s_active)
+				user.detach_hud(user.s_active)
+				user.s_active = null
+			src.storage.show_hud(user)
 		else
 			. = ..()
 
