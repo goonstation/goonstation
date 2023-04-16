@@ -679,7 +679,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "EQ" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Ft" = (

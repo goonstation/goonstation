@@ -569,7 +569,7 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "Yk" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Yt" = (

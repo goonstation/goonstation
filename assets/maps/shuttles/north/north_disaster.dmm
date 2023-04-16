@@ -1347,7 +1347,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Vy" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "VF" = (
@@ -1426,7 +1426,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Zy" = (
