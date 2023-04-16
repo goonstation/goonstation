@@ -787,9 +787,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
-	for (var/i = 1, i < 8, i++)
+	for (var/i = 1 to 7)
 		var/obj/item/record/R = pick(possibilities)
-		new R(src)
+		src.storage.add_contents(new R(src))
 		possibilities -= R
 
 // Tape deck
