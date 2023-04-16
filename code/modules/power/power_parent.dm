@@ -386,8 +386,8 @@ var/makingpowernetssince = 0
 		var/end_cycle_draw = avail - newload
 		charge_percentile = min(end_cycle_draw/apcload,1)
 
-	//mark down the part of load that isn't from APCs (for power reporting later)
-	var/pre_apc_load = newload
+	//mark down the part of load that isn't from APC load restitution (for power reporting later)
+	var/non_restitution_load = newload
 
 	//then tell each APC to supply that proportion of its load
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
@@ -410,7 +410,8 @@ var/makingpowernetssince = 0
 		var/expended = netapc.accept_excess(min(apc_charge_share,netexcess))	// and give them first share of any power not used by mandatory load,
 		if(expended)
 			netexcess -= expended												// subtracting it from netexcess
-			load += expended											// and letting the power computer know it's appreciated
+			non_restitution_load += expended									// and letting the power computer know it's appreciated
+			load += expended
 
 	//then notify other devices they can attempt to reclaim any power that didn't go used, and update their reporting on effective output
 	for(var/obj/machinery/power/smes/S in nodes)
@@ -419,6 +420,6 @@ var/makingpowernetssince = 0
 		SW.restore()
 
 	//report overall consumption, including ALL APC load (even if not fully satisfied) to give a better impression of supply vs demand
-	viewload = 0.6 * viewload + 0.4 * (pre_apc_load + apcload)
+	viewload = 0.6 * viewload + 0.4 * (non_restitution_load + apcload)
 
 	viewload = round(viewload)
