@@ -381,7 +381,7 @@
 	else
 		I.set_loc(location, FALSE)
 		if (isturf(location))
-			I.dropped()
+			I.dropped(user)
 
 /// return outputtable capacity
 /datum/storage/proc/get_capacity_string()
