@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "af" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "au" = (
@@ -661,7 +661,7 @@
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "xT" = (

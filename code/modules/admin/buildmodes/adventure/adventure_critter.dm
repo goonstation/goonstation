@@ -59,7 +59,7 @@
 		"Spirit" = /obj/critter/spirit,
 		"Town Guard" = /obj/critter/townguard,
 		"Transposed Particle Field" = /mob/living/critter/aberration,
-		"Transposed Scientist" = /obj/critter/crunched,
+		"Transposed Scientist" = /mob/living/critter/crunched,
 		"Weird Thing" = /obj/critter/ancient_thing,
 		"Brullbar" = /mob/living/critter/brullbar,
 		"Brullbar (king)" = /mob/living/critter/brullbar/king,

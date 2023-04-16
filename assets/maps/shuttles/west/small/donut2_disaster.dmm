@@ -49,7 +49,7 @@
 	},
 /area/shuttle/escape/centcom)
 "fW" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "gm" = (

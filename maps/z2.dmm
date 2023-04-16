@@ -32047,7 +32047,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
 "bVi" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor,
 /area/crunch)
 "bVj" = (
@@ -33424,7 +33424,7 @@
 /turf/unsimulated/floor/white,
 /area/crunch)
 "bZP" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/white,
 /area/crunch)
 "bZQ" = (
@@ -34314,7 +34314,7 @@
 	},
 /area/owlery/staffhall)
 "ccM" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "ccN" = (
@@ -69447,7 +69447,7 @@
 /mob/living/critter/bear{
 	desc = "Wow, you haven't seen this guy since 2014!";
 	name = "DOngEun MesTur";
-
+	
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
