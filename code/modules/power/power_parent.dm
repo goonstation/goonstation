@@ -386,6 +386,9 @@ var/makingpowernetssince = 0
 		var/end_cycle_draw = avail - newload
 		charge_percentile = min(end_cycle_draw/apcload,1)
 
+	//mark down the part of load that isn't from APCs (for power reporting later)
+	var/pre_apc_load = newload
+
 	//then tell each APC to supply that proportion of its load
 	for(var/obj/machinery/power/apc/netapc in our_apcs)
 		netapc.cell_cycle(charge_percentile)
@@ -415,7 +418,7 @@ var/makingpowernetssince = 0
 	for(var/obj/machinery/power/sword_engine/SW in nodes)
 		SW.restore()
 
-	//report total consumption, averaged out a bit
-	viewload = 0.6*viewload + 0.4*load
+	//report overall consumption, including ALL APC load (even if not fully satisfied) to give a better impression of supply vs demand
+	viewload = 0.6 * viewload + 0.4 * (pre_apc_load + apcload)
 
 	viewload = round(viewload)
