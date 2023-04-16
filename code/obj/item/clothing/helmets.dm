@@ -40,8 +40,8 @@
 	attackby(var/obj/item/C, mob/user as mob)
 		if (istype(C, /obj/item/clothing/head/helmet/camera) && src.type == /obj/item/clothing/head/helmet/space)
 			boutput(user, "You hastily shove the [C] onto the [src]")
-			new /obj/item/(get_turf(src))
-			qdel(T)
+			new /obj/item/clothing/head/helmet/space/camera(get_turf(src))
+			qdel(C)
 			qdel(src)
 			return
 		else
@@ -683,7 +683,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		src.camera.network = src.camera_network
 
 
-/obj/item/clothing/head/helmet/suitcamera
+/obj/item/clothing/head/helmet/space/camera
 	name = "Suit helmet with Camera"
 	desc = "A Space suit with a camera attached to the top"
 	icon_state = "espace0"
