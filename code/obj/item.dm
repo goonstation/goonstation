@@ -12,8 +12,11 @@
 	var/item_state = null
 	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
+	/// by default, items are assumed to be worn on the belt.
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
+	/// if this item is worn as an accessory, where on the body is it located? see defines/accessory_locations.dm
+	var/accessory_location = ACCESSORY_BODY
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable

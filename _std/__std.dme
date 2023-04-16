@@ -16,6 +16,7 @@
 #include "datum.dm"					// hasvar()
 #include "defines\abilities.dm"
 #include "defines\access.dm"
+#include "defines\accessory_locations.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
 #include "defines\ai.dm"

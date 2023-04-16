@@ -84,6 +84,8 @@
 	src.update_head(head_offset)
 	// Belt
 	src.update_belt(body_offset)
+	// Accessory
+	src.update_accessory(body_offset)
 
 	src.UpdateName()
 
@@ -579,6 +581,33 @@
 	else
 		UpdateOverlays(null, "wear_belt")
 		UpdateOverlays(null, "material_belt")
+
+/mob/living/carbon/human/proc/update_accessory(body_offset)
+	if (src.accessory)
+		wear_sanity_check(src.accessory)
+		var/wear_state = src.accessory.wear_state || src.accessory.item_state || src.accessory.icon_state
+		var/no_offset = FALSE
+		src.accessory.wear_image.icon = src.accessory.wear_image_icon
+		src.accessory.wear_image.icon_state = wear_state
+		if (!no_offset)
+			src.accessory.wear_image.pixel_x = 0
+			src.accessory.wear_image.pixel_y = body_offset
+		src.accessory.wear_image.layer = src.accessory.wear_layer
+		if(src.accessory.wear_image.layer == MOB_CLOTHING_LAYER) // if default assume accessory layer
+			src.accessory.wear_image.layer = MOB_ACCESSORY_LAYER
+		src.accessory.wear_image.color = src.accessory.color
+		src.accessory.wear_image.alpha = src.accessory.alpha
+		src.accessory.wear_image.filters = src.accessory.filters.Copy()
+		UpdateOverlays(src.accessory.wear_image, "wear_accessory")
+		if (src.accessory.worn_material_texture_image != null)
+			src.accessory.worn_material_texture_image.layer = src.accessory.wear_image.layer + 0.1
+			UpdateOverlays(src.accessory.worn_material_texture_image, "material_accessory")
+		else
+			UpdateOverlays(null, "material_accessory")
+		src.accessory.screen_loc = do_hud_offset_thing(accessory, hud.layouts[hud.layout_style]["accessory"])
+	else
+		UpdateOverlays(null, "wear_accessory")
+		UpdateOverlays(null, "material_accessory")
 
 /mob/living/carbon/human/proc/update_bloody_hands(hand_offset)
 	if (src.blood_DNA && !src.gloves)

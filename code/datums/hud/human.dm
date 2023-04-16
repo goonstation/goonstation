@@ -80,6 +80,7 @@
 										"ears" = ui_ears,\
 										"mask" = ui_mask,\
 										"head" = ui_head,\
+										"accessory" = ui_accessory,\
 										"abiltoggle" = ui_abiltoggle,\
 										"stats" = ui_stats,\
 										"legend" = ui_legend,\
@@ -116,6 +117,7 @@
 										"glasses" = tg_ui_glasses,\
 										"ears" = tg_ui_ears,\
 										"mask" = tg_ui_mask,\
+										"accessory" = tg_ui_accessory,\
 										"head" = tg_ui_head,\
 										"abiltoggle" = tg_ui_abiltoggle,\
 										"stats" = tg_ui_stats,\
@@ -230,6 +232,7 @@
 			inventory_bg += create_screen("ears", "ears", src.icon_hud, "ears", layouts[layout_style]["ears"], HUD_LAYER+1)
 			inventory_bg += create_screen("mask", "mask", src.icon_hud, "mask", layouts[layout_style]["mask"], HUD_LAYER+1)
 			inventory_bg += create_screen("head", "head", src.icon_hud, "hair", layouts[layout_style]["head"], HUD_LAYER+1)
+			inventory_bg += create_screen("accessory", "accessory", src.icon_hud, "accessory", layouts[layout_style]["accessory"], HUD_LAYER+1)
 
 			if (layouts[layout_style]["ignore_inventory_hide"])
 				for (var/id in layouts[layout_style]["ignore_inventory_hide"])
@@ -339,6 +342,7 @@
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
+					autoequip_slot(slot_accessory, accessory)
 
 					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
@@ -398,6 +402,7 @@
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
+					autoequip_slot(slot_accessory, accessory)
 
 					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
@@ -592,6 +597,8 @@
 				clicked_slot(slot_wear_mask)
 			if("head")
 				clicked_slot(slot_head)
+			if("accessory")
+				clicked_slot(slot_accessory)
 			#undef clicked_slot
 
 	MouseEntered(var/atom/movable/screen/hud/H, location, control, params)
@@ -642,6 +649,9 @@
 			if("head")
 				entered_slot(slot_head)
 				test_slot(slot_head)
+			if("accessory")
+				entered_slot(slot_accessory)
+				test_slot(slot_accessory)
 			if ("lhand")
 				entered_slot(slot_l_hand)
 			if ("rhand")
@@ -707,6 +717,8 @@
 				mdrop_slot(slot_wear_mask)
 			if("head")
 				mdrop_slot(slot_head)
+			if("accessory")
+				mdrop_slot(slot_accessory)
 			if ("lhand")
 				mdrop_slot(slot_l_hand)
 			if ("rhand")
@@ -744,6 +756,8 @@
 				mdrop_slot(slot_wear_mask)
 			if("head")
 				mdrop_slot(slot_head)
+			if("accessory")
+				mdrop_slot(slot_accessory)
 			if ("lhand")
 				mdrop_slot(slot_l_hand)
 			if ("rhand")

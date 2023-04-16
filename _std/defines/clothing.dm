@@ -17,6 +17,7 @@
 //#define SLOT_W_RADIO 17
 #define SLOT_IN_BACKPACK 18
 #define SLOT_IN_BELT 19
+#define SLOT_IN_ACCESSORY 20
 
 // bitflags for clothing parts
 #define HEAD			1
@@ -64,6 +65,8 @@
 #define ONBACK						(1<<17)
 /// can be work on the belt
 #define ONBELT						(1<<18)
+/// can be worn in the accessory slot
+#define ONACCESSORY					(1<<19)
 
 
 //Suit blood flags
@@ -84,6 +87,7 @@
 #define C_SHOES 1024
 #define C_SUIT 2048
 #define C_UNIFORM 4096
+#define C_ACCESSORY 8192
 
 //priority for which things make step sounds
 #define STEP_PRIORITY_MAX 2

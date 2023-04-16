@@ -33,6 +33,7 @@
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
+	var/obj/item/accessory = null
 
 	var/clothing_dirty = 0
 
@@ -1217,6 +1218,8 @@
 		return wear_mask
 	if (istype(head, eqtype))
 		return head
+	if (istype(accessory, eqtype))
+		return accessory
 	if (istype(belt, eqtype))
 		return belt
 	if (istype(l_store, eqtype))
@@ -1251,6 +1254,8 @@
 		return slot_wear_mask
 	if (src.head == I)
 		return slot_head
+	if (src.accessory == I)
+		return slot_accessory
 	if (src.belt == I)
 		return slot_belt
 	if (src.l_store == I)
@@ -1654,6 +1659,7 @@
 //	slot_w_radio = 17
 	slot_in_backpack = 18
 	slot_in_belt = 19
+	slot_accessory = 20
 
 /mob/living/carbon/human/u_equip(obj/item/W)
 	if (!W)
@@ -1732,6 +1738,10 @@
 	else if (W == src.belt)
 		W.unequipped(src)
 		src.belt = null
+		src.update_clothing()
+	else if (W == src.accessory)
+		W.unequipped(src)
+		src.accessory = null
 		src.update_clothing()
 	else if (W == src.wear_mask)
 		W.unequipped(src)
@@ -1928,6 +1938,8 @@
 			return src.l_store
 		if (slot_r_store)
 			return src.r_store
+		if (slot_accessory)
+			return src.accessory
 
 /mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
 	//warning: icky code
@@ -1996,6 +2008,13 @@
 				equipped = 1
 				src.update_hair_layer()
 				clothing_dirty |= C_HEAD
+		if (slot_accessory)
+			if (!src.accessory)
+				src.accessory = I
+				hud.add_other_object(I, hud.layouts[hud.layout_style]["accessory"])
+				I.equipped(src, slot_accessory)
+				equipped = 1
+				clothing_dirty |= C_ACCESSORY
 		if (slot_shoes)
 			if (!src.shoes)
 				src.shoes = I
@@ -2070,6 +2089,8 @@
 		hud.add_other_object(src.gloves,hud.layouts[hud.layout_style]["gloves"])
 	if (src.head)
 		hud.add_other_object(src.head,hud.layouts[hud.layout_style]["head"])
+	if (src.accessory)
+		hud.add_other_object(src.accessory,hud.layouts[hud.layout_style]["accessory"])
 	if (src.shoes)
 		hud.add_other_object(src.shoes,hud.layouts[hud.layout_style]["shoes"])
 	if (src.wear_suit)
@@ -2114,6 +2135,9 @@
 				return TRUE
 		if (slot_belt)
 			if ((I.c_flags & ONBELT) && src.w_uniform)
+				return TRUE
+		if (slot_accessory)
+			if ((I.c_flags & ONACCESSORY) && src.w_uniform)
 				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
@@ -2583,6 +2607,7 @@
 	if (src.shoes) . += src.shoes
 	if (src.wear_id) . += src.wear_id
 	if (src.wear_suit) . += src.wear_suit
+	if (src.accessory) . += src.accessory
 	if (src.w_uniform) . += src.w_uniform
 
 /mob/living/carbon/human/protected_from_space()
@@ -2795,6 +2820,7 @@
 		slot_glasses,
 		slot_gloves,
 		slot_head,
+		slot_accessory,
 		slot_shoes,
 		slot_wear_suit,
 		slot_w_uniform,

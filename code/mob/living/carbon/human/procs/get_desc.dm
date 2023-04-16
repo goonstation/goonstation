@@ -94,6 +94,17 @@
 	if (src.belt)
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
+	if (src.accessory)
+		var/location_text = src.accessory.accessory_location
+		switch(location_text)
+			if(ACCESSORY_BODY)
+				location_text = "on [t_his] body"
+			if(ACCESSORY_NECK)
+				location_text = "around [t_his] neck"
+			else
+				location_text = "on [t_his] body"
+		. += "<br><span class='[src.accessory.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.accessory)] [src.accessory.blood_DNA ? "a bloody [src.accessory.name]" : "\an [src.accessory.name]"] [location_text].</span>"
+
 	if (src.gloves && !src.gloves.nodescripition)
 		if(!(src.wear_suit && src.wear_suit?.hides_from_examine & C_GLOVES))
 			. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
