@@ -37,6 +37,17 @@
 		setProperty("space_movespeed", 0.2)
 		setProperty("radprot", 5)
 
+	attackby(var/obj/item/C, mob/user as mob)
+		if (istype(C, /obj/item/clothing/head/helmet/camera) && src.type == /obj/item/clothing/head/helmet/space)
+			boutput(user, "You hastily shove the [C] onto the [src]")
+			new /obj/item/(get_turf(src))
+			qdel(T)
+			qdel(src)
+			return
+		else
+			..()
+
+
 	oldish
 		icon_state = "space-OLD"
 		desc = "A relic of the past."
@@ -657,7 +668,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
-	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"
@@ -671,6 +681,26 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		src.camera = new /obj/machinery/camera (src)
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network
+
+
+/obj/item/clothing/head/helmet/suitcamera
+	name = "Suit helmet with Camera"
+	desc = "A Space suit with a camera attached to the top"
+	icon_state = "espace0"
+	var/obj/machinery/camera/camera = null
+	var/camera_tag = "Helmet Cam"
+	var/camera_network = "Zeta"
+	var/static/camera_counter = 0
+	New()
+		..()
+		if(src.camera_tag == initial(src.camera_tag))
+			src.camera_tag = "Built [src.camera_tag] [src.camera_counter]"
+			camera_counter++
+		src.camera = new /obj/machinery/camera (src)
+		src.camera.c_tag = src.camera_tag
+		src.camera.network = src.camera_network
+
+
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"
