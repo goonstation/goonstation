@@ -47,11 +47,6 @@
 	/// The initial y pixel offset required to centre the layer on the client's screen.
 	var/initial_pixel_y_offset = 0
 
-	/// The x pixel offset from the centre of the client's screen.
-	var/pixel_x_offset = 0
-	/// The y pixel offset from the centre of the client's screen.
-	var/pixel_y_offset = 0
-
 	New(turf/newLoc, new_owner, list/params)
 		. = ..()
 
@@ -90,26 +85,23 @@
 		if (!src.tessellate)
 			return
 
-		var/realigning = TRUE
-		while (realigning)
-			realigning = FALSE
-			if(src.pixel_x_offset > src.icon_width / 2)
-				src.pixel_x_offset -= src.icon_width
-				realigning = TRUE
+		var/pixel_x_offset = 0
+		var/pixel_y_offset = 0
 
-			else if(src.pixel_x_offset < -src.icon_width / 2)
-				src.pixel_x_offset += src.icon_width
-				realigning = TRUE
+		if(src.transform.c > 0)
+			pixel_x_offset -= src.icon_width
 
-			if(src.pixel_y_offset > src.icon_height / 2)
-				src.pixel_y_offset -= src.icon_height
-				realigning = TRUE
+		else if(src.transform.c < -(src.icon_width))
+			pixel_x_offset += src.icon_width
 
-			else if(src.pixel_y_offset < -src.icon_height / 2)
-				src.pixel_y_offset += src.icon_height
-				realigning = TRUE
+		if(src.transform.f > 0)
+			pixel_y_offset -= src.icon_height
 
-		src.transform = matrix(1, 0, (src.initial_pixel_x_offset + src.pixel_x_offset), 0, 1, (src.initial_pixel_y_offset + src.pixel_y_offset))
+		else if(src.transform.f < -(src.icon_height))
+			pixel_y_offset += src.icon_height
+
+		if (pixel_x_offset || pixel_y_offset)
+			src.transform = src.transform.Translate(pixel_x_offset, pixel_y_offset)
 
 	/// If the parallax layer is set to tessellate, duplicates and offsets the selected icon for the parallax layer, so that the layer appears as a seamless image.
 	proc/tessellate()
@@ -150,10 +142,10 @@
 		if (!src.tessellate)
 			// Offset the parallax layer so that it will be centred on the client's screen when they are at the initial x and y coordinates.
 			var/turf/current_turf = get_turf(src.owner.eye)
-			src.pixel_x_offset = round((src.initial_x_coordinate - current_turf.x) * world.icon_size * src.parallax_value, 1)
-			src.pixel_y_offset = round((src.initial_y_coordinate - current_turf.y) * world.icon_size * src.parallax_value, 1)
+			src.initial_pixel_x_offset += round((src.initial_x_coordinate - current_turf.x) * world.icon_size * src.parallax_value, 1)
+			src.initial_pixel_y_offset += round((src.initial_y_coordinate - current_turf.y) * world.icon_size * src.parallax_value, 1)
 
-		src.transform = matrix(1, 0, (src.initial_pixel_x_offset + src.pixel_x_offset), 0, 1, (src.initial_pixel_y_offset + src.pixel_y_offset))
+		src.transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset)
 		src.scroll_layer()
 
 	/// Animates the parallax layer so that it appears to be infinitely moving in one direction, using the `scroll_speed`, `parallax_value`, and `scroll_angle` variables.
@@ -168,7 +160,7 @@
 			var/x_direction = x / abs(x)
 			var/animation_time_x = abs(src.icon_width / x) SECONDS
 			src.initial_pixel_x_offset += (src.icon_width * x_direction / 2)
-			animate(src, 0, -1, transform = matrix(1, 0, (src.initial_pixel_x_offset + src.pixel_x_offset), 0, 1, (src.initial_pixel_y_offset + src.pixel_y_offset)), flags = ANIMATION_PARALLEL)
+			animate(src, 0, -1, transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset), flags = ANIMATION_PARALLEL)
 			animate(time = animation_time_x, transform = matrix(1, 0, src.icon_width * x_direction, 0, 1, 0), flags = ANIMATION_RELATIVE)
 
 		var/y = src.scroll_speed * src.parallax_value * cos(src.scroll_angle)
@@ -176,10 +168,10 @@
 			var/y_direction = y / abs(y)
 			var/animation_time_y = abs(src.icon_height / y) SECONDS
 			src.initial_pixel_y_offset += (src.icon_height * y_direction / 2)
-			animate(src, 0, -1, transform = matrix(1, 0, (src.initial_pixel_x_offset + src.pixel_x_offset), 0, 1, (src.initial_pixel_y_offset + src.pixel_y_offset)), flags = ANIMATION_PARALLEL)
+			animate(src, 0, -1, transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset), flags = ANIMATION_PARALLEL)
 			animate(time = animation_time_y, transform = matrix(1, 0, 0, 0, 1, src.icon_height * y_direction), flags = ANIMATION_RELATIVE)
 
-		src.transform = matrix(1, 0, (src.initial_pixel_x_offset + src.pixel_x_offset), 0, 1, (src.initial_pixel_y_offset + src.pixel_y_offset))
+		src.transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset)
 
 	/// Ends any infinite scrolling animation on the parallax layer.
 	proc/end_layer_scrolling()

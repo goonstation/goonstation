@@ -36,15 +36,10 @@
 				continue
 
 			// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
-			var/layer_x_pixel_change = x_pixel_change * parallax_layer.parallax_value
-			var/layer_y_pixel_change = y_pixel_change * parallax_layer.parallax_value
-
 			// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
-			animate(parallax_layer, animation_time, transform = matrix(1, 0, layer_x_pixel_change, 0, 1, layer_y_pixel_change), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+			animate(parallax_layer, animation_time, transform = matrix(1, 0, x_pixel_change * parallax_layer.parallax_value, 0, 1, y_pixel_change * parallax_layer.parallax_value), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 
-			// Update the stored layer offset values and check whether the layer should be realigned on the client's screen.
-			parallax_layer.pixel_x_offset += layer_x_pixel_change
-			parallax_layer.pixel_y_offset += layer_y_pixel_change
+			// Check whether the layer should be realigned on the client's screen.
 			parallax_layer.update_tessellation_alignment()
 
 	/// Populates `parallax_layers` with a list of parallax layers to be displayed to the client, depending on the client's mob's current z-level.
