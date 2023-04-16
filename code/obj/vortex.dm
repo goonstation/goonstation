@@ -76,11 +76,11 @@
 				break
 		if(!interdicted)
 			if(derelict_mode)
-				horror_path = pick(/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
-				/obj/critter/shade,
+				horror_path = pick(/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
 				/mob/living/critter/crunched,
 				/mob/living/critter/crunched,
 				/mob/living/critter/crunched,

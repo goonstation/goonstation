@@ -31,7 +31,7 @@
 		"Bear" = /mob/living/critter/bear,
 		"Bee" = /obj/critter/domestic_bee,
 		"Carebear" = /mob/living/critter/bear/care,
-		"Darkness" = /obj/critter/shade,
+		"Darkness" = /mob/living/critter/shade,
 		"Door (chompy)" = /obj/critter/monster_door,
 		"Drone (CR)" = /obj/critter/gunbot/drone/buzzdrone,
 		"Drone (Glitch)" = /obj/critter/gunbot/drone/glitchdrone,

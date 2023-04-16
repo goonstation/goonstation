@@ -20645,7 +20645,7 @@
 	},
 /area/precursor)
 "bld" = (
-/obj/critter/shade,
+/mob/living/critter/shade,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -21894,7 +21894,7 @@
 /obj/landmark{
 	name = "theonyxkeywashere"
 	},
-/obj/critter/shade/scientist/lost,
+/mob/living/critter/shade/crew_member/lost,
 /obj/item/device/key/onyx,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";

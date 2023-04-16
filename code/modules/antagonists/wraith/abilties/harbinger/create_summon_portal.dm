@@ -51,7 +51,7 @@
 					if("Monstrosity crawlers")
 						mob_choice = /obj/critter/mechmonstrositycrawler
 					if("Shades")
-						mob_choice = /obj/critter/shade
+						mob_choice = /mob/living/critter/shade
 					if("Bats")
 						mob_choice = /obj/critter/bat/buff
 					if("Lions")

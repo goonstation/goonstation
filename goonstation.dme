@@ -454,6 +454,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\carbon\human\procs\inventory.dm"
 #include "code\mob\living\carbon\human\procs\update_icon.dm"
 #include "code\mob\living\critter\aberration.dm"
+#include "code\mob\living\critter\adventure.dm"
 #include "code\mob\living\critter\ai.dm"
 #include "code\mob\living\critter\aquatic.dm"
 #include "code\mob\living\critter\bear.dm"

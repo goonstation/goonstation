@@ -22,7 +22,7 @@
 								/obj/critter/ancient_thing,
 								/obj/critter/ancient_repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
-								/obj/critter/shade,
+								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
 								/mob/living/critter/bear,
 								/mob/living/critter/lion,
@@ -150,7 +150,7 @@
 				return 10
 			if (/mob/living/critter/skeleton/wraith)
 				return 4
-			if (/obj/critter/shade)
+			if (/mob/living/critter/shade)
 				return 4
 			if (/mob/living/critter/crunched)
 				return 4
