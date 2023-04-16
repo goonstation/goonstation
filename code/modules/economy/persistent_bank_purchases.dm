@@ -207,7 +207,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		handkerchief
 			name = "Handkerchief"
-			cost = 0
+			cost = 1000
 			path = null
 			icon = 'icons/obj/items/cloths.dmi'
 			icon_state = "hanky_pink"
