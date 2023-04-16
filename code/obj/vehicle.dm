@@ -977,7 +977,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
-	var/peel_count = 0
+	var/peel_count = 5
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
