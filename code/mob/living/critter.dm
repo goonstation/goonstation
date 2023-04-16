@@ -774,7 +774,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 					return 0
 			HH.item = I
 			if (I.stored)
-				I.stored.transfer_stored_item(I, src, user = user)
+				I.stored.transfer_stored_item(I, src, user = src)
 			else
 				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
@@ -791,7 +791,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 					return 0
 			HH.item = I
 			if (I.stored)
-				I.stored.transfer_stored_item(I, src, user = user)
+				I.stored.transfer_stored_item(I, src, user = src)
 			else
 				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
