@@ -293,11 +293,12 @@
 
 	attack_hand(mob/user)
 		if (src.stored)
-			var/atom/previous_storage = src.stored.linked_item
-			src.stored.transfer_stored_item(src, get_turf(src), user = user)
-			user.put_in_hand(src)
-			src.Attackhand(user)
-			previous_storage.storage.add_contents(src, user, FALSE)
+			src.stored.hide_hud(user)
+		// in case its somehow attacked without opening where its stored
+		if (user.s_active)
+			user.detach_hud(user.s_active)
+			user.s_active = null
+		src.storage.show_hud(user)
 		else
 			. = ..()
 

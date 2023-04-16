@@ -288,18 +288,6 @@
 			M.triggered(user)
 			return TRUE
 
-/// show storage contents
-/datum/storage/proc/show_hud(mob/user)
-	user.s_active = src.hud
-	src.hud.update(user)
-	user.attach_hud(src.hud)
-
-/// hide storage
-/datum/storage/proc/hide_hud(mob/user)
-	if (user.s_active == src.hud)
-		user.s_active = null
-		user.detach_hud(src.hud)
-
 // ----------------- PUBLIC PROCS ----------------------
 
 /// check if the storage can hold an item or not
@@ -415,6 +403,18 @@
 	for (var/atom/A as anything in our_contents)
 		if (A.storage)
 			. += A.storage.get_all_contents()
+
+/// show storage contents
+/datum/storage/proc/show_hud(mob/user)
+	user.s_active = src.hud
+	src.hud.update(user)
+	user.attach_hud(src.hud)
+
+/// hide storage
+/datum/storage/proc/hide_hud(mob/user)
+	if (user.s_active == src.hud)
+		user.s_active = null
+		user.detach_hud(src.hud)
 
 /// emping storage emps everything inside
 /datum/storage/proc/storage_emp_act()
