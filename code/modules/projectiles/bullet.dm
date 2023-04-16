@@ -1206,13 +1206,13 @@ datum/projectile/bullet/autocannon
 
 /datum/projectile/bullet/stunbaton //direct less-lethal 40mm option
 	name = "stun baton round"
-	icon_state = "40mm_nonlethal"
+	icon_state = "stunbaton"
 	shot_sound = 'sound/weapons/launcher.ogg'
 	damage = 0
 	stun = 50
 	dissipation_rate = 0
 	dissipation_delay = 4
-	max_range = 9
+	max_range = 12
 	implanted = null
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
