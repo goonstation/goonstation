@@ -1076,12 +1076,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 
 	var/clown_tally = 0
 	if(ishuman(user))
-		if(istype(user:w_uniform, /obj/item/clothing/under/misc/clown))
-			clown_tally += 1
-		if(istype(user:shoes, /obj/item/clothing/shoes/clown_shoes))
-			clown_tally += 1
-		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
-			clown_tally += 1
+		var/mob/living/carbon/human/human = user
+		clown_tally = human.clown_tally()
 	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
