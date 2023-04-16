@@ -207,10 +207,15 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		handkerchief
 			name = "Handkerchief"
-			cost = 1000
-			path = /obj/item/cloth/handkerchief/random
+			cost = 0
+			path = null
 			icon = 'icons/obj/items/cloths.dmi'
 			icon_state = "hanky_pink"
+
+			Create(mob/living/M)
+				// equivalent to /obj/item/cloth/handkerchief/random, but that deletes itself in new(), so this is used
+				path = pick(concrete_typesof(/obj/item/cloth/handkerchief/colored))
+				..()
 
 		bee_egg
 			name = "Bee Egg"
