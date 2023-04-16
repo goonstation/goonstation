@@ -1,4 +1,9 @@
 
+(t)sun apr 16 23
+(u)Kubius
+(p)13586
+(e)🪲🆕⚖📦🌠|C-Bug, C-Feature, C-Balance, A-Game-Objects, A-Events
+(+)Tuned down spatial interdictors' power usage significantly in most scenarios, and added the ability for authorized users to calibrate their power intake.
 (t)sat apr 15 23
 (u)Amylizzle
 (p)13696
