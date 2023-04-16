@@ -36162,7 +36162,7 @@
 	icon_state = "bulb1"
 	},
 /obj/table/auto,
-/obj/item/cloth/handkerchief/white,
+/obj/item/cloth/handkerchief/colored/white,
 /obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/wood/six,
