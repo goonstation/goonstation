@@ -17,12 +17,16 @@ var/list/z_level_parallax_settings = list(
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
 	"[Z_LEVEL_SECRET]" = list(),
+#ifndef UNDERWATER_MAP
 	"[Z_LEVEL_MINING]" = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/asteroids_far,
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
+#else
+	"[Z_LEVEL_MINING]" = list(),
+#endif
 	)
 
 ///Map generation defines
