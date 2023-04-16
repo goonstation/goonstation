@@ -694,7 +694,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	New()
 		..()
 		if(src.camera_tag == initial(src.camera_tag))
-			src.camera_tag = "Built [src.camera_tag] [src.camera_counter]"
+			src.camera_tag = "Space Suit [src.camera_tag] [src.camera_counter]"
 			camera_counter++
 		src.camera = new /obj/machinery/camera (src)
 		src.camera.c_tag = src.camera_tag
