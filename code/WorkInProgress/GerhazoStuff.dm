@@ -233,7 +233,7 @@
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
 		if (sword.stored)
-			var/atom/previous_storage = sword.stored
+			var/atom/previous_storage = sword.stored.linked_item
 			sword.stored.transfer_stored_item(sword, get_turf(sword))
 			sword.visible_message("<span class='alert'>[sword] somehow escapes the [previous_storage] that it was inside of!</span>")
 
