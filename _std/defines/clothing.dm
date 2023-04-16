@@ -100,3 +100,7 @@
 #define LACES_TIED 1
 #define LACES_CUT 2
 #define LACES_NONE -1
+
+//accessories
+#define ACCESSORY_BODY 1
+#define ACCESSORY_NECK 2

@@ -39,8 +39,8 @@
 #define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.7)	// If we have another one
 #define MOB_SHEATH_LAYER 	(MOB_OVERLAY_BASE-8.8)
 #define MOB_BACK_LAYER_SATCHEL  (MOB_OVERLAY_BASE-8.9)  // For satchels so they don't show over a tail or something
-#define MOB_ACCESSORY_LAYER (MOB_OVERLAY_BASE-9)  // BODGE FOR NOW, THIS SHOULD NOT BE PERMANENT
-#define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9.1)
+#define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
+#define MOB_ACCESSORY_LAYER (MOB_OVERLAY_BASE-9.1)
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves
 #define MOB_HAND_LAYER1 	(MOB_OVERLAY_BASE-11)
 #define MOB_BELT_LAYER 		(MOB_OVERLAY_BASE-12) 	// bit missleading name, used for more than just belts

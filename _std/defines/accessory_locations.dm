@@ -1,2 +1,0 @@
-#define ACCESSORY_BODY 1
-#define ACCESSORY_NECK 2
