@@ -260,7 +260,7 @@ proc/is_weak_rollable_contract(type)
 	stamina_cost = 20 //nerfed from 10
 	stamina_crit_chance = 40 //buffed from 25
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
-	var/merchant = null
+	var/mob/merchant = null
 
 	New()
 		..()
@@ -291,7 +291,7 @@ proc/is_weak_rollable_contract(type)
 		if (total_souls_value >= 10)
 			wrestler_backfist(user, M) //sends people flying above 10 souls sold, does not scale with souls.
 
-	proc/set_merchant(merchant)
+	proc/set_merchant(mob/merchant)
 		src.merchant = merchant
 		for (var/obj/item/contract/contract in src.storage.get_contents())
 			contract.merchant = merchant
