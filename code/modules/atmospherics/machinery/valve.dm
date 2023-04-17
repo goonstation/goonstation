@@ -193,6 +193,12 @@
 
 	var/connect_directions
 
+	switch(dir)
+		if(NORTH, SOUTH)
+			connect_directions = NORTH|SOUTH
+		if(EAST, WEST)
+			connect_directions = EAST|WEST
+
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
 			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
