@@ -2664,13 +2664,13 @@
 	lowerfluc = -500
 
 /datum/commodity/foam_dart_grenade
-	comname = "Foam dart grenade"
+	comname = "Foam Dart Grenade"
 	comtype = /obj/item/old_grenade/foam_dart
-	desc = "goes great with foam dart guns!"
+	desc = "Goes great with foam dart guns!"
 	price = 250
 	baseprice = 250
-	upperfluc = 50
-	lowerfluc = -50
+	upperfluc = 500
+	lowerfluc = -500
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"
