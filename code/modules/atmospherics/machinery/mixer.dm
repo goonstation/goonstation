@@ -5,10 +5,12 @@
 #define RESET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_RESET_SIGNAL_GAS, ID)
 
 /obj/machinery/atmospherics/mixer
+	name = "Gas mixer"
 	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
 	density = FALSE
-	name = "Gas mixer"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/flipped = FALSE
 
