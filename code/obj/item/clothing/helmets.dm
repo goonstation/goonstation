@@ -46,7 +46,6 @@
 		if (istype(C, /obj/item/clothing/head/helmet/camera) && src.has_camera == FALSE)
 			boutput(user, "You hastily shove the [C] onto the [src].")
 			src.name = "[src.name] with a camera"
-			src.desc = "[src] It has a camera screwed on top."
 			if(src.camera_tag == initial(src.camera_tag))
 				src.camera_tag = "Space Suit [src.camera_tag] [src.camera_counter]"
 				camera_counter++
@@ -59,7 +58,6 @@
 		else if (istype(C, /obj/item/screwdriver) && src.has_camera == TRUE)
 			boutput(user, "You detach the camera from the helmet and it drops to the floor.")
 			src.name = copytext("[src.name]",1,-14)
-			src.desc = copytext("[src]",1,-32)
 			new /obj/item/clothing/head/helmet/camera(get_turf(src))
 			camera_counter--
 			src.camera_network = "Zeta"
