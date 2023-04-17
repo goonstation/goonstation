@@ -545,6 +545,15 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/jesuskit
+	name = "Crucifixion Kit"
+	item = /obj/item/device/crucifykit
+	cost = 2
+	desc = "Recreate the crucifixion of Jesus today with the cutting edge technology of a hammer and nails!"
+	job = list("Chaplain")
+	can_buy = UPLINK_TRAITOR
+
+
 /datum/syndicate_buylist/traitor/contract
 	name = "Faustian Bargain Kit"
 	item = /obj/item/storage/briefcase/satan
