@@ -1594,6 +1594,19 @@ About the new airlock wires panel:
 		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
+	else if (C.type == /obj/item/sword && user.a_intent == INTENT_HELP)
+		if (src.cant_emag)
+			boutput(user, "<span class='alert'>[src] is too resistant to melt from the saber!</span>")
+			return
+		else if (!src.density)
+			boutput(user, "<span class='alert'>You don't need to break open [src], as it's already open!</span>")
+			return
+		else
+			var/positions = src.get_welding_positions(user)
+			user.visible_message("<span class='alert'>[user] is melting [src] open with a cyalume saber!</span>",\
+				"<span class='alert'>You are melting [src] open with your cyalume saber!</span>")
+			playsound(user.loc, 'sound/items/Welder2.ogg', 40, 1)
+			actions.start(new /datum/action/bar/private/welding(user, src, 10 SECONDS, /obj/machinery/door/airlock/proc/sword_open, null, null, positions[1], positions[2]),user)
 	else
 		..()
 	return
@@ -1608,6 +1621,21 @@ About the new airlock wires panel:
 	else
 		logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 		src.welded = null
+	src.UpdateIcon()
+
+/obj/machinery/door/airlock/proc/sword_open()
+	src.operating = -1
+	playsound(src, 'sound/machines/airlock_break_very_temp.ogg', 40, 1)
+	var/obj/item/scrap/S = new /obj/item/scrap
+	S.set_loc(src.loc)
+	play_animation("opening")
+	src.UpdateIcon(1)
+	src.set_density(0)
+	if (!istype(src, /obj/machinery/door/airlock/glass))
+		if (ignore_light_or_cam_opacity)
+			src.set_opacity(0)
+		else
+			src.RL_SetOpacity(0)
 	src.UpdateIcon()
 
 /obj/machinery/door/airlock/proc/unpowered_open_close()
