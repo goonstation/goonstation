@@ -47,6 +47,11 @@
 	/// The initial y pixel offset required to centre the layer on the client's screen.
 	var/initial_pixel_y_offset = 0
 
+	/// The x pixel offset required for a scrolling layer to remain within the boundaries of a client's screen.
+	var/animation_pixel_x_offset = 0
+	/// The x pixel offset required for a scrolling layer to remain within the boundaries of a client's screen.
+	var/animation_pixel_y_offset = 0
+
 	New(turf/newLoc, new_owner, list/params)
 		. = ..()
 
@@ -88,16 +93,16 @@
 		var/pixel_x_offset = 0
 		var/pixel_y_offset = 0
 
-		if(src.transform.c > 0)
+		if(src.transform.c + src.animation_pixel_x_offset > 0)
 			pixel_x_offset -= src.icon_width
 
-		else if(src.transform.c < -(src.icon_width))
+		else if(src.transform.c + src.animation_pixel_x_offset < -(src.icon_width))
 			pixel_x_offset += src.icon_width
 
-		if(src.transform.f > 0)
+		if(src.transform.f + src.animation_pixel_y_offset > 0)
 			pixel_y_offset -= src.icon_height
 
-		else if(src.transform.f < -(src.icon_height))
+		else if(src.transform.f + src.animation_pixel_y_offset < -(src.icon_height))
 			pixel_y_offset += src.icon_height
 
 		if (pixel_x_offset || pixel_y_offset)
@@ -158,20 +163,18 @@
 		var/x = src.scroll_speed * src.parallax_value * sin(src.scroll_angle)
 		if (x)
 			var/x_direction = x / abs(x)
-			var/animation_time_x = abs(src.icon_width / x) SECONDS
-			src.initial_pixel_x_offset += (src.icon_width * x_direction / 2)
-			animate(src, 0, -1, transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset), flags = ANIMATION_PARALLEL)
+			var/animation_time_x = (abs(src.icon_width / x) / 2) SECONDS
+			src.animation_pixel_x_offset = src.icon_width * x_direction / -2
+			animate(src, 0, -1, transform = matrix(1, 0, src.animation_pixel_x_offset, 0, 1, 0), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 			animate(time = animation_time_x, transform = matrix(1, 0, src.icon_width * x_direction, 0, 1, 0), flags = ANIMATION_RELATIVE)
 
 		var/y = src.scroll_speed * src.parallax_value * cos(src.scroll_angle)
 		if (y)
 			var/y_direction = y / abs(y)
-			var/animation_time_y = abs(src.icon_height / y) SECONDS
-			src.initial_pixel_y_offset += (src.icon_height * y_direction / 2)
-			animate(src, 0, -1, transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset), flags = ANIMATION_PARALLEL)
+			var/animation_time_y = (abs(src.icon_height / y) / 2) SECONDS
+			src.animation_pixel_y_offset = src.icon_height * y_direction / -2
+			animate(src, 0, -1, transform = matrix(1, 0, 0, 0, 1, src.animation_pixel_y_offset), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 			animate(time = animation_time_y, transform = matrix(1, 0, 0, 0, 1, src.icon_height * y_direction), flags = ANIMATION_RELATIVE)
-
-		src.transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset)
 
 	/// Ends any infinite scrolling animation on the parallax layer.
 	proc/end_layer_scrolling()
