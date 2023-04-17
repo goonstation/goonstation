@@ -316,7 +316,7 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
-		SPAWN(15 SECONDS)
+		SPAWN(rand(15, 25) SECONDS)
 		health_alert()
 		..()
 
@@ -324,7 +324,7 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report death")
-		SPAWN(15 SECONDS)
+		SPAWN(rand(15, 25) SECONDS)
 		death_alert()
 		..()
 
