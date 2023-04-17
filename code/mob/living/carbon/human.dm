@@ -2204,7 +2204,7 @@
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
-	src.equip_if_possible(I, slot)
+	src.equip_if_possible(I, slot, TRUE)
 	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
 		qdel(I)
 		return FALSE
