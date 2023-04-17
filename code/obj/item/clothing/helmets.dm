@@ -25,6 +25,11 @@
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
+	var/camera_network = "Zeta"
+	var/camera_tag = "Helmet Cam"
+	var/static/camera_counter = 0
+	var/obj/machinery/camera/camera = null
+	var/has_camera = FALSE
 
 	setupProperties()
 		..()
@@ -38,11 +43,31 @@
 		setProperty("radprot", 5)
 
 	attackby(var/obj/item/C, mob/user as mob)
-		if (istype(C, /obj/item/clothing/head/helmet/camera) && src.type == /obj/item/clothing/head/helmet/space)
-			boutput(user, "You hastily shove the [C] onto the [src]")
-			new /obj/item/clothing/head/helmet/space/camera(get_turf(src))
+		if (istype(C, /obj/item/clothing/head/helmet/camera) && src.has_camera == FALSE)
+			boutput(user, "You hastily shove the [C] onto the [src].")
+			src.name = "[src] with a camera"
+			src.desc = "A [src] with a camera stuck to the top. It looks like it can be unscrewed."
+			if(src.camera_tag == initial(src.camera_tag))
+				src.camera_tag = "Space Suit [src.camera_tag] [src.camera_counter]"
+				camera_counter++
+			src.camera = new /obj/machinery/camera (src)
+			src.camera.c_tag = src.camera_tag
+			src.camera.network = src.camera_network
+			src.has_camera = TRUE
 			qdel(C)
-			qdel(src)
+			return
+		else if (istype(C, /obj/item/screwdriver) && src.has_camera == TRUE)
+			boutput(user, "You detach the camera from the helmet and it drops to the floor.")
+			src.name = copytext("[src.name]",1,-14)
+			src.desc = "A space helmet"
+			new /obj/item/clothing/head/helmet/camera(get_turf(src))
+			camera_counter--
+			src.camera_network = "Zeta"
+			src.camera_tag = "Helmet Cam"
+			src.camera = null
+			src.has_camera = FALSE
+
+
 			return
 		else
 			..()
@@ -681,25 +706,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		src.camera = new /obj/machinery/camera (src)
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network
-
-
-/obj/item/clothing/head/helmet/space/camera
-	name = "Suit helmet with Camera"
-	desc = "A Space suit with a camera attached to the top"
-	icon_state = "espace0"
-	var/obj/machinery/camera/camera = null
-	var/camera_tag = "Helmet Cam"
-	var/camera_network = "Zeta"
-	var/static/camera_counter = 0
-	New()
-		..()
-		if(src.camera_tag == initial(src.camera_tag))
-			src.camera_tag = "Space Suit [src.camera_tag] [src.camera_counter]"
-			camera_counter++
-		src.camera = new /obj/machinery/camera (src)
-		src.camera.c_tag = src.camera_tag
-		src.camera.network = src.camera_network
-
 
 
 /obj/item/clothing/head/helmet/camera/security
