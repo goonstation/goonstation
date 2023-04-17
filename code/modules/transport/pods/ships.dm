@@ -6,7 +6,7 @@
 	capacity = 4
 	health = 140
 	maxhealth = 140
-	anchored = 0
+	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
 	name = "Reconaissance Ship 7X-"
@@ -395,7 +395,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	var/cable_amt = null
 	var/vehicle_name = null
 	var/vehicle_type = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/item/putt/frame_box
@@ -1439,7 +1439,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)

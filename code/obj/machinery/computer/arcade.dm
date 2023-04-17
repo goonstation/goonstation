@@ -157,7 +157,7 @@ TYPEINFO(/obj/machinery/computer/arcade)
 				else
 					prize = new /obj/item/device/radio/beacon(src.loc)
 					prize.name = "electronic blink toy game"
-					prize.anchored = FALSE
+					prize.anchored = UNANCHORED
 					prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo(src.loc)

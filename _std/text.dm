@@ -132,3 +132,11 @@ proc/get_longest_common_prefix(list/L)
 				if(j < length(.))
 					. = copytext(., 1, j + 1)
 				break
+
+/// Returns a string with all HTML special characters encoded and newlines replaced with <br>
+proc/newline_html_encode(text)
+	return replacetext(html_encode(text), "\n", "<br>")
+
+/// Returns a string with all HTML special characters decoded and <br> replaced with newlines
+proc/newline_html_decode(text)
+	return html_decode(replacetext(text, "<br>", "\n"))

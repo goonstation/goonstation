@@ -61,6 +61,27 @@
 			return
 
 		. = ..()
+/turf/simulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
 
 /turf/unsimulated/floor/airless/plating/catwalk
 	name = "catwalk support"

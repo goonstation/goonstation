@@ -11,7 +11,7 @@
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_storage_unit"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/datum/ore_cloud_data/ores = list()

@@ -6,7 +6,7 @@
 	icon_state = "metalfoam"
 	density = 1
 	opacity = 0 	// changed in New()
-	anchored = 1
+	anchored = ANCHORED
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	flags = FPRINT | CONDUCT | USEDELAY

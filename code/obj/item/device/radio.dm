@@ -714,7 +714,7 @@ TYPEINFO(/obj/item/radiojammer)
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		if (src.anchored)
@@ -727,7 +727,7 @@ TYPEINFO(/obj/item/radiojammer)
 			if (src.anchored)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				return
 			else
 				if (isturf(src.loc))
@@ -738,7 +738,7 @@ TYPEINFO(/obj/item/radiojammer)
 					else
 						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
-						src.anchored = 1
+						src.anchored = ANCHORED
 						return
 		..()
 
@@ -1042,7 +1042,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	name = "Loudspeaker Transmitter"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "transmitter"
-	anchored = 1
+	anchored = ANCHORED
 	speaker_range = 0
 	chat_class = RADIOCL_INTERCOM
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
@@ -1087,7 +1087,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
 	icon_state = "loudspeaker"
-	anchored = 1
+	anchored = ANCHORED
 	speaker_range = 7
 	broadcasting = 1
 	listening = 1

@@ -583,9 +583,9 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(100,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -630,10 +630,10 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
+					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(150,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -2059,7 +2059,7 @@
 		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/cluwne/floor/floorcluwne = null
@@ -2992,7 +2992,7 @@
 	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
-		newbody.anchored = 1 // Stop running into the lava every half second jeez!
+		newbody.anchored = ANCHORED // Stop running into the lava every half second jeez!
 		sleep(4 SECONDS)
 		reset_anchored(newbody)
 
@@ -3007,7 +3007,7 @@
 		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/satan/satan = new /mob/living/carbon/human/satan

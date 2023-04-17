@@ -277,7 +277,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "aY" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "aZ" = (

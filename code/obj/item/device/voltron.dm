@@ -2,7 +2,7 @@
 	icon = null
 	name = "Sparks"
 	desc = "Dangerous looking sparks."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/can_move = 1
@@ -235,7 +235,7 @@
 		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.layer = MOB_EFFECT_LAYER
 		target.transforming = 1
 		O.icon = 'icons/effects/effects.dmi'
@@ -269,7 +269,7 @@
 			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.layer = MOB_EFFECT_LAYER
 			user.transforming = 1
 			O.icon = 'icons/effects/effects.dmi'

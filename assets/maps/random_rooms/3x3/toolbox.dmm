@@ -1,0 +1,100 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/caution/south,
+/area/dmm_suite/clear_area)
+"b" = (
+/turf/simulated/floor/caution/west,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/rack,
+/obj/item/storage/toolbox/electrical{
+	mimic_chance = 10;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/electrical{
+	mimic_chance = 10;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/electrical{
+	mimic_chance = 10;
+	pixel_y = -8;
+	pixel_x = -6
+	},
+/turf/simulated/floor/caution/corner/ne,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/rack,
+/obj/item/storage/toolbox/mechanical{
+	mimic_chance = 10;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/mechanical{
+	mimic_chance = 10;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	mimic_chance = 10;
+	pixel_y = -8;
+	pixel_x = -6
+	},
+/turf/simulated/floor/caution/corner/sw,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/rack,
+/obj/item/storage/toolbox/emergency{
+	mimic_chance = 10;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/emergency{
+	mimic_chance = 10;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/emergency{
+	mimic_chance = 10;
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/turf/simulated/floor/caution/corner/nw,
+/area/dmm_suite/clear_area)
+"s" = (
+/turf/simulated/floor/damaged2,
+/area/dmm_suite/clear_area)
+"w" = (
+/turf/simulated/floor/caution/east,
+/area/dmm_suite/clear_area)
+"z" = (
+/turf/simulated/floor/caution/north,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/rack,
+/obj/item/storage/toolbox/artistic{
+	mimic_chance = 10;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/artistic{
+	mimic_chance = 10;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/artistic{
+	mimic_chance = 10;
+	pixel_y = -8;
+	pixel_x = -6
+	},
+/turf/simulated/floor/caution/corner/se,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+q
+b
+e
+"}
+(2,1,1) = {"
+z
+s
+a
+"}
+(3,1,1) = {"
+c
+w
+T
+"}
