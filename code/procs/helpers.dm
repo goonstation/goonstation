@@ -2673,7 +2673,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 /proc/identify_object(datum/thing)
 	return "[log_object(thing)] \ref[thing]" // actual datum
 
-///Returns `amount` evenly distributed random integers that sum to `N`
+///Returns `amount` evenly distributed random integers that sum to `sum`
 /proc/random_split(sum, amount)
 	if (amount >= sum || sum <= 0)
 		CRASH("Invalid arguments to random split")
