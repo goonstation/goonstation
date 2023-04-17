@@ -1101,7 +1101,7 @@
 		var/in_pocket = 0
 		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
-		// storage storage in hands or worn
+		// storage items in hands or worn
 		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
 			src.storage.storage_item_attack_hand(user)
 			return FALSE
