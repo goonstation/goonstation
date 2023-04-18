@@ -66693,7 +66693,7 @@
 /obj/item/crowbar,
 /obj/storage/secure/closet/civilian/janitor{
 	locked = 0;
-	spawn_contents = list(/obj/item/clothing/shoes/galoshes,/obj/item/reagent_containers/glass/bottle/cleaner=2,/obj/item/reagent_containers/glass/bottle/acetone/janitors=1,/obj/item/reagent_containers/glass/bottle/ammonia/janitors=1,/obj/item/device/light/flashlight,/obj/item/caution=4)
+	
 	},
 /obj/item/mop/old,
 /obj/item/sponge,
@@ -69447,7 +69447,7 @@
 /mob/living/critter/bear{
 	desc = "Wow, you haven't seen this guy since 2014!";
 	name = "DOngEun MesTur";
-
+	
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
@@ -77005,7 +77005,7 @@
 	name = "stained tacticool pouch";
 	pixel_x = 5;
 	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
+	
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
 	desc = "Incredibly stinky.";
