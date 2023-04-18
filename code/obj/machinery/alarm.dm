@@ -1,7 +1,7 @@
-//
-// Alarm
-//
-
+#define SAFE 2
+#define CAUTION 1
+#define LETHAL 0
+#define UNKNOWN -1
 /obj/machinery/alarm
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
@@ -14,13 +14,13 @@
 	var/alarm_zone = null
 	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	var/id
-	var/locked = 1
+	var/locked = TRUE
 
 	var/datum/gas_mixture/environment
-	var/safe
-	/*var/panic_mode = 0 */
+	var/environment_status
+	// var/panic_mode = 0 SECONDS
 	var/e_gas = 0
-	var/last_safe = 2
+	var/last_status = SAFE
 
 /obj/machinery/alarm/New()
 	..()
@@ -47,7 +47,7 @@
 		return
 
 	var/turf/location = src.loc
-	safe = 2
+	environment_status = SAFE
 
 	if(status & (NOPOWER|BROKEN))
 		icon_state = "alarmp"
@@ -56,12 +56,12 @@
 	..()
 
 	if (!( istype(location, /turf) ))
-		return 0
+		return FALSE
 
 	environment = location.return_air()
 
 	if (!istype(environment))
-		safe = -1
+		environment_status = UNKNOWN
 		return
 
 	var/environment_pressure = MIXTURE_PRESSURE(environment)
@@ -69,32 +69,32 @@
 	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 		//Pressure sensor
 		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
+	if(environment_status && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
 		//Oxygen Levels Sensor
 		if(environment.oxygen < MOLES_O2STANDARD*0.8)
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
-	if(safe && ((environment.temperature < (T0C)) || (environment.temperature > (T0C+40))))
+	if(environment_status && ((environment.temperature < (T0C)) || (environment.temperature > (T0C+40))))
 		//Oxygen Levels Sensor
 		if((environment.temperature < (T0C-10)) || (environment.temperature > (T0C+50)))
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
-	if(safe && (environment.carbon_dioxide > 0.05))
+	if(environment_status && (environment.carbon_dioxide > 0.05))
 		//CO2 Levels Sensor
 		if(environment.carbon_dioxide > 0.1)
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
-	if(safe && (environment.toxins > 1))
+	if(environment_status && (environment.toxins > 1))
 		//Plasma Levels Sensor
 		if(environment.toxins > 2)
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
 	var/tgmoles = 0
 	if(length(environment.trace_gases))
@@ -103,33 +103,31 @@
 
 	if(tgmoles > 1)
 		if(tgmoles > 2)
-			safe = 0
-		else safe = 1
+			environment_status = LETHAL
+		else environment_status = CAUTION
 
-	src.icon_state = "alarm[!safe]"
+	src.icon_state = "alarm[!environment_status]"
 
-	if(safe == 2)
+	if(environment_status == SAFE)
 		src.skipprocess = 2
 
-	if(alarm_frequency && last_safe != safe)
-		post_alert(safe)
-		last_safe = safe
-
-	return
+	if(alarm_frequency && last_status != environment_status)
+		post_alert(environment_status)
+		last_status = environment_status
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
-	alert_signal.transmission_method = 1
+	alert_signal.transmission_method = TRANSMISSION_RADIO
 	alert_signal.data["zone"] = alarm_zone
 	alert_signal.data["type"] = "Atmospheric"
 
 	switch (alert_level)
-		if (0)
+		if (LETHAL)
 			alert_signal.data["alert"] = "severe"
-		if (1)
+		if (CAUTION)
 			alert_signal.data["alert"] = "minor"
-		if (2)
+		if (SAFE)
 			alert_signal.data["alert"] = "reset"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
@@ -162,17 +160,16 @@
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (BOUNDS_DIST(src, user) > 0 ))
+	if (BOUNDS_DIST(src, user))
 		if (!issilicon(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")
 		return
 
-
 	var/output = "<B>[name] Interface: </B><BR><HR>"
 	if (!istype(environment))
 		output += "<FONT color = 'red'>ERROR: Unable to determine environmental status!</FONT><BR><BR>"
-		safe = -1
+		environment_status = UNKNOWN
 	else
 		var/environment_pressure = MIXTURE_PRESSURE(environment)
 		var/total_moles = TOTAL_MOLES(environment)
@@ -201,6 +198,7 @@
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
+
 		if(total_moles > 0)
 			output += "N2: [round(100*environment.nitrogen/total_moles,0.01)]%</FONT><BR>"
 		else
@@ -223,6 +221,7 @@
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
+
 		if(total_moles > 0)
 			output += "CO2: [round(100*environment.carbon_dioxide/total_moles,0.01)]%</FONT><BR>"
 		else
@@ -265,12 +264,12 @@
 
 	output += "Environment Status: "
 
-	switch(safe)
-		if(-1)
+	switch(environment_status)
+		if(UNKNOWN)
 			output += "<FONT color = 'maroon'>UNKNOWN</FONT>"
-		if(0)
+		if(LETHAL)
 			output += "<FONT color = 'red'>LETHAL</FONT>"
-		if(1)
+		if(CAUTION)
 			output += "<FONT color = 'orange'>CAUTION</FONT>"
 		else
 			output += "<FONT color = 'blue'>OPTIMAL</FONT>"
@@ -287,7 +286,7 @@
 		if(panic_mode > 0)
 			output += "<A href='?src=\ref[src];unpanic=1'>Cancel Panic Siphon</A><BR>"
 		else
-			output += "<A href='?src=\ref[src];panic=1'>Engage Two-Minute Panic Siphon</A> - <FONT color = 'red'>WARNING: Pressure may temporarily drop below safe levels!</FONT><BR>"
+			output += "<A href='?src=\ref[src];panic=1'>Engage Two-Minute Panic Siphon</A> - <FONT color = 'red'>WARNING: Pressure may temporarily drop below environment_status levels!</FONT><BR>"
 		output += "</TT>" */
 	return output
 
@@ -302,7 +301,7 @@
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = 1
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["tag"] = id
 		if(!e_gas)
 			signal.data["command"] = "valve_divert"
@@ -336,7 +335,7 @@
 
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src
-	signal.transmission_method = 1
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = id
 	signal.data["command"] = "set_siphon"
 
@@ -344,7 +343,7 @@
 
 	signal = get_free_signal()
 	signal.source = src
-	signal.transmission_method = 1
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = id
 	signal.data["command"] = "purge"
 
@@ -359,7 +358,7 @@
 
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src
-	signal.transmission_method = 1
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = id
 	signal.data["command"] = "set_scrubbing"
 
@@ -367,8 +366,12 @@
 
 	signal = get_free_signal()
 	signal.source = src
-	signal.transmission_method = 1
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = id
 	signal.data["command"] = "end_purge"
 
 	frequency.post_signal(src, signal) */
+#undef SAFE
+#undef CAUTION
+#undef LETHAL
+#undef UNKNOWN
