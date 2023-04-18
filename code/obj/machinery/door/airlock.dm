@@ -1594,7 +1594,7 @@ About the new airlock wires panel:
 		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
-	else if (C.type == /obj/item/sword && user.a_intent == INTENT_HELP)
+	else if (C.type == /obj/item/sword && C:can_reflect() && user.a_intent == INTENT_HELP && !( src.operating ))
 		if (src.cant_emag)
 			boutput(user, "<span class='alert'>[src] is too resistant to melt from the saber!</span>")
 			return
