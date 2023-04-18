@@ -33,7 +33,11 @@
 			// It's not in the current directory, so try others
 			return __rust_g = "librust_g.so"
 	else
+		#ifdef OPENDREAM
+		return __rust_g = "rust_g_64"
+		#else
 		return __rust_g = "rust_g"
+		#endif
 
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
