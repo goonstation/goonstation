@@ -2320,27 +2320,25 @@
 
 		sortList(OL, /proc/cmp_text_asc)
 
-		selection:
-		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
+		while(TRUE)
+			var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
-		if (!IP || !output_target || !ismob(output_target))
-			return
+			if (!IP || !output_target || !ismob(output_target))
+				return
 
-		if (!src || !ismob(src))
-			output_target.show_text("Target mob doesn't exist anymore.", "red")
-			return
+			if (!src || !ismob(src))
+				output_target.show_text("Target mob doesn't exist anymore.", "red")
+				return
 
-		if (IP == REFRESH)
-			src.print_contents(output_target)
-			return
+			if (IP == REFRESH)
+				src.print_contents(output_target)
+				return
 
-		if (isnull(OL[IP]) || !isobj(OL[IP]))
-			output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
-			goto selection
+			if (isnull(OL[IP]) || !isobj(OL[IP]))
+				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
-		if (output_target.client)
-			output_target.client.view_fingerprints(OL[IP])
-			goto selection
+			if (output_target.client)
+				output_target.client.view_fingerprints(OL[IP])
 
 	return
 #undef REFRESH
