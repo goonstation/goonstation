@@ -16,12 +16,16 @@
  * would add the `*arm` and `*disarm` options to the admin interact menu for nuclear bombs.
  * Will display the "name" of the proc if it has one, for example `set name = "foo"` will result in the proc's entry in the interact menu being "Foo".
 **/
+#ifdef OPENDREAM // ODTODO
+#define ADMIN_INTERACT_PROCS(TYPE, PROCNAME...)
+#else
 #define ADMIN_INTERACT_PROCS(TYPE, PROCNAME...)\
 	TYPEINFO(TYPE); \
 	TYPEINFO_NEW(TYPE){ \
 		. = ..(); \
 		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
 	}
+#endif
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
