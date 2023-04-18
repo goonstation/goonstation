@@ -1,5 +1,9 @@
 #define GEHENNA_TIME 90
 
+#ifdef OPENDREAM // ODTODO
+#define sin(x) x
+#endif
+
 // Gehenna shit tho
 /turf/gehenna
 	name = "planet gehenna"
@@ -94,3 +98,7 @@
 	icon_state = "red"
 	name = "the barren wastes"
 	teleport_blocked = 0
+
+#ifdef OPENDREAM
+#undef sin
+#endif
