@@ -14,8 +14,9 @@
 
 		user.pixel_y = 15 //placeholder put up on cross test
 		user.loc = src.loc //placeholder put up on cross test
-		user.anchored = ANCHORED //placeholder put up on cross test
-		user.set_dir = SOUTH
+		user.dir = SOUTH //placeholder put up on cross test
+		user.dir_locked = TRUE //placeholder put up on cross test
+		user.buckled = TRUE
 
 		..()
 

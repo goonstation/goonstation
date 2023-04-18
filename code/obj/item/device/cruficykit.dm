@@ -21,3 +21,4 @@
 		//crucifying puts a nail in each hand - they can't interact but someone can pull them out
 		//if someone dies on the cross, they can't be pulled down
 		//can also be used as a melee weapon when the nails run out
+		//add objective to crucify someone on the crew
