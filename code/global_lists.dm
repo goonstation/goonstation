@@ -4216,3 +4216,265 @@ proc/initialize_global_lists()
 	'sound/ambience/spooky/Void_Wail.ogg',
 	'sound/ambience/spooky/Void_Calls.ogg')
 
+
+	global.globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
+	global.globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	global.aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
+	global.aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
+	global.clients = list()
+	global.mobs = list()
+	global.ai_mobs = list()
+	global.processing_items = list()
+	global.health_update_queue = list()
+	global.processing_fluid_groups = list()
+	global.processing_fluid_spreads = list()
+	global.processing_fluid_drains = list()
+	global.processing_fluid_turfs = list()
+	global.warping_mobs = list()
+	global.muted_keys = list()
+	global.deferred_powernet_objs = list()
+	global.default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
+	global.orbicons = list()
+	global.browse_item_icons = list()
+	global.browse_item_clients = list()
+	global.rewardDB = list() //Contains instances of the reward datums
+	global.materialRecipes = list() //Contains instances of the material recipe datums
+	global.materialProps = list() //Contains instances of the material property datums
+	global.factions = list()
+	global.traitList = list() //List of trait objects
+	global.spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
+	global.random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
+	global.spacePushList = list()
+	global.station_areas = list()
+	global.switched_objs = list()
+	global.cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
+	"Red" = 'icons/cursors/target/red.dmi',
+	"Green" = 'icons/cursors/target/green.dmi',
+	"Blue" = 'icons/cursors/target/blue.dmi',
+	"Yellow" = 'icons/cursors/target/yellow.dmi',
+	"Cyan" = 'icons/cursors/target/cyan.dmi',
+	"White" = 'icons/cursors/target/white.dmi',
+	"Rainbow" = 'icons/cursors/target/rainbow.dmi',
+	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated.dmi',
+	"Flashing" = 'icons/cursors/target/flashing.dmi',
+	"Minimalistic" = 'icons/cursors/target/minimalistic.dmi',
+	"Flat" = 'icons/cursors/target/flat.dmi',
+	"Small" = 'icons/cursors/target/small.dmi')
+
+	global.hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
+	"Old" = 'icons/mob/hud_human.dmi',
+	"Classic" = 'icons/mob/hud_human_classic.dmi',
+	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
+	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
+
+	global.underwear_styles = list("No Underwear" = "none",
+	"Briefs" = "briefs",
+	"Boxers" = "boxers",
+	"Bra and Panties" = "brapan",
+	"Tanktop and Panties" = "tankpan",
+	"Bra and Boyshorts" = "braboy",
+	"Tanktop and Boyshorts" = "tankboy",
+	"Panties" = "panties",
+	"Boyshorts" = "boyshort")
+
+	global.standard_skintones = list("Albino" = "#FAD7D0",
+	"White" = "#FFCC99",
+	"Pink" = "#EDB8A8",
+	"Olive" = "#CEAB69",
+	"Tan" = "#BD8A57",
+	"Sunburned" = "#EDAFAB",
+	"Black" = "#935D37",
+	"Dark" = "#483728")
+
+	global.handwriting_styles = list("Aguafina Script",
+	"Alex Brush",
+	"Allan",
+	"Allura",
+	"Annie Use Your Telescope",
+	"Architects Daughter",
+	"Arizonia",
+	"Bad Script",
+	"Bilbo Swash Caps",
+	"Bilbo",
+	"Calligraffitti",
+	"Cedarville Cursive",
+	"Clicker Script",
+	"Coming Soon",
+	"Condiment",
+	"Cookie",
+	"Courgette",
+	"Covered By Your Grace",
+	"Crafty Girls",
+	"Damion",
+	"Dancing Script",
+	"Dawning of a New Day",
+	"Delius Swash Caps",
+	"Delius Unicase",
+	"Delius",
+	"Devonshire",
+	"Engagement",
+	"Euphoria Script",
+	"Fondamento",
+	"Give You Glory",
+	"Gloria Hallelujah",
+	"Gochi Hand",
+	"Grand Hotel",
+	"Great Vibes",
+	"Handlee",
+	"Herr Von Muellerhoff",
+	"Homemade Apple",
+	"Indie Flower",
+	"Italianno",
+	"Julee",
+	"Just Another Hand",
+	"Just Me Again Down Here",
+	"Kalam",
+	"Kaushan Script",
+	"Kristi",
+	"La Belle Aurore",
+	"Leckerli One",
+	"Lobster Two",
+	"Lobster",
+	"Loved by the King",
+	"Lovers Quarrel",
+	"Marck Script",
+	"Meddon",
+	"Merienda One",
+	"Merienda",
+	"Molle",
+	"Montez",
+	"Mr Dafoe",
+	"Mr De Haviland",
+	"Mrs Saint Delafield",
+	"Neucha",
+	"Niconne",
+	"Norican",
+	"Nothing You Could Do",
+	"Over the Rainbow",
+	"Pacifico",
+	"Parisienne",
+	"Patrick Hand SC",
+	"Patrick Hand",
+	"Petit Formal Script",
+	"Pinyon Script",
+	"Playball",
+	"Quintessential",
+	"Qwigley",
+	"Rancho",
+	"Redressed",
+	"Reenie Beanie",
+	"Rochester",
+	"Rock Salt",
+	"Rouge Script",
+	"Sacramento",
+	"Satisfy",
+	"Schoolbell",
+	"Shadows Into Light Two",
+	"Shadows Into Light",
+	"Short Stack",
+	"Sofia",
+	"Stalemate",
+	"Sue Ellen Francisco",
+	"Sunshiney",
+	"Swanky and Moo Moo",
+	"Tangerine",
+	"The Girl Next Door",
+	"Unkempt",
+	"Vibur",
+	"Waiting for the Sunrise",
+	"Walter Turncoat",
+	"Yellowtail",
+	"Yesteryear",
+	"Zeyada")
+
+	global.selectable_ringtones = list()
+
+	player_cap_grace = list()
+
+	//cyberorgan damage thresholds for emagging without emag
+	global.cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	global.cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+
+	/// Loooooooooogs
+	global.logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_PDAMSG		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
+		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
+	)
+
+
+	global.warned_keys = list()	// tracking warnings per round, i guess
+
+
+
+	global.prisonwarped = list()	//list of players already warped
+	bioele_accidents = 0
+
+	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
+	global.chemical_reactions_cache = list()
+
+	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
+	global.total_chem_reactions = list()
+	global.chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	global.chem_reactions_by_result = list() // Chemical reactions indexed by result ID
+
+	//SpyGuy: The reagents cache is now an associative list
+	global.reagents_cache = list()
+
+
+	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
+	global.qm_supply_cache = list()
+
+	//Used for QM Ordering Categories
+	global.QM_CategoryList = list()
+
+	//Okay, I guess this was getting constructed every time someone wanted something from it
+	global.syndi_buylist_cache = list()
+
+
+	global.dirty_cameras = list() //Cameras that should be rebuilt
+
+	global.camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
+	global.camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
+
+	global.tracking_list = list()
+
+
+	//Resource Management
+	global.localResources = list()
+	global.cachedResources = list()
+
+	// for translating a zone_sel's id to its name
+	global.zone_sel2name = list("head" = "head",
+	"chest" = "chest",
+	"l_arm" = "left arm",
+	"r_arm" = "right arm",
+	"l_leg" = "left leg",
+	"r_leg" = "right leg")
+
+
+
+	global.valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
+
+
+	global.minimap_marker_targets = list()
+
+
+
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	global.valid_icon_states = list()
