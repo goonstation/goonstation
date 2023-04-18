@@ -1501,6 +1501,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\railing.dm"
 #include "code\obj\railway.dm"
 #include "code\obj\random_spawners.dm"
+#include "code\obj\religious_cross.dm"
 #include "code\obj\rocko.dm"
 #include "code\obj\sawflymisc.dm"
 #include "code\obj\screen.dm"
