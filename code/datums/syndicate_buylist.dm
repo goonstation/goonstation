@@ -552,6 +552,7 @@ This is basically useless for anyone but miners.
 	desc = "Recreate the crucifixion of Jesus today with the cutting edge technology of a hammer and nails!"
 	job = list("Chaplain")
 	can_buy = UPLINK_TRAITOR
+	vr_allowed = FALSE
 
 
 /datum/syndicate_buylist/traitor/contract
