@@ -125,15 +125,19 @@
 	proc/get_field(key, default=null)
 		return (key in fields) ? fields[key] : default
 
+#ifndef OPENDREAM // ODTODO
 	proc/operator[](key)
 		return src.get_field(key)
+#endif
 
 	proc/set_field(key, value)
 		db?.notify_field_change(src, key, src[key], value)
 		fields[key] = value
 
+#ifndef OPENDREAM // ODTODO
 	proc/operator[]=(key, value)
 		return src.set_field(key, value)
+#endif
 
 	proc/copy()
 		RETURN_TYPE(/datum/db_record)
