@@ -551,12 +551,8 @@
 	return list(node1)
 
 /obj/machinery/atmospherics/pipe/vent/update_icon()
-	if(node1)
-		icon_state = "intact"
-
-		dir = get_dir(src, node1)
-	else
-		icon_state = "exposed"
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
 
 /obj/machinery/atmospherics/pipe/vent/initialize()
 	var/connect_direction = dir
@@ -578,12 +574,11 @@
 
 	UpdateIcon()
 
-/obj/machinery/atmospherics/pipe/vent/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(node1)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node1)
+/obj/machinery/atmospherics/pipe/vent/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	if(intact && istype(loc, /turf/simulated) && level == 1)
+		icon_state = "hvent"
 	else
-		icon_state = "exposed"
+		icon_state = node1 ? "intact" : "exposed"
 
 /obj/machinery/atmospherics/pipe/vertical_pipe
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
