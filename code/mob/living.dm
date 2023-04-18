@@ -36,7 +36,11 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
+	#ifndef OPENDREAM // ODTODO
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
+	#else
+	var/static/mutable_appearance/speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
+	#endif
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null
