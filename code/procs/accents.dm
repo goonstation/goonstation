@@ -123,7 +123,12 @@
 	var/regex/our_regex = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
 	. = list()
 
-	while (our_regex.Find(text) != 0)
+	// ODTODO
+	while(TRUE)
+		var/pos = our_regex.Find(text)
+		if(pos == 0)
+			break
+		text = copytext(text, pos + 1)
 		. += our_regex.group[1]
 
 
