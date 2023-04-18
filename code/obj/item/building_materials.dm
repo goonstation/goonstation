@@ -1345,6 +1345,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 6
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
+		cross
+			recipe_id = "religious_cross"
+			craftedType = /obj/religious_cross/
+			name = "Religious Cross"
+			sheet_cost = 8
+			icon = 'icons/obj/furniture/cross.dmi'
+			icon_state = "cross"
 
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
