@@ -1,3 +1,8 @@
+#ifdef OPENDREAM // ODTODO
+/datum/command_argument/string/ckey
+/datum/command_argument/string/optional
+#endif
+
 /datum/spacebee_extension_command/pingall
 	name = "pingall"
 	server_targeting = COMMAND_TARGETING_ALL_SERVERS
