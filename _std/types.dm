@@ -4,7 +4,7 @@
 /// nulls a var if its value doesn't match the var's type
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
-#ifdef OPENDREAM
+#ifdef OPENDREAM // ODTODO
 #define ABSTRACT_TYPE(type)
 #else
 #define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
