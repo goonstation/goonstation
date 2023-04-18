@@ -62,6 +62,9 @@ var/global/mob/twitch_mob = 0
 	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
+	#ifdef OPENDREAM // ODTODO
+	return null
+	#endif
 	var/path = "data/intra_round.sav"
 
 	if (!fexists(path))
@@ -74,6 +77,10 @@ var/global/mob/twitch_mob = 0
 	F["[field]"] >> .
 
 /world/proc/save_intra_round_value(var/field, var/value)
+	#ifdef OPENDREAM // ODTODO
+	return
+	#endif
+
 	if (!field || isnull(value))
 		return -1
 
