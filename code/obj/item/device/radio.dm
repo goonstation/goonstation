@@ -1,3 +1,9 @@
+#define WIRE_SIGNAL 1 // sends a signal, like to set off a bomb or electrocute someone
+#define WIRE_RECEIVE 2
+#define WIRE_TRANSMIT 4
+#define TRANSMISSION_DELAY 5 // only 2/second/radio
+#define WINDOW_OPTIONS "window=radio;size=280x350"
+
 TYPEINFO(/obj/item/device/radio)
 	mats = 3
 
@@ -45,14 +51,6 @@ TYPEINFO(/obj/item/device/radio)
 
 	var/icon_override = 0
 	var/icon_tooltip = null // null = use name, "" = no tooltip
-
-	var/const
-		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
-		WIRE_RECEIVE = 2
-		WIRE_TRANSMIT = 4
-		TRANSMISSION_DELAY = 5 // only 2/second/radio
-		WINDOW_OPTIONS = "window=radio;size=280x350"
-
 
 	// Moved initializaiton to world/New
 var/list/headset_channel_lookup
@@ -1157,3 +1155,9 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	icon_tooltip = "Commentator"
 	secure_frequencies = list("z" = 555)
 	secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+#undef WIRE_SIGNAL
+#undef WIRE_RECEIVE
+#undef WIRE_TRANSMIT
+#undef TRANSMISSION_DELAY
+#undef WINDOW_OPTIONS
