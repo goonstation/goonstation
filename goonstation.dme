@@ -37,6 +37,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\del.dm"
 #include "code\error_handling.dm"
 #include "code\global.dm"
+#include "code\global_lists.dm"
 #include "code\interface.dm"
 #include "code\map.dm"
 #include "code\mapSwitching.dm"

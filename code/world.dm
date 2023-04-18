@@ -192,6 +192,8 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		global.initialize_global_lists() // ODTODO hack to make it so global lists initialize before global datums
+
 		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
