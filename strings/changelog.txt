@@ -1,3 +1,11 @@
+
+(t)tue apr 18 23
+(u)Caio029
+(p)13643
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Catwalks are now constructable. Click on a lattice with a steel rod and you'll start building a catwalk on it. Check minor updates for more details.
+(+)While normal roles have to wait an actionbar to build the catwalk, players with engineering training don't have to wait for such actionbar.
+(+)To destroy the catwalks and the support beams, click on it with wirecutters or scissors.
 (t)mon apr 17 23
 (u)LeahTheTech
 (+)Mimics now hide their faces after sitting still for a few seconds.
