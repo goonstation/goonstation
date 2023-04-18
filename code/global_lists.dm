@@ -173,7 +173,7 @@ proc/initialize_global_lists()
 
 
 	global.bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
-	var/list/removed_jobs = list(
+	global.removed_jobs = list(
 		// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 		"Barman" = "Bartender",
 		"Mechanic" = "Engineer",
@@ -382,7 +382,6 @@ proc/initialize_global_lists()
 
 
 	global.available_ai_shells = list()
-	global.ai_minimap_ui
 	global.ai_emotions = list("Happy" = "ai_happy", \
 		"Very Happy" = "ai_veryhappy",\
 		"Neutral" = "ai_neutral",\
@@ -910,7 +909,7 @@ proc/initialize_global_lists()
 		)
 
 	// verbs that SAs and As get while observing. PA+ get these all the time
-	var/list/special_admin_observing_verbs = list(
+	global.special_admin_observing_verbs = list(
 		/datum/admins/proc/toggle_respawns,
 		/datum/admins/proc/toggledeadchat,
 		/client/proc/togglepersonaldeadchat,
@@ -918,7 +917,7 @@ proc/initialize_global_lists()
 		)
 
 	// verbs that PAs get while observing. Coder+ get these all the time
-	var/list/special_pa_observing_verbs = list(
+	global.special_pa_observing_verbs = list(
 		/client/proc/cmd_admin_drop_everything,
 		/client/proc/debug_variables,
 		/client/proc/cmd_modify_ticker_variables,
@@ -1696,7 +1695,7 @@ proc/initialize_global_lists()
 
 
 
-	var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
+	global.numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
 	"r", "s", "t", "u", "v", "w", "x", "y", "z" , "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 	global.bioEffectList = list()
 	global.mutini_effects = list()
@@ -3776,7 +3775,6 @@ proc/initialize_global_lists()
 	global.the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
 
 
-	global.zoldorf_items_raw
 	global.zoldorf_items = list()
 
 
