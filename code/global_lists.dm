@@ -4478,3 +4478,9 @@ proc/initialize_global_lists()
 
 	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
 	global.valid_icon_states = list()
+
+	global.screenOverlayLibrary = list()
+	global.flocks = list()
+	global.worldgenCandidates = list()
+	global.railway_vehicles = list()
+	global.radio_antennas = list()
