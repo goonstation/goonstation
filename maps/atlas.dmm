@@ -19787,9 +19787,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "wlm" = (
-/obj/displaycase{
-	displayed = new/obj/item/captaingun()
-	},
+/obj/displaycase,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "wod" = (
