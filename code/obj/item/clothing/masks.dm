@@ -130,6 +130,21 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+/obj/item/clothing/mask/gas/respirator
+	name = "gas respirator"
+	desc = "A close-fitting gas mask with a custom particle filter."
+	icon_state = "respirator-gas"
+	item_state = "respirator-gas"
+	color_r = 0.85 // glass visor gives more visibility
+	color_g = 0.85
+	color_b = 0.95
+
+/obj/item/clothing/mask/breath/respirator
+	desc = "A close-fitting breath mask with a custom particle filter."
+	name = "breath respirator"
+	icon_state = "respirator-breath"
+	item_state = "respirator-breath"
+
 TYPEINFO(/obj/item/clothing/mask/moustache)
 	mats = 2
 
