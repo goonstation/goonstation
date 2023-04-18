@@ -1624,10 +1624,10 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #undef _SKIN_INFO_BG
 #undef _SKIN_TEXT
 #undef _SKIN_COMMAND_BG
-#define _SKIN_BG "none"
+#define _SKIN_BG "#ffffff"
 #define _SKIN_INFO_TAB_BG "#f0f0f0"
 #define _SKIN_INFO_BG "#ffffff"
-#define _SKIN_TEXT "none"
+#define _SKIN_TEXT "#000000"
 #define _SKIN_COMMAND_BG "#d3b5b5"
 	else
 		winset(src, null, SKIN_TEMPLATE)
