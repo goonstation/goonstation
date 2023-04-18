@@ -115,8 +115,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-var/f_color_selector_handler/F_Color_Selector
-
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
 	for(var/A in childrentypesof(/datum/material_property)) //Caching material props
