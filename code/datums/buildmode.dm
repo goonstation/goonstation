@@ -15,10 +15,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		holder = H
 		update_button_text()
 
+	#ifndef OPENDREAM // ODTODO
 	Read(F)
 		. = ..()
 		if(!isnull(src.hotkey_number))
 			on_add_to_hotkey_bar()
+	#endif
 
 	proc/copy()
 		var/datum/buildmode/new_mode = semi_deep_copy(src, copy_flags=COPY_SHALLOW_EXCEPT_FOR_LISTS)
@@ -105,10 +107,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if(C)
 			set_client(C)
 
+	#ifndef OPENDREAM // ODTODO
 	Read(F)
 		. = ..()
 		if(!isnull(src.hotkey_bar[1]))
 			select_mode(src.hotkey_bar[1])
+	#endif
 
 	proc/set_client(client/C)
 		owner = C
