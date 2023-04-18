@@ -1624,7 +1624,8 @@ datum/computer/file/embedded_program/maintpanel
 			if (cmptext(copytext(setupEntry, 1, 5), "fake"))
 				. = text2path("/datum/maintpanel_device_entry/dummy[copytext(setupEntry, 5)]")
 				if (.)
-					src.device_entries += new . (src, entryName)
+					var/typ = .
+					src.device_entries += new typ (src, entryName)
 				else
 					src.device_entries += new /datum/maintpanel_device_entry/dummy (src, entryName)
 				continue
