@@ -1,5 +1,7 @@
 
 (t)tue apr 18 23
+(u)Sord
+(+)Engineers now spawn with their own jumpsuits instead of mechanics jumpsuits
 (u)Caio029
 (p)13643
 (e)🆕📦|C-Feature, A-Game-Objects
