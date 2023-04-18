@@ -46,6 +46,11 @@ proc/qdel(var/datum/D)
 
 		// delete_queue.enqueue("\ref[O]")
 		var/refD = "\ref[D]"
+		#ifdef OPENDREAM // ODTODO
+		if(isnull(delete_queue_2))
+			delete_queue_2 = list()
+			delete_queue_2.len = DELQUEUE_SIZE
+		#endif
 		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += ADDR_TO_NUM(refD)
 	else
 		if(islist(D))
