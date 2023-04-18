@@ -1630,15 +1630,7 @@ About the new airlock wires panel:
 	src.operating = -1
 	playsound(src, 'sound/machines/airlock_break_very_temp.ogg', 40, 1)
 	new /obj/item/scrap(src.loc)
-	play_animation("opening")
-	src.UpdateIcon(1)
-	src.set_density(0)
-	if (!istype(src, /obj/machinery/door/airlock/glass))
-		if (ignore_light_or_cam_opacity)
-			src.set_opacity(0)
-		else
-			src.RL_SetOpacity(0)
-	src.UpdateIcon()
+	open(TRUE)
 
 /obj/machinery/door/airlock/proc/unpowered_open_close()
 	if (!src || !istype(src))
@@ -1696,8 +1688,8 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/open()
-	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+/obj/machinery/door/airlock/open(force = FALSE) //force bypasses doors being welded, bolted, etc
+	if (force == FALSE && (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR)))
 		return 0
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
