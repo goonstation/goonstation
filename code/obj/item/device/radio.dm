@@ -32,7 +32,6 @@ TYPEINFO(/obj/item/device/radio)
 	var/has_microphone = TRUE
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
-	var/static/mutable_appearance/speech_bubble = living_speech_bubble //typing_indicator.dm
 	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 	var/hardened = 1
 	///Set to make it not work, used by flock victory screech
@@ -75,7 +74,6 @@ var/list/headset_channel_lookup
 	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
-	src.speech_bubble = null
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
@@ -636,7 +634,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/proc/speech_bubble(var/bubbleOverride)
 	if (!bubbleOverride)
-		bubbleOverride = src.speech_bubble
+		bubbleOverride = global.living_speech_bubble
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
 			UpdateOverlays(bubbleOverride, "speech_bubble")
