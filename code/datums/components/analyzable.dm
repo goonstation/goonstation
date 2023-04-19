@@ -14,10 +14,15 @@ TYPEINFO(/datum/component/analyzable)
 
 /datum/component/analyzable/Initialize(type_override)
 	. = ..()
-	if (!isobj(parent))
-		return COMPONENT_INCOMPATIBLE
-	var/obj/O = parent
-	if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+	if (isobj(parent))
+		var/obj/O = parent
+		if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+			return COMPONENT_INCOMPATIBLE
+	else if (ismob(parent))
+		var/mob/O = parent
+		if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+			return COMPONENT_INCOMPATIBLE
+	else
 		return COMPONENT_INCOMPATIBLE
 	src.result_type = type_override
 	RegisterSignal(parent, COMSIG_ATOM_ANALYZE, .proc/attempt_analysis)

@@ -335,6 +335,10 @@
 	if (src.holder)
 		get_singleton(/datum/antagPopups).showPanel()
 
+
+TYPEINFO(/mob)
+	var/list/mats = 0
+
 /mob
 	///Stores the name of the last antag popup shown to the mob
 
@@ -352,3 +356,14 @@
 		set name = "Special role popup"
 		if (src.last_antag_popup)
 			src.show_antag_popup(src.last_antag_popup, FALSE)
+
+	/// Enables mobs to be mech scannable, also why is base mob code even in here???
+	var/is_syndicate = 0
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	var/mechanics_type_override = null
+
+	New()
+		. = ..()
+		var/typeinfo/mob/typeinfo = src.get_typeinfo()
+		if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
