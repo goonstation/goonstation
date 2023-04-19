@@ -1,5 +1,12 @@
 
 (t)tue apr 18 23
+(u)LeahTheTech
+(*)The syndicate cargo transporter now rewards money for anything teleported using it.
+(+)Objects sold via the syndicate cargo transporter will be dele- teleported to the syndicate, and humans sold will reward money based on their assigned job.
+(*)Pods and cars now damage things (windows, tables, vending machines) they crash into, and also take slightly more damage from said crashes.
+(u)Sord
+(+)Engineering manufacturers now have some more items available for production
+(+)Engineers now spawn with their own jumpsuits instead of mechanics jumpsuits
 (u)Caio029
 (p)13643
 (e)🆕📦|C-Feature, A-Game-Objects
