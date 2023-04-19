@@ -480,7 +480,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		src.preview.add_background("#242424", 2)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
-		// If you're wondering why I'm calling update_apperarance and also copying the appearance var from the barbee, it's because the appearance var copies the clothes and update_appearance copies the modified hair.
 
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
@@ -530,7 +529,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
-					src.preview.update_appearance(src.new_AH, src.new_AH.mutant_race, turn(src.preview.preview_thing.dir, params["direction"])) // Not using `update_appearance` to change dirs because it simply doesn't work. Why? Dunno.
+					src.preview.update_appearance(src.new_AH, src.new_AH.mutant_race, turn(src.preview.preview_thing.dir, params["direction"]))
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
