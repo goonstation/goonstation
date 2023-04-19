@@ -1003,6 +1003,16 @@ This is basically useless for anyone but miners.
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/ai_teleport
+	name = "AI Proto-Teleman Module"
+	item = /obj/item/aiModule/ability_expansion/proto_teleman
+	cost = 6
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI module that upgrades any AI connected to the installed law rack access to a targeted teleport system using the on-station science teleporter"
+	job = list("Captain", "Research Director")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
