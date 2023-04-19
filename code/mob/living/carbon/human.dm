@@ -2199,10 +2199,10 @@
 				else
 					return TRUE
 		if (slot_in_backpack) // this slot is stupid
-			if (src.back?.storage?.check_can_hold(I))
+			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
 				return TRUE
 		if (slot_in_belt) // this slot is also stupid
-			if (src.belt?.storage?.check_can_hold(I))
+			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
 				return TRUE
 	return FALSE
 
