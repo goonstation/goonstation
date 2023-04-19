@@ -140,7 +140,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		else
 			return 0
 
-	if (src.barbee) // If we are already cutting someone's hair...
+	if (!isnull(src.barbee) && src.barbee != M) // If we are already cutting someone's hair...
 		user.show_text("You are already cutting someone's hair.", "red")
 		return
 
@@ -202,6 +202,10 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			return ATTACK_PRE_DONT_ATTACK
 		else
 			return 0
+
+	if (!isnull(src.barbee) && src.barbee != M) // If we are already cutting someone's hair...
+		user.show_text("You are already cutting someone's hair.", "red")
+		return
 
 	SPAWN(0)
 		src.barber = user
@@ -474,7 +478,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424", 2)
-		src.copy_clothes(src.barbee, src.preview.preview_thing)
+		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 		// If you're wondering why I'm calling update_apperarance and also copying the appearance var from the barbee, it's because the appearance var copies the clothes and update_appearance copies the modified hair.
 
@@ -522,7 +526,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 							src.new_AH.customization_second = new_hairstyle
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
-					src.copy_clothes(src.barbee, src.preview.preview_thing)
+					src.reference_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
@@ -530,36 +534,57 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-					src.copy_clothes(src.barbee, src.preview.preview_thing)
+					src.reference_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
 
-/datum/component/barber/proc/copy_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
+// Safer than manually changing appearance var.
+/datum/component/barber/proc/reference_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
+	src.nullify_clothes(to_paste) // Better safe than runtiming 57 times
 	if (to_copy.wear_suit)
-		to_paste.wear_suit = new to_copy.wear_suit.type
+		to_paste.wear_suit = to_copy.wear_suit
+
 	if (to_copy.w_uniform)
-		to_paste.w_uniform = new to_copy.w_uniform.type
+		to_paste.w_uniform = to_copy.w_uniform
+
 	if (to_copy.shoes)
-		to_paste.shoes = new to_copy.shoes.type
+		to_paste.shoes = to_copy.shoes
+
 	if (to_copy.belt)
-		to_paste.belt = new to_copy.belt.type
+		to_paste.belt = to_copy.belt
+
 	if (to_copy.gloves)
-		to_paste.gloves = new to_copy.gloves.type
+		to_paste.gloves = to_copy.gloves
+
 	if (to_copy.glasses)
-		to_paste.glasses = new to_copy.glasses.type
-	if (to_copy.glasses)
-		to_paste.glasses = new to_copy.glasses.type
+		to_paste.glasses = to_copy.glasses
+
 	if (to_copy.head)
-		to_paste.head = new to_copy.head.type
+		to_paste.head = to_copy.head
+
 	if (to_copy.wear_id)
-		to_paste.wear_id = new to_copy.wear_id.type
+		to_paste.wear_id = to_copy.wear_id
+
 	if (to_copy.r_store)
-		to_paste.r_store = new to_copy.r_store.type
+		to_paste.r_store = to_copy.r_store
+
 	if (to_copy.l_store)
-		to_paste.l_store = new to_copy.l_store.type
+		to_paste.l_store = to_copy.l_store
 
 	to_paste.update_clothing()
+
+/datum/component/barber/proc/nullify_clothes(var/mob/living/carbon/human/to_nullify)
+	to_nullify.wear_suit = null
+	to_nullify.w_uniform = null
+	to_nullify.shoes = null
+	to_nullify.belt = null
+	to_nullify.gloves = null
+	to_nullify.glasses = null
+	to_nullify.head = null
+	to_nullify.wear_id = null
+	to_nullify.r_store = null
+	to_nullify.l_store = null
 
 /datum/component/barber/haircut/ui_act(var/action, var/params)
 	. = ..()
@@ -577,7 +602,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.copy_clothes(src.barbee, src.preview.preview_thing)
+			src.reference_clothes(src.barbee, src.preview.preview_thing)
 			src.preview.update_appearance(src.new_AH)
 			return
 
@@ -604,7 +629,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.copy_clothes(src.barbee, src.preview.preview_thing)
+		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH)
 		return TRUE
 
@@ -621,7 +646,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				return // If there's no barber, it's safe to say we've been disposed of
 
 			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.copy_clothes(src.barbee, src.preview.preview_thing)
+			src.reference_clothes(src.barbee, src.preview.preview_thing)
 			src.preview.update_appearance(src.new_AH)
 			return
 
@@ -648,7 +673,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			return // If there's no barber, it's safe to say we've been disposed of
 
 		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.copy_clothes(src.barbee, src.preview.preview_thing)
+		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH)
 		return TRUE
 
@@ -658,7 +683,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	. = . ? UI_INTERACTIVE : UI_CLOSE // If, after checking the previous conditions, return is true, then the user can still cut hair. Otherwise, close the window.
 
 /datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
-	src.preview.preview_thing.appearance = null
+	src.nullify_clothes(src.preview.preview_thing)
 	qdel(src.new_AH)
 	qdel(src.preview)
 	src.new_AH = null
