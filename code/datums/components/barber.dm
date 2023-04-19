@@ -541,35 +541,17 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 // Safer than manually changing appearance var.
 /datum/component/barber/proc/reference_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
 	src.nullify_clothes(to_paste) // Better safe than runtiming 57 times
-	if (to_copy.wear_suit)
-		to_paste.wear_suit = to_copy.wear_suit
 
-	if (to_copy.w_uniform)
-		to_paste.w_uniform = to_copy.w_uniform
-
-	if (to_copy.shoes)
-		to_paste.shoes = to_copy.shoes
-
-	if (to_copy.belt)
-		to_paste.belt = to_copy.belt
-
-	if (to_copy.gloves)
-		to_paste.gloves = to_copy.gloves
-
-	if (to_copy.glasses)
-		to_paste.glasses = to_copy.glasses
-
-	if (to_copy.head)
-		to_paste.head = to_copy.head
-
-	if (to_copy.wear_id)
-		to_paste.wear_id = to_copy.wear_id
-
-	if (to_copy.r_store)
-		to_paste.r_store = to_copy.r_store
-
-	if (to_copy.l_store)
-		to_paste.l_store = to_copy.l_store
+	to_paste.wear_suit = to_copy.wear_suit
+	to_paste.w_uniform = to_copy.w_uniform
+	to_paste.shoes = to_copy.shoes
+	to_paste.belt = to_copy.belt
+	to_paste.gloves = to_copy.gloves
+	to_paste.glasses = to_copy.glasses
+	to_paste.head = to_copy.head
+	to_paste.wear_id = to_copy.wear_id
+	to_paste.r_store = to_copy.r_store
+	to_paste.l_store = to_copy.l_store
 
 	to_paste.update_clothing()
 
