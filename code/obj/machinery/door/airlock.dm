@@ -1594,7 +1594,7 @@ About the new airlock wires panel:
 		return src.Attackhand(user)
 	else if (ispryingtool(C))
 		src.unpowered_open_close()
-	else if (istype(C, /obj/item/sword) && (user.a_intent == INTENT_HELP) && !src.operating)
+	else if ((C.type == /obj/item/sword) && (user.a_intent == INTENT_HELP) && !src.operating)
 		var/obj/item/sword/S = C
 		if (!S.active)
 			boutput(user, "<span class='alert'>[S] needs to be on to melt the [src]!</span>")
