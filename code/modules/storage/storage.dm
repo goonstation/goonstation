@@ -47,7 +47,7 @@
 	/// All items stored
 	var/list/stored_items = null
 
-/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/prevent_holding, list/restricted_from_holding, check_wclass, max_wclass, \
+/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
 		slots, sneaky, opens_if_worn)
 	..()
 	src.stored_items = list()
