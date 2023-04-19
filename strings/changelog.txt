@@ -1,4 +1,9 @@
 
+(t)wed apr 19 23
+(u)Wisemonster, Ikea
+(p)13742
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Security implants will no longer send crit alerts to security pdas. Normal health implants/pdas unaffected.
 (t)tue apr 18 23
 (u)LeahTheTech
 (*)The syndicate cargo transporter now rewards money for anything teleported using it.
