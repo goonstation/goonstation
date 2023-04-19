@@ -4,6 +4,7 @@
 	name = "reagent addiction"
 	scantype = "Chemical Dependency"
 	max_stages = 5
+	stage_prob = 3
 	cure = "Time"
 	affected_species = list("Human")
 
@@ -47,11 +48,17 @@
 				boutput(affected_mob, "<span class='alert'>You REALLY crave some [D.associated_reagent]!</span>")
 		if (5)
 			if (D.max_severity == "LOW")
-				if (prob(6))
+				if (prob(5))
 					affected_mob.changeStatus("slowed", 3 SECONDS)
 					boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
 			else // D.max_severity is HIGH or whatever
-				if (prob(6))
+				if (prob(5) && !affected_mob.hasStatus("slowed"))
+					affected_mob.changeStatus("slowed", 6 SECONDS)
+					boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
+				else if (prob(4))
+					affected_mob.change_eye_blurry(rand(7, 10))
+					boutput(affected_mob, "<span class='alert'>Your vision blurs, you REALLY need some [D.associated_reagent].</span>")
+				else if (prob(1))
 					if (affected_mob.nutrition > 10)
 						affected_mob.visible_message("<span class='alert'>[affected_mob] vomits on the floor profusely!</span>",\
 						"<span class='alert'>You vomit all over the floor!</span>")

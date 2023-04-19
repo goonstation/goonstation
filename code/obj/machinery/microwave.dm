@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/microwave)
 	desc = "The automatic chef of the future!"
 	icon_state = "mw"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	/// Current number of eggs inside the microwave
 	var/egg_amount = 0
 	/// Current amount of flour inside the microwave

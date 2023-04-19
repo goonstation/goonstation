@@ -16,6 +16,9 @@
 
 		. = ..()
 
+	is_compatible_with(datum/mind/mind)
+		return ishuman(mind.current)
+
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")

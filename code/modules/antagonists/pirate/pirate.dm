@@ -2,6 +2,9 @@
 	id = ROLE_PIRATE
 	display_name = "\improper Pirate"
 
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
+
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the pirates were unable to provide you with your equipment. That's biology for you.</span>")
@@ -72,7 +75,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/list/gibs = list()
 
 	New()

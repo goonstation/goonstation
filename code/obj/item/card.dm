@@ -239,7 +239,7 @@ TYPEINFO(/obj/item/card/emag)
 		boutput(user, "<span class='alert'>The ID-Card explodes.</span>")
 		user.transforming = 1
 		var/obj/overlay/O = new/obj/overlay(get_turf(user))
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92

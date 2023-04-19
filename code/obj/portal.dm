@@ -5,7 +5,7 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1
+	anchored = ANCHORED
 	var/portal_lums = 2
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER
@@ -86,9 +86,9 @@
 
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
-		//consumes 400 units of charge per wormhole interdicted
+		//consumes 200 units of charge (100,000 joules) per wormhole interdicted
 		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(400,src))
+			if (IX.expend_interdict(200,src))
 				icon = 'icons/effects/effects.dmi'
 				icon_state = "sparks_attack"
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

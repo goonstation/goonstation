@@ -14,11 +14,20 @@
 
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
+#ifdef RP_MODE
+	var/hot_zone_timer = 10 MINUTES
+#else
 	var/hot_zone_timer = 5 MINUTES
+#endif
 	var/hot_zone_score = 1000
 
+#ifdef RP_MODE
+	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
+	var/const/delay_between_kidnappings = 12 MINUTES
+#else
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
+#endif
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
@@ -185,7 +194,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN(hot_zone_timer-600)
+	SPAWN(hot_zone_timer - 1 MINUTE)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -701,7 +710,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/gang/gang = null
 	var/max_health = 200
 	var/health = 200
@@ -1204,7 +1213,7 @@ proc/broadcast_to_all_gangs(var/message)
 			user.visible_message("<b>[user]</b> attaches [src] to [A].","You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()
 
@@ -1214,7 +1223,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		user.put_in_hand_or_drop(src)
 
 	attack_self(mob/living/carbon/human/user as mob)

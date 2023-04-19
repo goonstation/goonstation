@@ -583,9 +583,9 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(100,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -630,10 +630,10 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
+					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(150,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -1267,6 +1267,7 @@
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
 	if (istype(W))
+		actions.interrupt(src, INTERRUPT_ACT)
 		var/obj/item/magtractor/origW
 		if (W.useInnerItem && W.contents.len > 0)
 			if (istype(W, /obj/item/magtractor))
@@ -2058,7 +2059,7 @@
 		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/cluwne/floor/floorcluwne = null
@@ -2319,27 +2320,25 @@
 
 		sortList(OL, /proc/cmp_text_asc)
 
-		selection:
-		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
+		while(TRUE)
+			var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
-		if (!IP || !output_target || !ismob(output_target))
-			return
+			if (!IP || !output_target || !ismob(output_target))
+				return
 
-		if (!src || !ismob(src))
-			output_target.show_text("Target mob doesn't exist anymore.", "red")
-			return
+			if (!src || !ismob(src))
+				output_target.show_text("Target mob doesn't exist anymore.", "red")
+				return
 
-		if (IP == REFRESH)
-			src.print_contents(output_target)
-			return
+			if (IP == REFRESH)
+				src.print_contents(output_target)
+				return
 
-		if (isnull(OL[IP]) || !isobj(OL[IP]))
-			output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
-			goto selection
+			if (isnull(OL[IP]) || !isobj(OL[IP]))
+				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
-		if (output_target.client)
-			output_target.client.view_fingerprints(OL[IP])
-			goto selection
+			if (output_target.client)
+				output_target.client.view_fingerprints(OL[IP])
 
 	return
 #undef REFRESH
@@ -2420,6 +2419,7 @@
 /mob/proc/throw_item(atom/target, list/params)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
+	actions.interrupt(src, INTERRUPT_ACT)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)
@@ -2990,7 +2990,7 @@
 	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
-		newbody.anchored = 1 // Stop running into the lava every half second jeez!
+		newbody.anchored = ANCHORED // Stop running into the lava every half second jeez!
 		sleep(4 SECONDS)
 		reset_anchored(newbody)
 
@@ -3005,7 +3005,7 @@
 		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/satan/satan = new /mob/living/carbon/human/satan

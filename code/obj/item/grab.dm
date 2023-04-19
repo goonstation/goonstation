@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20

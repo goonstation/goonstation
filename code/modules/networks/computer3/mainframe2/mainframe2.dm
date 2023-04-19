@@ -34,7 +34,7 @@
 	name = "Mainframe"
 	desc = "A mainframe computer. It's pretty big!"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "dwaine"
 	device_tag = "PNET_MAINFRAME"
 	timeout = 30

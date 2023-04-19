@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
-	anchored = 1
+	anchored = ANCHORED
 	flags = OPENCONTAINER
 
 	var/on = 0 //Are we currently spraying???

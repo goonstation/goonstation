@@ -30,7 +30,7 @@
 			S.deployer = src
 			src.deployed_shields += S
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()

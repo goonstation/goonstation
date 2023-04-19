@@ -10,7 +10,7 @@
 	desc = "A combined washer/dryer unit used for cleaning clothes."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "laundry"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WELDER | DECON_WRENCH
 	var/on = 0
@@ -79,11 +79,21 @@
 			src.UpdateIcon()
 		else // drying is done!
 			processing_items.Remove(src)
-			for (var/obj/item/clothing/C in src.contents)
-				C.stains = null
-				C.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
-				C.changeStatus("freshly_laundered", rand(2,4) MINUTES)
-				C.UpdateName()
+			for (var/obj/item/item in src.contents)
+				if (istype(item, /obj/item/clothing))
+					var/obj/item/clothing/clothing = item
+					clothing.stains = null
+					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
+					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					clothing.UpdateName()
+				else if (istype(item, /obj/item/spacecash))
+					var/obj/item/spacecash/cash = item
+					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
+					for (var/amount in amounts)
+						if (amount >= cash.amount)
+							break
+						var/obj/item/spacecash/newcash = cash.split_stack(amount)
+						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
@@ -174,7 +184,7 @@
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/spacecash))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")

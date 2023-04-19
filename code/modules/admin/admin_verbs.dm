@@ -540,7 +540,7 @@ var/list/special_pa_observing_verbs = list(
 */
 /client/proc/update_admins(var/rank)
 	if(src.player.tempmin && src.player.perm_admin)
-		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		logTheThing(LOG_DEBUG, src, "is somehow both tempminned and permadminned. This is a bug.")
 		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
 
 	// The idea is that player.tempmin and player.perm_admin are set when the given player

@@ -41,7 +41,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
 	timeout = 10
@@ -785,10 +785,10 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("majorsummon")
 				var/summon = pick(
 					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)
@@ -804,7 +804,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 	icon_state = "s_teleport"
 	name = "teleport computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
 	var/xtarget = 0

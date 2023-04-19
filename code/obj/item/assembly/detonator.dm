@@ -251,7 +251,7 @@
 		message_admins("A canister bomb would have detonated at at [T.loc.name] ([log_loc(T)]) but was forced to dud!")
 		return
 
-	src.attachedTo.anchored = 0
+	src.attachedTo.anchored = UNANCHORED
 	src.attachedTo.remove_simple_light("canister")
 
 	if (src.defused)

@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	desc = "A station which allows cyborgs to repair damage, recharge their cells, and have upgrades installed if they are present in the station."
 	icon_state = "station"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = TRUE
@@ -362,7 +362,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
 	is_syndicate = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.5
 
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
