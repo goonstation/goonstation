@@ -64,7 +64,7 @@
 /obj/machinery/chem_dispenser_admin/
 	name = "chem dispenser"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	flags = NOSPLASH

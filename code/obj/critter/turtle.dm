@@ -235,7 +235,7 @@
 	is_pet = 2
 	gender = MALE
 	var/obj/item/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
-	var/search_frequency = 30	//number of cycles between searches
+	var/search_frequency = 10	//number of cycles between searches
 	var/preferred_hat = /obj/item/clothing/head/hos_hat 	//if this is not null then the only hat type he will wear is this path.
 	#ifdef HALLOWEEN
 	costume_name = "sylv_costume_1"
@@ -249,18 +249,25 @@
 		//find clown
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
-				for (var/mob/M in mobs)
-					if (M.job == "Clown" && GET_DIST(src, M) < 7)
-						target = M
-						attack = 1
-						task = "chasing"
-						src.visible_message("<span class='alert'><b>[src]</b> notices a Clown and starts charging at [src.target]!</span>")
-
-						// walk_to(src, target,1,4)
-						search_frequency = 30
-						seek_target()
+				for (var/mob/M in range(src, 7))
+					if (M.job == "Clown")
+						src.chase_clown(M)
 						return
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (H.clown_tally() >= 2)
+							src.chase_clown(H)
+							return
 		search_frequency--
+
+	proc/chase_clown(mob/M)
+		target = M
+		attack = 1
+		task = "chasing"
+		src.visible_message("<span class='alert'><b>[src]</b> notices a Clown and starts charging at [src.target]!</span>")
+
+		search_frequency = 30
+		seek_target()
 
 	get_desc()
 		..()

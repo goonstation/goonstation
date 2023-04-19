@@ -21,7 +21,7 @@
 	bound_width = 160
 	bound_height = 160
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 
 	bullet_act(var/obj/projectile/P)
@@ -38,7 +38,7 @@
 	bound_width = 160
 	bound_height = 160
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	dir = 1
 	plane = PLANE_FLOOR
 	var/obj/cruiser_shield_visual/shield_obj
@@ -883,7 +883,7 @@
 /obj/cruiser_camera_dummy
 	name = ""
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	New()
@@ -899,7 +899,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "statpanel"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/image/barTop
 	var/image/barMid
 	var/image/barBot
@@ -962,7 +962,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "wpanel0"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/ignore = 0 //Wont count towards health / max health and won't break.
 	var/broken = 0
 	var/health = 50
@@ -1235,7 +1235,7 @@
 	desc = "This airlock leads out of the ship."
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "bdoorsingle1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	ignore = 1
 
@@ -1269,7 +1269,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		/*
@@ -1296,7 +1296,7 @@
 	bound_height = 32
 	texture_size = 64
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	health = 85
 	health_max = 85
 

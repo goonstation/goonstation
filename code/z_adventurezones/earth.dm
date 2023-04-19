@@ -574,7 +574,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 /obj/centcom_clone_wrapper
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	mouse_opacity = 0
 	var/bumping = FALSE
 

@@ -12,7 +12,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 	var/base_state = "mflash"
 	var/datum/light/light
 	var/cooldown_flash = 15 SECONDS
-	anchored = 1
+	anchored = ANCHORED
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -228,7 +228,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-c"
 	strength = 8
-	anchored = 0
+	anchored = UNANCHORED
 	base_state = "pflash"
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER

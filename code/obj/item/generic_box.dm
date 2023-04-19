@@ -195,7 +195,7 @@
 				attack_hand()
 				attack()
 
-				research //For the research module
+				science //For the science module
 					name = "box shaped artifact form dispensor"
 					desc = "A box full of forms for classifying alien artifacts"
 					icon_state = "item_box"

@@ -3,7 +3,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/status = 0
 	var/mob/current_user = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 100 //how much health the npc has
 	var/angry = 0 //Is the npc aggressive

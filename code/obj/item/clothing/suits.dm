@@ -1494,6 +1494,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
 	is_syndicate = TRUE
+	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
 
@@ -1525,11 +1526,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
 		setProperty("exploprot", 30)

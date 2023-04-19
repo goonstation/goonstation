@@ -179,6 +179,7 @@
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"
+	throwforce = 10
 
 /obj/storage/crate/bin/lostandfound
 	name = "\improper Lost and Found bin"

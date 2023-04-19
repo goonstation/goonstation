@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	icon_state = "fab-general"
 	var/icon_base = "general" //! This is used to make icon state changes cleaner by setting it to "fab-[icon_base]"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	power_usage = 200
 	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
@@ -2239,11 +2239,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
-		/datum/manufacture/soldering,
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
-		/datum/manufacture/multitool,
-		/datum/manufacture/t_scanner,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
 		/datum/manufacture/rods2,
@@ -2863,7 +2860,51 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/fireaxe,
 		/datum/manufacture/shovel)
 
+/obj/machinery/manufacturer/engineering
+	name = "Engineering Specialist Manufacturer"
+	desc = "This one produces specialist engineering devices."
+	icon_state = "fab-engineering"
+	icon_base = "engineering"
+	free_resource_amt = 2
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
+	available = list(
+		/datum/manufacture/screwdriver/yellow,
+		/datum/manufacture/wirecutters/yellow,
+		/datum/manufacture/wrench/yellow,
+		/datum/manufacture/crowbar/yellow,
+		/datum/manufacture/extinguisher,
+		/datum/manufacture/welder/yellow,
+		/datum/manufacture/soldering,
+		/datum/manufacture/multitool,
+		/datum/manufacture/t_scanner,
+		/datum/manufacture/engivac,
+		/datum/manufacture/lampmanufacturer,
+		/datum/manufacture/breathmask,
+		/datum/manufacture/engspacesuit,
+		/datum/manufacture/lightengspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+		/datum/manufacture/flippers,
+#endif
+		/datum/manufacture/mechanics/laser_mirror,
+		/datum/manufacture/mechanics/laser_splitter,
+		/datum/manufacture/interdictor_kit,
+		/datum/manufacture/interdictor_board_standard,
+		/datum/manufacture/interdictor_board_nimbus,
+		/datum/manufacture/interdictor_board_zephyr,
+		/datum/manufacture/interdictor_board_devera,
+		/datum/manufacture/interdictor_rod_lambda,
+		/datum/manufacture/interdictor_rod_sigma,
+		/datum/manufacture/interdictor_rod_epsilon,
+		/datum/manufacture/interdictor_rod_phi
+	)
 
+	New()
+		. = ..()
+		if (isturf(src.loc)) //not inside a frame or something
+			new /obj/item/paper/book/from_file/interdictor_guide(src.loc)
 
 /// Manufacturer blueprints can be read by any manufacturer unit to add the referenced object to the unit's production options.
 /obj/item/paper/manufacturer_blueprint

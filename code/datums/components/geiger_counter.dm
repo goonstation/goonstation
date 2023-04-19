@@ -6,7 +6,7 @@
 
 /datum/component/wearertargeting/geiger/proc/geigerclick(var/mob/owner, var/stage)
 	if(owner && !ON_COOLDOWN(src, "playsound", 1 SECOND))
-		owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 10)
+		owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 10)
 
 
 /datum/component/holdertargeting/geiger
@@ -24,5 +24,5 @@
 	if(owner)
 		var/obj/item/I = parent
 		if(!ON_COOLDOWN(src, "playsound", 1 SECOND))
-			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
+			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
 		SEND_SIGNAL(I, COMSIG_MOB_GEIGER_TICK, stage)

@@ -173,7 +173,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 /obj/decal/syndicate_destruction_scan_center
 	name = "Scan"
 	desc = "A glowing hologram, indicating the center of a scan."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -190,7 +190,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 /obj/decal/syndicate_destruction_scan_side
 	name = "Scan"
 	desc = "A hardlight hologram, hot to the touch."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 /obj/decal/purge_beam
 	name = "Linear Purge Beam"
 	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
@@ -222,7 +222,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 /obj/decal/purge_beam_end
 	name = "Linear Purge Beam"
 	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = null
