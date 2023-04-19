@@ -80,6 +80,8 @@ ABSTRACT_TYPE(/datum/component/barber)
 	var/mob/living/carbon/human/barbee
 	var/mob/barber
 	var/hair_portion = "bottom"
+	var/actionbar_type = null
+	var/cutting_names = list()
 
 /datum/component/barber/Initialize()
 	. = ..()
@@ -93,6 +95,8 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 	. = ..()
 
 /datum/component/barber/haircut
+	actionbar_type = /datum/action/bar/barber/haircut
+
 /datum/component/barber/haircut/Initialize()
 	. = ..()
 	if (. == COMPONENT_INCOMPATIBLE)
@@ -106,6 +110,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	. = ..()
 
 /datum/component/barber/shave
+	actionbar_type = /datum/action/bar/barber/shave
+
 /datum/component/barber/shave/Initialize()
 	. = ..()
 	if (. == COMPONENT_INCOMPATIBLE)
@@ -537,6 +543,49 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
+		if("do_hair")
+			if (ON_COOLDOWN(src.barber, "cut_hair", 1 SECOND))
+				return
+
+			if (isnull(params["style_id"])) // It means we are making a wig
+				actions.start_and_wait(new src.actionbar_type.type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
+
+				if (!barber || !barbee)
+					return // If there's no barber, it's safe to say we've been disposed of
+
+				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+				src.reference_clothes(src.barbee, src.preview.preview_thing)
+				src.preview.update_appearance(src.new_AH)
+				src.ui_close(src.barber)
+				return
+
+			var/hair_portion_list = list(
+				"bottom" = BOTTOM_DETAIL,
+				"middle" = MIDDLE_DETAIL,
+				"top" = TOP_DETAIL
+			)
+
+			var/hair_portion_selected = hair_portion_list[src.hair_portion]
+			var/datum/customization_style/new_hairstyle = null
+
+			var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
+
+			for (var/list/hair_listing as anything in typeinfo.all_hairs)
+				if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+					var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+					new_hairstyle = new hair_style_type
+					break
+
+			actions.start_and_wait(new src.actionbar_type.type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
+
+			if (!barber || !barbee)
+				return // If there's no barber, it's safe to say we've been disposed of
+
+			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+			src.reference_clothes(src.barbee, src.preview.preview_thing)
+			src.preview.update_appearance(src.new_AH)
+			return TRUE
+
 
 // Safer than manually changing appearance var.
 /datum/component/barber/proc/reference_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
@@ -566,97 +615,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	to_nullify.wear_id = null
 	to_nullify.r_store = null
 	to_nullify.l_store = null
-
-/datum/component/barber/haircut/ui_act(var/action, var/params)
-	. = ..()
-	if (.) // If it's anything but null, it probably did something and we shouldn't run at all.
-		return
-
-	if(action == "do_hair")
-		if (ON_COOLDOWN(src.barber, "cut_hair", 1 SECOND))
-			return
-
-		if (isnull(params["style_id"])) // It means we are making a wig
-			actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
-
-			if (!barber || !barbee)
-				return // If there's no barber, it's safe to say we've been disposed of
-
-			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.reference_clothes(src.barbee, src.preview.preview_thing)
-			src.preview.update_appearance(src.new_AH)
-			return
-
-		var/hair_portion_list = list(
-			"bottom" = BOTTOM_DETAIL,
-			"middle" = MIDDLE_DETAIL,
-			"top" = TOP_DETAIL
-		)
-
-		var/hair_portion_selected = hair_portion_list[src.hair_portion]
-		var/datum/customization_style/new_hairstyle = null
-
-		var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
-
-		for (var/list/hair_listing as anything in typeinfo.all_hairs)
-			if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
-				var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
-				new_hairstyle = new hair_style_type
-				break
-
-		actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
-
-		if (!barber || !barbee)
-			return // If there's no barber, it's safe to say we've been disposed of
-
-		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.reference_clothes(src.barbee, src.preview.preview_thing)
-		src.preview.update_appearance(src.new_AH)
-		return TRUE
-
-/datum/component/barber/shave/ui_act(var/action, var/params)
-	. = ..()
-	if (.) // If it's anything but null, it probably did something and we shouldn't run at all.
-		return
-
-	if(action == "do_hair")
-		if (isnull(params["style_id"])) // It means we are making a wig
-			actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
-
-			if (!barber || !barbee)
-				return // If there's no barber, it's safe to say we've been disposed of
-
-			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-			src.reference_clothes(src.barbee, src.preview.preview_thing)
-			src.preview.update_appearance(src.new_AH)
-			return
-
-		var/hair_portion_list = list(
-			"bottom" = BOTTOM_DETAIL,
-			"middle" = MIDDLE_DETAIL,
-			"top" = TOP_DETAIL
-		)
-
-		var/hair_portion_selected = hair_portion_list[src.hair_portion]
-		var/datum/customization_style/new_hairstyle = null
-
-		var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
-
-		for (var/list/hair_listing as anything in typeinfo.all_hairs)
-			if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
-				var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
-				new_hairstyle = new hair_style_type
-				break
-
-		actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
-
-		if (!barber || !barbee)
-			return // If there's no barber, it's safe to say we've been disposed of
-
-		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-		src.reference_clothes(src.barbee, src.preview.preview_thing)
-		src.preview.update_appearance(src.new_AH)
-		return TRUE
 
 /datum/component/barber/ui_status(mob/user, datum/ui_state/state)
 	. = user.find_in_hand(src.parent) // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
