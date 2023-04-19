@@ -971,7 +971,7 @@ var/datum/action_controller/actions
 				G.shoot()
 
 		if(obstructed)
-			boutput(source, "<span class='alert'>That item is blocked by [target.obstructed_by(slot)]! try removing that item instead.</span>")
+			boutput(source, "<span class='alert'>That item is blocked by [target.obstructed_by(slot)]! Try removing [target.obstructed_by(slot)] first.</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
