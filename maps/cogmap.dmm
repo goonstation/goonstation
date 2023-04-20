@@ -30817,8 +30817,8 @@
 "bIK" = (
 /obj/machinery/conveyor_switch{
 	id = "qmin";
-	layer = 4;
-	last_pos = 1
+	last_pos = 1;
+	layer = 4
 	},
 /obj/machinery/door_control{
 	id = "cargodock_in";
@@ -31542,6 +31542,9 @@
 /area/station/engine/engineering)
 "bKA" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -60523,9 +60526,6 @@
 /area/station/science/chemistry)
 "sao" = (
 /obj/table/wood/auto,
-/obj/drink_rack/mug{
-	pixel_y = -26
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},

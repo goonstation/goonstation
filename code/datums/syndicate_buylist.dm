@@ -900,7 +900,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/cargotele/traitor
 	cost = 3
 	vr_allowed = 0
-	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
+	desc = "A modified cargo transporter which welds containers shut and sells their contents directly to the black market, swipe your ID to set the account. Any hapless crewmembers sold will be teleported to a random point in space and will reward cash bonuses based on their job."
 	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

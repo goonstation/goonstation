@@ -3852,6 +3852,19 @@ var/global/noir = 0
 				src.show_chatbans(M.client)
 			else
 				tgui_alert( "You must be at least a Primary Admin to manage chat bans." )
+		if ("flavortext")
+			if( src.level >= LEVEL_SA )
+				var/mob/M = locate(href_list["target"])
+				if (!M || !M.client)
+					tgui_alert( "That player doesn't exist!" )
+					return
+				var/html = "Flavor Text: \"[M.client.preferences?.flavor_text]\"<br>"
+				html += "Security Note: \"[M.client.preferences.security_note]\"<br>"
+				html += "Medical Note: \"[M.client.preferences.medical_note]\"<br>"
+				html += "Syndicate Intelligence: \"[M.client.preferences.synd_int_note]\""
+				usr.Browse(html, "window=flavortext;title=Flavor text")
+			else
+				tgui_alert( "You must be at least a Secondary Admin to manage chat bans." )
 		if ("change_station_name")
 			if (!station_name_changing)
 				return tgui_alert(usr,"Station name changing is currently disabled.")
