@@ -31,6 +31,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
+	var/image/damage_image = null
+	var/damage_severity = null //used to determine which damage overlay to use if using them
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -176,6 +178,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
+		update_icon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount))
@@ -189,6 +192,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		update_icon()
 
 	damage_piercing(var/amount)
 		if (!isnum(amount))
@@ -202,6 +206,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		update_icon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -213,6 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		update_icon()
 
 	damage_heat(var/amount, var/nosmash)
 		if (!isnum(amount) || amount <= 0)
@@ -231,6 +237,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				qdel(src)
 			else
 				smash()
+		update_icon()
 
 	ex_act(severity)
 		// Current windows have 30 HP
@@ -751,6 +758,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
+	var/connectdir
 	var/static/list/connects_to = typecacheof(list(
 		/obj/machinery/door,
 		/obj/window,
@@ -813,9 +821,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			src.UpdateOverlays(null, "connect")
+			update_damage_overlay()
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
+		connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
 		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
@@ -827,6 +836,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
+		src.update_damage_overlay()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
@@ -835,6 +845,29 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+	proc/update_damage_overlay()
+		var/health_percentage = health/health_max
+		if(health_percentage < 0.15) //only look very broken when it's about to break
+			damage_severity = "heavy"
+		else if(health_percentage < 0.6)
+			damage_severity = "medium"
+		else if(health_percentage < 0.9)
+			damage_severity = "light"
+		else //cracks vanish if you heal the glass in some way
+			damage_severity = null
+
+		if (!src.damage_image)
+			src.damage_image = image('icons/obj/window_damage.dmi', "[damage_severity]-[connectdir]")
+			src.damage_image.appearance_flags = RESET_COLOR | RESET_ALPHA
+			if(src.default_material == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+				src.damage_image.alpha = 85
+			else
+				src.damage_image.alpha = 180
+
+		else
+			src.damage_image.icon_state = "[damage_severity]-[connectdir]"
+			src.UpdateOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3
