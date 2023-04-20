@@ -3708,7 +3708,10 @@
 "alR" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
-/obj/machinery/light_switch/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 8;
+	broadcasting = 0
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "alS" = (
@@ -5549,9 +5552,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/auto,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
@@ -13850,6 +13855,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aRs" = (
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0
+	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aRv" = (
@@ -15418,6 +15426,7 @@
 	light_type = /obj/item/light/tube/blueish
 	},
 /obj/table/auto,
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aVO" = (
@@ -18460,6 +18469,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "mSy" = (
@@ -20084,6 +20096,14 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"ylU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 
 (1,1,1) = {"
 aaa
@@ -60071,7 +60091,7 @@ axo
 puT
 opJ
 alt
-aWF
+ylU
 aWF
 aWF
 mxP
