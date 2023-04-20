@@ -11,13 +11,13 @@
 	can_cast_while_cuffed = TRUE
 	werewolf_only = 1
 
-	cast(mob/target)
+	cast()
 		. = ..()
-		M.changeStatus("werewolf_saliva", 30 SECONDS)
+		src.holder.owner.changeStatus("werewolf_saliva", 30 SECONDS)
 
 	castcheck()
 		. = ..()
-		var/mob/living/M = holder.owner
+		var/mob/living/M = src.holder.owner
 		if (!M.reagents.total_volume)
 			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
 			return FALSE

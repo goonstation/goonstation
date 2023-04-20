@@ -40,7 +40,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/merchant()
+			src.object = new /atom/movable/screen/ability/topBar()
 			object.icon = src.icon
 			object.owner = src
 

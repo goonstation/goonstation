@@ -40,9 +40,10 @@
 
 			M.layer = prevLayer
 
-		// no bonking against null
-		 else if (M.loc)
+		else
 			var/atom/movable/container = M.loc
+			if (!container)
+				return		// no bonking against null
 			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)

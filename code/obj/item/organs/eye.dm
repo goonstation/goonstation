@@ -420,16 +420,14 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		var/datum/targetable/organAbility/eyebeam/OA = aholder.getAbility(abil)
 		if (!OA) // what??
 			return
-		if (islist(OA.linked_organs)) // two laser eyes, just remove our half of the projectile and whatnot
-			var/list/lorgans = OA.linked_organs
-			lorgans -= src // remove us from the list so only the other eye is left and thus will be lorgans[1]
-			OA.linked_organs = lorgans[1]
-			OA.cooldown = 40
-			if (istype(OA.linked_organs, /obj/item/organ/eye/cyber/laser)) // I mean uhh it really really ought to be but we gotta be careful I guess
-				var/obj/item/organ/eye/cyber/laser/other_eye = OA.linked_organs
+		if (length(OA.linked_organs) >= 2) // two laser eyes, just remove our half of the projectile and whatnot
+			OA.linked_organs -= src // remove us from the list so only the other eye is left and thus will be lorgans[1]
+			OA.cooldown = 4 SECONDS
+			if (istype(OA.linked_organs[1], /obj/item/organ/eye/cyber/laser)) // I mean uhh it really really ought to be but we gotta be careful I guess
+				var/obj/item/organ/eye/cyber/laser/other_eye = OA.linked_organs[1]
 				if (ispath(other_eye.eye_proj_override))
 					OA.eye_proj = other_eye.eye_proj_override
-					OA.cooldown = 80
+					OA.cooldown = 8 SECONDS
 					return
 			if (src.body_side == L_ORGAN)
 				OA.eye_proj = /datum/projectile/laser/eyebeams/right

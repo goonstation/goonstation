@@ -1341,74 +1341,25 @@
 	preferred_holder_type = /datum/abilityHolder/organ
 	var/list/obj/item/organ/linked_organs = null
 
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
-		else if (on_cooldown)
-			object.name = "[src.name] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name] (on)"
-				object.icon_state = src.icon_state
-			else
-				object.name = "[src.name] (off)"
-				object.icon_state = src.icon_state + "_cd"
-		else
-			object.name = src.name
-			object.icon_state = src.icon_state
-
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || is_incapacitated(M)
-
 	castcheck()
-		if (!linked_organs)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+		. = ..()
+		if (!length(src.linked_organs))
+			boutput(holder.owner, "<span class='alert'>That ability is super broken and we're removing it!!! Sorry!!!.</span>")
+			stack_trace("Organ ability [identify_object(src)], owned by [identify_object(src.holder.owner)], is being cast without any linked organs.")
+			qdel(src)
 			return FALSE
-		else if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
-			return FALSE
-		else if (disabled)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
-			return FALSE
-		return TRUE
-
-	cast(atom/target)
-		if (!holder || !holder.owner)
-			return 1
-		if (!linked_organs)
-			return 1
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		if (ismob(target))
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]) on [constructTarget(target,"combat")].")
-		else if (target)
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]) on [target].")
-		else
-			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organs]).")
-		return 0
 
 /datum/targetable/organAbility/eyebeam
 	name = "Eyebeam"
 	desc = "Shoot a laser from your eye."
 	icon_state = "eye-laser"
-	targeted = 1
-	target_anything = 1
-	cooldown = 40
+	targeted = TRUE
+	target_anything = TRUE
+	cooldown = 4 SECONDS
 	var/datum/projectile/eye_proj = /datum/projectile/laser/eyebeams
 
 	cast(atom/target)
-		if (..())
-			return 1
-
+		. = ..()
 		if (ishuman(holder.owner)) // remember to take off your headgear if you want to fire the laser
 			var/mob/living/carbon/human/H = holder.owner
 			var/obj/item/I
@@ -1424,10 +1375,7 @@
 				I.combust() // POOF
 				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
 				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
-				return
-
-		if (!ispath(eye_proj))
-			return 1
+				return FALSE
 
 		var/turf/T = get_turf(target)
 
@@ -1450,43 +1398,30 @@
 	name = "Meson Toggle"
 	desc = "Toggle the Meson Vision functionality of your eye."
 	icon_state = "eye-meson"
-	targeted = 0
-	toggled = 1
-	cooldown = 5
-	is_on = 1
+	toggled = TRUE
+	cooldown = 0.5 SECONDS
+	is_on = TRUE
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		var/obj/item/organ/eye/cyber/meson/M = linked_organs
-		if (istype(M))
+		for (var/obj/item/organ/eye/cyber/meson/M in src.linked_organs)
 			M.toggle()
-			src.is_on = M.on
-		if(is_on)
-			src.icon_state = initial(src.icon_state)
-		else
-			src.icon_state = "[initial(src.icon_state)]_cd"
 
 
 /datum/targetable/organAbility/kidneypurge
 	name = "Kidney Purge"
 	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
 	icon_state = "cyberkidney"
-	targeted = 0
 	cooldown = 40 SECONDS
 	var/power = 6
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		if(length(linked_organs))
+		if(length(src.linked_organs) > 1)
 			for(var/obj/item/organ/O in linked_organs)
-				O.take_damage(15, 15) //safe-ish
+				O.take_damage(15, 15) //safe-ish with 2 kidneys
 		else
-			linked_organs.take_damage(30, 30) //not safe
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organs) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+			var/obj/item/organ/kidney = src.linked_organs[1]
+			kidney.take_damage(30, 30) //not safe with 1 kidney
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[length(linked_organs) > 1 ? "s" : ""] to rapidly purge chemicals from your body.</span>")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
@@ -1501,28 +1436,14 @@
 	name = "\"Detox\" Toggle"
 	desc = "Activate the experimental \"detoxification\" function of your liver to metabolize ethanol into omnizine."
 	icon_state = "cyberliver"
-	targeted = 0
-	toggled = 1
-	cooldown = 5
-	is_on = 0
-
-	New()
-		..()
-		src.icon_state = "[initial(src.icon_state)]_cd"
+	toggled = TRUE
+	cooldown = 0.5 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		var/obj/item/organ/liver/cyber/L = linked_organs
-		if (istype(L))
-			L.overloading = !L.overloading
-			src.is_on = L.overloading
-			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
-		if(is_on)
-			src.icon_state = initial(src.icon_state)
-		else
-			src.icon_state = "[initial(src.icon_state)]_cd"
+		. = ..()
+		for (var/obj/item/organ/liver/cyber/L in src.linked_organs)
+			L.overloading = src.is_on // is_on toggled in parent call
+			boutput(holder.owner, "<span class='notice'>You [src.is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
 
 /datum/targetable/organAbility/quickdigest
 	name = "Rapid Digestion"
@@ -1532,10 +1453,8 @@
 	cooldown = 40 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		linked_organs.take_damage(20, 20) //not safe
+		for (var/obj/item/organ/org in src.linked_organs)
+			org.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
 			if (L.stomach_process && length(L.stomach_process))
@@ -1544,68 +1463,60 @@
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
 			else
 				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organs.take_damage(30) //owwww
+				for (var/obj/item/organ/org in src.linked_organs)
+					org.take_damage(30) //owwww
 
 
 /datum/targetable/organAbility/projectilevomit
 	name = "Projectile Vomiting"
 	desc = "Upchuck your stomach contents with deadly force."
 	icon_state = "cyberstomach"
-	targeted = 1
-	target_anything = 1
-	cooldown = 10
+	targeted = TRUE
+	target_anything = TRUE
+	cooldown = 1 SECOND
 
 	cast(atom/target)
-		if (..())
-			return 1
-
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
+			if (length(L.stomach_process))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN(0)
-					for (var/i in 1 to 3)
-						var/obj/item/O = L.vomit()
-						O.throw_at(target, 8, 3, bonus_throwforce=5)
-						linked_organs.take_damage(3)
-						sleep(0.1 SECONDS)
-						if(linked_organs.broken || !length(L.stomach_process))
-							break
+					for (var/obj/item/organ/stomach in src.linked_organs)
+						for (var/i in 1 to 3)
+							if(stomach.broken || !length(L.stomach_process))
+								break
+							var/obj/item/O = L.vomit()
+							O.throw_at(target, 8, 3, bonus_throwforce=5)
+							stomach.take_damage(3)
+							sleep(0.1 SECONDS)
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
-				linked_organs.take_damage(30) //owwww
+				for (var/obj/item/organ/org in src.linked_organs)
+					org.take_damage(30) //owwww
 				L.vomit()
 
 /datum/targetable/organAbility/rebreather
 	name = "Rebreather Toggle"
 	desc = "Dangerously overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
 	icon_state = "cyberlung"
-	targeted = 0
-	toggled = 1
-	cooldown = 5
-	is_on = 0
-
-	New()
-		..()
-		src.icon_state = "[initial(src.icon_state)]_cd"
+	toggled = TRUE
+	cooldown = 0.5 SECONDS
 
 	cast(atom/target)
-		if (..())
-			return 1
-		if(!islist(linked_organs) && !is_on)
-			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
-			return 1
-
-		src.is_on = !src.is_on
+		. = ..()
 		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
 		for(var/obj/item/organ/lung/cyber/L in linked_organs)
 			L.overloading = is_on
+
 		if(is_on)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
 		else
 			REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_REBREATHING, "cyberlungs")
 
-		if(is_on)
-			src.icon_state = initial(src.icon_state)
-		else
-			src.icon_state = "[initial(src.icon_state)]_cd"
+	castcheck()
+		. = ..()
+		if(!islist(linked_organs) && !is_on)
+			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			return FALSE
+
+

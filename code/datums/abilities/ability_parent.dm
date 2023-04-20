@@ -855,6 +855,9 @@
 		..()
 		src.cooldowns = list()
 		src.holder = holder
+		src.build_button()
+
+	proc/build_button()
 		if (src.icon && src.icon_state)
 			var/atom/movable/screen/ability/topBar/button = new src.button_type()
 			button.icon = src.icon
@@ -866,7 +869,7 @@
 		else
 			var/problem
 			if (src.icon)
-					problem = "no icon_state"
+				problem = "no icon_state"
 			else
 				if (src.icon_state)
 					problem = "no icon"
@@ -904,6 +907,16 @@
 	proc/cast(atom/target)
 		if(interrupt_action_bars)
 			actions.interrupt(holder.owner, INTERRUPT_ACT)
+		if (!src.toggled) // don't need to know about toggles
+			if (ismob(target))
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)] on [constructTarget(target,"combat")].")
+			else if (target)
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)] on [target].")
+			else
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)].")
+		else // if we ARE toggled, then toggle
+			src.is_on = !src.is_on
+			src.updateObject()
 		return FALSE
 
 	//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
@@ -996,31 +1009,34 @@
 			if (!.)
 				localholder.deductPoints(pointCost)
 
+	/// Updates the sprite of the button linked to this ability.
 	proc/updateObject()
+		if (!src.object)
+			stack_trace("Ability [identify_object(src)], owned by [identify_object(src.holder.owner)], lost its ability button. Remaking.")
+			src.build_button()
 		var/on_cooldown = src.cooldowncheck()
 		var/pttxt = ""
 		if (src.pointCost)
 			pttxt = " \[[src.pointCost]\]"
 
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
+		if (src.disabled)
+			src.object.name = "[src.name] (unavailable)"
+			src.object.icon_state = src.icon_state + "_cd"
 		else if (on_cooldown)
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name][pttxt] (on)"
-				object.icon_state = src.icon_state
+			src.object.name = "[src.name][pttxt] ([round(on_cooldown)])"
+			src.object.icon_state = src.icon_state + "_cd"
+		else if (src.toggled)
+			if (src.is_on)
+				src.object.name = "[src.name][pttxt] (on)"
+				src.object.icon_state = src.icon_state
 			else
-				object.name = "[src.name][pttxt] (off)"
-				object.icon_state = src.icon_state + "_cd"
+				src.object.name = "[src.name][pttxt] (off)"
+				src.object.icon_state = src.icon_state + "_cd"
 		else
-			var/pttxt = ""
-			if (pointCost)
+			if (src.pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
+			src.object.name = "[src.name][pttxt]"
+			src.object.icon_state = src.icon_state
 
 	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already,
 	/// 0 is a valid argument so we check for null specifically
@@ -1034,13 +1050,13 @@
 		return src.doCooldown(0)
 
 	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast
-	/// Neat idea- add a castcheck proc to abilityHolders so they can use generic abilities, move holder-wide checks for there.
+	/// Neat idea- add  a castcheck proc to *abilityHolders* so they can use generic abilities, move holder-wide checks for there.
 	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities
 	proc/castcheck(atom/target)
 		return TRUE
 
 	/// Checks the cooldown on this ability.
-	/// returns 0 if off cooldown, positive float of time remaining if on cooldown
+	/// returns FALSE if off cooldown, positive float of time remaining if on cooldown
 	proc/cooldowncheck()
 		SHOULD_NOT_OVERRIDE(TRUE)
 		return GET_COOLDOWN(src, "cast")

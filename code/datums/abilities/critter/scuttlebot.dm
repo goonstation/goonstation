@@ -123,27 +123,26 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
+
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (istype(holder.owner, /mob/living/critter/robotic/scuttlebot))
 			if(!holder.owner.mind)
 				boutput(holder.owner, "<span class='alert'>You dont have a mind somehow.</span>")
-				return 1
+				return TRUE
 
 			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
 			if (!E.controller)
 				boutput(holder.owner, "<span class='alert'>You didn't have a body to go back to! The scuttlebot shuts down with a sad boop.</span>")
 				holder.owner.ghostize()
-				return 1
+				return TRUE
 			E.mind.transfer_to(E.controller)
 			E.controller = null
 		else //In case this ability is put on another mob
 			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
-			return 1
-
-	incapacitationCheck()
-		return FALSE
+			return TRUE
 
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"

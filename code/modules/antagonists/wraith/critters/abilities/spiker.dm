@@ -118,6 +118,7 @@
 	cooldown = 50 SECONDS
 	targeted = FALSE
 	icon_state = "shuffle"
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 
@@ -151,9 +152,6 @@
 			the_spiker.shuffling = FALSE
 			if (!isdead(the_spiker))
 				the_spiker.icon_state = "spiker"
-		return FALSE
-
-	incapacitationCheck()
 		return FALSE
 
 	onAttach(datum/abilityHolder/holder)

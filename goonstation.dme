@@ -819,7 +819,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\werewolf\abilities\werewolf_defense.dm"
 #include "code\modules\antagonists\werewolf\abilities\werewolf_feast.dm"
 #include "code\modules\antagonists\werewolf\abilities\werewolf_pounce.dm"
-#include "code\modules\antagonists\werewolf\abilities\werewolf_spread_affliction.dm"
 #include "code\modules\antagonists\werewolf\abilities\werewolf_tainted_saliva.dm"
 #include "code\modules\antagonists\werewolf\abilities\werewolf_thrash.dm"
 #include "code\modules\antagonists\werewolf\abilities\werewolf_throw.dm"
