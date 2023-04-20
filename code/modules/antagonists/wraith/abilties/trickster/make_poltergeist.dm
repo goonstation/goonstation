@@ -2,7 +2,7 @@
 	name = "Make Poltergeist"
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
 	icon_state = "make_poltergeist"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 600
 	cooldown = 5 MINUTES
 	ignore_holder_lock = 0

@@ -2,7 +2,7 @@
 	name = "Shocking Touch"
 	desc = "Shocks the victim with electrical power, which can arc to nearby people and stun them. Takes a few seconds to cast."
 	icon_state = "grasp"
-	targeted = 1
+	targeted = TRUE
 	max_range = 2
 	cooldown = 450
 	requires_robes = 1

@@ -2,8 +2,8 @@
 	name = "Command"
 	icon_state = "command"
 	desc = "Command a few objects to hurl themselves at the target location."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 50
 	cooldown = 20 SECONDS
 	min_req_dist = 15

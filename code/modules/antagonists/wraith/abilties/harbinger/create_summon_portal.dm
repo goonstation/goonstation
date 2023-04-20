@@ -3,7 +3,7 @@
 	icon_state = "open_portal"
 	desc = "Summon a void portal from which otherworldly creatures pour out. You get increased point generation when near it."
 	pointCost = 150
-	targeted = 0
+	targeted = FALSE
 	cooldown = 3 MINUTES
 	var/list/mob_types = list("Bears",
 	"Brullbars",

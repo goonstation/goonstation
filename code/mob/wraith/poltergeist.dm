@@ -246,8 +246,8 @@
 	name = "Retreat"
 	icon_state = "spook"
 	desc = "Retreat to the safety of your Master or your Anchor."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 100
 	cooldown = 1 MINUTES
 	min_req_dist = INFINITY

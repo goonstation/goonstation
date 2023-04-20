@@ -61,8 +61,8 @@
 	icon_state = "critter_bite"
 	cooldown = 0
 	var/actual_cooldown = 200
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

@@ -3,8 +3,8 @@
 	desc = "Become something much more powerful."
 	icon_state = "horror"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	can_use_in_container = 1
 
 	incapacitationCheck()
@@ -80,8 +80,8 @@
 	desc = "A terrorizing scream that causes everyone nearby to become flustered."
 	icon_state = "scream"
 	cooldown = 100
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	pointCost = 0
 	abomination_only = 1
 

@@ -2,7 +2,7 @@
 	name = "Pandemonium"
 	desc = "Calls upon spirits of chaos to summon unpredictable effects."
 	icon_state = "pandemonium"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1

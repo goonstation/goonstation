@@ -2,8 +2,8 @@
 	name = "Vandalize"
 	desc = "Drop Spacemas cheer via graffiti and acts of destruction."
 	icon_state = "grinchvandalize"
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 100

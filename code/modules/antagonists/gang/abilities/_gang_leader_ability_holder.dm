@@ -138,7 +138,7 @@
 	name = "Set Gang Base"
 	desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
 	icon_state = "set-gang-base"
-	targeted = 0
+	targeted = FALSE
 	can_cast_anytime = 1
 
 	cast()

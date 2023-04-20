@@ -2,8 +2,8 @@
 	name = "Raise Revenant"
 	icon_state = "revenant"
 	desc = "Take control of an intact corpse as a powerful Revenant! You will not be able to absorb this corpse later. As a revenant, you gain increased point generation, but your revenant abilities cost much more points than normal."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 1000
 	cooldown = 5 MINUTES
 

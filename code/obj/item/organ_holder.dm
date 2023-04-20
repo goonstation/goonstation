@@ -1450,7 +1450,7 @@
 	name = "Rapid Digestion"
 	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
 	icon_state = "cyberintestine"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 40 SECONDS
 
 	cast(atom/target)

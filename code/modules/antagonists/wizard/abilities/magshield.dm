@@ -2,7 +2,7 @@
 	name = "Spell Shield"
 	desc = "Temporarily shield yourself from melee attacks and projectiles. It also absorbs some of the blast of explosions."
 	icon_state = "spellshield"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 600
 	requires_robes = 1
 	cooldown_staff = 1

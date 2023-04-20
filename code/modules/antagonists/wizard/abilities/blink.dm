@@ -2,7 +2,7 @@
 	name = "Blink"
 	desc = "Teleport randomly to a nearby tile."
 	icon_state = "blink"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 100
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z

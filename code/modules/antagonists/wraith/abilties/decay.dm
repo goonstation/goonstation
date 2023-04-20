@@ -2,8 +2,8 @@
 	name = "Decay"
 	icon_state = "decay"
 	desc = "Cause a human to lose stamina, or an object to malfunction."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 30
 	cooldown = 1 MINUTE //1 minute
 	min_req_dist = 15

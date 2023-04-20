@@ -2,7 +2,7 @@
 	name = "Clown's Revenge"
 	desc = "Turns the target into a cursed clown."
 	icon_state = "clownrevenge"
-	targeted = 1
+	targeted = TRUE
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1

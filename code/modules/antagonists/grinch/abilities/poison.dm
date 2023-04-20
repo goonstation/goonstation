@@ -2,8 +2,8 @@
 	name = "Poison food"
 	desc = "Ruin a food item or drink by adding horrible poison to it."
 	icon_state = "grinchpoison"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 600

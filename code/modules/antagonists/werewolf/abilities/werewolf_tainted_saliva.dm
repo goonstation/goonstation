@@ -2,7 +2,7 @@
 	name = "Tainted Saliva"
 	desc = "Use your werewolf powers to add reagents from your body to your next attacks!."
 	icon_state = "tainted-bite"  // No custom sprites yet.
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 2000

@@ -175,7 +175,7 @@
 	icon_state = "blink"
 	name = "Visit Hell."
 	desc = "Take a visit to hell or return to the living realm."
-	targeted = 0
+	targeted = FALSE
 	cooldown = 50
 	var/turf/spawnturf = null
 
@@ -199,7 +199,7 @@
 	icon_state = "clairvoyance"
 	name = "Summon Contract"
 	desc = "Summon a devilish contract and pen."
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 0
@@ -246,7 +246,7 @@
 	icon_state = "doppelganger"
 	name = "Toggle Reveal"
 	desc = "Toggle your ability to hide under the floor."
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	tryCast()
@@ -310,7 +310,7 @@
 	icon_state = "clownrevenge"
 	name = "Capture target"
 	desc = "Drag a target into the eternal void."
-	targeted = 1
+	targeted = TRUE
 	cooldown = 300
 	max_range = 1
 	var/grabtime = 65
@@ -326,8 +326,8 @@
 	icon_state = "bloodwriting"
 	name = "Scribble"
 	desc = "Write on a tile with questionable intent."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 0
 	max_range = 5
 	var/in_use = 0

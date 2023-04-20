@@ -2,7 +2,7 @@
 	name = "Summon void creature"
 	desc = "Attempt to breach the veil between worlds to allow a lesser void creature to enter this realm."
 	icon_state = "summon_creature"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 400
 	cooldown = 150 SECONDS
 	ignore_holder_lock = 0

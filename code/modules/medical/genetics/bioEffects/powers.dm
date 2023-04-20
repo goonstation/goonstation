@@ -299,7 +299,7 @@
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -425,7 +425,7 @@
 	name = "Polymorphism"
 	desc = "Mimic the appearance of others."
 	icon_state = "polymorphism"
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -518,7 +518,7 @@
 	desc = "Swap the colors of your hair around."
 	icon_state = "polymorphism"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -573,7 +573,7 @@
 	desc = "Transmit psychic messages to others."
 	icon_state = "telepathy"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -681,7 +681,7 @@
 	desc = "Read the minds of others for information."
 	icon_state = "empath"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -828,7 +828,7 @@
 	desc = "Wreath yourself in burning flames."
 	icon_state = "immolate"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -879,7 +879,7 @@
 	desc = "Transform yourself into a liquid state."
 	icon_state = "melt"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -952,7 +952,7 @@
 	desc = "Unleash a gigantic fart!"
 	icon_state = "superfart"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())

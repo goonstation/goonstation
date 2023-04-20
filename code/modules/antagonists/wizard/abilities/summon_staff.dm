@@ -3,7 +3,7 @@
 	name = "Summon Staff of Cthulhu"
 	desc = "Returns the staff to your active hand."
 	icon_state = "staff"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 600
 	requires_robes = 1
 	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
@@ -98,7 +98,7 @@
 	name = "Summon and Recharge Staff of Thunder"
 	desc = "Returns the staff to your active hand and restores its charges."
 	icon_state = "staff_thunder"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 20 SECONDS
 	requires_robes = 1
 	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")

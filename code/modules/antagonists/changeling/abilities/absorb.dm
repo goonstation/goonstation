@@ -66,8 +66,8 @@
 	icon_state = "devour"
 	abomination_only = 1
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
@@ -181,8 +181,8 @@
 	icon_state = "absorb"
 	human_only = 1
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)

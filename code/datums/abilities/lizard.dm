@@ -61,7 +61,7 @@
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "lizard"
 	cooldown = 0
-	targeted = 0
+	targeted = FALSE
 	preferred_holder_type = /datum/abilityHolder/lizard
 	var/mob/living/carbon/human/L
 
@@ -75,7 +75,7 @@
 	name = "Regrow Tail"
 	desc = "Regrow your tail... (If cast while you have a tail, shoot off your tail and regrow a new one)"
 	cooldown = 2 MINUTES
-	targeted = 0
+	targeted = FALSE
 	pointCost = 2
 
 	cast()
@@ -106,7 +106,7 @@
 /datum/targetable/lizardAbility/colorshift
 	name = "Chromatophore Shift"
 	desc = "Swap the colors of your scales around."
-	targeted = 0
+	targeted = FALSE
 	pointCost = 1
 
 	cast()
@@ -135,7 +135,7 @@
 /datum/targetable/lizardAbility/colorchange
 	name = "Chromatophore Activation"
 	desc = "Change the color of your scales."
-	targeted = 0
+	targeted = FALSE
 	pointCost = 5
 	var/list/regions = list("Episcutus" = 1, "Ventral Aberration" = 2, "Sagittal Crest" = 3)
 

@@ -2,7 +2,7 @@
 	name = "Spirit message"
 	desc = "Telepathically speak to your minions."
 	icon_state = "speak_summons"
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0

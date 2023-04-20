@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Base curse"
 	icon_state = "skeleton"
 	desc = "This should never be seen."
-	targeted = 1
+	targeted = TRUE
 	pointCost = 30
 	cooldown = 45 SECONDS
 
@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Curse of blood"
 	icon_state = "bloodcurse"
 	desc = "Curse the living with a plague of blood."
-	targeted = 1
+	targeted = TRUE
 	pointCost = 40
 	cooldown = 45 SECONDS
 
@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Curse of blindness"
 	icon_state = "blindcurse"
 	desc = "Curse the living with blindness."
-	targeted = 1
+	targeted = TRUE
 	pointCost = 40
 	cooldown = 45 SECONDS
 
@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Curse of weakness"
 	icon_state = "weakcurse"
 	desc = "Curse the living with weakness and lower stamina regeneration."
-	targeted = 1
+	targeted = TRUE
 	pointCost = 40
 	cooldown = 45 SECONDS
 
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Curse of rot"
 	icon_state = "rotcurse"
 	desc = "Curse the living with a netherworldly plague."
-	targeted = 1
+	targeted = TRUE
 	pointCost = 40
 	cooldown = 45 SECONDS
 
@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Curse of death"
 	icon_state = "deathcurse"
 	desc = "Reap a fully cursed being's soul!"
-	targeted = 1
+	targeted = TRUE
 	pointCost = 80
 	cooldown = 45 SECONDS
 

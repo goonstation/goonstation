@@ -3,8 +3,8 @@
 	icon_state = "fake_sound"
 	desc = "Play a fake sound at a location of your choice"
 	pointCost = 5
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 4 SECONDS
 	var/list/sound_list = list("Death gasp",
 	"Gasp",

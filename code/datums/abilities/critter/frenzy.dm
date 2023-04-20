@@ -5,8 +5,8 @@
 	name = "Frenzy"
 	desc = "Go into a bloody frenzy on a weakened target and rip them to shreds."
 	cooldown = 350
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "frenzy"
 
 	cast(atom/target)

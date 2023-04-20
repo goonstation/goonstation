@@ -800,8 +800,8 @@ Returns:
 	M.update_cursor()
 
 /datum/targetable/cincam
-	target_anything = 1
-	targeted = 1
+	target_anything = TRUE
+	targeted = TRUE
 	check_range = FALSE
 
 	castcheck(var/mob/M)
@@ -2705,8 +2705,8 @@ Returns:
 				A.alpha = a
 
 /datum/targetable/portalpickerOrigin
-	target_anything = 1
-	targeted = 1
+	target_anything = TRUE
+	targeted = TRUE
 	check_range = FALSE
 	var/obj/fancyportal/P = null
 	var/atom/target = null

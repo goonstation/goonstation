@@ -1,7 +1,7 @@
 /datum/targetable/wraithAbility/choose_haunt_appearance
 	name = "Choose haunt appearance"
 	icon_state = "choose_appearance"
-	targeted = 1
+	targeted = TRUE
 	pointCost = 0
 
 	cast(atom/target)

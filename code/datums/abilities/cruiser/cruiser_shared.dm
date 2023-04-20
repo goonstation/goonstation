@@ -3,8 +3,8 @@
 	desc = "Cancels your current camera view."
 	icon_state = "cancelcam"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -22,8 +22,8 @@
 	desc = "Enables/disables the interior"
 	icon_state = "cancelcam"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -42,8 +42,8 @@
 	desc = "Exit the pod you are currently in."
 	icon_state = "cruiser_exit"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE // Dunno about your WIP stuff. Adjust as needed.
 	ignore_holder_lock = 1
 
@@ -63,8 +63,8 @@
 	desc = "Warp to a beacon."
 	icon_state = "warp"
 	cooldown = 10
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -84,8 +84,8 @@
 	desc = "Fire the cruisers main weapons at the specified target."
 	icon_state = "cruiser_shoot"
 	cooldown = 10
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	sticky = 1
 	lock_holder = FALSE
 	ignore_holder_lock = 1
@@ -104,8 +104,8 @@
 	desc = "Overloads the cruiser's shields, providing increased shield regeneration even during sustained damage, for 15 seconds."
 	icon_state = "shieldboost"
 	cooldown = 200
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -123,8 +123,8 @@
 	desc = "Overloads the cruiser's weapons, reducing cooldown times for 10 seconds."
 	icon_state = "weaponboost"
 	cooldown = 250
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -142,8 +142,8 @@
 	desc = "Continually modulates the frequency of the cruiser's shields while active, eliminating the weakness to energy weapons."
 	icon_state = "shieldmod"
 	cooldown = 10
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -161,8 +161,8 @@
 	desc = "Changes which weapons fire."
 	icon_state = "firemode"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
@@ -180,8 +180,8 @@
 	desc = "Enabled ramming mode."
 	icon_state = "ram"
 	cooldown = 100
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 

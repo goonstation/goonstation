@@ -14,8 +14,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "eat_filth"
 	cooldown = 2 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratbite"
 	cooldown = 5 SECOND
-	targeted = 1
+	targeted = TRUE
 
 
 	cast(atom/target)
@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratden"
 	cooldown = 120 SECONDS
-	targeted = 0
+	targeted = FALSE
 
 	cast(atom/target)
 		if (..())

@@ -2,7 +2,7 @@
 	name = "Clairvoyance"
 	desc = "Finds the location of a target."
 	icon_state = "clairvoyance"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 600
 	requires_robes = 1
 	cooldown_staff = 1

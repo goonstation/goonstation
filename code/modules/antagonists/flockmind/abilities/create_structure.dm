@@ -3,7 +3,7 @@
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
 	cooldown = 0
-	targeted = 0
+	targeted = FALSE
 
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/turf/simulated/floor/feather/T = get_turf(holder.owner)

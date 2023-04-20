@@ -63,8 +63,8 @@
 	desc = "After a medium delay, instantly devour a mob. You must stand still for this and maintain vision of the target."
 	cooldown = 0
 	var/actual_cooldown = 600
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

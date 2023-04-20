@@ -2,8 +2,8 @@
 	name = "Murder"
 	desc = "Induces instant cardiac arrest in a target."
 	icon_state = "grinchmurder"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 4800

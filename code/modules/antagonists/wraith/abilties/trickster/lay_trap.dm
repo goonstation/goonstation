@@ -3,7 +3,7 @@
 	icon_state = "runetrap"
 	desc = "Create a rune trap which stays invisible in the dark and can be sprung by people."
 	pointCost = 50
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 	var/max_traps = 7
 	var/list/trap_types = list("Madness",

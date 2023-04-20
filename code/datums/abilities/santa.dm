@@ -133,7 +133,7 @@
 	name = "Santa Heal"
 	desc = "Heal everyone around you."
 	icon_state = "heal"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 1 MINUTES
 
 	cast()
@@ -146,7 +146,7 @@
 	name = "Santa Gifts"
 	desc = "Summon a whole bunch of Spacemas presents!"
 	icon_state = "presents"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 2 MINUTES
 
 	cast()
@@ -171,7 +171,7 @@
 	name = "Spacemas Goodies"
 	desc = "Summon a whole bunch of festive snacks!"
 	icon_state = "food"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 80 SECONDS
 
 	cast()
@@ -198,7 +198,7 @@
 	name = "Winter Hearth"
 	desc = "Gives everyone near you temporary cold resistance."
 	icon_state = "warmth"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 80 SECONDS
 
 	cast()
@@ -212,7 +212,7 @@
 	name = "Spacemas Warp"
 	desc = "Warp to somewhere else via the power of Christmas."
 	icon_state = "warp"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 
 	cast()
@@ -249,7 +249,7 @@
 	name = "Banish Krampus"
 	desc = "Get rid of Krampus. He may return if Christmas Cheer goes too low again though."
 	icon_state = "banish_krampus"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 10 SECONDS
 
 	cast()

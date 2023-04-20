@@ -2,7 +2,7 @@
 	name = "Shockwave"
 	desc = "Violently throws nearby targets away from the caster."
 	icon_state = "shockwave"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1

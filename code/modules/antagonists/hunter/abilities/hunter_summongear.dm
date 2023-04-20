@@ -2,7 +2,7 @@
 	name = "Recover gear"
 	desc = "Teleports your hunting gear to your location."
 	icon_state = "summongear"
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 40 SECONDS

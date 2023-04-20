@@ -103,7 +103,7 @@
 	desc = "How many scores do we have?"
 	icon = 'icons/mob/pod_pilot_abilities.dmi'
 	icon_state = "empty"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	special_screen_loc = "NORTH,CENTER-2"
 

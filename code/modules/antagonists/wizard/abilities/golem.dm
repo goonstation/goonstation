@@ -2,7 +2,7 @@
 	name = "Summon Golem"
 	desc = "Summons a Golem made of the reagent you currently hold."
 	icon_state = "golem"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 500
 	requires_robes = 1
 	requires_being_on_turf = TRUE

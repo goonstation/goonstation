@@ -3,7 +3,7 @@
 	icon_state = "possession"
 	desc = "Channel your energy and slowly gain control over a living being."
 	pointCost = 400
-	targeted = 1
+	targeted = TRUE
 	cooldown = 3 MINUTES
 	ignore_holder_lock = 0
 	var/wraith_key = null

@@ -3,7 +3,7 @@
 	icon_state = "dread"
 	desc = "Instill a fear of the dark in a human's mind, causing terror and heart attacks if they do not stay in the light."
 	pointCost = 80
-	targeted = 1
+	targeted = TRUE
 	cooldown = 1 MINUTE
 
 	cast(mob/target)

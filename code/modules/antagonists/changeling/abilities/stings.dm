@@ -5,8 +5,8 @@
 	var/venom_id = "toxin"
 	var/inject_amount = 50
 	cooldown = 1400
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	target_in_inventory = 1
 	sticky = 1
 

@@ -5,8 +5,8 @@
   name = "Telepathy"
   desc = "Move your thoughts into the mind of another sapient being."
   cooldown = 10
-  targeted = 1
-  target_anything = 1
+  targeted = TRUE
+  target_anything = TRUE
 
   // shamelessly stolen from wraith, hi copy paste code, did you miss me - cirr
   cast(atom/target)

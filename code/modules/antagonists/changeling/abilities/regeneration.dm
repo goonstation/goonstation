@@ -4,8 +4,8 @@
 	icon_state = "stasis"
 	human_only = 1
 	cooldown = 450
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	can_use_in_container = 1
 
 	incapacitationCheck()
@@ -168,8 +168,8 @@
 	human_only = 1
 	cooldown = 900
 	pointCost = 10
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	can_use_in_container = 1
 	lock_holder = FALSE
 	ignore_holder_lock = 1

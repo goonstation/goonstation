@@ -2,7 +2,7 @@
 	name = "Bull's Charge"
 	desc = "Records the casters movement for 4 seconds after which the spell will fire and throw & heavily damage everyone in it's recorded Path."
 	icon_state = "bullc" // Vaguely matching placeholder.
-	targeted = 0
+	targeted = FALSE
 	cooldown = 150
 	requires_robes = 1
 	requires_being_on_turf = TRUE

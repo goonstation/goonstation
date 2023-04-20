@@ -2,11 +2,11 @@
 	name = "Sticks to Snakes"
 	desc = "Turns an item into a snake."
 	icon_state = "snakes"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 150 // TODO
 	requires_robes = 1
 	offensive = 1
-	target_anything = 1
+	target_anything = TRUE
 	target_in_inventory = 1
 	/*
 	voice_grim = 'sound/voice/wizard/weneed.ogg'

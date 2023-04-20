@@ -36,8 +36,8 @@
 	name = "Chair Flip"
 	desc = "Click to launch yourself off of a chair."
 	//icon_state = "fireball"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 1
 	preferred_holder_type = /datum/abilityHolder/hidden
 	icon = null
@@ -210,7 +210,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	cooldown = 1 SECOND
 	var/current_projectile = new/datum/projectile/laser/eyebeams
 

@@ -2,7 +2,7 @@
 	name = "Phase Shift"
 	desc = "Become incorporeal and move through walls."
 	icon_state = "phaseshift"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 300
 	requires_robes = 1
 	cooldown_staff = 1

@@ -6,8 +6,8 @@
 	desc = "Chomp down on a mob, causing damage and a short stun."
 	icon_state = "critter_bite"
 	cooldown = 150
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound_bite = 'sound/voice/animal/werewolf_attack1.ogg'
 	var/sound_volume = 50
 	var/brute_damage = 16

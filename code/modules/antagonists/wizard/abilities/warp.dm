@@ -2,7 +2,7 @@
 	name = "Warp"
 	desc = "Teleports a foe away."
 	icon_state = "warp"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 100
 	requires_robes = 1
 	requires_being_on_turf = TRUE

@@ -2,7 +2,7 @@
 	name = "Summon Plague rat"
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "summonrats"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 150
 	cooldown = 150 SECONDS
 	ignore_holder_lock = 0

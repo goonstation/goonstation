@@ -2,7 +2,7 @@
 	name = "Macho Heartpunch"
 	desc = "Punches a guy's heart. Right out of their body."
 	icon_state = "stasis"
-	targeted = 1
+	targeted = TRUE
 	cast(atom/target)
 		var/mob/M = target
 		if (!(BOUNDS_DIST(M, holder.owner) == 0))

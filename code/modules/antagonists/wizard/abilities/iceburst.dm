@@ -2,7 +2,7 @@
 	name = "Ice Burst"
 	desc = "Launches freezing bolts at nearby foes."
 	icon_state = "iceburst"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 200
 	requires_robes = 1
 	requires_being_on_turf = TRUE

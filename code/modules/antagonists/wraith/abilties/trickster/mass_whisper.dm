@@ -3,7 +3,7 @@
 	icon_state = "mass_whisper"
 	desc = "Send an ethereal message to all close living beings."
 	pointCost = 5
-	targeted = 0
+	targeted = FALSE
 	cooldown = 10 SECONDS
 
 	proc/ghostify_message(var/message)

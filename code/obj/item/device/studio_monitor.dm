@@ -176,7 +176,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	name = "Nukie Rocker Ability - You shouldn't see this..."
 	desc = "Waht you no see! This never happened"
 	icon_state = "nostun"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 	var/song_duration = 3 MINUTES + 11 SECONDS // And if I ever didn't thank you you.. then just let me do it now
 	var/list/status_effect_ids

@@ -9,8 +9,8 @@
 	var/inject_amount = 25
 	icon_state = "fermid_sting"
 	cooldown = 60 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())

@@ -2,7 +2,7 @@
 	name = "Empower"
 	desc = "Temporarily superpowers your body."
 	icon_state = "mutate"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1

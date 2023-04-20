@@ -2,7 +2,7 @@
 	name = "Haunt"
 	icon_state = "haunt"
 	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
-	targeted = 0
+	targeted = FALSE
 	pointCost = 0
 	cooldown = 30 SECONDS
 	min_req_dist = INFINITY

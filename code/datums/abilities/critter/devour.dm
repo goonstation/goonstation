@@ -52,8 +52,8 @@
 	cooldown = 0
 	icon_state = "maneater_munch"
 	var/actual_cooldown = 200 // fuck off
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

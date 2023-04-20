@@ -2,7 +2,7 @@
 	name = "Evolve"
 	icon_state = "evolve"
 	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
 	special_screen_loc = "NORTH-1,EAST"

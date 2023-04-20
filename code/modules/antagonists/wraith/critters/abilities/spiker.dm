@@ -3,8 +3,8 @@
 	desc = "Launch a tentacle at your target and drag it to you"
 	icon_state = "hook"
 	cooldown = 30 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 

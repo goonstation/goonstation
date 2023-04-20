@@ -3,8 +3,8 @@
   name = "Mark"
   desc = "Focus your unyielding gaze on some poor soul."
   cooldown = 600
-  targeted = 1
-  target_anything = 1
+  targeted = TRUE
+  target_anything = TRUE
   icon_state = "mark"
 
 

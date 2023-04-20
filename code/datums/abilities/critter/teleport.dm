@@ -5,8 +5,8 @@
 	name = "Teleport"
 	desc = "Phase yourself to a nearby visible spot."
 	cooldown = 300
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)

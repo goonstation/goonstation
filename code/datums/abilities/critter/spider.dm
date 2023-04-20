@@ -349,8 +349,8 @@
 	desc = "Lay Egg is True. Horribly, horribly true."
 	icon_state = "clown_spider_egg"
 	cooldown = 150
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/flavor_text = "clown"
 

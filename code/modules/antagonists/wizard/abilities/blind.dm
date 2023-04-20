@@ -2,7 +2,7 @@
 	name = "Blind"
 	desc = "Makes the victim temporarily unable to see."
 	icon_state = "blind"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 100
 	requires_robes = 1
 	requires_being_on_turf = TRUE

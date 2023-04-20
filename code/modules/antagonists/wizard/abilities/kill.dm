@@ -2,7 +2,7 @@
 	name = "Shocking Grasp"
 	desc = "Kills the victim with electrical power. Takes a few seconds to cast."
 	icon_state = "grasp"
-	targeted = 1
+	targeted = TRUE
 	max_range = 1
 	cooldown = 600
 	requires_robes = 1

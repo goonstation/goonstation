@@ -4,8 +4,8 @@
 	name = "Snap picture"
 	desc = "Take a picture."
 	cooldown = 5 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "hatpicture"
 	cast(atom/target)
 		if (..())
@@ -106,7 +106,7 @@
 	desc = "Flash someone in the eyes."
 	icon_state = "hatflash"
 	cooldown = 20 SECONDS
-	targeted = 1
+	targeted = TRUE
 	cast(atom/target)
 		if (..())
 			return 1
@@ -149,8 +149,8 @@
 	desc = "Use your robotic vision to gather forensics"
 	icon_state = "scuttlescan"
 	cooldown = 3 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())

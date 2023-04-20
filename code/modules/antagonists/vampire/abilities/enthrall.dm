@@ -28,7 +28,7 @@
 	name = "Speak to Thralls"
 	desc = "Telepathically speak to all of your undead thralls."
 	icon_state = "thrallspeak"
-	targeted = 0
+	targeted = FALSE
 	not_when_in_an_object = FALSE
 	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE

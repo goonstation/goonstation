@@ -2,8 +2,8 @@
 	name = "Defile"
 	desc = "Manifest some horrible poison inside a food item or a container."
 	icon_state = "wraithpoison"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
 	pointCost = 50

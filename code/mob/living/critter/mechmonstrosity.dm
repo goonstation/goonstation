@@ -176,8 +176,8 @@
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 10
 	cooldown = 600
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -209,7 +209,7 @@
 	name = "Terrifying glare"
 	desc = "Stuns one target for a short time."
 	icon_state = "evilstare"
-	targeted = 1
+	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 14
 	cooldown = 600
@@ -301,8 +301,8 @@
 	cooldown = 0
 	var/actual_cooldown = 200
 	icon_state = "pet"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown
@@ -330,7 +330,7 @@
 	name = "Dissect"
 	desc = "Removes ALL of the targets limbs."
 	icon_state = "dissect"
-	targeted = 1
+	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 600

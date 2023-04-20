@@ -2,7 +2,7 @@
 	name = "Toggle cloak"
 	desc = "Toggles your cloak of darkness, which is only effective in dark areas."
 	icon_state = "darkcloak"
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 0

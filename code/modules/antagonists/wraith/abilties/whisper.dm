@@ -2,8 +2,8 @@
 	name = "Whisper"
 	icon_state = "whisper"
 	desc = "Send an ethereal message to a living being."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 1
 	cooldown = 2 SECONDS
 	min_req_dist = 20

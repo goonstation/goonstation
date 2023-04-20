@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 	damage = 20
-	
+
 	is_magical = 1
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
@@ -29,8 +29,8 @@
 	name = "Fireball"
 	desc = "Launches an explosive fireball at the target."
 	icon_state = "fireball"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 350
 	requires_robes = 1
 	requires_being_on_turf = TRUE
@@ -58,8 +58,8 @@
 	icon_state = "fire-e-fireball"
 	desc = "Launches an explosive fireball at the target."
 	cooldown = 500
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 

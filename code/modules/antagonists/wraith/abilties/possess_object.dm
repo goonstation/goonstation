@@ -2,8 +2,8 @@
 	name = "Possess Object"
 	icon_state = "possessobject"
 	desc = "Possess and control an everyday object. Freakout level: high."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 300
 	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 

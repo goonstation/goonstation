@@ -320,7 +320,7 @@
 	name = "Bite Victim"
 	desc = "Bite the victim's neck to drain them of blood."
 	icon_state = "bite"
-	targeted = 1
+	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0

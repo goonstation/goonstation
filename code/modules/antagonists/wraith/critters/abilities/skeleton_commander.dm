@@ -3,7 +3,7 @@
 	desc = "Buff all surrounding critters to help you fight."
 	icon_state = "rally"
 	cooldown = 60 SECONDS
-	targeted = 0
+	targeted = FALSE
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
@@ -44,8 +44,8 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "skeleton"
 	cooldown = 30 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 

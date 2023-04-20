@@ -2,7 +2,7 @@
 	name = "Create rot hulk"
 	desc = "Assimilate the filth in an area and create an unstable servant."
 	icon_state = "summongoo"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 90 SECONDS
 	pointCost = 120
 	var/const/max_decals = 40

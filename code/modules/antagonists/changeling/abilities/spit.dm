@@ -3,8 +3,8 @@
 	desc = "Spit homing acid at a target, melting their headgear (if any) or burning their face."
 	icon_state = "acid"
 	cooldown = 900
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	sticky = 1
 
 	cast(atom/target)

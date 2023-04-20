@@ -224,7 +224,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Teleport"
 	desc = "Teleport to an area."
 	icon_state = "teleport"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 
@@ -240,7 +240,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Observe"
 	desc = "Observe a specific person."
 	icon_state = "observe-person"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 
@@ -256,7 +256,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Re-enter Corpse"
 	desc = "Re-enter your original corpse."
 	icon_state = "reenter-corpse"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 
@@ -274,7 +274,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Toggle Lighting"
 	desc = "Toggle lighting effects on tiles."
 	icon_state = "bulb-t"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -296,7 +296,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Toggle Seeing Ghosts"
 	desc = "Toggle seeing other ghosts."
 	icon_state = "toggle-ghosts"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -311,7 +311,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Observe Object"
 	desc = "Observe one of selected objects in the world."
 	icon_state = "observeobject"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -326,7 +326,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Hide HUD"
 	desc = "Hide all HUD buttons."
 	icon_state = "hide"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -353,7 +353,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Respawn Options"
 	desc = "Respawn as something."
 	icon_state = "spawnbutton"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	special_screen_loc = "NORTH,EAST"
 	tooltip_flags = TOOLTIP_LEFT
@@ -386,7 +386,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Respawn As Animal"
 	desc = "Respawn as an animal."
 	icon_state = "respawn-animal"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -401,7 +401,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Fight for a new life!"
 	desc = "Go to the Respawn Arena."
 	icon_state = "ass_day_arena"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -418,7 +418,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	desc = "How many Spookpoints do we have."
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	// icon_state = "empty"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	special_screen_loc = "NORTH,CENTER-2"
 	var/count = 0
@@ -439,8 +439,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Levitate Object"
 	desc = "Levitate an object."
 	icon_state = "levitate-object"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	max_range = 10
 	cooldown = 30 SECONDS // MINUTES
 	special_screen_loc = "SOUTH,CENTER-2"
@@ -473,9 +473,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Make a Spooky Sound"
 	desc = "Makes a spooky sound at your location.."
 	icon_state = "spooky-sound"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS // MINUTES
-	target_anything = 0
+	target_anything = FALSE
 	max_range = 0
 	cooldown = 1 MINUTES
 	pointCost = 30
@@ -496,10 +496,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Decorate"
 	desc = "Decorate on the ground!"
 	icon_state = "decorate"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 2 MINUTES
 	start_on_cooldown = 1
-	target_anything = 1
+	target_anything = TRUE
 	special_screen_loc = "SOUTH,CENTER"
 	pointCost = 200
 	var/static/list/effects = list("ectoplasm"=1, "Cobweb"=2, "candle"=3, "pumpkin"=4, "skellington"=5, "spider vomit puddles"=6, "Random"=7)
@@ -537,10 +537,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Spooky Writing"
 	desc = "Write a spooky character on the ground."
 	icon_state = "bloodwriting"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 3 MINUTES
 	start_on_cooldown = 1
-	target_anything = 1
+	target_anything = TRUE
 	special_screen_loc = "SOUTH,CENTER+1"
 	pointCost = 300
 
@@ -588,8 +588,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Summon Bat"
 	desc = "Summons a single, harmless, friendly bat for the living to enjoy."
 	icon_state = "summon-bat"
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	max_range = 0
 	cooldown = 10 MINUTES
 	start_on_cooldown = 1
@@ -614,8 +614,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	name = "Manifest"
 	desc = "Push yourself more fully into the material realm and be a bit more powerful for 30 seconds."
 	icon_state = "manifest"
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	max_range = 0
 	cooldown = 7 MINUTES
 	start_on_cooldown = 1

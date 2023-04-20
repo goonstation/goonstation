@@ -64,8 +64,8 @@
 	desc = "After a short delay, instantly envelop a mob. You must stand still for this."
 	cooldown = 0
 	var/actual_cooldown = 200
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

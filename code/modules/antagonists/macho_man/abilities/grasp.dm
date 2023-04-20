@@ -2,7 +2,7 @@
 	name = "Macho Grasp"
 	desc = "Instantly grab someone in a headlock"
 	icon_state = "badtouch"
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		var/mob/M = target

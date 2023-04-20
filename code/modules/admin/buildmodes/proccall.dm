@@ -30,12 +30,12 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 	var/tmp/list/listargs_s = null
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		var/istargeted = 1
+		var/istargeted = TRUE
 		switch (alert("Proc owned by obj? Yes to call proc on what you click on, No to call global proc", "Global Proc[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", "Yes", "No", "Cancel"))
 			if ("Cancel")
 				return
 			if ("No")
-				istargeted = 0
+				istargeted = FALSE
 
 		var/newpn = input("Enter proc name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:", "Proc Name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", ctrl ? procname_c : alt ? procname_a : shift ? procname_s : procname_n) as text|null
 		if (!newpn)
@@ -60,7 +60,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		var/proc2call = null
-		var/targeted = 0
+		var/targeted = FALSE
 		var/list/args2use = null
 
 		if (ctrl)
@@ -122,7 +122,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 		var/info2print = "<span class='notice'>***********************************************************</span>"
 		var/modkey = null
 		var/proc2list = null
-		var/targeted = 0
+		var/targeted = FALSE
 		var/list/args2list = null
 
 		if (ctrl)

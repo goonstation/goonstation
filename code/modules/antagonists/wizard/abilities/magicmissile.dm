@@ -2,7 +2,7 @@
 	name = "Magic Missile"
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 200
 	requires_robes = 1
 	requires_being_on_turf = TRUE

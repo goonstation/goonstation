@@ -3,7 +3,7 @@
 	icon_state = "terror"
 	desc = "Induce terror inside a mortal's mind and make them hallucinate."
 	pointCost = 30
-	targeted = 1
+	targeted = TRUE
 	cooldown = 45 SECONDS
 
 	cast(atom/target)

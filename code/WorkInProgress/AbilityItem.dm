@@ -848,9 +848,9 @@
 	var/last_use_time = 0
 
 	///does activating this ability let you click on something to target it?
-	var/targeted = 0
+	var/targeted = FALSE
 	///can you target any atom, not just people?
-	var/target_anything = 0
+	var/target_anything = FALSE
 
 	/// can you see this button without equipping the item
 	var/requires_equip = FALSE

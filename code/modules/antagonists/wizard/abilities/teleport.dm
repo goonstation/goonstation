@@ -2,7 +2,7 @@
 	name = "Teleport"
 	desc = "Teleports you to an area of your choice after a short delay."
 	icon_state = "teleport"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 450
 	requires_robes = 1
 	cooldown_staff = 1

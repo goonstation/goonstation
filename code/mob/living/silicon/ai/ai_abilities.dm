@@ -83,7 +83,7 @@
 
 /datum/targetable/ai/module/chems
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	var/obj/item/thrown_reagents/reagent_capsule
 
 	cast(atom/target)
@@ -133,7 +133,7 @@
 	desc = "Launches a small stream of metal foam from the camera."
 	icon_state = "camera_foam"
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	reagent_capsule = /obj/item/thrown_reagents/metal_foam
 
 /obj/item/thrown_reagents
@@ -155,7 +155,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	var/datum/projectile/P
 	var/projectile_cd = 10 SECONDS
 	var/charge_color = rgb(255,0,0)
@@ -235,7 +235,7 @@
 
 /datum/targetable/ai/module/teleport
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 
 	castcheck(atom/target)
 		. = ..()

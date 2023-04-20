@@ -2,7 +2,7 @@
 	name = "Spook"
 	icon_state = "spook"
 	desc = "Cause freaky, weird, creepy or spooky stuff to happen in an area around you. Use this ability to mark your current tile as the origin of these events, then activate it by using this ability again."
-	targeted = 0
+	targeted = FALSE
 	pointCost = 0
 	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"

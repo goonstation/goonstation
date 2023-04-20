@@ -5,8 +5,8 @@
 	name = "Gnaw"
 	desc = "Sink your teeth into a mob in an attempt to rob them of some DNA."
 	cooldown = 200
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "gnaw"
 
 	cast(atom/target)

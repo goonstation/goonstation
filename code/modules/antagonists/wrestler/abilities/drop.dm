@@ -2,8 +2,8 @@
 	name = "Drop (prone)"
 	desc = "Smash down onto on an opponent."
 	icon_state = "Drop"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	target_nodamage_check = 1
 	shortcut_target_if_available = TRUE
 	max_range = 1

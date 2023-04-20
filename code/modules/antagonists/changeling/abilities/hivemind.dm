@@ -6,8 +6,8 @@
 ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 /datum/targetable/changeling/critter
 	cooldown = 600
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	human_only = 0
 	can_use_in_container = 1
 	///The observer mob we chose to transfer mind from, this should just be returned from New, but datum/targetable/New relies on truthy fail states
@@ -222,8 +222,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "Speak to your own collected minds telepathically."
 	icon_state = "hivesay"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	human_only = 0
 	can_use_in_container = 1
 	interrupt_action_bars = 0
@@ -249,8 +249,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "Remove a member of your hivemind at no penalty."
 	icon_state = "silence"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
@@ -301,8 +301,8 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "Allow one of the members of the hive mind to control our form."
 	icon_state = "hivesay"
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	human_only = 0
 	pointCost = 0
 	can_use_in_container = 1
