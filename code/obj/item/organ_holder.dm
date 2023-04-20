@@ -1474,6 +1474,7 @@
 	icon_state = "cyberstomach"
 	targeted = TRUE
 	target_anything = TRUE
+	check_range = FALSE
 	cooldown = 1 SECOND
 
 	cast(atom/target)

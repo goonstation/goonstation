@@ -284,7 +284,7 @@
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		var/datum/targetable/organAbility/OA = aholder.addAbility(abil)
 		if (istype(OA))
-			OA.linked_organs += src
+			OA.linked_organs += list(src)
 
 	proc/remove_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!aholder || !abil)
