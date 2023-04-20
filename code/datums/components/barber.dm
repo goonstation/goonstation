@@ -623,7 +623,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	. = . ? UI_INTERACTIVE : UI_CLOSE // If, after checking the previous conditions, return is true, then the user can still cut hair. Otherwise, close the window.
 
 /datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
-	src.nullify_clothes(src.preview.preview_thing)
+	if (src.preview)
+		src.nullify_clothes(src.preview.preview_thing)
 	qdel(src.new_AH)
 	qdel(src.preview)
 	src.new_AH = null
