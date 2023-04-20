@@ -298,14 +298,9 @@
 	icon_state = "pandemonium"
 	name = "Move Floors"
 	desc = "Move floors to scream at your foes more personally."
-	targeted = 0
-	cooldown = 5
-	max_range = 50
+	cooldown = 0.5 SECONDS
 
 	cast(atom/T)
-		if (!holder)
-			return 1
-
 		var/movedistX = input(usr,"How far would you like to move the floor tile.","How far to move left or right.","4") as num
 		var/movedistY = input(usr,"How far would you like to move the floor tile.","How far to move up or down.","4") as num
 		var/movetime = input(usr,"How fast would you like to move it.","How long it takes to move it.","4") as num

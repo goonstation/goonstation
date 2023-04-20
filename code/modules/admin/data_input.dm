@@ -309,7 +309,7 @@
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = 3000
+	check_range = FALSE
 	target_ghosts = TRUE
 	lock_holder = FALSE
 

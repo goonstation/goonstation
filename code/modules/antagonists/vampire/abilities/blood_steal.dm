@@ -4,7 +4,7 @@
 	icon_state = "bloodsteal"
 	targeted = TRUE
 	target_nodamage_check = TRUE
-	max_range = 999
+	check_range = FALSE
 	cooldown = 45 SECONDS
 	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE

@@ -1355,6 +1355,7 @@
 	icon_state = "eye-laser"
 	targeted = TRUE
 	target_anything = TRUE
+	check_range = FALSE
 	cooldown = 4 SECONDS
 	var/datum/projectile/eye_proj = /datum/projectile/laser/eyebeams
 

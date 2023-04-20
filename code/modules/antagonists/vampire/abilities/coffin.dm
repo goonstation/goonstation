@@ -47,7 +47,7 @@
 	targeted = TRUE
 	target_anything = TRUE
 	target_nodamage_check = TRUE
-	max_range = 999
+	check_range = FALSE
 	cooldown = 60 SECONDS
 	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 	can_cast_while_cuffed = TRUE
@@ -81,7 +81,7 @@
 	name = "Coffin Escape"
 	desc = "Become temporarily intangible and escape to a coffin where you can regenerate. If you have previously used Hide Coffin, the coffin will appear in that location."
 	icon_state = "mist"
-	max_range = 999
+	check_range = FALSE
 	cooldown = 60 SECONDS
 	pointCost = 400
 	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS

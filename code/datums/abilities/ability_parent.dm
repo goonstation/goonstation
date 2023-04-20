@@ -663,7 +663,6 @@
 
 
 	proc/update_on_hud(pos_x = 0, pos_y = 0)
-
 		UpdateIcon()
 
 		if (owner.special_screen_loc)
@@ -888,6 +887,7 @@
 		..()
 
 	proc/handleCast(atom/target, params)
+		//SHOULD_NOT_OVERRIDE(TRUE)
 		var/datum/abilityHolder/localholder = src.holder
 		var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
@@ -905,6 +905,7 @@
 	/// return FALSE to deduct points on successful cast, TRUE to not deduct points.
 	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMMITTED TO CASTING THE ABILITY
 	proc/cast(atom/target)
+		//SHOULD_CALL_PARENT(TRUE)
 		if(interrupt_action_bars)
 			actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (!src.toggled) // don't need to know about toggles

@@ -229,8 +229,6 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 
-		return
-
 	//kyle-note come back
 	proc/on_removal()
 		SHOULD_CALL_PARENT(TRUE)
@@ -284,11 +282,9 @@
 			src.take_damage(20, 20, 0)
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
-		if (!aholder || !abil)
-			return
 		var/datum/targetable/organAbility/OA = aholder.addAbility(abil)
 		if (istype(OA))
-			OA.linked_organs = src
+			OA.linked_organs += src
 
 	proc/remove_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!aholder || !abil)
