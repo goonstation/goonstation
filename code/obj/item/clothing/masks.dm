@@ -139,12 +139,6 @@
 	color_g = 0.85
 	color_b = 0.95
 
-/obj/item/clothing/mask/breath/respirator
-	desc = "A close-fitting breath mask with a custom particle filter."
-	name = "breath respirator"
-	icon_state = "respirator-breath"
-	item_state = "respirator-breath"
-
 TYPEINFO(/obj/item/clothing/mask/moustache)
 	mats = 2
 
