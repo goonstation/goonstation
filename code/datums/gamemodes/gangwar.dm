@@ -710,7 +710,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/gang/gang = null
 	var/max_health = 200
 	var/health = 200
@@ -1213,7 +1213,7 @@ proc/broadcast_to_all_gangs(var/message)
 			user.visible_message("<b>[user]</b> attaches [src] to [A].","You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()
 
@@ -1223,7 +1223,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		user.put_in_hand_or_drop(src)
 
 	attack_self(mob/living/carbon/human/user as mob)

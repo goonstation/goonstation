@@ -7,7 +7,7 @@
 	name = "mustard gas"
 	icon_state = "mustard"
 	opacity = 1
-	anchored = 0
+	anchored = UNANCHORED
 	mouse_opacity = 0
 	var/amount = 6
 

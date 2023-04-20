@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/magtractor)
 	icon_state = "magtractor"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10

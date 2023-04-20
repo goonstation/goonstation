@@ -20,6 +20,7 @@
 	/datum/matfab_recipe/lightbulb,
 	/datum/matfab_recipe/tripodbulb,
 	/datum/matfab_recipe/sheet,
+	/datum/matfab_recipe/thermocouple,
 	/datum/matfab_recipe/cell_small,
 	/datum/matfab_recipe/cell_large,
 	/datum/matfab_recipe/infusion,
@@ -72,7 +73,7 @@
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "fab2-on"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	flags = NOSPLASH

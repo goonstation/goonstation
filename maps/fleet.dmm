@@ -9058,7 +9058,7 @@
 "sz" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
@@ -9077,7 +9077,7 @@
 "sB" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -9091,7 +9091,7 @@
 "sC" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	d2 = 8;
