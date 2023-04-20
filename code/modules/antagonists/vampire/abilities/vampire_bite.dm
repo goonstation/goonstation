@@ -11,7 +11,7 @@
 	src.blood_tally[target] += blood_amt_taken
 
 /datum/abilityHolder/vampire/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
+	. = TRUE
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
@@ -21,9 +21,6 @@
 	var/datum/abilityHolder/vampire/holder = src
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampire/H = holder
-
-	if (!M || !target)
-		return FALSE
 
 	if (!ishuman(target)) // Only humans use the blood system.
 		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
@@ -73,14 +70,13 @@
 	return TRUE
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
-	.= 1
+	. = TRUE
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampire/H = src
 
 
 	if (HH.blood_volume <= 0)
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
-		return 0
+		return FALSE
 
 	if (isdead(HH))
 		if (prob(20))
@@ -95,7 +91,7 @@
 		else
 			HH.blood_volume -= 20 * mult
 
-	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
+	else if (HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
 			M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
 			M.emote("scream")
@@ -165,7 +161,7 @@
 /datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
 
 /datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
+	. = TRUE
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
@@ -184,65 +180,61 @@
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampiric_thrall/H = holder
 
-	if (!M || !target)
-		return 0
-
 	if (!ishuman(target)) // Only humans use the blood system.
 		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
-		return 0
+		return FALSE
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, "<span class='alert'>You cannot drink the blood of a thrall.</span>")
-			return 0
+			return FALSE
 
 	if (M == target)
 		boutput(M, "<span class='alert'>Why would you want to bite yourself?</span>")
-		return 0
+		return FALSE
 
 	if (ismobcritter(M) && !istype(H))
 		boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
-		return 0
+		return FALSE
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
 			boutput(M, "<span class='alert'>You are already draining someone's blood!</span>")
-			return 0
+			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
-		return 0
+		return FALSE
 
 	if (check_target_immunity(target) == 1)
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
-		return 0
+		return FALSE
 
 	var/mob/master = null
 	if(src.owner.mind && src.owner.mind.master)
 		master = ckey_to_mob(src.owner.mind.master)
 	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
 		boutput(M, "<span class='alert'>You can't drink the blood of your master's thralls!</span>")
-		return 0
+		return FALSE
 
 	if (isnpcmonkey(target))
 		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
-		return 0
+		return FALSE
 
 	if (!holder.can_take_blood_from(target))
-		return 0
+		return FALSE
 
-
-	return 1
+	return TRUE
 
 /datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
-	.= 1
+	. = TRUE
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampiric_thrall/H = src
 
 
 	if (HH.blood_volume <= 0)
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
-		return 0
+		return FALSE
 
 	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
 		if (prob(20))
@@ -315,53 +307,42 @@
 	desc = "Bite the victim's neck to drain them of blood."
 	icon_state = "bite"
 	targeted = TRUE
-	target_nodamage_check = 1
+	target_nodamage_check = TRUE
 	max_range = 1
-	cooldown = 0
-	pointCost = 0
-	incapacitation_restriction = 0
 	can_cast_while_cuffed = FALSE
 	lock_holder = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 	var/thrall = FALSE
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		. = ..()
+		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M, H, target, src), M)
 
+	castcheck(atom/target)
+		. = ..()
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/H = holder
 
-		if (!M || !target || !ismob(target))
-			return 1
-
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			return TRUE
 
 		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
 			boutput(M, "<span class='alert'>You are already performing a Blood action and cannot start a Bite.</span>")
-			return 1
+			return TRUE
 
 		if (isnpc(target))
 			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
-			return 1
+			return TRUE
 
-		var/mob/living/carbon/human/HH = target
-
-
-		boutput(M, "<span class='notice'>You bite [HH] and begin to drain them of blood.</span>")
-		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
-
-		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)
-
-		return 0
+		boutput(M, "<span class='notice'>You bite [target] and begin to drain them of blood.</span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target]!</B></span>")
 
 /datum/targetable/vampire/vampire_bite/thrall
 	thrall = TRUE
 
 /datum/action/bar/private/icon/vamp_blood_suc
-	duration = 30
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
@@ -383,7 +364,7 @@
 		B = biteabil
 		..()
 		if (B.thrall)
-			duration = 60
+			duration *= 2
 
 
 	onUpdate()
