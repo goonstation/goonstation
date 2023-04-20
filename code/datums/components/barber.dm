@@ -494,10 +494,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
 	. = list("available_styles" = typeinfo.all_hairs)
 
-/datum/component/barber/shave/ui_static_data(mob/user)
-	var/typeinfo/datum/component/barber/shave/typeinfo = src.get_typeinfo()
-	. = list("available_styles" = typeinfo.all_hairs)
-
 /datum/component/barber/ui_act(var/action, var/params)
 	. = ..()
 	if (.)
@@ -578,8 +574,10 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 			actions.start_and_wait(new src.actionbar_type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 
-			if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
-				ui.close() // There is nothing more to cut.
+			if(istype(barbee.bioHolder.mobAppearance.customization_first,/datum/customization_style/none) && \
+			istype(barbee.bioHolder.mobAppearance.customization_second,/datum/customization_style/none) && \
+			istype(barbee.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
+				src.ui_close(src.barber) // There is nothing more to cut.
 
 			if (!barber || !barbee)
 				return // If there's no barber, it's safe to say we've been disposed of
