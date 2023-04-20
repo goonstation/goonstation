@@ -117,12 +117,6 @@
 			if (parallax_layer.static_colour)
 				continue
 
-			/* BYOND v514.1589 Bug Notice:
-			    An animation using a colour matrix as the colour value will not correctly animate should another animation be
-				running in parallel. However, using non-matrix colour values will result in less-than-acceptable qualities of
-				parallax layer recolouring, so I have opted to keep the matrix system and accept that it will occasionally
-				skip the animation.
-			*/
 			animate(parallax_layer, animation_time, color = colour, flags = ANIMATION_PARALLEL)
 
 
