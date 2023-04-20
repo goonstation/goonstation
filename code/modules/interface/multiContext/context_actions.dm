@@ -354,21 +354,21 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "minus"
 	icon_background = ""
-	var/ability_code = 0
+	var/ability_code = WRAITH_FORM_DEFAULT
 
-	New(code as num)
+	New(code)
 		..()
 		src.ability_code = code
 		switch(code)
-			if (1)
+			if (WRAITH_FORM_PLAGUEBRINGER)
 				name = "Plaguebringer"
 				desc = "Become a disease spreading spirit."
 				icon_state = "choose_plague"
-			if (2)
+			if (WRAITH_FORM_HARBINGER)
 				name = "Harbinger"
 				desc = "Lead an army of otherwoldly foes."
 				icon_state = "choose_harbinger"
-			if (3)
+			if (WRAITH_FORM_TRICKSTER)
 				name = "Trickster"
 				desc = "Fool the crew with illusions and let them tear themselves apart."
 				icon_state = "choose_trickster"

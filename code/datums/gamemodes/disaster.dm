@@ -39,7 +39,7 @@
 			generate_wraith_objectives(wraith)
 			var/datum/targetable/wraithAbility/specialize/SP = W.abilityHolder.getAbility(/datum/targetable/wraithAbility/specialize)
 			SP.pointCost = 0
-			SP?.evolve(2)
+			SP?.evolve(WRAITH_FORM_HARBINGER)
 
 	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED //Disable the shuttle temporarily.
 

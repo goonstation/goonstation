@@ -3,7 +3,7 @@
 	icon_state = "whisper"
 	desc = "Send an ethereal message to a living being."
 	targeted = TRUE
-	target_anything = TRUE
+	target_anything = FALSE
 	pointCost = 1
 	cooldown = 2 SECONDS
 	min_req_dist = 20
@@ -11,24 +11,18 @@
 		return message
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		if (ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if (isdead(H))
-				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
-				return 1
-			else
-				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
-				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
-				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
-				if (!message)
-					return 1
-				boutput(usr, "<b>You whisper to [target]:</b> [message]")
-				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+		. = ..()
+		var/mob/M = target
+		if (isdead(M))
+			boutput(src.holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+			return TRUE
 		else
-			boutput(usr, "<span class='alert'>It would be futile to attempt to force your voice to the consciousness of that.</span>")
-			return 1
+			var/message = html_encode(tgui_input_text(src.holder.owner, "What would you like to whisper to [M]?", "Whisper"))
+			logTheThing(LOG_SAY, src.holder.owner, "WRAITH WHISPER TO [constructTarget(M,"say")]: [message]")
+			message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
+			if (!message)
+				return TRUE
+			boutput(src.holder.owner, "<b>You whisper to [M]:</b> [message]")
+			boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+			src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+			M.playsound_local(M.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)

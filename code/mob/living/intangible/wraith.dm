@@ -408,7 +408,7 @@
 	click(atom/target)
 		if (src.targeting_ability)
 			..()
-		if (!density)
+		else if (!src.density)
 			src.examine_verb(target)
 
 	examine_verb(atom/A as mob|obj|turf in view())
@@ -424,13 +424,13 @@
 
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
-				if (f_amt >= src.formaldehyde_tolerance)
+				if (f_amt > src.formaldehyde_tolerance)
 					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
 				else if (f_amt > 0)
 					string += "<span class='blue'>This creature has a somewhat unpleasant <i>taste</i>.</span>\n"
 
 				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
-				if (hw_amt >= src.holy_water_tolerance)
+				if (hw_amt > src.holy_water_tolerance)
 					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
 				else if (hw_amt > 0)
 					string += "<span class='blue'>This creature has a somewhat vile <i>fragrance</i>!</span>\n"

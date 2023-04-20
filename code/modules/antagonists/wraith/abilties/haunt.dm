@@ -1,29 +1,28 @@
 /datum/targetable/wraithAbility/haunt
 	name = "Haunt"
 	icon_state = "haunt"
-	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
-	targeted = FALSE
-	pointCost = 0
+	desc = "Become corporeal until disabled, with a 30 second minimum haunt duration. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
 	cooldown = 30 SECONDS
-	min_req_dist = INFINITY
-	start_on_cooldown = 1
+	targeted = FALSE
+	start_on_cooldown = TRUE
 
 	cast()
+		. = ..()
 		if(istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			var/mob/living/critter/wraith/trickster_puppet/P = holder.owner
 			P.demanifest()
-			return 0
+			return FALSE
 
 		var/mob/living/intangible/wraith/K = src.holder.owner
 		if (!K.forced_manifest && K.hasStatus("corporeal"))
-			boutput(holder.owner, "We fade back into the shadows")
-			cooldown = 0 SECONDS
-			return K.delStatus("corporeal")
+			boutput(holder.owner, "<span class='alert'>We fade back into the shadows...</span>")
+			src.cooldown = 0 SECONDS
+			K.delStatus("corporeal")
 		else
 			boutput(holder.owner, "We show ourselves")
 			var/mob/living/intangible/wraith/W = holder.owner
 
-			cooldown = 30 SECONDS
+			src.cooldown = initial(src.cooldown)
 
 			if ((istype(W, /mob/living/intangible/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/living/intangible/wraith/wraith_trickster/T = holder.owner
@@ -40,15 +39,14 @@
 					animate(puppet, alpha=255, time=2 SECONDS)
 					puppet.flags &= UNCRUSHABLE
 					T.set_loc(puppet)
-					return 0
+					return FALSE
 
 			//check done in case a poltergeist uses this from within their master.
 			if (iswraith(W.loc))
 				boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
-				return 1
+				return TRUE
 			if (W.hasStatus("corporeal"))
-				return 1
+				return TRUE
 			else
 				W.setStatus("corporeal", INFINITE_STATUS)
-				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
-			return 0
+				src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)

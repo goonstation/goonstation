@@ -244,7 +244,7 @@
 		src.update_density()
 		src.item_position_check()
 
-	death(gibbed)
+	death(gibbed = FALSE)
 
 		if (src.possessed_thing && !gibbed)
 			src.possessed_thing.set_dir(src.dir)

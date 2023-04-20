@@ -6,3 +6,9 @@
 #define ANTAGONIST_SOURCE_ADMIN "admin-created "
 #define ANTAGONIST_SOURCE_MUTANT "antag-mutantrace "
 #define ANTAGONIST_SOURCE_SUMMONED "antag-summoned "
+
+// wraith forms
+#define WRAITH_FORM_DEFAULT 0
+#define WRAITH_FORM_PLAGUEBRINGER 1
+#define WRAITH_FORM_HARBINGER 2
+#define WRAITH_FORM_TRICKSTER 3

@@ -147,7 +147,6 @@
 			for(var/datum/targetable/B in src.abilities)
 				if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
 					B.object.UpdateIcon()
-			return
 
 	proc/updateText(var/called_by_owner = 0)
 		if (composite_owner && !called_by_owner)
@@ -802,7 +801,7 @@
 	var/icon_state = "blob-template"			//! icon_state for the ability button
 	var/atom/movable/screen/ability/object		//! The ability button which appears on the HUD and is clicked to cast the ability
 
-	var/max_range = 1							//! If this is a targetable ability, what is the max range we can target people at
+	var/max_range = 1							//! If this is a targetable ability, what is the max range we can target people at. Defaults to adjacent
 	var/cooldown = 0							//! Time between ability uses
 	var/start_on_cooldown = FALSE				//! If TRUE, ability is put on cooldown immediately after a mob gains it
 	var/datum/abilityHolder/holder				//! Ability holder of this ability
@@ -822,7 +821,7 @@
 
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
 	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
-	var/target_anything = FALSE					//! Can we target absolutely anything?
+	var/target_anything = FALSE					//! Can we target things other than mobs?
 	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
 	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
 	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
@@ -964,7 +963,7 @@
 			boutput(src.holder.owner, "<span class='alert'>[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're in range
-		else if (src.targeted && max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
+		else if (src.check_range && src.targeted && src.max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
 			boutput(src.holder.owner, "<span class='alert'>[target] is too far away.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast on ourselves, if relevant

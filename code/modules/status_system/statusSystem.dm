@@ -286,7 +286,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	* {status} can either be a reference to a status effect or a status effect ID.
 	*/
 /atom/proc/delStatus(status)
-	. = null
 	if(statusEffects == null)
 		return
 

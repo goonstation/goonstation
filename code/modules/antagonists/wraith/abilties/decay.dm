@@ -45,3 +45,6 @@
 			else
 				boutput(src.holder.owner, "<span class='alert'>You fail to alter the energy of [target].</span>")
 				return TRUE
+		else // turf
+			boutput(src.holder.owner, "<span class='alert>There's nothing to target there.</span>")
+			return TRUE

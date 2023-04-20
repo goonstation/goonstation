@@ -306,7 +306,6 @@
 	icon_state = "bite"
 	targeted = TRUE
 	target_nodamage_check = TRUE
-	max_range = 1
 	can_cast_while_cuffed = FALSE
 	lock_holder = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
