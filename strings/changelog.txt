@@ -1,5 +1,9 @@
 
 (t)wed apr 19 23
+(u)Azrun
+(p)13590
+(e)🆕🎨⚖🧱📦💡|C-Feature, C-Sprites, C-Balance, A-Materials, A-Game-Objects, A-Station-Systems
+(*)TEG Semiconductor gone?!? Now you can replace it with some sheets or with the help of the Nano-fabricator if you really need to.
 (u)Wisemonster, Ikea
 (p)13742
 (e)⚖📦|C-Balance, A-Game-Objects
