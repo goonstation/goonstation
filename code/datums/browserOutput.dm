@@ -336,6 +336,9 @@ var/global
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
 /proc/icon2base64(icon, iconKey = "misc")
+	#ifdef OPENDREAM // ODTODO
+	return ""
+	#else
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
@@ -343,6 +346,7 @@ var/global
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return copytext(partial[2], 3, -5)
+	#endif
 
 
 /proc/bicon(obj)
