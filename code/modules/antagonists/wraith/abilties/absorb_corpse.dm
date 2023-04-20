@@ -8,11 +8,7 @@
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 
 	cast(atom/target)
-		if (..())
-			return 1
-		if (!target)
-			target = get_turf(holder.owner)
-
+		. = ..()
 		//Find a suitable corpse
 		var/mob/living/carbon/human/H
 		if (ishuman(target))
@@ -26,12 +22,14 @@
 				H = mob_target
 				break
 		if (ishuman(H))
+			// These get to live here instead of castcheck() because I don't have a decent way to handle abilities which cast on
+			// something other than the original target (ie castcheck() doesn't see the picked human if we targeted a turf originally)
 			if (!isdead(H))
 				boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
-				return 1
+				return TRUE
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				boutput(holder.owner, "<span class='alert'>That corpse is already too decomposed.</span>")
-				return 1
+				return TRUE
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
 			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (istype(W))
@@ -41,12 +39,12 @@
 					boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...But you are wounded</span>")
 					particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(H.x, H.y, H.z)))
 					holder.owner.TakeDamage(null, 50, 0)
-					return 0
+					return FALSE
 		else
 			boutput(holder.owner, "<span class='alert'>Absorbing [target] does not satisfy your ethereal taste.</span>")
-			return 1
+			return TRUE
 		if (!H)
-			return 1 // no valid targets were identified, cast fails
+			return TRUE // no valid targets were identified, cast fails
 
 		logTheThing(LOG_COMBAT, holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
@@ -60,7 +58,7 @@
 				H.gib()
 			else if (!(H.get_toxin_damage() >= 30) && !(H.decomp_stage >= DECOMP_STAGE_BLOATED))
 				boutput(holder.owner, "<span class='alert'>This body is too fresh. It needs to be poisoned or rotten before we consume it.</span>")
-				return 1
+				return TRUE
 		if (H.loc)//gibbed check
 			//Make the corpse all grody and skeleton-y
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
@@ -79,8 +77,6 @@
 			if (istype(W))
 				W.onAbsorb(H)
 			AH.corpsecount++
-
-		return 0
 
 
 	doCooldown(customCooldown)         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses

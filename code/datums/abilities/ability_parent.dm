@@ -792,6 +792,8 @@
 		owner.holder.abilities.Swap(index_source,index_target)
 		owner.holder.updateButtons()
 
+///TODO: add a var for that thing where some abilities find a valid target on a turf if a turf isn't provided (for wraiths mostly)
+/// Allows me to put checks in castcheck() where they belong and avoid duplication
 /datum/targetable
 
 	var/name = null								//! Name, as appears on the ability button
@@ -1039,7 +1041,7 @@
 			src.object.name = "[src.name][pttxt]"
 			src.object.icon_state = src.icon_state
 
-	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already,
+	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already.
 	/// 0 is a valid argument so we check for null specifically
 	proc/doCooldown(customCooldown)
 		SHOULD_CALL_PARENT(TRUE)
@@ -1050,14 +1052,14 @@
 		SHOULD_NOT_OVERRIDE(TRUE)
 		return src.doCooldown(0)
 
-	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast
+	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast.
 	/// Neat idea- add  a castcheck proc to *abilityHolders* so they can use generic abilities, move holder-wide checks for there.
-	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities
+	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities.
 	proc/castcheck(atom/target)
 		return TRUE
 
 	/// Checks the cooldown on this ability.
-	/// returns FALSE if off cooldown, positive float of time remaining if on cooldown
+	/// returns FALSE if off cooldown, positive float of time remaining if on cooldown.
 	proc/cooldowncheck()
 		SHOULD_NOT_OVERRIDE(TRUE)
 		return GET_COOLDOWN(src, "cast")
@@ -1070,7 +1072,7 @@
 		updateObject(holder.owner)
 		stat(null, object)
 
-	/// Grab check for abilities. returns the grab we're using, or FALSE if we don't have a valid or strong enough grab
+	/// Grab check for abilities. returns the grab we're using, or FALSE if we don't have a valid or strong enough grab.
 	/// Works for off hand and active hand
 	proc/grab_check(var/min_state = GRAB_STRONG)
 		var/mob/living/user = holder.owner

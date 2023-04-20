@@ -73,7 +73,6 @@
 	. = TRUE
 	var/mob/living/carbon/human/M = src.owner
 
-
 	if (HH.blood_volume <= 0)
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return FALSE
@@ -83,9 +82,9 @@
 			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
-		H.change_vampire_blood(bitesize, 1)
-		H.change_vampire_blood(bitesize, 0)
-		H.tally_bite(HH,bitesize)
+		src.change_vampire_blood(bitesize, 1)
+		src.change_vampire_blood(bitesize, 0)
+		src.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
@@ -108,11 +107,11 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				H.change_vampire_blood(bitesize, 0)
-				H.change_vampire_blood(bitesize, 1)
-				H.tally_bite(HH,bitesize)
-				if (istype(H))
-					H.blood_tracking_output()
+				src.change_vampire_blood(bitesize, 0)
+				src.change_vampire_blood(bitesize, 1)
+				src.tally_bite(HH,bitesize)
+				if (istype(src))
+					src.blood_tracking_output()
 				if (prob(50))
 					boutput(M, "<span class='alert'>This is the blood of a fellow vampire!</span>")
 			else
@@ -121,9 +120,9 @@
 				return 0
 		else
 			var/bitesize = 10 * mult
-			H.change_vampire_blood(bitesize, 1)
-			H.change_vampire_blood(bitesize, 0)
-			H.tally_bite(HH,bitesize)
+			src.change_vampire_blood(bitesize, 1)
+			src.change_vampire_blood(bitesize, 0)
+			src.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
@@ -143,14 +142,13 @@
 						HH.changeStatus("weakened", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-			H.blood_tracking_output()
+			src.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
 		boutput(HH, "<span class='alert'>You feel your soul slipping away...</span>")
 		HH.death(FALSE)
 
-	if (istype(H))
-		H.check_for_unlocks()
+	src.check_for_unlocks()
 
 	eat_twitch(src.owner)
 	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4) //tested to be audible for about 5 tiles, assuming quiet environment
@@ -316,12 +314,11 @@
 
 	cast(mob/target)
 		. = ..()
-		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M, H, target, src), M)
+		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(src.holder.owner, src.holder, target, src), src.holder.owner)
 
 	castcheck(atom/target)
 		. = ..()
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
+		var/mob/living/M = src.holder.owner
 
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
@@ -357,7 +354,7 @@
 	var/mob/living/carbon/human/HH
 	var/datum/targetable/vampire/vampire_bite/B
 
-	New(user,vampabilityholder,target,biteabil)
+	New(mob/user, datum/abilityHolder/vampire/vampabilityholder, mob/target, datum/targetable/vampire/vampire_bite/biteabil)
 		M = user
 		H = vampabilityholder
 		HH = target

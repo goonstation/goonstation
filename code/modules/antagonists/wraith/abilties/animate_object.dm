@@ -8,26 +8,24 @@
 	cooldown = 30 SECONDS
 	min_req_dist = 10
 
-	cast(atom/T)
-		if (..())
-			return 1
-
-		var/obj/O = T
+	cast(atom/target)
 		//If you targeted a turf for some reason, find an object on it
-		if (istype(T, /turf))
-			for (var/obj/target in T.contents)
-				if (istype(target, /obj/critter) || istype(target, /obj/machinery/bot) || istype(target, /obj/decal) || target.anchored || target.invisibility)
+		if (isturf(target))
+			for (var/obj/O in target.contents)
+				if (!is_valid_target(O))
 					continue
-				O = target
+				target = O
 				break
 
-		if (istype(O))
-			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
-				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
-				return 1
-			new/mob/living/object/ai_controlled(O.loc, O)
-			usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 50, 0)
-			return 0
-		else
-			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
-			return 1
+		if(!is_valid_target(target))
+			boutput(src.holder.owner, "<span class='alert'>That is not a valid target for animation!</span>")
+			return TRUE
+		new /mob/living/object/ai_controlled(get_turf(target), target)
+		src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 50, 0)
+		return FALSE
+
+	proc/is_valid_target(obj/O)
+		if(!istype(O) || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
+			return FALSE
+		return TRUE
+

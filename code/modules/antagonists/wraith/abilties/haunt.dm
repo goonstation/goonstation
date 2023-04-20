@@ -9,9 +9,6 @@
 	start_on_cooldown = 1
 
 	cast()
-		if (..())
-			return 1
-
 		if(istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			var/mob/living/critter/wraith/trickster_puppet/P = holder.owner
 			P.demanifest()

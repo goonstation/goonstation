@@ -1,5 +1,4 @@
 /datum/abilityHolder/wraith
-	topBarRendered = 1
 	pointName = "Wraith Points"
 	cast_while_dead = 1
 	/// total souls absorbed by this wraith so far
@@ -40,6 +39,7 @@
 	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/wraith
 	ignore_holder_lock = TRUE //So we can still do things while our summons are coming
+	check_range = FALSE
 	theme = "wraith"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
@@ -90,16 +90,16 @@
 	desc = "Enter or exit help mode."
 	icon_state = "help0"
 	helpable = FALSE
+	toggled = TRUE
 	special_screen_loc = "SOUTH,EAST"
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
 		if (holder.help_mode)
-			holder.help_mode = 0
+			holder.help_mode = FALSE
 			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
-			holder.help_mode = 1
+			holder.help_mode = TRUE
 			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
@@ -111,8 +111,10 @@
 	name = "Toggle deadchat"
 	desc = "Silences or re-enables the whispers of the dead."
 	icon_state = "hide_chat"
+	targeted = FALSE
 
 	cast(mob/target)
+		. = ..()
 		var/mob/living/intangible/wraith/W = holder.owner
 
 		//hearghosts is checked in deadsay.dm and chatprocs.dm

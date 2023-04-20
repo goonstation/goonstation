@@ -333,7 +333,7 @@
 		return src.hud
 
 /mob/living/object/ai_controlled
-	is_npc = 1
+	is_npc = TRUE
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)
