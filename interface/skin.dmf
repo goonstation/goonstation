@@ -588,6 +588,7 @@ window "mainwindow"
 		anchor2 = 100,100
 		saved-params = "splitter"
 		on-size = "window-resize-event"
+		left = "mapwindow"
 		right = "rpane"
 		is-vert = true
 	elem "falsepadding"
@@ -798,6 +799,7 @@ window "rpane"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+		left = "infowindow"
 		right = "outputwindow"
 		is-vert = false
 		splitter = 23
