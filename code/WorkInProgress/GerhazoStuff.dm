@@ -1081,19 +1081,19 @@
 				steps = 0
 
 		if (world.time > src.next_move + 0.5 SECONDS)
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			src.icon_state = "walk"
 			src.lastdirection = NOT_MOVING
 
 
 		if (src.m_intent == "walk")
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			return
 
 		if(src.lastdirection == NOT_MOVING)
-			anchored = 0
+			anchored = UNANCHORED
 			momentum = 0
 			update_current_moving_direction(moved_right, moved_up)
 			return
@@ -1147,7 +1147,7 @@
 		src.base_move_delay = current_movement_delay
 
 		if(momentum > machrun_animation_min_momentum)
-			anchored = 1 // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
+			anchored = ANCHORED // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
 			src.icon_state = "machrun"
 
 

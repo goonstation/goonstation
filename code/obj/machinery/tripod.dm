@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tripod.dmi'
 	icon_state = "tripod"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	status = REQ_PHYSICAL_ACCESS
 
 	machine_registry_idx = MACHINES_MISC

@@ -249,7 +249,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"

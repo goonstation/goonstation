@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/area/supply)
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
@@ -87,5 +87,5 @@ ABSTRACT_TYPE(/area/supply)
 	icon = 'icons/misc/mark.dmi'
 	name = "X"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0

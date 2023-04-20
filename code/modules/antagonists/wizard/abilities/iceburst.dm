@@ -55,7 +55,7 @@
 				A.icon_state = "icem"
 				A.icon = 'icons/obj/wizard.dmi'
 				A.name = "ice bolt"
-				A.anchored = 0
+				A.anchored = UNANCHORED
 				A.set_density(0)
 				A.layer = MOB_EFFECT_LAYER
 				//A.sd_SetLuminosity(3)

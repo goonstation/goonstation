@@ -7,7 +7,7 @@
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	force = 1
 	throwforce = 1
 	throw_speed = 1
@@ -233,7 +233,7 @@
 
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	force = 1
 	throwforce = 1
 	throw_speed = 1

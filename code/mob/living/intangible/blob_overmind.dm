@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 

@@ -99,7 +99,7 @@ obj/item/chesspiece
 	desc = "a generic chess piece parent that you really shouldnt be seeing"
 	icon = 'icons/misc/chess.dmi'
 	icon_state = "pawn_black"
-	anchored = 1
+	anchored = ANCHORED
 
 	var/chess_color = 0
 	var/isking = 0

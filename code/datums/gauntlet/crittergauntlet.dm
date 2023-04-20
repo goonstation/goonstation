@@ -52,7 +52,7 @@
 /obj/stagebutton
 	name = "Gauntlet Staging Button"
 	desc = "By pressing this button, you begin the staging process. No more new attendees will be accepted."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/effects/VR.dmi'
@@ -540,7 +540,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/buildmode.dmi'
@@ -998,7 +998,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/zapdummy
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /datum/gauntletWave
@@ -1203,7 +1203,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Fermid"
 		point_cost = 3
 		count = 3
-		types = list(/obj/critter/fermid)
+		types = list(/mob/living/critter/fermid)
 
 	lion
 		name = "Lion"

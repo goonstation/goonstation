@@ -7,7 +7,7 @@
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	dir = 4
 	bound_height = 96
 	bound_width = 96
@@ -177,7 +177,7 @@
 	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
 	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
-	if (output_mw < 0) //steals money since you emagged it
+	if (src.output < 0) //steals money since you emagged it
 		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
 	lifetime_earnings += generated_moolah
@@ -277,7 +277,7 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -415,7 +415,6 @@
 				status |= BROKEN
 				UpdateIcon()
 	return
-
 
 //why was this on /obj, what the fuck
 /obj/machinery/power/pt_laser/proc/burn_living(var/mob/living/L, var/power = 0)
@@ -600,6 +599,11 @@ TYPEINFO(/obj/laser_sink/splitter)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
+	else if (ispryingtool(I))
+		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
+			return
+		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		src.dir = turn(src.dir, 90)
 	else
 		..()
 

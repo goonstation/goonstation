@@ -306,7 +306,7 @@ proc/Create_Tommyname()
 	desc = "warning"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 
 	Crossed(atom/movable/AM)

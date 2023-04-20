@@ -40412,28 +40412,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/storage/emergency)
-"bRQ" = (
-/obj/reagent_dispensers/foamtank,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/decal/stripe_caution,
-/obj/item/storage/wall/medical{
-	dir = 1;
-	pixel_y = 32
-	},
-/turf/simulated/floor,
-/area/station/storage/emergency)
-"bRR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/decal/stripe_caution,
-/obj/machinery/manufacturer/engineering,
-/turf/simulated/floor,
-/area/station/storage/emergency)
 "bRS" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -43670,20 +43648,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"bZx" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/blue,
-/area/station/engine/coldloop)
 "bZy" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -68100,11 +68064,6 @@
 /obj/warp_beacon/qm,
 /turf/space,
 /area/space)
-"dhU" = (
-/obj/item/raw_material/gold,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "dhV" = (
 /obj/item/raw_material/gold,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -68115,10 +68074,6 @@
 /area/space)
 "dhX" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"dhY" = (
-/obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhZ" = (
@@ -71861,6 +71816,19 @@
 	dir = 1
 	},
 /area/station/crew_quarters/cafeteria)
+"fZH" = (
+/obj/reagent_dispensers/foamtank,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/decal/stripe_caution,
+/obj/item/storage/wall/medical{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/storage/emergency)
 "gcY" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -72746,6 +72714,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"jbj" = (
+/obj/item/raw_material/gold,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "jcc" = (
 /obj/item/device/radio/intercom/catering,
 /obj/cable{
@@ -74404,6 +74377,10 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"nTU" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "nYN" = (
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 8
@@ -75855,6 +75832,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"tgp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/decal/stripe_caution,
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor,
+/area/station/storage/emergency)
 "tgr" = (
 /obj/firedoor_spawn,
 /obj/machinery/conveyor/SN{
@@ -76162,6 +76148,20 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"tYj" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/blue,
+/area/station/engine/coldloop)
 "ubH" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
@@ -86688,7 +86688,7 @@ aaa
 aab
 aab
 dhW
-dhY
+nTU
 aad
 aad
 aab
@@ -86988,7 +86988,7 @@ aaa
 aaa
 aaa
 aab
-dhU
+jbj
 aad
 aad
 aad
@@ -112890,7 +112890,7 @@ bCi
 bEd
 bHL
 bQm
-bRQ
+fZH
 bTw
 bUX
 bZl
@@ -113192,7 +113192,7 @@ bLz
 bNp
 bOU
 byT
-bRR
+tgp
 bTw
 bUX
 kFn
@@ -118633,7 +118633,7 @@ bTC
 bVo
 bWR
 bYh
-bZx
+tYj
 bZv
 cbQ
 ccH

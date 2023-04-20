@@ -4,7 +4,7 @@
 /obj/arrival_missile
 	name = "human capsule missile"
 	desc = "A great way to deliver humans to a research station. Trust me."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "arrival_missile"

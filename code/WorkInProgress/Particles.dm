@@ -14,7 +14,7 @@
 	desc = ""
 	mouse_opacity = 0
 	pass_unstable = FALSE
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE

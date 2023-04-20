@@ -69447,7 +69447,7 @@
 /mob/living/critter/bear{
 	desc = "Wow, you haven't seen this guy since 2014!";
 	name = "DOngEun MesTur";
-	
+
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)

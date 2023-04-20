@@ -58,7 +58,7 @@
 	desc = "i aint gotta explain shit"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -32
 	pixel_y = -32
 	icon = 'icons/effects/96x96.dmi'

@@ -59,7 +59,7 @@
 	icon_state = "projectiletrap"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/proj_type = /datum/projectile/bullet
 	var/datum/projectile/current_projectile

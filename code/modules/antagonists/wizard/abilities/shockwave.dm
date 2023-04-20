@@ -60,7 +60,7 @@
 /obj/effects/shockwave
 	name = "shockwave"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_1
 	density = 0
 	opacity = 0

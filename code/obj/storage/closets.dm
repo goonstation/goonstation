@@ -243,7 +243,7 @@
 /obj/storage/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = ANCHORED
 
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
@@ -403,7 +403,7 @@
 	icon_welded = "mantacontainerleft-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	open(var/entangleLogic, mob/user)
 		if (src.open)
@@ -584,7 +584,7 @@
 	icon_welded = "mantacontainerright-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"

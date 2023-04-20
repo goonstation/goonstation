@@ -131,8 +131,10 @@
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
 	invisibility = INVIS_SPOOKY
-	anchored = 0
-	mouse_opacity = FALSE
+	anchored = ANCHORED
+	density = 0
+	opacity = 0
+	mouse_opacity = 0
 	alpha = 100
 
 	New()
