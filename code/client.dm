@@ -1269,12 +1269,14 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "toggle-parallax"
 
-	if (src.parallax_controller)
+	if (winget(src, "menu.toggle_parallax", "is-checked") == "true")
+		src.screen -= src.parallax_controller?.parallax_layers
+		src.parallax_controller = new(null, src)
+
+	else if (src.parallax_controller)
 		src.screen -= src.parallax_controller.parallax_layers
 		qdel(src.parallax_controller)
 		src.parallax_controller = null
-	else
-		src.parallax_controller = new(null, src)
 
 /client/verb/apply_view_tint()
 	set hidden = 1

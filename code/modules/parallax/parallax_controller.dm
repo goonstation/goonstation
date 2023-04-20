@@ -134,7 +134,7 @@
 
 	New()
 		. = ..()
-		src.parallax_controller = new(null, src)
+		src.toggle_parallax()
 
 
 /mob/New()
