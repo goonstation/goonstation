@@ -1,5 +1,7 @@
 
 (t)fri apr 21 23
+(u)LeahTheTech
+(+)Ghostcritters now die instantly to mousetraps and cannot interact with them.
 (u)Caio029
 (p)12426
 (e)💅📄|C-QoL, A-UI
