@@ -1655,6 +1655,12 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Telescience"
 
+/datum/supply_packs/complex/autochem
+	name = "Automatic ChemDispenser Kit"
+	desc = "Frames: 1x Auto ChemDispenser"
+	category = "Research Department"
+	frames = list(/obj/machinery/autochem)
+
 /datum/supply_packs/complex/security_camera
 	name = "Security Camera kit"
 	desc = "Frames: 5x Security Camera"
