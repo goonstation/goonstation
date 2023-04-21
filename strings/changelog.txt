@@ -1,4 +1,6 @@
-
+(t)thu apr 20 23
+(u)LeahTheTech
+(+)Meteor showers can now leave behind solid lumps of rock containing ore.
 (t)wed apr 19 23
 (u)Azrun
 (p)13590
