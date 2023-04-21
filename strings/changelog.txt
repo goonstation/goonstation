@@ -1,5 +1,9 @@
 
 (t)fri apr 21 23
+(u)DeeDotVeeA
+(p)13751
+(e)🗺|A-Mapping
+(+)Atmos barriers have been added to several external airlocks on cogmap1.
 (u)Chatauscours
 (p)13759
 (e)💅💡|C-QoL, A-Station-Systems
