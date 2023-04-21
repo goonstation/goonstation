@@ -32,7 +32,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	var/image/damage_image = null
-	var/damage_severity = null //used to determine which damage overlay to use if using them
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -849,7 +848,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max
 		if(health_percentage < 0.15) //only look very broken when it's about to break
-			damage_severity = "heavy"
+			var/damage_severity = "heavy"
 		else if(health_percentage < 0.6)
 			damage_severity = "medium"
 		else if(health_percentage < 0.9)
