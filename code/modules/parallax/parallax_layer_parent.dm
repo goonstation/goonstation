@@ -144,13 +144,21 @@
 		src.initial_pixel_x_offset = round((src.icon_width / 2) * -1, 1)
 		src.initial_pixel_y_offset = round((src.icon_height / 2) * -1, 1)
 
+		var/turf/current_turf = get_turf(src.owner.eye)
 		if (!src.tessellate)
 			// Offset the parallax layer so that it will be centred on the client's screen when they are at the initial x and y coordinates.
-			var/turf/current_turf = get_turf(src.owner.eye)
 			src.initial_pixel_x_offset += round((src.initial_x_coordinate - current_turf.x) * world.icon_size * src.parallax_value, 1)
 			src.initial_pixel_y_offset += round((src.initial_y_coordinate - current_turf.y) * world.icon_size * src.parallax_value, 1)
 
-		src.transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset)
+			src.transform = matrix(1, 0, src.initial_pixel_x_offset, 0, 1, src.initial_pixel_y_offset)
+
+		else
+			// Offset the parallax layer as to maintain a consistant offset between `offset_layer()` calls, as opposed to resetting the layer to the middle of the client's screen.
+			var/pixel_x_offset = round((src.initial_x_coordinate - current_turf.x) * world.icon_size * src.parallax_value, 1) % src.icon_width
+			var/pixel_y_offset = round((src.initial_y_coordinate - current_turf.y) * world.icon_size * src.parallax_value, 1) % src.icon_height
+
+			src.transform = matrix(1, 0, src.initial_pixel_x_offset + pixel_x_offset, 0, 1, src.initial_pixel_y_offset + pixel_y_offset)
+
 		src.scroll_layer()
 
 	/// Animates the parallax layer so that it appears to be infinitely moving in one direction, using the `scroll_speed`, `parallax_value`, and `scroll_angle` variables.
