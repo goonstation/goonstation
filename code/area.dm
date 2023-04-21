@@ -562,7 +562,7 @@ TYPEINFO(/area)
 			// ghostize the mob first to punt them out of their body
 			// before removing the old body, so that we can boot the ghost out
 			var/mob/dead/dead_jerk = jerk.ghostize()
-			dead_jerk.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+			dead_jerk?.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			jerk.remove()
 
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
