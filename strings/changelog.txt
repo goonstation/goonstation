@@ -1,5 +1,9 @@
 
 (t)fri apr 21 23
+(u)Piesuu
+(p)13771
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Cyborgs can no longer recall the emergency shuttle
 (u)DeeDotVeeA
 (p)13751
 (e)🗺|A-Mapping
