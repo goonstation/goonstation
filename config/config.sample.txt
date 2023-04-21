@@ -86,7 +86,7 @@ SERVERREGION Development
 
 CDN https://cdn.goonhub.com
 RSC http://cdn.goonhub.com/rsc.zip
-ENV dev
+ENV prod
 
 # Spacebee API
 SPACEBEE_API_URL https://spacebee.goonhub.com
