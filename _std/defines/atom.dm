@@ -6,7 +6,7 @@
 /// Is this an atom that can move!!?
 #define isatommovable(A) (istype(A, /atom/movable))
 
-/// built-in isobj returns true for /obj
+/// built-in isobj returns true for /atom/movable
 #define isobj(A) (istype(A, /obj))
 
 /// This is relevant to atoms so it goes here!!!! do not @ me
