@@ -239,7 +239,7 @@ datum/mind
 			return FALSE
 		// To avoid wacky shenanigans
 		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
-			src.remove_antagonist(role_id)
+			src.remove_antagonist(role_id, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
 		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
 			var/datum/antagonist/subordinate/A = V
 			if (initial(A.id) == role_id)
