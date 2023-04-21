@@ -1042,7 +1042,7 @@ var/global/noir = 0
 					var/obj/item/card/id
 					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 					sortList(jobs, /proc/cmp_text_asc)
-					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					var/datum/job/job = tgui_input_list(usr, "Select job outfit", "Job outfit", jobs)
 					if(!istype(job))
 						return
 					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
@@ -5232,10 +5232,11 @@ var/global/noir = 0
 	var/mob/new_player/newM = new()
 	newM.adminspawned = 1
 
-	newM.key = M.key
 	if (M.mind)
 		M.mind.damned = 0
 		M.mind.transfer_to(newM)
+	else
+		newM.key = M.key
 	M.mind = null
 	newM.Login()
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen

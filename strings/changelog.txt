@@ -1,3 +1,23 @@
+
+(t)fri apr 21 23
+(u)LeahTheTech
+(+)Ghostcritters now die instantly to mousetraps and cannot interact with them.
+(u)Caio029
+(p)12426
+(e)💅📄|C-QoL, A-UI
+(+)Updates the Barbering Menu into a new, fancy TGUI version with previews!
+(u)Piesuu
+(p)13771
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Cyborgs can no longer recall the emergency shuttle
+(u)DeeDotVeeA
+(p)13751
+(e)🗺|A-Mapping
+(+)Atmos barriers have been added to several external airlocks on cogmap1.
+(u)Chatauscours
+(p)13759
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Underage drinking now relies on sec records rather than true age
 (t)thu apr 20 23
 (u)LeahTheTech
 (+)Meteor showers can now leave behind solid lumps of rock containing ore.
