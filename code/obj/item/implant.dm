@@ -356,7 +356,7 @@ THROWING DARTS
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
