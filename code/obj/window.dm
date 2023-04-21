@@ -847,8 +847,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max
+		var/damage_severity = "heavy"
 		if(health_percentage < 0.15) //only look very broken when it's about to break
-			var/damage_severity = "heavy"
+			damage_severity = "heavy"
 		else if(health_percentage < 0.6)
 			damage_severity = "medium"
 		else if(health_percentage < 0.9)
