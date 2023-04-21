@@ -102,6 +102,8 @@ datum/mind
 
 		if(current.client)
 			current.addOverlaysClient(current.client)
+			var/datum/component/complexsignal/outermost_movable/C = new_character.GetComponent(/datum/component/complexsignal/outermost_movable)
+			current.client.parallax_controller?.outermost_movable = C.get_outermost_movable()
 			current.client.parallax_controller?.update_parallax_z()
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")

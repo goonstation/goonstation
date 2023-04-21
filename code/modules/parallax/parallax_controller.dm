@@ -5,6 +5,8 @@
 	var/list/atom/movable/screen/parallax_layer/parallax_layers
 	/// The turf that the client's eye was centred upon when `update_parallax_layers()` was last called.
 	var/turf/previous_turf
+	/// The outermost atom/movable in the client's mob's .loc chain.
+	var/atom/movable/outermost_movable
 
 	/// A list of each z-level define and it's associated parallax layers.
 	var/list/z_level_parallax_layers
@@ -12,6 +14,7 @@
 	New(turf/newLoc, new_owner)
 		. = ..()
 		src.owner = new_owner
+		src.outermost_movable = src.owner.mob
 		src.setup_z_level_parallax_layers()
 		src.update_parallax_z()
 
@@ -27,9 +30,9 @@
 		src.previous_turf = current_turf
 
 		var/animation_time = 0
-		if (src.owner?.mob?.glide_size)
-			// The time it takes for a mob to move one tile.
-			animation_time = (world.icon_size / src.owner.mob.glide_size) * world.tick_lag
+		if (src.outermost_movable?.glide_size)
+			// The time it takes for an atom/movable to move one tile.
+			animation_time = (world.icon_size / src.outermost_movable.glide_size) * world.tick_lag
 
 		for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
 			if (!parallax_layer.parallax_value)
@@ -135,10 +138,12 @@
 	. = ..()
 	RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, .proc/update_parallax)
 	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, .proc/update_parallax_z)
+	RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, .proc/update_outermost_movable)
 
 /mob/disposing()
 	UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 	UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
 	. = ..()
 
 /mob/proc/update_parallax(datum/component/component, turf/old_turf, turf/new_turf)
@@ -146,3 +151,6 @@
 
 /mob/proc/update_parallax_z()
 	src.client?.parallax_controller?.update_parallax_z()
+
+/mob/proc/update_outermost_movable(datum/component/component, atom/movable/old_outermost, atom/movable/new_outermost)
+	src.client?.parallax_controller?.outermost_movable = new_outermost
