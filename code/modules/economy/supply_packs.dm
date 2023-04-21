@@ -164,6 +164,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Glass Sheets Crate - 50 pack"
 
+/datum/supply_packs/wood10
+	name = "10 Wooden Sheets"
+	desc = "x10 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 10
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Wooden Sheets Crate - 10 pack"
+
+/datum/supply_packs/wood50
+	name = "50 Wooden Sheets"
+	desc = "x50 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 50
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Wooden Sheets Crate - 10 pack"
+
 /datum/supply_packs/dryfoods
 	name = "Catering: Dry Goods Crate"
 	desc = "x25 Assorted Cooking Ingredients"
