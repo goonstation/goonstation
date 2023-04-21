@@ -1123,7 +1123,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			..()
 
 	onDeath(gibbed)
-		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL)
+		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 		..()
 
 /datum/mutantrace/skeleton

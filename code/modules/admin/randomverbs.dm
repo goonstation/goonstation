@@ -1748,7 +1748,7 @@
 	former_role = text("[M.mind.special_role]")
 
 	message_admins("[key_name(M)]'s antagonist status ([former_role]) was removed. Source: [admin ? "[key_name(admin)]" : "*automated*"].")
-	if (admin) // Log entries for automated antag status removal is handled in helpers.dm, remove_mindhack_status().
+	if (admin)
 		logTheThing(LOG_ADMIN, admin, "removed the antagonist status of [constructTarget(M,"admin")].")
 		logTheThing(LOG_DIARY, admin, "removed the antagonist status of [constructTarget(M,"diary")].", "admin")
 

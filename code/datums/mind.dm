@@ -234,7 +234,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
-	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
+	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
 		if (!master)
 			return FALSE
 		// To avoid wacky shenanigans
@@ -251,10 +251,10 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
-	proc/remove_antagonist(role_id)
+	proc/remove_antagonist(role_id, source)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
-				A.remove_self(TRUE)
+				A.remove_self(TRUE, source)
 				src.antagonists.Remove(A)
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
