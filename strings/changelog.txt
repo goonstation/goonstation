@@ -1,5 +1,9 @@
 
 (t)fri apr 21 23
+(u)Flaborized
+(p)13764
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Full tile windows now have damaged sprites.
 (u)LeahTheTech
 (+)Ghostcritters now die instantly to mousetraps and cannot interact with them.
 (u)Caio029
