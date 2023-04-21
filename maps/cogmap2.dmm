@@ -66852,7 +66852,8 @@
 	},
 /turf/simulated/floor/airless/engine/caution/westeast{
 	nitrogen = 82.1031;
-	oxygen = 21.8249
+	oxygen = 21.8249;
+	temperature = 293.15
 	},
 /area/station/hangar/science)
 "den" = (
@@ -72314,20 +72315,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
-"gSt" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "bridgetube2";
-	name = "Podbay Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/east)
 "gTd" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
@@ -72982,6 +72969,20 @@
 /obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"iSC" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "research_outpost"
+	},
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor,
+/area/research_outpost/chamber)
 "iYX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74413,7 +74414,13 @@
 	name = "very reinforced wall"
 	},
 /area/station/mining/magnet)
-"mXb" = (
+"mYy" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/mining/magnet)
+"mZx" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "bridgetube1";
@@ -74427,12 +74434,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/east)
-"mYy" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/mining/magnet)
 "nbd" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -74507,7 +74508,8 @@
 	},
 /turf/simulated/floor/airless/engine/caution/westeast{
 	nitrogen = 82.1031;
-	oxygen = 21.8249
+	oxygen = 21.8249;
+	temperature = 293.15
 	},
 /area/station/hangar/science)
 "nqk" = (
@@ -75517,6 +75519,20 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"rbm" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "bridgetube2";
+	name = "Podbay Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/east)
 "rbn" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -76048,20 +76064,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
-"sSV" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "research_outpost"
-	},
-/obj/decal/stripe_delivery,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor,
-/area/research_outpost/chamber)
 "sTd" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -76801,7 +76803,9 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/airless/caution/northsouth,
+/turf/simulated/floor/airless/caution/northsouth{
+	temperature = 293.15
+	},
 /area/station/hangar/science)
 "vvy" = (
 /obj/machinery/conveyor/NS{
@@ -92193,7 +92197,7 @@ dii
 aab
 aab
 dks
-sSV
+iSC
 dks
 aab
 aab
@@ -142540,9 +142544,9 @@ bfI
 bfI
 bfI
 bfI
-mXb
+mZx
 bfI
-gSt
+rbm
 bfI
 bfI
 bfI
