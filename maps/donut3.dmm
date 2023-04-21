@@ -25896,10 +25896,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
-"hMu" = (
-/obj/table/auto,
-/turf/simulated/floor/yellow,
-/area/station/engine/elect)
 "hMC" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -26818,6 +26814,14 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/clown)
+"icB" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 1;
+	req_access = null
+	},
+/obj/access_spawn/engineering_mechanic,
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "icO" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/hydro,
@@ -31714,6 +31718,17 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"jCq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decoration/vent/vent2{
+	pixel_y = 32
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/inner)
 "jCs" = (
 /obj/machinery/disposal/mail/small/autoname/bridge/east,
 /obj/cable{
@@ -140229,7 +140244,7 @@ tat
 svo
 nTr
 toH
-dbP
+tat
 sEo
 cmM
 sEo
@@ -140531,7 +140546,7 @@ tat
 wGr
 iLK
 iLK
-dbP
+tat
 pIf
 nZo
 vuP
@@ -140833,7 +140848,7 @@ mTe
 tAo
 ewz
 pEh
-dbP
+tat
 tmO
 pqD
 ocE
@@ -141134,9 +141149,9 @@ ewz
 ewz
 bUH
 ewz
-hMu
-dbP
-gew
+ewz
+icB
+vVK
 pqD
 ocE
 xVe
@@ -141437,7 +141452,7 @@ oLB
 tAo
 ewz
 xqx
-dbP
+tat
 oXX
 pqD
 ocE
@@ -141738,9 +141753,9 @@ tat
 tat
 pIN
 tat
-dbP
-dbP
-vVK
+tat
+tat
+jCq
 pqD
 ocE
 oWs
