@@ -366,7 +366,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/implanter/mindhack
 	cost = 3
 	vr_allowed = 0
-	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite."
+	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite. Will not work on anyone protected by those pesky security issue mind-protection implants."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack
@@ -374,7 +374,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/implanter/super_mindhack
 	cost = 6
 	vr_allowed = 0
-	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely!"
+	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely! Will not work on anyone protected by those pesky security issue mind-protection implants."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/microbomb
