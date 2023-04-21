@@ -43,7 +43,7 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			for (i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
 				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
