@@ -1,5 +1,9 @@
 
 (t)fri apr 21 23
+(u)Caio029
+(p)12426
+(e)💅📄|C-QoL, A-UI
+(+)Updates the Barbering Menu into a new, fancy TGUI version with previews!
 (u)Piesuu
 (p)13771
 (e)🪲🤖|C-Bug, A-Silicons
