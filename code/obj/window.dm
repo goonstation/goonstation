@@ -177,7 +177,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
-		update_icon()
+		UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount))
@@ -191,7 +191,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
-		update_icon()
+		UpdateIcon()
 
 	damage_piercing(var/amount)
 		if (!isnum(amount))
@@ -205,7 +205,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
-		update_icon()
+		UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -217,7 +217,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
-		update_icon()
+		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
 		if (!isnum(amount) || amount <= 0)
@@ -236,7 +236,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				qdel(src)
 			else
 				smash()
-		update_icon()
+		UpdateIcon()
 
 	ex_act(severity)
 		// Current windows have 30 HP
@@ -849,8 +849,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		var/health_percentage = health/health_max
 		if (!src.damage_image)
 			src.damage_image = image('icons/obj/window_damage.dmi')
-			src.damage_image.appearance_flags = RESET_COLOR | RESET_ALPHA
-			if(src.default_material == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180
