@@ -847,27 +847,23 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max
-		var/damage_severity = "heavy"
-		if(health_percentage < 0.15) //only look very broken when it's about to break
-			damage_severity = "heavy"
-		else if(health_percentage < 0.6)
-			damage_severity = "medium"
-		else if(health_percentage < 0.9)
-			damage_severity = "light"
-		else //cracks vanish if you heal the glass in some way
-			damage_severity = null
-
 		if (!src.damage_image)
-			src.damage_image = image('icons/obj/window_damage.dmi', "[damage_severity]-[connectdir]")
+			src.damage_image = image('icons/obj/window_damage.dmi')
 			src.damage_image.appearance_flags = RESET_COLOR | RESET_ALPHA
 			if(src.default_material == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180
 
+		if(health_percentage < 0.15) //only look very broken when it's about to break
+			src.damage_image.icon_state = "heavy-[connectdir]"
+		else if(health_percentage < 0.6)
+			src.damage_image.icon_state = "medium-[connectdir]"
+		else if(health_percentage < 0.9)
+			src.damage_image.icon_state = "light-[connectdir]"
 		else
-			src.damage_image.icon_state = "[damage_severity]-[connectdir]"
-			src.UpdateOverlays(src.damage_image, "damage")
+			src.damage_image.icon_state = null
+		src.UpdateOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3
