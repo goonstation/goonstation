@@ -21,7 +21,13 @@ Right Mouse Button + Shift             = Set object type to selected mob/obj typ
 			return
 		var/atom/movable/M = object
 		if(istype(M) && objpath)
-			new objpath(object)
+			if (M.storage)
+				if (!M.storage.is_full())
+					M.storage.add_contents(new objpath(M))
+				else
+					new objpath(get_turf(M))
+			else
+				new objpath(M)
 			blink(get_turf(object))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
