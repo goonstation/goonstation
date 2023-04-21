@@ -17,6 +17,9 @@ proc/get_moving_lights_stats()
 #endif
 
 // TODO readd counters for debugging
+#ifdef OPENDREAM // ODTODO
+#define RL_UPDATE_LIGHT(src) ;
+#else
 #define RL_UPDATE_LIGHT(src) do { \
 	if (src.fullbright || src.loc?:force_fullbright) { break } \
 	var/turf/_N = get_step(src, NORTH); \
@@ -44,7 +47,7 @@ proc/get_moving_lights_stats()
 			0, 0, 0, 1) ; \
 	} else { if(src.RL_AddOverlay) { qdel(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
 	} while(FALSE)
-
+#endif
 
 // requires atten to be defined outside
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
@@ -754,10 +757,12 @@ turf
 
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
+				#ifndef OPENDREAM
 				if(!src.RL_MulOverlay)
 					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
 					src.RL_MulOverlay.set_loc(src)
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
+				#endif
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
 				if(src.RL_MulOverlay)
