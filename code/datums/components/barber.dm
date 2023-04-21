@@ -490,8 +490,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
-/datum/component/barber/haircut/ui_static_data(mob/user)
-	var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+/datum/component/barber/ui_static_data(mob/user)
+	var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
 	. = list("available_styles" = typeinfo.all_hairs)
 
 /datum/component/barber/ui_act(var/action, var/params)
@@ -508,7 +508,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		if("update_preview")
 			switch(params["action"])
 				if("new_hair")
-					var/typeinfo/datum/component/barber/haircut/typeinfo = src.get_typeinfo()
+					var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
 
 					var/datum/customization_style/new_hairstyle = new /datum/customization_style/none // If we don't find any styles, we are probably trying to use the "none" style.
 
@@ -573,6 +573,9 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 					break
 
 			actions.start_and_wait(new src.actionbar_type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
+
+			if (!barber || !barbee) // If either don't exist anymore, it's safe to say we have been disposed of.
+				return
 
 			if(istype(barbee.bioHolder.mobAppearance.customization_first,/datum/customization_style/none) && \
 			istype(barbee.bioHolder.mobAppearance.customization_second,/datum/customization_style/none) && \
