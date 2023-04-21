@@ -1032,6 +1032,66 @@ TYPEINFO(/obj/item/bat)
 			hit_type = DAMAGE_CUT
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		return ..()
+
+/obj/item/switchblade
+	name = "switchblade"
+	desc = "Spring-loaded and therefore completely illegal in Space-England."
+	tool_flags = TOOL_CUTTING
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = ""
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "switchblade-idle"
+	hit_type = DAMAGE_BLUNT
+	force = 3
+	throwforce = 7
+	stamina_damage = 20
+	stamina_cost = 1
+	event_handler_flags = USE_GRAB_CHOKE
+	special_grab = /obj/item/grab
+	stamina_crit_chance = 5
+	var/active = FALSE
+	w_class = W_CLASS_SMALL
+
+	attack_self(var/mob/user)
+		toggle_active(user)
+		return ..()
+
+	proc/toggle_active(var/mob/user)
+		if (!active)
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
+			w_class = W_CLASS_NORMAL
+			active = TRUE
+			item_state = "knife"
+			src.setItemSpecial(/datum/item_special/bloodystab)
+			icon_state = "switchblade-open"
+			hit_type = DAMAGE_CUT
+			force = 15
+			playsound(user, 'sound/items/blade_pull.ogg', 60, 1)
+		else if (!chokehold)
+			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+			user.visible_message("<span class='combat bold'>[user] folds \the [src].</span>")
+			w_class = W_CLASS_SMALL
+			active = FALSE
+			item_state = ""
+			src.setItemSpecial(/datum/item_special/simple)
+			icon_state = "switchblade-close"
+			hit_type = DAMAGE_BLUNT
+			force = 3
+			playsound(user, 'sound/machines/heater_off.ogg', 40, 1)
+
+	afterattack(obj/O as obj, mob/user as mob)
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+			if (active)
+				toggle_active(user)
+			icon_state = "switchblade-idle"
+			boutput(user, "<span class='hint'>You hide the [src] inside \the [O]. (Use the snap emote while wearing the clothing item to retrieve it.)</span>")
+			user.u_equip(src)
+			src.set_loc(O)
+			src.dropped(user)
+		else
+			..()
+		return
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
 /obj/item/banme

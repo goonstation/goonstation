@@ -1471,7 +1471,21 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+
+							var/hasSwitch = FALSE
+							for (var/obj/item/C as anything in src.get_equipped_items())
+								if ((locate(/obj/item/switchblade) in C) != null)
+									var/obj/item/switchblade/B = (locate(/obj/item/switchblade) in C)
+									var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
+									drop_item()
+									B.set_loc(src)
+									equip_if_possible(B, drophand)
+									src.visible_message("<span class='alert'><B>[src] pulls a [B] out of \the [C]!</B></span>")
+									playsound(src.loc, "rustle", 60, 1)
+									hasSwitch = TRUE
+									break
+
+							if(!hasSwitch && !ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									var/obj/item/clothing/gloves/bladed/blades = src.gloves
 									blades.sheathe_blades_toggle(src)

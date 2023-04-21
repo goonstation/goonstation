@@ -1274,6 +1274,7 @@
 	var/pre_armor_power = power
 	power -= armor_mod
 
+
 	var/armor_blocked = 0
 
 	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
@@ -1290,6 +1291,9 @@
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (is_special && src.special)
+		src.special.onHit(M, power, user, msgs)
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
@@ -1321,6 +1325,7 @@
 	if (is_special && src.special)
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
+
 
 	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
 		power *= 2

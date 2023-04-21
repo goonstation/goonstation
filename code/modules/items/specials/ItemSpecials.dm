@@ -210,6 +210,10 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return
 
+	proc/onHit(mob/target, damage, mob/user, datum/attackResults/msgs)
+		return
+
+
 	//move to define probably?
 	proc/isTarget(var/atom/A, var/mob/user = null)
 		if (istype(A, /obj/itemspecialeffect))
@@ -474,6 +478,60 @@
 		moveDelay = 5
 		moveDelayDuration = 5
 		animation_color = "#a3774d"
+
+/datum/item_special/bloodystab
+	cooldown = 0 //10
+	staminaCost = 5
+	moveDelay = 5
+	moveDelayDuration = 5
+
+	image = "stab"
+	name = "Stab"
+	desc = "Aim for the throat for bloody crits."
+
+	var/stab_color = "#FFFFFF"
+
+	onAdd()
+		if(master)
+			//cooldown = master.click_delay
+			overrideStaminaDamage = master.stamina_damage * 1
+		return
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/dagger/S = new /obj/itemspecialeffect/dagger
+			if(src.animation_color)
+				S.color = src.stab_color
+			S.set_dir(direction)
+			S.setup(turf)
+
+			var/hit = 0
+			for(var/atom/A in turf)
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = 1
+					break
+
+			afterUse(user)
+
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+		return
+
+	onHit(mob/target, damage, mob/user, datum/attackResults/msgs)
+		if (damage > 0 && prob(25))
+			msgs.bleed_always = 1
+			msgs.bleed_bonus = 1
+			msgs.stamina_crit = 1
+			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
+			blood_slash(target,8,null, turn(user.dir,180), 3)
+
+
 
 /datum/item_special/rangestab
 	cooldown = 0 //10
@@ -1895,6 +1953,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	dagger
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "dagger"
+		pixel_x = -32
+		pixel_y = -32
 
 	bluefade
 		icon = 'icons/effects/effects.dmi'

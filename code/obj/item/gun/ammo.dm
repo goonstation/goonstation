@@ -536,11 +536,17 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
-	mag_fifteen
-		icon_state = "pistol_magazine"
-		name = "9mm Purretta magazine"
+	mag_mor
+		icon_state = "uzi"
+		icon_empty = "uzi-empty"
+		name = "9mm MOR magazine"
 		amount_left = 15.0
 		max_amount = 15.0
+	lopoint
+		icon_state = "pistol_magazine"
+		name = "9mm Lo-Point magazine"
+		amount_left = 12.0
+		max_amount = 12.0
 
 	boomerang //empty clip for the clock_188/boomerang
 		amount_left = 0

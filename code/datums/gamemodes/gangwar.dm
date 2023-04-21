@@ -451,6 +451,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
 	var/spendable_points = 0
+	/// The street cred this gang has - used exclusively by the leader for purchasing gang members & revives
+	var/street_cred = 0
 	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 	var/datum/client_image_group/turf_image_group = new/datum/client_image_group()
@@ -466,6 +468,16 @@ proc/broadcast_to_all_gangs(var/message)
 	var/score_drug = 0
 	/// Points gained by this gang from completing events.
 	var/score_event = 0
+
+	/// Starting price of the janktank II (gang member revival syringe)
+	var/current_revival_price = GANG_REVIVE_COST
+	/// Price increase for every janktank II purchased
+	var/revival_price_gain = GANG_REVIVE_COST_GAIN
+
+	/// Price to hire a spectator gang member
+	var/current_newmember_price = GANG_NEW_MEMBER_COST
+	/// Price increase for each following hire, to discourage zergs
+	var/newmember_price_gain = GANG_NEW_MEMBER_COST_GAIN
 
 
 	proc/unclaim_tiles(var/location)
@@ -631,8 +643,19 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return round(score)
 
-	proc/add_points(amount)
-		spendable_points += amount
+	proc/add_points(amount, datum/mind/bonusMind)
+		street_cred += amount
+		if (leader)
+			if (leader == bonusMind)
+				leader.gang_points += amount * 2 //give double rewards for the one providing
+			else
+				leader.gang_points += amount
+		if (islist(members))
+			for (var/datum/mind/M in members)
+				if (M == bonusMind)
+					M.gang_points += amount * 2
+				else
+					M.gang_points += amount
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
 		if(length(src.members) >= src.current_max_gang_members)
@@ -995,7 +1018,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	examine()
 		. = ..()
-		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
+		. += "The screen displays \"Total Score: [gang.gang_score()]\""
 
 	attack_hand(var/mob/living/carbon/human/user)
 		if(!isalive(user))
@@ -1005,29 +1028,26 @@ proc/broadcast_to_all_gangs(var/message)
 		add_fingerprint(user)
 
 		// if (!src.HTML)
-		src.generate_HTML()
+		var/page = src.generate_HTML(user)
 
-		user.Browse(src.HTML, "window=gang_locker;size=650x630")
+		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
 
 	//puts the html string in the var/HTML on src
-	proc/generate_HTML()
-		var/janktank = ""
-		janktank += "<p><b>JankTank purchasers:</b></p>"
-		for(var/datum/gang/G in get_all_gangs())
-			if (G.gang_name)
-				var/num = !G.items_purchased[/obj/item/implanter/gang] ? 0 : G.items_purchased[/obj/item/implanter/gang]
-				janktank += "[G.gang_name] - [num] implant(s)<BR>"
-
+	proc/generate_HTML(var/mob/living/carbon/human/user)
+		var/datum/mind/M = user.mind
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
 				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
-				<font size="3">You have [gang.spendable_points] points to spend!</font>
+				<font size="3">You have [M.gang_points] points to spend!</font>
 				<center><font size="6"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
 			</div>
-		    <div style="height: 150px;margin-left: 300px;padding-left: 5px;overflow: auto;"> [janktank] </div>
+			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
+				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
+				<font size="3">You have [gang.street_cred] street cred!</font>
+			</div>
 		</div>
 		<HR>
 		"}
@@ -1051,7 +1071,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		dat += "</table></HTML>"
 
-		HTML = dat
+		return dat
 
 	proc/handle_get_spraypaint(var/mob/living/carbon/human/user)
 		var/image/overlay = null
@@ -1083,14 +1103,12 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			var/datum/gang_item/GI = locate(href_list["buy_item"])
 			if (locate(GI) in buyable_items)
-				if (GI.price <= gang.spendable_points)
-					gang.spendable_points -= GI.price
+				if (GI.price <= usr.mind.gang_points)
+					usr.mind.gang_points -= GI.price
 					new GI.item_path(src.loc)
-					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points.</span>")
+					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [usr.mind.gang_points] points.</span>")
 					gang.items_purchased[GI.item_path]++
-					if (istype(GI, /datum/gang_item/misc/janktank))
-						src.increase_janktank_price()
-						updateDialog()
+					updateDialog()
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 
@@ -1250,16 +1268,20 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, "<span class='alert'><b>You can't physically cram more than 10,000[CREDIT_SIGN] into the [src.name] at once!<b></span>")
 				return 0
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
-			gang.spendable_points += round(S.amount/CASH_DIVISOR)
+			gang.add_points(round(S.amount/CASH_DIVISOR))
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
-			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
+			if(istype(item, /obj/item/gun/kinetic/foamdartgun) || istype(item, /obj/item/gun/kinetic/foamdartshotgun) || istype(item, /obj/item/gun/kinetic/foamdartrevolver))
 				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
 				return 0
 			// var/obj/item/gun/gun = item
-			gang.score_gun += round(300)
-			gang.spendable_points += round(300)
+			if (item.two_handed)
+				gang.score_gun += round(500)
+				gang.add_points(round(500),user.mind)
+			else
+				gang.score_gun += round(300)
+				gang.add_points(round(300),user.mind)
 
 
 		//drug score
@@ -1500,11 +1522,10 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/inject(mob/user, mob/O )
 		if (istype(O, /mob/living/carbon/human))
 			update_icon()
-			//cute implant
 			var/mob/living/carbon/human/H = O
-			qdel(src)
-			var/obj/item/implant/imp= new/obj/item/implant/projectile/body_visible/janktanktwo
+			var/obj/item/implant/imp= new/obj/item/implant/projectile/body_visible/janktanktwo(H)
 			imp.implanted(H, user)
+			qdel(src)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
@@ -1631,7 +1652,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A stylish knife with a button to release the blade."
 	price = 500
 	class2 = "weapon"
-	// item_path = /obj/item/switchblade
+	item_path = /obj/item/switchblade
 /datum/gang_item/street/Shiv	//Maybe have this damage an organ severely at the cost of little damage.
 	name = "Shiv"
 	desc = "A concealable stabbing implement for quick and deadly strikes."
@@ -1873,7 +1894,7 @@ proc/broadcast_to_all_gangs(var/message)
 			score = score + GANG_TAG_POINTS_PER_VIEWER
 
 		owners.score_turf += score
-		owners.spendable_points += score
+		owners.add_points(score)
 
 		mobs = list()
 		boutput(world, "Scored [score] points for [owners.gang_name]")

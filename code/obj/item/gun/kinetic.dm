@@ -859,6 +859,44 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 			UpdateIcon()
 
+/obj/item/gun/kinetic/uzi
+	desc = ""
+	name = "\improper MOR-15"
+	icon_state = "uzi"
+	item_state = "glock"
+	shoot_delay = 2
+	has_empty_state = 1
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+	max_ammo_capacity = 15
+	auto_eject = 1
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_mor
+
+	get_desc(var/dist, var/mob/user)
+		if (user.get_gang() != null)
+			. = "A stamped metal PDW for when you need MOR' DAKKA. Uses 9mm NATO rounds."
+		else
+			. = "A stamped metal PDW. Its' firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+
+	New()
+		ammo = new default_magazine
+
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO/burst)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		..()
+
+	attack_self(mob/user as mob)
+		..()	//burst shot has a slight spread.
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
+			spread_angle = 10
+			shoot_delay = 4
+		else
+			spread_angle = 4
+			shoot_delay = 3
+
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
 	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
@@ -913,32 +951,37 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			spread_angle = 0
 			shoot_delay = 2 DECI SECONDS
 
-/obj/item/gun/kinetic/beretta //somewhat less common gang pistol
-	desc = "The world's handgun of choice before the Clock-188, it quickly flooded black markets after the Clock became the standard."
-	name = "Purretta"
-	icon_state = "beretta"
-	item_state = "beretta"
+/obj/item/gun/kinetic/lopoint
+	desc = "Cheap and disposable, getting a Lo-Point is the first step towards a life of crime. Just remember to throw it away when you're done."
+	name = "Lo-Point"
+	icon_state = "hipoint"
+	item_state = "hipoint"
 	shoot_delay = 1
 	spread_angle = 3
+	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
-	max_ammo_capacity = 15
+	fire_animation = TRUE
+	max_ammo_capacity = 12
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = FALSE
-	fire_animation = FALSE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen
+	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/lopoint
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, .proc/selfdestruct)
 		..()
 
-
-	on_spin_emote(var/src)
-		if (prob(30))
-			playsound(src, "sound/voice/animal/cat.ogg", 70, 1)
-		..()
+	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
+		if(!isliving(target) || src.ammo?.amount_left > 0)
+			return
+		src.visible_message("<span class='alert'><b>The [src] hits [target] hard, breaking into a bunch of pieces!</b></span>")
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		var/obj/decal/cleanable/gib = make_cleanable( /obj/decal/cleanable/machine_debris,src.loc)
+		gib.streak_cleanable()
+		qdel(src)
 
 
 /obj/item/gun/kinetic/SMG_briefcase
@@ -1061,28 +1104,6 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
 		..()
 
-//38 ACP gang gun, supports speedloaders because it's cheap and weird, maybe.
-/obj/item/gun/kinetic/hipoint
-	desc = "A cheap .38 handgun, used as a throwaway gun all around the galaxy."
-	name = "Hi-Tek"
-	icon_state = "hipoint"
-	item_state = "hipoint"
-	shoot_delay = 2
-	spread_angle = 4
-	w_class = W_CLASS_SMALL
-	force = MELEE_DMG_PISTOL
-	ammo_cats = list(AMMO_REVOLVER_DETECTIVE)
-	max_ammo_capacity = 10
-	auto_eject = 1
-	has_empty_state = 1
-	gildable = FALSE
-	fire_animation = FALSE
-	default_magazine = /obj/item/ammo/bullets/a38_mag
-
-	New()
-		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/revolver_38)
-		..()
 //0.393
 /obj/item/gun/kinetic/foamdartgun
 	name = "foam dart gun"
@@ -2119,6 +2140,69 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+
+
+// assault
+/obj/item/gun/kinetic/m16
+	name = "\improper M16"
+	desc = "An iconic weapon design that doesn't need explanation. Besides this one... Uh. Uses 5.56 rounds."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "m16"
+	item_state = "m16"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	force = MELEE_DMG_RIFLE
+	contraband = 8
+	ammo_cats = list(AMMO_AUTO_556)
+	max_ammo_capacity = 15
+	auto_eject = 1
+	two_handed = 1
+	can_dual_wield = 0
+	spread_angle = 0
+	fire_animation = TRUE
+	has_empty_state = TRUE
+	default_magazine = /obj/item/ammo/bullets/assault_rifle
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
+		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
+		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
+		var/obj/previous_ammo = ammo
+		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
+				if(mode_was_burst) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
+					projectiles = list(new/datum/projectile/bullet/assault_rifle/armor_piercing, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/armor_piercing)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
+			else // we switched from armor penetrating ammo to normal
+				if(mode_was_burst) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst)
+					projectiles = list(new/datum/projectile/bullet/assault_rifle, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+	attack_self(mob/user as mob)
+		..()	//burst shot has a slight spread.
+		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
+			spread_angle = 12.5
+			shoot_delay = 4 DECI SECONDS
+		else
+			spread_angle = 0
+			shoot_delay = 3 DECI SECONDS
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 
 // heavy

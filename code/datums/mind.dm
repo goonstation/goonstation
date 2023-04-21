@@ -27,6 +27,10 @@ datum/mind
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
 
+	//Gang variables
+	var/obj/item/device/pda2/originalPDA //The PDA that this crewmember started with - for external organisation messages
+	var/gang_points = 0
+
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
@@ -35,7 +39,6 @@ datum/mind
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
 
-	var/obj/item/device/pda2/originalPDA //What PDA address would an external organisation know?
 
 	var/list/intrinsic_verbs = list()
 

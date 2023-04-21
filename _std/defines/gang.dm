@@ -2,6 +2,13 @@
 #define GANG_SPRAYPAINT_REGEN 300 //time in seconds between gangs gaining another spray bottle
 
 
+#define GANG_NEW_MEMBER_COST 300 		//Cost of buying a new gang member from the locker
+#define GANG_NEW_MEMBER_COST_GAIN 200 	//How much buying a new gang member increases the price
+
+#define GANG_REVIVE_COST 1500 		//Cost of buying a revival syringe (JankTank II) from the locker
+#define GANG_REVIVE_COST_GAIN 0 	//How much buying a revival syringe increases its' price
+
+
 #define CASH_DIVISOR 200 //cash per point
 #define CLIENT_IMAGE_GROUP_GANGS "client_image_group_gang"
 
