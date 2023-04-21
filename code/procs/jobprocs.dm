@@ -637,21 +637,21 @@ var/global/totally_random_jobs = FALSE
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -695,18 +695,18 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack, TRUE))
+		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
 			equipped = 1
-		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt, TRUE))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
 			equipped = 1
 		if (!equipped)
-			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store, TRUE))
+			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
 				equipped = 1
-			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store, TRUE))
+			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store))
 				equipped = 1
-			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand, TRUE))
+			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand))
 				equipped = 1
-			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand, TRUE))
+			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand))
 				equipped = 1
 
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground

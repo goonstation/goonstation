@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.set_loc(null)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							H.force_equip(I,item_slot) // mobs don't have force_equip
+							H.force_equip(I,item_slot, TRUE) // mobs don't have force_equip
 							return
 			drop.set_loc(get_turf(src.loc))
 /obj/item/reagent_containers/food/snacks/bite

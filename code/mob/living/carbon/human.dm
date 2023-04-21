@@ -1932,7 +1932,7 @@
 		if (slot_r_store)
 			return src.r_store
 
-/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, job_slot_equip = FALSE)
+/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -2035,7 +2035,7 @@
 				equipped = 1
 		if (slot_in_backpack)
 			if (src.back?.storage)
-				if (job_slot_equip)
+				if (role_equipped)
 					src.back.storage.add_contents(I, src, FALSE)
 					equipped = TRUE
 				else
@@ -2043,7 +2043,7 @@
 					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
 			if (src.belt?.storage)
-				if (job_slot_equip)
+				if (role_equipped)
 					src.belt.storage.add_contents(I, src, FALSE)
 					equipped = TRUE
 				else
@@ -2208,15 +2208,15 @@
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
-	src.equip_if_possible(I, slot, TRUE)
+	src.equip_if_possible(I, slot)
 	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
 		qdel(I)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, job_slot_equip = FALSE)
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, role_equipped = TRUE)
 	if (can_equip(I, slot))
-		return force_equip(I, slot, job_slot_equip)
+		return force_equip(I, slot, role_equipped)
 	else
 		return 0
 
