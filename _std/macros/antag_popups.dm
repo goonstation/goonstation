@@ -335,7 +335,6 @@
 	if (src.holder)
 		get_singleton(/datum/antagPopups).showPanel()
 
-
 /mob
 	///Stores the name of the last antag popup shown to the mob
 
