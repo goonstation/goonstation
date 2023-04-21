@@ -361,6 +361,11 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 
+	on_death()
+		. = ..()
+		src.on_remove(src.owner)
+		qdel(src)
+
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
