@@ -294,12 +294,11 @@
 
 		if (activator.wear_mask && istype(activator.wear_mask, /obj/item/clothing/mask/gas))
 			var/obj/item/clothing/mask/gas/emergency/M = activator.wear_mask
-			M.icon_state = "swat"
+			M.icon_state = "swatNT"
 			//M.item_state = "swat"
 			M.name = "SWAT Gas Mask"
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
-			M.color = list(0.157562,0.163186,0.844535,0.390637,0.414067,-0.58031,-0.0243897,-0.0534431,0.259584)
 			M.color_r = 0.8
 			M.color_g = 0.8
 			M.color_b = 1
