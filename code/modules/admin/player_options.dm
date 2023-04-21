@@ -123,11 +123,6 @@
 
 			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
 
-		// Remove when mindhacks datumized
-		if (M.hasStatus(list("mindhack")))
-			antagonist_roles += "<span class='antag'>Mindhack</span><br>"
-			number_of_antagonists++
-
 		if (isnull(antagonist_roles))
 			antagonist_roles += "No antagonist roles present."
 		else
