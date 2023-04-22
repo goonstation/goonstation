@@ -1,5 +1,9 @@
 
 (t)sat apr 22 23
+(u)Piesuu
+(p)13762
+(e)🗺💅|A-Mapping, C-QoL
+(+)The NCS Atlas has been equipped with AI intercoms
 (u)Flaborized
 (p)13786
 (e)🎨|C-Sprites
