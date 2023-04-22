@@ -134,13 +134,17 @@
 		src.toggle_parallax()
 
 
-/mob/New()
+/mob/Login()
 	. = ..()
 	RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, .proc/update_parallax)
 	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, .proc/update_parallax_z)
 	RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, .proc/update_outermost_movable)
 
-/mob/disposing()
+	var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
+	src.client?.parallax_controller?.outermost_movable = C.get_outermost_movable()
+	src.update_parallax_z()
+
+/mob/Logout()
 	UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 	UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
 	UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
