@@ -1661,6 +1661,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Research Department"
 	cost = 50000
 	frames = list(/obj/machinery/autochem)
+	contains = list(/obj/item/paper/autochem)
 	access = access_research
 	containertype = /obj/storage/secure/crate
 	containername = "Auto ChemDispenser (Cardlocked \[Research])"

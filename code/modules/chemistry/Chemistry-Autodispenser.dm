@@ -3,7 +3,7 @@
 	name = "Automatic ChemDispenser"
 	desc = "Like the ChemDispenser, but controlable with components"
 	density = 1
-	anchored = ANCHORED
+	anchored = UNANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenserautoidle"
 	//Connected Chemi compiler
@@ -40,8 +40,8 @@
 			boutput(user, "Selected chemical set to [selected_element]")
 	proc/setreservoir(obj/item/W as obj, mob/user as mob)
 		var/input = input(user, "Select an reservoir to dispense to:", "Reservoir", null) as num | null
-		if(!input || !input>0 || !input < 10)
-			boutput(user, "That is not a valid reservoir number, try from 1-9.")
+		if(!input || input < 1 || input > 10) //checks if there is an input and if it is within the 1-10 reservoirs
+			boutput(user, "That is not a valid reservoir number, try from 1-10.")
 			return
 		else
 			selected_reservoir = input
@@ -74,3 +74,44 @@
 					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
 					//Make the machine actually dispense chemicals
 					//Add instructions into qm package
+	attackby(obj/item/W, mob/user)
+		 if(iswrenchingtool(W))
+		 	if(src.anchored)
+				src.anchored = UNANCHORED
+				boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
+			else
+				src.anchored = ANCHORED
+				boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
+		else ..()
+
+
+
+
+
+
+/obj/item/paper/autochem
+	name = "AutoChem Dispenser setup guide"
+	info = {"
+	---------------------------<br>
+	Guide to setting up your new Automatic Chemical Dispenser<br>
+	---------------------------<br><br>
+	Ever wanted to make a large amount of chemicals, but didn't like pressing that gosh-darned button on your chemical dispenser so much?<br><br>
+	<b>Well this is the product for you!</b><br><br>
+	Packed with many little button pushers, this machine will dispense all the chemicals you need without all the work!<br><br><br>
+
+	Step one: Anchor your new ACD to the floor.<br>
+	This can be done easily with a wrench and a little elbow grease.<br><br>
+
+	Step two: Hook it up to desired output by dragging onto desired output, this can be a fluid canister or a ChemiCompiler.<br><br>
+
+	Step three: Use a Multitool on the ACD to configure settings and set your desired element, it can create any chemical the normal ChemDispenser can.<br>
+	<b>Make sure it is actually spelled properly.</b><br><br>
+
+	Step four: Use a Multitool to connect an input device to the Start component of the ACD. <br><br>
+
+
+	If attached to a ChemiCompile you need to set the reservoir number to output to with the Multitool:<br><br>
+
+	Now go make chemicals to your heart's content, just try not to get into any trouble.<br>
+
+	"}
