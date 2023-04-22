@@ -10,6 +10,7 @@
 	var/connected_CC = null
 	var/output_reservoir = 1
 	var/selected_element = null
+	var/selected_reservoir = 1
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -25,6 +26,7 @@
 		"radium","silicon","silver","sodium","sugar","sulfur","water") //allows the strange option for someone to add automatic alcohol dispenser, also just yoinked from ChemDispenser code :)
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Element", .proc/setelement)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Reservoir", .proc/setreservoir)
 		selected_element = "aluminium" //to make it not pour null
 
 
@@ -36,6 +38,14 @@
 		else
 			selected_element = lowertext(input)
 			boutput(user, "Selected chemical set to [selected_element]")
+	proc/setreservoir(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Select an reservoir to dispense to:", "Reservoir", null) as num | null
+		if(!input || !input>0 || !input < 10)
+			boutput(user, "That is not a valid reservoir number, try from 1-9.")
+			return
+		else
+			selected_reservoir = input
+			boutput(user, "Selected reservoir set to [selected_reservoir]")
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
