@@ -16,12 +16,18 @@
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliates = TRUE
+	//we're an ambush critter so we use all our abilities immediately
+	ai_attacks_per_ability = 0
 
 	dir_locked = TRUE //most items don't have dirstates, so don't let us change one
 	var/mutable_appearance/disguise
 	var/icon/face_image
 	var/icon/face_displace_image
 	var/is_hiding = FALSE
+	///The last time our disguise was interrupted
+	var/last_disturbed = INFINITY
+	///Time taken to hide if we sit still (Life interval dependent)
+	var/rehide_time = 5 SECONDS
 
 	New()
 		..()
@@ -35,6 +41,8 @@
 		. = ..()
 		if(!is_hiding)
 			src.add_filter("mimic_face", 101, layering_filter(icon = src.face_image,  blend_mode = BLEND_INSET_OVERLAY))
+		else
+			src.remove_filter("mimic_face")
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -58,41 +66,50 @@
 
 	was_harmed(mob/M, obj/item/weapon, special, intent)
 		. = ..()
-		src.is_hiding = FALSE
-		src.UpdateIcon()
+		src.stop_hiding()
 
 	proc/disguise_as(var/obj/target)
 		src.disguise = new /mutable_appearance(target)
 		src.appearance = src.disguise
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
+		src.start_hiding()
+
+	proc/start_hiding()
+		if (src.is_hiding)
+			return
 		src.is_hiding = TRUE
 		qdel(src.name_tag)
 		src.name_tag = null
 		src.UpdateIcon()
 
-
 	proc/stop_hiding()
-		if(src.is_hiding)
-			src.is_hiding = FALSE
-			src.name_tag = new()
-			src.update_name_tag()
-			src.vis_contents += src.name_tag
-			src.UpdateIcon()
-			src.visible_message("[src] suddenly opens eyes that weren't there and sprouts teeth!")
+		src.last_disturbed = TIME
+		if(!src.is_hiding)
+			return
+		src.is_hiding = FALSE
+		src.name_tag = new()
+		src.update_name_tag()
+		src.vis_contents += src.name_tag
+		src.UpdateIcon()
+		src.visible_message("[src] suddenly opens eyes that weren't there and sprouts teeth!")
 
 	OnMove(source)
 		. = ..()
 		src.stop_hiding()
 
 	critter_attack(mob/target)
+		src.last_disturbed = TIME
+		..()
+
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if(!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-		else if(!pounce.disabled && pounce.cooldowncheck())
+			return TRUE
+		if(!pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
-		else
-			. = ..()
+			return TRUE
 
 	seek_target(var/range = 5)
 		. = list()
@@ -102,6 +119,10 @@
 			if (istype(C, src.type)) continue
 			. += C
 
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if (!src.is_hiding && (TIME - src.last_disturbed > src.rehide_time))
+			src.start_hiding()
 
 /datum/targetable/critter/mimic
 	name = "Mimic Object"

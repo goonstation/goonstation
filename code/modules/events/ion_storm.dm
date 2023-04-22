@@ -160,7 +160,7 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
-	var/interdict_cost = 250 //how much energy an interdictor needs to invest to keep this from malfunctioning
+	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/APCs
 	amount = 20
-	interdict_cost = 900
+	interdict_cost = 500
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/manufacturers
 	amount = 5
-	interdict_cost = 500
+	interdict_cost = 200
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/venders
 	amount = 5
-	interdict_cost = 600
+	interdict_cost = 250
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)

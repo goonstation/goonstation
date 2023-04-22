@@ -1,4 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -101,6 +102,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	///If the mob has an ai, and is currently retaliating against being attacked, how long should we do that for? (deciseconds)
 	///Special values: RETALIATE_ONCE = Attack once, RETALIATE_UNTIL_INCAP = Attack until the target is incapacitated, RETALIATE_UNTIL_DEAD = Attck until the target is dead
 	var/ai_retaliate_persistence = RETALIATE_ONCE
+	///Counts the number of attacks this critter has performed without using an ability
+	var/ai_attack_count = 0
+	///The number of basic attacks this critter will perform in between using abilities
+	var/ai_attacks_per_ability = 2
 
 	blood_id = "blood"
 
@@ -243,6 +248,28 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (HH.count_in_total)
 				max_health += HH.maximum_value
 				health += HH.maximum_value
+
+	///admin varediting proc
+	proc/modify_health()
+		set name = "Modify critter health"
+		var/chosen = input(usr, "Pick health type") in (src.healthlist + "All")
+		if (!chosen)
+			return
+		var/value = input(usr, "Input new value") as num
+		if (!value)
+			return
+		var/to_update = list()
+		if (chosen == "All")
+			to_update = src.healthlist
+		else
+			to_update = list("chosen" = src.healthlist[chosen])
+		for (var/holder_id in to_update)
+			var/datum/healthHolder/holder = to_update[holder_id]
+			holder.maximum_value = value
+			holder.value = value
+			holder.last_value = value
+
+		src.count_healths()
 
 	// begin convenience procs
 	proc/add_hh_flesh(var/max, var/mult)
@@ -1292,9 +1319,23 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_attack(var/mob/target)
+		if (src.ai_attack_count >= src.ai_attacks_per_ability)
+			if (src.critter_ability_attack(target))
+				src.ai_attack_count = 0 //ability used successfully, reset the count
+				return
+		//default to a basic attack
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
+
+	/// How the critter should attack normally
+	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	///How the critter should use abilities, return TRUE to indicate ability usage success
+	proc/critter_ability_attack(var/mob/target)
+		return FALSE
 
 	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_scavenge(var/mob/target)

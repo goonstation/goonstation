@@ -4,6 +4,9 @@
 // THE REASON I SAY THIS IS BECAUSE WE CAN ADD A DATACORE OR SOMETHING THAT CAN BE BLOWN UP
 // AND ALL THE MONEY WILL BE GONE
 
+#define STATE_LOGGEDOFF 1
+#define STATE_LOGGEDIN 2
+
 /datum/wage_system
 
 	// Stations budget
@@ -214,9 +217,6 @@
 	var/obj/item/card/id/scan = null
 
 	var/state = STATE_LOGGEDOFF
-	var/const
-		STATE_LOGGEDOFF = 1
-		STATE_LOGGEDIN = 2
 
 
 	var/pin = null
@@ -764,9 +764,6 @@
 	var/sound_insert_cash = 'sound/machines/scan.ogg'
 
 	var/state = STATE_LOGGEDOFF
-	var/const
-		STATE_LOGGEDOFF = 1
-		STATE_LOGGEDIN = 2
 
 	attackby(var/obj/item/I, mob/user)
 		if (broken)
@@ -1091,3 +1088,6 @@ proc/FindBankAccountByName(var/nametosearch)
 	RETURN_TYPE(/datum/db_record)
 	if (!nametosearch) return
 	return data_core.bank.find_record("name", nametosearch)
+
+#undef STATE_LOGGEDOFF
+#undef STATE_LOGGEDIN

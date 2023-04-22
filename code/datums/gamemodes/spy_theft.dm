@@ -513,7 +513,7 @@
 	big_station_bounties[/obj/reagent_dispensers/still] = 2
 
 	big_station_bounties[/obj/machinery/communications_dish] = 2
-	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/item/teg_semiconductor/prototype] = 2
 	big_station_bounties[/obj/machinery/power/smes] = 2
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3

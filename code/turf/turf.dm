@@ -1076,9 +1076,12 @@ proc/generate_space_color()
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.change_stack_amount(-1))
+	if (istype(R))
+		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		R.change_stack_amount(-1)
 		ReplaceWithLattice()
 		if (R.material)
 			src.setMaterial(C.material)
