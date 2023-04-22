@@ -11,6 +11,7 @@
 	var/output_reservoir = 1
 	var/selected_element = null
 	var/selected_reservoir = 1
+	var/active = FALSE
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -32,12 +33,19 @@
 
 	proc/setelement(obj/item/W as obj, mob/user as mob)
 		var/input = input(user, "Select an element to dispense:", "Element", null) as text | null
-		if(!input || !dispensable_reagents.Find(input))
+		if(!input)
+			boutput(user, "That is not a valid chemical.")
+			return
+		if(lowertext(input) == "aluminum") //Anti-Bri'ish
+			selected_element = "aluminium"
+			boutput(user, "Selected chemical set to [selected_element]")
+		if(!dispensable_reagents.Find(input))
 			boutput(user, "That is not a valid chemical.")
 			return
 		else
 			selected_element = lowertext(input)
 			boutput(user, "Selected chemical set to [selected_element]")
+
 	proc/setreservoir(obj/item/W as obj, mob/user as mob)
 		var/input = input(user, "Select an reservoir to dispense to:", "Reservoir", null) as num | null
 		if(!input || input < 1 || input > 10) //checks if there is an input and if it is within the 1-10 reservoirs
@@ -66,23 +74,19 @@
 
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-					//TODO
-					//Make iconstate change to dispenserauto while active
-					//Make machine connectable to chemicompiler
-					//Add a config signal to change reservoir number
-					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
-					//Make the machine actually dispense chemicals
-					//Add instructions into qm package
+			return
+
 	attackby(obj/item/W, mob/user)
-		 if(iswrenchingtool(W))
-		 	if(src.anchored)
-				src.anchored = UNANCHORED
-				boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
-			else
-				src.anchored = ANCHORED
-				boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
-		else ..()
+		if(!iswrenchingtool(W))
+			..()
+			return
+		if(src.anchored)
+			src.anchored = UNANCHORED
+			boutput(user, "<span class='notice'>You unanchor the [name] from the floor.</span>")
+		else
+			src.anchored = ANCHORED
+			boutput(user, "<span class='notice'>You anchor the [name] to the floor.</span>")
+
 
 
 
@@ -115,3 +119,10 @@
 	Now go make chemicals to your heart's content, just try not to get into any trouble.<br>
 
 	"}
+
+
+					//TODO
+					//Make iconstate change to dispenserauto while active
+					//Make machine connectable to chemicompiler
+					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
+					//Make the machine actually dispense chemicals
