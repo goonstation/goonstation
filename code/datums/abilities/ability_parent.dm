@@ -1,3 +1,10 @@
+/// A thing that holds abilities. Everything has a composite holder, containing all the specific subholders within it.
+/// When an ability is added, if we don't have a subholder, we create one of the type specified on the ability's preferred_holder_type.
+
+// A few paradigms around abilityHolders-
+// An abilityHolder should (usually) function on every type of mob. It doesn't have to work perfectly, but it shouldn't runtime a lot.
+// Thus, if your abilities need any specific vars or tracked state, put them on the holder instead of the mob type (WRAITHS!!!)
+// or a mutantrace (THRALLS!!! and WEREWOLVES!!!) or whatever other nonsense. All ability-related state should be here.
 /datum/abilityHolder
 	var/help_mode = 0
 	var/list/abilities = list()

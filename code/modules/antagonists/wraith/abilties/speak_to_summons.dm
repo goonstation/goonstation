@@ -10,9 +10,6 @@
 
 		var/message = html_encode(input("What would you like to whisper to your minions?", "Whisper", "") as text)
 
-		if (!length(W.summons))
-			boutput(W, !prob(1) ? "<span class='alert'>You have no minions to talk to.</span>" : "<span class='alert'>No minions?</span>")
-			return TRUE
 		for(var/mob/living/critter/C in W.summons)
 			logTheThing(LOG_SAY, W, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, 255))
@@ -23,3 +20,10 @@
 
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		boutput(W, "<b>You whisper to your summons:</b> [message]")
+
+	castcheck(atom/target)
+		. = ..()
+		var/mob/living/intangible/wraith/W = src.holder.owner
+		if (!length(W.summons))
+			boutput(W, !prob(1) ? "<span class='alert'>You have no minions to talk to.</span>" : "<span class='alert'>No minions?</span>")
+			return FALSE
