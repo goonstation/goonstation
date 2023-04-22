@@ -220,7 +220,6 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 

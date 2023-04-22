@@ -16,6 +16,8 @@
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliates = TRUE
+	//we're an ambush critter so we use all our abilities immediately
+	ai_attacks_per_ability = 0
 
 	dir_locked = TRUE //most items don't have dirstates, so don't let us change one
 	var/mutable_appearance/disguise
@@ -97,14 +99,17 @@
 
 	critter_attack(mob/target)
 		src.last_disturbed = TIME
+		..()
+
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if(!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-		else if(!pounce.disabled && pounce.cooldowncheck())
+			return TRUE
+		if(!pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
-		else
-			. = ..()
+			return TRUE
 
 	seek_target(var/range = 5)
 		. = list()
