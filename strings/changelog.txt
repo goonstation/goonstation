@@ -1,5 +1,7 @@
 
 (t)fri apr 21 23
+(u)aloe
+(+)During Gang rounds on RP, less gangs will spawn (down from 1 per 9 roundstart players to 1 per 15)
 (u)Flaborized
 (p)13764
 (e)🆕🎨|C-Feature, C-Sprites
