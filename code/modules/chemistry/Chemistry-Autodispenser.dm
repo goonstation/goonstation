@@ -6,7 +6,10 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenserautoidle"
-	var/output_target = null
+	//Connected Chemi compiler
+	var/connected_CC = null
+	var/output_reservoir = 1
+	selected_element = null
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -20,6 +23,16 @@
 		"iodine","iron","lithium","magnesium","mercury","nickel", \
 		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
 		"radium","silicon","silver","sodium","sugar","sulfur","water") //allows the strange option for someone to add automatic alcohol dispenser, also just yoinked from ChemDispenser code :)
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "element", .proc/setelement)
+		selected_element = aluminium //to make it not pour null
+
+
+	proc/setelement(var/input = input(user, "Select an element to dispense:", "Element", null) as text | null)
+		if(!input || !dispensable_reagents.Find(input))
+			return
+		else
+			selected_element = input
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -35,7 +48,7 @@
 			return
 
 		else if (istype(over_object,/obj/machinery/chemicompiler_stationary))
-			src.output_target = over_object
+			src.connected_CC = over_object
 			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
 
 		else
@@ -44,6 +57,7 @@
 					//TODO
 					//Make iconstate change to dispenserauto while active
 					//Make machine connectable to chemicompiler
+					//Add a config signal to change reservoir number
 					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
 					//Make the machine actually dispense chemicals
 					//Add instructions into qm package
