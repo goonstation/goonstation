@@ -317,7 +317,7 @@ THROWING DARTS
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
 		SPAWN(rand(15, 25) SECONDS)
-		health_alert()
+			health_alert()
 		..()
 
 	on_death()
@@ -325,7 +325,7 @@ THROWING DARTS
 			return
 		DEBUG_MESSAGE("[src] calling to report death")
 		SPAWN(rand(15, 25) SECONDS)
-		death_alert()
+			death_alert()
 		..()
 
 	proc/health_alert()
