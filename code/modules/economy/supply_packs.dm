@@ -1657,7 +1657,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/autochem
 	name = "Automatic ChemDispenser Kit"
-	desc = "Frames: 1x Auto ChemDispenser"
+	desc = "Frames: 1x Auto ChemDispenser, 1x Instruction Manual"
 	category = "Research Department"
 	cost = 50000
 	frames = list(/obj/machinery/autochem)

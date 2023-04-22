@@ -8,7 +8,6 @@
 	icon_state = "dispenserautoidle"
 	//Connected Chemi compiler
 	var/connected_CC = null
-	var/output_reservoir = 1
 	var/selected_element = null
 	var/selected_reservoir = 1
 	var/active = FALSE
@@ -28,6 +27,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Element", .proc/setelement)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Reservoir", .proc/setreservoir)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Dispense", .proc/onoff)
 		selected_element = "aluminium" //to make it not pour null
 
 
@@ -83,11 +83,14 @@
 		if(src.anchored)
 			src.anchored = UNANCHORED
 			boutput(user, "<span class='notice'>You unanchor the [name] from the floor.</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		else
 			src.anchored = ANCHORED
 			boutput(user, "<span class='notice'>You anchor the [name] to the floor.</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
-
+	proc/onoff
+		//nothing here yet
 
 
 
@@ -100,6 +103,7 @@
 	Guide to setting up your new Automatic Chemical Dispenser<br>
 	---------------------------<br><br>
 	Ever wanted to make a large amount of chemicals, but didn't like pressing that gosh-darned button on your chemical dispenser so much?<br><br>
+	Ever wanted to make a ChemiCompiler setup that didn't need constant maintinence of filling the reservoirs?<br><br>
 	<b>Well this is the product for you!</b><br><br>
 	Packed with many little button pushers, this machine will dispense all the chemicals you need without all the work!<br><br><br>
 
@@ -108,10 +112,10 @@
 
 	Step two: Hook it up to desired output by dragging onto desired output, this can be a fluid canister or a ChemiCompiler.<br><br>
 
-	Step three: Use a Multitool on the ACD to configure settings and set your desired element, it can create any chemical the normal ChemDispenser can.<br>
+	Step three: Use a Multitool on the ACD to configure settings and set your desired reagent, it can create any chemical the normal ChemDispenser can.<br>
 	<b>Make sure it is actually spelled properly.</b><br><br>
 
-	Step four: Use a Multitool to connect an input device to the Start component of the ACD. <br><br>
+	Step four: Use a Multitool to connect an input device to the Dispense input of the ACD with the reagent amount wanted. <br><br>
 
 
 	If attached to a ChemiCompile you need to set the reservoir number to output to with the Multitool:<br><br>
@@ -121,8 +125,8 @@
 	"}
 
 
-					//TODO
-					//Make iconstate change to dispenserauto while active
-					//Make machine connectable to chemicompiler
-					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
-					//Make the machine actually dispense chemicals
+	//TODO
+	//Make iconstate change to dispenserauto while active
+	//Make machine connectable to chemicompiler
+	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
+	//Make the machine actually dispense chemicals
