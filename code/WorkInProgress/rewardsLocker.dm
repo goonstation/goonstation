@@ -631,8 +631,8 @@
 			var/obj/item/clothing/suit/det_suit/M = H.wear_suit
 			if (istype(M))
 				var/prev = M.name
-				M.icon_state = "detective_kim"
-				M.item_state = "detective_kim"
+				M.icon_state = findtext(M.icon_state, "_o") ? "detective_kim_o" : "detective_kim"
+				M.coat_style = "detective_kim"
 				M.name = "Aerostatic Pilot Jacket"
 				M.real_name = "Aerostatic pilot jacket"
 				M.desc = "You feel centered while wearing this... Maybe you could put something in the pockets? (Base Item: [prev])"
@@ -657,11 +657,11 @@
 			var/mob/living/carbon/human/H = activator
 			var/succ = FALSE
 			if (H.wear_suit)
-				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/det_suit))
+				var/obj/item/clothing/suit/det_suit/M = H.wear_suit
+				if (istype(M))
 					var/prev = M.name
-					M.icon_state = "inspectorc_o"
-					M.item_state = "inspectorc_o"
+					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
+					M.coat_style = "inspectorc"
 					M.name = "inspector's short coat"
 					M.real_name = "inspector's short coat"
 					M.desc = "A coat for the modern detective. (Base Item: [prev])"
