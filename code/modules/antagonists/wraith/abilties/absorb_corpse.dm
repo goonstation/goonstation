@@ -68,7 +68,7 @@
 			H.set_body_icon_dirty()
 			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
 			boutput(holder.owner, "<span class='alert'><b>[pick("You draw the essence of death out of [H]'s corpse!", "You drain the last scraps of life out of [H]'s corpse!")]</b></span>")
-			H.visible_message("<span class='alert'>[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone in moments!")]</span>", null, "<span class='alert'>A horrid stench fills the air.</span>")
+			H.visible_message("<span class='alert'>[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone!")]</span>", null, "<span class='alert'>A horrid stench fills the air.</span>")
 		playsound(T, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
 		holder.regenRate += 2
 		var/datum/abilityHolder/wraith/AH = holder
