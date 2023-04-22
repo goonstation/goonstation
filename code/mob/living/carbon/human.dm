@@ -2023,15 +2023,15 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
-				if (src.storage && !src.storage.opens_if_worn) // from item/proc/equipped()
-					src.storage.hide_hud(user)
+				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
-				if (src.storage && !src.storage.opens_if_worn)
-					src.storage.hide_hud(user)
+				if (I.storage && !I.storage.opens_if_worn)
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_in_backpack)
 			if (src.back?.storage)
