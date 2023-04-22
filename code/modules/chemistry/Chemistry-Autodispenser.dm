@@ -27,7 +27,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Element", .proc/setelement)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Reservoir", .proc/setreservoir)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Dispense", .proc/onoff)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Dispense", .proc/dispense)
 		selected_element = "aluminium" //to make it not pour null
 
 
@@ -82,16 +82,22 @@
 			return
 		if(src.anchored)
 			src.anchored = UNANCHORED
+			src.icon_state = "dispenserautoidle"
 			boutput(user, "<span class='notice'>You unanchor the [name] from the floor.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		else
 			src.anchored = ANCHORED
+			src.icon_state = "dispenserauto"
 			boutput(user, "<span class='notice'>You anchor the [name] to the floor.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
-	proc/onoff
-		//nothing here yet
+	proc/dispense(var/datum/mechanicsMessage/input)
 
+		// if (!beaker)
+		// 	return
+		var/amount = clamp(round(input.signal), 1, 100)
+		// beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
+		// beaker.reagents.handle_reactions()
 
 
 
@@ -130,3 +136,4 @@
 	//Make machine connectable to chemicompiler
 	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
 	//Make the machine actually dispense chemicals
+	//Add pipes onto dispensers on sprite going to the back
