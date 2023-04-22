@@ -24,16 +24,18 @@
 		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
 		"radium","silicon","silver","sodium","sugar","sulfur","water") //allows the strange option for someone to add automatic alcohol dispenser, also just yoinked from ChemDispenser code :)
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "element", .proc/setelement)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Element", .proc/setelement)
 		selected_element = "aluminium" //to make it not pour null
 
 
 	proc/setelement(obj/item/W as obj, mob/user as mob)
 		var/input = input(user, "Select an element to dispense:", "Element", null) as text | null
 		if(!input || !dispensable_reagents.Find(input))
+			boutput(user, "That is not a valid chemical.")
 			return
 		else
-			selected_element = input
+			selected_element = lowertext(input)
+			boutput(user, "Selected chemical set to [selected_element]")
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
