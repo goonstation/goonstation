@@ -183,15 +183,15 @@
 
 
 	equipped(var/mob/user, var/slot)
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
 		if(!(user == usr))
 			return
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H))
 			origin = get_turf(H)
 			SPAWN(1 SECOND)
 				enter_urs_dungeon(user)
-		return
 
 	proc/enter_urs_dungeon(var/mob/living/carbon/human/H)
 		if(target)
@@ -245,12 +245,12 @@
 		origin = get_turf(src)
 
 	equipped(var/mob/user, var/slot)
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H))
 			SPAWN(1 SECOND)
 				exit_urs_dungeon(user)
-		return
 
 	proc/exit_urs_dungeon(var/mob/living/carbon/human/H)
 

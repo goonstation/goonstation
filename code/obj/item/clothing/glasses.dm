@@ -23,6 +23,18 @@
 			return
 		return ..()
 
+	equipped(mob/user, slot)
+		if (slot != SLOT_GLASSES)
+			return FALSE
+		..()
+		return TRUE
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot != SLOT_GLASSES)
+			return FALSE
+		..()
+		return TRUE
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
@@ -98,21 +110,20 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
-		..()
+		if (!..())
+			return
 		if(!isliving(user))
 			return
-		if (slot == SLOT_GLASSES && on)
+		if (on)
 			user.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
-		..()
+		if (!..())
+			return
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
-
-	unequipped(mob/user)
-		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
@@ -137,11 +148,13 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		setProperty("disorient_resist_eye", 15)
 
 	equipped(mob/user, slot)
-		. = ..()
+		if (!..())
+			return
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 	unequipped(mob/user)
-		. = ..()
+		if (!..())
+			return
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
@@ -165,15 +178,13 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		setProperty("disorient_resist_eye", 100)
 
 /obj/item/clothing/glasses/sunglasses/equipped(var/mob/user, var/slot)
+	if (!..())
+		return
 	var/mob/living/carbon/human/H = user
-	if(istype(H) && slot == SLOT_GLASSES)
-		if(H.mind)
-			if(H.mind.assigned_role == "Detective" && !src.already_worn)
-				src.already_worn = 1
-				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
-				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
-	..()
-	return
+	if(istype(H) && H.mind?.assigned_role == "Detective" && !src.already_worn)
+		src.already_worn = 1
+		playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
+		user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 
 TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	mats = 4
@@ -206,14 +217,14 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 
 	unequipped(var/mob/user)
-		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
-		..()
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
 	name = "superhero mask"
@@ -240,14 +251,16 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	var/upgraded = FALSE
 
 	equipped(mob/user, slot)
-		. = ..()
+		if (!..())
+			return
 		if(upgraded)
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	unequipped(mob/user)
-		. = ..()
+		if (!..())
+			return
 		if(upgraded)
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
@@ -308,19 +321,18 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		setProperty("disorient_resist_eye", 15)
 
 	equipped(var/mob/living/user, var/slot)
-		..()
+		if (!..())
+			return
 		if(!isliving(user))
 			return
-		if (slot == SLOT_GLASSES)
-			user.vision.set_scan(1)
-		return
+		user.vision.set_scan(1)
 
 	unequipped(var/mob/living/user)
-		..()
+		if (!..())
+			return
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
-		return
 
 /obj/item/clothing/glasses/eyepatch
 	name = "medical eyepatch"
@@ -338,10 +350,11 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		setProperty("disorient_resist_eye", 7)
 
 	equipped(var/mob/user, var/slot)
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
+		if(istype(H))
 			equipper = user//todo: this is prooobably redundant
-		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
@@ -408,20 +421,20 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		..()
 
 	equipped(var/mob/user, var/slot)
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
+		if(istype(H) && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)
-		return
 
 	unequipped(var/mob/user)
-		..()
+		if (!..())
+			return
 		if(ishuman(user) && user:network_device == src)
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null
-		return
 
 //Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
@@ -432,7 +445,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
@@ -473,7 +487,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			..()
 
 	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
-		..()
+		if (!..())
+			return
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
 
@@ -484,11 +499,11 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	item_state = "sunglasses"
 
 	unequipped(var/mob/user)
-		..()
+		if (!..())
+			return
 		if(istype(user, /mob/living/carbon/human/virtual) && user:body)
 			//Station_VNet.Leave_Vspace(user)
 			user.death()
-		return
 
 /obj/item/clothing/glasses/vr/arcade
 	network = LANDMARK_VR_ARCADE
@@ -515,17 +530,17 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 		setProperty("disorient_resist_eye", 15)
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
-			if (src.health_scan)
-				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+		if (src.health_scan)
+			APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 
 	unequipped(var/mob/user)
-		if(src.equipped_in_slot == SLOT_GLASSES)
-			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
-			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
-		..()
+		if (!..())
+			return
+		REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
@@ -579,11 +594,13 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 		setProperty("disorient_resist_eye", 5)
 
 	equipped(mob/user, slot)
-		. = ..()
+		if (!..())
+			return
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 	unequipped(mob/user)
-		. = ..()
+		if (!..())
+			return
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 /obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
@@ -601,13 +618,14 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	var/active = FALSE
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(user)
-			active = TRUE
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(user)
+		active = TRUE
 
 	unequipped(var/mob/user)
-		..()
+		if (!..())
+			return
 		if (active)
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_mob(user)
 			active = FALSE
@@ -620,17 +638,18 @@ TYPEINFO(/obj/item/clothing/glasses/noir)
 	desc = "A pair of glasses that simulate what the world looked like before the invention of color."
 	icon_state = "noir"
 	equipped(var/mob/user, var/slot)
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
-			if(H.client)
-				animate_fade_grayscale(H.client, 5)
+		if(istype(H) && H.client)
+			animate_fade_grayscale(H.client, 5)
+
 	unequipped(var/mob/user, var/slot)
-		..()
+		if (!..())
+			return
 		var/mob/living/carbon/human/H = user
-		if(istype(H))
-			if (H.client)
-				animate_fade_from_grayscale(H.client, 5)
+		if(istype(H) && H.client)
+			animate_fade_from_grayscale(H.client, 5)
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision)
 	mats = 8
@@ -652,12 +671,16 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	wear_layer = MOB_GLASSES_LAYER2
 
 	equipped(mob/user, slot)
-		. = ..()
+		if (!..())
+			return FALSE
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+		return TRUE
 
 	unequipped(mob/user)
-		. = ..()
+		if (!..())
+			return FALSE
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+		return TRUE
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -679,14 +702,14 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		color_b = 0.5
 
 		equipped(var/mob/user, var/slot)
-			..()
-			if (slot == SLOT_GLASSES)
-				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			if (!..())
+				return
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 
 		unequipped(var/mob/user)
-			if(src.equipped_in_slot == SLOT_GLASSES)
-				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
-			..()
+			if (!..())
+				return
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 
 		flashblocking //Admin or gimmick spawn option
 			name = "SUPER night vision sechud goggles"
@@ -708,11 +731,11 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_b = 0.9
 
 	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
 
 	unequipped(var/mob/user)
-		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
-		..()
+		if (!..())
+			return
+		get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
