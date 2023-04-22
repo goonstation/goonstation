@@ -1659,7 +1659,11 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Automatic ChemDispenser Kit"
 	desc = "Frames: 1x Auto ChemDispenser"
 	category = "Research Department"
+	cost = 50000
 	frames = list(/obj/machinery/autochem)
+	access = access_research
+	containertype = /obj/storage/secure/crate
+	containername = "Auto ChemDispenser (Cardlocked \[Research])"
 
 /datum/supply_packs/complex/security_camera
 	name = "Security Camera kit"

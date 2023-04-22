@@ -957,6 +957,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\camera_coverage\datum\controller\process\camera_coverage_turf_queue.dm"
 #include "code\modules\chemistry\chem_requester.dm"
 #include "code\modules\chemistry\chemicompiler_core.dm"
+#include "code\modules\chemistry\Chemistry-Autodispenser.dm"
 #include "code\modules\chemistry\Chemistry-Dispenser.dm"
 #include "code\modules\chemistry\Chemistry-Holder.dm"
 #include "code\modules\chemistry\Chemistry-Machinery.dm"
