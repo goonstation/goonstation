@@ -116,7 +116,7 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -143,7 +143,7 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

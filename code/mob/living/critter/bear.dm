@@ -101,7 +101,7 @@
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!tackle.disabled && tackle.cooldowncheck())
+		if (!tackle.disabled && !tackle.cooldowncheck())
 			tackle.handleCast(target)
 			return TRUE
 

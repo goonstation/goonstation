@@ -5,6 +5,7 @@
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
 	special_screen_loc = "NORTH-1,EAST"
+	targeted = FALSE
 	var/static/list/paths = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
 	var/list/paths_buttons = list()
 
@@ -31,7 +32,7 @@
 	proc/evolve(var/effect)
 		var/datum/abilityHolder/wraith/AH = holder
 		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
-			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
+			boutput(holder.owner, "<span class='notice'>You haven't absorbed enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
 			return TRUE
 		if (holder.points < pointCost)
 			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")

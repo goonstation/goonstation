@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
 			src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
 			pounce.handleCast(target)
 			return TRUE
@@ -705,7 +705,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
 			src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
 			pounce.handleCast(target)
 			return TRUE
@@ -1835,10 +1835,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
 		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
 
-		if (!sting.disabled && sting.cooldowncheck() && prob(50))
+		if (!sting.disabled && !sting.cooldowncheck() && prob(50))
 			sting.handleCast(target)
 			return TRUE
-		if (!pincer_grab.disabled && pincer_grab.cooldowncheck() && prob(50))
+		if (!pincer_grab.disabled && !pincer_grab.cooldowncheck() && prob(50))
 			pincer_grab.handleCast(target)
 			return TRUE
 
@@ -1965,7 +1965,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 
-		if (!sting.disabled && sting.cooldowncheck())
+		if (!sting.disabled && !sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
 
@@ -2000,7 +2000,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
-			if (!sting.disabled && sting.cooldowncheck())
+			if (!sting.disabled && !sting.cooldowncheck())
 				sting.handleCast(AM)
 		return
 

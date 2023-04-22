@@ -19,7 +19,6 @@
 			src.cooldown = 0 SECONDS
 			K.delStatus("corporeal")
 		else
-			boutput(holder.owner, "We show ourselves")
 			var/mob/living/intangible/wraith/W = holder.owner
 
 			src.cooldown = initial(src.cooldown)

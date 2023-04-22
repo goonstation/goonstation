@@ -142,11 +142,11 @@
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
+		if (!tackle.disabled && !tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
 			src.ai_attack_count = src.ai_attacks_per_ability //brullbars get to be evil and frenzy right away
 			. = TRUE
-		if (!frenzy.disabled && frenzy.cooldowncheck() && is_incapacitated(target) && prob(30))
+		if (!frenzy.disabled && !frenzy.cooldowncheck() && is_incapacitated(target) && prob(30))
 			frenzy.handleCast(target)
 			. = TRUE
 
@@ -196,7 +196,7 @@
 
 	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		if (!fadeout.disabled && fadeout.cooldowncheck())
+		if (!fadeout.disabled && !fadeout.cooldowncheck())
 			fadeout.handleCast(src)
 
 	update_dead_icon()

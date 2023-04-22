@@ -548,29 +548,31 @@
 			safe_area_names += area.name
 		boutput(src, "<span class='alert'><b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b></span>")
 
+	/// Make a corpse into a revenant. Returns TRUE on failure, FALSE otherwise.
+	/// Most of this should be in castcheck() of the revenant ability, but we can't do that rn because of the wraith turf autotargeting thingy
 	proc/makeRevenant(var/mob/M as mob)
 		if (!ishuman(M))
 			boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
-			return 1
+			return TRUE
 		var/mob/living/carbon/human/H = M
 		if (!isdead(H))
 			boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
-			return 1
+			return TRUE
 		if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 			boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
-			return 1
+			return TRUE
 		if (ischangeling(H))
 			boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
-			return 1
+			return TRUE
 		if (!H.bioHolder)
 			message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
 			boutput(usr, "<span class='alert'>Failed.</span>")
-			return 1
+			return TRUE
 		var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
 		if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.
 			R.wraithPossess(src)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 //////////////
 // Subtypes
@@ -594,7 +596,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
 		src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
 		src.addAbility(/datum/targetable/wraithAbility/curse/rot)
-		src.addAbility(/datum/targetable/wraithAbility/curse/death)
+		src.addAbility(/datum/targetable/wraithAbility/death_curse)
 		src.addAbility(/datum/targetable/wraithAbility/poison)
 		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)

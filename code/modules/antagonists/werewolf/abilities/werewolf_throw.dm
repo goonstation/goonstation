@@ -6,6 +6,7 @@
 	preferred_holder_type = /datum/abilityHolder/werewolf
 	cooldown = 30 SECONDS
 
+	// duplicated from werewolf abilityHolder. see comment on /datum/targetable/castcheck()
 	castcheck()
 		. = ..()
 		var/mob/living/carbon/human/user = src.holder.owner

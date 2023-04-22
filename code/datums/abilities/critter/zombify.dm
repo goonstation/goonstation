@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -41,7 +41,7 @@
 			if (target.ghost?.mind && !target.mind.get_player()?.dnr) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				target.ghost.mind.transfer_to(target)
-		if(owner && ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && zombify?.cooldowncheck())
+		if(owner && ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && !zombify?.cooldowncheck())
 
 			logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))

@@ -855,6 +855,7 @@ proc/create_fluff(datum/mind/target)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
+
 		if(target?.current)
 			setText()
 		else

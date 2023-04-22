@@ -335,7 +335,7 @@
 			var/atom/movable/screen/ability/topBar/wraith/B = target
 			if (istype(B.owner, /datum/targetable/wraithAbility/spook))
 				var/datum/targetable/wraithAbility/spook/A = B.owner
-				if (!A.cooldowncheck())
+				if (A.cooldowncheck())
 					return FALSE
 
 	execute(atom/target, mob/user)
@@ -379,7 +379,7 @@
 			var/atom/movable/screen/ability/topBar/wraith/B = target
 			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
 				var/datum/targetable/wraithAbility/specialize/A = B.owner
-				if (!A.cooldowncheck())
+				if (A.cooldowncheck())
 					return FALSE
 
 	execute(atom/target, mob/user)
@@ -388,9 +388,8 @@
 			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
 				var/datum/targetable/wraithAbility/specialize/A = B.owner
 				A.evolve(ability_code)
-				A.doCooldown()
 		user.closeContextActions()
-		return 0
+		return FALSE
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'

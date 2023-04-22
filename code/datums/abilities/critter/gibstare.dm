@@ -26,13 +26,13 @@
 			if (!ownerCritter.alive)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if(!(target in view(owner)) || target == null || owner == null || ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -49,7 +49,7 @@
 			if (!ownerCritter.alive)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
+		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || !ability.cooldowncheck()))
 			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)

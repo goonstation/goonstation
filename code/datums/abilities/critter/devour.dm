@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || devour?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || devour?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -35,7 +35,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && devour?.cooldowncheck())
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && !devour?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] devours [target]!</B></span>", 1)

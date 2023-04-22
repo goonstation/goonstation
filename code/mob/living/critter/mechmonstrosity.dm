@@ -260,13 +260,13 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -276,7 +276,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && !mechanimate?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
