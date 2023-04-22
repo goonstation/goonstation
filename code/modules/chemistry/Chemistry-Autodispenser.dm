@@ -5,9 +5,9 @@
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "dispenserauto"
+	icon_state = "dispenserautoidle"
+
 	var/list/dispensable_reagents = null
-	//flags = NOSPLASH not sure if I want to do an interface or not
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 
@@ -19,3 +19,11 @@
 		"iodine","iron","lithium","magnesium","mercury","nickel", \
 		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
 		"radium","silicon","silver","sodium","sugar","sulfur","water") //allows the strange option for someone to add automatic alcohol dispenser, also just yoinked from ChemDispenser code :)
+
+
+					//TODO
+					//Make iconstate change to dispenserauto while active
+					//Make machine connectable to chemicompiler
+					//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
+					//Make the machine actually dispense chemicals
+					//
