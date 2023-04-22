@@ -232,6 +232,15 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+/obj/item/clothing/mask/gas/swat/NT
+	name = "SWAT mask"
+	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
+	icon_state = "swatNT"
+	item_state = "swatNT"
+	color_r = 0.8
+	color_g = 0.8
+	color_b = 1
+
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	mats = 6
 
