@@ -9,7 +9,7 @@
 	//Connected Chemi compiler
 	var/connected_CC = null
 	var/output_reservoir = 1
-	selected_element = null
+	var/selected_element = null
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -25,10 +25,11 @@
 		"radium","silicon","silver","sodium","sugar","sulfur","water") //allows the strange option for someone to add automatic alcohol dispenser, also just yoinked from ChemDispenser code :)
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "element", .proc/setelement)
-		selected_element = aluminium //to make it not pour null
+		selected_element = "aluminium" //to make it not pour null
 
 
-	proc/setelement(var/input = input(user, "Select an element to dispense:", "Element", null) as text | null)
+	proc/setelement(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Select an element to dispense:", "Element", null) as text | null
 		if(!input || !dispensable_reagents.Find(input))
 			return
 		else
