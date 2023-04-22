@@ -2,6 +2,7 @@
 	name = "Spirit message"
 	desc = "Telepathically speak to your minions."
 	icon_state = "speak_summons"
+	targeted = FALSE
 
 	cast(mob/target)
 		. = ..()

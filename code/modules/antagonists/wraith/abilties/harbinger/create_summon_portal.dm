@@ -66,5 +66,5 @@
 		. = ..()
 		var/mob/living/intangible/wraith/W = src.holder.owner
 		if (!W.density)
-			boutput(holder.owner, "<span class='alert>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
+			boutput(W, "<span class='alert>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
 			return FALSE

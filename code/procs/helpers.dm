@@ -1785,7 +1785,7 @@ proc/countJob(rank)
 
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
+/proc/dead_player_list(var/return_minds = FALSE, var/confirmation_spawn = FALSE, var/list/text_messages = list(), var/allow_dead_antags = FALSE,
 		var/require_client = FALSE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
