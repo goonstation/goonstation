@@ -237,9 +237,9 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swatNT"
 	item_state = "swatNT"
-	color_r = 1
+	color_r = 0.8
 	color_g = 0.8
-	color_b = 0.8
+	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	mats = 6
