@@ -1,5 +1,7 @@
 
 (t)sat apr 22 23
+(u)pali
+(+)Missing organs now displayed in red in health scan.
 (u)Piesuu
 (p)13762
 (e)🗺💅|A-Mapping, C-QoL
