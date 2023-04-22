@@ -7,14 +7,18 @@
 
 /datum/limb
 	var/obj/item/parts/holder = null
-	///used for ON_COOLDOWN stuff
+	/// used for ON_COOLDOWN stuff
 	var/cooldowns
 	var/special_next = 0
-	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/disarm_special = null
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/harm_special = null
 	var/can_pickup_item = TRUE
-	var/attack_strength_modifier = 1 // scale from 0 to 1 on how well this limb can attack/hit things with items
-	var/can_gun_grab = TRUE // if the limb can gun grab with a held gun
+	/// scale from 0 to 1 on how well this limb can attack/hit things with items
+	var/attack_strength_modifier = 1
+	/// if the limb can gun grab with a held gun
+	var/can_gun_grab = TRUE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -276,7 +280,7 @@
 	harm(mob/living/target, mob/living/user)
 		src.point_blank(target, user)
 
-	//despite the name, this means reloading
+	/// despite the name, this means reloading
 	is_on_cooldown(var/mob/user)
 		return GET_COOLDOWN(user, "\ref[src] reload")
 
@@ -411,10 +415,8 @@
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
-
-
-
-/datum/limb/mouth/small // for cats/mice/etc
+/// for cats/mice/etc
+/datum/limb/mouth/small
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	dam_low = 1
 	dam_high = 3
@@ -779,7 +781,7 @@
 	log_name = "severed werewolf limb"
 	quality = 1
 
-// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
+/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1372,7 +1374,7 @@
 		user.lastattacked = target
 
 
-//little critters with teeth, like mice! can pick up small items only.
+/// little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
 	var/max_wclass = W_CLASS_TINY // biggest thing we can carry
 	var/dam_low = 1
@@ -1477,7 +1479,8 @@
 					return
 		..()
 
-/datum/limb/small_critter/med //same as the previous, but can pick up some heavier shit
+/// same as the parent, but can pick up some heavier shit
+/datum/limb/small_critter/med
 	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 
@@ -1529,14 +1532,14 @@
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")
 		..()
 
-//test for crab attack thing
+/// test for crab attack thing
 /datum/limb/swipe_quake
 	New(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)
 
-//I wanted a claw-like limb but without the random item pickup fail
+/// I wanted a claw-like limb but without the random item pickup fail
 /datum/limb/tentacle
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))

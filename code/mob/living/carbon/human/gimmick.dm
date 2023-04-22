@@ -926,9 +926,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	switch(type)
 		if("spacer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")]"
 		if("juicer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 
 	return constructed_name
 
