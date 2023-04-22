@@ -283,6 +283,32 @@
 		new /obj/item/pod/paintjob/tronthing(get_turf(activator))
 		return 1
 
+/datum/achievementReward/respirator
+	title = "(Skin) Gas Respirator"
+	desc = "Turns a gas mask you're wearing into a high-tech particle-filtered version."
+	required_medal = "Old Enemy"
+	once_per_round = FALSE
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		if (activator.wear_mask && istype(activator.wear_mask, /obj/item/clothing/mask/gas))
+			var/obj/item/clothing/mask/gas/emergency/mask = activator.wear_mask
+			mask.icon_state = "respirator-gas"
+			mask.item_state = "respirator-gas"
+			mask.name = "gas respirator"
+			mask.real_name = "gas respirator"
+			mask.desc = "A close-fitting gas mask with a custom particle filter."
+			mask.color_r = 0.85
+			mask.color_g = 0.85
+			mask.color_b = 0.95
+			activator.set_clothing_icon_dirty()
+			return 1
+
+		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
+		return
+
 /datum/achievementReward/swatgasmask
 	title = "(Skin) SWAT Gas Mask"
 	desc = "Turns your Gas Mask into a SWAT Gas Mask. If you're wearing one."
