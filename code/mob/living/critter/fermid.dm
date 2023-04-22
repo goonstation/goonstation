@@ -99,17 +99,20 @@
 				return 3
 		return ..()
 
-	critter_attack(var/mob/target)
+	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
 		if (!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
+			return TRUE
 		else if (!bite.disabled && bite.cooldowncheck())
 			bite.handleCast(target)
-		else
-			if(prob(30))
-				src.swap_hand()
-			src.hand_attack(target)
+			return TRUE
+
+	critter_basic_attack(mob/target)
+		if(prob(30))
+			src.swap_hand()
+		return ..()
 
 	death()
 		src.can_lie = FALSE
