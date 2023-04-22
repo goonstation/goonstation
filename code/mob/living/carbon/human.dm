@@ -1749,10 +1749,8 @@
 		src.wear_id = null
 		src.update_clothing()
 	else if (W == src.r_store)
-		W.unequipped(src)
 		src.r_store = null
 	else if (W == src.l_store)
-		W.unequipped(src)
 		src.l_store = null
 	else if (W == src.back)
 		W.unequipped(src)
@@ -2025,13 +2023,15 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
-				I.equipped(src, slot_l_store)
+				if (src.storage && !src.storage.opens_if_worn) // from item/proc/equipped()
+					src.storage.hide_hud(user)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
-				I.equipped(src, slot_r_store)
+				if (src.storage && !src.storage.opens_if_worn)
+					src.storage.hide_hud(user)
 				equipped = 1
 		if (slot_in_backpack)
 			if (src.back?.storage)

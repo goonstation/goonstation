@@ -937,7 +937,7 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
 	user.update_equipped_modifiers()
-	if (src.storage && !src.storage.opens_if_worn)
+	if (src.storage && !src.storage.opens_if_worn) // also used in equipped() code if a wearing to a slot won't call equipped()
 		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
