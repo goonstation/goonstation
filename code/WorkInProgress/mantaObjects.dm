@@ -704,7 +704,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/constructioncone
 	desc = "Caution!"
-	name = "\improper construction cone"
+	name = "construction cone"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "cone_1"
 	force = 1
@@ -719,11 +719,11 @@ var/obj/manta_speed_lever/mantaLever = null
 	max_stack = 5
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins gathering up [src]\s!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		UpdateStackAppearance()
-		boutput(user, "<span class='notice'>You finish gathering up [src].</span>")
+		boutput(user, "<span class='notice'>You finish gathering up [src]\s.</span>")
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
@@ -737,7 +737,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
-			boutput(user, "<span class='notice'>You take 1 [src] from the stack, leaving [src.amount] [src] behind.</span>")
+			boutput(user, "<span class='notice'>You take 1 cone from the stack, leaving [src.amount] cones behind.</span>")
 		else
 			..(user)
 
@@ -750,14 +750,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (istype(W, /obj/item/constructioncone))
 			var/success = stack_item(W)
 			if (!success)
-				boutput(user, "<span class='alert'>You can't put any more [src]\s in this stack!</span>")
+				boutput(user, "<span class='alert'>You can't put any more cones in this stack!</span>")
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
 				if(isrobot(user))
-					boutput(user, "<span class='notice'>You add [success] [src] to the stack. It now has [W.amount] [src].</span>")
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [W.amount] cones.</span>")
 				else
-					boutput(user, "<span class='notice'>You add [success] [src] to the stack. It now has [src.amount] [src].</span>")
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones].</span>")
 
 	_update_stack_appearance()
 		if (amount <= 1)
@@ -801,7 +801,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	examine()
 		. = ..()
-		. += "There are [src.amount] [src]\s on this stack."
+		. += "There are [src.amount] cones on this stack."
 
 /obj/effect/boommarker
 	name = ""
