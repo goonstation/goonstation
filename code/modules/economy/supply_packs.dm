@@ -1656,10 +1656,10 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Telescience"
 
 /datum/supply_packs/complex/autochem
-	name = "Automatic ChemDispenser Kit"
-	desc = "Frames: 1x Auto ChemDispenser, 1x Instruction Manual"
+	name = "Automatic Chemical Dispenser Kit"
+	desc = "Frames: 1x Auto Chemical Dispenser, 1x Instruction Manual"
 	category = "Research Department"
-	cost = 50000
+	cost = 25000
 	frames = list(/obj/machinery/autochem)
 	contains = list(/obj/item/paper/autochem)
 	access = access_research
