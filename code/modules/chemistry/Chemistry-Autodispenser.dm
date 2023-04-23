@@ -92,18 +92,18 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	proc/dispense(var/datum/mechanicsMessage/input)
-		logTheThing(LOG_DEBUG, usr, input)
-		logTheThing(LOG_DEBUG, usr, input.signal)
-
+		if (status & (NOPOWER|BROKEN))
+			return
 		var/amount = clamp(round(text2num(input.signal)), 1, 100)
-		logTheThing(LOG_DEBUG, usr, amount)
 		if (!connected_CC)
 			return
 		if (connected_CC.executor)
 			var/obj/item/B = connected_CC.executor.reservoirs[selected_reservoir]
 			if(B && B.reagents)
+				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				B.reagents.add_reagent(selected_element, amount)
 				B.reagents.handle_reactions()
+				use_power(amount)
 
 
 
