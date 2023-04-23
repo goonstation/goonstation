@@ -848,7 +848,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							var/list/accounts = \
 								data_core.bank.find_records("job", "Chief Engineer") + \
 								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Engineer")
+								data_core.bank.find_records("job", "Miner")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
