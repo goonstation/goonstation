@@ -517,12 +517,12 @@ body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .connectionClosed.restored {background: green;}
 
 body.theme-dark .rstandard {color: #3fcc3f;}
-body.theme-dark .rintercom {color: #58dfe9;}
+body.theme-dark .rintercom {color: #81f7ff;}
 body.theme-dark .rcommand {color: #7397c0;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #00b3c3;}
+body.theme-dark .rmedical {color: #0095ec;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
