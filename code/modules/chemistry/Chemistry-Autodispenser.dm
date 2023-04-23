@@ -144,7 +144,7 @@
 	Step four: Use a Multitool to connect an input device to the Dispense input of the ACD with the reagent amount wanted. <br><br>
 
 
-	If attached to a ChemiCompile you need to set the reservoir number to output to with the Multitool:<br><br>
+	If attached to a ChemiCompiler you need to set the reservoir number to output to with the Multitool:<br><br>
 
 	Now go make chemicals to your heart's content, just try not to get into any trouble.<br>
 
