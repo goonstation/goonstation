@@ -187,14 +187,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
 
-/datum/aiHolder/wanderer
-	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
-
-
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted

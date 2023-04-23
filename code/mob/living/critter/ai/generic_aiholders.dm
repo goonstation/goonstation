@@ -1,3 +1,14 @@
+/* this file is for AI Holders which are used by multiple different critters to reduce code duplication
+if there is otherwise unique behaviour which you add to another mob consider moving it to here */
+
+/// Wanderer
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
 /// Aggressive Wanderer
 /datum/aiHolder/wanderer_aggressive
 	New()
