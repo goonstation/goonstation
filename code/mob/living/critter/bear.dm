@@ -20,7 +20,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/bear
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
