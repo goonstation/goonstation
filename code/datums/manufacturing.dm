@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
-/datum/manufacture/wirecutters
+/datum/manufacture/wirecutters/yellow
 	name = "Wirecutters"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
@@ -243,15 +243,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/wrench/yellow)
-	time = 5 SECONDS
-	create = 1
-	category = "Tool"
-
-/datum/manufacture/wirecutters/yellow
-	name = "Wirecutters"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
-	item_outputs = list(/obj/item/wirecutters/yellow)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"

@@ -116,7 +116,7 @@ var/global/list/atomTooltips = new()
 		var/list/windowIDs = params2list(windows)
 		for (var/windowID in windowIDs)
 			if (src.owner && dd_hasprefix(windowID, src.window))
-				winset(src.owner, windowID, "parent=")
+				winset(src.owner, windowID, "parent=none")
 
 
 	proc/add(atom/thing = null, clone = 1, stuck = 1)

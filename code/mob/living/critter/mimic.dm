@@ -16,6 +16,8 @@
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliates = TRUE
+	//we're an ambush critter so we use all our abilities immediately
+	ai_attacks_per_ability = 0
 
 	dir_locked = TRUE //most items don't have dirstates, so don't let us change one
 	var/mutable_appearance/disguise
@@ -29,6 +31,7 @@
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.face_image = icon('icons/misc/critter.dmi',"mimicface")
 		var/toolboxType =pick(25;/obj/item/storage/toolbox/mechanical, 25;/obj/item/storage/toolbox/emergency, 25;/obj/item/storage/toolbox/electrical, 24;/obj/item/storage/toolbox/artistic, 1;/obj/item/storage/toolbox/memetic)
 		var/obj/item/storage/toolbox/startDisguise = new toolboxType(null)
@@ -97,14 +100,17 @@
 
 	critter_attack(mob/target)
 		src.last_disturbed = TIME
+		..()
+
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if(!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-		else if(!pounce.disabled && pounce.cooldowncheck())
+			return TRUE
+		if(!pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
-		else
-			. = ..()
+			return TRUE
 
 	seek_target(var/range = 5)
 		. = list()
