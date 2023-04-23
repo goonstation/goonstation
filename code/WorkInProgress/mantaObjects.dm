@@ -779,7 +779,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			boutput(user, "<span class='notice'>You can't setup [src] that far away.</span>")
 			return
 
-		if (!istype(T, /turf))
+		if (!istype(T, /turf/simulated/floor))
 			return
 
 		var/obj/item/constructioncone/cone = new /obj/item/constructioncone
