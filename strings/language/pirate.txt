@@ -41,6 +41,7 @@ credit@=doubloon
 credits@=doubloons
 chef@=ship's cook
 chefs@=ship's cooks
+dead@=sleeping with the fishes
 die@=walk the plank
 died@=walked the plank
 dies@=walks the plank
