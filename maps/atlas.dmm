@@ -3705,12 +3705,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"alR" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "alS" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -5545,16 +5539,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"asr" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light_switch/auto,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "ass" = (
 /obj/landmark/start{
 	name = "Cyborg"
@@ -13849,9 +13833,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"aRs" = (
-/turf/simulated/floor/wood/two,
-/area/station/bridge/united_command)
 "aRv" = (
 /obj/machinery/plantpot,
 /obj/noticeboard/persistent{
@@ -15413,13 +15394,6 @@
 /obj/machinery/ghostdrone_factory,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"aVN" = (
-/obj/machinery/light{
-	light_type = /obj/item/light/tube/blueish
-	},
-/obj/table/auto,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "aVO" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -17130,6 +17104,10 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"cCz" = (
+/obj/displaycase,
+/turf/simulated/floor/blue,
+/area/station/bridge/captain)
 "cOr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17393,6 +17371,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"eYD" = (
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0
+	},
+/turf/simulated/floor/wood/two,
+/area/station/bridge/united_command)
 "fiL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17717,6 +17701,31 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"hLS" = (
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_x = 28
+	},
+/obj/landmark/start{
+	name = "AI"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "hQO" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/red/side{
@@ -18198,6 +18207,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"lji" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
+/obj/item/device/radio/intercom/AI{
+	dir = 8;
+	broadcasting = 0
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "lky" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
@@ -18440,28 +18458,6 @@
 /obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
-"mRp" = (
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_x = 28
-	},
-/obj/landmark/start{
-	name = "AI"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "mSy" = (
 /obj/potted_plant{
 	dir = 4
@@ -18531,6 +18527,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"nlD" = (
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/blueish
+	},
+/obj/table/auto,
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "nnI" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -19089,6 +19093,18 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qFr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "qGk" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -19154,6 +19170,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
+"rlo" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "rnV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -19786,10 +19810,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
-"wlm" = (
-/obj/displaycase,
-/turf/simulated/floor/blue,
-/area/station/bridge/captain)
 "wod" = (
 /obj/machinery/light{
 	dir = 4;
@@ -60069,7 +60089,7 @@ axo
 puT
 opJ
 alt
-aWF
+rlo
 aWF
 aWF
 mxP
@@ -60371,7 +60391,7 @@ alh
 alb
 gFi
 bKM
-alR
+lji
 axz
 alh
 axz
@@ -61879,10 +61899,10 @@ aTE
 aJm
 aqD
 vPH
-asr
+qFr
 atD
 auL
-aVN
+nlD
 aqD
 aTA
 aVZ
@@ -63390,7 +63410,7 @@ aqD
 aBc
 rDv
 asV
-mRp
+hLS
 asV
 avK
 awI
@@ -76682,7 +76702,7 @@ dWW
 krp
 asT
 aFO
-aRs
+eYD
 azs
 aAg
 aAW
@@ -79996,7 +80016,7 @@ axG
 aIW
 axu
 axE
-wlm
+cCz
 amu
 uzK
 asX

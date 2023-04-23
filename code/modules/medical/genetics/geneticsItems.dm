@@ -135,6 +135,7 @@
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	hide_attack = ATTACK_FULLY_HIDDEN
+	tool_flags = TOOL_SCREWING
 	var/obj/item/genetics_injector/dna_injector/payload = null
 
 	attack_self(var/mob/user as mob)

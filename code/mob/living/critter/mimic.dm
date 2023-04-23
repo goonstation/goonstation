@@ -31,6 +31,7 @@
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.face_image = icon('icons/misc/critter.dmi',"mimicface")
 		var/toolboxType =pick(25;/obj/item/storage/toolbox/mechanical, 25;/obj/item/storage/toolbox/emergency, 25;/obj/item/storage/toolbox/electrical, 24;/obj/item/storage/toolbox/artistic, 1;/obj/item/storage/toolbox/memetic)
 		var/obj/item/storage/toolbox/startDisguise = new toolboxType(null)

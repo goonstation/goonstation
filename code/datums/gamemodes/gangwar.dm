@@ -7,8 +7,8 @@
 	antag_token_support = TRUE
 	var/list/gangs = list()
 
-	var/const/setup_min_teams = 3
-	var/const/setup_max_teams = 5
+	var/const/setup_min_teams = 2
+	var/const/setup_max_teams = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -47,7 +47,13 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
+#ifdef RP_MODE
+#define PLAYERS_PER_GANG_GENERATED 15
+#else
+#define PLAYERS_PER_GANG_GENERATED 9
+#endif
+	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
+#undef PLAYERS_PER_GANG_GENERATED
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > length(leaders_possible))
