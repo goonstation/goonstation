@@ -2349,3 +2349,32 @@ var/list/zalgo_mid = list(
 	while (pos > 0 && (string[pos] in end_punctuation))
 		string = copytext(string, 1, pos--)
 	return string + "..."
+
+/proc/pirateify(var/string)
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/pirate.txt", lowertext(original_word), 1)
+		if(matching_token)
+			modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+			modified_token += punct
+		else
+			modified_token = token
+
+		modded_tokens += modified_token
+	var/modded = jointext(modded_tokens, " ")
+	if(prob(33))
+		modded += pick("Arrr!"," Arr!", "Yarrrrr!")
+	return modded

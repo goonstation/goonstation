@@ -907,3 +907,18 @@
 			return ""
 		message = lolcat(message)
 		return message
+
+/datum/bioEffect/speech/pirate
+	name = "Frontal Gyrus Alteration Type-AR"
+	desc = "Forces the language center of the subject's brain to construct sentences as sailing on the Seven Seas."
+	id = "accent_pirate"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Ye feel like a swashbucklin' pirate!"
+	msgLose = "You stop feeling like sailing the Seven Seas."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = pirateify(message)
+		return message

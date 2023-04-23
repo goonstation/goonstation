@@ -684,6 +684,7 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
+						M.bioHolder.AddEffect("accent_pirate")
 
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
