@@ -757,7 +757,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if(isrobot(user))
 					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [W.amount] cones.</span>")
 				else
-					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones].</span>")
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones.</span>")
 
 	_update_stack_appearance()
 		if (amount <= 1)
