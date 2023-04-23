@@ -139,5 +139,4 @@
 
 	//TODO
 	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
-	//Add pipes onto dispensers on sprite going to the back
-	//Only works when anchored maybe?
+	//Some sort of playsound?
