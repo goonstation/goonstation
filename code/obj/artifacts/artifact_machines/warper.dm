@@ -44,7 +44,7 @@
 			for (var/mob/living/M in orange(grab_range,O))
 				if (isintangible(M)) continue
 				var/warp_target = get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range))
-				logTheThing(LOG_COMBAT, M, "was teleported by Warper artifact [src.name] from [log_loc(M)] to [log_loc(warp_target)].")
+				logTheThing(LOG_COMBAT, M, "was teleported by Warper artifact [O] from [log_loc(M)] to [log_loc(warp_target)].")
 				M.set_loc(warp_target)
 			O.set_loc(loc)
 			teleports++
