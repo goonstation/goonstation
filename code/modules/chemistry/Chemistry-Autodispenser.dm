@@ -11,6 +11,7 @@
 	var/selected_element = null
 	var/selected_reservoir = 1
 	var/active = FALSE
+	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
