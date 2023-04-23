@@ -97,9 +97,10 @@
 			return
 		if (connected_CC.executor)
 			var/obj/item/B = connected_CC.executor.reservoirs[selected_reservoir]
-			amount = clamp(round(input.signal), 1, 100)
-			B.reagents.add_reagent(selected_element, (isnum(amount) ? amount : 10))
-			B.reagents.handle_reactions()
+			if(B && B.reagents)
+				amount = clamp(round(input.signal), 1, 100)
+				B.reagents.add_reagent(selected_element, (isnum(amount) ? amount : 10))
+				B.reagents.handle_reactions()
 
 
 
@@ -134,9 +135,6 @@
 
 
 	//TODO
-	//Make iconstate change to dispenserauto while active
-	//Make machine connectable to chemicompiler
 	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
-	//Make the machine actually dispense chemicals
 	//Add pipes onto dispensers on sprite going to the back
 	//WHY DOES IT ONLY GIVE ONE UNIT
