@@ -7,11 +7,12 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenserautoidle"
 	//Connected Chemi compiler
-	var/obj/machinery/chemicompiler_stationary/connected_CC = null
 	var/selected_element = null
 	var/selected_reservoir = 1
 	var/active = FALSE
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
+	var/obj/machinery/chemicompiler_stationary/connected_CC = null
+	var/obj/machinery/fluid_canister/connectedCanister = null
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -71,6 +72,12 @@
 
 		else if (istype(over_object,/obj/machinery/chemicompiler_stationary))
 			src.connected_CC = over_object
+			src.connectedCanister = null
+			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
+
+		else if (istype(over_object,/obj/machinery/fluid_canister))
+			src.connected_CC = null
+			src.connectedCanister = over_object
 			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
 
 		else
@@ -93,18 +100,24 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	proc/dispense(var/datum/mechanicsMessage/input)
-		if (status & (NOPOWER|BROKEN))
+		if (status & (NOPOWER))
 			return
 		var/amount = clamp(round(text2num(input.signal)), 1, 100)
-		if (!connected_CC)
+		if (!connected_CC && !connectedCanister)
 			return
-		if (connected_CC.executor)
+		if (connected_CC && connected_CC.executor)
 			var/obj/item/B = connected_CC.executor.reservoirs[selected_reservoir]
 			if(B && B.reagents)
-				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				playsound(src.loc, dispense_sound, 5, 1, 0.3)
 				B.reagents.add_reagent(selected_element, amount)
 				B.reagents.handle_reactions()
 				use_power(amount)
+		if (connectedCanister && connectedCanister.reagents)
+			playsound(src.loc, dispense_sound, 5, 1, 0.3)
+			connectedCanister.reagents.add_reagent(selected_element, amount)
+			connectedCanister.reagents.handle_reactions()
+			use_power(amount)
+
 
 
 
@@ -138,6 +151,3 @@
 	"}
 
 
-	//TODO
-	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
-	//Some sort of playsound?
