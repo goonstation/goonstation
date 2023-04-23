@@ -5,6 +5,7 @@
 (e)⚖📦|C-Balance, A-Game-Objects
 (*)All security officers including NTSCs (not assistants) now receive mind protection health implants. Said implants now self-destruct upon death.
 (+)Traitor slip and signs have been buffed slightly, they now have a 100% chance to activate, have a reduced cooldown and can be anchored with a screwdriver.
+(+)Attempting to disarm someone who is grabbing you will now resist the grab instead.
 (t)sat apr 22 23
 (u)pali
 (+)Missing organs now displayed in red in health scan.
