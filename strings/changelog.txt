@@ -1,4 +1,9 @@
 
+(t)sun apr 23 23
+(u)LeahTheTech
+(p)13782
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)All security officers including NTSCs (not assistants) now receive mind protection health implants. Said implants now self-destruct upon death.
 (t)sat apr 22 23
 (u)pali
 (+)Missing organs now displayed in red in health scan.
