@@ -635,7 +635,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		playerProduct.contents -= vended
 	else // make a new one
 		vended = new product.product_path(src.get_output_location())
-	vended.name = product.product_name
 	vended.set_loc(src.get_output_location())
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
