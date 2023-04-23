@@ -704,9 +704,9 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/constructioncone
 	desc = "Caution!"
-	name = "construction cone"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "cone"
+	name = "\improper construction cone"
+	icon = 'icons/obj/construction.dmi'
+	icon_state = "cone_1"
 	force = 1
 	throwforce = 3
 	throw_speed = 1
@@ -716,6 +716,92 @@ var/obj/manta_speed_lever/mantaLever = null
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
+	max_stack = 5
+
+	before_stack(atom/movable/O as obj, mob/user as mob)
+		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
+
+	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		UpdateStackAppearance()
+		boutput(user, "<span class='notice'>You finish gathering up [src].</span>")
+
+	attack_hand(mob/user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+
+			if (!in_interact_range(src, user)) //no walking away
+				return
+
+			var/obj/item/constructioncone/new_stack = split_stack(1)
+			if (!istype(new_stack))
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+			boutput(user, "<span class='notice'>You take 1 [src] from the stack, leaving [src.amount] [src] behind.</span>")
+		else
+			..(user)
+
+	check_valid_stack(atom/movable/O as obj)
+		if (!istype(O,/obj/item/constructioncone/))
+			return 0
+		return 1
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/constructioncone))
+			var/success = stack_item(W)
+			if (!success)
+				boutput(user, "<span class='alert'>You can't put any more [src]\s in this stack!</span>")
+			else
+				if(!user.is_in_hands(src))
+					user.put_in_hand(src)
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] [src] to the stack. It now has [W.amount] [src].</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] [src] to the stack. It now has [src.amount] [src].</span>")
+
+	_update_stack_appearance()
+		if (amount <= 1)
+			icon_state = "cone_1"
+		else if (amount <= 2)
+			icon_state = "cone_2"
+		else if (amount <= 3)
+			icon_state = "cone_3"
+		else if (amount <= 4)
+			icon_state = "cone_4"
+		else
+			icon_state = "cone_5"
+
+	afterattack(var/turf/T, var/mob/user, reach, params)
+		if (!isturf(user.loc))
+			return
+
+		if (BOUNDS_DIST(T, user) > 0)
+			boutput(user, "<span class='notice'>You can't setup [src] that far away.</span>")
+			return
+
+		if (!istype(T, /turf))
+			return
+
+		var/obj/item/constructioncone/cone = new /obj/item/constructioncone
+		src.change_stack_amount(-1)
+
+		var/pox = cone.pixel_x
+		var/poy = cone.pixel_y
+
+		if (params)
+			if (islist(params) && params["icon-y"] && params["icon-x"])
+				pox = text2num(params["icon-x"]) - 16
+				poy = text2num(params["icon-y"]) - 16
+
+		cone.pixel_x = pox
+		cone.pixel_y = poy
+		cone.set_loc(T)
+		playsound(cone, 'sound/impact_sounds/tube_bonk.ogg', 20, 1)
+		..()
+
+	examine()
+		. = ..()
+		. += "There are [src.amount] [src]\s on this stack."
 
 /obj/effect/boommarker
 	name = ""
