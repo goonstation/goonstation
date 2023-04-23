@@ -11,7 +11,6 @@
 	var/selected_element = null
 	var/selected_reservoir = 1
 	var/active = FALSE
-	var/amount = 0
 
 	var/list/dispensable_reagents = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -93,13 +92,17 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	proc/dispense(var/datum/mechanicsMessage/input)
+		logTheThing(LOG_DEBUG, usr, input)
+		logTheThing(LOG_DEBUG, usr, input.signal)
+
+		var/amount = clamp(round(text2num(input.signal)), 1, 100)
+		logTheThing(LOG_DEBUG, usr, amount)
 		if (!connected_CC)
 			return
 		if (connected_CC.executor)
 			var/obj/item/B = connected_CC.executor.reservoirs[selected_reservoir]
 			if(B && B.reagents)
-				amount = clamp(round(input.signal), 1, 100)
-				B.reagents.add_reagent(selected_element, (isnum(amount) ? amount : 10))
+				B.reagents.add_reagent(selected_element, amount)
 				B.reagents.handle_reactions()
 
 
@@ -137,4 +140,4 @@
 	//TODO
 	//Integrate power functions into this (should just have to copy a bunch of stuff from other machines)
 	//Add pipes onto dispensers on sprite going to the back
-	//WHY DOES IT ONLY GIVE ONE UNIT
+	//Only works when anchored maybe?
