@@ -484,6 +484,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
 		src.preview.add_background("#242424", 2)
+		if (src.barbee.client) // copied straight from cloning code, and yes, the original code has a comment saying how this is a gross hack.
+			src.barbee.client.set_layout(barbee.client.tg_layout)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 
