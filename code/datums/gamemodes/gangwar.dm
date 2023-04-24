@@ -117,16 +117,20 @@
 	for (var/datum/mind/L in ticker.mode:traitors)
 		leadercount++
 
+#ifndef RP_MODE
 	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
 		force_shuttle()
+#endif // RP_MODE
 
 	else return 0
 
 /datum/game_mode/gang/process()
 	..()
+#ifndef RP_MODE
 	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
 		shuttle_called = TRUE
 		force_shuttle()
+#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 60)
 		return
