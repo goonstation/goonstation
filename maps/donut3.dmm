@@ -29276,7 +29276,7 @@
 /area/station/security/quarters)
 "iOH" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/constructioncone,
+/obj/item/clothing/head/constructioncone,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "iOS" = (
@@ -67669,7 +67669,7 @@
 "uuC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/item/constructioncone,
+/obj/item/clothing/head/constructioncone,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "uuF" = (

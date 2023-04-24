@@ -35066,7 +35066,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/constructioncone,
+/obj/item/clothing/head/constructioncone,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
 "fOY" = (
@@ -35469,7 +35469,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/constructioncone,
+/obj/item/clothing/head/constructioncone,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
 "gLj" = (
@@ -42574,7 +42574,7 @@
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
 "ygy" = (
-/obj/item/constructioncone,
+/obj/item/clothing/head/constructioncone,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
 "yhc" = (

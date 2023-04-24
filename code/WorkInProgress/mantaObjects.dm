@@ -702,7 +702,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/constructioncone
+/obj/item/clothing/head/constructioncone
 	desc = "Caution!"
 	name = "construction cone"
 	icon = 'icons/obj/construction.dmi'
@@ -717,6 +717,14 @@ var/obj/manta_speed_lever/mantaLever = null
 	stamina_cost = 8
 	stamina_crit_chance = 10
 	max_stack = 5
+	item_state = "cone_1"
+	wear_state = "cone_hat_1"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 0) // it has a hole on top, after all
+		setProperty("heatprot", 0)
+		setProperty("meleeprot_head", 2)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins gathering up [src]\s!</span>")
@@ -731,7 +739,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (!in_interact_range(src, user)) //no walking away
 				return
 
-			var/obj/item/constructioncone/new_stack = split_stack(1)
+			var/obj/item/clothing/head/constructioncone/new_stack = split_stack(1)
 			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
@@ -742,12 +750,12 @@ var/obj/manta_speed_lever/mantaLever = null
 			..(user)
 
 	check_valid_stack(atom/movable/O as obj)
-		if (!istype(O,/obj/item/constructioncone/))
+		if (!istype(O, /obj/item/clothing/head/constructioncone))
 			return 0
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/constructioncone))
+		if (istype(W, /obj/item/clothing/head/constructioncone))
 			var/success = stack_item(W)
 			if (!success)
 				boutput(user, "<span class='alert'>You can't put any more cones in this stack!</span>")
@@ -762,14 +770,24 @@ var/obj/manta_speed_lever/mantaLever = null
 	_update_stack_appearance()
 		if (amount <= 1)
 			icon_state = "cone_1"
+			item_state = "cone_1"
+			wear_state = "cone_hat_1"
 		else if (amount <= 2)
 			icon_state = "cone_2"
+			item_state = "cone_2"
+			wear_state = "cone_hat_2"
 		else if (amount <= 3)
 			icon_state = "cone_3"
+			item_state = "cone_3"
+			wear_state = "cone_hat_3"
 		else if (amount <= 4)
 			icon_state = "cone_4"
+			item_state = "cone_4"
+			wear_state = "cone_hat_4"
 		else
 			icon_state = "cone_5"
+			item_state = "cone_5"
+			wear_state = "cone_hat_5"
 
 	afterattack(var/turf/T, var/mob/user, reach, params)
 		if (!isturf(user.loc))
@@ -782,7 +800,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (!istype(T, /turf/simulated/floor))
 			return
 
-		var/obj/item/constructioncone/cone = new /obj/item/constructioncone
+		var/obj/item/clothing/head/constructioncone/cone = new /obj/item/clothing/head/constructioncone
 		src.change_stack_amount(-1)
 
 		var/pox = cone.pixel_x
