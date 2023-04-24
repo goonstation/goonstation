@@ -117,10 +117,13 @@
 	for (var/datum/mind/L in ticker.mode:traitors)
 		leadercount++
 
-#ifndef RP_MODE
 	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
+#ifndef RP_MODE
 		force_shuttle()
-#endif // RP_MODE
+		return 1
+#else
+		return 0
+#endif
 
 	else return 0
 
