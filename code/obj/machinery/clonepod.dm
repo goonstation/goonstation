@@ -334,9 +334,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
 
-		if ((mindref) && (istype(mindref))) //Move that mind over!!
-			mindref.transfer_to(src.occupant)
-		else //welp
+		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
 			src.occupant.mind.ckey = src.occupant.ckey

@@ -593,6 +593,12 @@
 		else
 			..()
 
+	chief_engineer
+		name = "chief engineer's hard hat"
+		icon_state = "hardhat_chief_engineer0"
+		item_state = "hardhat_chief_engineer0"
+		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
+
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"

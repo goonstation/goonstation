@@ -356,10 +356,15 @@ THROWING DARTS
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+
+	on_death()
+		. = ..()
+		src.on_remove(src.owner)
+		qdel(src)
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
