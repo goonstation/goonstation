@@ -284,7 +284,14 @@
 	w_class = W_CLASS_SMALL
 	slots = 3
 	opens_if_worn = TRUE
-	spawn_contents = list(/obj/random_item_spawner/landmine/surplus = 3)
+	var/static/list/possible_contents = list(/obj/item/mine/radiation, /obj/item/mine/incendiary, /obj/item/mine/stun, /obj/item/mine/blast)
+
+	make_my_stuff()
+		..()
+		var/obj/item/mine/random_mine
+		for (var/i = 1 to src.slots)
+			random_mine = pick(src.possible_contents)
+			src.storage.add_contents(new random_mine(src))
 
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"

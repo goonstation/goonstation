@@ -895,15 +895,6 @@
 	/obj/item/mine/stun/armed,
 	/obj/item/mine/blast/armed)
 
-// Surplus crate picker.
-/obj/random_item_spawner/landmine/surplus
-	name = "random land mine spawner (surplus crate)"
-	amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation,
-	/obj/item/mine/incendiary,
-	/obj/item/mine/stun,
-	/obj/item/mine/blast)
-
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
