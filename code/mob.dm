@@ -1126,6 +1126,11 @@
 	if(!can_reach(src, A) || src.restrained())
 		return
 
+	if(istype(A, /obj/stool))
+		var/obj/stool/C = A
+		if(C?.buckled_guy == src)
+			return
+
 	src.pulling = A
 
 	if(ismob(src.pulling))
