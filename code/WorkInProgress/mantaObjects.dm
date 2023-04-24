@@ -796,7 +796,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		cone.pixel_x = pox
 		cone.pixel_y = poy
 		cone.set_loc(T)
-		playsound(cone, 'sound/impact_sounds/tube_bonk.ogg', 20, 1)
+		playsound(cone, 'sound/impact_sounds/tube_bonk.ogg', 20, 1, pitch=0.5)
 		..()
 
 	examine()
