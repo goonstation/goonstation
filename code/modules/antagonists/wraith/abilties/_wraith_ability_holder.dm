@@ -41,18 +41,10 @@
 	ignore_holder_lock = TRUE //So we can still do things while our summons are coming
 	check_range = FALSE
 	theme = "wraith"
+	button_type = /atom/movable/screen/ability/topBar/wraith
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
-
-	New()
-		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
 
 	doCooldown(customCooldown)
 		. = ..()

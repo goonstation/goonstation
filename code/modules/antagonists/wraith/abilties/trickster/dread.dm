@@ -2,6 +2,7 @@
 	name = "Creeping dread"
 	icon_state = "dread"
 	desc = "Instill a fear of the dark in a human's mind, causing terror and heart attacks if they do not stay in the light."
+	target_anything = FALSE
 	pointCost = 80
 	cooldown = 1 MINUTE
 
@@ -13,7 +14,7 @@
 		target.setStatus("creeping_dread", 30 SECONDS)
 		src.holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 
-	castcheck(atom/target)
+	castcheck(mob/living/target)
 		. = ..()
 		if (!ishuman(target) || isdead(target))
 			boutput(src.holder.owner, "<span class='alert'>We can only instill dread in living humans.</span>")

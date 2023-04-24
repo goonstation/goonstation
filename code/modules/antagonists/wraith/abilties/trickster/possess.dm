@@ -1,20 +1,18 @@
+#define SAFETY_CHECK(A, B) if (!(H?.loc && W?.loc)) return
 /datum/targetable/wraithAbility/possess
 	name = "Possession"
 	icon_state = "possession"
 	desc = "Channel your energy and slowly gain control over a living being."
 	pointCost = 400
-	targeted = TRUE
+	target_anything = FALSE
 	cooldown = 3 MINUTES
-	ignore_holder_lock = 0
+	ignore_holder_lock = FALSE // no possessing while we're already possessing
 	var/wraith_key = null
 	var/datum/mind/wraith_mind = null
 	var/datum/mind/human_mind = null
 
+	// hey it's aloe! I don't know what the hell is happening here so it's mostly untouched
 	cast(mob/target)
-		if (..())
-			return TRUE
-		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
-			return TRUE
 		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 		var/datum/abilityHolder/wraith/AH = W.abilityHolder
 		if (AH.possession_points < W.points_to_possess)
@@ -27,23 +25,23 @@
 			boutput(holder.owner, "<span class='alert'>As you try to reach inside this creature's mind, it instantly kicks you back into the aether!</span>")
 			return FALSE
 		var/mob/dead/target_observer/slasher_ghost/WG = null
-		wraith_key = holder.owner.ckey
+		src.wraith_key = src.holder.owner.ckey
 		H.emote("scream")
 		boutput(H, "<span class='alert'>You are feeling awfully woozy.</span>")
 		H.change_misstep_chance(20)
 		SPAWN(10 SECONDS)
-			if (!(H?.loc && W?.loc)) return
+			SAFETY_CHECK(H, W)
 			boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
 			H.emote("faint")
 			H.setStatusMin("weakened", 5 SECONDS)
 			sleep(15 SECONDS)
-			if (!(H?.loc && W?.loc)) return
+			SAFETY_CHECK(H, W)
 			H.change_misstep_chance(-20)
 			H.emote("scream")
 			H.setStatusMin("weakened", 8 SECONDS)
 			H.setStatusMin("paralysis", 8 SECONDS)
 			sleep(8 SECONDS)
-			if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
+			SAFETY_CHECK(H, W)
 			if(isnull(W.mind))	//Wraith died or was removed in the meantime
 				return
 			var/datum/player/target_player = H.mind?.get_player()
@@ -90,7 +88,6 @@
 			H.take_brain_damage(30)
 			H.setStatus("weakened", 5 SECOND)
 			boutput(H, "<span class='notice'>The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.</span>")
-		return FALSE
 
 	proc/return_wraith(mob/possessed) //we want to be absolutely sure the wraith goes back to their body no matter what
 		var/datum/abilityHolder/wraith/AH = src.holder
@@ -106,3 +103,4 @@
 		wraith_mind = null
 		human_mind = null
 		. = ..()
+#undef SAFETY_CHECK
