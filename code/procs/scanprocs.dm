@@ -269,7 +269,7 @@
 				return null
 
 	else
-		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
+		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
