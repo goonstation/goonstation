@@ -21,7 +21,7 @@
 	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
-	max_wclass = W_CLASS_BULKY
+	var/max_wclass = W_CLASS_BULKY
 	New()
 		..()
 		SPAWN(0)
