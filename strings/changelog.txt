@@ -2,6 +2,7 @@
 (t)tue apr 25 23
 (u)LeahTheTech
 (+)The rockbox now displays a count of how many of each ore have been purchased.
+(+)Manufacturers now have category tabs.
 (u)Ikea
 (p)13752
 (e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
