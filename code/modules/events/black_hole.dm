@@ -31,7 +31,7 @@
 		..()
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
-		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
+		//interdiction consumes a colossal amount of power - requiring a large cell - and the interdictor makes a hell of a ruckus
 		for_by_tcl(IX, /obj/machinery/interdictor)
 			if (IX.expend_interdict(9001,src))
 				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
@@ -107,7 +107,7 @@
 	icon_state = "bhole"
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -175,7 +175,7 @@
 
 				if (O.anchored)
 					if (prob(pull_prob))
-						O.anchored = 0
+						O.anchored = UNANCHORED
 				if (prob(pull_prob))
 					step_towards(O,src)
 					if (hit_strength)

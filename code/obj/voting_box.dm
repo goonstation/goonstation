@@ -4,7 +4,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put ballots into. Maybe you can even vote with it!"
 	var/bribeAmount = 0
 	var/bribeJerk = null

@@ -10,7 +10,7 @@
 	density = 0
 	opacity = 0
 	layer = 2.6
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -113,7 +113,7 @@
 	desc = "Scans the barcode on objects and reroutes them accordingly."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 

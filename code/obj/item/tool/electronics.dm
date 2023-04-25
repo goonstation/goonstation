@@ -503,7 +503,7 @@
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null

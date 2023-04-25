@@ -18,7 +18,7 @@
 	desc = "A stand which can hold a weapon. This one is a little generic looking."
 	icon = 'icons/obj/weapon_rack.dmi'
 	icon_state = "swordstand1"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 

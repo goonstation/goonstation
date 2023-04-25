@@ -224,10 +224,10 @@
 	name = "strange biohazard crate";
 	desc = "A crate for biohazardous materials. You can hear a faint scratching from it..."
 	},
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /obj/critter/bat/buff,
 /obj/critter/bat/buff,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},

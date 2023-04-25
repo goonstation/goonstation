@@ -18,7 +18,7 @@ TYPEINFO(/obj/player_piano)
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "player_piano"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
@@ -91,7 +91,7 @@ TYPEINFO(/obj/player_piano)
 				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
 				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
 				return
@@ -100,7 +100,7 @@ TYPEINFO(/obj/player_piano)
 				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
 				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
 				return
 

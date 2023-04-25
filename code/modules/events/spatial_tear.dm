@@ -30,7 +30,7 @@
 	desc = "A breach in the spatial fabric. Extremely difficult to pass."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "spat-h"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	density = 1
 	var/stabilized = 0
@@ -40,10 +40,10 @@
 		..()
 		START_TRACKING
 		//spatial interdictor: mitigate spatial tears
-		//consumes 800 units of charge per tear segment weakened
+		//consumes 500 units of charge (250,000 joules) per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
 		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(800,src))
+			if (IX.expend_interdict(500,src))
 				src.stabilize()
 				break
 		SPAWN(duration)

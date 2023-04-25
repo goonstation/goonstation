@@ -1,7 +1,7 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 mob/new_player
-	anchored = 1
+	anchored = ANCHORED
 
 	var/ready = 0
 	var/spawning = 0
@@ -19,7 +19,7 @@ mob/new_player
 	stat = 2
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchored = ANCHORED	//  don't get pushed around
 
 	var/datum/spend_spacebux/bank_menu
 

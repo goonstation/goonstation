@@ -62,7 +62,7 @@
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
-			src.anchored = TRUE
+			src.anchored = ANCHORED
 			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
@@ -71,7 +71,7 @@
 			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 		return
 
 	proc/triggered(mob/target)
@@ -94,6 +94,6 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 80, 1)
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
-			src.anchored = FALSE
+			src.anchored = UNANCHORED
 			logTheThing(LOG_COMBAT, target, "triggers [src] at [log_loc(src)]")
 		return

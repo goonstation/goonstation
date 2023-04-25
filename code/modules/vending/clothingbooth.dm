@@ -49,7 +49,7 @@ var/list/clothingbooth_paths = list()
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
 	flags = FPRINT | TGUI_INTERACTIVE
-	anchored = TRUE
+	anchored = ANCHORED
 	density = 1
 	var/datum/movable_preview/character/multiclient/preview
 	var/datum/light/light

@@ -22,7 +22,7 @@
 
 	src.update_lying()
 
-	// If he's wearing magnetic boots anchored = 1, otherwise anchored = 0
+	// If he's wearing magnetic boots anchored = ANCHORED, otherwise anchored = UNANCHORED
 	reset_anchored(src)
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (!src.w_uniform)

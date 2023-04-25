@@ -590,7 +590,7 @@ obj/hallucinated_item
 	icon_state = null
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/mob/owner = null
