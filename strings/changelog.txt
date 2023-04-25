@@ -1,5 +1,7 @@
 
 (t)tue apr 25 23
+(u)aloe
+(+)After some shady dealings with the heads of staff on the NSS Manta, CARL (the listening post vendor) now sells high explosive torpedos on Oshan.
 (u)LeahTheTech
 (+)The rockbox now displays a count of how many of each ore have been purchased.
 (+)Manufacturers now have category tabs.
