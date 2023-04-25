@@ -136,10 +136,7 @@
 	var/count = length(controls)
 	if (count > length(color_pool))
 		CRASH("Tried to create wirePanelDefinition with longer length `controls` than `color_pool`")
-	if (istype(light_map))
-		if (!istype(light_map, /datum/wirePanel/indicatorMap))
-			CRASH("Tried to create wirePanelDefinition with `light_map` not of type `/datum/wirePanel/indicatorMap`")
-	else
+	if (!istype(light_map))
 		light_map = /datum/wirePanel/indicatorMap
 
 	var/indicator_bitfield = 0
