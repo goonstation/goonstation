@@ -3,7 +3,6 @@
 		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
-		if(x.w_class >= W_CLASS_BULKY) \
 		x:block_vision \
 	)
 #define IS_NPC_CLOTHING(x) ( \
@@ -723,7 +722,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_BULKY) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
