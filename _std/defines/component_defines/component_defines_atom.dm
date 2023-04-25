@@ -47,6 +47,12 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// TGUI helper; call in `ui_data` and pass in a list (mob/user, list/data)
+	#define COMSIG_ATOM_UI_DATA "atom_ui_data"
+	/// TGUI helper; call in `ui_static_data` and pass in a list (mob/user, list/data)
+	#define COMSIG_ATOM_UI_STATIC_DATA "atom_ui_static_data"
+	/// TGUI helper; call in `ui_act` (action, list/params, datum/tgui/ui)
+	#define COMSIG_ATOM_UI_ACT "wpanel_ui_act"
 
 // ---- minimap ----
 
@@ -170,13 +176,6 @@
 	#define COMSIG_WPANEL_SET_COVER "wpanel_set_cover"
 	/// Set a wire control to be TRUE or FALSE (mob/user, controls, new_status)
 	#define COMSIG_WPANEL_SET_CONTROL "wpanel_set_control"
-
-	/// TGUI helper; call in `ui_data` and pass in a list (mob/user, list/data)
-	#define COMSIG_WPANEL_UI_DATA "wpanel_ui_data"
-	/// TGUI helper; call in `ui_static_data` and pass in a list (mob/user, list/data)
-	#define COMSIG_WPANEL_UI_STATIC_DATA "wpanel_ui_static_data"
-	/// TGUI helper; call in `ui_act` (action, list/params, datum/tgui/ui)
-	#define COMSIG_WPANEL_UI_ACT "wpanel_ui_act"
 
 	/// Returns state `WPANEL_COVER_*` of cover ()
 	#define COMSIG_WPANEL_STATE_COVER "wpanel_state_cover"

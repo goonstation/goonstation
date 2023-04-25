@@ -28,7 +28,8 @@
  * return list Data to be sent to the UI.
  */
 /datum/proc/ui_data(mob/user)
-	return list() // Not implemented.
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_DATA, user, .)
 
 /**
  * public
@@ -45,7 +46,8 @@
  * return list Statuic Data to be sent to the UI.
  */
 /datum/proc/ui_static_data(mob/user)
-	return list()
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_STATIC_DATA, user, .)
 
 /**
  * public
@@ -77,6 +79,7 @@
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_ACT, action, params, ui)
 
 /**
  * public

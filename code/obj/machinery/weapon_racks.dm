@@ -108,11 +108,6 @@
 /obj/machinery/weapon_stand/proc/mob_wire_act(obj/parent, mob/user, wire, action)
 	src.check_shock(user)
 
-/obj/machinery/weapon_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if (src.has_wire_panel)
-		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
-
 /obj/machinery/weapon_stand/ui_interact(mob/user, datum/tgui/ui)
 	if (src.has_wire_panel)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -120,19 +115,12 @@
 			ui = new(user, src, "WirePanelWindow", src.name)
 			ui.open()
 
-/obj/machinery/weapon_stand/ui_data(mob/user)
-	. = ..()
-	if (src.has_wire_panel)
-		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
-
 /obj/machinery/weapon_stand/ui_static_data(mob/user)
 	. = ..()
-	if (src.has_wire_panel)
-		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
-		.["wirePanelTheme"] = list(
-			"wireTheme" = WPANEL_THEME_PHYSICAL,
-			"controlTheme" = WPANEL_THEME_PHYSICAL,
-		)
+	.["wirePanelTheme"] = list(
+		"wireTheme" = WPANEL_THEME_PHYSICAL,
+		"controlTheme" = WPANEL_THEME_PHYSICAL,
+	)
 
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
 	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)

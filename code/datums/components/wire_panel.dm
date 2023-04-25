@@ -43,9 +43,9 @@ TYPEINFO(/datum/component/wirePanel)
 	RegisterSignal(parent, COMSIG_WPANEL_STATE_CONTROLS, .proc/state_controls)
 	RegisterSignal(parent, COMSIG_WPANEL_STATE_COVER, .proc/state_cover)
 
-	RegisterSignal(parent, COMSIG_WPANEL_UI_DATA, .proc/ui_data)
-	RegisterSignal(parent, COMSIG_WPANEL_UI_STATIC_DATA, .proc/ui_static_data)
-	RegisterSignal(parent, COMSIG_WPANEL_UI_ACT, .proc/ui_act)
+	RegisterSignal(parent, COMSIG_ATOM_UI_DATA, .proc/ui_data)
+	RegisterSignal(parent, COMSIG_ATOM_UI_STATIC_DATA, .proc/ui_static_data)
+	RegisterSignal(parent, COMSIG_ATOM_UI_ACT, .proc/ui_act)
 
 /// Handle tool usage on the panel/object
 /datum/component/wirePanel/proc/attackby(obj/parent, obj/item/item, mob/user)
