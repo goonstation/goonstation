@@ -21,6 +21,7 @@
 	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
+	var/max_wclass = W_CLASS_BULKY
 	New()
 		..()
 		SPAWN(0)
@@ -722,7 +723,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing || G.w_class >= W_CLASS_BULKY) continue
+		if(G.anchored || G.throwing || G.w_class >= max_wclass) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
