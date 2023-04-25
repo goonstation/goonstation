@@ -916,7 +916,9 @@
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
-
+#ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
+	return TRUE
+#else
 	if (IsGuestKey(src.key))
 		return null
 	else if (!config)
@@ -926,6 +928,7 @@
 
 	var/result = world.GetMedal(medal, src.key, config.medal_hub, config.medal_password)
 	return result
+#endif
 
 /mob/verb/list_medals()
 	set name = "Medals"
