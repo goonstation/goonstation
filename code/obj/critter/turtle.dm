@@ -3,7 +3,6 @@
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
 	var/base_icon_state = "turtle"		//I added this in a poor attempt to add costumes for sylvester and decided not to go with it, but it could be useful for handling other turtle types later on so I'll leave it.
-	density = 1
 	health = 100
 	aggressive = 0
 	defensive = 1
