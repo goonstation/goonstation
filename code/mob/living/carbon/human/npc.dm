@@ -722,7 +722,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing || G.w_class >= W_CLASS_BULKY) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
