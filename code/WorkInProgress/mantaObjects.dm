@@ -749,10 +749,6 @@ var/obj/manta_speed_lever/mantaLever = null
 		else
 			..(user)
 
-	check_valid_stack(atom/movable/O as obj)
-		if (!istype(O, /obj/item/clothing/head/constructioncone))
-			return 0
-		return 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/head/constructioncone))
@@ -768,26 +764,10 @@ var/obj/manta_speed_lever/mantaLever = null
 					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones.</span>")
 
 	_update_stack_appearance()
-		if (amount <= 1)
-			icon_state = "cone_1"
-			item_state = "cone_1"
-			wear_state = "cone_hat_1"
-		else if (amount <= 2)
-			icon_state = "cone_2"
-			item_state = "cone_2"
-			wear_state = "cone_hat_2"
-		else if (amount <= 3)
-			icon_state = "cone_3"
-			item_state = "cone_3"
-			wear_state = "cone_hat_3"
-		else if (amount <= 4)
-			icon_state = "cone_4"
-			item_state = "cone_4"
-			wear_state = "cone_hat_4"
-		else
-			icon_state = "cone_5"
-			item_state = "cone_5"
-			wear_state = "cone_hat_5"
+		src.amount = clamp(src.amount, 1, src.max_stack)
+		icon_state = "cone_[src.amount]"
+		item_state = "cone_[src.amount]"
+		wear_state = "cone_hat_[src.amount]"
 
 	afterattack(var/turf/T, var/mob/user, reach, params)
 		if (!isturf(user.loc))
