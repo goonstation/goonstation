@@ -71,7 +71,7 @@ TYPEINFO(/datum/component/wirePanel)
 		parent.ui_interact(user)
 		return TRUE
 
-/// handles when the wire panel is open. Note: does not block other actions.
+/// handles when the wire panel is open. Does not block other actions.
 /datum/component/wirePanel/proc/attack_hand(obj/parent, mob/user)
 	if (src.cover_status == WPANEL_COVER_OPEN)
 		parent.ui_interact(user)
@@ -82,9 +82,9 @@ TYPEINFO(/datum/component/wirePanel)
  * Returns TRUE if the active control state changes.
  *
  * Arguments:
+ * * `mob/user` - user doing the action
  * * `controls` - the control to change
  * * `new_status` - new status of the control
- * * `mob/user` - user doing the action, if applicable
  */
 /datum/component/wirePanel/proc/set_control(obj/parent, mob/user, controls, new_status)
 	if (HAS_FLAG(src.active_wire_controls, controls) == new_status)
@@ -171,7 +171,7 @@ TYPEINFO(/datum/component/wirePanel)
 /**
  * Mob attempting an action on a wire.
  *
- * Returns TRUE if
+ * Returns TRUE if the wire state changed
  *
  * Arguments:
  * * `mob/user`: mob - Who is doing the action

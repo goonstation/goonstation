@@ -52,6 +52,7 @@ proc/get_nearest_color_datum(var/datum/color/c)
 
 	return nearest
 
+/// Reverse lookup from named colors to the related colour code
 proc/get_color_by_name(var/color_name)
 	for(var/datum/named_color/C in named_colors)
 		if (C.name == color_name)

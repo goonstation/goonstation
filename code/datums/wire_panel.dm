@@ -10,8 +10,8 @@
  *
  * Arguments:
  * * `control`: The control flag this wire controls
- * * `to_fix`: bitfield of `WIRE_ACT_*` - which actions will fix this control
- * * `to_break`: bitfield of `WIRE_ACT_*` - which actions will break this control
+ * * `fix_act`: bitfield of `WIRE_ACT_*` - which actions will fix this control
+ * * `break_act`: bitfield of `WIRE_ACT_*` - which actions will break this control
  */
 /datum/wirePanel/wireActs
 	var/control_flag = 0
@@ -32,8 +32,8 @@
  * Arguments:
  * * `control`: WIRE_CONTROL_* - control this indicator is for
  * * `color`: string - name of a color from `named_colors.dm`
- * * `active_pattern`: WPANEL_PATTERN_* - pattern this uses when the relatedcontrol is active
- * * `inactive_pattern`:  WPANEL_PATTERN_* -
+ * * `active_pattern`: WPANEL_PATTERN_* - pattern to use when control is active
+ * * `inactive_pattern`:  WPANEL_PATTERN_* - pattern to use when control is inactive
  */
 /datum/wirePanel/indicatorDefintion
 	var/control_flags
@@ -80,7 +80,7 @@
  *
  * Arguments:
  * * `controls`: bitfield of `WIRE_CONTROL_*`. - Which control wire flags does this control
- * * `wire_color`: string - *Named* colour to apply to this wire.
+ * * `wire_color`: string - *Named* colour to apply to this wire (see `./named_colors.dm`)
  * * `to_fix`?: bitfield of `WIRE_ACT_*` - Which actions on this wire will fix the related controls
  * * `to_break`?: bitfield of `WIRE_ACT_*` - Which actions on this wire will break the related controls
  */
@@ -112,10 +112,10 @@
  *
  * Arguments:
  * * `controls`: indexed list of `WIRE_CONTROL_*` flags - Each wire can handle one or more wire controls
- * * `color_pool`: unordered list of global `named_colors` colors - pool to pull from for wire color. must be equal to or larger than `controls` length.
+ * * `color_pool`: unordered list of `named_colors` colors - pool to pull from for wire color. must be equal to or larger than `controls` length
  * * `custom_acts`?: unordered list of `/datum/wirePanel/wireActs` - what will fix/activate each wire control
- * * `indicators`?: bitfield of `WIRE_CONTROL_*` - which indicators are tracked. defaults to all controls in `wire_control`. set to -1 for no indicators.
- * * `light_map`?: `/datum/indicatorLights` - Custom defintion of indicator lights. defaults to directly referencing `/datum/indicatorLights/indicatorMap`
+ * * `indicators`?: bitfield of `WIRE_CONTROL_*` - which indicators are tracked. default: all. set to -1 for no indicators
+ * * `light_map`?: `/datum/indicatorLights` - Custom indicator lights. default: `/datum/indicatorLights/indicatorMap`
  * * `keep_order`?: boolean - keeps the order of wire controls and colors (e.g. for debugging)
  */
 /datum/wirePanel/panelDefintion
