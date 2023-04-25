@@ -6,8 +6,6 @@
 /**
  * Per-wire defintion for breaking/fixing controls. Can be defined via `custom_acts`.
  *
- * Use `WPANEL_CUSTOM_ACT` macro.
- *
  * Arguments:
  * * `control`: The control flag this wire controls
  * * `fix_act`: bitfield of `WIRE_ACT_*` - which actions will fix this control
@@ -27,13 +25,11 @@
 /**
  * Definition for a single indicator. Automatically generated via `/datum/wirePanel/indicatorMap`.
  *
- * Use `WPANEL_INDICATOR` macro.
- *
  * Arguments:
  * * `control`: WIRE_CONTROL_* - control this indicator is for
  * * `color`: string - name of a color from `named_colors.dm`
- * * `active_pattern`: WPANEL_PATTERN_* - pattern to use when control is active
- * * `inactive_pattern`:  WPANEL_PATTERN_* - pattern to use when control is inactive
+ * * `active`: WPANEL_PATTERN_* - pattern to use when control is active
+ * * `inactive`:  WPANEL_PATTERN_* - pattern to use when control is inactive
  */
 /datum/wirePanel/indicatorDefintion
 	var/control_flags
@@ -61,18 +57,18 @@
  */
 /datum/wirePanel/indicatorMap
 	var/static/list/datum/wirePanel/indicatorDefintion/indicators = list(
-		WPANEL_INDICATOR(WIRE_CONTROL_GROUND, "yellow", "on", "blink"),
-		WPANEL_INDICATOR(WIRE_CONTROL_POWER_A, "blue", "on", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_POWER_B, "brown", "on", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_A, "green", "on", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_B, "orange", "on", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_SILICON, "cyan", "on", "blink"),
-		WPANEL_INDICATOR(WIRE_CONTROL_ACCESS, "red", "on", "blink"),
-		WPANEL_INDICATOR(WIRE_CONTROL_SAFETY, "pink", "off", "blink"),
-		WPANEL_INDICATOR(WIRE_CONTROL_RESTRICT, "white", "on", "blink"),
-		WPANEL_INDICATOR(WIRE_CONTROL_ACTIVATE, "grey", "off", "on"),
-		WPANEL_INDICATOR(WIRE_CONTROL_RECEIVE, "purple", "blink", "off"),
-		WPANEL_INDICATOR(WIRE_CONTROL_TRANSMIT, "lime", "blink", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_GROUND, "yellow", "on", "blink"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_POWER_A, "blue", "on", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_POWER_B, "brown", "on", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_BACKUP_A, "green", "on", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_BACKUP_B, "orange", "on", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_SILICON, "cyan", "on", "blink"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_ACCESS, "red", "on", "blink"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_SAFETY, "pink", "off", "blink"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_RESTRICT, "white", "on", "blink"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_ACTIVATE, "grey", "off", "on"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_RECEIVE, "purple", "blink", "off"),
+		new /datum/wirePanel/indicatorDefintion(WIRE_CONTROL_TRANSMIT, "lime", "blink", "off"),
 		)
 
 /**
