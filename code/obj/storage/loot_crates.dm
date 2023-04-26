@@ -59,7 +59,7 @@
 		/obj/item/clothing/under/gimmick/frog = 20,\
 		/obj/vehicle/skateboard = 20,\
 		/obj/item/device/flyswatter = 20,\
-		/obj/critter/bear = 20,\
+		/mob/living/critter/bear = 20,\
 		/obj/item/clothing/shoes/jetpack = 20,\
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
 		/obj/item/gun/kinetic/foamdartshotgun = 20,
@@ -74,7 +74,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	locked = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/image/light = null
 
 	New()
@@ -459,7 +459,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		attached = C
 		attached.vis_contents += src
 		attached.locked = TRUE
-		attached.anchored = TRUE
+		attached.anchored = ANCHORED
 		attached.update_icon()
 		icon_state = "antitamper-on"
 		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
@@ -474,7 +474,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		SPAWN(1 SECOND)
 			C.vis_contents -= src
 			C.locked = FALSE
-			C.anchored = FALSE
+			C.anchored = UNANCHORED
 			C.update_icon()
 			qdel(src)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)

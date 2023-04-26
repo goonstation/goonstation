@@ -51,7 +51,7 @@
 				if(!attached)
 					boutput(user, "No exposed cable here to attach to.")
 				else
-					O.anchored = 1
+					O.anchored = ANCHORED
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
 					playsound(O, 'sound/effects/ship_charge.ogg', 75, 1)
@@ -62,7 +62,7 @@
 			else
 				boutput(user, "[O] must be placed over a cable to attach to it.")
 		else
-			O.anchored = 0
+			O.anchored = UNANCHORED
 			mode = 0
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")

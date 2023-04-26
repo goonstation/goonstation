@@ -149,7 +149,7 @@
 	icon_state = "acursed"
 	// invisibility = INVIS_ALWAYS
 	invisibility = INVIS_GHOST
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	mouse_opacity = 0

@@ -11,7 +11,7 @@
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/master = null
-	anchored = 1
+	anchored = ANCHORED
 	directwired = 0		// must have a cable on same turf connecting to terminal
 
 /obj/machinery/power/terminal/New(var/new_loc)
@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 1
+	anchored = ANCHORED
 	directwired = 0
 	use_datanet = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL

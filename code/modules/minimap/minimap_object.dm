@@ -1,7 +1,7 @@
 /obj/minimap
 	name = "Station Map"
 	layer = TURF_LAYER
-	anchored = TRUE
+	anchored = ANCHORED
 
 	///The minimap datum for this minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/map
@@ -174,7 +174,7 @@
 /obj/minimap_controller
 	name = "Map Controller"
 	layer = TURF_LAYER
-	anchored = TRUE
+	anchored = ANCHORED
 
 	///The controlled minimap object.
 	var/obj/minimap/controlled_minimap

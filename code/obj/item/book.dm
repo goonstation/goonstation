@@ -249,7 +249,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -560,3 +560,9 @@ all for the love of you.</tt>"}
 	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
 	icon_state = "nuclearguide"
 	file_path = "strings/books/nuclear_engineering.txt"
+
+/obj/item/paper/emergencycooler
+	name = "Emergency Cooler Instructions"
+	info = {"<h3>These coolers are for emergency use only</h3></br>
+			In the event of a meltdown scenario, activate the coolers and ensure the gas loop is pressurised.<br>
+			Use of these coolers outside of an emergency scenario will result in a loss of reactor efficiency and stalling of the turbine."}

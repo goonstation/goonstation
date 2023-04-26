@@ -3,7 +3,7 @@
 	desc = "Implants the user with an counter-revolutionary implant"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/obj/item/implant/imp = null
 
@@ -22,7 +22,7 @@
 		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 	else
 		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
-	M.anchored = 1
+	M.anchored = ANCHORED
 	M.buckled = src
 	M.set_loc(src.loc)
 	implantgo(M)

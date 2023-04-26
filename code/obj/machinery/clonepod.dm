@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	mats = list("MET-1"=35, "honey"=5)
 
 /obj/machinery/clonepod
-	anchored = 1
+	anchored = ANCHORED
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = 1
@@ -334,9 +334,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
 
-		if ((mindref) && (istype(mindref))) //Move that mind over!!
-			mindref.transfer_to(src.occupant)
-		else //welp
+		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
 			src.occupant.mind.ckey = src.occupant.ckey
@@ -857,7 +855,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "grinder0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID

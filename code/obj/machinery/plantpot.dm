@@ -92,7 +92,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = 0
 	icon_state = null
 	power_usage = 0
@@ -212,7 +212,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife."
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "tray"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
@@ -573,11 +573,11 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
@@ -1891,7 +1891,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/datum/light/light
 
@@ -1966,7 +1966,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	icon_state = "hydro_mister0"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/mode = 1
 

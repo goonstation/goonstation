@@ -91,7 +91,7 @@ var/global/obj/fuckyou/flashDummy
 		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
-		flashDummy.anchored = 1
+		flashDummy.anchored = ANCHORED
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
@@ -1697,8 +1697,8 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!istype(A) || !istype(B))
 		return
 	if (A.anchored || B.anchored)
-		A.anchored = 1
-		B.anchored = 1
+		A.anchored = ANCHORED
+		B.anchored = ANCHORED
 
 	if (!islist(A.attached_objs))
 		A.attached_objs = list()
@@ -2672,3 +2672,20 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)
 	return "[log_object(thing)] \ref[thing]" // actual datum
+
+///Returns `amount` evenly distributed random integers that sum to `sum`
+/proc/random_split(sum, amount)
+	if (amount >= sum || sum <= 0)
+		CRASH("Invalid arguments to random split")
+	var/list/points = list(sum)
+	for (var/i in 1 to (amount - 1))
+		var/next_number = rand(1, sum)
+		while (next_number in points)
+			next_number = rand(1, sum)
+		points += next_number
+	sortList(points)
+	. = list()
+	var/prev = 0
+	for (var/point in points)
+		. += point - prev
+		prev = point

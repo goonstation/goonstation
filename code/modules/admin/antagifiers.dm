@@ -3,7 +3,7 @@
 	//var/allowAntagStacking = 0 // If set to 1, permits people to use multiple traitorifier types TODO: Figure out how to make this work intelligently
 	name = "An Offer You Couldn't Refuse"
 	desc = "In this economy you'd be stupid to turn this down."
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda-s"
 	var/attachedObjective = "For the free market!"

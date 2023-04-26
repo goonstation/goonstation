@@ -390,6 +390,13 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
+"mO" = (
+/obj/stool/bar,
+/obj/item/storage/secure/ssafe/diner_arcade{
+	pixel_y = 26
+	},
+/turf/simulated/floor/carpet/red/standard/edge/west,
+/area/diner/dining)
 "mP" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
@@ -3402,7 +3409,7 @@ nw
 nw
 nw
 uP
-XK
+mO
 XK
 QH
 XK

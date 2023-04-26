@@ -136,7 +136,7 @@ TYPEINFO(/obj/item/disk)
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
 	item_function_flags = IMMUNE_TO_ACID
@@ -441,7 +441,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 /obj/item/wrestlingbell
 	name = "Wrestling bell"
 	desc = "A bell used to signal the start of a wrestling match"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
@@ -458,7 +458,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 /obj/item/trophy
 	name = "trophy"
 	desc = "You're winner! You did it! You did the thing! Good job!"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"

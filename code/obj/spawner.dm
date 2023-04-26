@@ -240,7 +240,7 @@
 			dispose()
 			return
 		src.icon = null
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.set_density(0)
 		var/list/atom/movable/overlay/boom = list()
 		var/list/atom/movable/overlay/boom_tips = list()

@@ -5,8 +5,6 @@
 ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/atom/movable/screen/storage/boxes = null
-	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -290,7 +288,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	flags = FPRINT | TABLEPASS
 	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe

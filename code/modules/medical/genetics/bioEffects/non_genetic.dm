@@ -37,6 +37,14 @@
 	msgLose = "The tingling in your skin fades."
 	can_copy = 0
 
+/datum/bioEffect/hidden/robed
+	name = "Robed"
+	desc = "Subject can cast arcane spells without the use of magical robes or a staff."
+	id = "robed"
+	msgGain = "You feel the constraints of traditional sorcery falling from your mind."
+	msgGain = "You feel once more bound by the laws of magic."
+	can_copy = FALSE
+
 /datum/bioEffect/hidden/husk
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."

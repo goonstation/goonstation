@@ -439,11 +439,13 @@
 				..()
 				if (slot == SLOT_HEAD)
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 			unequipped(var/mob/user)
 				if(src.equipped_in_slot == SLOT_HEAD)
 					REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
+					REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
 
@@ -590,6 +592,12 @@
 			return
 		else
 			..()
+
+	chief_engineer
+		name = "chief engineer's hard hat"
+		icon_state = "hardhat_chief_engineer0"
+		item_state = "hardhat_chief_engineer0"
+		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"

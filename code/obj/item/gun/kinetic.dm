@@ -1699,7 +1699,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			return
 
 /obj/item/gun/kinetic/mrl
-	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles."
+	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'

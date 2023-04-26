@@ -37,7 +37,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
@@ -2618,7 +2618,7 @@ proc/get_mobs_trackable_by_AI()
 				A.cell = src.cell
 				src.cell.set_loc(A)
 				src.cell = null
-			A.anchored = 0
+			A.anchored = UNANCHORED
 			A.dismantle_stage = 4
 			A.update_appearance()
 			qdel(src)

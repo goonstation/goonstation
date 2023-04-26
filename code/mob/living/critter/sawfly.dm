@@ -143,7 +143,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		if(!gibbed)
 			animate(src) //no more float animation
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
 			if (prob(20))
 				new /obj/item/device/prox_sensor(src.loc)
@@ -247,5 +247,5 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.is_npc = TRUE
-		src.ai = new /datum/aiHolder/sawfly(src)
+		src.ai = new/datum/aiHolder/wanderer_aggressive(src)
 

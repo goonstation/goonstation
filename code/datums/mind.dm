@@ -82,10 +82,20 @@ datum/mind
 				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to qdel'd mob [new_character] (\ref[new_character]) God damnit. Un-qdeling the mob and praying (this will probably fuck up).")
 				new_character.disposed = 0
 			else
-				message_admins("Tried to transfer mind [src] (\ref[src]) to qdel'd mob [new_character] (\ref[new_character]) FIX THIS SHIT")
+				message_admins("Tried to transfer mind [src] to qdel'd mob [new_character] (\ref[new_character]).")
 
-			Z_LOG_ERROR("Mind/TransferTo", "Trying to transfer to a mob that's in the delete queue! Jesus fucking christ.")
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
+			return
 			//CRASH("Trying to transfer to a mob that's in the delete queue!")
+
+		if (new_character.client)
+			if (current)
+				boutput(current, "You were about to be transferred into another body, but that body was occupied!")
+				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to mob with an existing client [new_character] (\ref[new_character])")
+			else
+				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
+			return
 
 		if (current)
 			if(current.client)
@@ -227,7 +237,7 @@ datum/mind
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
 				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
-				if (!new_datum)
+				if (!new_datum || QDELETED(new_datum))
 					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
@@ -244,7 +254,7 @@ datum/mind
 			var/datum/antagonist/subordinate/A = V
 			if (initial(A.id) == role_id)
 				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
-				if (!new_datum)
+				if (!new_datum || QDELETED(new_datum))
 					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
