@@ -165,6 +165,8 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	proc/valid_instance(var/atom/found)
 		var/turf/T = get_turf(found)
+		if (!T)
+			return FALSE
 		if (T.z != Z_LEVEL_STATION)
 			return FALSE
 		if (!istype(T.loc,/area/station/))

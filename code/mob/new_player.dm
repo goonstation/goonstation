@@ -205,6 +205,9 @@ mob/new_player
 						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
+						if (S.emagged)
+							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
+							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
