@@ -26,6 +26,7 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	var/is_king = FALSE
+	var/limb = /datum/limb/brullbar
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
@@ -76,13 +77,13 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = new src.limb
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left [is_king ? "king" : "" ] brullbar arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = (is_king ? new /datum/limb/brullbar/king : new /datum/limb/brullbar)
+		HH.limb = new src.limb
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -138,15 +139,21 @@
 				if (H.decomp_stage >= 3 || H.bioHolder?.HasEffect("husk")) continue //is dead, isn't a skeleton, isn't a grody husk
 			. += M
 
-	critter_attack(var/mob/target)
+	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
+			src.ai_attack_count = src.ai_attacks_per_ability //brullbars get to be evil and frenzy right away
+			. = TRUE
 		if (!frenzy.disabled && frenzy.cooldowncheck() && is_incapacitated(target) && prob(30))
 			frenzy.handleCast(target)
-		else if (issilicon(target))
+			. = TRUE
+
+	critter_basic_attack(mob/target)
+		if (issilicon(target))
 			fuck_up_silicons(target)
+			return TRUE
 		else
 			return ..()
 
@@ -222,6 +229,7 @@
 	is_king = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
+	limb = /datum/limb/brullbar/king
 
 	death()
 		..()

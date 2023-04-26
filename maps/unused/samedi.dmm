@@ -666,7 +666,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/power)
 "abC" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid{
 	name = "asteroid"
 	},
@@ -870,7 +870,7 @@
 	},
 /area/station/solar/east)
 "abT" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "abU" = (
@@ -38537,7 +38537,7 @@
 /area/station/turret_protected/ai_upload)
 "bHE" = (
 /obj/item/raw_material/gold,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bHF" = (

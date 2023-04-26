@@ -20,7 +20,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
 	color = OCEAN_COLOR
-	pathable = 0
+	pathable = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	fullbright = 0

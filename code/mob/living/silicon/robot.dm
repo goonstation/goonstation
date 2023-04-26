@@ -1,7 +1,7 @@
 #define ROBOT_BATTERY_DISTRESS_INACTIVE 0
 #define ROBOT_BATTERY_DISTRESS_ACTIVE 1
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
-#define ROBOT_BATTERY_WIRELESS_CHARGERATE 75
+#define ROBOT_BATTERY_WIRELESS_CHARGERATE 50
 
 /datum/robot_cosmetic
 	var/head_mod = null
@@ -991,7 +991,7 @@
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-				logTheThing(LOG_STATION, src, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
+				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 				update_appearance()
 				return 1
@@ -2266,7 +2266,7 @@
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Brobocop", "Research", "Civilian", "Engineering", "Medical", "Mining")
+		var/list/starter_modules = list("Brobocop", "Science", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
@@ -2281,10 +2281,10 @@
 				src.set_module(new /obj/item/robot_module/brobocop(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
-			if("Research")
+			if("Science")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Research module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
-				src.set_module(new /obj/item/robot_module/research(src))
+				boutput(src, "<span class='notice'>You chose the Science module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
+				src.set_module(new /obj/item/robot_module/science(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")

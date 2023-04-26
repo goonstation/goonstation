@@ -107,6 +107,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
@@ -130,6 +133,7 @@
 	proc/deconstruct()
 		if (!src.deconstructable)
 			return
+		unbuckle()
 		if (ispath(src.parts_type))
 			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
 			if (P && src.material)
@@ -378,6 +382,10 @@
 			return FALSE
 		if (!can_buckle(to_buckle,user))
 			return FALSE
+
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
@@ -705,6 +713,9 @@
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (!can_buckle(to_buckle,user))
 			return FALSE
+
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
 
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))

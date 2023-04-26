@@ -20,7 +20,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/bear
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
@@ -99,18 +99,20 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "bear", 3)
 		src.add_stam_mod_max("bear", 50)
 
-	critter_attack(mob/target)
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
-		else
-			if(!ON_COOLDOWN(src, "bear_scream", 3 SECONDS))
-				src.visible_message("<b><span class='alert'>[src] roars!</span></b>")
-				if(istype(src, /mob/living/critter/bear/care))
-					playsound(src.loc, 'sound/voice/babynoise.ogg', 40, 0)
-				else
-					playsound(src.loc, 'sound/voice/MEraaargh.ogg', 40, 0)
-			return ..()
+			return TRUE
+
+	critter_basic_attack(mob/target)
+		if(!ON_COOLDOWN(src, "bear_scream", 3 SECONDS))
+			src.visible_message("<b><span class='alert'>[src] roars!</span></b>")
+			if(istype(src, /mob/living/critter/bear/care))
+				playsound(src.loc, 'sound/voice/babynoise.ogg', 40, 0)
+			else
+				playsound(src.loc, 'sound/voice/MEraaargh.ogg', 40, 0)
+		return ..()
 
 	critter_scavenge(var/mob/target)
 		src.visible_message("<span class='alert'<b>[src] nibbles [target]!</b></span>")

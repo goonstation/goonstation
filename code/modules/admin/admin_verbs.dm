@@ -1278,6 +1278,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
+				S.UpdateOverlays(null, "starlight", 1)
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
@@ -1289,6 +1290,11 @@ var/list/fun_images = list()
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
+
+	var/confirm7 = tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
+	if (confirm7 == "Yes")
+		src.set_saturation(1)
+		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
 
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
