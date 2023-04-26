@@ -23,7 +23,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
-	ai_type = /datum/aiHolder/wanderer_agressive
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 
 	setup_hands()
@@ -97,7 +97,7 @@
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 /*
 	Extralines I haven't used but can be later, here to preserve them.
@@ -128,7 +128,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_agressive
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 
 	setup_hands()
