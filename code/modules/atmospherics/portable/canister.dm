@@ -761,7 +761,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/empty/New()
 	..()
-	src.air_contents.trace_gas.moles = 0
+	src.air_contents.clear_trace_gases()
 	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
