@@ -47,9 +47,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
 
   // Basic checks to detect whether this page runs in BYOND
   var isByond = (tridentVersion !== null || window.cef_to_byond)
-    && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0
-    && location.search !== '?external';
+    && (location.hostname === '127.0.0.1' || location.hostname === '_');
 
   // Version constants
   Byond.IS_BYOND = isByond;
