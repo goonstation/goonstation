@@ -804,6 +804,7 @@
 	UpdateOverlays(src.fire_standing, "fire", 0, 1)
 
 /mob/living/carbon/human/update_inhands()
+	..()
 
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null

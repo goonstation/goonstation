@@ -38,6 +38,7 @@
 	var/has_typing_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
+	var/image/silhouette
 	var/image/static_image = null
 	var/static_type_override = null
 	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
@@ -125,6 +126,7 @@
 	var/const/singing_prefix = "%"
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
@@ -166,6 +168,10 @@
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
+
+	if (src.silhouette)
+		get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_image(src.silhouette)
+		src.silhouette = null
 
 	if (src.static_image)
 		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
@@ -1233,6 +1239,33 @@
 		return
 
 	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
+
+/mob/living/update_body()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_clothing()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_inhands()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/proc/create_mob_silhouette()
+	src.silhouette = new(src, src)
+	src.silhouette.plane = PLANE_MOB_OVERLAY
+	src.update_mob_silhouette()
+
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
+
+/mob/living/proc/update_mob_silhouette()
+	src.silhouette.icon = src
+	src.silhouette.overlays = src.overlays
+	src.silhouette.vis_contents = src.vis_contents
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)
