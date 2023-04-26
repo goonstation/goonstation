@@ -489,7 +489,7 @@ var/global
 	centralConnTries = 0 //How many times have we tried and failed to connect?
 
 	//Resource Management
-	list/localResources = list()
+	list/localResources
 	list/cachedResources = list()
 	cdn = "" //Contains link to CDN as specified in the config (if not locally testing)
 	disableResourceCache = 0
