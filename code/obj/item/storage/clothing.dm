@@ -59,6 +59,7 @@
 	/obj/item/clothing/under/rank/chief_engineer/dress,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/chief_engineer/fancy,
+	/obj/item/clothing/under/rank/chief_engineer/scarf,
 	/obj/item/clothing/suit/wintercoat/command)
 
 // Civilian Equipment

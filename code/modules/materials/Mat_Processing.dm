@@ -7,7 +7,7 @@ TYPEINFO(/obj/machinery/processor)
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
 	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab3-on"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -317,7 +317,7 @@ TYPEINFO(/obj/machinery/processor)
 	name = "Portable material processor"
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 
 	custom_suicide = 1
@@ -335,7 +335,7 @@ TYPEINFO(/obj/machinery/processor)
 	desc = "A huge furnace-like machine used to combine materials."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "smelter0"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	bound_height = 96
 	bound_width = 96
 	density = 1

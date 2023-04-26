@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			gen.set_active(1)
 			gen.state = 3
 			gen.power = 250
-			gen.anchored = 1
+			gen.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
@@ -417,7 +417,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -479,7 +479,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			explosion_new(src, T, 5.0, 2)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -557,7 +557,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
@@ -957,7 +957,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/butt/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -966,7 +966,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/owlgib/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -975,7 +975,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/owlclothes/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -994,7 +994,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	force = 1
 	throwforce = 1
 	throw_speed = 1
@@ -1206,7 +1206,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.armed = TRUE
 
 					// Yes, please (Convair880).
@@ -1319,7 +1319,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.armed = TRUE
 
 					// Yes, please (Convair880).
@@ -1358,7 +1358,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				O.name = "Thermite"
 				O.desc = "A searing wall of flames."
 				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = 1
+				O.anchored = ANCHORED
 				O.layer = TURF_EFFECTS_LAYER
 				O.color = "#ff9a3a"
 				var/datum/light/point/light = new

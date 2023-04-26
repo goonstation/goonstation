@@ -548,7 +548,7 @@ var/bombini_saved
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	get_desc()
 		return "It says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\"."

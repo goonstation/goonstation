@@ -59,7 +59,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
@@ -635,7 +635,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		playerProduct.contents -= vended
 	else // make a new one
 		vended = new product.product_path(src.get_output_location())
-	vended.name = product.product_name
 	vended.set_loc(src.get_output_location())
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
@@ -937,7 +936,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
 
 	src.power_change()
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	return
 
 //Oh no we're malfunctioning!  Dump out some product and break.
@@ -1154,7 +1153,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(src.owner && vendor && (src.vendor.status & BROKEN))
 			src.vendor.can_fall = 1
 			src.vendor.layer = initial(src.vendor.layer)
-			src.vendor.anchored = 1
+			src.vendor.anchored = ANCHORED
 			src.vendor.status &= ~BROKEN
 			src.vendor.power_change()
 
@@ -1461,7 +1460,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10) //does this even work??
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10) //does this even work??
 
 	blue
 		icon_state = "grife"
@@ -1483,7 +1482,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -1876,12 +1875,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	proc/setFrameState(state, mob/user, obj/item/target)
 		if (state == "WRENCHED")
 			wrenched = TRUE
-			anchored = TRUE
+			anchored = ANCHORED
 			desc = boarddesc
 			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 		else if (state == "UNWRENCHED")
 			wrenched = FALSE
-			anchored = FALSE
+			anchored = UNANCHORED
 			desc = basedesc
 			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 		else if (state == "BOARDINSTALLED")
@@ -2205,7 +2204,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	var/bolt_status = " It is bolted to the floor."
 	var/pizcooking = 0
 	var/piztopping = "plain"
-	anchored = 1
+	anchored = ANCHORED
 	acceptcard = FALSE
 	vend_inhand = FALSE
 	pay = TRUE
@@ -2281,13 +2280,13 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the external reinforcing bolts to the floor.")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				update_desc()
 				return
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You undo the external reinforcing bolts.")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				update_desc()
 				return
 		return ..()
@@ -3074,8 +3073,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)

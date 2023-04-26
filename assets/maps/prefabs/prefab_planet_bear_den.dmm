@@ -3,7 +3,7 @@
 /turf/space,
 /area/allowGenerate)
 "s" = (
-/obj/critter/bear,
+/mob/living/critter/bear,
 /turf/space,
 /area/allowGenerate)
 "N" = (

@@ -11,11 +11,11 @@
 	stamina_damage = 40
 	stamina_cost = 23
 	stamina_crit_chance = 5
-	skintoned = 1
+	skintoned = TRUE
 	hitsound = 'sound/impact_sounds/meat_smack.ogg'
 	var/original_DNA = null
 	var/original_fprints = null
-	var/show_on_examine = 0
+	var/show_on_examine = FALSE
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -318,7 +318,7 @@
 	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
 	var/rebelliousness = 0
-	var/strangling = 0
+	var/strangling = FALSE
 
 	on_holder_examine()
 		if (src.show_on_examine)
@@ -328,11 +328,11 @@
 		if(rebelliousness < 10 && prob(20))
 			rebelliousness += 1
 
-		if(strangling == 1)
+		if(strangling)
 			if(holder.losebreath < 5) holder.losebreath = 5
 			if(prob(20-rebelliousness))
 				holder.visible_message("<span class='alert'>[holder.name] stops trying to strangle themself.</span>", "<span class='alert'>You manage to pull your [src.name] away from your throat!</span>")
-				strangling = 0
+				strangling = FALSE
 				holder.losebreath -= 5
 			return
 
@@ -349,7 +349,7 @@
 			holder.visible_message("<span class='alert'>[holder.name] tries to strangle themself with their [src.name].</span>", "<span class='alert'>Your [src.name] tries to strangle you!</span>")
 			holder.emote("gasp")
 			holder.losebreath = 5
-			strangling = 1
+			strangling = TRUE
 
 	sever(mob/user)
 		if(holder?.handcuffs)
@@ -457,21 +457,22 @@
 
 /obj/item/parts/human_parts/arm/left/item
 	name = "left item arm"
-	decomp_affected = 0
+	decomp_affected = FALSE
 	limb_type = /datum/limb/item
-	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
-	streak_descriptor = "oily" //bloody, oily, etc
+	streak_decal = /obj/decal/cleanable/oil
+	streak_descriptor = "oily"
 	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
 	partlistPart = null
-	no_icon = 1
-	skintoned = 0
+	no_icon = TRUE
+	skintoned = FALSE
 	var/special_icons = 'icons/mob/human.dmi'
+	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
 	var/image/handimage = 0
-	random_limb_blacklisted = 1
+	random_limb_blacklisted = TRUE
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -607,7 +608,7 @@
 
 /obj/item/parts/human_parts/arm/right/item
 	name = "right item arm"
-	decomp_affected = 0
+	decomp_affected = FALSE
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
 	streak_descriptor = "oily" //bloody, oily, etc
@@ -616,12 +617,13 @@
 	remove_object = null
 	handlistPart = null
 	partlistPart = null
-	no_icon = 1
-	skintoned = 0
+	no_icon = TRUE
+	skintoned = FALSE
+	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
-	random_limb_blacklisted = 1
+	random_limb_blacklisted = TRUE
 	/// Also, item arms are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -740,13 +742,13 @@
 	icon_state = "arm_left_brullbar"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
@@ -773,13 +775,13 @@
 	icon_state = "arm_right_brullbar"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
@@ -806,13 +808,13 @@
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
 
@@ -826,13 +828,13 @@
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
 
@@ -848,13 +850,13 @@
 	icon_state = "arm_left_bear"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
 
@@ -877,13 +879,13 @@
 	icon_state = "arm_right_bear"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
 
@@ -906,12 +908,12 @@
 	icon_state = "arm_left_plant"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	handlistPart = "l_hand_plant"
 	var/name_thing = "plant"
-	show_on_examine = 1
-	easy_attach = 1
+	show_on_examine = TRUE
+	easy_attach = TRUE
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
@@ -934,12 +936,12 @@
 	icon_state = "arm_right_plant"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	handlistPart = "r_hand_plant"
 	var/name_thing = "plant"
-	show_on_examine = 1
-	easy_attach = 1
+	show_on_examine = TRUE
+	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
@@ -961,12 +963,12 @@
 	icon_state = "leg_left_plant"
 	slot = "l_leg"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	partlistPart = "l_foot_plant"
 	var/name_thing = "plant"
-	show_on_examine = 1
-	easy_attach = 1
+	show_on_examine = TRUE
+	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
@@ -988,12 +990,12 @@
 	icon_state = "leg_right_plant"
 	slot = "r_leg"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	partlistPart = "r_foot_plant"
 	var/name_thing = "plant"
-	show_on_examine = 1
-	easy_attach = 1
+	show_on_examine = TRUE
+	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
@@ -1041,12 +1043,12 @@
 	icon_state = "arm_left_abomination"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	/// About as unnatural as it gets
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
@@ -1087,12 +1089,12 @@
 	icon_state = "arm_right_abomination"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
 
@@ -1133,11 +1135,11 @@
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
+	decomp_affected = FALSE
 	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
-	skintoned = 1
+	skintoned = TRUE
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
 	/// Supernatural if not abnormally gross
@@ -1156,11 +1158,11 @@
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
+	decomp_affected = FALSE
 	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
-	skintoned = 1
+	skintoned = TRUE
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
 	limb_is_unnatural = TRUE
@@ -1177,14 +1179,14 @@
 	icon_state = "arm_left_brullbar"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
 	siemens_coefficient = 0
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
 
@@ -1205,14 +1207,14 @@
 	icon_state = "arm_right_brullbar"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
 	siemens_coefficient = 0
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
 
@@ -1234,11 +1236,11 @@
 	icon_state = "arm_right_stone"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	handlistPart = "r_hand_stone"
 	var/name_thing = "stone"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
@@ -1260,11 +1262,11 @@
 	icon_state = "arm_left_stone"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	handlistPart = "l_hand_stone"
 	var/name_thing = "stone"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
@@ -1286,11 +1288,11 @@
 	icon_state = "leg_left_stone"
 	slot = "l_leg"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	partlistPart = "l_foot_stone"
 	var/name_thing = "stone"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
@@ -1312,11 +1314,11 @@
 	icon_state = "leg_right_stone"
 	slot = "r_leg"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	partlistPart = "r_foot_stone"
 	var/name_thing = "stone"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
@@ -1343,7 +1345,7 @@
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
-	skintoned = 0
+	skintoned = FALSE
 	kind_of_limb = (LIMB_MUTANT)
 
 	New(var/atom/holder)
@@ -1361,7 +1363,7 @@
 	side = "left"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
-	skintoned = 0
+	skintoned = FALSE
 	kind_of_limb = (LIMB_MUTANT)
 
 	New(var/atom/holder)
@@ -1380,7 +1382,7 @@
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
 	limb_hit_bonus = 4
-	skintoned = 1
+	skintoned = TRUE
 	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
 	handfoot_overlay_1_state = null
 	handfoot_overlay_1_color = CUST_2
@@ -1479,12 +1481,12 @@
 /obj/item/parts/human_parts/arm/mutant/lizard
 	icon = 'icons/mob/lizard.dmi'
 	partIcon = 'icons/mob/lizard.dmi'
-	skintoned = 1
+	skintoned = TRUE
 
 /obj/item/parts/human_parts/leg/mutant/lizard
 	icon = 'icons/mob/lizard.dmi'
 	partIcon = 'icons/mob/lizard.dmi'
-	skintoned = 1
+	skintoned = TRUE
 
 ////// ACTUAL LIZARD LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/lizard/left
@@ -1619,12 +1621,12 @@
 /obj/item/parts/human_parts/arm/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
-	skintoned = 1
+	skintoned = TRUE
 
 /obj/item/parts/human_parts/leg/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
-	skintoned = 1
+	skintoned = TRUE
 
 ////// ACTUAL ROACH LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/roach/left
@@ -1758,11 +1760,11 @@
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
-	show_on_examine = 1
+	show_on_examine = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1776,12 +1778,12 @@
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	handlistPart = "hand_right"
-	show_on_examine = 1
+	show_on_examine = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1842,7 +1844,7 @@
 /obj/item/parts/human_parts/arm/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
-	easy_attach = 1 // Its just a bone... full of meat. Kind of.
+	easy_attach = TRUE // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
@@ -1850,7 +1852,7 @@
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
-	easy_attach = 1
+	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
@@ -2032,14 +2034,14 @@
 /obj/item/parts/human_parts/arm/mutant/kudzu
 	icon = 'icons/obj/items/human_parts.dmi'
 	partIcon = 'icons/mob/human.dmi'
-	skintoned = 1
+	skintoned = TRUE
 	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	limb_overlay_1_color = null
 	handfoot_overlay_1_color = null
 	severed_overlay_1_color = null
-	easy_attach = 1 // These plants really like humanoid flesh
+	easy_attach = TRUE // These plants really like humanoid flesh
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
 	New()
@@ -2051,14 +2053,14 @@
 /obj/item/parts/human_parts/leg/mutant/kudzu
 	icon = 'icons/obj/items/human_parts.dmi'
 	partIcon = 'icons/mob/human.dmi'
-	skintoned = 1
+	skintoned = TRUE
 	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
 	limb_overlay_1_color = null
 	handfoot_overlay_1_color = null
 	severed_overlay_1_color = null
-	easy_attach = 1
+	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
 	New()
@@ -2121,12 +2123,12 @@
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_left"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
@@ -2140,12 +2142,12 @@
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	decomp_affected = 0
-	skintoned = 0
+	decomp_affected = FALSE
+	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_right"
-	show_on_examine = 1
+	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)

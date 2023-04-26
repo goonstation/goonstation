@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "smes"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -18,7 +18,7 @@
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 
@@ -48,7 +48,7 @@
 			TheAI.set_loc(src)
 			B.set_loc(TheAI)
 			TheAI.brain = B
-			TheAI.anchored = 0
+			TheAI.anchored = UNANCHORED
 			TheAI.dismantle_stage = 3
 			TheAI.update_appearance()
 			qdel(src)
@@ -644,7 +644,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Plan Marker"
 	icon = 'icons/turf/construction_walls.dmi'
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION
@@ -673,7 +673,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Window Plan Marker"
 	icon = 'icons/obj/grille.dmi'
 	icon_state = "grille-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION

@@ -11,7 +11,7 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/camera_status = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	var/invuln = null
 	var/last_paper = 0
 	///Cameras only the AI can see through
@@ -42,7 +42,7 @@
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
 	network = "Zeta" // why not.
 	icon_state = "television"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	reinforced = TRUE
 	var/securedstate = 2
@@ -62,9 +62,9 @@
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
@@ -101,7 +101,7 @@
 /obj/machinery/camera/television/mobile
 	name = "mobile television camera"
 	desc = "A bulky mobile camera for wireless broadcasting of live feeds."
-	anchored = 0
+	anchored = UNANCHORED
 	icon_state = "mobilevision"
 	securedstate = null //No bugginess thank you
 

@@ -1,14 +1,14 @@
 /obj/line_obj/railgun
 	name = "Energy"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/railgun_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -37,7 +37,7 @@
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 		for(var/obj/O in affected)
-			O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 			O.name = "Energy"
 			var/turf/src_turf = O.loc
 			for(var/atom/A in src_turf)

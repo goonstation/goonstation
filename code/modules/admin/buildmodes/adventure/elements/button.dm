@@ -69,7 +69,7 @@
 	icon_state = "button_red_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/button_type = "red"
 	var/pressed = 0
 
@@ -100,7 +100,7 @@
 	desc = "A wooden furniture used for the storage of books. One of the books appears to be loose."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "bookcase_full_alone_button"
 	var/pressed = 0

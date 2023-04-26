@@ -30,6 +30,59 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
+
+	attackby(obj/item/C, mob/user, params)
+		if(istype(C, /obj/item/rods))
+			var/actionbar_duration = 2 SECONDS
+			if (ishuman(user)) // Engineers can bypass the actionbar and instantly put down catwalks.
+				if (user.traitHolder.hasTrait("training_engineer"))
+					src.MakeCatwalk(C)
+					return
+
+				else if(user.traitHolder.hasTrait("carpenter"))
+					actionbar_duration /= 2
+
+			user.show_text("You start putting the rods on the frame...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, .proc/MakeCatwalk, list(C), C.icon, C.icon_state, null, null)
+			return
+
+		if(issnippingtool(C))
+			user.show_text("You cut away the support beams.")
+			var/obj/item/rods/steel/rod = new
+			rod.set_loc(src)
+			src.ReplaceWithSpace()
+			return
+
+		. = ..()
+/turf/simulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
+
 /turf/unsimulated/floor/airless/plating/catwalk
 	name = "catwalk support"
 	icon_state = "catwalk"

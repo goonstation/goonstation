@@ -297,7 +297,7 @@
 			next_move = world.time + delay
 			return delay
 		else
-			if (src.restrained())
+			if (src.restrained() || !isalive(src))
 				return
 			for (var/obj/item/grab/G as anything in src.grabbed_by)
 				if (G.state == GRAB_PIN)

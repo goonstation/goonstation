@@ -596,6 +596,22 @@
 			newObj.change_stack_amount((amount*10) - newObj.amount)
 			newObj.set_loc(getOutputLocation(owner))
 
+/datum/matfab_recipe/thermocouple
+	name = "Themocouple"
+	desc = "For use in a Thermo Electric Generator."
+	category = "Tools"
+
+	New()
+		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		..()
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		var/obj/item/source = getObjectByPartName("Sheet")
+		var/obj/item/teg_semiconductor/newObj = new()
+		if(source?.material)
+			newObj.setMaterial(source.material)
+		newObj.set_loc(getOutputLocation(owner))
+
 /datum/matfab_recipe/cell_small
 	name = "Small energy cell"
 	desc = "A small energy cell used in guns and small portable devices."
