@@ -415,6 +415,8 @@ TYPEINFO(/obj/item/device/flash/turbo)
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/device/flash/turbo = 5)
 
+TYPEINFO(/obj/item/device/flash/revolution)
+	mats = 0
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
