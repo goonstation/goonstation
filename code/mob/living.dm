@@ -40,8 +40,6 @@
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
 	var/image/static_image = null
-	var/static_type_override = null
-	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
@@ -140,7 +138,6 @@
 		//eventual hud merger pls
 
 	SPAWN(0)
-		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
@@ -1262,47 +1259,41 @@
 
 	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
 
+	src.new_static_image()
+
 /mob/living/proc/update_mob_silhouette()
 	src.silhouette.icon = src
 	src.silhouette.overlays = src.overlays
 	src.silhouette.vis_contents = src.vis_contents
 
-/mob/living/proc/get_static_image()
-	if (src.disposed)
+	src.update_static_image()
+
+/mob/living/proc/new_static_image()
+	src.static_image = new(null, src)
+
+	src.static_image.appearance_flags = KEEP_TOGETHER
+	src.static_image.plane = PLANE_LIGHTING
+	src.static_image.override = TRUE
+	src.static_image.color = list(
+		-0.5, 0, 0, -0.3,
+		0, -0.5, 0, -0.3,
+		0, 0, -0.5, -0.3,
+		0, 0, 0, 1,
+		0, 0, 0, 0,)
+
+	get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
+
+/mob/living/proc/update_static_image()
+	if (!src.silhouette || !src.static_image)
 		return
-	if (!islist(default_mob_static_icons))
-		return
-	if (src.static_image)
-		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
-	var/checkpath = src.static_type_override ? src.static_type_override : src.type
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace))
-			checkpath = H.mutantrace.type
-	if (ispath(checkpath))
-		var/generate_static = 1
-		if (checkpath in default_mob_static_icons)
-			if (istype(default_mob_static_icons[checkpath], /image))
-				src.static_image = image(default_mob_static_icons[checkpath])
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-				generate_static = 0
-		if (generate_static)
-			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if (H.mutantrace)
-					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
-			else
-				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
-			if (src.static_image)
-				default_mob_static_icons[checkpath] = image(src.static_image)
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-		return src.static_image
+
+	src.static_image.icon = src.silhouette.icon
+	src.static_image.overlays = src.silhouette.overlays
+	src.static_image.vis_contents = src.silhouette.vis_contents
+
+	var/image/static_overlay = image('icons/effects/atom_textures_64.dmi', "static")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+	src.static_image.overlays += static_overlay
 
 /proc/check_static_defaults()
 	if (!islist(default_mob_static_icons))
@@ -1312,8 +1303,6 @@
 		var/image/i = default_mob_static_icons[Type]
 		if (i)
 			DEBUG_MESSAGE(bicon(i) + "\ref[i][Type]")
-
-var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.dmi', "body_m")
 
 
 /mob/living/verb/give_item()

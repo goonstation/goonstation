@@ -9,7 +9,6 @@
 #else
 	icon_state = "blank"
 #endif
-	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
@@ -169,7 +168,6 @@
 	var/datum/humanInventory/inventory = null
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
-	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
 	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -2950,7 +2948,6 @@
 	if(.)
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
-		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()

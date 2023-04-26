@@ -1171,7 +1171,10 @@
 			if(A.material)
 				A.material.triggerTemp(A, temp)
 
-	get_static_image()
+	new_static_image()
+		return
+
+	update_static_image()
 		return
 
 	update_item_abilities()
