@@ -390,7 +390,7 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
-					if (I.try_specific_equip())
+					if (I.try_specific_equip(user))
 						return
 
 					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
