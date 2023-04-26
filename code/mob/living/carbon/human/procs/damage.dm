@@ -614,7 +614,7 @@
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		INVOKE_ASYNC(src, /mob/living/carbon/human.proc/death)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)
